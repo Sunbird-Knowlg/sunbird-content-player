@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="org.ekstep.quiz.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <preference name="loglevel" value="DEBUG" />
+    <feature name="Keyboard">
+        <param name="android-package" value="com.ionic.keyboard.IonicKeyboard" />
+        <param name="onload" value="true" />
+    </feature>
+    <preference name="webView" value="org.crosswalk.engine.XWalkWebViewEngine" />
+    <preference default="14+" name="xwalkVersion" />
+    <preference default="--disable-pull-to-refresh-effect" name="xwalkCommandLine" />
+    <preference default="embedded" name="xwalkMode" />
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="FileTransfer">
+        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
+    </feature>
+    <feature name="Media">
+        <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="ExitAppAtSecond">
+        <param name="android-package" value="com.cranberrygame.cordova.plugin.exitappatsecond.ExitAppAtSecond" />
+    </feature>
+    <feature name="WebIntent">
+        <param name="android-package" value="com.borismus.webintent.WebIntent" />
+    </feature>
+    <feature name="startApp">
+        <param name="android-package" value="com.lampa.startapp.startApp" />
+    </feature>
+    <feature name="IntentService">
+        <param name="android-package" value="IntentService" />
+    </feature>
+    <feature name="PlatformService">
+        <param name="android-package" value="PlatformService" />
+    </feature>
+    <feature name="DownloaderService">
+        <param name="android-package" value="org.apache.cordova.DownloaderService" />
+    </feature>
+    <feature name="GenieService">
+        <param name="android-package" value="GenieService" />
+    </feature>
+    <preference name="AndroidPersistentFileLocation" value="Internal" />
+    <icon density="ldpi" src="www/img/icons/app-icon.png" />
+    <icon density="mdpi" src="www/img/icons/app-icon.png" />
+    <icon density="hdpi" src="www/img/icons/app-icon.png" />
+    <icon density="xhdpi" src="www/img/icons/app-icon.png" />
+    <icon density="xxhdpi" src="www/img/icons/app-icon.png" />
+    <icon density="xxxhdpi" src="www/img/icons/app-icon.png" />
+    <splash density="land-ldpi" src="www/img/icons/splash.png" />
+    <splash density="land-mdpi" src="www/img/icons/splash.png" />
+    <splash density="land-hdpi" src="www/img/icons/splash.png" />
+    <splash density="land-xhdpi" src="www/img/icons/splash.png" />
+    <splash density="land-xxhdpi" src="www/img/icons/splash.png" />
+    <splash density="land-xxxhdpi" src="www/img/icons/splash.png" />
+    <splash density="port-ldpi" src="www/img/icons/splash.png" />
+    <splash density="port-mdpi" src="www/img/icons/splash.png" />
+    <splash density="port-hdpi" src="www/img/icons/splash.png" />
+    <splash density="port-xhdpi" src="www/img/icons/splash.png" />
+    <splash density="port-xxhdpi" src="www/img/icons/splash.png" />
+    <splash density="port-xxxhdpi" src="www/img/icons/splash.png" />
+    <name>Quiz-App</name>
+    <description>
+        Ekstep Quiz App.
+    </description>
+    <author email="dev@ilimi.in" href="http://www.ilimi.in/">
+        Ilimi Team.
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="android-minSdkVersion" value="17" />
+    <preference name="BackupWebStorage" value="none" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="Orientation" value="landscape" />
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+</widget>
