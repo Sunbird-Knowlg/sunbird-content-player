@@ -1,0 +1,21 @@
+<html>
+<head>
+	<script type="text/javascript" src="cordova.js"></script>
+</head>
+<body>
+
+<script>
+
+document.addEventListener("deviceready", function(){
+	
+	//
+	window.exitappatsecond.onExitAppAtSecond = function() {
+		alert('onExitAppAtSecond');
+	};
+}, false);
+</script>
+
+<p><button onclick="window.exitappatsecond.exitAppAtSecond();">exitAppAtSecond</button></p>
+
+</body>
+</html>

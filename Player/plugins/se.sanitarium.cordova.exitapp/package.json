@@ -1,0 +1,12 @@
+{
+    "version": "1.0.0",
+    "name": "se.sanitarium.cordova.exitapp",
+    "cordova_name": "ExitApp",
+    "description": "Implements navigator.app.exitApp on WP8",
+    "license": "Apache 2.0",
+    "keywords": [
+        "cordova",
+        "terminate"
+    ],
+    "engines": []
+}
