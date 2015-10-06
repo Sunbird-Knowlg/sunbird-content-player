@@ -1,0 +1,151 @@
+.\" The following commands are required for all man pages.
+.Dd January 1, 2014
+.Os Chrome Apps
+.Dt CCA 7
+.Sh NAME
+.Nm cca
+.Nd Run Chrome Apps on mobile using Apache Cordova
+.Sh SYNOPSIS
+.Nm cca
+help
+.Nm cca
+checkenv
+.Nm cca
+create
+.Ar new_project_directory
+.Op Fl -copy-from Ns = Ns Ar source_directory
+.Op Fl -link-to Ns = Ns Ar source_directory
+.Nm cca
+prepare
+.Oo
+.Ar platform
+.Oc
+.Nm cca
+run
+.Ar platform
+.Nm cca
+.Op ...
+.Sh DESCRIPTION
+A toolkit for porting Chrome Packaged Apps to Android and iOS hybrid web applications, through Apache Cordova.
+
+The cca command is a tool that can create, build, manage and run a Chrome Packaged App on Android and iOS.
+
+Commands which are not recognized by cca are passed unchanged to
+.Xr cordova 7
+for processing.
+.Ss Creating a mobile Chrome App
+.Nm cca
+create
+.Ar project_directory
+.Op Fl -copy-from Ns = Ns Ar source_directory
+.Op Fl -link-to Ns = Ns Ar source_directory
+.Bd -ragged -offset indent
+.Ar project_directory
+will be created in the current directory, and the new Apache Cordova Chrome App project will be created within it.
+
+.Fl -copy-from Ns = Ns Ar source_directory
+.Bd -ragged -offset indent
+Copy an existing Chrome packaged app from
+.Ar source_directory
+into the newly-created mobile Chrome App. After creation, the mobile and desktop apps will be separate from each other, and can be developed independently. It is an error to specify both this option as well as
+.Fl -link-to Ns .
+.Ed
+
+.Fl -link-to Ns = Ns Ar source_directory
+.Bd -ragged -offset indent
+Symlink the newly-created mobile Chrome App to an existing Chrome packaged app located in
+.Ar source_directory Ns .
+After creation, the mobile and desktop apps will be linked from each other, so changes in one will change the other as well. It is an error to specify both this option as well as
+.Fl -copy-from Ns .
+.Ed
+.Ed
+.Ss Preparing the platform-level projects
+.Nm cca
+prepare
+.Oo
+.Ar platform
+.Oc
+.Bd -ragged -offset indent
+Updates the platform-level projects with any changes that have been made in the source files. This command should be run before the app is run on device. Executing "cca run" will do this automatically.
+
+.Ar platform
+can be specified to update only a single platform
+.Po Ns Em android
+or
+.Em iOS
+.Pc .
+By default, all platforms are updated.
+.Ed
+.Ss Deploying the app to a device
+.Nm cca
+run
+.Ar platform
+.Bd -ragged -offset indent
+Builds the application for the specified platform
+.Po Ns Em android
+or
+.Em iOS
+.Pc Ns ,
+preparing first if necessary, and deploys to an attached physical device to run.
+.Ed
+.Ss Miscellaneous commands
+.Nm cca
+help
+.Bd -ragged -offset indent
+Print a short help message with a list of the most common commands.
+.Ed
+
+.Nm cca
+version
+.Bd -ragged -offset indent
+Print the version of the cca toolkit.
+.Ed
+
+.Nm cca
+checkenv
+
+.Nm cca
+pre-prepare
+
+.Nm cca
+update-app
+.Bd -ragged -offset indent
+These commands are used internally by
+.Nm cca
+to update the underlying cordova project based on changes to your manifest.json file. They are not intended to be called by developers directly.
+.Ed
+.Ss Other commands
+Other commands are passed directly to
+.Xr cordova 7
+to be handled by that script.
+.\" The following commands should be uncommented and
+.\" used where appropriate.
+.\" .Sh IMPLEMENTATION NOTES
+.\" This next command is for sections 2, 3 and 9 function
+.\" return values only.
+.\" .Sh RETURN VALUES
+.\" This next command is for sections 1, 6, 7 and 8 only.
+.\" .Sh ENVIRONMENT
+.\" .Sh FILES
+
+.Sh EXAMPLES
+This sequence of commands would create a new "Hello, World!" mobile Chrome App, linked to the sample code from the mobile-chrome-app-samples repository, build it and run it on a connected Android device.
+
+.Bd -literal -offset indent
+$ cca create sampleapp --link-to=~/mobile-chrome-app-samples/helloworld
+$ cd sampleapp
+$ cca prepare
+$ cca run android
+.Sh SEE ALSO
+.Xr cordova 7
+
+Chrome Packaged Apps: http://developer.chrome.com/apps/about_apps.html
+
+Repository:           https://github.com/MobileChromeApps
+.\" .Sh STANDARDS
+.Sh HISTORY
+January 2014: First version of this document
+.Sh AUTHORS
+Copyright 2012-2014 The Chromium Authors
+.Sh BUGS
+Please report bugs on the project's issue tracker at https://github.com/MobileChromeApps/mobile-chrome-apps/issues

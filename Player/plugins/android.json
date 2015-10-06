@@ -1,0 +1,182 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "res/xml/config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Keyboard\"><param name=\"android-package\" value=\"com.ionic.keyboard.IonicKeyboard\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"webView\" value=\"org.crosswalk.engine.XWalkWebViewEngine\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"14+\" name=\"xwalkVersion\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"--disable-pull-to-refresh-effect\" name=\"xwalkCommandLine\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"embedded\" name=\"xwalkMode\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"FileTransfer\"><param name=\"android-package\" value=\"org.apache.cordova.filetransfer.FileTransfer\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Media\"><param name=\"android-package\" value=\"org.apache.cordova.media.AudioHandler\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ExitAppAtSecond\"><param name=\"android-package\" value=\"com.cranberrygame.cordova.plugin.exitappatsecond.ExitAppAtSecond\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"WebIntent\"><param name=\"android-package\" value=\"com.borismus.webintent.WebIntent\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"startApp\"><param name=\"android-package\" value=\"com.lampa.startapp.startApp\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"IntentService\"><param name=\"android-package\" value=\"IntentService\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PlatformService\"><param name=\"android-package\" value=\"PlatformService\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"DownloaderService\"><param name=\"android-package\" value=\"org.apache.cordova.DownloaderService\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"GenieService\"><param name=\"android-package\" value=\"GenieService\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "AndroidManifest.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 3
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<preference name=\"AndroidPersistentFileLocation\" value=\"Internal\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "com.ionic.keyboard": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "cordova-plugin-crosswalk-webview": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "cordova-plugin-media": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "se.sanitarium.cordova.exitapp": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "com.cranberrygame.cordova.plugin.exitappatsecond": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "com.borismus.webintent": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "com.lampa.startapp": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "org.ekstep.intent.service.plugin": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "org.ekstep.platform.service.plugin": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "org.ekstep.downloader.service.plugin": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        },
+        "org.ekstep.genie.service.plugin": {
+            "PACKAGE_NAME": "org.ekstep.quiz.app"
+        }
+    },
+    "dependent_plugins": {}
+}
