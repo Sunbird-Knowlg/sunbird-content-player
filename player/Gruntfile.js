@@ -43,6 +43,12 @@ module.exports = function(grunt) {
                         cwd: 'public/',
                         src: 'build-extras.gradle',
                         dest: 'platforms/android/'
+                    },
+                    {
+                        expand: true,
+                        cwd: '',
+                        src: 'ekstep.keystore',
+                        dest: 'platforms/android/'
                     }
                 ]
             }
@@ -189,6 +195,13 @@ module.exports = function(grunt) {
                     platforms: ['android']
                 }
             },
+            build_android_release: {
+                options: {
+                    command: 'build',
+                    platforms: ['android'],
+                    args: ['--release']
+                }
+            },
             run_android: {
                 options: {
                     command: 'run',
@@ -212,6 +225,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build-samples', ['compress:story', 'compress:worksheet', 'aws_s3:uploadSamples']);
     grunt.registerTask('build-apk-xwalk', ['uglify:js', 'clean:before', 'copy', 'rename', 'clean:after', 'cordovacli:add_plugins', 'cordovacli:build_android']);
     grunt.registerTask('build-apk', ['uglify:js', 'clean:before', 'copy', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'cordovacli:build_android']);
+    grunt.registerTask('build-signed-apk', ['uglify:js', 'clean:before', 'copy', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'cordovacli:build_android_release']);
     grunt.registerTask('build-apk-quick', ['uglify:js', 'clean:before', 'copy', 'rename', 'clean:after', 'clean:samples', 'cordovacli:build_android']);
     grunt.registerTask('install-apk-xwalk', ['uglify:js', 'clean:before', 'copy', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:run_android']);
     grunt.registerTask('install-apk', ['uglify:js', 'clean:before', 'copy', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'cordovacli:run_android']);
