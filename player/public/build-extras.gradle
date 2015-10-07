@@ -11,8 +11,8 @@ android {
     }
 
     defaultConfig {
-        versionName "0.2"
-        setProperty("archivesBaseName", "quizapp-v$versionName-"+ getTimestamp())
+        versionName "1.0.1"
+        setProperty("archivesBaseName", "contentapp-$versionName")
     }
 
     signingConfigs {
