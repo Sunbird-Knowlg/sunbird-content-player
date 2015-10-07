@@ -224,6 +224,7 @@ angular.module('quiz.services', ['ngResource'])
                 _.map(returnObject.contentList, function(value, key){
                     DownloaderService.deleteContentDir(key);
                     delete returnObject.contentList[key];
+                    returnObject.commit();
                 });
             }
         };
