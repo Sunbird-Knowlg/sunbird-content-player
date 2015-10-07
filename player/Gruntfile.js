@@ -224,6 +224,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build-js', ['uglify:js', 'aws_s3:uploadJS']);
     grunt.registerTask('build-samples', ['compress:story', 'compress:worksheet', 'aws_s3:uploadSamples']);
     grunt.registerTask('build-apk-xwalk', ['uglify:js', 'clean:before', 'copy', 'rename', 'clean:after', 'cordovacli:add_plugins', 'cordovacli:build_android']);
+    grunt.registerTask('build-signed-apk-xwalk', ['uglify:js', 'clean:before', 'copy', 'rename', 'clean:after', 'cordovacli:add_plugins', 'cordovacli:build_android_release']);
     grunt.registerTask('build-apk', ['uglify:js', 'clean:before', 'copy', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'cordovacli:build_android']);
     grunt.registerTask('build-signed-apk', ['uglify:js', 'clean:before', 'copy', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'cordovacli:build_android_release']);
     grunt.registerTask('build-apk-quick', ['uglify:js', 'clean:before', 'copy', 'rename', 'clean:after', 'clean:samples', 'cordovacli:build_android']);
