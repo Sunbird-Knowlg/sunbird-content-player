@@ -63,6 +63,7 @@ Renderer = {
         createjs.Ticker.addEventListener("tick", function() {
             if(Renderer.update) {
                 Renderer.theme.update();
+                Renderer.update = false;                
             }
         });
     },

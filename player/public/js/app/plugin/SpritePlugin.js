@@ -8,6 +8,10 @@ var SpritePlugin = Plugin.extend({
 		grant.x = dims.x;
 		grant.y = dims.y;
 		this._self = grant;
+		grant.addEventListener('change', function() {
+			Renderer.update = true;
+			console.log("on grant change Renderer updated...");
+		});
 	},
 	playAnimation: function(animation) {
 		this._self.gotoAndPlay(animation);

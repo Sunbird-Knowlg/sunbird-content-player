@@ -46,6 +46,7 @@
         <media id="w-inner" src="wife-inner.png" type="image" />
         <media id="b-outer" src="barber-outer.png" type="image" />
         <media id="b-inner" src="barber-inner.png" type="image" />
+        <media id="grant_sprite" src="grant_sprite.json" type="spritesheet" />
         <media src="sounds/scene17.ogg" id="scene17_audio" type="audiosprite">
             <data>
                 <audioSprite id="scene17_sound" startTime="0" duration="3944.4897959183672"></audioSprite>
@@ -280,6 +281,7 @@
                 <action type="command" command="togglePlay" asset="clock_sound" />
             </event>
         </shape>
+        <sprite asset="grant_sprite" start="jump_run" x="80" y="15" id="sprite_jump"/>
         <events>
             <event type="enter">
                 <action type="command" command="play" asset="scene1_sound" loop="1" />
