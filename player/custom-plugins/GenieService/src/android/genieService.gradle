@@ -6,7 +6,7 @@ repositories{
 }
 
 dependencies {
-   compile(name:'sdks-debug', ext:'aar')
+   compile(name:'sdks-release', ext:'aar')
    compile(name:'aidls-release', ext:'aar')
 }
 

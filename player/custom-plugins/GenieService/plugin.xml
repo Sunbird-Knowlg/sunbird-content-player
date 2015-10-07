@@ -24,6 +24,6 @@
         <source-file src="src/android/TelemetryResponse.java" target-dir="src/" />
         <source-file src="src/android/UserProfileResponse.java" target-dir="src/" />
         <resource-file src="libs/aidls-release.aar" target="libs" />
-        <resource-file src="libs/sdks-debug.aar" target="libs" />
+        <resource-file src="libs/sdks-release.aar" target="libs" />
     </platform>
 </plugin>
