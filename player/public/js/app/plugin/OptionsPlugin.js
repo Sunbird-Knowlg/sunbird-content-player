@@ -10,15 +10,28 @@ var OptionsPlugin = Plugin.extend({
         }
         var layout = data.layout;
         if (value && _.isArray(value) && value.length > 0) {
-        	if (layout === 'table' && _.isFinite(data.cols)) {
+        	if (layout === 'table' && (_.isFinite(data.cols) || _.isFinite(data.rows))) {
         		this.renderTableLayout(value);
         	}
         }
     },
     renderTableLayout: function(value) {
+        var cols = undefined;
+        var rows = undefined;
     	var count = value.length;
-    	var cols = this._data.cols;
-    	var rows = Math.ceil(count/cols);
+        if(this._data.rows && this._data.cols) {
+            rows = this._data.rows; 
+            cols = Math.ceil(count/rows);
+        } else {
+            if(this._data.rows)
+                rows = this._data.rows; 
+            if(this._data.cols)
+                cols = this._data.cols;        
+            if(this._data.rows)
+                cols = Math.ceil(count/rows);
+            else
+                rows = Math.ceil(count/cols);
+        }    
     	var instance = this;
     	var marginX = 0;
     	if (_.isFinite(this._data.marginX)) {
