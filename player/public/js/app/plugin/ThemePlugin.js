@@ -101,6 +101,9 @@ var ThemePlugin = Plugin.extend({
     update: function() {
         this._self.update();
     },
+    tick: function() {
+        this._self.tick();
+    },
     restart: function() {
         var gameId = TelemetryService._gameData.id;
         var version = TelemetryService._gameData.ver;
