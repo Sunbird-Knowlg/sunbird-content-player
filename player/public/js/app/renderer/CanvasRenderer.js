@@ -65,7 +65,9 @@ Renderer = {
                 Renderer.theme.update();
                 Renderer.update = false;                
             } else {
-                Renderer.theme.tick();
+                if (Renderer.theme) {
+                    Renderer.theme.tick();
+                }
             }
         });
     },
