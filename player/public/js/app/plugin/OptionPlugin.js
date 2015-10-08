@@ -171,6 +171,12 @@ var OptionPlugin = Plugin.extend({
     },
     renderText: function(data) {
         data.$t = data.asset;
+        var padx = this._data.padX || 0;
+        var pady = this._data.padY || 0;
+        data.x = padx;
+        data.y = pady;
+        data.w = 100 - (2 * padx);
+        data.h = 100 - (2 * pady);
         PluginManager.invoke('text', data, this, this._stage, this._theme);
         this._data.asset = data.asset;
         this._render = true;

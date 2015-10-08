@@ -5,6 +5,8 @@ var MCQPlugin = Plugin.extend({
     _multi_select: false,
     _options: [],
     _controller: undefined,
+    _shadow: '#0470D8',
+    _blur: 30,
     initPlugin: function(data) {
         var model = data.model;
         if (model) {
@@ -25,6 +27,12 @@ var MCQPlugin = Plugin.extend({
 				var dims = this.relativeDims();
         		this._self.x = dims.x;
         		this._self.y = dims.y;
+                if (data.shadow) {
+                    this._shadow = data.shadow;
+                }
+                if (_.isFinite(data.blur)) {
+                    this._blur = data.blur;
+                }
 
         		for(k in data) {
         			if(PluginManager.isPlugin(k)) {
@@ -48,7 +56,7 @@ var MCQPlugin = Plugin.extend({
     	if (option._self.shadow) {
             option._self.shadow = undefined;
         } else {
-            option._self.shadow = new createjs.Shadow('#0470D8', 0, 0, 30);
+            option._self.shadow = new createjs.Shadow(this._shadow, 0, 0, this._blur);
             val = true;
         }
         controller.setModelValue(option._model, val, 'selected');
