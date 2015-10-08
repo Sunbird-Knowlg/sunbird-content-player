@@ -20,8 +20,8 @@ var OptionsPlugin = Plugin.extend({
         var rows = undefined;
     	var count = value.length;
         if(this._data.rows && this._data.cols) {
-            rows = this._data.rows; 
-            cols = Math.ceil(count/rows);
+            cols = this._data.cols; 
+            rows = Math.ceil(count/cols);
         } else {
             if(this._data.rows)
                 rows = this._data.rows; 
