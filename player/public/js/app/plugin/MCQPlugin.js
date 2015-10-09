@@ -7,6 +7,8 @@ var MCQPlugin = Plugin.extend({
     _controller: undefined,
     _shadow: '#0470D8',
     _blur: 30,
+    _offsetX: 0,
+    _offsetY: 0,
     initPlugin: function(data) {
         var model = data.model;
         if (model) {
@@ -33,7 +35,12 @@ var MCQPlugin = Plugin.extend({
                 if (_.isFinite(data.blur)) {
                     this._blur = data.blur;
                 }
-
+                if (_.isFinite(data.offsetX)) {
+                    this._offsetX = data.offsetX;
+                }
+                if (_.isFinite(data.offsetY)) {
+                    this._offsetY = data.offsetY;
+                }
         		for(k in data) {
         			if(PluginManager.isPlugin(k)) {
         				PluginManager.invoke(k, data[k], this, this._stage, this._theme);
@@ -56,7 +63,7 @@ var MCQPlugin = Plugin.extend({
     	if (option._self.shadow) {
             option._self.shadow = undefined;
         } else {
-            option._self.shadow = new createjs.Shadow(this._shadow, 0, 0, this._blur);
+            option._self.shadow = new createjs.Shadow(this._shadow, this._offsetX, this._offsetY, this._blur);
             val = true;
         }
         controller.setModelValue(option._model, val, 'selected');
