@@ -2,6 +2,7 @@
 	"identifier": "haircut_story_1",
 	"title": "Haircut Story Assessment",
 	"total_items": 4,
+	"shuffle": false,
 	"max_score": 9,
 	"subject": "LIT",
 	"item_sets": [

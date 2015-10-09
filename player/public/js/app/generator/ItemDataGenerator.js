@@ -21,9 +21,12 @@ var ItemDataGenerator = {
     		var total_items = data.total_items;
 			var item_sets = data.item_sets;
 			var items = data.items;
+			var shuffle = true;
+			if (typeof data.shuffle != 'undefined')
+				shuffle = data.shuffle;
 			if (item_sets && items) {
 				item_sets.forEach(function(map) {
-					list = ItemDataGenerator._addItems(map.id, map.count, items, list);
+					list = ItemDataGenerator._addItems(map.id, map.count, items, list, shuffle);
 				});
 				if (total_items && list.length > total_items) {
 					list = _.first(list, total_items);
@@ -32,7 +35,7 @@ var ItemDataGenerator = {
     	}
 		return list;
 	},
-	_addItems: function(id, count, items, list) {
+	_addItems: function(id, count, items, list, shuffle) {
 		var set = items[id];
 		if (_.isArray(set)) {
 			var indexArr = [];
@@ -43,10 +46,14 @@ var ItemDataGenerator = {
 
 			var pick = [];
 			for(var i = 0; i < count; i++) {
-				var randNum = _.random(0,indexArr.length-1);					
-				pick[i] = set[indexArr[randNum]];
-				indexArr[randNum] = indexArr[indexArr.length - 1];
-				indexArr.splice(indexArr.length - 1, 1);
+				if(shuffle) {
+					var randNum = _.random(0,indexArr.length-1);
+					pick[i] = set[indexArr[randNum]];
+					indexArr[randNum] = indexArr[indexArr.length - 1];
+					indexArr.splice(indexArr.length - 1, 1);
+				} else {
+					pick[i] = set[indexArr[i]];
+				}
 			}
 			list = _.union(list, pick);
 		}
