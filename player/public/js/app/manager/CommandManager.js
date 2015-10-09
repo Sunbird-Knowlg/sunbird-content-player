@@ -1,6 +1,7 @@
 CommandManager = {
 	audioActions: ['play', 'pause', 'stop', 'togglePlay'],
 	handle: function(action) {
+		console.log("Action:", action);
 		var plugin = PluginManager.getPluginObject(action.asset);
 		if(!_.contains(CommandManager.audioActions, action.command)) {
 			if(!plugin) {
@@ -10,20 +11,36 @@ CommandManager = {
 		}
 		switch(action.command) {
 			case 'play':
-				AudioManager.play(action);
+				if(plugin && plugin._type == 'sprite') {
+					plugin.play(action.animation);
+				} else {
+					AudioManager.play(action);
+				}
 				break;
 			case 'pause':
-				AudioManager.pause(action);
+				if(plugin && plugin._type == 'sprite') {
+					plugin.pause();
+				} else {
+					AudioManager.pause(action);
+				}
 				break;
 			case 'stop':
-				if(action.sound === true) {
-					AudioManager.stopAll(action);
+				if(plugin && plugin._type == 'sprite') {
+					plugin.stop();
 				} else {
-					AudioManager.stop(action);
+					if(action.sound === true) {
+						AudioManager.stopAll(action);
+					} else {
+						AudioManager.stop(action);
+					}
 				}
 				break;
 			case 'togglePlay':
-				AudioManager.togglePlay(action);
+				if(plugin && plugin._type == 'sprite') {
+					plugin.togglePlay(action.animation);
+				} else {
+					AudioManager.togglePlay(action);
+				}
 				break;
 			case 'show':
 				if (plugin) plugin.show(action);

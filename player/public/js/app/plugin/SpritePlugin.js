@@ -1,4 +1,5 @@
 var SpritePlugin = Plugin.extend({
+    _type: 'sprite',
     _isContainer: false,
     _render: true,
     initPlugin: function(data) {
@@ -11,7 +12,7 @@ var SpritePlugin = Plugin.extend({
             }
         }
         var spriteJSON = {
-            "framerate": data.framerate,
+            "framerate": data.framerate || 30,
             "images": [spriteImage],
             "frames": data.frames,
             "animations": animations
@@ -28,8 +29,21 @@ var SpritePlugin = Plugin.extend({
             Renderer.update = true;
         });
     },
-    playAnimation: function(animation) {
+    play: function(animation) {
         this._self.gotoAndPlay(animation);
+    },
+    togglePlay: function(animation) {
+      if(this._self.paused) {
+        this._self.gotoAndPlay(animation);    
+      } else {
+        this._self.paused = true;
+      }
+    },
+    pause: function() {
+        this._self.paused = true;
+    },
+    stop: function() {
+       this._self.stop(); 
     }
 });
 PluginManager.registerPlugin('sprite', SpritePlugin);
