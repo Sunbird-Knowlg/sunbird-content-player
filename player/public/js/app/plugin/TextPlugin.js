@@ -17,6 +17,7 @@ var TextPlugin = Plugin.extend({
         if (data.weight) {
             font = data.weight + ' ' + font;
         }
+        var align = data.align || 'left';
         var textStr = '';
         if (data.$t || data.__text) {
             textStr = (data.$t || data.__text);
@@ -29,7 +30,7 @@ var TextPlugin = Plugin.extend({
         text.x = dims.x;
         text.y = dims.y;
         text.lineWidth = dims.w;
-        text.textAlign = 'left';
+        text.textAlign = align;
         text.textBaseline = 'middle';
         this._self = text;
     }
