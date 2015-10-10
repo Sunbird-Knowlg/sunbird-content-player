@@ -17,7 +17,11 @@ var TextPlugin = Plugin.extend({
         if (data.weight) {
             font = data.weight + ' ' + font;
         }
-        var align = data.align || 'left';
+        var align = 'left'; // cretejs align working in reverse.
+        if (data.align && data.align.toLowerCase() == 'left') {
+            align = 'right';
+        }
+
         var textStr = '';
         if (data.$t || data.__text) {
             textStr = (data.$t || data.__text);
