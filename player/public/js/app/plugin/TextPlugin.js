@@ -17,11 +17,7 @@ var TextPlugin = Plugin.extend({
         if (data.weight) {
             font = data.weight + ' ' + font;
         }
-        var align = 'left'; // cretejs align working in reverse.
-        if (data.align && data.align.toLowerCase() == 'left') {
-            align = 'right';
-        }
-
+        
         var textStr = '';
         if (data.$t || data.__text) {
             textStr = (data.$t || data.__text);
@@ -31,7 +27,18 @@ var TextPlugin = Plugin.extend({
             textStr = (this._stage.params[data.param.trim()] || '');
         }
         var text = new createjs.Text(textStr, font, data.color || '#000000');
+        var align = 'left';
         text.x = dims.x;
+        if (data.align && data.align.toLowerCase() == 'left') {
+            text.x = dims.x;
+            align = data.align.toLowerCase();
+        } else if (data.align && data.align.toLowerCase() == 'right') {
+            text.x = dims.x + dims.w;
+            align = data.align.toLowerCase();
+        } else if (data.align && data.align.toLowerCase() == 'center') {
+            align = data.align.toLowerCase();
+            text.x = dims.x + dims.w/2;
+        }
         text.y = dims.y;
         text.lineWidth = dims.w;
         text.textAlign = align;
