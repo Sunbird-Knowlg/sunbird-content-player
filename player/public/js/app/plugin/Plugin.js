@@ -99,6 +99,16 @@ var Plugin = Class.extend({
         }
         return relDimensions;
 	},
+	setScale: function() {
+		var sb = this._self.getBounds();
+		var dims = this.relativeDims();
+		if (this._self && dims.h && dims.h > 0) {
+            this._self.scaleY = dims.h / sb.height;
+        }
+        if (this._self && dims.w && dims.w > 0) {
+            this._self.scaleX = dims.w / sb.width;
+        }
+	},
 	initPlugin: function(data) {
 		PluginManager.addError('Subclasses of plugin should implement this function');
 		throw "Subclasses of plugin should implement this function";

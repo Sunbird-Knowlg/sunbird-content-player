@@ -25,6 +25,8 @@ var SpritePlugin = Plugin.extend({
         grant.x = dims.x;
         grant.y = dims.y;
         this._self = grant;
+        this.setScale();
+
         grant.addEventListener('change', function() {
             Renderer.update = true;
         });

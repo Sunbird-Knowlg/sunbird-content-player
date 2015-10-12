@@ -9,13 +9,8 @@ var ImagePlugin = Plugin.extend({
         var sb = s.getBounds();
         s.x = dims.x;
         s.y = dims.y;
-        if (dims.h && dims.h > 0) {
-            s.scaleY = dims.h / sb.height;
-        }
-        if (dims.w && dims.w > 0) {
-            s.scaleX = dims.w / sb.width;
-        }
         this._self = s;
+        this.setScale();
     }
 });
 PluginManager.registerPlugin('image', ImagePlugin);
