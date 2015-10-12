@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version='1.0' encoding='utf-8'?>
 <widget id="org.ekstep.quiz.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Quiz-App</name>
     <description>
@@ -17,30 +17,30 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="Orientation" value="landscape" />
-    <preference name="Fullscreen" value="true" />    
+    <preference name="Fullscreen" value="true" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
     <platform name="android">
-        <icon src="www/img/icons/app-icon.png" density="ldpi" />
-        <icon src="www/img/icons/app-icon.png" density="mdpi" />
-        <icon src="www/img/icons/app-icon.png" density="hdpi" />
-        <icon src="www/img/icons/app-icon.png" density="xhdpi" />
-        <icon src="www/img/icons/app-icon.png" density="xxhdpi" />
-        <icon src="www/img/icons/app-icon.png" density="xxxhdpi" />
-        <splash src="www/img/icons/splash.png" density="land-ldpi" />
-        <splash src="www/img/icons/splash.png" density="land-mdpi" />
-        <splash src="www/img/icons/splash.png" density="land-hdpi" />
-        <splash src="www/img/icons/splash.png" density="land-xhdpi" />
-        <splash src="www/img/icons/splash.png" density="land-xxhdpi" />
-        <splash src="www/img/icons/splash.png" density="land-xxxhdpi" />
-        <splash src="www/img/icons/splash.png" density="port-ldpi" />
-        <splash src="www/img/icons/splash.png" density="port-mdpi" />
-        <splash src="www/img/icons/splash.png" density="port-hdpi" />
-        <splash src="www/img/icons/splash.png" density="port-xhdpi" />
-        <splash src="www/img/icons/splash.png" density="port-xxhdpi" />
-        <splash src="www/img/icons/splash.png" density="port-xxxhdpi" />
+        <icon density="ldpi" src="www/img/icons/app-icon.png" />
+        <icon density="mdpi" src="www/img/icons/app-icon.png" />
+        <icon density="hdpi" src="www/img/icons/app-icon.png" />
+        <icon density="xhdpi" src="www/img/icons/app-icon.png" />
+        <icon density="xxhdpi" src="www/img/icons/app-icon.png" />
+        <icon density="xxxhdpi" src="www/img/icons/app-icon.png" />
+        <splash density="land-ldpi" src="www/img/icons/splash.png" />
+        <splash density="land-mdpi" src="www/img/icons/splash.png" />
+        <splash density="land-hdpi" src="www/img/icons/splash.png" />
+        <splash density="land-xhdpi" src="www/img/icons/splash.png" />
+        <splash density="land-xxhdpi" src="www/img/icons/splash.png" />
+        <splash density="land-xxxhdpi" src="www/img/icons/splash.png" />
+        <splash density="port-ldpi" src="www/img/icons/splash.png" />
+        <splash density="port-mdpi" src="www/img/icons/splash.png" />
+        <splash density="port-hdpi" src="www/img/icons/splash.png" />
+        <splash density="port-xhdpi" src="www/img/icons/splash.png" />
+        <splash density="port-xxhdpi" src="www/img/icons/splash.png" />
+        <splash density="port-xxxhdpi" src="www/img/icons/splash.png" />
     </platform>
     <platform name="ios">
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
@@ -70,4 +70,7 @@
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
+    <preference name="xwalkMode" value="shared" />
+    <preference name="xwalkVersion" value="14+" />
+    <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
 </widget>
