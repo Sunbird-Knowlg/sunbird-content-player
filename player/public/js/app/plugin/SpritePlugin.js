@@ -4,19 +4,9 @@ var SpritePlugin = Plugin.extend({
     _render: true,
     initPlugin: function(data) {
         var dims = this.relativeDims();
-        var spriteImage = this._theme.getAsset(data.asset);
-        var animations = {};
-        if (data.animations) {
-            for (k in data.animations) {
-                animations[k] = JSON.parse(data.animations[k]);
-            }
-        }
-        var spriteJSON = {
-            "framerate": data.framerate || 30,
-            "images": [spriteImage],
-            "frames": data.frames,
-            "animations": animations
-        };
+
+        var spriteJSON = this._theme.getAsset(data.asset);
+
         var spritesheet = new createjs.SpriteSheet(spriteJSON);
         var grant = new createjs.Sprite(spritesheet);
         if (data.start) {

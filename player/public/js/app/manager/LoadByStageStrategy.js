@@ -1,5 +1,6 @@
 LoadByStageStrategy = Class.extend({
     assetMap: {},
+    spriteSheetMap: {},
     commonAssets: [],
     templateAssets: [],
     loaders: {},
@@ -25,6 +26,16 @@ LoadByStageStrategy = Class.extend({
 
             if (media.type == 'json') {
                 instance.commonAssets.push(_.clone(media));
+            } else if(media.type == 'spritesheet') {
+                media.images = ["assets/"+media.src.substring(basePath.length, media.src.length)];
+                var animations = {};
+                if (media.animations) {
+                    for (k in media.animations) {
+                        animations[k] = JSON.parse(media.animations[k]);
+                    }
+                }
+                media.animations = animations;
+                instance.spriteSheetMap[media.id] = media;
             } else {
                 if(media.type == 'audiosprite') {
                     if(!_.isArray(media.data.audioSprite)) media.data.audioSprite = [media.data.audioSprite];
@@ -95,6 +106,7 @@ LoadByStageStrategy = Class.extend({
         if (this.loaders[stageId]) asset = this.loaders[stageId].getResult(assetId);
         if (!asset) asset = this.commonLoader.getResult(assetId);
         if (!asset) asset = this.templateLoader.getResult(assetId);
+        if (!asset) asset = this.spriteSheetMap[assetId];
         if (!asset) {
             console.error('Asset not found. Returning - ', (this.assetMap[assetId].src));
             return this.assetMap[assetId].src;
