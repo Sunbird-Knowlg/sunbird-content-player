@@ -1,0 +1,528 @@
+{
+	"identifier": "ws_addition_1",
+	"title": "Addition by grouping",
+	"total_items": 15,
+	"max_score": 6,
+	"subject": "NUM",
+	"item_sets": [
+		{
+			"id": "set_1",
+        	"count": 15
+		}
+	],
+	"items": {
+		"set_1" : [
+			{
+				"identifier": "aq_g4_1",
+				"type": "mtf",
+				"template": "mtf_template_1",
+				"qlevel": "MEDIUM",
+				"title": "ಕೊಟ್ಟಿರುವ ಸಂಖ್ಯೆಗಳನ್ನು ಇಳಿಕೆ ಕ್ರಮದಲ್ಲಿ ಜೋಡಿಸಿರಿ.",
+				"lhs_options": [
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 0
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 1
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 2
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 3
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 4
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 5
+					}
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "text", "asset": "654", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 2
+					},
+					{
+						"value": {"type": "text", "asset": "345", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 4
+					},
+					{
+						"value": {"type": "text", "asset": "768", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 1
+					},
+					{
+						"value": {"type": "text", "asset": "456", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 3
+					},
+					{
+						"value": {"type": "text", "asset": "143", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 5
+					},
+					{
+						"value": {"type": "text", "asset": "987", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 0
+					}
+				],
+				"max_score": 6,
+				"partial_scoring": true,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_2",
+				"type": "mtf",
+				"template": "mtf_template_2",
+				"qlevel": "MEDIUM",
+				"title": "ಕೊಟ್ಟಿರುವ ಸಂಖ್ಯೆಗಳನ್ನು ಇಳಿಕೆ ಕ್ರಮದಲ್ಲಿ ಜೋಡಿಸಿರಿ.",
+				"question":"2080",
+				"lhs_options": [
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"label":"ಸಾವಿರ",
+						"index": 0
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"label":"ನೂರು",
+						"index": 1
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"label":"ಹತ್ತು",
+						"index": 2
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"label":"ಬಿಡಿ",
+						"index": 3
+					}
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "text", "asset": "2000", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 0
+					},
+					{
+						"value": {"type": "text", "asset": "0", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 1
+					},
+					{
+						"value": {"type": "text", "asset": "80", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 2
+					},
+					{
+						"value": {"type": "text", "asset": "0", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 3
+					}
+				],
+				"max_score": 6,
+				"partial_scoring": true,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_3",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_1",
+				"qlevel": "MEDIUM",
+				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
+				"question":"    1783 \n+ 4215 \n_____",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "8995", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "5998", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "9958", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "9598", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_4",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_1",
+				"qlevel": "MEDIUM",
+				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
+				"question":"   6538 \n- 4015 \n_____",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "3252", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "5232", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "2523", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "2532", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_5",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_1",
+				"qlevel": "MEDIUM",
+				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
+				"question":"200 x 8",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "1600", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "1800", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "1400", "font": "Verdana", "color": "white",  "fontsize": "240"}	
+					},
+					{
+						"value": {"type": "text", "asset": "1100", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_6",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_1",
+				"qlevel": "MEDIUM",
+				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
+				"question":"56 ÷ 8",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "6", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "8", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "9", "font": "Verdana", "color": "white",  "fontsize": "240"}	
+					},
+					{
+						"value": {"type": "text", "asset": "7", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": true
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_7",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_1",
+				"qlevel": "MEDIUM",
+				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ. ಒಂದು ಕಿತ್ತಳೆ ಹಣ್ಣಿನ ಬೆಲೆ 16 ರೂ. ಹಾಗಾದರೆ 20 ಕಿತ್ತಳೆ ಹಣ‍್ಣುಗಳ ಬೆಲೆ ಎಷ್ಟು?",
+				"question":"",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "420", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "520", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "220", "font": "Verdana", "color": "white",  "fontsize": "240"}	
+					},
+					{
+						"value": {"type": "text", "asset": "320", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": true
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_8",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_2",
+				"qlevel": "MEDIUM",
+				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
+				"question":"ಬಣ್ಣ ತುಂಬಿರುವ ಭಾಗವನ್ನು ಭಿನ್ನರಾಶಿಯಲ್ಲಿ ಪ್ರತಿನಿಧಿಸಿರಿ. \n =____________",
+				"model":{
+					"img":{
+						"type":"image",
+						"asset":"fraction"
+					}					
+				},
+				"options": [
+					{
+						"value": {"type": "text", "asset": "8/4", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "4/8", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "8/8", "font": "Verdana", "color": "white",  "fontsize": "240"}	
+					},
+					{
+						"value": {"type": "text", "asset": "4/4", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_9",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_1",
+				"qlevel": "MEDIUM",
+				"title": "ಲೆಕ್ಕಮಾಡಿ. ದಶಮಾಂಶದಲ್ಲಿರುವುದನ್ನು ಭಿನ್ನರಾಶಿಯಲ್ಲಿ ಪರಿವರ್ತಿಸಿ ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
+				"question":"0.07 = __________",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "7/100", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "7/10", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "7/1000", "font": "Verdana", "color": "white",  "fontsize": "240"}	
+					},
+					{
+						"value": {"type": "text", "asset": "1/7", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_10",
+				"type": "mtf",
+				"template": "mtf_template_vertical",
+				"qlevel": "MEDIUM",
+				"title": "ಸೂಕ್ತ ಉತ್ತರಕ್ಕೆ ಹೊಂದಿಸಿರಿ.",
+				"lhs_options": [
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"data":"½ ಕಿಲೋಗ್ರಾಂ         =",
+						"index": 0
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"data": "¼ ಲೀಟರ್               =",
+						"index": 1
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"data":"2½ ಕಿಲೋಮೀಟರ್ =",
+						"index": 2
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"data":"750 ಮಿಲಿಲೀಟರ್     = ",
+						"index": 3
+					}
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "text", "asset": "2500 ಮೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 2
+					},
+					{
+						"value": {"type": "text", "asset": "¾ ಲೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 3
+					},
+					{
+						"value": {"type": "text", "asset": "500 ಗ್ರಾಂ", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 0
+					},
+					{
+						"value": {"type": "text", "asset": "250 ಮಿಲಿಲೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": 1
+					}
+				],
+				"max_score": 6,
+				"partial_scoring": true,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_11",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_1",
+				"qlevel": "MEDIUM",
+				"title": "ಲೆಕ್ಕಮಾಡಿ.  ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
+				"question":"ಒಂದು ದಿನಕ್ಕೆ 24 ಗಂಟೆಗಳು. ಹಾಗಾದರೆ ಒಂದು ವಾರದಲ್ಲಿ ಒಟ್ಟು ಎಷ್ಟು ಗಂಟೆಗಳು ಎಂದು ಗುರುತಿಸಿರಿ.",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "158", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "175", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "168", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer": true	
+					},
+					{
+						"value": {"type": "text", "asset": "188", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_12",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_3",
+				"qlevel": "MEDIUM",
+				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
+				"question":"                                                                               _________",
+				"model":{
+					"img":{
+						"type":"image",
+						"asset":"pattern"
+					}					
+				},
+				"options": [
+					{
+						"value": {"type": "image", "asset": "square"},
+						"answer":true
+					},
+					{
+						"value": {"type": "image", "asset": "diamond"}
+					},
+					{
+						"value": {"type": "image", "asset": "circle"}
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_13",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_1",
+				"qlevel": "MEDIUM",
+				"title": "ಕೆಳಗೆ ಕೊಟ್ಟಿರುವ ಆಕೃತಿಗಳಲ್ಲಿ ವೃತ್ತಾಕಾರದ ಆಕೃತಿಯನ್ನು ಗುರುತಿಸಿ.",
+				"question":"",
+				"options": [
+					{
+						"value": {"type": "image", "asset": "bigSquare"}
+					},
+					{
+						"value": {"type": "image", "asset": "wheel"},
+						"answer": true
+					},
+					{
+						"value": {"type": "image", "asset": "flower"}
+					},
+					{
+						"value": {"type": "image", "asset": "triangle"}
+						
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_14",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_2",
+				"qlevel": "MEDIUM",
+				"title": "ಇದು ಯಾವ ಕೋನವೆಂದು ಹೆಸರನ್ನುಆರಿಸಿರಿ.",
+				"question":"",
+				"model":{
+					"img":{
+						"type":"image",
+						"asset":"angle"
+					}					
+				},
+				"options": [
+					{
+						"value": {"type": "text", "asset": "ಲಘು ಕೋನ ", "font": "Verdana", "color": "white", "fontsize": "240"},
+						"answer":true
+					},
+					{
+						"value": {"type": "text", "asset": "ವಿಶಾಲ ಕೋನ ", "font": "Verdana", "color": "white", "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "ಲಂಬ ಕೋನ ", "font": "Verdana", "color": "white", "fontsize": "240"}	
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "aq_g4_15",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_2",
+				"qlevel": "MEDIUM",
+				"title": "ಈ ಚಿತ್ರದಲ್ಲಿರುವ ಪ್ರತಿಯೊಂದು ಚೌಕವು 1 ಚದರ ಸೆಂ.ಮೀ. ಇದೆ. ಈ ಚಿತ್ರದ ಸುತ್ತಳತೆಯನ್ನು ಲೆಕ್ಕ ಮಾಡಿ,  ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
+				"question":"ಸುತ್ತಳತೆ = ______________ ಚದರ ಸೆಂ.ಮೀ",
+				"model":{
+					"img":{
+						"type":"image",
+						"asset":"perimeter"
+					},
+					"img2":{
+						"type":"image",
+						"asset":"smallSquare"
+					},
+					"subtext":"(          = 1 ಚದರ ಸೆಂ. ಮೀ.)"
+				},
+				"options": [
+					{
+						"value": {"type": "text", "asset": "12 ", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"answer":true
+					},
+					{
+						"value": {"type": "text", "asset": "14", "font": "Verdana", "color": "white",  "fontsize": "240"}
+					},
+					{
+						"value": {"type": "text", "asset": "15", "font": "Verdana", "color": "white",  "fontsize": "240"}	
+					},
+					{
+						"value": {"type": "text", "asset": "16", "font": "Verdana", "color": "white",  "fontsize": "240"}	
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			}
+		]
+	}
+}

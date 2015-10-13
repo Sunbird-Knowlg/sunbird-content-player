@@ -29,6 +29,25 @@
             "identifier": "org.ekstep.num.addition.by.grouping",
             "grayScaleAppIcon": null,
             "pkgVersion": 1
+        },
+        {
+            "questionnaire": null,
+            "appIcon": "worksheets/akshara_quiz/logo.png",
+            "subject": "numeracy",
+            "description": "Akshara Worksheet",
+            "name": "Akshara Worksheet",
+            "launchPath": "worksheets/akshara_quiz",
+            "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/akshara_ws1_1444713450988.zip",
+            "checksum": null,
+            "loadingMessage": "Loading \"Akshara Worksheet\" assets...",
+            "concepts": [{
+                "identifier": "Num:C3:SC1:MC12",
+                "name": "Two digit numbers, addition upto 99 (grouping)",
+                "objectType": "Concept"
+            }],
+            "identifier": "org.akshara.worksheet1",
+            "grayScaleAppIcon": null,
+            "pkgVersion": 1
         }],
         "ttl": 24
     }
