@@ -27,7 +27,9 @@ LoadByStageStrategy = Class.extend({
             if (media.type == 'json') {
                 instance.commonAssets.push(_.clone(media));
             } else if(media.type == 'spritesheet') {
-                media.images = ["assets/"+media.src.substring(basePath.length, media.src.length)];
+                var imgId = media.id+"_image";
+                instance.commonAssets.push({"id": imgId, "src": media.src, "type": "image"});
+                media.images = [];
                 var animations = {};
                 if (media.animations) {
                     for (k in media.animations) {

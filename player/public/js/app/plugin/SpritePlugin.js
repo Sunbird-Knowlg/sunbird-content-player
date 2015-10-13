@@ -6,20 +6,25 @@ var SpritePlugin = Plugin.extend({
         var dims = this.relativeDims();
 
         var spriteJSON = this._theme.getAsset(data.asset);
+        var spriteImage = this._theme.getAsset(data.asset +"_image");
+        if(spriteJSON && spriteImage) {
+            spriteJSON.images.push(spriteImage);
+            var spritesheet = new createjs.SpriteSheet(spriteJSON);
+            var grant = new createjs.Sprite(spritesheet);
+            if (data.start) {
+                grant.gotoAndPlay(data.start);
+            }
+            grant.x = dims.x;
+            grant.y = dims.y;
+            this._self = grant;
+            this.setScale();
 
-        var spritesheet = new createjs.SpriteSheet(spriteJSON);
-        var grant = new createjs.Sprite(spritesheet);
-        if (data.start) {
-            grant.gotoAndPlay(data.start);
+            grant.addEventListener('change', function() {
+                Renderer.update = true;
+            });
+        } else {
+            console.error("Sprite sheet definition or image not found.");
         }
-        grant.x = dims.x;
-        grant.y = dims.y;
-        this._self = grant;
-        this.setScale();
-
-        grant.addEventListener('change', function() {
-            Renderer.update = true;
-        });
     },
     play: function(animation) {
         if (!this._self.visible)
