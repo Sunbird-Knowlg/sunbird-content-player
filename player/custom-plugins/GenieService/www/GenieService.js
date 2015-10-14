@@ -34,5 +34,18 @@ GenieService.prototype.getCurrentUser = function() {
     });
 }
 
+GenieService.prototype.getMetaData = function() {
+    console.log("GenieService getMetaData... ");
+    return new Promise(function(resolve, reject) {
+        exec(function(result) {
+                resolve(result);
+            },
+            function(error) {
+                reject(error);
+            },
+            "GenieService", "getMetaData", []);
+    });
+}
+
 var genieService = new GenieService();
 module.exports = genieService;

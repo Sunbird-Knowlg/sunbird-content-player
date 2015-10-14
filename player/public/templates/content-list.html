@@ -83,20 +83,8 @@
             </div>
         </div>
         <div class="item">
-            <div style="margin-bottom: 5px;"><b>Environment</b></div>
-            <div>
-            <ion-radio ng-repeat="item in environmentList"
-                   ng-value="item.value"
-                   ng-model="selectedEnvironment.value"
-                   ng-change="changeEnvironment(item)"
-                   name="selected-environment">
-                {{item.text}}
-            </ion-radio>
-            </div>
-        </div>
-        <div class="item">
             <div style="margin-bottom: 5px;"><b>Clear All Content:</b></div>
-        <button class="button button-clear icon ion-trash-a" ng-click="clearAllContent()" style="float: right; margin-top: -5%;"></button></div>
+            <button class="button button-clear icon ion-trash-a" ng-click="clearAllContent()" style="float: right; margin-top: -5%;"></button></div>
     </ion-content>
   </ion-modal-view>
 </script>

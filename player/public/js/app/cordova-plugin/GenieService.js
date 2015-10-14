@@ -12,5 +12,12 @@ GenieService = {
 			result.data = {"avatar":"resource1","gender":"male","handle":"handle1","uid":"8hjh3c4b7b47d570df0ec286bf7adc8ihhnjy","age":6,"standard":-1};
 			resolve(result);
 		});	
+	},
+	getMetaData: function() {
+		return new Promise(function(resolve, reject) {
+			var result = {};
+			result = {"flavor":"sandbox","version":"1.0.1"};
+			resolve(result);
+		});	
 	}
 }
