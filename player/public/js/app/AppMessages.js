@@ -9,5 +9,7 @@ AppMessages = {
 	DOWNLOAD_ERROR: "Error downloading content: {0}",
 	EXTRACT_FILE_NOT_FOUND: "Error extracting content. File not found: {0}",
 	EXTRACT_INVALID_OUPUT_DIR: "Error extracting content. Output directory not found: {0}",
-	EXTRACT_INVALID_ARCHIVE: "Invalid Content Archive File"
+	EXTRACT_INVALID_ARCHIVE: "Invalid Content Archive File",
+	DIRECT_DOWNLOADING_MSG: "Content is downloading...",
+	DIRECT_CONTENT_LOAD_MSG: "Content downloading complete"
 }

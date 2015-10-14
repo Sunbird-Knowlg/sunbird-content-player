@@ -22,7 +22,12 @@ angular.module('quiz.services', ['ngResource'])
                     }
                     returnObject.saveContent(content);
                     if (content.status == 'ready') {
-                        var message = AppMessages.CONTENT_LOAD_MSG.replace("{0}", "1 " + content.type);
+                        var message = "";
+                        if(GlobalContext.config.contentId) {
+                            message = AppMessages.DIRECT_CONTENT_LOAD_MSG;
+                        } else {
+                            message = AppMessages.CONTENT_LOAD_MSG.replace("{0}", "1 " + content.type)
+                        }
                         $rootScope.$broadcast('show-message', {
                             "message": message,
                             "reload": true,
@@ -123,10 +128,10 @@ angular.module('quiz.services', ['ngResource'])
                     return 0;
                 }
             },
-            getContent: function(id) {
+            getContent: function(id, update) {
                 return new Promise(function(resolve, reject) {
                     var data = returnObject.contentList[id];
-                    if(data) {
+                    if(data && !update) {
                         resolve(data);
                     } else {
                        PlatformService.getContent(id)
@@ -135,6 +140,9 @@ angular.module('quiz.services', ['ngResource'])
                             if(content.status == 'error') {
                                 resolve(content.status);
                             } else {
+                                $rootScope.$broadcast('show-message', {
+                                    "message": AppMessages.DIRECT_DOWNLOADING_MSG
+                                });
                                 processContent(content.data)
                                 .then(function(data) {
                                     $rootScope.$broadcast('process-complete', {

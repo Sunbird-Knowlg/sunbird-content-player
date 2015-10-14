@@ -311,16 +311,30 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             }, 100);
         });
     }).controller('ContentHomeCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
+        $rootScope.showMessage = false;
+
+        // $rootScope.showMessage = true;
+        // $rootScope.message = "Content downloading complete.";
+        
         if ($stateParams.itemId) {
             ContentService.getContent($stateParams.itemId)
             .then(function(data) {
                 $scope.item = data;
-            });;
+            });
             $scope.playContent = function(content) {
                 $state.go('playContent', {
                     'itemId': content.identifier
                 });
             };
+
+            $scope.updateContent = function(id) {
+                ContentService.getContent(id, true)
+                .then(function(data) {
+                    $scope.$apply(function() {
+                        $scope.item = data;    
+                    });
+                });;
+            }
 
             $scope.startGenie = function(){
                 console.log("Start Genie.");
@@ -332,12 +346,29 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                     $scope.item = result.data;
                 });
             });
-
-
         } else {
-            alert('Name or Launch URL not found.');
-            $state.go('contentList');
+            alert('Sorry. Could not find the content');
+            startGenie();
         }
+        $rootScope.$on('show-message', function(event, data) {
+            if (data.message && data.message != '') {
+                $rootScope.$apply(function() {
+                    $rootScope.showMessage = true;
+                    $rootScope.message = data.message;
+                });
+            }
+            if(data.timeout) {
+                setTimeout(function() {
+                    $rootScope.$apply(function() {
+                        $rootScope.showMessage = false;
+                    });
+                    if (data.callback) {
+                        data.callback();
+                    }
+                }, data.timeout);
+            }
+        });
+
     });
 
 
