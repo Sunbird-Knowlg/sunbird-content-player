@@ -13,7 +13,7 @@
 	"items": {
 		"set_1" : [
 			{
-				"identifier": "aq_g4_1",
+				"identifier": "ek.n.q901",
 				"type": "mtf",
 				"template": "mtf_template_1",
 				"qlevel": "MEDIUM",
@@ -46,27 +46,27 @@
 				],
 				"rhs_options": [
 					{
-						"value": {"type": "text", "asset": "654", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "654", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 2
 					},
 					{
-						"value": {"type": "text", "asset": "345", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "345", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 4
 					},
 					{
-						"value": {"type": "text", "asset": "768", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "768", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 1
 					},
 					{
-						"value": {"type": "text", "asset": "456", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "456", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 3
 					},
 					{
-						"value": {"type": "text", "asset": "143", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "143", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 5
 					},
 					{
-						"value": {"type": "text", "asset": "987", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "987", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 0
 					}
 				],
@@ -75,7 +75,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_2",
+				"identifier": "ek.n.q902",
 				"type": "mtf",
 				"template": "mtf_template_2",
 				"qlevel": "MEDIUM",
@@ -105,19 +105,19 @@
 				],
 				"rhs_options": [
 					{
-						"value": {"type": "text", "asset": "2000", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "2000", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 0
 					},
 					{
-						"value": {"type": "text", "asset": "0", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "0", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 1
 					},
 					{
-						"value": {"type": "text", "asset": "80", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "80", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 2
 					},
 					{
-						"value": {"type": "text", "asset": "0", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "0", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 3
 					}
 				],
@@ -126,7 +126,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_3",
+				"identifier": "ek.n.q903",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -153,7 +153,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_4",
+				"identifier": "ek.n.q904",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -180,7 +180,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_5",
+				"identifier": "ek.n.q905",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -207,7 +207,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_6",
+				"identifier": "ek.n.q906",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -234,7 +234,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_7",
+				"identifier": "ek.n.q907",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -261,7 +261,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_8",
+				"identifier": "ek.n.q908",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_2",
@@ -294,7 +294,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_9",
+				"identifier": "ek.n.q909",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -321,7 +321,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_10",
+				"identifier": "ek.n.q910",
 				"type": "mtf",
 				"template": "mtf_template_vertical",
 				"qlevel": "MEDIUM",
@@ -350,19 +350,19 @@
 				],
 				"rhs_options": [
 					{
-						"value": {"type": "text", "asset": "2500 ಮೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "2500ಮೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 2
 					},
 					{
-						"value": {"type": "text", "asset": "¾ ಲೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "¾ಲೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 3
 					},
 					{
-						"value": {"type": "text", "asset": "500 ಗ್ರಾಂ", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "500ಗ್ರಾಂ", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 0
 					},
 					{
-						"value": {"type": "text", "asset": "250 ಮಿಲಿಲೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "250ಮಿಲಿಲೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "600"},
 						"answer": 1
 					}
 				],
@@ -371,7 +371,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_11",
+				"identifier": "ek.n.q911",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -398,7 +398,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_12",
+				"identifier": "ek.n.q912",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_3",
@@ -428,10 +428,10 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_13",
+				"identifier": "ek.n.q913",
 				"type": "mcq",
 				"num_answers": 1,
-				"template": "mcq_template_1",
+				"template": "mcq_template_5",
 				"qlevel": "MEDIUM",
 				"title": "ಕೆಳಗೆ ಕೊಟ್ಟಿರುವ ಆಕೃತಿಗಳಲ್ಲಿ ವೃತ್ತಾಕಾರದ ಆಕೃತಿಯನ್ನು ಗುರುತಿಸಿ.",
 				"question":"",
@@ -456,10 +456,10 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_14",
+				"identifier": "ek.n.q914",
 				"type": "mcq",
 				"num_answers": 1,
-				"template": "mcq_template_2",
+				"template": "mcq_template_4",
 				"qlevel": "MEDIUM",
 				"title": "ಇದು ಯಾವ ಕೋನವೆಂದು ಹೆಸರನ್ನುಆರಿಸಿರಿ.",
 				"question":"",
@@ -486,7 +486,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g4_15",
+				"identifier": "ek.n.q915",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_2",

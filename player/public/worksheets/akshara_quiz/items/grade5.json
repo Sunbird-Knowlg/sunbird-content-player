@@ -13,7 +13,7 @@
 	"items": {
 		"set_1" : [
 			{
-				"identifier": "aq_g5_1",
+				"identifier": "ek.n.q916",
 				"type": "mtf",
 				"template": "mtf_template_3",
 				"qlevel": "MEDIUM",
@@ -31,15 +31,13 @@
 				],
 				"rhs_options": [
 					{
-						"value": {"type": "text", "asset": ">", "font": "Verdana", "color": "white",  "fontsize": "240"},
-						"answer": 2
+						"value": {"type": "text", "asset": ">", "font": "Verdana", "color": "white",  "fontsize": "1000"}
 					},
 					{
-						"value": {"type": "text", "asset": "=", "font": "Verdana", "color": "white",  "fontsize": "240"},
-						"answer": 1
+						"value": {"type": "text", "asset": "=", "font": "Verdana", "color": "white",  "fontsize": "1000"}
 					},
 					{
-						"value": {"type": "text", "asset": "<", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "<", "font": "Verdana", "color": "white",  "fontsize": "1000"},
 						"answer": 0
 					}
 				],
@@ -48,7 +46,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_2",
+				"identifier": "ek.n.q917",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -75,7 +73,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_3",
+				"identifier": "ek.n.q918",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -102,7 +100,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_4",
+				"identifier": "ek.n.q919",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -129,7 +127,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_5",
+				"identifier": "ek.n.q920",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -156,7 +154,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_6",
+				"identifier": "ek.n.q921",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -183,7 +181,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_7",
+				"identifier": "ek.n.q922",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -210,7 +208,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_8",
+				"identifier": "ek.n.q923",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -237,7 +235,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_9",
+				"identifier": "ek.n.q924",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -272,7 +270,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_10",
+				"identifier": "ek.n.q925",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -299,7 +297,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_11",
+				"identifier": "ek.n.q926",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -326,7 +324,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_12",
+				"identifier": "ek.n.q927",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_3",
@@ -353,10 +351,10 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_13",
+				"identifier": "ek.n.q928",
 				"type": "mcq",
 				"num_answers": 1,
-				"template": "mcq_template_1",
+				"template": "mcq_template_5",
 				"qlevel": "MEDIUM",
 				"title": "ವೃತ್ತದ ತ್ರಿಜ್ಯ = 6 ಸೆಂ.ಮೀ. ಆದರೆ ಅದರ ವ್ಯಾಸ ಎಷ್ಟು ಎಂಬುದನ್ನು ಅರಿಸಿರಿ.",
 				"question":"",
@@ -385,10 +383,10 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_14",
+				"identifier": "ek.n.q929",
 				"type": "mcq",
 				"num_answers": 1,
-				"template": "mcq_template_2",
+				"template": "mcq_template_4",
 				"qlevel": "MEDIUM",
 				"title": "ವಿಶಾಲಕೋನ ಎಂದರೇನು? ಅದನ್ನು ಗುರುತಿಸಿ, ಅದರ ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
 				"question":"",
@@ -415,7 +413,7 @@
 				"feedback": ""
 			},
 			{
-				"identifier": "aq_g5_15",
+				"identifier": "ek.n.q930",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_2",
