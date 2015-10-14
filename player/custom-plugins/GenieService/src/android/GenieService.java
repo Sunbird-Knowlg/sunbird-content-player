@@ -7,6 +7,7 @@ import org.apache.cordova.CordovaInterface;
 
 import org.ekstep.genieservices.sdks.Telemetry;
 import org.ekstep.genieservices.sdks.UserProfile;
+import org.ekstep.genieservices.sdks.GenieServices;
 import org.ekstep.genieservices.sdks.response.IResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +22,7 @@ public class GenieService extends CordovaPlugin {
 
 	private Telemetry telemetry;
     private UserProfile userProfile;
+    private GenieServices genieServices;
 
 	public GenieService() {
 		System.out.println("Genie Service Constructor..........");
@@ -52,6 +54,11 @@ public class GenieService extends CordovaPlugin {
                 userProfile = new UserProfile(activity);    
             }
         }
+        if(null == genieServices) {
+            if (null != activity) {
+                genieServices = new GenieServices(activity);    
+            }
+        }
         Log.v(TAG, "GenieService received:" + action);
         System.out.println("Genie Service action: " + action);
         if(action.equals("sendTelemetry")) {
@@ -63,6 +70,8 @@ public class GenieService extends CordovaPlugin {
             sendTelemetry(data, callbackContext);
         } else if(action.equals("getCurrentUser")) {
             userProfile.getCurrentUser(new UserProfileResponse(callbackContext));
+        } else if(action.equals("getMetaData")) {
+            genieServices.getMetaData(new GenieServicesResponse(callbackContext));
         }
         return true;
     }

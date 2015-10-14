@@ -85,6 +85,15 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 }
             });
 
+            GenieService.getMetaData().then(function(data) {
+                var flavor = data.flavor;
+                if(AppConfig[flavor] == undefined ) 
+                    flavor = "sandbox";
+                if (_.isString(env) && env.length > 0) {
+                    PlatformService.setAPIEndpoint(AppConfig[flavor]);
+                }
+            });
+
             GlobalContext.init(packageName, version).then(function() {
                 if (!TelemetryService._gameData) {
                     ContentService.init();
@@ -270,13 +279,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             $scope.aboutModal.hide();
         };
 
-        $scope.changeEnvironment = function(item) {
-            console.log('Env changed:' + $scope.selectedEnvironment.value);
-            var env = AppConfig[$scope.selectedEnvironment.value];
-            if (_.isString(env) && env.length > 0) {
-                PlatformService.setAPIEndpoint(env);
-            }
-        };
         $scope.exitApp = function(){
             console.log("Exit");
             exitApp(ContentService);
