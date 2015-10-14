@@ -11,7 +11,7 @@
             <div class="col col-80">
                 <div class="list card">
                     <div class="item item-thumbnail-left" ng-show="item.name">
-                        <img ng-src="{{item.posterImage || item.appIcon || 'assets/quiz-icon-gs.png'}}">
+                        <img ng-src="{{item.appIcon || 'assets/quiz-icon-gs.png'}}">
                         <h2>{{item.name}}</h2>
                         <p ng-show="item.pkgVersion">V {{item.pkgVersion}}</p>
                         <p ng-show="item.processingStart">{{item.processingStart | date:'medium'}}</p>
@@ -24,7 +24,7 @@
                             <a ng-click="playContent(item)" style="margin:auto;" class="button icon button-positive">&nbsp;&nbsp;&nbsp;Play&nbsp;&nbsp;</a>
                         </div>
                         <div class="row">
-                            <a ng-click="updateContent(item.identifier)" ng-show="item.status != 'processing'" style="margin:auto" class="button icon button-calm">Update</a>
+                            <a ng-click="updateContent(item)" ng-show="item.status != 'processing'" style="margin:auto" class="button icon button-calm">Update</a>
                         </div>
                     </div>
                 </div>

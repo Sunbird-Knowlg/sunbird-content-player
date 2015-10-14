@@ -6,7 +6,8 @@ GlobalContext = {
     },
     config: {
         origin: "",
-        contentId: ""
+        contentId: "",
+        appInfo: undefined
     },
     init: function(gid, ver) {
         return new Promise(function(resolve, reject) {
@@ -21,16 +22,27 @@ GlobalContext = {
                 var promises = [];
                 promises.push(GlobalContext._getIntentExtra('origin', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('contentId', GlobalContext.config));
+                promises.push(GlobalContext._getIntentExtra('appInfo', GlobalContext.config));
                 Promise.all(promises)
                 .then(function(result) {
+                    // TODO: need to remove the hard coded GlobalContext.config.appInfo.
+                    // GlobalContext.config.appInfo = "{\"name\": \"Addition by Grouping\", \"identifier\": \"org.ekstep.num.addition.by.grouping\", \"description\": \"Akshara numeracy worksheet for Grade4 and Grade5 children\", \"launchUrl\": \"org.ekstep.num.addition.by.grouping\", \"downloadUrl\": \"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/haircut_story_1443694487449.zip\", \"pkgVersion\": 2, \"activity_class\": \".MainActivity\", \"code\": \"org.ekstep.num.addition.by.grouping\", \"osId\": \"org.ekstep.num.addition.by.grouping\", \"communication_scheme\": \"INTENT\"}";
+                    if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
+                        GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
+                    }
                     resolve(GlobalContext.config);
                 });
             } else {
-                GlobalContext.config = { origin: "Genie", contentId: ""};
+                GlobalContext.config = { origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping", appInfo: {"code":"org.ekstep.quiz.app"}};
+                // GlobalContext.config.appInfo = "{\"name\": \"Addition by Grouping\", \"identifier\": \"org.ekstep.num.addition.by.grouping\", \"description\": \"Akshara numeracy worksheet for Grade4 and Grade5 children\", \"launchUrl\": \"org.ekstep.num.addition.by.grouping\", \"downloadUrl\": \"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/haircut_story_1443694487449.zip\", \"pkgVersion\": 2, \"activity_class\": \".MainActivity\", \"code\": \"org.ekstep.num.addition.by.grouping\", \"osId\": \"org.ekstep.num.addition.by.grouping\", \"communication_scheme\": \"INTENT\", \"baseDir\": \"stories/haircut_story\"}";
+                // if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
+                //     GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
+                // }
                 resolve(GlobalContext.config);
             }
         })
         .then(function(config) {
+            // GlobalContext.config = config = { origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping"};
             console.log("Origin value is:::", config);
             if(config && config.origin == 'Genie') {
                 return GenieService.getCurrentUser();
@@ -62,14 +74,9 @@ GlobalContext = {
                     resolve(true);
                 }, function() {
                     console.log('intent value not set for: ' + param);
-                    // TODO: remove after getting new genie.
-                    // if(param == "contentId") {
-                    //     contextObj[param] = "org.ekstep.num.addition.by.grouping";   
-                    // }
                     resolve(true);
                 }
             );
         });
     }
-
 };

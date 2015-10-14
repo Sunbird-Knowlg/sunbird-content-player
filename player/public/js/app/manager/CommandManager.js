@@ -60,7 +60,11 @@ CommandManager = {
                 if (plugin) plugin.toggleShadow();
                 break;
             case 'windowEvent':
-                window.location.hash = action.href;
+                if(GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
+                    window.location.hash = "#/show/content";
+                } else {
+                    window.location.hash = action.href;
+                }
                 break;
             case 'eval':
                 if (plugin) plugin.evaluate(action);

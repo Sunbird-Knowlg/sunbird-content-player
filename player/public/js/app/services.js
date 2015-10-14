@@ -23,10 +23,10 @@ angular.module('quiz.services', ['ngResource'])
                     returnObject.saveContent(content);
                     if (content.status == 'ready') {
                         var message = "";
-                        if(GlobalContext.config.contentId) {
-                            message = AppMessages.DIRECT_CONTENT_LOAD_MSG;
+                        if(GlobalContext.config.appInfo && GlobalContext.config.appInfo.code && GlobalContext.config.appInfo.code == packageName) {
+                            message = AppMessages.CONTENT_LOAD_MSG.replace("{0}", "1 " + content.type);
                         } else {
-                            message = AppMessages.CONTENT_LOAD_MSG.replace("{0}", "1 " + content.type)
+                            message = AppMessages.DIRECT_CONTENT_LOAD_MSG;
                         }
                         $rootScope.$broadcast('show-message', {
                             "message": message,
@@ -131,11 +131,13 @@ angular.module('quiz.services', ['ngResource'])
             getContent: function(id) {
                 return returnObject.contentList[id];
             },
-            updateContent: function(id) {
+            updateContent: function(content) {
                 var update = function(obj, resolve, reject) {
-                    $rootScope.$broadcast('show-message', {
-                        "message": AppMessages.DIRECT_DOWNLOADING_MSG
-                    });
+                    setTimeout(function() {
+                        $rootScope.$broadcast('show-message', {
+                            "message": AppMessages.DIRECT_DOWNLOADING_MSG
+                        });
+                    }, 1000);
                     processContent(obj)
                     .then(function(data) {
                         $rootScope.$broadcast('process-complete', {
@@ -146,36 +148,24 @@ angular.module('quiz.services', ['ngResource'])
                     resolve(obj);
                 };
                 return new Promise(function(resolve, reject) {
-                    PlatformService.getContent(id)
-                    .then(function(content) {
-                        if(content.status == 'error') {
-                            var errorCode = content.errorCode;
-                            var errorParam = content.errorParam;
-                            var errMsg = AppMessages[errorCode];
-                            if (errorParam && errorParam != '') {
-                                errMsg = errMsg.replace('{0}', errorParam);
-                            }
-                            $rootScope.$broadcast('show-message', {
-                                "message": errMsg
-                            });
-                            reject(content);
-                        } else {
-                            var localContent = returnObject.contentList[id];
-                            if(localContent) {
-                                if (localContent.pkgVersion != content.data.pkgVersion) {
-                                    update(content.data, resolve, reject);
-                                } else {
-                                    $rootScope.$broadcast('show-message', {
-                                        "message": AppMessages.NO_NEW_CONTENT,
-                                        "timeout": 3000
-                                    });
-                                    resolve(localContent);
-                                }
+                    if(content && content.identifier) {
+                        var localContent = returnObject.contentList[content.identifier];
+                        if(localContent) {
+                            if (localContent.pkgVersion != content.pkgVersion) {
+                                update(content, resolve, reject);
                             } else {
-                                update(content.data, resolve, reject);
+                                $rootScope.$broadcast('show-message', {
+                                    "message": AppMessages.NO_NEW_CONTENT,
+                                    "timeout": 3000
+                                });
+                                resolve(localContent);
                             }
+                        } else {
+                            update(content, resolve, reject);
                         }
-                    });
+                    } else {
+                        reject('Invalid content to update');
+                    }
                 });
             },
             processContent: function(content) {
