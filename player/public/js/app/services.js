@@ -128,33 +128,54 @@ angular.module('quiz.services', ['ngResource'])
                     return 0;
                 }
             },
-            getContent: function(id, update) {
+            getContent: function(id) {
+                return returnObject.contentList[id];
+            },
+            updateContent: function(id) {
+                var update = function(obj, resolve, reject) {
+                    $rootScope.$broadcast('show-message', {
+                        "message": AppMessages.DIRECT_DOWNLOADING_MSG
+                    });
+                    processContent(obj)
+                    .then(function(data) {
+                        $rootScope.$broadcast('process-complete', {
+                            "data": data
+                        });
+                    });
+                    obj.status = "processing";
+                    resolve(obj);
+                };
                 return new Promise(function(resolve, reject) {
-                    var data = returnObject.contentList[id];
-                    if(data && !update) {
-                        resolve(data);
-                    } else {
-                       PlatformService.getContent(id)
-                       .then(function(content) {
-                            console.log('Content not available. Getting from Platform:', content);
-                            if(content.status == 'error') {
-                                resolve(content.status);
-                            } else {
-                                $rootScope.$broadcast('show-message', {
-                                    "message": AppMessages.DIRECT_DOWNLOADING_MSG
-                                });
-                                processContent(content.data)
-                                .then(function(data) {
-                                    $rootScope.$broadcast('process-complete', {
-                                        "data": data
-                                    });
-                                });
-                                var data = content.data;
-                                data.status = "processing";
-                                resolve(data);    
+                    PlatformService.getContent(id)
+                    .then(function(content) {
+                        if(content.status == 'error') {
+                            var errorCode = content.errorCode;
+                            var errorParam = content.errorParam;
+                            var errMsg = AppMessages[errorCode];
+                            if (errorParam && errorParam != '') {
+                                errMsg = errMsg.replace('{0}', errorParam);
                             }
-                       });
-                    }
+                            $rootScope.$broadcast('show-message', {
+                                "message": errMsg
+                            });
+                            reject(content);
+                        } else {
+                            var localContent = returnObject.contentList[id];
+                            if(localContent) {
+                                if (localContent.pkgVersion != content.data.pkgVersion) {
+                                    update(content.data, resolve, reject);
+                                } else {
+                                    $rootScope.$broadcast('show-message', {
+                                        "message": AppMessages.NO_NEW_CONTENT,
+                                        "timeout": 3000
+                                    });
+                                    resolve(localContent);
+                                }
+                            } else {
+                                update(content.data, resolve, reject);
+                            }
+                        }
+                    });
                 });
             },
             processContent: function(content) {

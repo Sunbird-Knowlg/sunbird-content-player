@@ -80,7 +80,10 @@ PlatformService = {
 						for(i=0;i<worksheets.result.content.length; i++) {
 	                    	var item = worksheets.result.content[i];
 	                    	item.type = 'worksheet';
-	                    	result.data.push(item);
+	                    	if(item.identifier == id) {
+	                    		result.data = item;
+	                    		break;
+	                    	}
 	                	}
 	                }
 				}

@@ -1,5 +1,5 @@
 <ion-header-bar class="bar">
-    <h1 class="title">{{item.name}}</h1>
+    <h1 class="title" ng-show="item.name">{{item.name}}</h1>
     <a href="javascript:void(0)" ng-click="startGenie()" class="button button-clear" style="float: right; color: #000">
         <i class="icon ion-close-circled"></i>
     </a>
@@ -10,8 +10,8 @@
             <div class="col"></div>
             <div class="col col-80">
                 <div class="list card">
-                    <div class="item item-thumbnail-left">
-                        <img ng-src="{{item.appIcon}}">
+                    <div class="item item-thumbnail-left" ng-show="item.name">
+                        <img ng-src="{{item.posterImage || item.appIcon || 'assets/quiz-icon-gs.png'}}">
                         <h2>{{item.name}}</h2>
                         <p ng-show="item.pkgVersion">V {{item.pkgVersion}}</p>
                         <p ng-show="item.processingStart">{{item.processingStart | date:'medium'}}</p>
@@ -33,9 +33,3 @@
         </div>
     </ion-content>
 </ion-pane>
-<!-- <div style="margin:auto; position:absolute;width:100%;height:20%; bottom:30px; z-index: 1000;" ng-show="showMessage">
-    <div style="margin: auto; width: 100%; position: fixed; text-align: center; bottom:30px; font-weight: bold;">
-        <div ng-bind-html="message" style="margin: auto; width: 100%; position: fixed; text-align: center; font-weight: bold;">
-        </div>
-    </div>
-</div> -->

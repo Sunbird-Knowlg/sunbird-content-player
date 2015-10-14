@@ -295,11 +295,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
 
     }).controller('ContentCtrl', function($scope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         if ($stateParams.itemId) {
-            ContentService.getContent($stateParams.itemId)
-            .then(function(data) {
-                $scope.item = data;
-                Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier);
-            });
+            $scope.item = ContentService.getContent($stateParams.itemId)
+            Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier);
         } else {
             alert('Name or Launch URL not found.');
             $state.go('contentList');
@@ -312,14 +309,17 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         });
     }).controller('ContentHomeCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         $rootScope.showMessage = false;
-
-        // $rootScope.showMessage = true;
-        // $rootScope.message = "Content downloading complete.";
         
         if ($stateParams.itemId) {
-            ContentService.getContent($stateParams.itemId)
+            ContentService.updateContent($stateParams.itemId)
             .then(function(data) {
-                $scope.item = data;
+                console.log("Got content:", data);
+                $scope.$apply(function() {
+                    $scope.item = data;    
+                });
+            })
+            .catch(function(err){
+                console.log(err);
             });
             $scope.playContent = function(content) {
                 $state.go('playContent', {
@@ -328,12 +328,15 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             };
 
             $scope.updateContent = function(id) {
-                ContentService.getContent(id, true)
+                ContentService.updateContent(id)
                 .then(function(data) {
                     $scope.$apply(function() {
                         $scope.item = data;    
                     });
-                });;
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
             }
 
             $scope.startGenie = function(){
