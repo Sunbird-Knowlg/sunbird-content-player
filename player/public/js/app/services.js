@@ -124,7 +124,30 @@ angular.module('quiz.services', ['ngResource'])
                 }
             },
             getContent: function(id) {
-                return this.contentList[id];
+                return new Promise(function(resolve, reject) {
+                    var data = returnObject.contentList[id];
+                    if(data) {
+                        resolve(data);
+                    } else {
+                       PlatformService.getContent(id)
+                       .then(function(content) {
+                            console.log('Content not available. Getting from Platform:', content);
+                            if(content.status == 'error') {
+                                resolve(content.status);
+                            } else {
+                                processContent(content.data)
+                                .then(function(data) {
+                                    $rootScope.$broadcast('process-complete', {
+                                        "data": data
+                                    });
+                                });
+                                var data = content.data;
+                                data.status = "processing";
+                                resolve(data);    
+                            }
+                       });
+                    }
+                });
             },
             processContent: function(content) {
                 var promise = {};

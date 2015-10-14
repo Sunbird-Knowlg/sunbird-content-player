@@ -1,0 +1,32 @@
+<ion-header-bar class="bar">
+    <h1 class="title">{{item.name}}</h1>
+    <a href="javascript:void(0)" ng-click="startGenie()" class="button button-clear" style="float: right; color: #000">
+        <i class="icon ion-close-circled"></i>
+    </a>
+</ion-header-bar>
+<ion-pane>
+    <ion-content>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col col-80">
+                <div class="list card">
+                    <div class="item item-thumbnail-left">
+                        <img ng-src="{{item.appIcon}}">
+                        <h2>{{item.name}}</h2>
+                        <p ng-show="item.pkgVersion">V {{item.pkgVersion}}</p>
+                        <p ng-show="item.processingStart">{{item.processingStart | date:'medium'}}</p>
+                    </div>
+                    <div class="item item-body">
+                        <div ng-show="item.status == 'ready'" class="row" style="margin-bottom:5px;">
+                            <a ng-click="playContent(item)" style="margin:auto;" class="button icon button-positive">&nbsp;&nbsp;&nbsp;Play&nbsp;&nbsp;</a>
+                        </div>
+                        <div class="row">
+                            <a ng-show="item.status != 'processing'" style="margin:auto" class="button icon button-calm">Update</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+    </ion-content>
+</ion-pane>

@@ -5,6 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 var packageName = "org.ekstep.quiz.app";
 var version = "1.0";
+var currentContentVersion = "0.2";
 
 function backbuttonPressed(cs) {
     if(Renderer.running) {
@@ -45,8 +46,19 @@ function exitApp(cs) {
     });
 }
 
+function startGenie() {
+    navigator.startApp.start("org.ekstep.genie", function(message) {
+        if (TelemetryService._gameData) {
+            TelemetryService.end(packageName, version);
+        }
+    }, 
+    function(error) {
+        alert("Unalbe to start Genie App.");
+    });
+}
+
 angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
-    .run(function($ionicPlatform, $ionicModal, $cordovaFile, $cordovaToast, ContentService) {
+    .run(function($ionicPlatform, $ionicModal, $cordovaFile, $cordovaToast, ContentService, $state) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -75,8 +87,16 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
 
             GlobalContext.init(packageName, version).then(function() {
                 if (!TelemetryService._gameData) {
+                    ContentService.init();
                     TelemetryService.init(GlobalContext.game).then(function() {
-                        TelemetryService.start();    
+                        TelemetryService.start();
+                        if (GlobalContext.config.contentId) {
+                            $state.go('showContent', {
+                                'itemId': GlobalContext.config.contentId
+                            });
+                        } else {
+                            $state.go('contentList', {});
+                        }
                     }).catch(function(error) {
                         console.log('TelemetryService init failed');
                     });
@@ -88,12 +108,17 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         });
     })
     .config(function($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise("/content/list");
+        // $urlRouterProvider.otherwise("/content/list");
         $stateProvider
             .state('contentList', {
                 url: "/content/list",
                 templateUrl: "templates/content-list.html",
                 controller: 'ContentListCtrl'
+            })
+            .state('showContent', {
+                url: "/show/content/:itemId",
+                templateUrl: "templates/content.html",
+                controller: 'ContentHomeCtrl'
             })
             .state('playContent', {
                 url: "/play/content/:itemId",
@@ -102,8 +127,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             });
     })
     .controller('ContentListCtrl', function($scope, $rootScope, $http, $ionicModal, $cordovaFile, $cordovaDialogs, $cordovaToast, $ionicPopover, $state, $q, ContentService) {
-
-        var currentContentVersion = "0.2";
 
         $ionicModal.fromTemplateUrl('about.html', {
             scope: $scope,
@@ -124,7 +147,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                     ContentService.clear();
                     ContentService.setContentVersion(currentContentVersion);
                 }
-                ContentService.init();
+                // ContentService.init();
                 resolve(true);
             })
             .then(function() {
@@ -272,8 +295,11 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
 
     }).controller('ContentCtrl', function($scope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         if ($stateParams.itemId) {
-            $scope.item = ContentService.getContent($stateParams.itemId);
-            Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier);
+            ContentService.getContent($stateParams.itemId)
+            .then(function(data) {
+                $scope.item = data;
+                Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier);
+            });
         } else {
             alert('Name or Launch URL not found.');
             $state.go('contentList');
@@ -284,6 +310,34 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 initBookshelf();
             }, 100);
         });
+    }).controller('ContentHomeCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
+        if ($stateParams.itemId) {
+            ContentService.getContent($stateParams.itemId)
+            .then(function(data) {
+                $scope.item = data;
+            });;
+            $scope.playContent = function(content) {
+                $state.go('playContent', {
+                    'itemId': content.identifier
+                });
+            };
+
+            $scope.startGenie = function(){
+                console.log("Start Genie.");
+                startGenie();
+            };
+
+            $rootScope.$on('process-complete', function(event, result) {
+                $scope.$apply(function() {
+                    $scope.item = result.data;
+                });
+            });
+
+
+        } else {
+            alert('Name or Launch URL not found.');
+            $state.go('contentList');
+        }
     });
 
 

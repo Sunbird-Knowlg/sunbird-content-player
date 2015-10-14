@@ -4,6 +4,10 @@ GlobalContext = {
         id: "",
         ver: ""
     },
+    config: {
+        origin: "",
+        contentId: ""
+    },
     init: function(gid, ver) {
         return new Promise(function(resolve, reject) {
             GlobalContext.game.id = gid;
@@ -14,17 +18,21 @@ GlobalContext = {
     _setGlobalContext: function(resolve, reject) {
         new Promise(function(resolve, reject) {
             if(window.plugins && window.plugins.webintent) {
-                GlobalContext._getIntentExtra('origin')
-                .then(function(origin) {
-                    resolve(origin);
+                var promises = [];
+                promises.push(GlobalContext._getIntentExtra('origin', GlobalContext.config));
+                promises.push(GlobalContext._getIntentExtra('contentId', GlobalContext.config));
+                Promise.all(promises)
+                .then(function(result) {
+                    resolve(GlobalContext.config);
                 });
             } else {
-                resolve('Genie');
+                GlobalContext.config = { origin: "Genie", contentId: ""};
+                resolve(GlobalContext.config);
             }
         })
-        .then(function(origin) {
-            console.log("Origin value is:::", origin);
-            if(origin && origin == 'Genie') {
+        .then(function(config) {
+            console.log("Origin value is:::", config);
+            if(config && config.origin == 'Genie') {
                 return GenieService.getCurrentUser();
             } else {
                 reject(false);
@@ -43,16 +51,22 @@ GlobalContext = {
             }
         });
     },
-    _getIntentExtra: function(param) {
+    _getIntentExtra: function(param, contextObj) {
         return new Promise(function(resolve, reject) {
             window.plugins.webintent.getExtra(param,
                 function(url) {
                     console.log(param + ' intent value: ' + url);
-                    resolve(url);
-                },
-                function() {
+                    if (url) {
+                        contextObj[param] = url;
+                    }
+                    resolve(true);
+                }, function() {
                     console.log('intent value not set for: ' + param);
-                    resolve();
+                    // TODO: remove after getting new genie.
+                    // if(param == "contentId") {
+                    //     contextObj[param] = "org.ekstep.num.addition.by.grouping";   
+                    // }
+                    resolve(true);
                 }
             );
         });

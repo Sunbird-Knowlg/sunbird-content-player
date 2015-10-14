@@ -56,5 +56,39 @@ PlatformService.prototype.getContentList = function() {
     });
 }
 
+PlatformService.prototype.getContent = function(id) {
+    return new Promise(function(resolve, reject) {
+        exec(function(resp) {
+            console.log("REST response:", resp);
+            var result = {"data": {}};
+            for(key in resp) {
+                var contentResponse = resp[key];
+                console.log("contentResponse response:", contentResponse);
+                console.log("contentResponse status:", contentResponse.status);
+                if(contentResponse.status == "success") {
+                    var data = (typeof contentResponse.data == 'string') ? JSON.parse(contentResponse.data) : contentResponse.data;
+                    for(i=0;i<data.result.content.length; i++) {
+                        var item = data.result.content[i];
+                        item.type = key.toLowerCase();
+                        if(item.identifier == id) {
+                            result.data = item;
+                            break;
+                        }
+                    }
+                } else {
+                    result["status"] = "error";
+                    result["errorCode"] = contentResponse.errorCode;
+                    result["errorParam"] = contentResponse.errorParam;
+                }
+            }
+            console.log("REST result:", result);
+            resolve(result);
+        }, function(error) {
+            console.log("REST error:", result);
+            reject(error);
+        }, "PlatformService", "getContentList", ["Story", "Worksheet"]);
+    });
+}
+
 var platformService = new PlatformService();
 module.exports = platformService;
