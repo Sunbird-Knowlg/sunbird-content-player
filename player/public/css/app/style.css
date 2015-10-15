@@ -36,9 +36,9 @@ ion-popover-view.fit ion-content {
 	border: 0px !important;
 }
 
-.max100 {
-	max-height: 100px;
-	max-width: 100px;
+.preview_posterImg {
+	max-height: 90px;
+	max-width: 90px;
 }
 
 .preview_txt {
@@ -53,7 +53,6 @@ ion-popover-view.fit ion-content {
 .preview_subtext {
 	font-family: 'flavours' !important;
 	margin: 0px !important;
-	color: #000 !important;
 }
 
 .preview_button_bg {

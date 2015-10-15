@@ -4,16 +4,21 @@
         <center>
             <h1 class="preview_txt" ng-show="item.name">{{item.name}}</h1>
         </center>
+        <a href="javascript:void(0)" ng-click="startGenie()" class="button button-clear" style="position:fixed; top: 0; right: 10px; color: #000">
+            <i class="icon ion-close-circled"></i>
+        </a>
     </div>
 
     <div class="item item-body noBorder">
         <center>
-            <img ng-src="{{item.posterImage || item.appIcon || 'assets/quiz-icon.png'}}" class="max100">
+            <img ng-src="{{item.posterImage || item.appIcon || 'assets/quiz-icon.png'}}" class="preview_posterImg">
             <p class="preview_description" ng-if="item.description">
                 {{item.description}}
             </p>
-            <p ng-show="item.pkgVersion" class="preview_subtext" style="float: left;">Version: {{item.pkgVersion}}</p>    
-            <p ng-show="item.processingStart" class="preview_subtext" style="float: right;">Last Downloaded on: {{item.processingStart | date: medium}}</p>
+            <p ng-show="item.pkgVersion || item.processingStart" class="preview_subtext" >
+                <span ng-show="item.pkgVersion" style="margin-right: 20px;">Version: {{item.pkgVersion}}</span>    
+                <span ng-show="item.processingStart">Last Downloaded on: {{item.processingStart | date: medium}}</span>
+            </p>
         </center>
     </div>
 
