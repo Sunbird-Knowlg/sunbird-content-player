@@ -27,22 +27,34 @@ var TextPlugin = Plugin.extend({
             textStr = (this._stage.params[data.param.trim()] || '');
         }
         var text = new createjs.Text(textStr, font, data.color || '#000000');
-        var align = 'left';
+        
+        var align  = (data.align ? data.align.toLowerCase() : 'left');
+        var valign = (data.valign ? data.valign.toLowerCase() : 'top');
+
         text.x = dims.x;
-        if (data.align && data.align.toLowerCase() == 'left') {
+        if (align == 'left') {
             text.x = dims.x;
-            align = data.align.toLowerCase();
-        } else if (data.align && data.align.toLowerCase() == 'right') {
+        } else if (align == 'right') {
             text.x = dims.x + dims.w;
-            align = data.align.toLowerCase();
-        } else if (data.align && data.align.toLowerCase() == 'center') {
-            align = data.align.toLowerCase();
+        } else if (align == 'center') {
             text.x = dims.x + dims.w/2;
         }
-        text.y = dims.y;
+
+        if (valign == 'top') {
+            text.y = dims.y;
+            text.textBaseline = 'top';
+        } else if (valign == 'bottom') {
+            text.y = dims.y + dims.h;
+            text.textBaseline = 'bottom';
+        } else if (valign == 'middle') {
+            text.y = dims.y + dims.h / 2 ;
+            text.textBaseline = 'middle';
+        }
+
         text.lineWidth = dims.w;
         text.textAlign = align;
-        text.textBaseline = 'middle';
+        text.valign = valign;
+        
         this._self = text;
     }
 });
