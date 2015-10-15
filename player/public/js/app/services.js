@@ -151,6 +151,10 @@ angular.module('quiz.services', ['ngResource'])
                     if(content && content.identifier) {
                         var localContent = returnObject.contentList[content.identifier];
                         if(localContent) {
+                            for (var key in content) {
+                                localContent[key] = content[key];   
+                            }
+                            returnObject.commit();
                             if (localContent.pkgVersion != content.pkgVersion) {
                                 update(content, resolve, reject);
                             } else {
