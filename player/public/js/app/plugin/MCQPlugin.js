@@ -10,6 +10,14 @@ var MCQPlugin = Plugin.extend({
     _offsetX: 0,
     _offsetY: 0,
     initPlugin: function(data) {
+        
+        this._multi_select = false;
+        this._options = [];
+        this._shadow = '#0470D8';
+        this._blur = 30;
+        this._offsetX = 0;
+        this._offsetY = 0;
+
         var model = data.model;
         if (model) {
         	var controller = this._stage.getController(model);

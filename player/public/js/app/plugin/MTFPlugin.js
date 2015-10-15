@@ -7,6 +7,10 @@ var MTFPlugin = Plugin.extend({
     _force: false,
     _controller: undefined,
     initPlugin: function(data) {
+        this._lhs_options = [];
+        this._rhs_options = [];
+        this._force  = false;
+        
         var model = data.model;
         if (model) {
         	var controller = this._stage.getController(model);
