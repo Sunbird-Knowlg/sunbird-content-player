@@ -165,6 +165,13 @@ var OptionPlugin = Plugin.extend({
         data.y = pady;
         data.w = 100 - (2 * padx);
         data.h = 100 - (2 * pady);
+
+        // var debugData = {x : data.x, y: data.y, w: data.w, h:data.h, type:'rect', stroke:'red'};
+        // var debugData2 = {x : 0, y: 0, w: 100, h: 100, type:'rect', stroke:'green'};
+        
+        // PluginManager.invoke('shape', debugData, this, this._stage, this._theme);
+        // PluginManager.invoke('shape', debugData2, this, this._stage, this._theme);
+
         PluginManager.invoke('image', data, this, this._stage, this._theme);
         this._data.asset = value.asset;
         this._render = true;
@@ -177,6 +184,19 @@ var OptionPlugin = Plugin.extend({
         data.y = pady;
         data.w = 100 - (2 * padx);
         data.h = 100 - (2 * pady);
+
+        var align  = (this._data.align ? this._data.align.toLowerCase() : 'center');
+        var valign = (this._data.valign ? this._data.valign.toLowerCase() : 'middle');
+
+        data.align = align;
+        data.valign = valign;
+        
+        // var debugData = {x : data.x, y: data.y, w: data.w, h:data.h, type:'rect', stroke:'red'};
+        // var debugData2 = {x : 0, y: 0, w: 100, h: 100, type:'rect', stroke:'green'};
+        
+        // PluginManager.invoke('shape', debugData, this, this._stage, this._theme);
+        // PluginManager.invoke('shape', debugData2, this, this._stage, this._theme);
+
         PluginManager.invoke('text', data, this, this._stage, this._theme);
         this._data.asset = data.asset;
         this._render = true;
