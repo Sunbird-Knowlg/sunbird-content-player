@@ -89,7 +89,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 var flavor = data.flavor;
                 if (AppConfig[flavor] == undefined)
                     flavor = "sandbox";
-                if (_.isString(env) && env.length > 0) {
+                if (_.isString(AppConfig[flavor]) && (AppConfig[flavor]).length > 0) {
                     PlatformService.setAPIEndpoint(AppConfig[flavor]);
                 }
             });
