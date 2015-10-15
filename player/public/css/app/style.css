@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'flavours';
+    src: url('fonts/Flavors-Regular.ttf') format('truetype')
+}
+
 ion-popover-view.fit {
   height: auto !important;
   width: auto !important;
@@ -15,4 +20,60 @@ ion-popover-view.fit ion-content {
 	font-size: 25px !important;
 	margin: -8px !important;
     padding: 18px !important;
+}
+
+.clearList {
+	padding: 0px !important;
+	border: 0px !important;
+	box-shadow: none !important;
+}
+
+.noPad {
+	padding: 0px !important;
+}
+
+.noBorder {
+	border: 0px !important;
+}
+
+.max100 {
+	max-height: 100px;
+	max-width: 100px;
+}
+
+.preview_txt {
+	font-family: 'flavours' !important;
+}
+
+.preview_description {
+	font-size: 1.25em !important;
+	color: #000 !important;
+}
+
+.preview_subtext {
+	font-family: 'flavours' !important;
+	margin: 0px !important;
+	color: #000 !important;
+}
+
+.preview_button_bg {
+	background-image: url('../../img/skin/button_bg.png');
+    background-repeat: no-repeat;
+    background-size: 140px 45px;
+    padding-top: 13px;
+    display: inline-block;
+    text-align: center;
+    width: 140px;
+    height: 45px;
+}
+
+.preview_button {
+	font-family: 'flavours';
+	font-size: 1.5em;
+}
+
+.preview_bottom_bg {
+	background-image: url('../../img/skin/bottom_bg.png');
+	height: 66px;
+	margin-top: 10px;
 }

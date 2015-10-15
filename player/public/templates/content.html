@@ -1,35 +1,34 @@
-<ion-header-bar class="bar">
-    <h1 class="title" ng-show="item.name">{{item.name}}</h1>
-    <a href="javascript:void(0)" ng-click="startGenie()" class="button button-clear" style="float: right; color: #000">
-        <i class="icon ion-close-circled"></i>
-    </a>
-</ion-header-bar>
-<ion-pane>
-    <ion-content>
-        <div class="row">
-            <div class="col"></div>
-            <div class="col col-80">
-                <div class="list card">
-                    <div class="item item-thumbnail-left" ng-show="item.name">
-                        <img ng-src="{{item.appIcon || 'assets/quiz-icon-gs.png'}}">
-                        <h2>{{item.name}}</h2>
-                        <p ng-show="item.pkgVersion">V {{item.pkgVersion}}</p>
-                        <p ng-show="item.processingStart">{{item.processingStart | date:'medium'}}</p>
-                    </div>
-                    <div class="item item-body">
-                    	<div class="row" style="margin-bottom:20px;" ng-show="showMessage">
-                        	<div ng-bind-html="message" style="margin: auto; text-align: center; font-weight: bold;"></div>
-                        </div>
-                        <div ng-show="item.status == 'ready'" class="row" style="margin-bottom:5px;">
-                            <a ng-click="playContent(item)" style="margin:auto;" class="button icon button-positive">&nbsp;&nbsp;&nbsp;Play&nbsp;&nbsp;</a>
-                        </div>
-                        <div class="row">
-                            <a ng-click="updateContent(item)" ng-show="item.status != 'processing'" style="margin:auto" class="button icon button-calm">Update</a>
-                        </div>
-                    </div>
-                </div>
+<div class="list card clearList" style="overflow-y: auto;">
+
+    <div class="item clearList">
+        <center>
+            <h1 class="preview_txt" ng-show="item.name">{{item.name}}</h1>
+        </center>
+    </div>
+
+    <div class="item item-body noBorder">
+        <center>
+            <img ng-src="{{item.posterImage || item.appIcon || 'assets/quiz-icon.png'}}" class="max100">
+            <p class="preview_description" ng-if="item.description">
+                {{item.description}}
+            </p>
+            <p ng-show="item.pkgVersion" class="preview_subtext" style="float: left;">Version: {{item.pkgVersion}}</p>    
+            <p ng-show="item.processingStart" class="preview_subtext" style="float: right;">Last Downloaded on: {{item.processingStart | date: medium}}</p>
+        </center>
+    </div>
+
+    <div class="item item-body clearList" style="margin-top:5px;">
+        <center>
+            <div style="margin-bottom:10px;" ng-show="showMessage">
+                <div ng-bind-html="message" style="margin: auto; text-align: center; font-weight: bold;"></div>
             </div>
-            <div class="col"></div>
-        </div>
-    </ion-content>
-</ion-pane>
+            <span ng-show="item.status == 'ready'" style="margin-right: 10px">
+                <a ng-click="playContent(item)" class="preview_button_bg preview_button">Play</a>
+            </span>
+            <span>
+                <a ng-click="updateContent(item)" ng-show="item.status != 'processing'" class="preview_button_bg preview_button">Update</a>
+            </span>    
+        </center>
+        <div class="preview_bottom_bg"></div>
+    </div>
+</div>
