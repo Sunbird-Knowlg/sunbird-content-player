@@ -5,12 +5,19 @@ var ShapePlugin = Plugin.extend({
     	this._self = new createjs.Shape();
     	var graphics = this._self.graphics;
     	var dims = this.relativeDims();
-		if(data.fill) {
+		
+        if(data.fill) {
 			graphics.beginFill(data.fill);
 		}
-		if(data.stroke) {
+		
+        if(data.stroke) {
 			graphics.beginStroke(data.stroke);
 		}
+
+        if(data['stroke-width']) {
+            graphics.setStrokeStyle(data['stroke-width']);
+        }
+
         switch(data.type) {
     		case 'rect':
     			graphics.dr(0, 0, dims.w, dims.h);
