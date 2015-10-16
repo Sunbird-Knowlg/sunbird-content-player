@@ -75,7 +75,7 @@
 
 /* ------- slides ------- */
 
-.slide_animate { position:relative; margin:0; padding:0; left:0px; top:0px; float:left; background:url(../assets/skin02/bookshelf_skin02_bg.jpg) repeat; background-position:0 30px; display:block; }
+.slide_animate { position:relative; margin:0; padding:0; left:0px; top:0px; float:left; background:url(../assets/skin02/bookshelf_skin02_bg.png) repeat; background-position:0 30px; display:block; }
 .slide_animate img { display:block; }
 
 

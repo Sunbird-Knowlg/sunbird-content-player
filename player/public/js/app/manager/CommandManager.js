@@ -60,7 +60,8 @@ CommandManager = {
                 if (plugin) plugin.toggleShadow();
                 break;
             case 'windowEvent':
-                if(GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
+                if(GlobalContext.config.appInfo && GlobalContext.config.appInfo.code 
+                    && GlobalContext.config.appInfo.code != GlobalContext.game.id) {
                     window.location.hash = "#/show/content";
                 } else {
                     window.location.hash = action.href;
