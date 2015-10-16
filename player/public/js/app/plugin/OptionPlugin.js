@@ -4,9 +4,17 @@ var OptionPlugin = Plugin.extend({
     _render: false,
     _index: -1,
     _model: undefined,
+    _value: undefined,
+
     initPlugin: function(data) {
+        
+        this._model = undefined;
+        this._value = undefined;
+        this._index = -1;
+
         var model = data.option;
         var value = undefined;
+
         if (this._parent._controller && model) {
             this._model = model;
             var controller = this._parent._controller;
@@ -25,6 +33,8 @@ var OptionPlugin = Plugin.extend({
         	var hit = new createjs.Shape();
             hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h);
             this._self.hitArea = hit;
+            this._value = value.value;
+
             if (value.value.type == 'image') {
                 this.renderImage(value.value);
                 if (this._parent._type == 'mcq') {
@@ -50,10 +60,13 @@ var OptionPlugin = Plugin.extend({
             var ext = {
                 type: event.type,
                 x: event.stageX,
-                y: event.stageY
+                y: event.stageY,
+                choice_id: instance._value.asset
             }
+            
+            var val = instance._parent.selectOption(instance);
+            ext.state = (val ? 'selected' : 'unselected');
             EventManager.processAppTelemetry({}, 'CHOOSE', instance, ext);
-            instance._parent.selectOption(instance);
         });
 
     },
@@ -79,7 +92,8 @@ var OptionPlugin = Plugin.extend({
                 var ext = {
                     type: evt.type,
                     x: evt.stageX,
-                    y: evt.stageY
+                    y: evt.stageY,
+                    drag_id: instance._value.asset
                 }
                 EventManager.processAppTelemetry({}, 'DRAG', instance, ext);
             });
@@ -133,6 +147,10 @@ var OptionPlugin = Plugin.extend({
                         }
                     }
                 }
+
+                var drop_id = (snapSuccess ? plugin._id : '');
+                var drop_idx = (snapSuccess ? plugin._index : '');
+
                 if (!snapSuccess) {
                     this.x = this.origX;
                     this.y = this.origY;
@@ -149,8 +167,11 @@ var OptionPlugin = Plugin.extend({
                 var ext = {
                     type: evt.type,
                     x: evt.stageX,
-                    y: evt.stageY
+                    y: evt.stageY,
+                    drop_id: drop_id,
+                    drop_idx: drop_idx
                 }
+
                 EventManager.processAppTelemetry({}, 'DROP', instance, ext);
                 Renderer.update = true;
             });

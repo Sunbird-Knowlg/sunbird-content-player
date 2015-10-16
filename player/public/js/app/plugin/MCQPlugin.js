@@ -76,7 +76,7 @@ var MCQPlugin = Plugin.extend({
         }
         controller.setModelValue(option._model, val, 'selected');
         Renderer.update = true;
-
+        return val;
     }
 });
 PluginManager.registerPlugin('mcq', MCQPlugin);

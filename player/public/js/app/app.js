@@ -4,13 +4,22 @@
 // 'quiz' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var packageName = "org.ekstep.quiz.app";
-var version = "1.0";
+var version = "1.0.35";
 var currentContentVersion = "0.2";
 
 function backbuttonPressed(cs) {
+
     if (Renderer.running) {
+        var ext = {
+            type: 'EXIT_CONTENT'
+        }
+        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
         initBookshelf();
     } else {
+        var ext = {
+            type: 'EXIT_APP'
+        }
+        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
         exitApp(cs);
     }
 }
