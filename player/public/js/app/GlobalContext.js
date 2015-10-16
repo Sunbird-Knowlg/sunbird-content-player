@@ -7,6 +7,7 @@ GlobalContext = {
     config: {
         origin: "",
         contentId: "",
+        flavor: "",
         appInfo: undefined
     },
     init: function(gid, ver) {

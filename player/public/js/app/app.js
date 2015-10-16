@@ -98,6 +98,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 var flavor = data.flavor;
                 if (AppConfig[flavor] == undefined)
                     flavor = "sandbox";
+                GlobalContext.config.flavor = flavor;
                 if (_.isString(AppConfig[flavor]) && (AppConfig[flavor]).length > 0) {
                     PlatformService.setAPIEndpoint(AppConfig[flavor]);
                 }
@@ -163,6 +164,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         $scope.selectedEnvironment = {
             value: "API_SANDBOX"
         };
+        $scope.version = GlobalContext.game.ver;
+        $scope.flavor = GlobalContext.config.flavor;
 
         new Promise(function(resolve, reject) {
                 if (currentContentVersion != ContentService.getContentVersion()) {
