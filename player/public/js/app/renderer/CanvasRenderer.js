@@ -30,7 +30,7 @@ Renderer = {
             Renderer.cleanUp();
         }
         Renderer.running = true;
-        TelemetryService.start(gameId, "1.0");
+        TelemetryService.start(gameId, GlobalContext.game.ver);
         Renderer.initByJSON(gameRelPath, canvasId);
     },
     initByJSON: function(gameRelPath, canvasId) {
