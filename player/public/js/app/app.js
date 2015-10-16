@@ -53,7 +53,7 @@ function startGenie() {
             }
         },
         function(error) {
-            alert("Unalbe to start Genie App.");
+            alert("Unable to start Genie App.");
         });
 }
 
@@ -304,7 +304,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         });
     }).controller('ContentHomeCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         $rootScope.showMessage = false;
-
         if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
             ContentService.updateContent(GlobalContext.config.appInfo)
                 .then(function(data) {
@@ -320,6 +319,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 $state.go('playContent', {
                     'itemId': content.identifier
                 });
+
             };
 
             $scope.updateContent = function(content) {
@@ -336,6 +336,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
 
             $scope.startGenie = function() {
                 console.log("Start Genie.");
+                exitApp(ContentService);
                 startGenie();
             };
 
@@ -362,7 +363,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 });
             });
         } else {
-            alert('Sorry. Could not find the content');
+            alert('Sorry. Could not find the content.');
             startGenie();
         }
     });
