@@ -4,14 +4,14 @@
 
             <div class="panel_title">
                 <div class="selected_title_box"><div class="selected_title">Selected Title</div></div>
-                <a href="javascript:void(0)" ng-click="exitApp()" class="button button-clear" style="float: right; color: #000">
-                    <i class="icon ion-close-circled"></i>
+                <a id="icon_exit" href="javascript:void(0)" ng-click="exitApp()" class="button button-clear" style="float: right; color: #000">
+                    <!-- <i class="icon ion-close-circled"></i> -->
                 </a>
-                <a href="javascript:void(0)" ng-click="showAboutUsPage()" class="button button-clear" style="float: right; color: #000">
-                    <i class="icon ion-information-circled"></i>
+                <a id="icon_info" href="javascript:void(0)" ng-click="showAboutUsPage()" class="button button-clear" style="float: right; color: #000">
+                    <!-- <i class="icon ion-information-circled"></i> -->
                 </a>
-                <a href="javascript:void(0)" ng-click="resetContentListCache()" class="button button-clear" style="float: right; color: #000">
-                    <i class="icon ion-android-refresh"></i>
+                <a id="icon_refresh" href="javascript:void(0)" ng-click="resetContentListCache()" class="button button-clear" style="float: right; color: #000">
+                    <!-- <i class="icon ion-android-refresh"></i> -->
                 </a>
 
             </div><!-- .panel_title -->
@@ -40,8 +40,8 @@
                 <div class='buttons_container'>
                     <div id="arrow_box"><div id="arrow_menu"></div></div>
                     <div class="button_items">
-                        <div id="btn1" class="button_bar"><a href="#"><div style="height: 65px; width:45px;">Stories</div></a></div>
-                        <div id="btn2" class="button_bar"><a href="#"><div style="height: 65px; width:75px;">Worksheets</div></a></div>
+                        <div id="btn1" class="button_bar"><a href="#"><div>Stories</div></a></div>
+                        <div id="btn2" class="button_bar"><a href="#"><div>Worksheets</div></a></div>
                     </div>
                 </div>
             </div>
@@ -54,38 +54,35 @@
 <script id="about.html" type="text/ng-template">
   <ion-modal-view>
     <ion-header-bar class="bar-energized">
-        <h1 class="title">EkStep Content App</h1>
-        <button class="button button-clear icon ion-ios-home" ng-click="hideAboutUsPage()"></button>
+        <h1 class="title" style="color:#5A3C22;font-size:20px; font-family:flavours;">About EkStep Content App</h1>
+        <button class="button button-clear icon" style="background:url(css/assets/skin02/btn_home.png) no-repeat right bottom;height:31px;width:31px;background-size: 30px 30px;" ng-click="hideAboutUsPage()"></button>
     </ion-header-bar>
     <ion-content padding="true">
-        <div class="item item-text-wrap">
-            <div><img src="assets/about_us_banner.jpg" style="width: 200px;"/></div>
-            <div>EkStep Content App can be used to play any content whose narrative and interactivity is governed by the EkStep Content Markup Language (ECML).</div>
-        </div>
-        <div class="item">
-            <div style="float: left; width: 50%">
-                <b>Version:</b><br/>
-                1.0
+        <div class="item item-text-wrap" style="padding:0px;border:0px">
+            <div>
+                <center>
+                    <img src="assets/ekstep_logo.png" style="width: 100px;padding-top:10px;"/>
+                </center>
             </div>
-            <div style="float: left; width: 50%">
-                <b>Age:</b><br/>
-                5+ Years
+            <div style="color:#5A3C22;font-size:15px; font-family:flavours;text-align:center;padding-left:20px;padding-right:20px">EkStep is a not for profit learner centric, technology enabled platform to improve applied literacy and numeracy. Visit www.ekstep.org to know more about EkStep and view the data protection and privacy policy.
             </div>
-        </div>
-        <div class="item">
-            <div style="float: left; width: 50%">
-                <b>Offered By:</b><br/>
-                EkStep<br/>
-            </div>
-            <div style="float: left; width: 50%">
-                <b>Contact:</b><br/>
-                Email: contact@ekstep.org
+
+            <div style="color:#blue;font-size:10px; font-family:flavours;;text-align:center;margin-top:10px">
+                Version 1.0.35 <!--TODO: Add environment -->
             </div>
         </div>
-        <div class="item">
+
+        <!--<div class="item">
             <div style="margin-bottom: 5px;"><b>Clear All Content:</b></div>
-            <button class="button button-clear icon ion-trash-a" ng-click="clearAllContent()" style="float: right; margin-top: -5%;"></button></div>
+                <button class="button button-clear icon ion-trash-a" ng-click="clearAllContent()" style="float: right; margin-top: -5%;"></button>
+            </div>
+        </div>-->
     </ion-content>
+    <ion-footer-bar style="padding:0px;background-color:#fff;height:65px;border:0px;background-image:none">
+        <div style="background:url(css/assets/skin02/bookshelf_skin02_bottom_bg.png) repeat-x left bottom;height:100%;width:100%">
+                &nbsp;
+            </div>
+    </ion-footer-bar>
   </ion-modal-view>
 </script>
 
