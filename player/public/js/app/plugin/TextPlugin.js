@@ -16,8 +16,7 @@ var TextPlugin = Plugin.extend({
         var font = fontsize + 'px ' + data.font || 'Arial';
         if (data.weight) {
             font = data.weight + ' ' + font;
-        }
-        
+        }        
         var textStr = '';
         if (data.$t || data.__text) {
             textStr = (data.$t || data.__text);
@@ -39,7 +38,6 @@ var TextPlugin = Plugin.extend({
         } else if (align == 'center') {
             text.x = dims.x + dims.w/2;
         }
-
         if (valign == 'top') {
             text.y = dims.y;
             text.textBaseline = 'top';
@@ -50,11 +48,9 @@ var TextPlugin = Plugin.extend({
             text.y = dims.y + dims.h / 2 ;
             text.textBaseline = 'middle';
         }
-
         text.lineWidth = dims.w;
         text.textAlign = align;
-        text.valign = valign;
-        
+        text.valign = valign;        
         this._self = text;
     }
 });
