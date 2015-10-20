@@ -80,7 +80,7 @@
         <text x="10" y="15" w="22" h="23" font="Arial" weight="bold" fontsize="96" color="#fff">
             Noah's Ark...
         </text>
-        <text id="noah" x="7" y="40" w="32" h="49" font="Arial, serif" color="#fff">
+        <text id="noah" x="7" y="40" w="32" h="49" fontsize="48" font="Arial, serif" color="#fff">
             Noah, an alien from Mars is on a mission to take some living beings from Earth to Mars. He has come with a space ship to Earth. He wants collect the following beings. Help him to add and get the required number of items.
         </text>
         <!-- <html x="10" y="15" w="22" h="23" >
