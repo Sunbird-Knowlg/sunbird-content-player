@@ -5,6 +5,9 @@ module.exports = function(grunt) {
             js: {
                 files: {
                     'public/js/app/quizapp-0.3.min.js': [
+                        'public/js/app/GlobalContext.js',
+                        'public/js/app/AppConfig.js',
+                        'public/js/app/ApMessages.js',
                         'public/js/thirdparty/exclude/xml2json.js',
                         'public/js/thirdparty/exclude/createjs-2015.05.21.min.js',
                         'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',

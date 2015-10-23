@@ -149,18 +149,24 @@ LoadByStageStrategy = Class.extend({
     loadStage: function(stageId, cb) {
         var instance = this;
         if (!instance.loaders[stageId]) {
-            var loader = new createjs.LoadQueue(false);
-            loader.setMaxConnections(instance.stageManifests[stageId].length);
-            if (cb) {
-                loader.addEventListener("complete", cb);
-            }
-            loader.on('error', function(evt) {
-                console.error('Asset preload error', evt);
-            });
-            loader.installPlugin(createjs.Sound);
             var manifest = JSON.parse(JSON.stringify(instance.stageManifests[stageId]));
-            loader.loadManifest(manifest, true);
-            instance.loaders[stageId] = loader;
+            if (_.isArray(manifest) && manifest.length > 0) {
+                var loader = new createjs.LoadQueue(false);
+                loader.setMaxConnections(instance.stageManifests[stageId].length);
+                if (cb) {
+                    loader.addEventListener("complete", cb);
+                }
+                loader.on('error', function(evt) {
+                    console.error('Asset preload error', evt);
+                });
+                loader.installPlugin(createjs.Sound);
+                loader.loadManifest(manifest, true);
+                instance.loaders[stageId] = loader;    
+            } else {
+                if (cb) {
+                    cb();
+                }
+            }
         } else {
             if (cb) {
                 cb();

@@ -7,6 +7,7 @@ var ThemePlugin = Plugin.extend({
     _director: false,
     _currentScene: undefined,
     _currentStage: undefined,
+    _previousStage: undefined,
     _canvasId: undefined,
     inputs: [],
     _animationEffect: {effect:'moveOut'},
@@ -15,6 +16,7 @@ var ThemePlugin = Plugin.extend({
     _isContainer: false,
     _templateMap: {},
     initPlugin: function(data) {
+        this._controllerMap = {};
         this._canvasId = data.canvasId;
         this._self = new createjs.Stage(data.canvasId);
         this._director = new creatine.Director(this._self);
@@ -149,6 +151,7 @@ var ThemePlugin = Plugin.extend({
             baseStage = _.findWhere(this._data.stage, {id: stage.extends});
             stage = this.mergeStages(stage, baseStage);
         }
+        this._previousStage = this._currentStage;
         this._currentStage = stageId;
         PluginManager.invoke('stage', stage, this, null, this);
     },
