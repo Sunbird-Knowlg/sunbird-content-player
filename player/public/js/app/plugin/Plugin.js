@@ -24,7 +24,7 @@ var Plugin = Class.extend({
 			this._self.origX = dims.x;
         	this._self.origY = dims.y;
         	this._self.width = dims.w;
-        	this._self.height = dims.h;	
+        	this._self.height = dims.h;
 		}
         if (data.enableDrag) {
             this.enableDrag(this._self, data.snapTo);

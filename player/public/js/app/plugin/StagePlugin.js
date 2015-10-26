@@ -2,6 +2,7 @@ var StagePlugin = Plugin.extend({
     _type: 'stage',
     _render: true,
     params: {},
+    _stageParams: {},
     _stageController: undefined,
     _stageControllerName: undefined,
     _templateVars: {},
@@ -134,6 +135,14 @@ var StagePlugin = Plugin.extend({
             this._stageController.decrIndex(1);
         }
         this._theme.replaceStage(this._data.id, action);
+    },
+    setParam: function(param, value) {
+        var instance = this;
+        instance._stageParams[param] = value;
+    },
+    getParam: function(param) {
+        var instance = this;
+        return instance._stageParams[param];
     }
 });
 PluginManager.registerPlugin('stage', StagePlugin);

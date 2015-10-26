@@ -15,6 +15,7 @@ var ThemePlugin = Plugin.extend({
     _controllerMap: {},
     _isContainer: false,
     _templateMap: {},
+    _contentParams: {},
     initPlugin: function(data) {
         this._controllerMap = {};
         this._canvasId = data.canvasId;
@@ -284,6 +285,14 @@ var ThemePlugin = Plugin.extend({
     },
     resume: function() {
         //TelemetryService.interrupt("RESUME", this._currentStage);
+    },
+    setParam: function(param, value) {
+        var instance = this;
+        instance._contentParams[param] = value;
+    },
+    getParam: function(param) {
+        var instance = this;
+        return instance._contentParams[param];
     }
 });
 PluginManager.registerPlugin('theme', ThemePlugin);

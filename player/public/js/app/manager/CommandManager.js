@@ -76,6 +76,9 @@ CommandManager = {
             case 'restart':
                 if (plugin) plugin.restart(action);
                 break;
+            case 'set':
+                // set params based on scope.
+                break;
             default:
         }
     }
