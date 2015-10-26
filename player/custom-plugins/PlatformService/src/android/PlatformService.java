@@ -62,17 +62,26 @@ public class PlatformService extends CordovaPlugin {
         });
     }
 
-    private JSONObject getContentList(JSONArray types) {
+    private JSONObject getContentList(JSONArray params) {
         JSONObject obj = new JSONObject();
         try {
             Map<String, JSONObject> result = new HashMap<String, JSONObject>();
-            if(types != null) {
-                for(int i=0;i<types.length();i++) {
-                    String type = types.getString(i);
-                    Map<String, Object> contentObj = getContent(type);
-                    if (null != contentObj) {
-                        JSONObject contentJSONObj = new JSONObject(contentObj);
-                        result.put(type, contentJSONObj);
+            if(null != params && params.length() > 0) {
+                JSONObject jsonObj = params.getJSONObject(0);
+                JSONArray types = jsonObj.getJSONArray("types");
+                JSONObject filterJSON = jsonObj.getJSONObject("filter");
+                String filter = null;
+                if (null != filterJSON) {
+                    filter = filterJSON.toString();
+                }
+                if(null != types && types.length() > 0) {
+                    for(int i=0;i<types.length();i++) {
+                        String type = types.getString(i);
+                        Map<String, Object> contentObj = getContent(type, filter);
+                        if (null != contentObj) {
+                            JSONObject contentJSONObj = new JSONObject(contentObj);
+                            result.put(type, contentJSONObj);
+                        }
                     }
                 }
             }
@@ -83,10 +92,14 @@ public class PlatformService extends CordovaPlugin {
         return obj;
     }
 
-    private Map<String, Object> getContent(String type) {
+    private Map<String, Object> getContent(String type, String filter) {
         Map<String, Object> content = contentMap.get(type);
         if(content == null || content.get("status") == "error") {
-            content = RESTUtil.post("/v1/content/list?type="+type, "{  \"request\": {}}");
+            String request = "{\"request\": {}}";
+            if (null != filter && filter.trim().length() > 0) {
+                request = "{\"request\": " + filter + "}";
+            }
+            content = RESTUtil.post("/v1/content/list?type="+type, request);
             contentMap.put(type, content);
         }
         return content;

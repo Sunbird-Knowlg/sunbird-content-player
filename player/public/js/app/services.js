@@ -201,7 +201,11 @@ angular.module('quiz.services', ['ngResource'])
             sync: function() {
                 returnObject.setSyncStart();
                 return new Promise(function(resolve, reject) {
-                    PlatformService.getContentList()
+                    var filter = {"types": ["Story", "Worksheer"]};
+                    if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.filter) {
+                        filter.filter = GlobalContext.config.appInfo.filter;
+                    }
+                    PlatformService.getContentList(filter)
                     .then(function(contents) {
                         var promises = [];
                         if (contents.status == 'error') {
