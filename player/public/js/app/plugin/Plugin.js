@@ -39,11 +39,11 @@ var Plugin = Class.extend({
 		if (data.visible === false) {
 	    	this._self.visible = false;
 		}
-		if(this._render) {
-			this.render();
+		if(this._render) {			
 			if(this._isContainer && this._type == 'stage') {
 				this.cache();
 			}
+			this.render();
 		}
 	},
 	cache: function() {
