@@ -67,7 +67,8 @@ public class PlatformService extends CordovaPlugin {
         try {
             Map<String, JSONObject> result = new HashMap<String, JSONObject>();
             if(null != params && params.length() > 0) {
-                JSONObject jsonObj = params.getJSONObject(0);
+                String strParam = params.getString(0);
+                JSONObject jsonObj = new JSONObject(strParam);
                 JSONArray types = jsonObj.getJSONArray("types");
                 JSONObject filterJSON = jsonObj.getJSONObject("filter");
                 String filter = null;

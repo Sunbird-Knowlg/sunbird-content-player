@@ -6,6 +6,7 @@
 var packageName = "org.ekstep.quiz.app";
 var version = "1.0.35";
 var currentContentVersion = "0.2";
+var packageNameDelhi = "org.ekstep.delhi.curriculum";
 
 function backbuttonPressed(cs) {
 
@@ -111,9 +112,16 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                         TelemetryService.start();
                         if (GlobalContext.config.appInfo &&
                             GlobalContext.config.appInfo.code &&
-                            GlobalContext.config.appInfo.code != packageName) {
+                            GlobalContext.config.appInfo.code != packageName 
+                                && GlobalContext.config.appInfo.code != packageNameDelhi) {
                             $state.go('showContent', {});
                         } else {
+                            if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.code) {
+                                if (GlobalContext.config.appInfo.code == packageNameDelhi) {
+                                    GlobalContext.filter = true;
+                                }
+                                GlobalContext.game.id = GlobalContext.config.appInfo.code;
+                            }
                             $state.go('contentList', {});
                         }
                     }).catch(function(error) {
@@ -166,6 +174,12 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         };
         $scope.version = GlobalContext.game.ver;
         $scope.flavor = GlobalContext.config.flavor;
+        $scope.tab1 = 'Stories';
+        $scope.tab2 = 'Worksheets';
+        if (GlobalContext.game.id == packageNameDelhi) {
+            $scope.tab1 = 'Literacy';
+            $scope.tab2 = 'Numeracy';
+        }
 
         new Promise(function(resolve, reject) {
                 if (currentContentVersion != ContentService.getContentVersion()) {

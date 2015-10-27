@@ -25,6 +25,9 @@ PlatformService.prototype.setAPIEndpoint = function(aString) {
 }
 
 PlatformService.prototype.getContentList = function(request) {
+    if (!request) {
+        request = {};
+    }
     return new Promise(function(resolve, reject) {
         exec(function(resp) {
             console.log("REST response:", resp);
@@ -52,7 +55,7 @@ PlatformService.prototype.getContentList = function(request) {
         }, function(error) {
             console.log("REST error:", result);
             reject(error);
-        }, "PlatformService", "getContentList", [request]);
+        }, "PlatformService", "getContentList", [JSON.stringify(request)]);
     });
 }
 

@@ -201,9 +201,9 @@ angular.module('quiz.services', ['ngResource'])
             sync: function() {
                 returnObject.setSyncStart();
                 return new Promise(function(resolve, reject) {
-                    var filter = {"types": ["Story", "Worksheer"]};
-                    if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.filter) {
-                        filter.filter = GlobalContext.config.appInfo.filter;
+                    var filter = {"types": ["Story", "Worksheet"], "filter": {}};
+                    if (GlobalContext.filter === true) {
+                        filter.filter = {"tags" : ["Delhi Curriculum"]};
                     }
                     PlatformService.getContentList(filter)
                     .then(function(contents) {
