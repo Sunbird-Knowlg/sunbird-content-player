@@ -18,6 +18,9 @@ var ShapePlugin = Plugin.extend({
             graphics.setStrokeStyle(data['stroke-width']);
         }
 
+        // Radius for rounded rectangle
+        var radius = data.radius || 10;
+
         switch(data.type) {
     		case 'rect':
     			graphics.dr(0, 0, dims.w, dims.h);
@@ -27,6 +30,14 @@ var ShapePlugin = Plugin.extend({
 					this._self.hitArea = hit;
 		    	}
     			break;
+            case 'roundrect':
+                graphics.drawRoundRect(0, 0, dims.w, dims.h, radius);
+                if(data.hitArea) {
+                    var hit = new createjs.Shape();
+                    hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h);
+                    this._self.hitArea = hit;
+                }
+                break;
     		case 'circle':
     			graphics.dc(0, 0, dims.w);
     			if(data.hitArea) {
