@@ -39,6 +39,10 @@ var Plugin = Class.extend({
 		if (data.visible === false) {
 	    	this._self.visible = false;
 		}
+		if (data['ev-if']) {
+			var exprVal = this.evaluateExpr(data['ev-if']);
+			if (typeof exprVal != undefined) this._self.visible = (this._self.visible && exprVal);
+		}
 		if(this._render) {			
 			if(this._isContainer && this._type == 'stage') {
 				this.cache();
@@ -207,6 +211,18 @@ var Plugin = Class.extend({
                 Renderer.update = true;
             });
         }
+    },
+    evaluateExpr: function(expr) {
+        var app = GlobalContext._params;
+        var stage = this._stage._stageParams;
+        var content = this._theme._contentParams;
+        var value = undefined;
+        try {
+            value = eval(expr);
+        } catch (err) {
+            console.error('set ev-value evaluation faild:', err.message);
+        }
+        return value;
     },
 	transitionTo: function() {
 		PluginManager.addError('Subclasses of plugin should implement transitionTo()');

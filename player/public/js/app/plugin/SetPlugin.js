@@ -2,16 +2,20 @@ var SetPlugin = Plugin.extend({
     _type: 'set',
     _isContainer: false,
     initPlugin: function(data) {
-        this.setParam(data.param, data.value, data.scope);
+        var value = data.value;
+        if (data['ev-value']) {
+            value = this.evaluateExpr(data['ev-value']);
+        }
+        this.setParam(data.param, value, data.scope);
     },
     setParam: function(param, value, scope) {
-        if(scope && scope.toLowerCase() == 'app') {
+        if (scope && scope.toLowerCase() == 'app') {
             GlobalContext.setParam(param, value);
-        } else if(scope && scope.toLowerCase() == 'stage') {
+        } else if (scope && scope.toLowerCase() == 'stage') {
             this._stage.setParam(param, value);
         } else {
             this._theme.setParam(param, value);
-        } 
+        }
     },
     getParam: function(param) {
         var value = GlobalContext.getParam(param);
