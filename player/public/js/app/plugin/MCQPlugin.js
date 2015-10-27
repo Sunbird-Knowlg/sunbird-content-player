@@ -9,6 +9,7 @@ var MCQPlugin = Plugin.extend({
     _blur: 30,
     _offsetX: 0,
     _offsetY: 0,
+    _highlight: '#E89241',
     initPlugin: function(data) {
         
         this._multi_select = false;
@@ -40,6 +41,9 @@ var MCQPlugin = Plugin.extend({
                 if (data.shadow) {
                     this._shadow = data.shadow;
                 }
+                if (data.highlight) {
+                    this._highlight = data.highlight;
+                }
                 if (_.isFinite(data.blur)) {
                     this._blur = data.blur;
                 }
@@ -58,23 +62,24 @@ var MCQPlugin = Plugin.extend({
         }
     },
     selectOption: function(option) {
+        
     	var controller = this._controller;
-    	if (!this._multi_select) {
+    	
+        // If it is not a multi-select, then unset all other selected shadows
+        if (!this._multi_select) {
     		this._options.forEach(function(o) {
-    			if (o._index != option._index && typeof o._self.shadow != 'undefined') {
+    			if (o._index != option._index && o.hasShadow()) {
     				o.removeShadow();
     				controller.setModelValue(o._model, false, 'selected');
     			}
             });
     	}
-    	var val = false;
-    	if (option._self.shadow) {
-            option._self.shadow = undefined;
-        } else {
-            option._self.shadow = new createjs.Shadow(this._shadow, this._offsetX, this._offsetY, this._blur);
-            val = true;
-        }
+    	
+        // If the shadow is visible, toggle it (unselect)
+        var val = option.toggleShadow();
         controller.setModelValue(option._model, val, 'selected');
+
+        // Shadow state has changed, re-render
         Renderer.update = true;
         return val;
     }

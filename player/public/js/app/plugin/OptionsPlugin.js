@@ -58,6 +58,26 @@ var OptionsPlugin = Plugin.extend({
                     data.padY = padY;
                     data.snapX = instance._data.snapX;
                     data.snapY = instance._data.snapY;
+
+                    data.stroke = instance._data.stroke;
+                    data['stroke-width'] = instance._data['stroke-width'];
+
+                    if (this._parent._shadow) {
+                        data.shadowColor = this._parent._shadow;
+                    }
+                    if (this._parent._highlight) {
+                        data.highlight = this._parent._highlight;
+                    }
+                    if (_.isFinite(this._parent._blur)) {
+                        data.blur = this._parent._blur;
+                    }
+                    if (_.isFinite(this._parent._offsetX)) {
+                        data.offsetX = this._parent._offsetX;
+                    }
+                    if (_.isFinite(this._parent.offsetY)) {
+                        data.offsetY = this._parent.offsetY;
+                    }
+
     				data.option = instance._data.options + '[' + index + ']';
     				index = index + 1;
     				PluginManager.invoke('option', data, instance._parent, instance._stage, instance._theme);

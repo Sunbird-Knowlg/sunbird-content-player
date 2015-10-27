@@ -83,6 +83,7 @@ var OptionPlugin = Plugin.extend({
             var instance = this;
             var asset = this._self;
             asset.cursor = 'pointer';
+
             asset.on("mousedown", function(evt) {
                 this.parent.addChild(this);
                 this.offset = {
@@ -100,6 +101,9 @@ var OptionPlugin = Plugin.extend({
             asset.on("pressmove", function(evt) {
                 this.x = evt.stageX + this.offset.x;
                 this.y = evt.stageY + this.offset.y;
+
+                instance.addShadow();
+                
                 Renderer.update = true;
             });
             asset.on("pressup", function(evt) {
@@ -164,6 +168,9 @@ var OptionPlugin = Plugin.extend({
                     }
                     instance._parent.setAnswer(instance, plugin._index);
                 }
+
+                instance.removeShadow();
+
                 var ext = {
                     type: evt.type,
                     x: evt.stageX,
@@ -187,11 +194,7 @@ var OptionPlugin = Plugin.extend({
         data.w = 100 - (2 * padx);
         data.h = 100 - (2 * pady);
 
-        // var debugData = {x : data.x, y: data.y, w: data.w, h:data.h, type:'rect', stroke:'red'};
-        // var debugData2 = {x : 0, y: 0, w: 100, h: 100, type:'rect', stroke:'green'};
-        
-        // PluginManager.invoke('shape', debugData, this, this._stage, this._theme);
-        // PluginManager.invoke('shape', debugData2, this, this._stage, this._theme);
+        this.initShadow(data);
 
         PluginManager.invoke('image', data, this, this._stage, this._theme);
         this._data.asset = value.asset;
@@ -212,15 +215,24 @@ var OptionPlugin = Plugin.extend({
         data.align = align;
         data.valign = valign;
         
-        // var debugData = {x : data.x, y: data.y, w: data.w, h:data.h, type:'rect', stroke:'red'};
-        // var debugData2 = {x : 0, y: 0, w: 100, h: 100, type:'rect', stroke:'green'};
-        
-        // PluginManager.invoke('shape', debugData, this, this._stage, this._theme);
-        // PluginManager.invoke('shape', debugData2, this, this._stage, this._theme);
+        this.initShadow(data);
 
         PluginManager.invoke('text', data, this, this._stage, this._theme);
         this._data.asset = data.asset;
         this._render = true;
+    },
+    initShadow: function(data) {
+
+        var highlightColor = this._data.highlight || '#E89241';
+        var shadowColor = this._data.shadowColor || '#cccccc';
+
+        var shadowData = {x : 0, y: 0, w: 100, h: 100, type:'roundrect', fill: highlightColor, visible: false};
+        this._self.shadow = PluginManager.invoke('shape', shadowData, this, this._stage, this._theme);
+
+        var offsetX = this._data.offsetX || 0;
+        var offsetY = this._data.offsetY || 0;
+        var blur = this._data.blur || 2;
+        this._self.shadow._self.shadow = new createjs.Shadow(shadowColor, offsetX, offsetY, blur);
     }
 });
 PluginManager.registerPlugin('option', OptionPlugin);
