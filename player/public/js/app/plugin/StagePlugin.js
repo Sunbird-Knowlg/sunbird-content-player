@@ -7,7 +7,9 @@ var StagePlugin = Plugin.extend({
     _stageControllerName: undefined,
     _templateVars: {},
     _controllerMap: {},
+    _inputs: [],
     initPlugin: function(data) {
+        this._inputs = [];
         var instance = this;
         this._self = new creatine.Scene();;
         var dims = this.relativeDims();
@@ -119,6 +121,9 @@ var StagePlugin = Plugin.extend({
     evaluate: function(action) {
         var valid = false;
         if (this._stageController) {
+            this._inputs.forEach(function(input) {
+                input.setModelValue();
+            });
             var result = this._stageController.evalItem();
             if (result) {
                 valid = result.pass;    
