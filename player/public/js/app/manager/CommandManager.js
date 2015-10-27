@@ -67,6 +67,12 @@ CommandManager = {
                     window.location.hash = action.href;
                 }
                 break;
+            case 'external': 
+                if(action.href) 
+                    window.open(action.href, "_system"); 
+                else
+                    startApp(action.app);            
+                break;
             case 'eval':
                 if (plugin) plugin.evaluate(action);
                 break;
