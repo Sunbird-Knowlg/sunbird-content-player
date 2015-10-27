@@ -68,10 +68,7 @@ CommandManager = {
                 }
                 break;
             case 'external': 
-                if(action.href) 
-                    window.open(action.href, "_system"); 
-                else
-                    startApp(action.app);            
+                if(action.href) window.open(action.href, "_system");             
                 break;
             case 'eval':
                 if (plugin) plugin.evaluate(action);
