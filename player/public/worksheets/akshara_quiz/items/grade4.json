@@ -14,6 +14,7 @@
 		"set_1" : [
 			{
 				"identifier": "ek.n.q901",
+				"qid": "G4Q1",
 				"type": "mtf",
 				"template": "mtf_template_1",
 				"qlevel": "MEDIUM",
@@ -46,27 +47,27 @@
 				],
 				"rhs_options": [
 					{
-						"value": {"type": "text", "asset": "654", "font": "Verdana", "color": "white",  "fontsize": "600"},
+						"value": {"type": "text", "asset": "654", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 2
 					},
 					{
-						"value": {"type": "text", "asset": "345", "font": "Verdana", "color": "white",  "fontsize": "600"},
+						"value": {"type": "text", "asset": "345", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 4
 					},
 					{
-						"value": {"type": "text", "asset": "768", "font": "Verdana", "color": "white",  "fontsize": "600"},
+						"value": {"type": "text", "asset": "768", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 1
 					},
 					{
-						"value": {"type": "text", "asset": "456", "font": "Verdana", "color": "white",  "fontsize": "600"},
+						"value": {"type": "text", "asset": "456", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 3
 					},
 					{
-						"value": {"type": "text", "asset": "143", "font": "Verdana", "color": "white",  "fontsize": "600"},
+						"value": {"type": "text", "asset": "143", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 5
 					},
 					{
-						"value": {"type": "text", "asset": "987", "font": "Verdana", "color": "white",  "fontsize": "600"},
+						"value": {"type": "text", "asset": "987", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 0
 					}
 				],
@@ -76,10 +77,11 @@
 			},
 			{
 				"identifier": "ek.n.q902",
+				"qid": "G4Q2",
 				"type": "mtf",
 				"template": "mtf_template_2",
 				"qlevel": "MEDIUM",
-				"title": "ಕೊಟ್ಟಿರುವ ಸಂಖ್ಯೆಗಳನ್ನು ಇಳಿಕೆ ಕ್ರಮದಲ್ಲಿ ಜೋಡಿಸಿರಿ.",
+				"title": "ಸ್ಥಾನಬೆಲೆಗೆ ಅನುಗುಣವಾಗಿ ಸಂಖ್ಯೆಯನ್ನು ಭರ್ತಿ ಮಾಡಿರಿ.",
 				"question":"2080",
 				"lhs_options": [
 					{
@@ -105,47 +107,48 @@
 				],
 				"rhs_options": [
 					{
-						"value": {"type": "text", "asset": "2000", "font": "Verdana", "color": "white",  "fontsize": "600"},
+						"value": {"type": "text", "asset": "2000", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 0
 					},
 					{
-						"value": {"type": "text", "asset": "0", "font": "Verdana", "color": "white",  "fontsize": "600"},
+						"value": {"type": "text", "asset": "0", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 1
 					},
 					{
-						"value": {"type": "text", "asset": "80", "font": "Verdana", "color": "white",  "fontsize": "600"},
+						"value": {"type": "text", "asset": "80", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 2
 					},
 					{
-						"value": {"type": "text", "asset": "0", "font": "Verdana", "color": "white",  "fontsize": "600"},
+						"value": {"type": "text", "asset": "0", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 3
 					}
-				],
+				],	
 				"max_score": 6,
 				"partial_scoring": true,
 				"feedback": ""
 			},
 			{
 				"identifier": "ek.n.q903",
+				"qid": "G4Q3",
 				"type": "mcq",
 				"num_answers": 1,
-				"template": "mcq_template_1",
+				"template": "mcq_template_6",
 				"qlevel": "MEDIUM",
 				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
-				"question":"    1783 \n+ 4215 \n_____",
+				"question":"    1783 \n+ 4215",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "8995", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "8995", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "5998", "font": "Verdana", "color": "white",  "fontsize": "500"},
+						"value": {"type": "text", "asset": "5998", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					},
 					{
-						"value": {"type": "text", "asset": "9958", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "9958", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "9598", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "9598", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					}
 				],
 				"max_score": 1,
@@ -154,25 +157,26 @@
 			},
 			{
 				"identifier": "ek.n.q904",
+				"qid": "G4Q4",
 				"type": "mcq",
 				"num_answers": 1,
-				"template": "mcq_template_1",
+				"template": "mcq_template_6",
 				"qlevel": "MEDIUM",
 				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
-				"question":"   6538 \n- 4015 \n_____",
+				"question":"   6538 \n- 4015",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "3252", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "3252", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "5232", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "5232", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "2523", "font": "Verdana", "color": "white",  "fontsize": "500"},
+						"value": {"type": "text", "asset": "2523", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					},
 					{
-						"value": {"type": "text", "asset": "2532", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "2532", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					}
 				],
 				"max_score": 1,
@@ -181,6 +185,7 @@
 			},
 			{
 				"identifier": "ek.n.q905",
+				"qid": "G4Q5",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -189,17 +194,17 @@
 				"question":"200 x 8",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "1600", "font": "Verdana", "color": "white",  "fontsize": "500"},
+						"value": {"type": "text", "asset": "1600", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					},
 					{
-						"value": {"type": "text", "asset": "1800", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "1800", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "1400", "font": "Verdana", "color": "white",  "fontsize": "500"}	
+						"value": {"type": "text", "asset": "1400", "font": "Verdana", "color": "black",  "fontsize": "240"}	
 					},
 					{
-						"value": {"type": "text", "asset": "1100", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "1100", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					}
 				],
 				"max_score": 1,
@@ -208,6 +213,7 @@
 			},
 			{
 				"identifier": "ek.n.q906",
+				"qid": "G4Q6",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -216,16 +222,16 @@
 				"question":"56 ÷ 8",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "6", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "6", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "8", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "8", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "9", "font": "Verdana", "color": "white",  "fontsize": "500"}	
+						"value": {"type": "text", "asset": "9", "font": "Verdana", "color": "black",  "fontsize": "240"}	
 					},
 					{
-						"value": {"type": "text", "asset": "7", "font": "Verdana", "color": "white",  "fontsize": "500"},
+						"value": {"type": "text", "asset": "7", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					}
 				],
@@ -235,24 +241,25 @@
 			},
 			{
 				"identifier": "ek.n.q907",
+				"qid": "G4Q7",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
 				"qlevel": "MEDIUM",
-				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ. ಒಂದು ಕಿತ್ತಳೆ ಹಣ್ಣಿನ ಬೆಲೆ 16 ರೂ. ಹಾಗಾದರೆ 20 ಕಿತ್ತಳೆ ಹಣ‍್ಣುಗಳ ಬೆಲೆ ಎಷ್ಟು?",
+				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ. ಒಂದು ಕಿತ್ತಳೆ ಹಣ್ಣಿನ ಬೆಲೆ 16 ರೂ, ಹಾಗಾದರೆ 20 ಕಿತ್ತಳೆ  ಹಣ್ಣುಗಳು ಬೆಲೆ ಎಷ್ಟು?",
 				"question":"",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "420", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "420", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "520", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "520", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "220", "font": "Verdana", "color": "white",  "fontsize": "500"}	
+						"value": {"type": "text", "asset": "220", "font": "Verdana", "color": "black",  "fontsize": "240"}	
 					},
 					{
-						"value": {"type": "text", "asset": "320", "font": "Verdana", "color": "white",  "fontsize": "500"},
+						"value": {"type": "text", "asset": "320", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					}
 				],
@@ -262,12 +269,13 @@
 			},
 			{
 				"identifier": "ek.n.q908",
+				"qid": "G4Q8",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_2",
 				"qlevel": "MEDIUM",
 				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
-				"question":"ಬಣ್ಣ ತುಂಬಿರುವ ಭಾಗವನ್ನು ಭಿನ್ನರಾಶಿಯಲ್ಲಿ ಪ್ರತಿನಿಧಿಸಿರಿ. =_________",
+				"question":"ಬಣ್ಣ ತುಂಬಿರುವ ಭಾಗವನ್ನು ಭಿನ್ನರಾಶಿಯಲ್ಲಿ ಪ್ರತಿನಿಧಿಸಿರಿ.  =____________",
 				"model":{
 					"img":{
 						"type":"image",
@@ -276,17 +284,17 @@
 				},
 				"options": [
 					{
-						"value": {"type": "text", "asset": "8/4", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "8/4", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "4/8", "font": "Verdana", "color": "white",  "fontsize": "500"},
+						"value": {"type": "text", "asset": "4/8", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					},
 					{
-						"value": {"type": "text", "asset": "8/8", "font": "Verdana", "color": "white",  "fontsize": "500"}	
+						"value": {"type": "text", "asset": "8/8", "font": "Verdana", "color": "black",  "fontsize": "240"}	
 					},
 					{
-						"value": {"type": "text", "asset": "4/4", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "4/4", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					}
 				],
 				"max_score": 1,
@@ -295,6 +303,7 @@
 			},
 			{
 				"identifier": "ek.n.q909",
+				"qid": "G4Q9",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -303,17 +312,17 @@
 				"question":"0.07 = __________",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "7/100", "font": "Verdana", "color": "white",  "fontsize": "500"},
+						"value": {"type": "text", "asset": "7/100", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					},
 					{
-						"value": {"type": "text", "asset": "7/10", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "7/10", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "7/1000", "font": "Verdana", "color": "white",  "fontsize": "500"}	
+						"value": {"type": "text", "asset": "7/1000", "font": "Verdana", "color": "black",  "fontsize": "240"}	
 					},
 					{
-						"value": {"type": "text", "asset": "1/7", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "1/7", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					}
 				],
 				"max_score": 1,
@@ -322,6 +331,7 @@
 			},
 			{
 				"identifier": "ek.n.q910",
+				"qid": "G4Q10",
 				"type": "mtf",
 				"template": "mtf_template_vertical",
 				"qlevel": "MEDIUM",
@@ -350,19 +360,19 @@
 				],
 				"rhs_options": [
 					{
-						"value": {"type": "text", "asset": "2500ಮೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "500"},
+						"value": {"type": "text", "asset": "2500ಮೀಟರ್", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 2
 					},
 					{
-						"value": {"type": "text", "asset": "¾ಲೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "500"},
+						"value": {"type": "text", "asset": "¾ಲೀಟರ್", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 3
 					},
 					{
-						"value": {"type": "text", "asset": "500ಗ್ರಾಂ", "font": "Verdana", "color": "white",  "fontsize": "500"},
+						"value": {"type": "text", "asset": "500ಗ್ರಾಂ", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 0
 					},
 					{
-						"value": {"type": "text", "asset": "250ಮಿಲಿಲೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "500"},
+						"value": {"type": "text", "asset": "250ಮಿಲಿಲೀಟರ್", "font": "Verdana", "color": "black",  "fontsize": "600"},
 						"answer": 1
 					}
 				],
@@ -372,6 +382,7 @@
 			},
 			{
 				"identifier": "ek.n.q911",
+				"qid": "G4Q11",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -380,17 +391,17 @@
 				"question":"ಒಂದು ದಿನಕ್ಕೆ 24 ಗಂಟೆಗಳು. ಹಾಗಾದರೆ ಒಂದು ವಾರದಲ್ಲಿ ಒಟ್ಟು ಎಷ್ಟು ಗಂಟೆಗಳು ಎಂದು ಗುರುತಿಸಿರಿ.",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "158", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "158", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "175", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "175", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "168", "font": "Verdana", "color": "white",  "fontsize": "500"},
+						"value": {"type": "text", "asset": "168", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true	
 					},
 					{
-						"value": {"type": "text", "asset": "188", "font": "Verdana", "color": "white",  "fontsize": "500"}
+						"value": {"type": "text", "asset": "188", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					}
 				],
 				"max_score": 1,
@@ -399,11 +410,12 @@
 			},
 			{
 				"identifier": "ek.n.q912",
+				"qid": "G4Q12",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_3",
 				"qlevel": "MEDIUM",
-				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
+				"title": "ಮುಂದಿನ ವಿನ್ಯಾಸವನ್ನು ಆರಿಸಿರಿ.",
 				"question":"                                                                               _________",
 				"model":{
 					"img":{
@@ -429,6 +441,7 @@
 			},
 			{
 				"identifier": "ek.n.q913",
+				"qid": "G4Q13",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_5",
@@ -457,11 +470,12 @@
 			},
 			{
 				"identifier": "ek.n.q914",
+				"qid": "G4Q14",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_4",
 				"qlevel": "MEDIUM",
-				"title": "ಇದು ಯಾವ ಕೋನವೆಂದು ಹೆಸರನ್ನುಆರಿಸಿರಿ.",
+				"title": "ಇದು ಯಾವ ಕೋನವೆಂದು ಹೆಸರನ್ನು ಆರಿಸಿರಿ.",
 				"question":"",
 				"model":{
 					"img":{
@@ -471,14 +485,14 @@
 				},
 				"options": [
 					{
-						"value": {"type": "text", "asset": "ಲಘು ಕೋನ ", "font": "Verdana", "color": "white", "fontsize": "500"},
+						"value": {"type": "text", "asset": "ಲಘು ಕೋನ ", "font": "Verdana", "color": "black", "fontsize": "240"},
 						"answer":true
 					},
 					{
-						"value": {"type": "text", "asset": "ವಿಶಾಲ ಕೋನ ", "font": "Verdana", "color": "white", "fontsize": "500"}
+						"value": {"type": "text", "asset": "ವಿಶಾಲ ಕೋನ ", "font": "Verdana", "color": "black", "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "ಲಂಬ ಕೋನ ", "font": "Verdana", "color": "white", "fontsize": "500"}	
+						"value": {"type": "text", "asset": "ಲಂಬ ಕೋನ ", "font": "Verdana", "color": "black", "fontsize": "240"}	
 					}
 				],
 				"max_score": 1,
@@ -487,12 +501,13 @@
 			},
 			{
 				"identifier": "ek.n.q915",
+				"qid": "G4Q15",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_2",
 				"qlevel": "MEDIUM",
 				"title": "ಈ ಚಿತ್ರದಲ್ಲಿರುವ ಪ್ರತಿಯೊಂದು ಚೌಕವು 1 ಚದರ ಸೆಂ.ಮೀ. ಇದೆ. ಈ ಚಿತ್ರದ ಸುತ್ತಳತೆಯನ್ನು ಲೆಕ್ಕ ಮಾಡಿ,  ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
-				"question":"ಸುತ್ತಳತೆ = _______ ಚದರ ಸೆಂ.ಮೀ",
+				"question":"ಸುತ್ತಳತೆ = ______________ ಚದರ ಸೆಂ.ಮೀ",
 				"model":{
 					"img":{
 						"type":"image",
@@ -506,17 +521,17 @@
 				},
 				"options": [
 					{
-						"value": {"type": "text", "asset": "12 ", "font": "Verdana", "color": "white",  "fontsize": "650"},
+						"value": {"type": "text", "asset": "12 ", "font": "Verdana", "color": "black",  "fontsize": "500"},
 						"answer":true
 					},
 					{
-						"value": {"type": "text", "asset": "14", "font": "Verdana", "color": "white",  "fontsize": "650"}
+						"value": {"type": "text", "asset": "14", "font": "Verdana", "color": "black",  "fontsize": "500"}
 					},
 					{
-						"value": {"type": "text", "asset": "15", "font": "Verdana", "color": "white",  "fontsize": "650"}	
+						"value": {"type": "text", "asset": "15", "font": "Verdana", "color": "black",  "fontsize": "500"}	
 					},
 					{
-						"value": {"type": "text", "asset": "16", "font": "Verdana", "color": "white",  "fontsize": "650"}	
+						"value": {"type": "text", "asset": "16", "font": "Verdana", "color": "black",  "fontsize": "500"}	
 					}
 				],
 				"max_score": 1,
