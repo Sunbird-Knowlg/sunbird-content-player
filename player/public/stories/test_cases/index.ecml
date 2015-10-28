@@ -132,6 +132,15 @@
                 <action type="command" command="windowEvent" asset="theme" href="#/content/list"/>
             </event>
         </shape>
+
+        <text x="48" y="75" w="15" h="5" font="Arial" fontsize="48">
+            Ekstep
+        </text>
+        <shape type="rect" x="47" y="74" w="17" h="7" hitArea="true">
+            <event type="click">
+                <action type="command" command="external" href="http://www.ekstep.org/"/>
+            </event>
+        </shape>
         
     </stage>
 </theme>
