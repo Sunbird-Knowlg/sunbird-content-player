@@ -1,5 +1,5 @@
 CommandManager = {
-    audioActions: ['play', 'pause', 'stop', 'togglePlay'],
+    audioActions: ['play', 'pause', 'stop', 'togglePlay', 'external', 'windowEvent'],
     handle: function(action) {
         var plugin = PluginManager.getPluginObject(action.asset);
         if (!_.contains(CommandManager.audioActions, action.command)) {
