@@ -1,5 +1,5 @@
 CommandManager = {
-    audioActions: ['play', 'pause', 'stop', 'togglePlay'],
+    audioActions: ['play', 'pause', 'stop', 'togglePlay', 'external', 'windowEvent'],
     handle: function(action) {
         var plugin = PluginManager.getPluginObject(action.asset);
         if (!_.contains(CommandManager.audioActions, action.command)) {
@@ -8,7 +8,8 @@ CommandManager = {
                 return;
             }
         }
-        switch (action.command) {
+        var choice = (action.command).toLowerCase();
+        switch (choice) {
             case 'play':
                 if (plugin && plugin._type == 'sprite') {
                     plugin.play(action.animation);
@@ -68,7 +69,10 @@ CommandManager = {
                 }
                 break;
             case 'external': 
-                if(action.href) window.open(action.href, "_system");             
+                if(action.href) 
+                    window.open(action.href, "_system"); 
+                else 
+                    startApp(action.app);                                
                 break;
             case 'eval':
                 if (plugin) plugin.evaluate(action);
@@ -83,6 +87,7 @@ CommandManager = {
                 // set params based on scope.
                 break;
             default:
+                console.log("Command not found.");
         }
     }
 }
