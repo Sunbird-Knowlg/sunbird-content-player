@@ -1,0 +1,77 @@
+{
+	"identifier": "moon_cap_funtime_1",
+	"title": "Moon And The Cap FunTime",
+	"total_items": 1,
+	"max_score": 4,
+	"subject": "LIT",
+	"item_sets": [
+		{
+			"id": "set_1",
+        	"count": 1	
+		}
+	],
+	"items": {
+		"set_1" : [
+			{
+				"identifier": "FT1",
+				"dimension":"LD1",
+				"mc":"LO1",
+				"methodCode":"LT4",
+				"type": "MTF",
+				"template": "mtf_template_2",
+				"qlevel": "EASY",
+				"qid":"EK.L.ENG.MATC.P1",
+				"exres":"Sun Sun, Moon Moon, Cap Cap, Pipal Tree Pipal Tree",
+				"title": "Match the following",
+				"lhs_options": [
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 0,
+						"sub_title":"Sun"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 1,
+						"sub_title":"Moon"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 2,
+						"sub_title":"Cap"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 3,
+						"sub_title":"Pipal Tree"
+					}
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "image", "asset": "ws_tree"},
+						"answer": 3
+					},
+					{
+						"value": {"type": "image", "asset": "ws_moon"},
+						"answer": 1
+					},
+					{
+						"value": {"type": "image", "asset": "ws_sun"},
+						"answer": 0
+					},
+					{
+						"value": {"type": "image", "asset": "ws_bluecap"},
+						"answer": 2
+					}
+				],
+				"hints": [
+					
+				],"model" : {
+					"title_audio" : {"asset": "ft_1_sound", "type": "audio"}
+				},
+				"max_score": 4,
+				"partial_scoring": true,
+				"feedback": ""
+			}
+		]
+	}
+}

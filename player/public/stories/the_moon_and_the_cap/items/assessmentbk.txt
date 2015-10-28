@@ -1,0 +1,214 @@
+{
+				"identifier": "mc1_set_1_1",
+				"type": "mtf",
+				"template": "mtf_template_1",
+				"qlevel": "MEDIUM",
+				"title": "Match the following",
+				"lhs_options": [
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 0,
+						"sub_title":"Old"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 1,
+						"sub_title":"New"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 2,
+						"sub_title":"Day"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 3,
+						"sub_title":"Night"
+					}
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "image", "asset": "night"},
+						"answer": 3
+					},
+					{
+						"value": {"type": "image", "asset": "new"},
+						"answer": 1
+					},
+					{
+						"value": {"type": "image", "asset": "old"},
+						"answer": 0
+					},
+					{
+						"value": {"type": "image", "asset": "day"},
+						"answer": 2
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "Q1_sound", "type": "audio"}
+				},
+				"hints": [
+					{"asset": "The tailor is surrounded by clothers to stitch.", "type": "text"}
+				],
+				"max_score": 4,
+				"partial_scoring": true,
+				"feedback": ""
+			},
+			{
+				"identifier": "mc1_set_1_2",
+				"type": "mtf",
+				"template": "mtf_template_1",
+				"qlevel": "MEDIUM",
+				"title": "Match the meals to the time of the day",
+				"lhs_options": [
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 0,
+						"sub_title":"Old"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 1,
+						"sub_title":"New"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 2,
+						"sub_title":"Day"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 3,
+						"sub_title":"Night"
+					}
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "image", "asset": "new"},
+						"answer": 1
+					},
+					{
+						"value": {"type": "image", "asset": "night"},
+						"answer": 3
+					},
+					{
+						"value": {"type": "image", "asset": "old"},
+						"answer": 0
+					},
+					{
+						"value": {"type": "image", "asset": "day"},
+						"answer": 2
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "Q1_sound", "type": "audio"}
+				},
+				"hints": [
+					
+				],
+				"max_score": 4,
+				"partial_scoring": true,
+				"feedback": ""
+			},
+			{
+				"identifier": "mc1_set_1_3",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_1",
+				"qlevel": "MEDIUM",
+				"title": "Pick the shiney new object from below",
+				"options": [
+					{
+						"value": {"type": "image", "asset": "new"},
+						"answer": true
+					},
+					{
+						"value": {"type": "image", "asset": "old"}
+					},
+					{
+						"value": {"type": "image", "asset": "night"}
+					},
+					{
+						"value": {"type": "image", "asset": "day"}
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "mc1_set_1_4",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_1",
+				"qlevel": "MEDIUM",
+				"title": "What was the color of the moon's cap",
+				"options": [
+					{
+						"value": {"type": "image", "asset": "new"},
+						"answer": true
+					},
+					{
+						"value": {"type": "image", "asset": "old"}
+					},
+					{
+						"value": {"type": "image", "asset": "night"}
+					},
+					{
+						"value": {"type": "image", "asset": "day"}
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "mc1_set_1_5",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_1",
+				"qlevel": "MEDIUM",
+				"title": "Where did the boy get the cap from",
+				"options": [
+					{
+						"value": {"type": "image", "asset": "new"},
+						"answer": true
+					},
+					{
+						"value": {"type": "image", "asset": "old"}
+					},
+					{
+						"value": {"type": "image", "asset": "night"}
+					},
+					{
+						"value": {"type": "image", "asset": "day"}
+					}
+				],
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "mc1_set_1_6",
+				"type": "ftb",
+				"num_answers": 1,
+				"template": "ftb_template_1",
+				"qlevel": "MEDIUM",
+				"title": "Complete the spelling of these words by choosing from AEIOU",
+				"model": {
+					"default":"",
+					"word0":"C __ P",						
+					"word1":"M __ __ N",					
+					"word2":"T R __ __",					
+					"word3":"S __ N"					
+				},
+				"answer": {
+					"ans0" : {"value" : "A", "score": 1},
+					"ans1" : {"value" : "OO", "score": 1},
+					"ans1" : {"value" : "EE", "score": 1},
+					"ans2" : {"value" : "U", "score": 1}
+				},
+				"max_score": 4,
+				"partial_scoring": false,
+				"feedback": ""
+			}

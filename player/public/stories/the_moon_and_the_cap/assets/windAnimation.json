@@ -1,0 +1,9 @@
+{
+	"framerate": 12,
+	"images": ["assets/animations/windAnimation.png"],
+	"frames": {"regX": 0, "height":240 , "count": 20, "regY": 0, "width": 506},
+	"animations": {
+		"wind": [0, 19, "wind",1.0],
+		"stop":[19,19,"wind",0.0005]
+	}
+}
