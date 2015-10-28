@@ -1,0 +1,9 @@
+{
+	"model" :{
+		"ts_textpg_align" : "Text Plugin - Align",
+		"ts_textpg_wrap"  : "Text Plugin - Wrap",
+		"ts_external_launch" : "External Launch", 
+		"ts_mcq_glow" : "MCQ options - Glow Control",
+		"summary_heading" : "It works! See you soon. :)"
+	}
+}
