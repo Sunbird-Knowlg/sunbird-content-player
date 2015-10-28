@@ -1,0 +1,9 @@
+{
+	"framerate": 30,
+	"images": ["assets/animations/capAnimation.png"],
+	"frames": {"regX": 0, "height": 452, "count": 30, "regY": 0, "width": 480},
+	"animations": {
+		"cap": [0, 29, "stop",2.0],
+		"stop":[29,29,"stop"]
+	}
+}

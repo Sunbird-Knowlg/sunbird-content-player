@@ -1,0 +1,9 @@
+{
+	"framerate": 30,
+	"images": ["assets/animations/moonAnimation.png"],
+	"frames": {"regX": 0, "height": 252, "count": 30, "regY": 0, "width": 381},
+	"animations": {
+		"moon": [0, 29, "moon",2.0],
+		"stop":[29,29,"stop"]
+	}
+}

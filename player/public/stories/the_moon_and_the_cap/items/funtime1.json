@@ -1,0 +1,73 @@
+{
+	"identifier": "haircut_story_1",
+	"title": "Haircut Story Assessment",
+	"total_items": 1,
+	"max_score": 5,
+	"subject": "LIT",
+	"item_sets": [
+		{
+			"id": "set_1",
+        	"count": 1	
+		}
+	],
+	"items": {
+		"set_1" : [
+			{
+				"identifier": "mc1_set_1_1",
+				"type": "mtf",
+				"template": "mtf_template_2",
+				"qlevel": "MEDIUM",
+				"title": "Match the following",
+				"lhs_options": [
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 0,
+						"sub_title":"Sun"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 1,
+						"sub_title":"Moon"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 2,
+						"sub_title":"Cap"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 3,
+						"sub_title":"Pipal Tree"
+					}
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "image", "asset": "ws_tree"},
+						"answer": 3
+					},
+					{
+						"value": {"type": "image", "asset": "ws_moon"},
+						"answer": 1
+					},
+					{
+						"value": {"type": "image", "asset": "ws_sun"},
+						"answer": 0
+					},
+					{
+						"value": {"type": "image", "asset": "ws_bluecap"},
+						"answer": 2
+					}
+				],
+				"model" : {
+					
+				},
+				"hints": [
+					
+				],
+				"max_score": 4,
+				"partial_scoring": true,
+				"feedback": ""
+			}
+		]
+	}
+}

@@ -1,0 +1,422 @@
+{
+				"identifier": "Q2",
+				"dimension":"LD2",
+				"mc":"LO6",
+				"methodCode":"LT32",
+				"type": "MCQ",
+				"qid":"EK.L.ENG.Q2",
+				"exres":"A",
+				"num_answers": 4,
+				"template": "mcq_template_aeiou",
+				"qlevel": "EASY",
+				"title": "Complete the spelling of these words by choosing from AEIOU",
+				"model": {
+					"default":"",
+					"word0":"C __ P",						
+					"word1":"M __ __ N",					
+					"word2":"T R __ __",					
+					"word3":"S __ N",
+					"title_audio" : {"asset": "ws_2_sound", "type": "audio"}
+				},
+				"options": [
+					{
+						"value": {"type": "text", "asset": "A", "font": "Verdana", "color": "black",  "fontsize": "400"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "E", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "I", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "O", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "U", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					}
+				],
+				"max_score": 4,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q5",
+				"dimension":"LD2",
+				"mc":"LO6",
+				"methodCode":"LT32",
+				"type": "MCQ",
+				"qid":"EK.L.ENG.Q5",
+				"exres":"U",
+				"num_answers": 4,
+				"template": "mcq_template_aeiou",
+				"qlevel": "EASY",
+				"title": "Complete the spelling of these words by choosing from AEIOU",
+				"model": {
+					"default":"",
+					"word1":"C __ P",						
+					"word3":"M __ __ N",					
+					"word2":"T R __ __",					
+					"word0":"S __ N",
+					"title_audio" : {"asset": "ws_2_sound", "type": "audio"}
+				},
+				"options": [
+					{
+						"value": {"type": "text", "asset": "A", "font": "Verdana", "color": "black",  "fontsize": "400"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "E", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "I", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "O", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "U", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					}
+				],
+				"max_score": 4,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q3",
+				"dimension":"LD2",
+				"mc":"LO6",
+				"methodCode":"LT32",
+				"type": "MCQ",
+				"qid":"EK.L.ENG.Q3",
+				"exres":"OO",
+				"num_answers": 2,
+				"template": "mcq_template_aeiou1",
+				"qlevel": "EASY",
+				"title": "Complete the spelling of these words by choosing from AEIOU",
+				"model": {
+					"default":"",
+					"word1":"C __ P",						
+					"word0":"M __ __ N",					
+					"word2":"T R __ __",					
+					"word3":"S __ N",
+					"title_audio" : {"asset": "ws_2_sound", "type": "audio"}
+				},
+				"options": [
+					{
+						"value": {"type": "text", "asset": "A", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "E", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "I", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "O", "font": "Verdana", "color": "black",  "fontsize": "400"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "U", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "A", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "E", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "I", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "O", "font": "Verdana", "color": "black",  "fontsize": "400"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "U", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					}
+				],
+				"max_score": 4,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q4",
+				"dimension":"LD2",
+				"mc":"LO6",
+				"methodCode":"LT32",
+				"type": "MCQ",
+				"qid":"EK.L.ENG.Q4",
+				"exres":"EE",
+				"num_answers": 4,
+				"template": "mcq_template_aeiou1",
+				"qlevel": "EASY",
+				"title": "Complete the spelling of these words by choosing from AEIOU",
+				"model": {
+					"default":"",
+					"word1":"C __ P",						
+					"word2":"M __ __ N",					
+					"word0":"T R __ __",					
+					"word3":"S __ N",
+					"title_audio" : {"asset": "ws_2_sound", "type": "audio"}
+				},
+				"options": [
+					{
+						"value": {"type": "text", "asset": "A", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "E", "font": "Verdana", "color": "black",  "fontsize": "400"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "I", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "O", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "U", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "A", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "E", "font": "Verdana", "color": "black",  "fontsize": "400"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "I", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "O", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "U", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					}
+				],
+				"max_score": 4,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q1",
+				"dimension":"LD3",
+				"mc":"LO43.1",
+				"methodCode":"LT51",
+				"type": "MTF",
+				"template": "mtf_template_1",
+				"qlevel": "EASY",
+				"qid":"EK.L.ENG.MATC.Q1",
+				"exres":"Chintu FancyGlasses, Baby Candy, Ramu BlueCap",
+				"title": "Match the following",
+				"lhs_options": [
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 0,
+						"sub_title":"Chintu"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 1,
+						"sub_title":"Baby"
+					},
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 2,
+						"sub_title":"Ramu"
+					}
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "image", "asset": "ws_fancyglasses"},
+						"answer": 0
+					},
+					{
+						"value": {"type": "image", "asset": "ws_bluecap"},
+						"answer": 2
+					},
+					{
+						"value": {"type": "image", "asset": "ws_candy"},
+						"answer": 1
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "ws_1_sound", "type": "audio"}
+				},
+				"hints": [
+					
+				],
+				"max_score": 4,
+				"partial_scoring": true,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q9",
+				"dimension":"LD5",
+				"mc":"LO43.2",
+				"methodCode":"LT61",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_1",
+				"qlevel": "EASY",
+				"qid":"EK.L.ENG.MATC.Q9",
+				"exres":"BLUE",
+				"title": "What was the color of the moon's cap?",
+				"options": [
+					{
+						"value": {"type": "image", "asset": "ws_blue"},
+						"answer": true
+					},
+					{
+						"value": {"type": "image", "asset": "ws_red"}
+					},
+					{
+						"value": {"type": "image", "asset": "ws_yellow"}
+					},
+					{
+						"value": {"type": "image", "asset": "ws_green"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "ws_4_sound", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "mc1_set_1_3",
+				"dimension":"LD3",
+				"mc":"LO43.1",
+				"methodCode":"LT16",
+				"type": "MCQ",
+				"qid":"EK.L.ENG.MATC.Q10",
+				"exres":"FAIR",
+				"num_answers": 1,
+				"template": "mcq_template_2",
+				"qlevel": "MEDIUM",
+				"title": "Where did the boy get the cap from?",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "Fair", "font": "Verdana", "color": "black",  "fontsize": "400"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "Tree", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "School", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "Moon", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "ws_5_sound", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "mc1_set_1_3",
+				"dimension":"LD1",
+				"mc":"LO1",
+				"methodCode":"LT16",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_2",
+				"qlevel": "EASY",
+				"qid":"EK.L.ENG.MATC.Q11",
+				"exres":"pipal tree",
+				"title": "The cap got stuck on a",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "Banana tree", "font": "Verdana", "color": "black",  "fontsize": "400"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "Pipal tree", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "Moon", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "School", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "ws_6_sound", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "mc1_set_1_3",
+				"dimension":"LD1, LD2",
+				"mc":"LO31, LO2, LO43.1",
+				"methodCode":"LT16",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_2",
+				"qlevel": "EASY",
+				"qid":"EK.L.ENG.MATC.Q12",
+				"exres":"bright",
+				"title": "The cap was _______ blue",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "Old", "font": "Verdana", "color": "black",  "fontsize": "400"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "Candy", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "Bright", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "Strong", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "ws_7_sound", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "mc1_set_1_3",
+				"dimension":"LD1,LD2",
+				"mc":"LO31, LO2, LO43.1",
+				"methodCode":"LT16",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_2",
+				"qlevel": "MCQ",
+				"qid":"EK.L.ENG.MATC.Q13",
+				"exres":"strong",
+				"title": "The wind was ______",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "Strong", "font": "Verdana", "color": "black",  "fontsize": "400"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "Bright", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "Old", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					},
+					{
+						"value": {"type": "text", "asset": "Fancy", "font": "Verdana", "color": "black",  "fontsize": "400"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "ws_8_sound", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			}

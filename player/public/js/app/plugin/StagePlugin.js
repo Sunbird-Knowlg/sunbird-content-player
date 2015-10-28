@@ -11,6 +11,7 @@ var StagePlugin = Plugin.extend({
     initPlugin: function(data) {
         this._inputs = [];
         var instance = this;
+        this.params = {};
         this._self = new creatine.Scene();;
         var dims = this.relativeDims();
         this._self.x = dims.x;
