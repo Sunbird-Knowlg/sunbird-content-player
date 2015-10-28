@@ -108,12 +108,18 @@ var ThemePlugin = Plugin.extend({
         this._self.tick();
     },
     restart: function() {
-        var gameId = TelemetryService._gameData.id;
-        var version = TelemetryService._gameData.ver;
+        var gameId = undefined;
+        var version = undefined;
+        if (TelemetryService._gameData) {
+            gameId = TelemetryService._gameData.id;
+            version = TelemetryService._gameData.ver;
+        }
         var instance = this;
         TelemetryService.end();
         AssetManager.initStage(this._data.startStage, null, null, function() {
-            TelemetryService.start(gameId, version);
+            if (gameId && version) {
+                TelemetryService.start(gameId, version);
+            }
             instance.render();
         });
     },
