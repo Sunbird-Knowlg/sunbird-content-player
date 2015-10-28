@@ -37,11 +37,11 @@ var ItemController = Controller.extend({
 		var item = this.getModel();
 		var result;
 		var pass = false;
-		if (item.type == 'ftb') {
+		if (item.type.toLowerCase() == 'ftb') {
 			result = FTBEvaluator.evaluate(item);
-		} else if (item.type == 'mcq' || item.type == 'mmcq') {
+		} else if (item.type.toLowerCase() == 'mcq' || item.type.toLowerCase() == 'mmcq') {
 			result = MCQEvaluator.evaluate(item);
-		} else if (item.type == 'mtf') {
+		} else if (item.type.toLowerCase() == 'mtf') {
 			result = MTFEvaluator.evaluate(item);
 		}
 		if (result) {

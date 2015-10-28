@@ -14,6 +14,7 @@
 		"set_1" : [
 			{
 				"identifier": "ek.n.q916",
+				"qid": "G5Q1",
 				"type": "mtf",
 				"template": "mtf_template_3",
 				"qlevel": "MEDIUM",
@@ -31,13 +32,13 @@
 				],
 				"rhs_options": [
 					{
-						"value": {"type": "text", "asset": ">", "font": "Verdana", "color": "white",  "fontsize": "1000"}
+						"value": {"type": "text", "asset": ">", "font": "Verdana", "color": "black",  "fontsize": "1000"}
 					},
 					{
-						"value": {"type": "text", "asset": "=", "font": "Verdana", "color": "white",  "fontsize": "1000"}
+						"value": {"type": "text", "asset": "=", "font": "Verdana", "color": "black",  "fontsize": "1000"}
 					},
 					{
-						"value": {"type": "text", "asset": "<", "font": "Verdana", "color": "white",  "fontsize": "1000"},
+						"value": {"type": "text", "asset": "<", "font": "Verdana", "color": "black",  "fontsize": "1000"},
 						"answer": 0
 					}
 				],
@@ -47,25 +48,26 @@
 			},
 			{
 				"identifier": "ek.n.q917",
+				"qid": "G5Q2",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
 				"qlevel": "MEDIUM",
-				"title": "ಕೊಟ್ಟಿರುವ ವಿಸ್ತರಣಾರೂಪದ ಸಂಖ್ಯೆಯನ್ನು ಸಂಕ್ಷಿಪ್ತರೂಪದಲ್ಲಿ  ತೋರಿಸಿ. 600+8+5000+30+10000 = ",
-				"question":"",
+				"title": "ಕೊಟ್ಟಿರುವ ವಿಸ್ತರಣಾರೂಪದ ಸಂಖ್ಯೆಯನ್ನು ಸಂಕ್ಷಿಪ್ತರೂಪದಲ್ಲಿ  ತೋರಿಸಿ.  ",
+				"question":"600+8+5000+30+10000 = ",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "15638", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "15638", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					},
 					{
-						"value": {"type": "text", "asset": "15368", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "15368", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "15683", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "15683", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "68531", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "68531", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					}
 				],
 				"max_score": 1,
@@ -74,24 +76,25 @@
 			},
 			{
 				"identifier": "ek.n.q918",
+				"qid": "G5Q3",
 				"type": "mcq",
 				"num_answers": 1,
-				"template": "mcq_template_1",
+				"template": "mcq_template_6",
 				"qlevel": "MEDIUM",
 				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
-				"question":"    16438 \n+ 21783 \n_____",
+				"question":"    16438 \n+ 21783",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "22183", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "22183", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "12283", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "12283", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "83221", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "83221", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "38221", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "38221", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					}
 				],
@@ -101,25 +104,26 @@
 			},
 			{
 				"identifier": "ek.n.q919",
+				"qid": "G5Q4",
 				"type": "mcq",
 				"num_answers": 1,
-				"template": "mcq_template_1",
+				"template": "mcq_template_6",
 				"qlevel": "MEDIUM",
 				"title": "ಲೆಕ್ಕಮಾಡಿ. ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
-				"question":"   80103 \n- 24658 \n_____",
+				"question":"   80103 \n- 24658",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "55445", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "55445", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					},
 					{
-						"value": {"type": "text", "asset": "55454", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "55454", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "54455", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "54455", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "54545", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "54545", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					}
 				],
 				"max_score": 1,
@@ -128,6 +132,7 @@
 			},
 			{
 				"identifier": "ek.n.q920",
+				"qid": "G5Q5",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -136,17 +141,17 @@
 				"question":"15 x 40",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "900", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "900", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "600", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "600", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					},
 					{
-						"value": {"type": "text", "asset": "800", "font": "Verdana", "color": "white",  "fontsize": "240"}	
+						"value": {"type": "text", "asset": "800", "font": "Verdana", "color": "black",  "fontsize": "240"}	
 					},
 					{
-						"value": {"type": "text", "asset": "400", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "400", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					}
 				],
 				"max_score": 1,
@@ -155,6 +160,7 @@
 			},
 			{
 				"identifier": "ek.n.q921",
+				"qid": "G5Q6",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -163,17 +169,17 @@
 				"question":"216 ÷ 4",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "54", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "54", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					},
 					{
-						"value": {"type": "text", "asset": "57", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "57", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "58", "font": "Verdana", "color": "white",  "fontsize": "240"}	
+						"value": {"type": "text", "asset": "58", "font": "Verdana", "color": "black",  "fontsize": "240"}	
 					},
 					{
-						"value": {"type": "text", "asset": "56", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "56", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					}
 				],
 				"max_score": 1,
@@ -182,6 +188,7 @@
 			},
 			{
 				"identifier": "ek.n.q922",
+				"qid": "G5Q7",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -190,17 +197,17 @@
 				"question":"ರಮೇಶನು ಪ್ರತಿಯೊಬ್ಬನಿಗೆ ರೂ. 200 ರಂತೆ, 4 ಗೆಳೆಯರಿಗೆ ಹಣವನ್ನು ಕೊಡಲು ಅವನ ಬಳಿ ಎಷ್ಟು ಹಣ ಇರಬೇಕು?",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "400", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "400", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "800", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "800", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					},
 					{
-						"value": {"type": "text", "asset": "600", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "600", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "900", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "900", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					}
 				],
 				"max_score": 1,
@@ -209,6 +216,7 @@
 			},
 			{
 				"identifier": "ek.n.q923",
+				"qid": "G5Q8",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -217,16 +225,16 @@
 				"question":"16ರ ¼ ನ್ನು ಗುರುತಿಸಿರಿ",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "5", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "5", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "6", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "6", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "7", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "7", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "4", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "4", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					}
 				],
@@ -236,6 +244,7 @@
 			},
 			{
 				"identifier": "ek.n.q924",
+				"qid": "G5Q9",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -252,17 +261,17 @@
 				},
 				"options": [
 					{
-						"value": {"type": "text", "asset": "2/1000", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "2/1000", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "2/100", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "2/100", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "2/10", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "2/10", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					},
 					{
-						"value": {"type": "text", "asset": "1/2", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "1/2", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					}
 				],
 				"max_score": 1,
@@ -271,6 +280,7 @@
 			},
 			{
 				"identifier": "ek.n.q925",
+				"qid": "G5Q10",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -279,17 +289,17 @@
 				"question":"ಸುರೇಶನು ಪ್ರತಿದಿನ 2 ಲೀಟರ್ ನೀರನ್ನು ಕುಡಿಯುತ್ತಾನೆ. ಹಾಗಾದರೆ ಅವನು 15 ದಿನದಲ್ಲಿ ಎಷ್ಟು ನೀರು ಕುಡಿಯುತ್ತಾನೆ? ಇದನ್ನು ಮಿಲಿಲೀಟರ್ ನಲ್ಲಿ ಗುರುತಿಸಿರಿ.",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "10000 ಮಿಲಿಲೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "10000ಮಿಲಿಲೀಟರ್", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "15000 ಮಿಲಿಲೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "15000ಮಿಲಿಲೀಟರ್", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "30000 ಮಿಲಿಲೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "30000ಮಿಲಿಲೀಟರ್", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					},
 					{
-						"value": {"type": "text", "asset": "20000 ಮಿಲಿಲೀಟರ್", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "20000ಮಿಲಿಲೀಟರ್", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					}
 				],
 				"max_score": 1,
@@ -298,6 +308,7 @@
 			},
 			{
 				"identifier": "ek.n.q926",
+				"qid": "G5Q11",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_1",
@@ -306,16 +317,16 @@
 				"question":"ರೈಲ್ವೆ ವೇಳಾಪಟ್ಟಿಯಲ್ಲಿ 20:30 ಸಮಯವನ್ನು ಬರೆಯಲಾಗಿದೆ. ಇದನ್ನು 12 ಗಂಟೆಯ ಗಡಿಯಾರದ ಸಮಯಕ್ಕೆ ಬದಲಾಯಿಸಿರಿ",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "7:30", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "7:30", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "9:30", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "9:30", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "6:30", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "6:30", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "8:30", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "8:30", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer": true
 					}
 				],
@@ -325,6 +336,7 @@
 			},
 			{
 				"identifier": "ek.n.q927",
+				"qid": "G5Q12",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_3",
@@ -352,6 +364,7 @@
 			},
 			{
 				"identifier": "ek.n.q928",
+				"qid": "G5Q13",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_5",
@@ -384,6 +397,7 @@
 			},
 			{
 				"identifier": "ek.n.q929",
+				"qid": "G5Q14",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_4",
@@ -398,14 +412,14 @@
 				},
 				"options": [
 					{
-						"value": {"type": "text", "asset": "<90 ", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "<90 ", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer":true
 					},
 					{
-						"value": {"type": "text", "asset": ">90", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": ">90", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "=90", "font": "Verdana", "color": "white",  "fontsize": "240"}	
+						"value": {"type": "text", "asset": "=90", "font": "Verdana", "color": "black",  "fontsize": "240"}	
 					}
 				],
 				"max_score": 1,
@@ -414,12 +428,13 @@
 			},
 			{
 				"identifier": "ek.n.q930",
+				"qid": "G5Q15",
 				"type": "mcq",
 				"num_answers": 1,
 				"template": "mcq_template_2",
 				"qlevel": "MEDIUM",
 				"title": "ಈ ಚಿತ್ರದ ವಿಸ್ತೀರ್ಣವನ್ನು ಹಾಗೂ ಸುತ್ತಳತೆಯನ್ನು ಲೆಕ್ಕ ಮಾಡಿ.  ಸೂಕ್ತ ಉತ್ತರವನ್ನು ಆರಿಸಿರಿ.",
-				"question":"ವಿಸ್ತೀರ್ಣ = ___________ ಚದರ ಸೆಂ.ಮೀ.             \nಸುತ್ತಳತೆ= __________ ಚದರ ಸೆಂ.ಮೀ.",
+				"question":"ವಿಸ್ತೀರ್ಣ = ___________ ಚದರ ಸೆಂ.ಮೀ.\nಸುತ್ತಳತೆ= __________ ಚದರ ಸೆಂ.ಮೀ.",
 				"model":{
 					"img":{
 						"type":"image",
@@ -433,16 +448,16 @@
 				},
 				"options": [
 					{
-						"value": {"type": "text", "asset": "12&10", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "10&12", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "14&7", "font": "Verdana", "color": "white",  "fontsize": "240"}
+						"value": {"type": "text", "asset": "7&14", "font": "Verdana", "color": "black",  "fontsize": "240"}
 					},
 					{
-						"value": {"type": "text", "asset": "16&8", "font": "Verdana", "color": "white",  "fontsize": "240"}	
+						"value": {"type": "text", "asset": "8&16", "font": "Verdana", "color": "black",  "fontsize": "240"}	
 					},
 					{
-						"value": {"type": "text", "asset": "12&7", "font": "Verdana", "color": "white",  "fontsize": "240"},
+						"value": {"type": "text", "asset": "7&12", "font": "Verdana", "color": "black",  "fontsize": "240"},
 						"answer":true	
 					}
 				],

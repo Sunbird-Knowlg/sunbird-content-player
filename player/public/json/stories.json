@@ -11,7 +11,27 @@
     },
     "responseCode": "OK",
     "result": {
-        "content": [{
+        "content": [
+        {
+            "questionnaire": null,
+            "appIcon": "stories/test_cases/logo.png",
+            "subject": "literacy_v2",
+            "description": "Renderer Test Cases",
+            "name": "Renderer Tests",
+            "launchPath": "stories/test_cases",
+            "downloadUrl": "",
+            "checksum": null,
+            "loadingMessage": "A robust test suite is a must-have for any product...",
+            "concepts": [{
+                "identifier": "LO1",
+                "name": "Receptive Vocabulary",
+                "objectType": "Concept"
+            }],
+            "identifier": "org.ekstep.quiz.app.tests.renderer",
+            "grayScaleAppIcon": null,
+            "pkgVersion": 1
+        },
+        {
             "questionnaire": null,
             "appIcon": "stories/haircut_story/logo.png",
             "subject": "literacy_v2",

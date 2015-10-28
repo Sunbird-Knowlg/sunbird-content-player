@@ -31,6 +31,8 @@ var TextPlugin = Plugin.extend({
         var valign = (data.valign ? data.valign.toLowerCase() : 'top');
 
         text.x = dims.x;
+        text.lineWidth = dims.w;
+
         if (align == 'left') {
             text.x = dims.x;
         } else if (align == 'right') {
@@ -40,15 +42,15 @@ var TextPlugin = Plugin.extend({
         }
         if (valign == 'top') {
             text.y = dims.y;
-            text.textBaseline = 'top';
+            text.textBaseline = 'hanging';
         } else if (valign == 'bottom') {
-            text.y = dims.y + dims.h;
-            text.textBaseline = 'bottom';
+            text.y = dims.y + dims.h - text.getMeasuredHeight();
+            text.textBaseline = 'hanging';
         } else if (valign == 'middle') {
-            text.y = dims.y + dims.h / 2 ;
-            text.textBaseline = 'middle';
+            text.y = dims.y + dims.h/2 - text.getMeasuredHeight()/2;
+            text.textBaseline = 'hanging';
         }
-        text.lineWidth = dims.w;
+        
         text.textAlign = align;
         text.valign = valign;        
         this._self = text;

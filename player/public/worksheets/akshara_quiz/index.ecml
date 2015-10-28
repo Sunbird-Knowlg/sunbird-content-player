@@ -4,6 +4,8 @@
         <media id="g5_button" src="grade5button.png" type="image" />
         <media id="grey" src="grey.png" type="image" />
 		<media id="next" src="icons/icon_next.png" type="image" />
+		<media id="previous" src="icons/icon_previous.png" type="image" />
+		<media id="home" src="icons/home.png" type="image" />
         <media id="bg" src="felt.png" type="image" />
         <media id="fraction" src="q8_img.png" type="image" />
         <media id="pattern" src="q12_img.png" type="image" />
@@ -27,7 +29,18 @@
         <media id="highlight" src="highlight.png" type="image" />
         <media id="frameLeftLarge" src="frame_left_large.png" type="image" />
         <media id="frameRightLarge" src="frame_right_large.png" type="image" />
+		<media id="homeIcon" src="icon_home.png" type="image" />
+		<media id="replayIcon" src="icon_reload.png" type="image" />
+		<media id="aksharaLogo_Big" src="akshara_logo_final_english.jpg" type="image" />
+		<media id="aksharaLogo" src="akshara_icon_262x262.png" type="image" />
+		<media id="icon_reload" src="icon_reload.png" type="image" />
+		<media id="icon_home" src="icon_home.png" type="image" />
 		
+		<media src="sounds/select.ogg" id="select_audio" type="audiosprite">
+            <data>
+                <audioSprite id="select_sound" startTime="0" duration="102.0"></audioSprite>
+            </data>
+        </media>
         
     </manifest>
     <controller name="ws1" type="items" id="grade4"/>
@@ -36,17 +49,17 @@
 
 	<!-- User for q1, -->
 	<template id="mtf_template_1">
-		<image asset="bg" x="0" y="0" w="100" h="100"/>
-		<shape x="10" y="15" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		
-		<text model="item.identifier" x="4" y="5" w="10" h="4" font="Verdana" color = "white" fontsize="22"/>
-        <text model="item.title" x="15" y="20" w="86" h="4" font="Georgia" color = "white" fontsize="52"/>
+		<!-- <image asset="bg" x="0" y="0" w="100" h="100"/> -->
+		<!-- <shape x="10" y="15" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		 -->
+		<text model="item.qid" x="46" y="2" w="10" h="4" font="Verdana" color = "black" fontsize="35"/>
+        <text model="item.title" x="15" y="20" w="70" h="4" font="Georgia" color = "black" fontsize="42" align="center"/>
         
 			
-        <mtf model="item" force="false" id="mtf_t1">
+        <mtf model="item" force="false">
             <option x="15" y="34" w="10" h="10" snapX="28" snapY="28" option="lhs_options[0]"/>
             <option x="27" y="34" w="10" h="10" snapX="28" snapY="28" option="lhs_options[1]"/>
             <option x="39" y="34" w="10" h="10" snapX="28" snapY="28" option="lhs_options[2]"/>
@@ -54,88 +67,85 @@
             <option x="63" y="34" w="10" h="10" snapX="28" snapY="28" option="lhs_options[4]"/>
             <option x="75" y="34" w="10" h="10" snapX="28" snapY="28" option="lhs_options[5]"/>
 
-            <option x="30" y="68" w="5" h="3" option="rhs_options[0]"/>
-            <option x="43" y="84" w="5" h="3" option="rhs_options[1]"/>
-            <option x="50" y="76" w="5" h="3" option="rhs_options[2]"/>
-            <option x="40" y="66" w="5" h="3" option="rhs_options[3]"/>
-            <option x="61" y="72" w="5" h="3" option="rhs_options[4]"/>
-            <option x="50" y="60" w="5" h="3" option="rhs_options[5]"/>
+            <option x="17" y="60" w="5" h="3" option="rhs_options[0]"/>
+            <option x="29" y="60" w="5" h="3" option="rhs_options[1]"/>
+            <option x="41" y="60" w="5" h="3" option="rhs_options[2]"/>
+            <option x="53" y="60" w="5" h="3" option="rhs_options[3]"/>
+            <option x="65" y="60" w="5" h="3" option="rhs_options[4]"/>
+            <option x="77" y="60" w="5" h="3" option="rhs_options[5]"/>
         </mtf>
 	</template>
 	
 	<!-- Used for q2, -->
 	<template id="mtf_template_2">
-		<image asset="bg" x="0" y="0" w="100" h="100"/>
-		<shape x="10" y="15" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		
-
-		<text model="item.identifier" x="4" y="5" w="10" h="4" font="Verdana" color = "white" fontsize="22"/>
-        <text model="item.title" x="15" y="20" w="70" h="10" font="Georgia" color = "white" fontsize="60" align="center"/>
-        <text model="item.question" x="15" y="30" w="70" h="20" font="Georgia" color = "white" fontsize="60" align="center"/>
-
-        <text model="item.lhs_options[0].label" x="15" y="40" w="15" h="10" font="Georgia" color = "white" fontsize="50" align="center"/>
-        <text model="item.lhs_options[1].label" x="32" y="40" w="15" h="10" font="Georgia" color = "white" fontsize="50" align="center"/>
-        <text model="item.lhs_options[2].label" x="49" y="40" w="15" h="10" font="Georgia" color = "white" fontsize="50" align="center"/>
-        <text model="item.lhs_options[3].label" x="66" y="40" w="15" h="10" font="Georgia" color = "white" fontsize="50" align="center"/>
-        
+		<!-- <image asset="bg" x="0" y="0" w="100" h="100"/> -->
+		<!-- <shape x="10" y="15" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		 -->
+		<text model="item.qid" x="46" y="2" w="10" h="4" font="Verdana" color = "black" fontsize="35"/>
+        <text model="item.title" x="15" y="20" w="70" h="4" font="Georgia" color = "black" fontsize="42" align="center"/>
+        <text model="item.question" x="15" y="27" w="70" h="4" font="Georgia" color = "black" fontsize="42" align="center"/>
+        <text model="item.lhs_options[0].label" x="27" y="36" w="86" h="4" font="Georgia" color = "black" fontsize="40"/>
+        <text model="item.lhs_options[1].label" x="40" y="36" w="86" h="4" font="Georgia" color = "black" fontsize="40"/>
+        <text model="item.lhs_options[2].label" x="53" y="36" w="86" h="4" font="Georgia" color = "black" fontsize="40"/>
+        <text model="item.lhs_options[3].label" x="65" y="36" w="86" h="4" font="Georgia" color = "black" fontsize="40"/>
 			
-        <mtf model="item" force="false" id="mtf_t2">
-            <option x="15" y="47" w="15" h="12" snapX="7.5" snapY="7.5" option="lhs_options[0]"/>
-            <option x="32" y="47" w="15" h="12" snapX="7.5" snapY="7.5" option="lhs_options[1]"/>
-            <option x="49" y="47" w="15" h="12" snapX="7.5" snapY="7.5" option="lhs_options[2]"/>
-            <option x="66" y="47" w="15" h="12" snapX="7.5" snapY="7.5" option="lhs_options[3]"/>
+        <mtf model="item" force="false">
+            <option x="25" y="43" w="10" h="10" snapX="28" snapY="28" option="lhs_options[0]"/>
+            <option x="37" y="43" w="10" h="10" snapX="28" snapY="28" option="lhs_options[1]"/>
+            <option x="49" y="43" w="10" h="10" snapX="28" snapY="28" option="lhs_options[2]"/>
+            <option x="61" y="43" w="10" h="10" snapX="28" snapY="28" option="lhs_options[3]"/>
             
-            <option x="15" y="68" w="10" h="7" option="rhs_options[0]" padX="10" padY="10"/>
-            <option x="37" y="80" w="10" h="7" option="rhs_options[1]" padX="10" padY="10"/>
-            <option x="55" y="76" w="10" h="7" option="rhs_options[2]" padX="10" padY="10"/>
-            <option x="45" y="66" w="10" h="7" option="rhs_options[3]" padX="10" padY="10"/>
+            <option x="27" y="62" w="5" h="3" option="rhs_options[0]"/>
+            <option x="40" y="62" w="5" h="3" option="rhs_options[1]"/>
+            <option x="52" y="62" w="5" h="3" option="rhs_options[2]"/>
+            <option x="63" y="62" w="5" h="3" option="rhs_options[3]"/>
         </mtf>
 	</template>
 	
 	<!-- used for q 10 -->
 	<template id="mtf_template_vertical">
-		<image asset="bg" x="0" y="0" w="100" h="100"/>
-		<shape x="10" y="15" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		
-		<text model="item.identifier" x="4" y="5" w="10" h="4" font="Verdana" color = "white" fontsize="22"/>
-        <text model="item.title" x="15" y="20" w="86" h="4" font="Georgia" color = "white" fontsize="60"/>
+		<!-- <image asset="bg" x="0" y="0" w="100" h="100"/> -->
+		<!-- <shape x="10" y="15" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		 -->
+		<text model="item.qid" x="46" y="2" w="10" h="4" font="Verdana" color = "black" fontsize="35"/>
+        <text model="item.title" x="15" y="20" w="70" h="4" font="Georgia" color = "black" fontsize="42" align="center"/>
         
-		<text model="item.lhs_options[0].data" x="15" y="35" w="30" h="10" font="Georgia" color = "white" fontsize="50"/>
-		<text model="item.lhs_options[1].data" x="15" y="50" w="30" h="10" font="Georgia" color = "white" fontsize="50"/>
-		<text model="item.lhs_options[2].data" x="15" y="65" w="30" h="10" font="Georgia" color = "white" fontsize="50"/>
-		<text model="item.lhs_options[3].data" x="15" y="80" w="30" h="10" font="Georgia" color = "white" fontsize="50"/>
+		<text model="item.lhs_options[0].data" x="15" y="35" w="20" h="10" font="Georgia" color = "black" fontsize="40"/>
+		<text model="item.lhs_options[1].data" x="15" y="50" w="20" h="10" font="Georgia" color = "black" fontsize="40"/>
+		<text model="item.lhs_options[2].data" x="15" y="65" w="20" h="10" font="Georgia" color = "black" fontsize="40"/>
+		<text model="item.lhs_options[3].data" x="15" y="80" w="20" h="10" font="Georgia" color = "black" fontsize="40"/>
        	
-        <mtf model="item" force="false" id="mtf_vert">
-            <option x="37" y="31" w="20" h="11" snapX="10" snapY="10" option="lhs_options[0]"/>
-            <option x="37" y="46" w="20" h="11" snapX="10" snapY="10" option="lhs_options[1]"/>
-            <option x="37" y="61" w="20" h="11" snapX="10" snapY="10" option="lhs_options[2]"/>
-            <option x="37" y="76" w="20" h="11" snapX="10" snapY="10" option="lhs_options[3]"/>
+        <mtf model="item" force="false">
+            <option x="37" y="31" w="20" h="11" snapX="29" snapY="8" option="lhs_options[0]" stroke="red" stroke-width="2"/>
+            <option x="37" y="46" w="20" h="11" snapX="29" snapY="8" option="lhs_options[1]" stroke="red" stroke-width="2"/>
+            <option x="37" y="61" w="20" h="11" snapX="29" snapY="8" option="lhs_options[2]" stroke="red" stroke-width="2"/>
+            <option x="37" y="76" w="20" h="11" snapX="29" snapY="8" option="lhs_options[3]" stroke="red" stroke-width="2"/>
             
-            <option x="65" y="35" w="10" h="3" padX = "0" padY = "0" option="rhs_options[0]" align="left"/>
-            <option x="65" y="50" w="10" h="3" padX = "0" padY = "0" option="rhs_options[1]" align="left"/>
-            <option x="65" y="65" w="10" h="3" padX = "0" padY = "0" option="rhs_options[2]" align="left"/>
-            <option x="65" y="80" w="10" h="3" padX = "0" padY = "0" option="rhs_options[3]" align="left"/>
+            <option x="65" y="35" w="6" h="3" padX = "0" padY = "0" option="rhs_options[0]" stroke="red" stroke-width="2"/>
+            <option x="65" y="50" w="6" h="3" padX = "0" padY = "0" option="rhs_options[1]" stroke="red" stroke-width="2"/>
+            <option x="65" y="65" w="6" h="3" padX = "0" padY = "0" option="rhs_options[2]" stroke="red" stroke-width="2"/>
+            <option x="65" y="80" w="6" h="3" padX = "0" padY = "0" option="rhs_options[3]" stroke="red" stroke-width="2"/>
         </mtf>
 	</template>
 	<!-- grade 5 q1 -->
 	<!-- <template id="mtf_template_3">
 		<image asset="bg" x="0" y="0" w="100" h="100"/>
-		<shape x="10" y="15" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
+		<shape x="10" y="15" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#000000" />
 		
-		<text model="item.identifier" x="4" y="5" w="10" h="4" font="Verdana" color = "white" fontsize="22"/>
-        <text model="item.title" x="15" y="20" w="86" h="4" font="Georgia" color = "white" fontsize="52"/>
+		<text model="item.qid" x="46" y="2" w="10" h="4" font="Verdana" color = "black" fontsize="35"/>
+        <text model="item.title" x="15" y="20" w="86" h="4" font="Georgia" color = "black" fontsize="52"/>
         
-		<text model="item.data0" x="40" y="37" w="20" h="10" font="Georgia" color = "white" fontsize="40"/>
-		<text model="item.data1" x="52" y="37" w="20" h="10" font="Georgia" color = "white" fontsize="40"/>
+		<text model="item.data0" x="40" y="37" w="20" h="10" font="Georgia" color = "black" fontsize="40"/>
+		<text model="item.data1" x="52" y="37" w="20" h="10" font="Georgia" color = "black" fontsize="40"/>
 		
         <mtf model="item" force="true">
             <option x="46" y="35" w="5" h="5" snapX="25" snapY="25" option="lhs_options[0]"/>
@@ -146,23 +156,24 @@
             
         </mtf>
 	</template> -->
-	<template id="mtf_template_3">
-        <image asset="bg" x="0" y="0" w="100" h="100"/>
+	
+<template id="mtf_template_3">
+        <!-- <image asset="bg" x="0" y="0" w="100" h="100"/> -->
        
-	   <shape x="10" y="15" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		
-		<text model="item.identifier" x="4" y="5" w="10" h="4" font="Verdana" color = "white" fontsize="22"/>
+	   <!-- <shape x="10" y="15" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		 -->
+		<text model="item.qid" x="46" y="2" w="10" h="4" font="Verdana" color = "black" fontsize="35"/>
         
-	   <text model="item.title" x="15" y="20" w="86" h="4" font="Georgia" color = "white" fontsize="52"/>
+	   <text model="item.title" x="0" y="20" w="100" h="4" font="Georgia" color = "black" fontsize="42" align="center"/>
        
-        <text model="item.data0" x="35" y="40" w="20" h="10" font="Georgia" color = "white" fontsize="40"/>
-        <text model="item.data1" x="55" y="40" w="20" h="10" font="Georgia" color = "white" fontsize="40"/>
+        <text model="item.data0" x="37" y="40" w="20" h="10" font="Georgia" color = "black" fontsize="40"/>
+        <text model="item.data1" x="57" y="40" w="20" h="10" font="Georgia" color = "black" fontsize="40"/>
         
-       <mtf model="item" force="false" id="mtf_t3">
-           <option x="43" y="35" w="10" h="10" snapX="40" snapY="25" option="lhs_options[0]"/>
+       <mtf model="item" force="false">
+           <option x="45" y="37" w="10" h="10" snapX="25" snapY="0" option="lhs_options[0]"/>
            
             <option x="38" y="60" w="5" h="3" option="rhs_options[0]"/>
            <option x="47" y="60" w="5" h="3" option="rhs_options[1]"/>
@@ -172,130 +183,162 @@
 	
 	<!-- User for q3,4,5,6,7,9 -->
 	<template id="mcq_template_1">
-		<image asset="bg" x="0" y="0" w="100" h="100"/>
-		<!-- <image asset="frameLeftLarge" x="-5" y="0" w="20" h="100"/> -->
-		<!-- <image asset="frameRightLarge" x="85" y="0" w="20" h="100"/> -->
-		
-		<!-- <shape x="10" y="15" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" /> -->
-
-		<shape x="10" y="15" w="80" h="75" type="rect" stroke="#ffffff" stroke-width="2"/>
-		
-        <text model="item.identifier" x="4" y="5" w="10" h="95" font="Verdana" color = "white" fontsize="22"/>
-		<text model="item.title" x="15" y="22" w="70" h="4" font="Georgia" fontsize="70" color="white" align="center"/>
-        <text model="item.question" x="15" y="38" w="70" h="4" font="Georgia" fontsize="70" color="white" align="center"/>
-        <text model="item.subQuestion" x="15" y="45" w="70" h="4" font="Georgia" fontsize="50" color="white" align="center"/>
+		<!-- <audio asset="select_audio" /> -->
+        <text model="item.qid" x="46" y="2" w="10" h="4" font="Verdana" color = "black" fontsize="35" />
+		<text model="item.title" x="15" y="25" w="70" h="4" font="Georgia" fontsize="42" color="black" align="center"/>
+        <text model="item.question" x="15" y="34" w="70" h="4" font="Georgia" fontsize="42" color="black" align="center"/>
+        <text model="item.subQuestion" x="15" y="40" w="70" h="4" font="Georgia" fontsize="40" color="black" align="center"/>
         
-		<placeholder model="item.highlight" x="20" y="36" w="2" h="5"/>
+		<placeholder model="item.highlight" x="52.2" y="40" w="2" h="5"/>
 		
-		<text model="item.options[0].data" x="35" y="52" w="5" h="4" font="Georgia" fontsize="30" color="white"/>
-		<text model="item.options[1].data" x="60" y="52" w="5" h="4" font="Georgia" fontsize="30" color="white"/>
-		<text model="item.options[2].data" x="35" y="82" w="5" h="4" font="Georgia" fontsize="30" color="white"/>
-		<text model="item.options[3].data" x="62" y="82" w="5" h="4" font="Georgia" fontsize="30" color="white"/>
+		<text model="item.options[0].data" x="35" y="52" w="5" h="4" font="Georgia" fontsize="30" color="black"/>
+		<text model="item.options[1].data" x="60" y="52" w="5" h="4" font="Georgia" fontsize="30" color="black"/>
+		<text model="item.options[2].data" x="35" y="82" w="5" h="4" font="Georgia" fontsize="30" color="black"/>
+		<text model="item.options[3].data" x="62" y="82" w="5" h="4" font="Georgia" fontsize="30" color="black"/>
+		<!-- 
+		<shape x="17" y="60" w="15" h="20" type="rect" hitArea="true" fill="#ff0000" >
+			<event type="click">
+				<action type="command" command="play" asset="select_sound" loop="1" />
+			</event>
+		</shape>
+		<shape x="35" y="60" w="15" h="20" type="rect" hitArea="true" fill="#ff0000" >
+			<event type="click">
+				<action type="command" command="play" asset="select_sound" loop="1" />
+			</event>
+		</shape>
+		<shape x="55" y="60" w="15" h="20" type="rect" hitArea="true" fill="#ff0000" >
+			<event type="click">
+				<action type="command" command="play" asset="select_sound" loop="1" />
+			</event>
+		</shape>
+		<shape x="75" y="60" w="15" h="20" type="rect" hitArea="true" fill="#ff0000" >
+			<event type="click">
+				<action type="command" command="play" asset="select_sound" loop="1" />
+			</event>
+		</shape>
+		 -->
+        <mcq multi_select="false" model="item" shadow="#000000">
+            <options layout="table" x="17" y="60" w="70" h="20" cols="4" marginX="5" marginY="0" padX ="15" padY="5" options="options" stroke="red" stroke-width="2"/>
+        </mcq>
+    </template>
+	
+	<template id="mcq_template_6">
+		<!-- <audio asset="select_audio" /> -->
+        <text model="item.qid" x="46" y="2" w="10" h="4" font="Verdana" color = "black" fontsize="35" />
+		<text model="item.title" x="15" y="25" w="70" h="4" font="Georgia" fontsize="42" color="black" align="center"/>
+        <text model="item.question" x="15" y="32" w="70" h="4" font="Georgia" fontsize="42" color="black" align="center"/>
+        <text model="item.subQuestion" x="15" y="38" w="70" h="4" font="Georgia" fontsize="40" color="black" align="center"/>
+        <text x="15" y="38" w="70" h="4" font="Georgia" fontsize="40" color="black" align="center">
+		_____
+		</text>
+        
+		<placeholder model="item.highlight" x="52.6" y="38" w="2" h="5"/>
 		
-        <mcq multi_select="false" model="item" shadow="#FFFFFF">
-            <options layout="table" x="17" y="60" w="70" h="20" cols="4" marginX="5" marginY="0" padX ="0" padY="25" options="options"/>
+		<text model="item.options[0].data" x="35" y="52" w="5" h="4" font="Georgia" fontsize="30" color="black"/>
+		<text model="item.options[1].data" x="60" y="52" w="5" h="4" font="Georgia" fontsize="30" color="black"/>
+		<text model="item.options[2].data" x="35" y="82" w="5" h="4" font="Georgia" fontsize="30" color="black"/>
+		<text model="item.options[3].data" x="62" y="82" w="5" h="4" font="Georgia" fontsize="30" color="black"/>
+		
+        <mcq multi_select="false" model="item" shadow="#000000">
+            <options layout="table" x="17" y="60" w="70" h="20" cols="4" marginX="5" marginY="0" padX ="15" padY="5" options="options"/>
         </mcq>
     </template>
 	
 	<template id="mcq_template_5">
-		<image asset="bg" x="0" y="0" w="100" h="100"/>
-        
-		<shape x="10" y="15" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
+		<!-- <image asset="bg" x="0" y="0" w="100" h="100"/> -->
+        <!-- 
+		<shape x="10" y="15" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		 -->
 		
-		
-		<text model="item.identifier" x="4" y="5" w="10" h="4" font="Verdana" color = "white" fontsize="22"/>
-		<text model="item.title" x="15" y="25" w="70" h="4" font="Georgia" fontsize="42" color="white"/>
-        <text model="item.question" x="15" y="32" w="70" h="4" font="Georgia" fontsize="42" color="white"/>
-        <text model="item.subQuestion" x="15" y="38" w="70" h="4" font="Georgia" fontsize="50" color="white"/>
+		<text model="item.qid" x="46" y="2" w="10" h="4" font="Verdana" color = "black" fontsize="35"/>
+		<text model="item.title" x="15" y="25" w="70" h="4" font="Georgia" fontsize="42" color="black" align="center"/>
+        <text model="item.question" x="15" y="34" w="70" h="4" font="Georgia" fontsize="42" color="black"/>
+        <text model="item.subQuestion" x="15" y="38" w="70" h="4" font="Georgia" fontsize="50" color="black"/>
         
 		<placeholder model="item.highlight" x="20" y="36" w="2" h="5"/>
 		
-		<text model="item.options[0].data" x="16" y="52" w="5" h="4" font="Georgia" fontsize="30" color="white"/>
-		<text model="item.options[1].data" x="36" y="52" w="5" h="4" font="Georgia" fontsize="30" color="white"/>
-		<text model="item.options[2].data" x="56" y="52" w="5" h="4" font="Georgia" fontsize="30" color="white"/>
-		<text model="item.options[3].data" x="78" y="52" w="5" h="4" font="Georgia" fontsize="30" color="white"/>
+		<text model="item.options[0].data" x="16" y="52" w="5" h="4" font="Georgia" fontsize="35" color="black"/>
+		<text model="item.options[1].data" x="36" y="52" w="5" h="4" font="Georgia" fontsize="35" color="black"/>
+		<text model="item.options[2].data" x="56" y="52" w="5" h="4" font="Georgia" fontsize="35" color="black"/>
+		<text model="item.options[3].data" x="79" y="52" w="5" h="4" font="Georgia" fontsize="35" color="black"/>
 		
-        <mcq multi_select="false" model="item" shadow="#FFFFFF">
+        <mcq multi_select="false" model="item" shadow="#000000">
             <options layout="table" x="10" y="40" w="80" h="35" cols="4" marginX="0" marginY="0" padX ="15" padY="15" options="options"/>
         </mcq>
     </template>
 	
 	<!-- used for q 8 , 15-->
 	<template id="mcq_template_2">
-		<image asset="bg" x="0" y="0" w="100" h="100"/>
+		<!-- <image asset="bg" x="0" y="0" w="100" h="100"/> -->
 		
-		<shape x="10" y="15" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		
-		<text model="item.identifier" x="4" y="5" w="10" h="4" font="Verdana" color = "white" fontsize="22"/>
-		
-		<placeholder model="item.img" x="65" y="20" w="15" h="36"/>
-        <text model="item.title" x="15" y="20" w="45" h="4" font="Georgia" fontsize="55" color="white" align="left"/>
-        <text model="item.question" x="15" y="45" w="45" h="4" font="Georgia" fontsize="55" color="white" align="left"/>
+		<!-- <shape x="10" y="15" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		 -->
+		<text model="item.qid" x="46" y="2" w="10" h="4" font="Verdana" color = "black" fontsize="35"/>
+		<placeholder model="item.img" x="45" y="44" w="10" h="24"/>
+        <text model="item.title" x="15" y="27" w="70" h="4" font="Georgia" fontsize="42" color="black" align="center"/>
+        <text model="item.question" x="15" y="36" w="70" h="4" font="Georgia" fontsize="42" color="black" align="center"/>
 
-		<placeholder model="item.img2" x="16" y="85" w="2.2" h="3.3"/>
-        <text model="item.subtext" x="15" y="85" w="86" h="4" font="Georgia" fontsize="32" color="white"/>
+		<placeholder model="item.img2" x="16.5" y="85" w="2.2" h="3.3"/>
+        <text model="item.subtext" x="15" y="85" w="70" h="4" font="Georgia" fontsize="32" color="black"/>
 		
-        <mcq multi_select="false" model="item" shadow="#FFFFFF">
-            <options layout="table" x="20" y="65" w="60" h="15" cols="4" padX = "5" marginX="5" marginY="0" options="options"/>
+        <mcq multi_select="false" model="item" shadow="#000000" highlight="red">
+            <options layout="table" x="20" y="75" w="60" h="15" cols="4" padX="5" marginX="5" marginY="0" options="options"/>
         </mcq>
     </template>
 	
 	<!-- used for q12 -->
 	<template id="mcq_template_3">
-		<image asset="bg" x="0" y="0" w="100" h="100"/>
-		<shape x="10" y="15" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		
-		<text model="item.identifier" x="4" y="5" w="10" h="4" font="Verdana" color = "white" fontsize="22"/>
+		<!-- <image asset="bg" x="0" y="0" w="100" h="100"/> -->
+		<!-- <shape x="10" y="15" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		 -->
+		<text model="item.qid" x="46" y="2" w="10" h="4" font="Verdana" color = "black" fontsize="35"/>
 		<placeholder model="item.img" x="15" y="34" w="40" h="9"/>
-        <text model="item.title" x="15" y="27" w="70" h="4" font="Georgia" fontsize="42" color="white"/>
-        <text model="item.question" x="15" y="42" w="86" h="4" font="Georgia" fontsize="42" color="white"/>
+        <text model="item.title" x="15" y="27" w="70" h="4" font="Georgia" fontsize="42" color="black" align="center"/>
+        <text model="item.question" x="15" y="42" w="86" h="4" font="Georgia" fontsize="42" color="black"/>
         
-        <mcq multi_select="false" model="item" shadow="#FFFFFF">
-            <options layout="table" x="30" y="56" w="40" h="18" cols="3" marginX="5" marginY="5" options="options"/>
+        <mcq multi_select="false" model="item" shadow="#000000">
+            <options layout="table" x="30" y="56" w="50" h="25" cols="3" marginX="5" marginY="5" padX="15" padY="15" options="options"/>
         </mcq>
     </template>
 	
 	<!-- used for q14 -->
 	<template id="mcq_template_4">
-		<image asset="bg" x="0" y="0" w="100" h="100"/>
-		<shape x="10" y="15" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		
-		<text model="item.identifier" x="4" y="5" w="10" h="4" font="Verdana" color = "white" fontsize="22"/>
-		<placeholder model="item.img" x="40" y="36" w="10" h="24"/>
-        <text model="item.title" x="15" y="27" w="70" h="4" font="Georgia" fontsize="42" color="white"/>
-        <text model="item.question" x="15" y="36" w="86" h="4" font="Georgia" fontsize="42" color="white"/>
+		<!-- <image asset="bg" x="0" y="0" w="100" h="100"/> -->
+		<!-- <shape x="10" y="15" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		 -->
+		<text model="item.qid" x="46" y="2" w="10" h="4" font="Verdana" color = "black" fontsize="35"/>
+		<placeholder model="item.img" x="45" y="36" w="10" h="24"/>
+        <text model="item.title" x="15" y="27" w="70" h="4" font="Georgia" fontsize="42" color="black" align="center"/>
+        <text model="item.question" x="15" y="36" w="86" h="4" font="Georgia" fontsize="42" color="black"/>
 
 		<!-- <placeholder model="item.img2" x="16" y="83" w="2.2" h="3.3"/> -->
-        <text model="item.subtext" x="15" y="85" w="86" h="4" font="Georgia" fontsize="32" color="white"/>
+        <text model="item.subtext" x="15" y="85" w="86" h="4" font="Georgia" fontsize="32" color="black"/>
 		
-        <mcq multi_select="false" model="item" shadow="#FFFFFF">
-            <options layout="table" x="30" y="60" w="40" h="20" cols="3" marginX="0" marginY="0" options="options"/>
+        <mcq multi_select="false" model="item" shadow="#000000">
+            <options layout="table" x="28" y="70" w="44" h="20" cols="3" marginX="0" marginY="0" options="options"/>
         </mcq>
     </template>
 	
 	<template id="ftb_template_1">
-		<image asset="bg" x="0" y="0" w="100" h="100"/>
-		<shape x="10" y="15" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#FFFFFF" />
-		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#FFFFFF" />
-		
-		<text model="item.identifier" x="4" y="5" w="10" h="4" font="Verdana" color = "white" fontsize="22"/>
+		<!-- <image asset="bg" x="0" y="0" w="100" h="100"/> -->
+		<!-- <shape x="10" y="15" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="90" w="80" h="0.4" type="rect" fill="#000000" />
+		<shape x="10" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#000000" />
+		 -->
+		<text model="item.qid" x="46" y="2" w="10" h="4" font="Verdana" color = "black" fontsize="35"/>
 		<text model="item.title" x="9" y="17" w="86" h="4" font="Georgia" fontsize="52"/>
 		<input type="number" class="inputText" x="37" y="37" w="20" h="7" id="text1" model="item.ans1" />
 	</template>
@@ -306,6 +349,8 @@
         <image asset="g5_button" />
         <image asset="grey" />
 		<image asset="next" />
+		<image asset="previous" />
+		<image asset="home" />
         <image asset="bg" />
         <image asset="fraction" />
         <image asset="pattern" />
@@ -327,13 +372,18 @@
         <image asset="diameter3" />
         <image asset="diameter4" />
         <image asset="highlight" />
+		<image asset="homeIcon" />
+        <image asset="replayIcon" />
+        <image asset="frameLeftLarge" />
+        <image asset="frameRightLarge" />
+        <image asset="aksharaLogo" />
+        <image asset="aksharaLogo_Big" />
         
     </stage>
     <stage id="splash" x="0" y="0" w="100" h="100">
         <param name="g4" value="questions_g4"/>
         <param name="g5" value="questions_g5"/>
         <image asset="bg" x="0" y="0" w="100" h="100"/>
-		
 		<!-- <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="true"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="true" hitArea="true">
             <event type="click">
@@ -343,60 +393,133 @@
 		 -->
         <!-- <image asset="blacktint_square" x="4" y="34" w="38" h="50"/> -->
         <!-- fontsize is the expected font size of text in 1920 x 1200 resolution -->
-        <text x="28" y="15" w="62" h="23" font="Arial" weight="bold" fontsize="62" color="#fff">
+		<image asset="aksharaLogo_Big" x="2" y="83" w="25" h="15" id="next" visible="true"/>
+        <text x="30" y="15" w="62" h="23" font="Arial" weight="bold" fontsize="62" color="#000000">
             Welcome to Akshara Quiz
         </text>
-        <image asset="g4_button" x="24" y="38" w="22" h="12" id="g4">
+        <image asset="g4_button" x="22" y="43" w="22" h="12" id="g4">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" param="g4" effect="scroll" direction="top" ease="linear" duration="500"/>
             </event>
         </image>
-		<image asset="g5_button" x="54" y="38" w="22" h="12" id="g5">
+		<image asset="g5_button" x="52" y="43" w="22" h="12" id="g5">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" param="g5" effect="scroll" direction="top" ease="linear" duration="500"/>
             </event>
         </image>
     </stage>
     <stage id="questions_g4" x="0" y="0" w="100" h="100" iterate="ws1" var="item">
-        <param name="next" value="splash"/>
-        <!-- <param name="previous" value="splash"/> -->
-        <embed template="item" var-item="item" var-data="ws_data"/>
+        <param name="next" value="endScreen"/>
+        <param name="previous" value="splash"/>
+		<image asset="bg" x="0" y="0" w="100" h="100"/>
+		<image asset="frameLeftLarge" x="0" y="0" w="25" h="100"/>
+		<image asset="frameRightLarge" x="75" y="0" w="25" h="100"/>
 		
 		<image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="true"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="true" hitArea="true">
             <event type="click">
-                <action type="command" command="eval" asset="questions_g4" success="next" failure="next"/>
+                <action type="command" command="eval" asset="questions_g4" success="next_item" failure="next_item"/>
             </event>
         </shape>
 		
-		<appEvents list="next"/>
+		<image asset="previous" x="2" y="3" w="5" h="8.3" id="previous" visible="true"/>
+		<shape id="previousContainer" type="rect" x="0" y="1" w="10" h="15" visible="true" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="quintInOut" duration="200" transitionType="previous"/>
+            </event>
+        </shape>
+		
+		<image asset="home" x="93.6" y="88.3" w="5" h="9" id="next" visible="true"/>
+		<shape id="homeContainer" type="rect" x="93.6" y="88.3" w="5" h="9" visible="true" hitArea="true">
+            <event type="click">
+                <action type="command" command="windowEvent" asset="theme" href="#/content/list"/>
+            </event>
+        </shape>
+		
+        <embed template="item" var-item="item" var-data="ws_data"/>
+		<image asset="aksharaLogo" x="1.4" y="88.3" w="5" h="9" id="next" visible="true"/>
+		
+		
+		<appEvents list="next_item"/>
         <events>
-            <event type="next">
-                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" reset="true" />
+            <event type="next_item">
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="quintInOut" duration="200" reset="true" />
             </event>
            
         </events>
     </stage>
 	<stage id="questions_g5" x="0" y="0" w="100" h="100" iterate="ws2" var="item">
-        <param name="next" value="splash"/>
-        <!-- <param name="previous" value="splash"/> -->
-        <embed template="item" var-item="item" var-data="ws_data"/>
+        <param name="next" value="endScreen"/>
+        <param name="previous" value="splash"/>
+		<image asset="bg" x="0" y="0" w="100" h="100"/>
+		<image asset="frameLeftLarge" x="0" y="0" w="25" h="100"/>
+		<image asset="frameRightLarge" x="75" y="0" w="25" h="100"/>
+		
 		
 		<image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="true"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="true" hitArea="true">
             <event type="click">
-                <action type="command" command="eval" asset="questions_g5" success="next" failure="next"/>
+                <action type="command" command="eval" asset="questions_g5" success="next_item" failure="next_item"/>
             </event>
         </shape>
 		
-		<appEvents list="next"/>
+		<image asset="previous" x="2" y="3" w="5" h="8.3" id="previous" visible="true"/>
+		<shape id="previousContainer" type="rect" x="0" y="1" w="10" h="15" visible="true" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" transitionType="previous"/>
+            </event>
+        </shape>
+		
+		<image asset="home" x="93.6" y="88.3" w="5" h="9" id="next" visible="true"/>
+		<shape id="homeContainer" type="rect" x="93.6" y="88.3" w="5" h="9" visible="true" hitArea="true">
+            <event type="click">
+                <action type="command" command="windowEvent" asset="theme" href="#/content/list"/>
+            </event>
+        </shape>
+		
+		
+        <embed template="item" var-item="item" var-data="ws_data"/>
+		<image asset="aksharaLogo" x="1.4" y="88.3" w="5" h="9" id="next" visible="true"/>
+		<appEvents list="next_item"/>
         <events>
-            <event type="next">
+            <event type="next_item">
                 <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" reset="true" />
             </event>
            
         </events>
     </stage>
 	
+	<stage id="endScreen" x="0" y="0" w="100" h="100">
+        <shape x="0" y="2" w="100" h="10.5" type="rect" fill="#FFF16E" />
+        <shape x="0" y="12" w="100" h="89.5" type="rect" fill="#FFF16E" />
+        <text x="38" y="15" w="30" h="8" font="Georgia" fontsize="96">
+            Thank you
+        </text>
+        
+        <image asset="icon_reload" x="30" y="35" w="15" h="20" />
+        <text x="33" y="57" w="15" h="5" font="Arial" fontsize="48">
+            Replay
+        </text>
+        <shape type="rect" x="30" y="35" w="15" h="30" hitArea="true">
+            <event type="click">
+                <action type="command" command="restart" asset="theme"/>
+            </event>
+        </shape>
+
+        <image asset="icon_home" x="55" y="35" w="15" h="20" />
+        <text x="58" y="57" w="15" h="5" font="Arial" fontsize="48">
+            Home
+        </text>
+        <shape type="rect" x="55" y="35" w="15" h="30" hitArea="true">
+            <event type="click">
+                <action type="command" command="windowEvent" asset="theme" href="#/content/list"/>
+            </event>
+        </shape>
+        
+        <!-- <image asset="publisher_logo" x="5" y="75" w="13" h="17" /> -->
+        <image asset="aksharaLogo_Big" x="2" y="83" w="25" h="15" id="next" visible="true"/>
+		
+        
+    </stage>
     
 </theme>

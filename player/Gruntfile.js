@@ -173,7 +173,8 @@ module.exports = function(grunt) {
                         'cordova-plugin-crosswalk-webview',
                         'cordova-plugin-file-transfer',
                         'https://github.com/Initsogar/cordova-webintent.git',
-                        'com.lampa.startapp'
+                        'com.lampa.startapp',
+                        'cordova-plugin-inappbrowser'
                     ]
                 }
             },

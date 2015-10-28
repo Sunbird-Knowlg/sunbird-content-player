@@ -39,11 +39,22 @@ var Plugin = Class.extend({
 		if (data.visible === false) {
 	    	this._self.visible = false;
 		}
-		if(this._render) {
-			this.render();
+
+		// Conditional evaluation for rendering
+		if (data['ev-if']) {
+			var exprVal = this.evaluateExpr(data['ev-if']);
+			if (typeof exprVal != undefined) this._self.visible = (this._self.visible && exprVal);
+		}
+
+		// Draw border if needed
+		this.drawBorder(data, dims);
+
+		// Render the plugin component
+		if(this._render) {			
 			if(this._isContainer && this._type == 'stage') {
 				this.cache();
 			}
+			this.render();
 		}
 	},
 	cache: function() {
@@ -153,15 +164,73 @@ var Plugin = Class.extend({
 		Renderer.update = true;
 	},
 	toggleShadow: function() {
-        if (this._self.shadow) {
-            this._self.shadow = undefined;
+		var isVisible = false;
+
+        if (this.hasShadow()) {
+            this.removeShadow();
+            isVisible = false;
         } else {
-            this._self.shadow = new createjs.Shadow(this._data.shadowColor, 0, 0, 30);
+            this.addShadow();
+            isVisible = true;
         }
         Renderer.update = true;
+        return isVisible;
+    },
+    addShadow: function() {
+    	var shadowObj = this._self.shadow;
+
+    	// If the shadow is a plugin, set the visibility to true
+        if ((shadowObj) && (shadowObj._self) && ('visible' in shadowObj._self)) {
+            shadowObj._self.visible = true; 
+        }
+        else {
+        	// Not a plugin, render a normal shadow
+            var shadowColor = this._data.shadowColor || '#cccccc';
+            var offsetX = this._data.offsetX || 0;
+            var offsetY = this._data.offsetY || 0;
+            var blur = this._data.blur || 30;
+            this._self.shadow = new createjs.Shadow(shadowColor, offsetX, offsetY, blur);
+        }
     },
     removeShadow: function() {
-        this._self.shadow = undefined;
+    	var shadowObj = this._self.shadow;
+
+    	// If the shadow is a plugin, set the visibility to false
+        if ((shadowObj) && (shadowObj._self) && ('visible' in shadowObj._self)) {
+            shadowObj._self.visible = false;    
+        }
+        else {
+        	// Not a plugin (normal shadow), unset the object
+            this._self.shadow = undefined;
+        }
+    },
+    hasShadow: function() {
+    	var visibleShadow = false;
+    	var shadowObj = this._self.shadow;
+
+    	// If the shadow is a plugin, then check the visible property
+    	if ((shadowObj) && (shadowObj._self) && ('visible' in shadowObj._self)) {
+    		visibleShadow = shadowObj._self.visible;
+    	}
+    	else {
+    		// It is not a plugin, check if the shadow object is created
+    		if (this._self.shadow) {
+    			visibleShadow = true;
+    		}
+    	}
+
+    	return visibleShadow;
+    },
+    drawBorder: function(data, dims) {
+    	if (data.stroke) {
+			var strokeWidth = (data['stroke-width'] || 1);
+			var border = new createjs.Shape();
+			var graphics = border.graphics;
+			graphics.beginStroke(data.stroke);
+			graphics.setStrokeStyle(strokeWidth);
+			graphics.dr(dims.x, dims.y, dims.w, dims.h);
+			this._stage.addChild(border);
+		}
     },
     enableDrag: function(asset, snapTo) {
         asset.cursor = "pointer";
@@ -207,6 +276,18 @@ var Plugin = Class.extend({
                 Renderer.update = true;
             });
         }
+    },
+    evaluateExpr: function(expr) {
+        var app = GlobalContext._params;
+        var stage = this._stage._stageParams;
+        var content = this._theme._contentParams;
+        var value = undefined;
+        try {
+            value = eval(expr);
+        } catch (err) {
+            console.error('set ev-value evaluation faild:', err.message);
+        }
+        return value;
     },
 	transitionTo: function() {
 		PluginManager.addError('Subclasses of plugin should implement transitionTo()');
