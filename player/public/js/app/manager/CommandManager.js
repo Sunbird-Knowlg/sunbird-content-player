@@ -8,8 +8,8 @@ CommandManager = {
                 return;
             }
         }
-        var choice = (action.command).toLowerCase();
-        switch (choice) {
+        //var choice = (action.command).toLowerCase();
+        switch (action.command) {
             case 'play':
                 if (plugin && plugin._type == 'sprite') {
                     plugin.play(action.animation);
