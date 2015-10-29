@@ -16,17 +16,22 @@ EventManager = {
 		}
 	},
 	registerEvent: function(evt, plugin) {
-		plugin.events.push(evt.type);
-		if(_.contains(EventManager.appEvents, evt.type) || _.contains(plugin.appEvents, evt.type)) { // Handle app events
-			plugin.on(evt.type, function() {
-				EventManager.handleActions(evt, plugin);
-			});
-		} else { // Handle mouse events
-			plugin._self.cursor = 'pointer';
-			plugin._self.on(evt.type, function(event) {
-				EventManager.processMouseTelemetry(evt, event, plugin);
-				EventManager.handleActions(evt, plugin);
-			});
+		var register = true;
+		// Conditional evaluation to register event.
+		if (evt['ev-if']) register = plugin.evaluateExpr(evt['ev-if']);
+		if (register) {
+			plugin.events.push(evt.type);
+			if(_.contains(EventManager.appEvents, evt.type) || _.contains(plugin.appEvents, evt.type)) { // Handle app events
+				plugin.on(evt.type, function() {
+					EventManager.handleActions(evt, plugin);
+				});
+			} else { // Handle mouse events
+				plugin._self.cursor = 'pointer';
+				plugin._self.on(evt.type, function(event) {
+					EventManager.processMouseTelemetry(evt, event, plugin);
+					EventManager.handleActions(evt, plugin);
+				});
+			}
 		}
 	},
 	dispatchEvent: function(id, event) {
@@ -47,24 +52,29 @@ EventManager = {
 		}
 	},
 	handleAction: function(action, plugin) {
-		var stage = plugin._stage;
-		if (!stage || stage == null) {
-			stage = plugin;
-		}
-		if (stage && stage._type === 'stage') {
-			if(action.param) {
-				action.value = stage.params[action.param] || '';
+		var handle = true;
+		// Conditional evaluation for handle action.
+		if (action['ev-if']) handle = plugin.evaluateExpr(action['ev-if']);
+		if (handle) {
+			var stage = plugin._stage;
+			if (!stage || stage == null) {
+				stage = plugin;
 			}
-			if (action.asset_param) {
-				action.asset = stage.params[action.asset_param] || '';
-			} else if (action.asset_model) {
-				action.asset = stage.getModelValue(action.asset_model) || '';
+			if (stage && stage._type === 'stage') {
+				if(action.param) {
+					action.value = stage.params[action.param] || '';
+				}
+				if (action.asset_param) {
+					action.asset = stage.params[action.asset_param] || '';
+				} else if (action.asset_model) {
+					action.asset = stage.getModelValue(action.asset_model) || '';
+				}
 			}
-		}
-		if(action.type === 'animation') {
-			AnimationManager.handle(action, plugin);
-		} else {
-			CommandManager.handle(action);
+			if(action.type === 'animation') {
+				AnimationManager.handle(action, plugin);
+			} else {
+				CommandManager.handle(action);
+			}
 		}
 	},
 	processMouseTelemetry: function(action, event, plugin) {

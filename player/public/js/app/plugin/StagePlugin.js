@@ -62,9 +62,14 @@ var StagePlugin = Plugin.extend({
         }
     },
     addController: function(p) {
-        var controller = ControllerManager.get(p.type, p.id, this._theme.baseDir);
-        if (controller) {
-            this._controllerMap[p.name] = controller;
+        var add = true;
+        // Conditional evaluation to add controller.
+        if (p['ev-if']) add = this.evaluateExpr(p['ev-if']);
+        if (add) {
+            var controller = ControllerManager.get(p.type, p.id, this._theme.baseDir);
+            if (controller) {
+                this._controllerMap[p.name] = controller;
+            }
         }
     },
     getController: function(name) {
