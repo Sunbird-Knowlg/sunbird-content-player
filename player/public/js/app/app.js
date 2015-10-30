@@ -356,7 +356,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             $scope.startGenie = function() {
                 console.log("Start Genie.");
                 exitApp(ContentService);
-                startApp();
             };
 
             $rootScope.$on('show-message', function(event, data) {
