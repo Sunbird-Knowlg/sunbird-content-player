@@ -166,6 +166,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         };
         $scope.version = GlobalContext.game.ver;
         $scope.flavor = GlobalContext.config.flavor;
+        $scope.currentUser = GlobalContext.user;
 
         new Promise(function(resolve, reject) {
                 if (currentContentVersion != ContentService.getContentVersion()) {
