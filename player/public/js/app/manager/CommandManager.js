@@ -86,6 +86,9 @@ CommandManager = {
             case 'set':
                 if (plugin) plugin.setParam(action.param, action.value, action.scope);
                 break;
+            case 'startGenie':
+                exitApp();
+                break;
             default:
                 console.log("Command not found.");
         }
