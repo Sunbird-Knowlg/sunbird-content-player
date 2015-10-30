@@ -86,7 +86,8 @@
         <!-- <html x="10" y="15" w="22" h="23" >
             <![CDATA[<p style="font-size: 6em;">Noah's Ark</p></br> <button >Click</button>]]>
         </html> -->
-        <image asset="noah" x="48" y="10" w="20" h="65"/>
+        
+         <image asset="noah" x="48" y="10" w="20" h="65"/>
         <image asset="entermission" x="30" y="78" w="22" h="22" id="next">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="top" ease="linear" duration="500"/>

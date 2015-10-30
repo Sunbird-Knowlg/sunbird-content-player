@@ -6,6 +6,8 @@
         <media id="icon_home" src="icon_home.png" type="image" />
         <media id="bg" src="felt.png" type="image" />
     </manifest>
+    
+    <controller name="testData" type="data" id="testdata"/>
 
 	<stage id="baseStage" preload="true">
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
@@ -20,6 +22,7 @@
                 <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" transitionType="previous"/>
             </event>
         </shape>
+        <text param="heading" x="28" y="2" w="62" h="23" weight="bold" fontsize="50" color="#fff"/>
     </stage>
 
     <stage id="textPluginBasic" x="0" y="0" w="100" h="100" extends="baseStage">
@@ -27,11 +30,9 @@
     	<!-- <param name="previous" value="textPluginBasic" /> -->
 
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
-        <text x="28" y="2" w="62" h="23" font="Arial" weight="bold" fontsize="50" color="#fff">
-            Renderer Test Cases - Text Plugin
-        </text>
+        <param name="heading" model="testData.ts_textpg_align"/>
 
-        <text x="5" y="10" h="10" w="25" fontsize="30" color="yellow">Default alignments - should be aligned to top-left</text>
+        <text x="5" y="10" h="10" w="25" fontsize="30" color="yellow">Default alignment - should be aligned as top-left, by default</text>
         <shape x="5" y="20" h="10" w="15" type="rect" stroke="white"/>
         <text x="5" y="20" h="10" w="15" fontsize="60" color="white">TopLeft</text>
 
@@ -71,46 +72,100 @@
     </stage> 
 
     <stage id="textPluginWrap" x="0" y="0" w="100" h="100" extends="baseStage">
-    	<param name="next" value="finished" />
+    	<param name="next" value="mcqOptionsGlow" />
     	<param name="previous" value="textPluginBasic" />
 
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
-        <text x="28" y="2" w="62" h="23" font="Arial" weight="bold" fontsize="50" color="#fff">
-            Renderer Test Cases - Text Plugin (Wrap)
-        </text>
+        <param name="heading" model="testData.ts_textpg_wrap"/>
+
+
 
         <text x="10" y="10" h="10" w="20" fontsize="30" color="yellow">Default alignments - should be aligned to top-left</text>
         <shape x="10" y="20" h="10" w="20" type="rect" stroke="white"/>
-        <text x="10" y="20" h="10" w="20" fontsize="40" color="white">Lorem ipsum lorem ipsum</text>
+        <text x="10" y="20" h="10" w="20" fontsize="40" color="white">This text is aligned to top-left by default.</text>
 
 
         <text x="10" y="40" h="10" w="20" fontsize="30" color="yellow">Horiz alignments - should be aligned as displayed</text>
         <shape x="10" y="50" h="10" w="20" type="rect" stroke="white"/>
-        <text x="10" y="50" h="10" w="20" fontsize="40" color="white" align="left">Lorem ipsum lorem ipsum</text>
+        <text x="10" y="50" h="10" w="20" fontsize="40" color="white" align="left">This text is left aligned by setting.</text>
         
         <shape x="30" y="50" h="10" w="20" type="rect" stroke="white"/>
-        <text x="30" y="50" h="10" w="20" fontsize="40" color="white" align="center">Lorem ipsum lorem ipsum</text>
+        <text x="30" y="50" h="10" w="20" fontsize="40" color="white" align="center">Use align="center" to align text in center</text>
         
         <shape x="50" y="50" h="10" w="20" type="rect" stroke="white"/>
-        <text x="50" y="50" h="10" w="20" fontsize="40" color="white" align="right">Lorem ipsum lorem ipsum</text>
-
+        <text x="50" y="50" h="10" w="20" fontsize="40" color="white" align="right">Use align="right" to align text at right</text>
 
         <text x="10" y="70" h="10" w="20" fontsize="30" color="yellow">Vert alignments - should be aligned as displayed</text>
         <shape x="10" y="80" h="15" w="20" type="rect" stroke="white"/>
-        <text x="10" y="80" h="15" w="20" fontsize="40" color="white" align="center" valign="top">Lorem ipsum lorem ipsum</text>
+        <text x="10" y="80" h="15" w="20" fontsize="40" color="white" align="center" valign="top">Use valign="top" for vertical top alignment</text>
         
         <shape x="30" y="80" h="15" w="20" type="rect" stroke="white"/>
-        <text x="30" y="80" h="15" w="20" fontsize="40" color="white" align="center" valign="middle">Lorem ipsum lorem ipsum</text>
+        <text x="30" y="80" h="15" w="20" fontsize="40" color="white" align="center" valign="middle">Use valign="middle" for vertical middle alignment</text>
         
         <shape x="50" y="80" h="15" w="20" type="rect" stroke="white"/>
-        <text x="50" y="80" h="15" w="20" fontsize="40" color="white" align="center" valign="bottom" stroke="red" stroke-width="2">Lorem ipsum lorem ipsum</text>
-    </stage>    
+        <text x="50" y="80" h="15" w="20" fontsize="40" color="white" align="center" valign="bottom" stroke="red" stroke-width="2">Use valign="bottom" for vertical bottom alignment</text>
+    </stage> 
 
+    <stage id="mcqOptionsGlow" x="0" y="0" w="100" h="100" extends="baseStage">
+        <param name="next" value="launchExternal" />
+        <param name="previous" value="textPluginWrap" />
+
+        <image asset="bg" x="0" y="0" w="100" h="100"/>
+        <param name="heading" model="testData.ts_mcq_glow"/>
+
+        <text x="10" y="10" h="10" w="40" fontsize="30" color="yellow">TO-DO</text>
+
+
+    </stage>
+
+    <stage id="launchExternal" x="0" y="0" w="100" h="100" extends="baseStage">
+        <param name="next" value="conditionalRendering" />
+        <param name="previous" value="mcqOptionsGlow" />
+
+        <image asset="bg" x="0" y="0" w="100" h="100"/>
+        <param name="heading" model="testData.ts_external_launch"/>
+
+
+        <text x="10" y="10" h="10" w="40" fontsize="30" color="yellow">External URL - should be launched when URL is clicked</text>
+        <text x="10" y="15" w="45" h="5" font="Arial" fontsize="48" color="white">
+            Go to ekstep.org
+        </text>
+        <shape type="rect" x="10" y="15" w="35" h="7" hitArea="true">
+            <event type="click">
+                <action type="command" command="external" href="http://www.ekstep.org/"/>
+            </event>
+        </shape>    
+
+        <text x="10" y="40" h="10" w="40" fontsize="30" color="yellow">External app - should be launched when link is clicked</text>
+        <text x="10" y="45" w="45" h="15" font="Arial" fontsize="48" color="white">
+            Launch whatsapp
+        </text>
+        <shape type="rect" x="10" y="50" w="20" h="65">
+            <event type="click">
+                <action type="command" command="external" app="com.whatsapp"/>
+            </event>
+        </shape>
+
+    </stage>
+    <stage id="conditionalRendering" x="0" y="0" w="100" h="100" extends="baseStage">
+        <param name="next" value="finished" />
+        <param name="previous" value="launchExternal" />
+
+        <image asset="bg" x="0" y="0" w="100" h="100"/>
+        <param name="heading" model="testData.ts_conditional_render"/>
+
+        <set param="param1" value="value1" scope="stage"/>
+        <set param="param2" ev-value="stage.param1 + '_new'" scope="stage"/>
+        <text x="10" y="10" h="10" w="40" fontsize="30" color="yellow" ev-if="stage.param2 == 'value_new'">Invalid expression. So, this text doesn't show.</text>
+        <text x="10" y="15" h="10" w="40" fontsize="30" color="yellow" ev-if="stage.param2 == 'value1_new'">Valid expression. So, text is displayed.</text>
+        <text x="10" y="20" h="10" w="40" fontsize="30" color="yellow" ev-if="app.user.age == 6">This text will show if the user age is 6.</text>
+
+    </stage>
     <stage id="finished" x="0" y="0" w="100" h="100">
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
         
         <text x="38" y="15" w="30" h="8" font="Georgia" fontsize="50">
-            It works :) See you again
+            It works :) See you again!
         </text>
         
         <image asset="icon_reload" x="30" y="35" w="15" h="20" />

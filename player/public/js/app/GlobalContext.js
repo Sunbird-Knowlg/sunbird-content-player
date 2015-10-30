@@ -51,6 +51,7 @@ GlobalContext = {
             if (result && result.status == 'success') {
                 if (result.data.uid) {
                     GlobalContext.user = result.data;
+                    GlobalContext._params.user = GlobalContext.user;
                     resolve(true);
                 } else {
                     reject(false);
@@ -77,7 +78,11 @@ GlobalContext = {
         });
     },
     setParam: function(param, value) {
-        GlobalContext._params[param] = value;
+        if(param != 'user') {
+            GlobalContext._params[param] = value;
+        } else {
+            console.error('user param can not set');
+        }
     },
     getParam: function(param) {
         return GlobalContext._params[param];

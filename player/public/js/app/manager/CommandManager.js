@@ -8,6 +8,7 @@ CommandManager = {
                 return;
             }
         }
+        //var choice = (action.command).toLowerCase();
         switch (action.command) {
             case 'play':
                 if (plugin && plugin._type == 'sprite') {
@@ -68,7 +69,10 @@ CommandManager = {
                 }
                 break;
             case 'external': 
-                if(action.href) window.open(action.href, "_system");             
+                if(action.href) 
+                    window.open(action.href, "_system"); 
+                else 
+                    startApp(action.app);                                
                 break;
             case 'eval':
                 if (plugin) plugin.evaluate(action);
@@ -80,9 +84,13 @@ CommandManager = {
                 if (plugin) plugin.restart(action);
                 break;
             case 'set':
-                // set params based on scope.
+                if (plugin) plugin.setParam(action.param, action.value, action.scope);
+                break;
+            case 'startGenie':
+                exitApp();
                 break;
             default:
+                console.log("Command not found.");
         }
     }
 }

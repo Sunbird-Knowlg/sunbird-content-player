@@ -56,18 +56,25 @@ function exitApp(cs) {
             }
         },
         function(error) {
-            alert("Unalbe to start Genie App.");
+            alert("Unable to start Genie App.");
         });
 }
 
-function startGenie() {
-    navigator.startApp.start("org.ekstep.genie", function(message) {
+function startApp(app) {
+    if(!app) app = "org.ekstep.genie";
+    navigator.startApp.start(app, function(message) {
+            exitApp();
             if (TelemetryService._gameData) {
                 TelemetryService.end(packageName, version);
             }
         },
         function(error) {
-            alert("Unable to start Genie App.");
+            if(app == "org.ekstep.genie")
+                alert("Unable to start Genie App.");
+            else {
+                var bool = confirm('App not found. Do you want to search on PlayStore?');
+                if(bool) cordova.plugins.market.open(app);
+            }
         });
 }
 
@@ -185,6 +192,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             $scope.tab1 = 'Literacy';
             $scope.tab2 = 'Numeracy';
         }
+        $scope.currentUser = GlobalContext.user;
 
         new Promise(function(resolve, reject) {
                 if (currentContentVersion != ContentService.getContentVersion()) {
@@ -316,7 +324,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                         $rootScope.stories = undefined;
                     }
                 });
-            s
         }
 
     }).controller('ContentCtrl', function($scope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
@@ -368,7 +375,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             $scope.startGenie = function() {
                 console.log("Start Genie.");
                 exitApp(ContentService);
-                startGenie();
             };
 
             $rootScope.$on('show-message', function(event, data) {
@@ -395,7 +401,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             });
         } else {
             alert('Sorry. Could not find the content.');
-            startGenie();
+            startApp();
         }
     });
 
