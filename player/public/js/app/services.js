@@ -149,23 +149,27 @@ angular.module('quiz.services', ['ngResource'])
                 };
                 return new Promise(function(resolve, reject) {
                     if(content && content.identifier) {
-                        var localContent = returnObject.contentList[content.identifier];
-                        if(localContent) {
-                            for (var key in content) {
-                                localContent[key] = content[key];   
-                            }
-                            returnObject.commit();
-                            if (localContent.pkgVersion != content.pkgVersion) {
-                                update(content, resolve, reject);
-                            } else {
-                                $rootScope.$broadcast('show-message', {
-                                    "message": AppMessages.NO_NEW_CONTENT,
-                                    "timeout": 3000
-                                });
-                                resolve(localContent);
-                            }
-                        } else {
+                        if (content.status == 'error') {
                             update(content, resolve, reject);
+                        } else {
+                            var localContent = returnObject.contentList[content.identifier];
+                            if (localContent) {
+                                for (var key in content) {
+                                    localContent[key] = content[key];   
+                                }
+                                returnObject.commit();
+                                if (localContent.pkgVersion != content.pkgVersion) {
+                                    update(content, resolve, reject);
+                                } else {
+                                    $rootScope.$broadcast('show-message', {
+                                        "message": AppMessages.NO_NEW_CONTENT,
+                                        "timeout": 3000
+                                    });
+                                    resolve(localContent);
+                                }
+                            } else {
+                                update(content, resolve, reject);
+                            }
                         }
                     } else {
                         reject('Invalid content to update');
