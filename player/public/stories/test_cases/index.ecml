@@ -156,8 +156,9 @@
 
         <set param="param1" value="value1" scope="stage"/>
         <set param="param2" ev-value="stage.param1 + '_new'" scope="stage"/>
-        <text x="10" y="10" h="10" w="40" fontsize="30" color="yellow" ev-if="stage.param2 == 'value_new'">This text doesn't show.</text>
-        <text x="10" y="15" h="10" w="40" fontsize="30" color="yellow" ev-if="stage.param2 == 'value1_new'">Valid Expression. So, text is displayed.</text>
+        <text x="10" y="10" h="10" w="40" fontsize="30" color="yellow" ev-if="stage.param2 == 'value_new'">Invalid expression. So, this text doesn't show.</text>
+        <text x="10" y="15" h="10" w="40" fontsize="30" color="yellow" ev-if="stage.param2 == 'value1_new'">Valid expression. So, text is displayed.</text>
+        <text x="10" y="20" h="10" w="40" fontsize="30" color="yellow" ev-if="app.user.age == 6">This text will show if the user age is 6.</text>
 
     </stage>
     <stage id="finished" x="0" y="0" w="100" h="100">
