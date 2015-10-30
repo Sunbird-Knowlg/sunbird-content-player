@@ -6,7 +6,7 @@
         <media id="icon_home" src="icon_home.png" type="image" />
         <media id="bg" src="felt.png" type="image" />
     </manifest>
-
+    
     <controller name="testData" type="data" id="testdata"/>
 
 	<stage id="baseStage" preload="true">
@@ -119,7 +119,7 @@
     </stage>
 
     <stage id="launchExternal" x="0" y="0" w="100" h="100" extends="baseStage">
-        <param name="next" value="finished" />
+        <param name="next" value="conditionalRendering" />
         <param name="previous" value="mcqOptionsGlow" />
 
         <image asset="bg" x="0" y="0" w="100" h="100"/>
@@ -146,8 +146,20 @@
             </event>
         </shape>
 
-    </stage>    
+    </stage>
+    <stage id="conditionalRendering" x="0" y="0" w="100" h="100" extends="baseStage">
+        <param name="next" value="finished" />
+        <param name="previous" value="launchExternal" />
 
+        <image asset="bg" x="0" y="0" w="100" h="100"/>
+        <param name="heading" model="testData.ts_conditional_render"/>
+
+        <set param="param1" value="value1" scope="stage"/>
+        <set param="param2" ev-value="stage.param1 + '_new'" scope="stage"/>
+        <text x="10" y="10" h="10" w="40" fontsize="30" color="yellow" ev-if="stage.param2 == 'value_new'">This text doesn't show.</text>
+        <text x="10" y="15" h="10" w="40" fontsize="30" color="yellow" ev-if="stage.param2 == 'value1_new'">Valid Expression. So, text is displayed.</text>
+
+    </stage>
     <stage id="finished" x="0" y="0" w="100" h="100">
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
         

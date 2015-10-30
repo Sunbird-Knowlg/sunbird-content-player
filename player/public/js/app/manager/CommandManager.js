@@ -80,7 +80,7 @@ CommandManager = {
                 if (plugin) plugin.restart(action);
                 break;
             case 'set':
-                // set params based on scope.
+                if (plugin) plugin.setParam(action.param, action.value, action.scope);
                 break;
             default:
         }
