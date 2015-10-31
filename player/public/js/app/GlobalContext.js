@@ -11,6 +11,7 @@ GlobalContext = {
         flavor: "",
         appInfo: undefined
     },
+    filter: false,
     init: function(gid, ver) {
         return new Promise(function(resolve, reject) {
             GlobalContext.game.id = gid;

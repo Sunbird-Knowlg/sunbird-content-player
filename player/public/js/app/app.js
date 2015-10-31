@@ -4,8 +4,9 @@
 // 'quiz' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var packageName = "org.ekstep.quiz.app";
-var version = "1.0.35";
+var version = "1.0.37";
 var currentContentVersion = "0.2";
+var packageNameDelhi = "org.ekstep.delhi.curriculum";
 
 function backbuttonPressed(cs) {
 
@@ -37,8 +38,12 @@ function exitApp(cs) {
                     }
                 }
             }
-            if (TelemetryService._gameData) {
-                TelemetryService.end(packageName, version);
+            try {
+                if (TelemetryService._gameData) {
+                    TelemetryService.end(packageName, version);
+                }
+            } catch(err) {
+                console.error('End telemetry error:', err.message);
             }
             if (navigator.app) {
                 navigator.app.exitApp();
@@ -115,12 +120,20 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 if (!TelemetryService._gameData) {
                     ContentService.init();
                     TelemetryService.init(GlobalContext.game).then(function() {
-                        TelemetryService.start();
                         if (GlobalContext.config.appInfo &&
                             GlobalContext.config.appInfo.code &&
-                            GlobalContext.config.appInfo.code != packageName) {
+                            GlobalContext.config.appInfo.code != packageName 
+                                && GlobalContext.config.appInfo.code != packageNameDelhi) {
+                            TelemetryService.start();
                             $state.go('showContent', {});
                         } else {
+                            if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.code) {
+                                if (GlobalContext.config.appInfo.code == packageNameDelhi) {
+                                    GlobalContext.filter = true;
+                                }
+                                GlobalContext.game.id = GlobalContext.config.appInfo.code;
+                            }
+                            TelemetryService.start();
                             $state.go('contentList', {});
                         }
                     }).catch(function(error) {
@@ -173,6 +186,12 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         };
         $scope.version = GlobalContext.game.ver;
         $scope.flavor = GlobalContext.config.flavor;
+        $scope.tab1 = 'Stories';
+        $scope.tab2 = 'Worksheets';
+        if (GlobalContext.game.id == packageNameDelhi) {
+            $scope.tab1 = 'Literacy';
+            $scope.tab2 = 'Numeracy';
+        }
         $scope.currentUser = GlobalContext.user;
 
         new Promise(function(resolve, reject) {
