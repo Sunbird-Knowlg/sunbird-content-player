@@ -124,7 +124,7 @@
     </stage>
 
     <stage id="launchExternal" x="0" y="0" w="100" h="100" extends="baseStage">
-        <param name="next" value="conditionalRendering" />
+        <param name="next" value="conditionalRendering1" />
         <param name="previous" value="mcqOptionsGlow" />
 
         <image asset="bg" x="0" y="0" w="100" h="100"/>
@@ -152,12 +152,12 @@
         </shape>
 
     </stage>
-    <stage id="conditionalRendering" x="0" y="0" w="100" h="100" extends="baseStage">
-        <param name="next" value="finished" />
+    <stage id="conditionalRendering1" x="0" y="0" w="100" h="100" extends="baseStage">
+        <param name="next" value="conditionalRendering2" />
         <param name="previous" value="launchExternal" />
 
         <image asset="bg" x="0" y="0" w="100" h="100"/>
-        <param name="heading" model="testData.ts_cond_render_stage"/>
+        <param name="heading" model="testData.ts_cond_render_stage1"/>
 
         
         <set param="param1" value="value1" scope="stage"/>
@@ -170,20 +170,152 @@
         <image asset="icon_home" x="35" y="30" w="10" h="10" ev-if="stage.param2 == 'value_new'"/>
         <text x="10" y="45" h="10" w="80" fontsize="40" color="yellow">Image plugin: expression evaluates to true - should show image</text>
         <image asset="icon_home" x="35" y="50" w="10" h="10" ev-if="stage.param2 == 'value1_new'"/>
-        <text x="10" y="60" h="10" w="80" fontsize="40" color="yellow">Shape plugin: expression evaluates to false - should show shape</text>
+        <text x="10" y="60" h="10" w="80" fontsize="40" color="yellow">Shape plugin: expression evaluates to false - should not show shape</text>
         <shape type="rect" x="55" y="65" w="5" h="5" hitArea="true" stroke="white" ev-if="stage.param2 == 'value_new'"></shape>
         <text x="10" y="70" h="10" w="80" fontsize="40" color="yellow">Shape plugin: expression evaluates to true - should show shape</text>
         <shape type="rect" x="55" y="75" w="5" h="5" hitArea="true" stroke="white" ev-if="stage.param2 == 'value1_new'"></shape>
-        <text x="10" y="80" h="10" w="80" fontsize="40" color="yellow">Audio plugin: expression evaluates to false - should play audio</text>
+
+         <!-- Input Plugin tests -->
+        <text x="10" y="80" h="10" w="80" fontsize="40" color="yellow">Input plugin: expression evaluates to false - should not show input field</text>
+        <input type="number" class="inputText" x="20" y="85" w="7" h="7" id="text1" ev-if="stage.param2 == 'value_new'"/>
+        <text x="10" y="90" h="10" w="80" fontsize="40" color="yellow">Input plugin: expression evaluates to true - should show input field</text>
+        <input type="number" class="inputText" x="20" y="95" w="7" h="7" id="text1" ev-if="'a' != 'b'"/>
+
+        <!--Audio Plugin -->
+        <!--
+        <text x="10" y="80" h="10" w="80" fontsize="40" color="yellow">Audio plugin: expression evaluates to false - should not play audio</text>
         <audio asset="splash_audio" ev-if="stage.param2 == 'value_new'"/>
         <text x="10" y="90" h="10" w="80" fontsize="40" color="yellow">Audio plugin: expression evaluates to true - should play audio</text>
-        <audio asset="splash_audio" ev-if="stage.param2 == 'value1_new'"/>
+        <audio asset="splash_audio" ev-if="stage.param2 == 'value1_new'"/>-->
 
+                
+    </stage>
 
+    <stage id="conditionalRendering2" x="0" y="0" w="100" h="100" extends="baseStage">
+        <param name="next" value="conditionalRendering3" />
+        <param name="previous" value="conditionalRendering1" />
 
-        
+        <image asset="bg" x="0" y="0" w="100" h="100"/>
+        <param name="heading" model="testData.ts_cond_render_stage2"/>
+
+        <set param="param1" value="value1" scope="stage"/>
+        <set param="param2" ev-value="stage.param1 + '_new'" scope="stage"/>
+
+       
+        <!--Animation -->
+        <text x="10" y="15" h="10" w="40" fontsize="40" color="yellow">Animation plugin: expression evaluates to true - object should be animated on click.</text>
+        <image asset="icon_home" x="11.5" y="35" w="10" h="10" id="home">
+            <event type="click">
+                <action type="animation" ev-if="stage.param2 == 'value1_new'">
+                    <tween id="homeWalking">
+                        <to ease="linear" duration="500">
+                            <![CDATA[{"x":20,"y":20}]]>
+                        </to>
+                        <to ease="quadOut" duration="2000">
+                            <![CDATA[{"x":55,"y":0}]]>
+                        </to>
+                        <to ease="linear" duration="1">
+                            <![CDATA[{"x":75,"y":0, "scaleX": -1}]]>
+                        </to>
+                        <to ease="linear" duration="2000">
+                            <![CDATA[{"x":20,"y":35}]]>
+                        </to>                        
+                    </tween>
+                </action>
+            </event>
+        </image>
+        <text x="55" y="15" h="10" w="40" fontsize="40" color="yellow">Animation plugin: expression evaluates to false - object should not be animated on click.</text>
+        <image asset="icon_home" x="55.5" y="35" w="10" h="10" id="home">
+            <event type="click">
+                <action type="animation" ev-if="stage.param2 == 'value_new'">
+                    <tween id="homeWalking">
+                        <to ease="linear" duration="500">
+                            <![CDATA[{"x":20,"y":20}]]>
+                        </to>
+                        <to ease="quadOut" duration="2000">
+                            <![CDATA[{"x":55,"y":0}]]>
+                        </to>
+                        <to ease="linear" duration="1">
+                            <![CDATA[{"x":75,"y":0, "scaleX": -1}]]>
+                        </to>
+                        <to ease="linear" duration="2000">
+                            <![CDATA[{"x":40,"y":35}]]>
+                        </to>
+                        
+                    </tween>
+                </action>
+            </event>
+        </image>
+
+        <text x="10" y="75" h="10" w="40" fontsize="40" color="yellow">Tween / Sprite?: expression evaluates to false - - TO-DO.</text>
+
+        <text x="55" y="75" h="10" w="40" fontsize="40" color="yellow">Tween / Sprite?: expression evaluates to true -  -- TO-DO</text>
 
     </stage>
+
+   <stage id="conditionalRendering3" x="0" y="0" w="100" h="100" extends="baseStage">
+        <param name="next" value="conditionalRendering4" />
+        <param name="previous" value="conditionalRendering2" />
+
+        <image asset="bg" x="0" y="0" w="100" h="100"/>
+        <param name="heading" model="testData.ts_cond_render_stage3"/>
+
+        <set param="param1" value="value1" scope="stage"/>
+        <set param="param2" ev-value="stage.param1 + '_new'" scope="stage"/>
+
+        <text x="10" y="15" h="10" w="40" fontsize="40" color="yellow">Event: expression evaluates to false - object should not be clickable.</text>
+        <image asset="icon_home" x="15.5" y="35" w="10" h="10" id="home">
+            <event type="click" ev-if="stage.param2 == 'value_new'">
+            </event>
+        </image>
+
+        <text x="55" y="15" h="10" w="40" fontsize="40" color="yellow">Event: expression evaluates to true - object should be clickable.</text>
+        <image asset="icon_home" x="65.5" y="35" w="10" h="10" id="home">
+            <event type="click" ev-if="stage.param2 == 'value1_new'">
+            </event>
+        </image>
+
+        <text x="10" y="45" h="10" w="40" fontsize="40" color="yellow">Action: expression evaluates to false - action should not work - TO-DO.</text>
+
+        <text x="55" y="45" h="10" w="40" fontsize="40" color="yellow">Action: expression evaluates to true - action should work. -- TO-DO</text>     
+        
+        <text x="10" y="75" h="10" w="40" fontsize="40" color="yellow">Controller: expression evaluates to false - - TO-DO.</text>
+
+        <text x="55" y="75" h="10" w="40" fontsize="40" color="yellow">Controller: expression evaluates to true -  -- TO-DO</text>
+
+
+    </stage>
+
+    <stage id="conditionalRendering4" x="0" y="0" w="100" h="100" extends="baseStage">
+        <param name="next" value="finished" />
+        <param name="previous" value="conditionalRendering3" />
+
+        <image asset="bg" x="0" y="0" w="100" h="100"/>
+        <param name="heading" model="testData.ts_cond_render_stage4"/>
+
+        <set param="param1" value="value1" scope="stage"/>
+        <set param="param2" ev-value="stage.param1 + '_new'" scope="stage"/>
+
+        <text x="10" y="15" h="10" w="40" fontsize="40" color="yellow">MCQ: expression evaluates to false - MCQ shouldn't be displayed(???) - TO-DO.</text>
+
+        <text x="55" y="15" h="10" w="40" fontsize="40" color="yellow">MCQ: expression evaluates to true - MCQ should be displayed(???) - TO-DO.</text>
+
+        <text x="10" y="30" h="10" w="40" fontsize="40" color="yellow">MTF: expression evaluates to false - MTF shouldn't be displayed(???) - TO-DO.</text>
+
+        <text x="55" y="30" h="10" w="40" fontsize="40" color="yellow">MTF: expression evaluates to true - MTF should be displayed(???) - TO-DO.</text>
+
+        <text x="10" y="45" h="10" w="40" fontsize="40" color="yellow">option: expression evaluates to false - option shouldn't be displayed(???) - TO-DO.</text>
+
+        <text x="55" y="45" h="10" w="40" fontsize="40" color="yellow">option: expression evaluates to true - option should be displayed(???) - TO-DO.</text>
+
+        <text x="10" y="60" h="10" w="40" fontsize="40" color="yellow">options: expression evaluates to false - options shouldn't be displayed(???) - TO-DO.</text>
+
+        <text x="55" y="60" h="10" w="40" fontsize="40" color="yellow">options: expression evaluates to true - options should be displayed(???) - TO-DO.</text>
+
+
+    </stage>
+   
+    
     <stage id="finished" x="0" y="0" w="100" h="100">
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
         

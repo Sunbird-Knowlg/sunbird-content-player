@@ -4,7 +4,10 @@
 		"ts_textpg_wrap" : "Text Plugin - Wrap",
 		"ts_external_launch" : "External Launch",
 		"ts_mcq_glow" : "MCQ options - Glow Control",
-		"ts_cond_render_stage": "Conditional Rendering - Stage level",
+		"ts_cond_render_stage1": "Conditional Rendering - Stage level - Text,Image,Shape,Input",
+		"ts_cond_render_stage2": "Conditional Rendering - Stage level - Animation, Tween",
+		"ts_cond_render_stage3": "Conditional Rendering - Stage level - Event, Action, Controller",
+		"ts_cond_render_stage4": "Conditional Rendering - Stage level - MCQ, MTF",
 		"ts_cond_render_content": "Conditional Rendering - Content level",
 		"ts_cond_render_app": "Conditional Rendering - App level",
 		"summary_heading" : "It works! See you soon. :)"
