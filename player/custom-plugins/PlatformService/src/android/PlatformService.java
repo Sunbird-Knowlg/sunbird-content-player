@@ -101,7 +101,7 @@ public class PlatformService extends CordovaPlugin {
                 request = "{\"request\": " + filter + "}";
             }
             content = RESTUtil.post("/v1/content/list?type="+type, request);
-            contentMap.put(type, content);
+            // contentMap.put(type, content);
         }
         return content;
     }
