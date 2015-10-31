@@ -5,6 +5,11 @@
         <media id="icon_reload" src="icon_reload.png" type="image" />
         <media id="icon_home" src="icon_home.png" type="image" />
         <media id="bg" src="felt.png" type="image" />
+        <media src="sounds/splash.ogg" id="splash_audio" type="audiosprite">
+            <data>
+                <audioSprite id="cover_sound" startTime="0" duration="7131.428571428572"></audioSprite>
+            </data>
+        </media>
     </manifest>
     
     <controller name="testData" type="data" id="testdata"/>
@@ -152,13 +157,31 @@
         <param name="previous" value="launchExternal" />
 
         <image asset="bg" x="0" y="0" w="100" h="100"/>
-        <param name="heading" model="testData.ts_conditional_render"/>
+        <param name="heading" model="testData.ts_cond_render_stage"/>
 
+        
         <set param="param1" value="value1" scope="stage"/>
         <set param="param2" ev-value="stage.param1 + '_new'" scope="stage"/>
-        <text x="10" y="10" h="10" w="40" fontsize="30" color="yellow" ev-if="stage.param2 == 'value_new'">Invalid expression. So, this text doesn't show.</text>
-        <text x="10" y="15" h="10" w="40" fontsize="30" color="yellow" ev-if="stage.param2 == 'value1_new'">Valid expression. So, text is displayed.</text>
-        <text x="10" y="20" h="10" w="40" fontsize="30" color="yellow" ev-if="app.user.age == 6">This text will show if the user age is 6.</text>
+        <text x="10" y="10" h="10" w="80" fontsize="40" color="yellow">Text plugin: expression evaluates to false - should not show text</text>
+        <text x="10" y="15" h="10" w="80" fontsize="30" color="white" ev-if="stage.param2 == 'value_new'">Invalid expression. This expression shouldn't be seen.</text>
+        <text x="10" y="20" h="10" w="80" fontsize="40" color="yellow">Text plugin: expression evaluates to true - should show text below.</text>
+        <text x="10" y="25" h="10" w="80" fontsize="30" color="white" ev-if="stage.param2 == 'value1_new'">Got True. Showing the text.</text>
+        <text x="10" y="30" h="10" w="80" fontsize="40" color="yellow">Image plugin: expression evaluates to false - should not show image</text>
+        <image asset="icon_home" x="35" y="30" w="10" h="10" ev-if="stage.param2 == 'value_new'"/>
+        <text x="10" y="45" h="10" w="80" fontsize="40" color="yellow">Image plugin: expression evaluates to true - should show image</text>
+        <image asset="icon_home" x="35" y="50" w="10" h="10" ev-if="stage.param2 == 'value1_new'"/>
+        <text x="10" y="60" h="10" w="80" fontsize="40" color="yellow">Shape plugin: expression evaluates to false - should show shape</text>
+        <shape type="rect" x="55" y="65" w="5" h="5" hitArea="true" stroke="white" ev-if="stage.param2 == 'value_new'"></shape>
+        <text x="10" y="70" h="10" w="80" fontsize="40" color="yellow">Shape plugin: expression evaluates to true - should show shape</text>
+        <shape type="rect" x="55" y="75" w="5" h="5" hitArea="true" stroke="white" ev-if="stage.param2 == 'value1_new'"></shape>
+        <text x="10" y="80" h="10" w="80" fontsize="40" color="yellow">Audio plugin: expression evaluates to false - should play audio</text>
+        <audio asset="splash_audio" ev-if="stage.param2 == 'value_new'"/>
+        <text x="10" y="90" h="10" w="80" fontsize="40" color="yellow">Audio plugin: expression evaluates to true - should play audio</text>
+        <audio asset="splash_audio" ev-if="stage.param2 == 'value1_new'"/>
+
+
+
+        
 
     </stage>
     <stage id="finished" x="0" y="0" w="100" h="100">
