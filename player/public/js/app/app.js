@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 var packageName = "org.ekstep.quiz.app";
 var version = "1.0.37";
-var currentContentVersion = "0.2";
+var currentContentVersion = "0.3";
 var packageNameDelhi = "org.ekstep.delhi.curriculum";
 
 function backbuttonPressed(cs) {

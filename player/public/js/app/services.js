@@ -13,6 +13,13 @@ angular.module('quiz.services', ['ngResource'])
         var processContent = function(content) {
             content.status = "processing";
             content.processingStart = (new Date()).getTime();
+            if(content.filters) {
+                if(_.indexOf(content.filters, GlobalContext.game.id) == -1) {
+                    content.filters.push(GlobalContext.game.id);
+                }
+            } else {
+                content.filters = [GlobalContext.game.id];
+            }
             returnObject.saveContent(content);
             return new Promise(function(resolve, reject) {
                 DownloaderService.process(content)
@@ -112,12 +119,16 @@ angular.module('quiz.services', ['ngResource'])
                         "type": type,
                         "status": "ready"
                     });
-                    return list;
+                    return _.filter(list, function(item) {
+                        return _.indexOf(item.filters, GlobalContext.game.id) != -1;
+                    });
                 } else {
                     var list = _.where(_.values(this.contentList), {
                         "status": "ready"
                     });
-                    return list;
+                    return _.filter(list, function(item) {
+                        return _.indexOf(item.filters, GlobalContext.game.id) != -1;
+                    });
                 }
             },
             getContentCount: function(type) {
@@ -192,6 +203,15 @@ angular.module('quiz.services', ['ngResource'])
                     if ((localContent.status == "ready" && localContent.pkgVersion != content.pkgVersion) || (localContent.status == "error")) {
                         promise = processContent(content);
                     } else {
+                        if(localContent.filters) {
+                            if(_.indexOf(localContent.filters, GlobalContext.game.id) == -1) {
+                                localContent.filters.push(GlobalContext.game.id);
+                                returnObject.saveContent(localContent);
+                            }
+                        } else {
+                            localContent.filters = [GlobalContext.game.id];
+                            returnObject.saveContent(localContent);
+                        }
                         if (localContent.status == "ready")
                             console.log("content: " + localContent.identifier + " is at status: " + localContent.status + " and there is no change in pkgVersion.");
                         else
