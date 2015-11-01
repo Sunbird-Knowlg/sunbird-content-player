@@ -87,7 +87,16 @@ CommandManager = {
                 if (plugin) plugin.setParam(action.param, action.value, action.scope);
                 break;
             case 'startGenie':
-                exitApp();
+                if(TelemetryService._gameData.id != packageName && TelemetryService._gameData.id != packageNameDelhi) {
+                    console.log('Current game is:', TelemetryService._gameData.id, 'so, ending it first.');
+                    TelemetryService.end(TelemetryService._gameData.id);
+                    setTimeout(function() {
+                        exitApp();
+                    }, 500);
+                } else {
+                    exitApp();
+                }
+                
                 break;
             default:
                 console.log("Command not found.");
