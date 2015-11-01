@@ -40,6 +40,9 @@ var MCQPlugin = Plugin.extend({
         		this._self.y = dims.y;
                 if (data.shadow) {
                     this._shadow = data.shadow;
+
+                    // Unset the shadow on MCQ otherwise default plugin shadow takes effect
+                    data.shadow = undefined;
                 }
                 if (data.highlight) {
                     this._highlight = data.highlight;

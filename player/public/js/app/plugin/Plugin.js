@@ -49,6 +49,11 @@ var Plugin = Class.extend({
 		// Draw border if needed
 		this.drawBorder(data, dims);
 
+		// Draw shadow if needed
+		if (data.shadow) {
+            this.addShadow();
+        }
+
 		// Render the plugin component
 		if(this._render) {			
 			if(this._isContainer && this._type == 'stage') {
@@ -186,9 +191,10 @@ var Plugin = Class.extend({
         else {
         	// Not a plugin, render a normal shadow
             var shadowColor = this._data.shadowColor || '#cccccc';
+            shadowColor = this._data.shadow || shadowColor;
             var offsetX = this._data.offsetX || 0;
             var offsetY = this._data.offsetY || 0;
-            var blur = this._data.blur || 30;
+            var blur = this._data.blur || 5;
             this._self.shadow = new createjs.Shadow(shadowColor, offsetX, offsetY, blur);
         }
     },

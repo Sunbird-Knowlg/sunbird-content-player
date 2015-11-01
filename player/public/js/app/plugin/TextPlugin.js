@@ -29,6 +29,8 @@ var TextPlugin = Plugin.extend({
         
         var align  = (data.align ? data.align.toLowerCase() : 'left');
         var valign = (data.valign ? data.valign.toLowerCase() : 'top');
+        var lineHeight = (data.lineHeight ? data.lineHeight : 0);
+        var outline = (data.outline ? data.outline : 0);
 
         text.x = dims.x;
         text.lineWidth = dims.w;
@@ -52,7 +54,9 @@ var TextPlugin = Plugin.extend({
         }
         
         text.textAlign = align;
-        text.valign = valign;        
+        text.valign = valign;
+        text.lineHeight = lineHeight * (text.getMeasuredLineHeight());
+        text.outline = outline;
         this._self = text;
     }
 });

@@ -83,32 +83,29 @@
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
         <param name="heading" model="testData.ts_textpg_wrap"/>
 
-
-
         <text x="10" y="10" h="10" w="20" fontsize="30" color="yellow">Default alignments - should be aligned to top-left</text>
-        <shape x="10" y="20" h="10" w="20" type="rect" stroke="white"/>
-        <text x="10" y="20" h="10" w="20" fontsize="40" color="white">This text is aligned to top-left by default.</text>
-
+        <text x="10" y="20" h="10" w="20" fontsize="40" color="white" stroke="white">This text is aligned to top-left by default.</text>
 
         <text x="10" y="40" h="10" w="20" fontsize="30" color="yellow">Horiz alignments - should be aligned as displayed</text>
-        <shape x="10" y="50" h="10" w="20" type="rect" stroke="white"/>
-        <text x="10" y="50" h="10" w="20" fontsize="40" color="white" align="left">This text is left aligned by setting.</text>
-        
-        <shape x="30" y="50" h="10" w="20" type="rect" stroke="white"/>
-        <text x="30" y="50" h="10" w="20" fontsize="40" color="white" align="center">Use align="center" to align text in center</text>
-        
-        <shape x="50" y="50" h="10" w="20" type="rect" stroke="white"/>
-        <text x="50" y="50" h="10" w="20" fontsize="40" color="white" align="right">Use align="right" to align text at right</text>
+        <text x="10" y="50" h="10" w="20" fontsize="40" color="white" stroke="white" align="left">This text is left aligned by setting.</text>
+        <text x="30" y="50" h="10" w="20" fontsize="40" color="white" stroke="white" align="center">Use align="center" to align text in center</text>
+        <text x="50" y="50" h="10" w="20" fontsize="40" color="white" stroke="white" align="right">Use align="right" to align text at right</text>
 
         <text x="10" y="70" h="10" w="20" fontsize="30" color="yellow">Vert alignments - should be aligned as displayed</text>
-        <shape x="10" y="80" h="15" w="20" type="rect" stroke="white"/>
-        <text x="10" y="80" h="15" w="20" fontsize="40" color="white" align="center" valign="top">Use valign="top" for vertical top alignment</text>
-        
-        <shape x="30" y="80" h="15" w="20" type="rect" stroke="white"/>
-        <text x="30" y="80" h="15" w="20" fontsize="40" color="white" align="center" valign="middle">Use valign="middle" for vertical middle alignment</text>
-        
-        <shape x="50" y="80" h="15" w="20" type="rect" stroke="white"/>
-        <text x="50" y="80" h="15" w="20" fontsize="40" color="white" align="center" valign="bottom" stroke="red" stroke-width="2">Use valign="bottom" for vertical bottom alignment</text>
+        <text x="10" y="80" h="15" w="20" fontsize="40" color="white" stroke="white" align="center" valign="top">Use valign="top" for vertical top alignment</text>
+        <text x="30" y="80" h="15" w="20" fontsize="40" color="white" stroke="white" align="center" valign="middle">Use valign="middle" for vertical middle alignment</text>
+        <text x="50" y="80" h="15" w="20" fontsize="40" color="white" stroke="white" align="center" valign="bottom">Use valign="bottom" for vertical bottom alignment</text>
+
+        <text x="73" y="15" h="10" w="20" fontsize="30" color="yellow">LineHeight for Multiline Text</text>
+        <text x="73" y="20" h="40" w="20" fontsize="30" color="white" stroke="white">Text with default line height. Wrap should not overlap</text>
+        <text x="73" y="30" h="10" w="20" fontsize="30" color="white" lineHeight="1.5">Text with line height 1.5. Wrap should not overlap</text>
+        <text x="73" y="40" h="10" w="20" fontsize="30" color="white" lineHeight="0.3">Text with line height 0.3. Wrap should overlap</text>
+        <text x="73" y="50" h="10" w="20" fontsize="30" color="white" lineHeight="-1">Text with line height -1. Wrap should go on top</text>
+
+        <text x="73" y="65" h="10" w="20" fontsize="30" color="yellow">Advanced Text Properties</text>
+        <text x="73" y="70" h="20" w="20" fontsize="40" color="white" stroke="white" outline="2">Text With Outline</text>
+        <text x="73" y="75" h="10" w="20" fontsize="40" color="white" shadow="red" blur="10" offsetY="5">Text with Shadow</text>
+        <text x="73" y="80" h="10" w="20" fontsize="40" color="white" shadow="red" blur="10" offsetY="5" outline="2">Text with Outline and Shadow</text>
     </stage> 
 
     <stage id="mcqOptionsGlow" x="0" y="0" w="100" h="100" extends="baseStage">
