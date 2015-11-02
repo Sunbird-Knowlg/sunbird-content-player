@@ -15,7 +15,8 @@ MCQEvaluator = {
 						}
 					} else {
 						if (opt.selected === true) {
-							pass = false;	
+							pass = false;
+							delete opt.selected;
 						}
 					}
 				});
