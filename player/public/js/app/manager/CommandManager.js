@@ -84,7 +84,7 @@ CommandManager = {
                 if (plugin) plugin.restart(action);
                 break;
             case 'set':
-                if (plugin) plugin.setParam(action.param, action.value, action.scope);
+                if (plugin) plugin.setParam(action.param, action['param-value'], action.scope);
                 break;
             case 'startGenie':
                 if(TelemetryService._gameData.id != packageName && TelemetryService._gameData.id != packageNameDelhi) {

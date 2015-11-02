@@ -13,7 +13,6 @@
     </manifest>
     
     <controller name="testData" type="data" id="testdata"/>
-
 	<stage id="baseStage" preload="true">
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
@@ -168,7 +167,7 @@
         <text x="10" y="45" h="10" w="80" fontsize="40" color="yellow">Image plugin: expression evaluates to true - should show image</text>
         <image asset="icon_home" x="35" y="50" w="10" h="10" ev-if="stage.param2 == 'value1_new'"/>
         <text x="10" y="60" h="10" w="80" fontsize="40" color="yellow">Shape plugin: expression evaluates to false - should not show shape</text>
-        <shape type="rect" x="55" y="65" w="5" h="5" hitArea="true" stroke="white" ev-if="stage.param2 == 'value_new'"></shape>
+        <shape type="rect" x="55" y="65" w="5" h="5" hitArea="true" stroke="red" ev-if="stage.param2 == 'value_new'"></shape>
         <text x="10" y="70" h="10" w="80" fontsize="40" color="yellow">Shape plugin: expression evaluates to true - should show shape</text>
         <shape type="rect" x="55" y="75" w="5" h="5" hitArea="true" stroke="white" ev-if="stage.param2 == 'value1_new'"></shape>
 
@@ -284,7 +283,7 @@
     </stage>
 
     <stage id="conditionalRendering4" x="0" y="0" w="100" h="100" extends="baseStage">
-        <param name="next" value="finished" />
+        <param name="next" value="conditionalRendering5" />
         <param name="previous" value="conditionalRendering3" />
 
         <image asset="bg" x="0" y="0" w="100" h="100"/>
@@ -311,7 +310,37 @@
 
 
     </stage>
+    <stage id="conditionalRendering5" x="0" y="0" w="100" h="100" extends="baseStage">
+        <set id="appMode" param="mode" value="interact" scope="app" />
+        <param name="next" value="conditionalRendering6" />
+        <param name="previous" value="conditionalRendering4" />
+
+        <image asset="bg" x="0" y="0" w="100" h="100"/>
+        <param name="heading" model="testData.ts_cond_render_stage5"/>
+
+        <text fontsize="40" color="yellow" x="22" y="43" w="22" h="12"> Learn mode
+            <event type="click">
+                <action type="command" command="set" asset="appMode" param="mode" param-value="learn" scope="app" />
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="top" ease="linear" duration="500"/>
+            </event>
+        </text>
+        <text fontsize="40" color="yellow" x="52" y="43" w="22" h="12"> Interactive mode
+            <event type="click">
+                <action type="command" command="set" asset="appMode" param="mode" param-value="interact" scope="app" />
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="top" ease="linear" duration="500"/>
+            </event>
+        </text>
    
+   </stage>
+   <stage id="conditionalRendering6" x="0" y="0" w="100" h="100" extends="baseStage">
+        <param name="next" value="finished" />
+        <param name="previous" value="conditionalRendering5" />
+
+        <image asset="bg" x="0" y="0" w="100" h="100"/>
+        <param name="heading" model="testData.ts_cond_render_stage5"/>
+        <text fontsize="40" color="yellow" x="22" y="43" w="22" h="12" ev-if="app.mode == 'learn'"> Learn mode is enabled</text>
+        <text fontsize="40" color="yellow" x="22" y="43" w="22" h="12" ev-if="app.mode == 'interact'"> Interactive mode is enabled</text>
+    </stage>
     
     <stage id="finished" x="0" y="0" w="100" h="100">
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
