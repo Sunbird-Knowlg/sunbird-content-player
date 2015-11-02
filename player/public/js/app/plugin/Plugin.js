@@ -43,16 +43,23 @@ var Plugin = Class.extend({
 		// Conditional evaluation for rendering
 		if (data['ev-if']) {
 			var exprVal = this.evaluateExpr(data['ev-if']);
-			if (typeof exprVal != undefined) this._self.visible = (this._self.visible && exprVal);
+			if (typeof exprVal != undefined) {
+				if (this._self) {
+					this._self.visible = (this._self.visible && exprVal);	
+				}
+			}
 		}
 
-		// Draw border if needed
-		this.drawBorder(data, dims);
+		// Draw border and shadow only if the object is visible
+		if ((this._self) && (this._self.visible)) {
+			// Draw border if needed
+			this.drawBorder(data, dims);
 
-		// Draw shadow if needed
-		if (data.shadow) {
-            this.addShadow();
-        }
+			// Draw shadow if needed
+			if (data.shadow) {
+	            this.addShadow();
+	        }
+	    }
 
 		// Render the plugin component
 		if(this._render) {			
