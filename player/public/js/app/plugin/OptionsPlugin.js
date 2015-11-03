@@ -61,6 +61,8 @@ var OptionsPlugin = Plugin.extend({
 
                     data.stroke = instance._data.stroke;
                     data['stroke-width'] = instance._data['stroke-width'];
+                    data.events = instance._data.events;
+                    data.event = instance._data.event;
 
                     if (this._parent._shadow) {
                         data.shadowColor = this._parent._shadow;
@@ -84,6 +86,8 @@ var OptionsPlugin = Plugin.extend({
     			}
     		}
     	}
+        delete instance._data.events;
+        delete instance._data.event;
     }
 });
 PluginManager.registerPlugin('options', OptionsPlugin);
