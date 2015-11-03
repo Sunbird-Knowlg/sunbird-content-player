@@ -253,6 +253,10 @@
 		<shape x="90" y="15" w="0.2" h="75" type="rect" fill="#000000" />
 		 -->
 		
+        <mcq multi_select="false" model="item" shadow="#000000">
+            <options layout="table" x="10" y="40" w="80" h="35" cols="4" marginX="0" marginY="0" padX ="15" padY="15" options="options"/>
+        </mcq>
+
 		<text model="item.qid" x="46" y="2" w="10" h="4" font="Verdana" color = "black" fontsize="35"/>
 		<text model="item.title" x="15" y="25" w="70" h="4" font="Georgia" fontsize="42" color="black" align="center"/>
         <text model="item.question" x="15" y="34" w="70" h="4" font="Georgia" fontsize="42" color="black"/>
@@ -264,10 +268,7 @@
 		<text model="item.options[1].data" x="36" y="52" w="5" h="4" font="Georgia" fontsize="35" color="black"/>
 		<text model="item.options[2].data" x="56" y="52" w="5" h="4" font="Georgia" fontsize="35" color="black"/>
 		<text model="item.options[3].data" x="79" y="52" w="5" h="4" font="Georgia" fontsize="35" color="black"/>
-		
-        <mcq multi_select="false" model="item" shadow="#000000">
-            <options layout="table" x="10" y="40" w="80" h="35" cols="4" marginX="0" marginY="0" padX ="15" padY="15" options="options"/>
-        </mcq>
+
     </template>
 	
 	<!-- used for q 8 , 15-->
