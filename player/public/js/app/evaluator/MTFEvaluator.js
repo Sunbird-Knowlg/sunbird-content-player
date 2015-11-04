@@ -7,11 +7,14 @@ MTFEvaluator = {
 			var options = item.rhs_options;
 			if (_.isArray(options)) {
 				options.forEach(function(opt) {
-					if (opt.answer === opt.selected) {
-						score += opt.score || 1;
-					} else {
-						pass = false;
-					}
+					if (typeof opt.answer != 'undefined') {
+						if (opt.answer == opt.selected) {
+							console.log('correct answer');
+							score += opt.score || 1;
+						} else {
+							pass = false;
+						}
+ 					}
 				});
 			}
 			if (!pass) {
@@ -24,5 +27,17 @@ MTFEvaluator = {
 		result.pass = pass;
 		result.score = score;
 		return result;
+	},
+
+	reset: function(item) {
+		if (item) {
+			var options = item.rhs_options;
+			if (_.isArray(options)) {
+				options.forEach(function(opt) {
+					opt.selected = undefined;
+				});
+			}
+		}
 	}
+
 };

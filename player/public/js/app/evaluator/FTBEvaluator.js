@@ -23,5 +23,17 @@ FTBEvaluator = {
 		result.pass = pass;
 		result.score = score;
 		return result;
+	},
+
+	reset: function(item) {
+		if (item) {
+			var answer = item.answer;
+			var model = item.model;
+			for (var ans in answer) {
+				if (model[ans]) {
+					model[ans] = undefined;
+				}
+			}
+		}
 	}
 };

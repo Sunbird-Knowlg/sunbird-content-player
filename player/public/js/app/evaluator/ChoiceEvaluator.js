@@ -31,5 +31,16 @@ MCQEvaluator = {
 		result.pass = pass;
 		result.score = score;
 		return result;
+	},
+
+	reset: function(item) {
+		if (item) {
+			var options = item.options;
+			if (_.isArray(options)) {
+				options.forEach(function(opt) {
+					opt.selected = undefined;
+				});
+			}
+		}
 	}
 };
