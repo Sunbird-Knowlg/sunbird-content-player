@@ -3,10 +3,19 @@ MCQEvaluator = {
 		var result = {};
 		var pass = true;
 		var score = 0;
+		var res = [];
+
 		if (item) {
 			var options = item.options;
 			if (_.isArray(options)) {
 				options.forEach(function(opt) {
+					
+					// remember in telemetry what the response was 
+					if (opt.selected) {
+						res.push(opt.value.asset);
+					}
+
+					// evaluate if this is correct answer
 					if (opt.answer === true) {
 						if (!opt.selected) {
 							pass = false;
@@ -30,6 +39,7 @@ MCQEvaluator = {
 		}
 		result.pass = pass;
 		result.score = score;
+		result.res = res;
 		return result;
 	},
 

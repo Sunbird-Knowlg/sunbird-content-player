@@ -71,7 +71,7 @@ var ItemController = Controller.extend({
 			if (_.isArray(item.mmc)) {
 				assessEnd.mmc(item.mmc);
 			}
-			assessEnd.end(pass, item.score);
+			assessEnd.end(pass, item.score, result.res);
     	} catch(e) {
     		ControllerManager.addError('ItemController.evalItem() - OE_ASSESS_END error: ' + e);
     	}
