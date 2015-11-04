@@ -5,11 +5,13 @@ var OptionPlugin = Plugin.extend({
     _index: -1,
     _model: undefined,
     _value: undefined,
+    _answer: undefined,
 
     initPlugin: function(data) {
         
         this._model = undefined;
         this._value = undefined;
+        this._answer = undefined;
         this._index = -1;
 
         var model = data.option;
@@ -160,6 +162,16 @@ var OptionPlugin = Plugin.extend({
                     this.y = this.origY;
                     instance._parent.setAnswer(instance);
                 } else {
+                    
+                    // If there is an existing answer, nudge it out
+                    if (plugin._answer) {
+                        var existing = plugin._answer;
+                        existing._parent.setAnswer(existing);
+                        existing._self.x = existing._self.origX;
+                        existing._self.y = existing._self.origY;
+                    }
+
+                    // Set the current answer as accepted
                     if (plugin._data.snapX) {
                         this.x = dims.x + (dims.w * plugin._data.snapX / 100);
                     }
@@ -167,6 +179,9 @@ var OptionPlugin = Plugin.extend({
                         this.y = dims.y + (dims.w * plugin._data.snapY / 100);
                     }
                     instance._parent.setAnswer(instance, plugin._index);
+
+                    // Remember the answer so that on overwrite, we can clear it
+                    plugin._answer = instance;
                 }
 
                 instance.removeShadow();
