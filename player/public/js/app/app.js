@@ -328,15 +328,24 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
 
     }).controller('ContentCtrl', function($scope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         if ($stateParams.itemId) {
-            $scope.item = ContentService.getContent($stateParams.itemId)
-            Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier);
+            $scope.item = ContentService.getContent($stateParams.itemId);
+            if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'html') {
+                $scope
+                HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier, $scope);
+            } else {
+                Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier);
+            }
         } else {
             alert('Name or Launch URL not found.');
             $state.go('contentList');
         }
         $scope.$on('$destroy', function() {
             setTimeout(function() {
-                Renderer.cleanUp();
+                if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'html') {
+                    HTMLRenderer.cleanUp();
+                } else {
+                    Renderer.cleanUp();
+                }
                 initBookshelf();
             }, 100);
         });
