@@ -14,6 +14,25 @@
         "content": [
         {
             "questionnaire": null,
+            "appIcon": "stories/quizapp_bugs/logo.png",
+            "subject": "literacy_v2",
+            "description": "QuizApp bugs fixes",
+            "name": "QuizApp Bugs",
+            "launchPath": "stories/quizapp_bugs",
+            "downloadUrl": "",
+            "checksum": null,
+            "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+            "concepts": [{
+                "identifier": "LO1",
+                "name": "Receptive Vocabulary",
+                "objectType": "Concept"
+            }],
+            "identifier": "org.ekstep.quiz.app.bugs.renderer",
+            "grayScaleAppIcon": null,
+            "pkgVersion": 1
+        },
+        {
+            "questionnaire": null,
             "appIcon": "stories/test_cases/logo.png",
             "subject": "literacy_v2",
             "description": "Renderer Test Cases",

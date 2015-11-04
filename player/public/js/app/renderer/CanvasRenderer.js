@@ -31,7 +31,7 @@ Renderer = {
         }
         Renderer.running = true;
         TelemetryService.start(gameId, GlobalContext.game.ver);
-        Renderer.initByJSON(gameRelPath, canvasId);
+        Renderer.initByXML(gameRelPath, canvasId);
     },
     initByJSON: function(gameRelPath, canvasId) {
         $.get(gameRelPath + '/index.json', function(data) {

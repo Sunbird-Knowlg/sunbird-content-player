@@ -110,8 +110,11 @@ LoadByStageStrategy = Class.extend({
         if (!asset) asset = this.templateLoader.getResult(assetId);
         if (!asset) asset = this.spriteSheetMap[assetId];
         if (!asset) {
-            console.error('Asset not found. Returning - ', (this.assetMap[assetId].src));
-            return this.assetMap[assetId].src;
+            if(this.assetMap[assetId]) {
+                console.error('Asset not found. Returning - ', (this.assetMap[assetId].src));
+                return this.assetMap[assetId].src;
+            } else
+                console.error(assetId +' not found. Please check index.ecml.');
         };
         return asset;
     },
