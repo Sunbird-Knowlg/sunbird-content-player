@@ -9,12 +9,27 @@ HTMLRenderer = {
 	        $('#gameAreaLoad').hide();
 	        $('#gameArea').hide();
 	        var path = gameRelPath + '/index.html';
-	        console.info("Path:", path);
-	        // window.location = path;
+	        HTMLRenderer.resizeFrame();
 	        $scope.currentProjectUrl = path;
 	        $("#htmlFrame").show();
         }
 	},
+	resizeFrame: function() {
+        var gameArea = document.getElementById('htmlFrame');
+        var widthToHeight = 16 / 9;
+        var newWidth = window.innerWidth;
+        var newHeight = window.innerHeight;
+        var newWidthToHeight = newWidth / newHeight;
+        if (newWidthToHeight > widthToHeight) {
+            newWidth = newHeight * widthToHeight;
+            gameArea.style.height = newHeight + 'px';
+            gameArea.style.width = newWidth + 'px';
+        } else {
+            newHeight = newWidth / widthToHeight;
+            gameArea.style.width = newWidth + 'px';
+            gameArea.style.height = newHeight + 'px';
+        }
+    },
 	cleanUp: function() {
 		HTMLRenderer.running = false;
 		TelemetryService.end();

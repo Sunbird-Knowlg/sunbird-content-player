@@ -10,7 +10,7 @@ var packageNameDelhi = "org.ekstep.delhi.curriculum";
 
 function backbuttonPressed(cs) {
 
-    if (Renderer.running) {
+    if (Renderer.running || HTMLRenderer.running) {
         var ext = {
             type: 'EXIT_CONTENT'
         }
@@ -329,7 +329,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
     }).controller('ContentCtrl', function($scope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         if ($stateParams.itemId) {
             $scope.item = ContentService.getContent($stateParams.itemId);
-            if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'html') {
+            if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'html' || true) {
                 $scope
                 HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier, $scope);
             } else {
@@ -341,7 +341,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         }
         $scope.$on('$destroy', function() {
             setTimeout(function() {
-                if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'html') {
+                if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'html' || true) {
                     HTMLRenderer.cleanUp();
                 } else {
                     Renderer.cleanUp();
