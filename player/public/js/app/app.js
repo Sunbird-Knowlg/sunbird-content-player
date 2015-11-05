@@ -330,7 +330,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         if ($stateParams.itemId) {
             $scope.item = ContentService.getContent($stateParams.itemId);
             if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'html') {
-                $scope
                 HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier, $scope);
             } else {
                 Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier);
