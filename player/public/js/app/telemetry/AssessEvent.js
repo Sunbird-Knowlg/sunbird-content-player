@@ -48,7 +48,7 @@ AssessEvent = TelemetryEvent.extend({
             this.event.edata.eks.uri = uri || "";
             this._isStarted = false;
             this.flush();
-            delete TelemetryService._data[TelemetryService._gameData.id][qid];
+            delete TelemetryService._data[TelemetryService._gameData.id][this.qid];
     	} else {
     		throw "can't end assess event without starting.";
     	}

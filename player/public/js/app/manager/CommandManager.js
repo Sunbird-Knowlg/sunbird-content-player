@@ -1,30 +1,30 @@
 CommandManager = {
-    audioActions: ['play', 'pause', 'stop', 'togglePlay', 'external', 'windowEvent'],
+    audioActions: ['PLAY', 'PAUSE', 'STOP', 'TOGGLEPLAY', 'EXTERNAL', 'WINDOWEVENT'],
     handle: function(action) {
         var plugin = PluginManager.getPluginObject(action.asset);
-        if (!_.contains(CommandManager.audioActions, action.command)) {
+        if (!_.contains(CommandManager.audioActions, (action.command).toUpperCase())) {
             if (!plugin) {
                 PluginManager.addError('Plugin not found for action - ' + JSON.stringify(action));
                 return;
             }
         }
-        //var choice = (action.command).toLowerCase();
-        switch (action.command) {
-            case 'play':
+        var choice = (action.command).toUpperCase();
+        switch (choice) {
+            case 'PLAY':
                 if (plugin && plugin._type == 'sprite') {
                     plugin.play(action.animation);
                 } else {
                     AudioManager.play(action);
                 }
                 break;
-            case 'pause':
+            case 'PAUSE':
                 if (plugin && plugin._type == 'sprite') {
                     plugin.pause();
                 } else {
                     AudioManager.pause(action);
                 }
                 break;
-            case 'stop':
+            case 'STOP':
                 if (plugin && plugin._type == 'sprite') {
                     plugin.stop();
                 } else {
@@ -35,32 +35,32 @@ CommandManager = {
                     }
                 }
                 break;
-            case 'togglePlay':
+            case 'TOGGLEPLAY':
                 if (plugin && plugin._type == 'sprite') {
                     plugin.togglePlay(action.animation);
                 } else {
                     AudioManager.togglePlay(action);
                 }
                 break;
-            case 'show':
+            case 'SHOW':
                 if (plugin) plugin.show(action);
                 break;
-            case 'hide':
+            case 'HIDE':
                 if (plugin) plugin.hide(action);
                 break;
-            case 'toggleShow':
+            case 'TOGGLESHOW':
                 if (plugin) plugin.toggleShow(action);
                 break;
-            case 'transitionTo':
+            case 'TRANSITIONTO':
                 if (plugin) plugin.transitionTo(action);
                 break;
-            case 'event':
+            case 'EVENT':
                 EventManager.dispatchEvent(action.asset, action.value);
                 break;
-            case 'toggleShadow':
+            case 'TOGGLESHADOW':
                 if (plugin) plugin.toggleShadow();
                 break;
-            case 'windowEvent':
+            case 'WINDOWEVENT':
                 if(GlobalContext.config.appInfo && GlobalContext.config.appInfo.code 
                     && GlobalContext.config.appInfo.code != GlobalContext.game.id) {
                     window.location.hash = "#/show/content";
@@ -68,25 +68,25 @@ CommandManager = {
                     window.location.hash = action.href;
                 }
                 break;
-            case 'external': 
+            case 'EXTERNAL': 
                 if(action.href) 
                     window.open(action.href, "_system"); 
                 else 
                     startApp(action.app);                                
                 break;
-            case 'eval':
+            case 'EVAL':
                 if (plugin) plugin.evaluate(action);
                 break;
-            case 'reload':
+            case 'RELOAD':
                 if (plugin) plugin.reload(action);
                 break;
-            case 'restart':
+            case 'RESTART':
                 if (plugin) plugin.restart(action);
                 break;
-            case 'set':
+            case 'SET':
                 if (plugin) plugin.setParam(action.param, action['param-value'], action.scope);
                 break;
-            case 'startGenie':
+            case 'STARTGENIE':
                 if(TelemetryService._gameData.id != packageName && TelemetryService._gameData.id != packageNameDelhi) {
                     console.log('Current game is:', TelemetryService._gameData.id, 'so, ending it first.');
                     TelemetryService.end(TelemetryService._gameData.id);
@@ -99,7 +99,7 @@ CommandManager = {
                 
                 break;
             default:
-                console.log("Command not found.");
+                console.log("Command '" + choice +"' not found.");
         }
     }
 }
