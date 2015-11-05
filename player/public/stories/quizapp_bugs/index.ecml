@@ -33,20 +33,41 @@
     </stage>
 
     <stage id="AssetError" x="0" y="0" w="100" h="100" extends="baseStage">
-    	<param name="next" value="finished" />
+    	<param name="next" value="Command" />
         
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
+        <param name="heading" model="bugData.ts_asset_not_found"/>
         
         <image asset="sringeri" x="20" y="30" w="15" h="15"/>
-        <text x="10" y="15" h="10" w="40" fontsize="40" color="red">If asset is not present stage should able to move to next stage :</text>
-        <text x="10" y="50" h="10" w="40" fontsize="40" color="red">sringeri image asset is not present.</text>
-        <image asset="barber" x="65" y="30" w="15" h="15"/>
-        <text x="60" y="50" h="10" w="40" fontsize="40" color="red">barber image asset is present.</text>
+        <text x="10" y="15" h="10" w="40" fontsize="40" color="brown">If asset is not present stage should able to move to next stage :</text>
+        <text x="10" y="60" h="10" w="40" fontsize="40" color="brown">sringeri image asset is not present.</text>
+        <image asset="barber" x="60" y="25" w="25" h="25"/>
+        <text x="60" y="60" h="10" w="40" fontsize="40" color="brown">barber image asset is present.</text>
     </stage> 
+
+    <stage id="Command" x="0" y="0" w="100" h="100" extends="baseStage">
+        <param name="next" value="finished" />
+        <param name="previous" value="AssetError" />
+        <param name="heading" model="bugData.ts_command_insensitive"/>
+        <image asset="bg" x="0" y="0" w="100" h="100"/>
+        <text x="10" y="8" h="10" w="40" fontsize="40" color="brown">All commands should be inSensitive : </text>
+        <shape type="rect" x="69" y="15" w="7" h="5" hitArea="true" stroke="black">
+            <event type="click">
+                <action type="command" command="ExterNal" href="https://en.wikipedia.org/wiki/Barber" />
+            </event>
+        </shape>
+        <text x="10" y="15" h="10" w="50" fontsize="40" color="brown">Command written in ecml is "ExterNal", should open the external link.</text>
+
+        <image asset="barber" x="60" y="40" w="20" h="25">
+            <event type="click">
+                <action type="command" command="Hide" asset="barber" />
+            </event>
+        </image>
+        <text x="10" y="50" h="10" w="50" fontsize="40" color="brown">Command written in ecml is "Hide", should hide the barber image.</text>
+    </stage>
 
     
     <stage id="finished" x="0" y="0" w="100" h="100">
-         <param name="heading" model="bugData.ts_asset_not_found"/>
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
         <text x="38" y="15" w="30" h="8" font="Georgia" fontsize="50">
             It works :) See you again!
