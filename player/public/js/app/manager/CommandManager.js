@@ -1,5 +1,5 @@
 CommandManager = {
-    audioActions: ['PLAY', 'PAUSE', 'STOP', 'TOGGLEPLAY', 'EXTERNAL', 'WINDOWEVENT'],
+    audioActions: ['PLAY', 'PAUSE', 'STOP', 'TOGGLEPLAY', 'EXTERNAL', 'WINDOWEVENT', 'STARTGENIE'],
     handle: function(action) {
         var plugin = PluginManager.getPluginObject(action.asset);
         if (!_.contains(CommandManager.audioActions, (action.command).toUpperCase())) {
