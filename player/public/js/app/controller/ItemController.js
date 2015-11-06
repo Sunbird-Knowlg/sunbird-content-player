@@ -19,6 +19,11 @@ var ItemController = Controller.extend({
     		this._index += 1;
     		var item = this._model[this._index];
     		if (item) {
+                
+                // Reset the current state of the item (in case one is going back and forth)
+                this.resetItem(item);
+
+                // Start assessment telemetry
     			d = item.model;
     			try {
     				var assessStart = TelemetryService.assess(item.identifier, this._data.subject, item.qlevel).start();
@@ -33,6 +38,19 @@ var ItemController = Controller.extend({
     	}
     	return d;
 	},
+    resetItem: function(item) {
+        if (item) {
+            console.log('reseting state of ' + item.qid);
+
+            if (item.type.toLowerCase() == 'ftb') {
+                FTBEvaluator.reset(item);
+            } else if (item.type.toLowerCase() == 'mcq' || item.type.toLowerCase() == 'mmcq') {
+                MCQEvaluator.reset(item);
+            } else if (item.type.toLowerCase() == 'mtf') {
+                MTFEvaluator.reset(item);
+            }
+        }
+    },
 	evalItem: function() {
 		var item = this.getModel();
 		var result;
@@ -53,7 +71,7 @@ var ItemController = Controller.extend({
 			if (_.isArray(item.mmc)) {
 				assessEnd.mmc(item.mmc);
 			}
-			assessEnd.end(pass, item.score);
+			assessEnd.end(pass, item.score, result.res);
     	} catch(e) {
     		ControllerManager.addError('ItemController.evalItem() - OE_ASSESS_END error: ' + e);
     	}
