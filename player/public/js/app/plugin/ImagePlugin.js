@@ -10,7 +10,7 @@ var ImagePlugin = Plugin.extend({
         s.x = dims.x;
         s.y = dims.y;
         this._self = s;
-        if(this._theme.getAsset(data.asset)) this.setScale();
+        if(sb) this.setScale(); 
     }
 });
 PluginManager.registerPlugin('image', ImagePlugin);

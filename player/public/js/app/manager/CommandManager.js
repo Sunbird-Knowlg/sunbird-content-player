@@ -1,15 +1,17 @@
 CommandManager = {
     audioActions: ['PLAY', 'PAUSE', 'STOP', 'TOGGLEPLAY', 'EXTERNAL', 'WINDOWEVENT', 'STARTGENIE'],
     handle: function(action) {
+        var cmd = '';
+        if (_.isString(action.command))
+            cmd = (action.command).toUpperCase();
         var plugin = PluginManager.getPluginObject(action.asset);
-        if (!_.contains(CommandManager.audioActions, (action.command).toUpperCase())) {
+        if (!_.contains(CommandManager.audioActions, cmd)) {
             if (!plugin) {
                 PluginManager.addError('Plugin not found for action - ' + JSON.stringify(action));
                 return;
             }
         }
-        var choice = (action.command).toUpperCase();
-        switch (choice) {
+        switch (cmd) {
             case 'PLAY':
                 if (plugin && plugin._type == 'sprite') {
                     plugin.play(action.animation);
