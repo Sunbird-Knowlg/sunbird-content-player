@@ -11,24 +11,33 @@ angular.module('quiz.services', ['ngResource'])
                 return null;
         };
         var processContent = function(content) {
-            content.status = "processing";
-            content.processingStart = (new Date()).getTime();
-            if(content.filters) {
-                if(_.indexOf(content.filters, GlobalContext.game.id) == -1) {
-                    content.filters.push(GlobalContext.game.id);
+            var localContent = returnObject.getContent(content.identifier);
+            if(!localContent) localContent = content;
+            localContent.status = "processing";
+            localContent.processingStart = (new Date()).getTime();
+            if(localContent.filters) {
+                if(_.indexOf(localContent.filters, GlobalContext.game.id) == -1) {
+                    localContent.filters.push(GlobalContext.game.id);
                 }
             } else {
-                content.filters = [GlobalContext.game.id];
+                localContent.filters = [GlobalContext.game.id];
             }
-            returnObject.saveContent(content);
+            returnObject.saveContent(localContent);
             return new Promise(function(resolve, reject) {
                 DownloaderService.process(content)
                 .then(function(data) {
                     for (key in data) {
                         content[key] = data[key];
                     }
-                    returnObject.saveContent(content);
-                    if (content.status == 'ready') {
+                    returnObject.saveContent(content); // move inside ready if condition.
+                    if (data.status == 'ready') {
+                        for (key in data) {
+                            localContent[key] = data[key];
+                        }
+                        for(key in content) {
+                            localContent[key] = content[key];
+                        }
+                        returnObject.saveContent(localContent);
                         var message = "";
                         if(GlobalContext.config.appInfo && GlobalContext.config.appInfo.code && GlobalContext.config.appInfo.code == packageName) {
                             message = AppMessages.CONTENT_LOAD_MSG.replace("{0}", "1 " + content.type);
@@ -48,17 +57,28 @@ angular.module('quiz.services', ['ngResource'])
                                 }
                             }
                         });
-                    } else if(content.status == 'error') {
+                    } else if(data.status == 'error') {
+                        if(localContent.baseDir) {
+                            localContent.status = "ready";
+                            localContent.errorCode = data.errorCode;
+                        } else {
+                            for (key in data) {
+                                localContent[key] = data[key];
+                            }
+                        }
+                        returnObject.saveContent(localContent);
                         var message = "";
-                        if(content.errorCode == 'DOWNLOAD_ERROR') {
+                        if(data.errorCode == 'DOWNLOAD_ERROR') {
                             message = AppMessages.DOWNLOAD_ERROR.replace("{0}", content.name);
-                        } else if(content.errorCode == 'EXTRACT_FILE_NOT_FOUND') {
+                        } else if(data.errorCode == 'DOWNLOAD_URL_ERROR') {
+                            message = AppMessages.DOWNLOAD_URL_ERROR.replace("{0}", content.name);
+                        } else if(data.errorCode == 'EXTRACT_FILE_NOT_FOUND') {
                             message = AppMessages.EXTRACT_FILE_NOT_FOUND.replace("{0}", content.name);
-                        } else if(content.errorCode == 'EXTRACT_INVALID_OUPUT_DIR') {
+                        } else if(data.errorCode == 'EXTRACT_INVALID_OUPUT_DIR') {
                             message = AppMessages.EXTRACT_INVALID_OUPUT_DIR.replace("{0}", content.name);
-                        } else if(content.errorCode == 'EXTRACT_INVALID_ARCHIVE') {
+                        } else if(data.errorCode == 'EXTRACT_INVALID_ARCHIVE') {
                             message = AppMessages.EXTRACT_INVALID_ARCHIVE;
-                        } else if(content.errorCode == 'SYSTEM_ERROR') {
+                        } else if(data.errorCode == 'SYSTEM_ERROR') {
                             message = AppMessages.SYSTEM_ERROR.replace("{0}", content.name);
                         }
                         $rootScope.$broadcast('show-message', {
@@ -66,14 +86,23 @@ angular.module('quiz.services', ['ngResource'])
                             "timeout": 3000
                         });
                     }
-                    resolve(content);
+                    resolve(localContent);
                 })
                 .catch(function(data) {
-                    for (key in data) {
-                        content[key] = data[key];
+                    if(localContent.baseDir) {
+                        localContent.status = "ready";
+                        localContent.errorCode = data.errorCode;
+                    } else {
+                        for (key in data) {
+                            localContent[key] = data[key];
+                        }
                     }
-                    returnObject.saveContent(content);
-                    resolve(content);
+                    returnObject.saveContent(localContent);
+                    $rootScope.$broadcast('show-message', {
+                        "message": "Error while processing content.",
+                        "timeout": 3000
+                    });
+                    resolve(localContent);
                 });
             });
         };
@@ -100,7 +129,10 @@ angular.module('quiz.services', ['ngResource'])
                     "status": "processing"
                 });
                 if (_.isArray(list)) {
-                    return list.length;
+                    var filteredList =  _.filter(list, function(item) {
+                        return _.indexOf(item.filters, GlobalContext.game.id) != -1;
+                    });
+                    return filteredList.length;
                 }
                 return 0;
             },
@@ -109,7 +141,9 @@ angular.module('quiz.services', ['ngResource'])
                     "status": "processing"
                 });
                 if (_.isArray(list)) {
-                    return list;
+                    return _.filter(list, function(item) {
+                        return _.indexOf(item.filters, GlobalContext.game.id) != -1;
+                    });
                 }
                 return [];
             },

@@ -47,19 +47,23 @@ DownloaderService = {
                 if(content.pkgVersion) contentId += "."+ content.pkgVersion;
                 var basePath = DownloaderService.appDataDirectory;
                 var downloadUrl = content.downloadUrl;
-                var urlExt = downloadUrl.substring(downloadUrl.lastIndexOf(".")+1, downloadUrl.length);
-                var extension = ".zip";
-                if(urlExt == "gz") extension = ".tar.gz"; 
-                var fileTransfer = new FileTransfer();
-                var downloadPath = basePath + contentId + extension;
-                console.log("started downloading to "+ downloadPath);
-                fileTransfer.download(downloadUrl, downloadPath, function(theFile) {
-                    console.log("download complete: " + theFile.toURL());
-                    resolve(theFile);
-                }, function(error) {
-                    console.log("download error: ", JSON.stringify(error));
-                    reject({"status": "error", "file": "", "errorCode": "DOWNLOAD_ERROR", "errorParam": JSON.stringify(error)});
-                }, true);
+                if(downloadUrl) {
+                    var urlExt = downloadUrl.substring(downloadUrl.lastIndexOf(".")+1, downloadUrl.length);
+                    var extension = ".zip";
+                    if(urlExt == "gz") extension = ".tar.gz"; 
+                    var fileTransfer = new FileTransfer();
+                    var downloadPath = basePath + contentId + extension;
+                    console.log("started downloading to "+ downloadPath);
+                    fileTransfer.download(downloadUrl, downloadPath, function(theFile) {
+                        console.log("download complete: " + theFile.toURL());
+                        resolve(theFile);
+                    }, function(error) {
+                        console.log("download error: ", JSON.stringify(error));
+                        reject({"status": "error", "file": "", "errorCode": "DOWNLOAD_ERROR", "errorParam": JSON.stringify(error)});
+                    }, true);
+                } else {
+                    reject({"status": "error", "file": "", "errorCode": "DOWNLOAD_URL_ERROR", "errorParam": "download url is empty."});
+                }
             });
     },
     checkFile: function(contentId) {

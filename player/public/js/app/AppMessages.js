@@ -7,6 +7,7 @@ AppMessages = {
 	INTERNAL_ERROR: "Something went wrong.<br/>Please try again later or contact helpdesk if issue persists.",
 	SYSTEM_ERROR: "System Error occured: {0}.<br/>Please try again later or contact helpdesk if issue persists.",
 	DOWNLOAD_ERROR: "Error downloading content: {0}",
+	DOWNLOAD_URL_ERROR: "Invalid download URL for content: {0}",
 	EXTRACT_FILE_NOT_FOUND: "Error extracting content. File not found: {0}",
 	EXTRACT_INVALID_OUPUT_DIR: "Error extracting content. Output directory not found: {0}",
 	EXTRACT_INVALID_ARCHIVE: "Invalid Content Archive File",
