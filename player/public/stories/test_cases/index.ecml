@@ -16,9 +16,14 @@
                 <audioSprite id="cover_sound" startTime="0" duration="7131.428571428572"></audioSprite>
             </data>
         </media>
-        <media src="sounds/scene19.ogg" id="scene19_audio" type="audiosprite">
+        <media src="sounds/scene19.mp3" id="scene19_audio" type="audiosprite">
             <data>
                 <audioSprite id="scene19_sound" startTime="0" duration="12303.673469387755"></audioSprite>
+            </data>
+        </media>
+        <media src="sounds/drag.mp3" id="drag_audio" type="audiosprite">
+            <data>
+                <audioSprite id="drag_audio" startTime="1" duration="20.00"></audioSprite>
             </data>
         </media>
     </manifest>
@@ -27,7 +32,7 @@
     <controller name="assessment" type="items" id="assessment"/>
     <template id="mcq_template_1">
         <text model="item.title" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42"/>
-        <mcq multi_select="false" model="item" shadow="red" blur="80" offsetX="50">
+        <mcq multi_select="false" model="item" shadow="blue" blur="80" offsetX="50">
             <options layout="table" x="20" y="15" w="70" h="85" cols="2" marginX="10" marginY="5" options="options">
                 <events>
                     <event type="click">
@@ -40,22 +45,22 @@
     <template id="mtf_template_2">
         <text model="item.title" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42"/>
         <mtf model="item" force="true">
-            <option x="20" y="15" w="30" h="25" snapX="42" snapY="9" option="lhs_options[0]">
-                <events>
-                    <event type="mousedown">
-                        <action type="command" command="play" asset="scene19_sound" loop="1" />
-                    </event>
-                    <event type="mouseup">
-                        <action type="command" command="stop" asset="scene19_sound" audio="true" loop="1" />
-                    </event>
-                </events>
-            </option>
+            <option x="20" y="15" w="30" h="25" snapX="42" snapY="9" option="lhs_options[0]"/>
             <option x="20" y="43" w="30" h="25" snapX="10.5" snapY="5" option="lhs_options[1]"/>
             <option x="20" y="71" w="30" h="25" snapX="27.5" snapY="8.5" option="lhs_options[2]"/>
 
             <option x="70" y="15" w="10" h="16" option="rhs_options[0]"/>
             <option x="70" y="43" w="10" h="19.5" option="rhs_options[1]"/>
-            <option x="70" y="71" w="12" h="22" option="rhs_options[2]"/>
+            <option x="70" y="71" w="12" h="22" option="rhs_options[2]">
+                <events>
+                    <event type="mousedown">
+                        <action type="command" command="play" asset="drag_audio" audio="true" loop="1" />
+                    </event>
+                    <event type="pressup">
+                        <action type="command" command="stop" asset="drag_audio" audio="true" loop="1" />
+                    </event>
+                </events>
+            </option>
         </mtf>
         <g x="9" y="17" w="20" h="20" id="hint" visible="false">
             <!-- <image asset="speech_bubble" x="0" y="0" w="100" h="100" /> -->
@@ -404,6 +409,7 @@
         <text fontsize="40" color="yellow" x="22" y="43" w="22" h="12" ev-if="app.mode == 'interact'"> Interactive mode is enabled</text>
     </stage>
     <stage id="eventMCQMTFOptions" x="0" y="0" w="100" h="100" iterate="assessment" var="item" extends="baseStage">
+        <audio asset="drag_audio" />
         <param name="next" value="finished" />
         <param name="previous" value="conditionalRendering6" />
         <embed template="item" var-item="item"/>
