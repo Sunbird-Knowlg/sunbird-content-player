@@ -16,6 +16,11 @@
                 <audioSprite id="cover_sound" startTime="0" duration="7131.428571428572"></audioSprite>
             </data>
         </media>
+        <media src="sounds/scene19.ogg" id="scene19_audio" type="audiosprite">
+            <data>
+                <audioSprite id="scene19_sound" startTime="0" duration="12303.673469387755"></audioSprite>
+            </data>
+        </media>
     </manifest>
     
     <controller name="testData" type="data" id="testdata"/>
@@ -26,7 +31,7 @@
             <options layout="table" x="20" y="15" w="70" h="85" cols="2" marginX="10" marginY="5" options="options">
                 <events>
                     <event type="click">
-                        <action type="command" command="play" asset="cover_sound" loop="1" />
+                        <action type="command" command="play" asset="scene19_sound" loop="1" />
                     </event>
                 </events>
             </options>
@@ -38,10 +43,10 @@
             <option x="20" y="15" w="30" h="25" snapX="42" snapY="9" option="lhs_options[0]">
                 <events>
                     <event type="mousedown">
-                        <action type="command" command="play" asset="cover_sound" loop="1" />
+                        <action type="command" command="play" asset="scene19_sound" loop="1" />
                     </event>
                     <event type="mouseup">
-                        <action type="command" command="stop" asset="cover_sound" audio="true" loop="1" />
+                        <action type="command" command="stop" asset="scene19_sound" audio="true" loop="1" />
                     </event>
                 </events>
             </option>
@@ -52,8 +57,24 @@
             <option x="70" y="43" w="10" h="19.5" option="rhs_options[1]"/>
             <option x="70" y="71" w="12" h="22" option="rhs_options[2]"/>
         </mtf>
+        <g x="9" y="17" w="20" h="20" id="hint" visible="false">
+            <!-- <image asset="speech_bubble" x="0" y="0" w="100" h="100" /> -->
+            <text x="10" y="20" w="80" h="80" font="Georgia" weight="bold" fontsize="150">
+                Hint
+            </text>
+            <text x="10" y="40" w="80" h="80" font="Georgia" fontsize="120" model="item.hints[0].asset"/>
+        </g>
     </template>
 
+    <stage id="tempBaseStage" preload="true">
+        <image asset="b-outer"/>
+        <image asset="w-outer"/>
+        <image asset="t-outer"/>
+        <image asset="b-inner"/>
+        <image asset="w-inner"/>
+        <image asset="t-inner"/>
+        <audio asset="scene19_audio" />
+    </stage>
 	<stage id="baseStage" preload="true">
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
@@ -377,7 +398,6 @@
    <stage id="conditionalRendering6" x="0" y="0" w="100" h="100" extends="baseStage">
         <param name="next" value="eventMCQMTFOptions" />
         <param name="previous" value="conditionalRendering5" />
-
         <image asset="bg" x="0" y="0" w="100" h="100"/>
         <param name="heading" model="testData.ts_cond_render_stage5"/>
         <text fontsize="40" color="yellow" x="22" y="43" w="22" h="12" ev-if="app.mode == 'learn'"> Learn mode is enabled</text>
