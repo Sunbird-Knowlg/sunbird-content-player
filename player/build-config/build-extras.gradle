@@ -12,7 +12,7 @@ android {
     }
 
     defaultConfig {
-        versionName "1.0.38"
+        versionName "1.0.39"
         setProperty("archivesBaseName", "contentapp-$versionName")
     }
 
