@@ -249,6 +249,7 @@
                 <action type="command" command="transitionTo" asset="theme" param="recorderScene" effect="scroll" direction="left" ease="linear" duration="500" />
             </event>
         </shape>
+        <text x="70.5" y="91" w="10" h="5" font="Arial" fontsize="28">Auto transition</text>
         <text x="35" y="80" w="25" h="5" font="Arial" fontsize="48">
             Annual Haircut Day
         </text>
