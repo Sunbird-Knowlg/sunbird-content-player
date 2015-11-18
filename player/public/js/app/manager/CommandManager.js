@@ -100,8 +100,14 @@ CommandManager = {
                 }
                 
                 break;
+            case 'STARTRECORD':
+                if (plugin) RecorderManager.startRecording(action);
+                break;
+            case 'STOPRECORD':
+                if (plugin) RecorderManager.stopRecording(action);
+                break;
             default:
-                console.log("Command '" + choice +"' not found.");
+                console.log("Command '" + cmd +"' not found.");
         }
     }
 }

@@ -175,7 +175,8 @@ module.exports = function(grunt) {
                         'https://github.com/Initsogar/cordova-webintent.git',
                         'com.lampa.startapp',
                         'cordova-plugin-inappbrowser',
-                        'https://github.com/xmartlabs/cordova-plugin-market'
+                        'https://github.com/xmartlabs/cordova-plugin-market',
+                        'cordova-plugin-media'
                     ]
                 }
             },

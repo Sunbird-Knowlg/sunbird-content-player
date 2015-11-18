@@ -187,6 +187,7 @@
                 <audioSprite id="D5_sound" startTime="93000" duration="784.7392290249502"></audioSprite>
             </data>
         </media>
+        <media id="mic" src="mic.png" type="image" />
     </manifest>
     <controller name="storyData" type="data" id="story_data"/>
     <controller name="assessment" type="items" id="assessment"/>
@@ -280,6 +281,28 @@
                 <action type="command" command="togglePlay" asset="clock_sound" />
             </event>
         </shape>
+        <g x="40" y="40" w="20" h="20" id="youSpeak">
+            <shape type="roundrect" x="0" y="0" w="100" h="100" fill="green">
+                <event type="click">
+                    <action type="command" command="startRecord" asset="youSpeak" success="recordingInfo"/>
+                </event>
+            </shape>
+            <text x="10" y="20" w="80" h="80" font="Georgia" weight="bold" fontsize="150" align="center">
+                You Speak
+            </text>
+            <image asset="mic" x="35" y="40" w="30" h="30"/>
+        </g>
+        <g x="40" y="40" w="20" h="20" id="recordingInfo" visible="false">
+            <shape type="roundrect" x="0" y="0" w="100" h="100" fill="red">
+                <event type="click">
+                    <action type="command" command="stopRecord" asset="recordingInfo" />
+                </event>
+            </shape>
+            <text x="10" y="20" w="80" h="80" font="Georgia" weight="bold" fontsize="150" align="center">
+                Recording...
+            </text>
+            <image asset="mic" x="35" y="40" w="30" h="30"/>
+        </g>
         <events>
             <event type="enter">
                 <action type="command" command="play" asset="scene1_sound" loop="1" />
