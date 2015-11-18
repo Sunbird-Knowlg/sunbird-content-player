@@ -1,12 +1,13 @@
 TimerManager = {
 	instances: {},
 	start: function(action) {
+		var delay = action.delay || 0;
 		var stageId = Renderer.theme._currentStage;
 		var instance = setTimeout(function() {
 			if(stageId == Renderer.theme._currentStage) {
 				CommandManager.handle(action);
 			}
-		}, action.delay);
+		}, delay);
 		if(TimerManager.instances[stageId]) {
 			TimerManager.instances[stageId].push({'timeout': instance, 'action': action});
 		} else {
