@@ -74,9 +74,7 @@ EventManager = {
 				AnimationManager.handle(action, plugin);
 			} else {
 				if(action.delay) {
-					var delay = action.delay;
-					delete action.delay;
-					TimerManager.start(delay, action);
+					TimerManager.start(action);
 				} else {
 					CommandManager.handle(action);
 				}
