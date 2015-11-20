@@ -208,6 +208,13 @@
         <image asset="t-inner"/>
         <audio asset="scene20_audio" />
         <audio asset="scene21_audio" />
+
+        <image asset="page2" />
+        <image asset="page3" />
+        <image asset="sringeri" />
+        <image asset="icon_home" />
+        <image asset="publisher_logo" />
+        <image asset="level_band" />
     </stage>
     <stage id="storyBaseStage" preload="true">
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
@@ -253,6 +260,7 @@
     </stage>
     <stage id="splash" x="0" y="0" w="100" h="100">
         <param name="next" value="scene1" />
+        <param name="recorderScene" value="recorderScene" />
         <audio asset="splash_audio" />
         <image asset="page1" x="2" y="2" w="96" h="70" />
         <image asset="publisher_logo" x="2" y="75" w="13" h="17" />
@@ -263,6 +271,13 @@
                 <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
             </event>
         </shape>
+        <image asset="next" x="72" y="80" w="6" h="10" id="nextRecord"/>
+        <shape id="recordContainer" type="rect" x="67" y="75" w="13" h="20" visible="true" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="recorderScene" effect="scroll" direction="left" ease="linear" duration="500" />
+            </event>
+        </shape>
+        <text x="70.5" y="91" w="10" h="5" font="Arial" fontsize="28">Auto transition</text>
         <text x="35" y="80" w="25" h="5" font="Arial" fontsize="48">
             Annual Haircut Day
         </text>
@@ -538,8 +553,7 @@
                 Barber
             </text>
             <text x="10" y="40" w="80" h="80" font="Georgia" fontsize="90">
-                Barber is cutting hair.
-Barber uses razor and scissors to cut hair.
+                Barber is cutting hair. Barber uses razor and scissors to cut hair.
             </text>
         </g>
         <shape type="rect" x="63" y="30" w="5" h="13" hitArea="true">
@@ -628,8 +642,7 @@ Barber uses razor and scissors to cut hair.
                 Sringeri Srinivas's Wife
             </text>
             <text x="10" y="40" w="80" h="80" font="Georgia" fontsize="90">
-                Wife is cooking food.
-Wife uses a knife to Cut vegetables.
+                Wife is cooking food. Wife uses a knife to Cut vegetables.
             </text>
         </g>
         <shape type="rect" x="20" y="28" w="12" h="22" hitArea="true">
@@ -704,10 +717,7 @@ Wife uses a knife to Cut vegetables.
                 Tailor
             </text>
             <text x="8" y="32" w="86" font="Georgia" fontsize="90">
-                Tailor stitches clothes.
-Tailor uses tape to measure cloth.
-Tailor uses scissors to cut cloth.
-Tailor uses sewing machine to stitch.
+                Tailor stitches clothes. Tailor uses tape to measure cloth. Tailor uses scissors to cut cloth. Tailor uses sewing machine to stitch.
             </text>
         </g>
         <shape type="rect" x="30" y="40" w="20" h="34" hitArea="true">
@@ -834,8 +844,7 @@ Tailor uses sewing machine to stitch.
                 Carpenter
             </text>
             <text x="8" y="32" w="86" font="Georgia" fontsize="90">
-                Carpenter makes furniture from wood.
-Carpenter uses a saw to cut wood.
+                Carpenter makes furniture from wood. Carpenter uses a saw to cut wood.
             </text>
         </g>
         <shape type="rect" x="70" y="37" w="25" h="44" hitArea="true">
@@ -1257,6 +1266,105 @@ Carpenter uses a saw to cut wood.
         <text x="43.5" y="90" w="20" h="5" font="Georgia" fontsize="28">
             Angie &amp; Upesh
         </text>
+    </stage>
+    <stage id="recorderScene" x="0" y="0" w="100" h="100">
+        <!-- scene1 start -->
+        <param name="scene1_body" model="storyData.scene1_body" />
+        <shape id="scene1_body_bg" x="2" y="2" w="96" h="10.5" type="rect" fill="#F3CCDE"/>
+        <text id="scene1_body" param="scene1_body" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42" />
+        <image asset="page2" x="2" y="12" w="96" h="86"/>
+        <!-- scene1 end -->
+        <!-- scene2 start -->
+        <shape id="scene2_body_bg" x="2" y="2" w="96" h="10.5" type="rect" fill="#FFF16E" visible="false"/>
+        <param  id="scene2_body" name="scene2_body" model="storyData.scene2_body"/>
+        <text id="scene2_body" param="scene2_body" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42" visible="false"/>
+        <image asset="page3" x="2" y="12" w="96" h="86" visible="false"/>
+        <image asset="sringeri" x="11.5" y="19" w="20" h="36" id="sringeri" visible="false">
+            <event type="click">
+                <action type="animation">
+                    <tween id="sringeriWalking">
+                        <to ease="linear" duration="500">
+                            <![CDATA[{"x":20,"y":20}]]>
+                        </to>
+                        <to ease="quadOut" duration="2000">
+                            <![CDATA[{"x":55,"y":0}]]>
+                        </to>
+                        <to ease="linear" duration="1">
+                            <![CDATA[{"x":75,"y":0, "scaleX": -1}]]>
+                        </to>
+                        <to ease="linear" duration="2000">
+                            <![CDATA[{"x":40,"y":55}]]>
+                        </to>
+                        <to ease="linear" duration="1">
+                            <![CDATA[{"x":18,"y": 55, "scaleX": 1}]]>
+                        </to>
+                        <to ease="linear" duration="2000">
+                            <![CDATA[{"x":57,"y":55}]]>
+                        </to>
+                    </tween>
+                </action>
+            </event>
+        </image>
+        <!-- scene2 end -->
+        <!-- scene3 start -->
+        <shape id="scene3_shape_1" x="2" y="2" w="96" h="10.5" type="rect" fill="#FFF16E" visible="false"/>
+        <shape id="scene3_shape_2" x="2" y="12" w="96" h="89.5" type="rect" fill="#FFF16E" visible="false"/>
+        <text id="scene3_txt1" x="38" y="15" w="30" h="8" font="Georgia" fontsize="96" visible="false">Thank you</text>
+
         
+        <image id="scene3_img2" asset="icon_home" x="42" y="35" w="15" h="20" visible="false"/>
+        <text id="scene3_txt3" x="45" y="57" w="15" h="5" font="Arial" fontsize="48" visible="false">Home</text>
+        <shape id="scene3_shape_3" type="rect" x="42" y="35" w="15" h="30" hitArea="true" visible="false">
+            <event type="click">
+                <action type="command" command="windowEvent" asset="theme" href="#/content/list"/>
+            </event>
+        </shape>
+        
+        <image id="scene3_img3" asset="publisher_logo" x="5" y="75" w="13" h="17" visible="false"/>
+        <image id="scene3_img4" asset="level_band" x="5" y="94" w="13" h="5" visible="false"/>
+        <text id="scene3_txt4" x="35" y="80" w="25" h="5" font="Arial" fontsize="48" visible="false">Annual Haircut Day</text>
+        <text id="scene3_txt5" x="35" y="86" w="20" h="5" font="Georgia" weight="bold" fontsize="28" visible="false">Author:</text>
+        <text id="scene3_txt6" x="41" y="86" w="20" h="5" font="Georgia" fontsize="28" visible="false">Rohini Nilekani</text>
+        <text id="scene3_txt7" x="35" y="90" w="20" h="5" font="Georgia" weight="bold" fontsize="28" visible="false">Illustrator:</text>
+        <text id="scene3_txt8" x="43.5" y="90" w="20" h="5" font="Georgia" fontsize="28" visible="false">Angie &amp; Upesh</text>
+        <text id="scene3_txt9" x="43.5" y="90" w="20" h="5" font="Georgia" fontsize="28" visible="false">Angie &amp; Upesh</text>
+        <!-- scene3 end -->
+        <events>
+            <event type="enter">
+                <!-- scene2 start -->
+                <action type="command" command="toggleShow" asset="scene1_body" delay="10000" />
+                <action type="command" command="toggleShow" asset="scene1_body_bg" delay="10000" />
+                <action type="command" command="toggleShow" asset="page2" delay="10000" />
+                <action type="command" command="toggleShow" asset="scene2_body" delay="10000" />
+                <action type="command" command="toggleShow" asset="scene2_body_bg" delay="10000" />
+                <action type="command" command="toggleShow" asset="page3" delay="10000" />
+                <action type="command" command="toggleShow" asset="sringeri" delay="10000" />
+                <!-- scene2 end -->
+                <!-- scene3 start -->
+                <action type="command" command="toggleShow" asset="scene2_body" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene2_body_bg" delay="20000" />
+                <action type="command" command="toggleShow" asset="page3" delay="20000" />
+                <action type="command" command="toggleShow" asset="sringeri" delay="20000" />
+
+                <action type="command" command="toggleShow" asset="scene3_shape_1" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_shape_2" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_txt1" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_img2" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_txt3" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_shape_3" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_img3" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_img4" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_txt4" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_txt5" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_txt6" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_txt7" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_txt8" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_txt9" delay="20000" />
+                <!-- scene3 end -->
+            </event>
+            <event type="exit">
+                <action type="command" command="stop" asset="cover_sound" audio="true" loop="1" />
+            </event>
+        </events>
     </stage>
 </theme>

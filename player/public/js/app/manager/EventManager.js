@@ -73,7 +73,11 @@ EventManager = {
 			if(action.type === 'animation') {
 				AnimationManager.handle(action, plugin);
 			} else {
-				CommandManager.handle(action);
+				if(action.delay) {
+					TimerManager.start(action);
+				} else {
+					CommandManager.handle(action);
+				}
 			}
 		}
 	},

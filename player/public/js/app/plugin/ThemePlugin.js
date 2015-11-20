@@ -187,6 +187,7 @@ var ThemePlugin = Plugin.extend({
     },
     transitionTo: function(action) {
         var stage = this._currentScene;
+        TimerManager.stopAll(this._currentStage);
         if (action.transitionType === 'previous') {
             if (stage._stageController && stage._stageController.hasPrevious()) {
                 stage._stageController.decrIndex(2);

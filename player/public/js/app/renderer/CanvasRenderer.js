@@ -76,6 +76,7 @@ Renderer = {
         PluginManager.cleanUp();
         AnimationManager.cleanUp();
         AssetManager.destroy();
+        TimerManager.destroy();
         Renderer.theme.cleanUp();
         Renderer.theme = undefined;
         TelemetryService.end();
