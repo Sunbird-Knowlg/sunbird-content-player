@@ -223,6 +223,33 @@
             </event>
         </shape>
         <text param="body" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42"/>
+        <g x="40" y="40" w="20" h="20" id="youSpeakInfo" visible="false">
+            <shape type="roundrect" x="0" y="0" w="100" h="100" fill="green">
+                <event type="click">
+                    <action type="command" command="startRecord" asset="youSpeakInfo" success="recordingInfo"/>
+                </event>
+            </shape>
+            <text x="10" y="20" w="80" h="80" font="Georgia" weight="bold" fontsize="150" align="center">
+                You Speak
+            </text>
+            <image asset="mic" x="35" y="40" w="30" h="30"/>
+        </g>
+        <g x="40" y="40" w="20" h="20" id="recordingInfo" visible="false">
+            <shape type="roundrect" x="0" y="0" w="100" h="100" fill="red">
+                <event type="click">
+                    <action type="command" command="stopRecord" asset="recordingInfo" />
+                </event>
+            </shape>
+            <text x="10" y="20" w="80" h="80" font="Georgia" weight="bold" fontsize="150" align="center">
+                Recording...
+            </text>
+            <image asset="mic" x="35" y="40" w="30" h="30"/>
+        </g>
+        <image asset="mic" x="93" y="78" w="5" h="9">
+            <event type="click">
+                <action type="command" command="show" asset="youSpeakInfo" />
+            </event>
+        </image>
     </stage>
     <stage id="splash" x="0" y="0" w="100" h="100">
         <param name="next" value="scene1" />
@@ -281,28 +308,6 @@
                 <action type="command" command="togglePlay" asset="clock_sound" />
             </event>
         </shape>
-        <g x="40" y="40" w="20" h="20" id="youSpeak">
-            <shape type="roundrect" x="0" y="0" w="100" h="100" fill="green">
-                <event type="click">
-                    <action type="command" command="startRecord" asset="youSpeak" success="recordingInfo"/>
-                </event>
-            </shape>
-            <text x="10" y="20" w="80" h="80" font="Georgia" weight="bold" fontsize="150" align="center">
-                You Speak
-            </text>
-            <image asset="mic" x="35" y="40" w="30" h="30"/>
-        </g>
-        <g x="40" y="40" w="20" h="20" id="recordingInfo" visible="false">
-            <shape type="roundrect" x="0" y="0" w="100" h="100" fill="red">
-                <event type="click">
-                    <action type="command" command="stopRecord" asset="recordingInfo" />
-                </event>
-            </shape>
-            <text x="10" y="20" w="80" h="80" font="Georgia" weight="bold" fontsize="150" align="center">
-                Recording...
-            </text>
-            <image asset="mic" x="35" y="40" w="30" h="30"/>
-        </g>
         <events>
             <event type="enter">
                 <action type="command" command="play" asset="scene1_sound" loop="1" />
