@@ -36,8 +36,10 @@ RecorderManager = {
 			var response = AudioRecordingService.stopRecording(RecorderManager.mediaInstance);
 			if (response.status == "OK") {
 				RecorderManager.recording = false;
-				var plugin = PluginManager.getPluginObject(action.asset);
-				plugin.hide({"type": "command", "action": "hide", "asset": action.asset});
+				if (action && action.asset) {
+					var plugin = PluginManager.getPluginObject(action.asset);
+					plugin.hide({"type": "command", "action": "hide", "asset": action.asset});
+				}
 				console.info("Audio file saved at ", RecorderManager.mediaInstance.filePath);
 				RecorderManager.mediaInstance = undefined;
 			} else {
