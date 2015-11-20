@@ -211,6 +211,9 @@
 
         <image asset="page2" />
         <image asset="page3" />
+        <image asset="page4" />
+        <image asset="page5" />
+        <image asset="page5" />
         <image asset="sringeri" />
         <image asset="icon_home" />
         <image asset="publisher_logo" />
@@ -1307,31 +1310,37 @@
         </image>
         <!-- scene2 end -->
         <!-- scene3 start -->
-        <shape id="scene3_shape_1" x="2" y="2" w="96" h="10.5" type="rect" fill="#FFF16E" visible="false"/>
-        <shape id="scene3_shape_2" x="2" y="12" w="96" h="89.5" type="rect" fill="#FFF16E" visible="false"/>
-        <text id="scene3_txt1" x="38" y="15" w="30" h="8" font="Georgia" fontsize="96" visible="false">Thank you</text>
+        <param name="scene3_body" model="storyData.scene3_body"/>
+        <shape id="scene3_body_bg" x="2" y="2" w="96" h="10.5" type="rect" fill="#E5F4FB" visible="false"/>
+        <text id="scene3_body" param="scene3_body" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42" visible="false"/>
+        <image asset="page4" x="2" y="12" w="96" h="86" visible="false"/>
+        <!-- scene3 end -->
+        <!-- sceneEnd start -->
+        <shape id="sceneEnd_shape_1" x="2" y="2" w="96" h="10.5" type="rect" fill="#FFF16E" visible="false"/>
+        <shape id="sceneEnd_shape_2" x="2" y="12" w="96" h="89.5" type="rect" fill="#FFF16E" visible="false"/>
+        <text id="sceneEnd_txt1" x="38" y="15" w="30" h="8" font="Georgia" fontsize="96" visible="false">Thank you</text>
 
         
-        <image id="scene3_img2" asset="icon_home" x="42" y="35" w="15" h="20" visible="false"/>
-        <text id="scene3_txt3" x="45" y="57" w="15" h="5" font="Arial" fontsize="48" visible="false">Home</text>
-        <shape id="scene3_shape_3" type="rect" x="42" y="35" w="15" h="30" hitArea="true" visible="false">
+        <image id="sceneEnd_img2" asset="icon_home" x="42" y="35" w="15" h="20" visible="false"/>
+        <text id="sceneEnd_txt3" x="45" y="57" w="15" h="5" font="Arial" fontsize="48" visible="false">Home</text>
+        <shape id="sceneEnd_shape_3" type="rect" x="42" y="35" w="15" h="30" hitArea="true" visible="false">
             <event type="click">
                 <action type="command" command="windowEvent" asset="theme" href="#/content/list"/>
             </event>
         </shape>
         
-        <image id="scene3_img3" asset="publisher_logo" x="5" y="75" w="13" h="17" visible="false"/>
-        <image id="scene3_img4" asset="level_band" x="5" y="94" w="13" h="5" visible="false"/>
-        <text id="scene3_txt4" x="35" y="80" w="25" h="5" font="Arial" fontsize="48" visible="false">Annual Haircut Day</text>
-        <text id="scene3_txt5" x="35" y="86" w="20" h="5" font="Georgia" weight="bold" fontsize="28" visible="false">Author:</text>
-        <text id="scene3_txt6" x="41" y="86" w="20" h="5" font="Georgia" fontsize="28" visible="false">Rohini Nilekani</text>
-        <text id="scene3_txt7" x="35" y="90" w="20" h="5" font="Georgia" weight="bold" fontsize="28" visible="false">Illustrator:</text>
-        <text id="scene3_txt8" x="43.5" y="90" w="20" h="5" font="Georgia" fontsize="28" visible="false">Angie &amp; Upesh</text>
-        <text id="scene3_txt9" x="43.5" y="90" w="20" h="5" font="Georgia" fontsize="28" visible="false">Angie &amp; Upesh</text>
-        <!-- scene3 end -->
+        <image id="sceneEnd_img3" asset="publisher_logo" x="5" y="75" w="13" h="17" visible="false"/>
+        <image id="sceneEnd_img4" asset="level_band" x="5" y="94" w="13" h="5" visible="false"/>
+        <text id="sceneEnd_txt4" x="35" y="80" w="25" h="5" font="Arial" fontsize="48" visible="false">Annual Haircut Day</text>
+        <text id="sceneEnd_txt5" x="35" y="86" w="20" h="5" font="Georgia" weight="bold" fontsize="28" visible="false">Author:</text>
+        <text id="sceneEnd_txt6" x="41" y="86" w="20" h="5" font="Georgia" fontsize="28" visible="false">Rohini Nilekani</text>
+        <text id="sceneEnd_txt7" x="35" y="90" w="20" h="5" font="Georgia" weight="bold" fontsize="28" visible="false">Illustrator:</text>
+        <text id="sceneEnd_txt8" x="43.5" y="90" w="20" h="5" font="Georgia" fontsize="28" visible="false">Angie &amp; Upesh</text>
+        <text id="sceneEnd_txt9" x="43.5" y="90" w="20" h="5" font="Georgia" fontsize="28" visible="false">Angie &amp; Upesh</text>
+        <!-- sceneEnd end -->
         <events>
             <event type="enter">
-                <!-- scene2 start -->
+                <!-- scene1 start -->
                 <action type="command" command="toggleShow" asset="scene1_body" delay="10000" />
                 <action type="command" command="toggleShow" asset="scene1_body_bg" delay="10000" />
                 <action type="command" command="toggleShow" asset="page2" delay="10000" />
@@ -1339,27 +1348,36 @@
                 <action type="command" command="toggleShow" asset="scene2_body_bg" delay="10000" />
                 <action type="command" command="toggleShow" asset="page3" delay="10000" />
                 <action type="command" command="toggleShow" asset="sringeri" delay="10000" />
-                <!-- scene2 end -->
-                <!-- scene3 start -->
+                <!-- scene1 end -->
+                <!-- scene2 start -->
                 <action type="command" command="toggleShow" asset="scene2_body" delay="20000" />
                 <action type="command" command="toggleShow" asset="scene2_body_bg" delay="20000" />
                 <action type="command" command="toggleShow" asset="page3" delay="20000" />
                 <action type="command" command="toggleShow" asset="sringeri" delay="20000" />
 
-                <action type="command" command="toggleShow" asset="scene3_shape_1" delay="20000" />
-                <action type="command" command="toggleShow" asset="scene3_shape_2" delay="20000" />
-                <action type="command" command="toggleShow" asset="scene3_txt1" delay="20000" />
-                <action type="command" command="toggleShow" asset="scene3_img2" delay="20000" />
-                <action type="command" command="toggleShow" asset="scene3_txt3" delay="20000" />
-                <action type="command" command="toggleShow" asset="scene3_shape_3" delay="20000" />
-                <action type="command" command="toggleShow" asset="scene3_img3" delay="20000" />
-                <action type="command" command="toggleShow" asset="scene3_img4" delay="20000" />
-                <action type="command" command="toggleShow" asset="scene3_txt4" delay="20000" />
-                <action type="command" command="toggleShow" asset="scene3_txt5" delay="20000" />
-                <action type="command" command="toggleShow" asset="scene3_txt6" delay="20000" />
-                <action type="command" command="toggleShow" asset="scene3_txt7" delay="20000" />
-                <action type="command" command="toggleShow" asset="scene3_txt8" delay="20000" />
-                <action type="command" command="toggleShow" asset="scene3_txt9" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_body" delay="20000" />
+                <action type="command" command="toggleShow" asset="scene3_body_bg" delay="20000" />
+                <action type="command" command="toggleShow" asset="page4" delay="20000" />
+                <!-- scene2 end -->
+                <!-- scene3 start -->
+                <action type="command" command="toggleShow" asset="scene3_body" delay="30000" />
+                <action type="command" command="toggleShow" asset="scene3_body_bg" delay="30000" />
+                <action type="command" command="toggleShow" asset="page4" delay="30000" />
+
+                <action type="command" command="toggleShow" asset="sceneEnd_shape_1" delay="30000" />
+                <action type="command" command="toggleShow" asset="sceneEnd_shape_2" delay="30000" />
+                <action type="command" command="toggleShow" asset="sceneEnd_txt1" delay="30000" />
+                <action type="command" command="toggleShow" asset="sceneEnd_img2" delay="30000" />
+                <action type="command" command="toggleShow" asset="sceneEnd_txt3" delay="30000" />
+                <action type="command" command="toggleShow" asset="sceneEnd_shape_3" delay="30000" />
+                <action type="command" command="toggleShow" asset="sceneEnd_img3" delay="30000" />
+                <action type="command" command="toggleShow" asset="sceneEnd_img4" delay="30000" />
+                <action type="command" command="toggleShow" asset="sceneEnd_txt4" delay="30000" />
+                <action type="command" command="toggleShow" asset="sceneEnd_txt5" delay="30000" />
+                <action type="command" command="toggleShow" asset="sceneEnd_txt6" delay="30000" />
+                <action type="command" command="toggleShow" asset="sceneEnd_txt7" delay="30000" />
+                <action type="command" command="toggleShow" asset="sceneEnd_txt8" delay="30000" />
+                <action type="command" command="toggleShow" asset="sceneEnd_txt9" delay="30000" />
                 <!-- scene3 end -->
             </event>
             <event type="exit">
