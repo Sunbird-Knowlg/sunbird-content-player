@@ -51,7 +51,7 @@ RecorderManager = {
 	},
 	_getFilePath: function(stageId) {
 		var currentDate = new Date();
-		var path = DownloaderService.appDataDirectory + GlobalContext.user.uid + '_' + TelemetryService._gameData.id + '_' + stageId + "_"+ currentDate.getTime()  + ".mp3";
+		var path = DownloaderService.appDataDirectory + GlobalContext.user.uid + '_' + TelemetryService._gameData.id + '_' + stageId + "_"+ currentDate.getTime()  + ".wav";
 		return path;
 	}
 }

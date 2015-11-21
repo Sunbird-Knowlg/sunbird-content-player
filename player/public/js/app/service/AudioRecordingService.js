@@ -1,5 +1,5 @@
 AudioRecordingService = {
-	recorder: 'android', // 'android' - uses cordova-plugin-media for recording audio. :: 'sensibol': uses sensibol api for recording audio.
+	recorder: 'sensibol', // 'android' - uses cordova-plugin-media for recording audio. :: 'sensibol': uses sensibol api for recording audio.
 	init: function(recorder) {
 		if(recorder) {
 			AudioRecordingService.recorder = recorder;	
@@ -62,10 +62,12 @@ AndroidRecorder = {
 SensibolRecorder = {
 	startRecording: function(path) {
 		// TODO: integrate with sensibol API.
-		return {status: "ERROR", errMessage: "Sensibol is not integrated."};
+		console.log("Recording Path: ", path);
+		return {status: "OK", errMessage: "Sensibol is not integrated."};
 	},
 	stopRecording: function(instance) {
 		// TODO: integrate with sensibol API.
-		return {status: "ERROR", errMessage: "Sensibol is not integrated."};
+		console.log("Instance:", JSON.stringify(instance));
+		return {status: "OK", errMessage: "Sensibol is not integrated."};
 	}
 };
