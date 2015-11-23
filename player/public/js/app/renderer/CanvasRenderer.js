@@ -32,6 +32,11 @@ Renderer = {
         Renderer.running = true;
         TelemetryService.start(gameId, GlobalContext.game.ver);
         Renderer.initByXML(gameRelPath, canvasId);
+        // TODO: integrate it properly.
+        if (typeof RecorderService != "undefined") {
+            RecorderService.initLesson(gameRelPath + "/lesson.metadata");
+        }
+
     },
     initByJSON: function(gameRelPath, canvasId) {
         $.get(gameRelPath + '/index.json', function(data) {

@@ -18,8 +18,17 @@ AudioRecordingService = {
 		} else {
 			return AndroidRecorder.stopRecording(instance);
 		}
+	},
+	processRecording: function(path, lineIndex) {
+		if (AudioRecordingService.recorder == 'sensibol') {
+			return SensibolRecorder.processRecording(path, lineIndex);
+		} else {
+			return AndroidRecorder.processRecording(path, lineIndex);
+		}
 	}
 };
+
+// TODO: change them to return promise. ***
 
 AndroidRecorder = {
 	startRecording: function(path) {
@@ -35,9 +44,9 @@ AndroidRecorder = {
 		    );
 		    media.startRecord();
 		    instance.media = media;
-		    instance.status = "OK";
+		    instance.status = "success";
 		} else {
-			instance.status = "OK";
+			instance.status = "success";
 			instance.errMessage = "Media is not available.";
 			console.info("AndroidRecorder.startRecording called.");
 		}
@@ -48,26 +57,72 @@ AndroidRecorder = {
 			if (instance && instance.media) {
 				instance.media.stopRecord();
 				instance.media.release();
-				return {status: "OK"};
+				return {status: "success"};
 			} else {
 				return {status: "ERROR", errMessage: "Error recording not started."};
 			}
 		} else {
 			console.info("AndroidRecorder.stopRecording called.");
-			return {status: "OK", errMessage: "Media is not available."};
+			return {status: "success", errMessage: "Media is not available."};
 		}
+	},
+	processRecording: function(path, lineIndex) {
+		return new Promise(function(resolve, reject) {
+			resolve({status: "success", errMessage: "Process recording for android is not integrated."});
+		});
 	}
 };
 
 SensibolRecorder = {
+	initLesson: function(lessonMetadataFile) {
+		return RecorderService.initLesson(lessonMetadataFile);
+	},
 	startRecording: function(path) {
-		// TODO: integrate with sensibol API.
-		console.log("Recording Path: ", path);
-		return {status: "OK", errMessage: "Sensibol is not integrated."};
+		return new Promise(function(resolve, reject) {
+			if (typeof RecorderService != "undefined") {
+				RecorderService.startRecording(path)
+				.then(function(result) {
+					resolve(result);
+				})
+				.catch(function(err) {
+					console.error("Error AudioRecordingService startRecording:", err);
+					reject(err);
+				});
+			} else {
+				resolve({status: "success", errMessage: "Sensibol is not integrated."});
+			}
+		});
 	},
 	stopRecording: function(instance) {
-		// TODO: integrate with sensibol API.
-		console.log("Instance:", JSON.stringify(instance));
-		return {status: "OK", errMessage: "Sensibol is not integrated."};
+		return new Promise(function(resolve, reject) {
+			if (typeof RecorderService != "undefined") {
+				RecorderService.stopRecording()
+				.then(function(result) {
+					resolve(result);
+				})
+				.catch(function(err) {
+					console.error("Error AudioRecordingService stopRecording:", err);
+					reject(err);
+				});
+			} else {
+				resolve({status: "success", errMessage: "Sensibol is not integrated."});
+			}
+		});
+	},
+	processRecording: function(path, lineIndex) {
+		return new Promise(function(resolve, reject) {
+			if (typeof RecorderService != "undefined") {
+				RecorderService.processRecording(path, lineIndex)
+				.then(function(result) {
+					resolve(result);
+				})
+				.catch(function(err) {
+					console.error("Error AudioRecordingService processRecording:", err);
+					reject(err);
+				});
+			} else {
+				resolve({status: "success", result: {totalScore: 0}, errMessage: "Sensibol is not integrated."});
+			}
+		});
 	}
 };
