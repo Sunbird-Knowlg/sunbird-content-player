@@ -2,11 +2,19 @@ var TweenPlugin = AnimationPlugin.extend({
     _animateFn: undefined,
     initPlugin: function(data, plugin) {
         var to = data.to;
+        var loop = data.loop;
+
         if(!_.isArray(to)) {
             to = [to];
         }
+
+        var loopStr = '';
+        if (loop) {
+            loopStr = ', loop:true';
+        }
+
         var fn = '(function() {return function(plugin){';
-        fn += 'createjs.Tween.get(plugin, {override:true})';
+        fn += 'createjs.Tween.get(plugin, {override:true ' + loopStr + '})';
         to.forEach(function(to) {
             var data = JSON.parse(to.__cdata);
             var relDims = plugin.getRelativeDims(data);
