@@ -7,6 +7,7 @@ var packageName = "org.ekstep.quiz.app";
 var version = "BUILD_NUMBER";
 var currentContentVersion = "0.3";
 var packageNameDelhi = "org.ekstep.delhi.curriculum";
+var geniePackageName = "org.ekstep.android.genie";
 
 function backbuttonPressed(cs) {
 
@@ -26,7 +27,7 @@ function backbuttonPressed(cs) {
 }
 
 function exitApp(cs) {
-    navigator.startApp.start("org.ekstep.genie", function(message) {
+    navigator.startApp.start(geniePackageName, function(message) {
             if (cs) {
                 cs.resetSyncStart();
                 if (cs.getProcessCount() > 0) {
@@ -61,7 +62,7 @@ function exitApp(cs) {
 }
 
 function startApp(app) {
-    if(!app) app = "org.ekstep.genie";
+    if(!app) app = geniePackageName;
     navigator.startApp.start(app, function(message) {
             exitApp();
             if (TelemetryService._gameData) {
@@ -69,7 +70,7 @@ function startApp(app) {
             }
         },
         function(error) {
-            if(app == "org.ekstep.genie")
+            if(app == geniePackageName)
                 alert("Unable to start Genie App.");
             else {
                 var bool = confirm('App not found. Do you want to search on PlayStore?');
