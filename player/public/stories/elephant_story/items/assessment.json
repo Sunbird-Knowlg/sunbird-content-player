@@ -1,0 +1,584 @@
+{
+	"identifier": "AKM_1",
+	"title": "AKM Assessment",
+	"total_items": 15,
+	"shuffle":false,
+	"max_score": 4,
+	"subject": "LIT",
+	"item_sets": [
+		{
+			"id": "set_1",
+        	"count": 15	
+		}
+	],
+	"items": {
+		"set_1" : [
+		{
+				"identifier": "Q12",
+				"dimension":"LD1",
+				"mc":"LO1",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_10",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q1",
+				"exres":"P",
+				"title": "Tap on the letter 'P' ",
+				"subtitleone":"",
+				
+				"options": [
+					{
+						"value": {"type": "text", "asset": "P" ,  "fontsize":"1300"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "A" ,  "fontsize":"1300"}
+					},
+					{
+						"value": {"type": "text", "asset": "R" ,  "fontsize":"1300"}
+					},
+					{
+						"value": {"type": "text", "asset": "R" ,  "fontsize":"1300"}
+					},
+					{
+						"value": {"type": "text", "asset": "O" ,  "fontsize":"1300"}
+					},
+					{
+						"value": {"type": "text", "asset": "T" ,  "fontsize":"1300"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "taponP", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q13",
+				"dimension":"LD1",
+				"mc":"LO1",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_10.1",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q1",
+				"exres":"P",
+				"title": "Tap on the letter 'P' ",
+				"subtitleone":"",
+				
+				"options": [
+					{
+						"value": {"type": "text", "asset": "E" ,  "fontsize":"1600"}
+						
+					},
+					{
+						"value": {"type": "text", "asset": "L" ,  "fontsize":"1600"}
+					},
+					{
+						"value": {"type": "text", "asset": "E" ,  "fontsize":"1600"}
+					},
+					{
+						"value": {"type": "text", "asset": "P" ,  "fontsize":"1600"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "H" ,  "fontsize":"1600"}
+					},
+					{
+						"value": {"type": "text", "asset": "A" ,  "fontsize":"1600"}
+					},
+					{
+						"value": {"type": "text", "asset": "N" ,  "fontsize":"1600"}
+					},
+					{
+						"value": {"type": "text", "asset": "T" ,  "fontsize":"1600"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "taponP", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q14",
+				"dimension":"LD1",
+				"mc":"LO1",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_10.2",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q1",
+				"exres":"P",
+				"title": "Tap on the letter 'P' ",
+				"subtitleone":"",
+				
+				"options": [
+					{
+						"value": {"type": "text", "asset": "P" ,  "fontsize":"1050"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "A" ,  "fontsize":"1050"}
+					},
+					{
+						"value": {"type": "text", "asset": "N" ,  "fontsize":"1050"}
+					},
+					{
+						"value": {"type": "text", "asset": "T" ,  "fontsize":"1050"}
+					},
+					{
+						"value": {"type": "text", "asset": "S" ,  "fontsize":"1050"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "taponP", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q15",
+				"dimension":"LD1",
+				"mc":"LO1",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_10.3",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q1",
+				"exres":"P",
+				"title": "Tap on the letter 'P' ",
+				"subtitleone":"",
+				
+				"options": [
+					{
+						"value": {"type": "text", "asset": "L" ,  "fontsize":"1050"}
+						
+					},
+					{
+						"value": {"type": "text", "asset": "A" ,  "fontsize":"1050"}
+					},
+					{
+						"value": {"type": "text", "asset": "M" ,  "fontsize":"1050"}
+					},
+					{
+						"value": {"type": "text", "asset": "P" ,  "fontsize":"1050"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "S" ,  "fontsize":"1050"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "taponP", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			
+			{
+				"identifier": "Q1",
+				"dimension":"LD1",
+				"mc":"LO1",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_7",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q1",
+				"exres":"bear",
+				"title": "Match the word to the picture: ",
+				"subtitleone":"1. Bear",
+				
+				"options": [
+					{
+						"value": {"type": "image", "asset": "bear"},
+						"answer": true
+					},
+					{
+						"value": {"type": "image", "asset": "lion"}
+					},
+					{
+						"value": {"type": "image", "asset": "fox"}
+					},
+					{
+						"value": {"type": "image", "asset": "elephant"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "mtf_bear_sound", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q2",
+				"dimension":"LD1",
+				"mc":"LO1",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_7.1",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q2",
+				"exres":"lion",
+				"title": "Match the word to the picture: ",
+				"subtitleone":"2. Jungle King",
+				
+				"options": [
+					{
+						"value": {"type": "image", "asset": "tiger"}
+						
+						
+					},
+					{
+						"value": {"type": "image", "asset": "lion"},
+						"answer": true
+					},
+					{
+						"value": {"type": "image", "asset": "fox"}
+					},
+					{
+						"value": {"type": "image", "asset": "elephant"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "mtf_lion_sound", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q3",
+				"dimension":"LD1",
+				"mc":"LO1",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_7.2",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q2",
+				"exres":"lion",
+				"title": "Match the word to the picture: ",
+				"subtitleone":"3. Yummy",
+				
+				"options": [
+					{
+						"value": {"type": "image", "asset": "bored"}
+						
+						
+					},
+					{
+						"value": {"type": "image", "asset": "enjoyingfood"},
+						"answer": true
+					},
+					{
+						"value": {"type": "image", "asset": "sad"}
+					},
+					{
+						"value": {"type": "image", "asset": "expressionless"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "mtf_yummy_sound", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q4",
+				"dimension":"LD1",
+				"mc":"LO31",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_8",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q3",
+				"exres":"wore",
+				"title": "Did you like the story? Do you remember the following things ?",
+				"subtitleone":"1. The Bear wore a _________",
+			
+				"options": [
+					{
+						"value": {"type": "text", "asset": "1.Shirt  " ,  "fontsize":"450"}
+						
+					},
+					{
+						"value": {"type": "text", "asset": "2.Pant" ,  "fontsize":"450"}
+					},
+					{
+						"value": {"type": "text", "asset": "3.Chain" ,  "fontsize":"450"}
+					},
+					{
+						"value": {"type": "text", "asset": "4.Saree" , "fontsize":"450"}, 
+						"answer": true					
+					}
+				],
+				
+				"model" : {
+					"title_audio" : {"asset": "fitb_sound", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q5",
+				"dimension":"LD1",
+				"mc":"LO31",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_8.1",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q4",
+				"exres":"Trumpet",
+				"title": "Did you like the story? Do you remember the following things ?",
+				"subtitleone":"2. The Fox played the _______",
+			
+				"options": [
+					{
+						"value": {"type": "text", "asset": "1.Flute" ,  "fontsize":"450"}
+					},
+					{
+						"value": {"type": "text", "asset": "2.Trumpet",  "fontsize":"450"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "3.Guitar",  "fontsize":"450"}
+					},
+					{
+						"value": {"type": "text", "asset": "4.Drum",  "fontsize":"450"}
+					}
+				],
+				
+				"model" : {
+					"title_audio" : {"asset": "fitb_sound", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			
+			{
+			    "identifier": "Q6",
+				"type": "MCQ",
+				"dimension":"LD2",
+				"mc":"LO43.1",
+				"num_answers": 1,
+				"template": "mcq_template_3",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q5",
+				"exres":"Elephant and the Bear",
+				"title": "Did you like the story? Do you remember the following things ?",
+				"subtitleone":"3. Whose wedding was it?",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "1.Bear and Fox " ,  "fontsize":"200"}
+						
+					},
+					{
+						"value": {"type": "text", "asset": "2.Elephant and Fox", "fontsize":"200"}
+					},
+					{
+						"value": {"type": "text", "asset": "3.Elephant and Bear" ,  "fontsize":"200"},
+						"answer": true	
+					},
+					{
+						"value": {"type": "text", "asset": "4.Bear and Crow" ,"fontsize":"200"} 
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "fitb_sound", "type": "audio"}
+				},
+				
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+			"identifier": "Q7",
+				"type": "MCQ",
+				"dimension":"LD2",
+				"mc":"LO43.1",
+				"num_answers": 1,
+				"template": "mcq_template_3.1",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q6",
+				"exres":"Jungle King",
+				"title": "Did you like the story? Do you remember the following things ?",
+				"subtitleone":"4. Who made the Ladoos and the Kheer?",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "1.Fox" ,  "fontsize":"210"}
+					},
+					{
+						"value": {"type": "text", "asset": "2.Jungle friends",  "fontsize":"210"}
+					},
+					{
+						"value": {"type": "text", "asset": "3.Jungle King",  "fontsize":"210"},
+						"answer": true
+						
+					},
+					{
+						"value": {"type": "text", "asset": "4.Eagle",  "fontsize":"210"}
+						
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "fitb_sound", "type": "audio"}
+				},
+
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+			"identifier": "Q8",
+			"dimension":"LD10",
+				"mc":"LO38",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_8.2",
+				"qid":"EK.L.KAN.AKM.Q7",
+				"exres":"Wear",
+				"qlevel": "EASY",
+				"title": "Pick the word that rhymes with the given word. The last sounds of rhyming words are the same.",
+				"subtitleone":"1. Bear",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "A.Wear" ,  "fontsize":"450"},
+						"answer": true	
+						
+					},
+					{
+						"value": {"type": "text", "asset": "B.Wore" ,  "fontsize":"450"}
+					},
+					{
+						"value": {"type": "text", "asset": "C.More" ,  "fontsize":"450"}
+					},
+					{
+						"value": {"type": "text", "asset": "D.Beat" , "fontsize":"450"} 
+										
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "rhymequestion", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+			"identifier": "Q9",
+			"dimension":"LD10",
+				"mc":"LO38",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_8.3",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q8",
+				"exres":"Come",
+				"title": "Pick the word that rhymes with the given word.  The last sounds of rhyming words are the same.",
+				"subtitleone":"2. Drum",
+				"options": [
+					{
+						"value": {"type": "text", "asset": "A.Same" ,  "fontsize":"450"}
+					},
+					{
+						"value": {"type": "text", "asset": "B.Come",  "fontsize":"450"},
+							"answer": true
+						
+					},
+					{
+						"value": {"type": "text", "asset": "C.Van",  "fontsize":"450"}
+					
+					},
+					{
+						"value": {"type": "text", "asset": "D.Apple ",  "fontsize":"450"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "rhymequestion", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q10",
+				"dimension":"LD1",
+				"mc":"LO1",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_9",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q1",
+				"exres":"bear",
+				"title": "Listen to the audio and tick the correct letter ",
+				"subtitleone":"",
+				
+				"options": [
+					{
+						"value": {"type": "text", "asset": "1.ja  " ,  "fontsize":"300"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "2.pa  " ,  "fontsize":"300"}
+					},
+					{
+						"value": {"type": "text", "asset": "3.sa  " ,  "fontsize":"300"}
+					},
+					{
+						"value": {"type": "text", "asset": "4.la  " ,  "fontsize":"300"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "tickAudio", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			},
+			{
+				"identifier": "Q11",
+				"dimension":"LD1",
+				"mc":"LO1",
+				"type": "MCQ",
+				"num_answers": 1,
+				"template": "mcq_template_9.1",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q1",
+				"exres":"bear",
+				"title": "Listen to the audio and tick the correct word ",
+				"subtitleone":"",
+				
+				"options": [
+					{
+						"value": {"type": "text", "asset": "1.Lamp  " ,  "fontsize":"300"},
+						"answer": true
+					},
+					{
+						"value": {"type": "text", "asset": "2.Trumpet  " ,  "fontsize":"300"}
+					},
+					{
+						"value": {"type": "text", "asset": "3.Played  " ,  "fontsize":"300"}
+					},
+					{
+						"value": {"type": "text", "asset": "4.Celebrating  " ,  "fontsize":"300"}
+					}
+				],
+				"model" : {
+					"title_audio" : {"asset": "tickWord", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": ""
+			}
+			
+		]
+	}
+}

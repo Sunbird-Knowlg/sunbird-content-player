@@ -1,0 +1,3682 @@
+<theme startStage="activity" id="theme" ver="0.2">
+    <manifest>
+		<media id="grey" src="grey.png" type="image" />
+		<media id="icon_home" src="icon_home.png" type="image" />
+		<media id="icon_reload" src="icon_reload.png" type="image" />
+	    <media id="level_band" src="level_band.png" type="image" />
+        <media id="publisher_logo" src="publisher_logo.jpg" type="image" />
+        <media id="previous" src="icon_previous.png" type="image" />
+        <media id="next" src="icon_next.png" type="image" />
+        <media id="icon_sound" src="icon_sound.png" type="image" />
+		<media id="end_screen" src="endScreen.png" type="image"/>
+		<media id="highlightbutton" src="touch.png" type="image"/>
+		<media id="option_BG" src="option_bg.png" type="image"/>
+	
+	    <media id="activitybg" src="activitypage/activitybg.png" type="image" />
+		<media id="page1" src="scenes_new/Image_1.png" type="image" />
+        <media id="page2" src="scenes_new/Image_2.png" type="image" />
+        <media id="page3" src="scenes_new/Image_3.png" type="image" />
+		<media id="page4" src="scenes_new/Image_4.png" type="image" />
+        <media id="page5" src="scenes_new/Image_5.png" type="image" />
+        <media id="page6" src="scenes_new/Image_6.png" type="image" />
+        <media id="page7" src="scenes_new/Image_7.png" type="image" />
+		<media id="retryBg"     src="retryBg.png" type="image" />
+        <media id="retryButton" src="retryButton.png" type="image" />
+		<media id="nextButton" src="nextButton.png" type="image" />
+		<media id="goodjobBg" src="goodjobBg.png" type="image" />
+		<media id="teacher" src="Teacher.png" type="image" />
+		<media id="close_button" src="closeButton.png" type="image" />
+	    <media id="teacherPopupBg" src="teacherPopupBg.png" type="image" />
+	    
+		<media id="tick" src="tick.png" type="image" />
+		<media id="tickmark" src="tickMark.png" type="image"/>
+				
+		<media id="wordhighlight" src="wordHighlight.png" type="image" />
+		<media id="validate" src="icon_validate.png" type="image" />
+		<media id="yellowBox" src="activitypage/yellowBox.png" type="image" />
+        <media id="greenBox" src="activitypage/greenBox.png" type="image" />
+        <media id="blueBox" src="activitypage/blueBox.png" type="image" />
+		
+		<media id="Red1" src="image_glow/scene 3/red1.png" type="image"/>
+		<media id="Red2" src="image_glow/scene 3/red2.png" type="image"/>
+		<media id="Yellow1" src="image_glow/scene 3/yellow1.png" type="image"/>
+		<media id="Yellow2" src="image_glow/scene 3/yellow2.png" type="image"/>
+		<media id="Yellow3" src="image_glow/scene 3/yellow3.png" type="image"/>
+		<media id="Blue1" src="image_glow/scene 3/blue1.png" type="image"/>
+		<media id="Blue2" src="image_glow/scene 3/blue2.png" type="image"/>
+		<media id="Green1" src="image_glow/scene 3/green1.png" type="image"/>
+		<media id="Green2" src="image_glow/scene 3/green2.png" type="image"/>	
+
+		<media id="highlightL" src ="image_glow/scene 5/Highlight_L.png" type = "image"/>
+		<media id="highlightC" src ="image_glow/scene 5/Highlight_C.png" type = "image"/>
+		<media id="highlightR" src ="image_glow/scene 5/Highlight_R.png" type = "image"/>
+		
+		<media id="elephantquestion" src ="mcq/ElephantImage.jpg" type = "image"/>
+        <media id="pantquestion" src ="mcq/PantImage.png" type = "image"/>
+		<media id="lampsquestion" src ="mcq/LampsImage.png" type = "image"/>
+		<media id="parrotquestion" src ="mcq/ParrotImage.png" type = "image"/>
+		
+		<media id="taponP" src="sounds_english/questions/Tap on the letter p.mp3" type="audio"/>
+		
+		<media id="titleSound" src="sounds_english/Elephant Weds Bear.wav" type="audio"/>
+		<media id="fox_sound"  src="sounds_english/hotspots/Fox.mp3" type="audio"/>
+		<media id="tiger_sound"  src="sounds_english/hotspots/Tiger.mp3" type="audio"/>
+		<media id="squirrel_sound"  src="sounds_english/hotspots/Squirrel.mp3" type="audio"/>
+		<media id="monkey_sound"  src="sounds_english/hotspots/Monkey.mp3" type="audio"/>
+		<media id="rabbit_sound"  src="sounds_english/hotspots/Rabbit.mp3" type="audio"/>
+		<media id="rabbit_audio" src="sounds_new/Ambient/rabbit_sound.wav" type="audio"/>
+		
+		<media id="red_sound"  src="sounds_english/hotspots/Red.wav" type="audio"/>
+		<media id="green_sound"  src="sounds_english/hotspots/Green.wav" type="audio"/>
+		<media id="blue_sound"  src="sounds_english/hotspots/Blue.wav" type="audio"/>
+		<media id="yellow_sound"  src="sounds_english/hotspots/Yellow.wav" type="audio"/>
+		<media id="turahi_sound"  src="sounds_english/hotspots/Trumpet.wav" type="audio"/>
+		<media id="dhol_sound"  src="sounds_english/hotspots/Drum.wav" type="audio"/>
+		<media id="garud_sound"  src="sounds_english/hotspots/Eagle.wav" type="audio"/>
+		<media id="deer_sound"  src="sounds_english/hotspots/Deer.mp3" type="audio"/>
+		<media id="crow_sound"    src="sounds_english/hotspots/Crow.mp3" type="audio"/>
+		<media id="parrot_sound"  src="sounds_english/hotspots/Parrot.mp3" type="audio"/>
+		<media id="flowers_sound" src="sounds_english/hotspots/Bouquet.wav" type="audio"/>
+		<media id="diya_sound"    src="sounds_english/hotspots/Lamp.wav" type="audio"/>
+		<media id="crow_audio"    src="sounds_hindi/crow_sound.mp3" type="audio"/>
+		<media id="parrot_audio"  src="sounds_hindi/parrot_sound.mp3" type="audio"/>
+		
+		<media id="mala_sound" src="sounds_english/hotspots/Garland.wav" type="audio"/>
+		<media id="patloon_sound" src="sounds_english/hotspots/Pant.wav" type="audio"/>
+		<media id="saree_sound" src="sounds_hindi/saree.mp3" type="audio"/>
+		
+		<media id="carrot_sound" src="sounds_english/hotspots/Carrot.wav" type="audio"/>
+		<media id="beans_sound" src="sounds_english/hotspots/Beans.wav" type="audio"/>
+		<media id="potato_sound" src="sounds_english/hotspots/Potatoes.mp3" type="audio"/>
+		<media id="onion_sound" src="sounds_english/hotspots/Onion.wav" type="audio"/>
+		<media id="tomato_sound" src="sounds_english/hotspots/Tomato.wav" type="audio"/>
+		<media id="brinjal_sound" src="sounds_english/hotspots/Brinjal.wav" type="audio"/>
+		<media id="chillies_sound" src="sounds_english/hotspots/Chilli.wav" type="audio"/>
+		<media id="garland_sound" src="sounds_english/hotspots/Garland.wav" type="audio"/>
+		
+		<media id="fire_sound" src="sounds_english/hotspots/Fire.mp3" type="audio"/>
+		<!--<media id="decoration_sound" src="sounds_hindi/aag.mp3" type="audio"/>-->
+		<media id="tree_sound" src="sounds_hindi/ped.wav" type="audio"/>
+		<media id="laddu_sound" src="sounds_hindi/laddoo.mp3" type="audio"/>
+		<media id="puri_sound" src="sounds_english/hotspots/Poori.wav" type="audio"/>
+		<media id="wood_sound" src="sounds_english/hotspots/Wood.mp3" type="audio"/>
+		<media id="king_sound" src="sounds_hindi/jangal ka raja.mp3" type="audio"/>
+		<media id="tasty_sound" src="sounds_hindi/swadisht.mp3" type="audio"/>
+		<media id="khelo_sound" src="sounds_hindi/khelo.mp3" type="audio"/>
+		<media id="mtf_lion_sound" src="sounds_english/questions/mtf_lion.wav" type="audio"/>
+		<media id="mtf_bear_sound" src="sounds_english/questions/mtf_bear.wav" type="audio"/>
+		<media id="mtf_yummy_sound" src="sounds_english/questions/mtf_yummy.wav" type="audio"/>
+		<media id="fitb_sound" src="sounds_english/questions/fitb_Question.wav" type="audio"/>
+		<media id="Q3.1_sound" src="sounds_hindi/kisse kiski shaadi hui.mp3" type="audio"/>
+		<media id="Q3.2_sound" src="sounds_hindi/ladoo aur kheer kisne banayi.mp3" type="audio"/>
+		<media id="Q5_sound" src="sounds_hindi/saman dhwani wale shabdon ko milayein.mp3" type="audio"/>
+		<!--<media id="Q3_audio" src="sounds_hindi/haathi ko patloon.mp3" type="audio"/>
+		<media id="Q4_audio" src="sounds_hindi/lomdi ne.mp3" type="audio"/>
+		<media id="Q5_audio" src="sounds_hindi/Q5_sound.wav" type="audio"/>
+		<media id="Q6_audio" src="sounds_hindi/Q6_sound.wav" type="audio"/>
+		<media id="Q7_audio" src="sounds_hindi/Q7_sound.mp3" type="audio"/>
+		
+		<media id="Q8_audio" src="sounds_hindi/Q8_sound.mp3" type="audio"/>-->
+		
+		<media id="tickAudio" src="sounds_english/questions/listenLetter.wav" type="audio"/>
+		<media id="tickWord" src="sounds_english/questions/listenWord.wav" type="audio"/>
+		
+		
+		
+		<media src="sounds_english/questions/Rhyming1.wav" id="rhyme1" type="audiosprite">
+            <data>
+                <audioSprite id="rhyme1question" startTime="500" duration="3500.0"></audioSprite>
+                <audioSprite id="wearsound" startTime="4500" duration="1000.0"></audioSprite>
+                <audioSprite id="woresound" startTime="8800" duration="1500.0"></audioSprite>
+                <audioSprite id="moresound" startTime="6500" duration="1500.0"></audioSprite>
+                <audioSprite id="beatsound" startTime="11600" duration="2000.0"></audioSprite> 
+            </data>
+        </media>
+		<media src="sounds_english/questions/Rhyming2.wav" id="rhyme2" type="audiosprite">
+            <data>
+                <audioSprite id="rhyme2question" startTime="500" duration="3500.0"></audioSprite>
+                <audioSprite id="samesound" startTime="4400" duration="1200.0"></audioSprite>
+                <audioSprite id="comesound" startTime="8800" duration="1500.0"></audioSprite>
+                <audioSprite id="vansound" startTime="6500" duration="1500.0"></audioSprite>
+                <audioSprite id="applesound" startTime="11600" duration="2000.0"></audioSprite> 
+            </data>
+        </media>
+		<media src="sounds_english/questions/fitb_Q1.wav" id="fitbquestion1_sound" type="audiosprite">
+            <data>
+                <audioSprite id="fitbquestion1" startTime="500" duration="3000.0"></audioSprite>
+                <audioSprite id="shirtsound" startTime="3600" duration="1200.0"></audioSprite>
+                <audioSprite id="pantsound" startTime="5500" duration="1500.0"></audioSprite>
+                <audioSprite id="chainsound" startTime="8800" duration="8800.0"></audioSprite>
+                <audioSprite id="sareesound" startTime="6500" duration="1500.0"></audioSprite> 
+            </data>
+        </media>
+		<media src="sounds_english/questions/fitb_Q2.wav" id="fitbquestion2_sound" type="audiosprite">
+            <data>
+                <audioSprite id="fitbquestion2" startTime="1000" duration="3500.0"></audioSprite>
+                <audioSprite id="flutesound" startTime="4000" duration="1600.0"></audioSprite>
+                <audioSprite id="trumpetsound" startTime="5900" duration="2000.0"></audioSprite>
+                <audioSprite id="guitarsound" startTime="8100" duration="2000.0"></audioSprite>
+                <audioSprite id="drumsound" startTime="10300" duration="1500.0"></audioSprite> 
+            </data>
+        </media>
+		<media src="sounds_english/questions/fitb_Q3.wav" id="fitbquestion3_sound" type="audiosprite">
+            <data>
+                <audioSprite id="fitbquestion3" startTime="500" duration="3500.0"></audioSprite>
+                <audioSprite id="bearfoxsound" startTime="4500" duration="3000.0"></audioSprite>
+                <audioSprite id="elephantfoxsound" startTime="7600" duration="3000.0"></audioSprite>
+                <audioSprite id="elephantbearsound" startTime="10100" duration="3000.0"></audioSprite>
+                <audioSprite id="bearcrowsound" startTime="13300" duration="3000.0"></audioSprite> 
+            </data>
+        </media>
+		<media src="sounds_english/questions/fitb_Q4.wav" id="fitbquestion4_sound" type="audiosprite">
+            <data>
+                <audioSprite id="fitbquestion4" startTime="500" duration="3500.0"></audioSprite>
+                <audioSprite id="foxsound" startTime="4500" duration="1000.0"></audioSprite>
+                <audioSprite id="junglefriendssound" startTime="5600" duration="2000.0"></audioSprite>
+                <audioSprite id="junglekingsound" startTime="7800" duration="2000.0"></audioSprite>
+                <audioSprite id="eaglesound" startTime="9900" duration="3000.0"></audioSprite> 
+            </data>
+        </media>
+		<media src="sounds_english/questions/tickoptions1.wav" id="tickoption1" type="audiosprite">
+            <data>
+                <audioSprite id="tickquestion1" startTime="500" duration="3500.0"></audioSprite>
+                <audioSprite id="jasound" startTime="500" duration="2000.0"></audioSprite>
+                <audioSprite id="pasound" startTime="3500" duration="2000.0"></audioSprite>
+                <audioSprite id="sasound" startTime="5600" duration="1000.0"></audioSprite>
+                <audioSprite id="lasound" startTime="7800" duration="1500.0"></audioSprite> 
+            </data>
+        </media>
+		<media src="sounds_english/questions/tickoptions2.wav" id="tickoption2" type="audiosprite">
+            <data>
+                <audioSprite id="tickquestion2" startTime="500" duration="3500.0"></audioSprite>
+                <audioSprite id="lampsound" startTime="500" duration="2000.0"></audioSprite>
+                <audioSprite id="trumpetssound" startTime="2500" duration="2000.0"></audioSprite>
+                <audioSprite id="playedsound" startTime="4600" duration="2000.0"></audioSprite>
+                <audioSprite id="celebratingsound" startTime="7300" duration="1500.0"></audioSprite> 
+            </data>
+        </media>
+		
+		
+		
+		<media src="sounds_hindi/Q3_sound.wav" id="Q3_audio" type="audiosprite">
+            <data>
+                <audioSprite id="question2.1_sound" startTime="500" duration="3500.0"></audioSprite>
+                <audioSprite id="banayi_sound" startTime="4000" duration="1000.0"></audioSprite>
+                <audioSprite id="bajaya_sound" startTime="5300" duration="1000.0"></audioSprite>
+                <audioSprite id="jalaya_sound" startTime="6500" duration="1500.0"></audioSprite>
+                <audioSprite id="pahnayi_sound" startTime="7500" duration="1500.0"></audioSprite> 
+            </data>
+        </media>
+		
+		<media src="sounds_hindi/Q4_sound.wav" id="Q4_audio" type="audiosprite">
+            <data>
+                <audioSprite id="question2.2_sound" startTime="0" duration="2500.0"></audioSprite>
+				<audioSprite id="dhol_sound" startTime="2500" duration="1000.0"></audioSprite> 
+                <audioSprite id="turahi_sound" startTime="3500" duration="1000.0"></audioSprite>
+                <audioSprite id="tabla_sound" startTime="4500" duration="1000.0"></audioSprite>
+                <audioSprite id="dafli_sound" startTime="5500" duration="1000.0"></audioSprite>
+       
+            </data>
+        </media>
+		
+		<media src="sounds_hindi/Q5_sound.wav" id="Q5_audio" type="audiosprite">
+            <data>
+                <audioSprite id="question3.1_sound" startTime="0" duration="2500.0"></audioSprite>
+				<audioSprite id="foxbear_sound" startTime="2500" duration="1500.0"></audioSprite> 
+                <audioSprite id="elefox_sound" startTime="4500" duration="1800.0"></audioSprite>
+                <audioSprite id="elebear_sound" startTime="6300" duration="1500.0"></audioSprite>
+                <audioSprite id="bearcrow_sound" startTime="7800" duration="2000.0"></audioSprite>
+            </data>
+        </media>
+		
+		<media src="sounds_hindi/Q6_sound.wav" id="Q6_audio" type="audiosprite">
+            <data>
+                <audioSprite id="question3.2_sound" startTime="0" duration="2500.0"></audioSprite>
+				<audioSprite id="lomdi_sound" startTime="2500" duration="1500.0"></audioSprite> 
+                <audioSprite id="tota_sound" startTime="4000" duration="1500.0"></audioSprite>
+                <audioSprite id="lion_sound" startTime="5500" duration="1500.0"></audioSprite>
+                <audioSprite id="bhalu_sound" startTime="7000" duration="1500.0"></audioSprite>
+       
+            </data>
+        </media>
+		
+		<media src="sounds_hindi/Q7_sound.mp3" id="Q7_audio" type="audiosprite">
+            <data>
+                <audioSprite id="chara_sound" startTime="0" duration="1000.0"></audioSprite>
+				<audioSprite id="sher_sound" startTime="1000" duration="1000.0"></audioSprite> 
+                <audioSprite id="milo_sound" startTime="2000" duration="1000.0"></audioSprite>
+               <!-- <audioSprite id="khelo_sound" startTime="3000" duration="1000.0"></audioSprite>-->
+                <audioSprite id="khara_sound" startTime="4000" duration="1000.0"></audioSprite>
+       
+            </data>
+        </media>
+		
+		<media src="sounds_hindi/Q8_sound.mp3" id="Q8_audio" type="audiosprite">
+            <data>
+                <audioSprite id="meri_sound" startTime="0" duration="1000.0"></audioSprite>
+				<audioSprite id="milo2_sound" startTime="1000" duration="1000.0"></audioSprite> 
+                <audioSprite id="beri_sound" startTime="2000" duration="1000.0"></audioSprite>
+                <audioSprite id="chor_sound" startTime="3000" duration="1000.0"></audioSprite>
+                <audioSprite id="bhala_sound" startTime="4000" duration="1000.0"></audioSprite>
+       
+            </data>
+        </media>
+		
+		
+		<media id="rhymequestion" src="sounds_english/questions/RhymingQuestion.wav" type="audio"/>
+		
+		<media id="page1_sound" src="sounds_english/scenes/page 1.wav" type="audio"/>
+		<media id="page2_sound" src="sounds_english/scenes/page 2.wav" type="audio"/>
+		<media id="page3_sound" src="sounds_english/scenes/page 3.wav" type="audio"/>
+		<media id="page4_sound" src="sounds_english/scenes/page 4.wav" type="audio"/>
+		<media id="page5_sound" src="sounds_english/scenes/page 5.wav" type="audio"/>
+		<media id="page6_sound" src="sounds_english/scenes/page 6.wav" type="audio"/>
+		
+		<media src="sounds_english/scenes/page 1.wav" id="page1_audio" type="audiosprite">
+            <data>
+                <audioSprite id="todayword" startTime="500" duration="827.0"></audioSprite>
+                <audioSprite id="weddingword" startTime="1750" duration="500.0"></audioSprite>
+                <audioSprite id="elephantword" startTime="2700" duration="525.0"></audioSprite>
+                <audioSprite id="bearword" startTime="3650" duration="1000.0"></audioSprite>
+                <audioSprite id="jungleword" startTime="5300" duration="300.0"></audioSprite> 
+				<audioSprite id="friendword" startTime="5850" duration="450.0"></audioSprite>
+				<audioSprite id="celebratingword" startTime="6600" duration="850.0"></audioSprite>
+            </data>
+        </media>
+		<media src="sounds_english/scenes/page 2.wav" id="page2_audio" type="audiosprite">
+            <data>
+                <audioSprite id="woreword" startTime="1650" duration="255.0"></audioSprite>
+                <audioSprite id="sareeword" startTime="2150" duration="500.0"></audioSprite>
+                <audioSprite id="pantword" startTime="4660" duration="555.0"></audioSprite>
+                
+            </data>
+        </media>
+		
+		<media src="sounds_english/scenes/page 3.wav" id="page3_audio" type="audiosprite">
+            <data>
+                <audioSprite id="eagleword" startTime="1650" duration="255.0"></audioSprite>
+                <audioSprite id="playedword" startTime="2200" duration="300.0"></audioSprite>
+                <audioSprite id="drumsword" startTime="2850" duration="600.0"></audioSprite>
+				<audioSprite id="foxword" startTime="4200" duration="300.0"></audioSprite>
+				<audioSprite id="trumpetword" startTime="5500" duration="555.0"></audioSprite>
+                
+            </data>
+        </media>
+		
+		<media id="fox_audio" src="sounds_new/Ambient/Fox_sound.wav" type="audio"/>
+		<media id="monkey_audio" src="sounds_new/Ambient/Monkey_sound.wav" type="audio"/>
+		<media id="tiger_audio" src="sounds_new/Ambient/Tiger_sound.wav" type="audio"/>
+		<media id="squirrel_audio" src="sounds_new/Ambient/Squirrel_sound.wav" type="audio"/>
+		<media id="drum_audio" src="sounds_new/Ambient/Drum_sound.mp3" type="audio"/>
+		<media id="olaga_audio" src="sounds_new/Ambient/Olaga_sound.mp3" type="audio"/>
+		<media id="firecrackling_sound" src="sounds_new/HotSpots/Fire_sound.mp3" type="audio"/>
+		
+	
+		
+		<media id="elephant" src="mcq/Elephant.png" type="image" />
+		<media id="bear" src="mcq/Bear.png" type="image" />
+		<media id="tiger" src="mcq/Tiger.png" type="image" />
+		<media id="lion" src="mcq/Lion.png" type="image" />
+		<media id="fox" src="mcq/Fox.png" type="image" />
+		<media id="bored" src="mtf/Bored.png" type="image" />
+		<media id="expressionless" src="mtf/NoExpression.png" type="image" />
+		<media id="sad" src="mtf/Sad.png" type="image" />
+		<media id="enjoyingfood" src="mtf/EnjoyingFood.png" type="image" />
+		
+		<media id="play_audio" src="playAudio.png" type="image" />
+	
+		<media id="foxhighlight" src="image_glow/scene 1/fox.png" type="image" />
+		<media id="tigerhighlight" src="image_glow/scene 1/tiger.png" type="image" />
+		<media id="squirrelhighlight" src="image_glow/scene 1/squirrel.png" type="image" />
+		<media id="monkeyhighlight" src="image_glow/scene 1/monkey.png" type="image" />
+		<media id="monkeyhighlight2" src="image_glow/scene 1/monkey2.png" type="image" />
+		<media id="rabbithighlight2" src="image_glow/scene 1/rabbit2.png" type="image" />
+		<media id="foxhighlight2" src="image_glow/scene 1/fox2.png" type="image" />
+		<media id="rabbithighlight" src="image_glow/scene 1/rabbit.png" type="image" />
+		<media id="sc2firehighlight" src="image_glow/scene 2/fire.png" type="image" />
+		<media id="panthighlight" src="image_glow/scene 2/pant.png" type="image" />
+		<media id="sareehighlight" src="image_glow/scene 2/saree.png" type="image" />
+		<media id="garlandLhighlight" src="image_glow/scene 2/garlandL.png" type="image" />
+		<media id="garlandRhighlight" src="image_glow/scene 2/garlandR.png" type="image" />
+		<media id="decorGhighlight" src="image_glow/scene 3/green.png" type="image" />
+		<media id="decorRhighlight" src="image_glow/scene 3/red.png" type="image" />
+		<media id="decorBhighlight" src="image_glow/scene 3/blue.png" type="image" />
+		<media id="decorYhighlight" src="image_glow/scene 3/yellow.png" type="image" />
+		<media id="drumhighlight" src="image_glow/scene 3/drum.png" type="image" />
+		<media id="olagahighlight" src="image_glow/scene 3/olaga.png" type="image" />
+		<media id="flowersLhighlight" src="image_glow/scene 4/flowersL.png" type="image" />
+		<media id="flowersRhighlight" src="image_glow/scene 4/flowersR.png" type="image" />
+		<media id="crowhighlight" src="image_glow/scene 4/crow.png" type="image" />
+		<media id="parrothighlight" src="image_glow/scene 4/parrot.png" type="image" />
+		<media id="deepahighlight" src="image_glow/scene 4/deepa.png" type="image" />
+		<media id="decorhighlight" src="image_glow/scene 5/decor.png" type="image" />
+		<media id="treehighlight" src="image_glow/scene 5/tree.png" type="image" />
+		<media id="purihighlight" src="image_glow/scene 5/puri.png" type="image" />
+		<media id="carrothighlight" src="image_glow/scene 5/carrot.png" type="image" />
+		<media id="onionhighlight" src="image_glow/scene 5/onion.png" type="image" />
+		<media id="tomatohighlight" src="image_glow/scene 5/tomato.png" type="image" />
+		<media id="potatohighlight" src="image_glow/scene 5/potato.png" type="image" />
+		<media id="sc5firehighlight" src="image_glow/scene 5/fire.png" type="image" />
+		<media id="brinjalhighlight" src="image_glow/scene 5/brinjal.png" type="image" />
+		<media id="beanshighlight" src="image_glow/scene 5/beans.png" type="image" />
+		<media id="chillieshighlight" src="image_glow/scene 5/chilli.png" type="image" />
+		<media id="ladduhighlight" src="image_glow/scene 5/laddu.png" type="image" />
+		<media id="woodhighlight" src="image_glow/scene 5/lakdi.png" type="image" />
+		
+		<media id="garudhighlight" src="image_glow/scene 3/eagle.png" type="image" />
+		<media id="sc3foxhighlight" src="image_glow/scene 3/fox.png" type="image" />
+		<media id="deerhighlight" src="image_glow/scene 1/deer.png" type="image" />
+		
+		<media id="lakdi2highlight" src="image_glow/scene 5/lakdi2.png" type="image" />
+		<media id="fire2highlight" src="image_glow/scene 5/fire2.png" type="image" />
+		<media id="tree2highlight" src="image_glow/scene 5/tree2.png" type="image" />
+		<media id="carrot2highlight" src="image_glow/scene 5/carrot2.png" type="image" />
+		<media id="laddu2highlight" src="image_glow/scene 5/laddu2.png" type="image" />
+		<media id="menuBG" src="pageSel_bg.png" type="image" />
+		
+		
+    </manifest>
+    <controller name="assessment" type="items" id="assessment"/>
+    <controller name="elephantData" type="data" id="elephant_story"/>
+    <stage id="baseStage" preload="true">
+     
+		<image asset = "bear"/>
+		<image asset = "lion"/>
+		<image asset = "fox"/>
+		<image asset = "elephant"/>
+		<image asset = "tiger" />
+		<image asset = "validate" />
+		<image asset = "bored"/>
+		<image asset = "expressionless"/>
+		<image asset = "sad"/>
+		<image asset = "enjoyingfood"/>
+		<image asset = "option_BG"/>
+		<image asset = "tickmark"/>
+		<image asset = "grey"/>
+		<image asset = "activitybg"/>
+		<image asset = "previous"/>
+		<image asset = "next"/>
+		<image asset = "retryBg"/>
+		<image asset = "retryButton"/>
+		<image asset = "nextButton"/>
+		<image asset = "goodjobBg"/>
+		<image asset = "foxhighlight"/>
+		<image asset = "tigerhighlight"/>
+		<image asset = "squirrelhighlight"/>
+		<image asset = "monkeyhighlight"/>
+		<image asset = "rabbithighlight"/>
+		<image asset = "panthighlight"/>
+		<image asset = "sareehighlight"/>
+		<image asset = "garlandLhighlight"/>
+		<image asset = "garlandRhighlight"/>
+		<image asset = "sc2firehighlight"/>
+		<image asset = "decorRhighlight"/>
+		<image asset = "decorGhighlight"/>
+		<image asset = "decorBhighlight"/>
+		<image asset = "decorYhighlight"/>
+		<image asset = "olagahighlight"/>
+		<image asset = "drumhighlight"/>
+		<image asset = "flowersLhighlight"/>
+		<image asset = "flowersRhighlight"/>
+		<image asset = "parrothighlight"/>
+		<image asset = "crowhighlight"/>
+		<image asset = "deepahighlight"/>
+		<image asset = "yellowBox"/>
+		<image asset = "greenBox"/>
+		<image asset = "blueBox"/>
+		<image asset = "teacherPopupBg"/>
+		<image asset = "monkeyhighlight2"/>
+		<image asset = "rabbithighlight2"/>
+		<image asset = "foxhighlight2"/>
+		
+		<image asset = "decorhighlight"/>
+		<image asset = "sc5firehighlight"/>
+		<image asset = "onionhighlight"/>
+		<image asset = "tomatohighlight"/>
+		<image asset = "potatohighlight"/>
+		<image asset = "brinjalhighlight"/>
+		<image asset = "carrothighlight"/>
+		<image asset = "beanshighlight"/>
+		<image asset = "ladduhighlight"/>
+		<image asset = "chillieshighlight"/>
+		<image asset = "purihighlight"/>
+		<image asset = "treehighlight"/>
+		<image asset = "woodhighlight"/>
+		<image asset = "wordhighlight"/>
+		<image asset = "garudhighlight"/>
+		<image asset = "sc3foxhighlight"/>
+		<image asset = "deerhighlight"/>
+		<image asset = "end_screen"/>
+		<image asset = "Red1"/>
+		<image asset = "Red2"/>
+		<image asset = "Yellow1"/>
+		<image asset = "Yellow2"/>
+		<image asset = "Yellow3"/>
+		<image asset = "Blue1"/>
+		<image asset = "Blue2"/>
+		<image asset = "Green1"/>
+		<image asset = "Green2"/>
+		<image asset = "highlightL"/>
+		<image asset = "highlightC"/>
+		<image asset = "highlightR"/>
+		<image asset = "highlightbutton"/>
+		<image asset = "laddu2highlight"/>
+		<image asset = "carrot2highlight"/>
+		<image asset = "lakdi2highlight"/>
+		<image asset = "tree2highlight"/>
+		<image asset = "fire2highlight"/>
+		<image asset = "elephantquestion"/>
+		<image asset = "pantquestion"/>
+		<image asset = "lampsquestion"/>
+		<image asset = "parrotquestion"/>
+		<image asset = "menuBG"/>
+		
+    </stage>
+	
+   <stage id="storyBaseStage" preload="true">
+        <image asset="next" x="93" y="10" w="5" h="8.3" id="next" visible="false"/>
+        <shape id="nextContainer" type="rect" x="93" y="10" w="5" h="8" visible="false" hitArea="true" >
+            <event type="click">
+                <action type="command" command="pauseKaraoke" asset="headingText" /> 
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+            </event>
+        </shape>
+      <image asset="previous" x="2" y="10" w="5" h="8.3" id="previous" visible="false"/>
+        <shape id="previousContainer" type="rect" x="2" y="10" w="5" h="8" visible="false" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" transitionType="previous"/>
+            </event>
+        </shape>
+		<image asset="icon_home" x="2" y="87" w="6" h="10"/>
+		<shape type="rect" x="2" y="87" w="6" h="10" hitArea="true" >
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="home_stage" effect="scroll" direction="right" ease="linear" duration="600" />             
+            </event>
+        </shape>
+		
+		<image asset="teacher" x="92" y="87" w="6" h="10" />
+		
+		<!-- word hint: Teacher  -->
+		<shape type="rect" x="92" y="87" w="6" h="10" hitArea="true"  >
+            <event type="click">
+				<action type="command" command="toggleShow" asset="teacher_options" />
+                <action type="command" command="toggleShow" asset="teacher_text" />
+		    </event>
+        </shape>
+		
+		<g  x="67" y="82" w="50" h="16" id="teacher_options" visible="false">
+			<!-- Part1  -->
+			<image asset="yellowBox" x="0" y="0" w="45" h="100" id="learn_option_8">
+				<event type="click">
+					<!--<action type="command" command="toggleShow" asset="teacher_text"/>-->
+				</event>
+			</image>
+		</g>
+		
+		<!-- Teacher text -->
+		<g x="68" y="70.5" w="51" h="60"  id="teacher_text" visible="false">	
+	     	<text x="0" y="23" w="42.5" h="80" font="Georgia" fontsize="53" >
+			Recite the story to the child yourself or through the app. Help the child learn new words and develop vocabulary
+			</text>
+        </g>
+        <text id="headingText" param="heading" x="4" y="2" w="100" h="23" weight="bold" fontsize="37" color="#fff" />
+    </stage>
+	
+	<stage id="activity" x="0" y="0" w="100" h="100">
+       <param name="next" value="splash"/>
+       <param name="ws1" value="scene11"/>
+       <!--<param name="ws2" value="item"/>-->
+       
+
+		
+	   <image asset="activitybg" x="0" y="0" w="100" h="100" id="next"/>
+	   <!-- <image asset="next" x="92" y="80" w="6" h="10" id="next"/>-->
+      <!-- <shape id="nextContainer" type="rect" x="87" y="75" w="13" h="20" visible="false" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+            </event>
+        </shape>  --> 
+       
+		<text x="2" y="5.5" w="96" h="4" font="Verdana" fontsize="82" align="center">
+			Chapter 1
+		</text>
+		<text x="24.5" y="16.5" w="50" h="7" font="Verdana" fontsize="29" align="center">
+			Elephant Weds Bear 
+		</text>
+		<shape id="btcContainer" type="rect" x="72" y="5" w="25" h="6" hitArea="true">
+			<event type="click">
+                <action type="command" command="windowEvent" asset="theme" href="#/content/list"/>
+            </event>
+		</shape>
+		<text x="75" y="6" w="20" h="4" font="Verdana" fontsize="32" align="center">
+			
+		</text>
+		
+		
+		<!-- Learn circle -->
+		<!-- <text x="15.5" y="37" w="18" h="4" font="Verdana" fontsize="40" align="center">
+			1. Learn
+		</text> -->
+		<shape id="learn" type="rect" x="15.5" y="27" w="18" h="40" hitArea="true">
+            <event type="click">
+				<action type="command" command="toggleShow" asset="learn_options"/>
+				<action type="command" command="hide" asset="practice_options"/>
+				<action type="command" command="hide" asset="explore_options"/>
+            </event>
+        </shape>
+		
+		<!-- Practice circle -->
+		<!-- <text x="41" y="37" w="18" h="4" font="Verdana" fontsize="40" align="center">
+			2. Practice
+		</text> -->
+		<shape id="practice" type="rect" x="41" y="27" w="18" h="40" hitArea="true">
+            <event type="click">
+               <action type="command" command="toggleShow" asset="practice_options"/>
+				<action type="command" command="hide" asset="learn_options"/>
+				<action type="command" command="hide" asset="explore_options"/>
+            </event>
+        </shape>
+		
+		<!-- explore circle -->
+		<!-- <text x="67" y="37" w="18" h="4" font="Verdana" fontsize="40" align="center">
+			3. Explore	
+		</text> -->
+		<shape id="explore" type="rect" x="67" y="27" w="18" h="40" hitArea="true">
+            <event type="click">
+               <action type="command" command="toggleShow" asset="explore_options"/>
+				<action type="command" command="hide" asset="learn_options"/>
+				<action type="command" command="hide" asset="practice_options"/>
+            </event>
+        </shape>
+		
+		<!-- learn popups  -->
+		<g w="50" h= "20" x="13" y="69" id="learn_options" visible="false">
+			<!-- Part1  -->
+			<image asset="yellowBox" x="0" y="0" w="45" h="100" id="learn_option_1">
+				<event type="click">
+					<action type="command" command="toggleShow" asset="learn_options"/>
+					<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+				</event>
+			</image>
+			<text x="0" y="37" w="45" h="4" font="Verdana" fontsize="92" align="center">
+			  Read/Listen 
+			</text>
+			
+			
+		</g>
+		
+		<!-- practice popups -->
+		<g w="50" h= "20" x="39" y="69" id="practice_options" visible="false">
+			<image asset="greenBox" x="0" y="0" w="45" h="100" id="learn_option_1">
+				<event type="click">
+					<action type="command" command="toggleShow" asset="practice_options"/>
+					<action type="command" command="transitionTo" asset="theme" param="ws1" effect="scroll" direction="left" ease="linear" duration="500" />
+				</event>
+			</image>
+			<text x="0" y="37" w="45" h="4" font="Verdana" fontsize="92" align="center">
+			  Practice 
+			</text>
+			
+			<!--<image asset="greenBox" x="50" y="0" w="45" h="100" id="learn_option_2">
+				<event type="click">
+					<action type="command" command="toggleShow" asset="practice_options"/>
+					<action type="command" command="transitionTo" asset="theme" param="ws2" effect="scroll" direction="left" ease="linear" duration="500" />
+				</event>
+			</image>
+			<text x="50" y="37" w="45" h="4" font="Verdana" fontsize="92" align="center">
+			Noah's 	Arc
+			</text>
+			
+			<image asset="greenBox" x="100" y="0" w="45" h="100" id="learn_option_3">
+				<event type="click">
+					<action type="command" command="windowEvent" asset="theme" href="http://www.topmarks.co.uk/learning-to-count/ladybird-spots"/>
+				</event>
+			</image>			
+			<text x="100" y="37" w="45" h="4" font="Verdana" fontsize="92" align="center">
+			Lady Bug
+			</text>-->
+		</g>
+		
+		<!-- explore popups -->
+		<g w="50" h= "20" x="5" y="69" id="explore_options" visible="false">
+			
+			<image asset="blueBox" x="70" y="0" w="45" h="100" id="learn_option_1"/>
+			<text x="70" y="37" w="45" h="4" font="Verdana" fontsize="92" align="center">
+			Fun with Animals
+			</text>
+			
+			<image asset="blueBox" x="120" y="0" w="45" h="100" id="learn_option_2"/>	
+			<text x="120" y="33" w="45" h="4" font="Verdana" fontsize="90" align="center">
+			Annual Haircut Day
+			</text>
+		
+			<image asset="blueBox" x="20" y="0" w="45" h="100" id="learn_option_2">	
+		
+			<!--<event type="click">
+				<action type="command" command="windowEvent" asset="theme" href="https://www.khanacademy.org/math/early-math/cc-early-math-counting-topic/cc-early-math-counting/v/counting-with-small-numbers"/>
+			</event>-->
+			</image>
+			
+			<text x="20" y="38" w="45" h="4" font="Verdana" fontsize="90" align="center">
+			Zoo Manners
+			</text>
+			
+		</g>
+		
+		<events>
+            <!--<event type="enter">
+                <action type="command" command="play" asset="splash_sound" loop="1" />
+				<action type="command" command="play" asset="delayed_intro_sound" loop="1" />
+            </event>
+            <event type="exit">
+                <action type="command" command="stop" asset="splash_sound" audio="true" loop="1" />
+				<action type="command" command="stop" asset="delayed_intro_sound" audio = "true" loop="1" />
+            </event>-->
+        </events>
+    </stage>
+	
+    <stage id="splash" x="0" y="0" w="100" h="100">															<!--SPLASH SCREEN-->
+        <param name="next" value="scene1"/>
+        <audio asset="titleSound" />
+        <param name="home_stage" value="activity" />
+        <image asset="page1" x="23.5" y="2" w="55" h="70" />
+        <image asset="publisher_logo" x="2" y="75" w="13" h="17" />
+        <image asset="level_band" x="2" y="94" w="13" h="5" />
+        <image asset="next" x="92" y="86" w="6" h="10" id="next"/>
+		
+		<image asset="icon_home" x="92" y="75" w="6" h="10"/>
+		<shape type="rect" x="92" y="75" w="6" h="10" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="home_stage" effect="scroll" direction="right" ease="linear" duration="600" />             
+            </event>
+        </shape>
+        <shape id="nextContainer" type="rect" x="92" y="86" w="6" h="10" visible="false" hitArea="true" >
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+            </event>
+        </shape>
+        <text x="40" y="74" w="45" h="5" font="Arial" fontsize="48">
+                               Elephant Weds Bear
+        </text>
+        <text x="35" y="82" w="20" h="5" font="Georgia" weight="bold" fontsize="28">
+            Concept                :
+        </text>
+        <text x="50" y="82" w="20" h="5" font="Georgia" fontsize="28">
+            R. S. Annam, Honnali Block 
+        </text>
+        <text x="35" y="85" w="20" h="5" font="Georgia" weight="bold" fontsize="28">
+            Illustrations       :
+        </text>
+        <text x="50" y="85" w="20" h="5" font="Georgia" fontsize="28">
+            Suresh Jayapura
+        </text>
+		<text x="35" y="88" w="20" h="5" font="Georgia" weight="bold" fontsize="28">
+            Co-ordination    :
+        </text>
+        <text x="50" y="88" w="20" h="5" font="Georgia" fontsize="28">
+            Kanchan Bannerjee
+        </text>
+		<text x="35" y="91" w="20" h="5" font="Georgia" weight="bold" fontsize="28">
+            Designed by        :
+        </text>
+        <text x="50" y="91" w="30" h="5" font="Georgia" fontsize="28">
+            Akshara Foundation, Bangalore for Janashala, Karnataka
+        </text>
+		<text x="35" y="91" w="20" h="5" font="Georgia" weight="bold" fontsize="28">
+            Designed by        :
+        </text>
+		<!-- <text x="40" y="95" w="30" h="5" font="Georgia"  weight="bold" fontsize="28">
+           Story by Karnataka Board
+        </text>-->
+        
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="titleSound" loop="1" />
+            </event>
+            <event type="exit">
+                <action type="command" command="stop" asset="titleSound" audio="true" loop="1" />
+            </event>
+        </events>
+    </stage>
+	
+    <stage id="scene1" x="0" y="0" w="100" h="100" extends="storyBaseStage">							<!--SCENE 1-->
+    	<param name="heading" model="elephantData.scene1_body"/>
+        <audio asset="page1_sound" />
+		<audio asset="fox_audio" />
+		<audio asset="fox_sound" />
+		<audio asset="tiger_sound" />
+		<audio asset="rabbit_sound" />
+		<audio asset="rabbit_audio" />
+		<audio asset="squirrel_sound" />
+		<audio asset="deer_sound"/>
+		<audio asset="monkey_sound" />
+		<audio asset="tiger_audio" />
+		<audio asset="monkey_audio" />
+		<audio asset="squirrel_audio" />
+		<audio asset="page1_audio"/>
+        <param name="next" value="scene2" />
+        <param name="previous" value="splash" />
+        <param name="home_stage" value="activity" />
+		
+        <image asset="page2" x="0" y="5" w="100" h="95" />
+		
+		
+		
+		
+		
+        <image asset="icon_sound" x="92" y="63" w="6" h="10" />
+        <shape type="rect" x="92" y="63" w="6" h="10" hitArea="true">
+            <event type="click">
+            	<action type="command" command="toggleKaraoke" asset="headingText" /> 
+                <action type="command" command="togglePlay" asset="page1_sound" />               
+            </event>
+        </shape>
+		
+		
+		<image asset="highlightbutton" x="92" y="75" w="6" h="10" />										<!--show shadows-->
+        <shape type="rect" x="92" y="75" w="6" h="10" hitArea="true">
+            <event type="click">
+                <!--<action type="command" command="togglePlay" asset="page1_sound" />--> 
+				<action type="command" command="toggleShow" asset="h_fox" />	
+				<action type="command" command="toggleShow" asset="h_tiger" />
+				<action type="command" command="toggleShow" asset="h_rabbit" />
+				<action type="command" command="toggleShow" asset="h_squirrel" />
+				<action type="command" command="toggleShow" asset="h_monkey" />
+				<action type="command" command="toggleShow" asset="h_deer"/>
+				<action type="command" command="toggleShow" asset="h_monkey2"/>
+				<action type="command" command="toggleShow" asset="h_fox2"/>
+				<action type="command" command="toggleShow" asset="h_rabbit2"/>				
+            </event>
+        </shape>
+		
+		
+		 <shape type="rect" x="0" y="0" w="100" h="8" hitArea="false"  fill="#cc0000" >						<!--Text Area-->
+         </shape>
+		 
+		 <!-- <text x="1.5" y="3.5" w="100" h="15" font="Miriam" fontsize="40" color="white">
+           TODAY IS THE WEDDING OF THE ELEPHANT AND THE BEAR. THEIR JUNGLE FRIENDS ARE CELEBRATING.
+        </text> -->
+	
+		 <shape type="rect" x="1" y="1" w="7" h="5" hitArea="true"  >						<!--today word hotspot-->
+            <event type="click">
+			    <action type="command" command="togglePlay" asset="todayword" />
+            </event>
+        </shape>
+		
+		<shape type="rect" x="15" y="1" w="9" h="5" hitArea="true" >						<!--wedding word hotspot-->
+		<event type="click">
+			    <action type="command" command="togglePlay" asset="weddingword" />
+            </event>
+        </shape>
+		
+		<shape type="rect" x="32" y="1" w="10" h="5" hitArea="true" >						<!--elephant word hotspot-->
+		<event type="click">
+			    <action type="command" command="togglePlay" asset="elephantword" />
+            </event>
+        </shape>
+		
+		<shape type="rect" x="51.5" y="1" w="5.5" h="5" hitArea="true">						<!--bear word hotspot-->
+		<event type="click">
+			    <action type="command" command="togglePlay" asset="bearword" />
+            </event>
+        </shape>
+		
+		<shape type="rect" x="64" y="1" w="7" h="5" hitArea="true" >						<!--jungle word hotspot-->
+		<event type="click">
+			    <action type="command" command="togglePlay" asset="jungleword" />
+            </event>
+        </shape>
+		
+		<shape type="rect" x="72" y="1" w="8" h="5" hitArea="true" >						<!--friends word hotspot-->
+		<event type="click">
+			    <action type="command" command="togglePlay" asset="friendword" />
+            </event>
+        </shape>
+		
+		<shape type="rect" x="85" y="1" w="13.5" h="5" hitArea="true" >						<!--celebrating word hotspot-->
+		<event type="click">
+			    <action type="command" command="togglePlay" asset="celebratingword" />
+            </event>
+        </shape>
+		
+		
+		 <shape type="rect" x="8" y="46" w="9" h="47" hitArea="true"  >						<!--fox hotspot-->
+            <event type="click">
+			    
+				<action type="command" command="show" asset="h_fox" />	
+				<action type="command" command="hide" asset="h_tiger" />
+				<action type="command" command="hide" asset="h_rabbit" />
+				<action type="command" command="hide" asset="h_squirrel" />
+				<action type="command" command="hide" asset="h_monkey" />
+				<action type="command" command="hide" asset="h_deer"/>
+				<action type="command" command="hide" asset="h_monkey2"/>
+				<action type="command" command="hide" asset="h_fox2"/>
+				<action type="command" command="hide" asset="h_rabbit2"/>	
+               <action type="command" command="togglePlay" asset="fox_sound" />
+                <action type="command" command="togglePlay" asset="fox_audio" />
+            </event>
+        </shape>
+		 <shape type="rect" x="69" y="38" w="11" h="26" hitArea="true" >						<!--fox hotspot-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_fox" />	
+				<action type="command" command="hide" asset="h_tiger" />
+				<action type="command" command="hide" asset="h_rabbit" />
+				<action type="command" command="hide" asset="h_squirrel" />
+				<action type="command" command="hide" asset="h_monkey" />
+				<action type="command" command="hide" asset="h_deer"/>
+				<action type="command" command="hide" asset="h_monkey2"/>
+				<action type="command" command="show" asset="h_fox2"/>
+				<action type="command" command="hide" asset="h_rabbit2"/>
+                 <action type="command" command="togglePlay" asset="fox_sound" />
+                 <action type="command" command="togglePlay" asset="fox_audio" />
+            </event>
+        </shape>
+		 <shape type="rect" x="37" y="76" w="9" h="15" hitArea="true" >						<!--rabbit1 hotspot(left)-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_fox" />	
+				<action type="command" command="hide" asset="h_tiger" />
+				<action type="command" command="show" asset="h_rabbit" />
+				<action type="command" command="hide" asset="h_squirrel" />
+				<action type="command" command="hide" asset="h_monkey" />
+				<action type="command" command="hide" asset="h_deer"/>
+				<action type="command" command="hide" asset="h_monkey2"/>
+				<action type="command" command="hide" asset="h_fox2"/>
+				<action type="command" command="hide" asset="h_rabbit2"/>
+                 <action type="command" command="togglePlay" asset="rabbit_sound" />
+                 <action type="command" command="togglePlay" asset="rabbit_audio" />
+            </event>
+        </shape>
+		 <shape type="rect" x="53" y="73" w="10" h="15" hitArea="true" >						<!--rabbit2 hotspot(change to)-->
+            <event type="click">
+				<action type="command" command="hide" asset="h_fox" />	
+				<action type="command" command="hide" asset="h_tiger" />
+				<action type="command" command="hide" asset="h_rabbit" />
+				<action type="command" command="hide" asset="h_squirrel" />
+				<action type="command" command="hide" asset="h_monkey" />
+				<action type="command" command="hide" asset="h_deer"/>
+				<action type="command" command="hide" asset="h_monkey2"/>
+				<action type="command" command="hide" asset="h_fox2"/>
+				<action type="command" command="show" asset="h_rabbit2"/>
+                <action type="command" command="togglePlay" asset="rabbit_sound" />
+                 <action type="command" command="togglePlay" asset="rabbit_audio" />
+            </event>
+        </shape>
+		 <shape type="rect" x="61" y="36" w="5" h="18" hitArea="true" >						<!--monkey hotspot-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_fox" />	
+				<action type="command" command="hide" asset="h_tiger" />
+				<action type="command" command="hide" asset="h_rabbit" />
+				<action type="command" command="hide" asset="h_squirrel" />
+				<action type="command" command="show" asset="h_monkey" />
+				<action type="command" command="hide" asset="h_deer"/>
+				<action type="command" command="hide" asset="h_monkey2"/>
+				<action type="command" command="hide" asset="h_fox2"/>
+				<action type="command" command="hide" asset="h_rabbit2"/>
+                <action type="command" command="togglePlay" asset="monkey_sound" />
+                <action type="command" command="togglePlay" asset="monkey_audio" />
+            </event>
+        </shape>
+		 <shape type="rect" x="68" y="8" w="10" h="18" hitArea="true" >						<!--monkey hotspot-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_fox" />	
+				<action type="command" command="hide" asset="h_tiger" />
+				<action type="command" command="hide" asset="h_rabbit" />
+				<action type="command" command="hide" asset="h_squirrel" />
+				<action type="command" command="hide" asset="h_monkey" />
+				<action type="command" command="hide" asset="h_deer"/>
+				<action type="command" command="show" asset="h_monkey2"/>
+				<action type="command" command="hide" asset="h_fox2"/>
+				<action type="command" command="hide" asset="h_rabbit2"/>
+                <action type="command" command="togglePlay" asset="monkey_sound" />
+                 <action type="command" command="togglePlay" asset="monkey_audio" />
+            </event>
+        </shape>
+		
+		<shape type="rect" x="18" y="35" w="7" h="22" hitArea="true" >						<!--tiger hotspot-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_fox" />	
+				<action type="command" command="show" asset="h_tiger" />
+				<action type="command" command="hide" asset="h_rabbit" />
+				<action type="command" command="hide" asset="h_squirrel" />
+				<action type="command" command="hide" asset="h_monkey" />
+				<action type="command" command="hide" asset="h_deer"/>
+				<action type="command" command="hide" asset="h_monkey2"/>
+				<action type="command" command="hide" asset="h_fox2"/>
+				<action type="command" command="hide" asset="h_rabbit2"/>
+                <action type="command" command="togglePlay" asset="tiger_sound" />
+                 <action type="command" command="togglePlay" asset="tiger_audio" />
+            </event>
+        </shape>
+		<shape type="rect" x="27" y="8" w="8" h="9" hitArea="true" >						<!--squirrel hotspot-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_fox" />	
+				<action type="command" command="hide" asset="h_tiger" />
+				<action type="command" command="hide" asset="h_rabbit" />
+				<action type="command" command="show" asset="h_squirrel" />
+				<action type="command" command="hide" asset="h_monkey" />
+				<action type="command" command="hide" asset="h_deer"/>
+				<action type="command" command="hide" asset="h_monkey2"/>
+				<action type="command" command="hide" asset="h_fox2"/>
+				<action type="command" command="hide" asset="h_rabbit2"/>
+                <action type="command" command="togglePlay" asset="squirrel_sound" />
+                 <action type="command" command="togglePlay" asset="squirrel_audio" />
+            </event>
+        </shape>
+		<shape type="rect" x="46" y="30" w="9" h="23" hitArea="true" >						<!--deer hotspot-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_fox" />	
+				<action type="command" command="hide" asset="h_tiger" />
+				<action type="command" command="hide" asset="h_rabbit" />
+				<action type="command" command="hide" asset="h_squirrel" />
+				<action type="command" command="hide" asset="h_monkey" />
+				<action type="command" command="show" asset="h_deer"/>
+				<action type="command" command="hide" asset="h_monkey2"/>
+				<action type="command" command="hide" asset="h_fox2"/>
+				<action type="command" command="hide" asset="h_rabbit2"/>
+                <action type="command" command="togglePlay" asset="deer_sound" />
+                <!--<action type="command" command="togglePlay" asset="squirrel_audio" />-->
+            </event>
+        </shape>
+		
+		<image asset="foxhighlight"      x="3.7" y="45.5" w="18.9" h="55.2" id="h_fox"      visible = "false"/>   <!-- fox highlight-->
+		<image asset="foxhighlight2"      x="63.5" y="35.5" w="22" h="32.9" id="h_fox2"      visible = "false"/>   <!-- fox highlight-->
+		<image asset="tigerhighlight"    x="17.5" y="35" w="12.1" h="26" id="h_tiger"      visible = "false"/>   <!-- tiger highlight-->
+		<image asset="rabbithighlight"   x="35.5" y="75" w="12" h="16.9" id="h_rabbit"   visible = "false"/>   <!-- rabbit highlight-->
+		<image asset="rabbithighlight2"   x="51.5" y="71.8" w="12.5" h="17.9" id="h_rabbit2"   visible = "false"/>   <!-- rabbit highlight-->
+		<image asset="squirrelhighlight" x="26.3" y="6.8" w="9.5" h="9.5" id="h_squirrel" visible = "false"/>   <!-- squirrel highlight-->
+		<image asset="monkeyhighlight"   x="60" y="35.5" w="12.3" h="22.5" id="h_monkey"   visible = "false"/>   <!-- monkey highlight-->
+		<image asset="monkeyhighlight2"   x="64.5" y="4.5" w="15" h="22" id="h_monkey2"   visible = "false"/>   <!-- monkey highlight-->
+		<image asset="deerhighlight" 	  x="45" y="30.5" w="9.7" h="25.2" id="h_deer"  visible = "false" />	<!--deer highlight-->
+		
+        <events>
+            <event type="enter">
+            	<action type="command" command="startKaraoke" asset="headingText" /> 
+                <action type="command" command="play" asset="page1_sound" loop="1" />
+              
+            </event>
+            <event type="exit">
+
+                <action type="command" command="stop" asset="page1_sound" audio="true" loop="1" />
+				
+            </event>
+        </events>
+    </stage>
+	
+    <stage id="scene2" x="0" y="0" w="100" h="100" extends="storyBaseStage">								<!--SCENE 2-->
+
+    	<param name="heading" model="elephantData.scene2_body"/>
+        <audio asset="page2_sound" />
+		<audio asset="fitbquestion1_sound"/>
+		 <audio asset="firecrackling_sound" />
+		 <audio asset="fire_sound"/>
+		 <audio asset="mala_sound"/>
+		 <audio asset="patloon_sound"/>
+		 <audio asset="saree_sound"/>
+		 <audio asset="page1_audio"/>
+		 <audio asset="page2_audio"/>
+        <param name="next" value="scene3" />
+        <param name="previous" value="scene1" />
+        <image asset="page3" x="0" y="5" w="100" h="95" />
+        <param name="home_stage" value="activity" />
+		
+		<image asset="icon_sound" x="92" y="63" w="6" h="10"/>
+		<shape type="rect" x="92" y="63" w="6" h="10" hitArea="true" >
+            <event type="click">
+                <action type="command" command="togglePlay" asset="page2_sound" />
+            </event>
+        </shape>
+		
+		<!--<image asset="icon_home" x="0" y="80" w="8" h="12"/>
+		<shape type="rect" x="0" y="80" w="8" h="11.8" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="home_stage" effect="scroll" direction="right" ease="linear" duration="600" />             
+            </event>
+        </shape>-->
+		
+		
+		<image asset="highlightbutton" x="92" y="75" w="6" h="10" />										<!--show shadows-->
+        <shape type="rect" x="92" y="75" w="6" h="10" hitArea="true">
+            <event type="click">
+                 <action type="command" command="toggleShow" asset="h_pant" />                          
+				<action type="command" command="toggleShow" asset="h_saree" />
+				<action type="command" command="toggleShow" asset="h_haraL" />
+				<action type="command" command="toggleShow" asset="h_haraR" />
+				<action type="command" command="toggleShow" asset="h_sc2fire" />			
+            </event>
+        </shape>
+		
+		
+		 <shape type="rect" x="0" y="0" w="100" h="8" hitArea="false"  fill="#cc0000" >						<!--Text Area-->
+         </shape>
+		 
+		<!--  <text x="25" y="3.5" w="95" h="15" font="Miriam" fontsize="40" color="white">
+           THE BEAR WORE A SAREE. THE ELEPHANT WORE A PANT.
+        </text> -->
+		
+		<shape type="rect" x="29" y="1" w="5.5" h="5" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="togglePlay" asset="bearword" />						<!--bear word hotspot-->
+            </event>
+        </shape>
+		
+		<shape type="rect" x="35" y="1" w="6" h="5" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="togglePlay" asset="woreword" />						<!--wore word hotspot-->
+            </event>
+        </shape>
+		
+		<shape type="rect" x="43.5" y="1" w="6.5" h="5" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="togglePlay" asset="sareeword" />						<!--saree word hotspot-->
+            </event>
+        </shape>
+		
+		<shape type="rect" x="55" y="1" w="10" h="5" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="togglePlay" asset="elephantword" />						<!--elephant word hotspot-->
+            </event>
+        </shape>
+		
+		<shape type="rect" x="65.5" y="1" w="6" h="5" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="togglePlay" asset="woreword" />						<!--wore word hotspot-->
+            </event>
+        </shape>
+		
+		<shape type="rect" x="73.5" y="1" w="6" h="5" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="togglePlay" asset="pantword" />						<!--pant word hotspot-->
+            </event>
+        </shape>
+		
+		
+		<shape type="rect" x="54" y="62" w="13" h="15" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="show" asset="h_pant" />                          
+				<action type="command" command="hide" asset="h_saree" />
+				<action type="command" command="hide" asset="h_haraL" />
+				<action type="command" command="hide" asset="h_haraR" />
+				<action type="command" command="hide" asset="h_sc2fire" />		
+				<action type="command" command="togglePlay" asset="patloon_sound" />
+            </event>
+        </shape>
+		
+		<shape type="rect" x="34" y="42" w="3.5" h="10" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="hide" asset="h_pant" />                          
+				<action type="command" command="hide" asset="h_saree" />
+				<action type="command" command="show" asset="h_haraL" />
+				<action type="command" command="hide" asset="h_haraR" />
+				<action type="command" command="hide" asset="h_sc2fire" />  
+                <action type="command" command="togglePlay" asset="mala_sound" />				<!--garlandBear hotspot-->
+            </event>
+        </shape>
+		<shape type="rect" x="36" y="57" w="5.5" h="8" hitArea="true" >
+            <event type="click">
+			      
+			      <action type="command" command="hide" asset="h_pant" />                          
+				<action type="command" command="hide" asset="h_saree" />
+				<action type="command" command="show" asset="h_haraL" />
+				<action type="command" command="hide" asset="h_haraR" />
+				<action type="command" command="hide" asset="h_sc2fire" /> 
+                <action type="command" command="togglePlay" asset="mala_sound" />				<!--garlandBear hotspot-->
+            </event>
+        </shape>
+		<shape type="rect" x="41" y="42" w="3" h="9" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="hide" asset="h_pant" />                          
+				<action type="command" command="hide" asset="h_saree" />
+				<action type="command" command="show" asset="h_haraL" />
+				<action type="command" command="hide" asset="h_haraR" />
+				<action type="command" command="hide" asset="h_sc2fire" /> 
+                <action type="command" command="togglePlay" asset="mala_sound" />				<!--garlandBear hotspot-->
+            </event>
+        </shape>
+		<shape type="rect" x="55" y="36.5" w="3" h="6.5" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="hide" asset="h_pant" />                          
+				<action type="command" command="hide" asset="h_saree" />
+				<action type="command" command="hide" asset="h_haraL" />
+				<action type="command" command="show" asset="h_haraR" />
+				<action type="command" command="hide" asset="h_sc2fire" /> 
+                <action type="command" command="togglePlay" asset="mala_sound" />				<!--garlandL hotspot-->
+            </event>
+        </shape>
+		<shape type="rect" x="63.2" y="35" w="3.5" h="8" hitArea="true" >
+            <event type="click">
+			     <action type="command" command="hide" asset="h_pant" />                          
+				<action type="command" command="hide" asset="h_saree" />
+				<action type="command" command="hide" asset="h_haraL" />
+				<action type="command" command="show" asset="h_haraR" />
+				<action type="command" command="hide" asset="h_sc2fire" />
+               <action type="command" command="togglePlay" asset="mala_sound" />		<!--garlandR hotspot-->
+            </event>
+        </shape>
+		<shape type="rect" x="56" y="52.4" w="10" h="9	" hitArea="true" >
+            <event type="click">
+			      <action type="command" command="hide" asset="h_pant" />                          
+				<action type="command" command="hide" asset="h_saree" />
+				<action type="command" command="hide" asset="h_haraL" />
+				<action type="command" command="show" asset="h_haraR" />
+				<action type="command" command="hide" asset="h_sc2fire" />
+                <action type="command" command="togglePlay" asset="mala_sound" />				<!--garlandM hotspot-->
+            </event>
+        </shape>
+		<shape type="rect" x="33" y="68" w="12.5" h="11" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="hide" asset="h_pant" />                          
+				<action type="command" command="show" asset="h_saree" />
+				<action type="command" command="hide" asset="h_haraL" />
+				<action type="command" command="hide" asset="h_haraR" />
+				<action type="command" command="hide" asset="h_sc2fire" />
+                <action type="command" command="togglePlay" asset="saree_sound" />			<!--saree hotspot-->
+            </event>
+        </shape>
+		<shape type="rect" x="32.6" y="57" w="3" h="10" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="hide" asset="h_pant" />                          
+				<action type="command" command="show" asset="h_saree" />
+				<action type="command" command="hide" asset="h_haraL" />
+				<action type="command" command="hide" asset="h_haraR" />
+				<action type="command" command="hide" asset="h_sc2fire" />
+              <action type="command" command="togglePlay" asset="sareesound" />			<!--saree hotspot-->
+            </event>
+        </shape>
+		<shape type="rect" x="42.5" y="57" w="3" h="10" hitArea="true" >
+            <event type="click">
+			     <action type="command" command="hide" asset="h_pant" />                          
+				<action type="command" command="show" asset="h_saree" />
+				<action type="command" command="hide" asset="h_haraL" />
+				<action type="command" command="hide" asset="h_haraR" />
+				<action type="command" command="hide" asset="h_sc2fire" />
+                <action type="command" command="togglePlay" asset="sareesound" />				<!--saree hotspot-->
+            </event>
+        </shape>
+		<shape type="rect" x="44.5" y="75" w="11" h="15" hitArea="true" >
+            <event type="click">
+			   	<action type="command" command="hide" asset="h_pant" />                          
+				<action type="command" command="hide" asset="h_saree" />
+				<action type="command" command="hide" asset="h_haraL" />
+				<action type="command" command="hide" asset="h_haraR" />
+				<action type="command" command="show" asset="h_sc2fire" />		
+                <action type="command" command="togglePlay" asset="firecrackling_sound" />			<!--fire hotspot-->
+				<action type="command" command="togglePlay" asset="fire_sound"/>
+		   </event>
+        </shape>
+	
+			
+       
+        <image asset="panthighlight"      x="53" y="58.5" w="15" h="20" id="h_pant"      visible = "false"/>   <!-- pant highlight-->	
+		<image asset="sareehighlight"     x="32" y="41.5" w="14.5" h="41" id="h_saree"       visible = "false"/>   <!-- saree highlight-->	
+        <image asset="garlandLhighlight"  x="33" y="38.5" w="11.2" h="31.2" id="h_haraL"         visible = "false"/>   <!-- haraL highlight-->	
+        <image asset="garlandRhighlight"  x="54" y="32.3" w="13.45" h="33.5" id="h_haraR"  visible = "false"/>   <!-- haraR highlight-->	
+        <image asset="sc2firehighlight"   x="43.5" y="74" w="13.5" h="16" id="h_sc2fire"  visible = "false"/>   <!-- fire highlight-->	
+		 
+		 <events>
+            <event type="enter">
+            	<action type="command" command="startKaraoke" asset="headingText" /> 
+                <action type="command" command="play" asset="page2_sound" loop="1" />
+            </event>
+            <event type="exit">
+                <action type="command" command="stop" asset="page2_sound" audio="true" loop="1" />
+            </event>
+        </events>
+    </stage>
+	
+    <stage id="scene3" x="0" y="0" w="100" h="100" extends="storyBaseStage">								<!--SCENE 3-->	
+    	<param name="heading" model="elephantData.scene3_body"/>	
+        <audio asset="page3_sound" />
+		<audio asset="drum_audio" />
+		<audio asset="olaga_audio" />
+		<audio asset="red_sound" />
+		<audio asset="green_sound" />
+		<audio asset="blue_sound" />
+		<audio asset="yellow_sound" />
+		<audio asset="turahi_sound" />
+		<audio asset="dhol_sound" />
+		<audio asset="fox_sound" />
+		<audio asset="garud_sound" />
+		<audio asset="page3_audio"/>
+        <param name="home_stage" value="activity" />
+        <image asset="page4" x="0" y="5" w="100" h="95"/>
+        <param name="next" value="scene4" />
+        <param name="previous" value="scene2" />
+        
+		
+		<!--<image asset="icon_home" x="0" y="80" w="8" h="12"/>
+		<shape type="rect" x="0" y="80" w="8" h="11.8" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="home_stage" effect="scroll" direction="right" ease="linear" duration="600" />             
+            </event>
+        </shape>-->
+		
+		
+		<image asset="highlightbutton" x="92" y="75" w="6" h="10" />										<!--show shadows-->
+        <shape type="rect" x="92" y="75" w="6" h="10" hitArea="true">
+            <event type="click">
+                <action type="command" command="toggleShow" asset="h_decorB1" />
+				 <action type="command" command="toggleShow" asset="h_decorB2" />
+				<action type="command" command="toggleShow" asset="h_decorG1" />
+				<action type="command" command="toggleShow" asset="h_decorG2" />
+				<action type="command" command="toggleShow" asset="h_decorR1" />
+				<action type="command" command="toggleShow" asset="h_decorR2" />
+				<action type="command" command="toggleShow" asset="h_decorY1" />
+				<action type="command" command="toggleShow" asset="h_decorY2" />
+				<action type="command" command="toggleShow" asset="h_decorY3" />
+				<action type="command" command="toggleShow" asset="h_drum" />
+				<action type="command" command="toggleShow" asset="h_olaga" />
+				<action type="command" command="toggleShow" asset="h_fox"/>
+				<action type="command" command="toggleShow" asset="h_garuda"/>		
+            </event>
+        </shape>
+		
+		 
+		 <shape type="rect" x="0" y="0" w="100" h="8" hitArea="false"  fill="#cc0000" >						<!--Text Area-->
+         </shape>
+		 
+		 <!-- <text x="17" y="3.5" w="95" h="15" font="Miriam" fontsize="40" color="white">
+          THE EAGLE PLAYED THE DRUMS. THE FOX PLAYED THE TRUMPET.
+        </text> -->
+		
+		
+		<image asset="wordhighlight" x="69" y="26" w="7" h="8" id="h_lomdi" visible = "false" />   <!-- lomdi highlight-->
+		<image asset="wordhighlight" x="70.5" y="19.5" w="5" h="7" id="h_garud" visible = "false" />   <!-- garud highlight-->
+		
+		
+		<shape type="rect" x="21" y="1" w="6.5" h="5" hitArea="true"  >
+            <event type="click">
+			<action type="command" command="togglePlay" asset="eagleword" />				<!--eagle word hotspot-->
+			</event>
+        </shape>
+		
+		<shape type="rect" x="28" y="1" w="7.5" h="5" hitArea="true"  >
+            <event type="click">
+			<action type="command" command="togglePlay" asset="playedword" />				<!--played word hotspot-->
+			</event>
+        </shape>
+		
+		<shape type="rect" x="40.5" y="1" w="7" h="5" hitArea="true"  >
+            <event type="click">
+			<action type="command" command="togglePlay" asset="drumsword" />				<!--drums word hotspot-->
+			</event>
+        </shape>
+		
+		<shape type="rect" x="52.5" y="1" w="4.3" h="5" hitArea="true"  >
+            <event type="click">
+			<action type="command" command="togglePlay" asset="foxword" />				<!--fox word hotspot-->
+			</event>
+        </shape>
+		
+		<shape type="rect" x="57.3" y="1" w="7.5" h="5" hitArea="true"  >
+            <event type="click">
+			<action type="command" command="togglePlay" asset="playedword" />				<!--played word hotspot-->
+			</event>
+        </shape>
+		
+		<shape type="rect" x="69.5" y="1" w="9" h="5" hitArea="true"  >
+            <event type="click">
+			<action type="command" command="togglePlay" asset="trumpetword" />				<!--trumpet word hotspot-->
+			</event>
+        </shape>
+		
+		<shape type="rect" x="20" y="8" w="6" h="7" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="show" asset="h_decorB1" />
+				 <action type="command" command="show" asset="h_decorB2" />
+				<action type="command" command="hide" asset="h_decorG1" />
+				<action type="command" command="hide" asset="h_decorG2" />
+				<action type="command" command="hide" asset="h_decorR1" />
+				<action type="command" command="hide" asset="h_decorR2" />
+				<action type="command" command="hide" asset="h_decorY1" />
+				<action type="command" command="hide" asset="h_decorY2" />
+				<action type="command" command="hide" asset="h_decorY3" />
+				<action type="command" command="hide" asset="h_drum" />
+				<action type="command" command="hide" asset="h_olaga" />
+				<action type="command" command="hide" asset="h_lomdi" />
+				<action type="command" command="hide" asset="h_garud" />
+                <action type="command" command="togglePlay" asset="blue_sound" />				<!--blue hotspot-->
+				<action type="command" command="hide" asset="h_fox"/>
+				<action type="command" command="hide" asset="h_garuda"/>
+            </event>
+        </shape>
+		<shape type="rect" x="57.5" y="9.5" w="5" h="10" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="show" asset="h_decorB1" />
+				 <action type="command" command="show" asset="h_decorB2" />
+				<action type="command" command="hide" asset="h_decorG1" />
+				<action type="command" command="hide" asset="h_decorG2" />
+				<action type="command" command="hide" asset="h_decorR1" />
+				<action type="command" command="hide" asset="h_decorR2" />
+				<action type="command" command="hide" asset="h_decorY1" />
+				<action type="command" command="hide" asset="h_decorY2" />
+				<action type="command" command="hide" asset="h_decorY3" />
+				<action type="command" command="hide" asset="h_drum" />
+				<action type="command" command="hide" asset="h_olaga" />
+				<action type="command" command="hide" asset="h_lomdi" />
+				<action type="command" command="hide" asset="h_garud" />
+                <action type="command" command="togglePlay" asset="blue_sound" />				<!--blue hotspot-->
+				<action type="command" command="hide" asset="h_fox"/>
+				<action type="command" command="hide" asset="h_garuda"/>
+            </event>
+        </shape>
+		<shape type="rect" x="30" y="8" w="5" h="7" hitArea="true" >			<!--green hotspot-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_decorB1" />
+				<action type="command" command="hide" asset="h_decorB2" />
+				<action type="command" command="show" asset="h_decorG1" />
+				<action type="command" command="show" asset="h_decorG2" />
+				<action type="command" command="hide" asset="h_decorR1" />
+				<action type="command" command="hide" asset="h_decorR2" />
+				<action type="command" command="hide" asset="h_decorY1" />
+				<action type="command" command="hide" asset="h_decorY2" />
+				<action type="command" command="hide" asset="h_decorY3" />
+				<action type="command" command="hide" asset="h_drum" />
+				<action type="command" command="hide" asset="h_olaga" />
+				<action type="command" command="hide" asset="h_lomdi" />
+				<action type="command" command="hide" asset="h_garud" />
+                <action type="command" command="togglePlay" asset="green_sound" />		
+				<action type="command" command="hide" asset="h_fox"/>
+				<action type="command" command="hide" asset="h_garuda"/>
+            </event>
+        </shape>
+		<shape type="rect" x="67.5" y="10" w="5" h="10" hitArea="true" >			<!--green hotspot-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_decorB1" />
+				<action type="command" command="hide" asset="h_decorB2" />
+				<action type="command" command="show" asset="h_decorG1" />
+				<action type="command" command="show" asset="h_decorG2" />
+				<action type="command" command="hide" asset="h_decorR1" />
+				<action type="command" command="hide" asset="h_decorR2" />
+				<action type="command" command="hide" asset="h_decorY1" />
+				<action type="command" command="hide" asset="h_decorY2" />
+				<action type="command" command="hide" asset="h_decorY3" />
+				<action type="command" command="hide" asset="h_drum" />
+				<action type="command" command="hide" asset="h_olaga" />
+				<action type="command" command="hide" asset="h_lomdi" />
+				<action type="command" command="hide" asset="h_garud" />
+                <action type="command" command="togglePlay" asset="green_sound" />		
+				<action type="command" command="hide" asset="h_fox"/>
+				<action type="command" command="hide" asset="h_garuda"/>
+            </event>
+        </shape>
+		<!--<shape type="rect" x="87" y="4" w="5" h="10" hitArea="true" stroke="#000000">			
+            <event type="click">
+			    <action type="command" command="hide" asset="h_decorB1" />
+				<action type="command" command="hide" asset="h_decorB2" />
+				<action type="command" command="show" asset="h_decorG" />
+				<action type="command" command="hide" asset="h_decorR1" />
+				<action type="command" command="hide" asset="h_decorR2" />
+				<action type="command" command="hide" asset="h_decorY1" />
+				<action type="command" command="hide" asset="h_decorY2" />
+				<action type="command" command="hide" asset="h_decorY3" />
+				<action type="command" command="hide" asset="h_drum" />
+				<action type="command" command="hide" asset="h_olaga" />
+				<action type="command" command="hide" asset="h_lomdi" />
+				<action type="command" command="hide" asset="h_garud" />
+                <action type="command" command="togglePlay" asset="green_sound" />		
+				<action type="command" command="hide" asset="h_fox"/>
+				<action type="command" command="hide" asset="h_garuda"/>
+            </event>
+        </shape>-->
+		<shape type="rect" x="84.5" y="8" w="5" h="9" hitArea="true" >
+            <event type="click">
+			   <action type="command" command="hide" asset="h_decorB1" />
+				<action type="command" command="hide" asset="h_decorB2" />
+				<action type="command" command="hide" asset="h_decorG1" />
+				<action type="command" command="hide" asset="h_decorG2" />
+				<action type="command" command="hide" asset="h_decorR1" />
+				<action type="command" command="hide" asset="h_decorR2" />
+				<action type="command" command="show" asset="h_decorY1" />
+				<action type="command" command="show" asset="h_decorY2" />
+				<action type="command" command="show" asset="h_decorY3" />
+				<action type="command" command="hide" asset="h_drum" />
+				<action type="command" command="hide" asset="h_olaga" />
+				<action type="command" command="hide" asset="h_lomdi" />
+				<action type="command" command="hide" asset="h_garud" />
+                <action type="command" command="togglePlay" asset="yellow_sound" />				<!--yellow hotspot-->
+				<action type="command" command="hide" asset="h_fox"/>
+				<action type="command" command="hide" asset="h_garuda"/>
+            </event>
+        </shape>
+		<shape type="rect" x="48" y="8" w="5" h="9" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="hide" asset="h_decorB1" />
+				<action type="command" command="hide" asset="h_decorB2" />
+				<action type="command" command="hide" asset="h_decorG1" />
+				<action type="command" command="hide" asset="h_decorG2" />
+				<action type="command" command="hide" asset="h_decorR1" />
+				<action type="command" command="hide" asset="h_decorR2" />
+				<action type="command" command="show" asset="h_decorY1" />
+				<action type="command" command="show" asset="h_decorY2" />
+				<action type="command" command="show" asset="h_decorY3" />
+				<action type="command" command="hide" asset="h_drum" />
+				<action type="command" command="hide" asset="h_olaga" />
+				<action type="command" command="hide" asset="h_lomdi" />
+				<action type="command" command="hide" asset="h_garud" />
+                <action type="command" command="togglePlay" asset="yellow_sound" />				<!--yellow hotspot-->
+				<action type="command" command="hide" asset="h_fox"/>
+				<action type="command" command="hide" asset="h_garuda"/>
+            </event>
+        </shape>
+		<shape type="rect" x="12" y="8.5" w="5" h="9" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="hide" asset="h_decorB1" />
+				<action type="command" command="hide" asset="h_decorB2" />
+				<action type="command" command="hide" asset="h_decorG1" />
+				<action type="command" command="hide" asset="h_decorG2" />
+				<action type="command" command="hide" asset="h_decorR1" />
+				<action type="command" command="hide" asset="h_decorR2" />
+				<action type="command" command="show" asset="h_decorY1" />
+				<action type="command" command="show" asset="h_decorY2" />
+				<action type="command" command="show" asset="h_decorY3" />
+				<action type="command" command="hide" asset="h_drum" />
+				<action type="command" command="hide" asset="h_olaga" />
+				<action type="command" command="hide" asset="h_lomdi" />
+				<action type="command" command="hide" asset="h_garud" />
+                <action type="command" command="togglePlay" asset="yellow_sound" />				<!--yellow hotspot-->
+				<action type="command" command="hide" asset="h_fox"/>
+				<action type="command" command="hide" asset="h_garuda"/>
+            </event>
+        </shape>
+		
+		<shape type="rect" x="39.5" y="8" w="3" h="7" hitArea="true" >      <!--red hotspot-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_decorB1" />
+				<action type="command" command="hide" asset="h_decorB2" />
+				<action type="command" command="hide" asset="h_decorG1" />
+				<action type="command" command="hide" asset="h_decorG2" />
+				<action type="command" command="show" asset="h_decorR1" />
+				<action type="command" command="show" asset="h_decorR2" />
+				<action type="command" command="hide" asset="h_decorY1" />
+				<action type="command" command="hide" asset="h_decorY2" />
+				<action type="command" command="hide" asset="h_decorY3" />
+				<action type="command" command="hide" asset="h_drum" />
+				<action type="command" command="hide" asset="h_olaga" />
+				<action type="command" command="hide" asset="h_lomdi" />
+				<action type="command" command="hide" asset="h_garud" />
+                <action type="command" command="togglePlay" asset="red_sound" />
+				<action type="command" command="hide" asset="h_fox"/>
+				<action type="command" command="hide" asset="h_garuda"/>				
+            </event>
+        </shape>
+		<shape type="rect" x="76.5" y="10" w="5" h="10" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="hide" asset="h_decorB1" />
+				<action type="command" command="hide" asset="h_decorB2" />
+				<action type="command" command="hide" asset="h_decorG1" />
+				<action type="command" command="hide" asset="h_decorG2" />
+				<action type="command" command="show" asset="h_decorR1" />
+				<action type="command" command="show" asset="h_decorR2" />
+				<action type="command" command="hide" asset="h_decorY1" />
+				<action type="command" command="hide" asset="h_decorY2" />
+				<action type="command" command="hide" asset="h_decorY3" />
+				<action type="command" command="hide" asset="h_drum" />
+				<action type="command" command="hide" asset="h_olaga" />
+                <action type="command" command="togglePlay" asset="red_sound" />
+                <action type="command" command="hide" asset="h_lomdi" />
+				<action type="command" command="hide" asset="h_garud" />				<!--red hotspot-->
+				<action type="command" command="hide" asset="h_fox"/>
+				<action type="command" command="hide" asset="h_garuda"/>
+            </event>
+        </shape>
+		<shape type="rect" x="45" y="51" w="28" h="46" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="hide" asset="h_decorB1" />
+				<action type="command" command="hide" asset="h_decorB2" />
+				<action type="command" command="hide" asset="h_decorG1" />
+				<action type="command" command="hide" asset="h_decorG2" />
+				<action type="command" command="hide" asset="h_decorR1" />
+				<action type="command" command="hide" asset="h_decorR2" />
+				<action type="command" command="hide" asset="h_decorY1" />
+				<action type="command" command="hide" asset="h_decorY2" />
+				<action type="command" command="hide" asset="h_decorY3" />
+				<action type="command" command="show" asset="h_drum" />
+				<action type="command" command="hide" asset="h_olaga" />
+                <action type="command" command="togglePlay" asset="dhol_sound" />					<!--drum hotspot-->
+                 <action type="command" command="togglePlay" asset="drum_audio" /> 
+				 <action type="command" command="hide" asset="h_lomdi" />
+				<action type="command" command="hide" asset="h_garud" />
+				<action type="command" command="hide" asset="h_fox"/>
+				<action type="command" command="hide" asset="h_garuda"/>
+            </event>
+        </shape>
+		<shape type="rect" x="37" y="33" w="16" h="13" hitArea="true" >
+            <event type="click">
+			    <action type="command" command="hide" asset="h_decorB1" />
+				<action type="command" command="hide" asset="h_decorB2" />
+				<action type="command" command="hide" asset="h_decorG1" />
+				<action type="command" command="hide" asset="h_decorG2" />
+				<action type="command" command="hide" asset="h_decorR1" />
+				<action type="command" command="hide" asset="h_decorR2" />
+				<action type="command" command="hide" asset="h_decorY1" />
+				<action type="command" command="hide" asset="h_decorY2" />
+				<action type="command" command="hide" asset="h_decorY3" />
+				<action type="command" command="hide" asset="h_drum" />
+				<action type="command" command="show" asset="h_olaga" />
+                <action type="command" command="togglePlay" asset="turahi_sound" />					<!--olaga hotspot-->
+               <action type="command" command="togglePlay" asset="olaga_audio" />
+			    <action type="command" command="hide" asset="h_lomdi" />
+				<action type="command" command="hide" asset="h_garud" />
+				<action type="command" command="hide" asset="h_fox"/>
+				<action type="command" command="hide" asset="h_garuda"/>
+            </event>
+        </shape>
+		
+		<shape type="rect" x="74" y="40" w="16" h="46.5" hitArea="true">                           <!--garud hotspot-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_decorB1" />
+				<action type="command" command="hide" asset="h_decorB2" />
+				<action type="command" command="hide" asset="h_decorG1" />
+				<action type="command" command="hide" asset="h_decorG2" />
+				<action type="command" command="hide" asset="h_decorR1" />
+				<action type="command" command="hide" asset="h_decorR2" />
+				<action type="command" command="hide" asset="h_decorY1" />
+				<action type="command" command="hide" asset="h_decorY2" />
+				<action type="command" command="hide" asset="h_decorY3" />
+				<action type="command" command="hide" asset="h_drum" />
+				<action type="command" command="hide" asset="h_olaga" />
+				<action type="command" command="hide" asset="h_lomdi" />
+				<!--<action type="command" command="show" asset="h_garud" />-->
+				<action type="command" command="show" asset="h_garuda" />
+				<action type="command" command="hide" asset="h_fox"/>
+				<action type="command" command="togglePlay" asset="garud_sound" />
+                
+            </event>
+        </shape>
+		
+		<shape type="rect" x="10" y="27" w="26.4" h="65.5" hitArea="true">                             <!--fox hotspot-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_decorB1" />
+				<action type="command" command="hide" asset="h_decorB2" />
+				<action type="command" command="hide" asset="h_decorG1" />
+				<action type="command" command="hide" asset="h_decorG2" />
+				<action type="command" command="hide" asset="h_decorR1" />
+				<action type="command" command="hide" asset="h_decorR2" />
+				<action type="command" command="hide" asset="h_decorY1" />
+				<action type="command" command="hide" asset="h_decorY2" />
+				<action type="command" command="hide" asset="h_decorY3" />
+				<action type="command" command="hide" asset="h_drum" />
+				<action type="command" command="hide" asset="h_olaga" />
+				<action type="command" command="togglePlay" asset="fox_sound" />
+                <!--<action type="command" command="show" asset="h_lomdi" />-->
+				<action type="command" command="hide" asset="h_garud" />
+				<action type="command" command="show" asset="h_fox"/>
+				<action type="command" command="hide" asset="h_garuda"/>
+            </event>
+        </shape>
+		
+		<!--drum_meaning hotspot-->
+		<!--<shape type="rect" x="78" y="20" w="4.5" h="5" hitArea="true" >
+            <event type="click">
+                <action type="command" command="togglePlay" asset="drumMeaning_sound" />					
+             </event>
+        </shape>-->
+		<!--olaga_meaning hotspot-->
+		<!--<shape type="rect" x="78" y="27" w="5" h="5" hitArea="true" >
+            <event type="click">
+                <action type="command" command="togglePlay" asset="olagaMeaning_sound" />					
+             </event>
+        </shape>-->
+		
+        <!--<image asset="decorRhighlight"   x="3" y="7" w="75" h="19.9" id="h_decorR" visible = "false"/>-->  <!-- decorRed highlight-->
+        
+		<image asset="Green1"   x="30.7" y="7" w="3.5" h="6.8" id="h_decorG1"    visible = "false"/>  <!-- decorGreen highlight-->	
+        <image asset="Green2"   x="67.6" y="9.9" w="5" h="12" id="h_decorG2"    visible = "false"/>  <!-- decorGreen highlight-->
+		
+		<image asset="Blue1"   x="21.5" y="7" w="4.3" h="7.3" id="h_decorB1"    visible = "false"/>  <!-- decorBlue highlight-->
+		<image asset="Blue2"   x="57" y="9" w="6.2" h="14" id="h_decorB2"    visible = "false"/>  <!-- decorBlue highlight-->		
+        
+		<image asset="Yellow1"   x="12.2" y="6.8" w="5.3" h="12" id="h_decorY1"  visible = "false"/>  <!-- decorYellow highlight-->			
+		<image asset="Yellow2"   x="48" y="7.5" w="6" h="12" id="h_decorY2"  visible = "false"/>  <!-- decorYellow highlight-->	
+		<image asset="Yellow3"   x="84.7" y="7.5" w="5.3" h="12" id="h_decorY3"  visible = "false"/>  <!-- decorYellow highlight-->	
+		
+		<image asset="Red1"  x="38.8" y="7" w="4.8" h="10" id="h_decorR1" visible = "false"/>
+		<image asset="Red2"  x="76" y="9" w="6" h="14" id="h_decorR2" visible = "false"/>
+		
+		<image asset="olagahighlight"    x="33.5" y="32.5" w="19.6" h="16.2" id="h_olaga"  visible = "false"/>  <!-- olaga highlight-->	
+		<image asset="drumhighlight"     x="44.2" y="36" w="32" h="63.6" id="h_drum"   visible = "false"/>  <!-- drum highlight-->	
+		<image asset="garudhighlight"    x="59" y="38" w="42" h="61.15" id="h_garuda"  visible = "false"/>  <!--garud highlight-->
+		<image asset="sc3foxhighlight"   x="2.5" y="21" w="53.8" h="78.7" id="h_fox" 	 visible = "false"/>  <!--fox highlight-->
+		
+		
+		 <image asset="icon_sound" x="92" y="63" w="6" h="10" />
+        <shape type="rect"  x="92" y="63" w="6" h="10" hitArea="true" >
+            <event type="click">
+                <action type="command" command="togglePlay" asset="page3_sound" />
+            </event>
+        </shape>
+		
+	    <events>
+            <event type="enter">
+            	<action type="command" command="startKaraoke" asset="headingText" /> 
+                <action type="command" command="play" asset="page3_sound" loop="1" />
+             </event>
+            <event type="exit">
+                <action type="command" command="stop" asset="page3_sound" audio="true" loop="1" />
+            </event>
+        </events>
+    </stage>
+	
+    <stage id="scene4" x="0" y="0" w="100" h="100" extends="storyBaseStage">								<!--SCENE 4-->
+    	<param name="heading" model="elephantData.scene4_body"/>
+        <param name="next" value="scene5" />
+        <param name="previous" value="scene3" />
+        <audio asset="page4_sound" />
+		<audio asset="crow_sound" />
+		<audio asset="parrot_sound" />
+		<audio asset="crow_audio" />
+		<audio asset="parrot_audio" />
+		<audio asset="diya_sound" />
+		<audio asset="flowers_sound" />
+		<image asset="page5" x="0" y="5" w="100" h="95" />
+         <image asset="icon_sound" x="92" y="63" w="6" h="10"/>
+		<param name="home_stage" value="activity" />
+		
+        <shape type="rect" x="92" y="63" w="6" h="10" hitArea="true" >
+            <event type="click">
+                <action type="command" command="togglePlay" asset="page4_sound" />
+              
+            </event>
+        </shape>
+		
+		<!--<image asset="icon_home" x="0" y="80" w="8" h="12"/>
+		<shape type="rect" x="0" y="80" w="8" h="12" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="home_stage" effect="scroll" direction="right" ease="linear" duration="600" />             
+            </event>
+        </shape>-->
+		
+		
+		<image asset="highlightbutton" x="92" y="75" w="6" h="10" />										<!--show shadows-->
+        <shape type="rect" x="92" y="75" w="6" h="10" hitArea="true">
+            <event type="click">
+                 <action type="command" command="toggleShow" asset="h_deepa" />
+				<action type="command" command="toggleShow" asset="h_flowersR" />
+				<action type="command" command="toggleShow" asset="h_flowersL" />
+				<action type="command" command="toggleShow" asset="h_crow" />
+				<action type="command" command="toggleShow" asset="h_parrot" />	
+            </event>
+        </shape>
+		
+		
+		
+		
+		 <shape type="rect" x="0" y="0" w="100" h="8" hitArea="false"  fill="#cc0000" >						<!--Text Area-->
+         </shape>
+		 
+		 <!-- <text x="30" y="3.5" w="95" h="15" font="Miriam" fontsize="40" color="white">
+           THE CROW AND THE PARROT LIT THE LAMPS.
+        </text> -->
+		
+		
+		<shape type="rect" x="34" y="1" w="6.5" h="5" hitArea="true"  >
+            <event type="click">
+			<!--<action type="command" command="togglePlay" asset="blue_sound" />-->				<!--crow word hotspot-->
+			</event>
+        </shape>
+		
+		<shape type="rect" x="49.5" y="1" w="7.8" h="5" hitArea="true"  >
+            <event type="click">
+			<!--<action type="command" command="togglePlay" asset="blue_sound" />-->				<!--parrot word hotspot-->
+			</event>
+        </shape>
+		
+		<shape type="rect" x="58" y="1" w="3" h="5" hitArea="true" >
+            <event type="click">
+			<!--<action type="command" command="togglePlay" asset="blue_sound" />-->				<!--lit word hotspot-->
+			</event>
+        </shape>
+		
+		<shape type="rect" x="65.5" y="1" w="7" h="5" hitArea="true"  >
+            <event type="click">
+			<!--<action type="command" command="togglePlay" asset="blue_sound" />-->				<!--lamps word hotspot-->
+			</event>
+        </shape>
+		
+		
+		
+		 <!--aarti_meaning hotspot -->
+		<!--<shape type="rect" x="79" y="88" w="8.5" h="5.5" hitArea="true" >   									
+            <event type="click">
+			
+                <action type="command" command="togglePlay" asset="aarti_sound" />
+            </event>
+        </shape>-->
+		
+		<shape type="rect" x="45.5" y="76.5" w="10" h="9" hitArea="true" >     								 <!--dipa hotspot -->
+            <event type="click">
+			    <action type="command" command="show" asset="h_deepa" />
+				<action type="command" command="hide" asset="h_flowersR" />
+				<action type="command" command="hide" asset="h_flowersL" />
+				<action type="command" command="hide" asset="h_crow" />
+				<action type="command" command="hide" asset="h_parrot" />	
+                <action type="command" command="togglePlay" asset="diya_sound" />
+            </event>
+        </shape>
+		<shape type="rect" x="28" y="73.5" w="15" h="22" hitArea="true" >     										 <!--crow hotspot -->
+            <event type="click">
+			     <action type="command" command="hide" asset="h_deepa" />
+				<action type="command" command="hide" asset="h_flowersR" />
+				<action type="command" command="hide" asset="h_flowersL" />
+				<action type="command" command="show" asset="h_crow" />
+				<action type="command" command="hide" asset="h_parrot" />
+                <action type="command" command="togglePlay" asset="crow_sound" />
+				<action type="command" command="togglePlay" asset="crow_audio" />
+            </event>
+        </shape>
+		<shape type="rect" x="59" y="73" w="12.5" h="22" hitArea="true" >       								 <!--parrot hotspot -->
+            <event type="click">
+			     <action type="command" command="hide" asset="h_deepa" />
+				<action type="command" command="hide" asset="h_flowersR" />
+				<action type="command" command="hide" asset="h_flowersL" />
+				<action type="command" command="hide" asset="h_crow" />
+				<action type="command" command="show" asset="h_parrot" />
+               <action type="command" command="togglePlay" asset="parrot_sound" />
+				<action type="command" command="togglePlay" asset="parrot_audio" />
+            </event>
+        </shape>
+		<shape type="rect" x="35.5" y="54.5" w="5.5" h="7" hitArea="true" >      								 <!--flowersL hotspot -->
+            <event type="click"> 
+			     <action type="command" command="hide" asset="h_deepa" />
+				<action type="command" command="hide" asset="h_flowersR" />
+				<action type="command" command="show" asset="h_flowersL" />
+				<action type="command" command="hide" asset="h_crow" />
+				<action type="command" command="hide" asset="h_parrot" />
+               <action type="command" command="togglePlay" asset="flowers_sound" />
+            </event>
+        </shape>
+		<shape type="rect" x="57.5" y="49" w="5.5" h="7" hitArea="true" >      									 <!--flowersR hotspot -->
+            <event type="click"> 
+			   <action type="command" command="hide" asset="h_deepa" />
+				<action type="command" command="show" asset="h_flowersR" />
+				<action type="command" command="hide" asset="h_flowersL" />
+				<action type="command" command="hide" asset="h_crow" />
+				<action type="command" command="hide" asset="h_parrot" />
+                <action type="command" command="togglePlay" asset="flowers_sound" />
+            </event>
+        </shape>
+		
+		 <image asset="deepahighlight"   x="44.8" y="77" w="11" h="9" id="h_deepa"    visible = "false"/>  <!-- deepaRed highlight-->
+		 <image asset="crowhighlight"    x="21.5" y="74" w="29.3" h="23" id="h_crow"      visible = "false"/>  <!-- crow highlight-->
+		 <image asset="parrothighlight"   x="50.9" y="74" w="27.1" h="21.5" id="h_parrot"    visible = "false"/>  <!-- parrot highlight-->
+		 <image asset="flowersRhighlight"   x="56.8" y="48.7" w="7.3" h="8" id="h_flowersR"    visible = "false"/>  <!-- flowersR highlight-->
+	     <image asset="flowersLhighlight"   x="34.5" y="53.5" w="7" h="9.7" id="h_flowersL"    visible = "false"/>  <!-- flowersL highlight-->
+		
+	    <events>
+            <event type="enter">
+            	<action type="command" command="startKaraoke" asset="headingText" /> 
+                <action type="command" command="play" asset="page4_sound" loop="1" />
+              
+            </event>
+            <event type="exit">
+                <action type="command" command="stop" asset="page4_sound" audio="true" loop="1" />
+             
+            </event>
+        </events>
+    </stage>
+	
+    <stage id="scene5" x="0" y="0" w="100" h="100" extends="storyBaseStage">								<!--SCENE 5-->
+    	<param name="heading" model="elephantData.scene5_body"/>
+        <param name="next" value="scene6" />
+        <param name="previous" value="scene4" />
+        <audio asset="page5_sound" />
+		<audio asset="puri_sound" />
+		<audio asset="laddu_sound" />
+		<audio asset="carrot_sound" />
+		<audio asset="brinjal_sound" />
+		<audio asset="onion_sound" />
+	    <audio asset="tomato_sound" />
+	    <audio asset="chillies_sound" />
+	    <audio asset="potato_sound" />
+		<audio asset="beans_sound" />
+		<audio asset="fire_sound" />
+		<audio asset="wood_sound" />
+		<audio asset="king_sound" />
+		<audio asset="firecrackling_sound" />
+		
+		<param name="home_stage" value="activity" />
+			<audio asset="tree_sound" />
+        <image asset="page6" x="0" y="5" w="100" h="95" />
+        
+		<image asset="icon_sound" x="92" y="63" w="6" h="10"/>
+        <shape type="rect" x="92" y="63" w="6" h="10" hitArea="true" >
+            <event type="click">
+                <action type="command" command="togglePlay" asset="page5_sound" />
+            </event>
+        </shape>
+		
+		<!--<image asset="icon_home" x="0" y="80" w="8" h="12"/>
+		<shape type="rect" x="0" y="80" w="8" h="12" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="home_stage" effect="scroll" direction="right" ease="linear" duration="600" />             
+            </event>
+        </shape>-->
+		
+		
+		<image asset="highlightbutton" x="92" y="75" w="6" h="10" />										<!--show shadows-->
+        <shape type="rect" x="92" y="75" w="6" h="10" hitArea="true">
+            <event type="click">
+                <action type="command" command="toggleShow" asset="h_carrot" />
+				<action type="command" command="toggleShow" asset="h_brinjal" />
+				<action type="command" command="toggleShow" asset="h_onion" />
+				<action type="command" command="toggleShow" asset="h_tomato" />
+				<action type="command" command="toggleShow" asset="h_potato" />
+				<action type="command" command="toggleShow" asset="h_chillies" />
+				<action type="command" command="toggleShow" asset="h_sc5fire" />
+				<!--<action type="command" command="toggleShow" asset="h_decorL" />
+				<action type="command" command="toggleShow" asset="h_decorC" />
+				<action type="command" command="toggleShow" asset="h_decorR" />-->
+				<action type="command" command="toggleShow" asset="h_beans" />
+				<action type="command" command="toggleShow" asset="h_tree" />
+				<action type="command" command="toggleShow" asset="h_puri" />
+				<action type="command" command="toggleShow" asset="h_laddu" />
+				<action type="command" command="toggleShow" asset="h_lakdi" />
+				<action type="command" command="toggleShow" asset="h_laddu2" />
+				<action type="command" command="toggleShow" asset="h_tree2" />
+				<action type="command" command="toggleShow" asset="h_sc5fire2" />
+				<action type="command" command="toggleShow" asset="h_lakdi2" />
+            </event>
+        </shape>
+		
+		
+		
+		
+		 <shape type="rect" x="0" y="0" w="100" h="8" hitArea="false"  fill="#cc0000" >						<!--Text Area-->
+         </shape>
+		 
+		 <!-- <text x="15" y="3.5" w="95" h="15" font="Miriam" fontsize="40" color="white">
+           THE JUNGLE KING MADE LADOOS AND KHEER. THE FOX MADE POORI-CURRY.
+        </text> -->
+		
+		<image asset="wordhighlight" x="4.5" y="12.5" w="14.2" h="6.3" id="highlightking" visible = "false" />   <!-- king of jungle highlight-->
+		 
+		<shape type="rect" x="19.2" y="1" w="12.5" h="5" hitArea="true"  >
+            <event type="click">
+			<!--<action type="command" command="togglePlay" asset="blue_sound" />-->				<!--jungle king word hotspot-->
+			</event>
+        </shape> 
+		
+		<shape type="rect" x="38" y="1" w="8" h="5" hitArea="true"  >
+            <event type="click">
+			<!--<action type="command" command="togglePlay" asset="blue_sound" />-->				<!--ladoos word hotspot-->
+			</event>
+        </shape> 
+		
+		<shape type="rect" x="51" y="1" w="7" h="5" hitArea="true" >
+            <event type="click">
+			<!--<action type="command" command="togglePlay" asset="blue_sound" />-->				<!--kheer word hotspot-->
+			</event>
+        </shape> 
+		 
+		 <shape type="rect" x="63" y="1" w="4" h="5" hitArea="true"  >
+            <event type="click">
+			<!--<action type="command" command="togglePlay" asset="blue_sound" />-->				<!--fox word hotspot-->
+			</event>
+        </shape> 
+		
+		 <shape type="rect" x="73.5" y="1" w="13" h="5" hitArea="true"  >
+            <event type="click">
+			<!--<action type="command" command="togglePlay" asset="blue_sound" />-->				<!--poori-curry word hotspot-->
+			</event>
+        </shape>
+		 
+		 
+		 
+		<!--<shape type="rect" x="4" y="13" w="14.5" h="5.2" hitArea="true" stroke="#000000">						
+            <event type="click">
+			    <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="show" asset="highlightking" />
+                <action type="command" command="togglePlay" asset="king_sound" />
+                <action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+            </event>
+        </shape>-->
+		
+		<shape type="rect" x="29" y="88.5" w="7" h="6" hitArea="true" >							<!--carrot HOTSPOT-->
+            <event type="click">
+			    
+				<action type="command" command="show" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <action type="command" command="togglePlay" asset="carrot_sound" />
+               
+            </event>
+        </shape>
+		
+		<shape type="rect" x="10" y="91" w="17" h="8" hitArea="true" >							<!--carrot HOTSPOT-->
+            <event type="click">
+			    <action type="command" command="show" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <action type="command" command="togglePlay" asset="carrot_sound" />
+               
+            </event>
+        </shape>
+		<shape type="rect" x="70" y="90" w="11" h="7" hitArea="true" >							<!--beans HOTSPOT-->
+            <event type="click">
+			   <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="show" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <action type="command" command="togglePlay" asset="beans_sound" />
+				
+            </event>
+        </shape>
+		<shape type="rect" x="58" y="75.2" w="7" h="9" hitArea="true" >							<!--potato HOTSPOT-->
+            <event type="click">
+			     <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="show" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <action type="command" command="togglePlay" asset="potato_sound" />
+              
+            </event>
+        </shape>
+		<shape type="rect" x="40" y="85" w="9" h="12" hitArea="true" >							<!--onion HOTSPOT-->
+            <event type="click">
+			     <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="show" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <action type="command" command="togglePlay" asset="onion_sound" />
+             
+            </event>
+        </shape>
+		<shape type="rect" x="31.5" y="80.7" w="8.3" h="7" hitArea="true" >							<!--tomato HOTSPOT-->
+            <event type="click">
+			   <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="show" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <action type="command" command="togglePlay" asset="tomato_sound" />
+            
+            </event>
+        </shape>
+		<shape type="rect" x="46" y="77.5" w="8" h="7" hitArea="true" >							<!--brinjal HOTSPOT-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="show" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <action type="command" command="togglePlay" asset="brinjal_sound" />
+             
+            </event>
+        </shape>
+		<shape type="rect" x="51.5" y="85" w="8" h="10" hitArea="true" >							<!--chillies HOTSPOT-->
+            <event type="click">
+			   <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="show" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <action type="command" command="togglePlay" asset="chillies_sound" />
+             
+            </event>
+        </shape>
+		<shape type="rect" x="62.5" y="62" w="11" h="8" hitArea="true" >							<!--fire HOTSPOT-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="show" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="show" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+               <action type="command" command="togglePlay" asset="fire_sound" />
+				 <action type="command" command="togglePlay" asset="firecrackling_sound" />	
+           
+            </event>
+        </shape>
+		<shape type="rect" x="49" y="52" w="7" h="4.5" hitArea="true"  >							<!--fire HOTSPOT-->
+            <event type="click">
+			   <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="show" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="show" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <action type="command" command="togglePlay" asset="fire_sound" />
+				 <action type="command" command="togglePlay" asset="firecrackling_sound" />	
+          
+            </event>
+        </shape>
+		
+		<shape type="rect" x="49" y="57" w="6" h="6" hitArea="true" >							<!--wood HOTSPOT-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="show" asset="h_lakdi" />
+				<action type="command" command="show" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+               <action type="command" command="togglePlay" asset="wood_sound" />
+				
+            </event>
+        </shape>
+		
+		<shape type="rect" x="65" y="70.5" w="7" h="5" hitArea="true" >							<!--wood HOTSPOT-->
+            <event type="click">
+			    <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="show" asset="h_lakdi" />
+				<action type="command" command="show" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <action type="command" command="togglePlay" asset="wood_sound" />
+				
+            </event>
+        </shape>
+		
+		<!--<shape type="rect" x="8" y="9" w="50" h="5" hitArea="true" >							
+            <event type="click">
+			    <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="show" asset="h_decorL" />
+				<action type="command" command="show" asset="h_decorC" />
+				<action type="command" command="show" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <action type="command" command="togglePlay" asset="decoration_sound" />
+             
+            </event>
+        </shape>-->
+		<!--decor HOTSPOT-->
+		<!--<shape type="rect" x="19" y="4.5" w="5" h="4" hitArea="true" >							
+            <event type="click">
+			    <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="show" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <action type="command" command="togglePlay" asset="decoration_sound" />
+             <action type="command" command="hide" asset="h_lakdi" />
+			 <action type="command" command="hide" asset="highlightking" />
+            </event>
+        </shape>
+		<shape type="rect" x="47" y="4.5" w="5" h="4" hitArea="true">						
+            <event type="click">
+			    <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="show" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                action type="command" command="togglePlay" asset="decoration_sound" />
+             <action type="command" command="hide" asset="h_lakdi" />
+			 <action type="command" command="hide" asset="highlightking" />
+            </event>
+        </shape>-->
+		<!--<shape type="rect" x="55.5" y="13" w="27" h="4" hitArea="true" >							
+            <event type="click">
+			     <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="show" asset="h_decorL" />
+				<action type="command" command="show" asset="h_decorC" />
+				<action type="command" command="show" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+                <action type="command" command="togglePlay" asset="decoration_sound" />
+             
+            </event>
+        </shape>-->
+		<shape type="rect" x="84" y="26" w="12" h="15" hitArea="true"  >							<!--tree HOTSPOT-->
+            <event type="click">
+			     <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="show" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="show" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <!--<action type="command" command="togglePlay" asset="tree_sound" />-->
+           
+            </event>
+        </shape>
+		<shape type="rect" x="78" y="13" w="15" h="14" hitArea="true"  >							<!--tree HOTSPOT-->
+            <event type="click">
+			      <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="show" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="show" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+               <!-- <action type="command" command="togglePlay" asset="tree_sound" />-->
+            
+            </event>
+        </shape>
+		<shape type="rect" x="16" y="26" w="10.5" h="16" hitArea="true" >							<!--tree HOTSPOT-->
+            <event type="click">
+			      <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="show" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="show" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <!--<action type="command" command="togglePlay" asset="tree_sound" />-->
+          
+            </event>
+        </shape>
+		<shape type="rect" x="20" y="15" w="13" h="11" hitArea="true" >							<!--tree HOTSPOT-->
+            <event type="click">
+			
+				  <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="show" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="show" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+             <!--   <action type="command" command="togglePlay" asset="tree_sound" />-->
+          
+            </event>
+        </shape>
+		
+		<shape type="rect" x="63" y="8" w="16" h="5" hitArea="true"  >							<!--tree HOTSPOT-->
+            <event type="click">
+			  <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="show" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="show" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+				
+              <!--  <action type="command" command="togglePlay" asset="tree_sound" />-->
+            
+            </event>
+        </shape>
+		<shape type="rect" x="27.5" y="28" w="7" h="8" hitArea="true" >							<!--laddu HOTSPOT-->
+            <event type="click">
+			<action type="command" command="hide" asset="h_carrot" />
+				 <action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="show" asset="h_laddu" />
+				<action type="command" command="show" asset="h_laddu2" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				
+                <action type="command" command="togglePlay" asset="laddu_sound" />
+            
+            </event>
+        </shape>
+		<shape type="rect" x="25" y="54" w="10" h="8" hitArea="true" >							<!--laddu HOTSPOT-->
+            <event type="click">
+			<action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="hide" asset="h_puri" />
+				<action type="command" command="show" asset="h_laddu" />
+				<action type="command" command="show" asset="h_laddu2" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				
+                <action type="command" command="togglePlay" asset="laddu_sound" />
+              
+            </event>
+        </shape>
+		<shape type="rect" x="64" y="42.5" w="6.5" h="4" hitArea="true" >							<!--puri HOTSPOT-->
+            <event type="click">
+			<action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_carrot" />
+				<action type="command" command="hide" asset="h_brinjal" />
+				<action type="command" command="hide" asset="h_onion" />
+				<action type="command" command="hide" asset="h_tomato" />
+				<action type="command" command="hide" asset="h_potato" />
+				<action type="command" command="hide" asset="h_chillies" />
+				<action type="command" command="hide" asset="h_sc5fire" />
+				<action type="command" command="hide" asset="h_decorL" />
+				<action type="command" command="hide" asset="h_decorC" />
+				<action type="command" command="hide" asset="h_decorR" />
+				<action type="command" command="hide" asset="h_beans" />
+				<action type="command" command="hide" asset="h_tree" />
+				<action type="command" command="show" asset="h_puri" />
+				<action type="command" command="hide" asset="h_laddu" />
+				<action type="command" command="hide" asset="h_lakdi" />
+				<action type="command" command="hide" asset="h_lakdi2" />
+				<action type="command" command="hide" asset="h_sc5fire2" />
+				<action type="command" command="hide" asset="h_tree2" />
+				<action type="command" command="hide" asset="h_laddu2" />
+                <action type="command" command="togglePlay" asset="puri_sound" />
+             
+            </event>
+        </shape>
+		
+		<image asset="sc5firehighlight"   x="61.8" y="61" w="12.5" h="11" id="h_sc5fire"    visible = "false"/>  <!-- fire highlight-->
+		 <image asset="fire2highlight"   x="47" y="49.7" w="10.5" h="9.2" id="h_sc5fire2"    visible = "false"/>
+		 
+		 <image asset="highlightL"    x="6.6" y="6" w="12.6" h="11" id="h_decorL"      visible = "false"/>  <!-- decor highlight-->
+		 <image asset="highlightC"    x="17.25" y="6.5" w="33.4" h="11" id="h_decorC"      visible = "false"/>  <!-- decor highlight-->
+		 <image asset="highlightR"    x="49.55" y="8" w="48.7" h="11.2" id="h_decorR"      visible = "false"/>  <!-- decor highlight-->
+		 
+		 <image asset="ladduhighlight"   x="27" y="27" w="8.2" h="10" id="h_laddu"    visible = "false"/>  <!-- laddu highlight-->
+		 <image asset="laddu2highlight"   x="22" y="52.2" w="15" h="12" id="h_laddu2"    visible = "false"/>  <!-- laddu highlight-->
+
+		 <image asset="purihighlight"   x="63.8" y="41" w="7.4" h="7.1" id="h_puri"    visible = "false"/>  <!-- puri highlight-->
+	     <image asset="onionhighlight"   x="39.4" y="84.6" w="10.6" h="14.7" id="h_onion"    visible = "false"/>  <!-- onion highlight-->
+		 <image asset="tomatohighlight"   x="30.8" y="81.1" w="9.8" h="10.4" id="h_tomato"    visible = "false"/>  <!-- tomato highlight-->
+		 <image asset="potatohighlight"    x="57.7" y="74.8" w="8" h="12.5" id="h_potato"      visible = "false"/>  <!-- potato highlight-->
+		 <image asset="brinjalhighlight"   x="45.4" y="77" w="10.5" h="11" id="h_brinjal"    visible = "false"/>  <!-- brinjal highlight-->
+		 <image asset="chillieshighlight"   x="50" y="84.5" w="9" h="12" id="h_chillies"    visible = "false"/>  <!-- chillies highlight-->
+	     <image asset="carrothighlight"   x="21.7" y="78" w="15" h="17" id="h_carrot"    visible = "false"/>  <!-- carrot highlight-->
+		 <image asset="beanshighlight"   x="67" y="88.5" w="15" h="13.2" id="h_beans"    visible = "false"/>  <!-- beans highlight-->
+		 
+		 <image asset="treehighlight"   x="57.1" y="5" w="40.8" h="48.2" id="h_tree"    visible = "false"/>  <!-- tree highlight-->
+		 <image asset="tree2highlight"   x="11.2" y="2.7" w="42" h="48.2" id="h_tree2"    visible = "false"/>
+		 
+		 <image asset="woodhighlight"   x="64" y="68.5" w="9.5" h="8.5" id="h_lakdi"    visible = "false"/>  <!-- tree highlight-->
+		 <image asset="lakdi2highlight"   x="47" y="54" w="10.5" h="10" id="h_lakdi2"    visible = "false"/>
+	    
+		<events>
+            <event type="enter">
+            	<action type="command" command="startKaraoke" asset="headingText" /> 
+                <action type="command" command="play" asset="page5_sound" loop="1" />
+              
+            </event>
+            <event type="exit">
+                <action type="command" command="stop" asset="page5_sound" audio="true" loop="1" />
+             
+            </event>
+        </events>
+    </stage>
+	
+    <stage id="scene6" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+    			<!--SCENE 6-->
+    	<param name="heading" model="elephantData.scene6_body"/>
+        <param name="next" value="scene7" />
+        <param name="previous" value="scene5" />
+		<param name="home_stage" value="activity" />
+        <audio asset="page6_sound" />
+		<audio asset="ruchi_sound" />
+		<audio asset="tasty_sound" />
+        <image asset="page7" x="0" y="5" w="100" h="95" />
+        <image asset="icon_sound" x="92" y="75" w="6" h="10"/>
+        <shape type="rect" x="92" y="75" w="6" h="10" hitArea="true" >
+            <event type="click">
+                <action type="command" command="togglePlay" asset="page6_sound" />
+                </event>
+        </shape>
+		
+		<!--<image asset="icon_home" x="0" y="80" w="8" h="12"/>
+		<shape type="rect" x="0" y="80" w="8" h="12" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="home_stage" effect="scroll" direction="right" ease="linear" duration="600" />             
+            </event>
+        </shape>-->
+		
+		 <shape type="rect" x="0" y="0" w="100" h="8" hitArea="false"  fill="#cc0000" >						<!--Text Area-->
+         </shape>
+		 
+		 <!-- <text x="20" y="3.5" w="95" h="15" font="Miriam" fontsize="40" color="white">
+         YUMMY FOOD WAS MADE. ALL THE FRIENDS ENJOYED THE MEAL. 
+        </text> -->
+		
+		
+		<!--Swadisht hotspot-->
+       <!-- <shape type="rect" x="37" y="9" w="6.5" h="6" hitArea="true" >
+            <event type="click">
+               <action type="command" command="togglePlay" asset="tasty_sound" />					
+            </event>
+        </shape> -->
+        <events>
+            <event type="enter">
+            	<action type="command" command="startKaraoke" asset="headingText" /> 
+              <action type="command" command="play" asset="page6_sound" loop="1" />
+             </event>
+            <event type="exit">
+                <action type="command" command="stop" asset="page6_sound" audio="true" loop="1" />
+              </event>
+        </events>
+    </stage>
+	
+	
+	<stage id="scene7" x="0" y="0" w="100" h="100">								<!--SCENE 7-->     
+	 <param name="path2_stage" value="splash" />
+	  <param name="abhyas_stage" value="scene11" />
+       <param name="story_stage" value="activity" />
+	  <!-- <audio asset="abhyas_sound" />
+	   <audio asset="backtostory_sound" />
+	   <audio asset="khazana_sound" />
+	   <audio asset="treasure_sound"/>
+	   <audio asset="path2_sound"/>-->
+        <image asset="menuBG" x="0" y="0" w="100" h="100" />
+	   <image asset="next"      x="57" y="28" w="26" h="25" id="next_image" visible = "false"/> 
+	   <image asset="option_BG" x="13" y="28" w="20" h="25">                                                <!-- path2 bg image-->
+		</image>
+		<image asset="option_BG" x="35" y="28" w="20" h="25">                                                <!-- abhyas bg image-->
+		</image>
+		<image asset="option_BG" x="57" y="28" w="26" h="25">                                                <!-- story bg image-->
+		</image>
+		
+		
+		<!--<image asset="abhyashighlight"    x="18.6" y="37.5" w="7.3" h="4.5" id="h_abhyas" visible = "false"/>   
+		<image asset="khazanahighlight"      x="40.5" y="37.5" w="7" h="5" id="h_khazana" visible = "false"/>  
+		<image asset="backtostoryhighlight"      x="59.9" y="36.7" w="20.1" h="4.9" id="h_backtostory" visible = "false"/>  -->
+		
+		<image asset="wordhighlight"    x="13" y="28" w="20" h="25" id="h_path2" visible = "false"/>   
+		<image asset="wordhighlight"      x="35" y="28" w="20" h="25" id="h_abhyas" visible = "false"/>  
+		<image asset="wordhighlight"      x="57" y="28" w="26" h="25" id="h_backtostory" visible = "false"/>
+		
+		
+		<shape id="path2" type="rect" x="13" y="28" w="20" h="25" hitArea="true" stroke="#000000">
+            <event type="click">
+               <action type="command" command="show" asset="learn_options1"/>
+			    <action type="command" command="hide" asset="learn_options2"/>
+				 <action type="command" command="hide" asset="learn_options3"/>
+			   <action type="command" command="show" asset="h_path2" />
+				 <action type="command" command="hide" asset="h_backtostory" />
+				<action type="command" command="hide" asset="h_abhyas" />
+				 <action type="command" command="togglePlay" asset="path2_sound" />
+            </event>
+        </shape>
+		
+		<g w="12" h= "12" x="80" y="12" id="learn_options1" visible="false" >
+			<!-- Part1  -->
+			<image asset="next" x="0" y="0" w="60" h="100" id="learn_option_1">
+				<event type="click">
+				    
+				    <action type="command" command="toggleShow" asset="learn_options"/>
+					<action type="command" command="transitionTo" asset="theme" param="path2_stage" effect="scroll" direction="left" ease="linear" duration="500" />
+				</event>
+			</image>
+		</g>
+		
+		<shape id="abhyas" type="rect" x="35" y="28" w="20" h="25" hitArea="true" stroke="#000000">
+            <event type="click">
+               <action type="command" command="show" asset="learn_options2"/>
+			   <action type="command" command="hide" asset="learn_options1"/>
+			   <action type="command" command="hide" asset="learn_options3"/>
+			   <action type="command" command="hide" asset="h_path2" />
+				 <action type="command" command="hide" asset="h_backtostory" />
+				<action type="command" command="show" asset="h_abhyas" />
+				 <action type="command" command="togglePlay" asset="abhyas_sound" />
+            </event>
+        </shape>
+		
+		<g w="12" h= "12" x="80" y="12" id="learn_options2" visible="false" >
+			<!-- Part1  -->
+			<image asset="next" x="0" y="0" w="60" h="100" id="learn_option_1">
+				<event type="click">
+				    
+				    <action type="command" command="toggleShow" asset="learn_options"/>
+					<action type="command" command="transitionTo" asset="theme" param="abhyas_stage" effect="scroll" direction="left" ease="linear" duration="500" />
+				</event>
+			</image>
+		</g>
+		
+		<!--<shape id="story" type="rect" x="57" y="28" w="26" h="25" hitArea="true" stroke="#000000">
+            <event type="click">
+               <action type="command" command="show" asset="learn_options3"/>
+			   <action type="command" command="hide" asset="learn_options1"/>
+			   <action type="command" command="hide" asset="learn_options2"/>
+			   <action type="command" command="hide" asset="h_path2" />
+				 <action type="command" command="show" asset="h_backtostory" />
+				<action type="command" command="hide" asset="h_abhyas" />
+				 <action type="command" command="togglePlay" asset="backtostory_sound" />
+            </event>
+        </shape>-->
+		
+		<g w="12" h= "12" x="80" y="12" id="learn_options3" visible="false" >
+			<!-- Part1  -->
+			<image asset="next" x="0" y="0" w="60" h="100" id="learn_option_1">
+				<event type="click">
+				    
+				    <action type="command" command="toggleShow" asset="learn_options"/>
+					<action type="command" command="transitionTo" asset="theme" param="story_stage" effect="scroll" direction="left" ease="linear" duration="500" />
+				</event>
+			</image>
+		</g>
+		
+		<text x="19" y="38" w="40" h="5" font="Georgia" fontsize="45">
+				AGAIN
+        </text>
+		<!-- <shape type="rect" x="13" y="28" w="20" h="25" hitArea="true" stroke="#000000">
+			<event type="click">
+			    <action type="command" command="togglePlay" asset="abhyas_sound" />
+				  <action type="command" command="show" asset="next_button" />
+				  <shape type="rect" x="70" y="12" w="26" h="25" hitArea="true" stroke="#000000">
+                      <event type="click">
+                        <action type="command" command="transitionTo" asset="theme" param="path2_stage" effect="scroll" direction="left" ease="linear" duration="500" />
+                      </event>
+                  </shape>
+				 <action type="command" command="show" asset="h_path2" />
+				 <action type="command" command="show" asset="h_path2" />
+				 <action type="command" command="hide" asset="h_backtostory" />
+				 <action type="command" command="hide" asset="h_abhyas" />
+			<action type="command" command="transitionTo" asset="theme" param="path2_stage" effect="scroll" direction="left" ease="linear" duration="500" />
+			</event>
+		 </shape>-->
+		 
+		<text x="39.5" y="38" w="40" h="5" font="Georgia" fontsize="45">
+				PRACTICE
+        </text>
+		<!--<shape type="rect" x="35" y="28" w="20" h="25" hitArea="true" stroke="#000000">
+			<event type="click">
+			    <action type="command" command="togglePlay" asset="khazana_sound" />
+				<action type="command" command="show" asset="h_abhyas" />
+				 <action type="command" command="hide" asset="h_backtostory" />
+				 <action type="command" command="show" asset="h_path2" />
+				<action type="command" command="transitionTo" asset="theme" param="abhyas_stage" effect="scroll" direction="left" ease="linear" duration="600" />
+			</event>
+		</shape>-->
+		
+		<text x="65" y="38" w="40" h="5" font="Georgia" fontsize="45">
+				EXPLORE
+        </text>
+		
+		<!--<shape type="rect" x="57" y="28" w="26" h="25" hitArea="true" stroke="#000000"> 
+			<event type="click">
+              <action type="command" command="restart" asset="theme"/>
+			  <action type="command" command="togglePlay" asset="backtostory_sound" />
+			    <action type="command" command="hide" asset="h_abhyas" />
+				 <action type="command" command="show" asset="h_backtostory" />
+				 <action type="command" command="hide" asset="h_path2" />
+			   <action type="command" command="transitionTo" asset="theme" param="story_stage" effect="scroll" direction="left" ease="linear" duration="600" />
+			</event>
+		</shape>-->
+    </stage>
+	
+	
+	<stage id="scene8" x="0" y="0" w="100" h="100">								<!--SCENE 7-->     
+	 <param name="path2_stage" value="splash" />
+	  <param name="abhyas_stage" value="scene11" />
+       <param name="story_stage" value="activity" />
+	     <image asset="menuBG" x="0" y="0" w="100" h="100" />
+	  <!-- <audio asset="abhyas_sound" />
+	   <audio asset="backtostory_sound" />
+	   <audio asset="khazana_sound" />
+	   <audio asset="treasure_sound"/>
+	   <audio asset="path2_sound"/>-->
+       
+	   <image asset="next"      x="57" y="28" w="26" h="25" id="next_image" visible = "false"/> 
+	   <image asset="option_BG" x="13" y="28" w="20" h="25">                                                <!-- path2 bg image-->
+		</image>
+		<image asset="option_BG" x="35" y="28" w="20" h="25">                                                <!-- abhyas bg image-->
+		</image>
+		<image asset="option_BG" x="57" y="28" w="26" h="25">                                                <!-- story bg image-->
+		</image>
+		
+		
+		<!--<image asset="abhyashighlight"    x="18.6" y="37.5" w="7.3" h="4.5" id="h_abhyas" visible = "false"/>   
+		<image asset="khazanahighlight"      x="40.5" y="37.5" w="7" h="5" id="h_khazana" visible = "false"/>  
+		<image asset="backtostoryhighlight"      x="59.9" y="36.7" w="20.1" h="4.9" id="h_backtostory" visible = "false"/>  -->
+		
+		<image asset="wordhighlight"    x="13" y="28" w="20" h="25" id="h_path2" visible = "false"/>   
+		<image asset="wordhighlight"      x="35" y="28" w="20" h="25" id="h_abhyas" visible = "false"/>  
+		<image asset="wordhighlight"      x="57" y="28" w="26" h="25" id="h_backtostory" visible = "false"/> 
+		
+		
+		<shape id="path2" type="rect" x="13" y="28" w="20" h="25" hitArea="true" stroke="#000000">
+            <event type="click">
+               <action type="command" command="show" asset="learn_options1"/>
+			    <action type="command" command="hide" asset="learn_options2"/>
+				 <action type="command" command="hide" asset="learn_options3"/>
+			   <action type="command" command="show" asset="h_path2" />
+				 <action type="command" command="hide" asset="h_backtostory" />
+				<action type="command" command="hide" asset="h_abhyas" />
+				 <action type="command" command="togglePlay" asset="path2_sound" />
+            </event>
+        </shape>
+		
+		<g w="12" h= "12" x="80" y="12" id="learn_options1" visible="false" >
+			<!-- Part1  -->
+			<image asset="next" x="0" y="0" w="60" h="100" id="learn_option_1">
+				<event type="click">
+				    
+				    <action type="command" command="toggleShow" asset="learn_options"/>
+					<action type="command" command="transitionTo" asset="theme" param="path2_stage" effect="scroll" direction="left" ease="linear" duration="500" />
+				</event>
+			</image>
+		</g>
+		
+		<shape id="abhyas" type="rect" x="35" y="28" w="20" h="25" hitArea="true" stroke="#000000">
+            <event type="click">
+               <action type="command" command="show" asset="learn_options2"/>
+			   <action type="command" command="hide" asset="learn_options1"/>
+			   <action type="command" command="hide" asset="learn_options3"/>
+			   <action type="command" command="hide" asset="h_path2" />
+				 <action type="command" command="hide" asset="h_backtostory" />
+				<action type="command" command="show" asset="h_abhyas" />
+				 <action type="command" command="togglePlay" asset="abhyas_sound" />
+            </event>
+        </shape>
+		
+		<g w="12" h= "12" x="80" y="12" id="learn_options2" visible="false" >
+			<!-- Part1  -->
+			<image asset="next" x="0" y="0" w="60" h="100" id="learn_option_1">
+				<event type="click">
+				    
+				    <action type="command" command="toggleShow" asset="learn_options"/>
+					<action type="command" command="transitionTo" asset="theme" param="abhyas_stage" effect="scroll" direction="left" ease="linear" duration="500" />
+				</event>
+			</image>
+		</g>
+		
+		<!--<shape id="story" type="rect" x="57" y="28" w="26" h="25" hitArea="true" stroke="#000000">
+            <event type="click">
+               <action type="command" command="show" asset="learn_options3"/>
+			   <action type="command" command="hide" asset="learn_options1"/>
+			   <action type="command" command="hide" asset="learn_options2"/>
+			   <action type="command" command="hide" asset="h_path2" />
+				 <action type="command" command="show" asset="h_backtostory" />
+				<action type="command" command="hide" asset="h_abhyas" />
+				 <action type="command" command="togglePlay" asset="backtostory_sound" />
+            </event>
+        </shape>-->
+		
+		<g w="12" h= "12" x="80" y="12" id="learn_options3" visible="false" >
+			<!-- Part1  -->
+			<image asset="next" x="0" y="0" w="60" h="100" id="learn_option_1">
+				<event type="click">
+				    
+				    <action type="command" command="toggleShow" asset="learn_options"/>
+					<action type="command" command="transitionTo" asset="theme" param="story_stage" effect="scroll" direction="left" ease="linear" duration="500" />
+				</event>
+			</image>
+		</g>
+		
+		<text x="19" y="38" w="40" h="5" font="Georgia" fontsize="45">
+				LEARN
+        </text>
+		<!-- <shape type="rect" x="13" y="28" w="20" h="25" hitArea="true" stroke="#000000">
+			<event type="click">
+			    <action type="command" command="togglePlay" asset="abhyas_sound" />
+				  <action type="command" command="show" asset="next_button" />
+				  <shape type="rect" x="70" y="12" w="26" h="25" hitArea="true" stroke="#000000">
+                      <event type="click">
+                        <action type="command" command="transitionTo" asset="theme" param="path2_stage" effect="scroll" direction="left" ease="linear" duration="500" />
+                      </event>
+                  </shape>
+				 <action type="command" command="show" asset="h_path2" />
+				 <action type="command" command="show" asset="h_path2" />
+				 <action type="command" command="hide" asset="h_backtostory" />
+				 <action type="command" command="hide" asset="h_abhyas" />
+			<action type="command" command="transitionTo" asset="theme" param="path2_stage" effect="scroll" direction="left" ease="linear" duration="500" />
+			</event>
+		 </shape>-->
+		 
+		<text x="39.5" y="38" w="40" h="5" font="Georgia" fontsize="45">
+				PRACTICE
+        </text>
+		<!--<shape type="rect" x="35" y="28" w="20" h="25" hitArea="true" stroke="#000000">
+			<event type="click">
+			    <action type="command" command="togglePlay" asset="khazana_sound" />
+				<action type="command" command="show" asset="h_abhyas" />
+				 <action type="command" command="hide" asset="h_backtostory" />
+				 <action type="command" command="show" asset="h_path2" />
+				<action type="command" command="transitionTo" asset="theme" param="abhyas_stage" effect="scroll" direction="left" ease="linear" duration="600" />
+			</event>
+		</shape>-->
+		
+		<text x="65" y="38" w="40" h="5" font="Georgia" fontsize="45">
+				EXPLORE
+        </text>
+		
+		<!--<shape type="rect" x="57" y="28" w="26" h="25" hitArea="true" stroke="#000000"> 
+			<event type="click">
+              <action type="command" command="restart" asset="theme"/>
+			  <action type="command" command="togglePlay" asset="backtostory_sound" />
+			    <action type="command" command="hide" asset="h_abhyas" />
+				 <action type="command" command="show" asset="h_backtostory" />
+				 <action type="command" command="hide" asset="h_path2" />
+			   <action type="command" command="transitionTo" asset="theme" param="story_stage" effect="scroll" direction="left" ease="linear" duration="600" />
+			</event>
+		</shape>-->
+    </stage>
+	
+	
+	
+	
+	
+	
+	
+   	<!-- Worksheet templates -->
+    
+	
+	
+	
+	
+	
+
+	<template id="mcq_template_7">
+		
+        <text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+		<text model="item.subtitleone" x="12" y="30" w="86" h="4" font="Georgia" fontsize="47"/>
+		
+        <mcq multi_select="false" model="item">
+            <options layout="table" x="16" y="40" w="70" h="35" cols="4" marginX="5" marginY="5" options="options"/>
+		</mcq>
+		
+		<image asset="play_audio" x="9.5" y="5" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="mtf_bear_sound" />
+            </event>
+        </image>
+	</template>
+	
+	<template id="mcq_template_7.1">
+		
+        <text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+		<text model="item.subtitleone" x="12" y="30" w="86" h="4" font="Georgia" fontsize="47"/>
+		
+        <mcq multi_select="false" model="item">
+            <options layout="table" x="16" y="40" w="70" h="35" cols="4" marginX="5" marginY="5" options="options"/>
+		</mcq>
+		
+		<image asset="play_audio" x="9.5" y="5" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="mtf_lion_sound" />
+            </event>
+        </image>
+	</template>
+	
+	<template id="mcq_template_7.2">
+		<shape x="11" y="14" w="80" h="97" type="rect" fill="#FFFFFF" />
+        <text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+		<text model="item.subtitleone" x="12" y="30" w="86" h="4" font="Georgia" fontsize="47"/>
+		
+        <mcq multi_select="false" model="item">
+            <options layout="table" x="16" y="40" w="70" h="35" cols="4" marginX="5" marginY="5" options="options"/>
+		</mcq>
+		
+		<image asset="play_audio" x="9.5" y="5" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="mtf_yummy_sound" />
+            </event>
+        </image>
+	</template>
+	
+	<template id="mcq_template_8">
+		
+        <text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+		<text model="item.subtitleone" x="15" y="20" w="86" h="4" font="Georgia" fontsize="47"/>
+		<!--<text model="item.subtitletwo" x="9" y="60" w="86" h="4" font="Georgia" fontsize="55"/>-->
+        <mcq multi_select="false" model="item">
+            <options layout="table" x="15" y="38" w="10" h="20" cols="1" marginX="0" marginY="15" options="options"/>
+			<!--<options layout="table" x="12" y="67" w="100" h="20" cols="1" marginX="0" marginY="5" options="optionsTwo"/>-->
+        </mcq>
+		
+		<image asset="play_audio" x="9.5" y="5" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="fitb_sound" />
+            </event>
+        </image>
+		
+		<image asset="play_audio" x="9.5" y="20" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="fitbquestion1" />
+            </event>
+        </image>
+		
+		<image asset="play_audio" x="9.5" y="32" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="shirtsound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="41" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="pantsound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="50" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="chainsound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="58" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="sareesound" />
+            </event>
+        </image>
+	</template>
+	
+	<template id="mcq_template_8.1">
+		
+        <text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+		<text model="item.subtitleone" x="15" y="20" w="86" h="4" font="Georgia" fontsize="47"/>
+		<!--<text model="item.subtitletwo" x="9" y="60" w="86" h="4" font="Georgia" fontsize="55"/>-->
+        <mcq multi_select="false" model="item">
+            <options layout="table" x="15" y="38" w="10" h="20" cols="1" marginX="0" marginY="15" options="options"/>
+			<!--<options layout="table" x="12" y="67" w="100" h="20" cols="1" marginX="0" marginY="5" options="optionsTwo"/>-->
+        </mcq>
+		
+		<image asset="play_audio" x="9.5" y="5" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="fitb_sound" />
+            </event>
+        </image>
+		
+		<image asset="play_audio" x="9.5" y="20" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="fitbquestion2" />
+            </event>
+        </image>
+		
+		<image asset="play_audio" x="9.5" y="32" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="flutesound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="41" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="trumpetsound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="50" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="guitarsound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="58" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="drumsound" />
+            </event>
+        </image>
+		
+	</template>
+	
+	<template id="mcq_template_8.2">
+		
+          <text model="item.title" x="15" y="5" w="78" h="4" font="Georgia" fontsize="50"/>
+		<text model="item.subtitleone" x="15" y="20" w="86" h="4" font="Georgia" fontsize="47"/>
+		<!--<text model="item.subtitletwo" x="9" y="60" w="86" h="4" font="Georgia" fontsize="55"/>-->
+        <mcq multi_select="false" model="item">
+            <options layout="table"  x="15" y="38" w="10" h="20" cols="1" marginX="0" marginY="15" options="options"/>
+			<!--<options layout="table" x="12" y="67" w="100" h="20" cols="1" marginX="0" marginY="5" options="optionsTwo"/>-->
+        </mcq>
+		
+		<image asset="play_audio" x="9.5" y="5" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="rhymequestion" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="20" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="rhyme1question" />
+            </event>
+        </image>
+		
+		<image asset="play_audio" x="9.5" y="32" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="wearsound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="41" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="woresound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="50" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="moresound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="58" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="beatsound" />
+            </event>
+        </image>
+	</template>
+	
+	<template id="mcq_template_8.3">
+		
+        <text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+		<text model="item.subtitleone" x="15" y="20" w="86" h="4" font="Georgia" fontsize="47"/>
+		<!--<text model="item.subtitletwo" x="9" y="60" w="86" h="4" font="Georgia" fontsize="55"/>-->
+        <mcq multi_select="false" model="item">
+            <options layout="table" x="15" y="38" w="10" h="20" cols="1" marginX="0" marginY="15" options="options"/>
+			<!--<options layout="table" x="12" y="67" w="100" h="20" cols="1" marginX="0" marginY="5" options="optionsTwo"/>-->
+        </mcq>
+		
+		<image asset="play_audio" x="9.5" y="5" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="rhymequestion" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="20" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="rhyme2question" />
+            </event>
+        </image>
+		
+		<image asset="play_audio" x="9.5" y="32" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="samesound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="41" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="comesound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="50" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="vansound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="58" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="applesound" />
+            </event>
+        </image>
+	</template>
+	
+	
+	
+	<template id="mcq_template_3">
+	<audio asset="Q3.1_sound" />
+		
+        <text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+		<text model="item.subtitleone" x="14" y="20" w="86" h="4" font="Georgia" fontsize="47"/>
+        <mcq multi_select="false" model="item">
+            <options layout="table" x="14" y="38" w="20" h="20" cols="1" marginX="0" marginY="15" options="options"/>
+        </mcq>
+		
+		<image asset="play_audio" x="9.5" y="5" w="4" h="5">
+            <event type="click">
+              <action type="command" command="play" asset="fitb_sound" />
+            </event>
+        </image>
+		  
+		  <image asset="play_audio" x="9.5" y="20" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="fitbquestion3" />
+            </event>
+        </image>
+		
+		<image asset="play_audio" x="9.5" y="32" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="bearfoxsound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="41" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="elephantfoxsound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="50" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="elephantbearsound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="58" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="bearcrowsound" />
+            </event>
+        </image>
+	</template>
+	
+	
+	
+	
+	<template id="mcq_template_3.1">
+	<audio asset="Q3.2_sound"/>
+		
+        <text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+		<text model="item.subtitleone" x="15" y="20" w="86" h="4" font="Georgia" fontsize="47"/>
+        <mcq multi_select="false" model="item">
+            <options layout="table" x="14" y="38" w="20" h="20" cols="1" marginX="0" marginY="15" options="options"/>
+        </mcq>
+		
+		<image asset="play_audio" x="9.5" y="5" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="fitb_sound" />
+            </event>
+        </image>
+		
+		<image asset="play_audio" x="9.5" y="20" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="fitbquestion4" />
+            </event>
+        </image>
+		
+		<image asset="play_audio" x="9.5" y="32" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="foxsound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="41" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="junglefriendssound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="50" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="junglekingsound" />
+            </event>
+        </image>
+		<image asset="play_audio" x="9.5" y="58" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="eaglesound" />
+            </event>
+        </image>
+	</template>
+	
+	<template id="mcq_template_9">
+	
+	
+	<text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+	<text model="item.subtitleone" x="9" y="20" w="86" h="4" font="Georgia" fontsize="47"/>
+	 
+	<mcq multi_select="false" model="item">
+		<options layout="table" x="20" y="45" w="60" h="25" cols="2" marginX="30" marginY="5" options="options"/>
+	</mcq>
+	<image asset="play_audio" x="9.5" y="4.5" w="4" h="6">
+            <event type="click">
+                <action type="command" command="play" asset="tickAudio" />
+            </event>
+    </image>
+	<image asset="play_audio" x="45" y="20" w="7" h="11">
+            <event type="click">
+                <action type="command" command="play" asset="tickAudio" />
+            </event>
+    </image>
+	
+	<image asset="play_audio" x="15.5" y="47" w="4" h="6">
+            <event type="click">
+                <action type="command" command="play" asset="jasound" />
+            </event>
+    </image>
+	<image asset="play_audio" x="58" y="47" w="4" h="6">
+            <event type="click">
+                <action type="command" command="play" asset="pasound" />
+            </event>
+    </image>
+	<image asset="play_audio" x="15.5" y="62" w="4" h="6">
+            <event type="click">
+                <action type="command" command="play" asset="sasound" />
+            </event>
+    </image>
+	<image asset="play_audio" x="58" y="62" w="4" h="6">
+            <event type="click">
+                <action type="command" command="play" asset="lasound" />
+            </event>
+    </image>
+	
+	
+	
+	<!--<image asset="grey" x="32" y="32" w="9" h="9">
+            <event type="click">
+				<action type="command" command="show" asset="tickimage" />
+                
+		    </event>
+        </image>
+	<image asset="tickmark"   x="32" y="32" w="9" h="9" id="tickimage"    visible = "false"/>-->
+	</template>
+	
+	<template id="mcq_template_9.1">
+	
+	
+	<text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+	<text model="item.subtitleone" x="9" y="20" w="86" h="4" font="Georgia" fontsize="47"/>
+	 
+	<mcq multi_select="false" model="item">
+		<options layout="table" x="20" y="45" w="60" h="25" cols="2" marginX="30" marginY="5" options="options"/>
+	</mcq>
+	
+	<image asset="play_audio" x="9.5" y="4.5" w="4" h="6">
+            <event type="click">
+                <action type="command" command="play" asset="tickWord" />
+            </event>
+    </image>
+	
+	<image asset="play_audio" x="45" y="20" w="7" h="11">
+            <event type="click">
+                <action type="command" command="play" asset="" />
+            </event>
+    </image>
+	
+	<image asset="play_audio" x="15.5" y="47" w="4" h="6">
+            <event type="click">
+                <action type="command" command="play" asset="lampsound" />
+            </event>
+    </image>
+	<image asset="play_audio" x="58" y="47" w="4" h="6">
+            <event type="click">
+                <action type="command" command="play" asset="trumpetssound" />
+            </event>
+    </image>
+	<image asset="play_audio" x="15.5" y="62" w="4" h="6">
+            <event type="click">
+                <action type="command" command="play" asset="playedsound" />
+            </event>
+    </image>
+	<image asset="play_audio" x="58" y="62" w="4" h="6">
+            <event type="click">
+                <action type="command" command="play" asset="celebratingsound" />
+            </event>
+    </image>
+	
+	<!--<image asset="grey" x="32" y="32" w="9" h="9">
+            <event type="click">
+				<action type="command" command="show" asset="tickimage" />
+                
+		    </event>
+        </image>
+	<image asset="tickmark"   x="32" y="32" w="9" h="9" id="tickimage"    visible = "false"/>-->
+	</template>
+	
+	<template id="mcq_template_10">
+	
+		
+		
+        <text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+		<text model="item.subtitleone" x="12" y="30" w="86" h="4" font="Georgia" fontsize="47"/>
+		
+        <mcq multi_select="false" model="item">
+            <options layout="table" x="36" y="60" w="30" h="10" cols="6" marginX="1" marginY="5" options="options"/>
+		</mcq>
+		
+		<image asset="parrotquestion" x="45" y="35" w="13" h="15"/>
+		
+		<image asset="play_audio" x="9.5" y="5" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="taponP" />
+            </event>
+        </image>
+	</template>
+	
+	<template id="mcq_template_10.1">
+		
+        <text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+		<text model="item.subtitleone" x="12" y="30" w="86" h="4" font="Georgia" fontsize="47"/>
+		
+        <mcq multi_select="false" model="item">
+            <options layout="table" x="36" y="60" w="30" h="10" cols="8" marginX="1" marginY="5" options="options"/>
+		</mcq>
+		
+		<image asset="elephant" x="45" y="30" w="12" h="20"/>
+		
+		<image asset="play_audio" x="9.5" y="5" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="taponP" />
+            </event>
+        </image>
+	</template>
+	<template id="mcq_template_10.2">
+		
+        <text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+		<text model="item.subtitleone" x="12" y="30" w="86" h="4" font="Georgia" fontsize="47"/>
+		
+        <mcq multi_select="false" model="item">
+            <options layout="table" x="36" y="60" w="30" h="10" cols="5" marginX="1" marginY="5" options="options"/>
+		</mcq>
+		
+		<image asset="pantquestion" x="45" y="30" w="12" h="20"/>
+		
+		<image asset="play_audio" x="9.5" y="5" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="taponP" />
+            </event>
+        </image>
+	</template>
+	<template id="mcq_template_10.3">
+		
+        <text model="item.title" x="15" y="5" w="86" h="4" font="Georgia" fontsize="50"/>
+		<text model="item.subtitleone" x="12" y="30" w="86" h="4" font="Georgia" fontsize="47"/>
+		
+        <mcq multi_select="false" model="item">
+            <options layout="table" x="36" y="60" w="30" h="10" cols="5" marginX="1" marginY="5" options="options"/>
+		</mcq>
+		
+		<image asset="lampsquestion" x="45" y="30" w="12" h="14"/>
+		
+		<image asset="play_audio" x="9.5" y="5" w="4" h="5">
+            <event type="click">
+                <action type="command" command="play" asset="taponP" />
+            </event>
+        </image>
+	</template>
+	
+	
+	
+	
+	
+	<stage id="scene11" x="0" y="0" w="100" h="100" iterate="assessment" var="item">
+        <param name="next" value="scene8" />
+        <param name="previous" value="scene6" />
+		 <param name="home_stage" value="activity" />
+		 <image asset="menuBG" x="0" y="0" w="100" h="100" />
+        <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
+        <image asset="previous" x="2" y="3" w="5" h="8.3" id="previous" visible="false"/>
+		<!--<param name="home_stage" value="splash" />-->
+		<embed template="item" var-item="item"/>
+		
+        <shape id="nextContainer" type="rect" x="92" y="1" w="7" h="11" visible="false" hitArea="true">
+            <event type="click" disableTelemetry="true">
+			    <action type="command" command="eval" asset="scene11" success="correct_response" failure="wrong_response"/>
+               <!-- <action type="command" command="eval" asset="scene11" success="next_item" failure="next_item"/>-->
+            </event>
+        </shape>
+        <shape id="previousContainer" type="rect" x="1" y="1" w="7" h="11" visible="false" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" transitionType="previous"/>
+            </event>
+        </shape>
+		
+		<g x="30" y="-40" w="40" h="30" id="retryDialog" visible="false">
+			<image asset ="retryBg" x="0" y="0" w="100" h="100" visible="true" id="right"/>
+			<text x="0" y="10" w="100" h="10" font="Verdana" fontsize="120" align="center">
+				Try Again!
+			</text>
+			<image asset ="retryButton" x="15" y="40" w="30" h="30" visible="true" id="right">
+				<event type="click">
+					<action type="command" command="hide" asset="retryDialog" />
+					<action type="command" command="hide" asset="teacherPopup" />
+					<action type="animation" asset="retryDialog">
+					   <tween id="retryHideAnim">
+						   <to ease="bounceOut" duration="500"><![CDATA[{"x":30,"y":-40,"w":40,"h":30}]]></to>
+					   </tween>
+				   </action>
+				</event>
+			</image>
+			<image asset ="nextButton" x="50" y="40" w="30" h="30" visible="true" id="right">
+				<event type="click">
+					<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+				</event>
+			</image>
+		</g>
+		
+		<g x="30" y="-40" w="40" h="30" id="goodjobDialog" visible="false">
+			<image asset ="goodjobBg" x="0" y="0" w="100" h="100" visible="true" id="right">
+				<event type="click">
+					<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+				</event>
+			</image>
+			<text x="0" y="10" w="100" h="10" font="Verdana" fontsize="120" align="center">
+				Good Job!
+			</text>
+			<image asset ="tick" x="38" y="45" w="30" h="40" visible="true" id="tick"/>
+		</g>
+		
+		<!--<audio asset="Q5_sound" />
+		<audio asset="Q3_audio"/>
+		<audio asset="Q4_audio"/>
+		<audio asset="Q5_audio"/>
+		<audio asset="Q6_audio"/>
+		<audio asset="Q7_audio"/>
+		<audio asset="Q8_audio"/>
+		<audio asset="khelo_sound"/>-->
+		
+		<audio asset="taponP" />
+		<audio asset="rhymequestion" />
+		<audio asset="mtf_bear_sound" />
+		<audio asset="mtf_lion_sound" />
+		<audio asset="mtf_yummy_sound" />
+		<audio asset="tickAudio"/>
+		<audio asset="tickWord"/>
+		<audio asset="fitb_sound" />
+		<audio asset="rhyme1"/>
+        <audio asset="rhyme2"/>
+		<audio asset="fitbquestion1_sound"/>
+		<audio asset="fitbquestion2_sound"/>
+		<audio asset="fitbquestion3_sound"/>
+		<audio asset="fitbquestion4_sound"/>
+		<audio asset="tickoption1"/>
+		<audio asset="tickoption2"/>
+	
+		
+		<image asset="icon_home" x="1" y="87" w="6" h="10"/>
+		<shape type="rect" x="0" y="86" w="8" h="11.8" hitArea="true" >
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="home_stage" effect="scroll" direction="right" ease="linear" duration="600" />             
+            </event>
+        </shape>
+		
+		<image asset="teacher" x="92" y="87" w="6" h="10" />
+		
+		<!-- word hint: Teacher  -->
+		<shape type="rect" x="92" y="87" w="6" h="10" hitArea="true" >
+            <event type="click">
+				<action type="command" command="toggleShow" asset="teacher_options" />
+                <action type="command" command="toggleShow" asset="teacher_text" />
+		    </event>
+        </shape>
+		
+		
+		<g  x="68" y="84" w="49" h="13" id="teacher_options" visible="false">
+			<!-- Part1  -->
+			<image asset="yellowBox" x="0" y="0" w="45" h="100" id="learn_option_8">
+				<event type="click">
+					<!--<action type="command" command="toggleShow" asset="teacher_text"/>-->
+				</event>
+			</image>
+		</g>
+		
+		<!-- Teacher text -->
+		<g x="65.5" y="72.5" w="50" h="60"  id="teacher_text" visible="false">	
+	     	<text x="8" y="23" w="40" h="80" font="Georgia" fontsize="53" >
+			Provide practice to children to exercise what they have learnt and develop a thinking attitude
+			</text>
+        </g>
+		
+		
+		<appEvents list="correct_response,wrong_response"/>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset_model="item.title_audio.asset" loop="1" />
+            </event>
+            <event type="exit">
+               <action type="command" command="stop" asset_model="item.title_audio.asset" audio="true" loop="1" />
+            </event>
+			<event type="wrong_response">
+				<!-- <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" /> -->
+				<action type="command" command="show" asset="retryDialog" />
+				<action type="animation" asset="retryDialog">
+                   <tween id="retryShowAnim">
+                       <to ease="bounceOut" duration="1500"><![CDATA[{"x":30,"y":40,"w":40,"h":30}]]></to>
+                   </tween>
+               </action>
+            </event>
+			
+            <event type="correct_response">
+			<!--	<action type="command" command="show" asset="retryDialog" />
+				<action type="animation" asset="retryDialog">
+                   <tween id="retryShowAnim">
+                       <to ease="bounceOut" duration="1500"><![CDATA[{"x":30,"y":40,"w":40,"h":30}]]></to>
+                   </tween>
+               </action>-->
+				<action type="command" command="show" asset="goodjobDialog" />
+				<action type="animation" asset="goodjobDialog">
+                   <tween id="gjShowAnim">
+                       <to ease="bounceOut" duration="1500"><![CDATA[{"x":30,"y":40,"w":40,"h":30}]]></to>
+                   </tween>
+               </action>
+				<!-- <action type="command" command="show" asset="retryDialog" /> -->
+            </event>
+			
+        </events>
+		
+    </stage>
+	
+	
+	
+	<stage id="endScreen" x="0" y="0" w="100" h="100">
+        
+		<image asset="end_screen" x="0" y="0" w="100" h="100" />
+	 <shape type="rect" x="33" y="35" w="15" h="30" hitArea="true" >				<!--home-->
+            <event type="click">
+                <action type="command" command="windowEvent" asset="theme" href="#/content/list"/>
+            </event>
+        </shape>
+		
+		 <shape type="rect" x="52" y="35" w="15" h="30" hitArea="true" >								<!--reload-->
+            <event type="click">
+                <action type="command" command="restart" asset="theme"/>
+            </event>
+        </shape>
+		
+		<!--<shape x="2" y="2" w="96" h="10.5" type="rect" fill="#FFF16E" />
+        <shape x="2" y="12" w="96" h="89.5" type="rect" fill="#FFF16E" />
+        <text x="38" y="15" w="30" h="8" font="Georgia" fontsize="96">
+            Thank you
+        </text>
+        
+        <image asset="icon_reload" x="30" y="35" w="15" h="20" />
+        <text x="33" y="57" w="15" h="5" font="Arial" fontsize="48">
+            Replay
+        </text>
+        <shape type="rect" x="30" y="35" w="15" h="30" hitArea="true">
+            <event type="click">
+                <action type="command" command="restart" asset="theme"/>
+            </event>
+        </shape>
+
+        <image asset="icon_home" x="55" y="35" w="15" h="20" />
+        <text x="58" y="57" w="15" h="5" font="Arial" fontsize="48">
+            Home
+        </text>
+        <shape type="rect" x="55" y="35" w="15" h="30" hitArea="true">
+            <event type="click">
+                <action type="command" command="windowEvent" asset="theme" href="#/content/list"/>
+            </event>
+        </shape>
+        
+        <image asset="publisher_logo" x="5" y="75" w="13" h="17" />
+        <image asset="level_band" x="5" y="94" w="13" h="5" />
+        <text x="32" y="75" w="45" h="5" font="Arial" fontsize="40">
+			हाथी और भालू की शादी
+        </text>
+        <text x="35" y="80" w="20" h="5" font="Georgia" weight="bold" fontsize="28">
+            Concept                :
+        </text>
+        <text x="50" y="80" w="20" h="5" font="Georgia" fontsize="28">
+            R. S. Annam, Honnali Block 
+        </text>
+        <text x="35" y="83" w="20" h="5" font="Georgia" weight="bold" fontsize="28">
+            Illustrations       :
+        </text>
+        <text x="50" y="83" w="20" h="5" font="Georgia" fontsize="28">
+            Suresh Jayapura
+        </text>
+		<text x="35" y="86" w="20" h="5" font="Georgia" weight="bold" fontsize="28">
+            Co-ordination    :
+        </text>
+        <text x="50" y="86" w="20" h="5" font="Georgia" fontsize="28">
+            Kanchan Bannerjee
+        </text>
+		<text x="35" y="89" w="20" h="5" font="Georgia" weight="bold" fontsize="28">
+            Designed by        :
+        </text>
+        <text x="50" y="89" w="30" h="5" font="Georgia" fontsize="28">
+            Akshara Foundation, Bangalore for Janashala, Karnataka
+        </text>
+		<text x="40" y="95" w="30" h="5" font="Georgia"  weight="bold" fontsize="28">
+           Story by Karnataka Board
+        </text>-->
+		
+		
+        
+    </stage>
+</theme>
