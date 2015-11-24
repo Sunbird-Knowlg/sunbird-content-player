@@ -4,7 +4,9 @@ CommandManager = {
         var cmd = '';
         if (_.isString(action.command))
             cmd = (action.command).toUpperCase();
+        // console.log(cmd);
         var plugin = PluginManager.getPluginObject(action.asset);
+        // console.log("plugin : ", plugin);
         if (!_.contains(CommandManager.audioActions, cmd)) {
             if (!plugin) {
                 PluginManager.addError('Plugin not found for action - ' + JSON.stringify(action));
@@ -97,8 +99,19 @@ CommandManager = {
                     }, 500);
                 } else {
                     exitApp();
-                }
-                
+                }                
+                break;
+            case 'STARTKARAOKE':
+                if(plugin) plugin.start();
+                break;
+            case 'PAUSEKARAOKE':
+                if(plugin) plugin.pause();
+                break;
+            case 'RESUMEKARAOKE':
+                if(plugin) plugin.resume();
+                break;
+            case 'TOGGLEKARAOKE':
+                if(plugin) plugin.toggle();
                 break;
             default:
                 console.log("Command '" + choice +"' not found.");

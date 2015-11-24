@@ -87,7 +87,27 @@
             "identifier": "org.ekstep.lit.moon_cap.story",
             "grayScaleAppIcon": null,
             "pkgVersion": 1
-        }],
+        },
+         {
+            "questionnaire": null,
+            "appIcon": "stories/elephant_story/logo.png",
+            "subject": "literacy_v2",
+            "description": "elephant_story",
+            "name": "elephant_story",
+            "launchPath": "stories/elephant_story",
+            "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_2_1442335816604.zip",
+            "checksum": null,
+            "loadingMessage": "Every great journey starts with a great story...",
+            "concepts": [{
+                "identifier": "LO1",
+                "name": "Receptive Vocabulary",
+                "objectType": "Concept"
+            }],
+            "identifier": "org.ekstep.lit.elephant_story",
+            "grayScaleAppIcon": null,
+            "pkgVersion": 1
+        }
+        ],
         "ttl": 24
     }
 }
