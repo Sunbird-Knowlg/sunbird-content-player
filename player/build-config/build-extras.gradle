@@ -12,7 +12,7 @@ android {
     }
 
     defaultConfig {
-        versionName "1.0.39"
+        versionName System.getenv("BUILD_NUMBER") ?: "local"
         setProperty("archivesBaseName", "contentapp-$versionName")
     }
 
@@ -21,4 +21,17 @@ android {
 def getTimestamp() {
     def time = System.currentTimeMillis();
     return String.format("%tF", time);
+}
+
+task updateBuildNumber() {
+    def appFile = System.getProperty("user.dir") + '/www/js/app/app.js'
+    File file = file(appFile)
+    if (file.isFile()) {
+        ant.loadfile(srcFile: file, property: file.name)
+        def updatedContent = file.getText('UTF-8').replaceAll("BUILD_NUMBER", android.defaultConfig.versionName)
+        new File(appFile).write(updatedContent, 'UTF-8')
+        println "*** Build Number '" + android.defaultConfig.versionName + "' updated in app.js ***"
+    } else {
+        println "*** www/js/app/app.js file not found ***"
+    }
 }
