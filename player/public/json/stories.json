@@ -87,6 +87,44 @@
             "identifier": "org.ekstep.lit.moon_cap.story",
             "grayScaleAppIcon": null,
             "pkgVersion": 1
+        },
+        {
+            "questionnaire": null,
+            "appIcon": "stories/zoo_manners/logo.png",
+            "subject": "literacy_v2",
+            "description": "zoo_manners",
+            "name": "zoo_manners",
+            "launchPath": "stories/zoo_manners",
+            "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_2_1442335816604.zip",
+            "checksum": null,
+            "loadingMessage": "Every great journey starts with a great story...",
+            "concepts": [{
+                "identifier": "LO1",
+                "name": "Receptive Vocabulary",
+                "objectType": "Concept"
+            }],
+            "identifier": "org.ekstep.lit.zoo_manners",
+            "grayScaleAppIcon": null,
+            "pkgVersion": 1
+        },
+        {
+            "questionnaire": null,
+            "appIcon": "stories/org.ekstep.story.jhoola/logo.png",
+            "subject": "literacy_v2",
+            "description": "org.ekstep.story.jhoola",
+            "name": "org.ekstep.story.jhoola",
+            "launchPath": "stories/org.ekstep.story.jhoola",
+            "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_2_1442335816604.zip",
+            "checksum": null,
+            "loadingMessage": "Every great journey starts with a great story...",
+            "concepts": [{
+                "identifier": "LO1",
+                "name": "Receptive Vocabulary",
+                "objectType": "Concept"
+            }],
+            "identifier": "org.ekstep.lit.org.jhoola",
+            "grayScaleAppIcon": null,
+            "pkgVersion": 1
         }],
         "ttl": 24
     }
