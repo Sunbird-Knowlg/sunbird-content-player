@@ -64,6 +64,12 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: 'build-config/signedRelease',
+                        src: 'gradle.properties',
+                        dest: 'platforms/android/'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'build-config/signedRelease',
                         src: 'ekstep.keystore',
                         dest: 'platforms/android/'
                     }

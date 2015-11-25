@@ -4,6 +4,18 @@ ext {
     cdvBuildMultipleApks=false 
 }
 
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url  "http://${nexusIp}:8081/nexus/content/repositories/production" }
+    }
+}
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+    maven { url "http://${nexusIp}:8081/nexus/content/repositories/production" }
+}
+
 android {
 
     packagingOptions {
@@ -18,10 +30,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("ekstep.keystore")
-            storePassword "ekstep123"
-            keyAlias "ekstep"
-            keyPassword "ekstep123"
+            storeFile file("${keystore}")
+            storePassword "${keystore_password}"
+            keyAlias "${key_alias}"
+            keyPassword "${key_password}"
         }
     }
 
@@ -30,6 +42,11 @@ android {
             signingConfig signingConfigs.release
         }
     }
+}
+
+dependencies {
+    compile "org.ekstep.genieservices:sdks:1.0.+@aar"
+    compile "org.ekstep.genieservices:aidls:1.0.+@aar"
 }
 
 def getTimestamp() {

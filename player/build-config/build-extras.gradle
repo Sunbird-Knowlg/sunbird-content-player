@@ -4,6 +4,18 @@ ext {
     cdvBuildMultipleApks=false 
 }
 
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url  "http://${nexusIp}:8081/nexus/content/repositories/production" }
+    }
+}
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+    maven { url "http://${nexusIp}:8081/nexus/content/repositories/production" }
+}
+
 android {
 
     packagingOptions {
@@ -16,6 +28,11 @@ android {
         setProperty("archivesBaseName", "contentapp-$versionName")
     }
 
+}
+
+dependencies {
+    compile "org.ekstep.genieservices:sdks:1.0.+@aar"
+    compile "org.ekstep.genieservices:aidls:1.0.+@aar"
 }
 
 def getTimestamp() {
