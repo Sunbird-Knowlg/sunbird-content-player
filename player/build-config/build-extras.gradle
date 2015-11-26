@@ -4,6 +4,18 @@ ext {
     cdvBuildMultipleApks=false 
 }
 
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url  "http://${nexusIp}:8081/nexus/content/repositories/production" }
+    }
+}
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+    maven { url "http://${nexusIp}:8081/nexus/content/repositories/production" }
+}
+
 android {
 
     packagingOptions {
@@ -15,23 +27,24 @@ android {
         versionName System.getenv("BUILD_NUMBER") ?: "local"
         setProperty("archivesBaseName", "contentapp-$versionName")
     }
-
 }
 
-def getTimestamp() {
-    def time = System.currentTimeMillis();
-    return String.format("%tF", time);
+dependencies {
+    compile "org.apache.commons:commons-compress:1.10"
+    compile "commons-io:commons-io:2.4"
+    compile "org.ekstep.genieservices:sdks:1.0.184@aar"
+    compile "org.ekstep.genieservices:aidls:1.0.184@aar"
 }
 
 task updateBuildNumber() {
-    def appFile = System.getProperty("user.dir") + '/www/js/app/app.js'
+    def appFile =  System.getProperty("user.dir") + '/platforms/android/assets/www/js/app/AppConfig.js'
     File file = file(appFile)
     if (file.isFile()) {
         ant.loadfile(srcFile: file, property: file.name)
         def updatedContent = file.getText('UTF-8').replaceAll("BUILD_NUMBER", android.defaultConfig.versionName)
         new File(appFile).write(updatedContent, 'UTF-8')
-        println "*** Build Number '" + android.defaultConfig.versionName + "' updated in app.js ***"
+        println "*** Build Number '" + android.defaultConfig.versionName + "' updated in AppConfig.js ***"
     } else {
-        println "*** www/js/app/app.js file not found ***"
+        println "*** platforms/android/assets/www/js/app/AppConfig.js file not found ***"
     }
 }

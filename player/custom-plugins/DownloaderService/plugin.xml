@@ -21,7 +21,5 @@
         </config-file>
         <source-file src="src/android/DownloaderService.java" target-dir="src/org/apache/cordova" />
         <source-file src="src/android/TarUtils.java" target-dir="src/org/apache/cordova" />
-        <source-file src="src/android/libs/commons-compress-1.10.jar" target-dir="libs" />
-        <source-file src="src/android/libs/commons-io-2.4.jar" target-dir="libs" />
     </platform>
 </plugin>
