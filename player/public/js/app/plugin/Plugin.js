@@ -42,7 +42,10 @@ var Plugin = Class.extend({
 
 		// Conditional evaluation for rendering
 		if (data['ev-if']) {
-			var exprVal = this.evaluateExpr(data['ev-if']);
+			var expr = data['ev-if'].trim();
+			if (!expr.startsWith("${")) expr = "${" + expr;
+            if (!expr.endsWith("}")) expr = expr + "}"
+			var exprVal = this.evaluateExpr(expr);
 			if (typeof exprVal != undefined) {
 				if (this._self) {
 					this._self.visible = (this._self.visible && exprVal);	
@@ -292,11 +295,23 @@ var Plugin = Class.extend({
     },
     evaluateExpr: function(expr) {
         var app = GlobalContext._params;
-        var stage = this._stage._stageParams;
+        var stage = {};
+        if (this._stage) {
+        	stage = this._stage._stageParams;
+        } else if (this._type == 'stage') {
+        	stage = this._stageParams;
+        }
         var content = this._theme._contentParams;
         var value = undefined;
         try {
-            value = eval(expr);
+        	expr = expr.trim();
+        	if(expr.startsWith("${") && expr.endsWith("}")) {
+        		expr = expr.substring(2,expr.length);
+        		expr = expr.substring(0,expr.length-1);
+        		value = eval(expr);
+        	} else {
+        		value = expr;
+        	}
         } catch (err) {
             console.error('set ev-value evaluation faild:', err.message);
         }

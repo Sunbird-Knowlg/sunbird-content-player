@@ -80,7 +80,8 @@ RecorderManager = {
 		if (RecorderManager.mediaInstance) {
 			var plugin = PluginManager.getPluginObject(action.asset);
 			var stagePlugin = plugin._stage;
-			AudioRecordingService.processRecording(RecorderManager.mediaInstance.filePath, action.lineIndex)
+			var lineindex = stagePlugin.evaluateExpr(action.dataAttributes.lineindex);
+			AudioRecordingService.processRecording(RecorderManager.mediaInstance.filePath, lineindex)
 			.then(function(processResponse) {
 				if (processResponse.status == "success") {
 					if (processResponse.result) {

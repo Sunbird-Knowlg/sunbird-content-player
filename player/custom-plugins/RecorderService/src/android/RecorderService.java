@@ -25,12 +25,12 @@ import com.sensibol.ekstep.speechengine.sdk.SpeechEngineFactory;
 
 public class RecorderService extends CordovaPlugin {
 
-	public static final String TAG = "Genie Service Plugin";
+    public static final String TAG = "Genie Service Plugin";
     private static final String WORK_DIR_PATH = "/storage/emulated/0/Genie/SdkWorkDir";
     private SpeechEngine speechEngine;
 
-	public RecorderService() {
-		System.out.println("Recorder Service Constructor..........");
+    public RecorderService() {
+        System.out.println("Recorder Service Constructor..........");
     }
 
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -82,39 +82,49 @@ public class RecorderService extends CordovaPlugin {
     }
 
     private void initLesson(String lessonMetadataFile, CallbackContext callbackContext) {
+        Map<String, String> map = new HashMap<String, String>();
+        String error = null;
         if (null != lessonMetadataFile) {
             try {
                 speechEngine.initLesson(lessonMetadataFile);
-            } catch (FileNotFoundException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-            } catch (InvalidStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InvalidOrCorruptMedatada e) {
-                e.printStackTrace();
+                error = e.getMessage();
             }
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("status", "success");
-            callbackContext.success(new JSONObject(map));
+            if(error == null) {
+                map.put("status", "success");
+            } else {
+                map.put("status", "error");
+                map.put("errorMessage", error);
+            }
+        } else {
+            map.put("status", "error");
+            map.put("errorMessage", "metadata file path is empty.");
         }
+        callbackContext.success(new JSONObject(map));
     }
 
     private void startRecording(String recordingFile, CallbackContext callbackContext) {
-        try {
-            speechEngine.startRecording(recordingFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (SEException e) {
-            e.printStackTrace();
-        } catch (InvalidStateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Recording Stopped.");
         Map<String, String> map = new HashMap<String, String>();
-        map.put("status", "success");
+        String error = null;
+        if(null != recordingFile) {
+            try {
+                speechEngine.startRecording(recordingFile);
+                System.out.println("Recording Stopped.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                error = e.getMessage();
+            }
+            if(error == null) {
+                map.put("status", "success");
+            } else {
+                map.put("status", "error");
+                map.put("errorMessage", error);
+            }
+        } else {
+            map.put("status", "error");
+            map.put("errorMessage", "recording file path is empty.");
+        }
         callbackContext.success(new JSONObject(map));
     }
 
@@ -129,32 +139,30 @@ public class RecorderService extends CordovaPlugin {
                     callbackContext.success(new JSONObject(map));
                 }
             });
-        } catch (SEException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (InvalidStateException e) {
-            e.printStackTrace();
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("status", "error");
+            map.put("errorMessage", e.getMessage());
+            callbackContext.success(new JSONObject(map));
         }
     }
 
     private void processRecording(String recordingFile, int lineIndex, CallbackContext callbackContext) {
-        JSONObject result = null;
+        Map<String, Object> map = new HashMap<String, Object>();
+        String error = null;
         try {
             System.out.println("*** Processing file:" + recordingFile + " :: Line:" + lineIndex);
-            result = speechEngine.processRecording(recordingFile, lineIndex);
+            JSONObject result = speechEngine.processRecording(recordingFile, lineIndex);
             System.out.println("ProcessRecording result= " + result.toString());
-            Map<String, Object> map = new HashMap<String, Object>();
             map.put("status", "success");
             map.put("result", result);
-            callbackContext.success(new JSONObject(map));
-        } catch (SEException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (InvalidStateException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (LineIndexOutOfBoundException e) {
-            e.printStackTrace();
+            map.put("status", "error");
+            map.put("errorMessage", e.getMessage());
         }
+        callbackContext.success(new JSONObject(map));
     }
 
     private JSONObject getErrorJSONObject(String errorCode, String errorParam) {

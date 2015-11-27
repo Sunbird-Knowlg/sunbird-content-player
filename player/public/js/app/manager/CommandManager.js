@@ -11,6 +11,7 @@ CommandManager = {
                 return;
             }
         }
+        CommandManager._setDataAttributes(action);
         switch (cmd) {
             case 'PLAY':
                 if (plugin && plugin._type == 'sprite') {
@@ -113,5 +114,16 @@ CommandManager = {
             default:
                 console.log("Command '" + cmd +"' not found.");
         }
+    },
+    _setDataAttributes: function(action) {
+        var dataAttributes = {};
+        var keys = _.keys(action);
+        keys.forEach(function(key) {
+            var lowerKey = key.toLowerCase();
+            if (lowerKey.startsWith("data-")) {
+                dataAttributes[lowerKey.replace("data-","")] = action[key];
+            }
+        });
+        action.dataAttributes = dataAttributes;
     }
 }
