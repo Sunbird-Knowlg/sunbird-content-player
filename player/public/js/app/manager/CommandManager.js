@@ -104,9 +104,10 @@ CommandManager = {
                 if (plugin) RecorderManager.startRecording(action);
                 break;
             case 'STOPRECORD':
+                console.log("STOPRECORD command called.")
                 if (plugin) RecorderManager.stopRecording(action);
                 break;
-            case 'PROCESSRECORDING':
+            case 'PROCESSRECORD':
                 if (plugin) RecorderManager.processRecording(action);
                 break;
             default:

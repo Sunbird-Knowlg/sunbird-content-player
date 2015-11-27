@@ -40,6 +40,7 @@ RecorderManager = {
 	* 	Dispatch success OR failure events.
 	*/
 	stopRecording: function(action) {
+		console.log("Stop recording called.");
 		if (RecorderManager.recording) {
 			var plugin = PluginManager.getPluginObject(action.asset);
 			var stagePlugin = plugin._stage;

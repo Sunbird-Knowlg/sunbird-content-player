@@ -56,20 +56,20 @@ AndroidRecorder = {
 	},
 	stopRecording: function(instance) {
 		return new Promise(function(resolve, reject) {
-			var instance = {};
+			var result = {};
 			if (typeof Media != "undefined") {
 				if (instance && instance.media) {
 					instance.media.stopRecord();
 					instance.media.release();
-					instance = {status: "success"};
+					result = {status: "success"};
 				} else {
-					instance = {status: "ERROR", errMessage: "Error recording not started."};
+					result = {status: "ERROR", errMessage: "Error recording not started."};
 				}
 			} else {
 				console.info("AndroidRecorder.stopRecording called.");
-				instance = {status: "success", errMessage: "Media is not available."};
+				result = {status: "success", errMessage: "Media is not available."};
 			}
-			resolve(instance);
+			resolve(result);
 		});
 	},
 	processRecording: function(path, lineIndex) {
@@ -104,6 +104,7 @@ SensibolRecorder = {
 			if (typeof RecorderService != "undefined") {
 				RecorderService.stopRecording()
 				.then(function(result) {
+					console.log("recording stopped:", result);
 					resolve(result);
 				})
 				.catch(function(err) {
