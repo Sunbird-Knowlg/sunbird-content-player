@@ -7,7 +7,7 @@ var ItemDataGenerator = {
 		$.getJSON(fullPath, function(data) {
 			ItemDataGenerator._onLoad(data, controller);
 		}).fail(function() {
-			console.log("error while fetching json: "+ fullPath);
+			console.error("error while fetching json: "+ fullPath);
 		});
 	},
 	_onLoad: function(data, controller) {

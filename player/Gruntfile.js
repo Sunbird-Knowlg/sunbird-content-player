@@ -51,6 +51,12 @@ module.exports = function(grunt) {
                         cwd: 'build-config/',
                         src: 'build-extras.gradle',
                         dest: 'platforms/android/'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'build-config/',
+                        src: 'gradle.properties',
+                        dest: 'platforms/android/'
                     }
                 ]
             },
@@ -60,6 +66,12 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: 'build-config/signedRelease',
                         src: 'build-extras.gradle',
+                        dest: 'platforms/android/'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'build-config/signedRelease',
+                        src: 'gradle.properties',
                         dest: 'platforms/android/'
                     },
                     {
@@ -241,14 +253,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-aws-s3');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-rename');
-
     grunt.registerTask('default', ['uglify:js']);
     grunt.registerTask('build-all', ['uglify:js', 'compress:story', 'compress:worksheet', 'aws_s3:uploadJS', 'aws_s3:uploadSamples']);
     grunt.registerTask('build-js', ['uglify:js', 'aws_s3:uploadJS']);
-    grunt.registerTask('build-samples', ['compress:story', 'compress:worksheet', 'aws_s3:uploadSamples']);
-    grunt.registerTask('build-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:build_android']);
+    grunt.registerTask('build-samples', ['compress:story', 'compress:worksheet', 'aws_s3:uploadSamples']);    
     grunt.registerTask('build-unsigned-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:build_android_release']);
-    grunt.registerTask('build-signed-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:build_android_release']);
     grunt.registerTask('build-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'cordovacli:build_android']);
     grunt.registerTask('build-unsigned-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'cordovacli:build_android_release']);
     grunt.registerTask('build-signed-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'cordovacli:build_android_release']);
@@ -260,4 +269,7 @@ module.exports = function(grunt) {
     grunt.registerTask('add_custom_plugins', ['cordovacli:add_custom_plugins']);
     grunt.registerTask('build-all-apks', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:build_android', 'cordovacli:build_android_release', 'cordovacli:rm_xwalk', 'cordovacli:build_android', 'cordovacli:build_android_release']);
     grunt.registerTask('update_custom_plugins', ['cordovacli:rm_custom_plugins', 'cordovacli:add_custom_plugins']);
+
+    grunt.registerTask('build-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'cordovacli:add_plugins', 'cordovacli:build_android']);    
+    grunt.registerTask('build-signed-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'cordovacli:add_plugins', 'cordovacli:build_android_release']);
 };

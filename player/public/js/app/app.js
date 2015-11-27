@@ -4,9 +4,10 @@
 // 'quiz' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var packageName = "org.ekstep.quiz.app";
-var version = "1.0.40";
+var version = AppConfig.version;
 var currentContentVersion = "0.3";
 var packageNameDelhi = "org.ekstep.delhi.curriculum";
+var geniePackageName = "org.ekstep.android.genie";
 
 function backbuttonPressed(cs) {
 
@@ -26,7 +27,7 @@ function backbuttonPressed(cs) {
 }
 
 function exitApp(cs) {
-    navigator.startApp.start("org.ekstep.genie", function(message) {
+    navigator.startApp.start(geniePackageName, function(message) {
             if (cs) {
                 cs.resetSyncStart();
                 if (cs.getProcessCount() > 0) {
@@ -61,7 +62,7 @@ function exitApp(cs) {
 }
 
 function startApp(app) {
-    if(!app) app = "org.ekstep.genie";
+    if(!app) app = geniePackageName;
     navigator.startApp.start(app, function(message) {
             exitApp();
             if (TelemetryService._gameData) {
@@ -69,7 +70,7 @@ function startApp(app) {
             }
         },
         function(error) {
-            if(app == "org.ekstep.genie")
+            if(app == geniePackageName)
                 alert("Unable to start Genie App.");
             else {
                 var bool = confirm('App not found. Do you want to search on PlayStore?');
