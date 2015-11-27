@@ -32,39 +32,45 @@ AudioRecordingService = {
 
 AndroidRecorder = {
 	startRecording: function(path) {
-		var instance = {};
-		if (typeof Media != "undefined") {
-			var media = new Media(path,
-		        function() {
-		            console.info("Audio recording successfull.");
-		        },
-		        function(err) {
-		            console.error("Error Audio recording: "+ err.code);
-		        }
-		    );
-		    media.startRecord();
-		    instance.media = media;
-		    instance.status = "success";
-		} else {
-			instance.status = "success";
-			instance.errMessage = "Media is not available.";
-			console.info("AndroidRecorder.startRecording called.");
-		}
-		return instance;
+		return new Promise(function(resolve, reject) {
+			var instance = {};
+			if (typeof Media != "undefined") {
+				var media = new Media(path,
+			        function() {
+			            console.info("Audio recording successfull.");
+			        },
+			        function(err) {
+			            console.error("Error Audio recording: "+ err.code);
+			        }
+			    );
+			    media.startRecord();
+			    instance.media = media;
+			    instance.status = "success";
+			} else {
+				instance.status = "success";
+				instance.errMessage = "Media is not available.";
+				console.info("AndroidRecorder.startRecording called.");
+			}
+			resolve(instance);
+		});
 	},
 	stopRecording: function(instance) {
-		if (typeof Media != "undefined") {
-			if (instance && instance.media) {
-				instance.media.stopRecord();
-				instance.media.release();
-				return {status: "success"};
+		return new Promise(function(resolve, reject) {
+			var instance = {};
+			if (typeof Media != "undefined") {
+				if (instance && instance.media) {
+					instance.media.stopRecord();
+					instance.media.release();
+					instance = {status: "success"};
+				} else {
+					instance = {status: "ERROR", errMessage: "Error recording not started."};
+				}
 			} else {
-				return {status: "ERROR", errMessage: "Error recording not started."};
+				console.info("AndroidRecorder.stopRecording called.");
+				instance = {status: "success", errMessage: "Media is not available."};
 			}
-		} else {
-			console.info("AndroidRecorder.stopRecording called.");
-			return {status: "success", errMessage: "Media is not available."};
-		}
+			resolve(instance);
+		});
 	},
 	processRecording: function(path, lineIndex) {
 		return new Promise(function(resolve, reject) {
@@ -121,7 +127,7 @@ SensibolRecorder = {
 					reject(err);
 				});
 			} else {
-				resolve({status: "success", result: {totalScore: 0}, errMessage: "Sensibol is not integrated."});
+				resolve({status: "success", result: {totalScore: 1}, errMessage: "Sensibol is not integrated."});
 			}
 		});
 	}

@@ -106,6 +106,9 @@ CommandManager = {
             case 'STOPRECORD':
                 if (plugin) RecorderManager.stopRecording(action);
                 break;
+            case 'PROCESSRECORDING':
+                if (plugin) RecorderManager.processRecording(action);
+                break;
             default:
                 console.log("Command '" + cmd +"' not found.");
         }
