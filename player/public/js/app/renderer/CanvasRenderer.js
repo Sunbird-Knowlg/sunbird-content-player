@@ -34,7 +34,13 @@ Renderer = {
         Renderer.initByXML(gameRelPath, canvasId);
         // TODO: integrate it properly.
         if (typeof RecorderService != "undefined") {
-            RecorderService.initLesson(gameRelPath + "/lesson.metadata");
+            RecorderService.initLesson(gameRelPath + "/lesson.metadata")
+            .then(function(res) {
+                console.info("Init lesson successful.", res);
+            })
+            .catch(function(err) {
+                console.error("Error while init lesson:", err);
+            });
         }
 
     },
