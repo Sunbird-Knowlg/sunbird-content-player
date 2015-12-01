@@ -4,7 +4,7 @@
 // 'quiz' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var packageName = "org.ekstep.quiz.app";
-var version = "BUILD_NUMBER";
+var version = AppConfig.version;
 var currentContentVersion = "0.3";
 var packageNameDelhi = "org.ekstep.delhi.curriculum";
 var geniePackageName = "org.ekstep.android.genie";
