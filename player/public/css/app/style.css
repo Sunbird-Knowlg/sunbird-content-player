@@ -76,3 +76,10 @@ ion-popover-view.fit ion-content {
 	height: 66px;
 	margin-top: 10px;
 }
+
+.worksheet_exit {
+	background: url(../assets/skin02/btn_close.png) no-repeat left bottom;
+    background-size: 38px 38px;
+    height: 38px;
+    width: 38px;
+}
