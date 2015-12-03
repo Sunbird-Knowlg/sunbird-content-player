@@ -12,63 +12,6 @@
     "responseCode": "OK",
     "result": {
         "content": [
-         {
-            "questionnaire": null,
-            "appIcon": "stories/org.ekstep.story.en.elephant/logo.png",
-            "subject": "literacy_v2",
-            "description": "org.ekstep.story.en.elephant",
-            "name": "org.ekstep.story.en.elephant",
-            "launchPath": "stories/org.ekstep.story.en.elephant",
-            "downloadUrl": "",
-            "checksum": null,
-            "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
-            "concepts": [{
-                "identifier": "LO1",
-                "name": "Receptive Vocabulary",
-                "objectType": "Concept"
-            }],
-            "identifier": "org.ekstep.story.en.elephant",
-            "grayScaleAppIcon": null,
-            "pkgVersion": 1
-        },
-         {
-            "questionnaire": null,
-            "appIcon": "stories/org.ekstep.story.hi.elephant/logo.png",
-            "subject": "literacy_v2",
-            "description": "org.ekstep.story.hi.elephant",
-            "name": "org.ekstep.story.hi.elephant",
-            "launchPath": "stories/org.ekstep.story.hi.elephant",
-            "downloadUrl": "",
-            "checksum": null,
-            "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
-            "concepts": [{
-                "identifier": "LO1",
-                "name": "Receptive Vocabulary",
-                "objectType": "Concept"
-            }],
-            "identifier": "org.ekstep.story.hi.elephant",
-            "grayScaleAppIcon": null,
-            "pkgVersion": 1
-        },
-         {
-            "questionnaire": null,
-            "appIcon": "stories/zoo_manners/logo.png",
-            "subject": "literacy_v2",
-            "description": "zoo_manners",
-            "name": "zoo_manners",
-            "launchPath": "stories/zoo_manners",
-            "downloadUrl": "",
-            "checksum": null,
-            "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
-            "concepts": [{
-                "identifier": "LO1",
-                "name": "Receptive Vocabulary",
-                "objectType": "Concept"
-            }],
-            "identifier": "org.ekstep.story.zoo_mannerst",
-            "grayScaleAppIcon": null,
-            "pkgVersion": 1
-        },
         {
             "questionnaire": null,
             "appIcon": "stories/quizapp_bugs/logo.png",
