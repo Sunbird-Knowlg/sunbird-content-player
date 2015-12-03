@@ -110,7 +110,7 @@
         <!-- fontsize is the expected font size of text in 1920 x 1200 resolution -->
         <text x="10" y="15" w="22" h="23" font="Arial" weight="bold" fontsize="96" color="#fff" model="ws_data.title"/>
         <text x="7" y="40" w="32" h="40" font="Arial" fontsize="48" color="#fff" model="ws_data.description"/>
-        <text x="38" y="22" w="28" h="16" font="Arial, serif" fontsize="32" color="#000" model="ws_data.message"/>
+        <text x="38" y="21" w="28" h="16" font="Arial, serif" fontsize="32" color="#000" model="ws_data.message"/>
         <shape type="rect" x="67" y="27" w="5" h="10" hitArea="true" rotate="30">
             <event type="click">
                 <action type="command" command="togglePlay" asset="thunder_sound" loop="1"/>
