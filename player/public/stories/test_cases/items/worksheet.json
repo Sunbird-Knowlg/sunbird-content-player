@@ -39,11 +39,11 @@
 						"answer": 1
 					},
 					{
-						"value": {"type": "image", "asset": "beanshighlight"},
+						"value": {"type": "image", "asset": "potatohighlight"},
 						"answer": 0
 					},
 					{
-						"value": {"type": "image", "asset": "parrothighlight"},
+						"value": {"type": "image", "asset": "rabbithighlight"},
 						"answer": 2
 					},
 					{

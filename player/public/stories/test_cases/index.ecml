@@ -414,17 +414,23 @@
     </stage>
       <template id="mtf_template_4">
         
-        <text x="10" y="16" w="86" h="4" font="Verdana" fontsize="42" >
-            Able to drag more than one item in dropable area : 
+        <text x="8" y="13" w="86" h="4" font="Verdana" fontsize="42" >
+            Able to put more than one item in dropable area : 
+        </text>
+        <text x="8" y="42" w="86" h="4" font="Verdana" fontsize="42" >
+            Not able to put more than one item in dropable area : 
         </text>
             
         <mtf model="item" force="false">
             
-            <option x="65" y="23" w="15" h="24.5" snapX="12" snapY="12" option="lhs_options[0]" multiple="true"/>
+            <option x="65" y="15" w="15" h="24.5" snapX="12" snapY="12" option="lhs_options[0]" multiple="true"/>
+            <option x="65" y="45" w="15" h="24.5" snapX="12" snapY="12" option="lhs_options[0]" />
            <!-- <option x="72" y="30" w="15" h="25.5" snapX="0.1" snapY="0.1" option="lhs_options[3]"/>-->
 
-            <option x="15" y="28" w="11" h="17" option="rhs_options[0]"/>
-            <option x="32" y="28" w="11" h="14.5" option="rhs_options[1]"/>
+            <option x="15" y="24" w="11" h="17" option="rhs_options[0]"/>
+            <option x="42" y="24" w="11" h="14.5" option="rhs_options[1]"/>
+            <option x="15" y="48" w="11" h="17" option="rhs_options[0]"/>
+            <option x="42" y="49" w="11" h="14.5" option="rhs_options[1]"/>
         </mtf>
         
     </template>
