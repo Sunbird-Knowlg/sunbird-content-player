@@ -50,7 +50,6 @@
 
     </ion-content>
 </ion-pane>
-
 <script id="about.html" type="text/ng-template">
   <ion-modal-view>
     <ion-header-bar class="bar-energized">
@@ -94,9 +93,11 @@
         </div>
     </div>
 </div>
-<div id="errorDiv" style="margin:auto; position:absolute;width:100%;height:20%; bottom:105px; z-index: 1000;" ng-show="showMessage">
-    <div style="margin: auto; width: 100%; position: fixed; text-align: center; bottom:105px; font-family: flavours; color: #fff; font-size: 1.5em;">
+
+<div id="errorDiv" style="margin:auto; position:absolute;width:100%;height:20%; bottom:155px; z-index: 9000;" ng-show="showMessage">
+    <div style="margin: auto; width: 100%; position: fixed; text-align: center; bottom:155px; font-family: flavours; color: #fff; font-size: 1.5em;">
         <div ng-bind-html="message" style="margin: auto; width: 100%; position: fixed; text-align: center;">
         </div>
     </div>
 </div>
+<!-- showMessage -->
