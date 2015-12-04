@@ -6,9 +6,8 @@ MTFEvaluator = {
 		var res = [];
 		var answer = {};
 		if (item) {
-			var lhs_options = item.lhs_options;
 			var index = [];
-			_.each(lhs_options, function(opt){
+			_.each(item.lhs_options, function(opt){
 				index.push(opt.index);
 			});
 			var options = item.rhs_options;
@@ -30,8 +29,10 @@ MTFEvaluator = {
 								pass = false; 
 							else if(_.contains(index, opt.answer) && opt.selected || _.contains(index, opt.answer) && !opt.selected)
 								answer[opt.value.asset] = false;
-
 						}
+ 					} else {
+ 						if(typeof opt.selected != 'undefined')
+ 							pass = false;
  					}
 				});
 			}
