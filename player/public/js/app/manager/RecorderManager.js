@@ -7,8 +7,8 @@ RecorderManager = {
 	*/
 	startRecording: function(action) {
 		var plugin = PluginManager.getPluginObject(action.asset);
-		var stageId = plugin._stage._id;
-		var stagePlugin = plugin._stage;
+		var stagePlugin = plugin._stage || plugin;
+		var stageId = stagePlugin._id;
 		var path = RecorderManager._getFilePath(stageId);
 		RecorderManager.recording = false;
 		AudioRecordingService.startRecording(path)
@@ -27,7 +27,7 @@ RecorderManager = {
 				if (action.failure) {
 					stagePlugin.dispatchEvent(action.failure);
 				} else {
-
+					// TODO: do something
 				}
 			}
 		})
@@ -43,7 +43,7 @@ RecorderManager = {
 		console.log("Stop recording called.");
 		if (RecorderManager.recording) {
 			var plugin = PluginManager.getPluginObject(action.asset);
-			var stagePlugin = plugin._stage;
+			var stagePlugin = plugin._stage || plugin;
 			AudioRecordingService.stopRecording(RecorderManager.mediaInstance)
 			.then(function(response) {
 				if (response.status == "success") {
@@ -79,7 +79,7 @@ RecorderManager = {
 	processRecording: function(action) {
 		if (RecorderManager.mediaInstance) {
 			var plugin = PluginManager.getPluginObject(action.asset);
-			var stagePlugin = plugin._stage;
+			var stagePlugin = plugin._stage || plugin;
 			var lineindex = stagePlugin.evaluateExpr(action.dataAttributes.lineindex);
 			AudioRecordingService.processRecording(RecorderManager.mediaInstance.filePath, lineindex)
 			.then(function(processResponse) {
@@ -122,7 +122,14 @@ RecorderManager = {
 	},
 	_getFilePath: function(stageId) {
 		var currentDate = new Date();
-		var path = DownloaderService.appDataDirectory + GlobalContext.user.uid + '_' + TelemetryService._gameData.id + '_' + stageId + "_"+ currentDate.getTime()  + ".wav";
+		var path = "";
+		if (DownloaderService.appDataDirectory) 
+			path = path + DownloaderService.appDataDirectory;
+		if (GlobalContext.user && GlobalContext.user.uid) 
+			path = path + GlobalContext.user.uid + '_' ;
+		if (TelemetryService._gameData && TelemetryService._gameData.id)
+			path = path + TelemetryService._gameData.id + '_';
+		path = path + stageId + "_"+ currentDate.getTime()  + ".wav";
 		return path;
 	}
 }

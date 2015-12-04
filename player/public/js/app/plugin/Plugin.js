@@ -301,7 +301,10 @@ var Plugin = Class.extend({
         } else if (this._type == 'stage') {
         	stage = this._stageParams;
         }
-        var content = this._theme._contentParams;
+        var content = {};
+        if (this._theme) {
+        	content = this._theme._contentParams;
+        }
         var value = undefined;
         try {
         	expr = expr.trim();
