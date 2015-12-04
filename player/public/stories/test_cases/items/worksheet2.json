@@ -1,0 +1,84 @@
+{
+	"identifier": "AKM_1",
+	"title": "AKM Assessment",
+	"total_items": 9,
+	"shuffle":false,
+	"max_score": 4,
+	"subject": "LIT",
+	"item_sets": [
+		{
+			"id": "set_1",
+        	"count":9	
+		}
+	],
+	"items": {
+		"set_1" : [
+			{
+				"identifier": "Q18",
+				"dimension":"LD2",
+				"mc":"LO47.1",
+				"type": "MTF",
+				"template": "mtf_template_5",
+				"qlevel": "EASY",
+				"qid":"EK.L.KAN.AKM.Q8",
+				"title": " Match the picture to the group. :",
+				"lhs_options": [
+					{
+						"value": {"type": "image", "asset": "grey"},
+						"index": 0,
+						"sub_title":"Vegetable"
+					}
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "image", "asset": "potatohighlight"},
+						"answer": 0
+					},
+					{
+						"value": {"type": "image", "asset": "rabbithighlight"},
+						"answer": 1
+					},
+					{
+						"value": {"type": "image", "asset": "potatohighlight"},
+						"answer": 0
+					},
+					{
+						"value": {"type": "image", "asset": "rabbithighlight"},
+						"answer": 2
+					},
+					{
+						"value": {"type": "image", "asset": "onionhighlight"},
+						"answer": 3
+					},
+					{
+						"value": {"type": "image", "asset": "tigerhighlight"},
+						"answer": 1
+					},
+					{
+						"value": {"type": "image", "asset": "garudhighlight"},
+						"answer": 2
+					},
+					{
+						"value": {"type": "image", "asset": "crowhighlight"},
+						"answer": 2
+					},
+					{
+						"value": {"type": "image", "asset": "frog"},
+						"answer": 1
+					}
+					
+				],
+				"model" : {
+					"title_audio" : {"asset": "mtf_sound", "type": "audio"}
+				},
+				"hints": [
+					{"asset": "The tailor is surrounded by clothers to stitch.", "type": "text"}
+				],
+				"max_score": 4,
+				"partial_scoring": true,
+				"feedback": ""
+			}
+			
+		]
+	}
+}
