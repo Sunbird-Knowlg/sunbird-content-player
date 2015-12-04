@@ -83,7 +83,6 @@ var OptionPlugin = Plugin.extend({
             this._parent._rhs_options.push(this);
             enableDrag = true;
         }
-        console.log(this);
         if (enableDrag) {
             var instance = this;
             var asset = this._self;
@@ -181,9 +180,6 @@ var OptionPlugin = Plugin.extend({
                     // Set the current answer as accepted
                     if (plugin._data.snapX) {
                         this.x = dims.x + (dims.w * plugin._data.snapX / 100);
-                        this.w = parseFloat(dims.w * (this.w || 0)/1000);
-                        this.h = parseFloat(plugin._dimensions.h * (this.h || 0)/1000);
-                        console.log("w : ", plugin._dimensions, "h :", plugin.h);
                     }
                     if (plugin._data.snapY) {
                         this.y = dims.y + (dims.w * plugin._data.snapY / 100);
