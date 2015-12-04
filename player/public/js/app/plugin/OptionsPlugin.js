@@ -79,7 +79,8 @@ var OptionsPlugin = Plugin.extend({
                     if (_.isFinite(this._parent.offsetY)) {
                         data.offsetY = this._parent.offsetY;
                     }
-
+                    if(this._data.multiple)
+                        data.multiple = true;
     				data.option = instance._data.options + '[' + index + ']';
     				index = index + 1;
     				PluginManager.invoke('option', data, instance._parent, instance._stage, instance._theme);
