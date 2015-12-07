@@ -246,8 +246,7 @@ var OptionPlugin = Plugin.extend({
 
         var highlightColor = this._data.highlight || '#E89241';
         var shadowColor = this._data.shadowColor || '#cccccc';
-
-        var shadowData = {x : 0, y: 0, w: 100, h: 100, type:'roundrect', fill: highlightColor, visible: false};
+        var shadowData = {x : 0, y: 0, w: 100, h: 100, type:'roundrect', fill: highlightColor, visible: false, opacity: (this._data.opacity || 1)};
         this._self.shadow = PluginManager.invoke('shape', shadowData, this, this._stage, this._theme);
 
         var offsetX = this._data.offsetX || 0;
