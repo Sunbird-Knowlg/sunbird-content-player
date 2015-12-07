@@ -21,7 +21,6 @@ MTFEvaluator = {
 						}
 
 						if (opt.answer == opt.selected) {
-							console.log('correct answer');
 							score += opt.score || 1;
 							answer[opt.value.asset] = true;
 						} else {
@@ -53,7 +52,6 @@ MTFEvaluator = {
 		result.score = score;
 		result.res = res;
 
-		console.log(result);
 		return result;
 	},
 
