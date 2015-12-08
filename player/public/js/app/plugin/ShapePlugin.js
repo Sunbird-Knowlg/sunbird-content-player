@@ -55,6 +55,8 @@ var ShapePlugin = Plugin.extend({
             this._self.regY = dims.h/2;
             this._self.rotation = data.rotate;
         }
+        if(data.opacity)
+            this._self.alpha = data.opacity;
     }
 });
 PluginManager.registerPlugin('shape', ShapePlugin);
