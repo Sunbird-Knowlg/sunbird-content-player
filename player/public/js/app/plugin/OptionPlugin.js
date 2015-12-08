@@ -6,9 +6,8 @@ var OptionPlugin = Plugin.extend({
     _model: undefined,
     _value: undefined,
     _answer: undefined,
-
+    _multiple: false,
     initPlugin: function(data) {
-        
         this._model = undefined;
         this._value = undefined;
         this._answer = undefined;
@@ -16,6 +15,9 @@ var OptionPlugin = Plugin.extend({
 
         var model = data.option;
         var value = undefined;
+
+        if(data.multiple) 
+            this._multiple = data.multiple;
 
         if (this._parent._controller && model) {
             this._model = model;
@@ -162,9 +164,13 @@ var OptionPlugin = Plugin.extend({
                     this.y = this.origY;
                     instance._parent.setAnswer(instance);
                 } else {
-                    
+
+                    var flag = true;
+                    // If multiple attribute of option tag is true.
+                    if(plugin._multiple)
+                        flag = false;
                     // If there is an existing answer, nudge it out
-                    if (plugin._answer) {
+                    if (plugin._answer && flag) {
                         var existing = plugin._answer;
                         existing._parent.setAnswer(existing);
                         existing._self.x = existing._self.origX;
@@ -240,8 +246,7 @@ var OptionPlugin = Plugin.extend({
 
         var highlightColor = this._data.highlight || '#E89241';
         var shadowColor = this._data.shadowColor || '#cccccc';
-
-        var shadowData = {x : 0, y: 0, w: 100, h: 100, type:'roundrect', fill: highlightColor, visible: false};
+        var shadowData = {x : 0, y: 0, w: 100, h: 100, type:'roundrect', fill: highlightColor, visible: false, opacity: (this._data.opacity || 1)};
         this._self.shadow = PluginManager.invoke('shape', shadowData, this, this._stage, this._theme);
 
         var offsetX = this._data.offsetX || 0;

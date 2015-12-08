@@ -7,7 +7,10 @@
         <media id="bg" src="felt.png" type="image" />
         <media id="t-outer" src="tailor-outer.png" type="image" />
         <media id="t-inner" src="tailor-inner.png" type="image" />
-        <media id="w-outer" src="wife-outer.png" type="image" />
+        <media id="w-outer" src="wife-outer.png" type="image" />        
+        <media id="grey" src="grey.png" type="image" />
+        <media id="potatohighlight" src="potato.png" type="image" />
+        <media id="rabbithighlight" src="rabbit.png" type="image" />
         <media id="w-inner" src="wife-inner.png" type="image" />
         <media id="b-outer" src="barber-outer.png" type="image" />
         <media id="b-inner" src="barber-inner.png" type="image" />
@@ -30,6 +33,8 @@
     
     <controller name="testData" type="data" id="testdata"/>
     <controller name="assessment" type="items" id="assessment"/>
+    <controller name="worksheet" type="items" id="worksheet"/>
+    <controller name="worksheet2" type="items" id="worksheet2"/>
     <template id="mcq_template_1">
         <text model="item.title" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42"/>
         <mcq multi_select="false" model="item" shadow="blue" blur="80" offsetX="50">
@@ -401,17 +406,75 @@
    
    </stage>
    <stage id="conditionalRendering6" x="0" y="0" w="100" h="100" extends="baseStage">
-        <param name="next" value="eventMCQMTFOptions" />
+        <param name="next" value="MTFQuestionWithOptionsTag" />
         <param name="previous" value="conditionalRendering5" />
         <image asset="bg" x="0" y="0" w="100" h="100"/>
         <param name="heading" model="testData.ts_cond_render_stage5"/>
         <text fontsize="40" color="yellow" x="22" y="43" w="22" h="12" ev-if="app.mode == 'learn'"> Learn mode is enabled</text>
         <text fontsize="40" color="yellow" x="22" y="43" w="22" h="12" ev-if="app.mode == 'interact'"> Interactive mode is enabled</text>
     </stage>
+    <template id="mtf_template_4">
+        
+        <text x="8" y="13" w="86" h="4" font="Verdana" fontsize="42" color="white" >
+            Able to put more than one item in dropable area : 
+        </text>
+        <text x="8" y="42" w="86" h="4" font="Verdana" fontsize="42" color="white">
+            Not able to put more than one item in dropable area : 
+        </text>
+            
+        <mtf model="item" force="false">
+            
+            <option x="65" y="15" w="15" h="24.5" snapX="12" snapY="12" option="lhs_options[0]" multiple="true"/>
+            <option x="65" y="45" w="15" h="24.5" snapX="12" snapY="12" option="lhs_options[0]" />
+           <!-- <option x="72" y="30" w="15" h="25.5" snapX="0.1" snapY="0.1" option="lhs_options[3]"/>-->
+
+            <option x="15" y="24" w="11" h="17" option="rhs_options[0]"/>
+            <option x="42" y="24" w="11" h="14.5" option="rhs_options[1]"/>
+            <option x="15" y="48" w="11" h="17" option="rhs_options[0]"/>
+            <option x="42" y="49" w="11" h="14.5" option="rhs_options[1]"/>
+        </mtf>
+        
+    </template>
+    <template id="mtf_template_5">
+        
+        <text x="8" y="13" w="86" h="4" font="Verdana" fontsize="50" color="white">
+            Rendering option using options tag with multiple item drop is allowed : 
+        </text>
+                    
+        <mtf model="item" force="false">
+            
+           <options layout="table" x="60" y="18" w="51" h="37" cols="2" marginX="15" marginY="5" snapX="45" snapY="35" options="lhs_options" multiple="true"/>
+           <!-- <option x="72" y="30" w="15" h="25.5" snapX="0.1" snapY="0.1" option="lhs_options[3]"/>-->
+
+            <option x="15" y="24" w="11" h="17" option="rhs_options[0]"/>
+            <option x="42" y="24" w="11" h="14.5" option="rhs_options[1]"/>
+        </mtf>
+        
+    </template>
+     <stage id="MTFQuestionWithOptionsTag" x="0" y="0" w="100" h="100" iterate="worksheet2" var="item" extends="baseStage">
+        <image asset="bg" x="0" y="0" w="100" h="100"/>
+        <image asset="grey" visible="false"/>
+        <image asset="potatohighlight" visible="false"/>
+        <image asset="rabbithighlight" visible="false"/>
+        <param name="next" value="MTFQuestion" />
+        <param name="previous" value="conditionalRendering6" />
+        <embed template="item" var-item="item"/>
+
+    </stage>
+    <stage id="MTFQuestion" x="0" y="0" w="100" h="100" iterate="worksheet" var="item" extends="baseStage">
+        <image asset="bg" x="0" y="0" w="100" h="100"/>
+        <image asset="grey" visible="false"/>
+        <image asset="potatohighlight" visible="false"/>
+        <image asset="rabbithighlight" visible="false"/>
+        <param name="next" value="eventMCQMTFOptions" />
+        <param name="previous" value="MTFQuestionWithOptionsTag" />
+        <embed template="item" var-item="item"/>
+
+    </stage>
     <stage id="eventMCQMTFOptions" x="0" y="0" w="100" h="100" iterate="assessment" var="item" extends="baseStage">
         <audio asset="drag_audio" />
         <param name="next" value="finished" />
-        <param name="previous" value="conditionalRendering6" />
+        <param name="previous" value="MTFQuestion" />
         <embed template="item" var-item="item"/>
         <appEvents list="next_item"/>
         <events>
@@ -420,6 +483,7 @@
             </event>
         </events>
     </stage>
+  
     <stage id="finished" x="0" y="0" w="100" h="100">
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
         
