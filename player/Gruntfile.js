@@ -196,9 +196,9 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        'custom-plugins/PlatformService/',
-                        'custom-plugins/DownloaderService/',
-                        'custom-plugins/GenieService/'
+                        '../player/custom-plugins/PlatformService/',
+                        '../player/custom-plugins/DownloaderService/',
+                        '../player/custom-plugins/GenieService/'
                     ]
                 }
             },
