@@ -124,14 +124,14 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                         if (GlobalContext.config.appInfo &&
                             GlobalContext.config.appInfo.code &&
                             GlobalContext.config.appInfo.code != packageName 
-                                && GlobalContext.config.appInfo.code != packageNameDelhi) {
+                                && (typeof GlobalContext.config.appInfo.filter == 'undefined')) { // && GlobalContext.config.appInfo.code != packageNameDelhi
                             TelemetryService.start();
                             $state.go('showContent', {});
                         } else {
                             if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.code) {
-                                if (GlobalContext.config.appInfo.code == packageNameDelhi) {
-                                    GlobalContext.filter = true;
-                                }
+                                // if (GlobalContext.config.appInfo.code == packageNameDelhi) {
+                                //     GlobalContext.filter = true;
+                                // }
                                 GlobalContext.game.id = GlobalContext.config.appInfo.code;
                             }
                             TelemetryService.start();

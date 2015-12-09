@@ -11,7 +11,7 @@ GlobalContext = {
         flavor: "",
         appInfo: undefined
     },
-    filter: false,
+    filter: undefined,
     init: function(gid, ver) {
         return new Promise(function(resolve, reject) {
             GlobalContext.game.id = gid;
@@ -30,6 +30,7 @@ GlobalContext = {
                 .then(function(result) {
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
                         GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
+                        GlobalContext.filter = GlobalContext.config.appInfo.filter;
                     }
                     resolve(GlobalContext.config);
                 });
