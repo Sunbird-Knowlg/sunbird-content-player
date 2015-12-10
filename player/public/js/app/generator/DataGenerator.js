@@ -1,8 +1,9 @@
 var DataGenerator = {
 	_loaderMap: {},
-	loadData: function(baseDir, type, id, controller) {
+	loadData: function(baseDir, type, id, controller, dataType) {
 		var folder = type;
-		var filename = id + '.json';
+		(dataType)?dataType = dataType.toLowerCase(): dataType = "json";
+		var filename = id + '.' + dataType;
 		var fullPath = baseDir + "/" + folder + "/" + filename;
 		$.getJSON(fullPath, function(data) {
 			DataGenerator._onLoad(data, controller);
