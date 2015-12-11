@@ -16,22 +16,7 @@ var async = require('async')
 	, service = (require('../services/ContentService'))
 	, util = require('../commons/Util');
 
-exports.getContentDefinition = function(req, res) {
-	service.getContentDefinition(util.responseCB(res), req.params.tid, req.params.contentType);
-}
-
 exports.getContentList = function(req, res) {
 	service.getContentList(util.responseCB(res), req.params.type, "application/json");
 }
 
-exports.getContent = function(req, res) {
-	service.getContent(util.responseCB(res), req.params.cid, req.params.tid, req.params.type);
-}
-
-exports.createContent = function(req, res) {
-	service.createContent(req.body, util.responseCB(res));
-}
-
-exports.updateContent = function(req, res) {
-	service.updateContent(req.body, util.responseCB(res));
-}
