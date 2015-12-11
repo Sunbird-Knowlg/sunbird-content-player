@@ -1,12 +1,15 @@
 PlatformService = {
-	getJSON: function(jsonFile) {
-		return new Promise(function(resolve, reject) {
-			$.getJSON('json/' + jsonFile, function(data) {
-				resolve(data);
-			})
-			.fail(function(err) {
-				reject(err);
-			});
+	getJSON: function(contentType) {
+
+        return new Promise(function(resolve, reject) {
+			$.post("/taxonomy-service/v1/content/list/" + contentType , function(resp) {
+	            console.log(resp);
+	            resolve(resp);
+	        })
+	        .fail(function(){
+	        	console.log("Error......................................");
+	        	reject(err);
+	        });
 		});
 	},
 	setAPIEndpoint: function(endpoint) {
@@ -15,7 +18,7 @@ PlatformService = {
 	getContentList: function() {
 		var result = {"data": []};
 		return new Promise(function(resolve, reject) {
-			PlatformService.getJSON('stories.json')
+			PlatformService.getJSON('Story')
 			.then(function(stories) {
 				if (stories && stories.result && stories.result.content) {
 					if (stories.result.content == null) {
@@ -29,7 +32,7 @@ PlatformService = {
 				}
 			})
 			.then(function() {
-				return PlatformService.getJSON('worksheets.json')
+				return PlatformService.getJSON('Worksheet')
 			})
 			.then(function(worksheets) {
 				if (worksheets && worksheets.result && worksheets.result.content) {
