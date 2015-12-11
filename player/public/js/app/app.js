@@ -129,9 +129,10 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                             $state.go('showContent', {});
                         } else {
                             if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.code) {
-                                // if (GlobalContext.config.appInfo.code == packageNameDelhi) {
-                                //     GlobalContext.filter = true;
-                                // }
+                                // TODO: remove the below if condition after getting confirmation that, Genie sending this value.
+                                if (GlobalContext.config.appInfo.code == packageNameDelhi) {
+                                    GlobalContext.filter = '{"tags" : ["Delhi Curriculum"]}';
+                                }
                                 GlobalContext.game.id = GlobalContext.config.appInfo.code;
                             }
                             TelemetryService.start();
