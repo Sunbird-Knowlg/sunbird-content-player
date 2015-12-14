@@ -1,6 +1,13 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        mkdir: {
+            all: {
+              options: {
+                    create: ['www']
+                },
+            },
+        },
         uglify: {
             js: {
                 files: {
@@ -272,6 +279,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-aws-s3');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-rename');
+    grunt.loadNpmTasks('grunt-mkdir');
     grunt.registerTask('default', ['uglify:js']);
     grunt.registerTask('build-all', ['uglify:js', 'compress:story', 'compress:worksheet', 'aws_s3:uploadJS', 'aws_s3:uploadSamples']);
     grunt.registerTask('build-js', ['uglify:js', 'aws_s3:cleanJS', 'aws_s3:uploadJS', 'clean:minjs']);
@@ -292,7 +300,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'cordovacli:add_plugins', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('build-signed-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'cordovacli:add_plugins', 'cordovacli:build_android_release', 'clean:minjs']);
 
-    grunt.registerTask('init-setup', ['cordovacli:add_platforms', 'cordovacli:add_custom_plugins']);
+    grunt.registerTask('init-setup', ['mkdir:all', 'copy:main', 'cordovacli:add_platforms', 'cordovacli:add_custom_plugins']);
     grunt.registerTask('ci-build-debug', ['build-apk-xwalk']);
     grunt.registerTask('ci-build-signed', ['build-signed-apk-xwalk', 'build-js']);
 
