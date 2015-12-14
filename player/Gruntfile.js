@@ -302,6 +302,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('init-setup', ['mkdir:all', 'copy:main', 'cordovacli:add_platforms', 'cordovacli:add_custom_plugins']);
     grunt.registerTask('ci-build-debug', ['build-apk-xwalk']);
-    grunt.registerTask('ci-build-signed', ['build-signed-apk-xwalk', 'build-js']);
+    grunt.registerTask('ci-build-signed', ['build-signed-apk-xwalk']);
 
 };
