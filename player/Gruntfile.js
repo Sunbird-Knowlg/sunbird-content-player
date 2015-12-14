@@ -175,6 +175,13 @@ module.exports = function(grunt) {
                 path: 'www',
                 cli: 'cordova'  // cca or cordova
             },
+            add_platforms: {
+                options: {
+                    command: 'platform',
+                    action: 'add',
+                    platforms: ['android']
+                }
+            },
             rm_custom_plugins: {
                 options: {
                     command: 'plugin',
@@ -284,6 +291,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'cordovacli:add_plugins', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('build-signed-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'cordovacli:add_plugins', 'cordovacli:build_android_release', 'clean:minjs']);
+
+    grunt.registerTask('init-setup', ['cordovacli:add_platforms', 'cordovacli:add_custom_plugins']);
     grunt.registerTask('ci-build-debug', ['build-apk-xwalk']);
     grunt.registerTask('ci-build-signed', ['build-signed-apk-xwalk', 'build-js']);
 
