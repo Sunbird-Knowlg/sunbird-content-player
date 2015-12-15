@@ -1,5 +1,5 @@
 AudioRecordingService = {
-	recorder: 'sensibol', // 'android' - uses cordova-plugin-media for recording audio. :: 'sensibol': uses sensibol api for recording audio.
+	recorder: AppConfig.recorder, // 'android' - uses cordova-plugin-media for recording audio. :: 'sensibol': uses sensibol api for recording audio.
 	init: function(recorder) {
 		if(recorder) {
 			AudioRecordingService.recorder = recorder;	
