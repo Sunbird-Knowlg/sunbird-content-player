@@ -74,7 +74,7 @@ AndroidRecorder = {
 	},
 	processRecording: function(path, lineIndex) {
 		return new Promise(function(resolve, reject) {
-			resolve({status: "success", errMessage: "Process recording for android is not integrated."});
+			resolve({status: "success", result: {totalScore: 1}, errMessage: "Process recording for android is not integrated."});
 		});
 	}
 };

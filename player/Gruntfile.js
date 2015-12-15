@@ -309,19 +309,19 @@ module.exports = function(grunt) {
         },
         replace: {
             sensibol: {
-                src: ['www/js/app/AppConfig.js'],
+                src: ['www/js/app/AppConfig.js', 'www/js/app/quizapp-0.3.min.js'],
                 overwrite: true,
                 replacements: [{
-                    from: /recorder: "(android|sensibol)"/g,
-                    to: "recorder: \"sensibol\""
+                    from: /AUDIO_RECORDER/g,
+                    to: "sensibol"
                 }]
             },
             android: {
-                src: ['www/js/app/AppConfig.js'],
+                src: ['www/js/app/AppConfig.js', 'www/js/app/quizapp-0.3.min.js'],
                 overwrite: true,
                 replacements: [{
-                    from: /recorder: "(android|sensibol)"/g,
-                    to: "recorder: \"android\""
+                    from: /AUDIO_RECORDER/g,
+                    to: "android"
                 }]
             }
         }

@@ -21,7 +21,7 @@
             </feature>
         </config-file>
         <source-file src="src/android/RecorderService.java" target-dir="src/" />
-        <resource-file src="libs/sensibol-ekstep-speechengine-v.1.0.15.jar" target="libs" />
+        <resource-file src="libs/sensibol-ekstep-speechengine-v.1.0.15.jar" target="libs/sensibol-ekstep-speechengine-v.1.0.15.jar" />
         <resource-file src="libs/armeabi-v7a/libsensibol-ekstep-speechengine.so" target="libs/armeabi-v7a/libsensibol-ekstep-speechengine.so" />
     </platform>
 </plugin>
