@@ -3,14 +3,16 @@
  * configure deployable services at runtime from their orchestrator. This can
  * also provide authentication, interceptor capabilities.
  *
- * @author 
+ * @author Jitendra Singh Sankhwar
  */
-var contentHelper = require('../view_helpers/ContentViewHelper')
+var contentHelper = require('../view_helpers/ContentViewHelper'),
+	downloadHelper = require('../services/DownloaderService');
 
 module.exports = function(app, dirname) {
 	
 	/** Content List Routes */
 	app.post('/taxonomy-service/v1/content/list/:type', contentHelper.getContentList);
+	app.get('/download-url/v1/content/:type/:id/:url', downloadHelper.downloadFromUrl);
     
 };
 

@@ -1,13 +1,10 @@
 PlatformService = {
 	getJSON: function(contentType) {
-
         return new Promise(function(resolve, reject) {
 			$.post("/taxonomy-service/v1/content/list/" + contentType , function(resp) {
-	            console.log(resp);
 	            resolve(resp);
 	        })
-	        .fail(function(){
-	        	console.log("Error......................................");
+	        .fail(function(err){
 	        	reject(err);
 	        });
 		});
@@ -20,30 +17,32 @@ PlatformService = {
 		return new Promise(function(resolve, reject) {
 			PlatformService.getJSON('Story')
 			.then(function(stories) {
-				if (stories && stories.result && stories.result.content) {
-					if (stories.result.content == null) {
-						stories.result.content = [];
+				if (stories && stories.contents) {
+					if (stories.contents == null) {
+						stories.contents = [];
 					}
-					for(i=0;i < stories.result.content.length; i++) {
-                    	var item = stories.result.content[i];
+					for(i=0;i < stories.contents.length; i++) {
+                    	var item = stories.contents[i];
                     	item.type = 'story';
                     	result.data.push(item);
                 	}
+                	result.appStatus = stories.appStatus;
 				}
 			})
 			.then(function() {
 				return PlatformService.getJSON('Worksheet')
 			})
 			.then(function(worksheets) {
-				if (worksheets && worksheets.result && worksheets.result.content) {
-					if (worksheets.result.content == null) {
-						worksheets.result.content = [];
+				if (worksheets  && worksheets.contents) {
+					if (worksheets.contents == null) {
+						worksheets.contents = [];
 					}
-					for(i=0;i<worksheets.result.content.length; i++) {
-                    	var item = worksheets.result.content[i];
+					for(i=0;i<worksheets.contents.length; i++) {
+                    	var item = worksheets.contents[i];
                     	item.type = 'worksheet';
                     	result.data.push(item);
                 	}
+                	result.appStatus = worksheets.appStatus;
                 }
 				resolve(result);
 			})

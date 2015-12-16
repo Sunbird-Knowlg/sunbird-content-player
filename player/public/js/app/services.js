@@ -10,7 +10,7 @@ angular.module('quiz.services', ['ngResource'])
             else
                 return null;
         };
-        var processContent = function(content) {
+        var processContent = function(content, appStatus) {
             var localContent = returnObject.getContent(content.identifier);
             if(!localContent) localContent = content;
             localContent.status = "processing";
@@ -24,7 +24,7 @@ angular.module('quiz.services', ['ngResource'])
             }
             returnObject.saveContent(localContent);
             return new Promise(function(resolve, reject) {
-                DownloaderService.process(content)
+                DownloaderService.process(content, appStatus)
                 .then(function(data) {
                     for (key in data) {
                         content[key] = data[key];
@@ -221,7 +221,7 @@ angular.module('quiz.services', ['ngResource'])
                     }
                 });
             },
-            processContent: function(content) {
+            processContent: function(content, appStatus) {
                 var promise = {};
                 var localContent = returnObject.getContent(content.identifier);
                 if (localContent) {
@@ -235,7 +235,7 @@ angular.module('quiz.services', ['ngResource'])
                         }
                     }
                     if ((localContent.status == "ready" && localContent.pkgVersion != content.pkgVersion) || (localContent.status == "error")) {
-                        promise = processContent(content);
+                        promise = processContent(content, appStatus);
                     } else {
                         if(localContent.filters) {
                             if(_.indexOf(localContent.filters, GlobalContext.game.id) == -1) {
@@ -252,7 +252,7 @@ angular.module('quiz.services', ['ngResource'])
                             console.log("content: " + localContent.identifier + " is at status: " + localContent.status);
                     }
                 } else {
-                    promise = processContent(content);
+                    promise = processContent(content, appStatus);
                 }
                 return promise;
             },
@@ -281,7 +281,7 @@ angular.module('quiz.services', ['ngResource'])
                             if(contents.data) {
                                 for (key in contents.data) {
                                     var content = contents.data[key];
-                                    promises.push(returnObject.processContent(content));
+                                    promises.push(returnObject.processContent(content, contents.appStatus));
                                 }
                                 var localContentIds = _.keys(returnObject.contentList);
                                 var remoteContentIds = _.pluck(contents.data, 'identifier');

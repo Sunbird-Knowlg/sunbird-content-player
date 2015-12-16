@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "quizApp: An Ionic project",
   "dependencies": {
+    "download":"4.4.3",
     "async": "*",
     "ejs": "*",
     "express": "3.2.6",

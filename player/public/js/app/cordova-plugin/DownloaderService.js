@@ -12,11 +12,25 @@ DownloaderService = {
             DownloaderService.appDataDirectory = cordova.file.externalDataDirectory || cordova.file.dataDirectory;
         });
 	},
-	process: function(content) {
+	process: function(content, appStatus) {
 		if(typeof cordova == 'undefined') {
-            return new Promise(function(resolve, reject) {
-                resolve({"status": "ready", "baseDir": content.launchPath, "errorCode": ""});
-            });
+            if(typeof appStatus != undefined && appStatus == "DEMO"){
+                return new Promise(function(resolve, reject){
+                    resolve({"status": "ready", "baseDir": content.launchPath , "errorCode": ""});
+                });
+            } else {
+                return new Promise(function(resolve, reject) {
+                    var url = encodeURIComponent(content.downloadUrl);
+                    var id = content.identifier;
+                    var type = content.type;
+                    $.get("/download-url/v1/content/" + type + "/" + id + "/" + url  , function(resp) {
+                        resolve(resp);
+                    })
+                    .fail(function(err){
+                        reject(err);
+                    });
+                });
+            }
         } else {
             return new Promise(function(resolve, reject) {
                 var contentId = content.identifier;

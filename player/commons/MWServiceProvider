@@ -10,11 +10,11 @@
 /**
  * Helper class to invoke MW API's
  *
- * @author Santhosh
+ * @author Jitendra Singh Sankhwar
  */
 var Client = require('node-rest-client').Client;
 var client = new Client();
-var baseUrl = "http://lp-sandbox.ekstep.org:8080";
+var baseUrl = appConfig.SANDBOX;
 
 exports.postCall = function(url, arguments, callback) {
     var args = {
@@ -28,8 +28,7 @@ exports.postCall = function(url, arguments, callback) {
     client.post(baseUrl + url, args, function(data, response) {
         parseResponse(data, callback);
     }).on('error', function(err) {
-        console.log("error in postCall");
-        //callback(err);
+        callback(err);
     });
 }
 

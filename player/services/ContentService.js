@@ -2,7 +2,7 @@
 /**
  * Content Service - Invoke MW API's, transform data for UI and viceversa
  *
- * @author Mohammad Azharuddin
+ * @author Jitendra Singh Sankhwar
  */
 var async = require('async')
 	, mwService = require('../commons/MWServiceProvider')
@@ -24,10 +24,11 @@ exports.getContentList = function(cb, type, contentType) {
 			var contents = data.result.content;
 			var result = {};
 			result.contents = contents;
-			console.log("contents : ", contents);
 			cb(null, result);
 		}
 	});
 }
+
+
 
 

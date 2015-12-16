@@ -10,10 +10,10 @@
 /**
  * View Helper for Content UX.
  *
- * @author Mohammad Azharuddin
+ * @author Jitendra Singh Sankhwar
  */
 var async = require('async')
-	, service = (require('../services/ContentService'))
+	, service = (appConfig.APP_STATUS == "LIVE" ? require('../services/ContentService') : require('../services/ContentServiceFixtures'))
 	, util = require('../commons/Util');
 
 exports.getContentList = function(req, res) {

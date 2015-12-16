@@ -1,0 +1,7 @@
+{
+	"STORY" : "./public/stories/",
+	"WORKSHEET" : "./public/worksheets/",
+	"SANDBOX": "http://lp-sandbox.ekstep.org:8080",
+	"PRODUCTION": "https://platform.ekstep.org:8080/taxonomy-service",
+	"APP_STATUS" : "DEMO"
+}
