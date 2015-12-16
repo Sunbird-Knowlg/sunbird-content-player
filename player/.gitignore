@@ -3,4 +3,6 @@ platforms/
 plugins/
 resources/
 www/
+public/stories/
+public/worksheets/
 .idea
