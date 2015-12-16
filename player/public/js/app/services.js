@@ -260,8 +260,9 @@ angular.module('quiz.services', ['ngResource'])
                 returnObject.setSyncStart();
                 return new Promise(function(resolve, reject) {
                     var filter = {"types": ["Story", "Worksheet"], "filter": {}};
-                    if (GlobalContext.filter === true) {
-                        filter.filter = {"tags" : ["Delhi Curriculum"]};
+                    if (GlobalContext.filter) {
+                        // filter.filter = {"tags" : ["Delhi Curriculum"]};
+                        filter.filter = JSON.parse(GlobalContext.filter);
                     }
                     PlatformService.getContentList(filter)
                     .then(function(contents) {
