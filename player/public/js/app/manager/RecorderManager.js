@@ -1,6 +1,14 @@
 RecorderManager = {
 	mediaInstance: undefined,
 	recording: false, // status - true: recording audio, false: not recording audio.
+	recorder: AppConfig.recorder, // 'android' - uses cordova-plugin-media for recording audio. :: 'sensibol': uses sensibol api for recording audio.
+	getRecorder: function() {
+		if (RecorderManager.recorder == "sensibol") {
+			return RecorderService;
+		} else {
+			return AndroidRecorderService;
+		}
+	},
 	/*
 	*	Create Audio filepath. Call Audio Recording Service to start recording.
 	* 	Dispatch success OR failure events.
@@ -11,7 +19,7 @@ RecorderManager = {
 		var stageId = stagePlugin._id;
 		var path = RecorderManager._getFilePath(stageId);
 		RecorderManager.recording = false;
-		AudioRecordingService.startRecording(path)
+		RecorderManager.getRecorder().startRecording(path)
 		.then(function(mediaInstance) {
 			RecorderManager.mediaInstance = mediaInstance;
 			if (RecorderManager.mediaInstance && RecorderManager.mediaInstance.status == "success") { // not undefined means recording started.
@@ -44,7 +52,7 @@ RecorderManager = {
 		if (RecorderManager.recording) {
 			var plugin = PluginManager.getPluginObject(action.asset);
 			var stagePlugin = plugin._stage || plugin;
-			AudioRecordingService.stopRecording(RecorderManager.mediaInstance)
+			RecorderManager.getRecorder().stopRecording(RecorderManager.mediaInstance)
 			.then(function(response) {
 				if (response.status == "success") {
 					RecorderManager.recording = false;
@@ -81,7 +89,7 @@ RecorderManager = {
 			var plugin = PluginManager.getPluginObject(action.asset);
 			var stagePlugin = plugin._stage || plugin;
 			var lineindex = stagePlugin.evaluateExpr(action.dataAttributes.lineindex);
-			AudioRecordingService.processRecording(RecorderManager.mediaInstance.filePath, lineindex)
+			RecorderManager.getRecorder().processRecording(RecorderManager.mediaInstance.filePath, lineindex)
 			.then(function(processResponse) {
 				if (processResponse.status == "success") {
 					if (processResponse.result) {

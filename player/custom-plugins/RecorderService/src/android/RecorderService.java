@@ -38,12 +38,13 @@ public class RecorderService extends CordovaPlugin {
         speechEngine = SpeechEngineFactory.INSTANCE.getSpeechEngine();
         try {
             speechEngine.init(this.cordova.getActivity().getApplicationContext(), WORK_DIR_PATH);
+            super.initialize(cordova, webView);
         } catch (SEException e) {
             e.printStackTrace();
         } catch (InvalidStateException e) {
             e.printStackTrace();
         }
-        super.initialize(cordova, webView);
+        
     }
 
     public void onDestroy() {
@@ -83,19 +84,14 @@ public class RecorderService extends CordovaPlugin {
 
     private void initLesson(String lessonMetadataFile, CallbackContext callbackContext) {
         Map<String, String> map = new HashMap<String, String>();
-        String error = null;
         if (null != lessonMetadataFile) {
             try {
                 speechEngine.initLesson(lessonMetadataFile);
-            } catch (Exception e) {
-                e.printStackTrace();
-                error = e.getMessage();
-            }
-            if(error == null) {
                 map.put("status", "success");
-            } else {
+            } catch (Exception e) {
+                // e.printStackTrace();
                 map.put("status", "error");
-                map.put("errorMessage", error);
+                map.put("errorMessage", e.getMessage());
             }
         } else {
             map.put("status", "error");
@@ -106,20 +102,15 @@ public class RecorderService extends CordovaPlugin {
 
     private void startRecording(String recordingFile, CallbackContext callbackContext) {
         Map<String, String> map = new HashMap<String, String>();
-        String error = null;
         if(null != recordingFile) {
             try {
                 speechEngine.startRecording(recordingFile);
                 System.out.println("Recording Stopped.");
-            } catch (Exception e) {
-                e.printStackTrace();
-                error = e.getMessage();
-            }
-            if(error == null) {
                 map.put("status", "success");
-            } else {
+            } catch (Exception e) {
+                // e.printStackTrace();
                 map.put("status", "error");
-                map.put("errorMessage", error);
+                map.put("errorMessage", e.getMessage());
             }
         } else {
             map.put("status", "error");

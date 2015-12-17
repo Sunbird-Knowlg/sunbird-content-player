@@ -29,6 +29,7 @@ module.exports = function(grunt) {
                         'public/js/app/plugin/*Plugin.js',
                         'public/js/app/renderer/*.js',
                         'public/js/app/cordova-plugin/DownloaderService.js',
+                        'public/js/app/cordova-plugin/AndroidRecorderService.js',
                         'public/js/app/service/*.js'
                     ],
                     'public/js/app/telemetry-lib-0.3.min.js': [
