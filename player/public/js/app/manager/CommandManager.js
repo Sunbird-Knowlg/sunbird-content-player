@@ -11,6 +11,7 @@ CommandManager = {
                 return;
             }
         }
+        CommandManager._setDataAttributes(action);
         switch (cmd) {
             case 'PLAY':
                 if (plugin && plugin._type == 'sprite') {
@@ -100,8 +101,29 @@ CommandManager = {
                 }
                 
                 break;
+            case 'STARTRECORD':
+                if (plugin) RecorderManager.startRecording(action);
+                break;
+            case 'STOPRECORD':
+                console.log("STOPRECORD command called.")
+                if (plugin) RecorderManager.stopRecording(action);
+                break;
+            case 'PROCESSRECORD':
+                if (plugin) RecorderManager.processRecording(action);
+                break;
             default:
-                console.log("Command '" + choice +"' not found.");
+                console.log("Command '" + cmd +"' not found.");
         }
+    },
+    _setDataAttributes: function(action) {
+        var dataAttributes = {};
+        var keys = _.keys(action);
+        keys.forEach(function(key) {
+            var lowerKey = key.toLowerCase();
+            if (lowerKey.startsWith("data-")) {
+                dataAttributes[lowerKey.replace("data-","")] = action[key];
+            }
+        });
+        action.dataAttributes = dataAttributes;
     }
 }

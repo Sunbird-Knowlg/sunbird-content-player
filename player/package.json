@@ -31,7 +31,8 @@
     "grunt-string-replace": "*",
     "gulp-util": "^2.2.14",
     "shelljs": "^0.3.0",
-    "grunt-mkdir": "*"
+    "grunt-mkdir": "*",
+    "grunt-text-replace": "*"
   },
   "cordovaPlugins": [
     "cordova-plugin-device",
