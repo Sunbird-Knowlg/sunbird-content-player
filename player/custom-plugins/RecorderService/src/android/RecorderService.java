@@ -28,6 +28,7 @@ public class RecorderService extends CordovaPlugin {
     public static final String TAG = "Genie Service Plugin";
     private static final String WORK_DIR_PATH = "/storage/emulated/0/Genie/SdkWorkDir";
     private SpeechEngine speechEngine;
+    private boolean initialized = false;
 
     public RecorderService() {
         System.out.println("Recorder Service Constructor..........");
@@ -39,9 +40,8 @@ public class RecorderService extends CordovaPlugin {
         try {
             speechEngine.init(this.cordova.getActivity().getApplicationContext(), WORK_DIR_PATH);
             super.initialize(cordova, webView);
-        } catch (SEException e) {
-            e.printStackTrace();
-        } catch (InvalidStateException e) {
+            initialized = true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         
@@ -54,6 +54,10 @@ public class RecorderService extends CordovaPlugin {
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         CordovaActivity activity = (CordovaActivity) this.cordova.getActivity();
         System.out.println("Recorder Service action: " + action);
+        if( initialized == false) {
+            callbackContext.error(getErrorJSONObject("INIT_FAILED", null));
+            return false;
+        }
         if(action.equals("initLesson")) {
             if (args.length() != 1) {
                 callbackContext.error(getErrorJSONObject("INVALID_ACTION", null));
