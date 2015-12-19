@@ -25,7 +25,7 @@ exports.downloadFromUrl = function(req, res) {
 	if (!fs.existsSync(dir)){
 	    fs.mkdirSync(dir);
 	}
-	new Download({extract: true}).get(url).dest(dir)
+	new Download({mode: '777', extract: true}).get(url).dest(dir)
     .run(function(err, files){
     	var baseDir = "/" + type + "/" + req.params.id;
     	cb(null, {"status": "ready", "baseDir": baseDir , "appIcon" : baseDir + "/logo.png", "errorCode": err});

@@ -32,8 +32,7 @@ exports.getContentList = function(cb, type, contentType) {
   			}
   		}
 	});
-}
-else {
+} else {
   fs.readFile('fixtures/worksheets.json', 'utf8', function (err, data) {
   		if (err) {
   			cb(err);

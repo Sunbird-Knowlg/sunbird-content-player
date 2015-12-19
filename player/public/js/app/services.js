@@ -10,7 +10,7 @@ angular.module('quiz.services', ['ngResource'])
             else
                 return null;
         };
-        var processContent = function(content, appStatus) {
+        var processContent = function(content) {
             var localContent = returnObject.getContent(content.identifier);
             if(!localContent) localContent = content;
             localContent.status = "processing";
@@ -24,7 +24,7 @@ angular.module('quiz.services', ['ngResource'])
             }
             returnObject.saveContent(localContent);
             return new Promise(function(resolve, reject) {
-                DownloaderService.process(content, appStatus)
+                DownloaderService.process(content)
                 .then(function(data) {
                     for (key in data) {
                         content[key] = data[key];
@@ -221,7 +221,7 @@ angular.module('quiz.services', ['ngResource'])
                     }
                 });
             },
-            processContent: function(content, appStatus) {
+            processContent: function(content) {
                 var promise = {};
                 var localContent = returnObject.getContent(content.identifier);
                 if (localContent) {
@@ -234,8 +234,8 @@ angular.module('quiz.services', ['ngResource'])
                             }
                         }
                     }
-                    if ((localContent.status == "ready" && localContent.pkgVersion != content.pkgVersion) || (localContent.status == "error")) {
-                        promise = processContent(content, appStatus);
+                    if ((localContent.status == "ready" && localContent.pkgVersion != content.pkgVersion) || (localContent.status != "ready")) {
+                        promise = processContent(content);
                     } else {
                         if(localContent.filters) {
                             if(_.indexOf(localContent.filters, GlobalContext.game.id) == -1) {
@@ -252,7 +252,7 @@ angular.module('quiz.services', ['ngResource'])
                             console.log("content: " + localContent.identifier + " is at status: " + localContent.status);
                     }
                 } else {
-                    promise = processContent(content, appStatus);
+                    promise = processContent(content);
                 }
                 return promise;
             },
@@ -279,10 +279,11 @@ angular.module('quiz.services', ['ngResource'])
                                 "message": errMsg
                             });
                         } else {
+                            if (contents.appStatus) AppConfig.APP_STATUS = contents.appStatus;
                             if(contents.data) {
                                 for (key in contents.data) {
                                     var content = contents.data[key];
-                                    promises.push(returnObject.processContent(content, contents.appStatus));
+                                    promises.push(returnObject.processContent(content));
                                 }
                                 var localContentIds = _.keys(returnObject.contentList);
                                 var remoteContentIds = _.pluck(contents.data, 'identifier');

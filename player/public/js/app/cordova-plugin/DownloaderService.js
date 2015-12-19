@@ -12,13 +12,9 @@ DownloaderService = {
             DownloaderService.appDataDirectory = cordova.file.externalDataDirectory || cordova.file.dataDirectory;
         });
 	},
-	process: function(content, appStatus) {
+	process: function(content) {
 		if(typeof cordova == 'undefined') {
-            if(typeof appStatus != undefined && appStatus == "DEMO"){
-                return new Promise(function(resolve, reject){
-                    resolve({"status": "ready", "baseDir": content.launchPath , "errorCode": ""});
-                });
-            } else {
+            if (AppConfig.APP_STATUS = "LIVE") {
                 return new Promise(function(resolve, reject) {
                     var url = encodeURIComponent(content.downloadUrl);
                     var id = content.identifier;
@@ -29,6 +25,10 @@ DownloaderService = {
                     .fail(function(err){
                         reject(err);
                     });
+                });
+            } else {
+                return new Promise(function(resolve, reject){
+                    resolve({"status": "ready", "baseDir": content.launchPath , "errorCode": ""});
                 });
             }
         } else {
