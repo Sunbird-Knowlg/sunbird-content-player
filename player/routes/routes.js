@@ -1,20 +1,18 @@
-/*
- * Copyright (c) 2013-2014 Canopus Consulting. All rights reserved.
- *
- * This code is intellectual property of Canopus Consulting. The intellectual and technical
- * concepts contained herein may be covered by patents, patents in process, and are protected
- * by trade secret or copyright law. Any unauthorized use of this code without prior approval
- * from Canopus Consulting is prohibited.
- */
-
 /**
  * Defines all Rest Routes. This is a framework component that can be used to
- * configure deployable services at runtime from thei orchestrator. This can
+ * configure deployable services at runtime from their orchestrator. This can
  * also provide authentication, interceptor capabilities.
  *
- * @author Santhosh
+ * @author Jitendra Singh Sankhwar
  */
+var contentHelper = require('../view_helpers/ContentViewHelper'),
+	downloadHelper = require('../services/DownloaderService');
 
 module.exports = function(app, dirname) {
-
+	
+	/** Content List Routes */
+	app.post('/taxonomy-service/v1/content/list/:type', contentHelper.getContentList);
+	app.get('/download-url/v1/content/:type/:id/:url', downloadHelper.downloadFromUrl);
+    
 };
+

@@ -12,11 +12,11 @@
  *
  * @author Santhosh
  */
+appConfig = require('./conf/appConfig.json');
 var express = require('express')
     , http = require('http')
     , path = require('path')
     , fs = require('fs');
-
 http.globalAgent.maxSockets = 100000;
 
     var app = express();
