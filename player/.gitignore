@@ -2,7 +2,8 @@ node_modules/
 platforms/
 plugins/
 resources/
-www/
+public/stories/
+public/worksheets/
 .idea
 public/js/app/quizapp-0.3.min.js
 public/js/app/telemetry-lib-0.3.min.js

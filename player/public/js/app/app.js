@@ -87,6 +87,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             console.log('ionic platform is ready...');
             if (window.cordova && window.cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            } else {
+                AppConfig.recorder = "android";
             }
             if (window.StatusBar) {
                 StatusBar.styleDefault();
