@@ -18,6 +18,8 @@ MTFEvaluator = {
 						// rhs id -> lhs index
 						if (typeof opt.selected != 'undefined') {
 							res.push(opt.value.asset + '->' + opt.selected);
+						} else {
+							res.push(opt.value.asset + '->' + opt.selected);
 						}
 
 						if (opt.answer == opt.selected) {
@@ -30,8 +32,10 @@ MTFEvaluator = {
 								answer[opt.value.asset] = false;
 						}
  					} else {
- 						if(typeof opt.selected != 'undefined')
+ 						if(typeof opt.selected != 'undefined') {
  							pass = false;
+ 							res.push(opt.value.asset + '->' + opt.selected);
+ 						}
  					}
 				});
 			}

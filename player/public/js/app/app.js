@@ -334,7 +334,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'html') {
                 HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier, $scope);
             } else {
-                Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier);
+                console.log("$scope.item : ", $scope.item);
+                Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
             }
         } else {
             alert('Name or Launch URL not found.');

@@ -25,12 +25,12 @@ Renderer = {
         Renderer.theme.updateCanvas(newWidth, newHeight);
         if(!disableDraw) Renderer.theme.reRender();
     },
-    start: function(gameRelPath, canvasId, gameId) {
+    start: function(gameRelPath, canvasId, game) {
         if(Renderer.running) {
             Renderer.cleanUp();
         }
         Renderer.running = true;
-        TelemetryService.start(gameId, GlobalContext.game.ver);
+        TelemetryService.start(game.identifier, game.pkgVersion);
         Renderer.initByXML(gameRelPath, canvasId);
     },
     initByJSON: function(gameRelPath, canvasId) {
