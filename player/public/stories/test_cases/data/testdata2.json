@@ -1,0 +1,13 @@
+[{
+    "title": "Page 1 - of the data iterator.",
+    "description": "Description of Page 1. Description of Page 1. Description of Page 1. Description of Page 1. Description of Page 1. Description of Page 1.",
+    "template": "dataTemplate"
+}, {
+    "title": "Page 2 - of the data iterator.",
+    "description": "Description of Page 2. Description of Page 2. Description of Page 2. Description of Page 2. Description of Page 2. Description of Page 2.",
+    "template": "dataTemplate1"
+}, {
+    "title": "Page 3 - of the data iterator.",
+    "description": "Description of Page 3. Description of Page 3. Description of Page 3. Description of Page 3. Description of Page 3. Description of Page 3.",
+    "template": "dataTemplate"
+}]
