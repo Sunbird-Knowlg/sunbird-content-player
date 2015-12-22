@@ -14,7 +14,7 @@ DownloaderService = {
 	},
 	process: function(content) {
 		if(typeof cordova == 'undefined') {
-            if (AppConfig.APP_STATUS = "LIVE") {
+            if (AppConfig.APP_STATUS == "LIVE") {
                 return new Promise(function(resolve, reject) {
                     var url = encodeURIComponent(content.downloadUrl);
                     var id = content.identifier;

@@ -585,8 +585,12 @@
     </stage>
 
     <template id="dataTemplate">
-        <text model="obj.title" x="9" y="7" w="86" h="10" font="Georgia" fontsize="100"/>
-        <text model="obj.description" x="9" y="20" w="86" h="50" font="Georgia" fontsize="42"/>
+        <text model="data.title" x="9" y="7" w="86" h="10" color="green"  font="Georgia" fontsize="100"/>
+        <text model="data.description" x="9" y="20" w="86" h="50" font="Georgia" fontsize="42"/>
+    </template>
+    <template id="dataTemplate1">
+        <text model="data.title" x="9" y="7" w="86" h="10" color="red" font="Georgia" fontsize="100"/>
+        <text model="data.description" x="9" y="20" w="86" h="50" font="Georgia" fontsize="42"/>
     </template>
 
     <stage id="dataRepeatStage" x="0" y="0" w="100" h="100" iterate="testData2" var="data" extends="baseStage">
