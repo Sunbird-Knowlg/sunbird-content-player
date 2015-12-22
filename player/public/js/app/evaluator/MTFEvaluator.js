@@ -18,9 +18,7 @@ MTFEvaluator = {
 						// rhs id -> lhs index
 						if (typeof opt.selected != 'undefined') {
 							res.push(opt.value.asset + '->' + opt.selected);
-						} else {
-							res.push(opt.value.asset + '->' + opt.selected);
-						}
+						} 
 
 						if (opt.answer == opt.selected) {
 							score += opt.score || 1;
