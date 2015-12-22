@@ -7,7 +7,11 @@
         <media id="bg" src="felt.png" type="image" />
         <media id="t-outer" src="tailor-outer.png" type="image" />
         <media id="t-inner" src="tailor-inner.png" type="image" />
-        <media id="w-outer" src="wife-outer.png" type="image" />        
+        <media id="w-outer" src="wife-outer.png" type="image" /> 
+        <media id="barber_img" src="barber.png" type="image" />
+        <media id="carpenter_img" src="carpenter.png" type="image" />
+        <media id="tailor_img" src="tailor.png" type="image" />
+        <media id="wife_img" src="wife.png" type="image" />       
         <media id="grey" src="grey.png" type="image" />
         <media id="potatohighlight" src="potato.png" type="image" />
         <media id="rabbithighlight" src="rabbit.png" type="image" />
@@ -35,9 +39,10 @@
     <controller name="assessment" type="items" id="assessment"/>
     <controller name="worksheet" type="items" id="worksheet"/>
     <controller name="worksheet2" type="items" id="worksheet2"/>
+    <controller name="worksheet3" type="items" id="worksheet3"/>
     <template id="mcq_template_1">
         <text model="item.title" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42"/>
-        <mcq multi_select="false" model="item" shadow="blue" blur="80" offsetX="50">
+        <mcq multi_select="false" model="item" shadow="blue" blur="80" offsetX="50" >
             <options layout="table" x="20" y="15" w="70" h="85" cols="2" marginX="10" marginY="5" options="options">
                 <events>
                     <event type="click">
@@ -83,6 +88,10 @@
         <image asset="b-inner"/>
         <image asset="w-inner"/>
         <image asset="t-inner"/>
+        <image asset="barber_img" />
+        <image asset="carpenter_img" />
+        <image asset="tailor_img" />
+        <image asset="wife_img" />
         <audio asset="scene19_audio" />
     </stage>
 	<stage id="baseStage" preload="true">
@@ -466,8 +475,28 @@
         <image asset="grey" visible="false"/>
         <image asset="potatohighlight" visible="false"/>
         <image asset="rabbithighlight" visible="false"/>
-        <param name="next" value="eventMCQMTFOptions" />
+        <param name="next" value="MCQQuestion" />
         <param name="previous" value="MTFQuestionWithOptionsTag" />
+        <embed template="item" var-item="item"/>
+
+    </stage>
+    <template id="mcq_template_1">
+        <text model="item.title" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42"/>
+        <text x="9" y="50" w="86" h="4" font="Georgia" fontsize="42" >
+            Rendering option with less opacity :
+        </text>
+        <mcq multi_select="false" model="item" >
+            <option x="10" y="20" w="25" h="30" padX="20" padY="10" option="options[0]" highlight="red"/>
+            <option x="40" y="20" w="25" h="30" padX="20" padY="10" option="options[1]" highlight="green"/>
+            <option x="10" y="60" w="25" h="30" padX="20" padY="10" option="options[2]" highlight="red" opacity="0.4"/>
+            <option x="40" y="60" w="25" h="30" padX="20" padY="10" option="options[3]" highlight="green" opacity="0.2"/>
+        </mcq>
+    </template>
+     <stage id="MCQQuestion" x="0" y="0" w="100" h="100" iterate="worksheet3" var="item" extends="baseStage">
+        <!-- <image asset="bg" x="0" y="0" w="100" h="100"/> -->
+        <image asset="grey" visible="false"/>
+        <param name="next" value="eventMCQMTFOptions" />
+        <param name="previous" value="MTFQuestion" />
         <embed template="item" var-item="item"/>
 
     </stage>
