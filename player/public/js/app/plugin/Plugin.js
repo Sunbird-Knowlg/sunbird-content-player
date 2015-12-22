@@ -331,5 +331,28 @@ var Plugin = Class.extend({
 	},
 	restart: function() {
 		PluginManager.addError('Subclasses of plugin should implement reload()');
+	},
+	invokeChildren: function(data, parent, stage, theme) {
+		var children = [];
+        for (k in data) {
+            if (PluginManager.isPlugin(k)) {
+                if(_.isArray(data[k])) {
+                    _.each(data[k], function(item) {
+                        item.pluginType = k;
+                        if(!item['z-index']) item['z-index'] = -1;
+                        children.push(item);
+                    });
+                } else {
+                    data[k].pluginType = k;
+                    if(!data[k]['z-index']) data[k]['z-index'] = -1;
+                    children.push(data[k]);
+                }
+            }
+        }
+        children = _.sortBy(children, 'z-index');
+        for(k in children) {
+            var item = children[k];
+            PluginManager.invoke(item.pluginType, item, parent, stage, theme);
+        }
 	}
 })

@@ -16,11 +16,7 @@ var EmbedPlugin = Plugin.extend({
                         this._stage._templateVars[k] = data[k];
                     }
                 }
-                for (k in template) {
-                    if (PluginManager.isPlugin(k)) {
-                        PluginManager.invoke(k, template[k], this._parent, this._stage, this._theme);
-                    }
-                }
+                this.invokeChildren(template, this._parent, this._stage, this._theme);
             }
         }
     }
