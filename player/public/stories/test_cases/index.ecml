@@ -33,9 +33,14 @@
                 <audioSprite id="drag_audio" startTime="1" duration="20.00"></audioSprite>
             </data>
         </media>
+        <media id="mic" src="mic.png" type="image"/>
+        <media id="blacktint" src="blacktint.png" type="image"/>
+        <media id="record" src="record.png" type="image"/>
+        <media id="stop_record" src="stop_record.png" type="image"/>
     </manifest>
     
     <controller name="testData" type="data" id="testdata"/>
+    <controller name="testData2" type="data" id="testdata2"/>
     <controller name="assessment" type="items" id="assessment"/>
     <controller name="worksheet" type="items" id="worksheet"/>
     <controller name="worksheet2" type="items" id="worksheet2"/>
@@ -445,11 +450,9 @@
         
     </template>
     <template id="mtf_template_5">
-        
         <text x="8" y="13" w="86" h="4" font="Verdana" fontsize="50" color="white">
             Rendering option using options tag with multiple item drop is allowed : 
         </text>
-                    
         <mtf model="item" force="false">
             
            <options layout="table" x="60" y="18" w="51" h="37" cols="2" marginX="15" marginY="5" snapX="45" snapY="35" options="lhs_options" multiple="true"/>
@@ -458,9 +461,9 @@
             <option x="15" y="24" w="11" h="17" option="rhs_options[0]"/>
             <option x="42" y="24" w="11" h="14.5" option="rhs_options[1]"/>
         </mtf>
-        
     </template>
-     <stage id="MTFQuestionWithOptionsTag" x="0" y="0" w="100" h="100" iterate="worksheet2" var="item" extends="baseStage">
+
+    <stage id="MTFQuestionWithOptionsTag" x="0" y="0" w="100" h="100" iterate="worksheet2" var="item" extends="baseStage">
         <image asset="bg" x="0" y="0" w="100" h="100"/>
         <image asset="grey" visible="false"/>
         <image asset="potatohighlight" visible="false"/>
@@ -502,7 +505,7 @@
     </stage>
     <stage id="eventMCQMTFOptions" x="0" y="0" w="100" h="100" iterate="assessment" var="item" extends="baseStage">
         <audio asset="drag_audio" />
-        <param name="next" value="finished" />
+        <param name="next" value="audioRecording" />
         <param name="previous" value="MTFQuestion" />
         <embed template="item" var-item="item"/>
         <appEvents list="next_item"/>
@@ -512,7 +515,118 @@
             </event>
         </events>
     </stage>
-  
+    <stage id="audioRecording" x="0" y="0" w="100" h="100" extends="baseStage">
+        <audio asset="drag_audio" />
+        <param name="next" value="dataRepeatStage" />
+        <param name="previous" value="eventMCQMTFOptions" />
+        <image asset="mic" x="91" y="70" w="8" h="13">
+            <event type="click">
+                <action type="command" command="show" asset="recorder" />
+            </event>
+        </image>
+
+        <g id="recorder" x="0" y="0" w="100" h="100" visible="false">
+            <g x="0" y="0" w="100" h="100">
+                <image asset="blacktint" x="0" y="0" w="100" h="100">
+                    <event type="click">
+                        <action type="command" command="hide" asset="recorder" />
+                    </event>
+                </image>
+            </g>
+            <g x="0" y="0" w="100" h="100" id="startrec">
+                <shape type="roundrect" x="36" y="37" w="30" h="20" fill="gray"/>
+                <shape type="roundrect" x="35" y="35" w="30" h="20" fill="#34e941">
+                    <event type="click">
+                        <action type="command" command="startRecord" asset="startrec" success="rec_started" failure="rec_start_fail"/>
+                    </event>
+                </shape>
+                <image asset="record" x="38" y="40" w="6" h="10"/>
+                <text x="47" y="43" w="20" h="5" font="sans-serif" fontsize="50" color="darkgreen">Start</text>
+            </g>
+            <g x="0" y="0" w="100" h="100" id="stoprec" visible="false">
+                <shape type="roundrect" x="36" y="37" w="30" h="20" fill="gray"/>
+                <shape type="roundrect" x="35" y="35" w="30" h="20" fill="#e93441">
+                    <event type="click">
+                        <action type="command" command="stopRecord" asset="stoprec" success="rec_stopped" failure="rec_stop_failed"/>
+                    </event>
+                </shape>
+                <shape id="mover" type="circle" x="47" y="45" w="2" h="2" fill="#e98888" visible="false"/>
+                <image asset="stop_record" x="38" y="40" w="6" h="10"/>
+            </g>
+            <g x="0" y="0" w="100" h="100" id="welldone" visible="false">
+                <shape type="roundrect" x="36" y="37" w="30" h="20" fill="gray"/>
+                <shape type="roundrect" x="35" y="35" w="30" h="20" fill="#34e941">
+                    <event type="click">
+                        <action type="command" command="hide" asset="recorder" />
+                        <action type="command" command="hide" asset="welldone" />
+                        <action type="command" command="show" asset="startrec" />
+                    </event>
+                </shape>
+                <text x="47" y="43" w="20" h="5" font="sans-serif" fontsize="50" color="yellow">Well Done</text>
+            </g>
+            <g x="0" y="0" w="100" h="100" id="tryagain" visible="false">
+                <shape type="roundrect" x="36" y="37" w="30" h="20" fill="gray"/>
+                <shape type="roundrect" x="35" y="35" w="30" h="20" fill="#34e941">
+                    <event type="click">
+                        <action type="command" command="startRecord" asset="tryagain" success="rec_started" failure="rec_start_fail"/>
+                    </event>
+                </shape>
+                <image asset="record" x="38" y="40" w="6" h="10"/>
+                <text x="47" y="43" w="20" h="5" font="sans-serif" fontsize="50" color="darkred">Try Again</text>
+            </g>
+        </g>
+
+        <appEvents list="rec_started,rec_start_fail,rec_stopped,rec_stop_failed,rec_processed,rec_process_fail"/>
+
+        <events>
+            <event type="rec_started">
+                <action type="command" command="hide" asset="startrec" />
+                <action type="command" command="hide" asset="tryagain" />
+                <action type="command" command="show" asset="stoprec" />
+                <action type="command" command="show" asset="mover" />
+                <action type="animation" asset="mover">
+                    <tween id="mover" loop="true">
+                        <to ease="linear" duration="0">
+                            <![CDATA[{"x":47,"y":45}]]>
+                        </to>
+                        <to ease="sineInOut" duration="1000">
+                            <![CDATA[{"x":62,"y":45}]]>
+                        </to>
+                        <to ease="sineInOut" duration="1000">
+                            <![CDATA[{"x":47,"y":45}]]>
+                        </to>
+                    </tween>
+                </action>
+            </event>
+
+            <event type="rec_stopped">
+                <action type="command" command="hide" asset="stoprec" />
+                <action type="command" command="hide" asset="mover" />
+                <action type="command" command="processRecord" asset="stoprec" success="rec_processed" failure="rec_process_fail" data-lineindex="${stage.lineindex}"/>
+            </event>
+            <event type="rec_processed">
+                <action type="command" command="show" asset="welldone" />
+            </event>
+            <event type="rec_process_fail">
+                <action type="command" command="show" asset="tryagain" />
+            </event>
+        </events>
+    </stage>
+
+    <template id="dataTemplate">
+        <text model="data.title" x="9" y="7" w="86" h="10" color="green"  font="Georgia" fontsize="100"/>
+        <text model="data.description" x="9" y="20" w="86" h="50" font="Georgia" fontsize="42"/>
+    </template>
+    <template id="dataTemplate1">
+        <text model="data.title" x="9" y="7" w="86" h="10" color="red" font="Georgia" fontsize="100"/>
+        <text model="data.description" x="9" y="20" w="86" h="50" font="Georgia" fontsize="42"/>
+    </template>
+
+    <stage id="dataRepeatStage" x="0" y="0" w="100" h="100" iterate="testData2" var="data" extends="baseStage">
+        <param name="next" value="finished" />
+        <param name="previous" value="audioRecording" />
+        <embed template="data" var-data="data"/>
+    </stage>
     <stage id="finished" x="0" y="0" w="100" h="100">
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
         

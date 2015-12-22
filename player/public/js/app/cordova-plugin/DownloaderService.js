@@ -14,9 +14,23 @@ DownloaderService = {
 	},
 	process: function(content) {
 		if(typeof cordova == 'undefined') {
-            return new Promise(function(resolve, reject) {
-                resolve({"status": "ready", "baseDir": content.launchPath, "errorCode": ""});
-            });
+            if (AppConfig.APP_STATUS == "LIVE") {
+                return new Promise(function(resolve, reject) {
+                    var url = encodeURIComponent(content.downloadUrl);
+                    var id = content.identifier;
+                    var type = content.type;
+                    $.get("/download-url/v1/content/" + type + "/" + id + "/" + url  , function(resp) {
+                        resolve(resp);
+                    })
+                    .fail(function(err){
+                        reject(err);
+                    });
+                });
+            } else {
+                return new Promise(function(resolve, reject){
+                    resolve({"status": "ready", "baseDir": content.launchPath , "errorCode": ""});
+                });
+            }
         } else {
             return new Promise(function(resolve, reject) {
                 var contentId = content.identifier;

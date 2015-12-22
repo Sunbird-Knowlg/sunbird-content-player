@@ -234,7 +234,7 @@ angular.module('quiz.services', ['ngResource'])
                             }
                         }
                     }
-                    if ((localContent.status == "ready" && localContent.pkgVersion != content.pkgVersion) || (localContent.status == "error")) {
+                    if ((localContent.status == "ready" && localContent.pkgVersion != content.pkgVersion) || (localContent.status != "ready")) {
                         promise = processContent(content);
                     } else {
                         if(localContent.filters) {
@@ -279,6 +279,7 @@ angular.module('quiz.services', ['ngResource'])
                                 "message": errMsg
                             });
                         } else {
+                            if (contents.appStatus) AppConfig.APP_STATUS = contents.appStatus;
                             if(contents.data) {
                                 for (key in contents.data) {
                                     var content = contents.data[key];
