@@ -48,11 +48,7 @@ var StagePlugin = Plugin.extend({
                 }
             }
         }
-        for (k in data) {
-            if (PluginManager.isPlugin(k)) {
-                PluginManager.invoke(k, data[k], this, this, this._theme);
-            }
-        }
+        this.invokeChildren(data, this, this, this._theme);
     },
     setParamValue: function(p) {
         if (p.value) {
