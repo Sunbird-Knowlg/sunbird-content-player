@@ -1,36 +1,36 @@
 <theme id="theme" startStage="textPluginBasic" ver="0.2">
     <manifest>
-        <media id="previous" src="icon_previous.png" type="image" />
-        <media id="next" src="icon_next.png" type="image" />
-        <media id="icon_reload" src="icon_reload.png" type="image" />
-        <media id="icon_home" src="icon_home.png" type="image" />
-        <media id="bg" src="felt.png" type="image" />
-        <media id="t-outer" src="tailor-outer.png" type="image" />
-        <media id="t-inner" src="tailor-inner.png" type="image" />
-        <media id="w-outer" src="wife-outer.png" type="image" /> 
-        <media id="barber_img" src="barber.png" type="image" />
-        <media id="carpenter_img" src="carpenter.png" type="image" />
-        <media id="tailor_img" src="tailor.png" type="image" />
-        <media id="wife_img" src="wife.png" type="image" />       
-        <media id="grey" src="grey.png" type="image" />
-        <media id="potatohighlight" src="potato.png" type="image" />
-        <media id="rabbithighlight" src="rabbit.png" type="image" />
-        <media id="w-inner" src="wife-inner.png" type="image" />
-        <media id="b-outer" src="barber-outer.png" type="image" />
-        <media id="b-inner" src="barber-inner.png" type="image" />
-        <media src="sounds/splash.ogg" id="splash_audio" type="audiosprite">
+        <media id="previous" src="icon_previous.png" type="image"/>
+        <media id="next" src="icon_next.png" type="image"/>
+        <media id="icon_reload" src="icon_reload.png" type="image"/>
+        <media id="icon_home" src="icon_home.png" type="image"/>
+        <media id="bg" src="felt.png" type="image"/>
+        <media id="t-outer" src="tailor-outer.png" type="image"/>
+        <media id="t-inner" src="tailor-inner.png" type="image"/>
+        <media id="w-outer" src="wife-outer.png" type="image"/>
+        <media id="barber_img" src="barber.png" type="image"/>
+        <media id="carpenter_img" src="carpenter.png" type="image"/>
+        <media id="tailor_img" src="tailor.png" type="image"/>
+        <media id="wife_img" src="wife.png" type="image"/>
+        <media id="grey" src="grey.png" type="image"/>
+        <media id="potatohighlight" src="potato.png" type="image"/>
+        <media id="rabbithighlight" src="rabbit.png" type="image"/>
+        <media id="w-inner" src="wife-inner.png" type="image"/>
+        <media id="b-outer" src="barber-outer.png" type="image"/>
+        <media id="b-inner" src="barber-inner.png" type="image"/>
+        <media id="splash_audio" src="sounds/splash.ogg" type="audiosprite">
             <data>
-                <audioSprite id="cover_sound" startTime="0" duration="7131.428571428572"></audioSprite>
+                <audioSprite duration="7131.428571428572" id="cover_sound" startTime="0"/>
             </data>
         </media>
-        <media src="sounds/scene19.mp3" id="scene19_audio" type="audiosprite">
+        <media id="scene19_audio" src="sounds/scene19.mp3" type="audiosprite">
             <data>
-                <audioSprite id="scene19_sound" startTime="0" duration="12303.673469387755"></audioSprite>
+                <audioSprite duration="12303.673469387755" id="scene19_sound" startTime="0"/>
             </data>
         </media>
-        <media src="sounds/drag.mp3" id="drag_audio" type="audiosprite">
+        <media id="drag_audio" src="sounds/drag.mp3" type="audiosprite">
             <data>
-                <audioSprite id="drag_audio" startTime="1" duration="20.00"></audioSprite>
+                <audioSprite duration="20.00" id="drag_audio" startTime="1"/>
             </data>
         </media>
         <media id="mic" src="mic.png" type="image"/>
@@ -38,54 +38,49 @@
         <media id="record" src="record.png" type="image"/>
         <media id="stop_record" src="stop_record.png" type="image"/>
     </manifest>
-    
-    <controller name="testData" type="data" id="testdata"/>
-    <controller name="testData2" type="data" id="testdata2"/>
-    <controller name="assessment" type="items" id="assessment"/>
-    <controller name="worksheet" type="items" id="worksheet"/>
-    <controller name="worksheet2" type="items" id="worksheet2"/>
-    <controller name="worksheet3" type="items" id="worksheet3"/>
+    <controller id="testdata" name="testData" type="data"/>
+    <controller id="testdata2" name="testData2" type="data"/>
+    <controller id="assessment" name="assessment" type="items"/>
+    <controller id="worksheet" name="worksheet" type="items"/>
+    <controller id="worksheet2" name="worksheet2" type="items"/>
+    <controller id="worksheet3" name="worksheet3" type="items"/>
     <template id="mcq_template_1">
-        <text model="item.title" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42"/>
-        <mcq multi_select="false" model="item" shadow="blue" blur="80" offsetX="50" >
-            <options layout="table" x="20" y="15" w="70" h="85" cols="2" marginX="10" marginY="5" options="options">
+        <text font="Georgia" fontsize="42" h="4" model="item.title" w="86" x="9" y="7"/>
+        <mcq blur="80" model="item" multi_select="false" offsetX="50" shadow="blue">
+            <options cols="2" h="85" layout="table" marginX="10" marginY="5" options="options" w="70" x="20" y="15">
                 <events>
                     <event type="click">
-                        <action type="command" command="play" asset="scene19_sound" loop="1" />
+                        <action asset="scene19_sound" command="play" loop="1" type="command"/>
                     </event>
                 </events>
             </options>
         </mcq>
     </template>
     <template id="mtf_template_2">
-        <text model="item.title" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42"/>
-        <mtf model="item" force="true">
-            <option x="20" y="15" w="30" h="25" snapX="42" snapY="9" option="lhs_options[0]"/>
-            <option x="20" y="43" w="30" h="25" snapX="10.5" snapY="5" option="lhs_options[1]"/>
-            <option x="20" y="71" w="30" h="25" snapX="27.5" snapY="8.5" option="lhs_options[2]"/>
-
-            <option x="70" y="15" w="10" h="16" option="rhs_options[0]"/>
-            <option x="70" y="43" w="10" h="19.5" option="rhs_options[1]"/>
-            <option x="70" y="71" w="12" h="22" option="rhs_options[2]">
+        <text font="Georgia" fontsize="42" h="4" model="item.title" w="86" x="9" y="7"/>
+        <mtf force="true" model="item">
+            <option h="25" option="lhs_options[0]" snapX="42" snapY="9" w="30" x="20" y="15"/>
+            <option h="25" option="lhs_options[1]" snapX="10.5" snapY="5" w="30" x="20" y="43"/>
+            <option h="25" option="lhs_options[2]" snapX="27.5" snapY="8.5" w="30" x="20" y="71"/>
+            <option h="16" option="rhs_options[0]" w="10" x="70" y="15"/>
+            <option h="19.5" option="rhs_options[1]" w="10" x="70" y="43"/>
+            <option h="22" option="rhs_options[2]" w="12" x="70" y="71">
                 <events>
                     <event type="mousedown">
-                        <action type="command" command="play" asset="drag_audio" audio="true" loop="1" />
+                        <action asset="drag_audio" audio="true" command="play" loop="1" type="command"/>
                     </event>
                     <event type="pressup">
-                        <action type="command" command="stop" asset="drag_audio" audio="true" loop="1" />
+                        <action asset="drag_audio" audio="true" command="stop" loop="1" type="command"/>
                     </event>
                 </events>
             </option>
         </mtf>
-        <g x="9" y="17" w="20" h="20" id="hint" visible="false">
-            <!-- <image asset="speech_bubble" x="0" y="0" w="100" h="100" /> -->
-            <text x="10" y="20" w="80" h="80" font="Georgia" weight="bold" fontsize="150">
-                Hint
-            </text>
-            <text x="10" y="40" w="80" h="80" font="Georgia" fontsize="120" model="item.hints[0].asset"/>
+        <g h="20" id="hint" visible="false" w="20" x="9" y="17">
+            <!-- <image asset="speech_bubble" x="0" y="0" w="100" h="100" />-->
+            <text font="Georgia" fontsize="150" h="80" w="80" weight="bold" x="10" y="20">Hint</text>
+            <text font="Georgia" fontsize="120" h="80" model="item.hints[0].asset" w="80" x="10" y="40"/>
         </g>
     </template>
-
     <stage id="tempBaseStage" preload="true">
         <image asset="b-outer"/>
         <image asset="w-outer"/>
@@ -93,575 +88,443 @@
         <image asset="b-inner"/>
         <image asset="w-inner"/>
         <image asset="t-inner"/>
-        <image asset="barber_img" />
-        <image asset="carpenter_img" />
-        <image asset="tailor_img" />
-        <image asset="wife_img" />
-        <audio asset="scene19_audio" />
+        <image asset="barber_img"/>
+        <image asset="carpenter_img"/>
+        <image asset="tailor_img"/>
+        <image asset="wife_img"/>
+        <audio asset="scene19_audio"/>
     </stage>
-	<stage id="baseStage" preload="true">
-        <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
-        <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
+    <stage id="baseStage" preload="true">
+        <image asset="next" h="8.3" id="next" visible="false" w="5" x="93" y="3"/>
+        <shape h="15" hitArea="true" id="nextContainer" type="rect" visible="false" w="10" x="90" y="1">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+                <action asset="theme" command="transitionTo" direction="left" duration="500" ease="linear" effect="scroll" param="next" type="command"/>
             </event>
         </shape>
-        <image asset="previous" x="2" y="3" w="5" h="8.3" id="previous" visible="false"/>
-        <shape id="previousContainer" type="rect" x="1" y="1" w="10" h="15" visible="false" hitArea="true">
+        <image asset="previous" h="8.3" id="previous" visible="false" w="5" x="2" y="3"/>
+        <shape h="15" hitArea="true" id="previousContainer" type="rect" visible="false" w="10" x="1" y="1">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" transitionType="previous"/>
+                <action asset="theme" command="transitionTo" direction="right" duration="500" ease="linear" effect="scroll" param="previous" transitionType="previous" type="command"/>
             </event>
         </shape>
-        <text param="heading" x="28" y="2" w="62" h="23" weight="bold" fontsize="50" color="#fff"/>
+        <text color="#fff" fontsize="50" h="23" param="heading" w="62" weight="bold" x="28" y="2"/>
     </stage>
-
-    <stage id="textPluginBasic" x="0" y="0" w="100" h="100" extends="baseStage">
-    	<param name="next" value="textPluginWrap" />
-    	<!-- <param name="previous" value="textPluginBasic" /> -->
-
-    	<image asset="bg" x="0" y="0" w="100" h="100"/>
-        <param name="heading" model="testData.ts_textpg_align"/>
-
-        <text x="5" y="10" h="10" w="25" fontsize="30" color="yellow">Default alignment - should be aligned as top-left, by default</text>
-        <shape x="5" y="20" h="10" w="15" type="rect" stroke="white"/>
-        <text x="5" y="20" h="10" w="15" fontsize="60" color="white">TopLeft</text>
-
-
-        <text x="5" y="40" h="10" w="25" fontsize="30" color="yellow">Horiz alignments - should be aligned as displayed</text>
-        <shape x="5" y="50" h="10" w="15" type="rect" stroke="white"/>
-        <text x="5" y="50" h="10" w="15" fontsize="60" color="white" align="left">Left</text>
-        
-        <shape x="25" y="50" h="10" w="15" type="rect" stroke="white"/>
-        <text x="25" y="50" h="10" w="15" fontsize="60" color="white" align="center">Center</text>
-        
-        <shape x="45" y="50" h="10" w="15" type="rect" stroke="white"/>
-        <text x="45" y="50" h="10" w="15" fontsize="60" color="white" align="right">Right</text>
-
-
-        <text x="5" y="70" h="10" w="25" fontsize="30" color="yellow">Vert alignments - should be aligned as displayed</text>
-        <shape x="5" y="80" h="15" w="15" type="rect" stroke="white"/>
-        <text x="5" y="80" h="15" w="15" fontsize="60" color="white" align="center" valign="top">Top</text>
-        
-        <shape x="25" y="80" h="15" w="15" type="rect" stroke="white"/>
-        <text x="25" y="80" h="15" w="15" fontsize="60" color="white" align="center" valign="middle">Middle</text>
-        
-        <shape x="45" y="80" h="15" w="15" type="rect" stroke="white"/>
-        <text x="45" y="80" h="15" w="15" fontsize="60" color="white" align="center" valign="bottom">Bottom</text>
-
-        <text  x="65" y="55" h="10" w="30" fontsize="30" color="yellow">Both alignments - should be aligned as displayed</text>
-        <shape x="65" y="65" h="30" w="30" type="rect" stroke="white"/>
-        <text  x="65" y="65" h="30" w="30" fontsize="30" color="white" align="left" valign="top">TopLeft</text>
-        <text  x="65" y="65" h="30" w="30" fontsize="30" color="white" align="center" valign="top">TopCenter</text>
-        <text  x="65" y="65" h="30" w="30" fontsize="30" color="white" align="right" valign="top">TopRight</text>
-        <text  x="65" y="65" h="30" w="30" fontsize="30" color="white" align="left" valign="middle">MiddleLeft</text>
-        <text  x="65" y="65" h="30" w="30" fontsize="30" color="white" align="center" valign="middle">MiddleCenter</text>
-        <text  x="65" y="65" h="30" w="30" fontsize="30" color="white" align="right" valign="middle">MiddleRight</text>
-        <text  x="65" y="65" h="30" w="30" fontsize="30" color="white" align="left" valign="bottom">BottomLeft</text>
-        <text  x="65" y="65" h="30" w="30" fontsize="30" color="white" align="center" valign="bottom">BottomCenter</text>
-        <text  x="65" y="65" h="30" w="30" fontsize="30" color="white" align="right" valign="bottom">BottomRight</text>
-    </stage> 
-
-    <stage id="textPluginWrap" x="0" y="0" w="100" h="100" extends="baseStage">
-    	<param name="next" value="mcqOptionsGlow" />
-    	<param name="previous" value="textPluginBasic" />
-
-    	<image asset="bg" x="0" y="0" w="100" h="100"/>
-        <param name="heading" model="testData.ts_textpg_wrap"/>
-
-        <text x="10" y="10" h="10" w="20" fontsize="30" color="yellow">Default alignments - should be aligned to top-left</text>
-        <text x="10" y="20" h="10" w="20" fontsize="40" color="white" stroke="white">This text is aligned to top-left by default.</text>
-
-        <text x="10" y="40" h="10" w="20" fontsize="30" color="yellow">Horiz alignments - should be aligned as displayed</text>
-        <text x="10" y="50" h="10" w="20" fontsize="40" color="white" stroke="white" align="left">This text is left aligned by setting.</text>
-        <text x="30" y="50" h="10" w="20" fontsize="40" color="white" stroke="white" align="center">Use align="center" to align text in center</text>
-        <text x="50" y="50" h="10" w="20" fontsize="40" color="white" stroke="white" align="right">Use align="right" to align text at right</text>
-
-        <text x="10" y="70" h="10" w="20" fontsize="30" color="yellow">Vert alignments - should be aligned as displayed</text>
-        <text x="10" y="80" h="15" w="20" fontsize="40" color="white" stroke="white" align="center" valign="top">Use valign="top" for vertical top alignment</text>
-        <text x="30" y="80" h="15" w="20" fontsize="40" color="white" stroke="white" align="center" valign="middle">Use valign="middle" for vertical middle alignment</text>
-        <text x="50" y="80" h="15" w="20" fontsize="40" color="white" stroke="white" align="center" valign="bottom">Use valign="bottom" for vertical bottom alignment</text>
-
-        <text x="73" y="15" h="10" w="20" fontsize="30" color="yellow">LineHeight for Multiline Text</text>
-        <text x="73" y="20" h="40" w="20" fontsize="30" color="white" stroke="white">Text with default line height. Wrap should not overlap</text>
-        <text x="73" y="30" h="10" w="20" fontsize="30" color="white" lineHeight="1.5">Text with line height 1.5. Wrap should not overlap</text>
-        <text x="73" y="40" h="10" w="20" fontsize="30" color="white" lineHeight="0.3">Text with line height 0.3. Wrap should overlap</text>
-        <text x="73" y="50" h="10" w="20" fontsize="30" color="white" lineHeight="-1">Text with line height -1. Wrap should go on top</text>
-
-        <text x="73" y="65" h="10" w="20" fontsize="30" color="yellow">Advanced Text Properties</text>
-        <text x="73" y="70" h="20" w="20" fontsize="40" color="white" stroke="white" outline="2">Text With Outline</text>
-        <text x="73" y="75" h="10" w="20" fontsize="40" color="white" shadow="red" blur="10" offsetY="5">Text with Shadow</text>
-        <text x="73" y="80" h="10" w="20" fontsize="40" color="white" shadow="red" blur="10" offsetY="5" outline="2">Text with Outline and Shadow</text>
-    </stage> 
-
-    <stage id="mcqOptionsGlow" x="0" y="0" w="100" h="100" extends="baseStage">
-        <param name="next" value="launchExternal" />
-        <param name="previous" value="textPluginWrap" />
-
-        <image asset="bg" x="0" y="0" w="100" h="100"/>
-        <param name="heading" model="testData.ts_mcq_glow"/>
-
-        <text x="10" y="10" h="10" w="40" fontsize="30" color="yellow">TO-DO</text>
-
-
+    <stage extends="baseStage" h="100" id="textPluginBasic" w="100" x="0" y="0">
+        <param name="next" value="textPluginWrap"/>
+        <!-- <param name="previous" value="textPluginBasic" />-->
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
+        <param model="testData.ts_textpg_align" name="heading"/>
+        <text color="yellow" fontsize="30" h="10" w="25" x="5" y="10">Default alignment - should be aligned as top-left, by default</text>
+        <shape h="10" stroke="white" type="rect" w="15" x="5" y="20"/>
+        <text color="white" fontsize="60" h="10" w="15" x="5" y="20">TopLeft</text>
+        <text color="yellow" fontsize="30" h="10" w="25" x="5" y="40">Horiz alignments - should be aligned as displayed</text>
+        <shape h="10" stroke="white" type="rect" w="15" x="5" y="50"/>
+        <text align="left" color="white" fontsize="60" h="10" w="15" x="5" y="50">Left</text>
+        <shape h="10" stroke="white" type="rect" w="15" x="25" y="50"/>
+        <text align="center" color="white" fontsize="60" h="10" w="15" x="25" y="50">Center</text>
+        <shape h="10" stroke="white" type="rect" w="15" x="45" y="50"/>
+        <text align="right" color="white" fontsize="60" h="10" w="15" x="45" y="50">Right</text>
+        <text color="yellow" fontsize="30" h="10" w="25" x="5" y="70">Vert alignments - should be aligned as displayed</text>
+        <shape h="15" stroke="white" type="rect" w="15" x="5" y="80"/>
+        <text align="center" color="white" fontsize="60" h="15" valign="top" w="15" x="5" y="80">Top</text>
+        <shape h="15" stroke="white" type="rect" w="15" x="25" y="80"/>
+        <text align="center" color="white" fontsize="60" h="15" valign="middle" w="15" x="25" y="80">Middle</text>
+        <shape h="15" stroke="white" type="rect" w="15" x="45" y="80"/>
+        <text align="center" color="white" fontsize="60" h="15" valign="bottom" w="15" x="45" y="80">Bottom</text>
+        <text color="yellow" fontsize="30" h="10" w="30" x="65" y="55">Both alignments - should be aligned as displayed</text>
+        <shape h="30" stroke="white" type="rect" w="30" x="65" y="65"/>
+        <text align="left" color="white" fontsize="30" h="30" valign="top" w="30" x="65" y="65">TopLeft</text>
+        <text align="center" color="white" fontsize="30" h="30" valign="top" w="30" x="65" y="65">TopCenter</text>
+        <text align="right" color="white" fontsize="30" h="30" valign="top" w="30" x="65" y="65">TopRight</text>
+        <text align="left" color="white" fontsize="30" h="30" valign="middle" w="30" x="65" y="65">MiddleLeft</text>
+        <text align="center" color="white" fontsize="30" h="30" valign="middle" w="30" x="65" y="65">MiddleCenter</text>
+        <text align="right" color="white" fontsize="30" h="30" valign="middle" w="30" x="65" y="65">MiddleRight</text>
+        <text align="left" color="white" fontsize="30" h="30" valign="bottom" w="30" x="65" y="65">BottomLeft</text>
+        <text align="center" color="white" fontsize="30" h="30" valign="bottom" w="30" x="65" y="65">BottomCenter</text>
+        <text align="right" color="white" fontsize="30" h="30" valign="bottom" w="30" x="65" y="65">BottomRight</text>
     </stage>
-
-    <stage id="launchExternal" x="0" y="0" w="100" h="100" extends="baseStage">
-        <param name="next" value="conditionalRendering1" />
-        <param name="previous" value="mcqOptionsGlow" />
-
-        <image asset="bg" x="0" y="0" w="100" h="100"/>
-        <param name="heading" model="testData.ts_external_launch"/>
-
-
-        <text x="10" y="10" h="10" w="40" fontsize="30" color="yellow">External URL - should be launched when URL is clicked</text>
-        <text x="10" y="15" w="45" h="5" font="Arial" fontsize="48" color="white">
-            Go to ekstep.org
-        </text>
-        <shape type="rect" x="10" y="15" w="35" h="7" hitArea="true">
+    <stage extends="baseStage" h="100" id="textPluginWrap" w="100" x="0" y="0">
+        <param name="next" value="test-Z-Index"/>
+        <param name="previous" value="textPluginBasic"/>
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
+        <param model="testData.ts_textpg_wrap" name="heading"/>
+        <text color="yellow" fontsize="30" h="10" w="20" x="10" y="10">Default alignments - should be aligned to top-left</text>
+        <text color="white" fontsize="40" h="10" stroke="white" w="20" x="10" y="20">This text is aligned to top-left by default.</text>
+        <text color="yellow" fontsize="30" h="10" w="20" x="10" y="40">Horiz alignments - should be aligned as displayed</text>
+        <text align="left" color="white" fontsize="40" h="10" stroke="white" w="20" x="10" y="50">This text is left aligned by setting.</text>
+        <text align="center" color="white" fontsize="40" h="10" stroke="white" w="20" x="30" y="50">Use align=&quot;center&quot; to align text in center</text>
+        <text align="right" color="white" fontsize="40" h="10" stroke="white" w="20" x="50" y="50">Use align=&quot;right&quot; to align text at right</text>
+        <text color="yellow" fontsize="30" h="10" w="20" x="10" y="70">Vert alignments - should be aligned as displayed</text>
+        <text align="center" color="white" fontsize="40" h="15" stroke="white" valign="top" w="20" x="10" y="80">Use valign=&quot;top&quot; for vertical top alignment</text>
+        <text align="center" color="white" fontsize="40" h="15" stroke="white" valign="middle" w="20" x="30" y="80">Use valign=&quot;middle&quot; for vertical middle alignment</text>
+        <text align="center" color="white" fontsize="40" h="15" stroke="white" valign="bottom" w="20" x="50" y="80">Use valign=&quot;bottom&quot; for vertical bottom alignment</text>
+        <text color="yellow" fontsize="30" h="10" w="20" x="73" y="15">LineHeight for Multiline Text</text>
+        <text color="white" fontsize="30" h="40" stroke="white" w="20" x="73" y="20">Text with default line height. Wrap should not overlap</text>
+        <text color="white" fontsize="30" h="10" lineHeight="1.5" w="20" x="73" y="30">Text with line height 1.5. Wrap should not overlap</text>
+        <text color="white" fontsize="30" h="10" lineHeight="0.3" w="20" x="73" y="40">Text with line height 0.3. Wrap should overlap</text>
+        <text color="white" fontsize="30" h="10" lineHeight="-1" w="20" x="73" y="50">Text with line height -1. Wrap should go on top</text>
+        <text color="yellow" fontsize="30" h="10" w="20" x="73" y="65">Advanced Text Properties</text>
+        <text color="white" fontsize="40" h="20" outline="2" stroke="white" w="20" x="73" y="70">Text With Outline</text>
+        <text blur="10" color="white" fontsize="40" h="10" offsetY="5" shadow="red" w="20" x="73" y="75">Text with Shadow</text>
+        <text blur="10" color="white" fontsize="40" h="10" offsetY="5" outline="2" shadow="red" w="20" x="73" y="80">Text with Outline and Shadow</text>
+    </stage>
+    <stage extends="baseStage" h="100" id="test-Z-Index" w="100" x="0" y="0">
+        <param name="next" value="mcqOptionsGlow"/>
+        <param name="previous" value="textPluginWrap"/>
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
+        <param model="testData.ts_z_index" name="heading" />
+        <image asset="icon_home" h="30" w="30" x="20" y="35" z-index="2"/>
+        <g h="70" w="70" x="15" y="15" z-index="1">
+            <text color="white" fontsize="50" h="40" w="60" x="20" y="20" z-index="1">Text with z-index value=1 in white color. After this we have a share in green color.</text>
+            <shape x="0" y="0" w="100" h="100" hitArea="true" type="rect" fill="green" />
+        </g>
+        <shape x="10" y="10" w="80" h="80" hitArea="true" type="rect" fill="red" />
+    </stage>
+    <stage extends="baseStage" h="100" id="mcqOptionsGlow" w="100" x="0" y="0">
+        <param name="next" value="launchExternal"/>
+        <param name="previous" value="textPluginWrap"/>
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
+        <param model="testData.ts_mcq_glow" name="heading"/>
+        <text color="yellow" fontsize="30" h="10" w="40" x="10" y="10">TO-DO</text>
+    </stage>
+    <stage extends="baseStage" h="100" id="launchExternal" w="100" x="0" y="0">
+        <param name="next" value="conditionalRendering1"/>
+        <param name="previous" value="mcqOptionsGlow"/>
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
+        <param model="testData.ts_external_launch" name="heading"/>
+        <text color="yellow" fontsize="30" h="10" w="40" x="10" y="10">External URL - should be launched when URL is clicked</text>
+        <text color="white" font="Arial" fontsize="48" h="5" w="45" x="10" y="15">Go to ekstep.org</text>
+        <shape h="7" hitArea="true" type="rect" w="35" x="10" y="15">
             <event type="click">
-                <action type="command" command="external" href="http://www.ekstep.org/"/>
-            </event>
-        </shape>    
-
-        <text x="10" y="40" h="10" w="40" fontsize="30" color="yellow">External app - should be launched when link is clicked</text>
-        <text x="10" y="45" w="45" h="15" font="Arial" fontsize="48" color="white">
-            Launch whatsapp
-        </text>
-        <shape type="rect" x="10" y="50" w="20" h="65">
-            <event type="click">
-                <action type="command" command="external" app="com.whatsapp"/>
+                <action command="external" href="http://www.ekstep.org/" type="command"/>
             </event>
         </shape>
-
+        <text color="yellow" fontsize="30" h="10" w="40" x="10" y="40">External app - should be launched when link is clicked</text>
+        <text color="white" font="Arial" fontsize="48" h="15" w="45" x="10" y="45">Launch whatsapp</text>
+        <shape h="65" type="rect" w="20" x="10" y="50">
+            <event type="click">
+                <action app="com.whatsapp" command="external" type="command"/>
+            </event>
+        </shape>
     </stage>
-    <stage id="conditionalRendering1" x="0" y="0" w="100" h="100" extends="baseStage">
-        <param name="next" value="conditionalRendering2" />
-        <param name="previous" value="launchExternal" />
-
-        <set param="param1" value="value1" scope="stage"/>
-        <set param="param2" ev-value="stage.param1 + '_new'" scope="stage"/>
-
-        <image asset="bg" x="0" y="0" w="100" h="100"/>
-        <param name="heading" model="testData.ts_cond_render_stage1"/>
-
-        <text x="10" y="15" h="10" w="80" fontsize="40" color="yellow">Text plugin: expression evaluates to false - should not show text</text>
-        <text x="70" y="15" h="10" w="80" fontsize="30" color="white" ev-if="stage.param2 == 'value_new'">Invalid expression. This expression shouldn't be seen.</text>
-        <text x="10" y="25" h="10" w="80" fontsize="40" color="yellow">Text plugin: expression evaluates to true - should show text below.</text>
-        <text x="70" y="25" h="10" w="80" fontsize="30" color="white" ev-if="stage.param2 == 'value1_new'">Got True. Showing the text.</text>
-
-        <text x="10" y="35" h="10" w="80" fontsize="40" color="yellow">Image plugin: expression evaluates to false - should not show image</text>
-        <image asset="icon_home" x="70" y="35" w="10" h="10" ev-if="stage.param2 == 'value_new'"/>
-        <text x="10" y="45" h="10" w="80" fontsize="40" color="yellow">Image plugin: expression evaluates to true - should show image</text>
-        <image asset="icon_home" x="70" y="45" w="10" h="10" ev-if="stage.param2 == 'value1_new'"/>
-
-        <text x="10" y="55" h="10" w="80" fontsize="40" color="yellow">Shape plugin: expression evaluates to false - should not show shape</text>
-        <shape type="rect" x="70" y="55" w="5" h="5" hitArea="true" stroke="red" ev-if="stage.param2 == 'value_new'"></shape>
-        <text x="10" y="65" h="10" w="80" fontsize="40" color="yellow">Shape plugin: expression evaluates to true - should show shape</text>
-        <shape type="rect" x="70" y="65" w="5" h="5" hitArea="true" stroke="white" ev-if="stage.param2 == 'value1_new'"></shape>
-
-         <!-- Input Plugin tests -->
-        <text x="10" y="75" h="10" w="80" fontsize="40" color="yellow">Input plugin: expression evaluates to false - should not show input field</text>
-        <input type="number" class="inputText" x="70" y="75" w="7" h="7" id="text1" ev-if="stage.param2 == 'value_new'"/>
-        <text x="10" y="85" h="10" w="80" fontsize="40" color="yellow">Input plugin: expression evaluates to true - should show input field</text>
-        <input type="number" class="inputText" x="70" y="85" w="7" h="7" id="text1" ev-if="'a' != 'b'"/>
-
-        <!--Audio Plugin -->        
-        <!-- <text x="10" y="80" h="10" w="80" fontsize="40" color="yellow">Audio plugin: expression evaluates to false - should not play audio</text>
-        <audio asset="splash_audio" ev-if="stage.param2 == 'value_new'"/>
-        <text x="10" y="90" h="10" w="80" fontsize="40" color="yellow">Audio plugin: expression evaluates to true - should play audio</text>
-        <audio asset="splash_audio" ev-if="stage.param2 == 'value1_new'"/> -->
-
-                
+    <stage extends="baseStage" h="100" id="conditionalRendering1" w="100" x="0" y="0">
+        <param name="next" value="conditionalRendering2"/>
+        <param name="previous" value="launchExternal"/>
+        <set param="param1" scope="stage" value="value1"/>
+        <set ev-value="stage.param1 + '_new'" param="param2" scope="stage"/>
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
+        <param model="testData.ts_cond_render_stage1" name="heading"/>
+        <text color="yellow" fontsize="40" h="10" w="80" x="10" y="15">Text plugin: expression evaluates to false - should not show text</text>
+        <text color="white" ev-if="stage.param2 == 'value_new'" fontsize="30" h="10" w="80" x="70" y="15">Invalid expression. This expression shouldn't be seen.</text>
+        <text color="yellow" fontsize="40" h="10" w="80" x="10" y="25">Text plugin: expression evaluates to true - should show text below.</text>
+        <text color="white" ev-if="stage.param2 == 'value1_new'" fontsize="30" h="10" w="80" x="70" y="25">Got True. Showing the text.</text>
+        <text color="yellow" fontsize="40" h="10" w="80" x="10" y="35">Image plugin: expression evaluates to false - should not show image</text>
+        <image asset="icon_home" ev-if="stage.param2 == 'value_new'" h="10" w="10" x="70" y="35"/>
+        <text color="yellow" fontsize="40" h="10" w="80" x="10" y="45">Image plugin: expression evaluates to true - should show image</text>
+        <image asset="icon_home" ev-if="stage.param2 == 'value1_new'" h="10" w="10" x="70" y="45"/>
+        <text color="yellow" fontsize="40" h="10" w="80" x="10" y="55">Shape plugin: expression evaluates to false - should not show shape</text>
+        <shape ev-if="stage.param2 == 'value_new'" h="5" hitArea="true" stroke="red" type="rect" w="5" x="70" y="55"/>
+        <text color="yellow" fontsize="40" h="10" w="80" x="10" y="65">Shape plugin: expression evaluates to true - should show shape</text>
+        <shape ev-if="stage.param2 == 'value1_new'" h="5" hitArea="true" stroke="white" type="rect" w="5" x="70" y="65"/>
+        <!-- Input Plugin tests -->
+        <text color="yellow" fontsize="40" h="10" w="80" x="10" y="75">Input plugin: expression evaluates to false - should not show input field</text>
+        <input class="inputText" ev-if="stage.param2 == 'value_new'" h="7" id="text1" type="number" w="7" x="70" y="75"/>
+        <text color="yellow" fontsize="40" h="10" w="80" x="10" y="85">Input plugin: expression evaluates to true - should show input field</text>
+        <input class="inputText" ev-if="'a' != 'b'" h="7" id="text1" type="number" w="7" x="70" y="85"/>
+        <!--Audio Plugin -->
+        <!-- <text x="10" y="80" h="10" w="80" fontsize="40" color="yellow">Audio plugin: expression evaluates to false - should not play audio</text><audio asset="splash_audio" ev-if="stage.param2 == 'value_new'"/><text x="10" y="90" h="10" w="80" fontsize="40" color="yellow">Audio plugin: expression evaluates to true - should play audio</text><audio asset="splash_audio" ev-if="stage.param2 == 'value1_new'"/>-->
     </stage>
-
-    <stage id="conditionalRendering2" x="0" y="0" w="100" h="100" extends="baseStage">
-        <param name="next" value="conditionalRendering3" />
-        <param name="previous" value="conditionalRendering1" />
-
-        <image asset="bg" x="0" y="0" w="100" h="100"/>
-        <param name="heading" model="testData.ts_cond_render_stage2"/>
-
-        <set param="param1" value="value1" scope="stage"/>
-        <set param="param2" ev-value="stage.param1 + '_new'" scope="stage"/>
-
-       
+    <stage extends="baseStage" h="100" id="conditionalRendering2" w="100" x="0" y="0">
+        <param name="next" value="conditionalRendering3"/>
+        <param name="previous" value="conditionalRendering1"/>
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
+        <param model="testData.ts_cond_render_stage2" name="heading"/>
+        <set param="param1" scope="stage" value="value1"/>
+        <set ev-value="stage.param1 + '_new'" param="param2" scope="stage"/>
         <!--Animation -->
-        <text x="10" y="15" h="10" w="40" fontsize="40" color="yellow">Animation plugin: expression evaluates to true - object should be animated on click.</text>
-        <image asset="icon_home" x="11.5" y="35" w="10" h="10" id="home">
+        <text color="yellow" fontsize="40" h="10" w="40" x="10" y="15">Animation plugin: expression evaluates to true - object should be animated on click.</text>
+        <image asset="icon_home" h="10" id="home" w="10" x="11.5" y="35">
             <event type="click">
-                <action type="animation" ev-if="stage.param2 == 'value1_new'">
+                <action ev-if="stage.param2 == 'value1_new'" type="animation">
                     <tween id="homeWalking">
-                        <to ease="linear" duration="500">
-                            <![CDATA[{"x":20,"y":20}]]>
-                        </to>
-                        <to ease="quadOut" duration="2000">
-                            <![CDATA[{"x":55,"y":0}]]>
-                        </to>
-                        <to ease="linear" duration="1">
-                            <![CDATA[{"x":75,"y":0, "scaleX": -1}]]>
-                        </to>
-                        <to ease="linear" duration="2000">
-                            <![CDATA[{"x":20,"y":35}]]>
-                        </to>                        
+                        <to duration="500" ease="linear"><![CDATA[{&quot;x&quot;:20,&quot;y&quot;:20}]]></to>
+                        <to duration="2000" ease="quadOut"><![CDATA[{&quot;x&quot;:55,&quot;y&quot;:0}]]></to>
+                        <to duration="1" ease="linear"><![CDATA[{&quot;x&quot;:75,&quot;y&quot;:0, &quot;scaleX&quot;: -1}]]></to>
+                        <to duration="2000" ease="linear"><![CDATA[{&quot;x&quot;:20,&quot;y&quot;:35}]]></to>
                     </tween>
                 </action>
             </event>
         </image>
-        <text x="55" y="15" h="10" w="40" fontsize="40" color="yellow">Animation plugin: expression evaluates to false - object should not be animated on click.</text>
-        <image asset="icon_home" x="55.5" y="35" w="10" h="10" id="home">
+        <text color="yellow" fontsize="40" h="10" w="40" x="55" y="15">Animation plugin: expression evaluates to false - object should not be animated on click.</text>
+        <image asset="icon_home" h="10" id="home" w="10" x="55.5" y="35">
             <event type="click">
-                <action type="animation" ev-if="stage.param2 == 'value_new'">
+                <action ev-if="stage.param2 == 'value_new'" type="animation">
                     <tween id="homeWalking">
-                        <to ease="linear" duration="500">
-                            <![CDATA[{"x":20,"y":20}]]>
-                        </to>
-                        <to ease="quadOut" duration="2000">
-                            <![CDATA[{"x":55,"y":0}]]>
-                        </to>
-                        <to ease="linear" duration="1">
-                            <![CDATA[{"x":75,"y":0, "scaleX": -1}]]>
-                        </to>
-                        <to ease="linear" duration="2000">
-                            <![CDATA[{"x":40,"y":35}]]>
-                        </to>
-                        
+                        <to duration="500" ease="linear"><![CDATA[{&quot;x&quot;:20,&quot;y&quot;:20}]]></to>
+                        <to duration="2000" ease="quadOut"><![CDATA[{&quot;x&quot;:55,&quot;y&quot;:0}]]></to>
+                        <to duration="1" ease="linear"><![CDATA[{&quot;x&quot;:75,&quot;y&quot;:0, &quot;scaleX&quot;: -1}]]></to>
+                        <to duration="2000" ease="linear"><![CDATA[{&quot;x&quot;:40,&quot;y&quot;:35}]]></to>
                     </tween>
                 </action>
             </event>
         </image>
-
-        <text x="10" y="75" h="10" w="40" fontsize="40" color="yellow">Tween / Sprite?: expression evaluates to false - - TO-DO.</text>
-
-        <text x="55" y="75" h="10" w="40" fontsize="40" color="yellow">Tween / Sprite?: expression evaluates to true -  -- TO-DO</text>
-
+        <text color="yellow" fontsize="40" h="10" w="40" x="10" y="75">Tween / Sprite?: expression evaluates to false - - TO-DO.</text>
+        <text color="yellow" fontsize="40" h="10" w="40" x="55" y="75">Tween / Sprite?: expression evaluates to true -  -- TO-DO</text>
     </stage>
-
-   <stage id="conditionalRendering3" x="0" y="0" w="100" h="100" extends="baseStage">
-        <param name="next" value="conditionalRendering4" />
-        <param name="previous" value="conditionalRendering2" />
-
-        <image asset="bg" x="0" y="0" w="100" h="100"/>
-        <param name="heading" model="testData.ts_cond_render_stage3"/>
-
-        <set param="param1" value="value1" scope="stage"/>
-        <set param="param2" ev-value="stage.param1 + '_new'" scope="stage"/>
-
-        <text x="10" y="15" h="10" w="40" fontsize="40" color="yellow">Event: expression evaluates to false - object should not be clickable.</text>
-        <image asset="icon_home" x="15.5" y="35" w="10" h="10" id="home">
-            <event type="click" ev-if="stage.param2 == 'value_new'">
-            </event>
+    <stage extends="baseStage" h="100" id="conditionalRendering3" w="100" x="0" y="0">
+        <param name="next" value="conditionalRendering4"/>
+        <param name="previous" value="conditionalRendering2"/>
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
+        <param model="testData.ts_cond_render_stage3" name="heading"/>
+        <set param="param1" scope="stage" value="value1"/>
+        <set ev-value="stage.param1 + '_new'" param="param2" scope="stage"/>
+        <text color="yellow" fontsize="40" h="10" w="40" x="10" y="15">Event: expression evaluates to false - object should not be clickable.</text>
+        <image asset="icon_home" h="10" id="home" w="10" x="15.5" y="35">
+            <event ev-if="stage.param2 == 'value_new'" type="click"/>
         </image>
-
-        <text x="55" y="15" h="10" w="40" fontsize="40" color="yellow">Event: expression evaluates to true - object should be clickable.</text>
-        <image asset="icon_home" x="65.5" y="35" w="10" h="10" id="home">
-            <event type="click" ev-if="stage.param2 == 'value1_new'">
-            </event>
+        <text color="yellow" fontsize="40" h="10" w="40" x="55" y="15">Event: expression evaluates to true - object should be clickable.</text>
+        <image asset="icon_home" h="10" id="home" w="10" x="65.5" y="35">
+            <event ev-if="stage.param2 == 'value1_new'" type="click"/>
         </image>
-
-        <text x="10" y="45" h="10" w="40" fontsize="40" color="yellow">Action: expression evaluates to false - action should not work - TO-DO.</text>
-
-        <text x="55" y="45" h="10" w="40" fontsize="40" color="yellow">Action: expression evaluates to true - action should work. -- TO-DO</text>     
-        
-        <text x="10" y="75" h="10" w="40" fontsize="40" color="yellow">Controller: expression evaluates to false - - TO-DO.</text>
-
-        <text x="55" y="75" h="10" w="40" fontsize="40" color="yellow">Controller: expression evaluates to true -  -- TO-DO</text>
-
-
+        <text color="yellow" fontsize="40" h="10" w="40" x="10" y="45">Action: expression evaluates to false - action should not work - TO-DO.</text>
+        <text color="yellow" fontsize="40" h="10" w="40" x="55" y="45">Action: expression evaluates to true - action should work. -- TO-DO</text>
+        <text color="yellow" fontsize="40" h="10" w="40" x="10" y="75">Controller: expression evaluates to false - - TO-DO.</text>
+        <text color="yellow" fontsize="40" h="10" w="40" x="55" y="75">Controller: expression evaluates to true -  -- TO-DO</text>
     </stage>
-
-    <stage id="conditionalRendering4" x="0" y="0" w="100" h="100" extends="baseStage">
-        <param name="next" value="conditionalRendering5" />
-        <param name="previous" value="conditionalRendering3" />
-
-        <image asset="bg" x="0" y="0" w="100" h="100"/>
-        <param name="heading" model="testData.ts_cond_render_stage4"/>
-
-        <set param="param1" value="value1" scope="stage"/>
-        <set param="param2" ev-value="stage.param1 + '_new'" scope="stage"/>
-
-        <text x="10" y="15" h="10" w="40" fontsize="40" color="yellow">MCQ: expression evaluates to false - MCQ shouldn't be displayed(???) - TO-DO.</text>
-
-        <text x="55" y="15" h="10" w="40" fontsize="40" color="yellow">MCQ: expression evaluates to true - MCQ should be displayed(???) - TO-DO.</text>
-
-        <text x="10" y="30" h="10" w="40" fontsize="40" color="yellow">MTF: expression evaluates to false - MTF shouldn't be displayed(???) - TO-DO.</text>
-
-        <text x="55" y="30" h="10" w="40" fontsize="40" color="yellow">MTF: expression evaluates to true - MTF should be displayed(???) - TO-DO.</text>
-
-        <text x="10" y="45" h="10" w="40" fontsize="40" color="yellow">option: expression evaluates to false - option shouldn't be displayed(???) - TO-DO.</text>
-
-        <text x="55" y="45" h="10" w="40" fontsize="40" color="yellow">option: expression evaluates to true - option should be displayed(???) - TO-DO.</text>
-
-        <text x="10" y="60" h="10" w="40" fontsize="40" color="yellow">options: expression evaluates to false - options shouldn't be displayed(???) - TO-DO.</text>
-
-        <text x="55" y="60" h="10" w="40" fontsize="40" color="yellow">options: expression evaluates to true - options should be displayed(???) - TO-DO.</text>
-
-
+    <stage extends="baseStage" h="100" id="conditionalRendering4" w="100" x="0" y="0">
+        <param name="next" value="conditionalRendering5"/>
+        <param name="previous" value="conditionalRendering3"/>
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
+        <param model="testData.ts_cond_render_stage4" name="heading"/>
+        <set param="param1" scope="stage" value="value1"/>
+        <set ev-value="stage.param1 + '_new'" param="param2" scope="stage"/>
+        <text color="yellow" fontsize="40" h="10" w="40" x="10" y="15">MCQ: expression evaluates to false - MCQ shouldn't be displayed(???) - TO-DO.</text>
+        <text color="yellow" fontsize="40" h="10" w="40" x="55" y="15">MCQ: expression evaluates to true - MCQ should be displayed(???) - TO-DO.</text>
+        <text color="yellow" fontsize="40" h="10" w="40" x="10" y="30">MTF: expression evaluates to false - MTF shouldn't be displayed(???) - TO-DO.</text>
+        <text color="yellow" fontsize="40" h="10" w="40" x="55" y="30">MTF: expression evaluates to true - MTF should be displayed(???) - TO-DO.</text>
+        <text color="yellow" fontsize="40" h="10" w="40" x="10" y="45">option: expression evaluates to false - option shouldn't be displayed(???) - TO-DO.</text>
+        <text color="yellow" fontsize="40" h="10" w="40" x="55" y="45">option: expression evaluates to true - option should be displayed(???) - TO-DO.</text>
+        <text color="yellow" fontsize="40" h="10" w="40" x="10" y="60">options: expression evaluates to false - options shouldn't be displayed(???) - TO-DO.</text>
+        <text color="yellow" fontsize="40" h="10" w="40" x="55" y="60">options: expression evaluates to true - options should be displayed(???) - TO-DO.</text>
     </stage>
-    <stage id="conditionalRendering5" x="0" y="0" w="100" h="100" extends="baseStage">
-        <set id="appMode" param="mode" value="interact" scope="app" />
-        <param name="next" value="conditionalRendering6" />
-        <param name="previous" value="conditionalRendering4" />
-
-        <image asset="bg" x="0" y="0" w="100" h="100"/>
-        <param name="heading" model="testData.ts_cond_render_stage5"/>
-
-        <text fontsize="40" color="yellow" x="22" y="43" w="22" h="12"> Learn mode
+    <stage extends="baseStage" h="100" id="conditionalRendering5" w="100" x="0" y="0">
+        <set id="appMode" param="mode" scope="app" value="interact"/>
+        <param name="next" value="conditionalRendering6"/>
+        <param name="previous" value="conditionalRendering4"/>
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
+        <param model="testData.ts_cond_render_stage5" name="heading"/>
+        <text color="yellow" fontsize="40" h="12" w="22" x="22" y="43">Learn mode
+            
             <event type="click">
-                <action type="command" command="set" asset="appMode" param="mode" param-value="learn" scope="app" />
-                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="top" ease="linear" duration="500"/>
-            </event>
+                <action asset="appMode" command="set" param="mode" param-value="learn" scope="app" type="command"/>
+                <action asset="theme" command="transitionTo" direction="top" duration="500" ease="linear" effect="scroll" param="next" type="command"/></event>
         </text>
-        <text fontsize="40" color="yellow" x="52" y="43" w="22" h="12"> Interactive mode
+        <text color="yellow" fontsize="40" h="12" w="22" x="52" y="43">Interactive mode
+            
             <event type="click">
-                <action type="command" command="set" asset="appMode" param="mode" param-value="interact" scope="app" />
-                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="top" ease="linear" duration="500"/>
-            </event>
+                <action asset="appMode" command="set" param="mode" param-value="interact" scope="app" type="command"/>
+                <action asset="theme" command="transitionTo" direction="top" duration="500" ease="linear" effect="scroll" param="next" type="command"/></event>
         </text>
-   
-   </stage>
-   <stage id="conditionalRendering6" x="0" y="0" w="100" h="100" extends="baseStage">
-        <param name="next" value="MTFQuestionWithOptionsTag" />
-        <param name="previous" value="conditionalRendering5" />
-        <image asset="bg" x="0" y="0" w="100" h="100"/>
-        <param name="heading" model="testData.ts_cond_render_stage5"/>
-        <text fontsize="40" color="yellow" x="22" y="43" w="22" h="12" ev-if="app.mode == 'learn'"> Learn mode is enabled</text>
-        <text fontsize="40" color="yellow" x="22" y="43" w="22" h="12" ev-if="app.mode == 'interact'"> Interactive mode is enabled</text>
+    </stage>
+    <stage extends="baseStage" h="100" id="conditionalRendering6" w="100" x="0" y="0">
+        <param name="next" value="MTFQuestionWithOptionsTag"/>
+        <param name="previous" value="conditionalRendering5"/>
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
+        <param model="testData.ts_cond_render_stage5" name="heading"/>
+        <text color="yellow" ev-if="app.mode == 'learn'" fontsize="40" h="12" w="22" x="22" y="43">Learn mode is enabled</text>
+        <text color="yellow" ev-if="app.mode == 'interact'" fontsize="40" h="12" w="22" x="22" y="43">Interactive mode is enabled</text>
     </stage>
     <template id="mtf_template_4">
-        
-        <text x="8" y="13" w="86" h="4" font="Verdana" fontsize="42" color="white" >
-            Able to put more than one item in dropable area : 
-        </text>
-        <text x="8" y="42" w="86" h="4" font="Verdana" fontsize="42" color="white">
-            Not able to put more than one item in dropable area : 
-        </text>
-            
-        <mtf model="item" force="false">
-            
-            <option x="65" y="15" w="15" h="24.5" snapX="12" snapY="12" option="lhs_options[0]" multiple="true"/>
-            <option x="65" y="45" w="15" h="24.5" snapX="12" snapY="12" option="lhs_options[0]" />
-           <!-- <option x="72" y="30" w="15" h="25.5" snapX="0.1" snapY="0.1" option="lhs_options[3]"/>-->
-
-            <option x="15" y="24" w="11" h="17" option="rhs_options[0]"/>
-            <option x="42" y="24" w="11" h="14.5" option="rhs_options[1]"/>
-            <option x="15" y="48" w="11" h="17" option="rhs_options[0]"/>
-            <option x="42" y="49" w="11" h="14.5" option="rhs_options[1]"/>
+        <text color="white" font="Verdana" fontsize="42" h="4" w="86" x="8" y="13">Able to put more than one item in dropable area : </text>
+        <text color="white" font="Verdana" fontsize="42" h="4" w="86" x="8" y="42">Not able to put more than one item in dropable area : </text>
+        <mtf force="false" model="item">
+            <option h="24.5" multiple="true" option="lhs_options[0]" snapX="12" snapY="12" w="15" x="65" y="15"/>
+            <option h="24.5" option="lhs_options[0]" snapX="12" snapY="12" w="15" x="65" y="45"/>
+            <!-- <option x="72" y="30" w="15" h="25.5" snapX="0.1" snapY="0.1" option="lhs_options[3]"/>-->
+            <option h="17" option="rhs_options[0]" w="11" x="15" y="24"/>
+            <option h="14.5" option="rhs_options[1]" w="11" x="42" y="24"/>
+            <option h="17" option="rhs_options[0]" w="11" x="15" y="48"/>
+            <option h="14.5" option="rhs_options[1]" w="11" x="42" y="49"/>
         </mtf>
-        
     </template>
     <template id="mtf_template_5">
-        <text x="8" y="13" w="86" h="4" font="Verdana" fontsize="50" color="white">
-            Rendering option using options tag with multiple item drop is allowed : 
-        </text>
-        <mtf model="item" force="false">
-            
-           <options layout="table" x="60" y="18" w="51" h="37" cols="2" marginX="15" marginY="5" snapX="45" snapY="35" options="lhs_options" multiple="true"/>
-           <!-- <option x="72" y="30" w="15" h="25.5" snapX="0.1" snapY="0.1" option="lhs_options[3]"/>-->
-
-            <option x="15" y="24" w="11" h="17" option="rhs_options[0]"/>
-            <option x="42" y="24" w="11" h="14.5" option="rhs_options[1]"/>
+        <text color="white" font="Verdana" fontsize="50" h="4" w="86" x="8" y="13">Rendering option using options tag with multiple item drop is allowed : </text>
+        <mtf force="false" model="item">
+            <options cols="2" h="37" layout="table" marginX="15" marginY="5" multiple="true" options="lhs_options" snapX="45" snapY="35" w="51" x="60" y="18"/>
+            <!-- <option x="72" y="30" w="15" h="25.5" snapX="0.1" snapY="0.1" option="lhs_options[3]"/>-->
+            <option h="17" option="rhs_options[0]" w="11" x="15" y="24"/>
+            <option h="14.5" option="rhs_options[1]" w="11" x="42" y="24"/>
         </mtf>
     </template>
-
-    <stage id="MTFQuestionWithOptionsTag" x="0" y="0" w="100" h="100" iterate="worksheet2" var="item" extends="baseStage">
-        <image asset="bg" x="0" y="0" w="100" h="100"/>
+    <stage extends="baseStage" h="100" id="MTFQuestionWithOptionsTag" iterate="worksheet2" var="item" w="100" x="0" y="0">
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
         <image asset="grey" visible="false"/>
         <image asset="potatohighlight" visible="false"/>
         <image asset="rabbithighlight" visible="false"/>
-        <param name="next" value="MTFQuestion" />
-        <param name="previous" value="conditionalRendering6" />
+        <param name="next" value="MTFQuestion"/>
+        <param name="previous" value="conditionalRendering6"/>
         <embed template="item" var-item="item"/>
-
     </stage>
-    <stage id="MTFQuestion" x="0" y="0" w="100" h="100" iterate="worksheet" var="item" extends="baseStage">
-        <image asset="bg" x="0" y="0" w="100" h="100"/>
+    <stage extends="baseStage" h="100" id="MTFQuestion" iterate="worksheet" var="item" w="100" x="0" y="0">
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
         <image asset="grey" visible="false"/>
         <image asset="potatohighlight" visible="false"/>
         <image asset="rabbithighlight" visible="false"/>
-        <param name="next" value="MCQQuestion" />
-        <param name="previous" value="MTFQuestionWithOptionsTag" />
+        <param name="next" value="MCQQuestion"/>
+        <param name="previous" value="MTFQuestionWithOptionsTag"/>
         <embed template="item" var-item="item"/>
-
     </stage>
     <template id="mcq_template_1">
-        <text model="item.title" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42"/>
-        <text x="9" y="50" w="86" h="4" font="Georgia" fontsize="42" >
-            Rendering option with less opacity :
-        </text>
-        <mcq multi_select="false" model="item" >
-            <option x="10" y="20" w="25" h="30" padX="20" padY="10" option="options[0]" highlight="red"/>
-            <option x="40" y="20" w="25" h="30" padX="20" padY="10" option="options[1]" highlight="green"/>
-            <option x="10" y="60" w="25" h="30" padX="20" padY="10" option="options[2]" highlight="red" opacity="0.4"/>
-            <option x="40" y="60" w="25" h="30" padX="20" padY="10" option="options[3]" highlight="green" opacity="0.2"/>
+        <text font="Georgia" fontsize="42" h="4" model="item.title" w="86" x="9" y="7"/>
+        <text font="Georgia" fontsize="42" h="4" w="86" x="9" y="50">Rendering option with less opacity :</text>
+        <mcq model="item" multi_select="false">
+            <option h="30" highlight="red" option="options[0]" padX="20" padY="10" w="25" x="10" y="20"/>
+            <option h="30" highlight="green" option="options[1]" padX="20" padY="10" w="25" x="40" y="20"/>
+            <option h="30" highlight="red" opacity="0.4" option="options[2]" padX="20" padY="10" w="25" x="10" y="60"/>
+            <option h="30" highlight="green" opacity="0.2" option="options[3]" padX="20" padY="10" w="25" x="40" y="60"/>
         </mcq>
     </template>
-     <stage id="MCQQuestion" x="0" y="0" w="100" h="100" iterate="worksheet3" var="item" extends="baseStage">
-        <!-- <image asset="bg" x="0" y="0" w="100" h="100"/> -->
+    <stage extends="baseStage" h="100" id="MCQQuestion" iterate="worksheet3" var="item" w="100" x="0" y="0">
+        <!-- <image asset="bg" x="0" y="0" w="100" h="100"/>-->
         <image asset="grey" visible="false"/>
-        <param name="next" value="eventMCQMTFOptions" />
-        <param name="previous" value="MTFQuestion" />
+        <param name="next" value="eventMCQMTFOptions"/>
+        <param name="previous" value="MTFQuestion"/>
         <embed template="item" var-item="item"/>
-
     </stage>
-    <stage id="eventMCQMTFOptions" x="0" y="0" w="100" h="100" iterate="assessment" var="item" extends="baseStage">
-        <audio asset="drag_audio" />
-        <param name="next" value="audioRecording" />
-        <param name="previous" value="MTFQuestion" />
+    <stage extends="baseStage" h="100" id="eventMCQMTFOptions" iterate="assessment" var="item" w="100" x="0" y="0">
+        <audio asset="drag_audio"/>
+        <param name="next" value="audioRecording"/>
+        <param name="previous" value="MTFQuestion"/>
         <embed template="item" var-item="item"/>
         <appEvents list="next_item"/>
         <events>
             <event type="next_item">
-                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" reset="true" />
+                <action asset="theme" command="transitionTo" direction="left" duration="500" ease="linear" effect="scroll" param="next" reset="true" type="command"/>
             </event>
         </events>
     </stage>
-    <stage id="audioRecording" x="0" y="0" w="100" h="100" extends="baseStage">
-        <audio asset="drag_audio" />
-        <param name="next" value="dataRepeatStage" />
-        <param name="previous" value="eventMCQMTFOptions" />
-        <image asset="mic" x="91" y="70" w="8" h="13">
+    <stage extends="baseStage" h="100" id="audioRecording" w="100" x="0" y="0">
+        <audio asset="drag_audio"/>
+        <param name="next" value="dataRepeatStage"/>
+        <param name="previous" value="eventMCQMTFOptions"/>
+        <image asset="mic" h="13" w="8" x="91" y="70">
             <event type="click">
-                <action type="command" command="show" asset="recorder" />
+                <action asset="recorder" command="show" type="command"/>
             </event>
         </image>
-
-        <g id="recorder" x="0" y="0" w="100" h="100" visible="false">
-            <g x="0" y="0" w="100" h="100">
-                <image asset="blacktint" x="0" y="0" w="100" h="100">
+        <g h="100" id="recorder" visible="false" w="100" x="0" y="0">
+            <g h="100" w="100" x="0" y="0">
+                <image asset="blacktint" h="100" w="100" x="0" y="0">
                     <event type="click">
-                        <action type="command" command="hide" asset="recorder" />
+                        <action asset="recorder" command="hide" type="command"/>
                     </event>
                 </image>
             </g>
-            <g x="0" y="0" w="100" h="100" id="startrec">
-                <shape type="roundrect" x="36" y="37" w="30" h="20" fill="gray"/>
-                <shape type="roundrect" x="35" y="35" w="30" h="20" fill="#34e941">
+            <g h="100" id="startrec" w="100" x="0" y="0">
+                <shape fill="gray" h="20" type="roundrect" w="30" x="36" y="37"/>
+                <shape fill="#34e941" h="20" type="roundrect" w="30" x="35" y="35">
                     <event type="click">
-                        <action type="command" command="startRecord" asset="startrec" success="rec_started" failure="rec_start_fail"/>
+                        <action asset="startrec" command="startRecord" failure="rec_start_fail" success="rec_started" type="command"/>
                     </event>
                 </shape>
-                <image asset="record" x="38" y="40" w="6" h="10"/>
-                <text x="47" y="43" w="20" h="5" font="sans-serif" fontsize="50" color="darkgreen">Start</text>
+                <image asset="record" h="10" w="6" x="38" y="40"/>
+                <text color="darkgreen" font="sans-serif" fontsize="50" h="5" w="20" x="47" y="43">Start</text>
             </g>
-            <g x="0" y="0" w="100" h="100" id="stoprec" visible="false">
-                <shape type="roundrect" x="36" y="37" w="30" h="20" fill="gray"/>
-                <shape type="roundrect" x="35" y="35" w="30" h="20" fill="#e93441">
+            <g h="100" id="stoprec" visible="false" w="100" x="0" y="0">
+                <shape fill="gray" h="20" type="roundrect" w="30" x="36" y="37"/>
+                <shape fill="#e93441" h="20" type="roundrect" w="30" x="35" y="35">
                     <event type="click">
-                        <action type="command" command="stopRecord" asset="stoprec" success="rec_stopped" failure="rec_stop_failed"/>
+                        <action asset="stoprec" command="stopRecord" failure="rec_stop_failed" success="rec_stopped" type="command"/>
                     </event>
                 </shape>
-                <shape id="mover" type="circle" x="47" y="45" w="2" h="2" fill="#e98888" visible="false"/>
-                <image asset="stop_record" x="38" y="40" w="6" h="10"/>
+                <shape fill="#e98888" h="2" id="mover" type="circle" visible="false" w="2" x="47" y="45"/>
+                <image asset="stop_record" h="10" w="6" x="38" y="40"/>
             </g>
-            <g x="0" y="0" w="100" h="100" id="welldone" visible="false">
-                <shape type="roundrect" x="36" y="37" w="30" h="20" fill="gray"/>
-                <shape type="roundrect" x="35" y="35" w="30" h="20" fill="#34e941">
+            <g h="100" id="welldone" visible="false" w="100" x="0" y="0">
+                <shape fill="gray" h="20" type="roundrect" w="30" x="36" y="37"/>
+                <shape fill="#34e941" h="20" type="roundrect" w="30" x="35" y="35">
                     <event type="click">
-                        <action type="command" command="hide" asset="recorder" />
-                        <action type="command" command="hide" asset="welldone" />
-                        <action type="command" command="show" asset="startrec" />
+                        <action asset="recorder" command="hide" type="command"/>
+                        <action asset="welldone" command="hide" type="command"/>
+                        <action asset="startrec" command="show" type="command"/>
                     </event>
                 </shape>
-                <text x="47" y="43" w="20" h="5" font="sans-serif" fontsize="50" color="yellow">Well Done</text>
+                <text color="yellow" font="sans-serif" fontsize="50" h="5" w="20" x="47" y="43">Well Done</text>
             </g>
-            <g x="0" y="0" w="100" h="100" id="tryagain" visible="false">
-                <shape type="roundrect" x="36" y="37" w="30" h="20" fill="gray"/>
-                <shape type="roundrect" x="35" y="35" w="30" h="20" fill="#34e941">
+            <g h="100" id="tryagain" visible="false" w="100" x="0" y="0">
+                <shape fill="gray" h="20" type="roundrect" w="30" x="36" y="37"/>
+                <shape fill="#34e941" h="20" type="roundrect" w="30" x="35" y="35">
                     <event type="click">
-                        <action type="command" command="startRecord" asset="tryagain" success="rec_started" failure="rec_start_fail"/>
+                        <action asset="tryagain" command="startRecord" failure="rec_start_fail" success="rec_started" type="command"/>
                     </event>
                 </shape>
-                <image asset="record" x="38" y="40" w="6" h="10"/>
-                <text x="47" y="43" w="20" h="5" font="sans-serif" fontsize="50" color="darkred">Try Again</text>
+                <image asset="record" h="10" w="6" x="38" y="40"/>
+                <text color="darkred" font="sans-serif" fontsize="50" h="5" w="20" x="47" y="43">Try Again</text>
             </g>
         </g>
-
         <appEvents list="rec_started,rec_start_fail,rec_stopped,rec_stop_failed,rec_processed,rec_process_fail"/>
-
         <events>
             <event type="rec_started">
-                <action type="command" command="hide" asset="startrec" />
-                <action type="command" command="hide" asset="tryagain" />
-                <action type="command" command="show" asset="stoprec" />
-                <action type="command" command="show" asset="mover" />
-                <action type="animation" asset="mover">
+                <action asset="startrec" command="hide" type="command"/>
+                <action asset="tryagain" command="hide" type="command"/>
+                <action asset="stoprec" command="show" type="command"/>
+                <action asset="mover" command="show" type="command"/>
+                <action asset="mover" type="animation">
                     <tween id="mover" loop="true">
-                        <to ease="linear" duration="0">
-                            <![CDATA[{"x":47,"y":45}]]>
-                        </to>
-                        <to ease="sineInOut" duration="1000">
-                            <![CDATA[{"x":62,"y":45}]]>
-                        </to>
-                        <to ease="sineInOut" duration="1000">
-                            <![CDATA[{"x":47,"y":45}]]>
-                        </to>
+                        <to duration="0" ease="linear"><![CDATA[{&quot;x&quot;:47,&quot;y&quot;:45}]]></to>
+                        <to duration="1000" ease="sineInOut"><![CDATA[{&quot;x&quot;:62,&quot;y&quot;:45}]]></to>
+                        <to duration="1000" ease="sineInOut"><![CDATA[{&quot;x&quot;:47,&quot;y&quot;:45}]]></to>
                     </tween>
                 </action>
             </event>
-
             <event type="rec_stopped">
-                <action type="command" command="hide" asset="stoprec" />
-                <action type="command" command="hide" asset="mover" />
-                <action type="command" command="processRecord" asset="stoprec" success="rec_processed" failure="rec_process_fail" data-lineindex="${stage.lineindex}"/>
+                <action asset="stoprec" command="hide" type="command"/>
+                <action asset="mover" command="hide" type="command"/>
+                <action asset="stoprec" command="processRecord" data-lineindex="${stage.lineindex}" failure="rec_process_fail" success="rec_processed" type="command"/>
             </event>
             <event type="rec_processed">
-                <action type="command" command="show" asset="welldone" />
+                <action asset="welldone" command="show" type="command"/>
             </event>
             <event type="rec_process_fail">
-                <action type="command" command="show" asset="tryagain" />
+                <action asset="tryagain" command="show" type="command"/>
             </event>
         </events>
     </stage>
-
     <template id="dataTemplate">
-        <text model="data.title" x="9" y="7" w="86" h="10" color="green"  font="Georgia" fontsize="100"/>
-        <text model="data.description" x="9" y="20" w="86" h="50" font="Georgia" fontsize="42"/>
+        <text color="green" font="Georgia" fontsize="100" h="10" model="data.title" w="86" x="9" y="7"/>
+        <text font="Georgia" fontsize="42" h="50" model="data.description" w="86" x="9" y="20"/>
     </template>
     <template id="dataTemplate1">
-        <text model="data.title" x="9" y="7" w="86" h="10" color="red" font="Georgia" fontsize="100"/>
-        <text model="data.description" x="9" y="20" w="86" h="50" font="Georgia" fontsize="42"/>
+        <text color="red" font="Georgia" fontsize="100" h="10" model="data.title" w="86" x="9" y="7"/>
+        <text font="Georgia" fontsize="42" h="50" model="data.description" w="86" x="9" y="20"/>
     </template>
-
-    <stage id="dataRepeatStage" x="0" y="0" w="100" h="100" iterate="testData2" var="data" extends="baseStage">
-        <param name="next" value="finished" />
-        <param name="previous" value="audioRecording" />
+    <stage extends="baseStage" h="100" id="dataRepeatStage" iterate="testData2" var="data" w="100" x="0" y="0">
+        <param name="next" value="finished"/>
+        <param name="previous" value="audioRecording"/>
         <embed template="data" var-data="data"/>
     </stage>
-    <stage id="finished" x="0" y="0" w="100" h="100">
-    	<image asset="bg" x="0" y="0" w="100" h="100"/>
-        
-        <text x="38" y="15" w="30" h="8" font="Georgia" fontsize="50">
-            It works :) See you again!
-        </text>
-        
-        <image asset="icon_reload" x="30" y="35" w="15" h="20" />
-        <text x="33" y="57" w="15" h="5" font="Arial" fontsize="48">
-            Replay
-        </text>
-        <shape type="rect" x="30" y="35" w="15" h="30" hitArea="true">
+    <stage h="100" id="finished" w="100" x="0" y="0">
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
+        <text font="Georgia" fontsize="50" h="8" w="30" x="38" y="15">It works :) See you again!</text>
+        <image asset="icon_reload" h="20" w="15" x="30" y="35"/>
+        <text font="Arial" fontsize="48" h="5" w="15" x="33" y="57">Replay</text>
+        <shape h="30" hitArea="true" type="rect" w="15" x="30" y="35">
             <event type="click">
-                <action type="command" command="restart" asset="theme"/>
+                <action asset="theme" command="restart" type="command"/>
             </event>
         </shape>
-
-        <image asset="icon_home" x="55" y="35" w="15" h="20" />
-        <text x="58" y="57" w="15" h="5" font="Arial" fontsize="48">
-            Home
-        </text>
-        <shape type="rect" x="55" y="35" w="15" h="30" hitArea="true">
+        <image asset="icon_home" h="20" w="15" x="55" y="35"/>
+        <text font="Arial" fontsize="48" h="5" w="15" x="58" y="57">Home</text>
+        <shape h="30" hitArea="true" type="rect" w="15" x="55" y="35">
             <event type="click">
-                <action type="command" command="windowEvent" asset="theme" href="#/content/list"/>
+                <action asset="theme" command="windowEvent" href="#/content/list" type="command"/>
             </event>
         </shape>
-
-        <text x="48" y="75" w="15" h="5" font="Arial" fontsize="48">
-            Ekstep
-        </text>
-        <shape type="rect" x="47" y="74" w="17" h="7" hitArea="true">
+        <text font="Arial" fontsize="48" h="5" w="15" x="48" y="75">Ekstep</text>
+        <shape h="7" hitArea="true" type="rect" w="17" x="47" y="74">
             <event type="click">
-                <action type="command" command="external" href="http://www.ekstep.org/"/>
+                <action command="external" href="http://www.ekstep.org/" type="command"/>
             </event>
         </shape>
-        
     </stage>
 </theme>
