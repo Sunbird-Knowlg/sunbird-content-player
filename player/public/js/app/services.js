@@ -234,7 +234,7 @@ angular.module('quiz.services', ['ngResource'])
                             }
                         }
                     }
-                    if ((localContent.status == "ready" && localContent.pkgVersion != content.pkgVersion) || (localContent.status == "error")) {
+                    if ((localContent.status == "ready" && localContent.pkgVersion != content.pkgVersion) || (localContent.status != "ready")) {
                         promise = processContent(content);
                     } else {
                         if(localContent.filters) {
@@ -260,8 +260,9 @@ angular.module('quiz.services', ['ngResource'])
                 returnObject.setSyncStart();
                 return new Promise(function(resolve, reject) {
                     var filter = {"types": ["Story", "Worksheet"], "filter": {}};
-                    if (GlobalContext.filter === true) {
-                        filter.filter = {"tags" : ["Delhi Curriculum"]};
+                    if (GlobalContext.filter) {
+                        // filter.filter = {"tags" : ["Delhi Curriculum"]};
+                        filter.filter = JSON.parse(GlobalContext.filter);
                     }
                     PlatformService.getContentList(filter)
                     .then(function(contents) {
@@ -278,6 +279,7 @@ angular.module('quiz.services', ['ngResource'])
                                 "message": errMsg
                             });
                         } else {
+                            if (contents.appStatus) AppConfig.APP_STATUS = contents.appStatus;
                             if(contents.data) {
                                 for (key in contents.data) {
                                     var content = contents.data[key];

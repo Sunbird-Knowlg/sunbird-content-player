@@ -48,11 +48,7 @@ var StagePlugin = Plugin.extend({
                 }
             }
         }
-        for (k in data) {
-            if (PluginManager.isPlugin(k)) {
-                PluginManager.invoke(k, data[k], this, this, this._theme);
-            }
-        }
+        this.invokeChildren(data, this, this, this._theme);
     },
     setParamValue: function(p) {
         if (p.value) {
@@ -64,7 +60,12 @@ var StagePlugin = Plugin.extend({
     addController: function(p) {
         var add = true;
         // Conditional evaluation to add controller.
-        if (p['ev-if']) add = this.evaluateExpr(p['ev-if']);
+        if (p['ev-if']) {
+            var expr = p['ev-if'].trim();
+            if (!expr.startsWith("${")) expr = "${" + expr;
+            if (!expr.endsWith("}")) expr = expr + "}"
+            add = this.evaluateExpr(expr);
+        }
         if (add) {
             var controller = ControllerManager.get(p.type, p.id, this._theme.baseDir);
             if (controller) {

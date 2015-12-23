@@ -28,11 +28,7 @@ var MTFPlugin = Plugin.extend({
 				var dims = this.relativeDims();
         		this._self.x = dims.x;
         		this._self.y = dims.y;
-        		for(k in data) {
-        			if(PluginManager.isPlugin(k)) {
-        				PluginManager.invoke(k, data[k], this, this._stage, this._theme);
-        			}
-        		}
+                this.invokeChildren(data, this, this._stage, this._theme);
         	}
         }
     },

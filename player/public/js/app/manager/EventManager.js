@@ -3,7 +3,14 @@ EventManager = {
 	registerEvents: function(plugin, data) {
 		var events = undefined;
 		if(data.events) {
-			events = data.events.event
+			if (_.isArray(data.events)) {
+				events = [];
+				data.events.forEach(function(e) {
+					events.push.apply(events, e.event);
+				});
+			} else {
+				events = data.events.event
+			}
 		} else {
 			events = data.event;
 		}
@@ -18,7 +25,12 @@ EventManager = {
 	registerEvent: function(evt, plugin) {
 		var register = true;
 		// Conditional evaluation to register event.
-		if (evt['ev-if']) register = plugin.evaluateExpr(evt['ev-if']);
+		if (evt['ev-if']) {
+			var expr = evt['ev-if'].trim();
+			if (!expr.startsWith("${")) expr = "${" + expr;
+            if (!expr.endsWith("}")) expr = expr + "}"
+			register = plugin.evaluateExpr(expr);
+		}
 		if (register) {
 			plugin.events.push(evt.type);
 			if(_.contains(EventManager.appEvents, evt.type) || _.contains(plugin.appEvents, evt.type)) { // Handle app events
@@ -60,7 +72,12 @@ EventManager = {
 	handleAction: function(action, plugin) {
 		var handle = true;
 		// Conditional evaluation for handle action.
-		if (action['ev-if']) handle = plugin.evaluateExpr(action['ev-if']);
+		if (action['ev-if']) {
+			var expr = action['ev-if'].trim();
+			if (!expr.startsWith("${")) expr = "${" + expr;
+            if (!expr.endsWith("}")) expr = expr + "}"
+			handle = plugin.evaluateExpr(expr);
+		}
 		if (handle) {
 			var stage = plugin._stage;
 			if (!stage || stage == null) {

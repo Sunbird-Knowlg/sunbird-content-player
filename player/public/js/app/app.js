@@ -87,6 +87,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             console.log('ionic platform is ready...');
             if (window.cordova && window.cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            } else {
+                AppConfig.recorder = "android";
             }
             if (window.StatusBar) {
                 StatusBar.styleDefault();
@@ -124,13 +126,14 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                         if (GlobalContext.config.appInfo &&
                             GlobalContext.config.appInfo.code &&
                             GlobalContext.config.appInfo.code != packageName 
-                                && GlobalContext.config.appInfo.code != packageNameDelhi) {
+                                && (typeof GlobalContext.config.appInfo.filter == 'undefined')) { // && GlobalContext.config.appInfo.code != packageNameDelhi
                             TelemetryService.start();
                             $state.go('showContent', {});
                         } else {
                             if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.code) {
+                                // TODO: remove the below if condition after getting confirmation that, Genie sending this value.
                                 if (GlobalContext.config.appInfo.code == packageNameDelhi) {
-                                    GlobalContext.filter = true;
+                                    GlobalContext.filter = '{"tags" : ["Delhi Curriculum"]}';
                                 }
                                 GlobalContext.game.id = GlobalContext.config.appInfo.code;
                             }
