@@ -169,7 +169,7 @@
         <text blur="10" color="white" fontsize="40" h="10" offsetY="5" outline="2" shadow="red" w="20" x="73" y="80">Text with Outline and Shadow</text>
     </stage>
     <stage extends="baseStage" h="100" id="test-Z-Index" w="100" x="0" y="0">
-        <param name="next" value="mcqOptionsGlow"/>
+        <param name="next" value="hybridRendering"/>
         <param name="previous" value="textPluginWrap"/>
         <image asset="bg" h="100" w="100" x="0" y="0"/>
         <param model="testData.ts_z_index" name="heading" />
@@ -180,9 +180,31 @@
         </g>
         <shape x="10" y="10" w="80" h="80" hitArea="true" type="rect" fill="red" />
     </stage>
+
+    <stage extends="baseStage" h="100" id="hybridRendering" w="100" x="0" y="0">
+        <param name="next" value="mcqOptionsGlow"/>
+        <param name="previous" value="test-Z-Index"/>
+        <image asset="bg" h="100" w="100" x="0" y="0"/>
+        <param model="testData.ts_hybrig_rendering" name="heading"/>
+        <text color="yellow" fontsize="40" h="10" w="80" x="10" y="10">Rendering HTML element as well as canvas and can interact with each other.</text>
+        <div id="testDiv" x="10" y="30" w="40" h="5" style="color:red; background:green;text-align:center;">
+            <![CDATA[<span style="font-weight:bold;">This </span><span>is </span><span>the </span><span id="annualHeader">HTML </span><span>div </span><span>Element</span>]]>
+            <event type="click">
+                <action type="command" command="toggleshow" asset="testShape"/>
+            </event>
+        </div>
+        <text color="red" fontsize="47" x="66" y="30.5" w="35" h="5" z-index="2">This is canvas shape</text>
+        <shape id="testShape" x="60" y="30" w="35" h="5" hitArea="true" type="rect" fill="green" z-index="1">
+            <event type="click">
+                <action type="command" command="toggleshow" asset="testDiv"/>
+            </event>
+        </shape>
+        <text color="white" fontsize="45" x="10" y="48" w="100" h="5" z-index="2">On click of HTML element hides the canvas shape and vice-versa</text>
+    </stage>
+
     <stage extends="baseStage" h="100" id="mcqOptionsGlow" w="100" x="0" y="0">
         <param name="next" value="launchExternal"/>
-        <param name="previous" value="textPluginWrap"/>
+        <param name="previous" value="hybridRendering"/>
         <image asset="bg" h="100" w="100" x="0" y="0"/>
         <param model="testData.ts_mcq_glow" name="heading"/>
         <text color="yellow" fontsize="30" h="10" w="40" x="10" y="10">TO-DO</text>

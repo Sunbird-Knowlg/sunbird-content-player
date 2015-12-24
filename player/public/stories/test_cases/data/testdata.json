@@ -3,6 +3,7 @@
 		"ts_textpg_align" : "Text Plugin - Align",
 		"ts_textpg_wrap" : "Text Plugin - Wrap",
 		"ts_z_index": "Testing z-index rendering",
+		"ts_hybrig_rendering": "Hybrid Rendering Test",
 		"ts_external_launch" : "External Launch",
 		"ts_mcq_glow" : "MCQ options - Glow Control",
 		"ts_cond_render_stage1": "Conditional Rendering - Stage level - Text,Image,Shape,Input",

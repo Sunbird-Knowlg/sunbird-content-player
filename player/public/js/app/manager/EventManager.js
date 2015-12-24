@@ -38,8 +38,14 @@ EventManager = {
 					EventManager.handleActions(evt, plugin);
 				});
 			} else { // Handle mouse events
-				plugin._self.cursor = 'pointer';
-				plugin._self.on(evt.type, function(event) {
+				var element = plugin._self;
+				if(plugin._type == 'div') {
+					element = plugin._self.htmlElement;
+					element.style.cursor = 'pointer';
+				} else {
+					element.cursor = 'pointer';
+				}
+				element.addEventListener(evt.type, function(event) {
 					EventManager.processMouseTelemetry(evt, event, plugin);
 					EventManager.handleActions(evt, plugin);
 				});
