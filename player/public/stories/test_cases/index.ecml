@@ -187,8 +187,8 @@
         <image asset="bg" h="100" w="100" x="0" y="0"/>
         <param model="testData.ts_hybrig_rendering" name="heading"/>
         <text color="yellow" fontsize="40" h="10" w="80" x="10" y="10">Rendering HTML element as well as canvas and can interact with each other.</text>
-        <div id="testDiv" x="10" y="30" w="40" h="40">
-            <![CDATA[<div style="color:red; background:green; text-align:center;"><span style="font-weight:bold;">This </span><span>is </span><span>the </span><span id="annualHeader">HTML </span><span>div </span><span>Element</span></div>]]>
+        <div id="testDiv" x="10" y="30" w="40" h="5" style="color:red; background:green;text-align:center;">
+            <![CDATA[<div><span style="font-weight:bold;">This </span><span>is </span><span>the </span><span id="annualHeader">HTML </span><span>div </span><span>Element</span></div>]]>
             <event type="click">
                 <action type="command" command="toggleshow" asset="testShape"/>
             </event>

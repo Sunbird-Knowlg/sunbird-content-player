@@ -11,6 +11,8 @@ var DivPlugin = Plugin.extend({
 			$("#" + data.id).remove();
 		}
 		div = document.createElement('div');
+        if(data.style)
+            div.setAttribute("style", data.style);
         div.id = data.id;
         div.style.width = dims.w + 'px';
         div.style.height = dims.h + 'px';
