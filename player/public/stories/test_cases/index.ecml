@@ -432,7 +432,7 @@
         <param name="previous" value="eventMCQMTFOptions"/>
         <shape fill="gray" h="25" type="roundrect" w="35" x="33" y="34" />
         <text color="white" font="sans-serif" fontsize="50" h="5" w="20" x="47" y="43">Hotspot</text>
-        <hotspot fill="gray" h="20" type="roundrect" w="30" x="36" y="37">
+        <hotspot fill="gray" h="20" type="rect" w="30" x="36" y="37" stroke="white">
             <event type="click">
                 <action asset="mic" command="toggleShow" type="command"/>
             </event>
