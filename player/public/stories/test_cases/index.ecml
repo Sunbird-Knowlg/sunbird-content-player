@@ -50,7 +50,7 @@
             <options cols="2" h="85" layout="table" marginX="10" marginY="5" options="options" w="70" x="20" y="15">
                 <events>
                     <event type="click">
-                        <action asset="scene19_sound" command="play" loop="1" type="command"/>
+                        <action asset_param="op_click_sound" command="play" loop="1" type="command"/>
                     </event>
                 </events>
             </options>
@@ -396,7 +396,7 @@
         <param name="previous" value="MTFQuestionWithOptionsTag"/>
         <embed template="item" var-item="item"/>
     </stage>
-    <template id="mcq_template_1">
+    <template id="mcq_template_12">
         <text font="Georgia" fontsize="42" h="4" model="item.title" w="86" x="9" y="7"/>
         <text font="Georgia" fontsize="42" h="4" w="86" x="9" y="50">Rendering option with less opacity :</text>
         <mcq model="item" multi_select="false">
@@ -411,12 +411,13 @@
         <image asset="grey" visible="false"/>
         <param name="next" value="eventMCQMTFOptions"/>
         <param name="previous" value="MTFQuestion"/>
+        <param name="op_click_sound" value="drag_audio" />
         <embed template="item" var-item="item"/>
     </stage>
     <stage extends="baseStage" h="100" id="eventMCQMTFOptions" iterate="assessment" var="item" w="100" x="0" y="0">
         <audio asset="drag_audio"/>
         <param name="next" value="audioRecording"/>
-        <param name="previous" value="MTFQuestion"/>
+        <param name="previous" value="MCQQuestion"/>
         <embed template="item" var-item="item"/>
         <appEvents list="next_item"/>
         <events>
@@ -429,6 +430,13 @@
         <audio asset="drag_audio"/>
         <param name="next" value="dataRepeatStage"/>
         <param name="previous" value="eventMCQMTFOptions"/>
+        <shape fill="gray" h="25" type="roundrect" w="35" x="33" y="34" />
+        <text color="white" font="sans-serif" fontsize="50" h="5" w="20" x="47" y="43">Hotspot</text>
+        <hotspot fill="gray" h="20" type="roundrect" w="30" x="36" y="37">
+            <event type="click">
+                <action asset="mic" command="toggleShow" type="command"/>
+            </event>
+        </hotspot>
         <image asset="mic" h="13" w="8" x="91" y="70">
             <event type="click">
                 <action asset="recorder" command="show" type="command"/>
