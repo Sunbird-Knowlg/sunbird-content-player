@@ -26,6 +26,7 @@ module.exports = function(grunt) {
                         'public/js/app/controller/*Controller.js',
                         'public/js/app/generator/*.js',
                         'public/js/app/evaluator/*.js',
+                        'public/js/app/plugin/ShapePlugin.js',
                         'public/js/app/plugin/*Plugin.js',
                         'public/js/app/renderer/*.js',
                         'public/js/app/cordova-plugin/DownloaderService.js',

@@ -89,8 +89,9 @@ var OptionsPlugin = Plugin.extend({
     			}
     		}
     	}
-        delete instance._data.events;
-        delete instance._data.event;
+        // TODO: check why did we add this delete statements?
+        // delete instance._data.events;
+        // delete instance._data.event;
     }
 });
 PluginManager.registerPlugin('options', OptionsPlugin);
