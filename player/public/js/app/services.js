@@ -176,50 +176,100 @@ angular.module('quiz.services', ['ngResource'])
             getContent: function(id) {
                 return returnObject.contentList[id];
             },
+            // updateContent: function(content) {
+            //     var update = function(obj, resolve, reject) {
+            //         setTimeout(function() {
+            //             $rootScope.$broadcast('show-message', {
+            //                 "message": AppMessages.DIRECT_DOWNLOADING_MSG
+            //             });
+            //         }, 1000);
+            //         processContent(obj)
+            //         .then(function(data) {
+            //             $rootScope.$broadcast('process-complete', {
+            //                 "data": data
+            //             });
+            //         });
+            //         obj.status = "processing";
+            //         resolve(obj);
+            //     };
+            //     return new Promise(function(resolve, reject) {
+            //         if(content && content.identifier) {
+            //             if (content.status == 'error') {
+            //                 update(content, resolve, reject);
+            //             } else {
+            //                 var localContent = returnObject.contentList[content.identifier];
+            //                 if (localContent) {
+            //                     for (var key in content) {
+            //                         localContent[key] = content[key];   
+            //                     }
+            //                     returnObject.commit();
+            //                     if (localContent.pkgVersion != content.pkgVersion) {
+            //                         update(content, resolve, reject);
+            //                     } else {
+            //                         $rootScope.$broadcast('show-message', {
+            //                             "message": AppMessages.NO_NEW_CONTENT,
+            //                             "timeout": 3000
+            //                         });
+            //                         resolve(localContent);
+            //                     }
+            //                 } else {
+            //                     update(content, resolve, reject);
+            //                 }
+            //             }
+            //         } else {
+            //             reject('Invalid content to update');
+            //         }
+            //     });
+            // },
             updateContent: function(content) {
-                var update = function(obj, resolve, reject) {
+                var updateContentPath = function(localContent, resolve, reject) {
+                    GenieService.getContent(localContent.identifier)
+                    .then(function(result) {
+                        (result.path.charAt(result.path.length-1) == '/')? result.path = result.path.substring(0, result.path.length-1): result.path = result.path;
+                        localContent.baseDir = "file://" + result.path;
+                        localContent.appIcon = "file://" + result.path +'/logo.png';
+                        localContent.status = "ready";
+                        returnObject.saveContent(localContent);
+                        showMessage(AppMessages.CONTENT_READY_TO_PLAY);
+                        resolve(localContent);
+                    })
+                    .catch(function(err) {
+                        console.error("Error while fetching content path:", err);
+                        localContent.status = "error";
+                        returnObject.saveContent(localContent);
+                        showMessage(AppMessages.ERR_FETCHING_CONTENT_PATH);
+                        reject("Error while fetching content path:" + JSON.stringify(err));
+                    });
+                };
+                var showMessage = function(message) {
                     setTimeout(function() {
                         $rootScope.$broadcast('show-message', {
-                            "message": AppMessages.DIRECT_DOWNLOADING_MSG
+                            "message": message,
+                            "timeout": 3000
                         });
                     }, 1000);
-                    processContent(obj)
-                    .then(function(data) {
-                        $rootScope.$broadcast('process-complete', {
-                            "data": data
-                        });
-                    });
-                    obj.status = "processing";
-                    resolve(obj);
-                };
+                }
                 return new Promise(function(resolve, reject) {
                     if(content && content.identifier) {
-                        if (content.status == 'error') {
-                            update(content, resolve, reject);
-                        } else {
-                            var localContent = returnObject.contentList[content.identifier];
+                        var localContent = returnObject.contentList[content.identifier];
                             if (localContent) {
-                                for (var key in content) {
-                                    localContent[key] = content[key];   
-                                }
-                                returnObject.commit();
-                                if (localContent.pkgVersion != content.pkgVersion) {
-                                    update(content, resolve, reject);
+                                if(localContent.status == "error") {
+                                    updateContentPath(localContent, resolve, reject);
                                 } else {
-                                    $rootScope.$broadcast('show-message', {
-                                        "message": AppMessages.NO_NEW_CONTENT,
-                                        "timeout": 3000
-                                    });
+                                    for (var key in content) {
+                                        localContent[key] = content[key];   
+                                    }
+                                    returnObject.saveContent(localContent);
                                     resolve(localContent);
                                 }
                             } else {
-                                update(content, resolve, reject);
+                                localContent = content;
+                                updateContentPath(localContent, resolve, reject);
                             }
-                        }
                     } else {
                         reject('Invalid content to update');
                     }
-                });
+                });  
             },
             processContent: function(content) {
                 var promise = {};

@@ -12,5 +12,7 @@ AppMessages = {
 	EXTRACT_INVALID_OUPUT_DIR: "Error extracting content. Output directory not found: {0}",
 	EXTRACT_INVALID_ARCHIVE: "Invalid Content Archive File",
 	DIRECT_DOWNLOADING_MSG: "Content is downloading...",
-	DIRECT_CONTENT_LOAD_MSG: "Content downloading complete"
+	DIRECT_CONTENT_LOAD_MSG: "Content downloading complete",
+	CONTENT_READY_TO_PLAY: "Content is ready to play",
+	ERR_FETCHING_CONTENT_PATH: "Error while fetching content path. Please try again."
 }
