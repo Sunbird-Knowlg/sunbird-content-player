@@ -47,13 +47,14 @@ EventManager = {
 						element.cursor = 'pointer';
 					}
 					element.addEventListener(evt.type, function(event) {
+						var stageId = Renderer.theme._currentStage;
+						plugin.stageId = stageId;
 						EventManager.processMouseTelemetry(evt, event, plugin);
 						EventManager.handleActions(evt, plugin);
 					});	
 				} else {
 					console.log("Element is null:", plugin);
 				}
-				
 			}
 		}
 	},
@@ -143,7 +144,7 @@ EventManager = {
 					id = plugin._type || 'none';
 				}
 				if (id) {
-					TelemetryService.interact(type, id, type).ext(ext).flush();
+					TelemetryService.interact(type, id, type, plugin.stageId).ext(ext).flush();
 				}
 			}
 		}

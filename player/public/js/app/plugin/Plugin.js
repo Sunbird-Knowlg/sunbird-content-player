@@ -157,6 +157,7 @@ var Plugin = Class.extend({
 		} else {
 			this._self.visible = true;
 		}
+		this.stageId = this._stage._id;
 		EventManager.processAppTelemetry(action, 'SHOW', this);
 		Renderer.update = true;
 	},
@@ -166,6 +167,7 @@ var Plugin = Class.extend({
 		} else {
 			this._self.visible = false;
 		}
+		this.stageId = this._stage._id;
 		EventManager.processAppTelemetry(action, 'HIDE', this);
 		Renderer.update = true;
 	},
@@ -175,6 +177,7 @@ var Plugin = Class.extend({
 		} else {
 			this._self.visible = !this._self.visible;
 		}
+		this.stageId = this._stage._id;
 		EventManager.processAppTelemetry(action, this._self.visible ? 'SHOW': 'HIDE', this);
 		Renderer.update = true;
 	},
