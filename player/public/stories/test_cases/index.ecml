@@ -56,6 +56,18 @@
             </options>
         </mcq>
     </template>
+    <template id="mcq_template_2">
+        <text font="Georgia" fontsize="42" h="4" model="item.title" w="86" x="9" y="7"/>
+        <mcq blur="80" model="item" multi_select="false" offsetX="50" shadow="blue">
+            <options cols="2" h="85" layout="table" marginX="10" marginY="5" options="options" w="70" x="20" y="15">
+                <events>
+                    <event type="click">
+                        <action asset_model="item.options[item.current].audio" command="play" loop="1" type="command"/>
+                    </event>
+                </events>
+            </options>
+        </mcq>
+    </template>
     <template id="mtf_template_2">
         <text font="Georgia" fontsize="42" h="4" model="item.title" w="86" x="9" y="7"/>
         <mtf force="true" model="item">

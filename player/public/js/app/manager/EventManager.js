@@ -39,16 +39,21 @@ EventManager = {
 				});
 			} else { // Handle mouse events
 				var element = plugin._self;
-				if(plugin._type == 'div') {
-					element = plugin._self.htmlElement;
-					element.style.cursor = 'pointer';
+				if (element) {
+					if(plugin._type == 'div') {
+						element = plugin._self.htmlElement;
+						element.style.cursor = 'pointer';
+					} else {
+						element.cursor = 'pointer';
+					}
+					element.addEventListener(evt.type, function(event) {
+						EventManager.processMouseTelemetry(evt, event, plugin);
+						EventManager.handleActions(evt, plugin);
+					});	
 				} else {
-					element.cursor = 'pointer';
+					console.log("Element is null:", plugin);
 				}
-				element.addEventListener(evt.type, function(event) {
-					EventManager.processMouseTelemetry(evt, event, plugin);
-					EventManager.handleActions(evt, plugin);
-				});
+				
 			}
 		}
 	},
