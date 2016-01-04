@@ -13,7 +13,8 @@ AudioManager = {
             instance._data = {id: action.asset};
             AudioManager.instances[action.asset] = instance;
             AssetManager.addStageAudio(Renderer.theme._currentStage, action.asset);
-        }        instance.stageId = Renderer.theme._currentStage;
+        }        
+        instance.stageId = Renderer.theme._currentStage;
         EventManager.processAppTelemetry(action, 'LISTEN', instance);
     },
     togglePlay: function(action) {

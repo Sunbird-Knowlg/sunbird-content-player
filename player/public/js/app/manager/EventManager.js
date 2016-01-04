@@ -45,7 +45,10 @@ EventManager = {
 				} else {
 					element.cursor = 'pointer';
 				}
+
 				element.addEventListener(evt.type, function(event) {
+					var stageId = Renderer.theme._currentStage;
+					plugin.stageId = stageId;	
 					EventManager.processMouseTelemetry(evt, event, plugin);
 					EventManager.handleActions(evt, plugin);
 				});
