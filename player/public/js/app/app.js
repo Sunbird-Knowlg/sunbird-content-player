@@ -357,7 +357,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
             ContentService.updateContent(GlobalContext.config.appInfo)
                 .then(function(data) {
-                    console.log("data:", data);
                     $scope.$apply(function() {
                         $scope.item = data;
                     });
