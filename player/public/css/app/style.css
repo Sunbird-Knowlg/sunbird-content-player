@@ -4,6 +4,11 @@
 }
 
 @font-face {
+    font-family: 'NotoSansMalayalam';
+    src: url('fonts/NotoSansMalayalam-Regular.ttf') format('truetype')
+}
+
+@font-face {
     font-family: 'NotoSansOriya';
     src: url('fonts/NotoSansOriya-Regular.ttf') format('truetype')
 }
