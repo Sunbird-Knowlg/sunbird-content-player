@@ -364,7 +364,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             $scope.updateContent = function(content) {
                 ContentService.updateContent(content)
                     .then(function(data) {
-                        console.log("data:", data);
                         $scope.$apply(function() {
                             $scope.item = data;
                         });

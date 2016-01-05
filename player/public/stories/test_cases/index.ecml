@@ -219,18 +219,19 @@
         <param name="previous" value="hybridRendering"/>
         <image asset="bg" h="100" w="100" x="0" y="0"/>
         <param model="testData.ts_font_rendering" name="heading"/>
-        <text color="yellow" fontsize="40" font="NotoSansDevanagari" h="10" w="80" x="10" y="10">सावन का महीना था | आसमान में काले-  </text>
-        <text color="yellow" fontsize="40" font="NotoSansOriya" h="10" w="80" x="10" y="15">ଶୀତ ରାତି. ଉଷୁମ୍ ବିଛଣାରେ ଯଦୁ ଅଜା ମଜାରେ </text>
-        <text color="yellow" fontsize="40" font="NotoSansGujarati" h="10" w="80" x="10" y="20">શિયાળો આવે એટલે ઠંડી લાગે અને  </text>
-        <text color="yellow" fontsize="40" font="NotoSansKannada" h="10" w="80" x="10" y="25">ಈಗ ಕನ್ನಡದಲ್ಲಿ ಬರೆಯುವುದು ತುಂಬಾ ಸುಲಭ </text>
-        <text color="yellow" fontsize="40" font="NotoSansTamil" h="10" w="80" x="10" y="30">ஒரு நாள் ராணி ஒரு நாய் குட்டியை தெருவில் பார்த்தாள்  </text>
-        <text color="yellow" fontsize="40" font="NotoNastaliqUrdu" h="10" w="80" x="10" y="35">ایک تتلی تھی- وہ روز باغ میں آتی اور پھولوں کا  </text>
-        <text color="yellow" fontsize="40" font="NotoSansDevanagari" h="10" w="80" x="10" y="50">एका गावात एक आजी राहत होती. </text>
-        <text color="yellow" fontsize="40" font="NotoSansTelugu" h="10" w="80" x="10" y="55">అది ఎండాకాలం </text>
-        <text color="yellow" fontsize="40" font="NotoSansBengali" h="10" w="80" x="10" y="60">মা ডাকঘরে টাকা জমিয়ে রাখেন  </text>
-        <text color="yellow" fontsize="40" font="NotoSansDevanagari" h="10" w="80" x="10" y="65">नेपाल चार जात छत्तिस वर्णको साझा फूलवारी हो । </text>
-        <text color="yellow" fontsize="40" font="NotoSansGurmukhi" h="10" w="80" x="10" y="70">ਲਹੌਰ ਪਾਕਿਸਤਾਨੀ ਪੰਜਾਬ ਦੀ ਰਾਜਧਾਨੀ ਹੈ </text>
-        <text color="yellow" fontsize="40" font="NotoSansBengali" h="10" w="80" x="10" y="75">সকলো মানুহে স্বাধীনভাৱে সমান মৰ্যদা আৰু অধিকাৰে জন্মগ্ৰহণ কৰে </text> 
+        <text color="yellow" fontsize="40" font="NotoSansDevanagari,Arial" h="10" w="80" x="10" y="10">सावन का महीना था | आसमान में काले-  : Hindi</text>
+        <text color="yellow" fontsize="40" font="NotoSansOriya,Arial" h="10" w="80" x="10" y="15">ଶୀତ ରାତି. ଉଷୁମ୍ ବିଛଣାରେ ଯଦୁ ଅଜା ମଜାରେ : Oriya</text>
+        <text color="yellow" fontsize="40" font="NotoSansGujarati,Arial" h="10" w="80" x="10" y="20">શિયાળો આવે એટલે ઠંડી લાગે અને  : Gujarati</text>
+        <text color="yellow" fontsize="40" font="NotoSansKannada,Arial" h="10" w="80" x="10" y="25">ಈಗ ಕನ್ನಡದಲ್ಲಿ ಬರೆಯುವುದು ತುಂಬಾ ಸುಲಭ : Kannada</text>
+        <text color="yellow" fontsize="40" font="NotoSansTamil,Arial" h="10" w="80" x="10" y="30">ஒரு நாள் ராணி ஒரு நாய் குட்டியை தெருவில் பார்த்தாள்  : Tamil</text>
+        <text color="yellow" fontsize="40" font="NotoNastaliqUrdu,Arial" h="10" w="80" x="10" y="37">ایک تتلی تھی- وہ روز باغ میں آتی اور پھولوں کا  : Urdu</text>
+        <text color="yellow" fontsize="40" font="NotoSansDevanagari,Arial" h="10" w="80" x="10" y="50">एका गावात एक आजी राहत होती. : Marathi</text>
+        <text color="yellow" fontsize="40" font="NotoSansTelugu,Arial" h="10" w="80" x="10" y="55">అది ఎండాకాలం : Telugu</text>
+        <text color="yellow" fontsize="40" font="NotoSansBengali,Arial" h="10" w="80" x="10" y="60">মা ডাকঘরে টাকা জমিয়ে রাখেন  : Bengali</text>
+        <text color="yellow" fontsize="40" font="NotoSansDevanagari,Arial" h="10" w="80" x="10" y="65">नेपाल चार जात छत्तिस वर्णको साझा फूलवारी हो । : Nepali</text>
+        <text color="yellow" fontsize="40" font="NotoSansGurmukhi,Arial" h="10" w="80" x="10" y="70">ਲਹੌਰ ਪਾਕਿਸਤਾਨੀ ਪੰਜਾਬ ਦੀ ਰਾਜਧਾਨੀ ਹੈ : Punjabi</text> 
+        <text color="yellow" fontsize="40" font="NotoSansBengali,Arial" h="10" w="80" x="10" y="75">সকলো মানুহে স্বাধীনভাৱে সমান মৰ্যদা আৰু অধিকাৰে জন্মগ্ৰহণ কৰে : Assamese</text> 
+        <text color="yellow" fontsize="40" font="NotoSansMalayalam,Arial" h="10" w="80" x="10" y="80">വൃക്കരോഗത്തിനുവരെ കാരണമായേക്കാവുന്ന മാരകമായ ചാരത്തിന്റെ അംശം യിപ്പിയിലും മാഗിയിലും കണ്ടെത്തി. : Malayalam</text>
     </stage>
 
     <stage extends="baseStage" h="100" id="mcqOptionsGlow" w="100" x="0" y="0">
