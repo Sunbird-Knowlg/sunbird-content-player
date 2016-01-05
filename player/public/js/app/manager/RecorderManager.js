@@ -61,7 +61,7 @@ RecorderManager = {
 					// preload the audio file which is recorded just now and remove the old instance.
 					var currentRecId = "current_rec";
 					AssetManager.loadAsset(stageId, currentRecId, RecorderManager.mediaInstance.filePath);
-					AudioManager.removeInstance(currentRecId);
+					AudioManager.destroy(currentRecId);
 					if (action.success) {
 						stagePlugin.dispatchEvent(action.success);
 					} else {
