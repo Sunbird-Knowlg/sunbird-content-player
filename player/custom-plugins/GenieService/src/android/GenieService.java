@@ -64,9 +64,6 @@ public class GenieService extends CordovaPlugin {
         if(null == content) {
             if(null != activity) {
                 content = new Content(activity);
-                System.out.println("Content is initialized...");
-                content.seed(new GenieServicesListResponse(callbackContext));
-                System.out.println("Content seed completed...");
             }
         }
         Log.v(TAG, "GenieService received:" + action);

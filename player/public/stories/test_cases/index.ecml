@@ -62,7 +62,7 @@
             <options cols="2" h="85" layout="table" marginX="10" marginY="5" options="options" w="70" x="20" y="15">
                 <events>
                     <event type="click">
-                        <action asset_model="item.options[item.current].audio" command="play" loop="1" type="command"/>
+                        <action asset_model="item.options[$current].audio" command="play" loop="1" type="command"/>
                     </event>
                 </events>
             </options>

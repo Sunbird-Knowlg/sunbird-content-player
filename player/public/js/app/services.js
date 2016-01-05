@@ -230,7 +230,6 @@ angular.module('quiz.services', ['ngResource'])
                         localContent.appIcon = "file://" + result.path +'/logo.png';
                         localContent.status = "ready";
                         returnObject.saveContent(localContent);
-                        showMessage(AppMessages.CONTENT_READY_TO_PLAY);
                         resolve(localContent);
                     })
                     .catch(function(err) {
