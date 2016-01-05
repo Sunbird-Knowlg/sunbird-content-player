@@ -4,8 +4,12 @@ Renderer = {
     update: true,
     gdata: undefined,
     running: false,
+    divIds: {
+        gameArea: 'gameArea',
+        canvas: 'gameCanvas'
+    },
     resizeGame: function(disableDraw) {
-        var gameArea = document.getElementById('gameArea');
+        var gameArea = document.getElementById(Renderer.divIds.gameArea);
         var widthToHeight = 16 / 9;
         var newWidth = window.innerWidth;
         var newHeight = window.innerHeight;
@@ -74,7 +78,7 @@ Renderer = {
         createjs.Ticker.addEventListener("tick", function() {
             if(Renderer.update) {
                 Renderer.theme.update();
-                Renderer.update = false;                
+                Renderer.update = false;
             } else {
                 if (Renderer.theme) {
                     Renderer.theme.tick();

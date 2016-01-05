@@ -38,6 +38,7 @@ var OptionPlugin = Plugin.extend({
             hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h);
             this._self.hitArea = hit;
             this._value = value.value;
+            this.setOptionIndex(data);
 
             if (value.value.type == 'image') {
                 this.renderImage(value.value);
@@ -57,6 +58,8 @@ var OptionPlugin = Plugin.extend({
         }
     },
     renderMCQOption: function() {
+        var controller = this._parent._controller;
+        var itemId = controller.getModelValue("identifier");
         this._parent._options.push(this);
         this._self.cursor = 'pointer';
         var instance = this;
@@ -65,17 +68,21 @@ var OptionPlugin = Plugin.extend({
                 type: event.type,
                 x: event.stageX,
                 y: event.stageY,
-                choice_id: instance._value.asset
+                choice_id: instance._value.asset,
+                itemId: itemId
             }
             
             var val = instance._parent.selectOption(instance);
             ext.state = (val ? 'selected' : 'unselected');
+            instance.stageId = Renderer.theme._currentStage;
             EventManager.processAppTelemetry({}, 'CHOOSE', instance, ext);
         });
 
     },
     renderMTFOption: function(value) {
         var enableDrag = false;
+        var controller = this._parent._controller;
+        var itemId = controller.getModelValue("identifier");
         if (_.isFinite(value.index)) {
             this._index = value.index;
             this._parent._lhs_options.push(this);
@@ -98,8 +105,10 @@ var OptionPlugin = Plugin.extend({
                     type: evt.type,
                     x: evt.stageX,
                     y: evt.stageY,
-                    drag_id: instance._value.asset
+                    drag_id: instance._value.asset,
+                    itemId: itemId
                 }
+                instance.stageId = Renderer.theme._currentStage;
                 EventManager.processAppTelemetry({}, 'DRAG', instance, ext);
             });
             asset.on("pressmove", function(evt) {
@@ -197,9 +206,10 @@ var OptionPlugin = Plugin.extend({
                     x: evt.stageX,
                     y: evt.stageY,
                     drop_id: drop_id,
-                    drop_idx: drop_idx
+                    drop_idx: drop_idx,
+                    itemId: itemId
                 }
-
+                instance.stageId = Renderer.theme._currentStage;
                 EventManager.processAppTelemetry({}, 'DROP', instance, ext);
                 Renderer.update = true;
             });
@@ -253,6 +263,12 @@ var OptionPlugin = Plugin.extend({
         var offsetY = this._data.offsetY || 0;
         var blur = this._data.blur || 2;
         this._self.shadow._self.shadow = new createjs.Shadow(shadowColor, offsetX, offsetY, blur);
+    },
+    setOptionIndex: function(data) {
+        data = JSON.stringify(data);
+        data = data.replace(new RegExp('\\$current', 'g'), this._index);
+        data = JSON.parse(data);
+        this._data = data;
     }
 });
 PluginManager.registerPlugin('option', OptionPlugin);
