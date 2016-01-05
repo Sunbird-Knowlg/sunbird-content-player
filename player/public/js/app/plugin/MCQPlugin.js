@@ -56,11 +56,7 @@ var MCQPlugin = Plugin.extend({
                 if (_.isFinite(data.offsetY)) {
                     this._offsetY = data.offsetY;
                 }
-        		for(k in data) {
-        			if(PluginManager.isPlugin(k)) {
-        				PluginManager.invoke(k, data[k], this, this._stage, this._theme);
-        			}
-        		}
+                this.invokeChildren(data, this, this._stage, this._theme);
         	}
         }
     },

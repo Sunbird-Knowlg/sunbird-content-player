@@ -15,13 +15,13 @@ function backbuttonPressed(cs) {
         var ext = {
             type: 'EXIT_CONTENT'
         }
-        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
+        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', Renderer.theme._currentStage).ext(ext).flush();
         initBookshelf();
     } else {
         var ext = {
             type: 'EXIT_APP'
         }
-        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
+        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', Renderer.theme._currentStage).ext(ext).flush();
         exitApp(cs);
     }
 }
@@ -358,7 +358,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
             ContentService.updateContent(GlobalContext.config.appInfo)
                 .then(function(data) {
-                    console.log("data:", data);
                     $scope.$apply(function() {
                         $scope.item = data;
                     });

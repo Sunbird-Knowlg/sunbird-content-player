@@ -1,5 +1,5 @@
 InteractEvent = TelemetryEvent.extend({
-    init: function(type, id, extype) {
+    init: function(type, id, extype, stageId) {
         this._super();
         this.event.eid = this.name = "OE_INTERACT";
         var eventStr = TelemetryService._config.events[this.name];
@@ -12,6 +12,9 @@ InteractEvent = TelemetryEvent.extend({
             "id": id,
             "extype": extype,
             "uri": ""
+        };
+        this.event.edata.ext = {
+            "stageId": stageId
         };
         // this.flush();
     }

@@ -8,6 +8,7 @@ var AudioPlugin = Plugin.extend({
         this._id = data.asset;
     },
     play: function(action) {
+        this.stageId = this._stage._id;
         EventManager.processAppTelemetry(action, 'LISTEN', this);
         if(this._state == 'paused') {
             this._self.paused = false;
@@ -35,12 +36,14 @@ var AudioPlugin = Plugin.extend({
         if(this._state == 'play') {
             this._self.paused = true;
             this._state = 'paused';
+            this.stageId = this._stage._id;
             EventManager.processAppTelemetry(action, 'PAUSE_LISTENING', this);
         }
     },
     stop: function(action) {
         if(this._state == 'play') {
             this._self.stop();
+            this.stageId = this._stage._id;
             EventManager.processAppTelemetry(action, 'STOP_LISTENING', this);
         }
     }
