@@ -355,20 +355,10 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
     }).controller('ContentHomeCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         $rootScope.showMessage = false;
         if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
-            ContentService.updateContent(GlobalContext.config.appInfo)
-                .then(function(data) {
-                    $scope.$apply(function() {
-                        $scope.item = data;
-                    });
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
             $scope.playContent = function(content) {
                 $state.go('playContent', {
                     'itemId': content.identifier
                 });
-
             };
 
             $scope.updateContent = function(content) {
@@ -388,6 +378,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 exitApp(ContentService);
             };
 
+            $scope.updateContent(GlobalContext.config.appInfo);
             $rootScope.$on('show-message', function(event, data) {
                 if (data.message && data.message != '') {
                     $rootScope.showMessage = true;

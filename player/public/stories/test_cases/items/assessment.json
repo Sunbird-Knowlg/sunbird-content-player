@@ -17,22 +17,26 @@
 				"identifier": "hs1_set_1_1",
 				"type": "mcq",
 				"num_answers": 1,
-				"template": "mcq_template_1",
+				"template": "mcq_template_2",
 				"qlevel": "MEDIUM",
 				"title": "Find the Barber.",
 				"options": [
 					{
-						"value": {"type": "text", "asset": "carpenter", "fontsize": 200}
+						"value": {"type": "text", "asset": "carpenter", "fontsize": 200},
+						"audio": "scene19_sound"
 					},
 					{
 						"value": {"type": "text", "asset": "barber", "fontsize": 200},
-						"answer": true
+						"answer": true,
+						"audio": "drag_audio"
 					},
 					{
-						"value": {"type": "text", "asset": "tailor", "fontsize": 200}
+						"value": {"type": "text", "asset": "tailor", "fontsize": 200},
+						"audio": "scene19_sound"
 					},
 					{
-						"value": {"type": "text", "asset": "wife", "fontsize": 200}
+						"value": {"type": "text", "asset": "wife", "fontsize": 200},
+						"audio": "drag_audio"
 					}
 				],
 				"model" : {
@@ -77,7 +81,8 @@
 					},
 					{
 						"value": {"type": "image", "asset": "w-inner"},
-						"answer": 1
+						"answer": 1,
+						"audio": "drag_audio"
 					}
 				],
 				"hints": [
