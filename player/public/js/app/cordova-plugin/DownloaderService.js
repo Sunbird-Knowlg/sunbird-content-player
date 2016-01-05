@@ -93,6 +93,7 @@ DownloaderService = {
                     console.log("tar file already exist: "+ tarFile.fullPath);
                     resolve(tarFile);
                 }, function(tarErr) {
+                    console.log("zip file or tar file not exist:", expZipPath);
                     resolve();
                 });
             });

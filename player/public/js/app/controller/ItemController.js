@@ -55,26 +55,31 @@ var ItemController = Controller.extend({
 		var item = this.getModel();
 		var result;
 		var pass = false;
-		if (item.type.toLowerCase() == 'ftb') {
-			result = FTBEvaluator.evaluate(item);
-		} else if (item.type.toLowerCase() == 'mcq' || item.type.toLowerCase() == 'mmcq') {
-			result = MCQEvaluator.evaluate(item);
-		} else if (item.type.toLowerCase() == 'mtf') {
-			result = MTFEvaluator.evaluate(item);
-		}
-		if (result) {
-			pass = result.pass;
-			item.score = result.score;
-		}
-		try {
-    		var assessEnd = TelemetryService.assess(item.identifier);
-			if (_.isArray(item.mmc)) {
-				assessEnd.mmc(item.mmc);
-			}
-			assessEnd.end(pass, item.score, result.res);
-    	} catch(e) {
-    		ControllerManager.addError('ItemController.evalItem() - OE_ASSESS_END error: ' + e);
-    	}
+        if (item.max_score == 0) {
+            result = {};
+        } else {
+            if (item.type.toLowerCase() == 'ftb') {
+                result = FTBEvaluator.evaluate(item);
+            } else if (item.type.toLowerCase() == 'mcq' || item.type.toLowerCase() == 'mmcq') {
+                result = MCQEvaluator.evaluate(item);
+            } else if (item.type.toLowerCase() == 'mtf') {
+                result = MTFEvaluator.evaluate(item);
+            }
+            if (result) {
+                pass = result.pass;
+                item.score = result.score;
+            }
+            try {
+                var assessEnd = TelemetryService.assess(item.identifier);
+                if (_.isArray(item.mmc)) {
+
+                    assessEnd.mmc(item.mmc);
+                }
+                assessEnd.end(pass, item.score, result.res);
+            } catch(e) {
+                ControllerManager.addError('ItemController.evalItem() - OE_ASSESS_END error: ' + e);
+            }
+        }
 		return result;
     },
     feedback: function() {

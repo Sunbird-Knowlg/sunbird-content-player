@@ -38,6 +38,7 @@ var OptionPlugin = Plugin.extend({
             hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h);
             this._self.hitArea = hit;
             this._value = value.value;
+            this.setOptionIndex(data);
 
             if (value.value.type == 'image') {
                 this.renderImage(value.value);
@@ -80,7 +81,7 @@ var OptionPlugin = Plugin.extend({
     },
     renderMTFOption: function(value) {
         var enableDrag = false;
-        var controller = this._stage.getController(model);
+        var controller = this._parent._controller;
         var itemId = controller.getModelValue("identifier");
         if (_.isFinite(value.index)) {
             this._index = value.index;
@@ -262,6 +263,12 @@ var OptionPlugin = Plugin.extend({
         var offsetY = this._data.offsetY || 0;
         var blur = this._data.blur || 2;
         this._self.shadow._self.shadow = new createjs.Shadow(shadowColor, offsetX, offsetY, blur);
+    },
+    setOptionIndex: function(data) {
+        data = JSON.stringify(data);
+        data = data.replace(new RegExp('\\$current', 'g'), this._index);
+        data = JSON.parse(data);
+        this._data = data;
     }
 });
 PluginManager.registerPlugin('option', OptionPlugin);

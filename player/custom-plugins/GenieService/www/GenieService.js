@@ -1,7 +1,6 @@
 var exec = require('cordova/exec');
 
-function GenieService() {
-}
+function GenieService() {}
 
 GenieService.prototype.sendTelemetry = function(aString) {
     console.log("GenieService sendTelemetry: ", aString);
@@ -44,6 +43,21 @@ GenieService.prototype.getMetaData = function() {
                 reject(error);
             },
             "GenieService", "getMetaData", []);
+    });
+}
+
+GenieService.prototype.getContent = function(id) {
+    console.log("GenieService getContent...");
+    return new Promise(function(resolve, reject) {
+        exec(function(result) {
+                console.log("GenieService.getContent Result:", JSON.stringify(result));
+                resolve(result);
+            },
+            function(error) {
+                console.log("GenieService.getContent Error:", error);
+                reject(error);
+            },
+            "GenieService", "getContent", [id]);
     });
 }
 

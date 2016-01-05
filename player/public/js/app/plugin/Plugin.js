@@ -33,7 +33,7 @@ var Plugin = Class.extend({
 		if(data.appEvents) {
 			this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(','));	
 		}
-		EventManager.registerEvents(this, data);
+		EventManager.registerEvents(this, this._data);
 		this._id = this._data.id || this._data.asset || _.uniqueId('plugin');
 		PluginManager.registerPluginObject(this);
 		if (data.visible === false) {
