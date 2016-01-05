@@ -153,7 +153,7 @@ var ThemePlugin = Plugin.extend({
         this.invokeStage(stageId);
     },
     invokeStage: function(stageId) {
-        var stage = _.findWhere(this._data.stage, {id: stageId});
+        var stage = _.clone(_.findWhere(this._data.stage, {id: stageId}));
         if(stage.extends) {
             baseStage = _.findWhere(this._data.stage, {id: stage.extends});
             stage = this.mergeStages(stage, baseStage);
