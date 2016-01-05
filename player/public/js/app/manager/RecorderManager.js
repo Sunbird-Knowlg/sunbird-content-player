@@ -58,9 +58,10 @@ RecorderManager = {
 				if (response.status == "success") {
 					RecorderManager.recording = false;
 					console.info("Audio file saved at ", RecorderManager.mediaInstance.filePath);
-					var prevRecId = "previous_recording";
-					AssetManager.loadAsset(stageId, prevRecId, RecorderManager.mediaInstance.filePath);
-					AudioManager.removeInstance(prevRecId);
+					// preload the audio file which is recorded just now and remove the old instance.
+					var currentRecId = "current_rec";
+					AssetManager.loadAsset(stageId, currentRecId, RecorderManager.mediaInstance.filePath);
+					AudioManager.removeInstance(currentRecId);
 					if (action.success) {
 						stagePlugin.dispatchEvent(action.success);
 					} else {
