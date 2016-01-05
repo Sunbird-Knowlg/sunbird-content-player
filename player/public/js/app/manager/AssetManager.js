@@ -32,5 +32,8 @@ AssetManager = {
         if(AssetManager.stageAudios[stageId]) {
             AssetManager.stageAudios[stageId].push(audioId);
         }
+    },
+    loadAsset: function(stageId, assetId, path) {
+        AssetManager.strategy.loadAsset(stageId, assetId, path);
     }
 }

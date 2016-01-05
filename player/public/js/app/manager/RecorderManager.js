@@ -52,11 +52,15 @@ RecorderManager = {
 		if (RecorderManager.recording) {
 			var plugin = PluginManager.getPluginObject(action.asset);
 			var stagePlugin = plugin._stage || plugin;
+			var stageId = stagePlugin._id;
 			RecorderManager.getRecorder().stopRecording(RecorderManager.mediaInstance)
 			.then(function(response) {
 				if (response.status == "success") {
 					RecorderManager.recording = false;
 					console.info("Audio file saved at ", RecorderManager.mediaInstance.filePath);
+					var prevRecId = "previous_recording";
+					AssetManager.loadAsset(stageId, prevRecId, RecorderManager.mediaInstance.filePath);
+					AudioManager.removeInstance(prevRecId);
 					if (action.success) {
 						stagePlugin.dispatchEvent(action.success);
 					} else {

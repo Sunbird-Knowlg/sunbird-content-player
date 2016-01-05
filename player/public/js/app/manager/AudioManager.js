@@ -51,6 +51,10 @@ AudioManager = {
         var stageId = Renderer.theme._currentStage;
 		EventManager.processAppTelemetry(action, 'STOP_ALL_SOUNDS',{"stageId" : stageId});
     },
+    removeInstance: function(id) {
+        if (AudioManager.instances[id])
+            delete AudioManager.instances[id];
+    },
     destroy: function(soundId) {
         var instance = AudioManager.instances[soundId] || {};
         if(instance.object) {
