@@ -80,7 +80,7 @@ var OptionPlugin = Plugin.extend({
     },
     renderMTFOption: function(value) {
         var enableDrag = false;
-        var controller = this._stage.getController(model);
+        var controller = this._parent._controller;
         var itemId = controller.getModelValue("identifier");
         if (_.isFinite(value.index)) {
             this._index = value.index;
