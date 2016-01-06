@@ -237,7 +237,8 @@ angular.module('quiz.services', ['ngResource'])
                         localContent.status = "error";
                         returnObject.saveContent(localContent);
                         showMessage(AppMessages.ERR_FETCHING_CONTENT_PATH);
-                        reject("Error while fetching content path:" + JSON.stringify(err));
+                        console.log("Error while fetching content path:" + JSON.stringify(err));
+                        resolve(localContent);
                     });
                 };
                 var showMessage = function(message) {

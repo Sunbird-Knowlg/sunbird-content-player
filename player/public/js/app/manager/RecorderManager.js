@@ -26,16 +26,11 @@ RecorderManager = {
 				RecorderManager.recording = true;
 				RecorderManager.mediaInstance.filePath = path;
 				if (action.success) {
-					console.log("Firing event "+ action.success);
 					stagePlugin.dispatchEvent(action.success);
-				} else {
-					// TODO: do something
 				}
 			} else {
 				if (action.failure) {
 					stagePlugin.dispatchEvent(action.failure);
-				} else {
-					// TODO: do something
 				}
 			}
 		})
@@ -48,7 +43,6 @@ RecorderManager = {
 	* 	Dispatch success OR failure events.
 	*/
 	stopRecording: function(action) {
-		console.log("Stop recording called.");
 		if (RecorderManager.recording) {
 			var plugin = PluginManager.getPluginObject(action.asset);
 			var stagePlugin = plugin._stage || plugin;
@@ -64,15 +58,11 @@ RecorderManager = {
 					AudioManager.destroy(currentRecId);
 					if (action.success) {
 						stagePlugin.dispatchEvent(action.success);
-					} else {
-						// TODO: somthing to do.
 					}
 				} else {
 					console.error(response.errMessage);
 					if (action.failure) {
 						stagePlugin.dispatchEvent(action.failure);
-					} else {
-						// TODO: somthing to do.
 					}
 				}
 			})
@@ -80,8 +70,6 @@ RecorderManager = {
 				console.error("Error stop recording audio:", err);
 				if (action.failure) {
 					stagePlugin.dispatchEvent(action.failure);
-				} else {
-					// TODO: somthing to do.
 				}
 			});
 			
@@ -102,14 +90,10 @@ RecorderManager = {
 						if (processResponse.result.totalScore == 1) {
 							if (action.success) {
 								stagePlugin.dispatchEvent(action.success);
-							} else {
-								// TODO: do something.
 							}
 						} else {
 							if (action.failure) {
 								stagePlugin.dispatchEvent(action.failure);
-							} else {
-								// TODO: do something.
 							}
 						}
 					} else {
@@ -119,8 +103,6 @@ RecorderManager = {
 					console.info("Error while processing audio:", JSON.stringify(processResponse));
 					if (action.failure) {
 						stagePlugin.dispatchEvent(action.failure);
-					} else {
-						// TODO: do something.
 					}
 				}
 				RecorderManager.mediaInstance = undefined;
