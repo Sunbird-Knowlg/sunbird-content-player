@@ -209,7 +209,9 @@ LoadByStageStrategy = Class.extend({
         instance.assetMap = {};
         instance.loaders = {};
         instance.stageManifests = {};
-        createjs.Sound.removeAllSounds();
+        try {
+            createjs.Sound.removeAllSounds();
+        } catch(err) {}
     },
     destroyStage: function(stageId) {
         if (this.loaders[stageId]) {
