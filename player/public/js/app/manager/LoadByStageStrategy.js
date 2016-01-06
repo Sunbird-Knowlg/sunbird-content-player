@@ -190,6 +190,17 @@ LoadByStageStrategy = Class.extend({
         loader.loadManifest(this.templateAssets, true);
         this.templateLoader = loader;
     },
+    loadAsset: function(stageId, assetId, path) {
+        if (this.loaders[stageId]) {
+            var loader = this.loaders[stageId];
+            loader.remove(assetId);
+            loader.installPlugin(createjs.Sound);
+            loader.on("complete", function() {
+                console.log("asset" + assetId + " loaded successfully.");
+            }, this);
+            loader.loadFile({id:assetId, src: path});
+        }
+    },
     destroy: function() {
         var instance = this;
         for (k in instance.loaders) {
@@ -198,6 +209,9 @@ LoadByStageStrategy = Class.extend({
         instance.assetMap = {};
         instance.loaders = {};
         instance.stageManifests = {};
+        try {
+            createjs.Sound.removeAllSounds();
+        } catch(err) {}
     },
     destroyStage: function(stageId) {
         if (this.loaders[stageId]) {

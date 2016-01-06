@@ -1,6 +1,8 @@
 StartEvent = TelemetryEvent.extend({
     init: function(id, ver) {
         if (id && ver) {
+            id = id.toString();
+            ver = ver.toString();
             TelemetryService._gameData = {
                 "id": id,
                 "ver": ver
