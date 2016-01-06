@@ -83,6 +83,9 @@ public class GenieService extends CordovaPlugin {
             // content.getList(new GenieServicesListResponse(callbackContext));
             String contentId = args.getString(0);
             content.get(contentId, new GenieServicesResponse(callbackContext));
+        } else if(action.equals("getContentList")) {
+            String filter = args.getString(0);
+            content.getList(new GenieServicesListResponse(callbackContext));
         }
         return true;
     }
