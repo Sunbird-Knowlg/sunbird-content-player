@@ -144,7 +144,15 @@ EventManager = {
 					id = plugin._type || 'none';
 				}
 				if (id) {
-					TelemetryService.interact(type, id, type, plugin.stageId).ext(ext).flush();
+					var tempExt = {};
+					if(ext && !ext.stageId)
+						ext.stageId = plugin.stageId;
+					else {
+						tempExt = {
+							stageId: plugin.stageId
+						}
+					}
+					TelemetryService.interact(type, id, type).ext(ext ? ext : tempExt).flush();
 				}
 			}
 		}

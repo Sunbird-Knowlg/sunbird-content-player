@@ -55,9 +55,9 @@ TelemetryService = {
             return new InActiveEvent();
         }
     },
-    interact: function(type, id, extype, stageId) {
+    interact: function(type, id, extype) {
         if (TelemetryService.isActive) {
-            return new InteractEvent(type, id, extype, stageId);
+            return new InteractEvent(type, id, extype);
         } else {
             return new InActiveEvent();
         }

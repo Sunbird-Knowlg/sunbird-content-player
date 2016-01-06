@@ -13,15 +13,16 @@ function backbuttonPressed(cs) {
 
     if (Renderer.running || HTMLRenderer.running) {
         var ext = {
-            type: 'EXIT_CONTENT'
+            type: 'EXIT_CONTENT',
+            stageId: Renderer.theme._currentStage
         }
-        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', Renderer.theme._currentStage).ext(ext).flush();
+        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
         initBookshelf();
     } else {
         var ext = {
             type: 'EXIT_APP'
         }
-        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', Renderer.theme._currentStage).ext(ext).flush();
+        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
         exitApp(cs);
     }
 }
