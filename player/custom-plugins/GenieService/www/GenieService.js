@@ -10,7 +10,7 @@ GenieService.prototype.handleAction = function(actionName, args) {
                 resolve(result);
             },
             function(error) {
-                console.log("GenieService error of "+actionName+": ", result);
+                console.log("GenieService error of "+actionName+": ", error);
                 reject(error);
             },
             "GenieService", actionName, args);
