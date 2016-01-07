@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.*;
 
 public class GenieService extends CordovaPlugin {
 
@@ -80,9 +81,21 @@ public class GenieService extends CordovaPlugin {
         } else if(action.equals("getMetaData")) {
             genieServices.getMetaData(new GenieServicesResponse(callbackContext));
         } else if(action.equals("getContent")) {
-            // content.getList(new GenieServicesListResponse(callbackContext));
             String contentId = args.getString(0);
             content.get(contentId, new GenieServicesResponse(callbackContext));
+        } else if(action.equals("getContentList")) {
+            String[] filter = null;
+            JSONArray jsonArray = args.getJSONArray(0);
+            if(jsonArray != null && jsonArray.length() > 0) {
+                filter = new String[jsonArray.length()];
+                List<String> filterList = new ArrayList<String>();
+                for(int i=0;i<jsonArray.length();i++)
+                    filterList.add(jsonArray.getString(i));
+                filterList.toArray(filter);
+            } else {
+                filter = new String[0];
+            }
+            content.getList(new GenieServicesListResponse(callbackContext), filter);
         }
         return true;
     }

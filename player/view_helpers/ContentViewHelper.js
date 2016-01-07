@@ -17,6 +17,5 @@ var async = require('async')
 	, util = require('../commons/Util');
 
 exports.getContentList = function(req, res) {
-	service.getContentList(util.responseCB(res), req.params.type, "application/json");
+	service.getContentList(util.responseCB(res));
 }
-

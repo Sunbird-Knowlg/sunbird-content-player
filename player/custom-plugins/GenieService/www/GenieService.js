@@ -2,6 +2,21 @@ var exec = require('cordova/exec');
 
 function GenieService() {}
 
+GenieService.prototype.handleAction = function(actionName, args) {
+    console.info("GenieService Action: " + actionName + " args: ", args);
+    return new Promise(function(resolve, reject) {
+        exec(function(result) {
+                console.log("GenieService result of "+actionName+": ", result);
+                resolve(result);
+            },
+            function(error) {
+                console.log("GenieService error of "+actionName+": ", error);
+                reject(error);
+            },
+            "GenieService", actionName, args);
+    });
+}
+
 GenieService.prototype.sendTelemetry = function(aString) {
     console.log("GenieService sendTelemetry: ", aString);
     return new Promise(function(resolve, reject) {
@@ -21,44 +36,19 @@ GenieService.prototype.sendTelemetry = function(aString) {
 }
 
 GenieService.prototype.getCurrentUser = function() {
-    console.log("GenieService getCurrentUser... ");
-    return new Promise(function(resolve, reject) {
-        exec(function(result) {
-                resolve(result);
-            },
-            function(error) {
-                reject(error);
-            },
-            "GenieService", "getCurrentUser", []);
-    });
+    return this.handleAction("getCurrentUser", []);
 }
 
 GenieService.prototype.getMetaData = function() {
-    console.log("GenieService getMetaData... ");
-    return new Promise(function(resolve, reject) {
-        exec(function(result) {
-                resolve(result);
-            },
-            function(error) {
-                reject(error);
-            },
-            "GenieService", "getMetaData", []);
-    });
+    return this.handleAction("getMetaData", []);
 }
 
 GenieService.prototype.getContent = function(id) {
-    console.log("GenieService getContent...");
-    return new Promise(function(resolve, reject) {
-        exec(function(result) {
-                console.log("GenieService.getContent Result:", JSON.stringify(result));
-                resolve(result);
-            },
-            function(error) {
-                console.log("GenieService.getContent Error:", error);
-                reject(error);
-            },
-            "GenieService", "getContent", [id]);
-    });
+    return this.handleAction("getContent", [id]);
+}
+
+GenieService.prototype.getContentList = function(filter) {
+    return this.handleAction("getContentList", [filter]);
 }
 
 var genieService = new GenieService();

@@ -7,6 +7,7 @@ import org.ekstep.genieservices.sdks.response.IListResponseHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,8 @@ public class GenieServicesListResponse implements IListResponseHandler {
         System.out.println("GenieServicesResponse success: " + response.getResults());
         JSONObject obj = new JSONObject();
         try {
-        	obj.put("list", response.getResults());
+            JSONArray results = new JSONArray(response.getResults());
+        	obj.put("list", results);
         } catch(Exception e) {}
         callbackContext.success(obj);
     }

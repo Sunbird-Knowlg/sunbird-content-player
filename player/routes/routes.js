@@ -11,8 +11,7 @@ var contentHelper = require('../view_helpers/ContentViewHelper'),
 module.exports = function(app, dirname) {
 	
 	/** Content List Routes */
-	app.post('/taxonomy-service/v1/content/list/:type', contentHelper.getContentList);
 	app.get('/download-url/v1/content/:type/:id/:url', downloadHelper.downloadFromUrl);
-    
+	app.post('/genie-canvas/v1/content/list', contentHelper.getContentList);
 };
 

@@ -1,5 +1,7 @@
 AppMessages = {
-	NO_CONTENT_FOUND: "No downloaded content available. Please sync to download the content",
+	NO_CONTENT_FOUND: "No content available. Please sync to get the content.",
+	SUCCESS_GET_CONTENT_LIST: "Content list synced.",
+	ERR_GET_CONTENT_LIST: "Error while getting content list. Please try again.",
 	CONTENT_LOAD_MSG: "{0} downloaded to bookshelf",
 	NO_NEW_CONTENT: "No new content available in the repository",
 	DOWNLOADING_MSG: "Downloading {0} content items",
@@ -13,5 +15,5 @@ AppMessages = {
 	EXTRACT_INVALID_ARCHIVE: "Invalid Content Archive File",
 	DIRECT_DOWNLOADING_MSG: "Content is downloading...",
 	DIRECT_CONTENT_LOAD_MSG: "Content downloading complete",
-	ERR_FETCHING_CONTENT_PATH: "Error while fetching content. Please try again."
+	ERR_FETCHING_CONTENT_PATH: "Error while getting content. Please try again."
 }

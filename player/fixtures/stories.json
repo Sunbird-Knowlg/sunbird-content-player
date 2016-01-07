@@ -11,82 +11,100 @@
     },
     "responseCode": "OK",
     "result": {
-        "contents": [
-        {
-            "questionnaire": null,
-            "appIcon": "stories/quizapp_bugs/logo.png",
-            "subject": "literacy_v2",
-            "description": "QuizApp bugs fixes",
-            "name": "QuizApp Bugs",
-            "launchPath": "stories/quizapp_bugs",
-            "downloadUrl": "",
-            "checksum": null,
-            "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
-            "concepts": [{
-                "identifier": "LO1",
-                "name": "Receptive Vocabulary",
-                "objectType": "Concept"
-            }],
+        "content": [{
             "identifier": "org.ekstep.quiz.app.bugs.renderer",
-            "grayScaleAppIcon": null,
-            "pkgVersion": 1
-        },
-        {
-            "questionnaire": null,
-            "appIcon": "stories/test_cases/logo.png",
-            "subject": "literacy_v2",
-            "description": "Renderer Test Cases",
-            "name": "Renderer Tests",
-            "launchPath": "stories/test_cases",
-            "downloadUrl": "",
-            "checksum": null,
-            "loadingMessage": "A robust test suite is a must-have for any product...",
-            "concepts": [{
-                "identifier": "LO1",
-                "name": "Receptive Vocabulary",
-                "objectType": "Concept"
-            }],
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "serverData": {
+                "questionnaire": null,
+                "appIcon": "stories/quizapp_bugs/logo.png",
+                "subject": "literacy_v2",
+                "description": "QuizApp bugs fixes",
+                "name": "QuizApp Bugs",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.quiz.app.bugs.renderer",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/quizapp_bugs"
+        }, {
             "identifier": "org.ekstep.quiz.app.tests.renderer",
-            "grayScaleAppIcon": null,
-            "pkgVersion": 1
-        },
-        {
-            "questionnaire": null,
-            "appIcon": "stories/haircut_story/logo.png",
-            "subject": "literacy_v2",
-            "description": "Haircut Story",
-            "name": "Haircut Story",
-            "launchPath": "stories/haircut_story",
-            "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_1_1442335816604.zip",
-            "checksum": null,
-            "loadingMessage": "Every great journey starts with a great story...",
-            "concepts": [{
-                "identifier": "LO1",
-                "name": "Receptive Vocabulary",
-                "objectType": "Concept"
-            }],
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "serverData": {
+                "questionnaire": null,
+                "appIcon": "stories/test_cases/logo.png",
+                "subject": "literacy_v2",
+                "description": "Renderer Test Cases",
+                "name": "Renderer Tests",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "A robust test suite is a must-have for any product...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.quiz.app.tests.renderer",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/test_cases"
+
+        }, {
             "identifier": "org.ekstep.lit.haircut.story",
-            "grayScaleAppIcon": null,
-            "pkgVersion": 1
-        },
-        {
-            "questionnaire": null,
-            "appIcon": "stories/the_moon_and_the_cap/logo.png",
-            "subject": "literacy_v2",
-            "description": "The Moon and the Cap",
-            "name": "The Moon and the Cap",
-            "launchPath": "stories/the_moon_and_the_cap",
-            "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_2_1442335816604.zip",
-            "checksum": null,
-            "loadingMessage": "Every great journey starts with a great story...",
-            "concepts": [{
-                "identifier": "LO1",
-                "name": "Receptive Vocabulary",
-                "objectType": "Concept"
-            }],
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "serverData": {
+                "questionnaire": null,
+                "appIcon": "stories/haircut_story/logo.png",
+                "subject": "literacy_v2",
+                "description": "Haircut Story",
+                "name": "Haircut Story",
+                "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_1_1442335816604.zip",
+                "checksum": null,
+                "loadingMessage": "Every great journey starts with a great story...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.lit.haircut.story",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/haircut_story"
+        }, {
             "identifier": "org.ekstep.lit.moon_cap.story",
-            "grayScaleAppIcon": null,
-            "pkgVersion": 1
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "serverData": {
+                "questionnaire": null,
+                "appIcon": "stories/the_moon_and_the_cap/logo.png",
+                "subject": "literacy_v2",
+                "description": "The Moon and the Cap",
+                "name": "The Moon and the Cap",
+                "launchPath": "stories/the_moon_and_the_cap",
+                "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_2_1442335816604.zip",
+                "checksum": null,
+                "loadingMessage": "Every great journey starts with a great story...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.lit.moon_cap.story",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/haircut_story"
         }],
         "ttl": 24
     }
