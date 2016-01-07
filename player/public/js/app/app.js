@@ -119,10 +119,10 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                             $state.go('showContent', {});
                         } else {
                             if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.code) {
-                                // TODO: remove the below if condition after getting confirmation that, Genie sending this value.
-                                if (GlobalContext.config.appInfo.code == packageNameDelhi) {
-                                    GlobalContext.filter = '{"tags" : ["Delhi Curriculum"]}';
-                                }
+                                // // TODO: remove the below if condition after getting confirmation that, Genie sending this value.
+                                // if (GlobalContext.config.appInfo.code == packageNameDelhi) {
+                                //     GlobalContext.filter = '{"tags" : ["Delhi Curriculum"]}';
+                                // }
                                 GlobalContext.game.id = GlobalContext.config.appInfo.code;
                             }
                             TelemetryService.start();
@@ -185,24 +185,9 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             $scope.tab2 = 'Numeracy';
         }
         $scope.currentUser = GlobalContext.user;
+        $rootScope.title = GlobalContext.config.appInfo.name;
         $rootScope.stories = [];
         $rootScope.showMessage = false;
-
-        new Promise(function(resolve, reject) {
-                resolve(true);
-            })
-            .then(function() {
-                $rootScope.$apply(function() {
-                    $rootScope.loadBookshelf();
-                });
-                setTimeout(function() {
-                    $scope.checkContentCount();
-                }, 100);
-            })
-            .catch(function(error) {
-                TelemetryService.exitWithError(error);
-            });
-
         
         $rootScope.$on('show-message', function(event, data) {
             if (data.message && data.message != '') {
@@ -239,7 +224,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         $scope.resetContentListCache = function() {
             $("#loadingDiv").show();
             $rootScope.renderMessage("", 0);
-            ContentService.getContentList()
+            ContentService.getContentList(GlobalContext.filter)
             .then(function(result) {
                 $rootScope.$apply(function() {
                     $rootScope.stories = result;
@@ -261,15 +246,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             initBookshelf();
         };
 
-        $scope.checkContentCount = function() {
-            var count = $rootScope.stories.length;
-            if (count <= 0) {
-                $rootScope.$broadcast('show-message', {
-                    "message": AppMessages.NO_CONTENT_FOUND
-                });
-            }
-        };
-
         $scope.playContent = function(content) {
             $state.go('playContent', {
                 'itemId': content.identifier
@@ -286,8 +262,12 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         $scope.exitApp = function() {
             exitApp();
         };
+        // TODO: remove this method.
         $scope.clearAllContent = function() {}
 
+        $rootScope.loadBookshelf();
+        $scope.resetContentListCache();
+        
     }).controller('ContentCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         if ($stateParams.itemId) {
             console.log("$rootScope.stories:", $rootScope.stories);
