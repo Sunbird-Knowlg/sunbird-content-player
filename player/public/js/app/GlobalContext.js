@@ -31,11 +31,7 @@ GlobalContext = {
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
                         GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
                         // Assuming filter is always an array of strings.
-                        if (GlobalContext.config.appInfo.filter) {
-                            GlobalContext.filter = JSON.parse(GlobalContext.config.appInfo.filter);
-                        } else {
-                            GlobalContext.filter = [];
-                        }
+                        GlobalContext.filter = (GlobalContext.config.appInfo.filter)? JSON.parse(GlobalContext.config.appInfo.filter): [];
                     }
                     resolve(GlobalContext.config);
                 });
