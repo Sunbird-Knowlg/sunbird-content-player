@@ -34,7 +34,7 @@ angular.module('quiz.services', ['ngResource'])
                 var data = item.serverData;
                 if (item.path) {
                     var path = (item.path.charAt(item.path.length-1) == '/')? item.path.substring(0, item.path.length-1): item.path;
-                    path = "file://" + path; 
+                    path = ($window.cordova)? "file://" + path : path; 
                     data.baseDir =  path;
                     data.appIcon = path + "/logo.png";
                     data.status = "ready";

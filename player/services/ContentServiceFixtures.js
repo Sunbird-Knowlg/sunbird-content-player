@@ -11,40 +11,19 @@
  *
  * @author Jitendra Singh Sankhwar
  */
-var async = require('async')
-	, mwService = require('../commons/MWServiceProvider')
-	, util = require('../commons/Util')
-	, fs = require('fs')
-	, _ = require('underscore');
+var async = require('async'), mwService = require('../commons/MWServiceProvider'), util = require('../commons/Util'), fs = require('fs'), _ = require('underscore');
 
-exports.getContentList = function(cb, type, contentType) {
-  if (type.toLowerCase() == "story") {
-	fs.readFile('fixtures/stories.json', 'utf8', function (err, data) {
-  		if (err) {
-  			cb(err);
-  		} else {
-  			var obj = JSON.parse(data);
-        obj.result.appStatus = "DEMO";
-  			if (obj != null) {
-  				cb(null, obj.result);
-  			} else {
-  				cb('Content list not found for stories.');
-  			}
-  		}
-	});
-} else {
-  fs.readFile('fixtures/worksheets.json', 'utf8', function (err, data) {
-  		if (err) {
-  			cb(err);
-  		} else {
-  			var obj = JSON.parse(data);
-        obj.result.appStatus = "DEMO";
-  			if (obj != null) {
-  				cb(null, obj.result);
-  			} else {
-  				cb('Content list not found for worksheets.');
-  			}
-  		}
-	});
-}
+exports.getContentList = function(cb) {
+    fs.readFile('fixtures/stories.json', 'utf8', function(err, data) {
+        if (err) {
+            cb(err);
+        } else {
+            var obj = JSON.parse(data);
+            if (obj != null) {
+                cb(null, obj.result);
+            } else {
+                cb('Content list not found for stories.');
+            }
+        }
+    });
 }
