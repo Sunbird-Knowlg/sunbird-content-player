@@ -9,8 +9,7 @@ var currentContentVersion = "0.3";
 var packageNameDelhi = "org.ekstep.delhi.curriculum";
 var geniePackageName = "org.ekstep.android.genie";
 
-function backbuttonPressed(cs) {
-
+function backbuttonPressed() {
     if (Renderer.running || HTMLRenderer.running) {
         var ext = {
             type: 'EXIT_CONTENT'
@@ -22,23 +21,12 @@ function backbuttonPressed(cs) {
             type: 'EXIT_APP'
         }
         TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', Renderer.theme._currentStage).ext(ext).flush();
-        exitApp(cs);
+        exitApp();
     }
 }
 
-function exitApp(cs) {
+function exitApp() {
     navigator.startApp.start(geniePackageName, function(message) {
-            if (cs) {
-                cs.resetSyncStart();
-                if (cs.getProcessCount() > 0) {
-                    var processing = cs.getProcessList();
-                    for (key in processing) {
-                        var item = processing[key];
-                        item.status = "error";
-                        cs.saveContent(item);
-                    }
-                }
-            }
             try {
                 if (TelemetryService._gameData) {
                     TelemetryService.end(packageName, version);
@@ -95,7 +83,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             }
 
             $ionicPlatform.onHardwareBackButton(function() {
-                backbuttonPressed(ContentService);
+                backbuttonPressed();
             });
             $ionicPlatform.on("pause", function() {
                 Renderer.pause();
@@ -121,7 +109,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
 
             GlobalContext.init(packageName, version).then(function() {
                 if (!TelemetryService._gameData) {
-                    ContentService.init();
                     TelemetryService.init(GlobalContext.game).then(function() {
                         if (GlobalContext.config.appInfo &&
                             GlobalContext.config.appInfo.code &&
@@ -197,14 +184,10 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             $scope.tab2 = 'Numeracy';
         }
         $scope.currentUser = GlobalContext.user;
+        $rootScope.stories = [];
+        $rootScope.showMessage = false;
 
         new Promise(function(resolve, reject) {
-                if (currentContentVersion != ContentService.getContentVersion()) {
-                    console.log("Clearing ContentService cache.");
-                    ContentService.clear();
-                    ContentService.setContentVersion(currentContentVersion);
-                }
-                // ContentService.init();
                 resolve(true);
             })
             .then(function() {
@@ -219,7 +202,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 TelemetryService.exitWithError(error);
             });
 
-        $rootScope.showMessage = false;
+        
         $rootScope.$on('show-message', function(event, data) {
             if (data.message && data.message != '') {
                 $rootScope.$apply(function() {
@@ -244,56 +227,41 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             }
         });
 
+        $rootScope.renderMessage = function(message, timeout, reload) {
+            $rootScope.$broadcast('show-message', {
+                "message": message,
+                "timeout": timeout,
+                "reload": reload
+            });
+        }
+
         $scope.resetContentListCache = function() {
-            var syncStart = ContentService.getSyncStart();
-            var reload = true;
-            if (syncStart) {
-                var timeLapse = (new Date()).getTime() - syncStart;
-                if (timeLapse / 60000 < 10) {
-                    reload = false;
-                }
-            }
-            if (reload) {
-                $("#loadingDiv").show();
-                $rootScope.showMessage = false;
-                $rootScope.message = "";
-                setTimeout(function() {
-                    ContentService.sync()
-                        .then(function() {
-                            var processing = ContentService.getProcessCount();
-                            if (processing > 0) {
-                                $rootScope.$broadcast('show-message', {
-                                    "message": AppMessages.DOWNLOADING_MSG.replace('{0}', processing)
-                                });
-                            }
-                            $rootScope.loadBookshelf();
-                        });
-                }, 100);
-            } else {
-                setTimeout(function() {
-                    $rootScope.$apply(function() {
-                        $rootScope.showMessage = false;
-                    });
-                    var processing = ContentService.getProcessCount();
-                    if (processing > 0) {
-                        $rootScope.$broadcast('show-message', {
-                            "message": AppMessages.DOWNLOADING_MSG.replace('{0}', processing)
-                        });
-                    }
-                }, 100);
-            }
+            $("#loadingDiv").show();
+            $rootScope.renderMessage("", 0);
+            ContentService.getContentList()
+            .then(function(result) {
+                $rootScope.$apply(function() {
+                    $rootScope.stories = result;
+                });
+                $rootScope.loadBookshelf();
+                $rootScope.renderMessage(AppMessages.SUCCESS_GET_CONTENT_LIST, 3000);
+            })
+            .catch(function(err) {
+                $rootScope.$apply(function() {
+                    $rootScope.stories = [];
+                });
+                console.error(err);
+                $rootScope.loadBookshelf();
+                $rootScope.renderMessage(AppMessages.ERR_GET_CONTENT_LIST, 3000);
+            });
         }
 
         $rootScope.loadBookshelf = function() {
-            $rootScope.worksheets = ContentService.getContentList('worksheet');
-            console.log("$scope.worksheets:", $rootScope.worksheets);
-            $rootScope.stories = ContentService.getContentList('story');
-            console.log("$scope.stories:", $rootScope.stories);
             initBookshelf();
         };
 
         $scope.checkContentCount = function() {
-            var count = ContentService.getContentCount();
+            var count = $rootScope.stories.length;
             if (count <= 0) {
                 $rootScope.$broadcast('show-message', {
                     "message": AppMessages.NO_CONTENT_FOUND
@@ -315,28 +283,17 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         };
 
         $scope.exitApp = function() {
-            console.log("Exit");
-            exitApp(ContentService);
+            exitApp();
         };
-        $scope.clearAllContent = function() {
-            $cordovaDialogs.confirm('Are you sure you want to clear the content??', 'Alert', ['button 1', 'button 2'])
-                .then(function(buttonIndex) {
-                    var btnIndex = buttonIndex;
-                    if (btnIndex == 1) {
-                        ContentService.deleteAllContent();
-                        $rootScope.worksheets = undefined;
-                        $rootScope.stories = undefined;
-                    }
-                });
-        }
+        $scope.clearAllContent = function() {}
 
-    }).controller('ContentCtrl', function($scope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
+    }).controller('ContentCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         if ($stateParams.itemId) {
-            $scope.item = ContentService.getContent($stateParams.itemId);
-            if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'html') {
+            console.log("$rootScope.stories:", $rootScope.stories);
+            $scope.item = _.findWhere($rootScope.stories, {identifier: $stateParams.itemId});
+            if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                 HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier, $scope);
             } else {
-                console.log("$scope.item : ", $scope.item);
                 Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
             }
         } else {
@@ -345,7 +302,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         }
         $scope.$on('$destroy', function() {
             setTimeout(function() {
-                if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'html') {
+                if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                     HTMLRenderer.cleanUp();
                 } else {
                     Renderer.cleanUp();
@@ -363,11 +320,12 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             };
 
             $scope.updateContent = function(content) {
-                ContentService.updateContent(content)
+                ContentService.getContent(content.identifier)
                     .then(function(data) {
                         $scope.$apply(function() {
                             $scope.item = data;
                         });
+                        $rootScope.stories = [data];
                     })
                     .catch(function(err) {
                         console.log(err);
@@ -376,7 +334,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
 
             $scope.startGenie = function() {
                 console.log("Start Genie.");
-                exitApp(ContentService);
+                exitApp();
             };
 
             $scope.updateContent(GlobalContext.config.appInfo);
