@@ -102,13 +102,13 @@ var OptionPlugin = Plugin.extend({
                     y: this.y - evt.stageY
                 };
                 var ext = {
+                    stageId: Renderer.theme._currentStage,
                     type: evt.type,
                     x: evt.stageX,
                     y: evt.stageY,
                     drag_id: instance._value.asset,
                     itemId: itemId
                 }
-                instance.stageId = Renderer.theme._currentStage;
                 EventManager.processAppTelemetry({}, 'DRAG', instance, ext);
             });
             asset.on("pressmove", function(evt) {
@@ -202,6 +202,7 @@ var OptionPlugin = Plugin.extend({
                 instance.removeShadow();
 
                 var ext = {
+                    stageId: Renderer.theme._currentStage,
                     type: evt.type,
                     x: evt.stageX,
                     y: evt.stageY,
@@ -209,7 +210,6 @@ var OptionPlugin = Plugin.extend({
                     drop_idx: drop_idx,
                     itemId: itemId
                 }
-                instance.stageId = Renderer.theme._currentStage;
                 EventManager.processAppTelemetry({}, 'DROP', instance, ext);
                 Renderer.update = true;
             });

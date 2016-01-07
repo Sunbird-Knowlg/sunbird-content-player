@@ -12,16 +12,17 @@ var geniePackageName = "org.ekstep.android.genie";
 function backbuttonPressed() {
     if (Renderer.running || HTMLRenderer.running) {
         var ext = {
-            type: 'EXIT_CONTENT'
+            type: 'EXIT_CONTENT',
+            stageId: Renderer.theme._currentStage
         }
-        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', Renderer.theme._currentStage).ext(ext).flush();
+        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
         initBookshelf();
     } else {
         var ext = {
             type: 'EXIT_APP'
         }
-        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', Renderer.theme._currentStage).ext(ext).flush();
-        exitApp();
+        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
+        exitApp(cs);
     }
 }
 
@@ -380,23 +381,23 @@ function initBookshelf() {
         } else {
             newHeight = newWidth / widthToHeight;
         }
-        $.bookshelfSlider('#bookshelf_slider', {
-            'item_width': newWidth,
-            'item_height': newHeight,
-            'products_box_margin_left': 30,
-            'product_title_textcolor': '#ffffff',
-            'product_title_bgcolor': '#990000',
-            'product_margin': 30,
-            'product_show_title': true,
-            'show_icons': true,
-            'buttons_margin': 15,
-            'buttons_align': 'center', // left, center, right
-            'slide_duration': 800,
-            'slide_easing': 'easeOutCirc',
-            'arrow_duration': 800,
-            'arrow_easing': 'easeInCirc',
-            'folder': ''
-        });
+        // $.bookshelfSlider('#bookshelf_slider', {
+        //     'item_width': newWidth,
+        //     'item_height': newHeight,
+        //     'products_box_margin_left': 30,
+        //     'product_title_textcolor': '#ffffff',
+        //     'product_title_bgcolor': '#990000',
+        //     'product_margin': 30,
+        //     'product_show_title': true,
+        //     'show_icons': true,
+        //     'buttons_margin': 15,
+        //     'buttons_align': 'center', // left, center, right
+        //     'slide_duration': 800,
+        //     'slide_easing': 'easeOutCirc',
+        //     'arrow_duration': 800,
+        //     'arrow_easing': 'easeInCirc',
+        //     'folder': ''
+        // });
         $(".panel_slider").height($(".view-container").height() - $(".panel_title").height() - $(".panel_bar").height());
         console.log('Loading completed....');
         $("#loadingDiv").hide();

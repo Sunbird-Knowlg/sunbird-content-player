@@ -1,27 +1,27 @@
 
 /* ------- panel title ------- */
 
-.panel_title { 
-	background:#28108F  url(../assets/skin02/bookshelf_skin02_top_bg.png) repeat; 
+.panel_title {
+	background:#28108F  url(../assets/skin02/bookshelf_skin02_top_bg.png) repeat;
 	background-size: 380px 75px;
 	color:#e4b173; width:960px; height:75px; text-align:center; margin:0 auto; overflow: hidden;
 	box-shadow:0px 0px 0px rgba(0, 0, 0, 0.3); -moz-box-shadow:0px 0px 0px rgba(0, 0, 0, 0.3); -webkit-box-shadow:0px 0px 0px rgba(0, 0, 0, 0.3);
 }
 
-.selected_title { 
-	color:#266576; padding:2px 8px; font-size:30px; font-family:flavours, Helvetica, sans-serif; 
+.selected_title {
+	color:#266576; padding:2px 8px; font-size:30px; font-family:flavours, Helvetica, sans-serif;
 	height:20px; line-height:20px; margin-top:15px; margin-left:15px; display:block; float:left;
 	background: #BFF8FF; border:0px;
 }
 
-.selected_title_box { 
+.selected_title_box {
 	background:#28108F  url(../assets/skin02/selected_title_skin02.png) repeat;
 	background-size: 220px 75px;
 	width: 220px; height:75px;
 	display:block; float:left;
 }
 
-.button_bar { 
+.button_bar {
 	background: url(../assets/skin02/button_bar_skin02_bg.png) repeat;
 	background-size: 200px 75px;
 	width: 200px; height:75px;
@@ -35,17 +35,17 @@
 /* menu top */
 .menu_top { float:right; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:12px; margin:15px 15px 0px auto; letter-spacing:1px; }
 .menu_top ul { list-style:none; margin:0; padding:0; margin-top:0px; margin-left:10px; }
-.menu_top ul li { 
-	list-style:none; margin:0; padding:0; display:block; float:left; margin-right:5px; 
+.menu_top ul li {
+	list-style:none; margin:0; padding:0; display:block; float:left; margin-right:5px;
 	display:block; padding:4px 8px; outline:none; background:transparent url(../assets/menutopli_bg.png) repeat;
 	border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; border:#d39e6b solid 1px;
 	box-shadow:1px 1px 4px rgba(0, 0, 0, 0.4); -moz-box-shadow:1px 1px 4px rgba(0, 0, 0, 0.4); -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
 	}
 
-.menu_top ul li a { 
+.menu_top ul li a {
 	color:#f5c994 !important; text-decoration:none; display:block; padding:2px 2px; outline:none; text-shadow:1px 1px 1px #000;
 }
-.menu_top ul li a:hover { 
+.menu_top ul li a:hover {
 	color:#f5c994 !important; text-decoration:none; display:block; padding:2px 2px; outline:none; text-shadow:1px 1px 1px #000;
 }
 
@@ -61,7 +61,7 @@
 
 /* ------- panel bar ------- */
 
-.panel_bar { 
+.panel_bar {
 	background-size: 200px 70px;
 	background:#28108F  url(../assets/skin02/bookshelf_skin02_bottom_bg.png) repeat-x left bottom; width:960px; height:70px; text-align:center; margin:0 auto; overflow: hidden;
 	border-top:none; font-size:12px; font-family:Arial, Helvetica, sans-serif; letter-spacing:1px;
@@ -119,16 +119,34 @@
 
 .fx_shadow {display: none !important;}
 
-.product img { 
+.product img {
 	border: 2px dotted lightblue;
 	padding:5px;
 	border-radius: 8px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .product {
-	margin-right: 60px !important;
-	margin-top: 40px !important;
+	margin-right: 20px !important;
+	margin-top: 20px !important;
 	margin-bottom: 50px !important;
+	margin-left:10px !important;
+}
+
+.bookshelf_message {
+	margin: auto;
+	width: 70%;
+	position: fixed;
+	text-align: center;
+	bottom:50px;
+	font-family: flavours;
+	font-size: 1.5em;
+	display:block;
+	padding: 10px;
+	border-radius: 15px;
+	overflow: hidden;
 }
 
 .product_title {
@@ -151,6 +169,16 @@
 	color:#266576 !important;
 	padding-top: 10px;
 	margin-top: 20px;
+}
+
+.product_name {
+	font-size:12px; font-family:flavours !important;
+	color:#266576 !important;
+	margin-top: 10px;
+	text-align: center;
+	width:110px;
+	height:40px;
+	overflow: hidden;
 }
 
 #arrow_box {
