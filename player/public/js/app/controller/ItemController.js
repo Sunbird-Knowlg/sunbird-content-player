@@ -26,7 +26,7 @@ var ItemController = Controller.extend({
                 // Start assessment telemetry
     			d = item.model;
     			try {
-    				var assessStart = TelemetryService.assess(item.identifier, this._data.subject, item.qlevel).start();
+    				var assessStart = TelemetryService.assess((_.isString(item.qid) && !_.isEmpty(item.qid.trim()))  ? item.qid : item.identifier, this._data.subject, item.qlevel).start();
     				if(item.max_score) {
     					assessStart.maxscore(item.max_score);
     				}
