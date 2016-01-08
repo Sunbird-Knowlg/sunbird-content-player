@@ -22,7 +22,7 @@ function backbuttonPressed() {
             type: 'EXIT_APP'
         }
         TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
-        exitApp(cs);
+        exitApp();
     }
 }
 
@@ -143,10 +143,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                             $state.go('showContent', {});
                         } else {
                             if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.code) {
-                                // // TODO: remove the below if condition after getting confirmation that, Genie sending this value.
-                                // if (GlobalContext.config.appInfo.code == packageNameDelhi) {
-                                //     GlobalContext.filter = '{"tags" : ["Delhi Curriculum"]}';
-                                // }
                                 GlobalContext.game.id = GlobalContext.config.appInfo.code;
                             }
                             TelemetryService.start();
@@ -163,7 +159,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         });
     })
     .config(function($stateProvider, $urlRouterProvider) {
-        // $urlRouterProvider.otherwise("/content/list");
         $stateProvider
             .state('contentList', {
                 url: "/content/list",
@@ -254,7 +249,11 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                     $rootScope.stories = result;
                 });
                 $rootScope.loadBookshelf();
-                $rootScope.renderMessage(AppMessages.SUCCESS_GET_CONTENT_LIST, 3000);
+                if($rootScope.stories && $rootScope.stories.length <=0) {
+                    $rootScope.renderMessage(AppMessages.NO_CONTENT_FOUND);
+                } else {
+                    $rootScope.renderMessage(AppMessages.SUCCESS_GET_CONTENT_LIST, 3000);
+                }
             })
             .catch(function(err) {
                 $rootScope.$apply(function() {
