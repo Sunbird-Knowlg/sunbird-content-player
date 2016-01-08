@@ -31,14 +31,15 @@ angular.module('quiz.services', ['ngResource'])
                 });
             },
             _prepareContent: function(item) {
-                var data = item.serverData;
-                if (item.path) {
+                var data = item.localData || item.serverData;
+                if (item.path && data) {
                     var path = (item.path.charAt(item.path.length-1) == '/')? item.path.substring(0, item.path.length-1): item.path;
                     path = ($window.cordova)? "file://" + path : path; 
                     data.baseDir =  path;
                     data.appIcon = path + "/logo.png";
                     data.status = "ready";
                 } else {
+                    if(!data) data = {};
                     data.status = "error";
                     console.info("Path is not available for content:", item);
                 }
