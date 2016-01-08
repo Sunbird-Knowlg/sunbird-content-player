@@ -53,8 +53,12 @@ AssessEvent = TelemetryEvent.extend({
     		throw "can't end assess event without starting.";
     	}
     },
+    mc: function(mc) {
+    	this.event.edata.eks.mc = mc;
+        return this;
+    },
     mmc: function(mmc) {
-    	this.event.edata.eks.mmc = mmc;
+        this.event.edata.eks.mmc = mmc;
         return this;
     },
     maxscore: function(maxscore) {
