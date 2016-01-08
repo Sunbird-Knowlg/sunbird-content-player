@@ -92,7 +92,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             $ionicPlatform.on("resume", function() {
                 var currentContentId = GlobalContext.config.appInfo.identifier;
                 var currentVersion = GlobalContext.config.appInfo.pkgVersion || TelemetryService._gameData.ver;
-                 GlobalContext.init(packageName, version).then(function() { 
+                 GlobalContext.init(packageName, version).then(function() {
                     var newContentId = GlobalContext.config.appInfo.identifier;
                     if(currentContentId == newContentId) {
                         if (!Renderer.running) {
@@ -112,7 +112,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                         }
                         if(GlobalContext.config.appInfo &&
                             GlobalContext.config.appInfo.code &&
-                            GlobalContext.config.appInfo.code != packageName 
+                            GlobalContext.config.appInfo.code != packageName
                                 && (typeof GlobalContext.config.appInfo.filter == 'undefined')) {
                             $state.go('showContent', {});
                         } else {
@@ -137,7 +137,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                     TelemetryService.init(GlobalContext.game).then(function() {
                         if (GlobalContext.config.appInfo &&
                             GlobalContext.config.appInfo.code &&
-                            GlobalContext.config.appInfo.code != packageName 
+                            GlobalContext.config.appInfo.code != packageName
                                 && (typeof GlobalContext.config.appInfo.filter == 'undefined')) { // && GlobalContext.config.appInfo.code != packageNameDelhi
                             TelemetryService.start();
                             $state.go('showContent', {});
@@ -212,7 +212,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         $rootScope.title = GlobalContext.config.appInfo.name;
         $rootScope.stories = [];
         $rootScope.showMessage = false;
-        
+
         $rootScope.$on('show-message', function(event, data) {
             if (data.message && data.message != '') {
                 $rootScope.$apply(function() {
@@ -283,6 +283,24 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             $scope.aboutModal.hide();
         };
 
+        $scope.simulateCrash = function(fatal) {
+            if (navigator.crashlytics) {
+                if (fatal === true) {
+                    console.log("Simulating fatal crash for Crashlytics");
+                    navigator.crashlytics.simulateCrash("Simulated crash");
+                }
+                else {
+                    console.log("Simulating non-fatal error for Crashlytics");
+                    navigator.crashlytics.logException("Simulated non-fatal error");
+                }
+
+                console.log("Simulation sent to Crashlytics");
+            }
+            else {
+                console.log("Crashlytics not available for reporting");
+            }
+        };
+
         $scope.exitApp = function() {
             exitApp();
         };
@@ -291,7 +309,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
 
         $rootScope.loadBookshelf();
         $scope.resetContentListCache();
-        
+
     }).controller('ContentCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         if ($stateParams.itemId) {
             console.log("$rootScope.stories:", $rootScope.stories);
