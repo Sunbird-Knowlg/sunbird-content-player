@@ -90,36 +90,12 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 Renderer.pause();
             });
             $ionicPlatform.on("resume", function() {
-                var currentContentId = GlobalContext.config.appInfo.identifier;
-                var currentVersion = GlobalContext.config.appInfo.pkgVersion || TelemetryService._gameData.ver;
-                 GlobalContext.init(packageName, version).then(function() {
-                    var newContentId = GlobalContext.config.appInfo.identifier;
-                    if(currentContentId == newContentId) {
-                        if (!Renderer.running) {
-                            setTimeout(function() {
-                                initBookshelf();
-                            }, 500);
-                        } else {
-                            Renderer.resume();
-                        }
-                    } else {
-                        if(Renderer.running) {
-                            Renderer.cleanUp();
-                        }
-                        if (TelemetryService._gameData){
-                            TelemetryService.end(currentContentId, currentVersion);
-                            TelemetryService.start();
-                        }
-                        if(GlobalContext.config.appInfo &&
-                            GlobalContext.config.appInfo.code &&
-                            GlobalContext.config.appInfo.code != packageName
-                                && (typeof GlobalContext.config.appInfo.filter == 'undefined')) {
-                            $state.go('showContent', {});
-                        } else {
-                            $state.go('contentList', {});
-                        }
-                    }
-                });
+                Renderer.resume();
+                if (!Renderer.running) {
+                    setTimeout(function() {
+                        initBookshelf();
+                    }, 500);
+                }
             });
 
             GenieService.getMetaData().then(function(data) {
