@@ -125,5 +125,6 @@ CommandManager = {
             }
         });
         action.dataAttributes = dataAttributes;
+        action.stageId = Renderer.theme._currentStage;
     }
 }

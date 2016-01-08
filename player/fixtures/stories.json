@@ -14,7 +14,7 @@
         "content": [{
             "identifier": "org.ekstep.quiz.app.bugs.renderer",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "serverData": {
+            "localData": {
                 "questionnaire": null,
                 "appIcon": "stories/quizapp_bugs/logo.png",
                 "subject": "literacy_v2",
@@ -37,7 +37,7 @@
         }, {
             "identifier": "org.ekstep.quiz.app.tests.renderer",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "serverData": {
+            "localData": {
                 "questionnaire": null,
                 "appIcon": "stories/test_cases/logo.png",
                 "subject": "literacy_v2",
@@ -61,7 +61,7 @@
         }, {
             "identifier": "org.ekstep.lit.haircut.story",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "serverData": {
+            "localData": {
                 "questionnaire": null,
                 "appIcon": "stories/haircut_story/logo.png",
                 "subject": "literacy_v2",
@@ -84,7 +84,7 @@
         }, {
             "identifier": "org.ekstep.lit.moon_cap.story",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "serverData": {
+            "localData": {
                 "questionnaire": null,
                 "appIcon": "stories/the_moon_and_the_cap/logo.png",
                 "subject": "literacy_v2",
@@ -104,7 +104,7 @@
                 "pkgVersion": 1
             },
             "isAvailable": true,
-            "path": "stories/haircut_story"
+            "path": "stories/the_moon_and_the_cap"
         }],
         "ttl": 24
     }

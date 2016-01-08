@@ -11,7 +11,7 @@
 
     <div class="item item-body noBorder" style="margin:-3px;">
         <center>
-            <img ng-src="{{item.posterImage || item.appIcon || 'assets/quiz-icon.png'}}" class="preview_posterImg">
+            <img ng-src="{{item.appIcon || 'assets/quiz-icon.png'}}" class="preview_posterImg">
             <p class="preview_description" ng-if="item.description">
                 {{item.description}}
             </p>
@@ -30,9 +30,9 @@
             <span ng-show="item.status == 'ready'" style="margin-right: 10px">
                 <a ng-click="playContent(item)" class="preview_button_bg preview_button">Play</a>
             </span>
-            <span>
+            <!-- <span>
                 <a ng-click="updateContent(item)" ng-show="item.status != 'processing'" class="preview_button_bg preview_button">Update</a>
-            </span>    
+            </span>  -->   
         </center>
         <div class="preview_bottom_bg"></div>
     </div>

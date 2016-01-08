@@ -217,7 +217,7 @@ LoadByStageStrategy = Class.extend({
         if (this.loaders[stageId]) {
             this.loaders[stageId].destroy();
             AssetManager.stageAudios[stageId].forEach(function(audioAsset) {
-                AudioManager.destroy(audioAsset);
+                AudioManager.destroy(stageId, audioAsset);
             });
         }
     }
