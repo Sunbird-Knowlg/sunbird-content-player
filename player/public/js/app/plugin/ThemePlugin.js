@@ -43,6 +43,7 @@ var ThemePlugin = Plugin.extend({
     },
     start: function(basePath) {
         var instance = this;
+        RecorderManager.init();
         AssetManager.init(this._data, basePath);
         AssetManager.initStage(this._data.startStage, null, null, function() {
             instance.render();

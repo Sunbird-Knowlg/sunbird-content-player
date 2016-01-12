@@ -2,6 +2,19 @@ RecorderManager = {
 	mediaInstance: undefined,
 	recording: false, // status - true: recording audio, false: not recording audio.
 	recorder: AppConfig.recorder, // 'android' - uses cordova-plugin-media for recording audio. :: 'sensibol': uses sensibol api for recording audio.
+	appDataDirectory: undefined,
+	_root: undefined,
+	init: function() {
+		document.addEventListener("deviceready", function() {
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+                RecorderManager._root = fileSystem.root;
+            }, function(e) {
+                console.log('[ERROR] Problem setting up root filesystem for running! Error to follow.');
+                console.log(JSON.stringify(e));
+            });
+            RecorderManager.appDataDirectory = cordova.file.externalDataDirectory || cordova.file.dataDirectory;
+        });
+	},
 	getRecorder: function() {
 		if (RecorderManager.recorder == "sensibol") {
 			return RecorderService;
@@ -118,8 +131,8 @@ RecorderManager = {
 	_getFilePath: function(stageId) {
 		var currentDate = new Date();
 		var path = "";
-		if (DownloaderService.appDataDirectory) 
-			path = path + DownloaderService.appDataDirectory;
+		if (RecorderManager.appDataDirectory) 
+			path = path + RecorderManager.appDataDirectory;
 		if (GlobalContext.user && GlobalContext.user.uid) 
 			path = path + GlobalContext.user.uid + '_' ;
 		if (TelemetryService._gameData && TelemetryService._gameData.id)
