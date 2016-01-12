@@ -1,5 +1,6 @@
 var ShapePlugin = Plugin.extend({
-	_isContainer: false,
+    _type: 'shape',
+    _isContainer: false,
     _render: true,
     initPlugin: function(data) {
     	this._self = new createjs.Shape();

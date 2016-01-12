@@ -126,34 +126,12 @@
         <!-- <param name="previous" value="textPluginBasic" />-->
         <image asset="bg" h="100" w="100" x="0" y="0"/>
         <param model="testData.ts_textpg_align" name="heading"/>
-        <text color="yellow" fontsize="30" h="10" w="25" x="5" y="10">Default alignment - should be aligned as top-left, by default</text>
-        <shape h="10" stroke="white" type="rect" w="15" x="5" y="20"/>
-        <text color="white" fontsize="60" h="10" w="15" x="5" y="20">TopLeft</text>
-        <text color="yellow" fontsize="30" h="10" w="25" x="5" y="40">Horiz alignments - should be aligned as displayed</text>
-        <shape h="10" stroke="white" type="rect" w="15" x="5" y="50"/>
-        <text align="left" color="white" fontsize="60" h="10" w="15" x="5" y="50">Left</text>
-        <shape h="10" stroke="white" type="rect" w="15" x="25" y="50"/>
-        <text align="center" color="white" fontsize="60" h="10" w="15" x="25" y="50">Center</text>
-        <shape h="10" stroke="white" type="rect" w="15" x="45" y="50"/>
-        <text align="right" color="white" fontsize="60" h="10" w="15" x="45" y="50">Right</text>
-        <text color="yellow" fontsize="30" h="10" w="25" x="5" y="70">Vert alignments - should be aligned as displayed</text>
-        <shape h="15" stroke="white" type="rect" w="15" x="5" y="80"/>
-        <text align="center" color="white" fontsize="60" h="15" valign="top" w="15" x="5" y="80">Top</text>
-        <shape h="15" stroke="white" type="rect" w="15" x="25" y="80"/>
-        <text align="center" color="white" fontsize="60" h="15" valign="middle" w="15" x="25" y="80">Middle</text>
-        <shape h="15" stroke="white" type="rect" w="15" x="45" y="80"/>
-        <text align="center" color="white" fontsize="60" h="15" valign="bottom" w="15" x="45" y="80">Bottom</text>
-        <text color="yellow" fontsize="30" h="10" w="30" x="65" y="55">Both alignments - should be aligned as displayed</text>
-        <shape h="30" stroke="white" type="rect" w="30" x="65" y="65"/>
-        <text align="left" color="white" fontsize="30" h="30" valign="top" w="30" x="65" y="65">TopLeft</text>
-        <text align="center" color="white" fontsize="30" h="30" valign="top" w="30" x="65" y="65">TopCenter</text>
-        <text align="right" color="white" fontsize="30" h="30" valign="top" w="30" x="65" y="65">TopRight</text>
-        <text align="left" color="white" fontsize="30" h="30" valign="middle" w="30" x="65" y="65">MiddleLeft</text>
-        <text align="center" color="white" fontsize="30" h="30" valign="middle" w="30" x="65" y="65">MiddleCenter</text>
-        <text align="right" color="white" fontsize="30" h="30" valign="middle" w="30" x="65" y="65">MiddleRight</text>
-        <text align="left" color="white" fontsize="30" h="30" valign="bottom" w="30" x="65" y="65">BottomLeft</text>
-        <text align="center" color="white" fontsize="30" h="30" valign="bottom" w="30" x="65" y="65">BottomCenter</text>
-        <text align="right" color="white" fontsize="30" h="30" valign="bottom" w="30" x="65" y="65">BottomRight</text>
+
+        <testcase id="topleft-text" w="30" h="30" x="10" y="5" stroke="#25DBBC">
+            <text color="yellow" fontsize="120" h="20" w="100" x="2" y="12">Default alignment - should be aligned as top-left, by default</text>
+            <shape h="30" stroke="white" hitArea="false" type="rect" w="90" x="2" y="40" />
+            <text color="white" fontsize="150" h="30" w="90" x="2" y="40">TopLeft</text>
+        </testcase>
     </stage>
     <stage extends="baseStage" h="100" id="textPluginWrap" w="100" x="0" y="0">
         <param name="next" value="test-Z-Index"/>
