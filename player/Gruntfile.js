@@ -225,7 +225,6 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        './custom-plugins/PlatformService/',
                         './custom-plugins/GenieService/'
                     ]
                 }

@@ -1,6 +1,7 @@
 describe('Timer manager test cases', function() {
 
     beforeEach(function(done) {
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
         Renderer.theme = {_currentStage:''};
         spyOn(CommandManager, 'handle').and.callThrough();
         spyOn(TimerManager, 'start').and.callThrough();
@@ -11,8 +12,9 @@ describe('Timer manager test cases', function() {
         done();
     });
 
-    it('Test command hide with 5000ms delay', function() {
+    it('Test command hide with 5000ms delay', function(done) {
         var delay = 5000;
+        var instance = this;
         this.action.command = 'hide';
         this.action.delay = delay;
         expect(true).toEqual(this.plugin._self.visible);
@@ -21,7 +23,8 @@ describe('Timer manager test cases', function() {
         expect(TimerManager.start.calls.count()).toEqual(1);
         expect(true).toEqual(this.plugin._self.visible);
         setTimeout(function() {
-            expect(false).toEqual(this.plugin._self.visible);
+            expect(false).toEqual(instance.plugin._self.visible);
+            done();
         }, delay);
     });
 

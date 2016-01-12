@@ -104,7 +104,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                     flavor = "sandbox";
                 GlobalContext.config.flavor = flavor;
                 if (_.isString(AppConfig[flavor]) && (AppConfig[flavor]).length > 0) {
-                    PlatformService.setAPIEndpoint(AppConfig[flavor]);
+                    // PlatformService.setAPIEndpoint(AppConfig[flavor]);
                 }
             });
 
