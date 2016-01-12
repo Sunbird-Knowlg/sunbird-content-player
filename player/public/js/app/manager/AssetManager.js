@@ -34,6 +34,9 @@ AssetManager = {
         }
     },
     loadAsset: function(stageId, assetId, path) {
-        AssetManager.strategy.loadAsset(stageId, assetId, path);
+        if (AssetManager.strategy) 
+            AssetManager.strategy.loadAsset(stageId, assetId, path);
+        else
+            console.info("asset not loaded because AssetManager not initialised or failed to initialize.")
     }
 }

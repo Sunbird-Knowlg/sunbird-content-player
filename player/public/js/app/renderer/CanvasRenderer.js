@@ -34,7 +34,7 @@ Renderer = {
             Renderer.cleanUp();
         }
         Renderer.running = true;
-        TelemetryService.start(game.identifier, game.pkgVersion);
+        (game && game.identifier && game.pkgVersion) ? TelemetryService.start(game.identifier, game.pkgVersion): TelemetryService.start();
         Renderer.initByXML(gameRelPath, canvasId);
         // TODO: integrate it properly.
         if (typeof RecorderService != "undefined") {
