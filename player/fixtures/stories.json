@@ -11,7 +11,7 @@
     },
     "responseCode": "OK",
     "result": {
-        "content": [{
+        "contents": [{
             "identifier": "org.ekstep.quiz.app.bugs.renderer",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {

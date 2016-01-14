@@ -115,6 +115,11 @@ TelemetryService = {
         }
         // change this to write to file??
         console.log('TelemetryService Error:', JSON.stringify(data));
+        var $body = angular.element(document.body);   // 1
+        var $rootScope = $body.scope().$root;         // 2
+        $rootScope.$broadcast('show-message', {
+            "message": 'Telemetry :' + JSON.stringify(data.message.errors)
+        });
     },
     exitApp: function() {
         setTimeout(function() {
