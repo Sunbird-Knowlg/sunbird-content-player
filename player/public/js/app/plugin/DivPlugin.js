@@ -1,23 +1,23 @@
 var DivPlugin = Plugin.extend({
-	_type: 'div',
+    _type: 'div',
     _isContainer: false,
     _render: true,
     _div: undefined,
     initPlugin: function(data) {
-    	this._input = undefined;
-		var dims = this.relativeDims();
-		var div = document.getElementById(data.id);
-		if(div) {
-			$("#" + data.id).remove();
-		}
-		div = document.createElement('div');
-        if(data.style)
+        this._input = undefined;
+        var dims = this.relativeDims();
+        var div = document.getElementById(data.id);
+        if (div) {
+            $("#" + data.id).remove();
+        }
+        div = document.createElement('div');
+        if (data.style)
             div.setAttribute("style", data.style);
         div.id = data.id;
         div.style.width = dims.w + 'px';
         div.style.height = dims.h + 'px';
         div.style.position = 'absolute';
-        
+
         var instance = this;
         var parentDiv = document.getElementById(Renderer.divIds.gameArea);
         parentDiv.insertBefore(div, parentDiv.childNodes[0]);
@@ -29,6 +29,23 @@ var DivPlugin = Plugin.extend({
         this._self = new createjs.DOMElement(div);
         this._self.x = dims.x;
         this._self.y = dims.y;
+        this.registerEvents(data.id);
+    },
+    registerEvents: function(id) {
+        
+    },
+    triggerEvent: function(event) {
+        console.log("DIV:triggerEvent::", event);
+        var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
+        event = new createjs.Event(event);
+        plugin.dispatchEvent(event);
     }
 });
 PluginManager.registerPlugin('div', DivPlugin);
+
+function triggerEvent(event) {
+    console.log("GLOBAL:triggerEvent::", event);
+    var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
+    event = new createjs.Event(event);
+    plugin.dispatchEvent(event);
+}

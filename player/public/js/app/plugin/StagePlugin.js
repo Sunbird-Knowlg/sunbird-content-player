@@ -103,6 +103,13 @@ var StagePlugin = Plugin.extend({
                 var name = tokens[0].trim();
                 var idx = param.indexOf('.');
                 var paramName = param.substring(idx+1);
+                if (this._templateVars[name]) {
+                    name = this._templateVars[name];
+                    if (name.indexOf('.') > 0) {
+                        paramName = name.substring(name.indexOf('.')+1) +'.' + paramName;
+                        name = name.substring(0, name.indexOf('.'));
+                    }
+                }
                 var controller = this.getController(name);
                 if (controller) {
                     val = controller.getModelValue(paramName);
