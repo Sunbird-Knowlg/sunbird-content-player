@@ -77,7 +77,7 @@ function localStorage(contents) {
 					_.each(contents, function(content){
 						var dir = appConfig.STORY + "/" + content.code;
 
-						if(fs.existsSync(dir)) {
+						if(fs.existsSync(dir) && _.findWhere(localMap, {"identifier": content.identifier})) {
 							var localContent = _.findWhere(localMap, {"identifier": content.identifier});
 					  		if(content.localData.pkgVersion != localContent.localData.pkgVersion) {
 					  			downloadFromUrl(content).then(function(data){
