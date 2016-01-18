@@ -32,20 +32,22 @@ var DivPlugin = Plugin.extend({
         this.registerEvents(data.id);
     },
     registerEvents: function(id) {
-        
+        var instance = this;
+        $('#'+id).children().each(function () {
+            var data = $(this).data();
+            if (data && data.event) {
+                $(this).click(function(event) {
+                    event.preventDefault();
+                    instance._triggerEvent(data.event);
+                    console.info("Triggered event ",data.event);
+                });
+            }
+        });
     },
-    triggerEvent: function(event) {
-        console.log("DIV:triggerEvent::", event);
+    _triggerEvent: function(event) {
         var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
         event = new createjs.Event(event);
         plugin.dispatchEvent(event);
     }
 });
 PluginManager.registerPlugin('div', DivPlugin);
-
-function triggerEvent(event) {
-    console.log("GLOBAL:triggerEvent::", event);
-    var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
-    event = new createjs.Event(event);
-    plugin.dispatchEvent(event);
-}
