@@ -6,7 +6,6 @@ angular.module('quiz.services', ['ngResource'])
                     var service = ($window.cordova)? GenieService: PlatformService;
                     service.getContentList(filter)
                     .then(function(result) {
-                        console.log("result : ", result);
                         resolve(returnObject._filterContentList(result.list));
                     })
                     .catch(function(err) {
@@ -15,11 +14,6 @@ angular.module('quiz.services', ['ngResource'])
                     });
                 });
             },
-            // downloadContent: function(content) {
-            //     return new Promise(function(resolve, reject) {
-
-            //     });
-            // }
             getContent: function(id) {
                 return new Promise(function(resolve, reject) {
                     GenieService.getContent(id)
@@ -52,7 +46,6 @@ angular.module('quiz.services', ['ngResource'])
                 return data;
             },
             _filterContentList: function(list) {
-                console.log("list : ", list);
                 list = _.filter(list, function(item) {
                     return item.isAvailable && (item.mimeType == "application/vnd.ekstep.ecml-archive" || item.mimeType == "application/vnd.ekstep.html-archive");
                 });
