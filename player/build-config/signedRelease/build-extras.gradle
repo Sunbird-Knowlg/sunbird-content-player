@@ -7,13 +7,13 @@ ext {
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
-        maven { url  "http://${nexusIp}:8081/nexus/content/repositories/production" }
+        maven { url  "https://platform.ekstep.org/downloads/content/repositories/production" }
     }
 }
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
-    maven { url "http://${nexusIp}:8081/nexus/content/repositories/production" }
+    maven { url "https://platform.ekstep.org/downloads/content/repositories/production" }
 }
 
 android {
