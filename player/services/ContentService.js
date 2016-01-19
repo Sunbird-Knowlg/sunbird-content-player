@@ -3,7 +3,7 @@
  *
  * @author Jitendra Singh Sankhwar
  */
-var async = require('async'), mwService = require('../commons/MWServiceProvider'), util = require('../commons/Util'), _ = require('underscore'), fs = require('fs'), Download = require('download'), jsonfile = require('jsonfile'), mimeType = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"], downloading = false, isAvailableList = [], contentList = [], path = "local_storage/content-list.json";
+var restClient = require('../commons/RESTClientWrapper'), fs = require('fs'), Download = require('download'), jsonfile = require('jsonfile'), mimeType = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"], downloading = false, isAvailableList = [], contentList = [], path = "local_storage/content-list.json";
 
 exports.getContentList = function(cb, type, contentType) {
     var args = {
@@ -17,7 +17,7 @@ exports.getContentList = function(cb, type, contentType) {
     }
     if (!downloading) {
         downloading = true;
-        mwService.postCall("/taxonomy-service/v1/game/list", args, function(err, data) {
+        restClient.postCall("/taxonomy-service/v1/game/list", args, function(err, data) {
             if (err) {
                 cb(err);
             } else {
