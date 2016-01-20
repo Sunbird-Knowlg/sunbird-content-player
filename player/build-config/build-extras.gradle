@@ -7,13 +7,13 @@ ext {
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
-        maven { url  "http://${nexusIp}:8081/nexus/content/repositories/production" }
+        maven { url  "https://platform.ekstep.org/downloads/content/repositories/production" }
     }
 }
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
-    maven { url "http://${nexusIp}:8081/nexus/content/repositories/production" }
+    maven { url "https://platform.ekstep.org/downloads/content/repositories/production" }
 }
 
 android {
@@ -32,8 +32,8 @@ android {
 dependencies {
     compile "org.apache.commons:commons-compress:1.10"
     compile "commons-io:commons-io:2.4"
-    compile "org.ekstep.genieservices:sdks:1.0.+@aar"
-    compile "org.ekstep.genieservices:aidls:1.0.+@aar"
+    compile "org.ekstep.genieservices:sdks:1.0.229@aar"
+    compile "org.ekstep.genieservices:aidls:1.0.229@aar"
 }
 
 task updateBuildNumber() {
