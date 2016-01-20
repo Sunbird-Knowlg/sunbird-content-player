@@ -110,7 +110,8 @@ var Plugin = Class.extend({
 	            x: parseFloat(parentDims.w * (this._data.x || 0)/100),
 	            y: parseFloat(parentDims.h * (this._data.y || 0)/100),
 	            w: parseFloat(parentDims.w * (this._data.w || 0)/100),
-	            h: parseFloat(parentDims.h * (this._data.h || 0)/100)
+	            h: parseFloat(parentDims.h * (this._data.h || 0)/100),
+	            r: parseFloat(parentDims.w * (this._data.r || 0)/100)
 	        }
 		}
         return this._dimensions;
@@ -121,7 +122,8 @@ var Plugin = Class.extend({
             x: parseFloat(parentDims.w * (data.x || 0)/100),
             y: parseFloat(parentDims.h * (data.y || 0)/100),
             w: parseFloat(parentDims.w * (data.w || 0)/100),
-            h: parseFloat(parentDims.h * (data.h || 0)/100)
+            h: parseFloat(parentDims.h * (data.h || 0)/100),
+            r: parseFloat(parentDims.w * (data.r || 0)/100)
         }
         return relDimensions;
 	},

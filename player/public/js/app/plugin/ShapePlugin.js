@@ -39,13 +39,21 @@ var ShapePlugin = Plugin.extend({
                 }
                 break;
     		case 'circle':
-    			graphics.dc(0, 0, dims.w);
+    			graphics.dc(0, 0, dims.r || dims.w);
     			if(data.hitArea) {
 		    		var hit = new createjs.Shape();
 					hit.graphics.beginFill("#000").dc(0, 0, dims.w);
 					this._self.hitArea = hit;
 		    	}
     			break;
+            case 'ellipse':
+                graphics.de(0, 0, dims.w, dims.h);
+                if(data.hitArea) {
+                    var hit = new createjs.Shape();
+                    hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h);
+                    this._self.hitArea = hit;
+                }
+                break;
     		default:
     	}
         this._self.x = dims.x;
