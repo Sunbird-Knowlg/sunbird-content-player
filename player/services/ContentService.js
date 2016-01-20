@@ -1,9 +1,8 @@
 /**
  * Content Service - Invoke MW API's, transform data for UI and viceversa
- *
  * @author Jitendra Singh Sankhwar
  */
-var restClient = require('../commons/RESTClientWrapper'), fs = require('fs'), Download = require('download'), jsonfile = require('jsonfile'), mimeType = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"], downloading = false, isAvailableList = [], contentList = [], path = "local_storage/content-list.json";
+var async = require('async'), restClient = require('../commons/RESTClientWrapper'), _ = require('underscore'), fs = require('fs'), Download = require('download'), jsonfile = require('jsonfile'), mimeType = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"], downloading = false, isAvailableList = [], contentList = [], path = "local_storage/content-list.json";
 
 exports.getContentList = function(cb, type, contentType) {
     var args = {
@@ -36,10 +35,9 @@ exports.getContentList = function(cb, type, contentType) {
                     }
 
                 });
-                localStorage(contentList).then(function(content) {
-                    result.contents = content;
-                }).catch(function(err) {
-                    reject(err);
+                localStorage(contentList, function(err, data){
+                	if (err)
+                		console.log(err);
                 });
             }
         });
@@ -50,16 +48,21 @@ exports.getContentList = function(cb, type, contentType) {
     }
 }
 
-function localStorage(contents) {
+function localStorage(contents, cb) {
     var localMap = {};
-    return new Promise(function(resolve, reject) {
+    var asyncTask = [];
+
         jsonfile.readFile(path, function(err, localMap) {
             if (localMap == undefined) {
+            	var promises = [];
                 _.each(contents, function(content) {
-                    downloadHelper(content).then(function(data) {
-                        resolve(content);
-                    });
+					asyncTask.push(function(callback){
+						downloadHelper(content);
+					})
                 });
+               async.parallel(asyncTask, function(err, result){
+					cb(err, result);
+				});
             } else {
                 _.each(contents, function(content) {
                     var dir = appConfig.STORY + "/" + content.localData.code;
@@ -71,26 +74,27 @@ function localStorage(contents) {
                             "identifier": content.identifier
                         });
                         if (content.localData.pkgVersion != localContent.localData.pkgVersion) {
-                            downloadHelper(content).then(function(data) {
-                                resolve(content);
-                            });
+                            asyncTask.push(function(callback){
+								downloadHelper(content);
+							})
                         } else {
                             localContent.isAvailable = true;
                             isAvailableList.push(localContent);
                             contentList.push(localContent);
                             writeFile(contentList);
-                            resolve(localContent);
+                            cb(localContent);
                         }
                     } else {
-                        downloadHelper(content).then(function(data) {
-                            resolve(content);
-                        });
+                        asyncTask.push(function(callback){
+							downloadHelper(content);
+						})
                     }
                 });
+				async.parallel(asyncTask, function(err, result){
+					cb(err, result);
+				});
             }
         });
-
-    });
 }
 
 function writeFile(obj) {
