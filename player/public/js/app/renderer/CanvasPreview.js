@@ -5,8 +5,12 @@ CanvasPreview = {
     gdata: undefined,
     running: false,
     preview: false,
+    divIds: {
+        gameArea: 'gameArea',
+        canvas: 'gameCanvas'
+    },
     resizeGame: function(disableDraw) {
-        var gameArea = document.getElementById('gameArea');
+        var gameArea = document.getElementById(CanvasPreview.divIds.gameArea);
         var widthToHeight = 16 / 9;     
         var newWidth = 720;
         var newHeight = 450;
