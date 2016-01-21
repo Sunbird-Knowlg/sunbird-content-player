@@ -15,17 +15,17 @@ ControllerManager = {
 			return false;
 		}
 	},
-	get: function(type, id, baseDir) {
+	get: function(c, baseDir) {
 		var d,
 			controllerMap = ControllerManager.controllerMap;
-		if (type && id) {
-			if(!controllerMap[type]) {
-				ControllerManager.addError('No Controller found for - ' + type);
+		if (c.type && c.id) {
+			if(!controllerMap[c.type]) {
+				ControllerManager.addError('No Controller found for - ' + c.type);
 			} else {
-				var controllerId = type + '.' + id;
+				var controllerId = c.type + '.' + c.id;
 				d = ControllerManager.getControllerInstance(controllerId);
 				if (!d) {
-					d = new controllerMap[type](baseDir, type, id);
+					d = new controllerMap[c.type](c, baseDir);
 				}
 			}
 		}

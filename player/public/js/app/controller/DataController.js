@@ -1,6 +1,11 @@
 var DataController = Controller.extend({
-	initController: function(baseDir, type, id) {
-		DataGenerator.loadData(baseDir, type, id, this);
+	initController: function(dc, baseDir) {
+		if (dc.__cdata) {
+			var data = (_.isString(dc.__cdata))? JSON.parse(dc.__cdata): dc.__cdata;
+			this.onLoad(data);
+		} else {
+			DataGenerator.loadData(baseDir, dc.type, dc.id, this);
+		}
 	},
 	onLoad: function(data) {
 		if (data) {

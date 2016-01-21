@@ -81,7 +81,7 @@ var ThemePlugin = Plugin.extend({
         $('#gameAreaLoad').hide();
     },
     addController: function(p) {
-        var controller = ControllerManager.get(p.type, p.id, this.baseDir);
+        var controller = ControllerManager.get(p, this.baseDir);
         if (controller) {
             this._controllerMap[p.name] = controller;
         }
@@ -90,10 +90,10 @@ var ThemePlugin = Plugin.extend({
         if (stage.controller) {
             if (_.isArray(stage.controller)) {
                 stage.controller.forEach(function(p) {
-                    ControllerManager.get(p.type, p.id, this.baseDir);
+                    ControllerManager.get(p, this.baseDir);
                 });
             } else {
-                ControllerManager.get(stage.controller.type, stage.controller.id, this.baseDir);
+                ControllerManager.get(stage.controller, this.baseDir);
             }
         }
     },

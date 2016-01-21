@@ -6,11 +6,11 @@ var Controller = Class.extend({
 	_index: -1,
 	_loaded: false,
 	_error: false,
-	init: function(baseDir, type, id) {
-		this._id = type + '.' + id;
-        this.initController(baseDir, type, id);
+	init: function(c, baseDir) {
+		this._id = c.type + '.' + c.id;
+        this.initController(c, baseDir);
 	},
-	initController: function(baseDir, type, id) {
+	initController: function(c, baseDir) {
 		ControllerManager.addError('Subclasses of Controller should implement initController()');
 	},
     onLoad: function(data, model) {
@@ -22,7 +22,7 @@ var Controller = Class.extend({
     setIndex: function(idx) {
         if (this._loaded) {
             if (idx) {
-                this._index = idx;    
+                this._index = idx;
             }
             if (this._index < -1) {
                 this._index = -1;

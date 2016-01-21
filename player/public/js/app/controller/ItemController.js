@@ -1,6 +1,11 @@
 var ItemController = Controller.extend({
-    initController: function(baseDir, type, id) {
-    	ItemDataGenerator.loadData(baseDir, type, id, this);
+    initController: function(ic, baseDir) {
+        if (ic.__cdata) {
+            var data = (_.isString(ic.__cdata))? JSON.parse(ic.__cdata): ic.__cdata;
+            this.onLoad(data);
+        } else {
+            ItemDataGenerator.loadData(baseDir, ic.type, ic.id, this);
+        }
 	},
 	onLoad: function(data, model) {
 		if (_.isObject(data) && _.isArray(model)) {
