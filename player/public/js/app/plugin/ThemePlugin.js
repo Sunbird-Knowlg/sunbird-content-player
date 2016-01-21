@@ -223,7 +223,9 @@ var ThemePlugin = Plugin.extend({
             document.getElementById(inputId).style.display = 'block';
         })
     },
+    getTransitionEffectEvent_: WTF.trace.events.createScope('ThemePlugin#getTransitionEffect(any a)'),
     getTransitionEffect: function(animation) {
+        var wtfScope = this.getTransitionEffectEvent_(animation);
         var d = this.getDirection(animation.direction),
             e = this.getEase(animation.ease),
             t = animation.duration;
@@ -257,6 +259,7 @@ var ThemePlugin = Plugin.extend({
             default:
                 effect = new creatine.transitions.MoveOut(d, e, t);
         }
+        WTF.trace.leaveScope(wtfScope);
         return effect;
     },
     getDirection: function(d) {

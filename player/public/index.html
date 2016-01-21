@@ -14,7 +14,8 @@
 
     <link rel="stylesheet" type="text/css" href="css/thirdparty/bookshelf_slider.css" />
     <link rel="stylesheet" type="text/css" href="css/thirdparty/skin02.css" />
-
+    <script type="text/javascript" src="js/thirdparty/wtf/wtf_trace_web_js_compiled.js"></script>
+    <script type="text/javascript" src="js/thirdparty/wtf/wtf-trace.js"></script>
     <script type="text/javascript" src="js/thirdparty/jquery.min.js"></script>
     <script type="text/javascript" src="js/thirdparty/jquery.easing.1.3.js"></script>
     <script type="text/javascript" src="js/thirdparty/jquery.bookshelfslider.min.js"></script>
@@ -123,6 +124,18 @@
             text-align: center;
         }
     </style>
+    <script>
+        var options = {
+          'wtf.trace.target': 'file://test',
+          'wtf.trace.provider.webgl': true,
+          'wtf.trace.provider.webgl.recordAtStartup': false,
+          'wtf.trace.provider.webgl.replayable': true,
+          'wtf.trace.provider.webgl.embedRemoteImages': false
+        };
+        wtf.trace.prepare(options);
+        wtf.hud.prepare();
+        wtf.trace.start();
+    </script>
   </head>
   <body>
     <ion-nav-view></ion-nav-view>

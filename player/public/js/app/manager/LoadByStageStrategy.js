@@ -149,7 +149,9 @@ LoadByStageStrategy = Class.extend({
         }
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);
     },
+    loadStageEvent_ : WTF.trace.events.createScope('LoadByStageStrategy#loadStage(ascii a)'),
     loadStage: function(stageId, cb) {
+        var wtfScope = this.loadStageEvent_(stageId);
         var instance = this;
         if (!instance.loaders[stageId]) {
             var manifest = JSON.parse(JSON.stringify(instance.stageManifests[stageId]));
@@ -161,6 +163,10 @@ LoadByStageStrategy = Class.extend({
                 }
                 loader.on('error', function(evt) {
                     console.error('Asset preload error', evt);
+                    WTF.trace.leaveScope(wtfScope);
+                });
+                loader.on("complete", function(evt) {
+                    WTF.trace.leaveScope(wtfScope);
                 });
                 loader.installPlugin(createjs.Sound);
                 loader.loadManifest(manifest, true);

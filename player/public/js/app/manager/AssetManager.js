@@ -2,12 +2,16 @@ AssetManager = {
     strategy: undefined,
     stageAudios: {},
     init: function(themeData, basePath) {
+        var wtfScope = WTF.trace.enterScope('AssetManager.init');
         AssetManager.strategy = new LoadByStageStrategy(themeData, basePath);
+        WTF.trace.leaveScope(wtfScope);
     },
     getAsset: function(stageId, assetId) {
         return AssetManager.strategy.getAsset(stageId, assetId);
     },
+    initStageEvent_: WTF.trace.events.createScope('AssetManager#initStage(ascii stageId, ascii nextStageId, ascii prevStageId)'),
     initStage: function(stageId, nextStageId, prevStageId, cb) {
+        var wtfScope = this.initStageEvent_(stageId, nextStageId, prevStageId);
         if (nextStageId) {
             AssetManager.stopStageAudio(nextStageId);
         }
@@ -15,6 +19,7 @@ AssetManager = {
             AssetManager.stopStageAudio(prevStageId);
         }
         AssetManager.strategy.initStage(stageId, nextStageId, prevStageId, cb);
+        WTF.trace.leaveScope(wtfScope);
     },
     destroy: function() {
         AssetManager.strategy.destroy();

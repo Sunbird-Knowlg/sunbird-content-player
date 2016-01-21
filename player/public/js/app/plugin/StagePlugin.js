@@ -8,6 +8,7 @@ var StagePlugin = Plugin.extend({
     _templateVars: {},
     _controllerMap: {},
     _inputs: [],
+    invokeChildrenEvent_: WTF.trace.events.createScope('StagePlugin#invokeChildren(any data)'),
     initPlugin: function(data) {
         this._inputs = [];
         var instance = this;
@@ -48,7 +49,9 @@ var StagePlugin = Plugin.extend({
                 }
             }
         }
+        var wtfScope = this.invokeChildrenEvent_(data);
         this.invokeChildren(data, this, this, this._theme);
+        WTF.trace.leaveScope(wtfScope);
     },
     setParamValue: function(p) {
         if (p.value) {
