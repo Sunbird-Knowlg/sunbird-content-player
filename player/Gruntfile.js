@@ -12,6 +12,9 @@ module.exports = function(grunt) {
             js: {
                 files: {
                     'public/js/app/quizapp-0.3.min.js': [
+                        'public/js/thirdparty/wtf/wtf_trace_web_js_compiled.js',
+                        'public/js/thirdparty/wtf/wtf-trace.js',
+                        'public/js/app/GlobalContext.js',
                         'public/js/app/GlobalContext.js',
                         'public/js/app/AppConfig.js',
                         'public/js/app/ApMessages.js',
