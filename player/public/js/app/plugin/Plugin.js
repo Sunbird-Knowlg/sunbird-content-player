@@ -11,6 +11,7 @@ var Plugin = Class.extend({
 	_id: undefined,
 	events: [],
 	appEvents: [],
+	renderEvent_: WTF.trace.events.createScope('Plugin#render(ascii id)'),
 	init: function(data, parent, stage, theme) {
 		this.events = [];
 		this.appEvents = [];
@@ -69,7 +70,9 @@ var Plugin = Class.extend({
 			if(this._isContainer && this._type == 'stage') {
 				this.cache();
 			}
+			var renderWTFScope = this.renderEvent_(this._id);
 			this.render();
+			WTF.trace.leaveScope(renderWTFScope);
 		}
 	},
 	cache: function() {

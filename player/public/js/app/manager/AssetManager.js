@@ -1,8 +1,9 @@
 AssetManager = {
     strategy: undefined,
     stageAudios: {},
+    initEvent_: WTF.trace.events.createScope('AssetManager#initialize(ascii basePath)'),
     init: function(themeData, basePath) {
-        var wtfScope = WTF.trace.enterScope('AssetManager.init');
+        var wtfScope = this.initEvent_(basePath);
         AssetManager.strategy = new LoadByStageStrategy(themeData, basePath);
         WTF.trace.leaveScope(wtfScope);
     },
