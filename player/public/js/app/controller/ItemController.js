@@ -75,7 +75,7 @@ var ItemController = Controller.extend({
                 item.score = result.score;
             }
             try {
-                var assessEnd = TelemetryService.assess((_.isString(item.qid) && !_.isEmpty(item.qid.trim()))  ? item.qid : item.identifier);
+                var assessEnd = TelemetryService.assess((_.isString(item.qid) && !_.isEmpty(item.qid.trim()))  ? item.qid : item.identifier, this._data.subject, item.qlevel);
                 if (_.isArray(item.concepts)) {
                     assessEnd.mc(_.pluck(item.concepts, 'identifier'));
                 }

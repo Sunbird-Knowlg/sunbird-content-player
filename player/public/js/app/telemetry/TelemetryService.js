@@ -68,7 +68,12 @@ TelemetryService = {
             if(eventObj) {
                 return eventObj;
             } else {
-                return new AssessEvent(qid, subj, qlevel);
+                if(qid && subj && qlevel) {
+                    return new AssessEvent(qid, subj, qlevel);
+                } else {
+                    console.error("qid, subject, qlevel is required to create assess event.");
+                    return new InActiveEvent();
+                }
             }
         } else {
             return new InActiveEvent();
