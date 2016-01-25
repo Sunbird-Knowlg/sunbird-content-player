@@ -54,7 +54,7 @@ var TestcasePlugin = Plugin.extend({
         this._header.g.x = data.x;
         this._header.g.y = data.y;
         this._header.g.w = data.w;
-        this._header.g.h = data.h / 10;
+        this._header.g.h = this._getHeaderHeight(data.h);
         this._header.g.text[0].id += uniqueId;
         this._header.g.text[1].id += uniqueId;
         if (data.stroke) this._header.g.shape.fill = data.stroke;
@@ -74,6 +74,9 @@ var TestcasePlugin = Plugin.extend({
                 TelemetryService.assess(instance._id, "TESTCASE", "MEDIUM").start().end(pass);
             });
         }
+    },
+    _getHeaderHeight: function(h) {
+        return h / 10;   
     }
 });
 PluginManager.registerPlugin('testcase', TestcasePlugin);
