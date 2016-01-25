@@ -243,7 +243,7 @@ var Plugin = Class.extend({
     	return visibleShadow;
     },
     drawBorder: function(data, dims) {
-    	if (data.stroke) {
+    	if (data.stroke && !(this._self instanceof createjs.Shape)) {
 			var strokeWidth = (data['stroke-width'] || 1);
 			var border = new createjs.Shape();
 			var graphics = border.graphics;
