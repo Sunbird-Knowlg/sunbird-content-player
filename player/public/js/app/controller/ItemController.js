@@ -1,6 +1,11 @@
 var ItemController = Controller.extend({
-    initController: function(baseDir, type, id) {
-    	ItemDataGenerator.loadData(baseDir, type, id, this);
+    initController: function(ic, baseDir) {
+        if (ic.__cdata) {
+            var data = (_.isString(ic.__cdata))? JSON.parse(ic.__cdata): ic.__cdata;
+            this.onLoad(data);
+        } else {
+            ItemDataGenerator.loadData(baseDir, ic.type, ic.id, this);
+        }
 	},
 	onLoad: function(data, model) {
 		if (_.isObject(data) && _.isArray(model)) {
@@ -70,7 +75,7 @@ var ItemController = Controller.extend({
                 item.score = result.score;
             }
             try {
-                var assessEnd = TelemetryService.assess((_.isString(item.qid) && !_.isEmpty(item.qid.trim()))  ? item.qid : item.identifier);
+                var assessEnd = TelemetryService.assess((_.isString(item.qid) && !_.isEmpty(item.qid.trim()))  ? item.qid : item.identifier, this._data.subject, item.qlevel);
                 if (_.isArray(item.concepts)) {
                     assessEnd.mc(_.pluck(item.concepts, 'identifier'));
                 }

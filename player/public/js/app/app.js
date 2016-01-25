@@ -104,7 +104,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                     flavor = "sandbox";
                 GlobalContext.config.flavor = flavor;
                 if (_.isString(AppConfig[flavor]) && (AppConfig[flavor]).length > 0) {
-                    PlatformService.setAPIEndpoint(AppConfig[flavor]);
+                    // PlatformService.setAPIEndpoint(AppConfig[flavor]);
                 }
             });
 
@@ -289,6 +289,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         if ($stateParams.itemId) {
             console.log("$rootScope.stories:", $rootScope.stories);
             $scope.item = _.findWhere($rootScope.stories, {identifier: $stateParams.itemId});
+            console.log($scope.item);
             if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                 HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier, $scope);
             } else {
@@ -307,6 +308,22 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 }
                 initBookshelf();
             }, 100);
+        })
+        $rootScope.showMessage = false;
+        $rootScope.$on('show-message', function(event, data) {
+            if (data.message && data.message != '') {
+                $rootScope.$apply(function() {
+                    $rootScope.showMessage = true;
+                    $rootScope.message = data.message;
+                });
+            }
+            if (data) {
+                setTimeout(function() {
+                    $rootScope.$apply(function() {
+                        $rootScope.showMessage = false;
+                    });
+                }, 5000);
+            }
         });
     }).controller('ContentHomeCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         $rootScope.showMessage = false;

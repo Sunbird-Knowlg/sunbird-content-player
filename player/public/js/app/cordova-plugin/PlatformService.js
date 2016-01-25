@@ -1,8 +1,9 @@
 PlatformService = {
-	getContent: function(contentType) {
-        return new Promise(function(resolve, reject) {
+	getContent: function(id, url) {
+		return new Promise(function(resolve, reject) {
 			resolve();
 		});
+  
 	},
 	setAPIEndpoint: function(endpoint) {
 		return endpoint;
@@ -19,7 +20,6 @@ PlatformService = {
 				}
 	        })
 	        .fail(function(err){
-	        	console.err("Error:", err);
 	        	reject(err);
 	        });
 		});

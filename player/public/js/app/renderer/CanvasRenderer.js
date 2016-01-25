@@ -4,6 +4,7 @@ Renderer = {
     update: true,
     gdata: undefined,
     running: false,
+    preview: false,
     divIds: {
         gameArea: 'gameArea',
         canvas: 'gameCanvas'
@@ -29,24 +30,27 @@ Renderer = {
         Renderer.theme.updateCanvas(newWidth, newHeight);
         if(!disableDraw) Renderer.theme.reRender();
     },
-    start: function(gameRelPath, canvasId, game) {
+    start: function(gameRelPath, canvasId, game, data, preview) {
         if(Renderer.running) {
             Renderer.cleanUp();
         }
         Renderer.running = true;
+        Renderer.preview = preview || false;
         (game && game.identifier && game.pkgVersion) ? TelemetryService.start(game.identifier, game.pkgVersion): TelemetryService.start();
-        Renderer.initByXML(gameRelPath, canvasId);
-        // TODO: integrate it properly.
-        if (typeof RecorderService != "undefined") {
-            RecorderService.initLesson(gameRelPath + "/lesson.metadata")
-            .then(function(res) {
-                console.info("Init lesson successful.", res);
-            })
-            .catch(function(err) {
-                console.error("Error while init lesson:", err);
-            });
+        if (data) {
+            Renderer.init(data, canvasId, gameRelPath);
+        } else {
+            Renderer.initByXML(gameRelPath, canvasId);
+            if (typeof RecorderService != "undefined") {
+                RecorderService.initLesson(gameRelPath + "/lesson.metadata")
+                .then(function(res) {
+                    console.info("Init lesson successful.", res);
+                })
+                .catch(function(err) {
+                    console.error("Error while init lesson:", err);
+                });
+            }
         }
-
     },
     initByJSON: function(gameRelPath, canvasId) {
         $.get(gameRelPath + '/index.json', function(data) {

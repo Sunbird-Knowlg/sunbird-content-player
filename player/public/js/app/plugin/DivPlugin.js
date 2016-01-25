@@ -1,23 +1,23 @@
 var DivPlugin = Plugin.extend({
-	_type: 'div',
+    _type: 'div',
     _isContainer: false,
     _render: true,
     _div: undefined,
     initPlugin: function(data) {
-    	this._input = undefined;
-		var dims = this.relativeDims();
-		var div = document.getElementById(data.id);
-		if(div) {
-			$("#" + data.id).remove();
-		}
-		div = document.createElement('div');
-        if(data.style)
+        this._input = undefined;
+        var dims = this.relativeDims();
+        var div = document.getElementById(data.id);
+        if (div) {
+            $("#" + data.id).remove();
+        }
+        div = document.createElement('div');
+        if (data.style)
             div.setAttribute("style", data.style);
         div.id = data.id;
         div.style.width = dims.w + 'px';
         div.style.height = dims.h + 'px';
         div.style.position = 'absolute';
-        
+
         var instance = this;
         var parentDiv = document.getElementById(Renderer.divIds.gameArea);
         parentDiv.insertBefore(div, parentDiv.childNodes[0]);
@@ -29,6 +29,25 @@ var DivPlugin = Plugin.extend({
         this._self = new createjs.DOMElement(div);
         this._self.x = dims.x;
         this._self.y = dims.y;
+        this.registerEvents(data.id);
+    },
+    registerEvents: function(id) {
+        var instance = this;
+        $('#'+id).children().each(function () {
+            var data = $(this).data();
+            if (data && data.event) {
+                $(this).click(function(event) {
+                    event.preventDefault();
+                    instance._triggerEvent(data.event);
+                    console.info("Triggered event ",data.event);
+                });
+            }
+        });
+    },
+    _triggerEvent: function(event) {
+        var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
+        event = new createjs.Event(event);
+        plugin.dispatchEvent(event);
     }
 });
 PluginManager.registerPlugin('div', DivPlugin);
