@@ -262,7 +262,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        './custom-plugins/RecorderService/'
+                        './custom-plugins/cordova-plugin-sensibol/'
                     ]
                 }
             },
@@ -271,7 +271,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'rm',
                     plugins: [
-                        'org.ekstep.recorder.service.plugin'
+                        'cordova-plugin-sensibol'
                     ]
                 }
             },

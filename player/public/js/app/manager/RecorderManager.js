@@ -17,7 +17,7 @@ RecorderManager = {
 	},
 	getRecorder: function() {
 		if (RecorderManager.recorder == "sensibol") {
-			return RecorderService;
+			return sensibol.media;
 		} else {
 			return AndroidRecorderService;
 		}
