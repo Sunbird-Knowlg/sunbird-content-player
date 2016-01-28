@@ -7,3 +7,4 @@ public/worksheets/
 .idea
 public/js/app/quizapp-0.3.min.js
 public/js/app/telemetry-lib-0.3.min.js
+public/js/app/speech.js

@@ -23,15 +23,16 @@ import com.sensibol.ekstep.speechengine.sdk.SEException;
 import com.sensibol.ekstep.speechengine.sdk.SpeechEngine;
 import com.sensibol.ekstep.speechengine.sdk.SpeechEngineFactory;
 
-public class SensibolMedia extends CordovaPlugin {
+public class SensibolPlugin extends CordovaPlugin {
 
-    public static final String TAG = "SensibolMedia";
+    public static final String TAG = "SensibolPlugin";
+    // TODO: Can't have "Genie" in the path -> ideally, local app path
     private static final String WORK_DIR_PATH = "/storage/emulated/0/Genie/SdkWorkDir";
     private SpeechEngine speechEngine;
     private boolean initialized = false;
 
-    public SensibolMedia() {
-        System.out.println("SensibolMedia Constructor..........");
+    public SensibolPlugin() {
+        System.out.println("SensibolPlugin Constructor..........");
     }
 
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -52,7 +53,7 @@ public class SensibolMedia extends CordovaPlugin {
 
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         CordovaActivity activity = (CordovaActivity) this.cordova.getActivity();
-        System.out.println("SensibolMedia action: " + action);
+        System.out.println("SensibolPlugin action: " + action);
         if( initialized == false) {
             callbackContext.error(getErrorJSONObject("INIT_FAILED", null));
             return false;

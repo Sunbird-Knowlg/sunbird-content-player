@@ -92,7 +92,7 @@ speech = {
 			var plugin = PluginManager.getPluginObject(action.asset);
 			var stagePlugin = plugin._stage || plugin;
 			var lineindex = stagePlugin.evaluateExpr(action.dataAttributes.lineindex);
-			speech.getRecorder().compare(speech.mediaInstance.filePath, lineindex)
+			speech.getRecorder().process(speech.mediaInstance.filePath, lineindex)
 			.then(function(processResponse) {
 				if (processResponse.status == "success") {
 					if (processResponse.result) {

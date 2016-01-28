@@ -41,8 +41,8 @@ Renderer = {
             Renderer.init(data, canvasId, gameRelPath);
         } else {
             Renderer.initByXML(gameRelPath, canvasId);
-            if (typeof RecorderService != "undefined") {
-                RecorderService.initLesson(gameRelPath + "/lesson.metadata")
+            if (typeof sensibol != "undefined") {
+                sensibol.recorder.init(gameRelPath + "/lesson.metadata")
                 .then(function(res) {
                     console.info("Init lesson successful.", res);
                 })

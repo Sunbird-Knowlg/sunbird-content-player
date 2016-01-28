@@ -41,29 +41,9 @@ android.recorder = {
 			resolve(result);
 		});
 	},
-	compare: function(path, lineIndex) {
+	process: function(path, lineIndex) {
 		return new Promise(function(resolve, reject) {
 			resolve({status: "success", result: {totalScore: 1}, errMessage: "Process recording for android is not integrated."});
-		});
-	},
-	_invokeMethod: function(method, errMsg) {
-		return new Promise(function(resolve, reject) {
-			var result = {status: "success"};
-			if (typeof Media != "undefined") {
-				var media = new Media(path,
-			        function() {
-			            console.info("Audio recording successfull.");
-			        },
-			        function(err) {
-			            console.error("Error Audio recording: "+ err.code);
-			        }
-			    );
-			    media.startRecord();
-			    instance.media = media;
-			} else {
-				result = {status: "success", errMessage: errMsg};
-			}
-			resolve({});
 		});
 	}
 };

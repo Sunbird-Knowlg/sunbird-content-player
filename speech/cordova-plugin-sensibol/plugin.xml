@@ -17,13 +17,13 @@
 
     <!-- android -->
     <platform name="android">
-        <framework src="src/android/recorderService.gradle" custom="true" type="gradleReference" />
+        <framework src="sensibol.gradle" custom="true" type="gradleReference" />
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="SensibolMedia" >
-                <param name="android-package" value="SensibolMedia"/>
+            <feature name="SensibolPlugin" >
+                <param name="android-package" value="SensibolPlugin"/>
             </feature>
         </config-file>
-        <source-file src="src/android/SensibolMedia.java" target-dir="src/" />
+        <source-file src="src/android/SensibolPlugin.java" target-dir="src/" />
         <resource-file src="libs/sensibol-ekstep-speechengine-v.1.0.15.jar" target="libs/sensibol-ekstep-speechengine-v.1.0.15.jar" />
         <resource-file src="libs/armeabi-v7a/libsensibol-ekstep-speechengine.so" target="libs/armeabi-v7a/libsensibol-ekstep-speechengine.so" />
     </platform>

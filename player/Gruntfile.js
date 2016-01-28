@@ -206,6 +206,13 @@ module.exports = function(grunt) {
                     platforms: ['android']
                 }
             },
+            update_platforms: {
+                options: {
+                    command: 'platform',
+                    action: 'update',
+                    platforms: ['android@5.0.0']
+                }  
+            },
             add_plugins: {
                 options: {
                     command: 'plugin',
@@ -270,7 +277,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        './custom-plugins/cordova-plugin-sensibol/'
+                        '../speech/cordova-plugin-sensibol/'
                     ]
                 }
             },
@@ -375,15 +382,10 @@ module.exports = function(grunt) {
 
     grunt.registerTask('set-platforms', function() {
         if (grunt.file.exists('platforms/android')) {
-            grunt.task.run(['cordovacli:rm_platforms', 'cordovacli:add_platforms']);
+            grunt.task.run(['cordovacli:rm_platforms', 'cordovacli:add_platforms', 'cordovacli:update_platforms']);
         } else {
-            grunt.task.run(['cordovacli:add_platforms']);
+            grunt.task.run(['cordovacli:add_platforms', 'cordovacli:update_platforms']);
         }
-    });
-
-    grunt.registerTask('add-recorder', function() {
-        if (recorder == "sensibol") grunt.task.run(['cordovacli:add_sensibol_recorder']);
-        grunt.task.run(['replace:'+recorder]);
     });
 
     grunt.registerTask('rm-cordova-plugin-sensibol', function() {
@@ -400,9 +402,10 @@ module.exports = function(grunt) {
     });
     grunt.registerTask('add-speech', function() {
         var tasks = ['add-cordova-plugin-media'];
-        if (recorder == "sensibol") 
+        if (recorder == "sensibol")
             tasks.push('add-cordova-plugin-sensibol');
         tasks.push('uglify:speech');
+        tasks.push('replace:'+recorder);
         grunt.task.run(tasks);
     });
 
@@ -419,18 +422,18 @@ module.exports = function(grunt) {
     grunt.registerTask('build-samples', ['compress:story', 'compress:worksheet', 'aws_s3:uploadSamples']);
     grunt.registerTask('add_custom_plugins', ['cordovacli:add_custom_plugins']);
     grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'cordovacli:add_custom_plugins']);
-    grunt.registerTask('build-unsigned-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-recorder', 'cordovacli:build_android_release', 'clean:minjs']);
-    grunt.registerTask('build-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-recorder', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('build-unsigned-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-recorder', 'cordovacli:build_android_release', 'clean:minjs']);
-    grunt.registerTask('build-signed-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-recorder', 'cordovacli:build_android_release', 'clean:minjs']);
-    grunt.registerTask('build-apk-quick', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'add-recorder', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('install-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-recorder', 'cordovacli:run_android', 'clean:minjs']);
-    grunt.registerTask('install-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-recorder', 'cordovacli:run_android', 'clean:minjs']);
-    grunt.registerTask('install-apk-quick', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'add-recorder', 'cordovacli:run_android', 'clean:minjs']);
+    grunt.registerTask('build-unsigned-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
+    grunt.registerTask('build-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-unsigned-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
+    grunt.registerTask('build-signed-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
+    grunt.registerTask('build-apk-quick', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('install-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'cordovacli:run_android', 'clean:minjs']);
+    grunt.registerTask('install-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:run_android', 'clean:minjs']);
+    grunt.registerTask('install-apk-quick', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'add-speech', 'cordovacli:run_android', 'clean:minjs']);
 
 
-    grunt.registerTask('build-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-recorder', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('build-signed-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-recorder', 'cordovacli:build_android_release', 'clean:minjs']);
+    grunt.registerTask('build-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-signed-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
 
     grunt.registerTask('init-setup', ['mkdir:all', 'copy:main', 'set-platforms', 'cordovacli:add_custom_plugins']);
 

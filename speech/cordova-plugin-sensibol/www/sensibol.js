@@ -18,11 +18,11 @@ sensibol.prototype.handleAction = function(actionName, args) {
             function(error) {
                 reject(error);
             },
-            "sensibol", actionName, args);
+            "SensibolPlugin", actionName, args);
     });
 }
 
-sensibol.prototype.initLesson = function(lessonMetadataFile) {
+sensibol.prototype.init = function(lessonMetadataFile) {
     lessonMetadataFile = lessonMetadataFile.replace("file://", "");
     return this.handleAction("initLesson", [lessonMetadataFile]);
 }
@@ -36,7 +36,7 @@ sensibol.prototype.stop = function() {
     return this.handleAction("stopRecording", []);
 }
 
-sensibol.prototype.compare = function(recordingFile, lineNumber) {
+sensibol.prototype.process = function(recordingFile, lineNumber) {
     recordingFile = recordingFile.replace("file://", "");
     return this.handleAction("processRecording", [recordingFile, lineNumber]);
 }
