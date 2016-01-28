@@ -1,7 +1,8 @@
-AndroidRecorderService = {
-	startRecording: function(path) {
+var android =  (android)? android : {};
+android.recorder = {
+	start: function(path) {
 		return new Promise(function(resolve, reject) {
-			var instance = {};
+			var result = {};
 			if (typeof Media != "undefined") {
 				var media = new Media(path,
 			        function() {
@@ -12,17 +13,17 @@ AndroidRecorderService = {
 			        }
 			    );
 			    media.startRecord();
-			    instance.media = media;
-			    instance.status = "success";
+			    result.media = media;
+			    result.status = "success";
 			} else {
-				instance.status = "success";
-				instance.errMessage = "Media is not available.";
+				result.status = "success";
+				result.errMessage = "Media is not available.";
 				console.info("AndroidRecorder.startRecording called.");
 			}
-			resolve(instance);
+			resolve(result);
 		});
 	},
-	stopRecording: function(instance) {
+	stop: function(instance) {
 		return new Promise(function(resolve, reject) {
 			var result = {};
 			if (typeof Media != "undefined") {
@@ -40,9 +41,29 @@ AndroidRecorderService = {
 			resolve(result);
 		});
 	},
-	processRecording: function(path, lineIndex) {
+	compare: function(path, lineIndex) {
 		return new Promise(function(resolve, reject) {
 			resolve({status: "success", result: {totalScore: 1}, errMessage: "Process recording for android is not integrated."});
+		});
+	},
+	_invokeMethod: function(method, errMsg) {
+		return new Promise(function(resolve, reject) {
+			var result = {status: "success"};
+			if (typeof Media != "undefined") {
+				var media = new Media(path,
+			        function() {
+			            console.info("Audio recording successfull.");
+			        },
+			        function(err) {
+			            console.error("Error Audio recording: "+ err.code);
+			        }
+			    );
+			    media.startRecord();
+			    instance.media = media;
+			} else {
+				result = {status: "success", errMessage: errMsg};
+			}
+			resolve({});
 		});
 	}
 };

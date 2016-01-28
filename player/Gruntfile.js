@@ -20,6 +20,7 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
                         'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
                         'public/js/thirdparty/exclude/Class.js',
+                        'public/js/app/speech.js',
                         'public/js/app/controller/Controller.js',
                         'public/js/app/plugin/Plugin.js',
                         'public/js/app/manager/*.js',
@@ -29,7 +30,6 @@ module.exports = function(grunt) {
                         'public/js/app/plugin/ShapePlugin.js',
                         'public/js/app/plugin/*Plugin.js',
                         'public/js/app/renderer/*.js',
-                        'public/js/app/cordova-plugin/AndroidRecorderService.js',
                         'public/js/app/service/*.js'
                     ],
                     'public/js/app/telemetry-lib-0.3.min.js': [
@@ -38,6 +38,14 @@ module.exports = function(grunt) {
                         'public/js/app/telemetry/TelemetryEvent.js',
                         'public/js/app/telemetry/*.js'
                     ]
+                }
+            },
+            speech: {
+                options: {
+                    beautify: true
+                },
+                files:{
+                    'public/js/app/speech.js': ['../speech/js/speech.js', '../speech/js/android-recorder.js']
                 }
             }
         },
@@ -275,6 +283,20 @@ module.exports = function(grunt) {
                     ]
                 }
             },
+            add_android_media: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: ['cordova-plugin-media']
+                }
+            },
+            rm_android_media: {
+                options: {
+                    command: 'plugin',
+                    action: 'rm',
+                    plugins: ['cordova-plugin-media']
+                }
+            },
             rm_platform_service: {
                 options: {
                     command: 'plugin',
@@ -362,6 +384,26 @@ module.exports = function(grunt) {
     grunt.registerTask('add-recorder', function() {
         if (recorder == "sensibol") grunt.task.run(['cordovacli:add_sensibol_recorder']);
         grunt.task.run(['replace:'+recorder]);
+    });
+
+    grunt.registerTask('rm-cordova-plugin-sensibol', function() {
+        if (grunt.file.exists('plugins/cordova-plugin-sensibol')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
+    });
+    grunt.registerTask('add-cordova-plugin-sensibol', function() {
+        grunt.task.run(['rm-cordova-plugin-sensibol', 'cordovacli:add_sensibol_recorder']);
+    });
+    grunt.registerTask('rm-cordova-plugin-media', function() {
+        if (grunt.file.exists('plugins/cordova-plugin-media')) grunt.task.run(['cordovacli:rm_android_media']);
+    });
+    grunt.registerTask('add-cordova-plugin-media', function() {
+        grunt.task.run(['rm-cordova-plugin-media', 'cordovacli:add_android_media']);
+    });
+    grunt.registerTask('add-speech', function() {
+        var tasks = ['add-cordova-plugin-media'];
+        if (recorder == "sensibol") 
+            tasks.push('add-cordova-plugin-sensibol');
+        tasks.push('uglify:speech');
+        grunt.task.run(tasks);
     });
 
     grunt.registerTask('rm_custom_plugins', function() {

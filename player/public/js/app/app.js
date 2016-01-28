@@ -5,25 +5,18 @@
 // the 2nd parameter is an array of 'requires'
 var packageName = "org.ekstep.quiz.app";
 var version = AppConfig.version;
-var currentContentVersion = "0.3";
 var packageNameDelhi = "org.ekstep.delhi.curriculum";
 var geniePackageName = "org.ekstep.android.genie";
 
 function backbuttonPressed() {
-    if (Renderer.running || HTMLRenderer.running) {
-        var ext = {
-            type: 'EXIT_CONTENT',
-            stageId: Renderer.theme._currentStage
-        }
-        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
-        initBookshelf();
-    } else {
-        var ext = {
-            type: 'EXIT_APP'
-        }
-        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
-        exitApp();
-    }
+    var ext = (Renderer.running || HTMLRenderer.running) ? {
+        type: 'EXIT_CONTENT',
+        stageId: Renderer.theme._currentStage
+    } : {
+        type: 'EXIT_APP'
+    };
+    TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
+    (Renderer.running || HTMLRenderer.running) ? initBookshelf(): exitApp();
 }
 
 function exitApp() {
@@ -114,7 +107,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                         if (GlobalContext.config.appInfo &&
                             GlobalContext.config.appInfo.code &&
                             GlobalContext.config.appInfo.code != packageName
-                                && (typeof GlobalContext.config.appInfo.filter == 'undefined')) { // && GlobalContext.config.appInfo.code != packageNameDelhi
+                                && (typeof GlobalContext.config.appInfo.filter == 'undefined')) {
                             TelemetryService.start();
                             $state.go('showContent', {});
                         } else {
