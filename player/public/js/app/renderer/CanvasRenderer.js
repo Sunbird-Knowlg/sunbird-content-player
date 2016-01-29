@@ -40,7 +40,7 @@ Renderer = {
         if (data) {
             Renderer.init(data, canvasId, gameRelPath);
         } else {
-            Renderer.initByXML(gameRelPath, canvasId);
+            Renderer.initByJSON(gameRelPath, canvasId);
             if (typeof RecorderService != "undefined") {
                 RecorderService.initLesson(gameRelPath + "/lesson.metadata")
                 .then(function(res) {
