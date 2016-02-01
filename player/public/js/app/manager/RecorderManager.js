@@ -33,24 +33,13 @@ RecorderManager = {
 		var stagePlugin = plugin._stage || plugin;
 		var stageId = stagePlugin._id;
 		var path = RecorderManager._getFilePath(stageId);
-		RecorderManager.recording = false;
-		RecorderManager.getRecorder().start(path)
-		.then(function(mediaInstance) {
-			RecorderManager.mediaInstance = mediaInstance;
-			if (RecorderManager.mediaInstance && RecorderManager.mediaInstance.status == "success") { // not undefined means recording started.
-				RecorderManager.recording = true;
-				RecorderManager.mediaInstance.filePath = path;
-				if (action.success) {
-					stagePlugin.dispatchEvent(action.success);
-				}
-			} else {
-				if (action.failure) {
-					stagePlugin.dispatchEvent(action.failure);
-				}
+
+		speech.startRecording(path, function(response) {
+			if ("success" == response.status && action.success) {
+				stagePlugin.dispatchEvent(action.success);
+			} else if("error" == response.status && action.failure) {
+				stagePlugin.dispatchEvent(action.failure);
 			}
-		})
-		.catch(function(err) {
-			console.error("Error start recording audio:", err);
 		});
 	},
 	/*
@@ -58,77 +47,45 @@ RecorderManager = {
 	* 	Dispatch success OR failure events.
 	*/
 	stopRecording: function(action) {
-		if (RecorderManager.recording) {
-			var plugin = PluginManager.getPluginObject(action.asset);
-			var stagePlugin = plugin._stage || plugin;
-			var stageId = stagePlugin._id;
-			RecorderManager.getRecorder().stop(RecorderManager.mediaInstance)
-			.then(function(response) {
-				if (response.status == "success") {
-					RecorderManager.recording = false;
-					console.info("Audio file saved at ", RecorderManager.mediaInstance.filePath);
-					// preload the audio file which is recorded just now and remove the old instance.
-					var currentRecId = "current_rec";
-					AssetManager.loadAsset(stageId, currentRecId, RecorderManager.mediaInstance.filePath);
-					AudioManager.destroy(stageId, currentRecId);
+		var plugin = PluginManager.getPluginObject(action.asset);
+		var stagePlugin = plugin._stage || plugin;
+		var stageId = stagePlugin._id;
+		speech.stopRecording(function(response) {
+			if("success" == response.status) {
+				var currentRecId = "current_rec";
+				AssetManager.loadAsset(stageId, currentRecId, response.filePath);
+				AudioManager.destroy(stageId, currentRecId);
+			}
+			if ("success" == response.status && action.success) {
+				stagePlugin.dispatchEvent(action.success);
+			} else if("error" == response.status && action.failure) {
+				stagePlugin.dispatchEvent(action.failure);
+			}
+		});
+	},
+	processRecording: function(action) {
+		var plugin = PluginManager.getPluginObject(action.asset);
+		var stagePlugin = plugin._stage || plugin;
+		var lineindex = stagePlugin.evaluateExpr(action.dataAttributes.lineindex);
+		speech.processRecording(lineindex, null, function(response) {
+			if ("success" == response.status && response.result) {
+				console.info("Processed recording result:", JSON.stringify(response));
+				if (response.result.totalScore == 1) {
 					if (action.success) {
 						stagePlugin.dispatchEvent(action.success);
 					}
 				} else {
-					console.error(response.errMessage);
 					if (action.failure) {
 						stagePlugin.dispatchEvent(action.failure);
 					}
 				}
-			})
-			.catch(function(err) {
-				console.error("Error stop recording audio:", err);
+			} else {
+				console.info("Error while processing audio:", JSON.stringify(response));
 				if (action.failure) {
 					stagePlugin.dispatchEvent(action.failure);
 				}
-			});
-			
-		} else {
-			console.error("No recording is in progress.");
-		}
-	},
-	processRecording: function(action) {
-		if (RecorderManager.mediaInstance) {
-			var plugin = PluginManager.getPluginObject(action.asset);
-			var stagePlugin = plugin._stage || plugin;
-			var lineindex = stagePlugin.evaluateExpr(action.dataAttributes.lineindex);
-			RecorderManager.getRecorder().compare(RecorderManager.mediaInstance.filePath, lineindex)
-			.then(function(processResponse) {
-				if (processResponse.status == "success") {
-					if (processResponse.result) {
-						console.info("Processed recording result:", JSON.stringify(processResponse));
-						if (processResponse.result.totalScore == 1) {
-							if (action.success) {
-								stagePlugin.dispatchEvent(action.success);
-							}
-						} else {
-							if (action.failure) {
-								stagePlugin.dispatchEvent(action.failure);
-							}
-						}
-					} else {
-						console.info("Processed recording result:", JSON.stringify(processResponse));	
-					}
-				} else {
-					console.info("Error while processing audio:", JSON.stringify(processResponse));
-					if (action.failure) {
-						stagePlugin.dispatchEvent(action.failure);
-					}
-				}
-				RecorderManager.mediaInstance = undefined;
-			})
-			.catch(function(err) {
-				RecorderManager.mediaInstance = undefined;
-				console.error("Error processing audio:", err);
-			});
-		} else {
-			console.error("No recorded instance to process.");
-		}
+			}
+		});
 	},
 	_getFilePath: function(stageId) {
 		var currentDate = new Date();
