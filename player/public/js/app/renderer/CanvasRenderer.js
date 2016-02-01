@@ -40,7 +40,7 @@ Renderer = {
         if (data) {
             Renderer.init(data, canvasId, gameRelPath);
         } else {
-            Renderer.initByXML(gameRelPath, canvasId);
+            Renderer.initByJSON(gameRelPath, canvasId);
             if (typeof sensibol != "undefined") {
                 sensibol.recorder.init(gameRelPath + "/lesson.metadata")
                 .then(function(res) {

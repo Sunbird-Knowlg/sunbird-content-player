@@ -154,7 +154,7 @@ LoadByStageStrategy = Class.extend({
         if (!instance.loaders[stageId]) {
             var manifest = JSON.parse(JSON.stringify(instance.stageManifests[stageId]));
             if (_.isArray(manifest) && manifest.length > 0) {
-                var loader = new createjs.LoadQueue(false);
+                var loader = this._createLoader();
                 loader.setMaxConnections(instance.stageManifests[stageId].length);
                 if (cb) {
                     loader.addEventListener("complete", cb);
@@ -177,14 +177,14 @@ LoadByStageStrategy = Class.extend({
         }
     },
     loadCommonAssets: function() {
-        var loader = new createjs.LoadQueue(false);
+        var loader = this._createLoader();
         loader.setMaxConnections(this.commonAssets.length);
         loader.installPlugin(createjs.Sound);
         loader.loadManifest(this.commonAssets, true);
         this.commonLoader = loader;
     },
     loadTemplateAssets: function() {
-        var loader = new createjs.LoadQueue(false);
+        var loader = this._createLoader();
         loader.setMaxConnections(this.templateAssets.length);
         loader.installPlugin(createjs.Sound);
         loader.loadManifest(this.templateAssets, true);
@@ -220,5 +220,8 @@ LoadByStageStrategy = Class.extend({
                 AudioManager.destroy(stageId, audioAsset);
             });
         }
+    },
+    _createLoader: function() {
+        return "undefined" == typeof cordova ? new createjs.LoadQueue(true, null, true) : new createjs.LoadQueue(false);
     }
 });
