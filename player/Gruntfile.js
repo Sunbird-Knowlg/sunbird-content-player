@@ -235,12 +235,12 @@ module.exports = function(grunt) {
                     ]
                 }
             },
-            add_custom_plugins: {
+            add_genie_services: {
                 options: {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        './custom-plugins/GenieService/'
+                        './custom-plugins/cordova-plugin-genieservices/'
                     ]
                 }
             },
@@ -304,25 +304,11 @@ module.exports = function(grunt) {
                     plugins: ['cordova-plugin-media']
                 }
             },
-            rm_platform_service: {
-                options: {
-                    command: 'plugin',
-                    action: 'rm',
-                    plugins: ['org.ekstep.platform.service.plugin']
-                }
-            },
-            rm_downloader_service: {
-                options: {
-                    command: 'plugin',
-                    action: 'rm',
-                    plugins: ['org.ekstep.downloader.service.plugin']
-                }
-            },
             rm_genie_service: {
                 options: {
                     command: 'plugin',
                     action: 'rm',
-                    plugins: ['org.ekstep.genie.service.plugin']
+                    plugins: ['cordova-plugin-genieservices']
                 }
             },
             build_android: {
@@ -409,9 +395,14 @@ module.exports = function(grunt) {
         grunt.task.run(tasks);
     });
 
+    grunt.registerTask('rm-cordova-plugin-genieservices', function() {
+        if (grunt.file.exists('plugins/cordova-plugin-genieservices')) grunt.task.run(['cordovacli:rm_genie_service']);
+    });
+    grunt.registerTask('add-cordova-plugin-genieservices', function() {
+        grunt.task.run(['rm-cordova-plugin-genieservices', 'cordovacli:add_genie_services']);
+    });    
+
     grunt.registerTask('rm_custom_plugins', function() {
-        if (grunt.file.exists('plugins/org.ekstep.platform.service.plugin')) grunt.task.run(['cordovacli:rm_platform_service']);
-        if (grunt.file.exists('plugins/org.ekstep.downloader.service.plugin')) grunt.task.run(['cordovacli:rm_downloader_service']);
         if (grunt.file.exists('plugins/org.ekstep.genie.service.plugin')) grunt.task.run(['cordovacli:rm_genie_service']);
         if (grunt.file.exists('plugins/org.ekstep.recorder.service.plugin')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
     });
@@ -420,8 +411,8 @@ module.exports = function(grunt) {
     grunt.registerTask('build-all', ['uglify:js', 'compress:story', 'compress:worksheet', 'aws_s3:uploadJS', 'aws_s3:uploadSamples']);
     grunt.registerTask('build-js', ['uglify:js', 'aws_s3:cleanJS', 'aws_s3:uploadJS', 'clean:minjs']);
     grunt.registerTask('build-samples', ['compress:story', 'compress:worksheet', 'aws_s3:uploadSamples']);
-    grunt.registerTask('add_custom_plugins', ['cordovacli:add_custom_plugins']);
-    grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'cordovacli:add_custom_plugins']);
+    grunt.registerTask('add_custom_plugins', ['add-cordova-plugin-genieservices']);
+    grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'add-cordova-plugin-genieservices']);
     grunt.registerTask('build-unsigned-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
     grunt.registerTask('build-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('build-unsigned-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
@@ -435,7 +426,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('build-signed-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
 
-    grunt.registerTask('init-setup', ['mkdir:all', 'copy:main', 'set-platforms', 'cordovacli:add_custom_plugins']);
+    grunt.registerTask('init-setup', ['mkdir:all', 'copy:main', 'set-platforms', 'add-cordova-plugin-genieservices']);
 
     grunt.registerTask('ci-build-debug', ['build-apk-xwalk']);
     grunt.registerTask('ci-build-signed', ['build-signed-apk-xwalk']);

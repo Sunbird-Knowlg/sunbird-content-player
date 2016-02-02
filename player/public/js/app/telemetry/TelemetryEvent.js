@@ -19,7 +19,7 @@ TelemetryEvent = Class.extend({
     },
     flush: function() {
         if (this.event) {
-            GenieService.sendTelemetry(JSON.stringify(this.event)).then(function() {
+            telemetry.send(JSON.stringify(this.event)).then(function() {
                 
             }).catch(function(err) {
                 TelemetryService.logError(this.name, err);

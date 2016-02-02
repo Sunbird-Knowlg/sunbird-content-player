@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.*;
 
-public class GenieService extends CordovaPlugin {
+public class GenieServicePlugin extends CordovaPlugin {
 
 	public static final String TAG = "Genie Service Plugin";
 
@@ -27,7 +27,7 @@ public class GenieService extends CordovaPlugin {
     private GenieServices genieServices;
     private Content content;
 
-	public GenieService() {
+	public GenieServicePlugin() {
 		System.out.println("Genie Service Constructor..........");
     }
 
@@ -38,7 +38,6 @@ public class GenieService extends CordovaPlugin {
 
     public void onDestroy() {
         if(null != userProfile) {
-            System.out.println("Calling UserProfile finish...........");
             userProfile.finish();
         }
         super.onDestroy();
@@ -46,7 +45,6 @@ public class GenieService extends CordovaPlugin {
 
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         CordovaActivity activity = (CordovaActivity) this.cordova.getActivity();
-        System.out.println("Genie Service execute...........");
         if (null == telemetry) {
             if (null != activity) {
                 telemetry = new Telemetry(activity);
@@ -67,7 +65,7 @@ public class GenieService extends CordovaPlugin {
                 content = new Content(activity);
             }
         }
-        Log.v(TAG, "GenieService received:" + action);
+        Log.v(TAG, "GenieServicePlugin received:" + action);
         System.out.println("Genie Service action: " + action);
         if(action.equals("sendTelemetry")) {
             if (args.length() != 1) {

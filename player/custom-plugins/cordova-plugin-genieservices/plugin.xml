@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    id="org.ekstep.genie.service.plugin"
+    id="cordova-plugin-genieservices"
     version="0.0.1">
-    <name>Genie Service</name>
+    <name>Genie Service Cordova Plugin</name>
     <description>Plugin to call Genie Services SDK.</description>
-    <license>Apache 2.0</license>
-    <keywords>Genie Services Plugin</keywords>
+    <license></license>
+    <keywords>genieservices, telemetry, cordova, plugin</keywords>
     <repo></repo>
     <issue></issue>
-    <js-module src="www/GenieService.js" name="GenieService">
-        <clobbers target="GenieService" />
+    <js-module src="www/genieservice.js" name="genieservice">
+        <clobbers target="genieservice" />
+    </js-module>
+    <js-module src="www/telemetry.js" name="telemetry">
+        <clobbers target="telemetry" />
     </js-module>
     <!-- android -->
     <platform name="android">
-        <framework src="src/android/genieService.gradle" custom="true" type="gradleReference" />
+        <framework src="genieservice.gradle" custom="true" type="gradleReference" />
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="GenieService" >
-                <param name="android-package" value="GenieService"/>
+            <feature name="GenieServicePlugin" >
+                <param name="android-package" value="GenieServicePlugin"/>
             </feature>
         </config-file>
-        <source-file src="src/android/GenieService.java" target-dir="src/" />
+        <source-file src="src/android/GenieServicePlugin.java" target-dir="src/" />
         <source-file src="src/android/TelemetryResponse.java" target-dir="src/" />
         <source-file src="src/android/UserProfileResponse.java" target-dir="src/" />
         <source-file src="src/android/GenieServicesResponse.java" target-dir="src/" />

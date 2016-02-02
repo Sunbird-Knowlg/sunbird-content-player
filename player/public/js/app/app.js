@@ -91,14 +91,11 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 }
             });
 
-            GenieService.getMetaData().then(function(data) {
+            genieservice.getMetaData().then(function(data) {
                 var flavor = data.flavor;
                 if (AppConfig[flavor] == undefined)
                     flavor = "sandbox";
                 GlobalContext.config.flavor = flavor;
-                if (_.isString(AppConfig[flavor]) && (AppConfig[flavor]).length > 0) {
-                    // PlatformService.setAPIEndpoint(AppConfig[flavor]);
-                }
             });
 
             GlobalContext.init(packageName, version).then(function() {
