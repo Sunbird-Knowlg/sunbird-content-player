@@ -216,32 +216,23 @@ module.exports = function(grunt) {
                     platforms: ['android']
                 }
             },
-            update_platforms: {
-                options: {
-                    command: 'platform',
-                    action: 'update',
-                    platforms: ['android@5.0.0']
-                }  
-            },
             add_plugins: {
                 options: {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        'device',
-                        'file',
-                        'media',
-                        'splashscreen',
-                        'com.ionic.keyboard',
-                        'console',
-                        'cordova-plugin-whitelist',
-                        'cordova-plugin-crosswalk-webview',
-                        'cordova-plugin-file-transfer',
-                        'https://github.com/Initsogar/cordova-webintent.git',
-                        'com.lampa.startapp',
-                        'cordova-plugin-inappbrowser',
-                        'https://github.com/xmartlabs/cordova-plugin-market',
-                        'cordova-plugin-media'
+                        'cordova-plugin-device@1.1.1',
+                        'cordova-plugin-file@4.1.0',
+                        'cordova-plugin-splashscreen@3.1.0',
+                        'com.ionic.keyboard@1.0.4',
+                        'cordova-plugin-console@1.0.2',
+                        'cordova-plugin-whitelist@1.2.1',
+                        'cordova-plugin-crosswalk-webview@1.5.0',
+                        'cordova-plugin-file-transfer@1.5.0',
+                        'https://github.com/Initsogar/cordova-webintent.git', // no registry in npm and cordova plugins
+                        'com.lampa.startapp@0.0.5',
+                        'cordova-plugin-inappbrowser@1.2.0',
+                        'cordova-plugin-market@1.1'
                     ]
                 }
             },
@@ -304,7 +295,7 @@ module.exports = function(grunt) {
                 options: {
                     command: 'plugin',
                     action: 'add',
-                    plugins: ['cordova-plugin-media']
+                    plugins: ['cordova-plugin-media@1.0.1']
                 }
             },
             rm_android_media: {
@@ -378,9 +369,9 @@ module.exports = function(grunt) {
 
     grunt.registerTask('set-platforms', function() {
         if (grunt.file.exists('platforms/android')) {
-            grunt.task.run(['cordovacli:rm_platforms', 'cordovacli:add_platforms', 'cordovacli:update_platforms']);
+            grunt.task.run(['cordovacli:rm_platforms', 'cordovacli:add_platforms']);
         } else {
-            grunt.task.run(['cordovacli:add_platforms', 'cordovacli:update_platforms']);
+            grunt.task.run(['cordovacli:add_platforms']);
         }
     });
 
