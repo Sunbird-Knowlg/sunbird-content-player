@@ -31,7 +31,7 @@ module.exports = function(grunt) {
                     beautify: true
                 },
                 files:{
-                    'public/js/app/speech.js': ['../speech/js/speech.js', '../speech/js/android-recorder.js']
+                    'public/js/app/speech.js': ['../speech/speech.js', '../speech/android-recorder.js']
                 }
             },
             renderer: {
@@ -250,7 +250,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        './custom-plugins/cordova-plugin-genieservices/'
+                        '../cordova-plugins/cordova-plugin-genieservices/'
                     ]
                 }
             },
@@ -287,7 +287,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        '../speech/cordova-plugin-sensibol/'
+                        '../cordova-plugins/cordova-plugin-sensibol/'
                     ]
                 }
             },
