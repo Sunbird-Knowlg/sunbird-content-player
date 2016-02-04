@@ -17,13 +17,6 @@ RecorderManager = {
             RecorderManager.appDataDirectory = cordova.file.externalDataDirectory || cordova.file.dataDirectory;
         });
 	},
-	getRecorder: function() {
-		if (RecorderManager.recorder == "sensibol") {
-			return sensibol.recorder; 
-		} else {
-			return android.recorder;
-		}
-	},
 	/*
 	*	Create Audio filepath. Call Audio Recording Service to start recording.
 	* 	Dispatch success OR failure events.
