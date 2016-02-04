@@ -5,7 +5,7 @@
 var fs = require('fs');
 
 exports.getContentList = function(cb) {
-    fs.readFile('fixtures/stories.json', 'utf8', function(err, data) {
+    fs.readFile('app-data/fixture-content-list.json', 'utf8', function(err, data) {
         if (err) {
             cb(err);
         } else {

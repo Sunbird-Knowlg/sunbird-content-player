@@ -2,7 +2,7 @@
  * Content Service - Invoke MW API's, transform data for UI and viceversa
  * @author Jitendra Singh Sankhwar
  */
-var async = require('async'), restClient = require('../commons/RESTClientWrapper'), _ = require('underscore'), fs = require('fs'), Download = require('download'), jsonfile = require('jsonfile'), mimeType = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"], downloading = false, isAvailableList = [], contentList = [], path = "local_storage/content-list.json";
+var async = require('async'), restClient = require('../commons/RESTClientWrapper'), _ = require('underscore'), fs = require('fs'), Download = require('download'), jsonfile = require('jsonfile'), mimeType = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"], downloading = false, isAvailableList = [], contentList = [], path = "app-data/content-list.json";
 
 exports.getContentList = function(cb, type, contentType) {
     var args = {

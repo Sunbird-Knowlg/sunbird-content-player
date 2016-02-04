@@ -12,7 +12,7 @@
  *
  * @author Santhosh
  */
-appConfig = require('./conf/appConfig.json');
+appConfig = require('./app-data/appConfig.json');
 var express = require('express')
     , http = require('http')
     , path = require('path')
