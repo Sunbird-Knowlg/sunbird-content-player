@@ -1,17 +1,13 @@
 HTMLRenderer = {
 	running: false,
-	start: function(gameRelPath, canvasId, gameId, $scope) {
+	start: function(gameRelPath, canvasId, game, cb) {
 		if(HTMLRenderer.running) {
             HTMLRenderer.cleanUp();
         } else {
         	HTMLRenderer.running = true;
-	        TelemetryService.start(gameId, GlobalContext.game.ver);
-	        $('#gameAreaLoad').hide();
-	        $('#gameArea').hide();
-	        var path = gameRelPath + '/index.html';
-	        HTMLRenderer.resizeFrame();
-	        $scope.currentProjectUrl = path;
-	        $("#htmlFrame").show();
+	        (game && game.identifier && game.pkgVersion) ? TelemetryService.start(game.identifier, game.pkgVersion): TelemetryService.start();
+            HTMLRenderer.resizeFrame();
+            cb();
         }
 	},
 	resizeFrame: function() {

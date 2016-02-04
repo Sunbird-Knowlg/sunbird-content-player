@@ -281,7 +281,13 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             $scope.item = _.findWhere($rootScope.stories, {identifier: $stateParams.itemId});
             console.log($scope.item);
             if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
-                HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier, $scope);
+                HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
+                    $('#gameAreaLoad').hide();
+                    $('#gameArea').hide();
+                    var path = $scope.item.baseDir + '/index.html';
+                    $scope.currentProjectUrl = path;
+                    $("#htmlFrame").show();
+                });
             } else {
                 Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
             }

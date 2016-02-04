@@ -92,9 +92,9 @@ RecorderManager = {
 		var path = "";
 		if (RecorderManager.appDataDirectory) 
 			path = path + RecorderManager.appDataDirectory;
-		if (GlobalContext.user && GlobalContext.user.uid) 
+		if (GlobalContext && GlobalContext.user && GlobalContext.user.uid) 
 			path = path + GlobalContext.user.uid + '_' ;
-		if (TelemetryService._gameData && TelemetryService._gameData.id)
+		if (TelemetryService && TelemetryService._gameData && TelemetryService._gameData.id)
 			path = path + TelemetryService._gameData.id + '_';
 		path = path + stageId + "_"+ currentDate.getTime()  + ".wav";
 		return path;

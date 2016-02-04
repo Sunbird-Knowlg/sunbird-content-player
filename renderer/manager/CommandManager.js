@@ -64,7 +64,8 @@ CommandManager = {
                 if (plugin) plugin.toggleShadow();
                 break;
             case 'WINDOWEVENT':
-                if(GlobalContext.config.appInfo && GlobalContext.config.appInfo.code 
+                // TODO: remove the dependency on GlobalContext for this command.
+                if(GlobalContext && GlobalContext.config.appInfo && GlobalContext.config.appInfo.code 
                     && GlobalContext.config.appInfo.code != GlobalContext.game.id) {
                     window.location.hash = "#/show/content";
                 } else {

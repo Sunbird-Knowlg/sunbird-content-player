@@ -24,7 +24,6 @@ CanvasPreview = {
         }
         CanvasPreview.running = true;
         CanvasPreview.preview = preview;
-        // TelemetryService.start(gameId, GlobalContext.game.ver);
         CanvasPreview.init(data, canvasId, gameRelPath);
       
     },
