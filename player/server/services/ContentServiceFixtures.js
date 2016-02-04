@@ -10,6 +10,7 @@ exports.getContentList = function(cb) {
             cb(err);
         } else {
             var obj = JSON.parse(data);
+            console.log("Fetched content list.");
             if (obj != null) {
                 cb(null, obj.result);
             } else {

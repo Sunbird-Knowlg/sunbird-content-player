@@ -5,7 +5,7 @@
  *
  * @author Jitendra Singh Sankhwar
  */
-var contentHelper = require('../view_helpers/ContentViewHelper');
+var contentHelper = require('../helpers/ContentViewHelper');
 
 module.exports = function(app, dirname) {
 	

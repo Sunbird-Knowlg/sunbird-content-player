@@ -53,7 +53,7 @@ http.globalAgent.maxSockets = 100000;
     }
 
     //Bootstrap routes
-    var routes = __dirname + '/routes', route_files = fs.readdirSync(routes);
+    var routes = __dirname + '/server/routes', route_files = fs.readdirSync(routes);
     route_files.forEach(function (file) {
         require(routes + '/' + file)(app, __dirname);
     });
