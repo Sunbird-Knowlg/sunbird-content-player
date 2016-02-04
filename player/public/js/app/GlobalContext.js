@@ -44,7 +44,7 @@ GlobalContext = {
             // GlobalContext.config = config = { origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping"};
             console.log("Origin value is:::", config);
             if(config && config.origin == 'Genie') {
-                return GenieService.getCurrentUser();
+                return genieservice.getCurrentUser();
             } else {
                 reject(false);
             }

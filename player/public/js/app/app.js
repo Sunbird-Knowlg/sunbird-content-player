@@ -5,25 +5,18 @@
 // the 2nd parameter is an array of 'requires'
 var packageName = "org.ekstep.quiz.app";
 var version = AppConfig.version;
-var currentContentVersion = "0.3";
 var packageNameDelhi = "org.ekstep.delhi.curriculum";
 var geniePackageName = "org.ekstep.android.genie";
 
 function backbuttonPressed() {
-    if (Renderer.running || HTMLRenderer.running) {
-        var ext = {
-            type: 'EXIT_CONTENT',
-            stageId: Renderer.theme._currentStage
-        }
-        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
-        initBookshelf();
-    } else {
-        var ext = {
-            type: 'EXIT_APP'
-        }
-        TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
-        exitApp();
-    }
+    var ext = (Renderer.running || HTMLRenderer.running) ? {
+        type: 'EXIT_CONTENT',
+        stageId: Renderer.theme._currentStage
+    } : {
+        type: 'EXIT_APP'
+    };
+    TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
+    (Renderer.running || HTMLRenderer.running) ? initBookshelf(): exitApp();
 }
 
 function exitApp() {
@@ -98,14 +91,11 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 }
             });
 
-            GenieService.getMetaData().then(function(data) {
+            genieservice.getMetaData().then(function(data) {
                 var flavor = data.flavor;
                 if (AppConfig[flavor] == undefined)
                     flavor = "sandbox";
                 GlobalContext.config.flavor = flavor;
-                if (_.isString(AppConfig[flavor]) && (AppConfig[flavor]).length > 0) {
-                    // PlatformService.setAPIEndpoint(AppConfig[flavor]);
-                }
             });
 
             GlobalContext.init(packageName, version).then(function() {
@@ -114,7 +104,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                         if (GlobalContext.config.appInfo &&
                             GlobalContext.config.appInfo.code &&
                             GlobalContext.config.appInfo.code != packageName
-                                && (typeof GlobalContext.config.appInfo.filter == 'undefined')) { // && GlobalContext.config.appInfo.code != packageNameDelhi
+                                && (typeof GlobalContext.config.appInfo.filter == 'undefined')) {
                             TelemetryService.start();
                             $state.go('showContent', {});
                         } else {
@@ -291,7 +281,13 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             $scope.item = _.findWhere($rootScope.stories, {identifier: $stateParams.itemId});
             console.log($scope.item);
             if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
-                HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item.identifier, $scope);
+                HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
+                    $('#gameAreaLoad').hide();
+                    $('#gameArea').hide();
+                    var path = $scope.item.baseDir + '/index.html';
+                    $scope.currentProjectUrl = path;
+                    $("#htmlFrame").show();
+                });
             } else {
                 Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
             }

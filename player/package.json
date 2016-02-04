@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "quizApp: An Ionic project",
   "dependencies": {
-    "jsonfile":"*",
-    "download":"4.4.3",
+    "jsonfile": "*",
+    "download": "4.4.3",
     "async": "*",
     "ejs": "*",
     "express": "3.2.6",
@@ -46,7 +46,5 @@
     "org.apache.cordova.file",
     "cordova-plugin-file"
   ],
-  "cordovaPlatforms": [
-    "android"
-  ]
+  "cordovaPlatforms": []
 }

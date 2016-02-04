@@ -14,29 +14,47 @@ module.exports = function(grunt) {
                     'public/js/app/quizapp-0.3.min.js': [
                         'public/js/app/GlobalContext.js',
                         'public/js/app/AppConfig.js',
-                        'public/js/app/ApMessages.js',
-                        'public/js/thirdparty/exclude/xml2json.js',
-                        'public/js/thirdparty/exclude/createjs-2015.05.21.min.js',
-                        'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
-                        'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
-                        'public/js/thirdparty/exclude/Class.js',
-                        'public/js/app/controller/Controller.js',
-                        'public/js/app/plugin/Plugin.js',
-                        'public/js/app/manager/*.js',
-                        'public/js/app/controller/*Controller.js',
-                        'public/js/app/generator/*.js',
-                        'public/js/app/evaluator/*.js',
-                        'public/js/app/plugin/ShapePlugin.js',
-                        'public/js/app/plugin/*Plugin.js',
-                        'public/js/app/renderer/*.js',
-                        'public/js/app/cordova-plugin/AndroidRecorderService.js',
-                        'public/js/app/service/*.js'
+                        'public/js/app/AppMessages.js',
+                        'public/js/app/speech.js',
+                        'public/js/app/renderer.js'
                     ],
                     'public/js/app/telemetry-lib-0.3.min.js': [
                         'public/js/thirdparty/exclude/date-format.js',
                         'public/js/app/telemetry/FilewriterService.js',
                         'public/js/app/telemetry/TelemetryEvent.js',
                         'public/js/app/telemetry/*.js'
+                    ]
+                }
+            },
+            speech: {
+                options: {
+                    beautify: true
+                },
+                files:{
+                    'public/js/app/speech.js': ['../speech/speech.js', '../speech/android-recorder.js']
+                }
+            },
+            renderer: {
+                options: {
+                    beautify: true
+                },
+                files: {
+                    'public/js/app/renderer.js': [
+                        'public/js/thirdparty/exclude/xml2json.js',
+                        'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
+                        'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
+                        'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
+                        'public/js/thirdparty/exclude/Class.js',
+                        '../renderer/controller/Controller.js',
+                        '../renderer/plugin/Plugin.js',
+                        '../renderer/manager/*.js',
+                        '../renderer/controller/*Controller.js',
+                        '../renderer/generator/*.js',
+                        '../renderer/evaluator/*.js',
+                        '../renderer/plugin/ShapePlugin.js',
+                        '../renderer/plugin/*Plugin.js',
+                        '../renderer/renderer/*.js',
+                        '../renderer/service/*.js'
                     ]
                 }
             }
@@ -203,29 +221,27 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        'device',
-                        'file',
-                        'media',
-                        'splashscreen',
-                        'com.ionic.keyboard',
-                        'console',
-                        'cordova-plugin-whitelist',
-                        'cordova-plugin-crosswalk-webview',
-                        'cordova-plugin-file-transfer',
-                        'https://github.com/Initsogar/cordova-webintent.git',
-                        'com.lampa.startapp',
-                        'cordova-plugin-inappbrowser',
-                        'https://github.com/xmartlabs/cordova-plugin-market',
-                        'cordova-plugin-media'
+                        'cordova-plugin-device@1.1.1',
+                        'cordova-plugin-file@4.1.0',
+                        'cordova-plugin-splashscreen@3.1.0',
+                        'com.ionic.keyboard@1.0.4',
+                        'cordova-plugin-console@1.0.2',
+                        'cordova-plugin-whitelist@1.2.1',
+                        'cordova-plugin-crosswalk-webview@1.5.0',
+                        'cordova-plugin-file-transfer@1.5.0',
+                        'https://github.com/Initsogar/cordova-webintent.git', // no registry in npm and cordova plugins
+                        'com.lampa.startapp@0.0.5',
+                        'cordova-plugin-inappbrowser@1.2.0',
+                        'cordova-plugin-market@1.1'
                     ]
                 }
             },
-            add_custom_plugins: {
+            add_genie_services: {
                 options: {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        './custom-plugins/GenieService/'
+                        '../cordova-plugins/cordova-plugin-genieservices/'
                     ]
                 }
             },
@@ -262,7 +278,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        './custom-plugins/RecorderService/'
+                        '../cordova-plugins/cordova-plugin-sensibol/'
                     ]
                 }
             },
@@ -271,29 +287,29 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'rm',
                     plugins: [
-                        'org.ekstep.recorder.service.plugin'
+                        'cordova-plugin-sensibol'
                     ]
                 }
             },
-            rm_platform_service: {
+            add_android_media: {
                 options: {
                     command: 'plugin',
-                    action: 'rm',
-                    plugins: ['org.ekstep.platform.service.plugin']
+                    action: 'add',
+                    plugins: ['cordova-plugin-media@1.0.1']
                 }
             },
-            rm_downloader_service: {
+            rm_android_media: {
                 options: {
                     command: 'plugin',
                     action: 'rm',
-                    plugins: ['org.ekstep.downloader.service.plugin']
+                    plugins: ['cordova-plugin-media']
                 }
             },
             rm_genie_service: {
                 options: {
                     command: 'plugin',
                     action: 'rm',
-                    plugins: ['org.ekstep.genie.service.plugin']
+                    plugins: ['cordova-plugin-genieservices']
                 }
             },
             build_android: {
@@ -359,38 +375,58 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('add-recorder', function() {
-        if (recorder == "sensibol") grunt.task.run(['cordovacli:add_sensibol_recorder']);
-        grunt.task.run(['replace:'+recorder]);
+    grunt.registerTask('rm-cordova-plugin-sensibol', function() {
+        if (grunt.file.exists('plugins/cordova-plugin-sensibol')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
+    });
+    grunt.registerTask('add-cordova-plugin-sensibol', function() {
+        grunt.task.run(['rm-cordova-plugin-sensibol', 'cordovacli:add_sensibol_recorder']);
+    });
+    grunt.registerTask('rm-cordova-plugin-media', function() {
+        if (grunt.file.exists('plugins/cordova-plugin-media')) grunt.task.run(['cordovacli:rm_android_media']);
+    });
+    grunt.registerTask('add-cordova-plugin-media', function() {
+        grunt.task.run(['rm-cordova-plugin-media', 'cordovacli:add_android_media']);
+    });
+    grunt.registerTask('add-speech', function() {
+        var tasks = ['add-cordova-plugin-media'];
+        if (recorder == "sensibol")
+            tasks.push('add-cordova-plugin-sensibol');
+        tasks.push('uglify:speech');
+        tasks.push('replace:'+recorder);
+        grunt.task.run(tasks);
     });
 
+    grunt.registerTask('rm-cordova-plugin-genieservices', function() {
+        if (grunt.file.exists('plugins/cordova-plugin-genieservices')) grunt.task.run(['cordovacli:rm_genie_service']);
+    });
+    grunt.registerTask('add-cordova-plugin-genieservices', function() {
+        grunt.task.run(['rm-cordova-plugin-genieservices', 'cordovacli:add_genie_services']);
+    });    
+
     grunt.registerTask('rm_custom_plugins', function() {
-        if (grunt.file.exists('plugins/org.ekstep.platform.service.plugin')) grunt.task.run(['cordovacli:rm_platform_service']);
-        if (grunt.file.exists('plugins/org.ekstep.downloader.service.plugin')) grunt.task.run(['cordovacli:rm_downloader_service']);
         if (grunt.file.exists('plugins/org.ekstep.genie.service.plugin')) grunt.task.run(['cordovacli:rm_genie_service']);
         if (grunt.file.exists('plugins/org.ekstep.recorder.service.plugin')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
     });
 
-    grunt.registerTask('default', ['uglify:js']);
-    grunt.registerTask('build-all', ['uglify:js', 'compress:story', 'compress:worksheet', 'aws_s3:uploadJS', 'aws_s3:uploadSamples']);
-    grunt.registerTask('build-js', ['uglify:js', 'aws_s3:cleanJS', 'aws_s3:uploadJS', 'clean:minjs']);
+    grunt.registerTask('default', ['uglify:renderer', 'uglify:speech', 'uglify:js']);
+    grunt.registerTask('build-all', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'compress:story', 'compress:worksheet', 'aws_s3:uploadJS', 'aws_s3:uploadSamples']);
+    grunt.registerTask('build-js', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'aws_s3:cleanJS', 'aws_s3:uploadJS', 'clean:minjs']);
     grunt.registerTask('build-samples', ['compress:story', 'compress:worksheet', 'aws_s3:uploadSamples']);
-    grunt.registerTask('add_custom_plugins', ['cordovacli:add_custom_plugins']);
-    grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'cordovacli:add_custom_plugins']);
-    grunt.registerTask('build-unsigned-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-recorder', 'cordovacli:build_android_release', 'clean:minjs']);
-    grunt.registerTask('build-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-recorder', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('build-unsigned-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-recorder', 'cordovacli:build_android_release', 'clean:minjs']);
-    grunt.registerTask('build-signed-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-recorder', 'cordovacli:build_android_release', 'clean:minjs']);
-    grunt.registerTask('build-apk-quick', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'add-recorder', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('install-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-recorder', 'cordovacli:run_android', 'clean:minjs']);
-    grunt.registerTask('install-apk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-recorder', 'cordovacli:run_android', 'clean:minjs']);
-    grunt.registerTask('install-apk-quick', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'add-recorder', 'cordovacli:run_android', 'clean:minjs']);
+    grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'add-cordova-plugin-genieservices']);
+    grunt.registerTask('build-unsigned-apk-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
+    grunt.registerTask('build-apk', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-unsigned-apk', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
+    grunt.registerTask('build-signed-apk', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
+    grunt.registerTask('build-apk-quick', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('install-apk-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'cordovacli:run_android', 'clean:minjs']);
+    grunt.registerTask('install-apk', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:run_android', 'clean:minjs']);
+    grunt.registerTask('install-apk-quick', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'add-speech', 'cordovacli:run_android', 'clean:minjs']);
 
 
-    grunt.registerTask('build-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-recorder', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('build-signed-apk-xwalk', ['uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-recorder', 'cordovacli:build_android_release', 'clean:minjs']);
+    grunt.registerTask('build-apk-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-signed-apk-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
 
-    grunt.registerTask('init-setup', ['mkdir:all', 'copy:main', 'set-platforms', 'cordovacli:add_custom_plugins']);
+    grunt.registerTask('init-setup', ['mkdir:all', 'copy:main', 'set-platforms', 'add-cordova-plugin-genieservices']);
 
     grunt.registerTask('ci-build-debug', ['build-apk-xwalk']);
     grunt.registerTask('ci-build-signed', ['build-signed-apk-xwalk']);

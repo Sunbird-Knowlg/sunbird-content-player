@@ -3,8 +3,7 @@ angular.module('quiz.services', ['ngResource'])
         var returnObject = {
             getContentList: function(filter) {
                 return new Promise(function(resolve, reject) {
-                    var service = ($window.cordova)? GenieService: PlatformService;
-                    service.getContentList(filter)
+                    genieservice.getContentList(filter)
                     .then(function(result) {
                         resolve(returnObject._filterContentList(result.list));
                     })
@@ -16,7 +15,7 @@ angular.module('quiz.services', ['ngResource'])
             },
             getContent: function(id) {
                 return new Promise(function(resolve, reject) {
-                    GenieService.getContent(id)
+                    genieservice.getContent(id)
                     .then(function(item) {
                         if (item.isAvailable) {
                             resolve(returnObject._prepareContent(item));
@@ -37,6 +36,7 @@ angular.module('quiz.services', ['ngResource'])
                     path = ($window.cordova)? "file://" + path : path; 
                     data.baseDir =  path;
                     data.appIcon = path + "/logo.png";
+                    data.mimeType = item.mimeType;
                     data.status = "ready";
                 } else {
                     if(!data) data = {};

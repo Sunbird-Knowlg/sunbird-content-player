@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-sensibol"
+    version="0.0.1">
+    <name>Sensibol Audio Recorder</name>
+    <description>Cordova Sensibol Audio Recorder Plugin</description>
+    <keywords>cordova, sensibol, recorder</keywords>
+    <repo></repo>
+    <issue></issue>
+    <!-- <js-module src="www/RecorderService.js" name="RecorderService">
+        <clobbers target="RecorderService" />
+    </js-module> -->
+    <js-module src="www/sensibol.js" name="sensibol">
+        <clobbers target="sensibol.recorder" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <framework src="sensibol.gradle" custom="true" type="gradleReference" />
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="SensibolPlugin" >
+                <param name="android-package" value="SensibolPlugin"/>
+            </feature>
+        </config-file>
+        <source-file src="src/android/SensibolPlugin.java" target-dir="src/" />
+        <resource-file src="libs/sensibol-ekstep-speechengine-v.1.0.15.jar" target="libs/sensibol-ekstep-speechengine-v.1.0.15.jar" />
+        <resource-file src="libs/armeabi-v7a/libsensibol-ekstep-speechengine.so" target="libs/armeabi-v7a/libsensibol-ekstep-speechengine.so" />
+    </platform>
+</plugin>
