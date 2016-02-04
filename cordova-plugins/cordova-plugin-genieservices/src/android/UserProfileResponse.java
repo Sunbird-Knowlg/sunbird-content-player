@@ -20,7 +20,6 @@ public class UserProfileResponse implements IResponseHandler {
     }
 
     public void onSuccess(GenieResponse response) {
-        // GenieResponse response = (GenieResponse) o;
         System.out.println("UserProfileResponse success: " + response.getStatus());
         System.out.println("UserProfileResponse result: " + response.getResult());
         Map<String, Object> map = new HashMap<String, Object>();
@@ -32,15 +31,16 @@ public class UserProfileResponse implements IResponseHandler {
     }
 
     public void onFailure(GenieResponse response) {
-        // GenieResponse response = (GenieResponse) o;
         System.out.println("TelemetryResponse error: " + response.getStatus() + " -- " + response.getError());
-        List<String> errors = response.getErrorMessages();
+        String errors = "";
+        List<String> errorList = response.getErrorMessages();
+        if (null != errorList) 
+        errors = TextUtils.join(",", errorList);
         String error = response.getError();
-        String errorString = TextUtils.join(",", errors);
         Map<String, String> map = new HashMap<String, String>();
         map.put("status", response.getStatus());
         map.put("error", error);
-        map.put("errors", errorString);
+        map.put("errors", errors);
         callbackContext.error(new JSONObject(map));
     }
 }
