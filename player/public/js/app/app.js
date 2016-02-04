@@ -8,6 +8,8 @@ var version = AppConfig.version;
 var packageNameDelhi = "org.ekstep.delhi.curriculum";
 var geniePackageName = "org.ekstep.android.genie";
 
+var SUPPORTED_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"];
+
 function backbuttonPressed() {
     var ext = (Renderer.running || HTMLRenderer.running) ? {
         type: 'EXIT_CONTENT',

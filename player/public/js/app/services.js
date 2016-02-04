@@ -47,7 +47,7 @@ angular.module('quiz.services', ['ngResource'])
             },
             _filterContentList: function(list) {
                 list = _.filter(list, function(item) {
-                    return item.isAvailable && (item.mimeType == "application/vnd.ekstep.ecml-archive" || item.mimeType == "application/vnd.ekstep.html-archive");
+                    return item.isAvailable && _.indexOf(SUPPORTED_MIMETYPES, item.mimeType) > -1;
                 });
                 list = _.map(list, function(item) {
                     return returnObject._prepareContent(item);

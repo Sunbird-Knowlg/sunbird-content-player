@@ -53,8 +53,7 @@ module.exports = function(grunt) {
                         '../renderer/evaluator/*.js',
                         '../renderer/plugin/ShapePlugin.js',
                         '../renderer/plugin/*Plugin.js',
-                        '../renderer/renderer/*.js',
-                        '../renderer/service/*.js'
+                        '../renderer/renderer/*.js'
                     ]
                 }
             }
