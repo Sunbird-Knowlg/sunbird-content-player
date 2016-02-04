@@ -1,6 +1,7 @@
 angular.module('quiz.services', ['ngResource'])
     .factory('ContentService', ['$window', '$rootScope', function($window, $rootScope) {
         var returnObject = {
+            _SUPPORTED_MIMETYPES: ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
             getContentList: function(filter) {
                 return new Promise(function(resolve, reject) {
                     genieservice.getContentList(filter)
@@ -47,7 +48,7 @@ angular.module('quiz.services', ['ngResource'])
             },
             _filterContentList: function(list) {
                 list = _.filter(list, function(item) {
-                    return item.isAvailable && _.indexOf(SUPPORTED_MIMETYPES, item.mimeType) > -1;
+                    return item.isAvailable && _.indexOf(returnObject._SUPPORTED_MIMETYPES, item.mimeType) > -1;
                 });
                 list = _.map(list, function(item) {
                     return returnObject._prepareContent(item);

@@ -3,12 +3,15 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'quiz' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var packageName = "org.ekstep.quiz.app";
-var version = AppConfig.version;
-var packageNameDelhi = "org.ekstep.delhi.curriculum";
-var geniePackageName = "org.ekstep.android.genie";
+var packageName = "org.ekstep.quiz.app",
+    version = AppConfig.version,
+    packageNameDelhi = "org.ekstep.delhi.curriculum",
+    geniePackageName = "org.ekstep.android.genie",
 
-var SUPPORTED_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"];
+    CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
+    COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
+    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive";
+
 
 function backbuttonPressed() {
     var ext = (Renderer.running || HTMLRenderer.running) ? {
@@ -63,6 +66,32 @@ function startApp(app) {
         });
 }
 
+function launchInitialPage(appInfo, $state) {
+    if (!TelemetryService._gameData) {
+        TelemetryService.init(GlobalContext.game).then(function() {
+            if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
+                TelemetryService.start();
+                $state.go('showContent', {});
+            } else if (COLLECTION_MIMETYPE == appInfo.mimeType) {
+                GlobalContext.game.id = GlobalContext.config.appInfo.code;
+                TelemetryService.start();
+                $state.go('contentList', {});
+            } else if (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName) {
+                GlobalContext.game.id = GlobalContext.config.appInfo.code;
+                TelemetryService.start();
+                $state.go('contentList', {});
+            } else {
+                alert("App launched with invalid context.");
+                exitApp();
+            }
+        }).catch(function(error) {
+            console.log('TelemetryService init failed');
+            alert('TelemetryService init failed.');
+            exitApp();
+        });
+    }
+}
+
 angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
     .run(function($ionicPlatform, $ionicModal, $cordovaFile, $cordovaToast, ContentService, $state) {
         $ionicPlatform.ready(function() {
@@ -100,26 +129,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 GlobalContext.config.flavor = flavor;
             });
 
-            GlobalContext.init(packageName, version).then(function() {
-                if (!TelemetryService._gameData) {
-                    TelemetryService.init(GlobalContext.game).then(function() {
-                        if (GlobalContext.config.appInfo &&
-                            GlobalContext.config.appInfo.code &&
-                            GlobalContext.config.appInfo.code != packageName
-                                && (typeof GlobalContext.config.appInfo.filter == 'undefined')) {
-                            TelemetryService.start();
-                            $state.go('showContent', {});
-                        } else {
-                            if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.code) {
-                                GlobalContext.game.id = GlobalContext.config.appInfo.code;
-                            }
-                            TelemetryService.start();
-                            $state.go('contentList', {});
-                        }
-                    }).catch(function(error) {
-                        console.log('TelemetryService init failed');
-                    });
-                }
+            GlobalContext.init(packageName, version).then(function(appInfo) {
+                launchInitialPage(GlobalContext.config.appInfo, $state);
             }).catch(function(error) {
                 alert('Please open this app from Genie.');
                 exitApp();
