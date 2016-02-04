@@ -222,7 +222,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         $scope.resetContentListCache = function() {
             $("#loadingDiv").show();
             $rootScope.renderMessage("", 0);
-            ContentService.getContentList(GlobalContext.filter)
+            var childrenIds = (GlobalContext.config.appInfo.children) ? _.pluck(GlobalContext.config.appInfo.children, 'identifier') :[];
+            ContentService.getContentList(GlobalContext.filter, childrenIds)
             .then(function(result) {
                 $rootScope.$apply(function() {
                     $rootScope.stories = result;

@@ -2,11 +2,11 @@ angular.module('quiz.services', ['ngResource'])
     .factory('ContentService', ['$window', '$rootScope', function($window, $rootScope) {
         var returnObject = {
             _SUPPORTED_MIMETYPES: ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
-            getContentList: function(filter) {
+            getContentList: function(filter, childrenIds) {
                 return new Promise(function(resolve, reject) {
-                    genieservice.getContentList(filter)
+                    returnObject._filterContentList(filter, childrenIds)
                     .then(function(result) {
-                        resolve(returnObject._filterContentList(result.list));
+                        resolve(returnObject._getAvailableContentList(result));
                     })
                     .catch(function(err) {
                         console.log("Error while fetching content list:", err);
@@ -46,7 +46,25 @@ angular.module('quiz.services', ['ngResource'])
                 }
                 return data;
             },
-            _filterContentList: function(list) {
+            _filterContentList: function(filter, childrenIds) {
+                return new Promise(function(resolve, reject) {
+                    genieservice.getContentList(filter)
+                    .then(function(result) {
+                        if (childrenIds && childrenIds.length > 0) {
+                            resolve(_.filter(result.list, function(item) {
+                                return childrenIds.indexOf(item.id) > -1;
+                            }));
+                        } else {
+                            resolve(result.list);
+                        }
+                    })
+                    .catch(function(err) {
+                        console.error("Error while fetching and filtering content list: ", err);
+                        reject(err);
+                    });
+                });
+            },
+            _getAvailableContentList: function(list) {
                 list = _.filter(list, function(item) {
                     return item.isAvailable && _.indexOf(returnObject._SUPPORTED_MIMETYPES, item.mimeType) > -1;
                 });
