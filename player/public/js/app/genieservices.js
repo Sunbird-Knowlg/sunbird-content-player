@@ -1,4 +1,14 @@
 genieservice_web = {
+    api: {
+        basePath: '/genie-canvas/v2/',
+        contentList: 'content/list',
+        getFullAPI: function(specificApi){
+            return this.basePath + specificApi;
+        },
+        getContentList: function(){
+            return this.getFullAPI(this.contentList);
+        }
+    }, 
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
@@ -31,7 +41,7 @@ genieservice_web = {
     },
     getContentList: function(filter) {
         return new Promise(function(resolve, reject) {
-            $.post("/genie-canvas/v1/content/list", function(resp) {
+            $.post(genieservice_web.api.getContentList(), function(resp) {
                     var result = {};
                     if (!resp.error) {
                         result.list = resp.content;

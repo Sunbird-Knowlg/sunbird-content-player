@@ -1,7 +1,7 @@
 angular.module('quiz.services', ['ngResource'])
     .factory('ContentService', ['$window', '$rootScope', function($window, $rootScope) {
         var returnObject = {
-            _SUPPORTED_MIMETYPES: ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
+            _SUPPORTED_MIMETYPES: ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive",  "application/vnd.ekstep.content-collection"],
             getContentList: function(filter, childrenIds) {
                 return new Promise(function(resolve, reject) {
                     returnObject._filterContentList(filter, childrenIds)
@@ -9,8 +9,8 @@ angular.module('quiz.services', ['ngResource'])
                         resolve(returnObject._getAvailableContentList(result));
                     })
                     .catch(function(err) {
-                        console.log("Error while fetching content list:", err);
-                        reject("Error while fetching content list.");
+                        console.log(AppErrors.contentListFetch, err);
+                        reject(err);
                     });
                 });
             },
@@ -25,7 +25,7 @@ angular.module('quiz.services', ['ngResource'])
                         }
                     })
                     .catch(function(err) {
-                        console.error("Error while fetching content path:", err);
+                        console.error(AppErrors.contetnPathFetch, err);
                         reject(err);
                     });
                 });
@@ -59,7 +59,7 @@ angular.module('quiz.services', ['ngResource'])
                         }
                     })
                     .catch(function(err) {
-                        console.error("Error while fetching and filtering content list: ", err);
+                        console.error(AppErrors.contentListFilterFetch, err);
                         reject(err);
                     });
                 });

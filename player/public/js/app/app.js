@@ -156,6 +156,11 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             });
     })
     .controller('ContentListCtrl', function($scope, $rootScope, $http, $ionicModal, $cordovaFile, $cordovaDialogs, $cordovaToast, $ionicPopover, $state, $q, ContentService) {
+        
+        //To Store current selected collectio item
+        $scope.collectionItem; 
+        $scope.rootStories;
+        $scope.collectionItems = [];
 
         $ionicModal.fromTemplateUrl('about.html', {
             scope: $scope,
@@ -243,13 +248,89 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 $rootScope.loadBookshelf();
                 $rootScope.renderMessage(AppMessages.ERR_GET_CONTENT_LIST, 3000);
             });
-        }
+        };
 
         $rootScope.loadBookshelf = function() {
             initBookshelf();
         };
 
+        $scope.showBackButton = function(){
+            if($scope.collectionItems.length > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        /**
+         * This is to show the selected collection, children in BookShell
+         */
+        $scope.showCollectionItems = function(){
+            if($scope.collectionItem.children){
+                var contChildren = $scope.collectionItem.children;
+                if(contChildren.length > 0){
+                    //For Back button reference
+                    $scope.updateCollectionItems($scope.collectionItem);
+
+                    //Used to go back to home
+                    $scope.duplicateRootStories();
+
+                    $scope.stories = [];
+                    //Getting selected collection item childrens to show in the bookshell
+                    _.each(contChildren, function(child){
+                        var story = _.findWhere($scope.rootStories, {'identifier': child.identifier});
+                        $scope.stories.push(story);
+                    });                        
+                }
+            }
+        };
+
+        /**
+         * Back to parent collection in bookshell
+         */
+        $scope.backToParentCollection = function(){
+            if($scope.collectionItems.length == 1){
+                //Go to root/home list
+                $scope.stories = angular.copy($scope.rootStories);
+                $scope.collectionItems = [];
+                $scope.collectionItem = null;
+            }else{
+                //go to parent collection list 
+                var parentCollection = $scope.collectionItems.pop();
+                parentCollection = _.findWhere($scope.rootStories, {'identifier': parentCollection.identifier});
+                $scope.playContent(parentCollection);
+            }
+        };
+
+        /**
+         * this is to duplicate root stories. 
+         * After selecting nested collection items, we can show root items directly 
+         */
+        $scope.duplicateRootStories = function(){
+            //Storing base root stories
+            if(_.isUndefined($scope.rootStories)){
+                $scope.rootStories = angular.copy($scope.stories);                
+            }
+        };
+
+        /**
+         * This is used to back button functionality.
+         * When user want to go back to parent collection, then we are getting the last item from this collection 
+         */
+        $scope.updateCollectionItems = function(content){
+            var collectionItem = {
+                identifier: content.identifier,
+            }
+            $scope.collectionItems[$scope.collectionItems.length] = collectionItem;
+        }
+
         $scope.playContent = function(content) {
+            if(content.mimeType == COLLECTION_MIMETYPE){
+                //Selected item is of type "Collection". So show its child items in BookShell
+                $scope.collectionItem = content;
+                $scope.showCollectionItems();
+                return;
+            }
             $state.go('playContent', {
                 'itemId': content.identifier
             });
@@ -258,6 +339,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         $scope.showAboutUsPage = function() {
             $scope.aboutModal.show();
         };
+
         $scope.hideAboutUsPage = function() {
             $scope.aboutModal.hide();
         };
