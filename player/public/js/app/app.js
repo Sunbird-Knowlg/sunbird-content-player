@@ -394,22 +394,6 @@ function initBookshelf() {
             newHeight = newWidth / widthToHeight;
         }
 
-        var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            //effect: 'coverflow',
-            centeredSlides: true,
-            initialSlide: 1,
-            slidesPerView: 'auto',
-            slidesPerColumnFill: 'row',
-
-            //slidesPerView: 3,
-            slidesPerColumn: numRows,
-            // nextButton: '.swiper-button-next',
-            // prevButton: '.swiper-button-prev',
-            spaceBetween: 40,
-            paginationClickable: true
-        });
-
         console.log('Loading completed....');
         $("#loadingDiv").hide();
     }, 100);
