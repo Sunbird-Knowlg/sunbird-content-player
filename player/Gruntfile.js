@@ -120,28 +120,6 @@ module.exports = function(grunt) {
                 dest: 'www/index.html'
             }
         },
-        compress: {
-            story: {
-                options: {
-                    archive: 'samples/haircut_story_0.2.zip'
-                },
-                filter: 'isFile',
-                expand: true,
-                cwd: 'public/stories/haircut_story/',
-                src: ['**/*'],
-                dest: '/'
-            },
-            worksheet: {
-                options: {
-                    archive: 'samples/addition_by_grouping_0.2.zip'
-                },
-                filter: 'isFile',
-                expand: true,
-                cwd: 'public/worksheets/addition_by_grouping/',
-                src: ['**/*'],
-                dest: '/'
-            }
-        },
         aws_s3: {
             options: {
                 accessKeyId: process.env.AWSAccessKeyId, // Use the variables
@@ -178,21 +156,6 @@ module.exports = function(grunt) {
                     dest: 'js/telemetry-lib-0.3.min.js',
                     exclude: "**/.*",
                     action: 'delete'
-                }]
-            },
-            uploadSamples: {
-                options: {
-                    bucket: 'ekstep-public',
-                    mime: {
-                        'samples/haircut_story_0.2.zip': 'application/zip',
-                        'samples/addition_by_grouping_0.2.zip': 'application/zip'
-                    }
-                },
-                files: [{
-                    expand: true,
-                    cwd: 'samples/',
-                    src: ['**'],
-                    dest: 'samples/'
                 }]
             }
         },
@@ -408,9 +371,8 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('default', ['uglify:renderer', 'uglify:speech', 'uglify:js']);
-    grunt.registerTask('build-all', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'compress:story', 'compress:worksheet', 'aws_s3:uploadJS', 'aws_s3:uploadSamples']);
+    grunt.registerTask('build-all', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'aws_s3:uploadJS']);
     grunt.registerTask('build-js', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'aws_s3:cleanJS', 'aws_s3:uploadJS', 'clean:minjs']);
-    grunt.registerTask('build-samples', ['compress:story', 'compress:worksheet', 'aws_s3:uploadSamples']);
     grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'add-cordova-plugin-genieservices']);
     grunt.registerTask('build-unsigned-apk-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
     grunt.registerTask('build-apk', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
