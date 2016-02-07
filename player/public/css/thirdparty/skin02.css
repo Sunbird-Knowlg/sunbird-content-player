@@ -120,11 +120,11 @@
 .fx_shadow {display: none !important;}
 
 .product img {
-	width: 140px;
-    height: 155px;
-    border: 2px solid burlywood;
+    width: 120px;
+    height: 130px;
+    border: 2px solid #B98549;
     border-radius: 10px;
-    padding: 10px;
+    padding: 2px;
     background: white;
 }
 
@@ -172,13 +172,16 @@
 }
 
 .product_name {
-	font-size:15px; font-family:flavours !important;
-	color:rgb(90, 60, 34) !important;
-	margin-top: 10px;
-	text-align: center;
-	width:150px;
-	height:40px;
-	overflow: hidden;
+	font-size: 15px;
+    font-family: flavours !important;
+    color: rgb(90, 60, 34) !important;
+    margin-top: 10px;
+    text-align: center;
+    width: 120px;
+    height: 20px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 	text-shadow: 1px 0 0 #fff, -1px 0 0 #fff, 0 1px 0 #fff, 0 -1px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
 }
 

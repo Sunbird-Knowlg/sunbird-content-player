@@ -220,7 +220,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 if($rootScope.stories && $rootScope.stories.length <=0) {
                     $rootScope.renderMessage(AppMessages.NO_CONTENT_FOUND);
                 } else {
-                    $rootScope.renderMessage(AppMessages.SUCCESS_GET_CONTENT_LIST, 3000);
+                    // No need to show this message
+                    //$rootScope.renderMessage(AppMessages.SUCCESS_GET_CONTENT_LIST, 3000);
                 }
             })
             .catch(function(err) {
