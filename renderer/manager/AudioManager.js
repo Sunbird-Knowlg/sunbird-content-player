@@ -36,19 +36,19 @@ AudioManager = {
         instance = instance || AudioManager.instances[AudioManager.uniqueId(action)];
         if(instance.object && instance.object.playState === createjs.Sound.PLAY_SUCCEEDED) {
             instance.object.paused = true;
-            EventManager.processAppTelemetry(action, 'PAUSE_LISTENING', instance, {subtype : "PAUSE"});
+            EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PAUSE"});
         }
     },
     stop: function(action) {
         var instance = AudioManager.instances[AudioManager.uniqueId(action)] || {};
         if(instance.object && instance.object.playState !== createjs.Sound.PLAY_FINISHED) {
             instance.object.stop();
-            EventManager.processAppTelemetry(action, 'STOP_LISTENING', instance, {subtype : "STOP"});
+            EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "STOP"});
         }
     },
     stopAll: function(action) {
         createjs.Sound.stop();
-        EventManager.processAppTelemetry(action, 'STOP_ALL_SOUNDS',instance, {subtype : "STOP_ALL"});
+        EventManager.processAppTelemetry(action, 'LISTEN',instance, {subtype : "STOP_ALL"});
     },
     destroy: function(stageId, assetId) {
         var soundId = AudioManager.uniqueId({stageId: stageId, asset: assetId});
