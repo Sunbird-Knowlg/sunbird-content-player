@@ -8,7 +8,6 @@ TelemetryEvent = Class.extend({
         this.createdTime = Date.now();
         this.name = eid;
         this.event = {
-            ets: getTime(this.createdTime),
             ver: version,
             sid: user.uid,
             uid: user.uid,
@@ -19,6 +18,7 @@ TelemetryEvent = Class.extend({
             eid: eid,
             gdata: gdata
         };
+        TelemetryService._version == "1.0" ? this.event.ts = getTime(this.createdTime) : this.event.ets = getTime(this.createdTime);
     },
     flush: function() {
         if (this.event) {
@@ -52,7 +52,7 @@ TelemetryEvent = Class.extend({
     },
     end: function() {
         if (this._isStarted) {
-            this.event.edata.eks.length = Math.round((Date.now() - this.event.ets) / 1000);
+            this.event.edata.eks.length = Math.round((Date.now() - this.startTime ) / 1000);
             this.event.ets = Date.now();
             return this;
         } else {

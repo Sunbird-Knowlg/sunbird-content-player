@@ -53,7 +53,7 @@ TelemetryV1Manager = Class.extend({
                 maxscore: data.maxscore,
                 params: []
             };
-            return this.createEvent("OE_ASSESS", eks);
+            return this.createEvent("OE_ASSESS", eks).start();
         } else {
             console.error("qid, subject, qlevel is required to create assess event.");
             return new InActiveEvent();
