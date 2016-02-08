@@ -1,4 +1,5 @@
 genieservice_web = {
+    tList: [],
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
@@ -55,6 +56,7 @@ telemetry_web = {
     send: function(string) {
         return new Promise(function(resolve, reject) {
             console.log(string);
+            genieservice_web.tList.push(string);
             resolve(true);
         });
     }

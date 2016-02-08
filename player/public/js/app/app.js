@@ -11,23 +11,21 @@ var geniePackageName = "org.ekstep.android.genie";
 var SUPPORTED_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"];
 
 function backbuttonPressed() {
-    var ext = (Renderer.running || HTMLRenderer.running) ? {
+    var data = (Renderer.running || HTMLRenderer.running) ? {
         type: 'EXIT_CONTENT',
         stageId: Renderer.theme._currentStage
     } : {
         type: 'EXIT_APP'
     };
-    TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
+    TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', data);
     (Renderer.running || HTMLRenderer.running) ? initBookshelf(): exitApp();
 }
 
 function exitApp() {
-    navigator.startApp.start(geniePackageName, function(message) {
+     navigator.startApp.start(geniePackageName, function(message) {
             try {
-                if (TelemetryService._gameData) {
-                    TelemetryService.end(packageName, version);
-                }
-            } catch(err) {
+                TelemetryService.exit(packageName, version);
+            } catch (err) {
                 console.error('End telemetry error:', err.message);
             }
             if (navigator.app) {
@@ -46,19 +44,17 @@ function exitApp() {
 }
 
 function startApp(app) {
-    if(!app) app = geniePackageName;
+     if (!app) app = geniePackageName;
     navigator.startApp.start(app, function(message) {
             exitApp();
-            if (TelemetryService._gameData) {
-                TelemetryService.end(packageName, version);
-            }
+            TelemetryService.exit(packageName, version)
         },
         function(error) {
-            if(app == geniePackageName)
+            if (app == geniePackageName)
                 alert("Unable to start Genie App.");
             else {
                 var bool = confirm('App not found. Do you want to search on PlayStore?');
-                if(bool) cordova.plugins.market.open(app);
+                if (bool) cordova.plugins.market.open(app);
             }
         });
 }
@@ -101,25 +97,22 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             });
 
             GlobalContext.init(packageName, version).then(function() {
-                if (!TelemetryService._gameData) {
-                    TelemetryService.init(GlobalContext.game).then(function() {
-                        if (GlobalContext.config.appInfo &&
-                            GlobalContext.config.appInfo.code &&
-                            GlobalContext.config.appInfo.code != packageName
-                                && (typeof GlobalContext.config.appInfo.filter == 'undefined')) {
-                            TelemetryService.start();
-                            $state.go('showContent', {});
-                        } else {
-                            if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.code) {
-                                GlobalContext.game.id = GlobalContext.config.appInfo.code;
-                            }
-                            TelemetryService.start();
-                            $state.go('contentList', {});
+                TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
+                    if (GlobalContext.config.appInfo &&
+                        GlobalContext.config.appInfo.code &&
+                        GlobalContext.config.appInfo.code != packageName && (typeof GlobalContext.config.appInfo.filter == 'undefined')) { // && GlobalContext.config.appInfo.code != packageNameDelhi
+                        TelemetryService.start();
+                        $state.go('showContent', {});
+                    } else {
+                        if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.code) {
+                            GlobalContext.game.id = GlobalContext.config.appInfo.code;
                         }
-                    }).catch(function(error) {
-                        console.log('TelemetryService init failed');
-                    });
-                }
+                        TelemetryService.start();
+                        $state.go('contentList', {});
+                    }
+                }).catch(function(error) {
+                    console.log('TelemetryService init failed');
+                });
             }).catch(function(error) {
                 alert('Please open this app from Genie.');
                 exitApp();

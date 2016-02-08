@@ -47,8 +47,6 @@ EventManager = {
 						element.cursor = 'pointer';
 					}
 					element.addEventListener(evt.type, function(event) {
-						var stageId = Renderer.theme._currentStage;
-						plugin.stageId = stageId;
 						EventManager.processMouseTelemetry(evt, event, plugin);
 						EventManager.handleActions(evt, plugin);
 					});	
@@ -111,15 +109,15 @@ EventManager = {
 		}
 	},
 	processMouseTelemetry: function(action, event, plugin) {
-		var ext = {
+		var data = {
 			type: event.type,
 			x: event.stageX,
 			y: event.stageY
 		}
-		var type = TelemetryService.mouseEventMapping[action.type];
-		EventManager.processAppTelemetry(action, type, plugin, ext);
+		var type = TelemetryService.getMouseEventMapping()[action.type];
+		EventManager.processAppTelemetry(action, type, plugin, data);
 	},
-	processAppTelemetry: function(action, type, plugin, ext) {
+	processAppTelemetry: function(action, type, plugin, data) {
 		if(!plugin) {
 			plugin = {_data: {id: '', asset: ''}};
 		}
@@ -144,15 +142,10 @@ EventManager = {
 					id = plugin._type || 'none';
 				}
 				if (id) {
-					var tempExt = {};
-					if(ext && !ext.stageId)
-						ext.stageId = plugin.stageId;
-					else {
-						tempExt = {
-							stageId: plugin.stageId
-						}
-					}
-					TelemetryService.interact(type, id, type).ext(ext ? ext : tempExt).flush();
+					if (data)
+						data.stageId = Renderer.theme._currentStage;
+					// console.log("inside processAppTelemetry.....");
+					TelemetryService.interact(type, id, type, data ? data : {stageId : Renderer.theme._currentStage});
 				}
 			}
 		}
