@@ -3,7 +3,7 @@ var ItemController = Controller.extend({
     initController: function(ic, baseDir) {
         if (ic.__cdata) {
             var data = (_.isString(ic.__cdata)) ? JSON.parse(ic.__cdata) : ic.__cdata;
-            this.onLoad(data);
+            ItemDataGenerator._onLoad(data, this);
         } else {
             ItemDataGenerator.loadData(baseDir, ic.type, ic.id, this);
         }
