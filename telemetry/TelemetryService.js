@@ -123,7 +123,7 @@ TelemetryService = {
         var data = {
                 'eventName': eventName,
                 'message': error,
-                'time': Date().now()
+                'time': new Date().getTime()
             }
             // change this to write to file??
         console.log('TelemetryService Error:', JSON.stringify(data));
