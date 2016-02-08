@@ -16,4 +16,10 @@ AppMessages = {
 	DIRECT_DOWNLOADING_MSG: "Content is downloading...",
 	DIRECT_CONTENT_LOAD_MSG: "Content downloading complete",
 	ERR_FETCHING_CONTENT_PATH: "Error while getting content. Please try again."
-}
+};
+
+var AppErrors = {
+	contentListFetch: 'Error while fetching content list: ',
+	contentListFilterFetch: 'Error while fetching and filtering content list: ',
+	contetnPathFetch: 'Error while fetching content path: '
+};
