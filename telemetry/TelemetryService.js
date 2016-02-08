@@ -43,6 +43,11 @@ TelemetryService = {
             });
         }
     },
+    changeVersion: function(version) {
+        TelemetryService._version = version;
+        TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
+        console.info("Telemetry Version updated to:", version);
+    },
     getDataByField: function(field) {
 
     },

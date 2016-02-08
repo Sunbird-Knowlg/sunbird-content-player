@@ -17,7 +17,7 @@ TelemetryV1Manager = Class.extend({
         return this.createEvent("OE_START", {});
     },
     end: function(gameId) {
-        // console.log("genieservice_web.tList : " +  genieservice_web.tList);
+        //console.log("genieservice_web.tList : " +  telemetry_web.tList.length);
         return this._end.end();
     },
     interact: function(type, id, extype, data) {
