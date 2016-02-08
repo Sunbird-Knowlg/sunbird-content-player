@@ -43,7 +43,7 @@ function getTime(ms) {
         return v.insert(-2, ':');
     }
     else {
-        v = Date.now();
+        v = new Date().getTime();
         return v;
     }
 

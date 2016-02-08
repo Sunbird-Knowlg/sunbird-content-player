@@ -52,8 +52,8 @@ TelemetryEvent = Class.extend({
     },
     end: function() {
         if (this._isStarted) {
-            this.event.edata.eks.length = Math.round((Date.now() - this.startTime ) / 1000);
-            this.event.ets = Date.now();
+            this.event.edata.eks.length = Math.round((new Date().getTime() - this.startTime ) / 1000);
+            this.event.ets = new Date().getTime();
             return this;
         } else {
             throw "can't end event without starting.";
