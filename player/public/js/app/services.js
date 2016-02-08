@@ -1,7 +1,7 @@
 angular.module('quiz.services', ['ngResource'])
     .factory('ContentService', ['$window', '$rootScope', function($window, $rootScope) {
         var returnObject = {
-            _SUPPORTED_MIMETYPES: ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive",  "application/vnd.ekstep.content-collection"],
+            _SUPPORTED_MIMETYPES: ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
             getContentList: function(filter, childrenIds) {
                 return new Promise(function(resolve, reject) {
                     returnObject._filterContentList(filter, childrenIds)

@@ -1,22 +1,41 @@
-<ion-pane>
-    <ion-header-bar class="bar-balanced">
-        <div class="button button-clear icon" ng-show="showBackButton()" ng-click="backToParentCollection()">
-            <h4>Back</h4>
-        </div>
-        <h1 class="title" style="color:#5A3C22;font-size:20px; font-family:flavours;">{{title || "EkStep Content App"}}</h1>
+<style>
+    .swiper-background {
+        background-image: url("img/icons/splash.png");
+        background-size: cover;
+    }
+    .swiper-slide {
+        background-image:url('img/icons/img_panel.png');
+        background-position: center;
+        background-size: cover;
+        width: 150px;
+        height: 190px;
+        padding: 15px;
+        margin-left:30px !important;
+        margin-bottom:30px !important;
+        margin-top:10px !important;
+    }
+    .pane {
+        overflow-y: scroll;
+        overflow-x: scroll;
+        overflow: scroll;
+    }
+</style>
+
+<ion-pane class="swiper-background">
+    <ion-header-bar class="bar-header" style="background-color:transparent; border-bottom:0px;background-image:none;height:50px">
+        <!-- <div class="button button-clear icon" ng-show="showBackButton()" ng-click="backToParentCollection()"><h4>Back</h4></div> -->
+        <h1 class="title" style="color:#5A3C22;font-size:20px;height:50px;font-family:flavours;">{{title || "EkStep Content App"}}</h1>
         <div class="button button-clear icon">
-            <!-- <a href="javascript:void(0)" ng-click="resetContentListCache()" class="button button-clear" style="background:url(css/assets/skin02/btn_download.png) no-repeat right bottom;height:31px;width:31px;background-size: 30px 30px; margin-right:5px"></a> -->
-            <a href="javascript:void(0)" ng-click="showAboutUsPage()" class="button button-clear" style="background:url(css/assets/skin02/btn_info.png) no-repeat right bottom;height:31px;width:31px;background-size: 30px 30px; margin-right:5px"></a>
-            <a href="javascript:void(0)" ng-click="exitApp()" class="button button-clear" style="background:url(css/assets/skin02/btn_close.png) no-repeat right bottom;height:31px;width:31px;background-size: 30px 30px; margin-right:5px"></a>
+            <a href="javascript:void(0)" ng-click="exitApp()" class="button button-clear" style="background:url(img/icons/icn_close_game.png) no-repeat right bottom;height:51px;width:51px;background-size: 40px 40px; margin-right:5px"></a>
         </div>
     </ion-header-bar>
-    <ion-content padding="true">
-        <!-- <div class="row" style="flex-wrap: wrap;"> -->
-            <div class="product" ng-repeat="story in stories track by $index" ng-click="playContent(story);">
-                <img data-ng-src="{{story.appIcon}}" alt="" width="100" height="110" align="center"/>
-                <p class="product_name">{{story.name}}</p>
-            </div>
-        <!-- </div> -->
+    <ion-content>
+        <div class="product swiper-slide"
+            ng-repeat="story in stories track by $index"
+            ng-click="playContent(story);">
+            <img ng-src="{{story.appIcon}}"></img>
+            <p class="product_name">{{story.name}}</p>
+        </div>
     </ion-content>
 </ion-pane>
 

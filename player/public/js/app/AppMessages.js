@@ -1,5 +1,5 @@
-var AppMessages = {
-	NO_CONTENT_FOUND: "No content available. Please load.",
+AppMessages = {
+	NO_CONTENT_FOUND: "There are no stories or worksheets available. You can always download new ones !",
 	SUCCESS_GET_CONTENT_LIST: "Content list synced.",
 	ERR_GET_CONTENT_LIST: "Error while getting content list. Please try again.",
 	CONTENT_LOAD_MSG: "{0} downloaded to bookshelf",
