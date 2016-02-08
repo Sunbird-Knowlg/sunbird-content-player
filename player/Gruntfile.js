@@ -60,7 +60,7 @@ module.exports = function(grunt) {
                     beautify:true
                 },
                 files: {
-                    'public/js/app/telemetry-lib-0.3.min.js': [
+                    'public/js/app/telemetry.js': [
                         'public/js/thirdparty/exclude/date-format.js',
                         'public/js/thirdparty/exclude/Class.js',
                         '../telemetry/*.js',
