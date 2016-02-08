@@ -16,7 +16,7 @@ var OptionPlugin = Plugin.extend({
         var model = data.option;
         var value = undefined;
 
-        if(data.multiple) 
+        if (data.multiple)
             this._multiple = data.multiple;
 
         if (this._parent._controller && model) {
@@ -26,15 +26,15 @@ var OptionPlugin = Plugin.extend({
             this._index = parseInt(model.substring(model.indexOf('[') + 1, model.length - 1));
         }
         if (value && _.isFinite(this._index) && this._index > -1) {
-        	this._self = new createjs.Container();
-        	var dims = this.relativeDims();
-        	this._self.x = dims.x;
-        	this._self.y = dims.y;
+            this._self = new createjs.Container();
+            var dims = this.relativeDims();
+            this._self.x = dims.x;
+            this._self.y = dims.y;
             this._self.origX = dims.x;
             this._self.origY = dims.y;
             this._self.width = dims.w;
-            this._self.height = dims.h; 
-        	var hit = new createjs.Shape();
+            this._self.height = dims.h;
+            var hit = new createjs.Shape();
             hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h);
             this._self.hitArea = hit;
             this._value = value.value;
@@ -47,7 +47,7 @@ var OptionPlugin = Plugin.extend({
                 } else if (this._parent._type == 'mtf') {
                     this.renderMTFOption(value);
                 }
-            } else if(value.value.type == 'text') {
+            } else if (value.value.type == 'text') {
                 this.renderText(value.value);
                 if (this._parent._type == 'mcq') {
                     this.renderMCQOption();
@@ -64,23 +64,29 @@ var OptionPlugin = Plugin.extend({
         this._self.cursor = 'pointer';
         var instance = this;
         this._self.on('click', function(event) {
-            var ext = {
+            var eventData = {};
+            var val = instance._parent.selectOption(instance);
+            var data = {
                 type: event.type,
                 x: event.stageX,
                 y: event.stageY,
                 choice_id: instance._value.asset,
-                itemId: itemId
+                itemId: itemId,
+                res: [{
+                    "option": instance._value.asset
+                }],
+                state: (val ? 'selected' : 'unselected'),
+                optionTag: "MCQ"
             }
-            
-            var val = instance._parent.selectOption(instance);
-            ext.state = (val ? 'selected' : 'unselected');
-            instance.stageId = Renderer.theme._currentStage;
-            EventManager.processAppTelemetry({}, 'CHOOSE', instance, ext);
+            EventManager.processAppTelemetry({}, 'CHOOSE', instance, data);
         });
 
     },
+
     renderMTFOption: function(value) {
         var enableDrag = false;
+        var dragPos = {};
+        var dragItem = {};
         var controller = this._parent._controller;
         var itemId = controller.getModelValue("identifier");
         if (_.isFinite(value.index)) {
@@ -101,22 +107,26 @@ var OptionPlugin = Plugin.extend({
                     x: this.x - evt.stageX,
                     y: this.y - evt.stageY
                 };
-                var ext = {
-                    stageId: Renderer.theme._currentStage,
+                dragItem = instance._value.asset;
+                dragPos = {
+                    x: evt.stageX,
+                    y: evt.stageY
+                };
+                var data = {
                     type: evt.type,
                     x: evt.stageX,
                     y: evt.stageY,
                     drag_id: instance._value.asset,
                     itemId: itemId
                 }
-                EventManager.processAppTelemetry({}, 'DRAG', instance, ext);
+                EventManager.processAppTelemetry({}, 'DRAG', instance, data);
             });
             asset.on("pressmove", function(evt) {
                 this.x = evt.stageX + this.offset.x;
                 this.y = evt.stageY + this.offset.y;
 
                 instance.addShadow();
-                
+
                 Renderer.update = true;
             });
             asset.on("pressup", function(evt) {
@@ -124,20 +134,20 @@ var OptionPlugin = Plugin.extend({
                 if (instance._parent._force === true) {
                     snapTo = instance._parent.getLhsOption(value.answer);
                 } else {
-                    snapTo = instance._parent._lhs_options;    
+                    snapTo = instance._parent._lhs_options;
                 }
                 var plugin;
                 var dims;
                 var snapSuccess = false;
                 if (_.isArray(snapTo)) {
-                    for (var i=0; i<snapTo.length; i++) {
+                    for (var i = 0; i < snapTo.length; i++) {
                         if (snapSuccess) {
                             break;
                         } else {
                             plugin = snapTo[i];
                             dims = plugin._dimensions;
-                            var xFactor = parseFloat(this.width * (50/100));
-                            var yFactor = parseFloat(this.height * (50/100));
+                            var xFactor = parseFloat(this.width * (50 / 100));
+                            var yFactor = parseFloat(this.height * (50 / 100));
                             var x = dims.x - xFactor,
                                 y = dims.y - yFactor,
                                 maxX = dims.x + dims.w + xFactor,
@@ -152,8 +162,8 @@ var OptionPlugin = Plugin.extend({
                 } else if (snapTo) {
                     plugin = snapTo;
                     dims = plugin._dimensions;
-                    var xFactor = parseFloat(this.width * (50/100));
-                    var yFactor = parseFloat(this.height * (50/100));
+                    var xFactor = parseFloat(this.width * (50 / 100));
+                    var yFactor = parseFloat(this.height * (50 / 100));
                     var x = dims.x - xFactor,
                         y = dims.y - yFactor,
                         maxX = dims.x + dims.w + xFactor,
@@ -176,7 +186,7 @@ var OptionPlugin = Plugin.extend({
 
                     var flag = true;
                     // If multiple attribute of option tag is true.
-                    if(plugin._multiple)
+                    if (plugin._multiple)
                         flag = false;
                     // If there is an existing answer, nudge it out
                     if (plugin._answer && flag) {
@@ -201,16 +211,22 @@ var OptionPlugin = Plugin.extend({
 
                 instance.removeShadow();
 
-                var ext = {
-                    stageId: Renderer.theme._currentStage,
-                    type: evt.type,
-                    x: evt.stageX,
-                    y: evt.stageY,
-                    drop_id: drop_id,
-                    drop_idx: drop_idx,
-                    itemId: itemId
-                }
-                EventManager.processAppTelemetry({}, 'DROP', instance, ext);
+                var data = {
+                        type: evt.type,
+                        x: evt.stageX,
+                        y: evt.stageY,
+                        choice_id: instance._value.asset,
+                        itemId: itemId,
+                        drop_id: drop_id,
+                        drop_idx: drop_idx,
+                        pos: [{x: evt.stageX, y: evt.stageY}, dragPos],
+                        res: {
+                            dragItem: drop_idx
+                        },
+                        optionTag: "MTF"
+                    }
+                    // data.res[dragItem] = drop_idx;
+                EventManager.processAppTelemetry({}, 'DROP', instance, data);
                 Renderer.update = true;
             });
         }
@@ -240,12 +256,12 @@ var OptionPlugin = Plugin.extend({
         data.w = 100 - (2 * padx);
         data.h = 100 - (2 * pady);
 
-        var align  = (this._data.align ? this._data.align.toLowerCase() : 'center');
+        var align = (this._data.align ? this._data.align.toLowerCase() : 'center');
         var valign = (this._data.valign ? this._data.valign.toLowerCase() : 'middle');
 
         data.align = align;
         data.valign = valign;
-        
+
         this.initShadow(data);
 
         PluginManager.invoke('text', data, this, this._stage, this._theme);
@@ -256,7 +272,16 @@ var OptionPlugin = Plugin.extend({
 
         var highlightColor = this._data.highlight || '#E89241';
         var shadowColor = this._data.shadowColor || '#cccccc';
-        var shadowData = {x : 0, y: 0, w: 100, h: 100, type:'roundrect', fill: highlightColor, visible: false, opacity: (this._data.opacity || 1)};
+        var shadowData = {
+            x: 0,
+            y: 0,
+            w: 100,
+            h: 100,
+            type: 'roundrect',
+            fill: highlightColor,
+            visible: false,
+            opacity: (this._data.opacity || 1)
+        };
         this._self.shadow = PluginManager.invoke('shape', shadowData, this, this._stage, this._theme);
 
         var offsetX = this._data.offsetX || 0;

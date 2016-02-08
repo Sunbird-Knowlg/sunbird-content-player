@@ -14,23 +14,21 @@ var packageName = "org.ekstep.quiz.app",
 
 
 function backbuttonPressed() {
-    var ext = (Renderer.running || HTMLRenderer.running) ? {
+    var data = (Renderer.running || HTMLRenderer.running) ? {
         type: 'EXIT_CONTENT',
         stageId: Renderer.theme._currentStage
     } : {
         type: 'EXIT_APP'
     };
-    TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT').ext(ext).flush();
+    TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', data);
     (Renderer.running || HTMLRenderer.running) ? initBookshelf(): exitApp();
 }
 
 function exitApp() {
-    navigator.startApp.start(geniePackageName, function(message) {
+     navigator.startApp.start(geniePackageName, function(message) {
             try {
-                if (TelemetryService._gameData) {
-                    TelemetryService.end(packageName, version);
-                }
-            } catch(err) {
+                TelemetryService.exit(packageName, version);
+            } catch (err) {
                 console.error('End telemetry error:', err.message);
             }
             if (navigator.app) {
@@ -49,26 +47,23 @@ function exitApp() {
 }
 
 function startApp(app) {
-    if(!app) app = geniePackageName;
+     if (!app) app = geniePackageName;
     navigator.startApp.start(app, function(message) {
             exitApp();
-            if (TelemetryService._gameData) {
-                TelemetryService.end(packageName, version);
-            }
+            TelemetryService.exit(packageName, version)
         },
         function(error) {
-            if(app == geniePackageName)
+            if (app == geniePackageName)
                 alert("Unable to start Genie App.");
             else {
                 var bool = confirm('App not found. Do you want to search on PlayStore?');
-                if(bool) cordova.plugins.market.open(app);
+                if (bool) cordova.plugins.market.open(app);
             }
         });
 }
 
-function launchInitialPage(appInfo, $state) {
-    if (!TelemetryService._gameData) {
-        TelemetryService.init(GlobalContext.game).then(function() {
+function launchInitialPage(appInfo, $state) {    
+        TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
             if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
                 TelemetryService.start();
                 $state.go('showContent', {});
@@ -89,7 +84,6 @@ function launchInitialPage(appInfo, $state) {
             alert('TelemetryService init failed.');
             exitApp();
         });
-    }
 }
 
 angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
@@ -128,6 +122,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                     flavor = "sandbox";
                 GlobalContext.config.flavor = flavor;
             });
+
 
             GlobalContext.init(packageName, version).then(function(appInfo) {
                 launchInitialPage(GlobalContext.config.appInfo, $state);

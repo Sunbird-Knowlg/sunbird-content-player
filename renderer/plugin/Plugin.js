@@ -110,8 +110,7 @@ var Plugin = Class.extend({
 	            x: parseFloat(parentDims.w * (this._data.x || 0)/100),
 	            y: parseFloat(parentDims.h * (this._data.y || 0)/100),
 	            w: parseFloat(parentDims.w * (this._data.w || 0)/100),
-	            h: parseFloat(parentDims.h * (this._data.h || 0)/100),
-	            r: parseFloat(parentDims.w * (this._data.r || 0)/100)
+	            h: parseFloat(parentDims.h * (this._data.h || 0)/100)
 	        }
 		}
         return this._dimensions;
@@ -122,8 +121,7 @@ var Plugin = Class.extend({
             x: parseFloat(parentDims.w * (data.x || 0)/100),
             y: parseFloat(parentDims.h * (data.y || 0)/100),
             w: parseFloat(parentDims.w * (data.w || 0)/100),
-            h: parseFloat(parentDims.h * (data.h || 0)/100),
-            r: parseFloat(parentDims.w * (data.r || 0)/100)
+            h: parseFloat(parentDims.h * (data.h || 0)/100)
         }
         return relDimensions;
 	},
@@ -159,7 +157,6 @@ var Plugin = Class.extend({
 		} else {
 			this._self.visible = true;
 		}
-		this.stageId = (this._stage && this._stage._id) ? this._stage._id : "";
 		EventManager.processAppTelemetry(action, 'SHOW', this);
 		Renderer.update = true;
 	},
@@ -169,7 +166,6 @@ var Plugin = Class.extend({
 		} else {
 			this._self.visible = false;
 		}
-		this.stageId = (this._stage && this._stage._id) ? this._stage._id : "";
 		EventManager.processAppTelemetry(action, 'HIDE', this);
 		Renderer.update = true;
 	},
@@ -179,7 +175,6 @@ var Plugin = Class.extend({
 		} else {
 			this._self.visible = !this._self.visible;
 		}
-		this.stageId = (this._stage && this._stage._id) ? this._stage._id : "";
 		EventManager.processAppTelemetry(action, this._self.visible ? 'SHOW': 'HIDE', this);
 		Renderer.update = true;
 	},
@@ -243,7 +238,7 @@ var Plugin = Class.extend({
     	return visibleShadow;
     },
     drawBorder: function(data, dims) {
-    	if (data.stroke && !(this._self instanceof createjs.Shape)) {
+    	if (data.stroke) {
 			var strokeWidth = (data['stroke-width'] || 1);
 			var border = new createjs.Shape();
 			var graphics = border.graphics;

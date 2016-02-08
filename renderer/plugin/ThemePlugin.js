@@ -109,12 +109,9 @@ var ThemePlugin = Plugin.extend({
         this._self.tick();
     },
     restart: function() {
-        var gameId = undefined;
-        var version = undefined;
-        if (TelemetryService._gameData) {
-            gameId = TelemetryService._gameData.id;
-            version = TelemetryService._gameData.ver;
-        }
+        var gameId = TelemetryService.getGameId();
+        var version = TelemetryService.getGameVer();;
+
         var instance = this;
         TelemetryService.end();
         AssetManager.initStage(this._data.startStage, null, null, function() {
@@ -135,6 +132,7 @@ var ThemePlugin = Plugin.extend({
             instance.preloadStages();
             Renderer.update = true;
             childPlugin.uncache();
+            TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
         });
         var nextIdx = this._currIndex++;
         if(this._currentScene) {
@@ -289,10 +287,10 @@ var ThemePlugin = Plugin.extend({
         if(this._currentStage) {
             AssetManager.stopStageAudio(this._currentStage);
         }
-        TelemetryService.interrupt("IDLE", this._currentStage);
+        TelemetryService.interrupt("BACKGROUNG", this._currentStage);
     },
     resume: function() {
-        //TelemetryService.interrupt("RESUME", this._currentStage);
+        TelemetryService.interrupt("RESUME", this._currentStage);
     },
     setParam: function(param, value) {
         var instance = this;

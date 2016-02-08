@@ -1,11 +1,11 @@
 AudioManager = {
-	instances: {},
+    instances: {},
     // creating unique id for each audio instance using stageId.
     uniqueId: function(action) {
         return action.stageId + ':' + action.asset;
     },
-	play: function(action, instance) {
-		instance = instance || AudioManager.instances[AudioManager.uniqueId(action)] || {};
+    play: function(action, instance) {
+        instance = instance || AudioManager.instances[AudioManager.uniqueId(action)] || {};
         if(instance.object) {
             if(instance.object.paused) {
                 instance.object.paused = false;
@@ -18,11 +18,10 @@ AudioManager = {
             AudioManager.instances[AudioManager.uniqueId(action)] = instance;
             AssetManager.addStageAudio(Renderer.theme._currentStage, action.asset);
         }        
-        instance.stageId = Renderer.theme._currentStage;
-        EventManager.processAppTelemetry(action, 'LISTEN', instance);
+        EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PLAY"});
     },
     togglePlay: function(action) {
-    	var instance = AudioManager.instances[AudioManager.uniqueId(action)] || {};
+        var instance = AudioManager.instances[AudioManager.uniqueId(action)] || {};
         if(instance.object) {
             if(instance.object.playState === createjs.Sound.PLAY_FINISHED || instance.object.paused) {
                 AudioManager.play(action, instance);    
@@ -34,26 +33,22 @@ AudioManager = {
         }
     },
     pause: function(action, instance) {
-    	instance = instance || AudioManager.instances[AudioManager.uniqueId(action)];
+        instance = instance || AudioManager.instances[AudioManager.uniqueId(action)];
         if(instance.object && instance.object.playState === createjs.Sound.PLAY_SUCCEEDED) {
             instance.object.paused = true;
-
-            instance.stageId = Renderer.theme._currentStage;
-            EventManager.processAppTelemetry(action, 'PAUSE_LISTENING', instance);
+            EventManager.processAppTelemetry(action, 'PAUSE_LISTENING', instance, {subtype : "PAUSE"});
         }
     },
     stop: function(action) {
-    	var instance = AudioManager.instances[AudioManager.uniqueId(action)] || {};
+        var instance = AudioManager.instances[AudioManager.uniqueId(action)] || {};
         if(instance.object && instance.object.playState !== createjs.Sound.PLAY_FINISHED) {
             instance.object.stop();
-            instance.stageId = Renderer.theme._currentStage;
-            EventManager.processAppTelemetry(action, 'STOP_LISTENING', instance);
+            EventManager.processAppTelemetry(action, 'STOP_LISTENING', instance, {subtype : "STOP"});
         }
     },
     stopAll: function(action) {
-    	createjs.Sound.stop();
-        var stageId = Renderer.theme._currentStage;
-		EventManager.processAppTelemetry(action, 'STOP_ALL_SOUNDS',{"stageId" : stageId});
+        createjs.Sound.stop();
+        EventManager.processAppTelemetry(action, 'STOP_ALL_SOUNDS',instance, {subtype : "STOP_ALL"});
     },
     destroy: function(stageId, assetId) {
         var soundId = AudioManager.uniqueId({stageId: stageId, asset: assetId});
