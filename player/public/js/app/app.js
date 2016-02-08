@@ -213,7 +213,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 if($rootScope.stories && $rootScope.stories.length <=0) {
                     $rootScope.renderMessage(AppMessages.NO_CONTENT_FOUND);
                 } else {
-                    $rootScope.renderMessage(AppMessages.SUCCESS_GET_CONTENT_LIST, 3000);
+                    // No need to show this message
+                    //$rootScope.renderMessage(AppMessages.SUCCESS_GET_CONTENT_LIST, 3000);
                 }
             })
             .catch(function(err) {
@@ -375,8 +376,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
 
 function initBookshelf() {
     setTimeout(function() {
-        $(".product_title").remove();
-        $(".fx_shadow").remove();
+
+        var numRows = ((screen.height < 599) ? 1 : 2);
         var widthToHeight = 16 / 9;
         var newWidth = window.innerWidth;
         var newHeight = window.innerHeight;
@@ -386,24 +387,7 @@ function initBookshelf() {
         } else {
             newHeight = newWidth / widthToHeight;
         }
-        // $.bookshelfSlider('#bookshelf_slider', {
-        //     'item_width': newWidth,
-        //     'item_height': newHeight,
-        //     'products_box_margin_left': 30,
-        //     'product_title_textcolor': '#ffffff',
-        //     'product_title_bgcolor': '#990000',
-        //     'product_margin': 30,
-        //     'product_show_title': true,
-        //     'show_icons': true,
-        //     'buttons_margin': 15,
-        //     'buttons_align': 'center', // left, center, right
-        //     'slide_duration': 800,
-        //     'slide_easing': 'easeOutCirc',
-        //     'arrow_duration': 800,
-        //     'arrow_easing': 'easeInCirc',
-        //     'folder': ''
-        // });
-        $(".panel_slider").height($(".view-container").height() - $(".panel_title").height() - $(".panel_bar").height());
+
         console.log('Loading completed....');
         $("#loadingDiv").hide();
     }, 100);
