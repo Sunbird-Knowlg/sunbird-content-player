@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         uglify: {
             js: {
                 files: {
-                    'public/js/app/quizapp-0.3.min.js': [
+                    'public/js/app/renderer.min.js': [
                         'public/js/app/GlobalContext.js',
                         'public/js/app/AppConfig.js',
                         'public/js/app/AppMessages.js',
@@ -19,7 +19,7 @@ module.exports = function(grunt) {
                         'public/js/app/renderer.js',
                         'public/js/app/telemetry.js'
                     ],
-                    'public/js/app/telemetry-lib-0.3.min.js' : [
+                    'public/js/app/telemetry.min.js' : [
                         'public/js/app/telemetry.js'
                     ]
                 }
@@ -142,14 +142,14 @@ module.exports = function(grunt) {
                 options: {
                     bucket: 'ekstep-public',
                     mime: {
-                        'public/js/app/quizapp-0.3.min.js': 'application/javascript',
-                        'public/js/app/telemetry-lib-0.3.min.js': 'application/javascript'
+                        'public/js/app/renderer.min.js': 'application/javascript',
+                        'public/js/app/telemetry.min.js': 'application/javascript'
                     }
                 },
                 files: [{
                     expand: true,
                     cwd: 'public/js/app/',
-                    src: ['*-0.3.min.js'],
+                    src: ['*.min.js'],
                     dest: 'js/'
                 }]
             },
@@ -158,12 +158,12 @@ module.exports = function(grunt) {
                     bucket: 'ekstep-public'
                 },
                 files: [{
-                    dest: 'js/quizapp-0.3.min.js',
+                    dest: 'js/renderer.min.js',
                     exclude: "**/.*",
                     action: 'delete'
                 },
                 {
-                    dest: 'js/telemetry-lib-0.3.min.js',
+                    dest: 'js/telemetry.min.js',
                     exclude: "**/.*",
                     action: 'delete'
                 }]
@@ -306,7 +306,7 @@ module.exports = function(grunt) {
         },
         replace: {
             sensibol: {
-                src: ['www/js/app/AppConfig.js', 'www/js/app/quizapp-0.3.min.js'],
+                src: ['www/js/app/AppConfig.js', 'www/js/app/renderer.min.js'],
                 overwrite: true,
                 replacements: [{
                     from: /AUDIO_RECORDER/g,
@@ -314,7 +314,7 @@ module.exports = function(grunt) {
                 }]
             },
             android: {
-                src: ['www/js/app/AppConfig.js', 'www/js/app/quizapp-0.3.min.js'],
+                src: ['www/js/app/AppConfig.js', 'www/js/app/renderer.min.js'],
                 overwrite: true,
                 replacements: [{
                     from: /AUDIO_RECORDER/g,
@@ -383,7 +383,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js']);
     grunt.registerTask('build-all', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
 
-    grunt.registerTask('build-js', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:cleanJS', 'aws_s3:uploadJS', 'clean:minjs']);
+    grunt.registerTask('build-js', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS', 'clean:minjs']);
     grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'add-cordova-plugin-genieservices']);
     grunt.registerTask('build-unsigned-apk-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
     grunt.registerTask('build-apk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
