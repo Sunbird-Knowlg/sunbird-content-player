@@ -5,7 +5,7 @@ TelemetryEvent = Class.extend({
     name: undefined,
     event: undefined,
     init: function(eid, version, body, user, gdata) {
-        this.createdTime = new Date().getTime();
+        this.createdTime = getCurrentTime();
         this.name = eid;
         this.event = {
             ver: version,
@@ -47,12 +47,12 @@ TelemetryEvent = Class.extend({
     },
     start: function() {
         this._isStarted = true;
-        this.startTime = new Date().getTime();
+        this.startTime = getCurrentTime();
         return this;
     },
     end: function() {
         if (this._isStarted) {
-            this.event.edata.eks.length = Math.round((new Date().getTime() - this.startTime ) / 1000);
+            this.event.edata.eks.length = Math.round((getCurrentTime() - this.startTime ) / 1000);
             this.event.ets = new Date().getTime();
             return this;
         } else {

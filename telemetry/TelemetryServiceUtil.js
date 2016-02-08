@@ -46,6 +46,8 @@ function getTime(ms) {
         v = new Date().getTime();
         return v;
     }
+}
 
-    //.
+function getCurrentTime() {
+    return new Date().getTime();
 }
