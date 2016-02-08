@@ -1,5 +1,4 @@
 genieservice_web = {
-    tList: [],
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
@@ -53,10 +52,11 @@ genieservice_web = {
 if ("undefined" == typeof cordova) genieservice = genieservice_web;
 
 telemetry_web = {
+    tList: [],
     send: function(string) {
         return new Promise(function(resolve, reject) {
             console.log(string);
-            genieservice_web.tList.push(string);
+            telemetry_web.tList.push(string);
             resolve(true);
         });
     }

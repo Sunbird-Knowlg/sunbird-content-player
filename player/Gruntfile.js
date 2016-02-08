@@ -18,6 +18,9 @@ module.exports = function(grunt) {
                         'public/js/app/speech.js',
                         'public/js/app/renderer.js',
                         'public/js/app/telemetry.js'
+                    ],
+                    'public/js/app/telemetry-lib-0.3.min.js' : [
+                        'public/js/app/telemetry.js'
                     ]
                 }
             },
@@ -57,9 +60,9 @@ module.exports = function(grunt) {
                     beautify:true
                 },
                 files: {
-                    'public/js/app/telemetry.js': [
+                    'public/js/app/telemetry-lib-0.3.min.js': [
                         'public/js/thirdparty/exclude/date-format.js',
-                        'public/js/thirdparty/exclude/class.js',
+                        'public/js/thirdparty/exclude/Class.js',
                         '../telemetry/*.js',
                     ]
                 }
