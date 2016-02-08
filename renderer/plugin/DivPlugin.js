@@ -8,7 +8,7 @@ var DivPlugin = Plugin.extend({
         var dims = this.relativeDims();
         var div = document.getElementById(data.id);
         if (div) {
-            $("#" + data.id).remove();
+            jQuery("#" + data.id).remove();
         }
         div = document.createElement('div');
         if (data.style)
@@ -24,7 +24,7 @@ var DivPlugin = Plugin.extend({
 
         // TODO: need to check child events working with the current div and it's children (if id is provided.)
         // TODO: get the data from model - like how we are getting the JSON data for scene title.
-        $("#" + data.id).append(data.__cdata);
+        jQuery("#" + data.id).append(data.__cdata);
         this._div = div;
         this._self = new createjs.DOMElement(div);
         this._self.x = dims.x;
@@ -33,10 +33,10 @@ var DivPlugin = Plugin.extend({
     },
     registerEvents: function(id) {
         var instance = this;
-        $('#'+id).children().each(function () {
-            var data = $(this).data();
+        jQuery('#'+id).children().each(function () {
+            var data = jQuery(this).data();
             if (data && data.event) {
-                $(this).click(function(event) {
+                jQuery(this).click(function(event) {
                     event.preventDefault();
                     instance._triggerEvent(data.event);
                     console.info("Triggered event ",data.event);

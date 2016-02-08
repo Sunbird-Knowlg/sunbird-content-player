@@ -41,7 +41,7 @@ genieservice_web = {
     },
     getContentList: function(filter) {
         return new Promise(function(resolve, reject) {
-            $.post(genieservice_web.api.getContentList(), function(resp) {
+            jQuery.post(genieservice_web.api.getContentList(), function(resp) {
                     var result = {};
                     if (!resp.error) {
                         result.list = resp.content;

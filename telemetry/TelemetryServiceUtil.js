@@ -5,7 +5,7 @@ TelemetryServiceUtil = {
             if (TelemetryServiceUtil._config) {
                 resolve(TelemetryServiceUtil._config);
             } else {
-                $.getJSON('json/telemetryConfig.json', {}, function(data) {
+                jQuery.getJSON('json/telemetryConfig.json', {}, function(data) {
                         if (data) {
                             if (typeof data === 'string') {
                                 TelemetryServiceUtil._config = JSON.parse(data);

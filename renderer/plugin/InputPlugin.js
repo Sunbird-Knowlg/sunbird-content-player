@@ -8,7 +8,7 @@ var InputPlugin = Plugin.extend({
 		var dims = this.relativeDims();
 		var input = document.getElementById(data.id);
 		if(input) {
-			$("#" + data.id).remove();
+			jQuery("#" + data.id).remove();
 		}
         input = document.createElement('input');
         input.id = data.id;

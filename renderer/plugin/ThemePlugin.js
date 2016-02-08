@@ -78,7 +78,7 @@ var ThemePlugin = Plugin.extend({
             this.invokeStage(this._data.startStage);
         }
         this.update();
-        $('#gameAreaLoad').hide();
+        jQuery('#gameAreaLoad').hide();
     },
     addController: function(p) {
         var controller = ControllerManager.get(p, this.baseDir);

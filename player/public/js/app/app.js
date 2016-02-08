@@ -220,7 +220,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         }
 
         $scope.resetContentListCache = function() {
-            $("#loadingDiv").show();
+            jQuery("#loadingDiv").show();
             $rootScope.renderMessage("", 0);
             var childrenIds = (GlobalContext.config.appInfo.children) ? _.pluck(GlobalContext.config.appInfo.children, 'identifier') :[];
             ContentService.getContentList(GlobalContext.filter, childrenIds)
@@ -374,11 +374,11 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             console.log($scope.item);
             if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                 HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
-                    $('#gameAreaLoad').hide();
-                    $('#gameArea').hide();
+                    jQuery('#gameAreaLoad').hide();
+                    jQuery('#gameArea').hide();
                     var path = $scope.item.baseDir + '/index.html';
                     $scope.currentProjectUrl = path;
-                    $("#htmlFrame").show();
+                    jQuery("#htmlFrame").show();
                 });
             } else {
                 Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
@@ -485,6 +485,6 @@ function initBookshelf() {
         }
 
         console.log('Loading completed....');
-        $("#loadingDiv").hide();
+        jQuery("#loadingDiv").hide();
     }, 100);
 }

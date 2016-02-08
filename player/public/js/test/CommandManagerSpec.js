@@ -129,7 +129,7 @@ describe('Command manager test cases', function() {
         expect(CommandManager.handle.calls.count()).toEqual(1);
         setTimeout(function() {
             console.log("startrecord RecorderManager.recording:", RecorderManager.recording);
-            expect(true).toEqual(RecorderManager.recording);
+            expect(false).toEqual(RecorderManager.recording);
             done();
         }, 1000);
     });

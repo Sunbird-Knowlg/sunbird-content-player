@@ -53,7 +53,7 @@ Renderer = {
         }
     },
     initByJSON: function(gameRelPath, canvasId) {
-        $.get(gameRelPath + '/index.json', function(data) {
+        jQuery.get(gameRelPath + '/index.json', function(data) {
             Renderer.init(data, canvasId, gameRelPath);
         })
         .fail(function() {
@@ -61,7 +61,7 @@ Renderer = {
         });
     },
     initByXML: function(gameRelPath, canvasId) {
-        $.get(gameRelPath + '/index.ecml', function(data) {
+        jQuery.get(gameRelPath + '/index.ecml', function(data) {
             Renderer.init(data, canvasId, gameRelPath);
         },null, 'xml')
         .fail(function(err) {
@@ -69,7 +69,7 @@ Renderer = {
         });
     },
     init: function(data, canvasId, gameRelPath) {
-        if(!$.isPlainObject(data)) {
+        if(!jQuery.isPlainObject(data)) {
             var x2js = new X2JS({attributePrefix: 'none'});
             data = x2js.xml2json(data);
         }

@@ -5,7 +5,7 @@ var DataGenerator = {
 		(dataType)?dataType = dataType.toLowerCase(): dataType = "json";
 		var filename = id + '.' + dataType;
 		var fullPath = baseDir + "/" + folder + "/" + filename;
-		$.getJSON(fullPath, function(data) {
+		jQuery.getJSON(fullPath, function(data) {
 			DataGenerator._onLoad(data, controller);
 		}).fail(function() {
 			console.error("error while fetching json: "+fullPath);

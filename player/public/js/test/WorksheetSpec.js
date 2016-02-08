@@ -5,8 +5,8 @@ describe('Worksheets and Stories Validations', function() {
       // worksheets/worksheet2/markup.xml
       // worksheets/addition_by_grouping/markup.xml
       // stories/haircut_story/markup.xml
-        $.get('stories/haircut_story/markup.xml', function(data) {
-                if (!$.isPlainObject(data)) {
+        jQuery.get('stories/haircut_story/markup.xml', function(data) {
+                if (!jQuery.isPlainObject(data)) {
                     var x2js = new X2JS({
                         attributePrefix: 'none'
                     });

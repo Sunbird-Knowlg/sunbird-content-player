@@ -4,7 +4,7 @@ var ItemDataGenerator = {
 		var folder = type;
 		var filename = id + '.json';
 		var fullPath = baseDir + "/" + folder + "/" + filename;
-		$.getJSON(fullPath, function(data) {
+		jQuery.getJSON(fullPath, function(data) {
 			ItemDataGenerator._onLoad(data, controller);
 		}).fail(function() {
 			console.error("error while fetching json: "+ fullPath);
