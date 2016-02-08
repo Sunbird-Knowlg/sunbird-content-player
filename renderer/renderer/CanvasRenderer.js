@@ -53,7 +53,7 @@ Renderer = {
         }
     },
     initByJSON: function(gameRelPath, canvasId) {
-        $.get(gameRelPath + '/index.json', function(data) {
+        $.getJSON(gameRelPath + '/index.json', function(data) {
             Renderer.init(data, canvasId, gameRelPath);
         })
         .fail(function() {
