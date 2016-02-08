@@ -27,8 +27,8 @@ EventManager = {
 		// Conditional evaluation to register event.
 		if (evt['ev-if']) {
 			var expr = evt['ev-if'].trim();
-			if (!expr.startsWith("${")) expr = "${" + expr;
-            if (!expr.endsWith("}")) expr = expr + "}"
+			if (!(expr.substring(0,2) == "${")) expr = "${" + expr;
+            if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}"
 			register = plugin.evaluateExpr(expr);
 		}
 		if (register) {
@@ -78,8 +78,8 @@ EventManager = {
 		// Conditional evaluation for handle action.
 		if (action['ev-if']) {
 			var expr = action['ev-if'].trim();
-			if (!expr.startsWith("${")) expr = "${" + expr;
-            if (!expr.endsWith("}")) expr = expr + "}"
+			if (!(expr.substring(0,2) == "${")) expr = "${" + expr;
+            if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}"
 			handle = plugin.evaluateExpr(expr);
 		}
 		if (handle) {

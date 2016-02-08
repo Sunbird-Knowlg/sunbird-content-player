@@ -121,7 +121,7 @@ CommandManager = {
         var keys = _.keys(action);
         keys.forEach(function(key) {
             var lowerKey = key.toLowerCase();
-            if (lowerKey.startsWith("data-")) {
+            if (lowerKey.substring(0,5) == "data-") {
                 dataAttributes[lowerKey.replace("data-","")] = action[key];
             }
         });

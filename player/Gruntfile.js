@@ -383,7 +383,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js']);
     grunt.registerTask('build-all', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
 
-    grunt.registerTask('build-js', ['uglify:renderer', 'uglify:speech', 'uglify:js', 'aws_s3:cleanJS', 'aws_s3:uploadJS', 'clean:minjs']);
+    grunt.registerTask('build-js', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:cleanJS', 'aws_s3:uploadJS', 'clean:minjs']);
     grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'add-cordova-plugin-genieservices']);
     grunt.registerTask('build-unsigned-apk-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
     grunt.registerTask('build-apk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);

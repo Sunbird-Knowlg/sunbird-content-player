@@ -10,7 +10,7 @@ var EmbedPlugin = Plugin.extend({
             if (template) {
                 for (var k in data) {
                     if (k === 'template' || k === 'template-name') continue;
-                    if (k.startsWith('var-')) {
+                    if (k.substring(0,4) == "var-") {
                         this._stage._templateVars[k.substring(4)] = data[k];
                     } else {
                         this._stage._templateVars[k] = data[k];

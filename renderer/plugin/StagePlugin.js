@@ -62,8 +62,8 @@ var StagePlugin = Plugin.extend({
         // Conditional evaluation to add controller.
         if (p['ev-if']) {
             var expr = p['ev-if'].trim();
-            if (!expr.startsWith("${")) expr = "${" + expr;
-            if (!expr.endsWith("}")) expr = expr + "}"
+            if (!(expr.substring(0,2) == "${")) expr = "${" + expr;
+            if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}"
             add = this.evaluateExpr(expr);
         }
         if (add) {

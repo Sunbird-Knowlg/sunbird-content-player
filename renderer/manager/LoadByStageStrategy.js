@@ -17,7 +17,7 @@ LoadByStageStrategy = Class.extend({
             if (!_.isArray(themeData.manifest.media)) themeData.manifest.media = [themeData.manifest.media];
         }
         themeData.manifest.media.forEach(function(media) {
-            media.src = (media.src.startsWith("http")) ? media.src : basePath + media.src;
+            media.src = (media.src.substring(0,4) == "http") ? media.src : basePath + media.src;
             if(createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
                 if(media.type !== 'sound' && media.type !== 'audiosprite') {
                     media.src = 'file:///' + media.src;

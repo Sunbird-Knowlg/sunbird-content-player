@@ -43,8 +43,8 @@ var Plugin = Class.extend({
 		// Conditional evaluation for rendering
 		if (data['ev-if']) {
 			var expr = data['ev-if'].trim();
-			if (!expr.startsWith("${")) expr = "${" + expr;
-            if (!expr.endsWith("}")) expr = expr + "}"
+			if (!(expr.substring(0,2) == "${")) expr = "${" + expr;
+            if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}"
 			var exprVal = this.evaluateExpr(expr);
 			if (typeof exprVal != undefined) {
 				if (this._self) {
@@ -309,7 +309,7 @@ var Plugin = Class.extend({
         var value = undefined;
         try {
         	expr = expr.trim();
-        	if(expr.startsWith("${") && expr.endsWith("}")) {
+        	if((expr.substring(0,2) == "${") && (expr.substring(expr.length-1, expr.length) == "}")) {
         		expr = expr.substring(2,expr.length);
         		expr = expr.substring(0,expr.length-1);
         		value = eval(expr);
