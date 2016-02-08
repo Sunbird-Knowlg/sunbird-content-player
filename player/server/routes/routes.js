@@ -10,6 +10,6 @@ var contentHelper = require('../helpers/ContentViewHelper');
 module.exports = function(app, dirname) {
 	
 	/** Content List Routes */
-	app.post('/genie-canvas/v1/content/list', contentHelper.getContentList);
+	app.post('/genie-canvas/v2/content/list', contentHelper.getContentList);
 };
 

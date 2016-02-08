@@ -3,12 +3,15 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'quiz' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var packageName = "org.ekstep.quiz.app";
-var version = AppConfig.version;
-var packageNameDelhi = "org.ekstep.delhi.curriculum";
-var geniePackageName = "org.ekstep.android.genie";
+var packageName = "org.ekstep.quiz.app",
+    version = AppConfig.version,
+    packageNameDelhi = "org.ekstep.delhi.curriculum",
+    geniePackageName = "org.ekstep.android.genie",
 
-var SUPPORTED_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"];
+    CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
+    COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
+    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive";
+
 
 function backbuttonPressed() {
     var ext = (Renderer.running || HTMLRenderer.running) ? {
@@ -63,6 +66,32 @@ function startApp(app) {
         });
 }
 
+function launchInitialPage(appInfo, $state) {
+    if (!TelemetryService._gameData) {
+        TelemetryService.init(GlobalContext.game).then(function() {
+            if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
+                TelemetryService.start();
+                $state.go('showContent', {});
+            } else if (COLLECTION_MIMETYPE == appInfo.mimeType) {
+                GlobalContext.game.id = GlobalContext.config.appInfo.code;
+                TelemetryService.start();
+                $state.go('contentList', {});
+            } else if (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName) {
+                GlobalContext.game.id = GlobalContext.config.appInfo.code;
+                TelemetryService.start();
+                $state.go('contentList', {});
+            } else {
+                alert("App launched with invalid context.");
+                exitApp();
+            }
+        }).catch(function(error) {
+            console.log('TelemetryService init failed');
+            alert('TelemetryService init failed.');
+            exitApp();
+        });
+    }
+}
+
 angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
     .run(function($ionicPlatform, $ionicModal, $cordovaFile, $cordovaToast, ContentService, $state) {
         $ionicPlatform.ready(function() {
@@ -100,26 +129,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 GlobalContext.config.flavor = flavor;
             });
 
-            GlobalContext.init(packageName, version).then(function() {
-                if (!TelemetryService._gameData) {
-                    TelemetryService.init(GlobalContext.game).then(function() {
-                        if (GlobalContext.config.appInfo &&
-                            GlobalContext.config.appInfo.code &&
-                            GlobalContext.config.appInfo.code != packageName
-                                && (typeof GlobalContext.config.appInfo.filter == 'undefined')) {
-                            TelemetryService.start();
-                            $state.go('showContent', {});
-                        } else {
-                            if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.code) {
-                                GlobalContext.game.id = GlobalContext.config.appInfo.code;
-                            }
-                            TelemetryService.start();
-                            $state.go('contentList', {});
-                        }
-                    }).catch(function(error) {
-                        console.log('TelemetryService init failed');
-                    });
-                }
+            GlobalContext.init(packageName, version).then(function(appInfo) {
+                launchInitialPage(GlobalContext.config.appInfo, $state);
             }).catch(function(error) {
                 alert('Please open this app from Genie.');
                 exitApp();
@@ -145,6 +156,11 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             });
     })
     .controller('ContentListCtrl', function($scope, $rootScope, $http, $ionicModal, $cordovaFile, $cordovaDialogs, $cordovaToast, $ionicPopover, $state, $q, ContentService) {
+        
+        //To Store current selected collectio item
+        $scope.collectionItem; 
+        $scope.rootStories;
+        $scope.collectionItems = [];
 
         $ionicModal.fromTemplateUrl('about.html', {
             scope: $scope,
@@ -211,7 +227,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         $scope.resetContentListCache = function() {
             $("#loadingDiv").show();
             $rootScope.renderMessage("", 0);
-            ContentService.getContentList(GlobalContext.filter)
+            var childrenIds = (GlobalContext.config.appInfo.children) ? _.pluck(GlobalContext.config.appInfo.children, 'identifier') :[];
+            ContentService.getContentList(GlobalContext.filter, childrenIds)
             .then(function(result) {
                 $rootScope.$apply(function() {
                     $rootScope.stories = result;
@@ -232,13 +249,89 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 $rootScope.loadBookshelf();
                 $rootScope.renderMessage(AppMessages.ERR_GET_CONTENT_LIST, 3000);
             });
-        }
+        };
 
         $rootScope.loadBookshelf = function() {
             initBookshelf();
         };
 
+        $scope.showBackButton = function(){
+            if($scope.collectionItems.length > 0){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        /**
+         * This is to show the selected collection, children in BookShell
+         */
+        $scope.showCollectionItems = function(){
+            if($scope.collectionItem.children){
+                var contChildren = $scope.collectionItem.children;
+                if(contChildren.length > 0){
+                    //For Back button reference
+                    $scope.updateCollectionItems($scope.collectionItem);
+
+                    //Used to go back to home
+                    $scope.duplicateRootStories();
+
+                    $scope.stories = [];
+                    //Getting selected collection item childrens to show in the bookshell
+                    _.each(contChildren, function(child){
+                        var story = _.findWhere($scope.rootStories, {'identifier': child.identifier});
+                        $scope.stories.push(story);
+                    });                        
+                }
+            }
+        };
+
+        /**
+         * Back to parent collection in bookshell
+         */
+        $scope.backToParentCollection = function(){
+            if($scope.collectionItems.length == 1){
+                //Go to root/home list
+                $scope.stories = angular.copy($scope.rootStories);
+                $scope.collectionItems = [];
+                $scope.collectionItem = null;
+            }else{
+                //go to parent collection list 
+                var parentCollection = $scope.collectionItems.pop();
+                parentCollection = _.findWhere($scope.rootStories, {'identifier': parentCollection.identifier});
+                $scope.playContent(parentCollection);
+            }
+        };
+
+        /**
+         * this is to duplicate root stories. 
+         * After selecting nested collection items, we can show root items directly 
+         */
+        $scope.duplicateRootStories = function(){
+            //Storing base root stories
+            if(_.isUndefined($scope.rootStories)){
+                $scope.rootStories = angular.copy($scope.stories);                
+            }
+        };
+
+        /**
+         * This is used to back button functionality.
+         * When user want to go back to parent collection, then we are getting the last item from this collection 
+         */
+        $scope.updateCollectionItems = function(content){
+            var collectionItem = {
+                identifier: content.identifier,
+            }
+            $scope.collectionItems[$scope.collectionItems.length] = collectionItem;
+        }
+
         $scope.playContent = function(content) {
+            if(content.mimeType == COLLECTION_MIMETYPE){
+                //Selected item is of type "Collection". So show its child items in BookShell
+                $scope.collectionItem = content;
+                $scope.showCollectionItems();
+                return;
+            }
             $state.go('playContent', {
                 'itemId': content.identifier
             });
@@ -247,6 +340,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         $scope.showAboutUsPage = function() {
             $scope.aboutModal.show();
         };
+
         $scope.hideAboutUsPage = function() {
             $scope.aboutModal.hide();
         };

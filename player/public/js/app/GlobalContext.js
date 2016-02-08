@@ -36,7 +36,7 @@ GlobalContext = {
                     resolve(GlobalContext.config);
                 });
             } else {
-                GlobalContext.config = { origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping", appInfo: {"code":"org.ekstep.quiz.app"}};
+                GlobalContext.config = { origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping", appInfo: {code:"org.ekstep.quiz.app", mimeType: "application/vnd.android.package-archive"}};
                 resolve(GlobalContext.config);
             }
         })

@@ -8,7 +8,7 @@ var async = require('async'),
     fs = require('fs'),
     Download = require('download'),
     jsonfile = require('jsonfile'),
-    mimeType = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
+    SUPPORTED_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     downloading = false,
     isAvailableList = [],
     contentList = [],
@@ -16,25 +16,26 @@ var async = require('async'),
 
 exports.getContentList = function(cb, type, contentType) {
     var args = {
-        path: {
-            type: type,
-            contentType: contentType
-        },
         data: {
-            request: {}
+            request: { 
+                "search": {
+                    "sort": ["name", "contentType"],
+                    "order": "desc"
+                }
+            }
         }
     }
     if (!downloading) {
         downloading = true;
-        restClient.postCall("/taxonomy-service/v1/game/list", args, function(err, data) {
+        restClient.postCall("/taxonomy-service/v2/content/list", args, function(err, data) {
             if (err) {
                 cb(err);
             } else {
                 var contents = data.result;
                 var result = {};
                 var contentList = [];
-                _.each(contents.games, function(object) {
-                    if (_.contains(mimeType, object.mimeType)) {
+                _.each(contents.content, function(object) {
+                    if (_.contains(SUPPORTED_MIMETYPES, object.mimeType)) {
                         var map = {};
                         map.identifier = object.identifier;
                         map.localData = object;
@@ -124,6 +125,7 @@ function downloadHelper(content) {
                 isAvailableList.push(content);
                 contentList.push(content);
                 writeFile(contentList);
+                console.info("Content downloaded for "+content.identifier);
                 resolve(content);
             }).catch(function(err) {
                 reject(err);
