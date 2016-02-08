@@ -66,15 +66,15 @@ TelemetryV2Manager = Class.extend({
         }
     },
     interrupt: function(type, id) {
-            var eventStr = TelemetryService.manager._config.events[name];
+            var eventStr = TelemetryService._config.events["OE_INTERRUPT"];
             var eks = {
                 "type": type,
                 "stageid": id || ''
             };
-            if (!_.contains(eventStr.eks.type.values, type)) {
-                edata.eks["type"] = type;
-                type = "OTHER";
-            }
+            // if (!_.contains(eventStr.eks.type.values, type)) {
+            //     eks["type"] = type;
+            //     type = "OTHER";
+            // }
             return this.createEvent("OE_INTERRUPT", eks);
     },
     logError: function(eventName, error) {

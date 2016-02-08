@@ -1,5 +1,5 @@
 TelemetryService = {
-    _version: "1.0",
+    _version: "2.0",
     _baseDir: 'EkStep Content App',
     isActive: false,
     _config: undefined,
@@ -117,7 +117,7 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.instance.interrupt(type, id);
+        return TelemetryService.flushEvent(TelemetryService.instance.interrupt(type, id));
     },
     logError: function(eventName, error) {
         var data = {

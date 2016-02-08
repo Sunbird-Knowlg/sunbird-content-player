@@ -287,10 +287,10 @@ var ThemePlugin = Plugin.extend({
         if(this._currentStage) {
             AssetManager.stopStageAudio(this._currentStage);
         }
-        TelemetryService.interrupt("IDLE", this._currentStage);
+        TelemetryService.interrupt("BACKGROUNG", this._currentStage);
     },
     resume: function() {
-        //TelemetryService.interrupt("RESUME", this._currentStage);
+        TelemetryService.interrupt("RESUME", this._currentStage);
     },
     setParam: function(param, value) {
         var instance = this;

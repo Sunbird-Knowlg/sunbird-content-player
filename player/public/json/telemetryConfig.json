@@ -114,6 +114,7 @@
                     "values": [
                         "BACKGROUND",
                         "IDLE",
+                        "RESUME",
                         "SLEEP",
                         "CALL",
                         "SWITCH",
