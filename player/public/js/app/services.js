@@ -52,7 +52,7 @@ angular.module('quiz.services', ['ngResource'])
                     .then(function(result) {
                         if (childrenIds && childrenIds.length > 0) {
                             resolve(_.filter(result.list, function(item) {
-                                return childrenIds.indexOf(item.id) > -1;
+                                return childrenIds.indexOf(item.identifier) > -1;
                             }));
                         } else {
                             resolve(result.list);
