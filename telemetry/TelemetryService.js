@@ -32,7 +32,6 @@ TelemetryService = {
                         if (TelemetryService._config.isActive) TelemetryService.isActive = TelemetryService._config.isActive;
                         resolve(true);
                     }).catch(function(err) {
-
                         reject(err);
                     });
 
@@ -158,6 +157,5 @@ TelemetryService = {
         TelemetryService._data = [];
         if (TelemetryService.instance._gameData)
             TelemetryService.end(packageName, ver);
-    },
-    
+    }
 }
