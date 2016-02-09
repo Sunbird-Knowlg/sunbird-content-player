@@ -139,11 +139,9 @@ var ThemePlugin = Plugin.extend({
             this._currentScene.dispatchEvent('exit');
             this._currentScene = childPlugin;
             this._director.replace(child, this.getTransitionEffect(this._animationEffect));
-            this._director.pop();
         } else {
             this._currentScene = childPlugin;
             this._director.replace(child);
-            this._director.pop();
         }
         childPlugin.setIndex(nextIdx);
     },
