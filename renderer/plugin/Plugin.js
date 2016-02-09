@@ -154,19 +154,19 @@ var Plugin = Class.extend({
 	show: function(action) {
 		if(_.contains(this.events, 'show')) {
 			EventManager.dispatchEvent(this._data.id, 'show');
-		} else {
+		} else if(!this._self.visible) {
 			this._self.visible = true;
+			EventManager.processAppTelemetry(action, 'SHOW', this);
 		}
-		EventManager.processAppTelemetry(action, 'SHOW', this);
 		Renderer.update = true;
 	},
 	hide: function(action) {
 		if(_.contains(this.events, 'hide')) {
 			EventManager.dispatchEvent(this._data.id, 'hide');
-		} else {
+		} else if(this._self.visible) { 
 			this._self.visible = false;
+			EventManager.processAppTelemetry(action, 'HIDE', this);
 		}
-		EventManager.processAppTelemetry(action, 'HIDE', this);
 		Renderer.update = true;
 	},
 	toggleShow: function(action) {
@@ -174,8 +174,8 @@ var Plugin = Class.extend({
 			EventManager.dispatchEvent(this._data.id, 'toggleShow');
 		} else {
 			this._self.visible = !this._self.visible;
+			EventManager.processAppTelemetry(action, this._self.visible ? 'SHOW': 'HIDE', this);
 		}
-		EventManager.processAppTelemetry(action, this._self.visible ? 'SHOW': 'HIDE', this);
 		Renderer.update = true;
 	},
 	toggleShadow: function() {
