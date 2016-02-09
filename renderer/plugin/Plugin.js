@@ -31,7 +31,7 @@ var Plugin = Class.extend({
         }
         var instance = this;
 		if(data.appEvents) {
-			this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(','));	
+			this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/));
 		}
 		EventManager.registerEvents(this, this._data);
 		this._id = this._data.id || this._data.asset || _.uniqueId('plugin');
