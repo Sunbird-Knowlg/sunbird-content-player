@@ -139,9 +139,11 @@ var ThemePlugin = Plugin.extend({
             this._currentScene.dispatchEvent('exit');
             this._currentScene = childPlugin;
             this._director.replace(child, this.getTransitionEffect(this._animationEffect));
+            this._director.pop();
         } else {
             this._currentScene = childPlugin;
             this._director.replace(child);
+            this._director.pop();
         }
         childPlugin.setIndex(nextIdx);
     },
@@ -212,6 +214,10 @@ var ThemePlugin = Plugin.extend({
         }
     },
     disableInputs: function() {
+        //This is to remove all div's added inside 'GameArea' div which are positioned at absolute position
+        jQuery('#'+Renderer.divIds.gameArea + ' div').each(function(a) {
+            $(this).remove();
+        });
         this.inputs.forEach(function(inputId) {
             document.getElementById(inputId).style.display = 'none';
         })
