@@ -70,23 +70,23 @@ angular.module('quiz.services', ['ngResource'])
                                     returnResult(list);
                                 })
                                 .catch(function(err) {
-                                    returnResult(list, "Error while fetching filtered content:" + err);
+                                    returnResult(list, "Error while fetching filtered content:" + JSON.stringify(err));
                                 });
                             } else {
                                 returnResult(list);
                             }
                         })
                         .catch(function(err) {
-                            returnResult(list, "Error while fetching filterContentList:" + err);
+                            returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err));
                         })
                     } else {
-                        genieservice.getContentList()
+                        genieservice.getContentList([])
                         .then(function(result) {
                             list = result.list;
                             returnResult(list);
                         })
                         .catch(function(err) {
-                            returnResult(list, "Error while fetching filterContentList:" + err);
+                            returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err));
                         });
                     }
                 });

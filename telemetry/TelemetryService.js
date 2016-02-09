@@ -1,5 +1,5 @@
 TelemetryService = {
-    _version: "2.0",
+    _version: "1.0",
     _baseDir: 'EkStep Content App',
     isActive: false,
     _config: undefined,

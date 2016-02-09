@@ -6,7 +6,7 @@
 var packageName = "org.ekstep.quiz.app",
     version = AppConfig.version,
     packageNameDelhi = "org.ekstep.delhi.curriculum",
-    geniePackageName = "org.ekstep.android.genie",
+    geniePackageName = "org.ekstep.genieservices",
 
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
@@ -230,7 +230,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 });
                 $rootScope.loadBookshelf();
                 if($rootScope.stories && $rootScope.stories.length <=0) {
-                    $rootScope.renderMessage(AppMessages.NO_CONTENT_FOUND);
+                    $rootScope.renderMessage(AppMessages.NO_CONTENT_LIST_FOUND);
                 } else {
                     // No need to show this message
                     //$rootScope.renderMessage(AppMessages.SUCCESS_GET_CONTENT_LIST, 3000);
@@ -431,7 +431,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                         $rootScope.stories = [data];
                     })
                     .catch(function(err) {
-                        console.log(err);
+                        alert(AppMessages.NO_CONTENT_FOUND);
+                        exitApp();
                     });
             }
 
