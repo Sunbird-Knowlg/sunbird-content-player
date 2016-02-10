@@ -51,19 +51,19 @@ TelemetryService = {
 
     },
     getGameData: function() {
-        return TelemetryService._gameData
+        return TelemetryService.isActive ? TelemetryService._gameData : undefined;
     },
     getInstance: function() {
-        return TelemetryService.instance;
+        return TelemetryService.isActive ? TelemetryService.instance : undefined;
     },
     getMouseEventMapping: function() {
         return TelemetryService.mouseEventMapping;
     },
     getGameId: function() {
-        return TelemetryService._gameData.id;
+        return TelemetryService.isActive ? TelemetryService._gameData.id : undefined;
     },
     getGameVer: function() {
-        return TelemetryService._gameData.ver;
+        return TelemetryService.isActive ? TelemetryService._gameData.ver : undefined;
     },
     exitWithError: function(error) {
         var message = '';

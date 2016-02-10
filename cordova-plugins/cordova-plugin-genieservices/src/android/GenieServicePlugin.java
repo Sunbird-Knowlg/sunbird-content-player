@@ -93,7 +93,11 @@ public class GenieServicePlugin extends CordovaPlugin {
             } else {
                 filter = new String[0];
             }
-            content.getList(filter, new GenieServicesListResponse(callbackContext));
+            if(filter.length == 0) {
+                content.getList(new GenieServicesListResponse(callbackContext));
+            } else {
+                content.filter(filter, new GenieServicesListResponse(callbackContext));
+            }
         }
         return true;
     }
