@@ -54,7 +54,7 @@ angular.module('quiz.services', ['ngResource'])
                         resolve(list);
                     };
                     if (filter || childrenIds) {
-                        genieservice.getContentList()
+                        genieservice.getContentList([])
                         .then(function(result) {
                             if (childrenIds && childrenIds.length > 0) {
                                 list = _.filter(result.list, function(item) {
