@@ -34,10 +34,14 @@ TelemetryV1Manager = Class.extend({
             ext.type = type;
             type = "OTHER";
         }
+        if(data.subtype == "PAUSE" || data.subtype == "STOP")
+            type = data.subtype + "_LISTENING";
+        if(data.subtype == "STOP_ALL")
+            type = data.subtype + "_SOUNDS";
         var eks = {
             "type": type ? type : "",
             "id": id,
-            "extype": extype,
+            "extype": type,
             "uri": ""
         };
         return this.createEvent("OE_INTERACT", eks).ext(ext);

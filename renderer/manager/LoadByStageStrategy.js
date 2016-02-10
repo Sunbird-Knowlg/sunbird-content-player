@@ -17,32 +17,34 @@ LoadByStageStrategy = Class.extend({
             if (!_.isArray(themeData.manifest.media)) themeData.manifest.media = [themeData.manifest.media];
         }
         themeData.manifest.media.forEach(function(media) {
-            media.src = (media.src.substring(0,4) == "http") ? media.src : basePath + media.src;
-            if(createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
-                if(media.type !== 'sound' && media.type !== 'audiosprite') {
-                    media.src = 'file:///' + media.src;
-                }
-            }
-
-            if (media.type == 'json') {
-                instance.commonAssets.push(_.clone(media));
-            } else if(media.type == 'spritesheet') {
-                var imgId = media.id+"_image";
-                instance.commonAssets.push({"id": imgId, "src": media.src, "type": "image"});
-                media.images = [];
-                var animations = {};
-                if (media.animations) {
-                    for (k in media.animations) {
-                        animations[k] = JSON.parse(media.animations[k]);
+            if ((media) && (media.src)) {
+                media.src = (media.src.substring(0,4) == "http") ? media.src : basePath + media.src;
+                if(createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
+                    if(media.type !== 'sound' && media.type !== 'audiosprite') {
+                        media.src = 'file:///' + media.src;
                     }
                 }
-                media.animations = animations;
-                instance.spriteSheetMap[media.id] = media;
-            } else {
-                if(media.type == 'audiosprite') {
-                    if(!_.isArray(media.data.audioSprite)) media.data.audioSprite = [media.data.audioSprite];
+
+                if (media.type == 'json') {
+                    instance.commonAssets.push(_.clone(media));
+                } else if(media.type == 'spritesheet') {
+                    var imgId = media.id+"_image";
+                    instance.commonAssets.push({"id": imgId, "src": media.src, "type": "image"});
+                    media.images = [];
+                    var animations = {};
+                    if (media.animations) {
+                        for (k in media.animations) {
+                            animations[k] = JSON.parse(media.animations[k]);
+                        }
+                    }
+                    media.animations = animations;
+                    instance.spriteSheetMap[media.id] = media;
+                } else {
+                    if(media.type == 'audiosprite') {
+                        if(!_.isArray(media.data.audioSprite)) media.data.audioSprite = [media.data.audioSprite];
+                    }
+                    instance.assetMap[media.id] = media;
                 }
-                instance.assetMap[media.id] = media;
             }
         });
         var stages = themeData.stage;
@@ -112,7 +114,7 @@ LoadByStageStrategy = Class.extend({
         if (!asset) {
             if(this.assetMap[assetId]) {
                 console.error('Asset not found. Returning - ' + (this.assetMap[assetId].src));
-                return this.assetMap[assetId].src;                            
+                return this.assetMap[assetId].src;
             } else
                 console.error('"' + assetId +'" Asset not found. Please check index.ecml.');
         };
@@ -164,7 +166,7 @@ LoadByStageStrategy = Class.extend({
                 });
                 loader.installPlugin(createjs.Sound);
                 loader.loadManifest(manifest, true);
-                instance.loaders[stageId] = loader;    
+                instance.loaders[stageId] = loader;
             } else {
                 if (cb) {
                     cb();

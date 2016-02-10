@@ -6,7 +6,7 @@
 var packageName = "org.ekstep.quiz.app",
     version = AppConfig.version,
     packageNameDelhi = "org.ekstep.delhi.curriculum",
-    geniePackageName = "org.ekstep.android.genie",
+    geniePackageName = "org.ekstep.genieservices",
 
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
@@ -86,6 +86,11 @@ function launchInitialPage(appInfo, $state) {
         });
 }
 
+function contentNotAvailable() {
+    alert(AppMessages.NO_CONTENT_FOUND);
+    exitApp();
+}
+
 angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
     .run(function($ionicPlatform, $ionicModal, $cordovaFile, $cordovaToast, ContentService, $state) {
         $ionicPlatform.ready(function() {
@@ -127,8 +132,13 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             GlobalContext.init(packageName, version).then(function(appInfo) {
                 launchInitialPage(GlobalContext.config.appInfo, $state);
             }).catch(function(error) {
-                alert('Please open this app from Genie.');
-                exitApp();
+                console.log("Error Globalcontext.init:", error);
+                if (error == 'CONTENT_NOT_FOUND') {
+                    contentNotAvailable();
+                } else {
+                    alert('Please open this app from Genie.');
+                    exitApp();    
+                }
             });
         });
     })
@@ -222,7 +232,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         $scope.resetContentListCache = function() {
             $("#loadingDiv").show();
             $rootScope.renderMessage("", 0);
-            var childrenIds = (GlobalContext.config.appInfo.children) ? _.pluck(GlobalContext.config.appInfo.children, 'identifier') :[];
+            var childrenIds = (GlobalContext.config.appInfo.children) ? _.pluck(GlobalContext.config.appInfo.children, 'identifier') :null;
             ContentService.getContentList(GlobalContext.filter, childrenIds)
             .then(function(result) {
                 $rootScope.$apply(function() {
@@ -230,7 +240,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 });
                 $rootScope.loadBookshelf();
                 if($rootScope.stories && $rootScope.stories.length <=0) {
-                    $rootScope.renderMessage(AppMessages.NO_CONTENT_FOUND);
+                    $rootScope.renderMessage(AppMessages.NO_CONTENT_LIST_FOUND);
                 } else {
                     // No need to show this message
                     //$rootScope.renderMessage(AppMessages.SUCCESS_GET_CONTENT_LIST, 3000);
@@ -431,7 +441,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                         $rootScope.stories = [data];
                     })
                     .catch(function(err) {
-                        console.log(err);
+                        contentNotAvailable();
                     });
             }
 
@@ -468,7 +478,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             startApp();
         }
     });
-
 
 function initBookshelf() {
     setTimeout(function() {

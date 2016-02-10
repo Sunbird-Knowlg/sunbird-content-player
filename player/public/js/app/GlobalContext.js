@@ -31,9 +31,27 @@ GlobalContext = {
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
                         GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
                         // Assuming filter is always an array of strings.
-                        GlobalContext.filter = (GlobalContext.config.appInfo.filter)? JSON.parse(GlobalContext.config.appInfo.filter): [];
+                        GlobalContext.filter = (GlobalContext.config.appInfo.filter)? JSON.parse(GlobalContext.config.appInfo.filter): GlobalContext.config.appInfo.filter;
                     }
-                    resolve(GlobalContext.config);
+                })
+                .then(function() {
+                    if (GlobalContext.config.appInfo && COLLECTION_MIMETYPE == GlobalContext.config.appInfo.mimeType && null == GlobalContext.filter) {
+                        genieservice.getContent(GlobalContext.config.appInfo.identifier)
+                        .then(function(result) {
+                            if (result.isAvailable) {
+                                GlobalContext.config.appInfo = result.localData || result.serverData;
+                                resolve(GlobalContext.config);
+                            } else {
+                                reject('CONTENT_NOT_FOUND');
+                            }
+                        })
+                        .catch(function(err) {
+                            console.error(err);
+                            reject('CONTENT_NOT_FOUND');
+                        });
+                    } else {
+                        resolve(GlobalContext.config);
+                    }
                 });
             } else {
                 GlobalContext.config = { origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping", appInfo: {code:"org.ekstep.quiz.app", mimeType: "application/vnd.android.package-archive"}};
@@ -46,7 +64,7 @@ GlobalContext = {
             if(config && config.origin == 'Genie') {
                 return genieservice.getCurrentUser();
             } else {
-                reject(false);
+                reject('INVALID_ORIGIN');
             }
         })
         .then(function(result) {
@@ -56,11 +74,14 @@ GlobalContext = {
                     GlobalContext._params.user = GlobalContext.user;
                     resolve(true);
                 } else {
-                    reject(false);
+                    reject('INVALID_USER');
                 }
             } else {
-                reject(false);
+                reject('INVALID_USER');
             }
+        })
+        .catch(function(err) {
+            reject(err);
         });
     },
     _getIntentExtra: function(param, contextObj) {

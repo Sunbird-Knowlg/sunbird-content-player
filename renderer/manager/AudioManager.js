@@ -18,11 +18,17 @@ AudioManager = {
             AudioManager.instances[AudioManager.uniqueId(action)] = instance;
             AssetManager.addStageAudio(Renderer.theme._currentStage, action.asset);
         }        
-        EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PLAY"});
+        if(createjs.Sound.PLAY_FAILED != instance.object.playState) {
+            EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PLAY"});
+        }
+        else {
+            delete AudioManager.instances[AudioManager.uniqueId(action)];
+            console.info( "Audio with 'id :" + action.asset  + "' is not found..")
+        }
     },
     togglePlay: function(action) {
         var instance = AudioManager.instances[AudioManager.uniqueId(action)] || {};
-        if(instance.object) {
+        if(instance && instance.object) {
             if(instance.object.playState === createjs.Sound.PLAY_FINISHED || instance.object.paused) {
                 AudioManager.play(action, instance);    
             } else if (!instance.object.paused) {
@@ -34,14 +40,14 @@ AudioManager = {
     },
     pause: function(action, instance) {
         instance = instance || AudioManager.instances[AudioManager.uniqueId(action)];
-        if(instance.object && instance.object.playState === createjs.Sound.PLAY_SUCCEEDED) {
+        if(instance && instance.object && instance.object.playState === createjs.Sound.PLAY_SUCCEEDED) {
             instance.object.paused = true;
             EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PAUSE"});
         }
     },
     stop: function(action) {
         var instance = AudioManager.instances[AudioManager.uniqueId(action)] || {};
-        if(instance.object && instance.object.playState !== createjs.Sound.PLAY_FINISHED) {
+        if(instance && instance.object && instance.object.playState !== createjs.Sound.PLAY_FINISHED) {
             instance.object.stop();
             EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "STOP"});
         }
