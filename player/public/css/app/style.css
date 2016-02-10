@@ -87,8 +87,8 @@ ion-popover-view.fit ion-content {
 }
 
 .preview_posterImg {
-	max-height: 90px;
-	max-width: 90px;
+	max-height: 100px;
+	max-width: 100px;
 }
 
 .preview_txt {
@@ -106,7 +106,7 @@ ion-popover-view.fit ion-content {
 }
 
 .preview_button_bg {
-	background-image: url('../../img/skin/button_bg.png');
+	background-image: url('../../img/icons/btn_play_selected.png');
     background-repeat: no-repeat;
     background-size: 140px 45px;
     padding-top: 13px;
