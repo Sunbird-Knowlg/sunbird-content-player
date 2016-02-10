@@ -79,8 +79,10 @@ TelemetryService = {
     start: function(id, ver) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
+        } else {
+            ver = (ver) ? ver + "" : ver;
+            return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver));    
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver));
     },
     end: function() {
         if (!TelemetryService.isActive) {

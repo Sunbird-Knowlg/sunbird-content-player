@@ -75,7 +75,7 @@ var OptionPlugin = Plugin.extend({
                 res: [{
                     "option": instance._value.asset
                 }],
-                state: (val ? 'selected' : 'unselected'),
+                state: (val ? 'SELECTED' : 'UNSELECTED'),
                 optionTag: "MCQ"
             }
             EventManager.processAppTelemetry({}, 'CHOOSE', instance, data);
@@ -223,6 +223,7 @@ var OptionPlugin = Plugin.extend({
                         res: {
                             dragItem: drop_idx
                         },
+                        state: "",
                         optionTag: "MTF"
                     }
                     // data.res[dragItem] = drop_idx;
