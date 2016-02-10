@@ -86,6 +86,11 @@ function launchInitialPage(appInfo, $state) {
         });
 }
 
+function contentNotAvailable() {
+    alert(AppMessages.NO_CONTENT_FOUND);
+    exitApp();
+}
+
 angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
     .run(function($ionicPlatform, $ionicModal, $cordovaFile, $cordovaToast, ContentService, $state) {
         $ionicPlatform.ready(function() {
@@ -127,8 +132,13 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             GlobalContext.init(packageName, version).then(function(appInfo) {
                 launchInitialPage(GlobalContext.config.appInfo, $state);
             }).catch(function(error) {
-                alert('Please open this app from Genie.');
-                exitApp();
+                console.log("Error Globalcontext.init:", error);
+                if (error == 'CONTENT_NOT_FOUND') {
+                    contentNotAvailable();
+                } else {
+                    alert('Please open this app from Genie.');
+                    exitApp();    
+                }
             });
         });
     })
@@ -431,8 +441,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                         $rootScope.stories = [data];
                     })
                     .catch(function(err) {
-                        alert(AppMessages.NO_CONTENT_FOUND);
-                        exitApp();
+                        contentNotAvailable();
                     });
             }
 
@@ -469,7 +478,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             startApp();
         }
     });
-
 
 function initBookshelf() {
     setTimeout(function() {
