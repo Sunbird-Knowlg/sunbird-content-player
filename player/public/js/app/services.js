@@ -48,20 +48,47 @@ angular.module('quiz.services', ['ngResource'])
             },
             _filterContentList: function(filter, childrenIds) {
                 return new Promise(function(resolve, reject) {
-                    genieservice.getContentList(filter)
-                    .then(function(result) {
-                        if (childrenIds && childrenIds.length > 0) {
-                            resolve(_.filter(result.list, function(item) {
-                                return childrenIds.indexOf(item.identifier) > -1;
-                            }));
-                        } else {
-                            resolve(result.list);
-                        }
-                    })
-                    .catch(function(err) {
-                        console.error(AppErrors.contentListFilterFetch, err);
-                        reject(err);
-                    });
+                    var list = [];
+                    var returnResult = function(list, errorMessage) {
+                        if (errorMessage) console.error(errorMessage);
+                        resolve(list);
+                    };
+                    if (filter || childrenIds) {
+                        genieservice.getContentList([])
+                        .then(function(result) {
+                            if (childrenIds && childrenIds.length > 0) {
+                                list = _.filter(result.list, function(item) {
+                                    return childrenIds.indexOf(item.identifier) > -1;
+                                });
+                            }
+                        })
+                        .then(function() {
+                            if(filter) {
+                                genieservice.getContentList(filter)
+                                .then(function(result) {
+                                    list = _.union(list, result.list);
+                                    returnResult(list);
+                                })
+                                .catch(function(err) {
+                                    returnResult(list, "Error while fetching filtered content:" + JSON.stringify(err));
+                                });
+                            } else {
+                                returnResult(list);
+                            }
+                        })
+                        .catch(function(err) {
+                            returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err));
+                        })
+                    } else {
+                        genieservice.getContentList([])
+                        .then(function(result) {
+                            list = result.list;
+                            returnResult(list);
+                        })
+                        .catch(function(err) {
+                            returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err));
+                        });
+                    }
                 });
             },
             _getAvailableContentList: function(list) {
