@@ -8,6 +8,16 @@ module.exports = function(grunt) {
                 },
             },
         },
+       watch:{
+            renderer: {
+                files: ['public/js/thirdparty/exclude/**/*',
+                        '../renderer/**/*',
+                        '../speech/**/*',
+                        '../telemetry/*.js'
+                        ],
+                tasks: ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js'] 
+            }
+        },
         uglify: {
             js: {
                 files: {
@@ -34,7 +44,8 @@ module.exports = function(grunt) {
             },
             renderer: {
                 options: {
-                    beautify: true
+                    beautify: true,                   
+                    mangle: false                    
                 },
                 files: {
                     'public/js/app/renderer.js': [
@@ -329,6 +340,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-aws-s3');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-rename');
     grunt.loadNpmTasks('grunt-mkdir');
@@ -380,6 +392,7 @@ module.exports = function(grunt) {
         if (grunt.file.exists('plugins/org.ekstep.recorder.service.plugin')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
     });
 
+   // grunt.registerTask('watch-def', ['watch:renderer', 'watch:speech', 'watch:telemetry']);
     grunt.registerTask('default', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js']);
     grunt.registerTask('build-all', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
 
