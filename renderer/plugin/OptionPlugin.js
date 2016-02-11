@@ -220,9 +220,9 @@ var OptionPlugin = Plugin.extend({
                         drop_id: drop_id,
                         drop_idx: drop_idx,
                         pos: [{x: evt.stageX, y: evt.stageY}, dragPos],
-                        res: {
+                        res: [{
                             dragItem: drop_idx
-                        },
+                        }],
                         state: "",
                         optionTag: "MTF"
                     }

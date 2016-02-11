@@ -12,7 +12,9 @@ FTBEvaluator = {
 
 				// each value answered
 				if (model[ans]) {
-					res.push(ans + '=' + model[ans]);
+					var obj = {};
+					obj[ans] = model[ans];
+					res.push(obj);
 				}
 
 				if (model[ans] && answer[ans].value == model[ans]) {

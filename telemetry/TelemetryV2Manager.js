@@ -60,9 +60,18 @@ TelemetryV2Manager = Class.extend({
         if (eventObj && eventObj._isStarted) {
             eventObj.event.edata.eks.score = data.score || 0;
             eventObj.event.edata.eks.pass = data.pass ? 'Yes' : 'No';
-            eventObj.event.edata.eks.resvalues = data.res || [];
+            eventObj.event.edata.eks.resvalues = _.isEmpty(data.res)? [] : data.res;
             eventObj.event.edata.eks.uri = data.uri || "";
             eventObj.event.edata.eks.exlength = 0;
+            if (_.isArray(eventObj.event.edata.eks.resvalues)) {
+                eventObj.event.edata.eks.resvalues = _.map(eventObj.event.edata.eks.resvalues, function(val) {
+                    val = _.isObject(val) ? val :{"0" : val};
+                    return val;
+                });
+            } else {
+                eventObj.event.edata.eks.resvalues = [];
+            }
+
             eventObj.end();
             eventObj.flush();
             return eventObj;
@@ -116,7 +125,7 @@ TelemetryV2Manager = Class.extend({
                 "qid": data.itemId ? data.itemId : "",
                 "type": type ? type : "",
                 "state": data.state ? data.state : "",
-                "resvalues": data.res ? data.res : []
+                "resvalues": _.isEmpty(data.res) ? [] : data.res
             };
         return this.createEvent("OE_ITEM_RESPONSE", eks);
     },
