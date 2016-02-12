@@ -17,15 +17,11 @@ TelemetryV2Manager = Class.extend({
         return this.createEvent("OE_START", {});
     },
     end: function(gameId) {
-        // console.log("genieservice_web.tList : " +  genieservice_web.tList);
         return this._end.end();
     },
     interact: function(type, id, extype, eks) {
-        if (eks.optionTag) {
-            console.log("inside interact option tag....");
-            var itemResponseEvent = this.itemResponse(eks);
-            itemResponseEvent.flush();
-        }
+        if (eks.optionTag) 
+            TelemetryService.flushEvent(this.itemResponse(eks));
         if (type != "DRAG") {
             var eks = {
                 "stageid": eks.stageId ? eks.stageId : "",
@@ -39,9 +35,7 @@ TelemetryV2Manager = Class.extend({
                 "values": []
             };
             return this.createEvent("OE_INTERACT", eks);
-        } else {
-            return new InActiveEvent();
-        }
+        } 
     },
     assess: function(qid, subj, qlevel, data) {
         if (qid && subj && qlevel) {
@@ -73,7 +67,6 @@ TelemetryV2Manager = Class.extend({
             }
 
             eventObj.end();
-            eventObj.flush();
             return eventObj;
         }
     },
@@ -83,10 +76,6 @@ TelemetryV2Manager = Class.extend({
                 "type": type,
                 "stageid": id || ''
             };
-            // if (!_.contains(eventStr.eks.type.values, type)) {
-            //     eks["type"] = type;
-            //     type = "OTHER";
-            // }
             return this.createEvent("OE_INTERRUPT", eks);
     },
     logError: function(eventName, error) {
@@ -128,9 +117,5 @@ TelemetryV2Manager = Class.extend({
                 "resvalues": _.isEmpty(data.res) ? [] : data.res
             };
         return this.createEvent("OE_ITEM_RESPONSE", eks);
-    },
-    levelSet: function(eventData) {
-        var eventName = 'OE_LEVEL_SET';
-        return new InActiveEvent();
     }
 })

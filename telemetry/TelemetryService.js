@@ -106,7 +106,7 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.instance.assessEnd(event, data);
+        return TelemetryService.flushEvent(TelemetryService.instance.assessEnd(event, data));
     },
     levelSet: function(eventData) {
         if (TelemetryService.isActive) {
@@ -119,15 +119,6 @@ TelemetryService = {
             return new InActiveEvent();
         }
         return TelemetryService.flushEvent(TelemetryService.instance.interrupt(type, id));
-    },
-    logError: function(eventName, error) {
-        var data = {
-                'eventName': eventName,
-                'message': error,
-                'time': getCurrentTime()
-            }
-            // change this to write to file??
-        console.log('TelemetryService Error:', JSON.stringify(data));
     },
     exitApp: function() {
         setTimeout(function() {

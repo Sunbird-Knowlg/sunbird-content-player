@@ -17,7 +17,6 @@ TelemetryV1Manager = Class.extend({
         return this.createEvent("OE_START", {});
     },
     end: function(gameId) {
-        //console.log("genieservice_web.tList : " +  telemetry_web.tList.length);
         return this._end.end();
     },
     interact: function(type, id, extype, data) {
@@ -70,14 +69,8 @@ TelemetryV1Manager = Class.extend({
             eventObj.event.edata.eks.res = data.res || [];
             eventObj.event.edata.eks.uri = data.uri || "";
             eventObj.end();
-            eventObj.flush();
             return eventObj;
         }
-    },
-    levelSet: function(eventData) {
-        if (TelemetryService.isActive) {
-            var eventName = 'OE_LEVEL_SET';
-            return new InActiveEvent();        }
     },
     interrupt: function(type, id) {
         var eventStr = TelemetryService._config.events["OE_INTERRUPT"];
@@ -91,15 +84,6 @@ TelemetryV1Manager = Class.extend({
             type = "OTHER";
         }
         return this.createEvent("OE_INTERRUPT", eks).ext(ext);
-    },
-    logError: function(eventName, error) {
-        var data = {
-                'eventName': eventName,
-                'message': error,
-                'time': Date.now()
-            }
-            // change this to write to file??
-        console.log('TelemetryServiceV1 Error:', JSON.stringify(data));
     },
     exitApp: function() {
         setTimeout(function() {
