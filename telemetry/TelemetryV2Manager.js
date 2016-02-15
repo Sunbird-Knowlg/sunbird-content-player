@@ -78,20 +78,6 @@ TelemetryV2Manager = Class.extend({
             };
             return this.createEvent("OE_INTERRUPT", eks);
     },
-    logError: function(eventName, error) {
-        var data = {
-                'eventName': eventName,
-                'message': error,
-                'time': toGenieDateTime(new Date().getTime())
-            }
-            // change this to write to file??
-        console.log('TelemetryServiceV2 Error:', JSON.stringify(data));
-        var $body = angular.element(document.body); // 1
-        var $rootScope = $body.scope().$root; // 2
-        $rootScope.$broadcast('show-message', {
-            "message": 'Telemetry :' + JSON.stringify(data.message.errors)
-        });
-    },
     exitApp: function() {
         setTimeout(function() {
             navigator.app.exitApp();

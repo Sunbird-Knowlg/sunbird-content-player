@@ -150,5 +150,19 @@ TelemetryService = {
         TelemetryService._data = [];
         if (TelemetryService.instance._gameData)
             TelemetryService.end(packageName, ver);
+    },
+    logError: function(eventName, error) {
+        var data = {
+                'eventName': eventName,
+                'message': error,
+                'time': getCurrentTime()
+            }
+            // change this to write to file??
+        console.log('TelemetryService Error:', JSON.stringify(data));
+        var $body = angular.element(document.body); // 1
+        var $rootScope = $body.scope().$root; // 2
+        $rootScope.$broadcast('show-message', {
+            "message": 'Telemetry :' + JSON.stringify(data.message.errors)
+        });
     }
 }
