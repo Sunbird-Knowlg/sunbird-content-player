@@ -42,6 +42,9 @@ TelemetryService = {
             });
         }
     },
+    testInit: function(gameData, user) {
+        return TelemetryService.init(gameData, user);
+    },
     changeVersion: function(version) {
         TelemetryService._version = version;
         TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
@@ -164,5 +167,24 @@ TelemetryService = {
         $rootScope.$broadcast('show-message', {
             "message": 'Telemetry :' + JSON.stringify(data.message.errors)
         });
+    },
+    print: function() {
+        if (TelemetryService._data.length > 0) {
+            var events = TelemetryService._data.cleanUndefined();
+            events = _.pluck(events, "event");
+            console.log(JSON.stringify(events));
+        } else {
+            console.log("No events to print.");
+        }
     }
 }
+
+Array.prototype.cleanUndefined = function() {
+  for (var i = 0; i < this.length; i++) {
+    if (this[i] == undefined) {         
+      this.splice(i, 1);
+      i--;
+    }
+  }
+  return this;
+};
