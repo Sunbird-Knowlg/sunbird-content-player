@@ -42,6 +42,9 @@ TelemetryService = {
             });
         }
     },
+    testInit: function(gameData, user) {
+        return TelemetryService.init(gameData, user);
+    },
     changeVersion: function(version) {
         TelemetryService._version = version;
         TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
@@ -79,8 +82,10 @@ TelemetryService = {
     start: function(id, ver) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
+        } else {
+            ver = (ver) ? ver + "" : ver;
+            return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver));    
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver));
     },
     end: function() {
         if (!TelemetryService.isActive) {
@@ -104,7 +109,7 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.instance.assessEnd(event, data);
+        return TelemetryService.flushEvent(TelemetryService.instance.assessEnd(event, data));
     },
     levelSet: function(eventData) {
         if (TelemetryService.isActive) {
@@ -117,15 +122,6 @@ TelemetryService = {
             return new InActiveEvent();
         }
         return TelemetryService.flushEvent(TelemetryService.instance.interrupt(type, id));
-    },
-    logError: function(eventName, error) {
-        var data = {
-                'eventName': eventName,
-                'message': error,
-                'time': getCurrentTime()
-            }
-            // change this to write to file??
-        console.log('TelemetryService Error:', JSON.stringify(data));
     },
     exitApp: function() {
         setTimeout(function() {
@@ -157,5 +153,38 @@ TelemetryService = {
         TelemetryService._data = [];
         if (TelemetryService.instance._gameData)
             TelemetryService.end(packageName, ver);
+    },
+    logError: function(eventName, error) {
+        var data = {
+                'eventName': eventName,
+                'message': error,
+                'time': getCurrentTime()
+            }
+            // change this to write to file??
+        console.log('TelemetryService Error:', JSON.stringify(data));
+        var $body = angular.element(document.body); // 1
+        var $rootScope = $body.scope().$root; // 2
+        $rootScope.$broadcast('show-message', {
+            "message": 'Telemetry :' + JSON.stringify(data.message.errors)
+        });
+    },
+    print: function() {
+        if (TelemetryService._data.length > 0) {
+            var events = TelemetryService._data.cleanUndefined();
+            events = _.pluck(events, "event");
+            console.log(JSON.stringify(events));
+        } else {
+            console.log("No events to print.");
+        }
     }
 }
+
+Array.prototype.cleanUndefined = function() {
+  for (var i = 0; i < this.length; i++) {
+    if (this[i] == undefined) {         
+      this.splice(i, 1);
+      i--;
+    }
+  }
+  return this;
+};

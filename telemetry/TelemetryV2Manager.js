@@ -17,15 +17,11 @@ TelemetryV2Manager = Class.extend({
         return this.createEvent("OE_START", {});
     },
     end: function(gameId) {
-        // console.log("genieservice_web.tList : " +  genieservice_web.tList);
         return this._end.end();
     },
     interact: function(type, id, extype, eks) {
-        if (eks.optionTag) {
-            console.log("inside interact option tag....");
-            var itemResponseEvent = this.itemResponse(eks);
-            itemResponseEvent.flush();
-        }
+        if (eks.optionTag) 
+            TelemetryService.flushEvent(this.itemResponse(eks));
         if (type != "DRAG") {
             var eks = {
                 "stageid": eks.stageId ? eks.stageId : "",
@@ -34,12 +30,12 @@ TelemetryV2Manager = Class.extend({
                 "pos": eks.pos ? eks.pos : [],
                 "id": id,
                 "tid": eks.tid ? eks.tid : "",
-                "uri": eks.uri ? eks.uri : ""
+                "uri": eks.uri ? eks.uri : "",
+                "extype": "",
+                "values": []
             };
             return this.createEvent("OE_INTERACT", eks);
-        } else {
-            return new InActiveEvent();
-        }
+        } 
     },
     assess: function(qid, subj, qlevel, data) {
         if (qid && subj && qlevel) {
@@ -58,10 +54,19 @@ TelemetryV2Manager = Class.extend({
         if (eventObj && eventObj._isStarted) {
             eventObj.event.edata.eks.score = data.score || 0;
             eventObj.event.edata.eks.pass = data.pass ? 'Yes' : 'No';
-            eventObj.event.edata.eks.res = data.res || [];
+            eventObj.event.edata.eks.resvalues = _.isEmpty(data.res)? [] : data.res;
             eventObj.event.edata.eks.uri = data.uri || "";
+            eventObj.event.edata.eks.exlength = 0;
+            if (_.isArray(eventObj.event.edata.eks.resvalues)) {
+                eventObj.event.edata.eks.resvalues = _.map(eventObj.event.edata.eks.resvalues, function(val) {
+                    val = _.isObject(val) ? val :{"0" : val};
+                    return val;
+                });
+            } else {
+                eventObj.event.edata.eks.resvalues = [];
+            }
+
             eventObj.end();
-            eventObj.flush();
             return eventObj;
         }
     },
@@ -71,25 +76,7 @@ TelemetryV2Manager = Class.extend({
                 "type": type,
                 "stageid": id || ''
             };
-            // if (!_.contains(eventStr.eks.type.values, type)) {
-            //     eks["type"] = type;
-            //     type = "OTHER";
-            // }
             return this.createEvent("OE_INTERRUPT", eks);
-    },
-    logError: function(eventName, error) {
-        var data = {
-                'eventName': eventName,
-                'message': error,
-                'time': toGenieDateTime(new Date().getTime())
-            }
-            // change this to write to file??
-        console.log('TelemetryServiceV2 Error:', JSON.stringify(data));
-        var $body = angular.element(document.body); // 1
-        var $rootScope = $body.scope().$root; // 2
-        $rootScope.$broadcast('show-message', {
-            "message": 'Telemetry :' + JSON.stringify(data.message.errors)
-        });
     },
     exitApp: function() {
         setTimeout(function() {
@@ -100,7 +87,9 @@ TelemetryV2Manager = Class.extend({
         if (stageto != undefined && stageid != undefined && stageto != stageid) {
             var eks = {
                 stageid: stageid ? stageid : "",
-                stageto: stageto ? stageto : ""
+                stageto: stageto ? stageto : "",
+                type: "",
+                itype: ""
             };
             return this.createEvent("OE_NAVIGATE", eks);
         }
@@ -111,12 +100,8 @@ TelemetryV2Manager = Class.extend({
                 "qid": data.itemId ? data.itemId : "",
                 "type": type ? type : "",
                 "state": data.state ? data.state : "",
-                "res": data.res ? data.res : []
+                "resvalues": _.isEmpty(data.res) ? [] : data.res
             };
         return this.createEvent("OE_ITEM_RESPONSE", eks);
-    },
-    levelSet: function(eventData) {
-        var eventName = 'OE_LEVEL_SET';
-        return new InActiveEvent();
     }
 })

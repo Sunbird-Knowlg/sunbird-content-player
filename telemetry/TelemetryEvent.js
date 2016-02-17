@@ -22,7 +22,7 @@ TelemetryEvent = Class.extend({
     },
     flush: function() {
         if (this.event) {
-            if (telemetry) {
+            if ("undefined" != typeof telemetry) {
                 telemetry.send(JSON.stringify(this.event)).then(function() {
                     return JSON.stringify(this.event);
                 }).catch(function(err) {

@@ -12,7 +12,7 @@ MCQEvaluator = {
 					
 					// remember in telemetry what the response was 
 					if (opt.selected) {
-						res.push(opt.value.asset);
+						res.push({"0": opt.value.asset});
 					}
 
 					// evaluate if this is correct answer
