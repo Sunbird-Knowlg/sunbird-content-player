@@ -22,7 +22,7 @@ var ShapePlugin = Plugin.extend({
         // Radius for rounded rectangle
         var radius = data.radius || 10;
 
-        switch(data.type) {
+        switch(data.type.toLowerCase()) {
     		case 'rect':
     			graphics.dr(0, 0, dims.w, dims.h);
     			if(data.hitArea) {
@@ -66,6 +66,10 @@ var ShapePlugin = Plugin.extend({
         }
         if(data.opacity)
             this._self.alpha = data.opacity;
+    },
+    drawBorder : function(){
+
     }
+
 });
 PluginManager.registerPlugin('shape', ShapePlugin);
