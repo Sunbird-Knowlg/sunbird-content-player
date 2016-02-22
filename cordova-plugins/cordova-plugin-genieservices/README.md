@@ -9,7 +9,9 @@ This plugin provides the ability to send telemetry, get user profile, get conten
 
 ## Installation
 
-    cordova plugin add ./cordova-plugin-genieservices
+    cordova plugin add https://username@github.com/ekstep/Genie-Canvas.git#:/cordova-plugins/cordova-plugin-genieservices/
+
+* change `username` in the above URL. It is a private repository so, the same user should have access to add plugin.
 
 ## Supported Platforms
 
