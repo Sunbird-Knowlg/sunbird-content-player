@@ -42,7 +42,7 @@ TelemetryService = {
             });
         }
     },
-    testInit: function(gameData, user) {
+    webInit: function(gameData, user) {
         return TelemetryService.init(gameData, user);
     },
     changeVersion: function(version) {

@@ -5,7 +5,7 @@ TelemetryServiceUtil = {
             if (TelemetryServiceUtil._config) {
                 resolve(TelemetryServiceUtil._config);
             } else {
-                jQuery.getJSON('json/telemetryConfig.json', {}, function(data) {
+                jQuery.getJSON('https://s3-ap-southeast-1.amazonaws.com/ekstep-public/js/telemetryConfig.json', {}, function(data) {
                         if (data) {
                             if (typeof data === 'string') {
                                 TelemetryServiceUtil._config = JSON.parse(data);
