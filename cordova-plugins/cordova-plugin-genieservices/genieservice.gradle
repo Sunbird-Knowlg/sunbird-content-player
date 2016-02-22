@@ -1,3 +1,11 @@
+repositories {
+    maven { url "https://platform.ekstep.org/downloads/content/repositories/releases" }
+}
+
+dependencies {
+    compile "org.ekstep.genieservices:sdks:1.0.245@aar"
+    compile "org.ekstep.genieservices:aidls:1.0.245@aar"
+}
 
 android {
   packagingOptions {
