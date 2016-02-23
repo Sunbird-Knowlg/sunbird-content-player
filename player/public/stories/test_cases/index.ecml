@@ -299,10 +299,10 @@
             <event type="click">
                 <action ev-if="stage.param2 == 'value1_new'" type="animation">
                     <tween id="homeWalking">
-                        <to duration="500" ease="linear"><![CDATA[{&quot;x&quot;:20,&quot;y&quot;:20}]]></to>
-                        <to duration="2000" ease="quadOut"><![CDATA[{&quot;x&quot;:55,&quot;y&quot;:0}]]></to>
-                        <to duration="1" ease="linear"><![CDATA[{&quot;x&quot;:75,&quot;y&quot;:0, &quot;scaleX&quot;: -1}]]></to>
-                        <to duration="2000" ease="linear"><![CDATA[{&quot;x&quot;:20,&quot;y&quot;:35}]]></to>
+                        <to duration="500" ease="linear"><![CDATA["{&quot;x&quot;:20,&quot;y&quot;:20}"]]></to>
+                        <to duration="2000" ease="quadOut"><![CDATA["{&quot;x&quot;:55,&quot;y&quot;:0}"]]></to>
+                        <to duration="1" ease="linear"><![CDATA["{&quot;x&quot;:75,&quot;y&quot;:0, &quot;scaleX&quot;: -1}"]]></to>
+                        <to duration="2000" ease="linear"><![CDATA["{&quot;x&quot;:20,&quot;y&quot;:35}"]]></to>
                     </tween>
                 </action>
             </event>
@@ -531,9 +531,9 @@
                 <action asset="mover" command="show" type="command"/>
                 <action asset="mover" type="animation">
                     <tween id="mover" loop="true">
-                        <to duration="0" ease="linear"><![CDATA[{&quot;x&quot;:47,&quot;y&quot;:45}]]></to>
-                        <to duration="1000" ease="sineInOut"><![CDATA[{&quot;x&quot;:62,&quot;y&quot;:45}]]></to>
-                        <to duration="1000" ease="sineInOut"><![CDATA[{&quot;x&quot;:47,&quot;y&quot;:45}]]></to>
+                        <to duration="0" ease="linear"><![CDATA["{&quot;x&quot;:47,&quot;y&quot;:45}"]]></to>
+                        <to duration="1000" ease="sineInOut"><![CDATA["{&quot;x&quot;:62,&quot;y&quot;:45}"]]></to>
+                        <to duration="1000" ease="sineInOut"><![CDATA["{&quot;x&quot;:47,&quot;y&quot;:45}"]]></to>
                     </tween>
                 </action>
             </event>
