@@ -1,5 +1,5 @@
 TelemetryService = {
-    _version: "2.0",
+    _version: "1.0",
     _baseDir: 'EkStep Content App',
     isActive: false,
     _config: undefined,
@@ -30,7 +30,7 @@ TelemetryService = {
                     TelemetryServiceUtil.getConfig().then(function(config) {
                         TelemetryService._config = config;
                         if (TelemetryService._config.isActive) TelemetryService.isActive = TelemetryService._config.isActive;
-                        resolve(true);
+                            resolve(true);
                     }).catch(function(err) {
                         reject(err);
                     });
@@ -43,10 +43,20 @@ TelemetryService = {
         }
     },
     webInit: function(gameData, user) {
-        return TelemetryService.init(gameData, user);
+        return new Promise(function(resolve, reject) {
+            TelemetryService.init(gameData, user)
+            .then(function() {
+                TelemetryService.start(gameData.id, gameData.ver);
+                resolve(true);
+
+            })
+            .catch(function(err) {
+                reject(err);
+            });
+        });
     },
     changeVersion: function(version) {
-        TelemetryService._version = version;
+        TelemetryService._version = version;        
         TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
         console.info("Telemetry Version updated to:", version);
     },
