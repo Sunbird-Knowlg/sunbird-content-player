@@ -155,7 +155,7 @@
         <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black">
             <event type="click">
                 <action type="animation" asset="top-left"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":-35,"y":-35}]]></to></tween></action>
-                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="splash" duration="10" delay="500"/>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500"/>
             </event>
         </shape>
         <events>
@@ -171,7 +171,7 @@
         <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E04C16" rotate="45" shadow="black">
             <event type="click">
                 <action type="animation" asset="top-right"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":135,"y":-35}]]></to></tween></action>
-                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="splash" duration="10" delay="500"/>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500"/>
             </event>
         </shape>
         <events>
@@ -321,7 +321,7 @@
         <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black">
             <event type="click">
                 <action type="animation" asset="bottom-right"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":135,"y":135}]]></to></tween></action>
-                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="splash" duration="10" delay="500"/>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500"/>
             </event>
         </shape>
         <events>
@@ -360,7 +360,7 @@
         <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black">
             <event type="click">
                 <action type="animation" asset="bottom-left"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":-35,"y":135}]]></to></tween></action>
-                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="splash" duration="10" delay="500"/>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500"/>
             </event>
         </shape>
         <events>
