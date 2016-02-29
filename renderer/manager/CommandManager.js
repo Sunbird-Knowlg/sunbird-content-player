@@ -115,6 +115,12 @@ CommandManager = {
             case 'PROCESSRECORD':
                 if (plugin) RecorderManager.processRecording(action);
                 break;
+            case 'BLUR':
+                if (plugin) plugin.blur();
+                break;
+            case 'UNBLUR':
+                if (plugin) plugin.unblur();
+                break; 
             default:
                 console.log("Command '" + cmd +"' not found.");
         }

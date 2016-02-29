@@ -336,6 +336,21 @@ var Plugin = Class.extend({
 	restart: function() {
 		PluginManager.addError('Subclasses of plugin should implement reload()');
 	},
+    blur: function() {
+        var instance = this;
+        var obj = instance._self;
+        var blurFilter = new createjs.BlurFilter(25, 25, 1);
+        obj.filters = [blurFilter];
+        var bounds = instance.relativeDims();
+        obj.cache(bounds.x,bounds.y, bounds.w, bounds.h);
+        Renderer.update = true;
+    },
+    unblur: function() {
+        var instance = this;
+        instance._self.filters = [];
+        instance._self.uncache();
+        Renderer.update = true;
+    },
 	invokeChildren: function(data, parent, stage, theme) {
 		var children = [];
         for (k in data) {

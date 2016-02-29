@@ -4,6 +4,9 @@
         <media id="stage_sound" src="audio/new_puzzle.ogg" type="sound" />
         <media id="cheers_sound" src="audio/cheers_soft.ogg" type="sound" />
 
+        <media id="sound_icon" src="icons/sound.png" type="image" />
+        <media id="cancel_icon" src="icons/cancel.png" type="image" />
+
         <media id="elephant_image1" src="pictures/elephant_image1.jpeg" type="image" />
         <media id="lion_image1" src="pictures/lion_image1.jpeg" type="image" />
         <media id="palak_image1" src="pictures/palak_image1.jpeg" type="image" />
@@ -84,11 +87,21 @@
 
     <stage id="scene1" x="0" y="0" w="100" h="100" extends="storyBaseStage">
         <param name="next" value="scene2" />
-        <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#F3CCDE" />
-        <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
+        <g id="scene1Main" x="0" y="0" w="100" h="100">
+            <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#F3CCDE" />
+            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
 उस  रात बहुत तेज बारिश हो रही थी  | शेर अपने घर में लेटा हुआ था | 
-        </text>
-        <image asset="page2" x="2" y="12" w="96" h="86" />
+            </text>
+            <image asset="page2" x="2" y="12" w="96" h="86" />
+            <shape x="53" y="30" w="20" h="65" type="rect" z-index="2" hitArea="true">
+                <event type="click">
+                    <action type="command" command="blur" asset="scene1Main" />
+                </event>
+            </shape>
+        </g>
+        <g id="scene1Word" x="0" y="0" w="100" h="100">
+
+        </g>
     </stage>
 
     <stage id="scene2" x="0" y="0" w="100" h="100" extends="storyBaseStage">
@@ -102,23 +115,56 @@
     </stage>
 
     <stage id="scene3" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <audio asset="palak_audio1" />
         <param name="previous" value="scene2" />
         <param name="next" value="scene4" />
-        <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#E5F4FB" />
-        <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
+        <g id="scene3Main" x="0" y="0" w="100" h="100">
+            <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#E5F4FB" />
+            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
 अरे ! किसी ने उसके आम और पालक चुरा लिए थे | उसे आम और पालक बहुत पसंद थे |
-        </text>
-        <image asset="page4" x="2" y="12" w="96" h="86" />
+            </text>
+            <image asset="page4" x="2" y="12" w="96" h="86" />
+            <shape x="30" y="2" w="6" h="10" type="rect" z-index="2" hitArea="true">
+                <event type="click">
+                    <action type="command" command="blur" asset="scene3Main" />
+                    <action type="command" command="show" asset="scene2Word" />
+                </event>
+            </shape>
+        </g>
+        <g id="scene2Word" x="0" y="0" w="100" h="100" visible="false">
+            
+            <image asset="cancel_icon" x="50" y="22" w="8" h="9">
+                <event type="click">
+                    <action type="command" command="hide" asset="scene2Word" />
+                    <action type="command" command="unblur" asset="scene3Main" />
+                </event>
+            </image>
+            <image asset="palak_image1" x="20" y="35" w="20" h="20" />
+            <text x="42" y="35" w="20" h="20" font="Georgia" fontsize="70">पालक</text>
+            <image asset="sound_icon" x="53" y="35" w="4" h="5">
+                <event type="click">
+                    <action type="command" command="togglePlay" asset="palak_audio1" />
+                </event>
+            </image>
+            <text x="42" y="45" w="25" h="20" font="Georgia" fontsize="50">आप खा सकते हैं (सब्जी )</text>
+        </g>
     </stage>
 
     <stage id="scene4" x="0" y="0" w="100" h="100" extends="storyBaseStage">
         <param name="previous" value="scene3" />
         <param name="next" value="explore" />
-        <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#86CFF2" />
-        <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
+        <g id="scene4Main" x="0" y="0" w="100" h="100">
+            <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#86CFF2" />
+            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
 शेर घबरा कर अपने साथी, हाथी के पास गया |  दोनों रात को बारिश में चोर को खोजने निकल पड़े |
-        </text>
-        <image asset="page5" x="2" y="12" w="96" h="86" />
+            </text>
+            <image asset="page5" x="2" y="12" w="96" h="86" />
+            <shape x="18" y="15" w="25" h="32" type="rect" z-index="2" hitArea="true">
+                <event type="click">
+                    <action type="command" command="blur" asset="scene4Main" />
+                </event>
+            </shape>
+        </g>
     </stage>
 
     <stage id="explore" x="0" y="0" w="100" h="100">
