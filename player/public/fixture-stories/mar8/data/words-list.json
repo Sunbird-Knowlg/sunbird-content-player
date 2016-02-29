@@ -1,0 +1,20 @@
+[
+  {
+    "lemma": "हाथी",
+    "meaning": "चार पैरों से चलने वाला दुमदार जंतु",
+    "picture": "elephant_image1",
+    "pronunciation": "elephant_audio1"
+  },
+  {
+    "lemma": "शेर",
+    "meaning": "चार पैरों से चलने वाला दुमदार जंतु",
+    "picture": "lion_image1",
+    "pronunciation": "lion_audio1"
+  },
+  {
+    "lemma": "पालक",
+    "meaning": "आप खा सकते हैं (सब्जी )",
+    "picture": "palak_image1",
+    "pronunciation": "palak_audio1"
+  }
+]

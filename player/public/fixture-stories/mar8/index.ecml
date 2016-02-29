@@ -3,12 +3,22 @@
         <media id="welcome_sound" src="audio/welcome_riff.ogg" type="sound" />
         <media id="stage_sound" src="audio/new_puzzle.ogg" type="sound" />
         <media id="cheers_sound" src="audio/cheers_soft.ogg" type="sound" />
-        <!-- <media id="icon_sound" src="icon_sound.png" type="image" /> -->
-        <!-- <media id="icon_hint" src="icon_hint.png" type="image" />
-        <media id="icon_home" src="icon_home.png" type="image" />
-        <media id="icon_reload" src="icon_reload.png" type="image" />
-        <media id="start" src="start.png" type="image" />
-        <media id="mic" src="mic.png" type="image" /> -->
+
+        <media id="elephant_image1" src="pictures/elephant_image1.jpeg" type="image" />
+        <media id="lion_image1" src="pictures/lion_image1.jpeg" type="image" />
+        <media id="palak_image1" src="pictures/palak_image1.jpeg" type="image" />
+        <media id="friend_image1" src="pictures/friend_image1.jpg" type="image" />
+        <media id="going_image1" src="pictures/going_image1.jpg" type="image" />
+        <media id="child_image1" src="pictures/child_image1.jpg" type="image" />
+        <media id="salt_image1" src="pictures/salt_image1.jpeg" type="image" />
+
+        <media id="elephant_audio1" src="sounds/elephant_audio1.mp3" type="sound" />
+        <media id="lion_audio1" src="sounds/lion_audio1.mp3" type="sound" />
+        <media id="palak_audio1" src="sounds/palak_audio1.mp3" type="sound" />
+        <media id="friend_audio1" src="sounds/friend_audio1.mp3" type="sound" />
+        <media id="jaati_audio1" src="sounds/jaati_audio1.mp3" type="sound" />
+        <media id="balak_audio1" src="sounds/balak_audio1.mp3" type="sound" />
+        <media id="namak_audio1" src="sounds/namak_audio1.mp3" type="sound" />
     </manifest>
 
     <stage id="splash" preload="true" x="0" y="0" w="100" h="100">

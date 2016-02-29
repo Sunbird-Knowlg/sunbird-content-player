@@ -1,0 +1,48 @@
+{
+  "हाथी": {
+    "meaning": "चार पैरों से चलने वाला दुमदार जंतु",
+    "picture": "elephant_image1",
+    "pronunciation": "elephant_audio1",
+    "syllableCount": 2,
+    "rhymingWords": [
+      {
+        "lemma": "साथी",
+        "syllables": ["सा"],
+        "picture": "friend_image1",
+        "pronunciation": "friend_audio1"
+      },
+      {
+        "lemma": "जाती",
+        "syllables": ["जा"],
+        "picture": "going_image1",
+        "pronunciation": "jaati_audio1"
+      }
+    ],
+    "exampleSentences": [
+      "हम  कल हाथी देखेंगे", "हाथी ने पेड़ हिला दिया |", "हाथी भी भागने लगा।"  
+    ]
+  },
+  "पालक": {
+    "meaning": "आप खा सकते हैं (सब्जी )",
+    "picture": "palak_image1",
+    "pronunciation": "palak_audio1",
+    "syllableCount": 3,
+    "rhymingWords": [
+      {
+        "lemma": "बालक",
+        "syllables": ["बा", "ल"],
+        "picture": "child_image1",
+        "pronunciation": "balak_audio1"
+      },
+      {
+        "lemma": "नमक",
+        "syllables": ["न", "म"],
+        "picture": "salt_image1",
+        "pronunciation": "namak_audio1"
+      }
+    ],
+    "exampleSentences": [
+      "पालक  खाने से आँखे ठीक रहती है", "मुझे पालक  की सब्जी बहुत अच्छी लगती है ", "मैंने अपने घर में पालक लगाया है "  
+    ]
+  }
+}
