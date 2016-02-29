@@ -1,0 +1,263 @@
+<theme startStage="splash" id="theme" ver="0.2">
+    <manifest>
+        <media id="welcome_sound" src="audio/welcome_riff.ogg" type="sound" />
+        <media id="stage_sound" src="audio/new_puzzle.ogg" type="sound" />
+        <media id="cheers_sound" src="audio/cheers_soft.ogg" type="sound" />
+        <!-- <media id="icon_sound" src="icon_sound.png" type="image" /> -->
+        <!-- <media id="icon_hint" src="icon_hint.png" type="image" />
+        <media id="icon_home" src="icon_home.png" type="image" />
+        <media id="icon_reload" src="icon_reload.png" type="image" />
+        <media id="start" src="start.png" type="image" />
+        <media id="mic" src="mic.png" type="image" /> -->
+    </manifest>
+
+    <stage id="splash" preload="true" x="0" y="0" w="100" h="100">
+        <audio asset="welcome_sound" />
+        <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page1" duration="10"/>
+            </event>
+        </shape>
+        <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E04C16" rotate="45" shadow="black">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page2" duration="10"/>
+            </event>
+        </shape>
+        <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page3" duration="10"/>
+            </event>
+        </shape>
+        <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page4" duration="10"/>
+            </event>
+        </shape>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="welcome_sound" loop="1" />
+            </event>
+        </events>
+    </stage>
+
+    <stage id="page1" preload="true" x="0" y="0" w="100" h="100">
+        <audio asset="stage_sound" />
+        <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black">
+            <event type="click">
+                <action type="animation" asset="top-left"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":-35,"y":-35}]]></to></tween></action>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="splash" duration="10" delay="500"/>
+            </event>
+        </shape>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="stage_sound" loop="1" />
+                <action type="animation" asset="top-left"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":30,"y":30}]]></to></tween></action>
+            </event>
+        </events>
+    </stage>
+
+    <stage id="page2" preload="true" x="0" y="0" w="100" h="100">
+        <audio asset="stage_sound" />
+        <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E04C16" rotate="45" shadow="black">
+            <event type="click">
+                <action type="animation" asset="top-right"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":135,"y":-35}]]></to></tween></action>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="splash" duration="10" delay="500"/>
+            </event>
+        </shape>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="stage_sound" loop="1" />
+                <action type="animation" asset="top-right"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":35,"y":-35}]]></to></tween></action>
+            </event>
+        </events>
+    </stage>
+
+    <stage id="page3" preload="true" x="0" y="0" w="100" h="100">
+        <audio asset="stage_sound" />
+
+        <shape type="roundrect" fill="white" radius="5" stroke="black" x="40" y="40" h="10" w="7" z-index="40" />
+        <shape type="roundrect" fill="white" radius="5" stroke="black" x="48" y="40" h="10" w="7" z-index="40" />
+        <shape type="roundrect" fill="white" radius="5" stroke="black" x="56" y="40" h="10" w="7" z-index="40" />
+
+        <shape type="rect" fill="#B000CA" x="40" y="0" h="40" w="40" z-index="100" />
+        <shape type="rect" fill="#B000CA" x="40" y="50" h="50" w="40" z-index="100">
+            <event type="click">
+                <action type="animation" asset="spinnertxt1">
+                    <tween>
+                        <to ease="cubicIn" duration="2000"><![CDATA[{"x":42,"y":-102}]]></to>
+                        <to ease="linear" duration="0"><![CDATA[{"x":42,"y":110}]]></to>
+                    </tween>
+                </action>
+                <action type="animation" asset="finaltxt1" delay="2000">
+                    <tween>
+                        <to ease="linear" duration="1600"><![CDATA[{"x":42,"y":110}]]></to>
+                        <to ease="linear" duration="0"><![CDATA[{"x":42,"y":60}]]></to>
+                        <to ease="bounceOut" duration="1000"><![CDATA[{"x":42,"y":42}]]></to>
+                    </tween>
+                </action>
+
+                <action type="animation" asset="spinnertxt2">
+                    <tween>
+                        <to ease="linear" duration="0"><![CDATA[{"x":50,"y":-500}]]></to>
+                        <to ease="cubicIn" duration="2000"><![CDATA[{"x":50,"y":50}]]></to>
+                        <to ease="linear" duration="0"><![CDATA[{"x":50,"y":110}]]></to>
+                    </tween>
+                </action>
+                <action type="animation" asset="finaltxt2" delay="2000">
+                    <tween>
+                        <to ease="linear" duration="1600"><![CDATA[{"x":50,"y":110}]]></to>
+                        <to ease="linear" duration="0"><![CDATA[{"x":50,"y":60}]]></to>
+                        <to ease="bounceOut" duration="1000"><![CDATA[{"x":50,"y":42}]]></to>
+                    </tween>
+                </action>
+            </event>
+        </shape>
+
+        <text id="finaltxt1" x="42" y="110" z-index="50" font="Arial" fontsize="50" color="black">ब</text>
+        <text id="finaltxt2" x="50" y="110" z-index="50" font="Arial" fontsize="50" color="black">क</text>
+        <text id="finaltxt3" x="58" y="42" z-index="50" font="Arial" fontsize="50" color="green">री</text>
+        <text id="spinnertxt1" x="42" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10">
+पा
+पी
+ना
+नो
+नी
+टो
+ट
+टु
+पा
+पी
+ना
+नो
+नी
+टो
+ट
+टु
+पा
+पी
+ना
+नो
+नी
+टो
+ट
+टु
+पा
+पी
+ना
+नो
+नी
+टो
+ट
+टु
+
+
+        </text>
+
+        <text id="spinnertxt2" x="50" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10">
+का
+की
+खा
+खी
+खो
+गा
+गी
+गौ
+घ
+घा
+त
+तो
+ती
+का
+की
+खा
+खी
+खो
+गा
+गी
+गौ
+घ
+घा
+त
+तो
+ती
+का
+की
+खा
+खी
+खो
+गा
+गी
+गौ
+घ
+घा
+त
+तो
+ती
+का
+की
+खा
+खी
+खो
+गा
+गी
+गौ
+घ
+घा
+त
+तो
+ती
+        </text>
+
+        <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black">
+            <event type="click">
+                <action type="animation" asset="bottom-right"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":135,"y":135}]]></to></tween></action>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="splash" duration="10" delay="500"/>
+            </event>
+        </shape>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="stage_sound" loop="1" />
+                <action type="animation" asset="bottom-right"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":70,"y":70}]]></to></tween></action>
+            </event>
+        </events>
+    </stage>
+
+    <stage id="page4" preload="true" x="0" y="0" w="100" h="100">
+        <audio asset="stage_sound" />
+        <audio asset="cheers_sound" />
+
+        <param name="score" value="100" scope="stage"/>
+        <param name="incr" value="10" scope="stage"/>
+
+        <text id="scoretxt" x="80" y="5"   h="20" w="20" z-index="100" fontsize="100" font="Arial" param="score" color="black" shadow="white" outline="2"/>
+        <text id="incrtext" x="85" y="110" h="20" w="20" z-index="100" fontsize="60" font="Arial" param="incr"  color="white" shadow="black" outline="2"/>
+
+        <shape type="roundrect" z-index="100" shadow="black" x="10" y="10" h="10" w="10" fill="red">
+            <event type="click">
+                <action type="command" command="play" asset="cheers_sound" loop="1" />
+                <action type="animation" asset="incrtext">
+                    <tween>
+                        <to ease="quadOut" duration="0"><![CDATA[{"x":85,"y":20}]]></to>
+                        <to ease="bounceOut" duration="1000"><![CDATA[{"x":85,"y":90}]]></to>
+                        <to ease="quadOut" duration="0"><![CDATA[{"x":85,"y":110}]]></to>
+                    </tween>
+                </action>
+                <action type="command" command="set" param="score" param-increment="10" asset="page4"/>
+                <action type="command" command="refresh" asset="scoretxt"/>
+            </event>
+        </shape>
+
+        <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black">
+            <event type="click">
+                <action type="animation" asset="bottom-left"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":-35,"y":135}]]></to></tween></action>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="splash" duration="10" delay="500"/>
+            </event>
+        </shape>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="stage_sound" loop="1" />
+                <action type="animation" asset="bottom-left"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":10,"y":35}]]></to></tween></action>
+            </event>
+        </events>
+    </stage>
+</theme>

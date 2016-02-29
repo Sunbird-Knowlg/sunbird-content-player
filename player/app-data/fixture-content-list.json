@@ -81,6 +81,29 @@
             },
             "isAvailable": true,
             "path": "fixture-stories/haircut_story"
+        },{
+            "identifier": "org.ekstep.mar8.story",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/mar8/logo.png",
+                "subject": "literacy_v2",
+                "description": "March 8 Story",
+                "name": "March 8 Story",
+                "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_1_1442335816604.zip",
+                "checksum": null,
+                "loadingMessage": "Every great journey starts with a great story...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.mar8.story",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/mar8"
         }, {
             "identifier": "org.ekstep.lit.moon_cap.story",
             "mimeType": "application/vnd.ekstep.ecml-archive",
