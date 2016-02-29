@@ -1,4 +1,4 @@
-<theme startStage="splash" id="theme" ver="0.2">
+<theme startStage="scene1" id="theme" ver="0.2">
     <manifest>
         <media id="welcome_sound" src="audio/welcome_riff.ogg" type="sound" />
         <media id="stage_sound" src="audio/new_puzzle.ogg" type="sound" />
@@ -29,9 +29,99 @@
         <media id="ghar_audio" src="sounds/ghar_audio.mp3" type="sound" />
         <media id="more_audio1" src="sounds/more_audio1.mp3" type="sound" />
         <media id="neer_audio1" src="sounds/neer_audio1.mp3" type="sound" />
+
+        <media id="page2" src="scenes/image_2.jpg" type="image" />
+        <media id="page3" src="scenes/image_3.jpg" type="image" />
+        <media id="page4" src="scenes/image_4.jpg" type="image" />
+        <media id="page5" src="scenes/image_5.jpg" type="image" />
+
+        <media id="previous" src="icon_previous.png" type="image" />
+        <media id="next" src="icon_next.png" type="image" />
     </manifest>
 
-    <stage id="splash" x="0" y="0" w="100" h="100">
+    <stage id="preloadStage" preload="true">
+        <image asset="elephant_image1"/>
+        <image asset="lion_image1"/>
+        <image asset="palak_image1"/>
+        <image asset="friend_image1"/>
+        <image asset="going_image1"/>
+        <image asset="child_image1"/>
+        <image asset="salt_image1"/>
+        <image asset="car_image1"/>
+        <image asset="four_image1"/>
+        <image asset="house_image1"/>
+        <image asset="peacock_image1"/>
+        <image asset="water_image1"/>
+
+        <audio asset="elephant_audio1" />
+        <audio asset="lion_audio1" />
+        <audio asset="palak_audio1" />
+        <audio asset="friend_audio1" />
+        <audio asset="jaati_audio1" />
+        <audio asset="balak_audio1" />
+        <audio asset="namak_audio1" />
+        <audio asset="car_audio1" />
+        <audio asset="char_audio1" />
+        <audio asset="ghar_audio" />
+        <audio asset="more_audio1" />
+        <audio asset="neer_audio1" />
+    </stage>
+
+    <stage id="storyBaseStage" preload="true">
+        <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
+        <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+            </event>
+        </shape>
+        <image asset="previous" x="2" y="3" w="5" h="8.3" id="previous" visible="false"/>
+        <shape id="previousContainer" type="rect" x="1" y="1" w="10" h="15" visible="false" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" transitionType="previous"/>
+            </event>
+        </shape>
+    </stage>
+
+    <stage id="scene1" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="next" value="scene2" />
+        <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#F3CCDE" />
+        <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
+उस  रात बहुत तेज बारिश हो रही थी  | शेर अपने घर में लेटा हुआ था | 
+        </text>
+        <image asset="page2" x="2" y="12" w="96" h="86" />
+    </stage>
+
+    <stage id="scene2" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="scene1" />
+        <param name="next" value="scene3" />
+        <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#FFF16E" />
+        <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
+तभी आवाज से उसकी आँख खुल गई  | रसोई  में जा कर देखा तो पाया कि वहां कोई आया था |
+        </text>
+        <image asset="page3" x="2" y="12" w="96" h="86" />
+    </stage>
+
+    <stage id="scene3" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="scene2" />
+        <param name="next" value="scene4" />
+        <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#E5F4FB" />
+        <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
+अरे ! किसी ने उसके आम और पालक चुरा लिए थे | उसे आम और पालक बहुत पसंद थे |
+        </text>
+        <image asset="page4" x="2" y="12" w="96" h="86" />
+    </stage>
+
+    <stage id="scene4" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="scene3" />
+        <param name="next" value="explore" />
+        <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#86CFF2" />
+        <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
+शेर घबरा कर अपने साथी, हाथी के पास गया |  दोनों रात को बारिश में चोर को खोजने निकल पड़े |
+        </text>
+        <image asset="page5" x="2" y="12" w="96" h="86" />
+    </stage>
+
+    <stage id="explore" x="0" y="0" w="100" h="100">
         <audio asset="welcome_sound" />
         <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black">
             <event type="click">
@@ -60,7 +150,7 @@
         </events>
     </stage>
 
-    <stage id="page1" preload="true" x="0" y="0" w="100" h="100">
+    <stage id="page1" x="0" y="0" w="100" h="100">
         <audio asset="stage_sound" />
         <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black">
             <event type="click">
@@ -76,7 +166,7 @@
         </events>
     </stage>
 
-    <stage id="page2" preload="true" x="0" y="0" w="100" h="100">
+    <stage id="page2" x="0" y="0" w="100" h="100">
         <audio asset="stage_sound" />
         <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E04C16" rotate="45" shadow="black">
             <event type="click">
@@ -92,7 +182,7 @@
         </events>
     </stage>
 
-    <stage id="page3" preload="true" x="0" y="0" w="100" h="100">
+    <stage id="page3" x="0" y="0" w="100" h="100">
         <audio asset="stage_sound" />
 
         <shape type="roundrect" fill="white" radius="5" stroke="black" x="40" y="40" h="10" w="7" z-index="40" />
@@ -242,7 +332,7 @@
         </events>
     </stage>
 
-    <stage id="page4" preload="true" x="0" y="0" w="100" h="100">
+    <stage id="page4" x="0" y="0" w="100" h="100">
         <audio asset="stage_sound" />
         <audio asset="cheers_sound" />
 
