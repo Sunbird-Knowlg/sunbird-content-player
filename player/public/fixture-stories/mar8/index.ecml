@@ -19,6 +19,8 @@
         <media id="house_image1" src="pictures/house_image1.png" type="image" />
         <media id="peacock_image1" src="pictures/peacock_image1.jpg" type="image" />
         <media id="water_image1" src="pictures/water_image1.jpg" type="image" />
+        <media id="sound_image1" src="pictures/sound.png" type="image" />
+        <media id="animal_border" src="pictures/animal_info_border.png" type="image" />
 
         <media id="elephant_audio1" src="sounds/elephant_audio1.mp3" type="sound" />
         <media id="lion_audio1" src="sounds/lion_audio1.mp3" type="sound" />
@@ -55,7 +57,7 @@
         <image asset="house_image1"/>
         <image asset="peacock_image1"/>
         <image asset="water_image1"/>
-
+        <image asset="animal_border"/>
         <audio asset="elephant_audio1" />
         <audio asset="lion_audio1" />
         <audio asset="palak_audio1" />
@@ -167,8 +169,23 @@
         </g>
     </stage>
 
-    <stage id="explore" x="0" y="0" w="100" h="100">
+    <controller name="word-details" type="data" id="word-details"/>
+    <controller name="words-list" id="words-list" type="data" />
+    <template id="word_template">
+        <text x="55" y="30" w="50" h="10" fontsize="80" color="black" model="data.lemma"/>
+        <text x="52" y="40" w="80" h="30" fontsize="50" color="black" model="data.meaning"/>
+        <image x="50" y="-2" h="40" w="40" asset="sound_image1"/>
+        <image x="20" y="40" h="25" w="25" param="data.picture"/>
+    </template>
+
+
+
+    <stage id="explore" x="0" y="0" w="100" h="100" iterate="words-list" var="data">
         <audio asset="welcome_sound" />
+
+         <embed template-name="word_template" var-data="data"/>
+         <image asset="animal_border" x="15" y="15" w="70" h="70" />
+
         <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page1" duration="10"/>
@@ -198,6 +215,7 @@
 
     <stage id="page1" x="0" y="0" w="100" h="100">
         <audio asset="stage_sound" />
+
         <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black">
             <event type="click">
                 <action type="animation" asset="top-left"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":-35,"y":-35}]]></to></tween></action>
@@ -214,29 +232,14 @@
 
     <stage id="page2" x="0" y="0" w="100" h="100">
         <audio asset="stage_sound" />
-        <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E04C16" rotate="45" shadow="black">
-            <event type="click">
-                <action type="animation" asset="top-right"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":135,"y":-35}]]></to></tween></action>
-                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500"/>
-            </event>
-        </shape>
-        <events>
-            <event type="enter">
-                <action type="command" command="play" asset="stage_sound" loop="1" />
-                <action type="animation" asset="top-right"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":35,"y":-35}]]></to></tween></action>
-            </event>
-        </events>
-    </stage>
 
-    <stage id="page3" x="0" y="0" w="100" h="100">
-        <audio asset="stage_sound" />
 
-        <shape type="roundrect" fill="white" radius="5" stroke="black" x="40" y="40" h="10" w="7" z-index="40" />
+<shape type="roundrect" fill="white" radius="5" stroke="black" x="40" y="40" h="10" w="7" z-index="40" />
         <shape type="roundrect" fill="white" radius="5" stroke="black" x="48" y="40" h="10" w="7" z-index="40" />
         <shape type="roundrect" fill="white" radius="5" stroke="black" x="56" y="40" h="10" w="7" z-index="40" />
 
-        <shape type="rect" fill="#B000CA" x="40" y="0" h="40" w="40" z-index="100" />
-        <shape type="rect" fill="#B000CA" x="40" y="50" h="50" w="40" z-index="100">
+        <shape type="rect" fill="#E04C16" x="40" y="0" h="40" w="40" z-index="100" />
+        <shape type="rect" fill="#E04C16" x="40" y="50" h="50" w="40" z-index="100">
             <event type="click">
                 <action type="animation" asset="spinnertxt1">
                     <tween>
@@ -363,6 +366,23 @@
 तो
 ती
         </text>
+
+        <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E04C16" rotate="45" shadow="black">
+            <event type="click">
+                <action type="animation" asset="top-right"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":135,"y":-35}]]></to></tween></action>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500"/>
+            </event>
+        </shape>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="stage_sound" loop="1" />
+                <action type="animation" asset="top-right"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":35,"y":-35}]]></to></tween></action>
+            </event>
+        </events>
+    </stage>
+
+    <stage id="page3" x="0" y="0" w="100" h="100">
+        <audio asset="stage_sound" />
 
         <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black">
             <event type="click">

@@ -4,7 +4,8 @@ var ImagePlugin = Plugin.extend({
     _render: true,
     initPlugin: function(data) {
         var instance = this;
-        var s = new createjs.Bitmap(this._theme.getAsset(data.asset));
+       // console.log("asset : ", asset);
+        var s = new createjs.Bitmap(this._theme.getAsset(data.param ? this._stage.getModelValue(data.param) : data.asset));
         var dims = this.relativeDims();
         var sb = s.getBounds();
         s.x = dims.x;
