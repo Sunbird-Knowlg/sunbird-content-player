@@ -25,6 +25,19 @@ var ImagePlugin = Plugin.extend({
             this._self.rotation = data.rotate;
         }
         if(sb) this.setScale(); 
+    },
+    refresh: function() {
+        var asset = '';
+        if (this._data.model) {
+            asset = this._stage.getModelValue(this._data.model);   
+        } else if (this._data.param) {
+            asset = this.getParam(this._data.param);
+        } else {
+            asset = this._data.asset;
+        }
+        var image = this._theme.getAsset(asset);
+        this._self.image = image;
+        Renderer.update = true;
     }
 });
 PluginManager.registerPlugin('image', ImagePlugin);

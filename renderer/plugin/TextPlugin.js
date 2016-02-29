@@ -72,6 +72,6 @@ var TextPlugin = Plugin.extend({
         }
         this._self.text = textStr;
         Renderer.update = true;
-    },
+    }
 });
 PluginManager.registerPlugin('text', TextPlugin);

@@ -4,6 +4,7 @@
     "picture": "elephant_image1",
     "pronunciation": "elephant_audio1",
     "syllableCount": 2,
+    "endsWith": "थी",
     "rhymingWords": [
       {
         "lemma": "साथी",
@@ -27,6 +28,7 @@
     "picture": "lion_image1",
     "pronunciation": "lion_audio1",
     "syllableCount": 2,
+    "endsWith": "र",
     "rhymingWords": [
       {
         "lemma": "कार",
@@ -69,6 +71,7 @@
     "picture": "palak_image1",
     "pronunciation": "palak_audio1",
     "syllableCount": 3,
+    "endsWith": "क",
     "rhymingWords": [
       {
         "lemma": "बालक",
