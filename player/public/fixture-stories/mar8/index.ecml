@@ -103,11 +103,25 @@
             <shape x="53" y="30" w="20" h="65" type="rect" z-index="2" hitArea="true">
                 <event type="click">
                     <action type="command" command="blur" asset="scene1Main" />
+                    <action type="command" command="show" asset="scene1Word" />
                 </event>
             </shape>
         </g>
-        <g id="scene1Word" x="0" y="0" w="100" h="100">
-
+        <g id="scene1Word" x="0" y="0" w="100" h="100" visible="false">
+            <image asset="cancel_icon" x="50" y="22" w="8" h="9">
+                <event type="click">
+                    <action type="command" command="hide" asset="scene1Word" />
+                    <action type="command" command="unblur" asset="scene1Main" />
+                </event>
+            </image>
+            <image asset="lion_image1" x="20" y="35" w="20" h="20" />
+            <text x="42" y="35" w="20" h="20" font="Georgia" fontsize="70">शेर</text>
+            <image asset="sound_icon" x="53" y="35" w="4" h="5">
+                <event type="click">
+                    <action type="command" command="togglePlay" asset="lion_audio1" />
+                </event>
+            </image>
+            <text x="42" y="45" w="25" h="20" font="Georgia" fontsize="50">चार पैरों से चलने वाला दुमदार जंतु</text>
         </g>
     </stage>
 
@@ -134,15 +148,14 @@
             <shape x="30" y="2" w="6" h="10" type="rect" z-index="2" hitArea="true">
                 <event type="click">
                     <action type="command" command="blur" asset="scene3Main" />
-                    <action type="command" command="show" asset="scene2Word" />
+                    <action type="command" command="show" asset="scene3Word" />
                 </event>
             </shape>
         </g>
-        <g id="scene2Word" x="0" y="0" w="100" h="100" visible="false">
-            
+        <g id="scene3Word" x="0" y="0" w="100" h="100" visible="false">
             <image asset="cancel_icon" x="50" y="22" w="8" h="9">
                 <event type="click">
-                    <action type="command" command="hide" asset="scene2Word" />
+                    <action type="command" command="hide" asset="scene3Word" />
                     <action type="command" command="unblur" asset="scene3Main" />
                 </event>
             </image>
@@ -169,9 +182,26 @@
             <shape x="18" y="15" w="25" h="32" type="rect" z-index="2" hitArea="true">
                 <event type="click">
                     <action type="command" command="blur" asset="scene4Main" />
+                    <action type="command" command="show" asset="scene4Word" />
                 </event>
             </shape>
         </g>
+        <g id="scene4Word" x="0" y="0" w="100" h="100" visible="false">
+            <image asset="cancel_icon" x="50" y="22" w="8" h="9">
+                <event type="click">
+                    <action type="command" command="hide" asset="scene4Word" />
+                    <action type="command" command="unblur" asset="scene4Main" />
+                </event>
+            </image>
+            <image asset="elephant_image1" x="20" y="35" w="20" h="20" />
+            <text x="42" y="35" w="20" h="20" font="Georgia" fontsize="70">हाथी</text>
+            <image asset="sound_icon" x="53" y="35" w="4" h="5">
+                <event type="click">
+                    <action type="command" command="togglePlay" asset="elephant_audio1" />
+                </event>
+            </image>
+            <text x="42" y="45" w="25" h="20" font="Georgia" fontsize="50">चार पैरों से चलने वाला दुमदार जंतु</text>
+        </g> 
     </stage>
 
     <controller name="word-details" type="data" id="word-details"/>
