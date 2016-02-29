@@ -6,7 +6,9 @@
 
         <media id="sound_icon" src="icons/sound.png" type="image" />
         <media id="cancel_icon" src="icons/cancel.png" type="image" />
-
+        <media id="button_long_up" src="icons/button_long_up.png" type="image" />
+        <media id="button_long_down" src="icons/button_long_down.png" type="image" />
+        
         <media id="elephant_image1" src="pictures/elephant_image1.jpeg" type="image" />
         <media id="lion_image1" src="pictures/lion_image1.jpeg" type="image" />
         <media id="palak_image1" src="pictures/palak_image1.jpeg" type="image" />
@@ -58,6 +60,9 @@
         <image asset="peacock_image1"/>
         <image asset="water_image1"/>
         <image asset="animal_border"/>
+        <image asset="button_long_up"/>
+        <image asset="button_long_down"/>
+        
         <audio asset="elephant_audio1" />
         <audio asset="lion_audio1" />
         <audio asset="palak_audio1" />
@@ -178,32 +183,40 @@
         <image x="20" y="40" h="25" w="25" param="data.picture"/>
     </template>
 
-
-
     <stage id="explore" x="0" y="0" w="100" h="100" iterate="words-list" var="data">
         <audio asset="welcome_sound" />
 
          <embed template-name="word_template" var-data="data"/>
-         <image asset="animal_border" x="15" y="15" w="70" h="70" />
+         <image id="button_long_up" asset="button_long_up" x="40" y="8.5" w="20" h="10">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="explore" duration="10" reset="true"/>
+            </event>
+        </image>
+        <image asset="animal_border" x="15" y="15" w="70" h="70" />
+        <image id="button_long_down" asset="button_long_down" x="40" y="81" w="20" h="10">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="explore" duration="10" reset="true"/>
+            </event>
+        </image>
 
         <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page1" duration="10"/>
+                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page1" duration="10" transitionType="skip" reset="true"/>
             </event>
         </shape>
         <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E04C16" rotate="45" shadow="black">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page2" duration="10"/>
+                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page2" duration="10" transitionType="skip" reset="true"/>
             </event>
         </shape>
         <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page3" duration="10"/>
+                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page3" duration="10" transitionType="skip" reset="true"/>
             </event>
         </shape>
         <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page4" duration="10"/>
+                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page4" duration="10" transitionType="skip" reset="true"/>
             </event>
         </shape>
         <events>
@@ -399,6 +412,7 @@
     </stage>
 
     <stage id="page4" x="0" y="0" w="100" h="100">
+        <set id="setPluginId" param="mode" scope="stage" value="interact"/>
         <audio asset="stage_sound" />
         <audio asset="cheers_sound" />
 
@@ -418,7 +432,7 @@
                         <to ease="quadOut" duration="0"><![CDATA[{"x":85,"y":110}]]></to>
                     </tween>
                 </action>
-                <action type="command" command="set" param="score" param-increment="10" asset="page4"/>
+                <action type="command" command="set" param="score" param-increment="10" asset="setPluginId" scope="stage"/>
                 <action type="command" command="refresh" asset="scoretxt"/>
             </event>
         </shape>

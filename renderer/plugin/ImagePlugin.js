@@ -11,6 +11,11 @@ var ImagePlugin = Plugin.extend({
         s.x = dims.x;
         s.y = dims.y;
         this._self = s;
+        if(data.rotate) {
+            this._self.regX = dims.w/2;
+            this._self.regY = dims.h/2;
+            this._self.rotation = data.rotate;
+        }
         if(sb) this.setScale(); 
     }
 });

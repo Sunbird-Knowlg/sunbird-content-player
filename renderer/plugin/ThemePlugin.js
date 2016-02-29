@@ -200,6 +200,11 @@ var ThemePlugin = Plugin.extend({
                 }
                 this.replaceStage(action.value, action);
             }
+        } else if (action.transitionType === 'skip') {
+            if (stage._stageController && action.reset == true) {
+                stage._stageController.reset();
+            }
+            this.replaceStage(action.value, action);
         } else {
             if (stage._stageController && stage._stageController.hasNext()) {
                 this.replaceStage(stage._data.id, action);
