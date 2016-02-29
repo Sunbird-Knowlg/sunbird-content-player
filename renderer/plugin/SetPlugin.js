@@ -8,13 +8,13 @@ var SetPlugin = Plugin.extend({
         }
         this.setParam(data.param, value, data.scope);
     },
-    setParam: function(param, value, scope) {
+    setParam: function(param, value, incr, scope) {
         if (scope && scope.toLowerCase() == 'app') {
-            GlobalContext.setParam(param, value);
+            GlobalContext.setParam(param, value, incr);
         } else if (scope && scope.toLowerCase() == 'stage') {
-            this._stage.setParam(param, value);
+            this._stage.setParam(param, value, incr);
         } else {
-            this._theme.setParam(param, value);
+            this._theme.setParam(param, value, incr);
         }
     },
     getParam: function(param) {

@@ -81,6 +81,7 @@ Renderer = {
         Renderer.resizeGame(true);
         Renderer.theme.baseDir = gameRelPath;
         Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
+        createjs.Ticker.setFPS(60);
         createjs.Ticker.addEventListener("tick", function() {
             if(Renderer.update) {
                 Renderer.theme.update();
