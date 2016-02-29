@@ -5,7 +5,15 @@ var ImagePlugin = Plugin.extend({
     initPlugin: function(data) {
         var instance = this;
        // console.log("asset : ", asset);
-        var s = new createjs.Bitmap(this._theme.getAsset(data.param ? this._stage.getModelValue(data.param) : data.asset));
+        var asset = '';
+        if (data.model) {
+            asset = this._stage.getModelValue(data.model);   
+        } else if (data.param) {
+            asset = this.getParam(data.param);
+        } else {
+            asset = data.asset;
+        }
+        var s = new createjs.Bitmap(this._theme.getAsset(asset));
         var dims = this.relativeDims();
         var sb = s.getBounds();
         s.x = dims.x;

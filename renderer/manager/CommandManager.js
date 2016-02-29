@@ -93,7 +93,7 @@ CommandManager = {
                 if (plugin) plugin.refresh(action);
                 break;
             case 'SET':
-                if (plugin) plugin.setParam(action.param, action['param-value'], action['param-increment'], action.scope);
+                if (plugin && plugin._type == 'set') plugin.setParamValue(action);
                 break;
             case 'STARTGENIE':
                 if(TelemetryService._gameData.id != packageName && TelemetryService._gameData.id != packageNameDelhi) {

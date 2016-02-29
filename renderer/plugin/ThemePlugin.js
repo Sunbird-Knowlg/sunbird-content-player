@@ -309,7 +309,9 @@ var ThemePlugin = Plugin.extend({
     },
     getParam: function(param) {
         var instance = this;
-        return instance._contentParams[param];
+        var params = instance._contentParams;
+        var expr = 'params.' + param;
+        return eval(expr);
     }
 });
 PluginManager.registerPlugin('theme', ThemePlugin);

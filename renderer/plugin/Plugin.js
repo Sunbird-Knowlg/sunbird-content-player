@@ -324,6 +324,25 @@ var Plugin = Class.extend({
         }
         return value;
     },
+    getParam: function(param) {
+        var value;
+        var tokens = param.split('.');
+        if (tokens.length >= 2) {
+            var scope = tokens[0];
+            var idx = param.indexOf('.');
+            var paramName = param.substring(idx+1);
+            if (scope && scope.toLowerCase() == 'app') {
+                value = GlobalContext.getParam(paramName);
+            } else if (scope && scope.toLowerCase() == 'stage') {
+                value = this._stage.getParam(paramName);
+            } else {
+                value = this._theme.getParam(paramName);
+            }
+        } else if (this._stage) {
+            value = this._stage.getParam(param);
+        }
+        return value;
+    },
 	transitionTo: function() {
 		PluginManager.addError('Subclasses of plugin should implement transitionTo()');
 	},

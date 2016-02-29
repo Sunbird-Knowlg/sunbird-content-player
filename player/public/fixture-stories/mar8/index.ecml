@@ -8,6 +8,9 @@
         <media id="cancel_icon" src="icons/cancel.png" type="image" />
         <media id="button_long_up" src="icons/button_long_up.png" type="image" />
         <media id="button_long_down" src="icons/button_long_down.png" type="image" />
+        <media id="button_long_example_up" src="icons/button_long_example_up.png" type="image" />
+        <media id="button_long_example_down" src="icons/button_long_example_down.png" type="image" />
+        <media id="example_container" src="icons/example_container.png" type="image" />
         
         <media id="elephant_image1" src="pictures/elephant_image1.jpeg" type="image" />
         <media id="lion_image1" src="pictures/lion_image1.jpeg" type="image" />
@@ -62,6 +65,9 @@
         <image asset="animal_border"/>
         <image asset="button_long_up"/>
         <image asset="button_long_down"/>
+        <image asset="button_long_example_up"/>
+        <image asset="button_long_example_down"/>
+        <image asset="example_container"/>
         
         <audio asset="elephant_audio1" />
         <audio asset="lion_audio1" />
@@ -204,18 +210,21 @@
         </g> 
     </stage>
 
-    <controller name="word-details" type="data" id="word-details"/>
+    <controller name="wordDetails" type="data" id="word-details"/>
     <controller name="words-list" id="words-list" type="data" />
     <template id="word_template">
         <text x="55" y="30" w="50" h="10" fontsize="80" color="black" model="data.lemma"/>
         <text x="52" y="40" w="80" h="30" fontsize="50" color="black" model="data.meaning"/>
         <image x="50" y="-2" h="40" w="40" asset="sound_image1"/>
-        <image x="20" y="40" h="25" w="25" param="data.picture"/>
+        <image x="20" y="40" h="25" w="25" model="data.picture"/>
     </template>
+
+    <set param="selectedWord" scope="content" value=""/>
 
     <stage id="explore" x="0" y="0" w="100" h="100" iterate="words-list" var="data">
         <audio asset="welcome_sound" />
 
+        <set param="selectedWord" scope="content" model="data.lemma"/>
          <embed template-name="word_template" var-data="data"/>
          <image id="button_long_up" asset="button_long_up" x="40" y="8.5" w="20" h="10">
             <event type="click">
@@ -259,10 +268,34 @@
     <stage id="page1" x="0" y="0" w="100" h="100">
         <audio asset="stage_sound" />
 
+        <set id="exampleSentenceParam" param="exampleSentence" scope="stage" controller="wordDetails.${content.selectedWord}.exampleSentences"/>
+        <set id="selectedWordParam" param="selectedWordObj" scope="stage" controller="wordDetails.${content.selectedWord}"/>
+
+        <image id="button_long_example_up" asset="button_long_up" x="17" y="48.5" w="20" h="10" z-index="100">
+            <event type="click">
+                <action type="command" command="set" param="exampleSentence" param-index="previous" asset="exampleSentenceParam" scope="stage"/>
+                <action type="command" command="refresh" asset="exampleSentenceText"/>
+            </event>
+        </image>
+        <text x="25" y="35" w="30" h="10" fontsize="64" color="white" font="Arial" z-index="100">
+Example Sentences
+        </text>
+        <image asset="example_container" x="5" y="55" w="45" h="20" z-index="100"/>
+        <text id="exampleSentenceText" align="center" valign="middle" x="10" y="60" w="35" h="10" fontsize="56" color="white" font="Arial" z-index="100" param="stage.exampleSentence"/>
+        <image id="button_long_example_down" asset="button_long_down" x="16" y="71" w="20" h="10" z-index="100">
+            <event type="click">
+                <action type="command" command="set" param="exampleSentence" param-index="next" asset="exampleSentenceParam" scope="stage"/>
+                <action type="command" command="refresh" asset="exampleSentenceText"/>
+            </event>
+        </image>
+
+        <text x="74" y="50" w="25" h="10" align="center" fontsize="64" color="white" font="Arial" z-index="100" param="content.selectedWord"/>
+        <image x="74" y="56" w="25" h="40" param="stage.selectedWordObj.picture" z-index="100"/>
+
         <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black">
             <event type="click">
                 <action type="animation" asset="top-left"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":-35,"y":-35}]]></to></tween></action>
-                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500"/>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500" transitionType="skip" reset="true"/>
             </event>
         </shape>
         <events>

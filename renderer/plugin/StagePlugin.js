@@ -114,6 +114,11 @@ var StagePlugin = Plugin.extend({
                 if (controller) {
                     val = controller.getModelValue(paramName);
                 }
+            } else {
+                var controller = this.getController(param);
+                if (controller) {
+                    val = controller.getModelValue();
+                }
             }
         }
         return val;
@@ -164,7 +169,9 @@ var StagePlugin = Plugin.extend({
     },
     getParam: function(param) {
         var instance = this;
-        return instance.params[param];
+        var params = instance.params;
+        var expr = 'params.' + param;
+        return eval(expr);
     }
 });
 PluginManager.registerPlugin('stage', StagePlugin);

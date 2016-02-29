@@ -23,7 +23,7 @@ var TextPlugin = Plugin.extend({
         } else if (data.model) {
             textStr = (this._stage.getModelValue(data.model) || '');
         } else if (data.param) {
-            textStr = (this._stage.params[data.param.trim()] || '');
+            textStr = (this.getParam(data.param.trim()) || '');
         }
 
         var text = new createjs.Text(textStr, font, data.color || '#000000');
@@ -68,9 +68,10 @@ var TextPlugin = Plugin.extend({
         } else if (instance._data.model) {
             textStr = (this._stage.getModelValue(instance._data.model) || '');
         } else if (instance._data.param) {
-            textStr = (this._stage.params[instance._data.param.trim()] || '');
+            textStr = (this.getParam(instance._data.param.trim()) || '');
         }
         this._self.text = textStr;
+        Renderer.update = true;
     },
 });
 PluginManager.registerPlugin('text', TextPlugin);
