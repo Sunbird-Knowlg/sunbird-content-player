@@ -48,7 +48,7 @@ var Plugin = Class.extend({
 			var exprVal = this.evaluateExpr(expr);
 			if (typeof exprVal != undefined) {
 				if (this._self) {
-					this._self.visible = (this._self.visible && exprVal);	
+					this._self.visible = (this._self.visible && exprVal);
 				}
 			}
 		}
@@ -65,7 +65,7 @@ var Plugin = Class.extend({
 	    }
 
 		// Render the plugin component
-		if(this._render) {			
+		if(this._render) {
 			if(this._isContainer && this._type == 'stage') {
 				this.cache();
 			}
@@ -151,6 +151,9 @@ var Plugin = Class.extend({
 	togglePlay: function() {
 		PluginManager.addError('Subclasses of plugin should implement togglePlay()');
 	},
+    refresh: function() {
+        PluginManager.addError('Subclasses of plugin should implement togglePlay()');
+    },
 	show: function(action) {
 		if(_.contains(this.events, 'show')) {
 			EventManager.dispatchEvent(this._data.id, 'show');
@@ -163,7 +166,7 @@ var Plugin = Class.extend({
 	hide: function(action) {
 		if(_.contains(this.events, 'hide')) {
 			EventManager.dispatchEvent(this._data.id, 'hide');
-		} else if(this._self.visible) { 
+		} else if(this._self.visible) {
 			this._self.visible = false;
 			EventManager.processAppTelemetry(action, 'HIDE', this);
 		}
@@ -196,7 +199,7 @@ var Plugin = Class.extend({
 
     	// If the shadow is a plugin, set the visibility to true
         if ((shadowObj) && (shadowObj._self) && ('visible' in shadowObj._self)) {
-            shadowObj._self.visible = true; 
+            shadowObj._self.visible = true;
         }
         else {
         	// Not a plugin, render a normal shadow
@@ -213,7 +216,7 @@ var Plugin = Class.extend({
 
     	// If the shadow is a plugin, set the visibility to false
         if ((shadowObj) && (shadowObj._self) && ('visible' in shadowObj._self)) {
-            shadowObj._self.visible = false;    
+            shadowObj._self.visible = false;
         }
         else {
         	// Not a plugin (normal shadow), unset the object
@@ -298,9 +301,9 @@ var Plugin = Class.extend({
         var app = GlobalContext._params;
         var stage = {};
         if (this._stage) {
-        	stage = this._stage._stageParams;
+        	stage = this._stage.params;
         } else if (this._type == 'stage') {
-        	stage = this._stageParams;
+        	stage = this.params;
         }
         var content = {};
         if (this._theme) {
