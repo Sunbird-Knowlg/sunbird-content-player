@@ -22,6 +22,48 @@
       "हम  कल हाथी देखेंगे", "हाथी ने पेड़ हिला दिया |", "हाथी भी भागने लगा।"  
     ]
   },
+  "शेर": {
+    "meaning": "चार पैरों से चलने वाला दुमदार जंतु",
+    "picture": "lion_image1",
+    "pronunciation": "lion_audio1",
+    "syllableCount": 2,
+    "rhymingWords": [
+      {
+        "lemma": "कार",
+        "syllables": ["का"],
+        "picture": "car_image1",
+        "pronunciation": "car_audio1"
+      },
+      {
+        "lemma": "चार",
+        "syllables": ["चा"],
+        "picture": "four_image1",
+        "pronunciation": "char_audio1"
+      },
+      {
+        "lemma": "घर",
+        "syllables": ["घ"],
+        "picture": "house_image1",
+        "pronunciation": "ghar_audio"
+      },
+      {
+        "lemma": "मोर",
+        "syllables": ["मो"],
+        "picture": "peacock_image1",
+        "pronunciation": "more_audio1"
+      },
+      {
+        "lemma": "नीर",
+        "syllables": ["नी"],
+        "picture": "water_image1",
+        "pronunciation": "neer_audio1"
+      }
+    ],
+    "exampleSentences": [
+      "शेर का बच्चा दहाड़ा।", "शेर परिश्रम करकर हारा", "शेर क्रोध में भारी बिदका", "उन्हें एक शेर मिला।", 
+      "शेर ने कड़ककर कहा", "शेर ने पूछा", "दौड़ते हुए जानवरों को शेर ने क्यों रोक होगा ?"  
+    ]
+  },
   "पालक": {
     "meaning": "आप खा सकते हैं (सब्जी )",
     "picture": "palak_image1",
