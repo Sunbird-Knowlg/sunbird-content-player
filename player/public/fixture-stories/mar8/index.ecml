@@ -1,4 +1,4 @@
-<theme startStage="scene1" id="theme" ver="0.2">
+<theme startStage="splash" id="theme" ver="0.2">
     <manifest>
         <media id="welcome_sound" src="audio/welcome_riff.ogg" type="sound" />
         <media id="stage_sound" src="audio/new_puzzle.ogg" type="sound" />
@@ -49,7 +49,25 @@
 
         <media id="previous" src="icon_previous.png" type="image" />
         <media id="next" src="icon_next.png" type="image" />
+        <media id="logo_img" src="logo.png" type="image" />
     </manifest>
+
+    <template id="blurWordTemplate">
+        <image asset="cancel_icon" x="50" y="22" w="8" h="9">
+            <event type="click">
+                <action type="command" command="hide" asset-param="wordDetailsContainer" />
+                <action type="command" command="unblur" asset-param="mainContainer" />
+            </event>
+        </image>
+        <image model="data.picture" x="20" y="35" w="20" h="20" />
+        <text x="42" y="35" w="20" h="20" font="Georgia" fontsize="70" model="data.lemma"></text>
+        <image asset="sound_icon" x="53" y="35" w="4" h="5">
+            <event type="click">
+                <action type="command" command="togglePlay" asset-model="data.pronunciation" />
+            </event>
+        </image>
+        <text x="42" y="45" w="25" h="20" font="Georgia" fontsize="50" model="data.meaning"></text>
+    </template>
 
     <stage id="preloadStage" preload="true">
         <image asset="elephant_image1"/>
@@ -103,12 +121,22 @@
         </shape>
     </stage>
 
+    <stage id="splash" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
+        <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+            </event>
+        </shape>
+        <param name="next" value="scene1" />
+        <image asset="logo_img" x="35" y="25" w="25" h="25" />
+        <text x="32" y="55" w="40" h="10" font="Georgia" fontsize="60">March 8th Demo Story</text>
+    </stage>
     <stage id="scene1" x="0" y="0" w="100" h="100" extends="storyBaseStage">
         <param name="next" value="scene2" />
         <g id="scene1Main" x="0" y="0" w="100" h="100">
             <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#F3CCDE" />
-            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
-उस  रात बहुत तेज बारिश हो रही थी  | शेर अपने घर में लेटा हुआ था | 
+            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">उस  रात बहुत तेज बारिश हो रही थी  | शेर अपने घर में लेटा हुआ था | 
             </text>
             <image asset="page2" x="2" y="12" w="96" h="86" />
             <shape x="53" y="30" w="20" h="65" type="rect" z-index="2" hitArea="true">
@@ -118,21 +146,10 @@
                 </event>
             </shape>
         </g>
+        <set scope="stage" param="wordDetailsContainer" value="scene1Word"/>
+        <set scope="stage" param="mainContainer" value="scene1Main"/>
         <g id="scene1Word" x="0" y="0" w="100" h="100" visible="false">
-            <image asset="cancel_icon" x="50" y="22" w="8" h="9">
-                <event type="click">
-                    <action type="command" command="hide" asset="scene1Word" />
-                    <action type="command" command="unblur" asset="scene1Main" />
-                </event>
-            </image>
-            <image asset="lion_image1" x="20" y="35" w="20" h="20" />
-            <text x="42" y="35" w="20" h="20" font="Georgia" fontsize="70">शेर</text>
-            <image asset="sound_icon" x="53" y="35" w="4" h="5">
-                <event type="click">
-                    <action type="command" command="togglePlay" asset="lion_audio1" />
-                </event>
-            </image>
-            <text x="42" y="45" w="25" h="20" font="Georgia" fontsize="50">चार पैरों से चलने वाला दुमदार जंतु</text>
+            <embed template-name="blurWordTemplate" var-data="wordDetails.शेर" />
         </g>
     </stage>
 
@@ -140,8 +157,7 @@
         <param name="previous" value="scene1" />
         <param name="next" value="scene3" />
         <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#FFF16E" />
-        <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
-तभी आवाज से उसकी आँख खुल गई  | रसोई  में जा कर देखा तो पाया कि वहां कोई आया था |
+        <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">तभी आवाज से उसकी आँख खुल गई  | रसोई  में जा कर देखा तो पाया कि वहां कोई आया था |
         </text>
         <image asset="page3" x="2" y="12" w="96" h="86" />
     </stage>
@@ -152,8 +168,7 @@
         <param name="next" value="scene4" />
         <g id="scene3Main" x="0" y="0" w="100" h="100">
             <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#E5F4FB" />
-            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
-अरे ! किसी ने उसके आम और पालक चुरा लिए थे | उसे आम और पालक बहुत पसंद थे |
+            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">अरे ! किसी ने उसके आम और पालक चुरा लिए थे | उसे आम और पालक बहुत पसंद थे |
             </text>
             <image asset="page4" x="2" y="12" w="96" h="86" />
             <shape x="30" y="2" w="6" h="10" type="rect" z-index="2" hitArea="true">
@@ -163,21 +178,10 @@
                 </event>
             </shape>
         </g>
+        <set scope="stage" param="wordDetailsContainer" value="scene3Word"/>
+        <set scope="stage" param="mainContainer" value="scene3Main"/>
         <g id="scene3Word" x="0" y="0" w="100" h="100" visible="false">
-            <image asset="cancel_icon" x="50" y="22" w="8" h="9">
-                <event type="click">
-                    <action type="command" command="hide" asset="scene3Word" />
-                    <action type="command" command="unblur" asset="scene3Main" />
-                </event>
-            </image>
-            <image asset="palak_image1" x="20" y="35" w="20" h="20" />
-            <text x="42" y="35" w="20" h="20" font="Georgia" fontsize="70">पालक</text>
-            <image asset="sound_icon" x="53" y="35" w="4" h="5">
-                <event type="click">
-                    <action type="command" command="togglePlay" asset="palak_audio1" />
-                </event>
-            </image>
-            <text x="42" y="45" w="25" h="20" font="Georgia" fontsize="50">आप खा सकते हैं (सब्जी )</text>
+            <embed template-name="blurWordTemplate" var-data="wordDetails.पालक" />
         </g>
     </stage>
 
@@ -186,8 +190,7 @@
         <param name="next" value="explore" />
         <g id="scene4Main" x="0" y="0" w="100" h="100">
             <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#86CFF2" />
-            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
-शेर घबरा कर अपने साथी, हाथी के पास गया |  दोनों रात को बारिश में चोर को खोजने निकल पड़े |
+            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">शेर घबरा कर अपने साथी, हाथी के पास गया |  दोनों रात को बारिश में चोर को खोजने निकल पड़े |
             </text>
             <image asset="page5" x="2" y="12" w="96" h="86" />
             <shape x="18" y="15" w="25" h="32" type="rect" z-index="2" hitArea="true">
@@ -197,21 +200,10 @@
                 </event>
             </shape>
         </g>
+        <set scope="stage" param="wordDetailsContainer" value="scene4Word"/>
+        <set scope="stage" param="mainContainer" value="scene4Main"/>
         <g id="scene4Word" x="0" y="0" w="100" h="100" visible="false">
-            <image asset="cancel_icon" x="50" y="22" w="8" h="9">
-                <event type="click">
-                    <action type="command" command="hide" asset="scene4Word" />
-                    <action type="command" command="unblur" asset="scene4Main" />
-                </event>
-            </image>
-            <image asset="elephant_image1" x="20" y="35" w="20" h="20" />
-            <text x="42" y="35" w="20" h="20" font="Georgia" fontsize="70">हाथी</text>
-            <image asset="sound_icon" x="53" y="35" w="4" h="5">
-                <event type="click">
-                    <action type="command" command="togglePlay" asset="elephant_audio1" />
-                </event>
-            </image>
-            <text x="42" y="45" w="25" h="20" font="Georgia" fontsize="50">चार पैरों से चलने वाला दुमदार जंतु</text>
+            <embed template-name="blurWordTemplate" var-data="wordDetails.हाथी" />
         </g> 
     </stage>
 

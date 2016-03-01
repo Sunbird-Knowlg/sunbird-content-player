@@ -5,7 +5,18 @@ CommandManager = {
         if (_.isString(action.command))
             cmd = (action.command).toUpperCase();
 
-        var plugin = PluginManager.getPluginObject(action.asset);
+        var assetId = action.asset;
+        if (action['asset-model']) {
+            var stagePlugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
+            assetId = stagePlugin.getModelValue(action['asset-model']);
+            action.asset = assetId;
+        } else if (action['asset-param']) {
+            var stagePlugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
+            assetId = stagePlugin.getParam(action['asset-param']);
+            action.asset = assetId;
+        }
+
+        var plugin = PluginManager.getPluginObject(assetId);
         if (!_.contains(CommandManager.audioActions, cmd)) {
             if (!plugin) {
                 PluginManager.addError('Plugin not found for action - ' + JSON.stringify(action));
