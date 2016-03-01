@@ -9,6 +9,8 @@
         <media id="button_long_up" src="icons/button_long_up.png" type="image" />
         <media id="button_long_down" src="icons/button_long_down.png" type="image" />
         <media id="button_long_example_up" src="icons/button_long_example_up.png" type="image" />
+        <media id="triangle_up" src="icons/triangle_up.png" type="image" />
+        <media id="triangle_dn" src="icons/triangle_dn.png" type="image" />
         <media id="button_long_example_down" src="icons/button_long_example_down.png" type="image" />
         <media id="example_container" src="icons/example_container.png" type="image" />
         <media id="rhym_button_up" src="icons/rhym_button_up.png" type="image" />
@@ -85,6 +87,8 @@
         <image asset="animal_border"/>
         <image asset="button_long_up"/>
         <image asset="button_long_down"/>
+        <image asset="triangle_up"/>
+        <image asset="triangle_dn"/>
         <image asset="button_long_example_up"/>
         <image asset="button_long_example_down"/>
         <image asset="example_container"/>
@@ -268,26 +272,30 @@
         <set id="exampleSentenceParam" param="exampleSentence" scope="stage" ev-model="wordDetails.${content.selectedWord}.exampleSentences"/>
         <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
 
-        <image id="button_long_example_up" asset="button_long_up" x="17" y="48.5" w="20" h="10" z-index="100">
-            <event type="click">
-                <action type="command" command="set" param="exampleSentence" param-index="previous" asset="exampleSentenceParam" scope="stage"/>
-                <action type="command" command="refresh" asset="exampleSentenceText"/>
-            </event>
-        </image>
-        <text x="25" y="35" w="30" h="10" fontsize="64" color="white" font="Arial" z-index="100">
-Example Sentences
-        </text>
-        <image asset="example_container" x="5" y="55" w="45" h="20" z-index="100"/>
-        <text id="exampleSentenceText" align="center" valign="middle" x="10" y="60" w="35" h="10" fontsize="56" color="white" font="Arial" z-index="100" param="stage.exampleSentence"/>
-        <image id="button_long_example_down" asset="button_long_down" x="16" y="71" w="20" h="10" z-index="100">
-            <event type="click">
-                <action type="command" command="set" param="exampleSentence" param-index="next" asset="exampleSentenceParam" scope="stage"/>
-                <action type="command" command="refresh" asset="exampleSentenceText"/>
-            </event>
-        </image>
+        <g id="body" x="0" y="0" w="100" h="100" z-index="50">
+            <!-- <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="15" x="83" y="70" w="15" h="15" z-index="50"/> -->
+            <image id="page1Img" param="stage.selectedWordObj.picture" x="70" y="54" w="27" h="35" z-index="51"/>
 
-        <text x="74" y="50" w="25" h="10" align="center" fontsize="64" color="white" font="Arial" z-index="100" param="content.selectedWord"/>
-        <image x="74" y="56" w="25" h="40" param="stage.selectedWordObj.picture" z-index="100"/>
+            <shape id="spin_top" type="roundrect" fill="#B0D93D" shadow="#245E1F" blur="30" offsetX="-2" offsetY="0" stroke="black" x="5" y="35" w="55" h="15" z-index="50">
+                <event type="click">
+                    <action type="command" command="set" param="exampleSentence" param-index="previous" asset="exampleSentenceParam" scope="stage"/>
+                    <action type="command" command="refresh" asset="exampleSentenceText"/>
+                </event>
+            </shape>
+            <image id="spin_top_ico" asset="triangle_up" x="25" y="37" w="15" h="10" z-index="51"/>
+
+            <shape id="spinnerph1" type="roundrect" fill="#978F35" stroke="black" x="5" y="51" w="55" h="23" z-index="50"/>
+
+            <shape id="spin_bot" type="roundrect" fill="#B0D93D" shadow="#245E1F" blur="30" offsetX="-2" offsetY="2" stroke="black" x="5" y="75" w="55" h="15" z-index="50">
+                <event type="click">
+                    <action type="command" command="set" param="exampleSentence" param-index="next" asset="exampleSentenceParam" scope="stage"/>
+                    <action type="command" command="refresh" asset="exampleSentenceText"/>
+                </event>
+            </shape>
+            <image id="spin_bot_ico" asset="triangle_dn" x="25" y="77" w="15" h="10" z-index="51"/>
+
+            <text id="exampleSentenceText" align="center" valign="middle" x="7" y="51" w="55" h="23" z-index="50" font="Arial" fontsize="80" color="white" param="stage.exampleSentence"></text>
+        </g>
 
         <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black">
             <event type="click">
