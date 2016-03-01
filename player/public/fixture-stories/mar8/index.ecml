@@ -15,6 +15,7 @@
         <media id="example_container" src="icons/example_container.png" type="image" />
         <media id="rhym_button_up" src="icons/rhym_button_up.png" type="image" />
         <media id="rhym_button_down" src="icons/rhym_button_down.png" type="image" />
+        <media id="change_icon" src="icons/change.png" type="image" />
         
         <media id="elephant_image1" src="pictures/elephant_image1.jpeg" type="image" />
         <media id="lion_image1" src="pictures/lion_image1.jpeg" type="image" />
@@ -30,6 +31,16 @@
         <media id="water_image1" src="pictures/water_image1.jpg" type="image" />
         <media id="sound_image1" src="pictures/sound.png" type="image" />
         <media id="animal_border" src="pictures/animal_info_border.png" type="image" />
+        <media id="tiger_image1" src="pictures/tiger_image1.jpg" type="image" />
+        <media id="cow_image1" src="pictures/cow_image1.jpg" type="image" />
+        <media id="dog_image1" src="pictures/dog_image1.jpg" type="image" />
+        <media id="deer_image1" src="pictures/deer_image1.jpeg" type="image" />
+        <media id="camel_image1" src="pictures/camel_image1.jpg" type="image" />
+        <media id="horse_image1" src="pictures/horse_image1.jpeg" type="image" />
+        <media id="pigeon_image1" src="pictures/pigeon_image1.jpg" type="image" />
+        <media id="whale_image1" src="pictures/whale_image1.jpg" type="image" />
+        <media id="gorilla_image1" src="pictures/gorilla_image1.jpg" type="image" />
+        <media id="rhino_image1" src="pictures/rhino_image1.jpg" type="image" />
 
         <media id="elephant_audio1" src="sounds/elephant_audio1.mp3" type="sound" />
         <media id="lion_audio1" src="sounds/lion_audio1.mp3" type="sound" />
@@ -94,6 +105,18 @@
         <image asset="example_container"/>
         <image asset="rhym_button_up"/>
         <image asset="rhym_button_down"/>
+        <image asset="change_icon"/>
+
+        <image asset="tiger_image1"/>
+        <image asset="cow_image1"/>
+        <image asset="dog_image1"/>
+        <image asset="deer_image1"/>
+        <image asset="camel_image1"/>
+        <image asset="horse_image1"/>
+        <image asset="pigeon_image1"/>
+        <image asset="whale_image1"/>
+        <image asset="gorilla_image1"/>
+        <image asset="rhino_image1"/>
         
         <audio asset="stage_sound" />
         <audio asset="elephant_audio1" />
@@ -215,7 +238,7 @@
     <controller name="words-list" id="words-list" type="data" />
     <template id="word_template">
         <text x="55" y="30" w="50" h="10" fontsize="80" color="black" model="data.lemma"/>
-        <text x="52" y="40" w="80" h="30" fontsize="50" color="black" model="data.meaning"/>
+        <text x="52" y="40" w="30" h="30" fontsize="50" color="black" model="data.meaning"/>
         <image x="50" y="-2" h="40" w="40" asset="sound_image1"/>
         <image x="20" y="40" h="25" w="25" model="data.picture"/>
     </template>
@@ -452,23 +475,6 @@
     </stage>
 
     <stage id="page3" x="0" y="0" w="100" h="100">
-        <audio asset="stage_sound" />
-
-        <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black">
-            <event type="click">
-                <action type="animation" asset="bottom-right"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":135,"y":135}]]></to></tween></action>
-                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500" transitionType="skip" reset="true"/>
-            </event>
-        </shape>
-        <events>
-            <event type="enter">
-                <action type="command" command="play" asset="stage_sound" loop="1" />
-                <action type="animation" asset="bottom-right"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":70,"y":70}]]></to></tween></action>
-            </event>
-        </events>
-    </stage>
-
-    <stage id="page4" x="0" y="0" w="100" h="100">
         <set id="setPluginId" param="mode" scope="stage" value="interact"/>
         <audio asset="stage_sound" />
         <audio asset="cheers_sound" />
@@ -493,6 +499,70 @@
                 <action type="command" command="refresh" asset="scoretxt"/>
             </event>
         </shape>
+
+        <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black">
+            <event type="click">
+                <action type="animation" asset="bottom-right"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":135,"y":135}]]></to></tween></action>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500" transitionType="skip" reset="true"/>
+            </event>
+        </shape>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="stage_sound" loop="1" />
+                <action type="animation" asset="bottom-right"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":70,"y":70}]]></to></tween></action>
+            </event>
+        </events>
+    </stage>
+
+     <stage id="page4" x="0" y="0" w="100" h="100">
+        <audio asset="stage_sound" />
+
+        <set id="relatedWordsParam" param="relatedWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.relatedWords"/>
+        <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
+        <set id="membersParam" param="memberWord" scope="stage" ev-value="${stage.relatedWord.members}"/>
+
+        <image id="button_long_example_up" asset="button_long_up" x="14" y="46.5" w="20" h="10" z-index="100">
+            <event type="click">
+                <action type="command" command="set" param="relatedWord" param-index="previous" asset="relatedWordsParam" scope="stage"/>
+                <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
+                <action type="command" command="refresh" asset="relatedWordText"/>
+                <action type="command" command="refresh" asset="memberWordGroup"/>
+            </event>
+        </image>
+        <image asset="example_container" x="2" y="53" w="45" h="20" z-index="100"/>
+        <text id="wordMeaningText" valign="middle" x="5" y="10" w="60" h="10" fontsize="64" color="white" font="Arial" z-index="100" param="stage.selectedWordObj.meaning"/>
+        <text id="relatedWordText" align="center" valign="middle" x="7" y="58" w="35" h="10" fontsize="56" color="white" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
+        <image id="button_long_example_down" asset="button_long_down" x="13" y="69" w="20" h="10" z-index="100">
+            <event type="click">
+                <action type="command" command="set" param="relatedWord" param-index="next" asset="relatedWordsParam" scope="stage"/>
+                <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
+                <action type="command" command="refresh" asset="relatedWordText"/>
+                <action type="command" command="refresh" asset="memberWordGroup"/>
+            </event>
+        </image>
+
+        <image id="selectedWordImage" x="70" y="10" w="28" h="30" param="stage.selectedWordObj.picture" z-index="100"/>
+
+        <image x="72" y="40" w="6" h="8" asset="change_icon" z-index="100">
+            <event type="click">
+                <action type="command" command="set" param="memberWord" param-index="next" asset="membersParam" scope="stage"/>
+                <action type="command" command="refresh" asset="memberWordGroup"/>
+            </event>
+        </image>
+        <shape x="51" y="44" w="29" h="53" type="roundrect" fill="#999999" opacity="0.6" z-index="90"/>
+        <g id="memberWordGroup" x="0" y="0" w="100" h="100" z-index="100">
+            <image id="memberWordPicture" x="53" y="48" w="25" h="40" param="stage.memberWord.picture" z-index="100">
+                <event type="click">
+                    <action type="command" command="set" param="selectedWordObj" ev-model="wordDetails.${stage.memberWord.lemma}" asset="selectedWordParam" scope="stage"/>
+                    <action type="command" command="set" param="relatedWord" ev-value="${stage.selectedWordObj.relatedWords}" asset="relatedWordsParam" scope="stage"/>
+                    <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
+                    <action type="command" command="refresh" asset="relatedWordText"/>
+                    <action type="command" command="refresh" asset="selectedWordImage"/>
+                    <action type="command" command="refresh" asset="memberWordGroup"/>
+                </event>
+            </image>
+            <text id="memberWordLemma" align="center" valign="middle" x="53" y="88" w="25" h="10" fontsize="64" color="white" font="Arial" z-index="100" param="stage.memberWord.lemma"/>
+        </g>
 
         <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black">
             <event type="click">

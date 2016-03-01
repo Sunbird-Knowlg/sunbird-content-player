@@ -10,7 +10,13 @@ var SetPlugin = Plugin.extend({
         this._index = 0;
         var value = data.value;
         if (data['ev-value']) {
-            value = this.evaluateExpr(data['ev-value']);
+            this._modelName = data.param;
+            this._model = this.evaluateExpr(data['ev-value']);
+            if (_.isArray(this._model)) {
+                value = this._model[0];
+            } else {
+                value = this._model;
+            }
         } else if (data['model']) {
             if (this._stage) {
                 value = this._stage.getModelValue(data['model']);
@@ -54,6 +60,8 @@ var SetPlugin = Plugin.extend({
         var param = action.param;
         var paramIdx = action['param-index'];
         var paramKey = action['param-key'];
+        var paramExpr = action['ev-value'];
+        var paramModel = action['ev-model'];
         var val;
         if (paramIdx) {
             if (paramIdx == 'previous') {
@@ -84,6 +92,23 @@ var SetPlugin = Plugin.extend({
                 val = this.model[paramKey];
             } else {
                 val = '';
+            }
+        } else if (paramExpr) {
+            this._model = this.evaluateExpr(paramExpr);
+            if (_.isArray(this._model)) {
+                val = this._model[0];
+            } else {
+                val = this._model;
+            }
+        } else if (paramModel) {
+            if (this._stage) {
+                var model = this.replaceExpressions(paramModel);
+                this._model = this._stage.getModelValue(model);
+                if (_.isArray(this._model)) {
+                    val = this._model[0];
+                } else {
+                    val = this._model;
+                }
             }
         } else {
             val = action['param-value'];

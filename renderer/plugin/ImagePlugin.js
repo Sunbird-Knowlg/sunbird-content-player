@@ -35,9 +35,11 @@ var ImagePlugin = Plugin.extend({
         } else {
             asset = this._data.asset;
         }
-        var image = this._theme.getAsset(asset);
-        this._self.image = image;
-        Renderer.update = true;
+        if (asset) {
+            var image = this._theme.getAsset(asset);
+            this._self.image = image;
+            Renderer.update = true;
+        }
     }
 });
 PluginManager.registerPlugin('image', ImagePlugin);

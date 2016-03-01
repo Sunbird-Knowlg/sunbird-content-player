@@ -70,8 +70,10 @@ var TextPlugin = Plugin.extend({
         } else if (instance._data.param) {
             textStr = (this.getParam(instance._data.param.trim()) || '');
         }
-        this._self.text = textStr;
-        Renderer.update = true;
+        if (textStr && textStr != '') {
+            this._self.text = textStr;
+            Renderer.update = true;
+        }
     }
 });
 PluginManager.registerPlugin('text', TextPlugin);

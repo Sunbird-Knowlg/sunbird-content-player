@@ -1,7 +1,7 @@
 {
   "हाथी": {
     "lemma": "हाथी",
-    "meaning": "चार पैरों से चलने वाला दुमदार जंतु",
+    "meaning": "एक शाकाहारी स्तनपायी चौपाया जो अपने स्थूल और विशाल आकार तथा सूँड़ के कारण सब जानवरों से विलक्षण होता है",
     "picture": "elephant_image1",
     "pronunciation": "elephant_audio1",
     "syllableCount": 2,
@@ -22,6 +22,98 @@
     ],
     "exampleSentences": [
       "हम  कल हाथी देखेंगे", "हाथी ने पेड़ हिला दिया |", "हाथी भी भागने लगा।"  
+    ],
+    "relatedWords": [
+      {
+        "relation": "hasHypernym",
+        "gloss": "चार पैरों से चलने वाला दुमदार जंतु",
+        "picture": "",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {
+            "lemma": "बाघ",
+            "meaning": "बिल्ली की जाति का एक बहुत बड़ा और भयंकर, हिंसक पशु",
+            "picture": "tiger_image1",
+            "pronunciation": "baagh_audio1"
+          },
+          {
+            "lemma": "गाय",
+            "meaning": "सींग वाला एक पालतू शाकाहारी मादा चौपाया जो अपने दूध के लिए प्रसिद्ध है",
+            "picture": "cow_image1",
+            "pronunciation": "gaay_audio1"
+          },
+          {
+            "lemma": "कुत्ता",
+            "meaning": "भेड़िए, गीदड़ आदि की जाति का एक पालतू पशु",
+            "picture": "dog_image1",
+            "pronunciation": "kutta_audio1"
+          },
+          {
+            "lemma": "हिरण",
+            "meaning": "एक शाकाहारी चौपाया जो मैदानों और जंगलों में रहता है",
+            "picture": "deer_image1",
+            "pronunciation": "hiran_audio1"
+          },
+          {
+            "lemma": "शेर",
+            "meaning": "चार पैरों से चलने वाला दुमदार जंतु",
+            "picture": "lion_image1",
+            "pronunciation": "lion_audio1"
+          }
+        ]
+      },
+      {
+        "relation": "hasHypernym",
+        "gloss": "युद्ध में प्रयुक्त जानवर",
+        "picture": "",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {
+            "lemma": "ऊंट",
+            "meaning": "कैमुलस जीनस के अंतर्गत आने वाला एक खुरधारी जीव है",
+            "picture": "camel_image1",
+            "pronunciation": "oont_audio1"
+          },
+          {
+            "lemma": "घोड़ा",
+            "meaning": "सींगरहित एक चौपाया जो गाड़ी खींचने और सवारी के काम में आता है",
+            "picture": "horse_image1",
+            "pronunciation": "ghoda_audio1"
+          },
+          {
+            "lemma": "कबूतर",
+            "meaning": "झुंड में रहने वाला एक मँझोले आकार का पक्षी जो प्रायः मैदानों या छतों आदि पर दाना चुगते हुए देखा जा सकता है",
+            "picture": "pigeon_image1",
+            "pronunciation": "kabootar_audio1"
+          }
+        ]
+      },
+      {
+        "relation": "hasHypernym",
+        "gloss": "भारी जानवरों/पक्षी",
+        "picture": "",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {
+            "lemma": "ह्वेल",
+            "meaning": "समुद्र में रहने वाला मछली के आकार का एक बड़ा जल-जंतु",
+            "picture": "whale_image1",
+            "pronunciation": "whale_audio1"
+          },
+          {
+            "lemma": "गोरिल्ला",
+            "meaning": "अफ्रिका में पाया जाने वाला एक प्रकार का वनमानुष",
+            "picture": "gorilla_image1",
+            "pronunciation": "gorilla_audio1"
+          },
+          {
+            "lemma": "राइनो",
+            "meaning": "भैंसे के आकार का कड़ी खाल वाला एक जंगली पशु",
+            "picture": "rhino_image1",
+            "pronunciation": "rhino_audio1"
+          }
+        ]
+      }
     ]
   },
   "शेर": {
@@ -66,6 +158,46 @@
     "exampleSentences": [
       "शेर का बच्चा दहाड़ा।", "शेर परिश्रम करकर हारा", "शेर क्रोध में भारी बिदका", "उन्हें एक शेर मिला।", 
       "शेर ने कड़ककर कहा", "शेर ने पूछा", "दौड़ते हुए जानवरों को शेर ने क्यों रोक होगा ?"  
+    ],
+    "relatedWords": [
+      {
+        "relation": "hasHypernym",
+        "gloss": "चार पैरों से चलने वाला दुमदार जंतु",
+        "picture": "",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {
+            "lemma": "बाघ",
+            "meaning": "बिल्ली की जाति का एक बहुत बड़ा और भयंकर, हिंसक पशु",
+            "picture": "tiger_image1",
+            "pronunciation": "baagh_audio1"
+          },
+          {
+            "lemma": "गाय",
+            "meaning": "सींग वाला एक पालतू शाकाहारी मादा चौपाया जो अपने दूध के लिए प्रसिद्ध है",
+            "picture": "cow_image1",
+            "pronunciation": "gaay_audio1"
+          },
+          {
+            "lemma": "कुत्ता",
+            "meaning": "भेड़िए, गीदड़ आदि की जाति का एक पालतू पशु",
+            "picture": "dog_image1",
+            "pronunciation": "kutta_audio1"
+          },
+          {
+            "lemma": "हिरण",
+            "meaning": "एक शाकाहारी चौपाया जो मैदानों और जंगलों में रहता है",
+            "picture": "deer_image1",
+            "pronunciation": "hiran_audio1"
+          },
+          {
+            "lemma": "हाथी",
+            "meaning": "चार पैरों से चलने वाला दुमदार जंतु",
+            "picture": "elephant_image1",
+            "pronunciation": "elephant_audio1"
+          }
+        ]
+      }
     ]
   },
   "पालक": {
