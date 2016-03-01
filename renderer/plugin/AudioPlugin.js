@@ -5,7 +5,18 @@ var AudioPlugin = Plugin.extend({
     _state: 'stop',
     _render: false,
     initPlugin: function(data) {
-        this._id = data.asset;
+        this.refresh();
+    },
+    refresh: function() {
+        var asset = '';
+        if (this._data.model) {
+            asset = this._stage.getModelValue(this._data.model);   
+        } else if (this._data.param) {
+            asset = this.getParam(this._data.param);
+        } else {
+            asset = this._data.asset;
+        }
+        this._id = asset;
     },
     play: function(action) {
         this.stageId = this._stage._id;

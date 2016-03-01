@@ -89,10 +89,10 @@ EventManager = {
 			}
 			if (stage && stage._type === 'stage') {
 				if(action.param) {
-					action.value = stage.params[action.param] || '';
+					action.value = stage.getParam(action.param) || '';
 				}
 				if (action.asset_param) {
-					action.asset = stage.params[action.asset_param] || '';
+					action.asset = stage.getParam(action.asset_param) || '';
 				} else if (action.asset_model) {
 					action.asset = stage.getModelValue(action.asset_model) || '';
 				}

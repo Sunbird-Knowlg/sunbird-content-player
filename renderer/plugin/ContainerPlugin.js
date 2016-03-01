@@ -12,6 +12,16 @@ var ContainerPlugin = Plugin.extend({
             this._self.hitArea = hit;
         }
         this.invokeChildren(data, this, this._stage, this._theme);
-	}
+	},
+    refresh: function() {
+        if (_.isArray(this._childIds)) {
+            for (var i=0; i<this._childIds.length; i++) {
+                var childPlugin = PluginManager.getPluginObject(this._childIds[i]);
+                if (childPlugin) {
+                    childPlugin.refresh();
+                }
+            }   
+        }
+    }
 });
 PluginManager.registerPlugin('g', ContainerPlugin);

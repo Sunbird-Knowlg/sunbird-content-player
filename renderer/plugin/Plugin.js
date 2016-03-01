@@ -9,11 +9,13 @@ var Plugin = Class.extend({
 	_self: undefined,
 	_dimensions: undefined,
 	_id: undefined,
+    _childIds: [],
 	events: [],
 	appEvents: [],
 	init: function(data, parent, stage, theme) {
 		this.events = [];
 		this.appEvents = [];
+        this._childIds = [];
 		this._theme = theme;
 		this._stage = stage;
 		this._parent = parent;
@@ -86,6 +88,9 @@ var Plugin = Class.extend({
 		this._self.addChildAt(child, nextIdx);
 		if (childPlugin) {
 			childPlugin.setIndex(nextIdx);
+            if (childPlugin._id) {
+                this._childIds.push(childPlugin._id);
+            }
 		}
 	},
 	removeChildAt: function(idx) {
@@ -152,7 +157,7 @@ var Plugin = Class.extend({
 		PluginManager.addError('Subclasses of plugin should implement togglePlay()');
 	},
     refresh: function() {
-        PluginManager.addError('Subclasses of plugin should implement togglePlay()');
+        PluginManager.addError('Subclasses of plugin should implement refresh()');
     },
 	show: function(action) {
 		if(_.contains(this.events, 'show')) {

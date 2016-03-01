@@ -73,6 +73,7 @@
         <image asset="rhym_button_up"/>
         <image asset="rhym_button_down"/>
         
+        <audio asset="stage_sound" />
         <audio asset="elephant_audio1" />
         <audio asset="lion_audio1" />
         <audio asset="palak_audio1" />
@@ -316,6 +317,7 @@ Example Sentences
         <audio asset="stage_sound" />
         <set id="rhymingWordParam" param="rhymingWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.rhymingWords"/>
         <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
+        <audio param="rhymingWord.pronunciation" />
 
         <shape type="roundrect" fill="white" radius="5" stroke="black" x="40" y="40" h="10" w="7" z-index="40" />
         <shape type="roundrect" fill="white" radius="5" stroke="black" x="48" y="40" h="10" w="7" z-index="40" ev-if="stage.selectedWordObj.syllableCount == 2"/>
@@ -327,6 +329,7 @@ Example Sentences
                 <action type="command" command="set" param="rhymingWord" param-index="previous" asset="rhymingWordParam" scope="stage"/>
                 <action type="command" command="refresh" asset="finaltxt1"/>
                 <action type="command" command="refresh" asset="finaltxt2" ev-if="stage.selectedWordObj.syllableCount == 3"/>
+                <action type="command" command="play" asset_param="rhymingWord.pronunciation" loop="1" delay="2000"/>
                 <action type="command" command="refresh" asset="rhymingWordImage" delay="2000"/>
                 <action type="command" command="show" asset="rhymingWordImage" delay="2000"/>
                 <action type="animation" asset="spinnertxt1">
@@ -366,6 +369,7 @@ Example Sentences
                 <action type="command" command="set" param="rhymingWord" param-index="next" asset="rhymingWordParam" scope="stage"/>
                 <action type="command" command="refresh" asset="finaltxt1"/>
                 <action type="command" command="refresh" asset="finaltxt2" ev-if="stage.selectedWordObj.syllableCount == 3"/>
+                <action type="command" command="play" asset_param="rhymingWord.pronunciation" loop="1" delay="2000"/>
                 <action type="command" command="refresh" asset="rhymingWordImage" delay="2000"/>
                 <action type="command" command="show" asset="rhymingWordImage" delay="2000"/>
                 <action type="animation" asset="spinnertxt1">
@@ -420,6 +424,7 @@ Example Sentences
         <events>
             <event type="enter">
                 <action type="command" command="play" asset="stage_sound" loop="1" />
+                <action type="command" command="play" asset_param="rhymingWord.pronunciation" loop="1" delay="1000"/>
                 <action type="animation" asset="top-right"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":35,"y":-35}]]></to></tween></action>
                 <action type="command" command="show" asset="rhymingWordImage" delay="100"/>
                 <action type="animation" asset="finaltxt1" delay="100">
