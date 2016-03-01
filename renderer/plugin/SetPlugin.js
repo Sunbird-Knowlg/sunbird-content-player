@@ -15,9 +15,9 @@ var SetPlugin = Plugin.extend({
             if (this._stage) {
                 value = this._stage.getModelValue(data['model']);
             }
-        } else if (data['controller']) {
+        } else if (data['ev-model']) {
             if (this._stage) {
-                var model = this.replaceExpressions(data['controller']);
+                var model = this.replaceExpressions(data['ev-model']);
                 this._modelName = data.param;
                 this._model = this._stage.getModelValue(model);
                 if (_.isArray(this._model)) {

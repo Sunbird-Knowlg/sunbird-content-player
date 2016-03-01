@@ -272,8 +272,8 @@
     <stage id="page1" x="0" y="0" w="100" h="100">
         <audio asset="stage_sound" />
 
-        <set id="exampleSentenceParam" param="exampleSentence" scope="stage" controller="wordDetails.${content.selectedWord}.exampleSentences"/>
-        <set id="selectedWordParam" param="selectedWordObj" scope="stage" controller="wordDetails.${content.selectedWord}"/>
+        <set id="exampleSentenceParam" param="exampleSentence" scope="stage" ev-model="wordDetails.${content.selectedWord}.exampleSentences"/>
+        <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
 
         <image id="button_long_example_up" asset="button_long_up" x="17" y="48.5" w="20" h="10" z-index="100">
             <event type="click">
@@ -310,10 +310,12 @@ Example Sentences
         </events>
     </stage>
 
+    <controller name="spinnerTexts" type="data" id="spinner-texts"/>
+
     <stage id="page2" x="0" y="0" w="100" h="100">
         <audio asset="stage_sound" />
-        <set id="rhymingWordParam" param="rhymingWord" scope="stage" controller="wordDetails.${content.selectedWord}.rhymingWords"/>
-        <set id="selectedWordParam" param="selectedWordObj" scope="stage" controller="wordDetails.${content.selectedWord}"/>
+        <set id="rhymingWordParam" param="rhymingWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.rhymingWords"/>
+        <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
 
         <shape type="roundrect" fill="white" radius="5" stroke="black" x="40" y="40" h="10" w="7" z-index="40" />
         <shape type="roundrect" fill="white" radius="5" stroke="black" x="48" y="40" h="10" w="7" z-index="40" ev-if="stage.selectedWordObj.syllableCount == 2"/>
@@ -403,96 +405,10 @@ Example Sentences
         <text id="finaltxt2" x="49" y="110" z-index="50" font="Arial" fontsize="50" color="black" param="stage.rhymingWord.syllables[1]" ev-if="stage.selectedWordObj.syllableCount == 3"/>
         <text id="finaltxt3" x="49" y="42" z-index="50" font="Arial" fontsize="50" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 2"/>
         <text id="finaltxt3" x="57" y="42" z-index="50" font="Arial" fontsize="50" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 3"/>
-        <text id="spinnertxt1" x="41" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10">
-पा
-पी
-ना
-नो
-नी
-टो
-ट
-टु
-पा
-पी
-ना
-नो
-नी
-टो
-ट
-टु
-पा
-पी
-ना
-नो
-नी
-टो
-ट
-टु
-पा
-पी
-ना
-नो
-नी
-टो
-ट
-टु
-
-
+        <text id="spinnertxt1" x="41" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10" model="spinnerTexts.text1">
         </text>
 
-        <text id="spinnertxt2" x="49" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10">
-का
-की
-खा
-खी
-खो
-गा
-गी
-गौ
-घ
-घा
-त
-तो
-ती
-का
-की
-खा
-खी
-खो
-गा
-गी
-गौ
-घ
-घा
-त
-तो
-ती
-का
-की
-खा
-खी
-खो
-गा
-गी
-गौ
-घ
-घा
-त
-तो
-ती
-का
-की
-खा
-खी
-खो
-गा
-गी
-गौ
-घ
-घा
-त
-तो
-ती
+        <text id="spinnertxt2" x="49" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10" model="spinnerTexts.text2">
         </text>
 
         <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E04C16" rotate="45" shadow="black">
