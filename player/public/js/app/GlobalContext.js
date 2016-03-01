@@ -100,11 +100,9 @@ GlobalContext = {
             );
         });
     },
-    setParam: function(param, value, incr) {
+    setParam: function(param, value) {
         if(param != 'user') {
-            var fval = GlobalContext._params[param];
-            fval = value || (fval + incr);
-            GlobalContext._params[param] = fval;
+            GlobalContext._params[param] = value;
         } else {
             console.error('user param can not set');
         }

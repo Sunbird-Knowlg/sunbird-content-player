@@ -296,11 +296,9 @@ var ThemePlugin = Plugin.extend({
     resume: function() {
         TelemetryService.interrupt("RESUME", this._currentStage);
     },
-    setParam: function(param, value, incr) {
+    setParam: function(param, value) {
         var instance = this;
-        var fval = instance._contentParams[param];
-        fval = value || (fval + incr);
-        instance._contentParams[param] = fval;
+        instance._contentParams[param] = value;
     },
     getParam: function(param) {
         var instance = this;

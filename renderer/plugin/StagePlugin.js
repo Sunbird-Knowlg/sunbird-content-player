@@ -91,7 +91,7 @@ var StagePlugin = Plugin.extend({
         var c = this.getController(controller);
         var t;
         if (c) {
-            t = c.getTemplate();
+            t = c.getTemplate();   
         }
         return t;
     },
@@ -118,7 +118,7 @@ var StagePlugin = Plugin.extend({
         }
         return val;
     },
-    setModelValue: function(param, val) {
+    setModelValue: function(param, val) { 
         if (param) {
             var tokens = param.split('.');
             if (tokens.length >= 2) {
@@ -140,7 +140,7 @@ var StagePlugin = Plugin.extend({
             });
             var result = this._stageController.evalItem();
             if (result) {
-                valid = result.pass;
+                valid = result.pass;    
             }
         }
         if (valid) {
@@ -155,16 +155,13 @@ var StagePlugin = Plugin.extend({
         }
         this._theme.replaceStage(this._data.id, action);
     },
-    setParam: function(param, value, incr) {
+    setParam: function(param, value) {
         var instance = this;
-        var fval = instance.params[param] || '';
-
-        fval = value || (fval + incr);
-        instance.params[param] = fval;
+        instance._stageParams[param] = value;
     },
     getParam: function(param) {
         var instance = this;
-        return instance.params[param];
+        return instance._stageParams[param];
     }
 });
 PluginManager.registerPlugin('stage', StagePlugin);

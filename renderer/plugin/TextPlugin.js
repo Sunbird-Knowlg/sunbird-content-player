@@ -16,7 +16,7 @@ var TextPlugin = Plugin.extend({
         var font = fontsize + 'px ' + data.font || 'Arial';
         if (data.weight) {
             font = data.weight + ' ' + font;
-        }
+        }        
         var textStr = '';
         if (data.$t || data.__text) {
             textStr = (data.$t || data.__text);
@@ -25,9 +25,8 @@ var TextPlugin = Plugin.extend({
         } else if (data.param) {
             textStr = (this._stage.params[data.param.trim()] || '');
         }
-
         var text = new createjs.Text(textStr, font, data.color || '#000000');
-
+        
         var align  = (data.align ? data.align.toLowerCase() : 'left');
         var valign = (data.valign ? data.valign.toLowerCase() : 'top');
         var lineHeight = (data.lineHeight ? data.lineHeight : 0);
@@ -53,24 +52,12 @@ var TextPlugin = Plugin.extend({
             text.y = dims.y + dims.h/2 - text.getMeasuredHeight()/2;
             text.textBaseline = 'hanging';
         }
-
+        
         text.textAlign = align;
         text.valign = valign;
         text.lineHeight = lineHeight * (text.getMeasuredLineHeight());
         text.outline = outline;
         this._self = text;
-    },
-    refresh: function() {
-        var instance = this;
-        var textStr = '';
-        if (instance._data.$t || instance._data.__text) {
-            textStr = (instance._data.$t || instance._data.__text);
-        } else if (instance._data.model) {
-            textStr = (this._stage.getModelValue(instance._data.model) || '');
-        } else if (instance._data.param) {
-            textStr = (this._stage.params[instance._data.param.trim()] || '');
-        }
-        this._self.text = textStr;
-    },
+    }
 });
 PluginManager.registerPlugin('text', TextPlugin);

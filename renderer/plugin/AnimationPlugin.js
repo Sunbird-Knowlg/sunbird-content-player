@@ -1,6 +1,5 @@
 AnimationPlugin = Class.extend({
 	_data: undefined,
-	_id: undefined,
 	init: function(data, plugin) {
 	    this._data = data;
 	    this._id = data.id || _.uniqueId('animation');

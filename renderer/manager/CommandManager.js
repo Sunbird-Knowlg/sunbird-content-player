@@ -4,7 +4,6 @@ CommandManager = {
         var cmd = '';
         if (_.isString(action.command))
             cmd = (action.command).toUpperCase();
-
         var plugin = PluginManager.getPluginObject(action.asset);
         if (!_.contains(CommandManager.audioActions, cmd)) {
             if (!plugin) {
@@ -13,7 +12,6 @@ CommandManager = {
             }
         }
         CommandManager._setDataAttributes(action);
-
         switch (cmd) {
             case 'PLAY':
                 if (plugin && plugin._type == 'sprite') {
@@ -67,18 +65,18 @@ CommandManager = {
                 break;
             case 'WINDOWEVENT':
                 // TODO: remove the dependency on GlobalContext for this command.
-                if(GlobalContext && GlobalContext.config.appInfo && GlobalContext.config.appInfo.code
+                if(GlobalContext && GlobalContext.config.appInfo && GlobalContext.config.appInfo.code 
                     && GlobalContext.config.appInfo.code != GlobalContext.game.id) {
                     window.location.hash = "#/show/content";
                 } else {
                     window.location.hash = action.href;
                 }
                 break;
-            case 'EXTERNAL':
-                if(action.href)
-                    window.open(action.href, "_system");
-                else
-                    startApp(action.app);
+            case 'EXTERNAL': 
+                if(action.href) 
+                    window.open(action.href, "_system"); 
+                else 
+                    startApp(action.app);                                
                 break;
             case 'EVAL':
                 if (plugin) plugin.evaluate(action);
@@ -89,14 +87,12 @@ CommandManager = {
             case 'RESTART':
                 if (plugin) plugin.restart(action);
                 break;
-            case 'REFRESH':
-                if (plugin) plugin.refresh(action);
-                break;
             case 'SET':
-                if (plugin) plugin.setParam(action.param, action['param-value'], action['param-increment'], action.scope);
+                if (plugin) plugin.setParam(action.param, action['param-value'], action.scope);
                 break;
             case 'STARTGENIE':
                 if(TelemetryService._gameData.id != packageName && TelemetryService._gameData.id != packageNameDelhi) {
+                    console.log('Current game is:', TelemetryService._gameData.id, 'so, ending it first.');
                     TelemetryService.end(TelemetryService._gameData.id);
                     setTimeout(function() {
                         exitApp();
@@ -104,12 +100,13 @@ CommandManager = {
                 } else {
                     exitApp();
                 }
-
+                
                 break;
             case 'STARTRECORD':
                 if (plugin) RecorderManager.startRecording(action);
                 break;
             case 'STOPRECORD':
+                console.log("STOPRECORD command called.")
                 if (plugin) RecorderManager.stopRecording(action);
                 break;
             case 'PROCESSRECORD':
