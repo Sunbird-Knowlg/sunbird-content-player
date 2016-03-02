@@ -329,7 +329,7 @@ var Plugin = Class.extend({
         		value = expr;
         	}
         } catch (err) {
-            console.error('set ev-value evaluation faild:', err.message);
+            console.warn('expr: '+ expr + ' evaluation faild:', err.message);
         }
         return value;
     },
