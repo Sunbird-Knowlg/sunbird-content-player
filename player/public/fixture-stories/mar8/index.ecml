@@ -1,9 +1,11 @@
 <theme startStage="splash" id="theme" ver="0.2">
     <manifest>
+        <!-- Sounds -->
         <media id="welcome_sound" src="audio/welcome_riff.ogg" type="sound" />
         <media id="stage_sound" src="audio/new_puzzle.ogg" type="sound" />
         <media id="cheers_sound" src="audio/cheers_soft.ogg" type="sound" />
 
+        <!-- Icons -->
         <media id="sound_icon" src="icons/sound.png" type="image" />
         <media id="cancel_icon" src="icons/cancel.png" type="image" />
         <media id="button_long_up" src="icons/button_long_up.png" type="image" />
@@ -16,9 +18,19 @@
         <media id="rhym_button_up" src="icons/rhym_button_up.png" type="image" />
         <media id="rhym_button_down" src="icons/rhym_button_down.png" type="image" />
         <media id="change_icon" src="icons/change.png" type="image" />
-        
-        <media id="elephant_image1" src="pictures/elephant_image1.jpeg" type="image" />
-        <media id="lion_image1" src="pictures/lion_image1.jpeg" type="image" />
+
+        <media id="arrow_tl" src="icons/arrow_tl.png" type="image" />
+        <media id="arrow_tr" src="icons/arrow_tr.png" type="image" />
+        <media id="arrow_bl" src="icons/arrow_bl.png" type="image" />
+        <media id="arrow_br" src="icons/arrow_br.png" type="image" />
+
+        <!-- Story assets -->
+        <media id="elephant_tiger" src="pictures/elephant-tiger.jpg" type="image" />
+
+        <!-- Dictionary assets -->
+        <media id="elephant_image1" src="pictures/elephant_image1.png" type="image" />
+        <media id="lion_image1" src="pictures/lion_image1.png" type="image" />
+
         <media id="palak_image1" src="pictures/palak_image1.jpeg" type="image" />
         <media id="friend_image1" src="pictures/friend_image1.jpg" type="image" />
         <media id="going_image1" src="pictures/going_image1.jpg" type="image" />
@@ -83,6 +95,14 @@
     </template>
 
     <stage id="preloadStage" preload="true">
+
+        <image asset="arrow_tl"/>
+        <image asset="arrow_tr"/>
+        <image asset="arrow_bl"/>
+        <image asset="arrow_br"/>
+
+        <image asset="elephant_tiger"/>
+
         <image asset="elephant_image1"/>
         <image asset="lion_image1"/>
         <image asset="palak_image1"/>
@@ -117,7 +137,7 @@
         <image asset="whale_image1"/>
         <image asset="gorilla_image1"/>
         <image asset="rhino_image1"/>
-        
+
         <audio asset="stage_sound" />
         <audio asset="elephant_audio1" />
         <audio asset="lion_audio1" />
@@ -137,13 +157,13 @@
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="fadein" duration="500" />
             </event>
         </shape>
         <image asset="previous" x="2" y="3" w="5" h="8.3" id="previous" visible="false"/>
         <shape id="previousContainer" type="rect" x="1" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" transitionType="previous"/>
+                <action type="command" command="transitionTo" asset="theme" param="previous" effect="fadein" duration="500" transitionType="previous"/>
             </event>
         </shape>
     </stage>
@@ -152,91 +172,27 @@
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="fadein" duration="500" />
             </event>
         </shape>
-        <param name="next" value="scene1" />
-        <image asset="logo_img" x="35" y="25" w="25" h="25" />
-        <text x="32" y="55" w="40" h="10" font="Georgia" fontsize="60">March 8th Demo Story</text>
-    </stage>
-    <stage id="scene1" x="0" y="0" w="100" h="100" extends="storyBaseStage">
-        <param name="next" value="scene2" />
-        <g id="scene1Main" x="0" y="0" w="100" h="100">
-            <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#F3CCDE" />
-            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">उस  रात बहुत तेज बारिश हो रही थी  | शेर अपने घर में लेटा हुआ था | 
-            </text>
-            <image asset="page2" x="2" y="12" w="96" h="86" />
-            <shape x="53" y="30" w="20" h="65" type="rect" z-index="2" hitArea="true">
-                <event type="click">
-                    <action type="command" command="blur" asset="scene1Main" />
-                    <action type="command" command="show" asset="scene1Word" />
-                </event>
-            </shape>
-        </g>
-        <set scope="stage" param="wordDetailsContainer" value="scene1Word"/>
-        <set scope="stage" param="mainContainer" value="scene1Main"/>
-        <g id="scene1Word" x="0" y="0" w="100" h="100" visible="false">
-            <embed template-name="blurWordTemplate" var-data="wordDetails.शेर" />
-        </g>
-    </stage>
-
-    <stage id="scene2" x="0" y="0" w="100" h="100" extends="storyBaseStage">
-        <param name="previous" value="scene1" />
-        <param name="next" value="scene3" />
-        <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#FFF16E" />
-        <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">तभी आवाज से उसकी आँख खुल गई  | रसोई  में जा कर देखा तो पाया कि वहां कोई आया था |
-        </text>
-        <image asset="page3" x="2" y="12" w="96" h="86" />
-    </stage>
-
-    <stage id="scene3" x="0" y="0" w="100" h="100" extends="storyBaseStage">
-        <audio asset="palak_audio1" />
-        <param name="previous" value="scene2" />
-        <param name="next" value="scene4" />
-        <g id="scene3Main" x="0" y="0" w="100" h="100">
-            <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#E5F4FB" />
-            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">अरे ! किसी ने उसके आम और पालक चुरा लिए थे | उसे आम और पालक बहुत पसंद थे |
-            </text>
-            <image asset="page4" x="2" y="12" w="96" h="86" />
-            <shape x="30" y="2" w="6" h="10" type="rect" z-index="2" hitArea="true">
-                <event type="click">
-                    <action type="command" command="blur" asset="scene3Main" />
-                    <action type="command" command="show" asset="scene3Word" />
-                </event>
-            </shape>
-        </g>
-        <set scope="stage" param="wordDetailsContainer" value="scene3Word"/>
-        <set scope="stage" param="mainContainer" value="scene3Main"/>
-        <g id="scene3Word" x="0" y="0" w="100" h="100" visible="false">
-            <embed template-name="blurWordTemplate" var-data="wordDetails.पालक" />
-        </g>
-    </stage>
-
-    <stage id="scene4" x="0" y="0" w="100" h="100" extends="storyBaseStage">
-        <param name="previous" value="scene3" />
         <param name="next" value="explore" />
-        <g id="scene4Main" x="0" y="0" w="100" h="100">
-            <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#86CFF2" />
-            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">शेर घबरा कर अपने साथी, हाथी के पास गया |  दोनों रात को बारिश में चोर को खोजने निकल पड़े |
-            </text>
-            <image asset="page5" x="2" y="12" w="96" h="86" />
-            <shape x="18" y="15" w="25" h="32" type="rect" z-index="2" hitArea="true">
-                <event type="click">
-                    <action type="command" command="blur" asset="scene4Main" />
-                    <action type="command" command="show" asset="scene4Word" />
-                </event>
-            </shape>
-        </g>
-        <set scope="stage" param="wordDetailsContainer" value="scene4Word"/>
-        <set scope="stage" param="mainContainer" value="scene4Main"/>
-        <g id="scene4Word" x="0" y="0" w="100" h="100" visible="false">
-            <embed template-name="blurWordTemplate" var-data="wordDetails.हाथी" />
-        </g> 
+
+        <image asset="elephant_tiger" x="20" y="45" w="55" h="55"/>
+        <text x="32" y="3" w="60" h="10" font="Georgia" fontsize="100">शेर का साथी हाथी</text>
+
+        <text x="12" y="20" w="80" h="10" font="Georgia" lineHeight="1.5" fontsize="45" z-index="100">
+उस रात बहुत तेज बारिश हो रही थी | शेर अपने घर में लेटा हुआ था |
+तभी आवाज से उसकी आँख खुल गई | रसोई में जा कर देखा तो पाया कि वहां कोई आया था |
+अरे ! किसी ने उसके आम और पालक चुरा लिए थे | उसे आम और पालक बहुत पसंद थे |
+शेर घबरा कर अपने साथी, हाथी के पास गया | दोनों रात को बारिश में चोर को खोजने निकल पड़े |
+        </text>
+
     </stage>
 
     <controller name="wordDetails" type="data" id="word-details"/>
     <controller name="words-list" id="words-list" type="data" />
     <template id="word_template">
+        <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="14" x="32" y="50" w="14" h="14"/>
         <text x="55" y="30" w="50" h="10" fontsize="80" color="black" model="data.lemma"/>
         <text x="52" y="40" w="30" h="30" fontsize="50" color="black" model="data.meaning"/>
         <image x="50" y="-2" h="40" w="40" asset="sound_image1"/>
@@ -262,26 +218,35 @@
             </event>
         </image>
 
-        <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black">
+        <image asset="arrow_tl" x="2" y="4" w="9" h="16" z-index="50">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page1" duration="10" transitionType="skip" reset="true"/>
             </event>
-        </shape>
-        <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E04C16" rotate="45" shadow="black">
+        </image>
+
+        <image asset="arrow_tr" x="89" y="4" w="9" h="16" z-index="50">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page2" duration="10" transitionType="skip" reset="true"/>
             </event>
-        </shape>
-        <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black">
+        </image>
+
+        <image asset="arrow_br" x="89" y="80" w="9" h="16" z-index="50">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page3" duration="10" transitionType="skip" reset="true"/>
             </event>
-        </shape>
-        <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black">
+        </image>
+
+        <image asset="arrow_bl" x="2" y="80" w="9" h="16" z-index="50">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page4" duration="10" transitionType="skip" reset="true"/>
             </event>
-        </shape>
+        </image>
+
+        <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black" blur="30"/>
+        <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E04C16" rotate="45" shadow="black" blur="30"/>
+        <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black" blur="30"/>
+        <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black" blur="30"/>
+
         <events>
             <event type="enter">
                 <action type="command" command="play" asset="welcome_sound" loop="1" />
@@ -295,8 +260,8 @@
         <set id="exampleSentenceParam" param="exampleSentence" scope="stage" ev-model="wordDetails.${content.selectedWord}.exampleSentences"/>
         <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
 
-        <g id="body" x="0" y="0" w="100" h="100" z-index="50">
-            <!-- <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="15" x="83" y="70" w="15" h="15" z-index="50"/> -->
+        <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
+            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="16" x="83" y="70" w="16" h="16"/>
             <image id="page1Img" param="stage.selectedWordObj.picture" x="70" y="54" w="27" h="35" z-index="51"/>
 
             <shape id="spin_top" type="roundrect" fill="#B0D93D" shadow="#245E1F" blur="30" offsetX="-2" offsetY="0" stroke="black" x="5" y="35" w="55" h="15" z-index="50">
@@ -320,16 +285,20 @@
             <text id="exampleSentenceText" align="center" valign="middle" x="7" y="51" w="55" h="23" z-index="50" font="Arial" fontsize="80" color="white" param="stage.exampleSentence"></text>
         </g>
 
-        <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black">
+        <image asset="arrow_tl" x="2" y="4" w="9" h="16" z-index="50">
             <event type="click">
+                <action type="command" command="hide" asset="body"/>
                 <action type="animation" asset="top-left"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":-35,"y":-35}]]></to></tween></action>
                 <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500" transitionType="skip" reset="true"/>
             </event>
-        </shape>
+        </image>
+        <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#24C62A" rotate="-45" shadow="black" blur="30"/>
+
         <events>
             <event type="enter">
                 <action type="command" command="play" asset="stage_sound" loop="1" />
                 <action type="animation" asset="top-left"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":30,"y":30}]]></to></tween></action>
+                <action type="command" command="show" asset="body" delay="700"/>
             </event>
         </events>
     </stage>
@@ -444,12 +413,15 @@
             </text>
         </g>
 
-        <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E04C16" rotate="45" shadow="black">
+        <image asset="arrow_tr" x="89" y="4" w="9" h="16" z-index="50">
             <event type="click">
+                <action type="command" command="hide" asset="body"/>
                 <action type="animation" asset="top-right"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":135,"y":-35}]]></to></tween></action>
                 <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500" transitionType="skip" reset="true"/>
             </event>
-        </shape>
+        </image>
+        <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E04C16" rotate="45" shadow="black" blur="30"/>
+
         <events>
             <event type="enter">
                 <action type="command" command="play" asset="stage_sound" loop="1" />
@@ -477,39 +449,24 @@
     <stage id="page3" x="0" y="0" w="100" h="100">
         <set id="setPluginId" param="mode" scope="stage" value="interact"/>
         <audio asset="stage_sound" />
-        <audio asset="cheers_sound" />
 
-        <param name="score" value="100" scope="stage"/>
-        <param name="incr" value="10" scope="stage"/>
+        <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
+        </g>
 
-        <text id="scoretxt" x="80" y="5"   h="20" w="20" z-index="100" fontsize="100" font="Arial" param="score" color="black" shadow="white" outline="2"/>
-        <text id="incrtext" x="85" y="110" h="20" w="20" z-index="100" fontsize="60" font="Arial" param="incr"  color="white" shadow="black" outline="2"/>
-
-        <shape type="roundrect" z-index="100" shadow="black" x="10" y="10" h="10" w="10" fill="red">
+        <image asset="arrow_br" x="89" y="80" w="9" h="16" z-index="50">
             <event type="click">
-                <action type="command" command="play" asset="cheers_sound" loop="1" />
-                <action type="animation" asset="incrtext">
-                    <tween>
-                        <to ease="quadOut" duration="0"><![CDATA[{"x":85,"y":20}]]></to>
-                        <to ease="bounceOut" duration="1000"><![CDATA[{"x":85,"y":90}]]></to>
-                        <to ease="quadOut" duration="0"><![CDATA[{"x":85,"y":110}]]></to>
-                    </tween>
-                </action>
-                <action type="command" command="set" param="score" param-increment="10" asset="setPluginId" scope="stage"/>
-                <action type="command" command="refresh" asset="scoretxt"/>
-            </event>
-        </shape>
-
-        <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black">
-            <event type="click">
+                <action type="command" command="hide" asset="body"/>
                 <action type="animation" asset="bottom-right"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":135,"y":135}]]></to></tween></action>
                 <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500" transitionType="skip" reset="true"/>
             </event>
-        </shape>
+        </image>
+        <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black" blur="30"/>
+
         <events>
             <event type="enter">
                 <action type="command" command="play" asset="stage_sound" loop="1" />
                 <action type="animation" asset="bottom-right"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":70,"y":70}]]></to></tween></action>
+                <action type="command" command="show" asset="body" delay="700"/>
             </event>
         </events>
     </stage>
@@ -521,59 +478,67 @@
         <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
         <set id="membersParam" param="memberWord" scope="stage" ev-value="${stage.relatedWord.members}"/>
 
-        <image id="button_long_example_up" asset="button_long_up" x="14" y="46.5" w="20" h="10" z-index="100">
-            <event type="click">
-                <action type="command" command="set" param="relatedWord" param-index="previous" asset="relatedWordsParam" scope="stage"/>
-                <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
-                <action type="command" command="refresh" asset="relatedWordText"/>
-                <action type="command" command="refresh" asset="memberWordGroup"/>
-            </event>
-        </image>
-        <image asset="example_container" x="2" y="53" w="45" h="20" z-index="100"/>
-        <text id="wordMeaningText" valign="middle" x="5" y="10" w="60" h="10" fontsize="64" color="white" font="Arial" z-index="100" param="stage.selectedWordObj.meaning"/>
-        <text id="relatedWordText" align="center" valign="middle" x="7" y="58" w="35" h="10" fontsize="56" color="white" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
-        <image id="button_long_example_down" asset="button_long_down" x="13" y="69" w="20" h="10" z-index="100">
-            <event type="click">
-                <action type="command" command="set" param="relatedWord" param-index="next" asset="relatedWordsParam" scope="stage"/>
-                <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
-                <action type="command" command="refresh" asset="relatedWordText"/>
-                <action type="command" command="refresh" asset="memberWordGroup"/>
-            </event>
-        </image>
-
-        <image id="selectedWordImage" x="70" y="10" w="28" h="30" param="stage.selectedWordObj.picture" z-index="100"/>
-
-        <image x="72" y="40" w="6" h="8" asset="change_icon" z-index="100">
-            <event type="click">
-                <action type="command" command="set" param="memberWord" param-index="next" asset="membersParam" scope="stage"/>
-                <action type="command" command="refresh" asset="memberWordGroup"/>
-            </event>
-        </image>
-        <shape x="51" y="44" w="29" h="53" type="roundrect" fill="#999999" opacity="0.6" z-index="90"/>
-        <g id="memberWordGroup" x="0" y="0" w="100" h="100" z-index="100">
-            <image id="memberWordPicture" x="53" y="48" w="25" h="40" param="stage.memberWord.picture" z-index="100">
+        <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
+            <image id="button_long_example_up" asset="button_long_up" x="14" y="46.5" w="20" h="10" z-index="100">
                 <event type="click">
-                    <action type="command" command="set" param="selectedWordObj" ev-model="wordDetails.${stage.memberWord.lemma}" asset="selectedWordParam" scope="stage"/>
-                    <action type="command" command="set" param="relatedWord" ev-value="${stage.selectedWordObj.relatedWords}" asset="relatedWordsParam" scope="stage"/>
+                    <action type="command" command="set" param="relatedWord" param-index="previous" asset="relatedWordsParam" scope="stage"/>
                     <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
                     <action type="command" command="refresh" asset="relatedWordText"/>
-                    <action type="command" command="refresh" asset="selectedWordImage"/>
                     <action type="command" command="refresh" asset="memberWordGroup"/>
                 </event>
             </image>
-            <text id="memberWordLemma" align="center" valign="middle" x="53" y="88" w="25" h="10" fontsize="64" color="white" font="Arial" z-index="100" param="stage.memberWord.lemma"/>
+            <image asset="example_container" x="2" y="53" w="45" h="20" z-index="100"/>
+            <text id="wordMeaningText" valign="middle" x="5" y="10" w="60" h="10" fontsize="64" color="white" font="Arial" z-index="100" param="stage.selectedWordObj.meaning"/>
+            <text id="relatedWordText" align="center" valign="middle" x="7" y="58" w="35" h="10" fontsize="56" color="white" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
+            <image id="button_long_example_down" asset="button_long_down" x="13" y="69" w="20" h="10" z-index="100">
+                <event type="click">
+                    <action type="command" command="set" param="relatedWord" param-index="next" asset="relatedWordsParam" scope="stage"/>
+                    <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
+                    <action type="command" command="refresh" asset="relatedWordText"/>
+                    <action type="command" command="refresh" asset="memberWordGroup"/>
+                </event>
+            </image>
+
+            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="14" x="86" y="25" w="14" h="14"/>
+            <image id="selectedWordImage" x="75" y="10" w="24" h="30" param="stage.selectedWordObj.picture" z-index="100"/>
+
+            <image x="58" y="40" w="6" h="10" asset="change_icon" z-index="100">
+                <event type="click">
+                    <action type="command" command="set" param="memberWord" param-index="next" asset="membersParam" scope="stage"/>
+                    <action type="command" command="refresh" asset="memberWordGroup"/>
+                </event>
+            </image>
+
+            <shape x="48" y="44" w="25" h="53" type="roundrect" fill="#999999" opacity="0.6" z-index="90"/>
+            <g id="memberWordGroup" x="0" y="0" w="100" h="100" z-index="100">
+                <image id="memberWordPicture" x="50" y="48" w="21" h="40" param="stage.memberWord.picture" z-index="100">
+                    <event type="click">
+                        <action type="command" command="set" param="selectedWordObj" ev-model="wordDetails.${stage.memberWord.lemma}" asset="selectedWordParam" scope="stage"/>
+                        <action type="command" command="set" param="relatedWord" ev-value="${stage.selectedWordObj.relatedWords}" asset="relatedWordsParam" scope="stage"/>
+                        <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
+                        <action type="command" command="refresh" asset="relatedWordText"/>
+                        <action type="command" command="refresh" asset="selectedWordImage"/>
+                        <action type="command" command="refresh" asset="memberWordGroup"/>
+                    </event>
+                </image>
+                <text id="memberWordLemma" align="center" valign="middle" x="48" y="88" w="25" h="10" fontsize="64" color="white" font="Arial" z-index="100" param="stage.memberWord.lemma"/>
+            </g>
         </g>
 
-        <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black">
+        <image asset="arrow_bl" x="2" y="80" w="9" h="16" z-index="50">
             <event type="click">
+                <action type="command" command="hide" asset="body"/>
                 <action type="animation" asset="bottom-left"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":-35,"y":135}]]></to></tween></action>
                 <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500" transitionType="skip" reset="true"/>
             </event>
-        </shape>
+        </image>
+        <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black" blur="30"/>
+
         <events>
             <event type="enter">
                 <action type="command" command="play" asset="stage_sound" loop="1" />
                 <action type="animation" asset="bottom-left"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":10,"y":35}]]></to></tween></action>
+                <action type="command" command="show" asset="body" delay="700"/>
             </event>
         </events>
     </stage>
