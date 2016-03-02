@@ -28,31 +28,31 @@
         <media id="elephant_tiger" src="pictures/elephant-tiger.jpg" type="image" />
 
         <!-- Dictionary assets -->
-        <media id="elephant_image1" src="pictures/elephant_image1.png" type="image" />
+        <media id="elephant_image1" src="pictures/elephant.png" type="image" />
         <media id="lion_image1" src="pictures/lion_image1.png" type="image" />
 
         <media id="palak_image1" src="pictures/palak_image1.jpeg" type="image" />
         <media id="friend_image1" src="pictures/friend_image1.jpg" type="image" />
-        <media id="going_image1" src="pictures/going_image1.jpg" type="image" />
+        <media id="going_image1" src="pictures/go.png" type="image" />
         <media id="child_image1" src="pictures/child_image1.jpg" type="image" />
         <media id="salt_image1" src="pictures/salt_image1.jpeg" type="image" />
         <media id="car_image1" src="pictures/car_image1.png" type="image" />
-        <media id="four_image1" src="pictures/four_image1.png" type="image" />
+        <media id="four_image1" src="pictures/fourlegged.png" type="image" />
         <media id="house_image1" src="pictures/house_image1.png" type="image" />
         <media id="peacock_image1" src="pictures/peacock_image1.jpg" type="image" />
         <media id="water_image1" src="pictures/water_image1.jpg" type="image" />
         <media id="sound_image1" src="pictures/sound.png" type="image" />
         <media id="animal_border" src="pictures/animal_info_border.png" type="image" />
-        <media id="tiger_image1" src="pictures/tiger_image1.jpg" type="image" />
-        <media id="cow_image1" src="pictures/cow_image1.jpg" type="image" />
-        <media id="dog_image1" src="pictures/dog_image1.jpg" type="image" />
-        <media id="deer_image1" src="pictures/deer_image1.jpeg" type="image" />
-        <media id="camel_image1" src="pictures/camel_image1.jpg" type="image" />
-        <media id="horse_image1" src="pictures/horse_image1.jpeg" type="image" />
-        <media id="pigeon_image1" src="pictures/pigeon_image1.jpg" type="image" />
-        <media id="whale_image1" src="pictures/whale_image1.jpg" type="image" />
-        <media id="gorilla_image1" src="pictures/gorilla_image1.jpg" type="image" />
-        <media id="rhino_image1" src="pictures/rhino_image1.jpg" type="image" />
+        <media id="tiger_image1" src="pictures/tiger.png" type="image" />
+        <media id="cow_image1" src="pictures/cow.png" type="image" />
+        <media id="dog_image1" src="pictures/dog.png" type="image" />
+        <media id="deer_image1" src="pictures/deer.png" type="image" />
+        <media id="camel_image1" src="pictures/camel.png" type="image" />
+        <media id="horse_image1" src="pictures/horse.png" type="image" />
+        <media id="pigeon_image1" src="pictures/pigeon.png" type="image" />
+        <media id="whale_image1" src="pictures/whale.png" type="image" />
+        <media id="gorilla_image1" src="pictures/gorilla.png" type="image" />
+        <media id="rhino_image1" src="pictures/rhino.png" type="image" />
 
         <media id="elephant_audio1" src="sounds/elephant_audio1.mp3" type="sound" />
         <media id="lion_audio1" src="sounds/lion_audio1.mp3" type="sound" />
