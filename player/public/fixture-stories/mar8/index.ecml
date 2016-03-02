@@ -517,6 +517,7 @@
                         <action type="command" command="set" param="relatedWord" ev-value="${stage.selectedWordObj.relatedWords}" asset="relatedWordsParam" scope="stage"/>
                         <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
                         <action type="command" command="refresh" asset="relatedWordText"/>
+                        <action type="command" command="refresh" asset="wordMeaningText"/>
                         <action type="command" command="refresh" asset="selectedWordImage"/>
                         <action type="command" command="refresh" asset="memberWordGroup"/>
                     </event>
