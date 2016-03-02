@@ -45,10 +45,14 @@ var Plugin = Class.extend({
 		// Conditional evaluation for rendering
 		if (data['ev-if']) {
 			var expr = data['ev-if'].trim();
-			if (!(expr.substring(0,2) == "${")) expr = "${" + expr;
-            if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}"
-			var exprVal = this.evaluateExpr(expr);
-			if (typeof exprVal != undefined) {
+            var modelExpr = expr = this.replaceExpressions(expr);
+            if (!(expr.substring(0,2) == "${")) expr = "${" + expr;
+            if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}";
+            var exprVal = this.evaluateExpr(expr);
+            if (typeof exprVal == "undefined" && this._stage) {
+                exprVal = this._stage.getModelValue(modelExpr);
+            }
+			if (typeof exprVal != "undefined") {
 				if (this._self) {
 					this._self.visible = (this._self.visible && exprVal);
 				}
@@ -328,6 +332,26 @@ var Plugin = Class.extend({
             console.error('set ev-value evaluation faild:', err.message);
         }
         return value;
+    },
+    replaceExpressions: function(model) {
+        var arr = [];
+        var idx = 0;
+        var nextIdx = model.indexOf('${', idx);
+        var endIdx = model.indexOf('}', idx + 1);
+        while (nextIdx != -1 && endIdx != -1) {
+            var expr = model.substring(nextIdx, endIdx+1);
+            arr.push(expr);
+            idx = endIdx;
+            nextIdx = model.indexOf('${', idx);
+            endIdx = model.indexOf('}', idx + 1);
+        }
+        if (arr.length > 0) {
+            for (var i=0; i<arr.length; i++) {
+                var val = this.evaluateExpr(arr[i]);
+                model = model.replace(arr[i], val);
+            }
+        }
+        return model;
     },
     getParam: function(param) {
         var value;
