@@ -67,6 +67,53 @@
         <media id="more_audio1" src="sounds/more_audio1.mp3" type="sound" />
         <media id="neer_audio1" src="sounds/neer_audio1.mp3" type="sound" />
 
+
+        <media id="baag_audio1" src="sounds/baag.mp3" type="sound" />
+        <media id="bail_audio1" src="sounds/bail.mp3" type="sound" />
+        <media id="bakari_audio1" src="sounds/bakari.mp3" type="sound" />
+        <media id="ghai_audio1" src="sounds/ghai.mp3" type="sound" />
+        <media id="ghoda_audio1" src="sounds/ghoda.mp3" type="sound" />
+        <media id="hiran_audio1" src="sounds/hiran.mp3" type="sound" />
+        <media id="kutta_audio1" src="sounds/kutta.mp3" type="sound" />
+        <media id="lomdi_audio1" src="sounds/lomdi.mp3" type="sound" />
+        <media id="magarmachch_audio1" src="sounds/magarmachch.mp3" type="sound" />
+        <media id="magarmachchi_audio1" src="sounds/magarmachchi.mp3" type="sound" />
+        <media id="oont_audio1" src="sounds/oont.mp3" type="sound" />
+        <media id="saand_audio1" src="sounds/saand.mp3" type="sound" />
+        <media id="sher_audio1" src="sounds/sher.mp3" type="sound" />
+        <media id="shoekar_audio1" src="sounds/shoekar.mp3" type="sound" />
+        <media id="siyar_audio1" src="sounds/siyar.mp3" type="sound" />
+        <media id="suaar_audio1" src="sounds/suaar.mp3" type="sound" />
+        <media id="zeybra_audio1" src="sounds/zeybra.mp3" type="sound" />
+        <media id="mantri_audio1" src="sounds/s2words/mantri.mp3" type="sound" />
+        <media id="pyadha_audio1" src="sounds/s2words/pyadha.mp3" type="sound" />
+        <media id="raja_audio1" src="sounds/s2words/raja.mp3" type="sound" />
+        <media id="shatranj_ka_ek_mohara_audio1" src="sounds/s2words/shatranj_ka_ek_mohara.mp3" type="sound" />
+        <media id="gadha_audio1" src="sounds/s3words/gadha.mp3" type="sound" />
+        <media id="kabutar_audio1" src="sounds/s3words/kabutar.mp3" type="sound" />
+        <media id="yuddh_mein_prayukth_janvar_audio1" src="sounds/s3words/yuddh_mein_prayukth_janvar.mp3" type="sound" />
+        <media id="bhari_janvaro_ya_pakshi_audio1" src="sounds/s4words/bhari_janvaro_ya_pakshi.mp3" type="sound" />
+        <media id="giraffe_audio1" src="sounds/s4words/giraffe.mp3" type="sound" />
+        <media id="gorilla_audio1" src="sounds/s4words/gorilla.mp3" type="sound" />
+        <media id="rhino_audio1" src="sounds/s4words/rhino.mp3" type="sound" />
+        <media id="shuturmurg_audio1" src="sounds/s4words/shuturmurg.mp3" type="sound" />
+        <media id="whale_audio1" src="sounds/s4words/whale.mp3" type="sound" />
+
+        <media id="achanak_haathi_saamne_agaya_audio1" src="sounds/examples/achanak_haathi_saamne_agaya.mp3" type="sound" />
+        <media id="bandh_bhavare_ko_haathi ne_kaise_mukth_kiya_audio1" src="sounds/examples/bandh_bhavare_ko_haathi ne_kaise_mukth_kiya.mp3" type="sound" />
+        <media id="example_sentences_audio1" src="sounds/examples/Example_sentences.mp3" type="sound" />
+        <media id="haathi_aur_bhavare_ki_dosti_hai_audio1" src="sounds/examples/haathi_aur_bhavare_ki_dosti_hai.mp3" type="sound" />
+        <media id="haathi_bhi_bhagne_laga_audio1" src="sounds/examples/haathi_bhi_bhagne_laga.mp3" type="sound" />
+        <media id="haathi_bola_audio1" src="sounds/examples/haathi_bola.mp3" type="sound" />
+        <media id="haathi_daali_jhukatha_hai_audio1" src="sounds/examples/haathi_daali_jhukatha_hai.mp3" type="sound" />
+        <media id="haathi_doobne_lage_audio1" src="sounds/examples/haathi_doobne_lage.mp3" type="sound" />
+        <media id="haathi_kisko_dekhkar_roya_audio1" src="sounds/examples/haathi_kisko_dekhkar_roya.mp3" type="sound" />
+        <media id="haathi_ne_peid_hila_diya_audio1" src="sounds/examples/haathi_ne_peid_hila_diya.mp3" type="sound" />
+        <media id="haathi_ne_phool_ko_taalab_se_bahar_phek_diya_audio1" src="sounds/examples/haathi_ne_phool_ko_taalab_se_bahar_phek_diya.mp3" type="sound" />
+        <media id="hum_kal_haathi_dekhenge_audio1" src="sounds/examples/hum_kal_haathi_dekhenge.mp3" type="sound" />
+        <media id="khaghosh_ke_peeche_haathi_daud_raha_tha_audio1" src="sounds/examples/khaghosh_ke_peeche_haathi_daud_raha_tha.mp3" type="sound" />
+
+
         <media id="page2" src="scenes/image_2.jpg" type="image" />
         <media id="page3" src="scenes/image_3.jpg" type="image" />
         <media id="page4" src="scenes/image_4.jpg" type="image" />
@@ -151,6 +198,51 @@
         <audio asset="ghar_audio" />
         <audio asset="more_audio1" />
         <audio asset="neer_audio1" />
+
+        <audio asset="baag_audio1" />
+        <audio asset="bail_audio1" />
+        <audio asset="bakari_audio1" />
+        <audio asset="ghai_audio1" />
+        <audio asset="ghoda_audio1" />
+        <audio asset="hiran_audio1" />
+        <audio asset="kutta_audio1" />
+        <audio asset="lomdi_audio1" />
+        <audio asset="magarmachch_audio1" />
+        <audio asset="magarmachchi_audio1" />
+        <audio asset="oont_audio1" />
+        <audio asset="saand_audio1" />
+        <audio asset="sher_audio1" />
+        <audio asset="shoekar_audio1" />
+        <audio asset="siyar_audio1" />
+        <audio asset="suaar_audio1" />
+        <audio asset="zeybra_audio1" />
+        <audio asset="mantri_audio1" />
+        <audio asset="pyadha_audio1" />
+        <audio asset="raja_audio1" />
+        <audio asset="shatranj_ka_ek_mohara_audio1" />
+        <audio asset="gadha_audio1" />
+        <audio asset="kabutar_audio1" />
+        <audio asset="yuddh_mein_prayukth_janvar_audio1" />
+        <audio asset="bhari_janvaro_ya_pakshi_audio1" />
+        <audio asset="giraffe_audio1" />
+        <audio asset="gorilla_audio1" />
+        <audio asset="rhino_audio1" />
+        <audio asset="shuturmurg_audio1" />
+        <audio asset="whale_audio1" />
+
+        <audio asset="achanak_haathi_saamne_agaya_audio1"/>
+        <audio asset="bandh_bhavare_ko_haathi ne_kaise_mukth_kiya_audio1" />
+        <audio asset="example_sentences_audio1"/>
+        <audio asset="haathi_aur_bhavare_ki_dosti_hai_audio1"/>
+        <audio asset="haathi_bhi_bhagne_laga_audio1"/>
+        <audio asset="haathi_bola_audio1"/>
+        <audio asset="haathi_daali_jhukatha_hai_audio1"/>
+        <audio asset="haathi_doobne_lage_audio1"/>
+        <audio asset="haathi_kisko_dekhkar_roya_audio1"/>
+        <audio asset="haathi_ne_peid_hila_diya_audio1"/>
+        <audio asset="haathi_ne_phool_ko_taalab_se_bahar_phek_diya_audio1"/>
+        <audio asset="hum_kal_haathi_dekhenge_audio1"/>
+        <audio asset="khaghosh_ke_peeche_haathi_daud_raha_tha_audio1"/>        
     </stage>
 
     <stage id="storyBaseStage" preload="true">
