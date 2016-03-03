@@ -20,6 +20,9 @@ CommandManager = {
         if (action.parent === true && plugin._parent){
             plugin = plugin._parent;
         }
+        if (!plugin) {
+            plugin = action.pluginObj;
+        }
         if (!_.contains(CommandManager.audioActions, cmd)) {
             if (!plugin) {
                 PluginManager.addError('Plugin not found for action - ' + JSON.stringify(action));
@@ -107,7 +110,11 @@ CommandManager = {
                 if (plugin) plugin.refresh(action);
                 break;
             case 'SET':
-                if (plugin && plugin._type == 'set') plugin.setParamValue(action);
+                if (plugin && plugin._type == 'set') {
+                    plugin.setParamValue(action);
+                } else if (plugin) {
+                    plugin.setPluginParamValue(action);
+                }
                 break;
             case 'STARTGENIE':
                 if(TelemetryService._gameData.id != packageName && TelemetryService._gameData.id != packageNameDelhi) {

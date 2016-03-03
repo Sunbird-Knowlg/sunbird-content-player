@@ -97,6 +97,9 @@ EventManager = {
 					action.asset = stage.getModelValue(action.asset_model) || '';
 				}
 			}
+			if (!action.asset) {
+				action.pluginObj = plugin;
+			}
 			if(action.type === 'animation') {
 				AnimationManager.handle(action, plugin);
 			} else {

@@ -120,6 +120,8 @@ var SetPlugin = Plugin.extend({
             GlobalContext.setParam(param, value, incr);
         } else if (scope && scope.toLowerCase() == 'stage') {
             this._stage.setParam(param, value, incr);
+        } else if (scope && scope.toLowerCase() == 'parent') {
+            this._parent.setPluginParam(param, value, incr);
         } else {
             this._theme.setParam(param, value, incr);
         }
@@ -128,6 +130,7 @@ var SetPlugin = Plugin.extend({
         var value = GlobalContext.getParam(param);
         if (!value) value = this._theme.getParam(param);
         if (!value) value = this._stage.getParam(param);
+        if (!value) value = this._parent.getPluginParam(param);
         return value;
     }
 });

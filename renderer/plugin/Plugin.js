@@ -12,10 +12,12 @@ var Plugin = Class.extend({
     _childIds: [],
 	events: [],
 	appEvents: [],
+    _pluginParams: {},
 	init: function(data, parent, stage, theme) {
 		this.events = [];
 		this.appEvents = [];
         this._childIds = [];
+        this._pluginParams = {};
 		this._theme = theme;
 		this._stage = stage;
 		this._parent = parent;
@@ -421,5 +423,50 @@ var Plugin = Class.extend({
             var item = children[k];
             PluginManager.invoke(item.pluginType, item, parent, stage, theme);
         }
-	}
+	},
+    getPluginParam: function(param) {
+        var instance = this;
+        var params = instance._pluginParams;
+        var expr = 'params.' + param;
+        return eval(expr);
+    },
+    setPluginParam: function(param, value, incr) {
+        var instance = this;
+        var fval = instance._pluginParams[param];
+        if (incr) {
+            if (!fval)
+                fval = 0;
+            fval = (fval + incr);
+        } else {
+            fval = value;
+        }
+        instance._pluginParams[param] = fval;
+    },
+    setPluginParamValue: function(action) {
+        var scope = action.scope;
+        var param = action.param;
+        var paramExpr = action['ev-value'];
+        var paramModel = action['ev-model'];
+        var val;
+        if (paramExpr) {
+            val = this.getPluginParam(paramExpr);
+        } else if (paramModel) {
+            if (this._stage) {
+                var model = this.replaceExpressions(paramModel);
+                val = this._stage.getModelValue(model);
+            }
+        } else {
+            val = action['param-value'];
+        }
+        var incr = action['param-incr'];
+        if (scope && scope.toLowerCase() == 'app') {
+            GlobalContext.setParam(param, val, incr);
+        } else if (scope && scope.toLowerCase() == 'stage') {
+            this._stage.setParam(param, val, incr);
+        } else if (scope && scope.toLowerCase() == 'content') {
+            this._theme.setParam(param, val, incr);
+        } else {
+            this.setPluginParam(param, val, incr);
+        }
+    }
 })
