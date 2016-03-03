@@ -113,7 +113,7 @@ var SetPlugin = Plugin.extend({
         } else {
             val = action['param-value'];
         }
-        this.setParam(param, val, action['param-increment'], scope);
+        this.setParam(param, val, action['param-incr'], scope);
     },
     setParam: function(param, value, incr, scope) {
         if (scope && scope.toLowerCase() == 'app') {

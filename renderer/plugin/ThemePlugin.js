@@ -304,7 +304,13 @@ var ThemePlugin = Plugin.extend({
     setParam: function(param, value, incr) {
         var instance = this;
         var fval = instance._contentParams[param];
-        fval = value || (fval + incr);
+        if (incr) {
+            if (!fval)
+                fval = 0;
+            fval = (fval + incr);
+        } else {
+            fval = value    
+        }
         instance._contentParams[param] = fval;
     },
     getParam: function(param) {

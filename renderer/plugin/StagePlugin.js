@@ -162,9 +162,14 @@ var StagePlugin = Plugin.extend({
     },
     setParam: function(param, value, incr) {
         var instance = this;
-        var fval = instance.params[param] || '';
-
-        fval = value || (fval + incr);
+        var fval = instance.params[param];
+        if (incr) {
+            if (!fval)
+                fval = 0;
+            fval = (fval + incr);
+        } else {
+            fval = value;
+        }
         instance.params[param] = fval;
     },
     getParam: function(param) {

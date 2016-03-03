@@ -17,6 +17,9 @@ CommandManager = {
         }
 
         var plugin = PluginManager.getPluginObject(assetId);
+        if (action.parent === true && plugin._parent){
+            plugin = plugin._parent;
+        }
         if (!_.contains(CommandManager.audioActions, cmd)) {
             if (!plugin) {
                 PluginManager.addError('Plugin not found for action - ' + JSON.stringify(action));

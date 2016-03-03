@@ -13,7 +13,8 @@ var EmbedPlugin = Plugin.extend({
                     if (k.substring(0,4) == "var-") {
                         this._stage._templateVars[k.substring(4)] = data[k];
                     } else if (k.substring(0,3) == "ev-") {
-                        this._stage._templateVars[k.substring(3)] = this.replaceExpressions(data[k]);
+                        var expr = this.replaceExpressions(data[k]);
+                        this._stage._templateVars[k.substring(3)] = expr;
                     } else {
                         this._stage._templateVars[k] = data[k];
                     }
@@ -30,6 +31,16 @@ var EmbedPlugin = Plugin.extend({
                 
                 this.invokeChildren(template, this, this._stage, this._theme);
             }
+        }
+    },
+    refresh: function() {
+        if (_.isArray(this._childIds)) {
+            for (var i=0; i<this._childIds.length; i++) {
+                var childPlugin = PluginManager.getPluginObject(this._childIds[i]);
+                if (childPlugin) {
+                    childPlugin.refresh();
+                }
+            }   
         }
     },
     replaceExpressions: function(model) {
