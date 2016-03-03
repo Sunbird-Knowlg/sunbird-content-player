@@ -30,6 +30,25 @@
         <!-- Dictionary assets -->
         <media id="elephant_image1" src="pictures/elephant.png" type="image" />
         <media id="lion_image1" src="pictures/lion.png" type="image" />
+        <media id="jackal_image1" src="pictures/jackal.png" type="image" />
+        <media id="pig_image1" src="pictures/pig.png" type="image" />
+        <media id="hog_image1" src="pictures/hog.png" type="image" />
+        <media id="bull_image1" src="pictures/bull.png" type="image" />
+        <media id="crocodile_image1" src="pictures/crocodile.png" type="image" />
+        <media id="zebra_image1" src="pictures/zebra.png" type="image" />
+        <media id="ox_image1" src="pictures/ox.png" type="image" />
+        <media id="goat_image1" src="pictures/goat.png" type="image" />
+        <media id="fourlegged_image1" src="pictures/fourlegged.png" type="image" />
+        <media id="chess_image1" src="pictures/chess.png" type="image" />
+        <media id="mantri_image1" src="pictures/mantri.png" type="image" />
+        <media id="chess_king_image1" src="pictures/chess_king.png" type="image" />
+        <media id="castle_image1" src="pictures/castle.png" type="image" />
+        <media id="pyada_image1" src="pictures/pyada.png" type="image" />
+        <media id="war_image1" src="pictures/war.png" type="image" />
+        <media id="donkey_image1" src="pictures/donkey.png" type="image" />
+        <media id="animals_image1" src="pictures/animals.png" type="image" />
+        <media id="giraffe_image1" src="pictures/giraffe.png" type="image" />
+
         <media id="palak_image1" src="pictures/spinach.png" type="image" />
 
         <media id="friend_image1" src="pictures/friends.png" type="image" />
@@ -55,6 +74,10 @@
         <media id="gorilla_image1" src="pictures/gorilla.png" type="image" />
         <media id="rhino_image1" src="pictures/rhino.png" type="image" />
 
+        <media id="utensil_image1" src="pictures/utensil.png" type="image" />
+
+        <media id="example_sentences_audio1" src="sounds/Example_sentences.mp3" type="sound" />
+
         <media id="elephant_audio1" src="sounds/elephant_audio1.mp3" type="sound" />
         <media id="lion_audio1" src="sounds/lion_audio1.mp3" type="sound" />
         <media id="palak_audio1" src="sounds/palak_audio1.mp3" type="sound" />
@@ -68,52 +91,77 @@
         <media id="more_audio1" src="sounds/more_audio1.mp3" type="sound" />
         <media id="neer_audio1" src="sounds/neer_audio1.mp3" type="sound" />
 
+        <media id="bhathi_audio1" src="haathi_sounds/rhymingWords/bhathi.mp3" type="sound" />
+        <media id="jati_audio1" src="haathi_sounds/rhymingWords/jati.mp3" type="sound" />
+        <media id="khati_audio1" src="haathi_sounds/rhymingWords/khati.mp3" type="sound" />
+        <media id="saathi_audio1" src="haathi_sounds/rhymingWords/saathi.mp3" type="sound" />
+        <media id="thati_audio1" src="haathi_sounds/rhymingWords/thati.mp3" type="sound" />
 
-        <media id="baag_audio1" src="sounds/baag.mp3" type="sound" />
-        <media id="bail_audio1" src="sounds/bail.mp3" type="sound" />
-        <media id="bakari_audio1" src="sounds/bakari.mp3" type="sound" />
-        <media id="ghai_audio1" src="sounds/ghai.mp3" type="sound" />
-        <media id="ghoda_audio1" src="sounds/ghoda.mp3" type="sound" />
-        <media id="hiran_audio1" src="sounds/hiran.mp3" type="sound" />
-        <media id="kutta_audio1" src="sounds/kutta.mp3" type="sound" />
-        <media id="lomdi_audio1" src="sounds/lomdi.mp3" type="sound" />
-        <media id="magarmachch_audio1" src="sounds/magarmachch.mp3" type="sound" />
-        <media id="magarmachchi_audio1" src="sounds/magarmachchi.mp3" type="sound" />
-        <media id="oont_audio1" src="sounds/oont.mp3" type="sound" />
-        <media id="saand_audio1" src="sounds/saand.mp3" type="sound" />
-        <media id="sher_audio1" src="sounds/sher.mp3" type="sound" />
-        <media id="shoekar_audio1" src="sounds/shoekar.mp3" type="sound" />
-        <media id="siyar_audio1" src="sounds/siyar.mp3" type="sound" />
-        <media id="suaar_audio1" src="sounds/suaar.mp3" type="sound" />
-        <media id="zeybra_audio1" src="sounds/zeybra.mp3" type="sound" />
-        <media id="mantri_audio1" src="sounds/s2words/mantri.mp3" type="sound" />
-        <media id="pyadha_audio1" src="sounds/s2words/pyadha.mp3" type="sound" />
-        <media id="raja_audio1" src="sounds/s2words/raja.mp3" type="sound" />
-        <media id="shatranj_ka_ek_mohara_audio1" src="sounds/s2words/shatranj_ka_ek_mohara.mp3" type="sound" />
-        <media id="gadha_audio1" src="sounds/s3words/gadha.mp3" type="sound" />
-        <media id="kabutar_audio1" src="sounds/s3words/kabutar.mp3" type="sound" />
-        <media id="yuddh_mein_prayukth_janvar_audio1" src="sounds/s3words/yuddh_mein_prayukth_janvar.mp3" type="sound" />
-        <media id="bhari_janvaro_ya_pakshi_audio1" src="sounds/s4words/bhari_janvaro_ya_pakshi.mp3" type="sound" />
-        <media id="giraffe_audio1" src="sounds/s4words/giraffe.mp3" type="sound" />
-        <media id="gorilla_audio1" src="sounds/s4words/gorilla.mp3" type="sound" />
-        <media id="rhino_audio1" src="sounds/s4words/rhino.mp3" type="sound" />
-        <media id="shuturmurg_audio1" src="sounds/s4words/shuturmurg.mp3" type="sound" />
-        <media id="whale_audio1" src="sounds/s4words/whale.mp3" type="sound" />
+        <media id="charna_audio1" src="haathi_sounds/verbs/charna.mp3" type="sound" />
+        <media id="daudna_audio1" src="haathi_sounds/verbs/daudna.mp3" type="sound" />
+        <media id="ghoomna_audio1" src="haathi_sounds/verbs/ghoomna.mp3" type="sound" />
+        <media id="khana_audio1" src="haathi_sounds/verbs/khana.mp3" type="sound" />
+        <media id="kudhna_audio1" src="haathi_sounds/verbs/kudhna.mp3" type="sound" />
+        <media id="nahaana_audio1" src="haathi_sounds/verbs/nahaana.mp3" type="sound" />
+        <media id="sona_audio1" src="haathi_sounds/verbs/sona.mp3" type="sound" />
 
-        <media id="achanak_haathi_saamne_agaya_audio1" src="sounds/examples/achanak_haathi_saamne_agaya.mp3" type="sound" />
-        <media id="bandh_bhavare_ko_haathi ne_kaise_mukth_kiya_audio1" src="sounds/examples/bandh_bhavare_ko_haathi ne_kaise_mukth_kiya.mp3" type="sound" />
-        <media id="example_sentences_audio1" src="sounds/examples/Example_sentences.mp3" type="sound" />
-        <media id="haathi_aur_bhavare_ki_dosti_hai_audio1" src="sounds/examples/haathi_aur_bhavare_ki_dosti_hai.mp3" type="sound" />
-        <media id="haathi_bhi_bhagne_laga_audio1" src="sounds/examples/haathi_bhi_bhagne_laga.mp3" type="sound" />
-        <media id="haathi_bola_audio1" src="sounds/examples/haathi_bola.mp3" type="sound" />
-        <media id="haathi_daali_jhukatha_hai_audio1" src="sounds/examples/haathi_daali_jhukatha_hai.mp3" type="sound" />
-        <media id="haathi_doobne_lage_audio1" src="sounds/examples/haathi_doobne_lage.mp3" type="sound" />
-        <media id="haathi_kisko_dekhkar_roya_audio1" src="sounds/examples/haathi_kisko_dekhkar_roya.mp3" type="sound" />
-        <media id="haathi_ne_peid_hila_diya_audio1" src="sounds/examples/haathi_ne_peid_hila_diya.mp3" type="sound" />
-        <media id="haathi_ne_phool_ko_taalab_se_bahar_phek_diya_audio1" src="sounds/examples/haathi_ne_phool_ko_taalab_se_bahar_phek_diya.mp3" type="sound" />
-        <media id="hum_kal_haathi_dekhenge_audio1" src="sounds/examples/hum_kal_haathi_dekhenge.mp3" type="sound" />
-        <media id="khaghosh_ke_peeche_haathi_daud_raha_tha_audio1" src="sounds/examples/khaghosh_ke_peeche_haathi_daud_raha_tha.mp3" type="sound" />
+        <media id="baag_audio1" src="haathi_sounds/s1words/baag.mp3" type="sound" />
+        <media id="bail_audio1" src="haathi_sounds/s1words/bail.mp3" type="sound" />
+        <media id="bakari_audio1" src="haathi_sounds/s1words/bakari.mp3" type="sound" />
+        <media id="ghai_audio1" src="haathi_sounds/s1words/ghai.mp3" type="sound" />
+        <media id="ghoda_audio1" src="haathi_sounds/s1words/ghoda.mp3" type="sound" />
+        <media id="hiran_audio1" src="haathi_sounds/s1words/hiran.mp3" type="sound" />
+        <media id="kutta_audio1" src="haathi_sounds/s1words/kutta.mp3" type="sound" />
+        <media id="lomdi_audio1" src="haathi_sounds/s1words/lomdi.mp3" type="sound" />
+        <media id="magarmachch_audio1" src="haathi_sounds/s1words/magarmachch.mp3" type="sound" />
+        <media id="magarmachchi_audio1" src="haathi_sounds/s1words/magarmachchi.mp3" type="sound" />
+        <media id="oont_audio1" src="haathi_sounds/s1words/oont.mp3" type="sound" />
+        <media id="saand_audio1" src="haathi_sounds/s1words/saand.mp3" type="sound" />
+        <media id="sher_audio1" src="haathi_sounds/s1words/sher.mp3" type="sound" />
+        <media id="shoekar_audio1" src="haathi_sounds/s1words/shoekar.mp3" type="sound" />
+        <media id="siyar_audio1" src="haathi_sounds/s1words/siyar.mp3" type="sound" />
+        <media id="suaar_audio1" src="haathi_sounds/s1words/suaar.mp3" type="sound" />
+        <media id="zeybra_audio1" src="haathi_sounds/s1words/zeybra.mp3" type="sound" />
 
+        <media id="mantri_audio1" src="haathi_sounds/s2words/mantri.mp3" type="sound" />
+        <media id="pyadha_audio1" src="haathi_sounds/s2words/pyadha.mp3" type="sound" />
+        <media id="raja_audio1" src="haathi_sounds/s2words/raja.mp3" type="sound" />
+        <media id="shatranj_ka_ek_mohara_audio1" src="haathi_sounds/s2words/shatranj_ka_ek_mohara.mp3" type="sound" />
+
+        <media id="gadha_audio1" src="haathi_sounds/s3words/gadha.mp3" type="sound" />
+        <media id="kabutar_audio1" src="haathi_sounds/s3words/kabutar.mp3" type="sound" />
+        <media id="yuddh_mein_prayukth_janvar_audio1" src="haathi_sounds/s3words/yuddh_mein_prayukth_janvar.mp3" type="sound" />
+
+        <media id="bhari_janvaro_ya_pakshi_audio1" src="haathi_sounds/s4words/bhari_janvaro_ya_pakshi.mp3" type="sound" />
+        <media id="giraffe_audio1" src="haathi_sounds/s4words/giraffe.mp3" type="sound" />
+        <media id="gorilla_audio1" src="haathi_sounds/s4words/gorilla.mp3" type="sound" />
+        <media id="rhino_audio1" src="haathi_sounds/s4words/rhino.mp3" type="sound" />
+        <media id="shuturmurg_audio1" src="haathi_sounds/s4words/shuturmurg.mp3" type="sound" />
+        <media id="whale_audio1" src="haathi_sounds/s4words/whale.mp3" type="sound" />
+
+        <media id="achanak_haathi_saamne_agaya_audio1" src="haathi_sounds/examples/achanak_haathi_saamne_agaya.mp3" type="sound" />
+        <media id="bandh_bhavare_ko_haathi ne_kaise_mukth_kiya_audio1" src="haathi_sounds/examples/bandh_bhavare_ko_haathi ne_kaise_mukth_kiya.mp3" type="sound" />
+        <media id="haathi_aur_bhavare_ki_dosti_hai_audio1" src="haathi_sounds/examples/haathi_aur_bhavare_ki_dosti_hai.mp3" type="sound" />
+        <media id="haathi_bhi_bhagne_laga_audio1" src="haathi_sounds/examples/haathi_bhi_bhagne_laga.mp3" type="sound" />
+        <media id="haathi_bola_audio1" src="haathi_sounds/examples/haathi_bola.mp3" type="sound" />
+        <media id="haathi_daali_jhukatha_hai_audio1" src="haathi_sounds/examples/haathi_daali_jhukatha_hai.mp3" type="sound" />
+        <media id="haathi_doobne_lage_audio1" src="haathi_sounds/examples/haathi_doobne_lage.mp3" type="sound" />
+        <media id="haathi_kisko_dekhkar_roya_audio1" src="haathi_sounds/examples/haathi_kisko_dekhkar_roya.mp3" type="sound" />
+        <media id="haathi_ne_peid_hila_diya_audio1" src="haathi_sounds/examples/haathi_ne_peid_hila_diya.mp3" type="sound" />
+        <media id="haathi_ne_phool_ko_taalab_se_bahar_phek_diya_audio1" src="haathi_sounds/examples/haathi_ne_phool_ko_taalab_se_bahar_phek_diya.mp3" type="sound" />
+        <media id="hum_kal_haathi_dekhenge_audio1" src="haathi_sounds/examples/hum_kal_haathi_dekhenge.mp3" type="sound" />
+        <media id="khaghosh_ke_peeche_haathi_daud_raha_tha_audio1" src="haathi_sounds/examples/khaghosh_ke_peeche_haathi_daud_raha_tha.mp3" type="sound" />
+
+        <media id="sher_bohot_teezi_se_chalta_hai_audio1" src="sher_sounds/examples/sher_bohot_teezi_se_chalta_hai.mp3" type="sound" />
+        <media id="sher_ek_bada_jaanvar_hai_audio1" src="sher_sounds/examples/sher_ek_bada_jaanvar_hai.mp3" type="sound" />
+        <media id="sher_krodh_mein_bhari_bidka_audio1" src="sher_sounds/examples/sher_krodh_mein_bhari_bidka.mp3" type="sound" />
+        <media id="sher_zor_laga_kar_gurrata_hai_audio1" src="sher_sounds/examples/sher_zor_laga_kar_gurrata_hai.mp3" type="sound" />
+        <media id="unhe_ek_sher_mila_audio1" src="sher_sounds/examples/unhe_ek_sher_mila.mp3" type="sound" />
+
+        <media id="aaj_maa_ne_palak_paneer_ki_sabzi_banayi_hai_audio1" src="palak_sounds/examples/aaj_maa_ne_palak_paneer_ki_sabzi_banayi_hai.mp3" type="sound" />
+        <media id="meine_apne_ghar_mein_palak_lagaya_hai_audio1" src="palak_sounds/examples/meine_apne_ghar_mein_palak_lagaya_hai.mp3" type="sound" />
+        <media id="mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai_audio1" src="palak_sounds/examples/mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai.mp3" type="sound" />
+        <media id="palak_khane_se_ankhen_teek_rehti_hai_audio1" src="palak_sounds/examples/palak_khane_se_ankhen_teek_rehti_hai.mp3" type="sound" />
 
         <media id="page2" src="scenes/image_2.jpg" type="image" />
         <media id="page3" src="scenes/image_3.jpg" type="image" />
@@ -185,6 +233,24 @@
         <image asset="whale_image1"/>
         <image asset="gorilla_image1"/>
         <image asset="rhino_image1"/>
+        <image asset="jackal_image1"/>
+        <image asset="pig_image1"/>
+        <image asset="hog_image1"/>
+        <image asset="bull_image1"/>
+        <image asset="crocodile_image1"/>
+        <image asset="zebra_image1"/>
+        <image asset="ox_image1"/>
+        <image asset="goat_image1"/>
+        <image asset="fourlegged_image1"/>
+        <image asset="chess_image1"/>
+        <image asset="mantri_image1"/>
+        <image asset="chess_king_image1"/>
+        <image asset="castle_image1"/>
+        <image asset="pyada_image1"/>
+        <image asset="war_image1"/>
+        <image asset="donkey_image1"/>
+        <image asset="animals_image1"/>
+        <image asset="giraffe_image1"/>
 
         <audio asset="stage_sound" />
         <audio asset="elephant_audio1" />
@@ -199,6 +265,20 @@
         <audio asset="ghar_audio" />
         <audio asset="more_audio1" />
         <audio asset="neer_audio1" />
+
+        <audio asset="bhathi_audio1" />
+        <audio asset="jati_audio1" />
+        <audio asset="khati_audio1" />
+        <audio asset="saathi_audio1" />
+        <audio asset="thati_audio1" />
+
+        <audio asset="charna_audio1" />
+        <audio asset="daudna_audio1" />
+        <audio asset="ghoomna_audio1" />
+        <audio asset="khana_audio1" />
+        <audio asset="kudhna_audio1" />
+        <audio asset="nahaana_audio1" />
+        <audio asset="sona_audio1" />
 
         <audio asset="baag_audio1" />
         <audio asset="bail_audio1" />
@@ -244,6 +324,17 @@
         <audio asset="haathi_ne_phool_ko_taalab_se_bahar_phek_diya_audio1"/>
         <audio asset="hum_kal_haathi_dekhenge_audio1"/>
         <audio asset="khaghosh_ke_peeche_haathi_daud_raha_tha_audio1"/>
+
+        <audio asset="sher_bohot_teezi_se_chalta_hai_audio1"/>
+        <audio asset="sher_ek_bada_jaanvar_hai_audio1"/>
+        <audio asset="sher_krodh_mein_bhari_bidka_audio1"/>
+        <audio asset="sher_zor_laga_kar_gurrata_hai_audio1"/>
+        <audio asset="unhe_ek_sher_mila_audio1"/>
+
+        <audio asset="aaj_maa_ne_palak_paneer_ki_sabzi_banayi_hai_audio1"/>
+        <audio asset="meine_apne_ghar_mein_palak_lagaya_hai_audio1"/>
+        <audio asset="mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai_audio1"/>
+        <audio asset="palak_khane_se_ankhen_teek_rehti_hai_audio1"/>
     </stage>
 
     <stage id="storyBaseStage" preload="true">
@@ -291,6 +382,8 @@
         <image x="50" y="-2" h="40" w="40" asset="sound_image1"/>
         <image x="20" y="40" h="25" w="25" model="data.picture"/>
     </template>
+
+    <set id="selectedWordParam" param="selectedWord" scope="content" model=""/>
 
     <stage id="explore" x="0" y="0" w="100" h="100" iterate="words-list" var="data">
         <audio asset="welcome_sound" />
@@ -375,7 +468,7 @@
             </shape>
             <image id="spin_bot_ico" asset="triangle_dn" x="25" y="77" w="15" h="10" z-index="51"/>
 
-            <text id="exampleSentenceText" align="center" valign="middle" x="7" y="51" w="55" h="23" z-index="50" font="Arial" fontsize="80" color="white" param="stage.exampleSentence"></text>
+            <text id="exampleSentenceText" align="center" valign="middle" x="7" y="51" w="55" h="23" z-index="50" font="Arial" fontsize="80" color="white" param="stage.exampleSentence.sentence"></text>
             <text x="0" y="10" w="100" h="20" align="center" font="Arial" fontsize="100" color="white" z-index="100">उदाहरण वाक्य</text>
         </g>
 
@@ -574,33 +667,31 @@
 
         <set id="relatedWordsParam" param="relatedWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}]"/>
         <set param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
-        <set id="membersParam" param="memberWord" scope="stage" ev-value="${stage.relatedWord.members}"/>
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
-
 
             <text x="0" y="7" w="15" h="10" align="right" font="Arial" fontsize="60" color="white" z-index="100">मैं हूँ एक</text>
             <text id="relatedWordTextTitle" align="left" x="16" y="7" w="65" h="10" fontsize="60" color="#161FA7" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
             <text x="7" y="15" w="80" h="10" align="left" font="Arial" fontsize="60" color="#519828" z-index="100">देखो ये सब मेरे साथी </text>
 
             <g x="20" y="30" w="20" h="35" id="obj1">
-                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[0]" ev-obj="obj1"/>
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[0]"/>
             </g>
 
             <g x="15" y="70" w="12" h="20">
-                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[1]" />
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[1]"/>
             </g>
 
             <g x="35" y="60" w="12" h="20">
-                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[1]" />
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[1]"/>
             </g>
 
             <g x="40" y="15" w="12" h="20" enableDrag="true">
-                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[1]" />
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[1]"/>
             </g>
 
             <g x="50" y="40" w="20" h="35">
-                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[4]" />
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[4]"/>
             </g>
 
             <g id="meaningSpinner" x="57" y="20" w="100" h="100" z-index="200">
@@ -647,18 +738,10 @@
     </stage>
 
     <template id="wordTest">
-        <g id="relatedWordBody" x="0" y="0" w="100" h="100">
+        <g x="0" y="0" w="100" h="100">
             <shape type="circle" x="50" y="50" w="50" h="50" fill="white" opacity="0.6" stroke="black"/>
-            <image id="memberWordPicture" x="5" y="5" w="90" h="90" model="member.picture" z-index="100">
-            </image>
-            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
-            <!-- <event type="click">
-                <action type="command" command="set" param="selectedWordObj" ev-model="wordDetails.${member.lemma}" asset="selectedWordParam" scope="stage"/>
-                <action type="command" command="set" param="relatedWord" ev-value="${stage.selectedWordObj.relatedWords}" asset="relatedWordsParam" scope="stage"/>
-                <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
-                <action type="command" command="reload" asset="stage"/>
-                <action type="animation"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
-            </event> -->
+            <image x="5" y="5" w="90" h="90" model="member.picture" z-index="100"/>
+            <text align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
             <event type="click">
                 <action type="animation" asset="body" parent="true"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
                 <action type="command" command="set" param="selectedWord" ev-model="member.lemma" asset="selectedWordParam" scope="content"/>

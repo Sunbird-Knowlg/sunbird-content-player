@@ -1,19 +1,19 @@
 [
   {
     "lemma": "हाथी",
-    "meaning": "एक शाकाहारी स्तनपायी चौपाया जो अपने स्थूल और विशाल आकार तथा सूँड़ के कारण सब जानवरों से विलक्षण होता है",
+    "meaning": "चार पैरों वाला बड़ा जानवर जिसकी शुंड होती है",
     "picture": "elephant_image1",
     "pronunciation": "elephant_audio1"
   },
   {
     "lemma": "शेर",
-    "meaning": "बिल्ली के वर्ग में सबसे अधिक बलवान हिंसक जंगली जन्तु जिसके नर की गर्दन पर बड़े-बड़े बाल होते हैं",
+    "meaning": "पीले रंग का मंशाहरी जानवर जंगल में रहता है",
     "picture": "lion_image1",
     "pronunciation": "lion_audio1"
   },
   {
     "lemma": "पालक",
-    "meaning": "आप खा सकते हैं (सब्जी )",
+    "meaning": "हरी पत्तेदार सब्जी",
     "picture": "palak_image1",
     "pronunciation": "palak_audio1"
   }
