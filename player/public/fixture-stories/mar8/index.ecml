@@ -29,18 +29,19 @@
 
         <!-- Dictionary assets -->
         <media id="elephant_image1" src="pictures/elephant.png" type="image" />
-        <media id="lion_image1" src="pictures/lion_image1.png" type="image" />
+        <media id="lion_image1" src="pictures/lion.png" type="image" />
+        <media id="palak_image1" src="pictures/spinach.png" type="image" />
 
-        <media id="palak_image1" src="pictures/palak_image1.jpeg" type="image" />
-        <media id="friend_image1" src="pictures/friend_image1.jpg" type="image" />
+        <media id="friend_image1" src="pictures/friends.png" type="image" />
+
         <media id="going_image1" src="pictures/go.png" type="image" />
-        <media id="child_image1" src="pictures/child_image1.jpg" type="image" />
-        <media id="salt_image1" src="pictures/salt_image1.jpeg" type="image" />
-        <media id="car_image1" src="pictures/car_image1.png" type="image" />
-        <media id="four_image1" src="pictures/fourlegged.png" type="image" />
-        <media id="house_image1" src="pictures/house_image1.png" type="image" />
-        <media id="peacock_image1" src="pictures/peacock_image1.jpg" type="image" />
-        <media id="water_image1" src="pictures/water_image1.jpg" type="image" />
+        <media id="child_image1" src="pictures/child.png" type="image" />
+        <media id="salt_image1" src="pictures/salt.png" type="image" />
+        <media id="car_image1" src="pictures/car.png" type="image" />
+        <media id="four_image1" src="pictures/four.png" type="image" />
+        <media id="house_image1" src="pictures/house.png" type="image" />
+        <media id="peacock_image1" src="pictures/peacock.png" type="image" />
+        <media id="water_image1" src="pictures/water.png" type="image" />
         <media id="sound_image1" src="pictures/sound.png" type="image" />
         <media id="animal_border" src="pictures/animal_info_border.png" type="image" />
         <media id="tiger_image1" src="pictures/tiger.png" type="image" />
@@ -139,15 +140,6 @@
             </event>
         </image>
         <text x="42" y="45" w="25" h="20" font="Georgia" fontsize="50" model="data.meaning"></text>
-    </template>
-
-    <template id="wordTest">
-        <text x="0" y="0" w="45" h="100" font="Georgia" fontsize="70" model="member.lemma">
-            <event type="click">
-                <action type="command" command="toggleShow" asset="textID" />
-            </event>
-        </text>
-        <text id="textID" x="50" y="0" w="45" h="100" font="Georgia" fontsize="70" >abc</text>
     </template>
 
     <stage id="preloadStage" preload="true">
@@ -251,7 +243,7 @@
         <audio asset="haathi_ne_peid_hila_diya_audio1"/>
         <audio asset="haathi_ne_phool_ko_taalab_se_bahar_phek_diya_audio1"/>
         <audio asset="hum_kal_haathi_dekhenge_audio1"/>
-        <audio asset="khaghosh_ke_peeche_haathi_daud_raha_tha_audio1"/>        
+        <audio asset="khaghosh_ke_peeche_haathi_daud_raha_tha_audio1"/>
     </stage>
 
     <stage id="storyBaseStage" preload="true">
@@ -587,64 +579,56 @@
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
 
-            <g x="5" y="10" w="40" h="40">
-                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[0]" />
+
+            <text x="0" y="7" w="15" h="10" align="right" font="Arial" fontsize="60" color="white" z-index="100">मैं हूँ एक</text>
+            <text id="relatedWordTextTitle" align="left" x="16" y="7" w="65" h="10" fontsize="60" color="#161FA7" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
+            <text x="7" y="15" w="80" h="10" align="left" font="Arial" fontsize="60" color="#519828" z-index="100">देखो ये सब मेरे साथी </text>
+
+            <g x="20" y="30" w="20" h="35" id="obj1">
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[0]" ev-obj="obj1"/>
             </g>
 
-            <g x="50" y="10" w="40" h="40">
+            <g x="15" y="70" w="12" h="20">
                 <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
             </g>
 
+            <g x="35" y="60" w="12" h="20">
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+            </g>
 
-            <image id="button_long_example_up" asset="button_long_up" x="14" y="46.5" w="20" h="10" z-index="100">
-                <event type="click">
-                    <action type="command" command="set" param="relatedWord" param-index="previous" asset="relatedWordsParam" scope="stage"/>
-                    <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
-                    <action type="command" command="refresh" asset="relatedWordText"/>
-                    <action type="command" command="refresh" asset="memberWordGroup"/>
-                </event>
-            </image>
-            <image asset="example_container" x="2" y="53" w="45" h="20" z-index="100"/>
+            <g x="40" y="15" w="12" h="20">
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+            </g>
 
-            <text x="0" y="7" w="80" h="10" align="center" font="Arial" fontsize="90" color="white" z-index="100">देखो मुझ सा कौन</text>
-            <text id="meaningPrefix" valign="top" x="5" y="22" w="60" h="10" fontsize="50" color="white" font="Arial" z-index="100">मैं हूँ </text>
-            <text id="wordMeaningText" align="left" valign="top" x="10" y="22" w="60" h="30" fontsize="50" color="#161FA7" font="Arial" lineHeight="1.5" z-index="100" param="stage.selectedWordObj.meaning"/>
-            <text id="relatedWordText" align="center" valign="middle" x="7" y="58" w="35" h="10" fontsize="56" color="white" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
+            <g x="50" y="40" w="20" h="35">
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+            </g>
 
-            <image id="button_long_example_down" asset="button_long_down" x="13" y="69" w="20" h="10" z-index="100">
-                <event type="click">
-                    <action type="command" command="set" param="relatedWord" param-index="next" asset="relatedWordsParam" scope="stage"/>
-                    <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
-                    <action type="command" command="refresh" asset="relatedWordText"/>
-                    <action type="command" command="refresh" asset="memberWordGroup"/>
-                </event>
-            </image>
+            <g id="meaningSpinner" x="57" y="20" w="100" h="100" z-index="200">
+                <image id="button_long_example_up" asset="button_long_up" x="14" y="46.5" w="20" h="10" z-index="100">
+                    <event type="click">
+                        <action type="command" command="set" param="relatedWord" param-index="previous" asset="relatedWordsParam" scope="stage"/>
+                        <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
+                        <action type="command" command="refresh" asset="relatedWordText"/>
+                        <action type="command" command="refresh" asset="body"/>
+                    </event>
+                </image>
+                <image asset="example_container" x="5" y="53" w="35" h="20" z-index="100"/>
+
+                <text id="relatedWordText" align="center" valign="middle" x="7" y="58" w="30" h="10" fontsize="50" color="white" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
+
+                <image id="button_long_example_down" asset="button_long_down" x="13" y="69" w="20" h="10" z-index="100">
+                    <event type="click">
+                        <action type="command" command="set" param="relatedWord" param-index="next" asset="relatedWordsParam" scope="stage"/>
+                        <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
+                        <action type="command" command="refresh" asset="relatedWordText"/>
+                        <action type="command" command="refresh" asset="body"/>
+                    </event>
+                </image>
+            </g>
 
             <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="14" x="86" y="25" w="14" h="14"/>
             <image id="selectedWordImage" x="75" y="10" w="24" h="30" param="stage.selectedWordObj.picture" z-index="100"/>
-
-            <image x="58" y="40" w="6" h="10" asset="change_icon" z-index="100">
-                <event type="click">
-                    <action type="command" command="set" param="memberWord" param-index="next" asset="membersParam" scope="stage"/>
-                    <action type="command" command="refresh" asset="memberWordGroup"/>
-                </event>
-            </image>
-
-            <shape x="48" y="44" w="25" h="53" type="roundrect" fill="#999999" opacity="0.6" z-index="90"/>
-            <g id="memberWordGroup" x="0" y="0" w="100" h="100" z-index="100">
-                <image id="memberWordPicture" x="50" y="48" w="21" h="40" param="stage.memberWord.picture" z-index="100">
-                    <event type="click">
-                        <action type="command" command="set" param="selectedWordObj" ev-model="wordDetails.${stage.memberWord.lemma}" asset="selectedWordParam" scope="stage"/>
-                        <action type="command" command="set" param="relatedWord" ev-value="${stage.selectedWordObj.relatedWords}" asset="relatedWordsParam" scope="stage"/>
-                        <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
-                        <action type="command" command="refresh" asset="relatedWordText"/>
-                        <action type="command" command="refresh" asset="wordMeaningText"/>
-                        <action type="command" command="refresh" asset="selectedWordImage"/>
-                        <action type="command" command="refresh" asset="memberWordGroup"/>
-                    </event>
-                </image>
-                <text id="memberWordLemma" align="center" valign="middle" x="48" y="88" w="25" h="10" fontsize="64" color="white" font="Arial" z-index="100" param="stage.memberWord.lemma"/>
-            </g>
 
         </g>
 
@@ -665,4 +649,24 @@
             </event>
         </events>
     </stage>
+
+    <template id="wordTest">
+        <g id="relatedWordBody" x="0" y="0" w="100" h="100">
+            <shape type="circle" x="50" y="50" w="50" h="50" fill="white" opacity="0.6" stroke="black"/>
+            <image id="memberWordPicture" x="5" y="5" w="90" h="90" model="member.picture" z-index="100"/>
+            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
+            <!-- <event type="click">
+                <action type="command" command="set" param="selectedWordObj" ev-model="wordDetails.${member.lemma}" asset="selectedWordParam" scope="stage"/>
+                <action type="command" command="set" param="relatedWord" ev-value="${stage.selectedWordObj.relatedWords}" asset="relatedWordsParam" scope="stage"/>
+                <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
+                <action type="command" command="reload" asset="stage"/>
+                <action type="animation"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
+            </event> -->
+            <event type="click">
+                <action type="animation" param="obj"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
+            </event>
+        </g>
+
+    </template>
+
 </theme>
