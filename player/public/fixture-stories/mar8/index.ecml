@@ -650,11 +650,6 @@
         <g id="relatedWordBody" x="0" y="0" w="100" h="100">
             <shape type="circle" x="50" y="50" w="50" h="50" fill="white" opacity="0.6" stroke="black"/>
             <image id="memberWordPicture" x="5" y="5" w="90" h="90" model="member.picture" z-index="100">
-                <event type="click">
-                    <action type="command" command="set" param="selectedWord" ev-model="member.lemma" asset="selectedWordParam" scope="content"/>
-                    <action type="command" command="set" param="relatedWordIndex" param-value="0" asset="relatedWordIndexParam" scope="content"/>
-                    <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
-                </event>
             </image>
             <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
             <!-- <event type="click">
@@ -665,7 +660,10 @@
                 <action type="animation"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
             </event> -->
             <event type="click">
-                <action type="animation" param="obj"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
+                <action type="animation" asset="body" parent="true"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
+                <action type="command" command="set" param="selectedWord" ev-model="member.lemma" asset="selectedWordParam" scope="content"/>
+                <action type="command" command="set" param="relatedWordIndex" param-value="0" asset="relatedWordIndexParam" scope="content"/>
+                <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
             </event>
         </g>
 
