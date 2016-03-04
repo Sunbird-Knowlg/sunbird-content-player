@@ -1,15 +1,14 @@
 {
   "हाथी": {
     "lemma": "हाथी",
-    "meaning": "चार पैरों वाला बड़ा जानवर जिसकी शुंड होती है",
+    "meaning": "चार पैरों वाला बड़ा जानवर जिसकी सूंढ़ होती है",
     "picture": "elephant_image1",
     "pronunciation": "elephant_audio1",
     "syllableCount": 2,
     "endsWith": "थी",
     "rhymingWords": [
       {"lemma": "साथी", "syllables": ["सा"], "picture": "friend_image1","pronunciation": "saathi_audio1"},
-      {"lemma": "भाथी", "syllables": ["भा"], "picture": "utensil_image1", "pronunciation": "bhathi_audio1"
-      }
+      {"lemma": "भाथी", "syllables": ["भा"], "picture": "utensil_image1", "pronunciation": "bhathi_audio1"}
     ],
     "exampleSentences": [
       {"sentence": "हम कल हाथी देखेंगे", "audio": "hum_kal_haathi_dekhenge_audio1"},
@@ -53,8 +52,9 @@
           {"lemma": "घोड़ा", "picture": "animals_image1", "pronunciation": "ghoda_audio1"},
           {"lemma": "मंत्री", "picture": "mantri_image1", "pronunciation": "mantri_audio1"},
           {"lemma": "राजा", "picture": "chess_king_image1", "pronunciation": "raja_audio1"},
-          {"lemma": "ऊंट", "picture": "camel_image1", "pronunciation": "oont_audio1"},
-          {"lemma": "प्यादा", "picture": "pyada_image1", "pronunciation": "pyadha_audio1"}
+          {"lemma": "ऊंट", "picture": "placeholder_image", "pronunciation": "oont_audio1"},
+          {"lemma": "प्यादा", "picture": "pyada_image1", "pronunciation": "pyadha_audio1"},
+          {"lemma": "हाथी", "picture": "castle_image1", "pronunciation": ""}
         ]
       },
       {
@@ -67,7 +67,8 @@
           {"lemma": "ऊंट", "picture": "camel_image1", "pronunciation": "oont_audio1"},
           {"lemma": "गधा", "picture": "donkey_image1", "pronunciation": "gadha_audio1"},
           {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
-          {"lemma": "कबूतर", "picture": "pigeon_image1", "pronunciation": "kabutar_audio1"}
+          {"lemma": "कबूतर", "picture": "pigeon_image1", "pronunciation": "kabutar_audio1"},
+          {"lemma": "हाथी", "picture": "castle_image1", "pronunciation": ""}
         ]
       },
       {
@@ -81,7 +82,8 @@
           {"lemma": "गोरिल्ला", "picture": "gorilla_image1", "pronunciation": "gorilla_audio1"},
           {"lemma": "शुतुरमुर्ग", "picture": "ostrich_image1", "pronunciation": "whale_audio1"},
           {"lemma": "राइनो", "picture": "rhino_image1", "pronunciation": "rhino_audio1"},
-          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "hiran_audio1"}
+          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "hiran_audio1"},
+          {"lemma": "हाथी", "picture": "castle_image1", "pronunciation": ""}
         ]
       }
     ],
@@ -90,14 +92,14 @@
       {"verb": "नहाना", "picture": "nahaana_image1", "pronunciation": "nahaana_audio1", "object": ""},
       {"verb": "चरना", "picture": "chaaraana_image1", "pronunciation": "charna_audio1", "object": ""},
       {"verb": "घूमना", "picture": "walking_image1", "pronunciation": "ghoomna_audio1", "object": ""},
-      {"verb": "सोना", "picture": "sona_image1", "pronunciation": "sona_audio1", "object": ""},
+      {"verb": "सोना", "picture": "image_sona", "pronunciation": "sona_audio1", "object": ""},
       {"verb": "कूदना", "picture": "jump_image1", "pronunciation": "kudhna_audio1", "object": ""},
       {"verb": "दौड़ना", "picture": "run_image1", "pronunciation": "daudna_audio1", "object": ""}
     ]
   },
   "शेर": {
     "lemma": "शेर",
-    "meaning": "पीले रंग का मंशाहरी जानवर जंगल में रहता है",
+    "meaning": "पीले रंग का माँसाहारी जानवर जो जंगल में रहता है",
     "picture": "lion_image1",
     "pronunciation": "lion_audio1",
     "syllableCount": 2,
@@ -120,47 +122,61 @@
       {
         "relation": "hasHypernym",
         "gloss": "चार पैरों से चलने वाला दुमदार जंतु",
-        "picture": "",
+        "picture": "fourlegged_image1",
         "memberRelation": "hasHyponym",
         "members": [
-          {
-            "lemma": "बाघ",
-            "meaning": "बिल्ली की जाति का एक बहुत बड़ा और भयंकर, हिंसक पशु",
-            "picture": "tiger_image1",
-            "pronunciation": "baagh_audio1"
-          },
-          {
-            "lemma": "गाय",
-            "meaning": "सींग वाला एक पालतू शाकाहारी मादा चौपाया जो अपने दूध के लिए प्रसिद्ध है",
-            "picture": "cow_image1",
-            "pronunciation": "gaay_audio1"
-          },
-          {
-            "lemma": "कुत्ता",
-            "meaning": "भेड़िए, गीदड़ आदि की जाति का एक पालतू पशु",
-            "picture": "dog_image1",
-            "pronunciation": "kutta_audio1"
-          },
-          {
-            "lemma": "हिरण",
-            "meaning": "एक शाकाहारी चौपाया जो मैदानों और जंगलों में रहता है",
-            "picture": "deer_image1",
-            "pronunciation": "hiran_audio1"
-          },
-          {
-            "lemma": "हाथी",
-            "meaning": "चार पैरों से चलने वाला दुमदार जंतु",
-            "picture": "elephant_image1",
-            "pronunciation": "elephant_audio1"
-          }
+          {"lemma": "बाघ", "picture": "tiger_image1", "pronunciation": "baag_audio1"},
+          {"lemma": "गाय", "picture": "cow_image1", "pronunciation": "ghai_audio1"},
+          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
+          {"lemma": "हिरण", "picture": "deer_image1", "pronunciation": "hiran_audio1"},
+          {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
+          {"lemma": "सूअर", "picture": "pig_image1", "pronunciation": "suaar_audio1"},
+          {"lemma": "शूकर", "picture": "hog_image1", "pronunciation": "shoekar_audio1"},
+          {"lemma": "साँड़", "picture": "bull_image1", "pronunciation": "saand_audio1"},
+          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "magarmachch_audio1"},
+          {"lemma": "सियार", "picture": "jackal_image1", "pronunciation": "siyar_audio1"},
+          {"lemma": "ज़ेबरा", "picture": "zebra_image1", "pronunciation": "zeybra_audio1"},
+          {"lemma": "बैल", "picture": "ox_image1", "pronunciation": "bail_audio1"},
+          {"lemma": "घोड़ा", "picture": "horse_image1", "pronunciation": "ghoda_audio1"},
+          {"lemma": "बकरी", "picture": "goat_image1", "pronunciation": "bakari_audio1"},
+          {"lemma": "ऊंट", "picture": "camel_image1", "pronunciation": "oont_audio1"}
+        ]
+      },
+      {
+        "relation": "hasHypernym",
+        "gloss": "जो मांस खाता हो",
+        "picture": "fourlegged_image1",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {"lemma": "नेवला", "picture": "image_mongoose", "pronunciation": ""},
+          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
+          {"lemma": "गीदड़", "picture": "image_fox", "pronunciation": ""},
+          {"lemma": "बिल्ली", "picture": "image_cat", "pronunciation": ""},
+          {"lemma": "भालू", "picture": "image_bear", "pronunciation": ""},
+          {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
+          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "magarmachch_audio1"},
+          {"lemma": "साँप", "picture": "image_snake", "pronunciation": ""},
+          {"lemma": "घटपर्णी", "picture": "image_pitcher_plant", "pronunciation": ""}
+        ]
+      },
+      {
+        "relation": "hasHypernym",
+        "gloss": "पंजे परिवार",
+        "picture": "fourlegged_image1",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {"lemma": "बाघ", "picture": "tiger_image1", "pronunciation": "baag_audio1"},
+          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
+          {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
+          {"lemma": "सियार", "picture": "jackal_image1", "pronunciation": "siyar_audio1"}
         ]
       }
     ],
     "verbs": [
-      {"verb": "खाना", "picture": "eating_image1", "pronunciation": "khana_audio1", "object": "palak_image1"},
-      {"verb": "नहाना", "picture": "nahaana_image1", "pronunciation": "nahaana_audio1", "object": ""},
-      {"verb": "चरना", "picture": "chaaraana_image1", "pronunciation": "charna_audio1", "object": ""},
-      {"verb": "घूमना", "picture": "walking_image1", "pronunciation": "ghoomna_audio1", "object": ""}
+      {"verb": "घूमना", "picture": "walking_image1", "pronunciation": "ghoomna_audio1", "object": ""},
+      {"verb": "सोना", "picture": "image_sona", "pronunciation": "", "object": ""},
+      {"verb": "कूदना", "picture": "jump_image1", "pronunciation": "kudhna_audio1", "object": ""},
+      {"verb": "दौड़ना", "picture": "run_image1", "pronunciation": "daudna_audio1", "object": ""}
     ]
   },
   "पालक": {
@@ -225,11 +241,11 @@
     ],
     "verbs": [
       {"verb": "पकाना", "picture": "image_pakaana", "pronunciation": "charna_audio1", "object": ""},
-      {"verb": "खाना", "picture": "palak_image1", "pronunciation": "ghoomna_audio1", "object": ""},
-      {"verb": "बोना", "picture": "palak_image1", "pronunciation": "sona_audio1", "object": ""},
-      {"verb": "लगाना", "picture": "palak_image1", "pronunciation": "kudhna_audio1", "object": ""},
+      {"verb": "खाना", "picture": "eating_image1", "pronunciation": "ghoomna_audio1", "object": ""},
+      {"verb": "बोना", "picture": "placeholder_image", "pronunciation": "sona_audio1", "object": ""},
+      {"verb": "लगाना", "picture": "placeholder_image", "pronunciation": "kudhna_audio1", "object": ""},
       {"verb": "काटना", "picture": "image_kaatna", "pronunciation": "daudna_audio1", "object": ""},
-      {"verb": "बनाना", "picture": "palak_image1", "pronunciation": "nahaana_audio1", "object": ""},
+      {"verb": "बनाना", "picture": "placeholder_image", "pronunciation": "nahaana_audio1", "object": ""},
       {"verb": "धोना", "picture": "image_dhona", "pronunciation": "khana_audio1", "object": ""}
     ]
   }

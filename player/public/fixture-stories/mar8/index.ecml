@@ -26,6 +26,8 @@
         <media id="arrow_bl" src="icons/arrow_bl.png" type="image" />
         <media id="arrow_br" src="icons/arrow_br.png" type="image" />
 
+        <media id="placeholder_image" src="placeholder.png" type="image" />
+
         <!-- Story assets -->
         <media id="elephant_tiger" src="pictures/elephant-tiger.jpg" type="image" />
 
@@ -223,6 +225,17 @@
         <media id="image_spinach" src="paalak/relwords/spinach.png" type="image" />
         <media id="image_tomato" src="paalak/relwords/tomato.png" type="image" />
 
+        <media id="image_cat" src="lion/relwords/cat.png" type="image" />
+        <media id="image_mongoose" src="lion/relwords/mongoose.png" type="image" />
+        <media id="image_fox" src="lion/relwords/fox.png" type="image" />
+        <media id="image_bear" src="lion/relwords/bear.png" type="image" />
+        <media id="image_snake" src="lion/relwords/snake.png" type="image" />
+        <media id="image_pitcher_plant" src="lion/relwords/pitcher_plant.png" type="image" />
+        <media id="image_sona" src="lion/relwords/sona.png" type="image" />
+
+
+
+
     </manifest>
 
     <template id="blurWordTemplate">
@@ -248,6 +261,7 @@
         <image asset="previous"/>
         <image asset="play"/>
         <image asset="ekstep"/>
+        <image asset="placeholder_image"/>
 
         <image asset="story_icon"/>
         <image asset="splash_screen_image"/>
@@ -362,6 +376,13 @@
         <image asset="image_shimla_mirch"/>
         <image asset="image_spinach"/>
         <image asset="image_tomato"/>
+        <image asset="image_cat"/>
+        <image asset="image_mongoose"/>
+        <image asset="image_fox"/>
+        <image asset="image_bear"/>
+        <image asset="image_snake"/>
+        <image asset="image_pitcher_plant"/>
+        <image asset="image_sona"/>
 
         <audio asset="stage_sound" />
         <audio asset="chimes" />
