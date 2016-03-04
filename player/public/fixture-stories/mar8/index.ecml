@@ -48,6 +48,7 @@
         <media id="donkey_image1" src="pictures/donkey.png" type="image" />
         <media id="animals_image1" src="pictures/animals.png" type="image" />
         <media id="giraffe_image1" src="pictures/giraffe.png" type="image" />
+        <media id="ostrich_image1" src="pictures/ostrich.png" type="image" />
 
         <media id="palak_image1" src="pictures/spinach.png" type="image" />
 
@@ -252,6 +253,7 @@
         <image asset="donkey_image1"/>
         <image asset="animals_image1"/>
         <image asset="giraffe_image1"/>
+        <image asset="ostrich_image1"/>
 
         <audio asset="stage_sound" />
         <audio asset="elephant_audio1" />

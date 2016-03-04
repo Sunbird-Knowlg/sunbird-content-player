@@ -79,14 +79,14 @@
           {"lemma": "जिराफ़", "picture": "giraffe_image1", "pronunciation": "giraffe_audio1"},
           {"lemma": "ह्वेल", "picture": "whale_image1", "pronunciation": "whale_audio1"},
           {"lemma": "गोरिल्ला", "picture": "gorilla_image1", "pronunciation": "gorilla_audio1"},
-          {"lemma": "शुतुरमुर्ग", "picture": "whale_image1", "pronunciation": "whale_audio1"},
+          {"lemma": "शुतुरमुर्ग", "picture": "ostrich_image1", "pronunciation": "whale_audio1"},
           {"lemma": "राइनो", "picture": "rhino_image1", "pronunciation": "rhino_audio1"},
-          {"lemma": "मगरमच्छ", "picture": "deer_image1", "pronunciation": "hiran_audio1"}
+          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "hiran_audio1"}
         ]
       }
     ],
     "verbs": [
-      {"verb": "चरना", "picture": "elephant_image1", "pronunciation": "charna_audio1", "object": ""},
+      {"verb": "चरना", "picture": "elephant_image1", "pronunciation": "charna_audio1", "object": "", "object_picture": ""},
       {"verb": "घूमना", "picture": "elephant_image1", "pronunciation": "ghoomna_audio1", "object": ""},
       {"verb": "सोना", "picture": "elephant_image1", "pronunciation": "sona_audio1", "object": ""},
       {"verb": "कूदना", "picture": "elephant_image1", "pronunciation": "kudhna_audio1", "object": ""},
