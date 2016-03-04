@@ -45,7 +45,7 @@
       },
       {
         "relation": "hasHypernym",
-        "gloss": "शतरंज का एक मोहरा ",
+        "gloss": "शतरंज का मोहरा ",
         "picture": "chess_image1",
         "memberRelation": "hasHyponym",
         "members": [
@@ -73,7 +73,7 @@
       },
       {
         "relation": "hasHypernym",
-        "gloss": "भारी जानवरों/पक्षी",
+        "gloss": "भारी जानवर या पक्षी",
         "picture": "",
         "memberRelation": "hasHyponym",
         "members": [
@@ -144,7 +144,7 @@
       },
       {
         "relation": "hasHypernym",
-        "gloss": "जो मांस खाता हो",
+        "gloss": "पशु जो मांस खाता हो",
         "picture": "fourlegged_image1",
         "memberRelation": "hasHyponym",
         "members": [
@@ -161,7 +161,7 @@
       },
       {
         "relation": "hasHypernym",
-        "gloss": "पंजे परिवार",
+        "gloss": "पंजे वाला जानवर ",
         "picture": "fourlegged_image1",
         "memberRelation": "hasHyponym",
         "members": [
