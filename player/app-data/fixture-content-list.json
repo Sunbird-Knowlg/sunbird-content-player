@@ -13,7 +13,7 @@
     "result": {
         "content": [
         {
-            "identifier": "org.ekstep.mar8.story",
+            "identifier": "org.ekstep.lit.noun",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
                 "questionnaire": null,
@@ -29,7 +29,7 @@
                     "name": "Receptive Vocabulary",
                     "objectType": "Concept"
                 }],
-                "identifier": "org.ekstep.mar8.story",
+                "identifier": "org.ekstep.lit.noun",
                 "grayScaleAppIcon": null,
                 "pkgVersion": 1
             },
