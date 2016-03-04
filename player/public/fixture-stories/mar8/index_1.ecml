@@ -18,7 +18,6 @@
         <media id="rhym_button_up" src="icons/rhym_button_up.png" type="image" />
         <media id="rhym_button_down" src="icons/rhym_button_down.png" type="image" />
         <media id="change_icon" src="icons/change.png" type="image" />
-        <media id="translucent_layer_part" src="pictures/translucent_layer_part.png" type="image" />
 
         <media id="arrow_tl" src="icons/arrow_tl.png" type="image" />
         <media id="arrow_tr" src="icons/arrow_tr.png" type="image" />
@@ -31,6 +30,25 @@
         <!-- Dictionary assets -->
         <media id="elephant_image1" src="pictures/elephant.png" type="image" />
         <media id="lion_image1" src="pictures/lion.png" type="image" />
+        <media id="jackal_image1" src="pictures/jackal.png" type="image" />
+        <media id="pig_image1" src="pictures/pig.png" type="image" />
+        <media id="hog_image1" src="pictures/hog.png" type="image" />
+        <media id="bull_image1" src="pictures/bull.png" type="image" />
+        <media id="crocodile_image1" src="pictures/crocodile.png" type="image" />
+        <media id="zebra_image1" src="pictures/zebra.png" type="image" />
+        <media id="ox_image1" src="pictures/ox.png" type="image" />
+        <media id="goat_image1" src="pictures/goat.png" type="image" />
+        <media id="fourlegged_image1" src="pictures/fourlegged.png" type="image" />
+        <media id="chess_image1" src="pictures/chess.png" type="image" />
+        <media id="mantri_image1" src="pictures/mantri.png" type="image" />
+        <media id="chess_king_image1" src="pictures/chess_king.png" type="image" />
+        <media id="castle_image1" src="pictures/castle.png" type="image" />
+        <media id="pyada_image1" src="pictures/pyada.png" type="image" />
+        <media id="war_image1" src="pictures/war.png" type="image" />
+        <media id="donkey_image1" src="pictures/donkey.png" type="image" />
+        <media id="animals_image1" src="pictures/animals.png" type="image" />
+        <media id="giraffe_image1" src="pictures/giraffe.png" type="image" />
+
         <media id="palak_image1" src="pictures/spinach.png" type="image" />
 
         <media id="friend_image1" src="pictures/friends.png" type="image" />
@@ -56,6 +74,10 @@
         <media id="gorilla_image1" src="pictures/gorilla.png" type="image" />
         <media id="rhino_image1" src="pictures/rhino.png" type="image" />
 
+        <media id="utensil_image1" src="pictures/utensil.png" type="image" />
+
+        <media id="example_sentences_audio1" src="sounds/Example_sentences.mp3" type="sound" />
+
         <media id="elephant_audio1" src="sounds/elephant_audio1.mp3" type="sound" />
         <media id="lion_audio1" src="sounds/lion_audio1.mp3" type="sound" />
         <media id="palak_audio1" src="sounds/palak_audio1.mp3" type="sound" />
@@ -69,52 +91,77 @@
         <media id="more_audio1" src="sounds/more_audio1.mp3" type="sound" />
         <media id="neer_audio1" src="sounds/neer_audio1.mp3" type="sound" />
 
+        <media id="bhathi_audio1" src="haathi_sounds/rhymingWords/bhathi.mp3" type="sound" />
+        <media id="jati_audio1" src="haathi_sounds/rhymingWords/jati.mp3" type="sound" />
+        <media id="khati_audio1" src="haathi_sounds/rhymingWords/khati.mp3" type="sound" />
+        <media id="saathi_audio1" src="haathi_sounds/rhymingWords/saathi.mp3" type="sound" />
+        <media id="thati_audio1" src="haathi_sounds/rhymingWords/thati.mp3" type="sound" />
 
-        <media id="baag_audio1" src="sounds/baag.mp3" type="sound" />
-        <media id="bail_audio1" src="sounds/bail.mp3" type="sound" />
-        <media id="bakari_audio1" src="sounds/bakari.mp3" type="sound" />
-        <media id="ghai_audio1" src="sounds/ghai.mp3" type="sound" />
-        <media id="ghoda_audio1" src="sounds/ghoda.mp3" type="sound" />
-        <media id="hiran_audio1" src="sounds/hiran.mp3" type="sound" />
-        <media id="kutta_audio1" src="sounds/kutta.mp3" type="sound" />
-        <media id="lomdi_audio1" src="sounds/lomdi.mp3" type="sound" />
-        <media id="magarmachch_audio1" src="sounds/magarmachch.mp3" type="sound" />
-        <media id="magarmachchi_audio1" src="sounds/magarmachchi.mp3" type="sound" />
-        <media id="oont_audio1" src="sounds/oont.mp3" type="sound" />
-        <media id="saand_audio1" src="sounds/saand.mp3" type="sound" />
-        <media id="sher_audio1" src="sounds/sher.mp3" type="sound" />
-        <media id="shoekar_audio1" src="sounds/shoekar.mp3" type="sound" />
-        <media id="siyar_audio1" src="sounds/siyar.mp3" type="sound" />
-        <media id="suaar_audio1" src="sounds/suaar.mp3" type="sound" />
-        <media id="zeybra_audio1" src="sounds/zeybra.mp3" type="sound" />
-        <media id="mantri_audio1" src="sounds/s2words/mantri.mp3" type="sound" />
-        <media id="pyadha_audio1" src="sounds/s2words/pyadha.mp3" type="sound" />
-        <media id="raja_audio1" src="sounds/s2words/raja.mp3" type="sound" />
-        <media id="shatranj_ka_ek_mohara_audio1" src="sounds/s2words/shatranj_ka_ek_mohara.mp3" type="sound" />
-        <media id="gadha_audio1" src="sounds/s3words/gadha.mp3" type="sound" />
-        <media id="kabutar_audio1" src="sounds/s3words/kabutar.mp3" type="sound" />
-        <media id="yuddh_mein_prayukth_janvar_audio1" src="sounds/s3words/yuddh_mein_prayukth_janvar.mp3" type="sound" />
-        <media id="bhari_janvaro_ya_pakshi_audio1" src="sounds/s4words/bhari_janvaro_ya_pakshi.mp3" type="sound" />
-        <media id="giraffe_audio1" src="sounds/s4words/giraffe.mp3" type="sound" />
-        <media id="gorilla_audio1" src="sounds/s4words/gorilla.mp3" type="sound" />
-        <media id="rhino_audio1" src="sounds/s4words/rhino.mp3" type="sound" />
-        <media id="shuturmurg_audio1" src="sounds/s4words/shuturmurg.mp3" type="sound" />
-        <media id="whale_audio1" src="sounds/s4words/whale.mp3" type="sound" />
+        <media id="charna_audio1" src="haathi_sounds/verbs/charna.mp3" type="sound" />
+        <media id="daudna_audio1" src="haathi_sounds/verbs/daudna.mp3" type="sound" />
+        <media id="ghoomna_audio1" src="haathi_sounds/verbs/ghoomna.mp3" type="sound" />
+        <media id="khana_audio1" src="haathi_sounds/verbs/khana.mp3" type="sound" />
+        <media id="kudhna_audio1" src="haathi_sounds/verbs/kudhna.mp3" type="sound" />
+        <media id="nahaana_audio1" src="haathi_sounds/verbs/nahaana.mp3" type="sound" />
+        <media id="sona_audio1" src="haathi_sounds/verbs/sona.mp3" type="sound" />
 
-        <media id="achanak_haathi_saamne_agaya_audio1" src="sounds/examples/achanak_haathi_saamne_agaya.mp3" type="sound" />
-        <media id="bandh_bhavare_ko_haathi ne_kaise_mukth_kiya_audio1" src="sounds/examples/bandh_bhavare_ko_haathi ne_kaise_mukth_kiya.mp3" type="sound" />
-        <media id="example_sentences_audio1" src="sounds/examples/Example_sentences.mp3" type="sound" />
-        <media id="haathi_aur_bhavare_ki_dosti_hai_audio1" src="sounds/examples/haathi_aur_bhavare_ki_dosti_hai.mp3" type="sound" />
-        <media id="haathi_bhi_bhagne_laga_audio1" src="sounds/examples/haathi_bhi_bhagne_laga.mp3" type="sound" />
-        <media id="haathi_bola_audio1" src="sounds/examples/haathi_bola.mp3" type="sound" />
-        <media id="haathi_daali_jhukatha_hai_audio1" src="sounds/examples/haathi_daali_jhukatha_hai.mp3" type="sound" />
-        <media id="haathi_doobne_lage_audio1" src="sounds/examples/haathi_doobne_lage.mp3" type="sound" />
-        <media id="haathi_kisko_dekhkar_roya_audio1" src="sounds/examples/haathi_kisko_dekhkar_roya.mp3" type="sound" />
-        <media id="haathi_ne_peid_hila_diya_audio1" src="sounds/examples/haathi_ne_peid_hila_diya.mp3" type="sound" />
-        <media id="haathi_ne_phool_ko_taalab_se_bahar_phek_diya_audio1" src="sounds/examples/haathi_ne_phool_ko_taalab_se_bahar_phek_diya.mp3" type="sound" />
-        <media id="hum_kal_haathi_dekhenge_audio1" src="sounds/examples/hum_kal_haathi_dekhenge.mp3" type="sound" />
-        <media id="khaghosh_ke_peeche_haathi_daud_raha_tha_audio1" src="sounds/examples/khaghosh_ke_peeche_haathi_daud_raha_tha.mp3" type="sound" />
+        <media id="baag_audio1" src="haathi_sounds/s1words/baag.mp3" type="sound" />
+        <media id="bail_audio1" src="haathi_sounds/s1words/bail.mp3" type="sound" />
+        <media id="bakari_audio1" src="haathi_sounds/s1words/bakari.mp3" type="sound" />
+        <media id="ghai_audio1" src="haathi_sounds/s1words/ghai.mp3" type="sound" />
+        <media id="ghoda_audio1" src="haathi_sounds/s1words/ghoda.mp3" type="sound" />
+        <media id="hiran_audio1" src="haathi_sounds/s1words/hiran.mp3" type="sound" />
+        <media id="kutta_audio1" src="haathi_sounds/s1words/kutta.mp3" type="sound" />
+        <media id="lomdi_audio1" src="haathi_sounds/s1words/lomdi.mp3" type="sound" />
+        <media id="magarmachch_audio1" src="haathi_sounds/s1words/magarmachch.mp3" type="sound" />
+        <media id="magarmachchi_audio1" src="haathi_sounds/s1words/magarmachchi.mp3" type="sound" />
+        <media id="oont_audio1" src="haathi_sounds/s1words/oont.mp3" type="sound" />
+        <media id="saand_audio1" src="haathi_sounds/s1words/saand.mp3" type="sound" />
+        <media id="sher_audio1" src="haathi_sounds/s1words/sher.mp3" type="sound" />
+        <media id="shoekar_audio1" src="haathi_sounds/s1words/shoekar.mp3" type="sound" />
+        <media id="siyar_audio1" src="haathi_sounds/s1words/siyar.mp3" type="sound" />
+        <media id="suaar_audio1" src="haathi_sounds/s1words/suaar.mp3" type="sound" />
+        <media id="zeybra_audio1" src="haathi_sounds/s1words/zeybra.mp3" type="sound" />
 
+        <media id="mantri_audio1" src="haathi_sounds/s2words/mantri.mp3" type="sound" />
+        <media id="pyadha_audio1" src="haathi_sounds/s2words/pyadha.mp3" type="sound" />
+        <media id="raja_audio1" src="haathi_sounds/s2words/raja.mp3" type="sound" />
+        <media id="shatranj_ka_ek_mohara_audio1" src="haathi_sounds/s2words/shatranj_ka_ek_mohara.mp3" type="sound" />
+
+        <media id="gadha_audio1" src="haathi_sounds/s3words/gadha.mp3" type="sound" />
+        <media id="kabutar_audio1" src="haathi_sounds/s3words/kabutar.mp3" type="sound" />
+        <media id="yuddh_mein_prayukth_janvar_audio1" src="haathi_sounds/s3words/yuddh_mein_prayukth_janvar.mp3" type="sound" />
+
+        <media id="bhari_janvaro_ya_pakshi_audio1" src="haathi_sounds/s4words/bhari_janvaro_ya_pakshi.mp3" type="sound" />
+        <media id="giraffe_audio1" src="haathi_sounds/s4words/giraffe.mp3" type="sound" />
+        <media id="gorilla_audio1" src="haathi_sounds/s4words/gorilla.mp3" type="sound" />
+        <media id="rhino_audio1" src="haathi_sounds/s4words/rhino.mp3" type="sound" />
+        <media id="shuturmurg_audio1" src="haathi_sounds/s4words/shuturmurg.mp3" type="sound" />
+        <media id="whale_audio1" src="haathi_sounds/s4words/whale.mp3" type="sound" />
+
+        <media id="achanak_haathi_saamne_agaya_audio1" src="haathi_sounds/examples/achanak_haathi_saamne_agaya.mp3" type="sound" />
+        <media id="bandh_bhavare_ko_haathi ne_kaise_mukth_kiya_audio1" src="haathi_sounds/examples/bandh_bhavare_ko_haathi ne_kaise_mukth_kiya.mp3" type="sound" />
+        <media id="haathi_aur_bhavare_ki_dosti_hai_audio1" src="haathi_sounds/examples/haathi_aur_bhavare_ki_dosti_hai.mp3" type="sound" />
+        <media id="haathi_bhi_bhagne_laga_audio1" src="haathi_sounds/examples/haathi_bhi_bhagne_laga.mp3" type="sound" />
+        <media id="haathi_bola_audio1" src="haathi_sounds/examples/haathi_bola.mp3" type="sound" />
+        <media id="haathi_daali_jhukatha_hai_audio1" src="haathi_sounds/examples/haathi_daali_jhukatha_hai.mp3" type="sound" />
+        <media id="haathi_doobne_lage_audio1" src="haathi_sounds/examples/haathi_doobne_lage.mp3" type="sound" />
+        <media id="haathi_kisko_dekhkar_roya_audio1" src="haathi_sounds/examples/haathi_kisko_dekhkar_roya.mp3" type="sound" />
+        <media id="haathi_ne_peid_hila_diya_audio1" src="haathi_sounds/examples/haathi_ne_peid_hila_diya.mp3" type="sound" />
+        <media id="haathi_ne_phool_ko_taalab_se_bahar_phek_diya_audio1" src="haathi_sounds/examples/haathi_ne_phool_ko_taalab_se_bahar_phek_diya.mp3" type="sound" />
+        <media id="hum_kal_haathi_dekhenge_audio1" src="haathi_sounds/examples/hum_kal_haathi_dekhenge.mp3" type="sound" />
+        <media id="khaghosh_ke_peeche_haathi_daud_raha_tha_audio1" src="haathi_sounds/examples/khaghosh_ke_peeche_haathi_daud_raha_tha.mp3" type="sound" />
+
+        <media id="sher_bohot_teezi_se_chalta_hai_audio1" src="sher_sounds/examples/sher_bohot_teezi_se_chalta_hai.mp3" type="sound" />
+        <media id="sher_ek_bada_jaanvar_hai_audio1" src="sher_sounds/examples/sher_ek_bada_jaanvar_hai.mp3" type="sound" />
+        <media id="sher_krodh_mein_bhari_bidka_audio1" src="sher_sounds/examples/sher_krodh_mein_bhari_bidka.mp3" type="sound" />
+        <media id="sher_zor_laga_kar_gurrata_hai_audio1" src="sher_sounds/examples/sher_zor_laga_kar_gurrata_hai.mp3" type="sound" />
+        <media id="unhe_ek_sher_mila_audio1" src="sher_sounds/examples/unhe_ek_sher_mila.mp3" type="sound" />
+
+        <media id="aaj_maa_ne_palak_paneer_ki_sabzi_banayi_hai_audio1" src="palak_sounds/examples/aaj_maa_ne_palak_paneer_ki_sabzi_banayi_hai.mp3" type="sound" />
+        <media id="meine_apne_ghar_mein_palak_lagaya_hai_audio1" src="palak_sounds/examples/meine_apne_ghar_mein_palak_lagaya_hai.mp3" type="sound" />
+        <media id="mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai_audio1" src="palak_sounds/examples/mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai.mp3" type="sound" />
+        <media id="palak_khane_se_ankhen_teek_rehti_hai_audio1" src="palak_sounds/examples/palak_khane_se_ankhen_teek_rehti_hai.mp3" type="sound" />
 
         <media id="page2" src="scenes/image_2.jpg" type="image" />
         <media id="page3" src="scenes/image_3.jpg" type="image" />
@@ -186,6 +233,25 @@
         <image asset="whale_image1"/>
         <image asset="gorilla_image1"/>
         <image asset="rhino_image1"/>
+        <image asset="utensil_image1"/>
+        <image asset="jackal_image1"/>
+        <image asset="pig_image1"/>
+        <image asset="hog_image1"/>
+        <image asset="bull_image1"/>
+        <image asset="crocodile_image1"/>
+        <image asset="zebra_image1"/>
+        <image asset="ox_image1"/>
+        <image asset="goat_image1"/>
+        <image asset="fourlegged_image1"/>
+        <image asset="chess_image1"/>
+        <image asset="mantri_image1"/>
+        <image asset="chess_king_image1"/>
+        <image asset="castle_image1"/>
+        <image asset="pyada_image1"/>
+        <image asset="war_image1"/>
+        <image asset="donkey_image1"/>
+        <image asset="animals_image1"/>
+        <image asset="giraffe_image1"/>
 
         <audio asset="stage_sound" />
         <audio asset="elephant_audio1" />
@@ -200,6 +266,20 @@
         <audio asset="ghar_audio" />
         <audio asset="more_audio1" />
         <audio asset="neer_audio1" />
+
+        <audio asset="bhathi_audio1" />
+        <audio asset="jati_audio1" />
+        <audio asset="khati_audio1" />
+        <audio asset="saathi_audio1" />
+        <audio asset="thati_audio1" />
+
+        <audio asset="charna_audio1" />
+        <audio asset="daudna_audio1" />
+        <audio asset="ghoomna_audio1" />
+        <audio asset="khana_audio1" />
+        <audio asset="kudhna_audio1" />
+        <audio asset="nahaana_audio1" />
+        <audio asset="sona_audio1" />
 
         <audio asset="baag_audio1" />
         <audio asset="bail_audio1" />
@@ -245,6 +325,17 @@
         <audio asset="haathi_ne_phool_ko_taalab_se_bahar_phek_diya_audio1"/>
         <audio asset="hum_kal_haathi_dekhenge_audio1"/>
         <audio asset="khaghosh_ke_peeche_haathi_daud_raha_tha_audio1"/>
+
+        <audio asset="sher_bohot_teezi_se_chalta_hai_audio1"/>
+        <audio asset="sher_ek_bada_jaanvar_hai_audio1"/>
+        <audio asset="sher_krodh_mein_bhari_bidka_audio1"/>
+        <audio asset="sher_zor_laga_kar_gurrata_hai_audio1"/>
+        <audio asset="unhe_ek_sher_mila_audio1"/>
+
+        <audio asset="aaj_maa_ne_palak_paneer_ki_sabzi_banayi_hai_audio1"/>
+        <audio asset="meine_apne_ghar_mein_palak_lagaya_hai_audio1"/>
+        <audio asset="mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai_audio1"/>
+        <audio asset="palak_khane_se_ankhen_teek_rehti_hai_audio1"/>
     </stage>
 
     <stage id="storyBaseStage" preload="true">
@@ -293,12 +384,14 @@
         <image x="20" y="40" h="25" w="25" model="data.picture"/>
     </template>
 
-    <set param="selectedWord" scope="content" value=""/>
+    <set id="selectedWordParam" param="selectedWord" scope="content" model=""/>
 
     <stage id="explore" x="0" y="0" w="100" h="100" iterate="words-list" var="data">
         <audio asset="welcome_sound" />
 
-        <set param="selectedWord" scope="content" model="data.lemma"/>
+        <set id="selectedWordParam" param="selectedWord" scope="content" model="data.lemma"/>
+
+        <set id="relatedWordIndexParam" param="relatedWordIndex" scope="content" value="0" />
          <embed template-name="word_template" var-data="data"/>
          <image id="button_long_up" asset="button_long_up" x="40" y="8.5" w="20" h="10">
             <event type="click">
@@ -329,10 +422,10 @@
                 <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page3" duration="10" transitionType="skip" reset="true"/>
             </event>
         </image>
-
         <image asset="arrow_bl" x="2" y="80" w="9" h="16" z-index="50">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page4" duration="10" transitionType="skip" reset="true"/>
+
             </event>
         </image>
 
@@ -352,52 +445,31 @@
         <audio asset="stage_sound" />
 
         <set id="exampleSentenceParam" param="exampleSentence" scope="stage" ev-model="wordDetails.${content.selectedWord}.exampleSentences"/>
-        <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
+        <set param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
             <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="16" x="83" y="70" w="16" h="16"/>
             <image id="page1Img" param="stage.selectedWordObj.picture" x="70" y="54" w="27" h="35" z-index="51"/>
 
-            <g x="2" y="30" w="30" h="12">
-                <embed template-name="exampleSentenceTemplate" ev-example="stage.exampleSentence" />
-            </g>
+            <shape id="spin_top" type="roundrect" fill="#B0D93D" shadow="#245E1F" blur="30" offsetX="-2" offsetY="0" stroke="black" x="5" y="35" w="55" h="15" z-index="50">
+                <event type="click">
+                    <action type="command" command="set" param="exampleSentence" param-index="previous" asset="exampleSentenceParam" scope="stage"/>
+                    <action type="command" command="refresh" asset="exampleSentenceText"/>
+                </event>
+            </shape>
+            <image id="spin_top_ico" asset="triangle_up" x="25" y="37" w="15" h="10" z-index="51"/>
 
-            <g x="2" y="44" w="30" h="12">
-                <embed template-name="exampleSentenceTemplate" ev-example="stage.exampleSentence" />
-            </g>
+            <shape id="spinnerph1" type="roundrect" fill="#978F35" stroke="black" x="5" y="51" w="55" h="23" z-index="50"/>
 
-            <g x="2" y="58" w="30" h="12">
-                <embed template-name="exampleSentenceTemplate" ev-example="stage.exampleSentence" />
-            </g>
+            <shape id="spin_bot" type="roundrect" fill="#B0D93D" shadow="#245E1F" blur="30" offsetX="-2" offsetY="2" stroke="black" x="5" y="75" w="55" h="15" z-index="50">
+                <event type="click">
+                    <action type="command" command="set" param="exampleSentence" param-index="next" asset="exampleSentenceParam" scope="stage"/>
+                    <action type="command" command="refresh" asset="exampleSentenceText"/>
+                </event>
+            </shape>
+            <image id="spin_bot_ico" asset="triangle_dn" x="25" y="77" w="15" h="10" z-index="51"/>
 
-            <g x="2" y="72" w="30" h="12">
-                <embed template-name="exampleSentenceTemplate" ev-example="stage.exampleSentence" />
-            </g>
-
-            <g x="2" y="86" w="30" h="12">
-                <embed template-name="exampleSentenceTemplate" ev-example="stage.exampleSentence" />
-            </g>
-
-            <g x="34" y="30" w="30" h="12">
-                <embed template-name="exampleSentenceTemplate" ev-example="stage.exampleSentence" />
-            </g>
-
-            <g x="34" y="44" w="30" h="12">
-                <embed template-name="exampleSentenceTemplate" ev-example="stage.exampleSentence" />
-            </g>
-
-            <g x="34" y="58" w="30" h="12">
-                <embed template-name="exampleSentenceTemplate" ev-example="stage.exampleSentence" />
-            </g>
-
-            <g x="34" y="72" w="30" h="12">
-                <embed template-name="exampleSentenceTemplate" ev-example="stage.exampleSentence" />
-            </g>
-
-            <g x="34" y="86" w="30" h="12">
-                <embed template-name="exampleSentenceTemplate" ev-example="stage.exampleSentence" />
-            </g>
-
+            <text id="exampleSentenceText" align="center" valign="middle" x="7" y="51" w="55" h="23" z-index="50" font="Arial" fontsize="80" color="white" param="stage.exampleSentence.sentence"></text>
             <text x="0" y="10" w="100" h="20" align="center" font="Arial" fontsize="100" color="white" z-index="100">उदाहरण वाक्य</text>
         </g>
 
@@ -424,7 +496,7 @@
     <stage id="page2" x="0" y="0" w="100" h="100">
         <audio asset="stage_sound" />
         <set id="rhymingWordParam" param="rhymingWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.rhymingWords"/>
-        <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
+        <set param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
         <audio param="rhymingWord.pronunciation" />
 
 
@@ -435,7 +507,7 @@
             <text x="0" y="10" w="100" h="20" align="center" font="Arial" fontsize="100" color="white" z-index="100">मेरी आवाज़ सुनो</text>
 
             <g id="spinnercontainer" x="0" y="15" w="100" h="100" z-index="50">
-                <shape id="spin_top" type="roundrect" fill="#DCC137" radius="5" shadow="#883517" blur="20" offsetX="-2" offsetY="0" stroke="black" x="41" y="22" w="32" h="12" z-index="100">
+                <shape id="spin_top" type="roundrect" fill="#DCC137" shadow="#883517" blur="30" offsetX="-2" offsetY="0" stroke="black" x="40" y="20" w="35" h="15" z-index="100">
                     <event type="click">
                         <action type="command" command="set" param="rhymingWord" param-index="previous" asset="rhymingWordParam" scope="stage"/>
                         <action type="command" command="refresh" asset="finaltxt1"/>
@@ -474,14 +546,15 @@
                     </event>
                 </shape>
                 <image id="spin_top_ico" asset="triangle_up" x="50" y="22" w="15" h="10" z-index="100"/>
-                <shape type="rect" fill="#E04C16" x="40" y="-15.5" h="51" w="40" z-index="90" />
-                <shape type="rect" fill="#E04C16" x="40" y="52.5" h="46" w="40" z-index="90" />
+                <shape type="rect" fill="#E04C16" x="40" y="-15" h="50" w="40" z-index="90" />
+                <shape type="rect" fill="#E04C16" x="40" y="54" h="46" w="40" z-index="90" />
 
                 <shape type="roundrect" fill="white" radius="5" stroke="black" x="41" y="36" w="10" h="16" z-index="40" />
-                <shape type="roundrect" fill="white" radius="5" stroke="black" x="52" y="36" w="10" h="16" z-index="40" />
-                <shape type="roundrect" fill="white" radius="5" stroke="black" x="63" y="36" w="10" h="16" z-index="40" />
+                <shape type="roundrect" fill="white" radius="5" stroke="black" x="52" y="36" w="10" h="16" z-index="40" ev-if="stage.selectedWordObj.syllableCount == 2"/>
+                <shape type="roundrect" fill="white" radius="5" stroke="black" x="52" y="36" w="10" h="16" z-index="40" ev-if="stage.selectedWordObj.syllableCount == 3"/>
+                <shape type="roundrect" fill="white" radius="5" stroke="black" x="63" y="36" w="10" h="16" z-index="40" ev-if="stage.selectedWordObj.syllableCount == 3"/>
 
-                <shape id="spin_bot" type="roundrect" fill="#DCC137" radius="5" shadow="#883517" blur="30" offsetX="-2" offsetY="2" stroke="black" x="41" y="54" w="32" h="12" z-index="100">
+                <shape id="spin_bot" type="roundrect" fill="#DCC137" shadow="#883517" blur="30" offsetX="-2" offsetY="2" stroke="black" x="40" y="53" w="35" h="15" z-index="100">
                     <event type="click">
                         <action type="command" command="set" param="rhymingWord" param-index="next" asset="rhymingWordParam" scope="stage"/>
                         <action type="command" command="refresh" asset="finaltxt1"/>
@@ -521,12 +594,13 @@
                 </shape>
                 <image id="spin_bot_ico" asset="triangle_dn" x="50" y="55" w="15" h="10" z-index="100"/>
 
-                <text id="finaltxt1" x="44" y="110" z-index="50" font="Arial" fontsize="40" color="black" param="stage.rhymingWord.syllables[0]"/>
-                <text id="finaltxt2" x="54" y="110" z-index="50" font="Arial" fontsize="40" color="black" param="stage.rhymingWord.syllables[1]" ev-if="stage.selectedWordObj.syllableCount == 3"/>
-                <text id="finaltxt3" x="54" y="40" z-index="50" font="Arial" fontsize="40" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 2"/>
-                <text id="finaltxt3" x="66" y="40" z-index="50" font="Arial" fontsize="40" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 3"/>
-                <text id="spinnertxt1" x="44" y="52" z-index="50" font="Arial" fontsize="40" color="black" shadow="black" blur="10" model="spinnerTexts.text1"/>
-                <text id="spinnertxt2" x="54" y="52" z-index="50" font="Arial" fontsize="40" color="black" shadow="black" blur="10" model="spinnerTexts.text2"/>
+                <text id="finaltxt1" x="44" y="110" z-index="50" font="Arial" fontsize="50" color="black" param="stage.rhymingWord.syllables[0]"/>
+                <text id="finaltxt2" x="54" y="110" z-index="50" font="Arial" fontsize="50" color="black" param="stage.rhymingWord.syllables[1]" ev-if="stage.selectedWordObj.syllableCount == 3"/>
+                <text id="finaltxt3" x="54" y="40" z-index="50" font="Arial" fontsize="50" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 2"/>
+                <text id="finaltxt3" x="66" y="40" z-index="50" font="Arial" fontsize="50" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 3"/>
+                <text id="spinnertxt1" x="44" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10" model="spinnerTexts.text1"/>
+
+                <text id="spinnertxt2" x="54" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10" model="spinnerTexts.text2"/>
             </g>
         </g>
 
@@ -565,47 +639,11 @@
     </stage>
 
     <stage id="page3" x="0" y="0" w="100" h="100">
-        <set id="relatedWordsParam" param="relatedWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.relatedWords"/>
-        <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
-        <set id="membersParam" param="memberWord" scope="stage" ev-value="${stage.relatedWord.members}"/>
         <set id="setPluginId" param="mode" scope="stage" value="interact"/>
-
         <audio asset="stage_sound" />
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
-
             <text x="0" y="10" w="100" h="20" align="center" font="Arial" fontsize="100" color="white" z-index="100">क्या मैं करूँ</text>
-
-            <g x="0" y="0" w="100" h="100" id="relatedVerbsContainer">
-                <g x="34" y="32" w="20" h="35">
-                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-
-                <g x="12" y="65" w="15" h="27">
-                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-
-                <g x="55" y="65" w="15" h="27">
-                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-
-                <g x="62" y="25" w="15" h="27">
-                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-
-                <g x="80" y="50" w="15" h="27">
-                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-
-                <g x="82" y="15" w="12" h="20">
-                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-            </g>
-
-            <g x="2" y="2" w="25" h="45">
-                <embed template-name="selectedWordTemplate" ev-member="stage.selectedWordObj" />
-            </g>
-
         </g>
 
         <image asset="arrow_br" x="89" y="80" w="9" h="16" z-index="50">
@@ -615,12 +653,7 @@
                 <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500" transitionType="skip" reset="true"/>
             </event>
         </image>
-
-        <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black" blur="30">
-            <event type="click">
-            </event>
-        </shape>
-
+        <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black" blur="30"/>
         <events>
             <event type="enter">
                 <action type="command" command="play" asset="stage_sound" loop="1" />
@@ -633,83 +666,55 @@
      <stage id="page4" x="0" y="0" w="100" h="100">
         <audio asset="stage_sound" />
 
-        <set id="relatedWordsParam" param="relatedWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.relatedWords"/>
-        <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
-        <set id="membersParam" param="memberWord" scope="stage" ev-value="${stage.relatedWord.members}"/>
+        <set id="relatedWordsParam" param="relatedWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}]"/>
+        <set param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
+        <set param="relWordsCount" scope="content" ev-model="wordDetails.${content.selectedWord}.relatedWords.length" />
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
 
             <text x="0" y="7" w="15" h="10" align="right" font="Arial" fontsize="60" color="white" z-index="100">मैं हूँ एक</text>
             <text id="relatedWordTextTitle" align="left" x="16" y="7" w="65" h="10" fontsize="60" color="#161FA7" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
-            <text x="6" y="15" w="80" h="10" align="left" font="Arial" fontsize="60" color="#519828" z-index="100">देखो ये सब मेरे साथी </text>
+            <text x="7" y="15" w="80" h="10" align="left" font="Arial" fontsize="60" color="#519828" z-index="100">देखो ये सब मेरे साथी </text>
 
-            <g x="0" y="0" w="100" h="100" id="relatedWordsContainer">
-
-                <g id="w1" x="52" y="35" w="20" h="35">
-                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-
-                <g x="35" y="50" w="15" h="27">
-                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-
-                <g x="37" y="20" w="15" h="27">
-                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[0]" ev-obj="obj1"/>
-                </g>
-
-                <g x="21" y="60" w="12" h="20">
-                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-
-                <g x="7" y="56" w="12" h="20">
-                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-
-                <g x="22" y="35" w="12" h="20">
-                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-
-                <g x="7" y="30" w="12" h="20">
-                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-
-                <g x="47" y="72" w="15" h="27">
-                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[0]" ev-obj="obj1"/>
-                </g>
-
-                <g x="32" y="80" w="9" h="16">
-                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-
-                <g x="14" y="78" w="9" h="16">
-                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
-                </g>
-
+            <g x="20" y="30" w="20" h="35" id="obj1">
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[0]"/>
             </g>
 
-            <g id="meaningSpinner" x="73" y="65" w="25" h="30" z-index="200">
-                <shape id="spin_top" type="roundrect" fill="#E2D33A" shadow="#AA7E23" blur="10" offsetX="-2" offsetY="0" stroke="black" x="0" y="0" w="100" h="25" radius="5" z-index="50">
+            <g x="15" y="70" w="12" h="20">
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[1]"/>
+            </g>
+
+            <g x="35" y="60" w="12" h="20">
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[1]"/>
+            </g>
+
+            <g x="40" y="15" w="12" h="20" enableDrag="true">
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[1]"/>
+            </g>
+
+            <g x="50" y="40" w="20" h="35">
+                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[4]"/>
+            </g>
+
+            <g id="meaningSpinner" x="57" y="20" w="100" h="100" z-index="200">
+                <image id="button_long_example_up" asset="button_long_up" x="14" y="46.5" w="20" h="10" z-index="100">
                     <event type="click">
                         <action type="command" command="set" param="relatedWord" param-index="previous" asset="relatedWordsParam" scope="stage"/>
-                        <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
-                        <action type="command" command="refresh" asset="relatedWordText"/>
-                        <action type="command" command="refresh" asset="body"/>
+                        <action type="command" command="set" param="relatedWordIndex" param-incr="-1" asset="relatedWordIndexParam" scope="content" param-max="${content.relWordsCount}"/>
+                        <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
                     </event>
-                </shape>
-                <image id="spin_top_ico" asset="triangle_up" x="35" y="3" w="30" h="20" z-index="51"/>
+                </image>
+                <image asset="example_container" x="5" y="53" w="35" h="20" z-index="100"/>
 
-                <shape id="spinnerph1" type="roundrect" fill="#EE8530" shadow="#AA7E23" blur="10" offsetX="-2" offsetY="0" stroke="black" x="0" y="25" w="100" h="50" radius="5" z-index="50"/>
-                <text id="relatedWordText" align="center" valign="middle" x="3" y="27" w="95" h="46" fontsize="180" color="white" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
+                <text id="relatedWordText" align="center" valign="middle" x="7" y="58" w="30" h="10" fontsize="50" color="white" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
 
-                <shape id="spin_bot" type="roundrect" fill="#E2D33A" shadow="#AA7E23" blur="10" offsetX="-2" offsetY="2" stroke="black" x="0" y="75" w="100" h="25" radius="5" z-index="50">
+                <image id="button_long_example_down" asset="button_long_down" x="13" y="69" w="20" h="10" z-index="100">
                     <event type="click">
+                        <action type="command" command="set" param="relatedWordIndex" param-incr="1" asset="relatedWordIndexParam" scope="content" param-max="${content.relWordsCount}"/>
                         <action type="command" command="set" param="relatedWord" param-index="next" asset="relatedWordsParam" scope="stage"/>
-                        <action type="command" command="set" param="memberWord" ev-value="${stage.relatedWord.members}" asset="membersParam" scope="stage"/>
-                        <action type="command" command="refresh" asset="relatedWordText"/>
-                        <action type="command" command="refresh" asset="body"/>
+                        <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
                     </event>
-                </shape>
-                <image id="spin_bot_ico" asset="triangle_dn" x="35" y="78" w="30" h="20" z-index="51"/>
+                </image>
             </g>
 
             <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="14" x="86" y="25" w="14" h="14"/>
@@ -724,12 +729,7 @@
                 <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500" transitionType="skip" reset="true"/>
             </event>
         </image>
-
-        <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black" blur="30">
-            <event type="click">
-            </event>
-        </shape>
-
+        <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black" blur="30"/>
         <events>
             <event type="enter">
                 <action type="command" command="play" asset="stage_sound" loop="1" />
@@ -739,45 +739,20 @@
         </events>
     </stage>
 
-    <template id="relatedWordTemplate">
-        <g id="relatedWordBody" x="0" y="0" w="100" h="100">
+    <template id="wordTest">
+        <g x="0" y="0" w="100" h="100">
             <shape type="circle" x="50" y="50" w="50" h="50" fill="white" opacity="0.6" stroke="black"/>
-            <image id="memberWordPicture" x="5" y="5" w="90" h="90" model="member.picture" z-index="100"/>
-            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
-            <event type="pressmove">
-                <action type="animation" param="obj"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
+            <image x="5" y="5" w="90" h="90" model="member.picture" z-index="100"/>
+            <text align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
+            <set param="memberLemma" scope="parent" ev-model="member.lemma"/>
+            <event type="click">
+                <action type="animation" asset="body" parent="true"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
+                <action type="command" command="set" param="selectedWord" ev-value="memberLemma" scope="content"/>
+                <action type="command" command="set" param="relatedWordIndex" param-value="0" asset="relatedWordIndexParam" scope="content"/>
+                <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
             </event>
         </g>
+
     </template>
 
-    <template id="relatedVerbTemplate">
-        <g id="relatedVerbBody" x="0" y="0" w="100" h="100">
-            <shape type="circle" x="50" y="50" w="50" h="50" fill="#DF99EA" stroke="black" z-index="100"/>
-
-            <image id="memberWordPicture" x="5" y="5" w="90" h="90" model="member.picture" z-index="100"/>
-            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.lemma"/>
-
-            <shape id="verbObject" type="circle" x="27" y="50" w="40" h="40" fill="white" opacity="0.6" stroke="black" z-index="50">
-                <event type="click">
-                    <action type="animation">
-                        <tween>
-                            <to ease="bounceOut" duration="500"><![CDATA[{"x":-10,"y":50}]]></to>
-                            <to ease="bounceOut" duration="1000"><![CDATA[{"x":-10,"y":50}]]></to>
-                            <to ease="linear" duration="100"><![CDATA[{"x":27,"y":50}]]></to>
-                        </tween>
-                    </action>
-                </event>
-            </shape>
-        </g>
-    </template>
-
-    <template id="selectedWordTemplate">
-        <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="50" x="50" y="50" w="50" h="50"/>
-        <image id="selectedWordImage" x="75" y="10" w="24" h="30" param="member.picture" z-index="100"/>
-    </template>
-
-    <template id="exampleSentenceTemplate">
-        <shape type="roundrect" fill="#978F35" stroke="black" x="0" y="2" w="100" h="90" z-index="50"/>
-        <text align="center" valign="middle" x="3" y="5" w="96" h="96" z-index="50" font="Arial" fontsize="150" color="white" param="stage.exampleSentence"></text>
-    </template>
 </theme>

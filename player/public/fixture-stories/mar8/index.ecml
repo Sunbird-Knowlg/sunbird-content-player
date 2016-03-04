@@ -390,7 +390,6 @@
         <audio asset="welcome_sound" />
 
         <set id="selectedWordParam" param="selectedWord" scope="content" model="data.lemma"/>
-
         <set id="relatedWordIndexParam" param="relatedWordIndex" scope="content" value="0" />
          <embed template-name="word_template" var-data="data"/>
          <image id="button_long_up" asset="button_long_up" x="40" y="8.5" w="20" h="10">
@@ -422,10 +421,10 @@
                 <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page3" duration="10" transitionType="skip" reset="true"/>
             </event>
         </image>
+
         <image asset="arrow_bl" x="2" y="80" w="9" h="16" z-index="50">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page4" duration="10" transitionType="skip" reset="true"/>
-
             </event>
         </image>
 
@@ -445,31 +444,52 @@
         <audio asset="stage_sound" />
 
         <set id="exampleSentenceParam" param="exampleSentence" scope="stage" ev-model="wordDetails.${content.selectedWord}.exampleSentences"/>
-        <set param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
+        <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
             <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="16" x="83" y="70" w="16" h="16"/>
             <image id="page1Img" param="stage.selectedWordObj.picture" x="70" y="54" w="27" h="35" z-index="51"/>
 
-            <shape id="spin_top" type="roundrect" fill="#B0D93D" shadow="#245E1F" blur="30" offsetX="-2" offsetY="0" stroke="black" x="5" y="35" w="55" h="15" z-index="50">
-                <event type="click">
-                    <action type="command" command="set" param="exampleSentence" param-index="previous" asset="exampleSentenceParam" scope="stage"/>
-                    <action type="command" command="refresh" asset="exampleSentenceText"/>
-                </event>
-            </shape>
-            <image id="spin_top_ico" asset="triangle_up" x="25" y="37" w="15" h="10" z-index="51"/>
+            <g x="2" y="30" w="30" h="12">
+                <embed template-name="exampleSentenceTemplate" ev-example="wordDetails.${content.selectedWord}.exampleSentences[0]" />
+            </g>
 
-            <shape id="spinnerph1" type="roundrect" fill="#978F35" stroke="black" x="5" y="51" w="55" h="23" z-index="50"/>
+            <g x="2" y="44" w="30" h="12" ev-if="wordDetails.${content.selectedWord}.exampleSentences.length >1">
+                <embed template-name="exampleSentenceTemplate" ev-example="wordDetails.${content.selectedWord}.exampleSentences[1]" />
+            </g>
 
-            <shape id="spin_bot" type="roundrect" fill="#B0D93D" shadow="#245E1F" blur="30" offsetX="-2" offsetY="2" stroke="black" x="5" y="75" w="55" h="15" z-index="50">
-                <event type="click">
-                    <action type="command" command="set" param="exampleSentence" param-index="next" asset="exampleSentenceParam" scope="stage"/>
-                    <action type="command" command="refresh" asset="exampleSentenceText"/>
-                </event>
-            </shape>
-            <image id="spin_bot_ico" asset="triangle_dn" x="25" y="77" w="15" h="10" z-index="51"/>
+            <g x="2" y="58" w="30" h="12" ev-if="wordDetails.${content.selectedWord}.exampleSentences.length >2">
+                <embed template-name="exampleSentenceTemplate" ev-example="wordDetails.${content.selectedWord}.exampleSentences[2]" />
+            </g>
 
-            <text id="exampleSentenceText" align="center" valign="middle" x="7" y="51" w="55" h="23" z-index="50" font="Arial" fontsize="80" color="white" param="stage.exampleSentence.sentence"></text>
+            <g x="2" y="72" w="30" h="12" ev-if="wordDetails.${content.selectedWord}.exampleSentences.length >3">
+                <embed template-name="exampleSentenceTemplate" ev-example="wordDetails.${content.selectedWord}.exampleSentences[3]" />
+            </g>
+
+            <g x="2" y="86" w="30" h="12" ev-if="wordDetails.${content.selectedWord}.exampleSentences.length >4">
+                <embed template-name="exampleSentenceTemplate" ev-example="wordDetails.${content.selectedWord}.exampleSentences[4]" />
+            </g>
+
+            <g x="34" y="30" w="30" h="12" ev-if="wordDetails.${content.selectedWord}.exampleSentences.length >5">
+                <embed template-name="exampleSentenceTemplate" ev-example="wordDetails.${content.selectedWord}.exampleSentences[5]" />
+            </g>
+
+            <g x="34" y="44" w="30" h="12" ev-if="wordDetails.${content.selectedWord}.exampleSentences.length >6">
+                <embed template-name="exampleSentenceTemplate" ev-example="wordDetails.${content.selectedWord}.exampleSentences[6]" />
+            </g>
+
+            <g x="34" y="58" w="30" h="12" ev-if="wordDetails.${content.selectedWord}.exampleSentences.length >7">
+                <embed template-name="exampleSentenceTemplate" ev-example="wordDetails.${content.selectedWord}.exampleSentences[7]" />
+            </g>
+
+            <g x="34" y="72" w="30" h="12" ev-if="wordDetails.${content.selectedWord}.exampleSentences.length >8">
+                <embed template-name="exampleSentenceTemplate" ev-example="wordDetails.${content.selectedWord}.exampleSentences[8]" />
+            </g>
+
+            <g x="34" y="86" w="30" h="12" ev-if="wordDetails.${content.selectedWord}.exampleSentences.length >9">
+                <embed template-name="exampleSentenceTemplate" ev-example="wordDetails.${content.selectedWord}.exampleSentences[9]" />
+            </g>
+
             <text x="0" y="10" w="100" h="20" align="center" font="Arial" fontsize="100" color="white" z-index="100">उदाहरण वाक्य</text>
         </g>
 
@@ -496,7 +516,7 @@
     <stage id="page2" x="0" y="0" w="100" h="100">
         <audio asset="stage_sound" />
         <set id="rhymingWordParam" param="rhymingWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.rhymingWords"/>
-        <set param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
+        <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
         <audio param="rhymingWord.pronunciation" />
 
 
@@ -507,7 +527,7 @@
             <text x="0" y="10" w="100" h="20" align="center" font="Arial" fontsize="100" color="white" z-index="100">मेरी आवाज़ सुनो</text>
 
             <g id="spinnercontainer" x="0" y="15" w="100" h="100" z-index="50">
-                <shape id="spin_top" type="roundrect" fill="#DCC137" shadow="#883517" blur="30" offsetX="-2" offsetY="0" stroke="black" x="40" y="20" w="35" h="15" z-index="100">
+                <shape id="spin_top" type="roundrect" fill="#DCC137" radius="5" shadow="#883517" blur="20" offsetX="-2" offsetY="0" stroke="black" x="41" y="22" w="32" h="12" z-index="100">
                     <event type="click">
                         <action type="command" command="set" param="rhymingWord" param-index="previous" asset="rhymingWordParam" scope="stage"/>
                         <action type="command" command="refresh" asset="finaltxt1"/>
@@ -546,15 +566,14 @@
                     </event>
                 </shape>
                 <image id="spin_top_ico" asset="triangle_up" x="50" y="22" w="15" h="10" z-index="100"/>
-                <shape type="rect" fill="#E04C16" x="40" y="-15" h="50" w="40" z-index="90" />
-                <shape type="rect" fill="#E04C16" x="40" y="54" h="46" w="40" z-index="90" />
+                <shape type="rect" fill="#E04C16" x="40" y="-15.5" h="51" w="40" z-index="90" />
+                <shape type="rect" fill="#E04C16" x="40" y="52.5" h="46" w="40" z-index="90" />
 
                 <shape type="roundrect" fill="white" radius="5" stroke="black" x="41" y="36" w="10" h="16" z-index="40" />
-                <shape type="roundrect" fill="white" radius="5" stroke="black" x="52" y="36" w="10" h="16" z-index="40" ev-if="stage.selectedWordObj.syllableCount == 2"/>
-                <shape type="roundrect" fill="white" radius="5" stroke="black" x="52" y="36" w="10" h="16" z-index="40" ev-if="stage.selectedWordObj.syllableCount == 3"/>
-                <shape type="roundrect" fill="white" radius="5" stroke="black" x="63" y="36" w="10" h="16" z-index="40" ev-if="stage.selectedWordObj.syllableCount == 3"/>
+                <shape type="roundrect" fill="white" radius="5" stroke="black" x="52" y="36" w="10" h="16" z-index="40" />
+                <shape type="roundrect" fill="white" radius="5" stroke="black" x="63" y="36" w="10" h="16" z-index="40" />
 
-                <shape id="spin_bot" type="roundrect" fill="#DCC137" shadow="#883517" blur="30" offsetX="-2" offsetY="2" stroke="black" x="40" y="53" w="35" h="15" z-index="100">
+                <shape id="spin_bot" type="roundrect" fill="#DCC137" radius="5" shadow="#883517" blur="30" offsetX="-2" offsetY="2" stroke="black" x="41" y="54" w="32" h="12" z-index="100">
                     <event type="click">
                         <action type="command" command="set" param="rhymingWord" param-index="next" asset="rhymingWordParam" scope="stage"/>
                         <action type="command" command="refresh" asset="finaltxt1"/>
@@ -594,13 +613,12 @@
                 </shape>
                 <image id="spin_bot_ico" asset="triangle_dn" x="50" y="55" w="15" h="10" z-index="100"/>
 
-                <text id="finaltxt1" x="44" y="110" z-index="50" font="Arial" fontsize="50" color="black" param="stage.rhymingWord.syllables[0]"/>
-                <text id="finaltxt2" x="54" y="110" z-index="50" font="Arial" fontsize="50" color="black" param="stage.rhymingWord.syllables[1]" ev-if="stage.selectedWordObj.syllableCount == 3"/>
-                <text id="finaltxt3" x="54" y="40" z-index="50" font="Arial" fontsize="50" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 2"/>
-                <text id="finaltxt3" x="66" y="40" z-index="50" font="Arial" fontsize="50" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 3"/>
-                <text id="spinnertxt1" x="44" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10" model="spinnerTexts.text1"/>
-
-                <text id="spinnertxt2" x="54" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10" model="spinnerTexts.text2"/>
+                <text id="finaltxt1" x="44" y="110" z-index="50" font="Arial" fontsize="40" color="black" param="stage.rhymingWord.syllables[0]"/>
+                <text id="finaltxt2" x="54" y="110" z-index="50" font="Arial" fontsize="40" color="black" param="stage.rhymingWord.syllables[1]" ev-if="stage.selectedWordObj.syllableCount == 3"/>
+                <text id="finaltxt3" x="54" y="40" z-index="50" font="Arial" fontsize="40" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 2"/>
+                <text id="finaltxt3" x="66" y="40" z-index="50" font="Arial" fontsize="40" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 3"/>
+                <text id="spinnertxt1" x="44" y="52" z-index="50" font="Arial" fontsize="40" color="black" shadow="black" blur="10" model="spinnerTexts.text1"/>
+                <text id="spinnertxt2" x="54" y="52" z-index="50" font="Arial" fontsize="40" color="black" shadow="black" blur="10" model="spinnerTexts.text2"/>
             </g>
         </g>
 
@@ -639,11 +657,47 @@
     </stage>
 
     <stage id="page3" x="0" y="0" w="100" h="100">
+        <set id="relatedWordsParam" param="relatedWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.relatedWords"/>
+        <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
+        <set id="membersParam" param="memberWord" scope="stage" ev-value="${stage.relatedWord.members}"/>
         <set id="setPluginId" param="mode" scope="stage" value="interact"/>
+
         <audio asset="stage_sound" />
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
+
             <text x="0" y="10" w="100" h="20" align="center" font="Arial" fontsize="100" color="white" z-index="100">क्या मैं करूँ</text>
+
+            <g x="0" y="0" w="100" h="100" id="relatedVerbsContainer">
+                <g x="34" y="32" w="20" h="35">
+                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+                </g>
+
+                <g x="12" y="65" w="15" h="27">
+                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+                </g>
+
+                <g x="55" y="65" w="15" h="27">
+                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+                </g>
+
+                <g x="62" y="25" w="15" h="27">
+                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+                </g>
+
+                <g x="80" y="50" w="15" h="27">
+                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+                </g>
+
+                <g x="82" y="15" w="12" h="20">
+                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+                </g>
+            </g>
+
+            <g x="2" y="2" w="25" h="45">
+                <embed template-name="selectedWordTemplate" ev-member="stage.selectedWordObj" />
+            </g>
+
         </g>
 
         <image asset="arrow_br" x="89" y="80" w="9" h="16" z-index="50">
@@ -653,7 +707,12 @@
                 <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500" transitionType="skip" reset="true"/>
             </event>
         </image>
-        <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black" blur="30"/>
+
+        <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black" blur="30">
+            <event type="click">
+            </event>
+        </shape>
+
         <events>
             <event type="enter">
                 <action type="command" command="play" asset="stage_sound" loop="1" />
@@ -670,51 +729,79 @@
         <set param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
         <set param="relWordsCount" scope="content" ev-model="wordDetails.${content.selectedWord}.relatedWords.length" />
 
+        <!-- <set id="membersParam" param="memberWord" scope="stage" ev-value="${stage.relatedWord.members}"/> -->
+
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
 
             <text x="0" y="7" w="15" h="10" align="right" font="Arial" fontsize="60" color="white" z-index="100">मैं हूँ एक</text>
             <text id="relatedWordTextTitle" align="left" x="16" y="7" w="65" h="10" fontsize="60" color="#161FA7" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
-            <text x="7" y="15" w="80" h="10" align="left" font="Arial" fontsize="60" color="#519828" z-index="100">देखो ये सब मेरे साथी </text>
+            <text x="6" y="15" w="80" h="10" align="left" font="Arial" fontsize="60" color="#519828" z-index="100">देखो ये सब मेरे साथी </text>
 
-            <g x="20" y="30" w="20" h="35" id="obj1">
-                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[0]"/>
+            <g x="0" y="0" w="100" h="100" id="relatedWordsContainer">
+
+                <g id="w1" x="52" y="35" w="20" h="35">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[0]" />
+                </g>
+
+                <g x="35" y="50" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 1">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[1]" />
+                </g>
+
+                <g x="37" y="20" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 2">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[2]"/>
+                </g>
+
+                <g x="21" y="60" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 3">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[3]" />
+                </g>
+
+                <g x="7" y="56" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 4">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[4]" />
+                </g>
+
+                <g x="22" y="35" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 5">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[5]" />
+                </g>
+
+                <g x="7" y="30" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 6">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[6]" />
+                </g>
+
+                <g x="47" y="72" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 7">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[7]"/>
+                </g>
+
+                <g x="32" y="80" w="9" h="16" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 8">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[8]" />
+                </g>
+
+                <g x="14" y="78" w="9" h="16" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 9">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[9]" />
+                </g>
+
             </g>
 
-            <g x="15" y="70" w="12" h="20">
-                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[1]"/>
-            </g>
-
-            <g x="35" y="60" w="12" h="20">
-                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[1]"/>
-            </g>
-
-            <g x="40" y="15" w="12" h="20" enableDrag="true">
-                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[1]"/>
-            </g>
-
-            <g x="50" y="40" w="20" h="35">
-                <embed template-name="wordTest" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[4]"/>
-            </g>
-
-            <g id="meaningSpinner" x="57" y="20" w="100" h="100" z-index="200">
-                <image id="button_long_example_up" asset="button_long_up" x="14" y="46.5" w="20" h="10" z-index="100">
+            <g id="meaningSpinner" x="73" y="65" w="25" h="30" z-index="200">
+                <shape id="spin_top" type="roundrect" fill="#E2D33A" shadow="#AA7E23" blur="10" offsetX="-2" offsetY="0" stroke="black" x="0" y="0" w="100" h="25" radius="5" z-index="50">
                     <event type="click">
                         <action type="command" command="set" param="relatedWord" param-index="previous" asset="relatedWordsParam" scope="stage"/>
                         <action type="command" command="set" param="relatedWordIndex" param-incr="-1" asset="relatedWordIndexParam" scope="content" param-max="${content.relWordsCount}"/>
                         <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
                     </event>
-                </image>
-                <image asset="example_container" x="5" y="53" w="35" h="20" z-index="100"/>
+                </shape>
+                <image id="spin_top_ico" asset="triangle_up" x="35" y="3" w="30" h="20" z-index="51"/>
 
-                <text id="relatedWordText" align="center" valign="middle" x="7" y="58" w="30" h="10" fontsize="50" color="white" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
+                <shape id="spinnerph1" type="roundrect" fill="#EE8530" shadow="#AA7E23" blur="10" offsetX="-2" offsetY="0" stroke="black" x="0" y="25" w="100" h="50" radius="5" z-index="50"/>
+                <text id="relatedWordText" align="center" valign="middle" x="3" y="27" w="95" h="46" fontsize="180" color="white" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
 
-                <image id="button_long_example_down" asset="button_long_down" x="13" y="69" w="20" h="10" z-index="100">
+                <shape id="spin_bot" type="roundrect" fill="#E2D33A" shadow="#AA7E23" blur="10" offsetX="-2" offsetY="2" stroke="black" x="0" y="75" w="100" h="25" radius="5" z-index="50">
                     <event type="click">
                         <action type="command" command="set" param="relatedWordIndex" param-incr="1" asset="relatedWordIndexParam" scope="content" param-max="${content.relWordsCount}"/>
                         <action type="command" command="set" param="relatedWord" param-index="next" asset="relatedWordsParam" scope="stage"/>
                         <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
                     </event>
-                </image>
+                </shape>
+                <image id="spin_bot_ico" asset="triangle_dn" x="35" y="78" w="30" h="20" z-index="51"/>
             </g>
 
             <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="14" x="86" y="25" w="14" h="14"/>
@@ -729,7 +816,12 @@
                 <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500" transitionType="skip" reset="true"/>
             </event>
         </image>
-        <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black" blur="30"/>
+
+        <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black" blur="30">
+            <event type="click">
+            </event>
+        </shape>
+
         <events>
             <event type="enter">
                 <action type="command" command="play" asset="stage_sound" loop="1" />
@@ -739,20 +831,47 @@
         </events>
     </stage>
 
-    <template id="wordTest">
-        <g x="0" y="0" w="100" h="100">
+    <template id="relatedWordTemplate">
+        <g id="relatedWordBody" x="0" y="0" w="100" h="100">
             <shape type="circle" x="50" y="50" w="50" h="50" fill="white" opacity="0.6" stroke="black"/>
-            <image x="5" y="5" w="90" h="90" model="member.picture" z-index="100"/>
-            <text align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
+            <image id="memberWordPicture" x="5" y="5" w="90" h="90" model="member.picture" z-index="100"/>
+            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
             <set param="memberLemma" scope="parent" ev-model="member.lemma"/>
             <event type="click">
-                <action type="animation" asset="body" parent="true"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
+                <action type="animation" param="obj"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
                 <action type="command" command="set" param="selectedWord" ev-value="memberLemma" scope="content"/>
                 <action type="command" command="set" param="relatedWordIndex" param-value="0" asset="relatedWordIndexParam" scope="content"/>
                 <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
             </event>
         </g>
-
     </template>
 
+    <template id="relatedVerbTemplate">
+        <g id="relatedVerbBody" x="0" y="0" w="100" h="100">
+            <shape type="circle" x="50" y="50" w="50" h="50" fill="#DF99EA" stroke="black" z-index="100"/>
+            <image id="memberWordPicture" x="5" y="5" w="90" h="90" model="member.picture" z-index="100"/>
+            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.lemma"/>
+            <shape id="verbObject" type="circle" x="27" y="50" w="40" h="40" fill="white" opacity="0.6" stroke="black" z-index="50">
+            </shape>
+            <event type="click">
+                <action type="animation">
+                    <tween>
+                        <to ease="bounceOut" duration="500"><![CDATA[{"x":-10,"y":50}]]></to>
+                        <to ease="bounceOut" duration="1000"><![CDATA[{"x":-10,"y":50}]]></to>
+                        <to ease="linear" duration="100"><![CDATA[{"x":27,"y":50}]]></to>
+                    </tween>
+                </action>
+            </event>
+        </g>
+    </template>
+
+    <template id="selectedWordTemplate">
+        <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="50" x="50" y="50" w="50" h="50"/>
+        <image id="selectedWordImage" x="75" y="10" w="24" h="30" param="member.picture" z-index="100"/>
+    </template>
+
+    <template id="exampleSentenceTemplate">
+        <shape type="roundrect" fill="#978F35" stroke="black" x="0" y="2" w="100" h="90" z-index="50"/>
+        <text align="center" valign="middle" x="3" y="5" w="96" h="96" z-index="50" font="Arial" fontsize="150" color="white" model="example.sentence"></text>
+    </template>
 </theme>
