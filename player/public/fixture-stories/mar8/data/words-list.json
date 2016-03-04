@@ -1,13 +1,13 @@
 [
   {
     "lemma": "हाथी",
-    "meaning": "चार पैरों वाला बड़ा जानवर जिसकी शुंड होती है",
+    "meaning": "चार पैरों वाला बड़ा जानवर जिसकी सूंढ़ होती है",
     "picture": "elephant_image1",
     "pronunciation": "elephant_audio1"
   },
   {
     "lemma": "शेर",
-    "meaning": "पीले रंग का मंशाहरी जानवर जंगल में रहता है",
+    "meaning": "पीले रंग का माँसाहारी जानवर जो जंगल में रहता है",
     "picture": "lion_image1",
     "pronunciation": "lion_audio1"
   },
