@@ -301,16 +301,17 @@ var ThemePlugin = Plugin.extend({
     resume: function() {
         TelemetryService.interrupt("RESUME", this._currentStage);
     },
-    setParam: function(param, value, incr) {
+    setParam: function(param, value, incr, max) {
         var instance = this;
         var fval = instance._contentParams[param];
         if (incr) {
-            if (!fval)
-                fval = 0;
+            if ("undefined" == typeof fval) fval = 0;
             fval = (fval + incr);
         } else {
             fval = value    
         }
+        if (0 > fval) fval = 0;
+        if ("undefined" != typeof max && fval >= max) fval = 0;
         instance._contentParams[param] = fval;
     },
     getParam: function(param) {

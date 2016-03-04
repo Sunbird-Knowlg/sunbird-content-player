@@ -430,7 +430,7 @@ var Plugin = Class.extend({
         var expr = 'params.' + param;
         return eval(expr);
     },
-    setPluginParam: function(param, value, incr) {
+    setPluginParam: function(param, value, incr, max) {
         var instance = this;
         var fval = instance._pluginParams[param];
         if (incr) {
@@ -440,6 +440,8 @@ var Plugin = Class.extend({
         } else {
             fval = value;
         }
+        if (0 > fval) fval = 0;
+        if ("undefined" != typeof max && fval >= max) fval = 0;
         instance._pluginParams[param] = fval;
     },
     setPluginParamValue: function(action) {

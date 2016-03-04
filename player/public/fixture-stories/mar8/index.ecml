@@ -233,6 +233,7 @@
         <image asset="whale_image1"/>
         <image asset="gorilla_image1"/>
         <image asset="rhino_image1"/>
+        <image asset="utensil_image1"/>
         <image asset="jackal_image1"/>
         <image asset="pig_image1"/>
         <image asset="hog_image1"/>
@@ -667,6 +668,7 @@
 
         <set id="relatedWordsParam" param="relatedWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}]"/>
         <set param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
+        <set param="relWordsCount" scope="content" ev-model="wordDetails.${content.selectedWord}.relatedWords.length" />
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
 
@@ -698,7 +700,7 @@
                 <image id="button_long_example_up" asset="button_long_up" x="14" y="46.5" w="20" h="10" z-index="100">
                     <event type="click">
                         <action type="command" command="set" param="relatedWord" param-index="previous" asset="relatedWordsParam" scope="stage"/>
-                        <action type="command" command="set" param="relatedWordIndex" param-incr="-1" asset="relatedWordIndexParam" scope="content"/>
+                        <action type="command" command="set" param="relatedWordIndex" param-incr="-1" asset="relatedWordIndexParam" scope="content" param-max="${content.relWordsCount}"/>
                         <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
                     </event>
                 </image>
@@ -708,7 +710,7 @@
 
                 <image id="button_long_example_down" asset="button_long_down" x="13" y="69" w="20" h="10" z-index="100">
                     <event type="click">
-                        <action type="command" command="set" param="relatedWordIndex" param-incr="1" asset="relatedWordIndexParam" scope="content"/>
+                        <action type="command" command="set" param="relatedWordIndex" param-incr="1" asset="relatedWordIndexParam" scope="content" param-max="${content.relWordsCount}"/>
                         <action type="command" command="set" param="relatedWord" param-index="next" asset="relatedWordsParam" scope="stage"/>
                         <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
                     </event>
