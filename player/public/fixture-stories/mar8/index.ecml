@@ -201,6 +201,9 @@
 
     <stage id="preloadStage" preload="true">
 
+        <image asset="next"/>
+        <image asset="previous"/>
+
         <image asset="arrow_tl"/>
         <image asset="arrow_tr"/>
         <image asset="arrow_bl"/>
@@ -800,6 +803,64 @@
 
                 <g x="14" y="78" w="9" h="16" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 9">
                     <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[9]" />
+                </g>
+
+                <image asset="next" x="65" y="90" w="5" h="8.3" z-index="51" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 10">
+                    <event type="click">
+                        <action type="command" command="hide" asset="relatedWordsContainer"/>
+                        <action type="command" command="show" asset="relatedWordsContainer2"/>
+                    </event>
+                </image>
+
+            </g>
+
+            <g x="0" y="0" w="100" h="100" id="relatedWordsContainer2" visible="false" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 10">
+
+                <image asset="previous" x="65" y="90" w="5" h="8.3" z-index="51">
+                    <event type="click">
+                        <action type="command" command="hide" asset="relatedWordsContainer2"/>
+                        <action type="command" command="show" asset="relatedWordsContainer"/>
+                    </event>
+                </image>
+
+                <g id="w1" x="52" y="35" w="20" h="35">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[10]" />
+                </g>
+
+                <g x="35" y="50" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 11">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[11]" />
+                </g>
+
+                <g x="37" y="20" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 12">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[12]"/>
+                </g>
+
+                <g x="21" y="60" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 13">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[13]" />
+                </g>
+
+                <g x="7" y="56" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 14">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[14]" />
+                </g>
+
+                <g x="22" y="35" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 15">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[15]" />
+                </g>
+
+                <g x="7" y="30" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 16">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[16]" />
+                </g>
+
+                <g x="47" y="72" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 17">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[17]"/>
+                </g>
+
+                <g x="32" y="80" w="9" h="16" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 18">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[18]" />
+                </g>
+
+                <g x="14" y="78" w="9" h="16" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 19">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[19]" />
                 </g>
 
             </g>
