@@ -113,21 +113,32 @@ var SetPlugin = Plugin.extend({
         } else {
             val = action['param-value'];
         }
-        this.setParam(param, val, action['param-incr'], scope);
+        // if ("undefined" == typeof val) val = 0;
+        // if ("undefined" != typeof val && 0 > val ) val = action['param-incr'] = 0;
+        var max = undefined;
+        if (action['param-max']) {
+             max = this.evaluateExpr(action['param-max']);
+            if (val >= max) val = action['param-incr'] = 0;
+        }
+        this.setParam(param, val, action['param-incr'], scope, max);
+        // this.setParam(param, val, action['param-incr'], scope);
     },
-    setParam: function(param, value, incr, scope) {
+    setParam: function(param, value, incr, scope, max) {
         if (scope && scope.toLowerCase() == 'app') {
-            GlobalContext.setParam(param, value, incr);
+            GlobalContext.setParam(param, value, incr, max);
         } else if (scope && scope.toLowerCase() == 'stage') {
-            this._stage.setParam(param, value, incr);
+            this._stage.setParam(param, value, incr, max);
+        } else if (scope && scope.toLowerCase() == 'parent') {
+            this._parent.setPluginParam(param, value, incr, max);
         } else {
-            this._theme.setParam(param, value, incr);
+            this._theme.setParam(param, value, incr, max);
         }
     },
     getParam: function(param) {
         var value = GlobalContext.getParam(param);
         if (!value) value = this._theme.getParam(param);
         if (!value) value = this._stage.getParam(param);
+        if (!value) value = this._parent.getPluginParam(param);
         return value;
     }
 });

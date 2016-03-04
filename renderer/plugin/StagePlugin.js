@@ -160,7 +160,7 @@ var StagePlugin = Plugin.extend({
         }
         this._theme.replaceStage(this._data.id, action);
     },
-    setParam: function(param, value, incr) {
+    setParam: function(param, value, incr, max) {
         var instance = this;
         var fval = instance.params[param];
         if (incr) {
@@ -170,6 +170,8 @@ var StagePlugin = Plugin.extend({
         } else {
             fval = value;
         }
+        if (0 > fval) fval = 0;
+        if ("undefined" != typeof max && fval >= max) fval = 0;
         instance.params[param] = fval;
     },
     getParam: function(param) {
