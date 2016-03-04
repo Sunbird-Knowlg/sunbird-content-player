@@ -86,7 +86,7 @@
       }
     ],
     "verbs": [
-      {"verb": "खाना", "picture": "eating_image1", "pronunciation": "khana_audio1", "object": "palak_image1"},
+      {"verb": "खाना", "picture": "eating_image1", "pronunciation": "khana_audio1", "object": "image_ganna"},
       {"verb": "नहाना", "picture": "nahaana_image1", "pronunciation": "nahaana_audio1", "object": ""},
       {"verb": "चरना", "picture": "chaaraana_image1", "pronunciation": "charna_audio1", "object": ""},
       {"verb": "घूमना", "picture": "walking_image1", "pronunciation": "ghoomna_audio1", "object": ""},
