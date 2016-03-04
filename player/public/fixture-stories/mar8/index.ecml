@@ -83,6 +83,7 @@
         <media id="run_image1" src="pictures/run.png" type="image" />
         <media id="nahaana_image1" src="pictures/nahaana.png" type="image" />
         <media id="eating_image1" src="pictures/eating.png" type="image" />
+        <media id="river_image1" src="pictures/river.png" type="image" />
 
         <media id="example_sentences_audio1" src="sounds/Example_sentences.mp3" type="sound" />
 
@@ -261,6 +262,7 @@
         <image asset="animals_image1"/>
         <image asset="giraffe_image1"/>
         <image asset="ostrich_image1"/>
+        <image asset="river_image1"/>
 
         <image asset="chaaraana_image1"/>
         <image asset="eating_image1"/>
@@ -686,31 +688,31 @@
             <text x="0" y="10" w="100" h="20" align="center" font="Arial" fontsize="100" color="white" z-index="100">क्या मैं करूँ</text>
 
             <g x="0" y="0" w="100" h="100" id="relatedVerbsContainer">
-                <g x="35" y="27" w="20" h="35">
+                <g x="35" y="27" w="20" h="35" ev-if="wordDetails.${content.selectedWord}.verbs.length > 0">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[0]" />
                 </g>
 
-                <g x="10" y="65" w="15" h="27">
+                <g x="10" y="65" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.verbs.length > 1">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[1]" />
                 </g>
 
-                <g x="34" y="67" w="15" h="27">
+                <g x="34" y="67" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.verbs.length > 2">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[2]" />
                 </g>
 
-                <g x="57" y="65" w="15" h="27">
+                <g x="57" y="65" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.verbs.length > 3">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[3]" />
                 </g>
 
-                <g x="65" y="25" w="15" h="27">
+                <g x="65" y="25" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.verbs.length > 4">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[4]" />
                 </g>
 
-                <g x="78" y="50" w="15" h="27">
+                <g x="78" y="50" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.verbs.length > 5">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[5]" />
                 </g>
 
-                <g x="85" y="15" w="12" h="20">
+                <g x="85" y="15" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.verbs.length > 6">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[6]" />
                 </g>
             </g>
@@ -872,18 +874,21 @@
             <shape type="circle" x="50" y="50" w="50" h="50" fill="#DF99EA" stroke="black" z-index="100"/>
             <image id="memberWordPicture" x="5" y="5" w="85" h="85" model="member.picture" z-index="100"/>
             <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.verb"/>
-            <image x="-55" y="10" w="75" h="75" model="member.object" z-index="100" visible="false"/>
-            <shape id="verbObject" type="circle" x="27" y="50" w="40" h="40" fill="white" opacity="0.6" stroke="black" z-index="50" ev-if="member.object">
+            <g x="27" y="50" w="40" h="40" ev-if="member.object">
+                <image x="-100" y="-70" w="150" h="150" model="member.object" z-index="100" ev-if="member.object"></image>
+                <shape id="verbObject" type="circle" x="0" y="0" w="100" h="100" fill="white" opacity="0.6" stroke="black" z-index="50" ev-if="member.object">
+                </shape>
                 <event type="click">
                     <action type="animation">
                         <tween>
-                            <to ease="bounceOut" duration="500"><![CDATA[{"x":-10,"y":50}]]></to>
+                            <to ease="bounceOut" duration="1000"><![CDATA[{"x":-10,"y":50}]]></to>
                             <to ease="bounceOut" duration="1000"><![CDATA[{"x":-10,"y":50}]]></to>
                             <to ease="linear" duration="100"><![CDATA[{"x":27,"y":50}]]></to>
                         </tween>
                     </action>
                 </event>
-            </shape>
+            </g>
+            
         </g>
     </template>
 

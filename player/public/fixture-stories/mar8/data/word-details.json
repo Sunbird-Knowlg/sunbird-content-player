@@ -87,13 +87,12 @@
     ],
     "verbs": [
       {"verb": "खाना", "picture": "eating_image1", "pronunciation": "khana_audio1", "object": "palak_image1"},
+      {"verb": "नहाना", "picture": "nahaana_image1", "pronunciation": "nahaana_audio1", "object": ""},
       {"verb": "चरना", "picture": "chaaraana_image1", "pronunciation": "charna_audio1", "object": ""},
       {"verb": "घूमना", "picture": "walking_image1", "pronunciation": "ghoomna_audio1", "object": ""},
       {"verb": "सोना", "picture": "sona_image1", "pronunciation": "sona_audio1", "object": ""},
       {"verb": "कूदना", "picture": "jump_image1", "pronunciation": "kudhna_audio1", "object": ""},
-      {"verb": "दौड़ना", "picture": "run_image1", "pronunciation": "daudna_audio1", "object": ""},
-      {"verb": "नहाना", "picture": "nahaana_image1", "pronunciation": "nahaana_audio1", "object": "utensil_image1"}
-      
+      {"verb": "दौड़ना", "picture": "run_image1", "pronunciation": "daudna_audio1", "object": ""}
     ]
   },
   "शेर": {
@@ -158,13 +157,10 @@
       }
     ],
     "verbs": [
-      {"verb": "चरना", "picture": "lion_image1", "pronunciation": "charna_audio1", "object": ""},
-      {"verb": "घूमना", "picture": "lion_image1", "pronunciation": "ghoomna_audio1", "object": ""},
-      {"verb": "सोना", "picture": "lion_image1", "pronunciation": "sona_audio1", "object": ""},
-      {"verb": "कूदना", "picture": "lion_image1", "pronunciation": "kudhna_audio1", "object": ""},
-      {"verb": "दौड़ना", "picture": "lion_image1", "pronunciation": "daudna_audio1", "object": ""},
-      {"verb": "नहाना", "picture": "lion_image1", "pronunciation": "nahaana_audio1", "object": ""},
-      {"verb": "खाना", "picture": "lion_image1", "pronunciation": "khana_audio1", "object": ""}
+      {"verb": "खाना", "picture": "eating_image1", "pronunciation": "khana_audio1", "object": "palak_image1"},
+      {"verb": "नहाना", "picture": "nahaana_image1", "pronunciation": "nahaana_audio1", "object": ""},
+      {"verb": "चरना", "picture": "chaaraana_image1", "pronunciation": "charna_audio1", "object": ""},
+      {"verb": "घूमना", "picture": "walking_image1", "pronunciation": "ghoomna_audio1", "object": ""}
     ]
   },
   "पालक": {
