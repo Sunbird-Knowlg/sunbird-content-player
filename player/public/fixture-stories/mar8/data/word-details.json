@@ -50,9 +50,9 @@
         "memberRelation": "hasHyponym",
         "members": [
           {"lemma": "घोड़ा", "picture": "animals_image1", "pronunciation": "ghoda_audio1"},
-          {"lemma": "मंत्री", "picture": "mantri_image1", "pronunciation": "mantri_audio1"},
+          {"lemma": "मंत्री", "picture": "chess_king_image1", "pronunciation": "mantri_audio1"},
           {"lemma": "राजा", "picture": "chess_king_image1", "pronunciation": "raja_audio1"},
-          {"lemma": "ऊंट", "picture": "placeholder_image", "pronunciation": "oont_audio1"},
+          {"lemma": "ऊंट", "picture": "mantri_image1", "pronunciation": "oont_audio1"},
           {"lemma": "प्यादा", "picture": "pyada_image1", "pronunciation": "pyadha_audio1"},
           {"lemma": "हाथी", "picture": "castle_image1", "pronunciation": ""}
         ]
@@ -68,7 +68,7 @@
           {"lemma": "गधा", "picture": "donkey_image1", "pronunciation": "gadha_audio1"},
           {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
           {"lemma": "कबूतर", "picture": "pigeon_image1", "pronunciation": "kabutar_audio1"},
-          {"lemma": "हाथी", "picture": "castle_image1", "pronunciation": ""}
+          {"lemma": "हाथी", "picture": "elephant_image1", "pronunciation": ""}
         ]
       },
       {
@@ -83,7 +83,7 @@
           {"lemma": "शुतुरमुर्ग", "picture": "ostrich_image1", "pronunciation": "whale_audio1"},
           {"lemma": "राइनो", "picture": "rhino_image1", "pronunciation": "rhino_audio1"},
           {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "hiran_audio1"},
-          {"lemma": "हाथी", "picture": "castle_image1", "pronunciation": ""}
+          {"lemma": "हाथी", "picture": "elephant_image1", "pronunciation": ""}
         ]
       }
     ],
