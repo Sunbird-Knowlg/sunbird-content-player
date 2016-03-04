@@ -233,9 +233,6 @@
         <media id="image_pitcher_plant" src="lion/relwords/pitcher_plant.png" type="image" />
         <media id="image_sona" src="lion/relwords/sona.png" type="image" />
 
-
-
-
     </manifest>
 
     <template id="blurWordTemplate">
@@ -499,10 +496,10 @@
         <param name="next" value="splash" />
 
         <image asset="ekstep" x="5" y="80" w="7" h="18" id="next" z-index="100"/>
-        <text x="13" y="82" w="15" h="10" font="Georgia" fontsize="50">Showcase Series</text>
-        <text x="13" y="94" w="80" h="10" font="Georgia" fontsize="30" color="">Literacy Platform</text>
+        <text x="13" y="82" w="15" h="10" font="Georgia" fontsize="50" shadow="white">Showcase Series</text>
+        <text x="13" y="94" w="80" h="10" font="Georgia" fontsize="30" shadow="white" color="">Literacy Platform</text>
 
-        <text x="85" y="82" w="12" h="5" align="center" font="Arial" fontsize="35" color="black" z-index="100">Grade 1</text>
+        <text x="85" y="82" w="12" h="5" align="center" font="Arial" fontsize="35" color="black" z-index="100">Level 1</text>
         <text x="85" y="92" w="12" h="5" align="center" font="Arial" fontsize="35" color="black" z-index="100">Vocabulary</text>
 
         <shape type="rect" x="85" y="80" w="12" h="7" fill="#FF9500" stroke="white" stroke-width="5"/>
@@ -534,7 +531,8 @@
         <g id="body" x="0" y="0" w="100" h="100">
             <image asset="scene1_image" x="0" y="0" w="100" h="100"/>
             <g x="10" y="3" w="80" h="10">
-                <text x="0" y="0" w="100" h="100" font="Georgia" align="center" color="white" fontsize="80">उस  रात बहुत तेज बारिश हो रही थी  | शेर अपने घर में लेटा हुआ था | </text>
+                <text x="0" y="3" w="100" h="100" font="Georgia" align="center" color="white" shadow="black" fontsize="120">उस रात बहुत तेज बारिश हो रही थी |
+शेर अपने घर में लेटा हुआ था | </text>
             </g>
         </g>
     </stage>
@@ -545,8 +543,8 @@
         <g id="body" x="0" y="0" w="100" h="100">
             <image asset="scene2_image" x="0" y="0" w="100" h="100"/>
             <g x="10" y="3" w="80" h="97">
-                <text x="50" y="2" w="50" h="100" font="Georgia" align="center" color="white" fontsize="100">तभी आवाज से उसकी आँख खुल गई</text>
-                <text x="50" y="80" w="50" h="10" font="Georgia" align="center" color="white" fontsize="100">रसोई  में जा कर देखा तो पाया कि वहां कोई आया था</text>
+                <text x="50" y="2" w="50" h="100" font="Georgia" align="center" color="white" shadow="black" fontsize="110">तभी आवाज से उसकी आँख खुल गई</text>
+                <text x="45" y="80" w="60" h="10" font="Georgia" align="center" color="white" shadow="black" fontsize="110">रसोई  में जा कर देखा तो पाया कि वहां कोई आया था</text>
             </g>
         </g>
     </stage>
@@ -557,8 +555,8 @@
         <g id="body" x="0" y="0" w="100" h="100">
             <image asset="scene3_image" x="0" y="0" w="100" h="100"/>
             <g x="10" y="3" w="80" h="97">
-                <text x="20" y="2" w="80" h="10" font="Georgia" align="center" color="white" fontsize="90">अरे ! किसी ने उसके आम और पालक चुरा लिए थे</text>
-                <text x="45" y="85" w="55" h="10" font="Georgia" align="center" color="white" fontsize="90">उसे आम और पालक बहुत पसंद थे</text>
+                <text x="20" y="1" w="80" h="10" font="Georgia" align="center" color="white" shadow="black" fontsize="90">अरे ! किसी ने उसके आम और पालक चुरा लिए थे</text>
+                <text x="50" y="75" w="50" h="10" font="Georgia" align="center" color="white" shadow="black" fontsize="120">उसे आम और पालक बहुत पसंद थे</text>
             </g>
         </g>
     </stage>
@@ -569,7 +567,8 @@
         <g id="body" x="0" y="0" w="100" h="100">
             <image asset="scene4_image" x="0" y="0" w="100" h="100"/>
             <g x="10" y="3" w="80" h="10">
-                <text x="0" y="0" w="100" h="100" font="Georgia" align="center" color="white" fontsize="80">शेर अपने साथी, हाथी के पास गया |  दोनों रात को बारिश में चोर को खोजने निकल पड़े |</text>
+                <text x="0" y="0" w="100" h="100" font="Georgia" align="center" color="white" shadow="black" fontsize="110">शेर अपने साथी, हाथी के पास गया |
+दोनों रात को बारिश में चोर को खोजने निकल पड़े |</text>
             </g>
         </g>
     </stage>
@@ -587,8 +586,8 @@
     <set id="selectedWordParam" param="selectedWord" scope="content" model=""/>
 
     <stage id="explore" x="0" y="0" w="100" h="100" iterate="words-list" var="data">
-        <audio asset="welcome_sound" />
-
+        <!-- <audio asset="welcome_sound" /> -->
+        <set param="explore" scope="content" value="true"/>
         <set id="selectedWordParam" param="selectedWord" scope="content" model="data.lemma"/>
         <set id="relatedWordIndexParam" param="relatedWordIndex" scope="content" value="0" />
          <embed template-name="word_template" var-data="data"/>
@@ -635,13 +634,13 @@
 
         <events>
             <event type="enter">
-                <action type="command" command="play" asset="chimes" loop="1" />
+                <!-- <action type="command" command="play" asset="chimes" loop="1" /> -->
             </event>
         </events>
     </stage>
 
     <stage id="page1" x="0" y="0" w="100" h="100">
-        <audio asset="stage_sound" />
+        <!-- <audio asset="stage_sound" /> -->
 
         <set id="exampleSentenceParam" param="exampleSentence" scope="stage" ev-model="wordDetails.${content.selectedWord}.exampleSentences"/>
         <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
@@ -704,7 +703,7 @@
 
         <events>
             <event type="enter">
-                <action type="command" command="play" asset="stage_sound" loop="1" />
+                <!-- <action type="command" command="play" asset="stage_sound" loop="1" /> -->
                 <action type="animation" asset="top-left"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":30,"y":30}]]></to></tween></action>
                 <action type="command" command="show" asset="body" delay="700"/>
             </event>
@@ -714,7 +713,7 @@
     <controller name="spinnerTexts" type="data" id="spinner-texts"/>
 
     <stage id="page2" x="0" y="0" w="100" h="100">
-        <audio asset="stage_sound" />
+        <!-- <audio asset="stage_sound" /> -->
         <set id="rhymingWordParam" param="rhymingWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.rhymingWords"/>
         <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
         <audio param="rhymingWord.pronunciation" />
@@ -722,7 +721,7 @@
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
 
             <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="-5" offsetY="5" r="15" x="17" y="70" w="15" h="15" z-index="50"/>
-            <image id="rhymingWordImage" param="stage.rhymingWord.picture" x="4" y="54" w="27" h="35" z-index="51" visible="false"/>
+            <image id="rhymingWordImage" param="stage.rhymingWord.picture" x="4" y="48" w="27" h="48" z-index="51" visible="false"/>
             <text x="0" y="10" w="100" h="20" align="center" font="Arial" fontsize="100" color="white" z-index="100">मेरी आवाज़ सुनो</text>
 
             <g id="spinnercontainer" x="0" y="15" w="100" h="100" z-index="50">
@@ -736,15 +735,15 @@
                         <action type="command" command="show" asset="rhymingWordImage" delay="2000"/>
                         <action type="animation" asset="spinnertxt1">
                             <tween>
-                                <to ease="cubicIn" duration="2000"><![CDATA[{"x":43,"y":-102}]]></to>
-                                <to ease="linear" duration="0"><![CDATA[{"x":43,"y":110}]]></to>
+                                <to ease="cubicIn" duration="2000"><![CDATA[{"x":44,"y":-102}]]></to>
+                                <to ease="linear" duration="0"><![CDATA[{"x":44,"y":110}]]></to>
                             </tween>
                         </action>
                         <action type="animation" asset="finaltxt1" delay="2000">
                             <tween>
-                                <to ease="linear" duration="1600"><![CDATA[{"x":43,"y":110}]]></to>
-                                <to ease="linear" duration="0"><![CDATA[{"x":43,"y":60}]]></to>
-                                <to ease="bounceOut" duration="1000"><![CDATA[{"x":43,"y":40}]]></to>
+                                <to ease="linear" duration="1600"><![CDATA[{"x":44,"y":110}]]></to>
+                                <to ease="linear" duration="0"><![CDATA[{"x":44,"y":60}]]></to>
+                                <to ease="bounceOut" duration="1000"><![CDATA[{"x":44,"y":40}]]></to>
                             </tween>
                         </action>
 
@@ -765,8 +764,8 @@
                     </event>
                 </shape>
                 <image id="spin_top_ico" asset="triangle_up" x="50" y="22" w="15" h="10" z-index="100"/>
-                <shape type="rect" fill="#E04C16" x="40" y="-15.5" h="51" w="40" z-index="90" />
-                <shape type="rect" fill="#E04C16" x="40" y="52.5" h="46" w="40" z-index="90" />
+                <shape type="rect" fill="#E04C16" x="40" y="-15" h="51" w="40" z-index="90" />
+                <shape type="rect" fill="#E04C16" x="40" y="52" h="46" w="40" z-index="90" />
 
                 <shape type="roundrect" fill="white" radius="5" stroke="black" x="41" y="36" w="10" h="16" z-index="40" />
                 <shape type="roundrect" fill="white" radius="5" stroke="black" x="52" y="36" w="10" h="16" z-index="40" />
@@ -782,15 +781,15 @@
                         <action type="command" command="show" asset="rhymingWordImage" delay="2000"/>
                         <action type="animation" asset="spinnertxt1">
                             <tween>
-                                <to ease="cubicIn" duration="2000"><![CDATA[{"x":43,"y":-102}]]></to>
-                                <to ease="linear" duration="0"><![CDATA[{"x":43,"y":110}]]></to>
+                                <to ease="cubicIn" duration="2000"><![CDATA[{"x":44,"y":-102}]]></to>
+                                <to ease="linear" duration="0"><![CDATA[{"x":44,"y":110}]]></to>
                             </tween>
                         </action>
                         <action type="animation" asset="finaltxt1" delay="2000">
                             <tween>
-                                <to ease="linear" duration="1600"><![CDATA[{"x":43,"y":110}]]></to>
-                                <to ease="linear" duration="0"><![CDATA[{"x":43,"y":60}]]></to>
-                                <to ease="bounceOut" duration="1000"><![CDATA[{"x":43,"y":40}]]></to>
+                                <to ease="linear" duration="1600"><![CDATA[{"x":44,"y":110}]]></to>
+                                <to ease="linear" duration="0"><![CDATA[{"x":44,"y":60}]]></to>
+                                <to ease="bounceOut" duration="1000"><![CDATA[{"x":44,"y":40}]]></to>
                             </tween>
                         </action>
 
@@ -812,12 +811,12 @@
                 </shape>
                 <image id="spin_bot_ico" asset="triangle_dn" x="50" y="55" w="15" h="10" z-index="100"/>
 
-                <text id="finaltxt1" x="44" y="110" z-index="50" font="Arial" fontsize="40" color="black" param="stage.rhymingWord.syllables[0]"/>
-                <text id="finaltxt2" x="54" y="110" z-index="50" font="Arial" fontsize="40" color="black" param="stage.rhymingWord.syllables[1]" ev-if="stage.selectedWordObj.syllableCount == 3"/>
-                <text id="finaltxt3" x="54" y="40" z-index="50" font="Arial" fontsize="40" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 2"/>
-                <text id="finaltxt3" x="66" y="40" z-index="50" font="Arial" fontsize="40" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 3"/>
-                <text id="spinnertxt1" x="44" y="52" z-index="50" font="Arial" fontsize="40" color="black" shadow="black" blur="10" model="spinnerTexts.text1"/>
-                <text id="spinnertxt2" x="54" y="52" z-index="50" font="Arial" fontsize="40" color="black" shadow="black" blur="10" model="spinnerTexts.text2"/>
+                <text id="finaltxt1" x="44" y="110" z-index="50" font="Arial" fontsize="50" color="black" param="stage.rhymingWord.syllables[0]"/>
+                <text id="finaltxt2" x="54" y="110" z-index="50" font="Arial" fontsize="50" color="black" param="stage.rhymingWord.syllables[1]" ev-if="stage.selectedWordObj.syllableCount == 3"/>
+                <text id="finaltxt3" x="54" y="40" z-index="50" font="Arial" fontsize="50" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 2"/>
+                <text id="finaltxt3" x="66" y="40" z-index="50" font="Arial" fontsize="50" color="green" param="stage.selectedWordObj.endsWith" ev-if="stage.selectedWordObj.syllableCount == 3"/>
+                <text id="spinnertxt1" x="44" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10" model="spinnerTexts.text1"/>
+                <text id="spinnertxt2" x="54" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10" model="spinnerTexts.text2"/>
             </g>
         </g>
 
@@ -832,15 +831,15 @@
 
         <events>
             <event type="enter">
-                <action type="command" command="play" asset="stage_sound" loop="1" />
+                <!-- <action type="command" command="play" asset="stage_sound" loop="1" /> -->
                 <action type="command" command="play" asset_param="rhymingWord.pronunciation" loop="1" delay="1000"/>
                 <action type="animation" asset="top-right"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":35,"y":-35}]]></to></tween></action>
                 <action type="command" command="show" asset="rhymingWordImage" delay="100"/>
                 <action type="animation" asset="finaltxt1" delay="100">
                     <tween>
-                        <to ease="linear" duration="50"><![CDATA[{"x":43,"y":110}]]></to>
-                        <to ease="linear" duration="0"><![CDATA[{"x":43,"y":60}]]></to>
-                        <to ease="bounceOut" duration="50"><![CDATA[{"x":43,"y":40}]]></to>
+                        <to ease="linear" duration="50"><![CDATA[{"x":44,"y":110}]]></to>
+                        <to ease="linear" duration="0"><![CDATA[{"x":44,"y":60}]]></to>
+                        <to ease="bounceOut" duration="50"><![CDATA[{"x":44,"y":40}]]></to>
                     </tween>
                 </action>
                 <action type="animation" asset="finaltxt2" delay="100" ev-if="stage.selectedWordObj.syllableCount == 3">
@@ -861,7 +860,7 @@
         <set id="membersParam" param="memberWord" scope="stage" ev-value="${stage.relatedWord.members}"/>
         <set id="setPluginId" param="mode" scope="stage" value="interact"/>
 
-        <audio asset="stage_sound" />
+        <!-- <audio asset="stage_sound" /> -->
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
 
@@ -918,7 +917,7 @@
 
         <events>
             <event type="enter">
-                <action type="command" command="play" asset="stage_sound" loop="1" />
+                <!-- <action type="command" command="play" asset="stage_sound" loop="1" /> -->
                 <action type="animation" asset="bottom-right"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":70,"y":70}]]></to></tween></action>
                 <action type="command" command="show" asset="body" delay="700"/>
             </event>
@@ -926,7 +925,7 @@
     </stage>
 
      <stage id="page4" x="0" y="0" w="100" h="100">
-        <audio asset="stage_sound" />
+        <!-- <audio asset="stage_sound" /> -->
 
         <set id="relatedWordsParam" param="relatedWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}]"/>
         <set param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
@@ -1047,7 +1046,7 @@
                     <event type="click">
                         <action type="command" command="set" param="relatedWord" param-index="previous" asset="relatedWordsParam" scope="stage"/>
                         <action type="command" command="set" param="relatedWordIndex" param-incr="-1" asset="relatedWordIndexParam" scope="content" param-max="${content.relWordsCount}"/>
-                        <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
+                        <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="500" />
                     </event>
                 </shape>
                 <image id="spin_top_ico" asset="triangle_up" x="35" y="3" w="30" h="20" z-index="51"/>
@@ -1059,35 +1058,36 @@
                     <event type="click">
                         <action type="command" command="set" param="relatedWordIndex" param-incr="1" asset="relatedWordIndexParam" scope="content" param-max="${content.relWordsCount}"/>
                         <action type="command" command="set" param="relatedWord" param-index="next" asset="relatedWordsParam" scope="stage"/>
-                        <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
+                        <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="500" />
                     </event>
                 </shape>
                 <image id="spin_bot_ico" asset="triangle_dn" x="35" y="78" w="30" h="20" z-index="51"/>
             </g>
 
-            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="12" x="86" y="25" w="12" h="12"/>
-            <image id="selectedWordImage" x="75" y="5" w="24" h="42" param="stage.selectedWordObj.picture" z-index="100"/>
-
+            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="12" x="86" y="25" w="12" h="12" z-index="500"/>
+            <image id="selectedWordImage" x="75" y="5" w="24" h="42" param="stage.selectedWordObj.picture" z-index="510"/>
         </g>
 
         <image asset="arrow_bl" x="2" y="80" w="9" h="16" z-index="50">
             <event type="click">
                 <action type="command" command="hide" asset="body"/>
                 <action type="animation" asset="bottom-left"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":-35,"y":135}]]></to></tween></action>
+                <action type="animation" asset="bottom-left2"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":-35,"y":135}]]></to></tween></action>
                 <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500" transitionType="skip" reset="true"/>
             </event>
         </image>
 
-        <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black" blur="30">
-            <event type="click">
-            </event>
-        </shape>
+        <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black" blur="30" ev-if="content.explore"/>
+        <shape id="bottom-left2" x="10" y="35" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black" blur="30" ev-if="!(content.explore)"/>
 
         <events>
             <event type="enter">
-                <action type="command" command="play" asset="stage_sound" loop="1" />
-                <action type="animation" asset="bottom-left"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":10,"y":35}]]></to></tween></action>
-                <action type="command" command="show" asset="body" delay="700"/>
+                <!-- <action type="command" command="play" asset="stage_sound" loop="1" /> -->
+                <action type="animation" asset="bottom-left" ev-if="content.explore"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":10,"y":35}]]></to></tween></action>
+                <!-- <action type="animation" asset="bottom-left" ev-if="!(content.explore)"><tween><to ease="linear" duration="100"><![CDATA[{"x":10,"y":35}]]></to></tween></action> -->
+                <action type="command" command="show" asset="body" delay="700" ev-if="content.explore"/>
+                <action type="command" command="show" asset="body" delay="100" ev-if="!(content.explore)"/>
+                <action type="command" command="set" param="explore" value="false" scope="content"/>
             </event>
         </events>
     </stage>
@@ -1095,14 +1095,14 @@
     <template id="relatedWordTemplate">
         <g id="relatedWordBody" x="0" y="0" w="100" h="100">
             <shape type="circle" x="50" y="50" w="50" h="50" fill="white" opacity="0.6" stroke="black"/>
-            <image id="memberWordPicture" x="5" y="5" w="90" h="90" model="member.picture" z-index="100"/>
-            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
+            <image id="memberWordPicture" x="7" y="0" w="85" h="85" model="member.picture" z-index="100"/>
+            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-22" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
             <set param="memberLemma" scope="parent" ev-model="member.lemma"/>
             <event type="click">
-                <action type="animation" param="obj"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
+                <action type="animation" param="obj" parent="true"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":120,"y":-80}]]></to></tween></action>
                 <action type="command" command="set" param="selectedWord" ev-value="memberLemma" scope="content"/>
                 <action type="command" command="set" param="relatedWordIndex" param-value="0" asset="relatedWordIndexParam" scope="content"/>
-                <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
+                <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="500" delay="500"/>
             </event>
         </g>
     </template>
@@ -1110,7 +1110,7 @@
     <template id="relatedVerbTemplate">
         <g id="relatedVerbBody" x="0" y="0" w="100" h="100">
             <shape type="circle" x="50" y="50" w="50" h="50" fill="#DF99EA" stroke="black" z-index="100"/>
-            <image id="memberWordPicture" x="15" y="3" w="70" h="70" model="member.picture" z-index="100"/>
+            <image id="memberWordPicture" x="15" y="3" w="65" h="65" model="member.picture" z-index="100"/>
             <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-22" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.verb"/>
             <g x="27" y="50" w="40" h="40" ev-if="member.object">
                 <image x="-100" y="-70" w="150" h="150" model="member.object" z-index="100" ev-if="member.object"></image>
