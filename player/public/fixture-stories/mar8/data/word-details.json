@@ -8,7 +8,7 @@
     "endsWith": "थी",
     "rhymingWords": [
       {"lemma": "साथी", "syllables": ["सा"], "picture": "friend_image1","pronunciation": "saathi_audio1"},
-      {"lemma": "भाथी", "syllables": ["जा"], "picture": "utensil_image1", "pronunciation": "bhathi_audio1"
+      {"lemma": "भाथी", "syllables": ["भा"], "picture": "utensil_image1", "pronunciation": "bhathi_audio1"
       }
     ],
     "exampleSentences": [
@@ -86,13 +86,14 @@
       }
     ],
     "verbs": [
-      {"verb": "चरना", "picture": "elephant_image1", "pronunciation": "charna_audio1", "object": "", "object_picture": ""},
-      {"verb": "घूमना", "picture": "elephant_image1", "pronunciation": "ghoomna_audio1", "object": ""},
-      {"verb": "सोना", "picture": "elephant_image1", "pronunciation": "sona_audio1", "object": ""},
-      {"verb": "कूदना", "picture": "elephant_image1", "pronunciation": "kudhna_audio1", "object": ""},
-      {"verb": "दौड़ना", "picture": "elephant_image1", "pronunciation": "daudna_audio1", "object": ""},
-      {"verb": "नहाना", "picture": "elephant_image1", "pronunciation": "nahaana_audio1", "object": ""},
-      {"verb": "खाना", "picture": "elephant_image1", "pronunciation": "khana_audio1", "object": ""}
+      {"verb": "खाना", "picture": "eating_image1", "pronunciation": "khana_audio1", "object": "palak_image1"},
+      {"verb": "चरना", "picture": "chaaraana_image1", "pronunciation": "charna_audio1", "object": ""},
+      {"verb": "घूमना", "picture": "walking_image1", "pronunciation": "ghoomna_audio1", "object": ""},
+      {"verb": "सोना", "picture": "sona_image1", "pronunciation": "sona_audio1", "object": ""},
+      {"verb": "कूदना", "picture": "jump_image1", "pronunciation": "kudhna_audio1", "object": ""},
+      {"verb": "दौड़ना", "picture": "run_image1", "pronunciation": "daudna_audio1", "object": ""},
+      {"verb": "नहाना", "picture": "nahaana_image1", "pronunciation": "nahaana_audio1", "object": "utensil_image1"}
+      
     ]
   },
   "शेर": {
