@@ -87,13 +87,12 @@
     ],
     "verbs": [
       {"verb": "खाना", "picture": "eating_image1", "pronunciation": "khana_audio1", "object": "palak_image1"},
+      {"verb": "नहाना", "picture": "nahaana_image1", "pronunciation": "nahaana_audio1", "object": ""},
       {"verb": "चरना", "picture": "chaaraana_image1", "pronunciation": "charna_audio1", "object": ""},
       {"verb": "घूमना", "picture": "walking_image1", "pronunciation": "ghoomna_audio1", "object": ""},
       {"verb": "सोना", "picture": "sona_image1", "pronunciation": "sona_audio1", "object": ""},
       {"verb": "कूदना", "picture": "jump_image1", "pronunciation": "kudhna_audio1", "object": ""},
-      {"verb": "दौड़ना", "picture": "run_image1", "pronunciation": "daudna_audio1", "object": ""},
-      {"verb": "नहाना", "picture": "nahaana_image1", "pronunciation": "nahaana_audio1", "object": "utensil_image1"}
-      
+      {"verb": "दौड़ना", "picture": "run_image1", "pronunciation": "daudna_audio1", "object": ""}
     ]
   },
   "शेर": {
@@ -158,13 +157,10 @@
       }
     ],
     "verbs": [
-      {"verb": "चरना", "picture": "lion_image1", "pronunciation": "charna_audio1", "object": ""},
-      {"verb": "घूमना", "picture": "lion_image1", "pronunciation": "ghoomna_audio1", "object": ""},
-      {"verb": "सोना", "picture": "lion_image1", "pronunciation": "sona_audio1", "object": ""},
-      {"verb": "कूदना", "picture": "lion_image1", "pronunciation": "kudhna_audio1", "object": ""},
-      {"verb": "दौड़ना", "picture": "lion_image1", "pronunciation": "daudna_audio1", "object": ""},
-      {"verb": "नहाना", "picture": "lion_image1", "pronunciation": "nahaana_audio1", "object": ""},
-      {"verb": "खाना", "picture": "lion_image1", "pronunciation": "khana_audio1", "object": ""}
+      {"verb": "खाना", "picture": "eating_image1", "pronunciation": "khana_audio1", "object": "palak_image1"},
+      {"verb": "नहाना", "picture": "nahaana_image1", "pronunciation": "nahaana_audio1", "object": ""},
+      {"verb": "चरना", "picture": "chaaraana_image1", "pronunciation": "charna_audio1", "object": ""},
+      {"verb": "घूमना", "picture": "walking_image1", "pronunciation": "ghoomna_audio1", "object": ""}
     ]
   },
   "पालक": {
@@ -183,6 +179,50 @@
       {"sentence": "मैंने अपने घर में पालक लगाया है", "audio": "meine_apne_ghar_mein_palak_lagaya_hai_audio1"},
       {"sentence": "मुझे पालक  की सब्जी बहुत अच्छी लगती है", "audio": "mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai_audio1"},
       {"sentence": "पालक  खाने से आँखे ठीक रहती है", "audio": "palak_khane_se_ankhen_teek_rehti_hai_audio1"}
+    ],
+    "relatedWords": [
+      {
+        "relation": "hasHypernym",
+        "gloss": "आप खा सकते हैं (सब्जी )",
+        "picture": "palak_image1",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {"lemma":"गाजर","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"गाजर","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"आलू","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"लहसुन","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"बैंगन","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"करेला","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"पत्तागोभी","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"सेंजन","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"अदरक","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"प्याज","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"पुदीना","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"कद्दू","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"मूली","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"इमली","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"फूल गोभी","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"भिन्डी","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"टमाटर","meaning":"","picture":"palak_image1","pronunciation":""}
+        ]
+      },
+      {
+        "relation": "hasHypernym",
+        "gloss": "हरे रंग की सब्जी",
+        "picture": "palak_image1",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {"lemma":"पत्ती","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"घास","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"हरे अंगूर","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"हरा सेब","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"मटर","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"शिमला मिर्च","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"पौधों","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"गन्ना","meaning":"","picture":"palak_image1","pronunciation":""},
+          {"lemma":"पुदीना","meaning":"","picture":"palak_image1","pronunciation":""}
+        ]
+      }
     ],
     "verbs": [
       {"verb": "चरना", "picture": "palak_image1", "pronunciation": "charna_audio1", "object": ""},
