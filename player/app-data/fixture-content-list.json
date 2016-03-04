@@ -82,52 +82,6 @@
             },
             "isAvailable": true,
             "path": "fixture-stories/the_moon_and_the_cap"
-        }, {
-            "identifier": "org.ekstep.quiz.app.bugs.renderer",
-            "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
-                "questionnaire": null,
-                "appIcon": "fixture-stories/quizapp_bugs/logo.png",
-                "subject": "literacy_v2",
-                "description": "QuizApp bugs fixes",
-                "name": "Story Test Cases",
-                "downloadUrl": "",
-                "checksum": null,
-                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
-                "concepts": [{
-                    "identifier": "LO1",
-                    "name": "Receptive Vocabulary",
-                    "objectType": "Concept"
-                }],
-                "identifier": "org.ekstep.quiz.app.bugs.renderer",
-                "grayScaleAppIcon": null,
-                "pkgVersion": 1
-            },
-            "isAvailable": true,
-            "path": "fixture-stories/quizapp_bugs"
-        }, {
-            "identifier": "org.ekstep.quiz.app.tests.renderer",
-            "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
-                "questionnaire": null,
-                "appIcon": "fixture-stories/test_cases/logo.png",
-                "subject": "literacy_v2",
-                "description": "Renderer Test Cases",
-                "name": "Renderer Tests",
-                "downloadUrl": "",
-                "checksum": null,
-                "loadingMessage": "A robust test suite is a must-have for any product...",
-                "concepts": [{
-                    "identifier": "LO1",
-                    "name": "Receptive Vocabulary",
-                    "objectType": "Concept"
-                }],
-                "identifier": "org.ekstep.quiz.app.tests.renderer",
-                "grayScaleAppIcon": null,
-                "pkgVersion": 1
-            },
-            "isAvailable": true,
-            "path": "fixture-stories/test_cases"
         }],
         "ttl": 24
     }

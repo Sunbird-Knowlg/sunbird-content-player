@@ -1,4 +1,4 @@
-<theme startStage="splash" id="theme" ver="0.2">
+<theme startStage="intro" id="theme" ver="0.2">
     <manifest>
         <!-- Sounds -->
         <media id="welcome_sound" src="audio/welcome_riff.ogg" type="sound" />
@@ -6,6 +6,7 @@
         <media id="cheers_sound" src="audio/cheers_soft.ogg" type="sound" />
 
         <!-- Icons -->
+        <media id="story_icon" src="icons/icon.png" type="image" />
         <media id="sound_icon" src="icons/sound.png" type="image" />
         <media id="cancel_icon" src="icons/cancel.png" type="image" />
         <media id="button_long_up" src="icons/button_long_up.png" type="image" />
@@ -83,6 +84,7 @@
         <media id="run_image1" src="pictures/run.png" type="image" />
         <media id="nahaana_image1" src="pictures/nahaana.png" type="image" />
         <media id="eating_image1" src="pictures/eating.png" type="image" />
+        <media id="river_image1" src="pictures/river.png" type="image" />
 
         <media id="example_sentences_audio1" src="sounds/Example_sentences.mp3" type="sound" />
 
@@ -171,10 +173,11 @@
         <media id="mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai_audio1" src="palak_sounds/examples/mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai.mp3" type="sound" />
         <media id="palak_khane_se_ankhen_teek_rehti_hai_audio1" src="palak_sounds/examples/palak_khane_se_ankhen_teek_rehti_hai.mp3" type="sound" />
 
-        <media id="page2" src="scenes/image_2.jpg" type="image" />
-        <media id="page3" src="scenes/image_3.jpg" type="image" />
-        <media id="page4" src="scenes/image_4.jpg" type="image" />
-        <media id="page5" src="scenes/image_5.jpg" type="image" />
+        <media id="splash_screen_image" src="scenes/splash_screen.png" type="image" />
+        <media id="scene1_image" src="scenes/1.jpg" type="image" />
+        <media id="scene2_image" src="scenes/2.jpg" type="image" />
+        <media id="scene3_image" src="scenes/3.jpg" type="image" />
+        <media id="scene4_image" src="scenes/4.jpg" type="image" />
 
         <media id="previous" src="icon_previous.png" type="image" />
         <media id="next" src="icon_next.png" type="image" />
@@ -199,6 +202,16 @@
     </template>
 
     <stage id="preloadStage" preload="true">
+
+        <image asset="next"/>
+        <image asset="previous"/>
+
+        <image asset="story_icon"/>
+        <image asset="splash_screen_image"/>
+        <image asset="scene1_image"/>
+        <image asset="scene2_image"/>
+        <image asset="scene3_image"/>
+        <image asset="scene4_image"/>
 
         <image asset="arrow_tl"/>
         <image asset="arrow_tr"/>
@@ -261,6 +274,7 @@
         <image asset="animals_image1"/>
         <image asset="giraffe_image1"/>
         <image asset="ostrich_image1"/>
+        <image asset="river_image1"/>
 
         <image asset="chaaraana_image1"/>
         <image asset="eating_image1"/>
@@ -355,40 +369,99 @@
         <audio asset="palak_khane_se_ankhen_teek_rehti_hai_audio1"/>
     </stage>
 
+
     <stage id="storyBaseStage" preload="true">
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" param="next" effect="fadein" duration="0" />
+                <action type="command" command="transitionTo" asset="theme" param="next" direction="left" duration="500" ease="linear" effect="scroll" />
             </event>
         </shape>
         <image asset="previous" x="2" y="3" w="5" h="8.3" id="previous" visible="false"/>
         <shape id="previousContainer" type="rect" x="1" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" param="previous" effect="fadein" duration="0" transitionType="previous"/>
+                <action type="command" command="transitionTo" asset="theme" param="previous" direction="right" duration="500" ease="linear" effect="scroll" transitionType="previous"/>
             </event>
         </shape>
     </stage>
 
-    <stage id="splash" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+    <stage id="intro" x="0" y="0" w="100" h="100" extends="storyBaseStage">
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" param="next" effect="fadein" duration="0" />
             </event>
         </shape>
+        <param name="next" value="splash" />
+
+        <image asset="story_icon" x="32" y="20" w="40" h="55"/>
+        <text x="32" y="3" w="60" h="10" font="Georgia" weight="bold" fontsize="120">शेर का साथी हाथी</text>
+        <text x="22" y="83" w="80" h="10" font="Georgia" fontsize="80">Language model showcase for APF</text>
+    </stage>
+
+    <stage id="splash" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="intro" />
+        <param name="next" value="scene1" />
+        <image asset="splash_screen_image" x="0" y="0" w="100" h="100"/>
+
+        <shape type="rect" x="10" y="55" w="25" h="30" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+            </event>
+        </shape>
+
+        <shape type="rect" x="63" y="55" w="25" h="30" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" value="explore" effect="scroll" direction="left" ease="linear" duration="500" />
+            </event>
+        </shape>
+
+    </stage>
+
+    <stage id="scene1" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="splash" />
+        <param name="next" value="scene2" />
+        <g id="body" x="0" y="0" w="100" h="100">
+            <image asset="scene1_image" x="0" y="0" w="100" h="100"/>
+            <g x="10" y="3" w="80" h="10">
+                <text x="0" y="0" w="100" h="100" font="Georgia" align="center" color="white" fontsize="80">उस  रात बहुत तेज बारिश हो रही थी  | शेर अपने घर में लेटा हुआ था | </text>
+            </g>
+        </g>
+    </stage>
+
+    <stage id="scene2" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="scene1" />
+        <param name="next" value="scene3" />
+        <g id="body" x="0" y="0" w="100" h="100">
+            <image asset="scene2_image" x="0" y="0" w="100" h="100"/>
+            <g x="10" y="3" w="80" h="97">
+                <text x="50" y="2" w="50" h="100" font="Georgia" align="center" color="white" fontsize="100">तभी आवाज से उसकी आँख खुल गई</text>
+                <text x="50" y="80" w="50" h="10" font="Georgia" align="center" color="white" fontsize="100">रसोई  में जा कर देखा तो पाया कि वहां कोई आया था</text>
+            </g>
+        </g>
+    </stage>
+
+    <stage id="scene3" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="scene2" />
+        <param name="next" value="scene4" />
+        <g id="body" x="0" y="0" w="100" h="100">
+            <image asset="scene3_image" x="0" y="0" w="100" h="100"/>
+            <g x="10" y="3" w="80" h="97">
+                <text x="20" y="2" w="80" h="10" font="Georgia" align="center" color="white" fontsize="90">अरे ! किसी ने उसके आम और पालक चुरा लिए थे</text>
+                <text x="45" y="85" w="55" h="10" font="Georgia" align="center" color="white" fontsize="90">उसे आम और पालक बहुत पसंद थे</text>
+            </g>
+        </g>
+    </stage> 
+
+    <stage id="scene4" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="scene3" />
         <param name="next" value="explore" />
-
-        <image asset="elephant_tiger" x="20" y="45" w="55" h="55"/>
-        <text x="32" y="3" w="60" h="10" font="Georgia" fontsize="100">शेर का साथी हाथी</text>
-
-        <text x="12" y="20" w="80" h="10" font="Georgia" lineHeight="1.5" fontsize="45" z-index="100">
-उस रात बहुत तेज बारिश हो रही थी | शेर अपने घर में लेटा हुआ था |
-तभी आवाज से उसकी आँख खुल गई | रसोई में जा कर देखा तो पाया कि वहां कोई आया था |
-अरे ! किसी ने उसके आम और पालक चुरा लिए थे | उसे आम और पालक बहुत पसंद थे |
-शेर घबरा कर अपने साथी, हाथी के पास गया | दोनों रात को बारिश में चोर को खोजने निकल पड़े |
-        </text>
-
+        <g id="body" x="0" y="0" w="100" h="100">
+            <image asset="scene4_image" x="0" y="0" w="100" h="100"/>
+            <g x="10" y="3" w="80" h="10">
+                <text x="0" y="0" w="100" h="100" font="Georgia" align="center" color="white" fontsize="80">शेर अपने साथी, हाथी के पास गया |  दोनों रात को बारिश में चोर को खोजने निकल पड़े |</text>
+            </g>
+        </g>
     </stage>
 
     <controller name="wordDetails" type="data" id="word-details"/>
@@ -398,7 +471,7 @@
         <text x="55" y="30" w="50" h="10" fontsize="80" color="black" model="data.lemma"/>
         <text x="52" y="40" w="30" h="30" fontsize="50" color="black" model="data.meaning"/>
         <image x="50" y="-2" h="40" w="40" asset="sound_image1"/>
-        <image x="20" y="28" h="44" w="25" model="data.picture"/>
+        <image x="20" y="40" h="25" w="25" model="data.picture"/>
     </template>
 
     <set id="selectedWordParam" param="selectedWord" scope="content" model=""/>
@@ -465,7 +538,7 @@
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
             <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="16" x="83" y="70" w="16" h="16"/>
-            <image id="page1Img" param="stage.selectedWordObj.picture" x="70" y="44" w="27" h="48" z-index="51"/>
+            <image id="page1Img" param="stage.selectedWordObj.picture" x="70" y="54" w="27" h="35" z-index="51"/>
 
             <g x="2" y="30" w="30" h="12">
                 <embed template-name="exampleSentenceTemplate" ev-example="wordDetails.${content.selectedWord}.exampleSentences[0]" />
@@ -540,7 +613,7 @@
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
 
             <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="-5" offsetY="5" r="15" x="17" y="70" w="15" h="15" z-index="50"/>
-            <image id="rhymingWordImage" param="stage.rhymingWord.picture" x="5" y="48" w="27" h="48" z-index="51" visible="false"/>
+            <image id="rhymingWordImage" param="stage.rhymingWord.picture" x="4" y="54" w="27" h="35" z-index="51" visible="false"/>
             <text x="0" y="10" w="100" h="20" align="center" font="Arial" fontsize="100" color="white" z-index="100">मेरी आवाज़ सुनो</text>
 
             <g id="spinnercontainer" x="0" y="15" w="100" h="100" z-index="50">
@@ -686,31 +759,31 @@
             <text x="0" y="10" w="100" h="20" align="center" font="Arial" fontsize="100" color="white" z-index="100">क्या मैं करूँ</text>
 
             <g x="0" y="0" w="100" h="100" id="relatedVerbsContainer">
-                <g x="35" y="27" w="20" h="35">
+                <g x="35" y="27" w="20" h="35" ev-if="wordDetails.${content.selectedWord}.verbs.length > 0">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[0]" />
                 </g>
 
-                <g x="10" y="65" w="15" h="27">
+                <g x="10" y="65" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.verbs.length > 1">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[1]" />
                 </g>
 
-                <g x="34" y="67" w="15" h="27">
+                <g x="34" y="67" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.verbs.length > 2">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[2]" />
                 </g>
 
-                <g x="57" y="65" w="15" h="27">
+                <g x="57" y="65" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.verbs.length > 3">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[3]" />
                 </g>
 
-                <g x="65" y="25" w="15" h="27">
+                <g x="65" y="25" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.verbs.length > 4">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[4]" />
                 </g>
 
-                <g x="78" y="50" w="15" h="27">
+                <g x="78" y="50" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.verbs.length > 5">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[5]" />
                 </g>
 
-                <g x="85" y="15" w="12" h="20">
+                <g x="85" y="15" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.verbs.length > 6">
                     <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[6]" />
                 </g>
             </g>
@@ -800,6 +873,64 @@
                     <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[9]" />
                 </g>
 
+                <image asset="next" x="65" y="90" w="5" h="8.3" z-index="51" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 10">
+                    <event type="click">
+                        <action type="command" command="hide" asset="relatedWordsContainer"/>
+                        <action type="command" command="show" asset="relatedWordsContainer2"/>
+                    </event>
+                </image>
+
+            </g>
+
+            <g x="0" y="0" w="100" h="100" id="relatedWordsContainer2" visible="false" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 10">
+
+                <image asset="previous" x="65" y="90" w="5" h="8.3" z-index="51">
+                    <event type="click">
+                        <action type="command" command="hide" asset="relatedWordsContainer2"/>
+                        <action type="command" command="show" asset="relatedWordsContainer"/>
+                    </event>
+                </image>
+
+                <g id="w1" x="52" y="35" w="20" h="35">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[10]" />
+                </g>
+
+                <g x="35" y="50" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 11">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[11]" />
+                </g>
+
+                <g x="37" y="20" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 12">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[12]"/>
+                </g>
+
+                <g x="21" y="60" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 13">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[13]" />
+                </g>
+
+                <g x="7" y="56" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 14">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[14]" />
+                </g>
+
+                <g x="22" y="35" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 15">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[15]" />
+                </g>
+
+                <g x="7" y="30" w="12" h="20" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 16">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[16]" />
+                </g>
+
+                <g x="47" y="72" w="15" h="27" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 17">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[17]"/>
+                </g>
+
+                <g x="32" y="80" w="9" h="16" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 18">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[18]" />
+                </g>
+
+                <g x="14" y="78" w="9" h="16" ev-if="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members.length > 19">
+                    <embed template-name="relatedWordTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[${content.relatedWordIndex}].members[19]" />
+                </g>
+
             </g>
 
             <g id="meaningSpinner" x="73" y="65" w="25" h="30" z-index="200">
@@ -825,8 +956,8 @@
                 <image id="spin_bot_ico" asset="triangle_dn" x="35" y="78" w="30" h="20" z-index="51"/>
             </g>
 
-            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="12" x="86" y="25" w="12" h="12"/>
-            <image id="selectedWordImage" x="74" y="3" w="25" h="44" param="stage.selectedWordObj.picture" z-index="100"/>
+            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="14" x="86" y="25" w="14" h="14"/>
+            <image id="selectedWordImage" x="75" y="10" w="24" h="30" param="stage.selectedWordObj.picture" z-index="100"/>
 
         </g>
 
@@ -859,7 +990,7 @@
             <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
             <set param="memberLemma" scope="parent" ev-model="member.lemma"/>
             <event type="click">
-                <action type="animation" param="obj" parent="true"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":100,"y":-40}]]></to></tween></action>
+                <action type="animation" param="obj"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
                 <action type="command" command="set" param="selectedWord" ev-value="memberLemma" scope="content"/>
                 <action type="command" command="set" param="relatedWordIndex" param-value="0" asset="relatedWordIndexParam" scope="content"/>
                 <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
@@ -870,20 +1001,23 @@
     <template id="relatedVerbTemplate">
         <g id="relatedVerbBody" x="0" y="0" w="100" h="100">
             <shape type="circle" x="50" y="50" w="50" h="50" fill="#DF99EA" stroke="black" z-index="100"/>
-            <image id="memberWordPicture" x="15" y="5" w="65" h="65" model="member.picture" z-index="100"/>
-            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-23" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.verb"/>
-            <image x="-55" y="10" w="75" h="75" model="member.object" z-index="100" visible="false"/>
-            <shape id="verbObject" type="circle" x="27" y="50" w="40" h="40" fill="white" opacity="0.6" stroke="black" z-index="50" ev-if="member.object">
+            <image id="memberWordPicture" x="5" y="5" w="85" h="85" model="member.picture" z-index="100"/>
+            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.verb"/>
+            <g x="27" y="50" w="40" h="40" ev-if="member.object">
+                <image x="-100" y="-70" w="150" h="150" model="member.object" z-index="100" ev-if="member.object"></image>
+                <shape id="verbObject" type="circle" x="0" y="0" w="100" h="100" fill="white" opacity="0.6" stroke="black" z-index="50" ev-if="member.object">
+                </shape>
                 <event type="click">
                     <action type="animation">
                         <tween>
-                            <to ease="bounceOut" duration="500"><![CDATA[{"x":-10,"y":50}]]></to>
+                            <to ease="bounceOut" duration="1000"><![CDATA[{"x":-10,"y":50}]]></to>
                             <to ease="bounceOut" duration="1000"><![CDATA[{"x":-10,"y":50}]]></to>
                             <to ease="linear" duration="100"><![CDATA[{"x":27,"y":50}]]></to>
                         </tween>
                     </action>
                 </event>
-            </shape>
+            </g>
+            
         </g>
     </template>
 
