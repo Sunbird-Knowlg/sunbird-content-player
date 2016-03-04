@@ -11,7 +11,78 @@
     },
     "responseCode": "OK",
     "result": {
-        "content": [{
+        "content": [
+        {
+            "identifier": "org.ekstep.mar8.story",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/mar8/logo.png",
+                "subject": "literacy_v2",
+                "description": "March 8 Story",
+                "name": "शेर का साथी हाथी",
+                "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_1_1442335816604.zip",
+                "checksum": null,
+                "loadingMessage": "Every great journey starts with a great story...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.mar8.story",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/mar8"
+        }, {
+            "identifier": "org.ekstep.lit.haircut.story",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/haircut_story/logo.png",
+                "subject": "literacy_v2",
+                "description": "Haircut Story",
+                "name": "Haircut Story",
+                "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_1_1442335816604.zip",
+                "checksum": null,
+                "loadingMessage": "Every great journey starts with a great story...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.lit.haircut.story",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/haircut_story"
+        }, {
+            "identifier": "org.ekstep.lit.moon_cap.story",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/the_moon_and_the_cap/logo.png",
+                "subject": "literacy_v2",
+                "description": "The Moon and the Cap",
+                "name": "The Moon and the Cap",
+                "launchPath": "fixture-stories/the_moon_and_the_cap",
+                "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_2_1442335816604.zip",
+                "checksum": null,
+                "loadingMessage": "Every great journey starts with a great story...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.lit.moon_cap.story",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/the_moon_and_the_cap"
+        }, {
             "identifier": "org.ekstep.quiz.app.bugs.renderer",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
@@ -19,7 +90,7 @@
                 "appIcon": "fixture-stories/quizapp_bugs/logo.png",
                 "subject": "literacy_v2",
                 "description": "QuizApp bugs fixes",
-                "name": "QuizApp Bugs",
+                "name": "Story Test Cases",
                 "downloadUrl": "",
                 "checksum": null,
                 "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
@@ -57,77 +128,6 @@
             },
             "isAvailable": true,
             "path": "fixture-stories/test_cases"
-
-        }, {
-            "identifier": "org.ekstep.lit.haircut.story",
-            "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
-                "questionnaire": null,
-                "appIcon": "fixture-stories/haircut_story/logo.png",
-                "subject": "literacy_v2",
-                "description": "Haircut Story",
-                "name": "Haircut Story",
-                "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_1_1442335816604.zip",
-                "checksum": null,
-                "loadingMessage": "Every great journey starts with a great story...",
-                "concepts": [{
-                    "identifier": "LO1",
-                    "name": "Receptive Vocabulary",
-                    "objectType": "Concept"
-                }],
-                "identifier": "org.ekstep.lit.haircut.story",
-                "grayScaleAppIcon": null,
-                "pkgVersion": 1
-            },
-            "isAvailable": true,
-            "path": "fixture-stories/haircut_story"
-        },{
-            "identifier": "org.ekstep.mar8.story",
-            "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
-                "questionnaire": null,
-                "appIcon": "fixture-stories/mar8/logo.png",
-                "subject": "literacy_v2",
-                "description": "March 8 Story",
-                "name": "March 8 Story",
-                "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_1_1442335816604.zip",
-                "checksum": null,
-                "loadingMessage": "Every great journey starts with a great story...",
-                "concepts": [{
-                    "identifier": "LO1",
-                    "name": "Receptive Vocabulary",
-                    "objectType": "Concept"
-                }],
-                "identifier": "org.ekstep.mar8.story",
-                "grayScaleAppIcon": null,
-                "pkgVersion": 1
-            },
-            "isAvailable": true,
-            "path": "fixture-stories/mar8"
-        }, {
-            "identifier": "org.ekstep.lit.moon_cap.story",
-            "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
-                "questionnaire": null,
-                "appIcon": "fixture-stories/the_moon_and_the_cap/logo.png",
-                "subject": "literacy_v2",
-                "description": "The Moon and the Cap",
-                "name": "The Moon and the Cap",
-                "launchPath": "fixture-stories/the_moon_and_the_cap",
-                "downloadUrl": "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/STORY_2_1442335816604.zip",
-                "checksum": null,
-                "loadingMessage": "Every great journey starts with a great story...",
-                "concepts": [{
-                    "identifier": "LO1",
-                    "name": "Receptive Vocabulary",
-                    "objectType": "Concept"
-                }],
-                "identifier": "org.ekstep.lit.moon_cap.story",
-                "grayScaleAppIcon": null,
-                "pkgVersion": 1
-            },
-            "isAvailable": true,
-            "path": "fixture-stories/the_moon_and_the_cap"
         }],
         "ttl": 24
     }
