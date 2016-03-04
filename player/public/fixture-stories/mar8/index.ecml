@@ -398,7 +398,7 @@
         <text x="55" y="30" w="50" h="10" fontsize="80" color="black" model="data.lemma"/>
         <text x="52" y="40" w="30" h="30" fontsize="50" color="black" model="data.meaning"/>
         <image x="50" y="-2" h="40" w="40" asset="sound_image1"/>
-        <image x="20" y="40" h="25" w="25" model="data.picture"/>
+        <image x="20" y="28" h="44" w="25" model="data.picture"/>
     </template>
 
     <set id="selectedWordParam" param="selectedWord" scope="content" model=""/>
@@ -465,7 +465,7 @@
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
             <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="16" x="83" y="70" w="16" h="16"/>
-            <image id="page1Img" param="stage.selectedWordObj.picture" x="70" y="54" w="27" h="35" z-index="51"/>
+            <image id="page1Img" param="stage.selectedWordObj.picture" x="70" y="44" w="27" h="48" z-index="51"/>
 
             <g x="2" y="30" w="30" h="12">
                 <embed template-name="exampleSentenceTemplate" ev-example="wordDetails.${content.selectedWord}.exampleSentences[0]" />
@@ -540,7 +540,7 @@
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
 
             <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="-5" offsetY="5" r="15" x="17" y="70" w="15" h="15" z-index="50"/>
-            <image id="rhymingWordImage" param="stage.rhymingWord.picture" x="4" y="54" w="27" h="35" z-index="51" visible="false"/>
+            <image id="rhymingWordImage" param="stage.rhymingWord.picture" x="5" y="48" w="27" h="48" z-index="51" visible="false"/>
             <text x="0" y="10" w="100" h="20" align="center" font="Arial" fontsize="100" color="white" z-index="100">मेरी आवाज़ सुनो</text>
 
             <g id="spinnercontainer" x="0" y="15" w="100" h="100" z-index="50">
@@ -825,8 +825,8 @@
                 <image id="spin_bot_ico" asset="triangle_dn" x="35" y="78" w="30" h="20" z-index="51"/>
             </g>
 
-            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="14" x="86" y="25" w="14" h="14"/>
-            <image id="selectedWordImage" x="75" y="10" w="24" h="30" param="stage.selectedWordObj.picture" z-index="100"/>
+            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="12" x="86" y="25" w="12" h="12"/>
+            <image id="selectedWordImage" x="74" y="3" w="25" h="44" param="stage.selectedWordObj.picture" z-index="100"/>
 
         </g>
 
@@ -859,7 +859,7 @@
             <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
             <set param="memberLemma" scope="parent" ev-model="member.lemma"/>
             <event type="click">
-                <action type="animation" param="obj"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":80,"y":10}]]></to></tween></action>
+                <action type="animation" param="obj" parent="true"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":100,"y":-40}]]></to></tween></action>
                 <action type="command" command="set" param="selectedWord" ev-value="memberLemma" scope="content"/>
                 <action type="command" command="set" param="relatedWordIndex" param-value="0" asset="relatedWordIndexParam" scope="content"/>
                 <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="0" />
@@ -870,8 +870,8 @@
     <template id="relatedVerbTemplate">
         <g id="relatedVerbBody" x="0" y="0" w="100" h="100">
             <shape type="circle" x="50" y="50" w="50" h="50" fill="#DF99EA" stroke="black" z-index="100"/>
-            <image id="memberWordPicture" x="5" y="5" w="85" h="85" model="member.picture" z-index="100"/>
-            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.verb"/>
+            <image id="memberWordPicture" x="15" y="5" w="65" h="65" model="member.picture" z-index="100"/>
+            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-23" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.verb"/>
             <image x="-55" y="10" w="75" h="75" model="member.object" z-index="100" visible="false"/>
             <shape id="verbObject" type="circle" x="27" y="50" w="40" h="40" fill="white" opacity="0.6" stroke="black" z-index="50" ev-if="member.object">
                 <event type="click">
