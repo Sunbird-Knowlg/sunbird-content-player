@@ -1,4 +1,4 @@
-<theme startStage="splash" id="theme" ver="0.2">
+<theme startStage="intro" id="theme" ver="0.2">
     <manifest>
         <!-- Sounds -->
         <media id="welcome_sound" src="audio/welcome_riff.ogg" type="sound" />
@@ -6,6 +6,7 @@
         <media id="cheers_sound" src="audio/cheers_soft.ogg" type="sound" />
 
         <!-- Icons -->
+        <media id="story_icon" src="icons/icon.png" type="image" />
         <media id="sound_icon" src="icons/sound.png" type="image" />
         <media id="cancel_icon" src="icons/cancel.png" type="image" />
         <media id="button_long_up" src="icons/button_long_up.png" type="image" />
@@ -172,10 +173,11 @@
         <media id="mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai_audio1" src="palak_sounds/examples/mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai.mp3" type="sound" />
         <media id="palak_khane_se_ankhen_teek_rehti_hai_audio1" src="palak_sounds/examples/palak_khane_se_ankhen_teek_rehti_hai.mp3" type="sound" />
 
-        <media id="page2" src="scenes/image_2.jpg" type="image" />
-        <media id="page3" src="scenes/image_3.jpg" type="image" />
-        <media id="page4" src="scenes/image_4.jpg" type="image" />
-        <media id="page5" src="scenes/image_5.jpg" type="image" />
+        <media id="splash_screen_image" src="scenes/splash_screen.jpg" type="image" />
+        <media id="scene1_image" src="scenes/1.jpg" type="image" />
+        <media id="scene2_image" src="scenes/2.jpg" type="image" />
+        <media id="scene3_image" src="scenes/3.jpg" type="image" />
+        <media id="scene4_image" src="scenes/4.jpg" type="image" />
 
         <media id="previous" src="icon_previous.png" type="image" />
         <media id="next" src="icon_next.png" type="image" />
@@ -203,6 +205,13 @@
 
         <image asset="next"/>
         <image asset="previous"/>
+
+        <image asset="story_icon"/>
+        <image asset="splash_screen_image"/>
+        <image asset="scene1_image"/>
+        <image asset="scene2_image"/>
+        <image asset="scene3_image"/>
+        <image asset="scene4_image"/>
 
         <image asset="arrow_tl"/>
         <image asset="arrow_tr"/>
@@ -360,40 +369,85 @@
         <audio asset="palak_khane_se_ankhen_teek_rehti_hai_audio1"/>
     </stage>
 
+
     <stage id="storyBaseStage" preload="true">
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" param="next" effect="fadein" duration="0" />
+                <action type="command" command="transitionTo" asset="theme" param="next" direction="left" duration="500" ease="linear" effect="scroll" />
             </event>
         </shape>
         <image asset="previous" x="2" y="3" w="5" h="8.3" id="previous" visible="false"/>
         <shape id="previousContainer" type="rect" x="1" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" param="previous" effect="fadein" duration="0" transitionType="previous"/>
+                <action type="command" command="transitionTo" asset="theme" param="previous" direction="right" duration="500" ease="linear" effect="scroll" transitionType="previous"/>
             </event>
         </shape>
     </stage>
 
-    <stage id="splash" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+    <stage id="intro" x="0" y="0" w="100" h="100" extends="storyBaseStage">
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" param="next" effect="fadein" duration="0" />
             </event>
         </shape>
+        <param name="next" value="splash" />
+
+        <image asset="story_icon" x="32" y="20" w="40" h="55"/>
+        <text x="32" y="3" w="60" h="10" font="Georgia" weight="bold" fontsize="120">शेर का साथी हाथी</text>
+        <text x="22" y="83" w="80" h="10" font="Georgia" fontsize="80">Language model showcase for APF</text>
+    </stage>
+
+    <stage id="splash" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="intro" />
+        <param name="next" value="scene1" />
+        <text x="32" y="3" w="60" h="10" font="Georgia" weight="bold" fontsize="100">शेर का साथी हाथी</text>
+        <image asset="splash_screen_image" x="0" y="12" w="100" h="88"/>
+    </stage>
+
+    <stage id="scene1" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="splash" />
+        <param name="next" value="scene2" />
+        <g id="body" x="0" y="0" w="100" h="100">
+            <g x="10" y="3" w="80" h="10">
+                <text x="0" y="0" w="100" h="100" font="Georgia" align="center" fontsize="80">उस  रात बहुत तेज बारिश हो रही थी  | शेर अपने घर में लेटा हुआ था | </text>
+            </g>
+            <image asset="scene1_image" x="0" y="12" w="100" h="88"/>
+        </g>
+    </stage>
+
+    <stage id="scene2" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="scene1" />
+        <param name="next" value="scene3" />
+        <g id="body" x="0" y="0" w="100" h="100">
+            <g x="10" y="3" w="80" h="10">
+                <text x="0" y="0" w="100" h="100" font="Georgia" align="center" fontsize="80">तभी आवाज से उसकी आँख खुल गई  | रसोई  में जा कर देखा तो पाया कि वहां कोई आया था |</text>
+            </g>
+            <image asset="scene2_image" x="0" y="16" w="100" h="84"/>
+        </g>
+    </stage>
+
+    <stage id="scene3" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="scene2" />
+        <param name="next" value="scene4" />
+        <g id="body" x="0" y="0" w="100" h="100">
+            <g x="10" y="3" w="80" h="10">
+                <text x="0" y="0" w="100" h="100" font="Georgia" align="center" fontsize="80">अरे ! किसी ने उसके आम और पालक चुरा लिए थे | उसे आम और पालक बहुत पसंद थे | </text>
+            </g>
+            <image asset="scene3_image" x="0" y="16" w="100" h="84"/>
+        </g>
+    </stage> 
+
+    <stage id="scene4" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="scene3" />
         <param name="next" value="explore" />
-
-        <image asset="elephant_tiger" x="20" y="45" w="55" h="55"/>
-        <text x="32" y="3" w="60" h="10" font="Georgia" fontsize="100">शेर का साथी हाथी</text>
-
-        <text x="12" y="20" w="80" h="10" font="Georgia" lineHeight="1.5" fontsize="45" z-index="100">
-उस रात बहुत तेज बारिश हो रही थी | शेर अपने घर में लेटा हुआ था |
-तभी आवाज से उसकी आँख खुल गई | रसोई में जा कर देखा तो पाया कि वहां कोई आया था |
-अरे ! किसी ने उसके आम और पालक चुरा लिए थे | उसे आम और पालक बहुत पसंद थे |
-शेर घबरा कर अपने साथी, हाथी के पास गया | दोनों रात को बारिश में चोर को खोजने निकल पड़े |
-        </text>
-
+        <g id="body" x="0" y="0" w="100" h="100">
+            <g x="10" y="3" w="80" h="10">
+                <text x="0" y="0" w="100" h="100" font="Georgia" align="center" fontsize="80">शेर अपने साथी, हाथी के पास गया |  दोनों रात को बारिश में चोर को खोजने निकल पड़े |</text>
+            </g>
+            <image asset="scene4_image" x="0" y="16" w="100" h="84"/>
+        </g>
     </stage>
 
     <controller name="wordDetails" type="data" id="word-details"/>
