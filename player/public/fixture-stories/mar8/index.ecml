@@ -4,6 +4,7 @@
         <media id="welcome_sound" src="audio/welcome_riff.ogg" type="sound" />
         <media id="stage_sound" src="audio/new_puzzle.ogg" type="sound" />
         <media id="cheers_sound" src="audio/cheers_soft.ogg" type="sound" />
+        <media id="chimes" src="audio/chimes.ogg" type="sound" />
 
         <!-- Icons -->
         <media id="story_icon" src="icons/icon.png" type="image" />
@@ -173,6 +174,7 @@
         <media id="mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai_audio1" src="palak_sounds/examples/mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai.mp3" type="sound" />
         <media id="palak_khane_se_ankhen_teek_rehti_hai_audio1" src="palak_sounds/examples/palak_khane_se_ankhen_teek_rehti_hai.mp3" type="sound" />
 
+        <media id="splash_screen_image1" src="scenes/splash_screen.jpg" type="image" />
         <media id="splash_screen_image" src="scenes/splash_screen.png" type="image" />
         <media id="scene1_image" src="scenes/1.jpg" type="image" />
         <media id="scene2_image" src="scenes/2.jpg" type="image" />
@@ -181,6 +183,9 @@
 
         <media id="previous" src="icon_previous.png" type="image" />
         <media id="next" src="icon_next.png" type="image" />
+        <media id="play" src="icon_play.png" type="image" />
+        <media id="ekstep" src="icons/eksteplogo.png" type="image" />
+
         <media id="logo_img" src="logo.png" type="image" />
 
         <!-- paalak verbs -->
@@ -241,9 +246,12 @@
 
         <image asset="next"/>
         <image asset="previous"/>
+        <image asset="play"/>
+        <image asset="ekstep"/>
 
         <image asset="story_icon"/>
         <image asset="splash_screen_image"/>
+        <image asset="splash_screen_image1"/>
         <image asset="scene1_image"/>
         <image asset="scene2_image"/>
         <image asset="scene3_image"/>
@@ -353,9 +361,10 @@
         <image asset="image_sanjan"/>
         <image asset="image_shimla_mirch"/>
         <image asset="image_spinach"/>
-        <image asset="image_tomato"/>        
+        <image asset="image_tomato"/>
 
         <audio asset="stage_sound" />
+        <audio asset="chimes" />
         <audio asset="elephant_audio1" />
         <audio asset="lion_audio1" />
         <audio asset="palak_audio1" />
@@ -456,18 +465,27 @@
         </shape>
     </stage>
 
-    <stage id="intro" x="0" y="0" w="100" h="100" extends="storyBaseStage">
-        <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
-        <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
+    <stage id="intro" x="0" y="0" w="100" h="100">
+        <image asset="splash_screen_image1" x="0" y="0" w="100" h="100" z-index="-1"/>
+
+        <shape type="rect" x="-10" y="75" w="120" h="65" fill="white" opacity="0.8" stroke="white" stroke-width="5"/>
+        <image asset="play" x="46" y="67" w="12" h="21" id="next" z-index="100"/>
+        <shape id="nextContainer" type="rect" x="40" y="60" w="18" h="30" visible="false" hitArea="true">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" param="next" effect="fadein" duration="0" />
             </event>
         </shape>
         <param name="next" value="splash" />
 
-        <image asset="story_icon" x="32" y="20" w="40" h="55"/>
-        <text x="32" y="3" w="60" h="10" font="Georgia" weight="bold" fontsize="120">शेर का साथी हाथी</text>
-        <text x="22" y="83" w="80" h="10" font="Georgia" fontsize="80">Language model showcase for APF</text>
+        <image asset="ekstep" x="5" y="80" w="7" h="18" id="next" z-index="100"/>
+        <text x="13" y="82" w="15" h="10" font="Georgia" fontsize="50">Showcase Series</text>
+        <text x="13" y="94" w="80" h="10" font="Georgia" fontsize="30" color="">Literacy Platform</text>
+
+        <text x="85" y="82" w="12" h="5" align="center" font="Arial" fontsize="35" color="black" z-index="100">Grade 1</text>
+        <text x="85" y="92" w="12" h="5" align="center" font="Arial" fontsize="35" color="black" z-index="100">Vocabulary</text>
+
+        <shape type="rect" x="85" y="80" w="12" h="7" fill="#FF9500" stroke="white" stroke-width="5"/>
+        <shape type="rect" x="85" y="90" w="12" h="7" fill="#FF9500" stroke="white" stroke-width="5"/>
     </stage>
 
     <stage id="splash" x="0" y="0" w="100" h="100" extends="storyBaseStage">
@@ -522,7 +540,7 @@
                 <text x="45" y="85" w="55" h="10" font="Georgia" align="center" color="white" fontsize="90">उसे आम और पालक बहुत पसंद थे</text>
             </g>
         </g>
-    </stage> 
+    </stage>
 
     <stage id="scene4" x="0" y="0" w="100" h="100" extends="storyBaseStage">
         <param name="previous" value="scene3" />
@@ -541,8 +559,8 @@
         <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="14" x="32" y="50" w="14" h="14"/>
         <text x="55" y="30" w="50" h="10" fontsize="80" color="black" model="data.lemma"/>
         <text x="52" y="40" w="30" h="30" fontsize="50" color="black" model="data.meaning"/>
-        <image x="50" y="-2" h="40" w="40" asset="sound_image1"/>
-        <image x="20" y="40" h="25" w="25" model="data.picture"/>
+        <image x="49" y="-2" h="40" w="40" asset="sound_image1"/>
+        <image x="18" y="27" h="48" w="27" model="data.picture"/>
     </template>
 
     <set id="selectedWordParam" param="selectedWord" scope="content" model=""/>
@@ -559,7 +577,7 @@
             </event>
         </image>
         <image asset="animal_border" x="15" y="15" w="70" h="70" />
-        <image id="button_long_down" asset="button_long_down" x="40" y="81" w="20" h="10">
+        <image id="button_long_down" asset="button_long_down" x="39" y="81" w="20" h="10">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" effect="fadein" value="explore" duration="10" reset="true"/>
             </event>
@@ -596,7 +614,7 @@
 
         <events>
             <event type="enter">
-                <action type="command" command="play" asset="welcome_sound" loop="1" />
+                <action type="command" command="play" asset="chimes" loop="1" />
             </event>
         </events>
     </stage>
@@ -609,7 +627,7 @@
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
             <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="16" x="83" y="70" w="16" h="16"/>
-            <image id="page1Img" param="stage.selectedWordObj.picture" x="70" y="54" w="27" h="35" z-index="51"/>
+            <image id="page1Img" param="stage.selectedWordObj.picture" x="70" y="45" w="27" h="48" z-index="51"/>
 
             <g x="2" y="30" w="30" h="12">
                 <embed template-name="exampleSentenceTemplate" ev-example="wordDetails.${content.selectedWord}.exampleSentences[0]" />
@@ -679,7 +697,6 @@
         <set id="rhymingWordParam" param="rhymingWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.rhymingWords"/>
         <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
         <audio param="rhymingWord.pronunciation" />
-
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
 
@@ -1027,8 +1044,8 @@
                 <image id="spin_bot_ico" asset="triangle_dn" x="35" y="78" w="30" h="20" z-index="51"/>
             </g>
 
-            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="14" x="86" y="25" w="14" h="14"/>
-            <image id="selectedWordImage" x="75" y="10" w="24" h="30" param="stage.selectedWordObj.picture" z-index="100"/>
+            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="12" x="86" y="25" w="12" h="12"/>
+            <image id="selectedWordImage" x="75" y="5" w="24" h="42" param="stage.selectedWordObj.picture" z-index="100"/>
 
         </g>
 
@@ -1072,8 +1089,8 @@
     <template id="relatedVerbTemplate">
         <g id="relatedVerbBody" x="0" y="0" w="100" h="100">
             <shape type="circle" x="50" y="50" w="50" h="50" fill="#DF99EA" stroke="black" z-index="100"/>
-            <image id="memberWordPicture" x="5" y="5" w="85" h="85" model="member.picture" z-index="100"/>
-            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.verb"/>
+            <image id="memberWordPicture" x="15" y="3" w="70" h="70" model="member.picture" z-index="100"/>
+            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-22" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.verb"/>
             <g x="27" y="50" w="40" h="40" ev-if="member.object">
                 <image x="-100" y="-70" w="150" h="150" model="member.object" z-index="100" ev-if="member.object"></image>
                 <shape id="verbObject" type="circle" x="0" y="0" w="100" h="100" fill="white" opacity="0.6" stroke="black" z-index="50" ev-if="member.object">
@@ -1088,7 +1105,7 @@
                     </action>
                 </event>
             </g>
-            
+
         </g>
     </template>
 
