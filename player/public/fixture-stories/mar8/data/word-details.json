@@ -86,13 +86,13 @@
       }
     ],
     "verbs": [
-      {"verb": "चरना", "picture": "", "pronunciation": "charna_audio1", "object": ""},
-      {"verb": "घूमना", "picture": "", "pronunciation": "ghoomna_audio1", "object": ""},
-      {"verb": "सोना", "picture": "", "pronunciation": "sona_audio1", "object": ""},
-      {"verb": "कूदना", "picture": "", "pronunciation": "kudhna_audio1", "object": ""},
-      {"verb": "दौड़ना", "picture": "", "pronunciation": "daudna_audio1", "object": ""},
-      {"verb": "नहाना", "picture": "", "pronunciation": "nahaana_audio1", "object": ""},
-      {"verb": "खाना", "picture": "", "pronunciation": "khana_audio1", "object": ""}
+      {"verb": "चरना", "picture": "elephant_image1", "pronunciation": "charna_audio1", "object": ""},
+      {"verb": "घूमना", "picture": "elephant_image1", "pronunciation": "ghoomna_audio1", "object": ""},
+      {"verb": "सोना", "picture": "elephant_image1", "pronunciation": "sona_audio1", "object": ""},
+      {"verb": "कूदना", "picture": "elephant_image1", "pronunciation": "kudhna_audio1", "object": ""},
+      {"verb": "दौड़ना", "picture": "elephant_image1", "pronunciation": "daudna_audio1", "object": ""},
+      {"verb": "नहाना", "picture": "elephant_image1", "pronunciation": "nahaana_audio1", "object": ""},
+      {"verb": "खाना", "picture": "elephant_image1", "pronunciation": "khana_audio1", "object": ""}
     ]
   },
   "शेर": {
@@ -157,13 +157,13 @@
       }
     ],
     "verbs": [
-      {"verb": "चरना", "picture": "", "pronunciation": "charna_audio1", "object": ""},
-      {"verb": "घूमना", "picture": "", "pronunciation": "ghoomna_audio1", "object": ""},
-      {"verb": "सोना", "picture": "", "pronunciation": "sona_audio1", "object": ""},
-      {"verb": "कूदना", "picture": "", "pronunciation": "kudhna_audio1", "object": ""},
-      {"verb": "दौड़ना", "picture": "", "pronunciation": "daudna_audio1", "object": ""},
-      {"verb": "नहाना", "picture": "", "pronunciation": "nahaana_audio1", "object": ""},
-      {"verb": "खाना", "picture": "", "pronunciation": "khana_audio1", "object": ""}
+      {"verb": "चरना", "picture": "lion_image1", "pronunciation": "charna_audio1", "object": ""},
+      {"verb": "घूमना", "picture": "lion_image1", "pronunciation": "ghoomna_audio1", "object": ""},
+      {"verb": "सोना", "picture": "lion_image1", "pronunciation": "sona_audio1", "object": ""},
+      {"verb": "कूदना", "picture": "lion_image1", "pronunciation": "kudhna_audio1", "object": ""},
+      {"verb": "दौड़ना", "picture": "lion_image1", "pronunciation": "daudna_audio1", "object": ""},
+      {"verb": "नहाना", "picture": "lion_image1", "pronunciation": "nahaana_audio1", "object": ""},
+      {"verb": "खाना", "picture": "lion_image1", "pronunciation": "khana_audio1", "object": ""}
     ]
   },
   "पालक": {
@@ -184,13 +184,13 @@
       {"sentence": "पालक  खाने से आँखे ठीक रहती है", "audio": "palak_khane_se_ankhen_teek_rehti_hai_audio1"}
     ],
     "verbs": [
-      {"verb": "चरना", "picture": "", "pronunciation": "charna_audio1", "object": ""},
-      {"verb": "घूमना", "picture": "", "pronunciation": "ghoomna_audio1", "object": ""},
-      {"verb": "सोना", "picture": "", "pronunciation": "sona_audio1", "object": ""},
-      {"verb": "कूदना", "picture": "", "pronunciation": "kudhna_audio1", "object": ""},
-      {"verb": "दौड़ना", "picture": "", "pronunciation": "daudna_audio1", "object": ""},
-      {"verb": "नहाना", "picture": "", "pronunciation": "nahaana_audio1", "object": ""},
-      {"verb": "खाना", "picture": "", "pronunciation": "khana_audio1", "object": ""}
+      {"verb": "चरना", "picture": "palak_image1", "pronunciation": "charna_audio1", "object": ""},
+      {"verb": "घूमना", "picture": "palak_image1", "pronunciation": "ghoomna_audio1", "object": ""},
+      {"verb": "सोना", "picture": "palak_image1", "pronunciation": "sona_audio1", "object": ""},
+      {"verb": "कूदना", "picture": "palak_image1", "pronunciation": "kudhna_audio1", "object": ""},
+      {"verb": "दौड़ना", "picture": "palak_image1", "pronunciation": "daudna_audio1", "object": ""},
+      {"verb": "नहाना", "picture": "palak_image1", "pronunciation": "nahaana_audio1", "object": ""},
+      {"verb": "खाना", "picture": "palak_image1", "pronunciation": "khana_audio1", "object": ""}
     ]
   }
 }

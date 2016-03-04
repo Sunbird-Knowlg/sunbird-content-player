@@ -670,32 +670,32 @@
 
             <g x="0" y="0" w="100" h="100" id="relatedVerbsContainer">
                 <g x="34" y="32" w="20" h="35">
-                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[0]" />
                 </g>
 
                 <g x="12" y="65" w="15" h="27">
-                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[1]" />
                 </g>
 
                 <g x="55" y="65" w="15" h="27">
-                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[2]" />
                 </g>
 
                 <g x="62" y="25" w="15" h="27">
-                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[3]" />
                 </g>
 
                 <g x="80" y="50" w="15" h="27">
-                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[4]" />
                 </g>
 
                 <g x="82" y="15" w="12" h="20">
-                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.relatedWords[0].members[1]" />
+                    <embed template-name="relatedVerbTemplate" ev-member="wordDetails.${content.selectedWord}.verbs[5]" />
                 </g>
             </g>
 
             <g x="2" y="2" w="25" h="45">
-                <embed template-name="selectedWordTemplate" ev-member="stage.selectedWordObj" />
+                <embed template-name="selectedWordTemplate" ev-word="wordDetails.${content.selectedWord}" />
             </g>
 
         </g>
@@ -850,7 +850,7 @@
         <g id="relatedVerbBody" x="0" y="0" w="100" h="100">
             <shape type="circle" x="50" y="50" w="50" h="50" fill="#DF99EA" stroke="black" z-index="100"/>
             <image id="memberWordPicture" x="5" y="5" w="90" h="90" model="member.picture" z-index="100"/>
-            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.lemma"/>
+            <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-20" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.verb"/>
             <shape id="verbObject" type="circle" x="27" y="50" w="40" h="40" fill="white" opacity="0.6" stroke="black" z-index="50">
             </shape>
             <event type="click">
@@ -867,7 +867,7 @@
 
     <template id="selectedWordTemplate">
         <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="50" x="50" y="50" w="50" h="50"/>
-        <image id="selectedWordImage" x="75" y="10" w="24" h="30" param="member.picture" z-index="100"/>
+        <image id="selectedWordImage" x="10" y="10" w="90" h="90" model="word.picture" z-index="100"/>
     </template>
 
     <template id="exampleSentenceTemplate">
