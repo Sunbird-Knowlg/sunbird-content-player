@@ -187,23 +187,22 @@
         "picture": "palak_image1",
         "memberRelation": "hasHyponym",
         "members": [
-          {"lemma":"गाजर","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"गाजर","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"आलू","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"लहसुन","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"बैंगन","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"करेला","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"पत्तागोभी","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"सेंजन","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"अदरक","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"प्याज","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"पुदीना","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"कद्दू","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"मूली","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"इमली","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"फूल गोभी","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"भिन्डी","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"टमाटर","meaning":"","picture":"palak_image1","pronunciation":""}
+          {"lemma":"गाजर","meaning":"","picture":"image_carrot","pronunciation":""},
+          {"lemma":"आलू","meaning":"","picture":"image_aalu","pronunciation":""},
+          {"lemma":"लहसुन","meaning":"","picture":"image_garlic","pronunciation":""},
+          {"lemma":"बैंगन","meaning":"","picture":"image_bayngan","pronunciation":""},
+          {"lemma":"करेला","meaning":"","picture":"image_karela","pronunciation":""},
+          {"lemma":"पत्तागोभी","meaning":"","picture":"image_patta_gobi","pronunciation":""},
+          {"lemma":"सेंजन","meaning":"","picture":"image_sanjan","pronunciation":""},
+          {"lemma":"अदरक","meaning":"","picture":"image_ginger","pronunciation":""},
+          {"lemma":"प्याज","meaning":"","picture":"image_piyaaj","pronunciation":""},
+          {"lemma":"पुदीना","meaning":"","picture":"image_pudina","pronunciation":""},
+          {"lemma":"कद्दू","meaning":"","picture":"image_kaddu","pronunciation":""},
+          {"lemma":"मूली","meaning":"","picture":"image_muli","pronunciation":""},
+          {"lemma":"इमली","meaning":"","picture":"image_imli","pronunciation":""},
+          {"lemma":"फूल गोभी","meaning":"","picture":"image_phool_gobi","pronunciation":""},
+          {"lemma":"भिन्डी","meaning":"","picture":"image_bhindi","pronunciation":""},
+          {"lemma":"टमाटर","meaning":"","picture":"image_tomato","pronunciation":""}
         ]
       },
       {
@@ -212,26 +211,26 @@
         "picture": "palak_image1",
         "memberRelation": "hasHyponym",
         "members": [
-          {"lemma":"पत्ती","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"घास","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"हरे अंगूर","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"हरा सेब","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"मटर","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"शिमला मिर्च","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"पौधों","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"गन्ना","meaning":"","picture":"palak_image1","pronunciation":""},
-          {"lemma":"पुदीना","meaning":"","picture":"palak_image1","pronunciation":""}
+          {"lemma":"पत्ती","meaning":"","picture":"image_pattay","pronunciation":""},
+          {"lemma":"घास","meaning":"","picture":"image_grass","pronunciation":""},
+          {"lemma":"हरे अंगूर","meaning":"","picture":"image_hara_angoor","pronunciation":""},
+          {"lemma":"हरा सेब","meaning":"","picture":"image_hara_sayb","pronunciation":""},
+          {"lemma":"मटर","meaning":"","picture":"image_hare_matar","pronunciation":""},
+          {"lemma":"शिमला मिर्च","meaning":"","picture":"image_shimla_mirch","pronunciation":""},
+          {"lemma":"पौधों","meaning":"","picture":"image_paudha","pronunciation":""},
+          {"lemma":"गन्ना","meaning":"","picture":"image_ganna","pronunciation":""},
+          {"lemma":"पुदीना","meaning":"","picture":"image_pudina","pronunciation":""}
         ]
       }
     ],
     "verbs": [
-      {"verb": "चरना", "picture": "palak_image1", "pronunciation": "charna_audio1", "object": ""},
-      {"verb": "घूमना", "picture": "palak_image1", "pronunciation": "ghoomna_audio1", "object": ""},
-      {"verb": "सोना", "picture": "palak_image1", "pronunciation": "sona_audio1", "object": ""},
-      {"verb": "कूदना", "picture": "palak_image1", "pronunciation": "kudhna_audio1", "object": ""},
-      {"verb": "दौड़ना", "picture": "palak_image1", "pronunciation": "daudna_audio1", "object": ""},
-      {"verb": "नहाना", "picture": "palak_image1", "pronunciation": "nahaana_audio1", "object": ""},
-      {"verb": "खाना", "picture": "palak_image1", "pronunciation": "khana_audio1", "object": ""}
+      {"verb": "पकाना", "picture": "image_pakaana", "pronunciation": "charna_audio1", "object": ""},
+      {"verb": "खाना", "picture": "palak_image1", "pronunciation": "ghoomna_audio1", "object": ""},
+      {"verb": "बोना", "picture": "palak_image1", "pronunciation": "sona_audio1", "object": ""},
+      {"verb": "लगाना", "picture": "palak_image1", "pronunciation": "kudhna_audio1", "object": ""},
+      {"verb": "काटना", "picture": "image_kaatna", "pronunciation": "daudna_audio1", "object": ""},
+      {"verb": "बनाना", "picture": "palak_image1", "pronunciation": "nahaana_audio1", "object": ""},
+      {"verb": "धोना", "picture": "image_dhona", "pronunciation": "khana_audio1", "object": ""}
     ]
   }
 }

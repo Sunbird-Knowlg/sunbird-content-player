@@ -182,6 +182,42 @@
         <media id="previous" src="icon_previous.png" type="image" />
         <media id="next" src="icon_next.png" type="image" />
         <media id="logo_img" src="logo.png" type="image" />
+
+        <!-- paalak verbs -->
+        <media id="image_dhona" src="paalak/verbs/dhona.png" type="image" />
+        <media id="image_kaatna" src="paalak/verbs/kaatna.png" type="image" />
+        <media id="image_pakaana" src="paalak/verbs/pakaana.png" type="image" />
+
+        <!-- paalak related words -->
+        <media id="image_aalu" src="paalak/relwords/aalu.png" type="image" />
+        <media id="image_bayngan" src="paalak/relwords/bayngan.png" type="image" />
+        <media id="image_bhindi" src="paalak/relwords/bhindi.png" type="image" />
+        <media id="image_carrot" src="paalak/relwords/carrot.png" type="image" />
+        <media id="image_eating" src="paalak/relwords/eating.png" type="image" />
+        <media id="image_ganna" src="paalak/relwords/ganna.png" type="image" />
+        <media id="image_garlic" src="paalak/relwords/garlic.png" type="image" />
+        <media id="image_ginger" src="paalak/relwords/ginger.png" type="image" />
+        <media id="image_grass" src="paalak/relwords/grass.png" type="image" />
+        <media id="image_hara_angoor" src="paalak/relwords/hara_angoor.png" type="image" />
+        <media id="image_hara_sayb" src="paalak/relwords/hara_sayb.png" type="image" />
+        <media id="image_hare_matar" src="paalak/relwords/hare_matar.png" type="image" />
+        <media id="image_imli" src="paalak/relwords/imli.png" type="image" />
+        <media id="image_kaddu" src="paalak/relwords/kaddu.png" type="image" />
+        <media id="image_hare_rang_ki_sabji" src="paalak/relwords/hare_rang_ki_sabji.png" type="image" />
+        <media id="image_karela" src="paalak/relwords/karela.png" type="image" />
+        <media id="image_muli" src="paalak/relwords/muli.png" type="image" />
+        <media id="image_palak" src="paalak/relwords/palak.png" type="image" />
+        <media id="image_patta_gobi" src="paalak/relwords/patta_gobi.png" type="image" />
+        <media id="image_pattay" src="paalak/relwords/pattay.png" type="image" />
+        <media id="image_paudha" src="paalak/relwords/paudha.png" type="image" />
+        <media id="image_phool_gobi" src="paalak/relwords/phool_gobi.png" type="image" />
+        <media id="image_piyaaj" src="paalak/relwords/piyaaj.png" type="image" />
+        <media id="image_pudina" src="paalak/relwords/pudina.png" type="image" />
+        <media id="image_sanjan" src="paalak/relwords/sanjan.png" type="image" />
+        <media id="image_shimla_mirch" src="paalak/relwords/shimla_mirch.png" type="image" />
+        <media id="image_spinach" src="paalak/relwords/spinach.png" type="image" />
+        <media id="image_tomato" src="paalak/relwords/tomato.png" type="image" />
+
     </manifest>
 
     <template id="blurWordTemplate">
@@ -283,6 +319,41 @@
         <image asset="jump_image1"/>
         <image asset="run_image1"/>
         <image asset="nahaana_image1"/>
+
+        <!-- preload paalak verbs -->
+        <image asset="image_dhona"/>
+        <image asset="image_kaatna"/>
+        <image asset="image_pakaana"/>
+
+        <!-- preload paalak related words -->
+        <image asset="image_aalu"/>
+        <image asset="image_bayngan"/>
+        <image asset="image_bhindi"/>
+        <image asset="image_carrot"/>
+        <image asset="image_eating"/>
+        <image asset="image_ganna"/>
+        <image asset="image_garlic"/>
+        <image asset="image_ginger"/>
+        <image asset="image_grass"/>
+        <image asset="image_hara_angoor"/>
+        <image asset="image_hara_sayb"/>
+        <image asset="image_hare_matar"/>
+        <image asset="image_imli"/>
+        <image asset="image_kaddu"/>
+        <image asset="image_hare_rang_ki_sabji"/>
+        <image asset="image_karela"/>
+        <image asset="image_muli"/>
+        <image asset="image_palak"/>
+        <image asset="image_patta_gobi"/>
+        <image asset="image_pattay"/>
+        <image asset="image_paudha"/>
+        <image asset="image_phool_gobi"/>
+        <image asset="image_piyaaj"/>
+        <image asset="image_pudina"/>
+        <image asset="image_sanjan"/>
+        <image asset="image_shimla_mirch"/>
+        <image asset="image_spinach"/>
+        <image asset="image_tomato"/>        
 
         <audio asset="stage_sound" />
         <audio asset="elephant_audio1" />
