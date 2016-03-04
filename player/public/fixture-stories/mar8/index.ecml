@@ -25,6 +25,8 @@
         <media id="arrow_bl" src="icons/arrow_bl.png" type="image" />
         <media id="arrow_br" src="icons/arrow_br.png" type="image" />
 
+        <media id="placeholder_image" src="placeholder.png" type="image" />
+
         <!-- Story assets -->
         <media id="elephant_tiger" src="pictures/elephant-tiger.jpg" type="image" />
 
@@ -252,6 +254,7 @@
 
         <image asset="next"/>
         <image asset="previous"/>
+        <image asset="placeholder_image"/>
 
         <image asset="story_icon"/>
         <image asset="splash_screen_image"/>

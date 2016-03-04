@@ -52,7 +52,7 @@
           {"lemma": "घोड़ा", "picture": "animals_image1", "pronunciation": "ghoda_audio1"},
           {"lemma": "मंत्री", "picture": "mantri_image1", "pronunciation": "mantri_audio1"},
           {"lemma": "राजा", "picture": "chess_king_image1", "pronunciation": "raja_audio1"},
-          {"lemma": "ऊंट", "picture": "camel_image1", "pronunciation": "oont_audio1"},
+          {"lemma": "ऊंट", "picture": "placeholder_image", "pronunciation": "oont_audio1"},
           {"lemma": "प्यादा", "picture": "pyada_image1", "pronunciation": "pyadha_audio1"},
           {"lemma": "हाथी", "picture": "castle_image1", "pronunciation": ""}
         ]
@@ -241,11 +241,11 @@
     ],
     "verbs": [
       {"verb": "पकाना", "picture": "image_pakaana", "pronunciation": "charna_audio1", "object": ""},
-      {"verb": "खाना", "picture": "palak_image1", "pronunciation": "ghoomna_audio1", "object": ""},
-      {"verb": "बोना", "picture": "palak_image1", "pronunciation": "sona_audio1", "object": ""},
-      {"verb": "लगाना", "picture": "palak_image1", "pronunciation": "kudhna_audio1", "object": ""},
+      {"verb": "खाना", "picture": "eating_image1", "pronunciation": "ghoomna_audio1", "object": ""},
+      {"verb": "बोना", "picture": "placeholder_image", "pronunciation": "sona_audio1", "object": ""},
+      {"verb": "लगाना", "picture": "placeholder_image", "pronunciation": "kudhna_audio1", "object": ""},
       {"verb": "काटना", "picture": "image_kaatna", "pronunciation": "daudna_audio1", "object": ""},
-      {"verb": "बनाना", "picture": "palak_image1", "pronunciation": "nahaana_audio1", "object": ""},
+      {"verb": "बनाना", "picture": "placeholder_image", "pronunciation": "nahaana_audio1", "object": ""},
       {"verb": "धोना", "picture": "image_dhona", "pronunciation": "khana_audio1", "object": ""}
     ]
   }
