@@ -91,9 +91,9 @@
 
         <media id="example_sentences_audio1" src="sounds/Example_sentences.mp3" type="sound" />
 
-        <media id="elephant_audio1" src="sounds/elephant_audio1.mp3" type="sound" />
+        <!-- <media id="elephant_audio1" src="sounds/elephant_audio1.mp3" type="sound" />
         <media id="lion_audio1" src="sounds/lion_audio1.mp3" type="sound" />
-        <media id="palak_audio1" src="sounds/palak_audio1.mp3" type="sound" />
+        <media id="palak_audio1" src="sounds/palak_audio1.mp3" type="sound" /> -->
         <media id="friend_audio1" src="sounds/friend_audio1.mp3" type="sound" />
         <media id="jaati_audio1" src="sounds/jaati_audio1.mp3" type="sound" />
         <media id="balak_audio1" src="sounds/balak_audio1.mp3" type="sound" />
@@ -243,13 +243,22 @@
         <media id="audio_scene4_1" src="story_audio/sher_ghabrakar_apne_saathi_haathi_ke_paas_gaya.mp3" type="sound" />
         <media id="audio_scene4_2" src="story_audio/dono_raat_ko_bharish_mein_chor_ko_khojne_nikal_pade.mp3" type="sound" />
 
+        <media id="audio_hathi" src="story_audio/words/hathi.mp3" type="sound" />
+        <media id="audio_sher" src="story_audio/words/sher.mp3" type="sound" />
+        <media id="audio_palak" src="story_audio/words/palak.mp3" type="sound" />
+
         <media id="audio_aam" src="story_audio/words/aam.mp3" type="sound" />
         <media id="audio_ankh" src="story_audio/words/ankh.mp3" type="sound" />
         <media id="audio_barish" src="story_audio/words/barish.mp3" type="sound" />
         <media id="audio_ghar" src="story_audio/words/ghar.mp3" type="sound" />
-        <media id="audio_hathi" src="story_audio/words/hathi.mp3" type="sound" />
-        <media id="audio_palak" src="story_audio/words/palak.mp3" type="sound" />
-        <media id="audio_sher" src="story_audio/words/sher.mp3" type="sound" />
+
+        <media id="audio_banana" src="palak_sounds/verbs/banana.mp3" type="sound" />
+        <media id="audio_bona" src="palak_sounds/verbs/bona.mp3" type="sound" />
+        <media id="audio_dhona" src="palak_sounds/verbs/dhona.mp3" type="sound" />
+        <media id="audio_khana" src="palak_sounds/verbs/khana.mp3" type="sound" />
+        <media id="audio_khatna" src="palak_sounds/verbs/khatna.mp3" type="sound" />
+        <media id="audio_lagana" src="palak_sounds/verbs/lagana.mp3" type="sound" />
+        <media id="audio_pakana" src="palak_sounds/verbs/pakana.mp3" type="sound" />
 
     </manifest>
 
@@ -401,9 +410,9 @@
 
         <audio asset="stage_sound" />
         <audio asset="chimes" />
-        <audio asset="elephant_audio1" />
+        <!-- <audio asset="elephant_audio1" />
         <audio asset="lion_audio1" />
-        <audio asset="palak_audio1" />
+        <audio asset="palak_audio1" /> -->
         <audio asset="friend_audio1" />
         <audio asset="jaati_audio1" />
         <audio asset="balak_audio1" />
@@ -501,6 +510,14 @@
         <audio asset="audio_hathi" />
         <audio asset="audio_palak" />
         <audio asset="audio_sher" />
+
+        <audio asset="audio_banana" />
+        <audio asset="audio_bona" />
+        <audio asset="audio_dhona" />
+        <audio asset="audio_khana" />
+        <audio asset="audio_khatna" />
+        <audio asset="audio_lagana" />
+        <audio asset="audio_pakana" />
     </stage>
 
 
@@ -659,10 +676,14 @@
     <controller name="wordDetails" type="data" id="word-details"/>
     <controller name="words-list" id="words-list" type="data" />
     <template id="word_template">
-        <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="14" x="32" y="50" w="14" h="14"/>
-        <text x="55" y="30" w="50" h="10" fontsize="80" color="black" model="data.lemma"/>
+        <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="14" x="32" y="50" w="14" h="14">
+            <event type="click">
+                <action type="command" command="togglePlay" asset-model="data.pronunciation"/>
+            </event>
+        </shape>
+        <text x="52" y="30" w="50" h="10" fontsize="80" color="black" model="data.lemma"/>
         <text x="52" y="40" w="30" h="30" fontsize="50" color="black" model="data.meaning"/>
-        <image x="49" y="-2" h="40" w="40" asset="sound_image1"/>
+        <!-- <image x="49" y="-2" h="40" w="40" asset="sound_image1"/> -->
         <image x="18" y="27" h="48" w="27" model="data.picture"/>
     </template>
 

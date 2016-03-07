@@ -240,13 +240,13 @@
       }
     ],
     "verbs": [
-      {"verb": "पकाना", "picture": "image_pakaana", "pronunciation": "charna_audio1", "object": ""},
-      {"verb": "खाना", "picture": "eating_image1", "pronunciation": "ghoomna_audio1", "object": ""},
-      {"verb": "बोना", "picture": "placeholder_image", "pronunciation": "sona_audio1", "object": ""},
-      {"verb": "लगाना", "picture": "placeholder_image", "pronunciation": "kudhna_audio1", "object": ""},
-      {"verb": "काटना", "picture": "image_kaatna", "pronunciation": "daudna_audio1", "object": ""},
-      {"verb": "बनाना", "picture": "placeholder_image", "pronunciation": "nahaana_audio1", "object": ""},
-      {"verb": "धोना", "picture": "image_dhona", "pronunciation": "khana_audio1", "object": ""}
+      {"verb": "पकाना", "picture": "image_pakaana", "pronunciation": "audio_pakana", "object": ""},
+      {"verb": "खाना", "picture": "eating_image1", "pronunciation": "audio_khana", "object": ""},
+      {"verb": "बोना", "picture": "placeholder_image", "pronunciation": "audio_bona", "object": ""},
+      {"verb": "लगाना", "picture": "placeholder_image", "pronunciation": "audio_lagana", "object": ""},
+      {"verb": "काटना", "picture": "image_kaatna", "pronunciation": "audio_khatna", "object": ""},
+      {"verb": "बनाना", "picture": "placeholder_image", "pronunciation": "audio_banana", "object": ""},
+      {"verb": "धोना", "picture": "image_dhona", "pronunciation": "audio_dhona", "object": ""}
     ]
   }
 }
