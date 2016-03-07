@@ -174,7 +174,7 @@
     ],
     "verbs": [
       {"verb": "घूमना", "picture": "walking_image1", "pronunciation": "ghoomna_audio1", "object": ""},
-      {"verb": "सोना", "picture": "image_sona", "pronunciation": "", "object": ""},
+      {"verb": "सोना", "picture": "image_sona", "pronunciation": "sona_audio1", "object": ""},
       {"verb": "कूदना", "picture": "jump_image1", "pronunciation": "kudhna_audio1", "object": ""},
       {"verb": "दौड़ना", "picture": "run_image1", "pronunciation": "daudna_audio1", "object": ""}
     ]

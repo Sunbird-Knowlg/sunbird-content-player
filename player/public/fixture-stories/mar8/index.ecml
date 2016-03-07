@@ -1109,6 +1109,7 @@
 
     <template id="relatedVerbTemplate">
         <g id="relatedVerbBody" x="0" y="0" w="100" h="100">
+            <set param="pronunciation" scope="parent" ev-model="member.pronunciation"/>
             <shape type="circle" x="50" y="50" w="50" h="50" fill="#DF99EA" stroke="black" z-index="100"/>
             <image id="memberWordPicture" x="15" y="3" w="65" h="65" model="member.picture" z-index="100"/>
             <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-22" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.verb"/>
@@ -1126,7 +1127,9 @@
                     </action>
                 </event>
             </g>
-
+            <event type="click">
+                <action type="command" command="play" asset-param="pronunciation" />
+            </event>
         </g>
     </template>
 
