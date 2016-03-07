@@ -25,22 +25,22 @@
         "picture": "fourlegged_image1",
         "memberRelation": "hasHyponym",
         "members": [
-          {"lemma": "शेर", "picture": "lion_image1", "pronunciation": "sher_audio1"},
-          {"lemma": "बाघ", "picture": "tiger_image1", "pronunciation": "baag_audio1"},
           {"lemma": "गाय", "picture": "cow_image1", "pronunciation": "ghai_audio1"},
-          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
-          {"lemma": "हिरण", "picture": "deer_image1", "pronunciation": "hiran_audio1"},
-          {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
+          {"lemma": "बैल", "picture": "ox_image1", "pronunciation": "bail_audio1"},
+          {"lemma": "शेर", "picture": "lion_image1", "pronunciation": "sher_audio1"},
+          {"lemma": "साँड़", "picture": "bull_image1", "pronunciation": "saand_audio1"},
+          {"lemma": "ऊंट", "picture": "camel_image1", "pronunciation": "oont_audio1"},
+          {"lemma": "बाघ", "picture": "tiger_image1", "pronunciation": "baag_audio1"},
           {"lemma": "सूअर", "picture": "pig_image1", "pronunciation": "suaar_audio1"},
           {"lemma": "शूकर", "picture": "hog_image1", "pronunciation": "shoekar_audio1"},
-          {"lemma": "साँड़", "picture": "bull_image1", "pronunciation": "saand_audio1"},
-          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "magarmachch_audio1"},
-          {"lemma": "सियार", "picture": "jackal_image1", "pronunciation": "siyar_audio1"},
-          {"lemma": "ज़ेबरा", "picture": "zebra_image1", "pronunciation": "zeybra_audio1"},
-          {"lemma": "बैल", "picture": "ox_image1", "pronunciation": "bail_audio1"},
           {"lemma": "घोड़ा", "picture": "horse_image1", "pronunciation": "ghoda_audio1"},
           {"lemma": "बकरी", "picture": "goat_image1", "pronunciation": "bakari_audio1"},
-          {"lemma": "ऊंट", "picture": "camel_image1", "pronunciation": "oont_audio1"}
+          {"lemma": "सियार", "picture": "jackal_image1", "pronunciation": "siyar_audio1"},
+          {"lemma": "ज़ेबरा", "picture": "zebra_image1", "pronunciation": "zeybra_audio1"},
+          {"lemma": "हिरण", "picture": "deer_image1", "pronunciation": "hiran_audio1"},
+          {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
+          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
+          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "magarmachch_audio1"}
         ]
       },
       {
@@ -49,12 +49,11 @@
         "picture": "chess_image1",
         "memberRelation": "hasHyponym",
         "members": [
-          {"lemma": "घोड़ा", "picture": "animals_image1", "pronunciation": "ghoda_audio1"},
-          {"lemma": "मंत्री", "picture": "chess_king_image1", "pronunciation": "mantri_audio1"},
           {"lemma": "राजा", "picture": "chess_king_image1", "pronunciation": "raja_audio1"},
           {"lemma": "ऊंट", "picture": "mantri_image1", "pronunciation": "oont_audio1"},
+          {"lemma": "घोड़ा", "picture": "animals_image1", "pronunciation": "ghoda_audio1"},
           {"lemma": "प्यादा", "picture": "pyada_image1", "pronunciation": "pyadha_audio1"},
-          {"lemma": "हाथी", "picture": "castle_image1", "pronunciation": ""}
+          {"lemma": "मंत्री", "picture": "chess_king_image1", "pronunciation": "mantri_audio1"}
         ]
       },
       {
@@ -63,12 +62,11 @@
         "picture": "war_image1",
         "memberRelation": "hasHyponym",
         "members": [
-          {"lemma": "घोड़ा", "picture": "horse_image1", "pronunciation": "ghoda_audio1"},
           {"lemma": "ऊंट", "picture": "camel_image1", "pronunciation": "oont_audio1"},
           {"lemma": "गधा", "picture": "donkey_image1", "pronunciation": "gadha_audio1"},
-          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
+          {"lemma": "घोड़ा", "picture": "horse_image1", "pronunciation": "ghoda_audio1"},
           {"lemma": "कबूतर", "picture": "pigeon_image1", "pronunciation": "kabutar_audio1"},
-          {"lemma": "हाथी", "picture": "elephant_image1", "pronunciation": ""}
+          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"}
         ]
       },
       {
@@ -78,12 +76,11 @@
         "memberRelation": "hasHyponym",
         "members": [
           {"lemma": "जिराफ़", "picture": "giraffe_image1", "pronunciation": "giraffe_audio1"},
+          {"lemma": "राइनो", "picture": "rhino_image1", "pronunciation": "rhino_audio1"},
           {"lemma": "ह्वेल", "picture": "whale_image1", "pronunciation": "whale_audio1"},
           {"lemma": "गोरिल्ला", "picture": "gorilla_image1", "pronunciation": "gorilla_audio1"},
-          {"lemma": "शुतुरमुर्ग", "picture": "ostrich_image1", "pronunciation": "whale_audio1"},
-          {"lemma": "राइनो", "picture": "rhino_image1", "pronunciation": "rhino_audio1"},
           {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "hiran_audio1"},
-          {"lemma": "हाथी", "picture": "elephant_image1", "pronunciation": ""}
+          {"lemma": "शुतुरमुर्ग", "picture": "ostrich_image1", "pronunciation": "whale_audio1"}
         ]
       }
     ],
@@ -125,22 +122,22 @@
         "picture": "fourlegged_image1",
         "memberRelation": "hasHyponym",
         "members": [
-          {"lemma": "हाथी", "picture": "elephant_image1", "pronunciation": "audio_hathi"},
-          {"lemma": "बाघ", "picture": "tiger_image1", "pronunciation": "baag_audio1"},
           {"lemma": "गाय", "picture": "cow_image1", "pronunciation": "ghai_audio1"},
-          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
-          {"lemma": "हिरण", "picture": "deer_image1", "pronunciation": "hiran_audio1"},
-          {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
+          {"lemma": "बैल", "picture": "ox_image1", "pronunciation": "bail_audio1"},
+          {"lemma": "साँड़", "picture": "bull_image1", "pronunciation": "saand_audio1"},
+          {"lemma": "ऊंट", "picture": "camel_image1", "pronunciation": "oont_audio1"},
+          {"lemma": "बाघ", "picture": "tiger_image1", "pronunciation": "baag_audio1"},
+          {"lemma": "हाथी", "picture": "elephant_image1", "pronunciation": "audio_hathi"},
           {"lemma": "सूअर", "picture": "pig_image1", "pronunciation": "suaar_audio1"},
           {"lemma": "शूकर", "picture": "hog_image1", "pronunciation": "shoekar_audio1"},
-          {"lemma": "साँड़", "picture": "bull_image1", "pronunciation": "saand_audio1"},
-          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "magarmachch_audio1"},
-          {"lemma": "सियार", "picture": "jackal_image1", "pronunciation": "siyar_audio1"},
-          {"lemma": "ज़ेबरा", "picture": "zebra_image1", "pronunciation": "zeybra_audio1"},
-          {"lemma": "बैल", "picture": "ox_image1", "pronunciation": "bail_audio1"},
           {"lemma": "घोड़ा", "picture": "horse_image1", "pronunciation": "ghoda_audio1"},
           {"lemma": "बकरी", "picture": "goat_image1", "pronunciation": "bakari_audio1"},
-          {"lemma": "ऊंट", "picture": "camel_image1", "pronunciation": "oont_audio1"}
+          {"lemma": "सियार", "picture": "jackal_image1", "pronunciation": "siyar_audio1"},
+          {"lemma": "ज़ेबरा", "picture": "zebra_image1", "pronunciation": "zeybra_audio1"},
+          {"lemma": "हिरण", "picture": "deer_image1", "pronunciation": "hiran_audio1"},
+          {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
+          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
+          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "magarmachch_audio1"}
         ]
       },
       {
@@ -149,15 +146,15 @@
         "picture": "fourlegged_image1",
         "memberRelation": "hasHyponym",
         "members": [
-          {"lemma": "नेवला", "picture": "image_mongoose", "pronunciation": ""},
-          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
-          {"lemma": "गीदड़", "picture": "image_fox", "pronunciation": ""},
-          {"lemma": "बिल्ली", "picture": "image_cat", "pronunciation": ""},
-          {"lemma": "भालू", "picture": "image_bear", "pronunciation": ""},
-          {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
-          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "magarmachch_audio1"},
           {"lemma": "साँप", "picture": "image_snake", "pronunciation": ""},
-          {"lemma": "घटपर्णी", "picture": "image_pitcher_plant", "pronunciation": ""}
+          {"lemma": "भालू", "picture": "image_bear", "pronunciation": ""},
+          {"lemma": "नेवला", "picture": "image_mongoose", "pronunciation": ""},
+          {"lemma": "गीदड़", "picture": "image_fox", "pronunciation": ""},
+          {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
+          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
+          {"lemma": "बिल्ली", "picture": "image_cat", "pronunciation": ""},
+          {"lemma": "घटपर्णी", "picture": "image_pitcher_plant", "pronunciation": ""},
+          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "magarmachch_audio1"}
         ]
       },
       {
@@ -167,9 +164,9 @@
         "memberRelation": "hasHyponym",
         "members": [
           {"lemma": "बाघ", "picture": "tiger_image1", "pronunciation": "baag_audio1"},
-          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
+          {"lemma": "सियार", "picture": "jackal_image1", "pronunciation": "siyar_audio1"},
           {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
-          {"lemma": "सियार", "picture": "jackal_image1", "pronunciation": "siyar_audio1"}
+          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"}
         ]
       }
     ],
@@ -204,22 +201,22 @@
         "picture": "palak_image1",
         "memberRelation": "hasHyponym",
         "members": [
-          {"lemma":"गाजर","meaning":"","picture":"image_carrot","pronunciation":""},
           {"lemma":"आलू","meaning":"","picture":"image_aalu","pronunciation":""},
+          {"lemma":"मूली","meaning":"","picture":"image_muli","pronunciation":""},
+          {"lemma":"गाजर","meaning":"","picture":"image_carrot","pronunciation":""},
+          {"lemma":"करेला","meaning":"","picture":"image_karela","pronunciation":""},
+          {"lemma":"इमली","meaning":"","picture":"image_imli","pronunciation":""},
+          {"lemma":"अदरक","meaning":"","picture":"image_ginger","pronunciation":""},
+          {"lemma":"पुदीना","meaning":"","picture":"image_pudina","pronunciation":""},
           {"lemma":"लहसुन","meaning":"","picture":"image_garlic","pronunciation":""},
           {"lemma":"बैंगन","meaning":"","picture":"image_bayngan","pronunciation":""},
-          {"lemma":"करेला","meaning":"","picture":"image_karela","pronunciation":""},
-          {"lemma":"पत्तागोभी","meaning":"","picture":"image_patta_gobi","pronunciation":""},
           {"lemma":"सेंजन","meaning":"","picture":"image_sanjan","pronunciation":""},
-          {"lemma":"अदरक","meaning":"","picture":"image_ginger","pronunciation":""},
-          {"lemma":"प्याज","meaning":"","picture":"image_piyaaj","pronunciation":""},
-          {"lemma":"पुदीना","meaning":"","picture":"image_pudina","pronunciation":""},
-          {"lemma":"कद्दू","meaning":"","picture":"image_kaddu","pronunciation":""},
-          {"lemma":"मूली","meaning":"","picture":"image_muli","pronunciation":""},
-          {"lemma":"इमली","meaning":"","picture":"image_imli","pronunciation":""},
+          {"lemma":"टमाटर","meaning":"","picture":"image_tomato","pronunciation":""},
           {"lemma":"फूल गोभी","meaning":"","picture":"image_phool_gobi","pronunciation":""},
+          {"lemma":"प्याज","meaning":"","picture":"image_piyaaj","pronunciation":""},
+          {"lemma":"कद्दू","meaning":"","picture":"image_kaddu","pronunciation":""},
           {"lemma":"भिन्डी","meaning":"","picture":"image_bhindi","pronunciation":""},
-          {"lemma":"टमाटर","meaning":"","picture":"image_tomato","pronunciation":""}
+          {"lemma":"पत्तागोभी","meaning":"","picture":"image_patta_gobi","pronunciation":""}
         ]
       },
       {
@@ -228,15 +225,15 @@
         "picture": "palak_image1",
         "memberRelation": "hasHyponym",
         "members": [
-          {"lemma":"पत्ती","meaning":"","picture":"image_pattay","pronunciation":""},
           {"lemma":"घास","meaning":"","picture":"image_grass","pronunciation":""},
-          {"lemma":"हरे अंगूर","meaning":"","picture":"image_hara_angoor","pronunciation":""},
-          {"lemma":"हरा सेब","meaning":"","picture":"image_hara_sayb","pronunciation":""},
           {"lemma":"मटर","meaning":"","picture":"image_hare_matar","pronunciation":""},
-          {"lemma":"शिमला मिर्च","meaning":"","picture":"image_shimla_mirch","pronunciation":""},
+          {"lemma":"हरा सेब","meaning":"","picture":"image_hara_sayb","pronunciation":""},
+          {"lemma":"पुदीना","meaning":"","picture":"image_pudina","pronunciation":""},
           {"lemma":"पौधों","meaning":"","picture":"image_paudha","pronunciation":""},
+          {"lemma":"हरे अंगूर","meaning":"","picture":"image_hara_angoor","pronunciation":""},
           {"lemma":"गन्ना","meaning":"","picture":"image_ganna","pronunciation":""},
-          {"lemma":"पुदीना","meaning":"","picture":"image_pudina","pronunciation":""}
+          {"lemma":"पत्ती","meaning":"","picture":"image_pattay","pronunciation":""},
+          {"lemma":"शिमला मिर्च","meaning":"","picture":"image_shimla_mirch","pronunciation":""}
         ]
       }
     ],
