@@ -525,13 +525,13 @@
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" param="next" direction="left" duration="500" ease="linear" effect="scroll" />
+                <action type="command" command="transitionTo" asset="theme" param="next" direction="left" duration="500" ease="linear" effect="fadein" />
             </event>
         </shape>
         <image asset="previous" x="2" y="3" w="5" h="8.3" id="previous" visible="false"/>
         <shape id="previousContainer" type="rect" x="1" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" param="previous" direction="right" duration="500" ease="linear" effect="scroll" transitionType="previous"/>
+                <action type="command" command="transitionTo" asset="theme" param="previous" direction="right" duration="500" ease="linear" effect="fadein" transitionType="previous"/>
             </event>
         </shape>
     </stage>
@@ -657,7 +657,7 @@
         <g id="body" x="0" y="0" w="100" h="100">
             <image asset="scene4_image" x="0" y="0" w="100" h="100"/>
             <g x="10" y="3" w="80" h="10">
-                <text x="0" y="0" w="100" h="100" font="Georgia" align="center" color="white" shadow="black" fontsize="110">शेर अपने साथी, हाथी के पास गया |
+                <text x="0" y="0" w="100" h="100" font="Georgia" align="center" color="white" shadow="black" fontsize="110">शेर घबराकर अपने साथी, हाथी के पास गया |
 दोनों रात को बारिश में चोर को खोजने निकल पड़े |</text>
             </g>
         </g>
@@ -675,16 +675,14 @@
 
     <controller name="wordDetails" type="data" id="word-details"/>
     <controller name="words-list" id="words-list" type="data" />
+
     <template id="word_template">
-        <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="14" x="32" y="50" w="14" h="14">
-            <event type="click">
-                <action type="command" command="togglePlay" asset-model="data.pronunciation"/>
-            </event>
-        </shape>
-        <text x="52" y="30" w="50" h="10" fontsize="80" color="black" model="data.lemma"/>
-        <text x="52" y="40" w="30" h="30" fontsize="50" color="black" model="data.meaning"/>
+        <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="18" x="22" y="50" w="18" h="18"/>
+
+        <text x="47" y="25" w="48" h="10" fontsize="150" color="black" model="data.lemma"/>
+        <text x="47" y="45" w="48" h="30" fontsize="70" color="black" model="data.meaning" lineHeight="1.5"/>
         <!-- <image x="49" y="-2" h="40" w="40" asset="sound_image1"/> -->
-        <image x="18" y="27" h="48" w="27" model="data.picture"/>
+        <image x="5" y="22" h="58" w="33" model="data.picture"/>
     </template>
 
     <set id="selectedWordParam" param="selectedWord" scope="content" model=""/>
@@ -694,18 +692,37 @@
         <set param="explore" scope="content" value="true"/>
         <set id="selectedWordParam" param="selectedWord" scope="content" model="data.lemma"/>
         <set id="relatedWordIndexParam" param="relatedWordIndex" scope="content" value="0" />
-         <embed template-name="word_template" var-data="data"/>
-         <image id="button_long_up" asset="button_long_up" x="40" y="8.5" w="20" h="10">
+
+        <image asset="scene4_image" x="0" y="0" w="100" h="100" z-index="-10"/>
+        <shape type="rect" x="0" y="0" w="100" h="100" z-index="-8" fill="white" opacity="0.5">
             <event type="click">
-                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="explore" duration="10" reset="true"/>
+                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="scene4" duration="500" transitionType="skip" reset="true"/>
             </event>
-        </image>
-        <image asset="animal_border" x="15" y="15" w="70" h="70" />
-        <image id="button_long_down" asset="button_long_down" x="39" y="81" w="20" h="10">
-            <event type="click">
-                <action type="command" command="transitionTo" asset="theme" effect="fadein" value="explore" duration="10" reset="true"/>
-            </event>
-        </image>
+        </shape>
+
+        <g id="wordSpinner" x="16" y="16" w="68" h="68">
+            <shape id="spin_top" type="roundrect" fill="#DADE61" shadow="#AA7E23" blur="10" offsetX="-2" offsetY="0" stroke="black" x="35" y="0" w="30" h="10" radius="3" z-index="50">
+                <event type="click">
+                    <action type="command" command="transitionTo" asset="theme" effect="fadein" value="explore" duration="10" reset="true"/>
+                </event>
+            </shape>
+            <image id="spin_top_ico" asset="triangle_up" x="45" y="2" w="10" h="6" z-index="51"/>
+
+            <shape type="roundrect" x="0" y="11" w="100" h="78" stroke-width="3" fill="white" stroke="#A47A69" opacity="0.8" z-index="-10">
+                <event type="click">
+                    <action type="command" command="togglePlay" asset-model="data.pronunciation"/>
+                </event>
+            </shape>
+
+            <embed template-name="word_template" var-data="data"/>
+
+            <shape id="spin_bot" type="roundrect" fill="#DADE61" shadow="#AA7E23" blur="10" offsetX="-2" offsetY="2" stroke="black" x="35" y="90" w="30" h="10" radius="3" z-index="50">
+                <event type="click">
+                    <action type="command" command="transitionTo" asset="theme" effect="fadein" value="explore" duration="10" reset="true"/>
+                </event>
+            </shape>
+            <image id="spin_bot_ico" asset="triangle_dn" x="45" y="92" w="10" h="6" z-index="51"/>
+        </g>
 
         <image asset="arrow_tl" x="2" y="4" w="9" h="16" z-index="50">
             <event type="click">
@@ -748,6 +765,9 @@
 
         <set id="exampleSentenceParam" param="exampleSentence" scope="stage" ev-model="wordDetails.${content.selectedWord}.exampleSentences"/>
         <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
+
+        <image asset="scene4_image" x="0" y="0" w="100" h="100" z-index="-10"/>
+        <shape type="rect" x="0" y="0" w="100" h="100" z-index="-8" fill="white" opacity="0.5" />
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
             <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="16" x="83" y="70" w="16" h="16"/>
@@ -821,6 +841,9 @@
         <set id="rhymingWordParam" param="rhymingWord" scope="stage" ev-model="wordDetails.${content.selectedWord}.rhymingWords"/>
         <set id="selectedWordParam" param="selectedWordObj" scope="stage" ev-model="wordDetails.${content.selectedWord}"/>
         <audio param="rhymingWord.pronunciation" />
+
+        <image asset="scene4_image" x="0" y="0" w="100" h="100" z-index="-10"/>
+        <shape type="rect" x="0" y="0" w="100" h="100" z-index="-8" fill="white" opacity="0.5" />
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
 
@@ -964,6 +987,9 @@
         <set id="membersParam" param="memberWord" scope="stage" ev-value="${stage.relatedWord.members}"/>
         <set id="setPluginId" param="mode" scope="stage" value="interact"/>
 
+        <image asset="scene4_image" x="0" y="0" w="100" h="100" z-index="-10"/>
+        <shape type="rect" x="0" y="0" w="100" h="100" z-index="-8" fill="white" opacity="0.5" />
+
         <!-- <audio asset="stage_sound" /> -->
 
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
@@ -1037,10 +1063,13 @@
 
         <!-- <set id="membersParam" param="memberWord" scope="stage" ev-value="${stage.relatedWord.members}"/> -->
 
+        <image asset="scene4_image" x="0" y="0" w="100" h="100" z-index="-10"/>
+        <shape type="rect" x="0" y="0" w="100" h="100" z-index="-8" fill="white" opacity="0.5" />
+
         <g id="body" x="0" y="0" w="100" h="100" z-index="50" visible="false">
 
-            <text x="0" y="7" w="15" h="10" align="right" font="Arial" fontsize="60" color="white" z-index="100">मैं हूँ एक</text>
-            <text id="relatedWordTextTitle" align="left" x="16" y="7" w="65" h="10" fontsize="60" color="#161FA7" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
+            <text x="0" y="7" w="10" h="10" align="right" font="Arial" fontsize="60" color="white" z-index="100">मैं हूँ</text>
+            <text id="relatedWordTextTitle" align="left" x="11" y="7" w="65" h="10" fontsize="60" color="#161FA7" font="Arial" z-index="100" param="stage.relatedWord.gloss"/>
             <text x="6" y="15" w="80" h="10" align="left" font="Arial" fontsize="60" color="#519828" z-index="100">देखो ये सब मेरे साथी </text>
 
             <g x="0" y="0" w="100" h="100" id="relatedWordsContainer">
@@ -1168,7 +1197,12 @@
                 <image id="spin_bot_ico" asset="triangle_dn" x="35" y="78" w="30" h="20" z-index="51"/>
             </g>
 
-            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="12" x="86" y="25" w="12" h="12" z-index="500"/>
+            <set param="wordPronunciation" scope="parent" ev-model="stage.selectedWordObj.pronunciation"/>
+            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="12" x="86" y="25" w="12" h="12" z-index="500">
+                <event type="click">
+                    <action type="command" command="play" asset-param="selectedWordObj.pronunciation" />
+                </event>
+            </shape>
             <image id="selectedWordImage" x="75" y="5" w="24" h="42" param="stage.selectedWordObj.picture" z-index="510"/>
         </g>
 
@@ -1201,9 +1235,15 @@
             <shape type="circle" x="50" y="50" w="50" h="50" fill="white" opacity="0.6" stroke="black"/>
             <image id="memberWordPicture" x="7" y="0" w="85" h="85" model="member.picture" z-index="100"/>
             <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-22" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
+
             <set param="memberLemma" scope="parent" ev-model="member.lemma"/>
+            <set param="memberPronunciation" scope="parent" ev-model="member.pronunciation"/>
+
             <event type="click">
-                <action type="animation" param="obj" parent="true"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":120,"y":-80}]]></to></tween></action>
+                <action type="command" command="play" asset-param="memberPronunciation" />
+            </event>
+            <event type="pressmove">
+                <action type="animation" param="obj" parent="true"><tween><to ease="elasticOut" duration="1000"><![CDATA[{"x":120,"y":-80}]]></to></tween></action>
                 <action type="command" command="set" param="selectedWord" ev-value="memberLemma" scope="content"/>
                 <action type="command" command="set" param="relatedWordIndex" param-value="0" asset="relatedWordIndexParam" scope="content"/>
                 <action type="command" command="transitionTo" asset="theme" value="page4" effect="fadein" duration="500" delay="500"/>
@@ -1219,8 +1259,7 @@
             <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-22" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="110" model="member.verb"/>
             <g x="27" y="50" w="40" h="40" ev-if="member.object">
                 <image x="-100" y="-70" w="150" h="150" model="member.object" z-index="100" ev-if="member.object"></image>
-                <shape id="verbObject" type="circle" x="0" y="0" w="100" h="100" fill="white" opacity="0.6" stroke="black" z-index="50" ev-if="member.object">
-                </shape>
+                <shape id="verbObject" type="circle" x="0" y="0" w="100" h="100" fill="white" opacity="0.6" stroke="black" z-index="50" ev-if="member.object"/>
                 <event type="click">
                     <action type="animation">
                         <tween>

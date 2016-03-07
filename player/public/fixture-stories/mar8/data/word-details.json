@@ -3,7 +3,7 @@
     "lemma": "हाथी",
     "meaning": "चार पैरों वाला बड़ा जानवर जिसकी सूंढ़ होती है",
     "picture": "elephant_image1",
-    "pronunciation": "elephant_audio1",
+    "pronunciation": "audio_hathi",
     "syllableCount": 2,
     "endsWith": "थी",
     "rhymingWords": [
@@ -14,7 +14,7 @@
       {"sentence": "हम कल हाथी देखेंगे", "audio": "hum_kal_haathi_dekhenge_audio1"},
       {"sentence": "अचानक हाथी सामने आ गया", "audio": "achanak_haathi_saamne_agaya_audio1"},
       {"sentence": "हाथी ने पेड़ हिला दिया", "audio": "haathi_ne_peid_hila_diya_audio1"},
-      {"sentence": "हाथी और भँवरे की दोस्ती थी", "audio": "haathi_aur_bhavare_ki_dosti_hai_audio1"},
+      {"sentence": "हाथी और भँवरे की दोस्ती है", "audio": "haathi_aur_bhavare_ki_dosti_hai_audio1"},
       {"sentence": "हाथी ने फूल को तालाब से बाहर फेंक दिया", "audio": "haathi_ne_phool_ko_taalab_se_bahar_phek_diya_audio1"},
       {"sentence": "खरगोश के पीछे हाथी दौड़ रहा था", "audio": "khaghosh_ke_peeche_haathi_daud_raha_tha_audio1"}
     ],
@@ -101,7 +101,7 @@
     "lemma": "शेर",
     "meaning": "पीले रंग का माँसाहारी जानवर जो जंगल में रहता है",
     "picture": "lion_image1",
-    "pronunciation": "lion_audio1",
+    "pronunciation": "audio_sher",
     "syllableCount": 2,
     "endsWith": "र",
     "rhymingWords": [
@@ -183,7 +183,7 @@
     "lemma": "पालक",
     "meaning": "हरी पत्तेदार सब्जी",
     "picture": "palak_image1",
-    "pronunciation": "palak_audio1",
+    "pronunciation": "audio_palak",
     "syllableCount": 3,
     "endsWith": "क",
     "rhymingWords": [
@@ -199,7 +199,7 @@
     "relatedWords": [
       {
         "relation": "hasHypernym",
-        "gloss": "आप खा सकते हैं (सब्जी )",
+        "gloss": "सब्जी जो आप खा सकते हैं",
         "picture": "palak_image1",
         "memberRelation": "hasHyponym",
         "members": [
