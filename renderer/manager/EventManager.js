@@ -27,9 +27,13 @@ EventManager = {
 		// Conditional evaluation to register event.
 		if (evt['ev-if']) {
 			var expr = evt['ev-if'].trim();
+			var modelExpr = expr = plugin.replaceExpressions(expr);
 			if (!(expr.substring(0,2) == "${")) expr = "${" + expr;
             if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}"
-			register = plugin.evaluateExpr(expr);
+            register = plugin.evaluateExpr(expr);
+            if (typeof register == "undefined" && plugin._stage) {
+                register = plugin._stage.getModelValue(modelExpr);
+            }
 		}
 		if (register) {
 			plugin.events.push(evt.type);

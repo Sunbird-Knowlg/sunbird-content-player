@@ -125,6 +125,7 @@
         "picture": "fourlegged_image1",
         "memberRelation": "hasHyponym",
         "members": [
+          {"lemma": "हाथी", "picture": "elephant_image1", "pronunciation": "audio_hathi"},
           {"lemma": "बाघ", "picture": "tiger_image1", "pronunciation": "baag_audio1"},
           {"lemma": "गाय", "picture": "cow_image1", "pronunciation": "ghai_audio1"},
           {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},

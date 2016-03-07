@@ -1236,13 +1236,14 @@
             <image id="memberWordPicture" x="7" y="0" w="85" h="85" model="member.picture" z-index="100"/>
             <text id="memberWordLemma" align="center" valign="bottom" x="0" y="-22" w="100" h="120" fontsize="300" color="black" font="Arial" z-index="210" model="member.lemma"/>
 
+            <set param="relatedWordLemma" scope="stage" ev-model="member.lemma"/>
             <set param="memberLemma" scope="parent" ev-model="member.lemma"/>
             <set param="memberPronunciation" scope="parent" ev-model="member.pronunciation"/>
 
             <event type="click">
                 <action type="command" command="play" asset-param="memberPronunciation" />
             </event>
-            <event type="pressmove">
+            <event type="pressmove" ev-if="wordDetails.${stage.relatedWordLemma}">
                 <action type="animation" param="obj" parent="true"><tween><to ease="elasticOut" duration="1000"><![CDATA[{"x":120,"y":-80}]]></to></tween></action>
                 <action type="command" command="set" param="selectedWord" ev-value="memberLemma" scope="content"/>
                 <action type="command" command="set" param="relatedWordIndex" param-value="0" asset="relatedWordIndexParam" scope="content"/>
