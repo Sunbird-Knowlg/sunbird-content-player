@@ -1136,7 +1136,14 @@
     </template>
 
     <template id="exampleSentenceTemplate">
-        <shape type="roundrect" fill="#978F35" stroke="black" x="0" y="2" w="100" h="90" z-index="50"/>
-        <text align="center" valign="middle" x="3" y="5" w="96" h="96" z-index="50" font="Arial" fontsize="150" color="white" model="example.sentence"></text>
+        <g id="exampleSentenceTemplateBody" x="0" y="0" w="100" h="100">
+            <set param="exampleAudio" scope="parent" ev-model="example.audio"/>
+            <shape type="roundrect" fill="#978F35" stroke="black" x="0" y="2" w="100" h="90" z-index="50">
+            </shape>
+            <text align="center" valign="middle" x="3" y="5" w="96" h="96" z-index="50" font="Arial" fontsize="150" color="white" model="example.sentence"></text>
+            <event type="click">
+                <action type="command" command="play" asset-param="exampleAudio" />
+            </event>
+        </g>
     </template>
 </theme>

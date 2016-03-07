@@ -15,6 +15,9 @@ CommandManager = {
             assetId = stagePlugin.getParam(action['asset-param']);
             action.asset = assetId;
         }
+        if (!assetId && action.pluginObj) {
+            action.asset = assetId = action.pluginObj.getPluginParam(action['asset-param']);
+        }
 
         var plugin = PluginManager.getPluginObject(assetId);
         if (action.parent === true && plugin._parent){

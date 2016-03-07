@@ -67,10 +67,10 @@ EventManager = {
 	handleActions: function(evt, plugin) {
 		if(_.isArray(evt.action)) {
 			evt.action.forEach(function(action) {
-				EventManager.handleAction(action, plugin);
+				EventManager.handleAction(_.clone(action), plugin);
 			});
 		} else if(evt.action) {
-			EventManager.handleAction(evt.action, plugin);
+			EventManager.handleAction(_.clone(evt.action), plugin);
 		}
 	},
 	handleAction: function(action, plugin) {
