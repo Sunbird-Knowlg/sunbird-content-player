@@ -79,8 +79,8 @@
           {"lemma": "राइनो", "picture": "rhino_image1", "pronunciation": "rhino_audio1"},
           {"lemma": "ह्वेल", "picture": "whale_image1", "pronunciation": "whale_audio1"},
           {"lemma": "गोरिल्ला", "picture": "gorilla_image1", "pronunciation": "gorilla_audio1"},
-          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "hiran_audio1"},
-          {"lemma": "शुतुरमुर्ग", "picture": "ostrich_image1", "pronunciation": "whale_audio1"}
+          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "magarmachch_audio1"},
+          {"lemma": "शुतुरमुर्ग", "picture": "ostrich_image1", "pronunciation": "shuturmurg_audio1"}
         ]
       }
     ],
