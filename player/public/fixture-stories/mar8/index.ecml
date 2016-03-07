@@ -233,6 +233,24 @@
         <media id="image_pitcher_plant" src="lion/relwords/pitcher_plant.png" type="image" />
         <media id="image_sona" src="lion/relwords/sona.png" type="image" />
 
+        <media id="audio_title" src="story_audio/title.mp3" type="sound" />
+        <media id="audio_scene1_1" src="story_audio/us_raath_bohut_teez_baarish_ho_rahi_thi.mp3" type="sound" />
+        <media id="audio_scene1_2" src="story_audio/sher_apne_ghar_mein_leta_hua_tha.mp3" type="sound" />
+        <media id="audio_scene2_1" src="story_audio/tabi_aavaz_se_uski_ankh_khul_gayi.mp3" type="sound" />
+        <media id="audio_scene2_2" src="story_audio/rasoyi_mein_ja_kar_dekha_tho_paaya_ki_vaha_koi_aaya_tha.mp3" type="sound" />
+        <media id="audio_scene3_1" src="story_audio/arey_!_kisi_ne_uske_aam_aur_palak_chura_liye_the.mp3" type="sound" />
+        <media id="audio_scene3_2" src="story_audio/usse_aam_aur_palak_bahut_pasand_the.mp3" type="sound" />
+        <media id="audio_scene4_1" src="story_audio/sher_ghabrakar_apne_saathi_haathi_ke_paas_gaya.mp3" type="sound" />
+        <media id="audio_scene4_2" src="story_audio/dono_raat_ko_bharish_mein_chor_ko_khojne_nikal_pade.mp3" type="sound" />
+
+        <media id="audio_aam" src="story_audio/words/aam.mp3" type="sound" />
+        <media id="audio_ankh" src="story_audio/words/ankh.mp3" type="sound" />
+        <media id="audio_barish" src="story_audio/words/barish.mp3" type="sound" />
+        <media id="audio_ghar" src="story_audio/words/ghar.mp3" type="sound" />
+        <media id="audio_hathi" src="story_audio/words/hathi.mp3" type="sound" />
+        <media id="audio_palak" src="story_audio/words/palak.mp3" type="sound" />
+        <media id="audio_sher" src="story_audio/words/sher.mp3" type="sound" />
+
     </manifest>
 
     <template id="blurWordTemplate">
@@ -465,6 +483,24 @@
         <audio asset="meine_apne_ghar_mein_palak_lagaya_hai_audio1"/>
         <audio asset="mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai_audio1"/>
         <audio asset="palak_khane_se_ankhen_teek_rehti_hai_audio1"/>
+
+        <audio asset="audio_title" />
+        <audio asset="audio_scene1_1" />
+        <audio asset="audio_scene1_2" />
+        <audio asset="audio_scene2_1" />
+        <audio asset="audio_scene2_2" />
+        <audio asset="audio_scene3_1" />
+        <audio asset="audio_scene3_2" />
+        <audio asset="audio_scene4_1" />
+        <audio asset="audio_scene4_2" />
+
+        <audio asset="audio_aam" />
+        <audio asset="audio_ankh" />
+        <audio asset="audio_barish" />
+        <audio asset="audio_ghar" />
+        <audio asset="audio_hathi" />
+        <audio asset="audio_palak" />
+        <audio asset="audio_sher" />
     </stage>
 
 
@@ -522,7 +558,14 @@
                 <action type="command" command="transitionTo" asset="theme" value="explore" effect="scroll" direction="left" ease="linear" duration="500" />
             </event>
         </shape>
-
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="audio_title" />
+            </event>
+            <event type="exit">
+                <action type="command" command="stop" asset="audio_title" />
+            </event>
+        </events>
     </stage>
 
     <stage id="scene1" x="0" y="0" w="100" h="100" extends="storyBaseStage">
@@ -535,6 +578,16 @@
 शेर अपने घर में लेटा हुआ था | </text>
             </g>
         </g>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="audio_scene1_1" />
+                <action type="command" command="play" asset="audio_scene1_2" delay="4000" />
+            </event>
+            <event type="exit">
+                <action type="command" command="stop" asset="audio_scene1_1" />
+                <action type="command" command="stop" asset="audio_scene1_2" />
+            </event>
+        </events>
     </stage>
 
     <stage id="scene2" x="0" y="0" w="100" h="100" extends="storyBaseStage">
@@ -547,6 +600,16 @@
                 <text x="45" y="80" w="60" h="10" font="Georgia" align="center" color="white" shadow="black" fontsize="110">रसोई  में जा कर देखा तो पाया कि वहां कोई आया था</text>
             </g>
         </g>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="audio_scene2_1" />
+                <action type="command" command="play" asset="audio_scene2_2" delay="4000" />
+            </event>
+            <event type="exit">
+                <action type="command" command="stop" asset="audio_scene2_1" />
+                <action type="command" command="stop" asset="audio_scene2_2" />
+            </event>
+        </events>
     </stage>
 
     <stage id="scene3" x="0" y="0" w="100" h="100" extends="storyBaseStage">
@@ -559,6 +622,16 @@
                 <text x="50" y="75" w="50" h="10" font="Georgia" align="center" color="white" shadow="black" fontsize="120">उसे आम और पालक बहुत पसंद थे</text>
             </g>
         </g>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="audio_scene3_1" />
+                <action type="command" command="play" asset="audio_scene3_2" delay="5000" />
+            </event>
+            <event type="exit">
+                <action type="command" command="stop" asset="audio_scene3_1" />
+                <action type="command" command="stop" asset="audio_scene3_2" />
+            </event>
+        </events>
     </stage>
 
     <stage id="scene4" x="0" y="0" w="100" h="100" extends="storyBaseStage">
@@ -571,6 +644,16 @@
 दोनों रात को बारिश में चोर को खोजने निकल पड़े |</text>
             </g>
         </g>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="audio_scene4_1" />
+                <action type="command" command="play" asset="audio_scene4_2" delay="4000" />
+            </event>
+            <event type="exit">
+                <action type="command" command="stop" asset="audio_scene4_1" />
+                <action type="command" command="stop" asset="audio_scene4_2" />
+            </event>
+        </events>
     </stage>
 
     <controller name="wordDetails" type="data" id="word-details"/>
