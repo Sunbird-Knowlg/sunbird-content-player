@@ -392,7 +392,7 @@ module.exports = function(grunt) {
         if (grunt.file.exists('plugins/org.ekstep.recorder.service.plugin')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
     });
 
-   // grunt.registerTask('watch-def', ['watch:renderer', 'watch:speech', 'watch:telemetry']);
+    grunt.registerTask('watch-def', ['watch:renderer', 'watch:speech', 'watch:telemetry']);
     grunt.registerTask('default', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js']);
     grunt.registerTask('build-all', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
 
