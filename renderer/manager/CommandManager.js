@@ -12,24 +12,25 @@ CommandManager = {
             }
         }
         CommandManager._setDataAttributes(action);
+
         switch (cmd) {
             case 'PLAY':
-                if (plugin && plugin._type == 'sprite') {
-                    plugin.play(action.animation);
+                if (plugin) {
+                    plugin.play(action);
                 } else {
                     AudioManager.play(action);
                 }
                 break;
             case 'PAUSE':
-                if (plugin && plugin._type == 'sprite') {
-                    plugin.pause();
+                if (plugin) {
+                    plugin.pause(action);
                 } else {
                     AudioManager.pause(action);
                 }
                 break;
             case 'STOP':
-                if (plugin && plugin._type == 'sprite') {
-                    plugin.stop();
+                if (plugin) {
+                    plugin.stop(action);
                 } else {
                     if (action.sound === true) {
                         AudioManager.stopAll(action);
@@ -39,8 +40,8 @@ CommandManager = {
                 }
                 break;
             case 'TOGGLEPLAY':
-                if (plugin && plugin._type == 'sprite') {
-                    plugin.togglePlay(action.animation);
+                if (plugin) {
+                    plugin.togglePlay(action);
                 } else {
                     AudioManager.togglePlay(action);
                 }

@@ -10,6 +10,7 @@ var ThemePlugin = Plugin.extend({
     _previousStage: undefined,
     _canvasId: undefined,
     inputs: [],
+    htmlElements: [],
     _animationEffect: {effect:'moveOut'},
     _themeData: undefined,
     _controllerMap: {},
@@ -148,6 +149,8 @@ var ThemePlugin = Plugin.extend({
     replaceStage: function(stageId, effect) {
         this.disableInputs();
         this.inputs = [];
+        this.removeHtmlElements();
+        this.htmlElements = [];
         this._animationEffect = effect;
         this.invokeStage(stageId);
     },
@@ -211,11 +214,16 @@ var ThemePlugin = Plugin.extend({
             }
         }
     },
-    disableInputs: function() {
-        //This is to remove all div's added inside 'GameArea' div which are positioned at absolute position
+    removeHtmlElements: function(){
         jQuery('#'+Renderer.divIds.gameArea + ' div').each(function(a) {
             jQuery(this).remove();
         });
+        jQuery('#'+Renderer.divIds.gameArea + ' video').each(function(a) {
+            jQuery(this).remove();
+        });
+    },
+    disableInputs: function() {
+        //This is to remove all div's added inside 'GameArea' div which are positioned at absolute position
         this.inputs.forEach(function(inputId) {
             document.getElementById(inputId).style.display = 'none';
         })

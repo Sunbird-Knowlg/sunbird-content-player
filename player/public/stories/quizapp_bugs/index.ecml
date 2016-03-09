@@ -38,13 +38,22 @@
         
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
         <param name="heading" model="bugData.ts_asset_not_found"/>
-        <video asset="video_1" x="100" y="70" width="300" height="300"/>
+        <video asset="video_1" x="100" y="70" w="300" h="300" autoplay="true" />
 
         <image asset="sringeri" x="20" y="30" w="15" h="15"/>
         <text x="10" y="15" h="10" w="40" fontsize="40" color="brown">If asset is not present stage should able to move to next stage :</text>
         <text x="10" y="60" h="10" w="40" fontsize="40" color="brown">sringeri image asset is not present.</text>
-        <image asset="barber" x="60" y="25" w="25" h="25"/>
+        <image asset="barber" x="60" y="25" w="25" h="25">
+             <event type="click">
+                <action type="command" command="play" asset="video_1"/>
+            </event>
+        </image>
         <text x="60" y="60" h="10" w="40" fontsize="40" color="brown">barber image asset is present.</text>
+        <shape type="rect" x="69" y="15" w="7" h="5" hitArea="true" stroke="black">
+            <event type="click">
+                <action type="command" command="pause" asset="video_1"/>
+            </event>
+        </shape>
     </stage> 
 
     <stage id="Command" x="0" y="0" w="100" h="100" extends="baseStage">
