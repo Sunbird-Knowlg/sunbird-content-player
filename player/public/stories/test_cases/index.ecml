@@ -179,21 +179,29 @@
         <text blur="10" color="white" fontsize="40" h="10" offsetY="5" outline="2" shadow="red" w="20" x="73" y="80">Text with Outline and Shadow</text>
     </stage>
     <stage extends="baseStage" h="100" id="test-Z-Index" w="100" x="0" y="0">
-        <param name="next" value="hybridRendering"/>
+        <param name="next" value="scribbleTest"/>
         <param name="previous" value="textPluginWrap"/>
         <image asset="bg" h="100" w="100" x="0" y="0"/>
         <param model="testData.ts_z_index" name="heading" />
         <image asset="icon_home" h="30" w="30" x="20" y="35" z-index="2"/>
         <g h="70" w="70" x="15" y="15" z-index="1">
             <text color="white" fontsize="50" h="40" w="60" x="20" y="20" z-index="1">Text with z-index value=1 in white color. After this we have a share in green color.</text>
+
             <shape x="0" y="0" w="100" h="100" hitArea="true" type="rect" fill="green" />
         </g>
         <shape x="10" y="10" w="80" h="80" hitArea="true" type="rect" fill="red" />
     </stage>
 
+    <stage extends="baseStage" h="100" id="scribbleTest" w="100" x="0" y="0">
+            <param name="next" value="hybridRendering"/>
+            <param name="previous" value="test-Z-Index"/>
+            <text id="sampleTest" x="8" y="5" w="99" fontsize="70"> Draw a design </text>
+            <scribble id="scribble" z-index="1" x="1" y="20" h="70" w="98" bgcolor="white" color="brown" stroke="1"/>
+    </stage>
+
     <stage extends="baseStage" h="100" id="hybridRendering" w="100" x="0" y="0">
         <param name="next" value="allFontRendering"/>
-        <param name="previous" value="test-Z-Index"/>
+        <param name="previous" value="scribbleTest"/>
         <image asset="bg" h="100" w="100" x="0" y="0"/>
         <param model="testData.ts_hybrig_rendering" name="heading"/>
         <text color="yellow" fontsize="40" h="10" w="80" x="10" y="10">Rendering HTML element as well as canvas and can interact with each other.</text>
