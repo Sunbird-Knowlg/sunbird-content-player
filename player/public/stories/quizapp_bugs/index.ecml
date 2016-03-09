@@ -38,7 +38,7 @@
         
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
         <param name="heading" model="bugData.ts_asset_not_found"/>
-        <video asset="video_1" x="100" y="70" w="300" h="300" autoplay="true" />
+        <video asset="video_1" x="10" y="22" w="40" h="30" autoplay="false" controls="true"/>
 
         <image asset="sringeri" x="20" y="30" w="15" h="15"/>
         <text x="10" y="15" h="10" w="40" fontsize="40" color="brown">If asset is not present stage should able to move to next stage :</text>

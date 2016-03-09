@@ -14,7 +14,7 @@ var VideoPlugin = Plugin.extend({
     },
     loadVideo: function (){
         var lItem =  this._createDOMElementVideo();
-        this._self = new createjs.DOMElement(document.createElement('p'));
+        this._self = new createjs.Bitmap(lItem);//new createjs.DOMElement(document.createElement('p'));
 
         if(_videoEle.readyState >= 2){   
             this.replay();
@@ -51,11 +51,13 @@ var VideoPlugin = Plugin.extend({
     _createDOMElementVideo: function () {
 
         var videoAssest = this._theme.getAsset(this._data.asset);
+        var dims = this.relativeDims();
+        console.log(dims);
 
         var jqVideoEle = jQuery(videoAssest).insertBefore("#gameArea");
         jQuery(jqVideoEle).attr({type: "video/webm", id: "video1"})
-        .prop({autoplay:true, controls: false})
-        .css({position: 'absolute', display: "none"});
+        .prop({autoplay: this._data.autoplay, controls: this._data.controls, width: dims.w, height: dims.h})
+        .css({position: 'absolute', display: "none", left: dims.x + "px", top: dims.y + "px"});
 
         //Pushing video element to the stage HTML elements list
         // So when stage is chagned, remove all HTML elements of previous stage
