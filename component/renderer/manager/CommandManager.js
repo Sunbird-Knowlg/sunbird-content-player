@@ -13,6 +13,9 @@ CommandManager = {
         }
         CommandManager._setDataAttributes(action);
         switch (cmd) {
+            case 'ERASE':
+                plugin.clear();
+                break;
             case 'PLAY':
                 if (plugin && plugin._type == 'sprite') {
                     plugin.play(action.animation);
