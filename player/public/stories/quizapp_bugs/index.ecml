@@ -7,7 +7,8 @@
         <!-- <media id="sringeri" src="sringeri.png" type="image" /> -->
         <media id="barber" src="barber.png" type="image" />
         <media id="bg" src="bugsBg.jpg" type="image" />
-        <media id="video_1" src="videos/big_buck_bunny.webm" type="video" />
+        <media id="video_1" src="videos/Rain_rain_go_away.webm" type="video" />
+        <media id="video_2" src="videos/After_A_Bath.webm" type="video" />
         <media src="sounds/splash.ogg" id="splash_audio" type="audiosprite">
             <data>
                 <audioSprite id="cover_sound" startTime="0" duration="7131.428571428572"></audioSprite>
@@ -38,9 +39,11 @@
         
     	<image asset="bg" x="0" y="0" w="100" h="100"/>
         <param name="heading" model="bugData.ts_asset_not_found"/>
-        <video asset="video_1" x="10" y="22" w="40" h="30" autoplay="false" controls="true"/>
+        <video asset="video_1" type="video/webm" x="10" y="22" w="40" h="30" autoplay="true" controls="false"/>
 
-        <image asset="sringeri" x="20" y="30" w="15" h="15"/>
+        <video asset="video_2" type="video/webm" x="50" y="22" w="40" h="30" autoplay="false" controls="true"/>
+
+        <image asset="sringeri" x="20" zy="30" w="15" h="15"/>
         <text x="10" y="15" h="10" w="40" fontsize="40" color="brown">If asset is not present stage should able to move to next stage :</text>
         <text x="10" y="60" h="10" w="40" fontsize="40" color="brown">sringeri image asset is not present.</text>
         <image asset="barber" x="60" y="25" w="25" h="25">
