@@ -39,7 +39,7 @@ module.exports = function(grunt) {
                     beautify: true
                 },
                 files:{
-                    'public/js/app/speech.js': ['../speech/speech.js', '../speech/android-recorder.js']
+                    'public/js/app/speech.js': ['../js-libs/speech/speech.js', '../js-libs/speech/android-recorder.js']
                 }
             },
             renderer: {
@@ -54,15 +54,15 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
                         'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
                         'public/js/thirdparty/exclude/Class.js',
-                        '../renderer/controller/Controller.js',
-                        '../renderer/plugin/Plugin.js',
-                        '../renderer/manager/*.js',
-                        '../renderer/controller/*Controller.js',
-                        '../renderer/generator/*.js',
-                        '../renderer/evaluator/*.js',
-                        '../renderer/plugin/ShapePlugin.js',
-                        '../renderer/plugin/*Plugin.js',
-                        '../renderer/renderer/*.js'
+                        '../js-libs/renderer/controller/Controller.js',
+                        '../js-libs/renderer/plugin/Plugin.js',
+                        '../js-libs/renderer/manager/*.js',
+                        '../js-libs/renderer/controller/*Controller.js',
+                        '../js-libs/renderer/generator/*.js',
+                        '../js-libs/renderer/evaluator/*.js',
+                        '../js-libs/renderer/plugin/ShapePlugin.js',
+                        '../js-libs/renderer/plugin/*Plugin.js',
+                        '../js-libs/renderer/renderer/*.js'
                     ]
                 }
             },
@@ -74,7 +74,7 @@ module.exports = function(grunt) {
                     'public/js/app/telemetry.js': [
                         'public/js/thirdparty/exclude/date-format.js',
                         'public/js/thirdparty/exclude/Class.js',
-                        '../telemetry/*.js',
+                        '../js-libs/telemetry/*.js',
                     ]
                 }
             }

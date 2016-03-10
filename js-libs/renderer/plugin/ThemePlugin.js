@@ -31,6 +31,9 @@ var ThemePlugin = Plugin.extend({
         this._self.enableMouseOver(10);
         this._self.mouseMoveOutside = true;
     },
+    mousePoint: function() {
+        return {x: this._self.mouseX,  y: this._self.mouseY};
+    },
     updateCanvas: function(w, h) {
         this._self.canvas.width = w;
         this._self.canvas.height = h;
