@@ -1,7 +1,6 @@
 var ScribblePlugin = Plugin.extend({
     _type: 'scribble',
     _render: true,
-    _actualStage: undefined,
     _container: undefined,
     _data: undefined,
     _oldPt: undefined,
@@ -9,9 +8,7 @@ var ScribblePlugin = Plugin.extend({
     _shapePoint: undefined,
     _shapeEndPoint: undefined,
     initPlugin: function(data) {
-        var instance = this;
-        instance._data = data;
-        instance._actualStage = Renderer.theme._self;
+        this._data = data;
         var stroke = data.stroke || 1;
         var color = data.color || "#000";
         var background = data.bgcolor || "#fff"
@@ -20,25 +17,26 @@ var ScribblePlugin = Plugin.extend({
         var bgShape = new createjs.Shape();
 
         // addEventListener for container
-        container.addEventListener("mousedown", instance.handleMouseDown.bind(instance), true);
-        container.addEventListener("pressup", instance.handleMouseUp.bind(instance), true);
+        container.addEventListener("mousedown", this.handleMouseDown.bind(this), true);
+        container.addEventListener("pressup", this.handleMouseUp.bind(this), true);
         createjs.Ticker.setFPS(50);
 
-        paintBrush = new createjs.Shape();
+
+        this.paintBrush = new createjs.Shape();
         bgShape.graphics = new createjs.Graphics().beginFill(background).drawRect(dims.x, dims.y, dims.w, dims.h);
         container.addChild(bgShape);
-        container.addChild(paintBrush);
-        this._container = container;
+        container.addChild(this.paintBrush);
         this._self = container;
     },       
     handleMouseDown: function(event) {
         if (!event.primary) {
             return;
         }
-        paintBrush.graphics.setStrokeStyle(this._data.stroke || 1).beginStroke(this._data.color || "#000");
-        this._oldPt = new createjs.Point(this._actualStage.mouseX, this._actualStage.mouseY);
+        this.paintBrush.graphics.setStrokeStyle(this._data.stroke || 1).beginStroke(this._data.color || "#000");
+        var mousePoint = Renderer.theme.mousePoint();
+        this._oldPt = new createjs.Point(mousePoint.x, mousePoint.y);
         this._oldMidPt = this._oldPt.clone();
-        this._container.addEventListener("pressmove", this.handleMouseMove.bind(this), true);
+        this._self.addEventListener("pressmove", this.handleMouseMove.bind(this), true);
         var dims = this.relativeDims();
         var x = dims.x + dims.w - 5;
         var y = dims.y + dims.h - 5;
@@ -49,19 +47,18 @@ var ScribblePlugin = Plugin.extend({
         if (!event.primary) {
             return;
         }
-        var mx = this._actualStage.mouseX;
-        var my = this._actualStage.mouseY;
+        var mousePoint = Renderer.theme.mousePoint();
         if (((this._oldPt.x > this._shapePoint.x) && (this._oldPt.x < this._shapeEndPoint.x))  && ((this._oldPt.y > this._shapePoint.y) && (this._oldPt.y < this._shapeEndPoint.y))){
-             paintBrush.graphics.lineTo( this._oldPt.x + 1 , this._oldPt.y + 1);
+            this.paintBrush.graphics.lineTo( this._oldPt.x + 1 , this._oldPt.y + 1);
         }
-        this._oldPt = new createjs.Point(mx, my);
-        this._actualStage.update();
+        this._oldPt = new createjs.Point(mousePoint.x, mousePoint.y);
+        Renderer.update = true;
     },
     handleMouseUp: function(event) {
         if (!event.primary) {
             return;
         }
-        this._container.removeEventListener("pressmove", this.handleMouseMove.bind(this), true);
+        this._self.removeEventListener("pressmove", this.handleMouseMove.bind(this), true);
     }
 
 });
