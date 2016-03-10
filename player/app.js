@@ -43,8 +43,9 @@ http.globalAgent.maxSockets = 100000;
         contextPath: ""
     });
 
-    app.use(express.compress());
+    app.use(express.compress());    
     app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname, '../js-libs/')));
     app.use(express.static(path.join(__dirname, 'views')));
 
     // development only
