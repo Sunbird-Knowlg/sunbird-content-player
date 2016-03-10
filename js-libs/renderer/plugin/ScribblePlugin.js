@@ -48,7 +48,7 @@ var ScribblePlugin = Plugin.extend({
         }
         var mousePoint = Renderer.theme.mousePoint();
         if (((event.stageX > this._shapePoint.x) && (event.stageX < this._shapeEndPoint.x))  && ((event.stageY > this._shapePoint.y) && (event.stageY < this._shapeEndPoint.y))){
-            this.paintBrush.graphics.setStrokeStyle(this._data.brushsize || 1, 'round').beginStroke(this._data.color || "#000");
+            this.paintBrush.graphics.setStrokeStyle(this._data.brushsize || 3, 'round').beginStroke(this._data.color || "#000");
 
             if (((event.stageX > this._shapePoint.x) && (event.stageX < this._shapeEndPoint.x))  && ((event.stageY > this._shapePoint.y) && (event.stageY < this._shapeEndPoint.y))){
                 this.paintBrush.graphics.mt(this._oldPt.x, this._oldPt.y).lineTo( event.stageX + 1 , event.stageY + 1);
@@ -65,10 +65,8 @@ var ScribblePlugin = Plugin.extend({
         this._self.removeEventListener("pressmove", this.handleMouseMove.bind(this), true);
     },
     clear: function() {
-        console.log("this.paintBrush : ", this.paintBrush);
         this.paintBrush.graphics.clear();
         Renderer.update = true;
     }
-
 });
 PluginManager.registerPlugin('scribble', ScribblePlugin);
