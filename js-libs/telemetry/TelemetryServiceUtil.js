@@ -57,8 +57,12 @@ String.prototype.insert = function(index, string) {
 function getTime(ms) {
     var v = undefined;
     if (TelemetryService._version == "1.0") {
-        v = dateFormat(new Date(ms), "yyyy-mm-dd'T'HH:MM:ssZ").replace('GMT', '');
-        return v.insert(-2, ':');
+        // v = dateFormat(new Date(ms), "yyyy-mm-dd'T'HH:MM:ssZ").replace('GMT', '');
+        // return v.insert(-2, ':');
+        var dte = new Date(ms);
+        dte.setTime(dte.getTime() +(dte.getTimezoneOffset()+330)*60*1000);
+        v = dateFormat(dte, "yyyy-mm-dd'T'HH:MM:ss")+"+05:30";
+        return v;
     } else {
         v = new Date().getTime();
         return v;
