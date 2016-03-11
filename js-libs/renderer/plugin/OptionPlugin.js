@@ -223,7 +223,7 @@ var OptionPlugin = Plugin.extend({
                         res: [{
                             dragItem: drop_idx
                         }],
-                        state: "",
+                        state: drop_idx ? "SELECTED" : "UNSELECTED",
                         optionTag: "MTF"
                     }
                     // data.res[dragItem] = drop_idx;
