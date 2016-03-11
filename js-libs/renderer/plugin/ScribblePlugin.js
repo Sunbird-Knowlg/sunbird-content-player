@@ -27,7 +27,7 @@ var ScribblePlugin = Plugin.extend({
         container.addChild(bgShape);
         container.addChild(this.paintBrush);
         this._self = container;
-    },       
+    },
     handleMouseDown: function(event) {
         if (!event.primary) {
             return;
@@ -47,14 +47,14 @@ var ScribblePlugin = Plugin.extend({
             return;
         }
         var mousePoint = Renderer.theme.mousePoint();
-        if (((event.stageX > this._shapePoint.x) && (event.stageX < this._shapeEndPoint.x))  && ((event.stageY > this._shapePoint.y) && (event.stageY < this._shapeEndPoint.y))){
+        if (((event.stageX > this._shapePoint.x) && (event.stageX < this._shapeEndPoint.x)) && ((event.stageY > this._shapePoint.y) && (event.stageY < this._shapeEndPoint.y))) {
             this.paintBrush.graphics.setStrokeStyle(this._data.thickness || 3, 'round').beginStroke(this._data.color || "#000");
 
-            if (((event.stageX > this._shapePoint.x) && (event.stageX < this._shapeEndPoint.x))  && ((event.stageY > this._shapePoint.y) && (event.stageY < this._shapeEndPoint.y))){
-                this.paintBrush.graphics.mt(this._oldPt.x, this._oldPt.y).lineTo( mousePoint.x + 1 , mousePoint.y + 1);
-                this._oldPt = {x: mousePoint.x, y:mousePoint.y};
+            if (((event.stageX > this._shapePoint.x) && (event.stageX < this._shapeEndPoint.x)) && ((event.stageY > this._shapePoint.y) && (event.stageY < this._shapeEndPoint.y))) {
+                this.paintBrush.graphics.mt(this._oldPt.x, this._oldPt.y).lineTo(mousePoint.x + 1, mousePoint.y + 1);
+                this._oldPt = { x: mousePoint.x, y: mousePoint.y };
             }
-            
+
         }
         Renderer.update = true;
     },
