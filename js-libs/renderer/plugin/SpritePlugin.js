@@ -26,14 +26,14 @@ var SpritePlugin = Plugin.extend({
             console.error("Sprite sheet definition or image not found.");
         }
     },
-    play: function(animation) {
+    play: function(action) {
         if (!this._self.visible)
             this._self.visible = true;
-        this._self.gotoAndPlay(animation);
+        this._self.gotoAndPlay(action.animation);
     },
-    togglePlay: function(animation) {
+    togglePlay: function(action) {
         if (this._self.paused) {
-            this._self.gotoAndPlay(animation);
+            this._self.gotoAndPlay(action.animation);
         } else {
             this._self.paused = true;
         }
