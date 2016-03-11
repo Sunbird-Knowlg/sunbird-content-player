@@ -1,4 +1,4 @@
-<theme id="theme" startStage="AssetError" ver="0.2">
+<theme id="theme" startStage="scene1_rain" ver="0.2">
     <manifest>
         <media id="previous" src="icon_previous.png" type="image" />
         <media id="next" src="icon_next.png" type="image" />
@@ -7,18 +7,25 @@
         <!-- <media id="sringeri" src="sringeri.png" type="image" /> -->
         <media id="barber" src="barber.png" type="image" />
         <media id="bg" src="bugsBg.jpg" type="image" />
-        <media id="video_1" src="videos/Rain_rain_go_away.webm" type="video" />
-        <media id="video_2" src="videos/After_A_Bath.webm" type="video" />
         <media src="sounds/splash.ogg" id="splash_audio" type="audiosprite">
             <data>
                 <audioSprite id="cover_sound" startTime="0" duration="7131.428571428572"></audioSprite>
             </data>
         </media>
+        <media id="rain_rain" src="scene1.png" type="image" />
+        <media id="bus_wheels" src="scene2.png" type="image" />
+        <media id="watch_video" src="WatchVideoNow3.jpg" type="image" />
+        <media id="bg" src="bg.jpg" type="image" />
+
+        <media id="play_green" src="play_green.ico" type="image" />
+        <media id="pause_green" src="pause_green.ico" type="image" />
+        <media id="video_1" src="videos/Rain_rain_go_away.webm" type="video" />
+        <media id="video_2" src="videos/Wheels_On_The_Bus.webm" type="video" />
     </manifest>
     
     <controller name="bugData" type="data" id="bug_data"/>
-
-	<stage id="baseStage" preload="true">
+    
+   <stage id="baseStage" preload="true">
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
@@ -31,58 +38,129 @@
                 <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" transitionType="previous"/>
             </event>
         </shape>
-        <text param="heading" x="28" y="2" w="62" h="23" weight="bold" fontsize="50" color="#fff"/>
+        <text param="heading" x="28" y="2" w="62" h="23" weight="bold" fontsize="50" color="#fff"></text>
     </stage>
 
-    <stage id="AssetError" x="0" y="0" w="100" h="100" extends="baseStage">
-    	<param name="next" value="Command" />
+    <stage id="scene1_rain" x="0" y="0" w="100" h="100" extends="baseStage">
+        <param name="next" value="scene1_video" />
+        <image asset="rain_rain" x="0" y="0" w="100" h="100"/>
+        <image asset="watch_video" x="35" y="60" w="30" h="15"/>
+        <shape id="next_scene1_video" type="rect"  x="35" y="60" w="50" h="35" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+            </event>
+        </shape>
         
-    	<image asset="bg" x="0" y="0" w="100" h="100"/>
-        <param name="heading" model="bugData.ts_asset_not_found"/>
-        <video asset="video_1" type="video/webm" x="10" y="22" w="40" h="30" autoplay="true" controls="false"/>
+    </stage>
 
-        <video asset="video_2" type="video/webm" x="50" y="22" w="40" h="30" autoplay="false" controls="true"/>
+    <stage id="scene1_video" x="0" y="0" w="100" h="100" extends="baseStage">
+        
+        <param name="next" value="scene2_bus" />
+        <param name="previous" value="scene1_rain" />
+        <image asset="bg" x="0" y="0" w="100" h="100" id="bg"/>
+        
+        <text x="38" y="5" w="30" h="8" weight="bold" font="Georgia" fontsize="50">
+            Video with Autoplay
+        </text>
+        <video asset="video_1" type="video/webm" x="10" y="10" w="80" h="75" autoplay="true" controls="false" delay="1000"/>
 
-        <image asset="sringeri" x="20" zy="30" w="15" h="15"/>
-        <text x="10" y="15" h="10" w="40" fontsize="40" color="brown">If asset is not present stage should able to move to next stage :</text>
-        <text x="10" y="60" h="10" w="40" fontsize="40" color="brown">sringeri image asset is not present.</text>
-        <image asset="barber" x="60" y="25" w="25" h="25">
+        <image asset="play_green" x="40" y="88" w="7" h="10">
              <event type="click">
                 <action type="command" command="play" asset="video_1"/>
             </event>
         </image>
-        <text x="60" y="60" h="10" w="40" fontsize="40" color="brown">barber image asset is present.</text>
-        <shape type="rect" x="69" y="15" w="7" h="5" hitArea="true" stroke="black">
-            <event type="click">
+
+        <image asset="pause_green" x="50" y="88" w="7" h="10">
+             <event type="click">
                 <action type="command" command="pause" asset="video_1"/>
             </event>
-        </shape>
+        </image>
+
     </stage> 
 
-    <stage id="Command" x="0" y="0" w="100" h="100" extends="baseStage">
-        <param name="next" value="finished" />
-        <param name="previous" value="AssetError" />
-        <param name="heading" model="bugData.ts_command_insensitive"/>
-        <image asset="bg" x="0" y="0" w="100" h="100"/>
-        <text x="10" y="8" h="10" w="40" fontsize="40" color="brown">All commands should be inSensitive : </text>
-        <shape type="rect" x="69" y="15" w="7" h="5" hitArea="true" stroke="black">
+    <stage id="scene2_bus" x="0" y="0" w="100" h="100" extends="baseStage">
+        <param name="next" value="scene2_video" />
+        <param name="previous" value="scene1_video" /> 
+        <image asset="bus_wheels" x="0" y="0" w="100" h="100"/>
+
+        <image asset="watch_video" x="40" y="77" w="30" h="15"/>
+        <shape id="next_scene2_video" type="rect"  x="40" y="77" w="30" h="15" hitArea="true">
             <event type="click">
-                <action type="command" command="ExterNal" href="https://en.wikipedia.org/wiki/Barber" />
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
             </event>
         </shape>
-        <text x="10" y="15" h="10" w="50" fontsize="40" color="brown">Command written in ecml is "ExterNal", should open the external link.</text>
+    </stage>
+    
+    <stage id="scene2_video" x="0" y="0" w="100" h="100" extends="baseStage">
+        
+        <param name="next" value="scene3_rain_bus" />
+        <param name="previous" value="scene2_bus" />
+    
+        <image asset="bg" x="0" y="0" w="100" h="100" id="bg"/>
 
-        <image asset="barber" x="60" y="40" w="20" h="25">
-            <event type="click">
-                <action type="command" command="Hide" asset="barber" />
+         <text x="38" y="5" w="50" h="8" font="Georgia"  weight="bold" fontsize="50">
+            Video with inline controls
+        </text>
+        <video asset="video_2" type="video/webm" x="10" y="10" w="80" h="75" autoplay="false" controls="true"/>
+
+        <!-- <image asset="play_green" x="40" y="90" w="7" h="10">
+             <event type="click">
+                <action type="command" command="play" asset="video_1"/>
             </event>
         </image>
-        <text x="10" y="50" h="10" w="50" fontsize="40" color="brown">Command written in ecml is "Hide", should hide the barber image.</text>
-    </stage>
+        
+        <image asset="pause_green" x="50" y="90" w="7" h="10">
+             <event type="click">
+                <action type="command" command="pause" asset="video_1"/>
+            </event>
+        </image> -->
 
+    </stage> 
+
+    <stage id="scene3_rain_bus" x="0" y="0" w="100" h="100" extends="baseStage">
+        <param name="next" value="scene3_video" />
+        <param name="previous" value="scene2_video" /> 
+        <image asset="rain_rain" x="0" y="0" w="50" h="100"/>
+        <image asset="bus_wheels" x="50" y="0" w="50" h="100"/>
+    </stage>
     
+    <stage id="scene3_video" x="0" y="0" w="100" h="100" extends="baseStage">
+        
+        <param name="next" value="finished" />
+        <param name="previous" value="scene3_rain_bus" />
+        
+        <image asset="bg" x="0" y="0" w="100" h="100" id="bg"/>
+        <text x="38" y="5" w="30" h="8" font="Georgia" weight="bold" fontsize="50">
+            Multiple videos
+        </text>
+        
+        <text x="8" y="20" w="30" h="8" font="Georgia" fontsize="38">
+            With Autoplay
+        </text>
+        <video asset="video_1" type="video/webm" x="8" y="25" w="40" h="40" autoplay="true" controls="false" delay="2000"/>
+
+        <image asset="play_green" x="22" y="70" w="5" h="8">
+             <event type="click">
+                <action type="command" command="play" asset="video_1"/>
+            </event>
+        </image>
+    
+        <image asset="pause_green" x="29" y="70" w="5" h="8">
+             <event type="click">
+                <action type="command" command="pause" asset="video_1"/>
+            </event>
+        </image>
+
+        <text x="52" y="20" w="30" h="8" font="Georgia" fontsize="38">
+            With Video Controls
+        </text>
+        <video asset="video_2" type="video/webm" x="52" y="25" w="40" h="40" autoplay="false" controls="true"/>
+
+    </stage> 
+
     <stage id="finished" x="0" y="0" w="100" h="100">
-    	<image asset="bg" x="0" y="0" w="100" h="100"/>
+        <param name="previous" value="scene3_video" /> 
+        <image asset="bg" x="0" y="0" w="100" h="100"/>
         <text x="38" y="15" w="30" h="8" font="Georgia" fontsize="50">
             It works :) See you again!
         </text>
@@ -117,4 +195,104 @@
         </shape>
         
     </stage>
+
+	<!-- <stage id="baseStage" preload="true">
+            <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
+            <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
+                <event type="click">
+                    <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+                </event>
+            </shape>
+            <image asset="previous" x="2" y="3" w="5" h="8.3" id="previous" visible="false"/>
+            <shape id="previousContainer" type="rect" x="1" y="1" w="10" h="15" visible="false" hitArea="true">
+                <event type="click">
+                    <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" transitionType="previous"/>
+                </event>
+            </shape>
+            <text param="heading" x="28" y="2" w="62" h="23" weight="bold" fontsize="50" color="#fff"/>
+        </stage>
+    
+        <stage id="AssetError" x="0" y="0" w="100" h="100" extends="baseStage">
+            <param name="next" value="Command" />
+            
+            <image asset="bg" x="0" y="0" w="100" h="100"/>
+            <param name="heading" model="bugData.ts_asset_not_found"/>
+            <video asset="video_1" type="video/webm" x="10" y="22" w="40" h="30" autoplay="true" controls="false"/>
+    
+            <video asset="video_2" type="video/webm" x="50" y="22" w="40" h="30" autoplay="false" controls="true"/>
+    
+            <image asset="sringeri" x="20" zy="30" w="15" h="15"/>
+            <text x="10" y="15" h="10" w="40" fontsize="40" color="brown">If asset is not present stage should able to move to next stage :</text>
+            <text x="10" y="60" h="10" w="40" fontsize="40" color="brown">sringeri image asset is not present.</text>
+            <image asset="barber" x="60" y="25" w="25" h="25">
+                 <event type="click">
+                    <action type="command" command="play" asset="video_1"/>
+                </event>
+            </image>
+            <text x="60" y="60" h="10" w="40" fontsize="40" color="brown">barber image asset is present.</text>
+            <shape type="rect" x="69" y="15" w="7" h="5" hitArea="true" stroke="black">
+                <event type="click">
+                    <action type="command" command="pause" asset="video_1"/>
+                </event>
+            </shape>
+        </stage> 
+    
+        <stage id="Command" x="0" y="0" w="100" h="100" extends="baseStage">
+            <param name="next" value="finished" />
+            <param name="previous" value="AssetError" />
+            <param name="heading" model="bugData.ts_command_insensitive"/>
+            <image asset="bg" x="0" y="0" w="100" h="100"/>
+            <text x="10" y="8" h="10" w="40" fontsize="40" color="brown">All commands should be inSensitive : </text>
+            <shape type="rect" x="69" y="15" w="7" h="5" hitArea="true" stroke="black">
+                <event type="click">
+                    <action type="command" command="ExterNal" href="https://en.wikipedia.org/wiki/Barber" />
+                </event>
+            </shape>
+            <text x="10" y="15" h="10" w="50" fontsize="40" color="brown">Command written in ecml is "ExterNal", should open the external link.</text>
+    
+            <image asset="barber" x="60" y="40" w="20" h="25">
+                <event type="click">
+                    <action type="command" command="Hide" asset="barber" />
+                </event>
+            </image>
+            <text x="10" y="50" h="10" w="50" fontsize="40" color="brown">Command written in ecml is "Hide", should hide the barber image.</text>
+        </stage>
+    
+        
+        <stage id="finished" x="0" y="0" w="100" h="100">
+            <image asset="bg" x="0" y="0" w="100" h="100"/>
+            <text x="38" y="15" w="30" h="8" font="Georgia" fontsize="50">
+                It works :) See you again!
+            </text>
+            
+            <image asset="icon_reload" x="30" y="35" w="15" h="20" />
+            <text x="33" y="57" w="15" h="5" font="Arial" fontsize="48">
+                Replay
+            </text>
+            <shape type="rect" x="30" y="35" w="15" h="30" hitArea="true">
+                <event type="click">
+                    <action type="command" command="restart" asset="theme"/>
+                </event>
+            </shape>
+    
+            <image asset="icon_home" x="55" y="35" w="15" h="20" />
+            <text x="58" y="57" w="15" h="5" font="Arial" fontsize="48">
+                Home
+            </text>
+            <shape type="rect" x="55" y="35" w="15" h="30" hitArea="true">
+                <event type="click">
+                    <action type="command" command="windowEvent" asset="theme" href="#/content/list"/>
+                </event>
+            </shape>
+    
+            <text x="48" y="75" w="15" h="5" font="Arial" fontsize="48">
+                Ekstep
+            </text>
+            <shape type="rect" x="47" y="74" w="17" h="7" hitArea="true">
+                <event type="click">
+                    <action type="command" command="external" href="http://www.ekstep.org/"/>
+                </event>
+            </shape>
+            
+        </stage> -->
 </theme>

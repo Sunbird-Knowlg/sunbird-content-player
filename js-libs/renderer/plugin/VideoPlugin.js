@@ -17,18 +17,30 @@ var VideoPlugin = Plugin.extend({
         this._self = new createjs.Bitmap(lItem);
 
         //If autoplay set to true, then play video
-        if(this._data.autoplay == true){
-            this.play();
+        if(this._data.autoplay == true){          
+            this.play();           
         }
     }, 
+    deplayStart: function(video){
+        setTimeout(function() {
+            video.style.display = "block";
+            video.play();    
+        }, this._data.delay);
+    },
     play: function(action){
         if(action){
             _videoEle = this.getVideo(action.asset);
         }
-        _videoEle.style.display = "block";
+
         //this._self.paused = false;
-        _videoEle.play();
-        this.sendTelemeteryData(action, "PLAY");
+        if(this._data.delay){
+            this.deplayStart(_videoEle);
+        }else{
+            _videoEle.style.display = "block";
+            _videoEle.play(); 
+            this.sendTelemeteryData(action, "PLAY");           
+        }
+        
     },
     pause: function(action) {
         if(action){
