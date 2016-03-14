@@ -75,7 +75,7 @@ var OptionPlugin = Plugin.extend({
                 res: [{
                     "option": instance._value.asset
                 }],
-                state: (val ? 'SELECTED' : 'UNSELECTED'),
+                state: (("undefined" != typeof val) && ("" !== val) ? 'SELECTED' : 'UNSELECTED'),
                 optionTag: "MCQ"
             }
             EventManager.processAppTelemetry({}, 'CHOOSE', instance, data);
@@ -223,7 +223,7 @@ var OptionPlugin = Plugin.extend({
                         res: [{
                             dragItem: drop_idx
                         }],
-                        state: drop_idx ? "SELECTED" : "UNSELECTED",
+                        state: (("undefined" != typeof drop_idx) && ("" !== drop_idx)) ? "SELECTED" : "UNSELECTED",
                         optionTag: "MTF"
                     }
                     // data.res[dragItem] = drop_idx;
