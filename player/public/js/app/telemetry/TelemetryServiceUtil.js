@@ -37,6 +37,10 @@ String.prototype.insert = function(index, string) {
 // https://github.com/ekstep/Common-Design/wiki/Telemetry
 // YYYY-MM-DDThh:mm:ss+/-nn:nn
 function toGenieDateTime(ms) {
-    var v = dateFormat(new Date(ms), "yyyy-mm-dd'T'HH:MM:ssZ").replace('GMT', '');
-    return v.insert(-2, ':');
+    // var v = dateFormat(new Date(ms), "yyyy-mm-dd'T'HH:MM:ssZ").replace('GMT', '');
+    // return v.insert(-2, ':');
+	var dte = new Date(ms);
+	dte.setTime(dte.getTime() +(dte.getTimezoneOffset()+330)*60*1000);
+	v = dateFormat(dte, "yyyy-mm-dd'T'HH:MM:ss")+"+05:30";
+	return v;
 }
