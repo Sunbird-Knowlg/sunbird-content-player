@@ -121,18 +121,18 @@ describe('Command manager test cases', function() {
         expect(_.contains(PluginManager.errors, 'Subclasses of plugin should implement transitionTo()')).toEqual(true);
     });
 
-    it('Test command startrecord', function(done) {
-        var action = this.action;
-        this.action.command = 'startrecord';
-        CommandManager.handle(this.action);
-        expect(CommandManager.handle).toHaveBeenCalled();
-        expect(CommandManager.handle.calls.count()).toEqual(1);
-        setTimeout(function() {
-            console.log("startrecord RecorderManager.recording:", RecorderManager.recording);
-            expect(false).toEqual(RecorderManager.recording);
-            done();
-        }, 1000);
-    });
+    // it('Test command startrecord', function(done) {
+    //     var action = this.action;
+    //     this.action.command = 'startrecord';
+    //     CommandManager.handle(this.action);
+    //     expect(CommandManager.handle).toHaveBeenCalled();
+    //     expect(CommandManager.handle.calls.count()).toEqual(1);
+    //     setTimeout(function() {
+    //         console.log("startrecord RecorderManager.recording:", RecorderManager.recording);
+    //         expect(false).toEqual(RecorderManager.recording);
+    //         done();
+    //     }, 1000);
+    // });
 
     it('Test command stoprecord', function(done) {
         this.action.command = 'stoprecord';
