@@ -23,6 +23,7 @@ module.exports = function(config) {
       'public/js/app/*.js',
       'public/js/test/BaseSpec.js',
       'public/js/test/specHelper.js',
+      'public/js/test/ScribblePluginSpec.js',
       'public/js/test/AnimationManagerSpec.js',
       'public/js/test/AssetManagerSpec.js',
       'public/js/test/AudioManagerSpec.js',
