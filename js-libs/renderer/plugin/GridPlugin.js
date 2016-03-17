@@ -3,6 +3,7 @@ var GridPlugin = Plugin.extend({
 	_properties: {},
 	_dataItems: [],
 	_dataModel: [],
+	_cellCount: 0,
 	initPlugin: function(data) {
 		this._data = data;
 		var container = new createjs.Container();
@@ -28,7 +29,7 @@ var GridPlugin = Plugin.extend({
 	},
 	_drawGrid: function() {
 		//Adding rows, internally it will columns to each row
-		this._loadDataItems();
+		this._dataItems = this._getDataItems(this._data.columns);
 		this._addRows();
 		return;
 	},
@@ -42,59 +43,87 @@ var GridPlugin = Plugin.extend({
       this._dataModel = (this._stage.getModelValue(this._data.model) || '');
       console.log(this._dataModel);
     } 
+		_cellCount = 0;
 
 		for(var j=0; j<this._properties.rowCount; j++){
+			//Adding grid rows
 			for(var i=0; i<this._properties.colCount; i++){
-				//Adding grid rows
-				var rowData = this._getDataItem(j, i);
-				//rowData.type = "rect";
-				//rowData.$t = "Row-"+j +", Cell-" + i;
-				rowData.w = 100/this._properties.colCount;
-				rowData.h = 100/this._properties.rowCount;
-				rowData.x = this._properties.colWidth * i;
-				rowData.y = this._properties.rowHeight * j;
-				//rowData.fill = "grey";
-				//rowData.stroke="black"
 
-				var rowContainer = PluginManager.invoke(rowData.pluginType, rowData, this, this._stage, this._theme);
-				rowContainer._self.x = rowData.x;
-				rowContainer._self.y = rowData.y;
+				for(var k=0; k<this._dataItems.length; k++){
+					var dataItem = this._getDataItem(this._dataItems[k], this._dataModel[_cellCount]);
+					//dataItem.type = "rect";
+					//dataItem.$t = "Row-"+j +", Cell-" + i;
+					dataItem.w = 100/this._properties.colCount;
+					dataItem.h = 100/this._properties.rowCount;
+					dataItem.x = this._properties.colWidth * i;
+					dataItem.y = this._properties.rowHeight * j;
+					//dataItem.fill = "grey";
+					//dataItem.stroke="black"
 
-				//Alternate row colors
-				var fillColor = "#5DCBFD"
-				if(i%2 == 0){
-					fillColor = "#D7ECF4"
+					//console.log(dataItem);
+					var rowContainer = PluginManager.invoke(dataItem.pluginType, dataItem, this, this._stage, this._theme);
+					
+					rowContainer.invokeChildren(dataItem, rowContainer, this._stage, this._theme);
+
+					var conDims = rowContainer.relativeDims();
+					rowContainer._self.x = dataItem.x;
+					rowContainer._self.y = dataItem.y;
+					/*rowContainer._self.w = dataItem.w;//conDims.w/this._properties.colCount;
+					rowContainer._self.h = dataItem.h;*/
+
+	 			  // //Alternate row colors
+					// var fillColor = "#5DCBFD"
+					// if(i%2 == 0){
+					// 	fillColor = "#D7ECF4"
+					// }
+
+					// //Adding shpae to row to set row bg color, stroke etc..
+					// var rowShape = new createjs.Shape();
+					// var cellDims = rowContainer.relativeDims();
+
+					// rowShape.graphics.beginFill(fillColor).r(dataItem.x, dataItem.y, cellDims.w, cellDims.h);
 				}
-
-				//Adding shpae to row to set row bg color, stroke etc..
-				var rowShape = new createjs.Shape();
-				var cellDims = rowContainer.relativeDims();
-
-				rowShape.graphics.beginFill(fillColor).r(rowData.x, rowData.y, cellDims.w, cellDims.h);
+				_cellCount++;
 			}
 		}
 	},
-	_getDataItem: function(rowIndex, colIndex){
+	_getDataItem: function(dataItem, dataObj){
 		//Getting plugin data declared in ecml
-		var dataItem = this._dataItems[colIndex];
+		//var dataItem = this._dataItems[colIndex];
 
 		//Getting json data for the row
-		var dataObj = this._dataModel[rowIndex];
+		//var dataObj = this._dataModel[rowIndex];
 		
 		if(dataItem.pluginType == "text"){
 			dataItem.$t = dataObj[dataItem.model];
 		}else if(dataItem.pluginType == "image"){
 			dataItem.asset = dataObj[dataItem.model];
-		}
+		}/*else if(dataItem.pluginType == "g"){
+			var childItems = this._getDataItems(dataItem);
+			for(k in childItems){
+				childItem = childItems[k];
+				if(childItem.model != null){
+					childItem = this._getDataItem(childItem, dataObj);
+					_.find(dataItem, )
+					console.log("childItem", childItem);
+				}
+			}
+			console.log("g children", dataItem);
+		}*/
 
 		_.omit(dataItem, dataItem.model);
-		console.log("dataItem", dataItem);
+		//console.log("dataItem", dataItem);
 		return dataItem;
 		//return _.findWhere(this._dataItems, {"order": orderIndex+1});
 	},
-	_loadDataItems: function(){
-		var len = this._data.columns.data.length;
-		var dataItems = this._data.columns.data;
+	_getDataItems: function(inputData){
+		var len = inputData.length;
+		var dataItems;
+		if(inputData.data){
+			dataItems = inputData.data
+		}else{
+			dataItems = inputData;
+		}
 		
 		var children = [];
 		for (k in dataItems) {
@@ -110,9 +139,9 @@ var GridPlugin = Plugin.extend({
 				}
 			}
 		}
-
-  	this._dataItems = _.sortBy(children, 'index');
-  	console.log("_dataItems", this._dataItems);
+		return _.sortBy(children, 'index');
+  	//this._dataItems = _.sortBy(children, 'index');
+  	//console.log("_dataItems", this._dataItems);
 	},
 	_addColumns: function(rowContainer, rowIndex){
 		// Not required
