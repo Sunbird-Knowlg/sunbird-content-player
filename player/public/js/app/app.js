@@ -18,10 +18,12 @@ function backbuttonPressed() {
         type: 'EXIT_CONTENT',
         stageId: Renderer.theme._currentStage
     } : {
+        // TODO: check and remove this event.
         type: 'EXIT_APP'
     };
     TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', data);
-    (Renderer.running || HTMLRenderer.running) ? initBookshelf(): exitApp();
+    if (Renderer.running || HTMLRenderer.running) 
+        initBookshelf();
 }
 
 function exitApp() {
@@ -91,6 +93,10 @@ function contentNotAvailable() {
     exitApp();
 }
 
+function onEnterController() {
+    jQuery('#loading').hide();
+}
+
 angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
     .run(function($ionicPlatform, $ionicModal, $cordovaFile, $cordovaToast, ContentService, $state) {
         $ionicPlatform.ready(function() {
@@ -147,12 +153,14 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             .state('contentList', {
                 url: "/content/list",
                 templateUrl: "templates/content-list.html",
-                controller: 'ContentListCtrl'
+                controller: 'ContentListCtrl',
+                onEnter: onEnterController()
             })
             .state('showContent', {
                 url: "/show/content",
                 templateUrl: "templates/content.html",
-                controller: 'ContentHomeCtrl'
+                controller: 'ContentHomeCtrl',
+                onEnter: onEnterController()
             })
             .state('playContent', {
                 url: "/play/content/:itemId",

@@ -127,6 +127,16 @@ module.exports = function(grunt) {
                         dest: 'platforms/android/'
                     }
                 ]
+            },
+            androidLib: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'build-config',
+                        src: 'AndroidManifest.xml',
+                        dest: 'platforms/android/'
+                    }
+                ]
             }
         },
         clean: {
@@ -331,6 +341,14 @@ module.exports = function(grunt) {
                     from: /AUDIO_RECORDER/g,
                     to: "android"
                 }]
+            },
+            androidLib: {
+                src: ['platforms/android/build.gradle'],
+                overwrite: true,
+                replacements: [{
+                    from: "apply plugin: 'android'",
+                    to: "apply plugin: 'android-library'"
+                }]
             }
         }
     });
@@ -415,5 +433,10 @@ module.exports = function(grunt) {
 
     grunt.registerTask('ci-build-debug', ['build-apk-xwalk']);
     grunt.registerTask('ci-build-signed', ['build-signed-apk-xwalk']);
+
+    grunt.registerTask('set-android-library',['copy:androidLib', 'replace:androidLib']);
+    grunt.registerTask('build-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-unsigned-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
+    grunt.registerTask('build-signed-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
 
 };
