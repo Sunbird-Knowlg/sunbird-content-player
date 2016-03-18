@@ -182,24 +182,9 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             $scope.aboutModal = modal;
         });
 
-        $scope.environmentList = [{
-            text: "Sandbox",
-            value: "API_SANDBOX"
-        }, {
-            text: "Production",
-            value: "API_PRODUCTION"
-        }];
-        $scope.selectedEnvironment = {
-            value: "API_SANDBOX"
-        };
         $scope.version = GlobalContext.game.ver;
         $scope.flavor = GlobalContext.config.flavor;
-        $scope.tab1 = 'Stories';
-        $scope.tab2 = 'Worksheets';
-        if (GlobalContext.game.id == packageNameDelhi) {
-            $scope.tab1 = 'Literacy';
-            $scope.tab2 = 'Numeracy';
-        }
+        
         $scope.currentUser = GlobalContext.user;
         $rootScope.title = GlobalContext.config.appInfo.name;
         $rootScope.stories = [];
