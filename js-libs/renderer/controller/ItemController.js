@@ -30,7 +30,7 @@ var ItemController = Controller.extend({
 
                 // Start assessment telemetry
                 d = item.model;
-                console.log(item);
+
                 try {
                     this.assessStartEvent = TelemetryService.assess((_.isString(item.identifier) && !_.isEmpty(item.identifier)) ? item.identifier : item.qid.trim(), this._data.subject, item.qlevel, {
                         maxscore: item.max_score
@@ -77,6 +77,7 @@ var ItemController = Controller.extend({
                     score: item.score,
                     res: result.res,
                     mmc: item.mmc,
+                    qindex: item.qindex,
                     mc: _.pluck(item.concepts, 'identifier')
                 };
                 TelemetryService.assessEnd(this.assessStartEvent, data);
