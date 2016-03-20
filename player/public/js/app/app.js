@@ -18,12 +18,9 @@ function backbuttonPressed() {
         type: 'EXIT_CONTENT',
         stageId: Renderer.theme._currentStage
     } : {
-        // TODO: check and remove this event.
         type: 'EXIT_APP'
     };
     TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', data);
-    if (Renderer.running || HTMLRenderer.running) 
-        initBookshelf();
 }
 
 function exitApp() {
@@ -67,16 +64,11 @@ function startApp(app) {
 function launchInitialPage(appInfo, $state) {    
         TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
             if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-                TelemetryService.start();
                 $state.go('showContent', {});
-            } else if (COLLECTION_MIMETYPE == appInfo.mimeType) {
+            } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) || 
+                (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
                 GlobalContext.game.id = GlobalContext.config.appInfo.code;
-                TelemetryService.start();
-                $state.go('contentList', {});
-            } else if (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName) {
-                GlobalContext.game.id = GlobalContext.config.appInfo.code;
-                TelemetryService.start();
-                $state.go('contentList', {});
+                $state.go('contentList', {"id": GlobalContext.game.id});
             } else {
                 alert("App launched with invalid context.");
                 exitApp();
@@ -91,10 +83,6 @@ function launchInitialPage(appInfo, $state) {
 function contentNotAvailable() {
     alert(AppMessages.NO_CONTENT_FOUND);
     exitApp();
-}
-
-function onEnterController() {
-    jQuery('#loading').hide();
 }
 
 angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
@@ -120,11 +108,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             });
             $ionicPlatform.on("resume", function() {
                 Renderer.resume();
-                if (!Renderer.running) {
-                    setTimeout(function() {
-                        initBookshelf();
-                    }, 500);
-                }
             });
 
             genieservice.getMetaData().then(function(data) {
@@ -151,16 +134,15 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('contentList', {
-                url: "/content/list",
+                cache: false,
+                url: "/content/list/:id",
                 templateUrl: "templates/content-list.html",
-                controller: 'ContentListCtrl',
-                onEnter: onEnterController()
+                controller: 'ContentListCtrl'
             })
             .state('showContent', {
                 url: "/show/content",
                 templateUrl: "templates/content.html",
-                controller: 'ContentHomeCtrl',
-                onEnter: onEnterController()
+                controller: 'ContentHomeCtrl'
             })
             .state('playContent', {
                 url: "/play/content/:itemId",
@@ -168,12 +150,9 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 controller: 'ContentCtrl'
             });
     })
-    .controller('ContentListCtrl', function($scope, $rootScope, $http, $ionicModal, $cordovaFile, $cordovaDialogs, $cordovaToast, $ionicPopover, $state, $q, ContentService) {
-        
-        //To Store current selected collectio item
-        $scope.collectionItem; 
-        $scope.rootStories;
-        $scope.collectionItems = [];
+    .controller('ContentListCtrl', function($scope, $rootScope, $http, $ionicModal, $cordovaFile, $cordovaDialogs, $cordovaToast, $ionicPopover, $state, $stateParams, $q, ContentService) {
+
+        var id = $stateParams.id;
 
         $ionicModal.fromTemplateUrl('about.html', {
             scope: $scope,
@@ -184,7 +163,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
 
         $scope.version = GlobalContext.game.ver;
         $scope.flavor = GlobalContext.config.flavor;
-        
         $scope.currentUser = GlobalContext.user;
         $rootScope.title = GlobalContext.config.appInfo.name;
         $rootScope.stories = [];
@@ -208,9 +186,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 }, data.timeout);
             }
             if (data.reload) {
-                $rootScope.$apply(function() {
-                    $rootScope.loadBookshelf();
-                });
+                // TODO: remove this if condition.
             }
         });
 
@@ -223,20 +199,28 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         }
 
         $scope.resetContentListCache = function() {
-            jQuery("#loadingDiv").show();
-            $rootScope.renderMessage("", 0);
-            var childrenIds = (GlobalContext.config.appInfo.children) ? _.pluck(GlobalContext.config.appInfo.children, 'identifier') :null;
-            ContentService.getContentList(GlobalContext.filter, childrenIds)
+            // jQuery("#loadingDiv").show();
+            $rootScope.renderMessage("", 0);            
+            ContentService.getContent(id)
+            .then(function(content) {
+                var childrenIds = (content.children) ? _.pluck(content.children, 'identifier') :null;
+                if (COLLECTION_MIMETYPE == content.mimeType) {
+                    $rootScope.title = content.name;
+                    if (!_.isEmpty($rootScope.collection)) 
+                        TelemetryService.end();
+                    $rootScope.collection = content;
+                    TelemetryService.start(content.identifier, content.pkgVersion);
+                } else {
+                    $rootScope.collection = {};
+                }
+                return ContentService.getContentList(content.filter, childrenIds);
+            })
             .then(function(result) {
                 $rootScope.$apply(function() {
                     $rootScope.stories = result;
                 });
-                $rootScope.loadBookshelf();
                 if($rootScope.stories && $rootScope.stories.length <=0) {
                     $rootScope.renderMessage(AppMessages.NO_CONTENT_LIST_FOUND);
-                } else {
-                    // No need to show this message
-                    //$rootScope.renderMessage(AppMessages.SUCCESS_GET_CONTENT_LIST, 3000);
                 }
             })
             .catch(function(err) {
@@ -244,13 +228,8 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                     $rootScope.stories = [];
                 });
                 console.error(err);
-                $rootScope.loadBookshelf();
                 $rootScope.renderMessage(AppMessages.ERR_GET_CONTENT_LIST, 3000);
             });
-        };
-
-        $rootScope.loadBookshelf = function() {
-            initBookshelf();
         };
 
         $scope.showBackButton = function(){
@@ -261,78 +240,12 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             }
         }
 
-        /**
-         * This is to show the selected collection, children in BookShell
-         */
-        $scope.showCollectionItems = function(){
-            if($scope.collectionItem.children){
-                var contChildren = $scope.collectionItem.children;
-                if(contChildren.length > 0){
-                    //For Back button reference
-                    $scope.updateCollectionItems($scope.collectionItem);
-
-                    //Used to go back to home
-                    $scope.duplicateRootStories();
-
-                    $scope.stories = [];
-                    //Getting selected collection item childrens to show in the bookshell
-                    _.each(contChildren, function(child){
-                        var story = _.findWhere($scope.rootStories, {'identifier': child.identifier});
-                        $scope.stories.push(story);
-                    });                        
-                }
-            }
-        };
-
-        /**
-         * Back to parent collection in bookshell
-         */
-        $scope.backToParentCollection = function(){
-            if($scope.collectionItems.length == 1){
-                //Go to root/home list
-                $scope.stories = angular.copy($scope.rootStories);
-                $scope.collectionItems = [];
-                $scope.collectionItem = null;
-            }else{
-                //go to parent collection list 
-                var parentCollection = $scope.collectionItems.pop();
-                parentCollection = _.findWhere($scope.rootStories, {'identifier': parentCollection.identifier});
-                $scope.playContent(parentCollection);
-            }
-        };
-
-        /**
-         * this is to duplicate root stories. 
-         * After selecting nested collection items, we can show root items directly 
-         */
-        $scope.duplicateRootStories = function(){
-            //Storing base root stories
-            if(_.isUndefined($scope.rootStories)){
-                $scope.rootStories = angular.copy($scope.stories);                
-            }
-        };
-
-        /**
-         * This is used to back button functionality.
-         * When user want to go back to parent collection, then we are getting the last item from this collection 
-         */
-        $scope.updateCollectionItems = function(content){
-            var collectionItem = {
-                identifier: content.identifier,
-            }
-            $scope.collectionItems[$scope.collectionItems.length] = collectionItem;
-        }
-
         $scope.playContent = function(content) {
-            if(content.mimeType == COLLECTION_MIMETYPE){
-                //Selected item is of type "Collection". So show its child items in BookShell
-                $scope.collectionItem = content;
-                $scope.showCollectionItems();
-                return;
+            if (content.mimeType == COLLECTION_MIMETYPE) {
+                $state.go('contentList', {"id": content.identifier});
+            } else {
+                $state.go('playContent', {'itemId': content.identifier});    
             }
-            $state.go('playContent', {
-                'itemId': content.identifier
-            });
         };
 
         $scope.showAboutUsPage = function() {
@@ -353,7 +266,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                     console.log("Simulating non-fatal error for Crashlytics");
                     navigator.crashlytics.logException("Simulated non-fatal error");
                 }
-
                 console.log("Simulation sent to Crashlytics");
             }
             else {
@@ -367,7 +279,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         // TODO: remove this method.
         $scope.clearAllContent = function() {}
 
-        $rootScope.loadBookshelf();
         $scope.resetContentListCache();
 
     }).controller('ContentCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
@@ -388,7 +299,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             }
         } else {
             alert('Name or Launch URL not found.');
-            $state.go('contentList');
+            $state.go('contentList', {"id": GlobalContext.game.id});
         }
         $scope.$on('$destroy', function() {
             setTimeout(function() {
@@ -397,7 +308,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 } else {
                     Renderer.cleanUp();
                 }
-                initBookshelf();
             }, 100);
         })
         $rootScope.showMessage = false;
@@ -471,22 +381,3 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             startApp();
         }
     });
-
-function initBookshelf() {
-    setTimeout(function() {
-
-        var numRows = ((screen.height < 599) ? 1 : 2);
-        var widthToHeight = 16 / 9;
-        var newWidth = window.innerWidth;
-        var newHeight = window.innerHeight;
-        var newWidthToHeight = newWidth / newHeight;
-        if (newWidthToHeight > widthToHeight) {
-            newWidth = newHeight * widthToHeight;
-        } else {
-            newHeight = newWidth / widthToHeight;
-        }
-
-        console.log('Loading completed....');
-        jQuery("#loadingDiv").hide();
-    }, 100);
-}
