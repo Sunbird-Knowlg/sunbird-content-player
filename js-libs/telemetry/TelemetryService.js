@@ -159,10 +159,10 @@ TelemetryService = {
             TelemetryService.start()
         }
     },
-    exit: function(packageName, ver) {
+    exit: function() {
         TelemetryService._data = [];
-        if (TelemetryService.instance._gameData)
-            TelemetryService.end(packageName, ver);
+        if (TelemetryService._gameData)
+            TelemetryService.end();
     },
     logError: function(eventName, error) {
         var data = {

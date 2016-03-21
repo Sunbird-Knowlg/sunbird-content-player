@@ -27,7 +27,7 @@ function backbuttonPressed() {
 // So, change exitApp to do the same.
 function exitApp() {
     try {
-        TelemetryService.exit(packageName, version);
+        TelemetryService.exit();
     } catch (err) {
         console.error('End telemetry error:', err.message);
     }
