@@ -1,7 +1,7 @@
 angular.module('quiz.services', ['ngResource'])
     .factory('ContentService', ['$window', '$rootScope', function($window, $rootScope) {
         var returnObject = {
-            _SUPPORTED_MIMETYPES: ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
+            _SUPPORTED_MIMETYPES: ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.content-collection"],
             getContentList: function(filter, childrenIds) {
                 return new Promise(function(resolve, reject) {
                     returnObject._filterContentList(filter, childrenIds)
@@ -36,7 +36,10 @@ angular.module('quiz.services', ['ngResource'])
                     var path = (item.path.charAt(item.path.length-1) == '/')? item.path.substring(0, item.path.length-1): item.path;
                     path = ($window.cordova)? "file://" + path : path; 
                     data.baseDir =  path;
-                    data.appIcon = path + "/logo.png";
+                    if ("undefined" != typeof cordova)
+                        data.appIcon = (data.appIcon) ? path + "/" + data.appIcon : path + "/logo.png";
+                    else 
+                        data.appIcon = path + "/logo.png";
                     data.mimeType = item.mimeType;
                     data.status = "ready";
                 } else {
@@ -54,11 +57,20 @@ angular.module('quiz.services', ['ngResource'])
                         resolve(list);
                     };
                     if (filter || childrenIds) {
-                        genieservice.getContentList([])
-                        .then(function(result) {
+                        new Promise(function(resolve, reject) {
+                            var promises = [];
                             if (childrenIds && childrenIds.length > 0) {
-                                list = _.filter(result.list, function(item) {
-                                    return childrenIds.indexOf(item.identifier) > -1;
+                                _.each(childrenIds, function(childId) {
+                                    promises.push(genieservice.getContent(childId));
+                                });
+                                Promise.all(promises)
+                                .then(function(resList) {
+                                    list = resList;
+                                    resolve(list);
+                                })
+                                .catch(function(err) {
+                                    console.error("Error while fetching children list:", err);
+                                    resolve(list);
                                 });
                             }
                         })
@@ -82,8 +94,7 @@ angular.module('quiz.services', ['ngResource'])
                     } else {
                         genieservice.getContentList([])
                         .then(function(result) {
-                            list = result.list;
-                            returnResult(list);
+                            returnResult(result.list);
                         })
                         .catch(function(err) {
                             returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err));
