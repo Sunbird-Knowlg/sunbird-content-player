@@ -25,8 +25,10 @@ var ItemDataGenerator = {
 			if (typeof data.shuffle != 'undefined')
 				shuffle = data.shuffle;
 			if (item_sets && items) {
-				item_sets.forEach(function(map) {
-					list = ItemDataGenerator._addItems(map.id, map.count, items, list, shuffle);
+				var cumulativeIndex = 0; // How many questions have been there before this set
+				item_sets.forEach(function(map, setidx) {
+					list = ItemDataGenerator._addItems(map.id, map.count, items, list, shuffle, cumulativeIndex);
+					cumulativeIndex += items[map.id].length; // Next iteration will have these many questions
 				});
 				if (total_items && list.length > total_items) {
 					list = _.first(list, total_items);
@@ -35,7 +37,7 @@ var ItemDataGenerator = {
     	}
 		return list;
 	},
-	_addItems: function(id, count, items, list, shuffle) {
+	_addItems: function(id, count, items, list, shuffle, cumulativeIndex) {
 		var set = items[id];
 		if (_.isArray(set)) {
 			var indexArr = [];
@@ -45,15 +47,24 @@ var ItemDataGenerator = {
 				count = set.length;
 
 			var pick = [];
+			var qindex = 0;
+
 			for(var i = 0; i < count; i++) {
 				if(shuffle) {
 					var randNum = _.random(0,indexArr.length-1);
 					pick[i] = set[indexArr[randNum]];
+					qindex = indexArr[randNum]; // When shuffling, the random index is the original index
+
+					// Rearrange the index array so that no repeat happens
 					indexArr[randNum] = indexArr[indexArr.length - 1];
 					indexArr.splice(indexArr.length - 1, 1);
 				} else {
 					pick[i] = set[indexArr[i]];
+					qindex = i; // When not shuffling, the iterator is the index
 				}
+
+				// Set the qindex value on the item
+				pick[i].qindex = (cumulativeIndex + qindex + 1);
 			}
 			list = _.union(list, pick);
 		}
