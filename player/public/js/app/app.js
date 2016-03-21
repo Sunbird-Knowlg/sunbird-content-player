@@ -23,26 +23,21 @@ function backbuttonPressed() {
     TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', data);
 }
 
+// TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
+// So, change exitApp to do the same.
 function exitApp() {
-     navigator.startApp.start(geniePackageName, function(message) {
-            try {
-                TelemetryService.exit(packageName, version);
-            } catch (err) {
-                console.error('End telemetry error:', err.message);
-            }
-            if (navigator.app) {
-                navigator.app.exitApp();
-            }
-            if (navigator.device) {
-                navigator.device.exitApp();
-            }
-            if (window) {
-                window.close();
-            }
-        },
-        function(error) {
-            alert("Unable to start Genie App.");
-        });
+    try {
+        TelemetryService.exit(packageName, version);
+    } catch (err) {
+        console.error('End telemetry error:', err.message);
+    }
+    genieservice.endGenieCanvas()
+    .then(function() {
+        console.info("Genie Canvas closed successfully.");
+    })
+    .catch(function() {
+        alert("Unable to close Genie Canvas.");
+    });
 }
 
 function startApp(app) {
@@ -150,7 +145,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 controller: 'ContentCtrl'
             });
     })
-    .controller('ContentListCtrl', function($scope, $rootScope, $http, $ionicModal, $cordovaFile, $cordovaDialogs, $cordovaToast, $ionicPopover, $state, $stateParams, $q, ContentService) {
+    .controller('ContentListCtrl', function($scope, $rootScope, $http, $ionicModal, $cordovaFile, $cordovaDialogs, $cordovaToast, $ionicPopover, $state, $stateParams, $q, ContentService, $ionicHistory) {
 
         var id = $stateParams.id;
 
@@ -185,16 +180,12 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                     }
                 }, data.timeout);
             }
-            if (data.reload) {
-                // TODO: remove this if condition.
-            }
         });
 
         $rootScope.renderMessage = function(message, timeout, reload) {
             $rootScope.$broadcast('show-message', {
                 "message": message,
-                "timeout": timeout,
-                "reload": reload
+                "timeout": timeout
             });
         }
 
@@ -206,7 +197,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 var childrenIds = (content.children) ? _.pluck(content.children, 'identifier') :null;
                 if (COLLECTION_MIMETYPE == content.mimeType) {
                     $rootScope.title = content.name;
-                    if (!_.isEmpty($rootScope.collection)) 
+                    if (!_.isEmpty($rootScope.collection))
                         TelemetryService.end();
                     $rootScope.collection = content;
                     TelemetryService.start(content.identifier, content.pkgVersion);
@@ -231,14 +222,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 $rootScope.renderMessage(AppMessages.ERR_GET_CONTENT_LIST, 3000);
             });
         };
-
-        $scope.showBackButton = function(){
-            if($scope.collectionItems.length > 0){
-                return true;
-            }else{
-                return false;
-            }
-        }
 
         $scope.playContent = function(content) {
             if (content.mimeType == COLLECTION_MIMETYPE) {
@@ -276,14 +259,23 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
         $scope.exitApp = function() {
             exitApp();
         };
-        // TODO: remove this method.
-        $scope.clearAllContent = function() {}
+
+        $scope.goBack = function() {
+            window.history.back();
+            // Note: the below condition is valid only on mobile.
+            setTimeout(function() {
+                if ("file:///android_asset/www/index.html" == window.location.href) {
+                    exitApp();
+                } else if (window.location.href.indexOf('/content/list/') == -1) {
+                    window.history.go(-2);
+                }
+            }, 50);
+        }
 
         $scope.resetContentListCache();
 
     }).controller('ContentCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         if ($stateParams.itemId) {
-            console.log("$rootScope.stories:", $rootScope.stories);
             $scope.item = _.findWhere($rootScope.stories, {identifier: $stateParams.itemId});
             console.log($scope.item);
             if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {

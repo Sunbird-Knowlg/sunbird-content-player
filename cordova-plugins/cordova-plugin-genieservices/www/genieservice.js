@@ -33,4 +33,8 @@ genieservice.prototype.getContentList = function(filter) {
     return this.handleAction("getContentList", [filter]);
 }
 
+genieservice.prototype.endGenieCanvas = function() {
+    return this.handleAction("endGenieCanvas", []);
+}
+
 module.exports = new genieservice();

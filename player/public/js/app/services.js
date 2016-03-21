@@ -36,7 +36,10 @@ angular.module('quiz.services', ['ngResource'])
                     var path = (item.path.charAt(item.path.length-1) == '/')? item.path.substring(0, item.path.length-1): item.path;
                     path = ($window.cordova)? "file://" + path : path; 
                     data.baseDir =  path;
-                    data.appIcon = (data.appIcon) ? path + "/" + data.appIcon : path + "/logo.png";
+                    if ("undefined" != typeof cordova)
+                        data.appIcon = (data.appIcon) ? path + "/" + data.appIcon : path + "/logo.png";
+                    else 
+                        data.appIcon = path + "/logo.png";
                     data.mimeType = item.mimeType;
                     data.status = "ready";
                 } else {

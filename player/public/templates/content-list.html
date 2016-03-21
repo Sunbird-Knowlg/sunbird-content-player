@@ -23,7 +23,9 @@
 
 <ion-pane class="swiper-background">
     <ion-header-bar class="bar-header" style="background-color:transparent; border-bottom:0px;background-image:none;height:50px">
-        <!-- <div class="button button-clear icon" ng-show="showBackButton()" ng-click="backToParentCollection()"><h4>Back</h4></div> -->
+        <div class="button button-clear icon" ng-click="goBack()">
+            <a href="javascript:void(0)" class="button button-clear" style="background:url(img/icons/icn_back.png) no-repeat right bottom;height:51px;width:51px;background-size: 40px 40px; margin-right:5px"></a>
+        </div>
         <h1 class="title" style="color:#5A3C22;font-size:20px;height:50px;font-family:flavours;">{{title || "EkStep Content App"}}</h1>
         <div class="button button-clear icon">
             <a href="javascript:void(0)" ng-click="exitApp()" class="button button-clear" style="background:url(img/icons/icn_close_game.png) no-repeat right bottom;height:51px;width:51px;background-size: 40px 40px; margin-right:5px"></a>
@@ -59,12 +61,6 @@
                 Version {{version}}, {{flavor}}
             </div>
         </div>
-
-        <!--<div class="item">
-            <div style="margin-bottom: 5px;"><b>Clear All Content:</b></div>
-                <button class="button button-clear icon ion-trash-a" ng-click="clearAllContent()" style="float: right; margin-top: -5%;"></button>
-            </div>
-        </div>-->
     </ion-content>
     <ion-footer-bar style="padding:0px;background-color:#fff;height:65px;border:0px;background-image:none">
         <div style="background:url(css/assets/skin02/bookshelf_skin02_bottom_bg.png) repeat-x left bottom;height:100%;width:100%">
@@ -84,7 +80,7 @@
 </div>
 
 <div id="errorDiv" style="z-index: 9000;" ng-show="showMessage" ng-click="showMessage = !showMessage">
-    <div ng-bind-html="message" class="bar bar-energized bookshelf_message">Lorem ipsum dolores
+    <div ng-bind-html="message" class="bar bar-energized bookshelf_message">
     </div>
 </div>
 <!-- showMessage -->
