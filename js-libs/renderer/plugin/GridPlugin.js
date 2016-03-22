@@ -166,4 +166,4 @@ var GridPlugin = Plugin.extend({
 		return rowContainer;
 	}
 });
-PluginManager.registerPlugin('grid', GridPlugin);
+// PluginManager.registerPlugin('grid', GridPlugin);
