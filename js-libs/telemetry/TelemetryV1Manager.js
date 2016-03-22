@@ -68,6 +68,7 @@ TelemetryV1Manager = Class.extend({
             eventObj.event.edata.eks.pass = data.pass ? 'Yes' : 'No';
             eventObj.event.edata.eks.res = data.res || [];
             eventObj.event.edata.eks.uri = data.uri || "";
+            eventObj.event.edata.eks.qindex = data.qindex || 0;
             eventObj.end();
             return eventObj;
         }

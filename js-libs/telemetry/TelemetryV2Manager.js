@@ -20,7 +20,7 @@ TelemetryV2Manager = Class.extend({
         return this._end.end();
     },
     interact: function(type, id, extype, eks) {
-        if (eks.optionTag) 
+        if (eks.optionTag)
             TelemetryService.flushEvent(this.itemResponse(eks));
         if (type != "DRAG") {
             var eks = {
@@ -35,7 +35,7 @@ TelemetryV2Manager = Class.extend({
                 "values": []
             };
             return this.createEvent("OE_INTERACT", eks);
-        } 
+        }
     },
     assess: function(qid, subj, qlevel, data) {
         if (qid && subj && qlevel) {
@@ -56,6 +56,7 @@ TelemetryV2Manager = Class.extend({
             eventObj.event.edata.eks.pass = data.pass ? 'Yes' : 'No';
             eventObj.event.edata.eks.resvalues = _.isEmpty(data.res)? [] : data.res;
             eventObj.event.edata.eks.uri = data.uri || "";
+            eventObj.event.edata.eks.qindex = data.qindex || 0;
             eventObj.event.edata.eks.exlength = 0;
             if (_.isArray(eventObj.event.edata.eks.resvalues)) {
                 eventObj.event.edata.eks.resvalues = _.map(eventObj.event.edata.eks.resvalues, function(val) {
