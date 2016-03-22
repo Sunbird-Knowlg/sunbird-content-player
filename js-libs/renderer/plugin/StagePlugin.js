@@ -1,5 +1,6 @@
 var StagePlugin = Plugin.extend({
     _type: 'stage',
+    _isContainer: true,
     _render: true,
     params: {},
     _stageParams: {},
