@@ -13,6 +13,7 @@
         <media id="publisher_logo" src="publisher_logo.jpg" type="image" />
         <media id="previous" src="icon_previous.png" type="image" />
         <media id="next" src="icon_next.png" type="image" />
+        <media id="play_icon" src="play.png" type="image" />
         <media id="icon_sound" src="icon_sound.png" type="image" />
         <media id="icon_hint" src="icon_hint.png" type="image" />
         <media id="icon_home" src="icon_home.png" type="image" />
@@ -200,6 +201,7 @@
         <image asset="knife"/>
         <image asset="razor"/>
         <image asset="scissors"/>
+        <image asset="play_icon"/>
         <image asset="saw"/>
         <image asset="b-outer"/>
         <image asset="w-outer"/>
@@ -222,6 +224,7 @@
     </stage>
     <stage id="storyBaseStage" preload="true">
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
+
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
@@ -234,21 +237,55 @@
             </event>
         </shape>
         <text param="body" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42"/>
+
         <g x="40" y="40" w="20" h="20" id="youSpeakInfo" visible="false">
             <shape type="roundrect" x="0" y="0" w="100" h="100" fill="green">
                 <event type="click">
-                    <action type="command" command="startRecord" asset="youSpeakInfo" success="recordingInfo"/>
+                    <action type="command" command="startRecord" asset="youSpeakInfo" success="recordingInfo" timeout="20000"/>
+                    <action type="command" command="hide" asset="youSpeakInfo" />
+                    <action type="command" command="show" asset="recordingInfo" />
+                    
                 </event>
             </shape>
+           <!--  <shape type="rect" x="2" y="62" w="20" h="36" hitArea="true">
+                <event type="click">
+                    <action type="command" command="play" asset="learning7_sound" />
+                    <action type="command" command="show" asset="sewingMachineInfo" />
+                </event>
+            </shape> -->
             <text x="10" y="20" w="80" h="80" font="Georgia" weight="bold" fontsize="150" align="center">
                 You Speak
             </text>
             <image asset="mic" x="35" y="40" w="30" h="30"/>
         </g>
+
+    <!--      <image asset="next" x="93" y="50" w="2" h="2.3" id="play_icon" visible="false">
+            <event type="enter">
+                <action type="command" command="play" asset="current_rec" loop="1" />
+            </event>
+        </image> -->
+
+
+         <image  x="2.8" y="89.4" w="6" h="7" asset="play_icon" visible="false">
+            <event type="click">
+                <action type="command" command="play" asset="current_rec" loop="1" />
+            </event>
+        </image>
+
+        <!-- <shape  type="roundrect" x="93" y="50" w="20" h="20.3"  hitArea="true" visible="false">
+            <event type="click">
+                <action type="command" command="play" asset="current_rec" loop="1" />
+            </event>
+        </shape> -->
+
         <g x="40" y="40" w="20" h="20" id="recordingInfo" visible="false">
             <shape type="roundrect" x="0" y="0" w="100" h="100" fill="red">
                 <event type="click">
+
                     <action type="command" command="stopRecord" asset="recordingInfo" />
+                    <action type="command" command="show" asset="play_icon" />
+                    <action type="command" command="show" asset="youSpeakInfo" />
+                    <action type="command" command="hide" asset="recordingInfo" />
                 </event>
             </shape>
             <text x="10" y="20" w="80" h="80" font="Georgia" weight="bold" fontsize="150" align="center">
@@ -256,6 +293,7 @@
             </text>
             <image asset="mic" x="35" y="40" w="30" h="30"/>
         </g>
+
         <image asset="mic" x="93" y="78" w="5" h="9">
             <event type="click">
                 <action type="command" command="show" asset="youSpeakInfo" />
