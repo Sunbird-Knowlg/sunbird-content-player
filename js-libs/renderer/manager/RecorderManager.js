@@ -1,10 +1,10 @@
-
 RecorderManager = {
 	mediaInstance: undefined,
 	recording: false, // status - true: recording audio, false: not recording audio.
 	recorder: AppConfig.recorder, // 'android' - uses cordova-plugin-media for recording audio. :: 'sensibol': uses sensibol api for recording audio.
 	appDataDirectory: undefined,
 	recordingInstances: {},
+	mediaFiles: [],
 	_root: undefined,
 	init: function() {
 		document.addEventListener("deviceready", function() {
@@ -27,14 +27,23 @@ RecorderManager = {
 		var stageId = stagePlugin._id;
 		var path = RecorderManager._getFilePath(stageId);
 
-		speech.startRecording(path, function(response) {
-			if ("success" == response.status && action.success) {
-				stagePlugin.dispatchEvent(action.success);
-			} else if("error" == response.status && action.failure) {
-				stagePlugin.dispatchEvent(action.failure);
-			}
-		});
-	},
+		if(!RecorderManager.recording) {
+			speech.startRecording(path, function(response) {
+				if ("success" == response.status && action.success) {
+					stagePlugin.dispatchEvent(action.success);
+				} else if("error" == response.status && action.failure) {
+					stagePlugin.dispatchEvent(action.failure);
+				}
+			});
+
+			setTimeout(function(){ 
+				if(RecorderManager.recording = true)
+					RecorderManager.stopRecording(action);
+			}, action.timeout ? action.timeout : 10000)
+		}
+
+		RecorderManager.recording = true;
+ 	},
 	/*
 	*	If the recording is inprogress, It will take the instance and try to stop recording.
 	* 	Dispatch success OR failure events.
@@ -44,6 +53,7 @@ RecorderManager = {
 		var stagePlugin = plugin._stage || plugin;
 		var stageId = stagePlugin._id;
 		speech.stopRecording(function(response) {
+			RecorderManager.recording = false;
 			if("success" == response.status) {
 				var currentRecId = "current_rec";
 				AssetManager.loadAsset(stageId, currentRecId, response.filePath);
@@ -90,6 +100,8 @@ RecorderManager = {
 		if (TelemetryService && TelemetryService._gameData && TelemetryService._gameData.id)
 			path = path + TelemetryService._gameData.id + '_';
 		path = path + stageId + "_"+ currentDate.getTime()  + ".wav";
+
+		RecorderManager.mediaFiles.push(path);
 		return path;
 	}
 }
