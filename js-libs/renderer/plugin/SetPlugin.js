@@ -1,6 +1,7 @@
 var SetPlugin = Plugin.extend({
     _type: 'set',
     _isContainer: false,
+    _render: false,
     initPlugin: function(data) {
         var value = data.value;
         if (data['ev-value']) {

@@ -103,7 +103,6 @@ var Plugin = Class.extend({
 		this._self.removeChild(child);
 	},
 	render: function() {
-		this.setDimensions();
 		this._parent.addChild(this._self, this);
 	},
 	update: function() {
