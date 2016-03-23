@@ -1,0 +1,43 @@
+{
+	"model" : {
+		"ts_asset_not_found" : "Asset Error",
+		"ts_command_insensitive" : "Commands",
+		"users" : [
+			{
+				"name" : "Barber",
+				"photo" : "barber_img",
+				"desc" : "Desc 1"
+			},
+			{
+				"name" : "Carpenter",
+				"photo" : "carpenter_img",
+				"desc" : "Desc 2"
+			},
+			{
+				"name" : "Tailor",
+				"photo" : "tailor_img",
+				"desc" : "Desc 1"
+			},
+			{
+				"name" : "Wife",
+				"photo" : "wife_img",
+				"desc" : "Desc 2"
+			},
+			{
+				"name" : "Barber",
+				"photo" : "b-outer",
+				"desc" : "Desc 1"
+			},
+			{
+				"name" : "Wife",
+				"photo" : "w-outer",
+				"desc" : "Desc 2"
+			},
+			{
+				"name" : "Tailor",
+				"photo" : "t-outer",
+				"desc" : "Desc 2"
+			}
+		]
+	}
+}
