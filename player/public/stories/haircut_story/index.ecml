@@ -189,6 +189,7 @@
             </data>
         </media>
         <media id="mic" src="mic.png" type="image" />
+        <plugin id="imageExt" src="ImageExtPlugin.js"/> <!-- Registering custom plugin - example -->
     </manifest>
     <controller name="storyData" type="data" id="story_data"/>
     <controller name="assessment" type="items" id="assessment"/>
@@ -303,8 +304,14 @@
         <param name="next" value="scene1" />
         <param name="recorderScene" value="recorderScene" />
         <audio asset="splash_audio" />
-        <image asset="page1" x="2" y="2" w="96" h="70" />
-        <image asset="publisher_logo" x="2" y="75" w="13" h="17" />
+        <!-- Custom Plugin Example -->
+        <imageExt asset="page1" x="2" y="2" h="70"/>
+        <image asset="publisher_logo" x="2" y="75" w="13" h="17" >
+            <event type="click">
+                <!-- Custom Command Example -->
+                <action type="command" command="custom" asset="page1" invoke="doSomething" message="Hey there! Test command works" />
+            </event>
+        </image>
         <image asset="level_band" x="2" y="94" w="13" h="5" />
         <image asset="next" x="92" y="80" w="6" h="10" id="next"/>
         <shape id="nextContainer" type="rect" x="87" y="75" w="13" h="20" visible="false" hitArea="true">

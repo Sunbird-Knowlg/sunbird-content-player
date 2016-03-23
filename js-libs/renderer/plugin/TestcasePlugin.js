@@ -1,6 +1,7 @@
 var TestcasePlugin = Plugin.extend({
     _type: 'testcase',
     _render: true,
+    _isContainer: true,
     _header: {
         "g": {
             "id": "hint",

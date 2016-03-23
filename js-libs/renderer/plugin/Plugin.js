@@ -1,5 +1,6 @@
 var Plugin = Class.extend({
-	_isContainer: true,
+	_isContainer: false,
+	_render: true,
 	_theme: undefined,
 	_parent: undefined,
 	_stage: undefined,
@@ -128,11 +129,15 @@ var Plugin = Class.extend({
 	setScale: function() {
 		var sb = this._self.getBounds();
 		var dims = this.relativeDims();
-		if (this._self && dims.h && dims.h > 0) {
-            this._self.scaleY = dims.h / sb.height;
+		if(dims.h == 0) {
+            dims.h = dims.w * sb.height / sb.width;
         }
-        if (this._self && dims.w && dims.w > 0) {
-            this._self.scaleX = dims.w / sb.width;
+        if(dims.w == 0) {
+            dims.w = dims.h * sb.width / sb.height;
+        }
+		if (this._self ) {
+            this._self.scaleY = dims.h / sb.height;
+        	this._self.scaleX = dims.w / sb.width;
         }
 	},
 	initPlugin: function(data) {
