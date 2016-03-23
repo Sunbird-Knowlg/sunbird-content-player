@@ -1,5 +1,5 @@
 var GridlayoutPlugin = LayoutPlugin.extend({
-	_type: 'gridlayout',
+	_type: 'grid',
     generateLayout: function() {
     	var tableProps = this.getTableProperties();
     	var instance = this;
