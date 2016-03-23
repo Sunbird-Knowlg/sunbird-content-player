@@ -60,6 +60,7 @@ module.exports = function(grunt) {
                         '../js-libs/renderer/controller/*Controller.js',
                         '../js-libs/renderer/generator/*.js',
                         '../js-libs/renderer/evaluator/*.js',
+                        '../js-libs/renderer/plugin/LayoutPlugin.js',
                         '../js-libs/renderer/plugin/ShapePlugin.js',
                         '../js-libs/renderer/plugin/*Plugin.js',
                         '../js-libs/renderer/renderer/*.js'

@@ -4,6 +4,8 @@ var LayoutPlugin = Plugin.extend({
 	_cells: [],
 	_cellsCount: 0,
 	initPlugin: function(data) {
+        this._cells = [];
+        this._cellsCount = 0;
 		this._self = new createjs.Container();
 		var dims = this.relativeDims();
         this._self.x = dims.x;
