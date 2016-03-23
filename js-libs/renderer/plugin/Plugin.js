@@ -82,6 +82,13 @@ var Plugin = Class.extend({
 	setIndex: function(idx) {
 		this._index = idx;
 	},
+	setDimensions: function(){
+		var dims = this.relativeDims();
+		this._self.x = dims.x ? dims.x : 0;
+		this._self.y = dims.y ? dims.y : 0;
+		this._self.width = dims.w ? dims.w : 1;	//default width = 1
+		this._self.height = dims.h ? dims.h : 1; //default height = 1
+	},
 	addChild: function(child, childPlugin) {
 		var nextIdx = this._currIndex++;
 		this._self.addChildAt(child, nextIdx);
@@ -96,6 +103,7 @@ var Plugin = Class.extend({
 		this._self.removeChild(child);
 	},
 	render: function() {
+		this.setDimensions();
 		this._parent.addChild(this._self, this);
 	},
 	update: function() {

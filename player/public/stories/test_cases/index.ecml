@@ -64,6 +64,7 @@
     <controller id="worksheet" name="worksheet" type="items"/>
     <controller id="worksheet2" name="worksheet2" type="items"/>
     <controller id="worksheet3" name="worksheet3" type="items"/>
+    <controller id="bug_data" name="bugData" type="data"/>
     <template id="mcq_template_1">
         <text font="Georgia" fontsize="42" h="4" model="item.title" w="86" x="9" y="7"/>
         <mcq blur="80" model="item" multi_select="false" offsetX="50" shadow="blue">
@@ -567,9 +568,21 @@
         <text font="Georgia" fontsize="42" h="50" model="data.description" w="86" x="9" y="20"/>
     </template>
     <stage extends="baseStage" h="100" id="dataRepeatStage" iterate="testData2" var="data" w="100" x="0" y="0">
-        <param name="next" value="finished"/>
+        <param name="next" value="gridLayoutStage"/>
         <param name="previous" value="audioRecording"/>
         <embed template="data" var-data="data"/>
+    </stage>
+    <stage extends="baseStage" h="100" id="gridLayoutStage" w="100" x="0" y="0">
+        <param name="next" value="finished"/>
+        <param name="previous" value="dataRepeatStage"/>
+        <grid cols="2" h="80" id="grid" iterate="bugData.users" var="user" w="80" x="10" y="10" marginX="1" marginY="1">
+            <shape fill="lightblue" h="100" stroke="black" type="rect" w="100" x="0" y="0"/>
+            <g h="50" w="50" x="0" y="0">
+                <shape fill="lightgreen" h="100" stroke="black" type="rect" w="100" x="0" y="0"/>
+            </g>
+            <image h="50" model="user.photo" w="50" x="20" y="20"/>
+            <text color="black" fontsize="140" h="90" model="user.name" valign="middle" w="90" x="10" y="10"/>
+        </grid>
     </stage>
     <stage h="100" id="finished" w="100" x="0" y="0">
         <image asset="bg" h="100" w="100" x="0" y="0"/>
