@@ -5,6 +5,8 @@ TelemetryEvent = Class.extend({
     name: undefined,
     event: undefined,
     init: function(eid, version, body, user, gdata) {
+        if(!gdata.pkgVersion)
+            gdata.ver = "1.0"
         this.createdTime = getCurrentTime();
         this.name = eid;
         this.event = {
@@ -54,6 +56,7 @@ TelemetryEvent = Class.extend({
         if (this._isStarted) {
             this.event.edata.eks.length = Math.round((getCurrentTime() - this.startTime ) / 1000);
             this.event.ets = new Date().getTime();
+            TelemetryService._gameData = undefined;
             return this;
         } else {
             throw "can't end event without starting.";
