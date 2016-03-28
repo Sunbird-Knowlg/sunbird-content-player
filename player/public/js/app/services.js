@@ -72,6 +72,8 @@ angular.module('quiz.services', ['ngResource'])
                                     console.error("Error while fetching children list:", err);
                                     resolve(list);
                                 });
+                            } else {
+                                resolve(list);   
                             }
                         })
                         .then(function() {

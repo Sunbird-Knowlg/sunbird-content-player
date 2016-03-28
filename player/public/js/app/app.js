@@ -209,7 +209,6 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             $rootScope.renderMessage("", 0);            
             ContentService.getContent(id)
             .then(function(content) {
-                var childrenIds = (content.children) ? _.pluck(content.children, 'identifier') :null;
                 if (COLLECTION_MIMETYPE == content.mimeType) {
                     $rootScope.title = content.name;
                     if (!_.isEmpty($rootScope.collection))
@@ -219,7 +218,9 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 } else {
                     $rootScope.collection = {};
                 }
-                return ContentService.getContentList(content.filter, childrenIds);
+                var childrenIds = (content.children) ? _.pluck(content.children, 'identifier') :null;
+                var filter = (content.filter)? JSON.parse(content.filter) : content.filter;
+                return ContentService.getContentList(filter, childrenIds);
             })
             .then(function(result) {
                 $rootScope.$apply(function() {
