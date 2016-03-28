@@ -161,7 +161,8 @@ TelemetryService = {
     },
     exit: function() {
         TelemetryService._data = [];
-        if (TelemetryService._gameData)
+        var event = TelemetryService.instance._end;
+        if ("undefined" !=  event && event._isStarted)
             TelemetryService.end();
     },
     logError: function(eventName, error) {
