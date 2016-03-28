@@ -11,5 +11,8 @@ Plugin.extend({
         s.y = dims.y;
         this._self = s;
         if(sb) this.setScale(); 
+    },
+    doSomething: function(action) {
+        alert(action.message);
     }
 });
