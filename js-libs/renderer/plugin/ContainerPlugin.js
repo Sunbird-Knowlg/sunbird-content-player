@@ -1,5 +1,6 @@
 var ContainerPlugin = Plugin.extend({
     _type: 'g',
+    _isContainer: true,
     _render: true,
 	initPlugin: function(data) {
 		this._self = new createjs.Container();

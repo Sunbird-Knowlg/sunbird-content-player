@@ -1,5 +1,6 @@
 var Plugin = Class.extend({
-	_isContainer: true,
+	_isContainer: false,
+	_render: true,
 	_theme: undefined,
 	_parent: undefined,
 	_stage: undefined,
@@ -81,6 +82,13 @@ var Plugin = Class.extend({
 	setIndex: function(idx) {
 		this._index = idx;
 	},
+	setDimensions: function(){
+		var dims = this.relativeDims();
+		this._self.x = dims.x ? dims.x : 0;
+		this._self.y = dims.y ? dims.y : 0;
+		this._self.width = dims.w ? dims.w : 1;	//default width = 1
+		this._self.height = dims.h ? dims.h : 1; //default height = 1
+	},
 	addChild: function(child, childPlugin) {
 		var nextIdx = this._currIndex++;
 		this._self.addChildAt(child, nextIdx);
@@ -128,11 +136,15 @@ var Plugin = Class.extend({
 	setScale: function() {
 		var sb = this._self.getBounds();
 		var dims = this.relativeDims();
-		if (this._self && dims.h && dims.h > 0) {
-            this._self.scaleY = dims.h / sb.height;
+		if(dims.h == 0) {
+            dims.h = dims.w * sb.height / sb.width;
         }
-        if (this._self && dims.w && dims.w > 0) {
-            this._self.scaleX = dims.w / sb.width;
+        if(dims.w == 0) {
+            dims.w = dims.h * sb.width / sb.height;
+        }
+		if (this._self ) {
+            this._self.scaleY = dims.h / sb.height;
+        	this._self.scaleX = dims.w / sb.width;
         }
 	},
 	initPlugin: function(data) {

@@ -75,7 +75,7 @@ var OptionPlugin = Plugin.extend({
                 res: [{
                     "option": instance._value.asset
                 }],
-                state: (("undefined" != typeof val) && ("" !== val) ? 'SELECTED' : 'UNSELECTED'),
+                state: val ? 'SELECTED' : 'UNSELECTED',
                 optionTag: "MCQ"
             }
             EventManager.processAppTelemetry({}, 'CHOOSE', instance, data);

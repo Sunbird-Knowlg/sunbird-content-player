@@ -56,7 +56,7 @@ TelemetryService = {
         });
     },
     changeVersion: function(version) {
-        TelemetryService._version = version;        
+        TelemetryService._version = version;
         TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
         console.info("Telemetry Version updated to:", version);
     },
@@ -94,7 +94,7 @@ TelemetryService = {
             return new InActiveEvent();
         } else {
             ver = (ver) ? ver + "" : ver;
-            return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver));    
+            return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver));
         }
     },
     end: function() {
@@ -159,10 +159,11 @@ TelemetryService = {
             TelemetryService.start()
         }
     },
-    exit: function(packageName, ver) {
+    exit: function() {
         TelemetryService._data = [];
-        if (TelemetryService.instance._gameData)
-            TelemetryService.end(packageName, ver);
+        var event = TelemetryService.instance._end;
+        if ("undefined" !=  event && event._isStarted)
+            TelemetryService.end();
     },
     logError: function(eventName, error) {
         var data = {
@@ -191,7 +192,7 @@ TelemetryService = {
 
 Array.prototype.cleanUndefined = function() {
   for (var i = 0; i < this.length; i++) {
-    if (this[i] == undefined) {         
+    if (this[i] == undefined) {
       this.splice(i, 1);
       i--;
     }

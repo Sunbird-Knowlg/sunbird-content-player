@@ -116,6 +116,10 @@ CommandManager = {
             case 'PROCESSRECORD':
                 if (plugin) RecorderManager.processRecording(action);
                 break;
+            case 'CUSTOM':
+                if (plugin && action.invoke) plugin[action.invoke](action);
+                break;
+
             default:
                 console.log("Command '" + cmd +"' not found.");
         }

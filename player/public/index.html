@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title></title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="libs/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/app/style.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="css/thirdparty/bookshelf_slider.css" />
@@ -24,15 +24,15 @@
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
     <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.min.js"></script>
+    <script src="libs/ionic/js/ionic.bundle.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+    <script src="libs/ngCordova/ng-cordova.min.js"></script>
 
-    <script src="lib/angular-resource/angular-resource.min.js"></script>
+    <script src="libs/angular-resource/angular-resource.min.js"></script>
     <script src="js/app/speech.js"></script>
 
     <!-- your app's js -->
@@ -46,7 +46,7 @@
     <script src="js/thirdparty/exclude/Class.js"></script>
     <script src="js/thirdparty/exclude/createjs-2015.11.26.min.js"></script>
     <script type="text/javascript" src="js/thirdparty/exclude/creatine-1.0.0.min.js"></script>
-     <script type="text/javascript" src="js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js"></script>
+    <script type="text/javascript" src="js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js"></script>
 
     <script src="renderer/manager/ControllerManager.js"></script>
 
@@ -104,6 +104,8 @@
     <script src="renderer/plugin/TweenPlugin.js"></script>
     <script src="renderer/plugin/ScribblePlugin.js"></script>
     <script src="renderer/plugin/VideoPlugin.js"></script>
+    <script src="renderer/plugin/LayoutPlugin.js"></script>
+    <script src="renderer/plugin/GridlayoutPlugin.js"></script>
 
     <!-- renderer -->
     <script src="renderer/renderer/CanvasRenderer.js"></script>
@@ -152,5 +154,8 @@
   </head>
   <body>
     <ion-nav-view></ion-nav-view>
+    <div id="loading" style="z-index:1000;padding-top:45%;width:100%;height:100%;text-align:center;background-color:white; display: none;" class="view-container">
+        <span style="font-size: 3em;">Loading...</span>
+    </div>
   </body>
 </html>
