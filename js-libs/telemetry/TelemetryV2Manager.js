@@ -51,7 +51,12 @@ TelemetryV2Manager = Class.extend({
 
     },
     assessEnd: function(eventObj, data) {
-        if (eventObj && eventObj._isStarted) {
+        if (eventObj) {
+
+            if (!eventObj._isStarted) {
+                eventObj._isStarted = true; // reset start status to true for re-assess events
+            }
+
             eventObj.event.edata.eks.score = data.score || 0;
             eventObj.event.edata.eks.pass = data.pass ? 'Yes' : 'No';
             eventObj.event.edata.eks.resvalues = _.isEmpty(data.res)? [] : data.res;
