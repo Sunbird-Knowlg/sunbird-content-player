@@ -9,6 +9,11 @@ var VideoPlugin = Plugin.extend({
     _instance: undefined,
     initPlugin: function(data) {
         this._data = data;
+        if(this._data){
+            if(_.isUndefined(data.autoplay)) this._data.autoplay = true;
+            if(_.isUndefined(data.controls)) this._data.controls = false;
+        }
+
         this.loadVideo();
         _instance = this;
     },
