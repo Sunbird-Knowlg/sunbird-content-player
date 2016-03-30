@@ -25,7 +25,7 @@ var InputPlugin = Plugin.extend({
         } else if (data.param) {
             val = this._stage.params[data.param.trim()];
         }
-        input.value = val;
+        input.value = val || "";
         var div = document.getElementById('gameArea');
         div.insertBefore(input, div.childNodes[0]);
         this._input = input;
