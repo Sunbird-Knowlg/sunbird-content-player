@@ -93,7 +93,7 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         } else {
-            ver = (ver) ? ver + "" : ver;
+            ver = (ver) ? ver + "" : "1"; // setting default ver to 1
             return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver));
         }
     },

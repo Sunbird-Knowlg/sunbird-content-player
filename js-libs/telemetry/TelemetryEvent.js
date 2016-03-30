@@ -6,7 +6,7 @@ TelemetryEvent = Class.extend({
     event: undefined,
     init: function(eid, version, body, user, gdata) {
         if("undefined" != gdata && "undefined" == gdata.ver)
-            gdata.ver = "1.0"
+            gdata.ver = "1";
         this.createdTime = getCurrentTime();
         this.name = eid;
         this.event = {
