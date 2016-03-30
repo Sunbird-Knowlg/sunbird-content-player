@@ -6,11 +6,11 @@ genieservice.prototype.handleAction = function(actionName, args) {
     console.info("genieservice Action: " + actionName + " args: ", args);
     return new Promise(function(resolve, reject) {
         exec(function(result) {
-                console.log("genieservice result of "+actionName+": ", result);
+                console.log("genieservice result of " + actionName + ": ", result);
                 resolve(result);
             },
             function(error) {
-                console.log("genieservice error of "+actionName+": ", error);
+                console.log("genieservice error of " + actionName + ": ", error);
                 reject(error);
             },
             "GenieServicePlugin", actionName, args);
@@ -34,7 +34,14 @@ genieservice.prototype.getContentList = function(filter) {
 }
 
 genieservice.prototype.endGenieCanvas = function() {
-    return this.handleAction("endGenieCanvas", []);
+    // return this.handleAction("endGenieCanvas", []);
+    exec(function(result) {
+            console.log("End Genie Canvas successful: ", result);
+        },
+        function(error) {
+            console.log("End Genie Canvas error: ", error);
+        },
+        "GenieServicePlugin", "endGenieCanvas", []);
 }
 
 module.exports = new genieservice();
