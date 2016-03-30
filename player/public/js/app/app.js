@@ -71,7 +71,6 @@ function launchInitialPage(appInfo, $state) {
                 $state.go('showContent', {});
             } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) || 
                 (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
-                GlobalContext.game.id = GlobalContext.config.appInfo.code;
                 $state.go('contentList', {"id": GlobalContext.game.id});
             } else {
                 alert("App launched with invalid context.");

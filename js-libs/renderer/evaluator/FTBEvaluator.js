@@ -42,7 +42,7 @@ FTBEvaluator = {
 			var model = item.model;
 			for (var ans in answer) {
 				if (model[ans]) {
-					model[ans] = undefined;
+					model[ans] = "";
 				}
 			}
 		}

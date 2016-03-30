@@ -71,18 +71,12 @@ CommandManager = {
                 // TODO: remove the dependency on GlobalContext for this command.
                 var mimeType = GlobalContext.config.appInfo.mimeType;
                 if (COLLECTION_MIMETYPE == mimeType) {
-                    window.location.hash = "#/content/list/"+ GlobalContext.config.appInfo.code;
+                    window.location.hash = "#/content/list/"+ GlobalContext.game.id;
                 } else if (CONTENT_MIMETYPES.indexOf(mimeType) > -1) {
                     window.location.hash = "#/show/content";
                 } else {
                     console.warn("Invalid mimeType to handle WINDOWEVENT:", mimeType);
                 }
-                // if(GlobalContext && GlobalContext.config.appInfo && GlobalContext.config.appInfo.code 
-                //     && GlobalContext.config.appInfo.code != GlobalContext.game.id) {
-                //     window.location.hash = "#/show/content";
-                // } else {
-                //     window.location.hash = "#/content/list/"+ GlobalContext.config.appInfo.code;
-                // }
                 break;
             case 'EXTERNAL': 
                 if(action.href) 
