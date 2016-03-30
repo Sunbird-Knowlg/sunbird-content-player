@@ -9,17 +9,22 @@ var VideoPlugin = Plugin.extend({
     _instance: undefined,
     initPlugin: function(data) {
         this._data = data;
+        if(this._data){
+            if(_.isUndefined(data.autoplay)) this._data.autoplay = true;
+            if(_.isUndefined(data.controls)) this._data.controls = false;
+        }
+
         this.loadVideo();
         _instance = this;
     },
     loadVideo: function (){
-        var lItem =  this._createDOMElementVideo();
+        var lItem =  this._createDOMElementVideo();    
         this._self = new createjs.Bitmap(lItem);
 
         //If autoplay set to true, then play video
         if(this._data.autoplay == true){          
             this.play();           
-        }
+        }        
     }, 
     deplayStart: function(video){
         setTimeout(function() {
@@ -76,13 +81,27 @@ var VideoPlugin = Plugin.extend({
     },
     _createDOMElementVideo: function () {
 
-        var videoAssest = this._theme.getAsset(this._data.asset);
-        var dims = this.relativeDims();
-        
-        console.log(videoAssest);
+        var videoAssest;
+        if(_.isUndefined(this._data.asset)){
+            console.log("Video assest is not defined", this._data);
+            return false;
+        }
+
+        videoAssest = this._theme.getAsset(this._data.asset);
+
+        if(_.isUndefined(videoAssest)){
+            console.log("Video assest is not loaded", this._data.asset);
+            return false;
+        }
 
         var jqVideoEle = jQuery(videoAssest).insertBefore("#gameArea");
-        jQuery(jqVideoEle).attr("type", this._data.type);
+        if(!_.isUndefined(this._data.type)){
+            jQuery(jqVideoEle).attr("type", this._data.type);
+        }else{
+            console.error("Video format type is not defiend..")
+        }
+
+        var dims = this.relativeDims();
         jQuery(jqVideoEle).attr("id", this._data.asset)
         .prop({autoplay: this._data.autoplay, controls: this._data.controls, width: dims.w, height: dims.h})
         .css({position: 'absolute', left: dims.x + "px", top: dims.y + "px"});
