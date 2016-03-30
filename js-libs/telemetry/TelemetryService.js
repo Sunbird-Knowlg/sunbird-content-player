@@ -160,10 +160,12 @@ TelemetryService = {
         }
     },
     exit: function() {
-        TelemetryService._data = [];
-        var event = TelemetryService.instance._end;
-        if ("undefined" !=  event && event._isStarted)
-            TelemetryService.end();
+        if (TelemetryService.isActive) {
+            TelemetryService._data = [];
+            var event = TelemetryService.instance._end;
+            if ("undefined" !=  event && event._isStarted)
+                TelemetryService.end();
+        }
     },
     logError: function(eventName, error) {
         var data = {
