@@ -61,15 +61,18 @@ angular.module('quiz.services', ['ngResource'])
                             var promises = [];
                             if (childrenIds && childrenIds.length > 0) {
                                 _.each(childrenIds, function(childId) {
-                                    promises.push(genieservice.getContent(childId));
+                                    promises.push(function(callback) {
+                                        genieservice.getContent(childId)
+                                        .then(function(item) {
+                                            callback(null, item);
+                                        })
+                                        .catch(function(err) {
+                                            callback(null, err);
+                                        });
+                                    });
                                 });
-                                Promise.all(promises)
-                                .then(function(resList) {
+                                async.parallel(promises, function(err, resList) {
                                     list = resList;
-                                    resolve(list);
-                                })
-                                .catch(function(err) {
-                                    console.error("Error while fetching children list:", err);
                                     resolve(list);
                                 });
                             } else {

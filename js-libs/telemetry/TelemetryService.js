@@ -93,7 +93,7 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         } else {
-            ver = (ver) ? ver + "" : ver;
+            ver = (ver) ? ver + "" : "1"; // setting default ver to 1
             return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver));
         }
     },
@@ -160,10 +160,12 @@ TelemetryService = {
         }
     },
     exit: function() {
-        TelemetryService._data = [];
-        var event = TelemetryService.instance._end;
-        if ("undefined" !=  event && event._isStarted)
-            TelemetryService.end();
+        if (TelemetryService.isActive) {
+            TelemetryService._data = [];
+            var event = TelemetryService.instance._end;
+            if ("undefined" !=  event && event._isStarted)
+                TelemetryService.end();
+        }
     },
     logError: function(eventName, error) {
         var data = {

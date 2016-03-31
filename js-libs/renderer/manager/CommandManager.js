@@ -69,11 +69,13 @@ CommandManager = {
                 break;
             case 'WINDOWEVENT':
                 // TODO: remove the dependency on GlobalContext for this command.
-                if(GlobalContext && GlobalContext.config.appInfo && GlobalContext.config.appInfo.code 
-                    && GlobalContext.config.appInfo.code != GlobalContext.game.id) {
+                var mimeType = GlobalContext.config.appInfo.mimeType;
+                if (COLLECTION_MIMETYPE == mimeType) {
+                    window.location.hash = "#/content/list/"+ GlobalContext.game.id;
+                } else if (CONTENT_MIMETYPES.indexOf(mimeType) > -1) {
                     window.location.hash = "#/show/content";
                 } else {
-                    window.location.hash = action.href;
+                    console.warn("Invalid mimeType to handle WINDOWEVENT:", mimeType);
                 }
                 break;
             case 'EXTERNAL': 

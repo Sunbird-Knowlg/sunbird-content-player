@@ -15,11 +15,20 @@ var LayoutPlugin = Plugin.extend({
         hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h);
         this._self.hitArea = hit;
 
+        // If iterate is undefine, then we cant create a layout
+        // "Iterate" is Mandatory property
+        if(_.isUndefined(data.iterate)) {
+            console.error("LayoutPlugin iterate undefined", data);
+            return;
+        }
         var model = data.iterate;
     	var dataObjs = this._stage.getModelValue(model);
-        this._cellsCount = dataObjs.length;
+        if(dataObjs) {
+            this._cellsCount = dataObjs.length;
+        }       
     	this.generateLayout();
-        this.renderLayout();
+        this.renderLayout();     
+        
 	},
 	getCellECML: function() {
     	var children = {};
