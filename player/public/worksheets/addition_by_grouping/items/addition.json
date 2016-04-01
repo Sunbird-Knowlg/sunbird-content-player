@@ -1,7 +1,7 @@
 {
 	"identifier": "ws_addition_1",
 	"title": "Addition by grouping",
-	"total_items": 5,
+	"total_items": 6,
 	"max_score": 15,
 	"subject": "NUM",
 	"item_sets": [
@@ -11,7 +11,7 @@
 		},
 		{
 			"id": "set_2",
-        	"count": 2
+        	"count": 3
 		}
 	],
 	"items": {
@@ -305,7 +305,33 @@
 				"max_score": 3,
 				"partial_scoring": true,
 				"feedback": ""
-			}
+			},
+			{
+				"answer": {"ans1": {"value": "east","score": 1}},
+				"model": {},
+				"hint": "",
+				"template": "one_blank_ftb",
+				"code": "en.qa.fib.1",
+				"lastUpdatedOn": "2016-03-28T16:02:26.138+0000",
+				"type": "ftb",
+				"feedback": "",
+				"createdOn": "2016-03-28T16:02:26.138+0000",
+				"title": "sun rising",
+				"qlevel": "EASY",
+				"name": "sun rising",
+				"domain": "literacy",
+				"owner": "210",
+				"used_for": "worksheet",
+				"max_score": 1,
+				"gradeLevel": [
+				"Grade 1"
+				],
+				"question": "Sun rises in the ___________",
+				"language": [
+				"English"
+				],
+				"identifier": "domain_14390"
+		    }
 		]
 	},
 	"feedback": [{
