@@ -8,16 +8,6 @@ module.exports = function(grunt) {
                 },
             },
         },
-       watch:{
-            renderer: {
-                files: ['public/js/thirdparty/exclude/**/*',
-                        '../renderer/**/*',
-                        '../speech/**/*',
-                        '../telemetry/*.js'
-                        ],
-                tasks: ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js'] 
-            }
-        },
         uglify: {
             js: {
                 files: {
@@ -254,7 +244,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        'cordova-plugin-crosswalk-webview'
+                        'cordova-plugin-crosswalk-webview@1.5.0'
                     ]
                 }
             },
@@ -350,6 +340,14 @@ module.exports = function(grunt) {
                     from: "apply plugin: 'android'",
                     to: "apply plugin: 'android-library'"
                 }]
+            },
+            xwalk_library: {
+                src: ['platforms/android/cordova-plugin-crosswalk-webview/geniecanvas-xwalk.gradle'],
+                overwrite: true,
+                replacements: [{
+                    from: "applicationVariants",
+                    to: "libraryVariants"
+                }]  
             }
         }
     });
@@ -359,7 +357,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-aws-s3');
-    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-rename');
     grunt.loadNpmTasks('grunt-mkdir');
@@ -411,7 +408,6 @@ module.exports = function(grunt) {
         if (grunt.file.exists('plugins/org.ekstep.recorder.service.plugin')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
     });
 
-    grunt.registerTask('watch-def', ['watch:renderer', 'watch:speech', 'watch:telemetry']);
     grunt.registerTask('default', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js']);
     grunt.registerTask('build-all', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
 
@@ -436,8 +432,12 @@ module.exports = function(grunt) {
     grunt.registerTask('ci-build-signed', ['build-signed-apk-xwalk']);
 
     grunt.registerTask('set-android-library',['copy:androidLib', 'replace:androidLib']);
+    grunt.registerTask('set-xwalk-library', ['cordovacli:add_xwalk','replace:xwalk_library']);
+
     grunt.registerTask('build-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('build-unsigned-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
     grunt.registerTask('build-signed-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
+
+    grunt.registerTask('build-aar-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalk-library', 'cordovacli:build_android', 'clean:minjs']);
 
 };
