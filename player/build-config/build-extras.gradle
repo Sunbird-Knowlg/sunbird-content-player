@@ -1,6 +1,6 @@
 ext {
     apply from: 'CordovaLib/cordova.gradle'
-    cdvMinSdkVersion = 17
+    cdvMinSdkVersion = 16
     cdvBuildMultipleApks=false 
 }
 
@@ -25,15 +25,27 @@ android {
 
     defaultConfig {
         versionName System.getenv("BUILD_NUMBER") ?: "local"
-        setProperty("archivesBaseName", "contentapp-$versionName")
+        setProperty("archivesBaseName", "geniecanvas-$versionName")
+    }
+
+    libraryVariants.all { variant ->
+        def buildType = variant.buildType
+        println "*** Build Type:" + buildType.name + " ***"
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.aar')) {
+                def fileName = "${archivesBaseName}-${buildType.name}.aar"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
     }
 }
 
 dependencies {
     compile "org.apache.commons:commons-compress:1.10"
     compile "commons-io:commons-io:2.4"
-    compile "org.ekstep.genieservices:sdks:1.0.245@aar"
-    compile "org.ekstep.genieservices:aidls:1.0.245@aar"
+    compile "org.ekstep.genieservices:sdks:1.0.+@aar"
+    compile "org.ekstep.genieservices:aidls:1.0.+@aar"
 }
 
 task updateBuildNumber() {

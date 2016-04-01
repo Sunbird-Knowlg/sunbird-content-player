@@ -64,6 +64,7 @@
     <controller id="worksheet" name="worksheet" type="items"/>
     <controller id="worksheet2" name="worksheet2" type="items"/>
     <controller id="worksheet3" name="worksheet3" type="items"/>
+    <controller id="bug_data" name="bugData" type="data"/>
     <template id="mcq_template_1">
         <text font="Georgia" fontsize="42" h="4" model="item.title" w="86" x="9" y="7"/>
         <mcq blur="80" model="item" multi_select="false" offsetX="50" shadow="blue">
@@ -179,21 +180,29 @@
         <text blur="10" color="white" fontsize="40" h="10" offsetY="5" outline="2" shadow="red" w="20" x="73" y="80">Text with Outline and Shadow</text>
     </stage>
     <stage extends="baseStage" h="100" id="test-Z-Index" w="100" x="0" y="0">
-        <param name="next" value="hybridRendering"/>
+        <param name="next" value="scribbleTest"/>
         <param name="previous" value="textPluginWrap"/>
         <image asset="bg" h="100" w="100" x="0" y="0"/>
         <param model="testData.ts_z_index" name="heading" />
         <image asset="icon_home" h="30" w="30" x="20" y="35" z-index="2"/>
         <g h="70" w="70" x="15" y="15" z-index="1">
             <text color="white" fontsize="50" h="40" w="60" x="20" y="20" z-index="1">Text with z-index value=1 in white color. After this we have a share in green color.</text>
+
             <shape x="0" y="0" w="100" h="100" hitArea="true" type="rect" fill="green" />
         </g>
         <shape x="10" y="10" w="80" h="80" hitArea="true" type="rect" fill="red" />
     </stage>
 
+    <stage extends="baseStage" h="100" id="scribbleTest" w="100" x="0" y="0">
+            <param name="next" value="hybridRendering"/>
+            <param name="previous" value="test-Z-Index"/>
+            <text id="sampleTest" x="8" y="5" w="99" fontsize="70"> Draw a design </text>
+            <scribble id="scribble" z-index="1" x="1" y="20" h="70" w="98" bgcolor="white" color="brown" stroke="1"/>
+    </stage>
+
     <stage extends="baseStage" h="100" id="hybridRendering" w="100" x="0" y="0">
         <param name="next" value="allFontRendering"/>
-        <param name="previous" value="test-Z-Index"/>
+        <param name="previous" value="scribbleTest"/>
         <image asset="bg" h="100" w="100" x="0" y="0"/>
         <param model="testData.ts_hybrig_rendering" name="heading"/>
         <text color="yellow" fontsize="40" h="10" w="80" x="10" y="10">Rendering HTML element as well as canvas and can interact with each other.</text>
@@ -559,9 +568,21 @@
         <text font="Georgia" fontsize="42" h="50" model="data.description" w="86" x="9" y="20"/>
     </template>
     <stage extends="baseStage" h="100" id="dataRepeatStage" iterate="testData2" var="data" w="100" x="0" y="0">
-        <param name="next" value="finished"/>
+        <param name="next" value="gridLayoutStage"/>
         <param name="previous" value="audioRecording"/>
         <embed template="data" var-data="data"/>
+    </stage>
+    <stage extends="baseStage" h="100" id="gridLayoutStage" w="100" x="0" y="0">
+        <param name="next" value="finished"/>
+        <param name="previous" value="dataRepeatStage"/>
+        <grid cols="2" h="80" id="grid" iterate="bugData.users" var="user" w="80" x="10" y="10" marginX="1" marginY="1">
+            <shape fill="lightblue" h="100" stroke="black" type="rect" w="100" x="0" y="0"/>
+            <g h="50" w="50" x="0" y="0">
+                <shape fill="lightgreen" h="100" stroke="black" type="rect" w="100" x="0" y="0"/>
+            </g>
+            <image h="50" model="user.photo" w="50" x="20" y="20"/>
+            <text color="black" fontsize="140" h="90" model="user.name" valign="middle" w="90" x="10" y="10"/>
+        </grid>
     </stage>
     <stage h="100" id="finished" w="100" x="0" y="0">
         <image asset="bg" h="100" w="100" x="0" y="0"/>

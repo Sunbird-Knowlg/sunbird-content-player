@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title></title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="libs/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/app/style.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="css/thirdparty/bookshelf_slider.css" />
@@ -18,32 +18,115 @@
     <script type="text/javascript" src="js/thirdparty/jquery.easing.1.3.js"></script>
     <script type="text/javascript" src="js/thirdparty/jquery.bookshelfslider.min.js"></script>
     <script type="text/javascript" src="js/thirdparty/exclude/xml2json.min.js"></script>
-    <!-- // <script type="text/javascript" src="js/thirdparty/exclude/class.js"></script> -->
+    <script type="text/javascript" src="js/thirdparty/exclude/Class.js"></script>
+
+    <script type="text/javascript" src="js/thirdparty/async.min.js"></script>
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
     <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.min.js"></script>
+    <script src="libs/ionic/js/ionic.bundle.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+    <script src="libs/ngCordova/ng-cordova.min.js"></script>
 
-    <script src="lib/angular-resource/angular-resource.min.js"></script>
+    <script src="libs/angular-resource/angular-resource.min.js"></script>
     <script src="js/app/speech.js"></script>
 
     <!-- your app's js -->
     <script src="js/app/GlobalContext.js"></script>
     <script src="js/app/AppConfig.js"></script>
     <script src="js/app/AppMessages.js"></script>
-    <script src="js/app/app.js"></script>
+
+    <script src="js/app/app.js"></script>   
     <script src="js/app/services.js"></script>
     <script src="js/thirdparty/underscore.js"></script>
-    <script src="js/app/renderer.js"></script>
-    <script src="js/app/telemetry.js"></script>
+    <script src="js/thirdparty/exclude/Class.js"></script>
+    <script src="js/thirdparty/exclude/createjs-2015.11.26.min.js"></script>
+    <script type="text/javascript" src="js/thirdparty/exclude/creatine-1.0.0.min.js"></script>
+    <script type="text/javascript" src="js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js"></script>
+
+    <script src="renderer/manager/ControllerManager.js"></script>
+
+     <!-- Controller -->
+    <script src="renderer/controller/Controller.js"></script>
+    <script src="renderer/controller/DataController.js"></script>
+    <script src="renderer/controller/ItemController.js"></script>
+
+    <!-- Evaluator -->
+    <script src="renderer/evaluator/ChoiceEvaluator.js"></script>
+    <script src="renderer/evaluator/FTBEvaluator.js"></script>
+    <script src="renderer/evaluator/MTFEvaluator.js"></script>
+
+
+    <!-- Manager -->
+    <script src="renderer/manager/AnimationManager.js"></script>
+    <script src="renderer/manager/AssetManager.js"></script>
+    <script src="renderer/manager/AudioManager.js"></script>
+    <script src="renderer/manager/CommandManager.js"></script>
+    <script src="renderer/manager/EventManager.js"></script>
+    <script src="renderer/manager/LoadByStageStrategy.js"></script>
+    <script src="renderer/manager/PluginManager.js"></script>
+    <script src="renderer/manager/RecorderManager.js"></script>
+    <script src="renderer/manager/TimerManager.js"></script>
+
+     <!-- Generator -->
+    <script src="renderer/generator/DataGenerator.js"></script>
+    <script src="renderer/generator/ItemDataGenerator.js"></script>
+    <!-- // <script src="renderer/generator/TemplateDataGenerator.js"></script> -->
+
+    <!-- plugin -->
+    <script src="renderer/plugin/Plugin.js"></script>
+    <script src="renderer/plugin/AnimationPlugin.js"></script>
+    <script src="renderer/plugin/AudioPlugin.js"></script>
+    <script src="renderer/plugin/ContainerPlugin.js"></script>
+    <script src="renderer/plugin/DivPlugin.js"></script>
+    <script src="renderer/plugin/EmbedPlugin.js"></script>
+    <script src="renderer/plugin/ShapePlugin.js"></script>
+    <script src="renderer/plugin/HotspotPlugin.js"></script>
+    <script src="renderer/plugin/ImagePlugin.js"></script>
+    <script src="renderer/plugin/InputPlugin.js"></script>
+    <script src="renderer/plugin/ManifestPlugin.js"></script>
+    <script src="renderer/plugin/MCQPlugin.js"></script>
+    <script src="renderer/plugin/MTFPlugin.js"></script>
+    <script src="renderer/plugin/OptionPlugin.js"></script>
+    <script src="renderer/plugin/OptionsPlugin.js"></script>
+    <script src="renderer/plugin/PlaceHolderPlugin.js"></script>
+    <script src="renderer/plugin/SetPlugin.js"></script>
+    <script src="renderer/plugin/SpritePlugin.js"></script>
+    <script src="renderer/plugin/StagePlugin.js"></script>
+    <script src="renderer/plugin/SummaryPlugin.js"></script>
+    <script src="renderer/plugin/TestcasePlugin.js"></script>
+    <script src="renderer/plugin/TextPlugin.js"></script>
+    <script src="renderer/plugin/ThemePlugin.js"></script>
+    <script src="renderer/plugin/TweenPlugin.js"></script>
+    <script src="renderer/plugin/ScribblePlugin.js"></script>
+    <script src="renderer/plugin/VideoPlugin.js"></script>
+    <script src="renderer/plugin/LayoutPlugin.js"></script>
+    <script src="renderer/plugin/GridlayoutPlugin.js"></script>
+
+    <!-- renderer -->
+    <script src="renderer/renderer/CanvasRenderer.js"></script>
+    <script src="renderer/renderer/CanvasPreview.js"></script>
+    <script src="renderer/renderer/HTMLRenderer.js"></script>
+
+    <!-- speech -->
+    <script src="speech/android-recorder.js"></script>
+    <script src="speech/speech.js"></script>
+
+    <!-- Telemetry -->
+    <script src="telemetry/InActiveEvent.js"></script>
+    <script src="telemetry/TelemetryEvent.js"></script>
+    <script src="telemetry/TelemetryServiceUtil.js"></script>
+    <script src="telemetry/TelemetryService.js"></script>   
+    <script src="telemetry/TelemetryV1Manager.js"></script>   
+    <script src="telemetry/TelemetryV2Manager.js"></script>   
+
+    <!-- // <script src="js/app/telemetry.js"></script> -->
     <script src="js/app/genieservices.js"></script>
     <script src="js/thirdparty/exclude/date-format.js"></script>
     <script src="js/test/specHelper.js"></script>
@@ -73,5 +156,8 @@
   </head>
   <body>
     <ion-nav-view></ion-nav-view>
+    <div id="loading" style="z-index:1000;padding-top:45%;width:100%;height:100%;text-align:center;background-color:white; display: none;" class="view-container">
+        <span style="font-size: 3em;">Loading...</span>
+    </div>
   </body>
 </html>
