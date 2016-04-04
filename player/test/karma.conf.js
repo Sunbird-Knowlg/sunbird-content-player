@@ -32,6 +32,14 @@ module.exports = function(config) {
       'public/js/test/PluginManagerSpec.js',
       'public/js/test/TelemetrySpec.js',
       'public/js/test/TimerManagerSpec.js',
+      'public/js/test/ThemePluginSpec.js',
+      'public/js/test/StagePluginSpec.js',
+      'public/js/test/ContainerPluginSpec.js',
+      'public/js/test/ImagePluginSpec.js',
+      'public/js/test/TextPluginSpec.js',
+      'public/js/test/ShapePluginSpec.js',
+      'public/js/test/VideoPluginSpec.js',
+      'public/js/test/MCQPluginSpec.js',
       'public/js/test/WorksheetSpec.js'
     ],
 

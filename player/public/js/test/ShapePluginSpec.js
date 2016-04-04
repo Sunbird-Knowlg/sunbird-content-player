@@ -35,7 +35,6 @@ describe('Shape Plugin test cases', function() {
     it('Shape plugin initPlugin', function() {
         console.log("this.plugin : ", this.plugin._self);
         expect(true).toEqual(this.plugin._self instanceof createjs.Shape);
-        // expect(true).toEqual(this.plugin._self instanceof createjs.Container);
     });
 
 
