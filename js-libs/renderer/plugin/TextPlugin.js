@@ -23,7 +23,7 @@ var TextPlugin = Plugin.extend({
         } else if (data.model) {
             textStr = (this._stage.getModelValue(data.model) || '');
         } else if (data.param) {
-            textStr = (this._stage.params[data.param.trim()] || '');
+            textStr = (this.getParam(data.param.trim()) || '');
         }
         var text = new createjs.Text(textStr, font, data.color || '#000000');
         
@@ -58,6 +58,21 @@ var TextPlugin = Plugin.extend({
         text.lineHeight = lineHeight * (text.getMeasuredLineHeight());
         text.outline = outline;
         this._self = text;
+    },
+    refresh: function() {
+        var instance = this;
+        var textStr = '';
+        if (instance._data.$t || instance._data.__text) {
+            textStr = (instance._data.$t || instance._data.__text);
+        } else if (instance._data.model) {
+            textStr = (this._stage.getModelValue(instance._data.model) || '');
+        } else if (instance._data.param) {
+            textStr = (this.getParam(instance._data.param.trim()) || '');
+        }
+        if (textStr && textStr != '') {
+            this._self.text = textStr;
+            Renderer.update = true;
+        }
     }
 });
 PluginManager.registerPlugin('text', TextPlugin);

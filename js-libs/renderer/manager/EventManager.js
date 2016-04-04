@@ -27,9 +27,13 @@ EventManager = {
 		// Conditional evaluation to register event.
 		if (evt['ev-if']) {
 			var expr = evt['ev-if'].trim();
+			var modelExpr = expr = plugin.replaceExpressions(expr);
 			if (!(expr.substring(0,2) == "${")) expr = "${" + expr;
             if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}"
-			register = plugin.evaluateExpr(expr);
+            register = plugin.evaluateExpr(expr);
+            if (typeof register == "undefined" && plugin._stage) {
+                register = plugin._stage.getModelValue(modelExpr);
+            }
 		}
 		if (register) {
 			plugin.events.push(evt.type);
@@ -67,10 +71,10 @@ EventManager = {
 	handleActions: function(evt, plugin) {
 		if(_.isArray(evt.action)) {
 			evt.action.forEach(function(action) {
-				EventManager.handleAction(action, plugin);
+				EventManager.handleAction(_.clone(action), plugin);
 			});
 		} else if(evt.action) {
-			EventManager.handleAction(evt.action, plugin);
+			EventManager.handleAction(_.clone(evt.action), plugin);
 		}
 	},
 	handleAction: function(action, plugin) {
@@ -89,13 +93,16 @@ EventManager = {
 			}
 			if (stage && stage._type === 'stage') {
 				if(action.param) {
-					action.value = stage.params[action.param] || '';
+					action.value = stage.getParam(action.param) || '';
 				}
 				if (action.asset_param) {
-					action.asset = stage.params[action.asset_param] || '';
+					action.asset = stage.getParam(action.asset_param) || '';
 				} else if (action.asset_model) {
 					action.asset = stage.getModelValue(action.asset_model) || '';
 				}
+			}
+			if (!action.asset) {
+				action.pluginObj = plugin;
 			}
 			if(action.type === 'animation') {
 				AnimationManager.handle(action, plugin);

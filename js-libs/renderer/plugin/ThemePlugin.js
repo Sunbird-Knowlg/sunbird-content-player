@@ -206,6 +206,11 @@ var ThemePlugin = Plugin.extend({
                 }
                 this.replaceStage(action.value, action);
             }
+        } else if (action.transitionType === 'skip') {
+            if (stage._stageController && action.reset == true) {
+                stage._stageController.reset();
+            }
+            this.replaceStage(action.value, action);
         } else {
             if (stage._stageController && stage._stageController.hasNext()) {
                 this.replaceStage(stage._data.id, action);
@@ -307,13 +312,24 @@ var ThemePlugin = Plugin.extend({
     resume: function() {
         TelemetryService.interrupt("RESUME", this._currentStage);
     },
-    setParam: function(param, value) {
+    setParam: function(param, value, incr, max) {
         var instance = this;
-        instance._contentParams[param] = value;
+        var fval = instance._contentParams[param];
+        if (incr) {
+            if ("undefined" == typeof fval) fval = 0;
+            fval = (fval + incr);
+        } else {
+            fval = value    
+        }
+        if (0 > fval) fval = 0;
+        if ("undefined" != typeof max && fval >= max) fval = 0;
+        instance._contentParams[param] = fval;
     },
     getParam: function(param) {
         var instance = this;
-        return instance._contentParams[param];
+        var params = instance._contentParams;
+        var expr = 'params.' + param;
+        return eval(expr);
     }
 });
 PluginManager.registerPlugin('theme', ThemePlugin);

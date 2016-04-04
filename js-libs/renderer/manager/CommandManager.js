@@ -4,7 +4,28 @@ CommandManager = {
         var cmd = '';
         if (_.isString(action.command))
             cmd = (action.command).toUpperCase();
-        var plugin = PluginManager.getPluginObject(action.asset);
+
+        var assetId = action.asset;
+        if (action['asset-model']) {
+            var stagePlugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
+            assetId = stagePlugin.getModelValue(action['asset-model']);
+            action.asset = assetId;
+        } else if (action['asset-param']) {
+            var stagePlugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
+            assetId = stagePlugin.getParam(action['asset-param']);
+            action.asset = assetId;
+        }
+        if (!assetId && action.pluginObj) {
+            action.asset = assetId = action.pluginObj.getPluginParam(action['asset-param']);
+        }
+
+        var plugin = PluginManager.getPluginObject(assetId);
+        if (action.parent === true && plugin._parent){
+            plugin = plugin._parent;
+        }
+        if (!plugin) {
+            plugin = action.pluginObj;
+        }
         if (!_.contains(CommandManager.audioActions, cmd)) {
             if (!plugin) {
                 PluginManager.addError('Plugin not found for action - ' + JSON.stringify(action));
@@ -93,8 +114,15 @@ CommandManager = {
             case 'RESTART':
                 if (plugin) plugin.restart(action);
                 break;
+            case 'REFRESH':
+                if (plugin) plugin.refresh(action);
+                break;
             case 'SET':
-                if (plugin) plugin.setParam(action.param, action['param-value'], action.scope);
+                if (plugin && plugin._type == 'set') {
+                    plugin.setParamValue(action);
+                } else if (plugin) {
+                    plugin.setPluginParamValue(action);
+                }
                 break;
             case 'STARTGENIE':
                 if(TelemetryService._gameData.id != packageName && TelemetryService._gameData.id != packageNameDelhi) {
@@ -118,10 +146,15 @@ CommandManager = {
             case 'PROCESSRECORD':
                 if (plugin) RecorderManager.processRecording(action);
                 break;
+            case 'BLUR':
+                if (plugin) plugin.blur();
+                break;
+            case 'UNBLUR':
+                if (plugin) plugin.unblur();
+                break; 
             case 'CUSTOM':
                 if (plugin && action.invoke) plugin[action.invoke](action);
                 break;
-
             default:
                 console.log("Command '" + cmd +"' not found.");
         }

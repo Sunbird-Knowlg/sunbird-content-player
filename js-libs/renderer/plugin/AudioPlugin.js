@@ -18,12 +18,11 @@ var AudioPlugin = Plugin.extend({
 
     },
     stop: function(action) {
-     if (action.sound === true) {
+        if (action.sound === true) {
             AudioManager.stopAll(action);
         } else {
             AudioManager.stop(action);
         }
-
     }
 
 });

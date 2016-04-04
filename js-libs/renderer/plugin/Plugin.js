@@ -10,11 +10,15 @@ var Plugin = Class.extend({
 	_self: undefined,
 	_dimensions: undefined,
 	_id: undefined,
+    _childIds: [],
 	events: [],
 	appEvents: [],
+    _pluginParams: {},
 	init: function(data, parent, stage, theme) {
 		this.events = [];
 		this.appEvents = [];
+        this._childIds = [];
+        this._pluginParams = {};
 		this._theme = theme;
 		this._stage = stage;
 		this._parent = parent;
@@ -44,10 +48,14 @@ var Plugin = Class.extend({
 		// Conditional evaluation for rendering
 		if (data['ev-if']) {
 			var expr = data['ev-if'].trim();
-			if (!(expr.substring(0,2) == "${")) expr = "${" + expr;
-            if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}"
-			var exprVal = this.evaluateExpr(expr);
-			if (typeof exprVal != undefined) {
+            var modelExpr = expr = this.replaceExpressions(expr);
+            if (!(expr.substring(0,2) == "${")) expr = "${" + expr;
+            if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}";
+            var exprVal = this.evaluateExpr(expr);
+            if (typeof exprVal == "undefined" && this._stage) {
+                exprVal = this._stage.getModelValue(modelExpr);
+            }
+			if (typeof exprVal != "undefined") {
 				if (this._self) {
 					this._self.visible = (this._self.visible && exprVal);	
 				}
@@ -94,6 +102,9 @@ var Plugin = Class.extend({
 		this._self.addChildAt(child, nextIdx);
 		if (childPlugin) {
 			childPlugin.setIndex(nextIdx);
+            if (childPlugin._id) {
+                this._childIds.push(childPlugin._id);
+            }
 		}
 	},
 	removeChildAt: function(idx) {
@@ -163,6 +174,9 @@ var Plugin = Class.extend({
 	togglePlay: function() {
 		PluginManager.addError('Subclasses of plugin should implement togglePlay()');
 	},
+    refresh: function() {
+        PluginManager.addError('Subclasses of plugin should implement refresh()');
+    },
 	show: function(action) {
 		if(_.contains(this.events, 'show')) {
 			EventManager.dispatchEvent(this._data.id, 'show');
@@ -306,30 +320,69 @@ var Plugin = Class.extend({
         }
     },
     evaluateExpr: function(expr) {
-    	if (!expr) return "";
+        if (!expr) return "";
         var app = GlobalContext._params;
         var stage = {};
         if (this._stage) {
-        	stage = this._stage._stageParams;
+            stage = this._stage.params;
         } else if (this._type == 'stage') {
-        	stage = this._stageParams;
+            stage = this.params;
         }
         var content = {};
         if (this._theme) {
-        	content = this._theme._contentParams;
+            content = this._theme._contentParams;
         }
         var value = undefined;
         try {
-        	expr = expr.trim();
-        	if((expr.substring(0,2) == "${") && (expr.substring(expr.length-1, expr.length) == "}")) {
-        		expr = expr.substring(2,expr.length);
-        		expr = expr.substring(0,expr.length-1);
-        		value = eval(expr);
-        	} else {
-        		value = expr;
-        	}
+            expr = expr.trim();
+            if((expr.substring(0,2) == "${") && (expr.substring(expr.length-1, expr.length) == "}")) {
+                expr = expr.substring(2,expr.length);
+                expr = expr.substring(0,expr.length-1);
+                value = eval(expr);
+            } else {
+                value = expr;
+            }
         } catch (err) {
-            console.error('set ev-value evaluation faild:', err.message);
+            console.warn('expr: '+ expr + ' evaluation faild:', err.message);
+        }
+        return value;
+    },
+    replaceExpressions: function(model) {
+        var arr = [];
+        var idx = 0;
+        var nextIdx = model.indexOf('${', idx);
+        var endIdx = model.indexOf('}', idx + 1);
+        while (nextIdx != -1 && endIdx != -1) {
+            var expr = model.substring(nextIdx, endIdx+1);
+            arr.push(expr);
+            idx = endIdx;
+            nextIdx = model.indexOf('${', idx);
+            endIdx = model.indexOf('}', idx + 1);
+        }
+        if (arr.length > 0) {
+            for (var i=0; i<arr.length; i++) {
+                var val = this.evaluateExpr(arr[i]);
+                model = model.replace(arr[i], val);
+            }
+        }
+        return model;
+    },
+    getParam: function(param) {
+        var value;
+        var tokens = param.split('.');
+        if (tokens.length >= 2) {
+            var scope = tokens[0];
+            var idx = param.indexOf('.');
+            var paramName = param.substring(idx+1);
+            if (scope && scope.toLowerCase() == 'app') {
+                value = GlobalContext.getParam(paramName);
+            } else if (scope && scope.toLowerCase() == 'stage') {
+                value = this._stage.getParam(paramName);
+            } else {
+                value = this._theme.getParam(paramName);
+            }
+        } else if (this._stage) {
+            value = this._stage.getParam(param);
         }
         return value;
     },
@@ -345,6 +398,21 @@ var Plugin = Class.extend({
 	restart: function() {
 		PluginManager.addError('Subclasses of plugin should implement reload()');
 	},
+    blur: function() {
+        var instance = this;
+        var obj = instance._self;
+        var blurFilter = new createjs.BlurFilter(25, 25, 1);
+        obj.filters = [blurFilter];
+        var bounds = instance.relativeDims();
+        obj.cache(bounds.x,bounds.y, bounds.w, bounds.h);
+        Renderer.update = true;
+    },
+    unblur: function() {
+        var instance = this;
+        instance._self.filters = [];
+        instance._self.uncache();
+        Renderer.update = true;
+    },
 	invokeChildren: function(data, parent, stage, theme) {
 		var children = [];
         for (k in data) {
@@ -367,5 +435,52 @@ var Plugin = Class.extend({
             var item = children[k];
             PluginManager.invoke(item.pluginType, item, parent, stage, theme);
         }
-	}
-})
+	},
+    getPluginParam: function(param) {
+        var instance = this;
+        var params = instance._pluginParams;
+        var expr = 'params.' + param;
+        return eval(expr);
+    },
+    setPluginParam: function(param, value, incr, max) {
+        var instance = this;
+        var fval = instance._pluginParams[param];
+        if (incr) {
+            if (!fval)
+                fval = 0;
+            fval = (fval + incr);
+        } else {
+            fval = value;
+        }
+        if (0 > fval) fval = 0;
+        if ("undefined" != typeof max && fval >= max) fval = 0;
+        instance._pluginParams[param] = fval;
+    },
+    setPluginParamValue: function(action) {
+        var scope = action.scope;
+        var param = action.param;
+        var paramExpr = action['ev-value'];
+        var paramModel = action['ev-model'];
+        var val;
+        if (paramExpr) {
+            val = this.getPluginParam(paramExpr);
+        } else if (paramModel) {
+            if (this._stage) {
+                var model = this.replaceExpressions(paramModel);
+                val = this._stage.getModelValue(model);
+            }
+        } else {
+            val = action['param-value'];
+        }
+        var incr = action['param-incr'];
+        if (scope && scope.toLowerCase() == 'app') {
+            GlobalContext.setParam(param, val, incr);
+        } else if (scope && scope.toLowerCase() == 'stage') {
+            this._stage.setParam(param, val, incr);
+        } else if (scope && scope.toLowerCase() == 'content') {
+            this._theme.setParam(param, val, incr);
+        } else {
+            this.setPluginParam(param, val, incr);
+        }
+    }
+});

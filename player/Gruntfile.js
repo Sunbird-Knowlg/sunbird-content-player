@@ -133,7 +133,7 @@ module.exports = function(grunt) {
         clean: {
             before: ["www", "platforms/android/assets/www", "platforms/android/build"],
             after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html"],
-            samples: ["www/stories", "www/worksheets"],
+            samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
             minjs: ['public/js/app/*.min.js']
         },
         rename: {

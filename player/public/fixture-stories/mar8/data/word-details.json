@@ -1,0 +1,250 @@
+{
+  "हाथी": {
+    "lemma": "हाथी",
+    "meaning": "चार पैरों वाला बड़ा जानवर जिसकी सूंढ़ होती है",
+    "picture": "elephant_image1",
+    "pronunciation": "audio_hathi",
+    "syllableCount": 2,
+    "endsWith": "थी",
+    "rhymingWords": [
+      {"lemma": "साथी", "syllables": ["सा"], "picture": "friend_image1","pronunciation": "saathi_audio1"},
+      {"lemma": "भाथी", "syllables": ["भा"], "picture": "utensil_image1", "pronunciation": "bhathi_audio1"}
+    ],
+    "exampleSentences": [
+      {"sentence": "हम कल हाथी देखेंगे", "audio": "hum_kal_haathi_dekhenge_audio1"},
+      {"sentence": "अचानक हाथी सामने आ गया", "audio": "achanak_haathi_saamne_agaya_audio1"},
+      {"sentence": "हाथी ने पेड़ हिला दिया", "audio": "haathi_ne_peid_hila_diya_audio1"},
+      {"sentence": "हाथी और भँवरे की दोस्ती है", "audio": "haathi_aur_bhavare_ki_dosti_hai_audio1"},
+      {"sentence": "हाथी ने फूल को तालाब से बाहर फेंक दिया", "audio": "haathi_ne_phool_ko_taalab_se_bahar_phek_diya_audio1"},
+      {"sentence": "खरगोश के पीछे हाथी दौड़ रहा था", "audio": "khaghosh_ke_peeche_haathi_daud_raha_tha_audio1"}
+    ],
+    "relatedWords": [
+      {
+        "relation": "hasHypernym",
+        "gloss": "चार पैरों से चलने वाला दुमदार जंतु",
+        "picture": "fourlegged_image1",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {"lemma": "गाय", "picture": "cow_image1", "pronunciation": "ghai_audio1"},
+          {"lemma": "बैल", "picture": "ox_image1", "pronunciation": "bail_audio1"},
+          {"lemma": "शेर", "picture": "lion_image1", "pronunciation": "sher_audio1"},
+          {"lemma": "साँड़", "picture": "bull_image1", "pronunciation": "saand_audio1"},
+          {"lemma": "ऊंट", "picture": "camel_image1", "pronunciation": "oont_audio1"},
+          {"lemma": "बाघ", "picture": "tiger_image1", "pronunciation": "baag_audio1"},
+          {"lemma": "सूअर", "picture": "pig_image1", "pronunciation": "suaar_audio1"},
+          {"lemma": "शूकर", "picture": "hog_image1", "pronunciation": "shoekar_audio1"},
+          {"lemma": "घोड़ा", "picture": "horse_image1", "pronunciation": "ghoda_audio1"},
+          {"lemma": "बकरी", "picture": "goat_image1", "pronunciation": "bakari_audio1"},
+          {"lemma": "सियार", "picture": "jackal_image1", "pronunciation": "siyar_audio1"},
+          {"lemma": "ज़ेबरा", "picture": "zebra_image1", "pronunciation": "zeybra_audio1"},
+          {"lemma": "हिरण", "picture": "deer_image1", "pronunciation": "hiran_audio1"},
+          {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
+          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
+          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "magarmachch_audio1"}
+        ]
+      },
+      {
+        "relation": "hasHypernym",
+        "gloss": "शतरंज का मोहरा ",
+        "picture": "chess_image1",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {"lemma": "राजा", "picture": "chess_king_image1", "pronunciation": "raja_audio1"},
+          {"lemma": "ऊंट", "picture": "mantri_image1", "pronunciation": "oont_audio1"},
+          {"lemma": "घोड़ा", "picture": "animals_image1", "pronunciation": "ghoda_audio1"},
+          {"lemma": "प्यादा", "picture": "pyada_image1", "pronunciation": "pyadha_audio1"},
+          {"lemma": "मंत्री", "picture": "chess_king_image1", "pronunciation": "mantri_audio1"}
+        ]
+      },
+      {
+        "relation": "hasHypernym",
+        "gloss": "युद्ध में प्रयुक्त जानवर",
+        "picture": "war_image1",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {"lemma": "ऊंट", "picture": "camel_image1", "pronunciation": "oont_audio1"},
+          {"lemma": "गधा", "picture": "donkey_image1", "pronunciation": "gadha_audio1"},
+          {"lemma": "घोड़ा", "picture": "horse_image1", "pronunciation": "ghoda_audio1"},
+          {"lemma": "कबूतर", "picture": "pigeon_image1", "pronunciation": "kabutar_audio1"},
+          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"}
+        ]
+      },
+      {
+        "relation": "hasHypernym",
+        "gloss": "भारी जानवर या पक्षी",
+        "picture": "",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {"lemma": "जिराफ़", "picture": "giraffe_image1", "pronunciation": "giraffe_audio1"},
+          {"lemma": "राइनो", "picture": "rhino_image1", "pronunciation": "rhino_audio1"},
+          {"lemma": "ह्वेल", "picture": "whale_image1", "pronunciation": "whale_audio1"},
+          {"lemma": "गोरिल्ला", "picture": "gorilla_image1", "pronunciation": "gorilla_audio1"},
+          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "magarmachch_audio1"},
+          {"lemma": "शुतुरमुर्ग", "picture": "ostrich_image1", "pronunciation": "shuturmurg_audio1"}
+        ]
+      }
+    ],
+    "verbs": [
+      {"verb": "खाना", "picture": "eating_image1", "pronunciation": "khana_audio1", "object": "image_ganna"},
+      {"verb": "नहाना", "picture": "nahaana_image1", "pronunciation": "nahaana_audio1", "object": ""},
+      {"verb": "चरना", "picture": "chaaraana_image1", "pronunciation": "charna_audio1", "object": ""},
+      {"verb": "घूमना", "picture": "walking_image1", "pronunciation": "ghoomna_audio1", "object": ""},
+      {"verb": "सोना", "picture": "image_sona", "pronunciation": "sona_audio1", "object": ""},
+      {"verb": "कूदना", "picture": "jump_image1", "pronunciation": "kudhna_audio1", "object": ""},
+      {"verb": "दौड़ना", "picture": "run_image1", "pronunciation": "daudna_audio1", "object": ""}
+    ]
+  },
+  "शेर": {
+    "lemma": "शेर",
+    "meaning": "पीले रंग का माँसाहारी जानवर जो जंगल में रहता है",
+    "picture": "lion_image1",
+    "pronunciation": "audio_sher",
+    "syllableCount": 2,
+    "endsWith": "र",
+    "rhymingWords": [
+      {"lemma": "कार", "syllables": ["का"], "picture": "car_image1", "pronunciation": "car_audio1"},
+      {"lemma": "चार", "syllables": ["चा"], "picture": "four_image1", "pronunciation": "char_audio1"},
+      {"lemma": "घर", "syllables": ["घ"], "picture": "house_image1", "pronunciation": "ghar_audio"},
+      {"lemma": "मोर", "syllables": ["मो"], "picture": "peacock_image1", "pronunciation": "more_audio1"},
+      {"lemma": "नीर", "syllables": ["नी"], "picture": "water_image1", "pronunciation": "neer_audio1"}
+    ],
+    "exampleSentences": [
+      {"sentence": "शेर बहुत तेजी से चलाता है", "audio": "sher_bohot_teezi_se_chalta_hai_audio1"},
+      {"sentence": "शेर एक बड़ा जानवर है", "audio": "sher_ek_bada_jaanvar_hai_audio1"},
+      {"sentence": "शेर क्रोध में भारी बिदका", "audio": "sher_krodh_mein_bhari_bidka_audio1"},
+      {"sentence": "शेर जोर लगाकर गुर्राता है", "audio": "sher_zor_laga_kar_gurrata_hai_audio1"},
+      {"sentence": "उन्हें एक शेर मिला", "audio": "unhe_ek_sher_mila_audio1"}
+    ],
+    "relatedWords": [
+      {
+        "relation": "hasHypernym",
+        "gloss": "चार पैरों से चलने वाला दुमदार जंतु",
+        "picture": "fourlegged_image1",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {"lemma": "गाय", "picture": "cow_image1", "pronunciation": "ghai_audio1"},
+          {"lemma": "बैल", "picture": "ox_image1", "pronunciation": "bail_audio1"},
+          {"lemma": "साँड़", "picture": "bull_image1", "pronunciation": "saand_audio1"},
+          {"lemma": "ऊंट", "picture": "camel_image1", "pronunciation": "oont_audio1"},
+          {"lemma": "बाघ", "picture": "tiger_image1", "pronunciation": "baag_audio1"},
+          {"lemma": "हाथी", "picture": "elephant_image1", "pronunciation": "audio_hathi"},
+          {"lemma": "सूअर", "picture": "pig_image1", "pronunciation": "suaar_audio1"},
+          {"lemma": "शूकर", "picture": "hog_image1", "pronunciation": "shoekar_audio1"},
+          {"lemma": "घोड़ा", "picture": "horse_image1", "pronunciation": "ghoda_audio1"},
+          {"lemma": "बकरी", "picture": "goat_image1", "pronunciation": "bakari_audio1"},
+          {"lemma": "सियार", "picture": "jackal_image1", "pronunciation": "siyar_audio1"},
+          {"lemma": "ज़ेबरा", "picture": "zebra_image1", "pronunciation": "zeybra_audio1"},
+          {"lemma": "हिरण", "picture": "deer_image1", "pronunciation": "hiran_audio1"},
+          {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
+          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
+          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "magarmachch_audio1"}
+        ]
+      },
+      {
+        "relation": "hasHypernym",
+        "gloss": "पशु जो मांस खाता हो",
+        "picture": "fourlegged_image1",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {"lemma": "साँप", "picture": "image_snake", "pronunciation": ""},
+          {"lemma": "भालू", "picture": "image_bear", "pronunciation": ""},
+          {"lemma": "नेवला", "picture": "image_mongoose", "pronunciation": ""},
+          {"lemma": "गीदड़", "picture": "image_fox", "pronunciation": ""},
+          {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
+          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"},
+          {"lemma": "बिल्ली", "picture": "image_cat", "pronunciation": ""},
+          {"lemma": "घटपर्णी", "picture": "image_pitcher_plant", "pronunciation": ""},
+          {"lemma": "मगरमच्छ", "picture": "crocodile_image1", "pronunciation": "magarmachch_audio1"}
+        ]
+      },
+      {
+        "relation": "hasHypernym",
+        "gloss": "पंजे वाला जानवर ",
+        "picture": "fourlegged_image1",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {"lemma": "बाघ", "picture": "tiger_image1", "pronunciation": "baag_audio1"},
+          {"lemma": "सियार", "picture": "jackal_image1", "pronunciation": "siyar_audio1"},
+          {"lemma": "लोमड़ी", "picture": "jackal_image1", "pronunciation": "lomdi_audio1"},
+          {"lemma": "कुत्ता", "picture": "dog_image1", "pronunciation": "kutta_audio1"}
+        ]
+      }
+    ],
+    "verbs": [
+      {"verb": "घूमना", "picture": "walking_image1", "pronunciation": "ghoomna_audio1", "object": ""},
+      {"verb": "सोना", "picture": "image_sona", "pronunciation": "sona_audio1", "object": ""},
+      {"verb": "कूदना", "picture": "jump_image1", "pronunciation": "kudhna_audio1", "object": ""},
+      {"verb": "दौड़ना", "picture": "run_image1", "pronunciation": "daudna_audio1", "object": ""}
+    ]
+  },
+  "पालक": {
+    "lemma": "पालक",
+    "meaning": "हरी पत्तेदार सब्जी",
+    "picture": "palak_image1",
+    "pronunciation": "audio_palak",
+    "syllableCount": 3,
+    "endsWith": "क",
+    "rhymingWords": [
+      {"lemma": "बालक", "syllables": ["बा", "ल"], "picture": "child_image1", "pronunciation": "balak_audio1"},
+      {"lemma": "नमक", "syllables": ["न", "म"], "picture": "salt_image1", "pronunciation": "namak_audio1"}
+    ],
+    "exampleSentences": [
+      {"sentence": "आज माँ ने पालक पनीर की सब्जी बनाई है", "audio": "aaj_maa_ne_palak_paneer_ki_sabzi_banayi_hai_audio1"},
+      {"sentence": "मैंने अपने घर में पालक लगाया है", "audio": "meine_apne_ghar_mein_palak_lagaya_hai_audio1"},
+      {"sentence": "मुझे पालक  की सब्जी बहुत अच्छी लगती है", "audio": "mujhe_palak_ki_sabzi_bohot_achchi_lagti_hai_audio1"},
+      {"sentence": "पालक  खाने से आँखे ठीक रहती है", "audio": "palak_khane_se_ankhen_teek_rehti_hai_audio1"}
+    ],
+    "relatedWords": [
+      {
+        "relation": "hasHypernym",
+        "gloss": "सब्जी जो आप खा सकते हैं",
+        "picture": "palak_image1",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {"lemma":"आलू","meaning":"","picture":"image_aalu","pronunciation":""},
+          {"lemma":"मूली","meaning":"","picture":"image_muli","pronunciation":""},
+          {"lemma":"गाजर","meaning":"","picture":"image_carrot","pronunciation":""},
+          {"lemma":"करेला","meaning":"","picture":"image_karela","pronunciation":""},
+          {"lemma":"इमली","meaning":"","picture":"image_imli","pronunciation":""},
+          {"lemma":"अदरक","meaning":"","picture":"image_ginger","pronunciation":""},
+          {"lemma":"पुदीना","meaning":"","picture":"image_pudina","pronunciation":""},
+          {"lemma":"लहसुन","meaning":"","picture":"image_garlic","pronunciation":""},
+          {"lemma":"बैंगन","meaning":"","picture":"image_bayngan","pronunciation":""},
+          {"lemma":"सेंजन","meaning":"","picture":"image_sanjan","pronunciation":""},
+          {"lemma":"टमाटर","meaning":"","picture":"image_tomato","pronunciation":""},
+          {"lemma":"फूल गोभी","meaning":"","picture":"image_phool_gobi","pronunciation":""},
+          {"lemma":"प्याज","meaning":"","picture":"image_piyaaj","pronunciation":""},
+          {"lemma":"कद्दू","meaning":"","picture":"image_kaddu","pronunciation":""},
+          {"lemma":"भिन्डी","meaning":"","picture":"image_bhindi","pronunciation":""},
+          {"lemma":"पत्तागोभी","meaning":"","picture":"image_patta_gobi","pronunciation":""}
+        ]
+      },
+      {
+        "relation": "hasHypernym",
+        "gloss": "हरे रंग की सब्जी",
+        "picture": "palak_image1",
+        "memberRelation": "hasHyponym",
+        "members": [
+          {"lemma":"घास","meaning":"","picture":"image_grass","pronunciation":""},
+          {"lemma":"मटर","meaning":"","picture":"image_hare_matar","pronunciation":""},
+          {"lemma":"हरा सेब","meaning":"","picture":"image_hara_sayb","pronunciation":""},
+          {"lemma":"पुदीना","meaning":"","picture":"image_pudina","pronunciation":""},
+          {"lemma":"पौधों","meaning":"","picture":"image_paudha","pronunciation":""},
+          {"lemma":"हरे अंगूर","meaning":"","picture":"image_hara_angoor","pronunciation":""},
+          {"lemma":"गन्ना","meaning":"","picture":"image_ganna","pronunciation":""},
+          {"lemma":"पत्ती","meaning":"","picture":"image_pattay","pronunciation":""},
+          {"lemma":"शिमला मिर्च","meaning":"","picture":"image_shimla_mirch","pronunciation":""}
+        ]
+      }
+    ],
+    "verbs": [
+      {"verb": "पकाना", "picture": "image_pakaana", "pronunciation": "audio_pakana", "object": ""},
+      {"verb": "खाना", "picture": "eating_image1", "pronunciation": "audio_khana", "object": ""},
+      {"verb": "बोना", "picture": "placeholder_image", "pronunciation": "audio_bona", "object": ""},
+      {"verb": "लगाना", "picture": "placeholder_image", "pronunciation": "audio_lagana", "object": ""},
+      {"verb": "काटना", "picture": "image_kaatna", "pronunciation": "audio_khatna", "object": ""},
+      {"verb": "बनाना", "picture": "placeholder_image", "pronunciation": "audio_banana", "object": ""},
+      {"verb": "धोना", "picture": "image_dhona", "pronunciation": "audio_dhona", "object": ""}
+    ]
+  }
+}
