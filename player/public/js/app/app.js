@@ -215,7 +215,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 } else {
                     $rootScope.collection = {};
                 }
-                var childrenIds = (content.children) ? _.pluck(content.children, 'identifier') :null;
+                var childrenIds = (content.children) ? _.pluck(_.sortBy(content.children, function(child) { return child.index; }), "identifier") : null;
                 var filter = (content.filter)? JSON.parse(content.filter) : content.filter;
                 return ContentService.getContentList(filter, childrenIds);
             })
