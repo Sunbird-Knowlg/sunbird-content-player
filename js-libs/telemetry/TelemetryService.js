@@ -165,6 +165,7 @@ TelemetryService = {
             var event = TelemetryService.instance._end;
             if ("undefined" !=  event && event._isStarted)
                 TelemetryService.end();
+            TelemetryService.isActive = false;
         }
     },
     logError: function(eventName, error) {
