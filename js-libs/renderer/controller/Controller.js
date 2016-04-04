@@ -94,7 +94,9 @@ var Controller = Class.extend({
                     }
                 }
     		}
-    	}
+    	} else if (this._model) {
+            val = this.getModel();
+        }
     	return val;
     },
     setModelValue: function(name, val, param) {

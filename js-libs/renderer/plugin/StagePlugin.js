@@ -115,6 +115,11 @@ var StagePlugin = Plugin.extend({
                 if (controller) {
                     val = controller.getModelValue(paramName);
                 }
+            } else {
+                var controller = this.getController(param);
+                if (controller) {
+                    val = controller.getModelValue();
+                }
             }
         }
         return val;
@@ -156,13 +161,25 @@ var StagePlugin = Plugin.extend({
         }
         this._theme.replaceStage(this._data.id, action);
     },
-    setParam: function(param, value) {
+    setParam: function(param, value, incr, max) {
         var instance = this;
-        instance._stageParams[param] = value;
+        var fval = instance.params[param];
+        if (incr) {
+            if (!fval)
+                fval = 0;
+            fval = (fval + incr);
+        } else {
+            fval = value;
+        }
+        if (0 > fval) fval = 0;
+        if ("undefined" != typeof max && fval >= max) fval = 0;
+        instance.params[param] = fval;
     },
     getParam: function(param) {
         var instance = this;
-        return instance._stageParams[param];
+        var params = instance.params;
+        var expr = 'params.' + param;
+        return eval(expr);
     }
 });
 PluginManager.registerPlugin('stage', StagePlugin);

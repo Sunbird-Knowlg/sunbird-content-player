@@ -1,0 +1,457 @@
+<theme startStage="scene1" id="theme" ver="0.2">
+    <manifest>
+        <media id="welcome_sound" src="audio/welcome_riff.ogg" type="sound" />
+        <media id="stage_sound" src="audio/new_puzzle.ogg" type="sound" />
+        <media id="cheers_sound" src="audio/cheers_soft.ogg" type="sound" />
+
+        <media id="elephant_tiger" src="pictures/elephant-tiger.jpg" type="image" />
+        <media id="elephant" src="pictures/elephant.png" type="image" />
+        <media id="triangle_up" src="icons/triangle_up.png" type="image" />
+        <media id="triangle_dn" src="icons/triangle_dn.png" type="image" />
+        <media id="translucent_layer" src="pictures/translucent_layer.png" type="image" />
+
+
+        <media id="sound_icon" src="icons/sound.png" type="image" />
+        <media id="cancel_icon" src="icons/cancel.png" type="image" />
+
+        <media id="elephant_image1" src="pictures/elephant_image1.jpeg" type="image" />
+        <media id="lion_image1" src="pictures/lion_image1.jpeg" type="image" />
+        <media id="palak_image1" src="pictures/palak_image1.jpeg" type="image" />
+        <media id="friend_image1" src="pictures/friend_image1.jpg" type="image" />
+        <media id="going_image1" src="pictures/going_image1.jpg" type="image" />
+        <media id="child_image1" src="pictures/child_image1.jpg" type="image" />
+        <media id="salt_image1" src="pictures/salt_image1.jpeg" type="image" />
+        <media id="car_image1" src="pictures/car_image1.png" type="image" />
+        <media id="four_image1" src="pictures/four_image1.png" type="image" />
+        <media id="house_image1" src="pictures/house_image1.png" type="image" />
+        <media id="peacock_image1" src="pictures/peacock_image1.jpg" type="image" />
+        <media id="water_image1" src="pictures/water_image1.jpg" type="image" />
+
+        <media id="elephant_audio1" src="sounds/elephant_audio1.mp3" type="sound" />
+        <media id="lion_audio1" src="sounds/lion_audio1.mp3" type="sound" />
+        <media id="palak_audio1" src="sounds/palak_audio1.mp3" type="sound" />
+        <media id="friend_audio1" src="sounds/friend_audio1.mp3" type="sound" />
+        <media id="jaati_audio1" src="sounds/jaati_audio1.mp3" type="sound" />
+        <media id="balak_audio1" src="sounds/balak_audio1.mp3" type="sound" />
+        <media id="namak_audio1" src="sounds/namak_audio1.mp3" type="sound" />
+        <media id="car_audio1" src="sounds/car_audio1.mp3" type="sound" />
+        <media id="char_audio1" src="sounds/char_audio1.mp3" type="sound" />
+        <media id="ghar_audio" src="sounds/ghar_audio.mp3" type="sound" />
+        <media id="more_audio1" src="sounds/more_audio1.mp3" type="sound" />
+        <media id="neer_audio1" src="sounds/neer_audio1.mp3" type="sound" />
+
+        <media id="page2" src="scenes/image_2.jpg" type="image" />
+        <media id="page3" src="scenes/image_3.jpg" type="image" />
+        <media id="page4" src="scenes/image_4.jpg" type="image" />
+        <media id="page5" src="scenes/image_5.jpg" type="image" />
+
+        <media id="previous" src="icon_previous.png" type="image" />
+        <media id="next" src="icon_next.png" type="image" />
+    </manifest>
+
+    <stage id="preloadStage" preload="true">
+        <image asset="elephant_image1"/>
+        <image asset="translucent_layer"/>
+        <image asset="lion_image1"/>
+        <image asset="palak_image1"/>
+        <image asset="friend_image1"/>
+        <image asset="going_image1"/>
+        <image asset="child_image1"/>
+        <image asset="salt_image1"/>
+        <image asset="car_image1"/>
+        <image asset="four_image1"/>
+        <image asset="house_image1"/>
+        <image asset="peacock_image1"/>
+        <image asset="water_image1"/>
+
+        <audio asset="elephant_audio1" />
+        <audio asset="lion_audio1" />
+        <audio asset="palak_audio1" />
+        <audio asset="friend_audio1" />
+        <audio asset="jaati_audio1" />
+        <audio asset="balak_audio1" />
+        <audio asset="namak_audio1" />
+        <audio asset="car_audio1" />
+        <audio asset="char_audio1" />
+        <audio asset="ghar_audio" />
+        <audio asset="more_audio1" />
+        <audio asset="neer_audio1" />
+    </stage>
+
+    <stage id="storyBaseStage" preload="true">
+        <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
+        <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+            </event>
+        </shape>
+        <image asset="previous" x="2" y="3" w="5" h="8.3" id="previous" visible="false"/>
+        <shape id="previousContainer" type="rect" x="1" y="1" w="10" h="15" visible="false" hitArea="true">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" transitionType="previous"/>
+            </event>
+        </shape>
+    </stage>
+
+    <stage id="scene1" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="next" value="explore" />
+        <g id="scene1Main" x="0" y="0" w="100" h="100">
+            <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#F3CCDE" />
+            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
+उस  रात बहुत तेज बारिश हो रही थी  | शेर अपने घर में लेटा हुआ था |
+            </text>
+            <image asset="page2" x="2" y="12" w="96" h="86" />
+            <shape x="53" y="30" w="20" h="65" type="rect" z-index="2" hitArea="true">
+                <event type="click">
+                    <action type="command" command="blur" asset="scene1Main" />
+                </event>
+            </shape>
+        </g>
+        <g id="scene1Word" x="0" y="0" w="100" h="100">
+
+        </g>
+    </stage>
+
+    <stage id="scene2" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="scene1" />
+        <param name="next" value="scene3" />
+        <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#FFF16E" />
+        <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
+तभी आवाज से उसकी आँख खुल गई  | रसोई  में जा कर देखा तो पाया कि वहां कोई आया था |
+        </text>
+        <image asset="page3" x="2" y="12" w="96" h="86" />
+    </stage>
+
+    <stage id="scene3" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <audio asset="palak_audio1" />
+        <param name="previous" value="scene2" />
+        <param name="next" value="scene4" />
+        <g id="scene3Main" x="0" y="0" w="100" h="100">
+            <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#E5F4FB" />
+            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
+अरे ! किसी ने उसके आम और पालक चुरा लिए थे | उसे आम और पालक बहुत पसंद थे |
+            </text>
+            <image asset="page4" x="2" y="12" w="96" h="86" />
+            <shape x="30" y="2" w="6" h="10" type="rect" z-index="2" hitArea="true">
+                <event type="click">
+                    <action type="command" command="blur" asset="scene3Main" />
+                    <action type="command" command="show" asset="scene2Word" />
+                </event>
+            </shape>
+        </g>
+        <g id="scene2Word" x="0" y="0" w="100" h="100" visible="false">
+
+            <image asset="cancel_icon" x="50" y="22" w="8" h="9">
+                <event type="click">
+                    <action type="command" command="hide" asset="scene2Word" />
+                    <action type="command" command="unblur" asset="scene3Main" />
+                </event>
+            </image>
+            <image asset="palak_image1" x="20" y="35" w="20" h="20" />
+            <text x="42" y="35" w="20" h="20" font="Georgia" fontsize="70">पालक</text>
+            <image asset="sound_icon" x="53" y="35" w="4" h="5">
+                <event type="click">
+                    <action type="command" command="togglePlay" asset="palak_audio1" />
+                </event>
+            </image>
+            <text x="42" y="45" w="25" h="20" font="Georgia" fontsize="50">आप खा सकते हैं (सब्जी )</text>
+        </g>
+    </stage>
+
+    <stage id="scene4" x="0" y="0" w="100" h="100" extends="storyBaseStage">
+        <param name="previous" value="scene3" />
+        <param name="next" value="explore" />
+        <g id="scene4Main" x="0" y="0" w="100" h="100">
+            <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#86CFF2" />
+            <text x="9" y="7" w="86" h="4" font="Georgia" fontsize="42">
+शेर घबरा कर अपने साथी, हाथी के पास गया |  दोनों रात को बारिश में चोर को खोजने निकल पड़े |
+            </text>
+            <image asset="page5" x="2" y="12" w="96" h="86" />
+            <shape x="18" y="15" w="25" h="32" type="rect" z-index="2" hitArea="true">
+                <event type="click">
+                    <action type="command" command="blur" asset="scene4Main" />
+                </event>
+            </shape>
+        </g>
+    </stage>
+
+    <stage id="explore" x="0" y="0" w="100" h="100" preload="true">
+        <audio asset="welcome_sound" />
+
+        <g id="card" x="-15" y="7" w="100" h="100">
+            <image asset="elephant_tiger" x="15" y="20" w="70" h="70"/>
+            <image asset="translucent_layer" x="-89" y="-107" w="290" h="320" z-index="50"/>
+            <shape type="roundrect" x="32" y="15" w="65" h="60" stroke="#A47A69" stroke-width="2" z-index="50"/>
+            <text x="67" y="25" w="25" h="20" font="Arial" fontsize="120" color="black" z-index="50">हाथी</text>
+            <text x="67" y="40" w="25" h="20" lineHeight="1.5" font="Arial" fontsize="50" color="black" z-index="50">सबसे बड़ा और ताकतवर जानवर जो जंगल में रहता है </text>
+        </g>
+
+        <g id="nav" x="0" y="0" w="100" h="100" z-index="100">
+            <image asset="cancel_icon" x="46" y="5" w="7" h="12">
+                <event type="click">
+                    <action type="command" command="transitionTo" asset="theme" value="scene1" effect="fadein" duration="10"/>
+                </event>
+            </image>
+
+            <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#2ECA42" rotate="-45" shadow="black" blur="30">
+                <event type="click">
+                    <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page1" duration="10"/>
+                </event>
+            </shape>
+            <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E6632B" rotate="45" shadow="black" blur="30">
+                <event type="click">
+                    <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page2" duration="10"/>
+                </event>
+            </shape>
+            <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#BE23D1" rotate="135" shadow="black" blur="30">
+                <event type="click">
+                    <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page3" duration="10"/>
+                </event>
+            </shape>
+            <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDB236" rotate="-135" shadow="black" blur="30">
+                <event type="click">
+                    <action type="command" command="transitionTo" asset="theme" effect="fadein" value="page4" duration="10"/>
+                </event>
+            </shape>
+        </g>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="welcome_sound" loop="1" />
+            </event>
+        </events>
+    </stage>
+
+    <stage id="page1" x="0" y="0" w="100" h="100">
+        <audio asset="stage_sound" />
+
+        <g id="body" x="0" y="0" w="100" h="100" z-index="50">
+            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="5" offsetY="5" r="15" x="83" y="70" w="15" h="15" z-index="50"/>
+            <image id="ep2" asset="elephant" x="70" y="54" w="27" h="35" z-index="51"/>
+
+            <shape id="spin_top" type="roundrect" fill="#B0D93D" shadow="#245E1F" blur="30" offsetX="-2" offsetY="0" stroke="black" x="5" y="35" w="55" h="15" z-index="50"/>
+            <image id="spin_top_ico" asset="triangle_up" x="25" y="37" w="15" h="10" z-index="51"/>
+
+            <shape id="spinnerph1" type="roundrect" fill="#978F35" stroke="black" x="5" y="51" w="55" h="23" z-index="50"/>
+
+            <shape id="spin_bot" type="roundrect" fill="#B0D93D" shadow="#245E1F" blur="30" offsetX="-2" offsetY="2" stroke="black" x="5" y="75" w="55" h="15" z-index="50"/>
+            <image id="spin_bot_ico" asset="triangle_dn" x="25" y="77" w="15" h="10" z-index="51"/>
+
+            <text id="finaltxt1" align="center" valign="middle" x="7" y="51" w="55" h="23" z-index="50" font="Arial" fontsize="80" color="white">हाथी  बहुत ताकतवर जानवर है । </text>
+        </g>
+
+        <shape id="top-left" x="-35" y="-35" w="200" h="200" type="rect" fill="#2ECA42" rotate="-45" shadow="black" blur="30">
+            <event type="click">
+                <action type="command" command="hide" asset="body"/>
+                <action type="animation" asset="top-left"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":-35,"y":-35}]]></to></tween></action>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500"/>
+            </event>
+        </shape>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="stage_sound" loop="1" />
+                <action type="animation" asset="top-left"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":30,"y":30}]]></to></tween></action>
+            </event>
+        </events>
+    </stage>
+
+    <stage id="page2" x="0" y="0" w="100" h="100" preload="true">
+        <audio asset="stage_sound" />
+
+        <g id="body" x="0" y="0" w="100" h="100" z-index="50">
+            <shape type="circle" fill="white" stroke="black" shadow="#333" blur="20" offsetX="-5" offsetY="5" r="15" x="17" y="70" w="15" h="15" z-index="50"/>
+            <image id="ep2" asset="elephant" x="4" y="54" w="27" h="35" z-index="51"/>
+
+            <shape id="spin_top" type="roundrect" fill="#DCC137" shadow="#883517" blur="30" offsetX="-2" offsetY="0" stroke="black" x="40" y="20" w="35" h="15" z-index="50"/>
+            <image id="spin_top_ico" asset="triangle_up" x="50" y="22" w="15" h="10" z-index="51"/>
+
+            <shape id="spinnerph1" type="roundrect" fill="#E6632B" stroke="black" x="40" y="36" w="17" h="23" z-index="50"/>
+            <shape id="spinnerph2" type="roundrect" fill="#E6632B" stroke="black" x="58" y="36" w="17" h="23" z-index="50"/>
+
+            <shape id="spin_bot" type="roundrect" fill="#DCC137" shadow="#883517" blur="30" offsetX="-2" offsetY="2" stroke="black" x="40" y="60" w="35" h="15" z-index="50"/>
+            <image id="spin_bot_ico" asset="triangle_dn" x="50" y="62" w="15" h="10" z-index="51"/>
+
+            <text id="finaltxt1" align="center" valign="middle" x="40" y="36" w="17" h="28" z-index="50" font="Arial" fontsize="150" color="black">हा</text>
+            <text id="finaltxt2" align="center" valign="middle" x="58" y="36" w="17" h="28" z-index="50" font="Arial" fontsize="150" color="#41F4F3">थी</text>
+        </g>
+        <shape id="top-right" x="135" y="-35" w="200" h="200" type="rect" fill="#E6632B" rotate="45" shadow="black" blur="30">
+            <event type="click">
+                <action type="command" command="hide" asset="body"/>
+                <action type="animation" asset="top-right"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":135,"y":-35}]]></to></tween></action>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500"/>
+            </event>
+        </shape>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="stage_sound" loop="1" />
+                <action type="animation" asset="top-right"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":35,"y":-35}]]></to></tween></action>
+            </event>
+        </events>
+    </stage>
+
+    <stage id="page3" x="0" y="0" w="100" h="100">
+        <audio asset="stage_sound" />
+
+        <shape type="roundrect" fill="white" radius="5" stroke="black" x="40" y="40" h="10" w="7" z-index="40" />
+        <shape type="roundrect" fill="white" radius="5" stroke="black" x="48" y="40" h="10" w="7" z-index="40" />
+        <shape type="roundrect" fill="white" radius="5" stroke="black" x="56" y="40" h="10" w="7" z-index="40" />
+
+        <shape type="rect" fill="#B000CA" x="40" y="0" h="40" w="40" z-index="100" />
+        <shape type="rect" fill="#B000CA" x="40" y="50" h="50" w="40" z-index="100">
+            <event type="click">
+                <action type="animation" asset="spinnertxt1">
+                    <tween>
+                        <to ease="cubicIn" duration="2000"><![CDATA[{"x":42,"y":-102}]]></to>
+                        <to ease="linear" duration="0"><![CDATA[{"x":42,"y":110}]]></to>
+                    </tween>
+                </action>
+                <action type="animation" asset="finaltxt1" delay="2000">
+                    <tween>
+                        <to ease="linear" duration="1600"><![CDATA[{"x":42,"y":110}]]></to>
+                        <to ease="linear" duration="0"><![CDATA[{"x":42,"y":60}]]></to>
+                        <to ease="bounceOut" duration="1000"><![CDATA[{"x":42,"y":42}]]></to>
+                    </tween>
+                </action>
+
+                <action type="animation" asset="spinnertxt2">
+                    <tween>
+                        <to ease="linear" duration="0"><![CDATA[{"x":50,"y":-500}]]></to>
+                        <to ease="cubicIn" duration="2000"><![CDATA[{"x":50,"y":50}]]></to>
+                        <to ease="linear" duration="0"><![CDATA[{"x":50,"y":110}]]></to>
+                    </tween>
+                </action>
+                <action type="animation" asset="finaltxt2" delay="2000">
+                    <tween>
+                        <to ease="linear" duration="1600"><![CDATA[{"x":50,"y":110}]]></to>
+                        <to ease="linear" duration="0"><![CDATA[{"x":50,"y":60}]]></to>
+                        <to ease="bounceOut" duration="1000"><![CDATA[{"x":50,"y":42}]]></to>
+                    </tween>
+                </action>
+            </event>
+        </shape>
+
+        <text id="finaltxt1" x="42" y="110" z-index="50" font="Arial" fontsize="50" color="black">ब</text>
+        <text id="finaltxt2" x="50" y="110" z-index="50" font="Arial" fontsize="50" color="black">क</text>
+        <text id="finaltxt3" x="58" y="42" z-index="50" font="Arial" fontsize="50" color="green">री</text>
+        <text id="spinnertxt1" x="42" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10">
+पा
+पी
+ना
+नो
+नी
+टो
+ट
+टु
+पा
+पी
+ना
+नो
+नी
+टो
+ट
+टु
+पा
+पी
+ना
+नो
+नी
+टो
+ट
+टु
+पा
+पी
+ना
+नो
+नी
+टो
+ट
+टु
+
+
+        </text>
+
+        <text id="spinnertxt2" x="50" y="52" z-index="50" font="Arial" fontsize="50" color="black" shadow="black" blur="10">
+का
+की
+खा
+खी
+खो
+गा
+गी
+गौ
+घ
+घा
+त
+तो
+ती
+का
+की
+खा
+खी
+खो
+गा
+गी
+गौ
+घ
+घा
+त
+तो
+ती
+का
+की
+खा
+खी
+खो
+गा
+गी
+गौ
+घ
+घा
+त
+तो
+ती
+का
+की
+खा
+खी
+खो
+गा
+गी
+गौ
+घ
+घा
+त
+तो
+ती
+        </text>
+
+        <shape id="bottom-right" x="135" y="135" w="200" h="200" type="rect" fill="#B000CA" rotate="135" shadow="black">
+            <event type="click">
+                <action type="animation" asset="bottom-right"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":135,"y":135}]]></to></tween></action>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500"/>
+            </event>
+        </shape>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="stage_sound" loop="1" />
+                <action type="animation" asset="bottom-right"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":70,"y":70}]]></to></tween></action>
+            </event>
+        </events>
+    </stage>
+
+    <stage id="page4" x="0" y="0" w="100" h="100">
+        <audio asset="stage_sound" />
+
+        <shape id="bottom-left" x="-35" y="135" w="200" h="200" type="rect" fill="#FDA51A" rotate="-135" shadow="black">
+            <event type="click">
+                <action type="animation" asset="bottom-left"><tween><to ease="quadOut" duration="500"><![CDATA[{"x":-35,"y":135}]]></to></tween></action>
+                <action type="command" command="transitionTo" effect="fadein" asset="theme" value="explore" duration="10" delay="500"/>
+            </event>
+        </shape>
+        <events>
+            <event type="enter">
+                <action type="command" command="play" asset="stage_sound" loop="1" />
+                <action type="animation" asset="bottom-left"><tween><to ease="bounceOut" duration="1000"><![CDATA[{"x":10,"y":35}]]></to></tween></action>
+            </event>
+        </events>
+    </stage>
+</theme>

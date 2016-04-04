@@ -9,6 +9,9 @@ AnimationManager = {
 		} else {
 			instance = plugin;
 		}
+		if (action.parent === true && instance._parent) {
+			instance = instance._parent;
+		}
 		for (k in action) {
             if (AnimationManager.isPlugin(k)) {
             	var data = action[k];

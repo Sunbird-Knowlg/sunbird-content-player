@@ -1,0 +1,20 @@
+[
+  {
+    "lemma": "हाथी",
+    "meaning": "चार पैरों वाला बड़ा जानवर जिसकी सूंढ़ होती है",
+    "picture": "elephant_image1",
+    "pronunciation": "audio_hathi"
+  },
+  {
+    "lemma": "शेर",
+    "meaning": "पीले रंग का माँसाहारी जानवर जो जंगल में रहता है",
+    "picture": "lion_image1",
+    "pronunciation": "audio_sher"
+  },
+  {
+    "lemma": "पालक",
+    "meaning": "हरी पत्तेदार सब्जी",
+    "picture": "palak_image1",
+    "pronunciation": "audio_palak"
+  }
+]
