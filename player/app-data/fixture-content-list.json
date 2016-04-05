@@ -13,6 +13,30 @@
     "result": {
         "content": [
         {
+            "identifier": "org.ekstep.custom.plugin",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/CustomPluginStory/logo.png",
+                "subject": "literacy_v2",
+                "description": "Custom Plugins",
+                "name": "Custom Plugins",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.custom.plugin",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/CustomPluginStory"
+        },
+        {
             "identifier": "org.ekstep.lit.noun",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
