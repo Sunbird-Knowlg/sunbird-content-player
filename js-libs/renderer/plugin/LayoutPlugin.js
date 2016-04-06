@@ -14,17 +14,19 @@ var LayoutPlugin = Plugin.extend({
         var hit = new createjs.Shape();
         hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h);
         this._self.hitArea = hit;
-
         // If iterate is undefine, then we cant create a layout
         // "Iterate" is Mandatory property
-        if(_.isUndefined(data.iterate)) {
-            console.error("LayoutPlugin iterate undefined", data);
+        if(_.isUndefined(data.iterate) && _.isUndefined(data.count)) {
+            console.warn("LayoutPlugin require iterate or count", data);
             return;
         }
+        if ("undefined" != typeof data.count) 
+            this._cellsCount = data.count;
         var model = data.iterate;
     	var dataObjs = this._stage.getModelValue(model);
         if(dataObjs) {
-            this._cellsCount = dataObjs.length;
+            var length = dataObjs.length;
+            this._cellsCount = (length < this._cellsCount || this._cellsCount == 0) ? length : this._cellsCount;
         }       
     	this.generateLayout();
         this.renderLayout();     

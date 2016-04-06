@@ -1,4 +1,4 @@
-<theme id="theme" startStage="textPluginBasic" ver="0.2">
+<theme id="theme" startStage="audioRecording" ver="0.2">
     <manifest>
         <media id="previous" src="icon_previous.png" type="image"/>
         <media id="next" src="icon_next.png" type="image"/>
@@ -575,7 +575,7 @@
     <stage extends="baseStage" h="100" id="gridLayoutStage" w="100" x="0" y="0">
         <param name="next" value="finished"/>
         <param name="previous" value="dataRepeatStage"/>
-        <grid cols="2" h="80" id="grid" iterate="bugData.users" var="user" w="80" x="10" y="10" marginX="1" marginY="1">
+        <grid cols="2" h="80" count="13" id="grid" iterate="bugData.users" var="user" w="80" x="10" y="10" marginX="1" marginY="1">
             <shape fill="lightblue" h="100" stroke="black" type="rect" w="100" x="0" y="0"/>
             <g h="50" w="50" x="0" y="0">
                 <shape fill="lightgreen" h="100" stroke="black" type="rect" w="100" x="0" y="0"/>
