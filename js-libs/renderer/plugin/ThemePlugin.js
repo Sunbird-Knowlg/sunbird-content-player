@@ -17,6 +17,7 @@ var ThemePlugin = Plugin.extend({
     _isContainer: false,
     _templateMap: {},
     _contentParams: {},
+    _isSceneChanging: false,
     initPlugin: function(data) {
         this._controllerMap = {};
         this._canvasId = data.canvasId;
@@ -132,6 +133,7 @@ var ThemePlugin = Plugin.extend({
         var instance = this;
         child.on('sceneenter', function() {
             instance.enableInputs();
+            instance._isSceneChanging = false;
             childPlugin.dispatchEvent('enter');
             instance.preloadStages();
             Renderer.update = true;
@@ -191,9 +193,14 @@ var ThemePlugin = Plugin.extend({
         return stage1;
     },
     transitionTo: function(action) {
+        // not next and previoud are clicked at the same time, 
+        // handle only one actions(next/previous)
+        if(this._isSceneChanging){ return; }
+        
         var stage = this._currentScene;
         TimerManager.stopAll(this._currentStage);
         if (action.transitionType === 'previous') {
+            this._isSceneChanging = true;
             if (stage._stageController && stage._stageController.hasPrevious()) {
                 stage._stageController.decrIndex(2);
                 this.replaceStage(stage._data.id, action);
@@ -212,6 +219,7 @@ var ThemePlugin = Plugin.extend({
             }
             this.replaceStage(action.value, action);
         } else {
+            this._isSceneChanging = true;
             if (stage._stageController && stage._stageController.hasNext()) {
                 this.replaceStage(stage._data.id, action);
             } else {
