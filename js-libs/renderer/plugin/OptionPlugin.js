@@ -24,6 +24,9 @@ var OptionPlugin = Plugin.extend({
             var controller = this._parent._controller;
             value = controller.getModelValue(model);
             this._index = parseInt(model.substring(model.indexOf('[') + 1, model.length - 1));
+            var varName = (this._data['var'] ? this._data['var'] : 'option');
+            this._stage._templateVars[varName] = this._parent._data.model + "." + model;
+            var modelValue = this._stage.getModelValue(this._parent._data.model + '.' + model);
         }
         if (value && _.isFinite(this._index) && this._index > -1) {
             this._self = new createjs.Container();
@@ -42,18 +45,14 @@ var OptionPlugin = Plugin.extend({
 
             if (value.value.type == 'image') {
                 this.renderImage(value.value);
-                if (this._parent._type == 'mcq') {
-                    this.renderMCQOption();
-                } else if (this._parent._type == 'mtf') {
-                    this.renderMTFOption(value);
-                }
             } else if (value.value.type == 'text') {
                 this.renderText(value.value);
-                if (this._parent._type == 'mcq') {
-                    this.renderMCQOption();
-                } else if (this._parent._type == 'mtf') {
-                    this.renderMTFOption(value);
-                }
+            }
+            this.renderInnerECML();
+            if (this._parent._type == 'mcq') {
+                this.renderMCQOption();
+            } else if (this._parent._type == 'mtf') {
+                this.renderMTFOption(value);
             }
         }
     },
@@ -295,6 +294,21 @@ var OptionPlugin = Plugin.extend({
         data = data.replace(new RegExp('\\$current', 'g'), this._index);
         data = JSON.parse(data);
         this._data = data;
+    },
+    renderInnerECML: function() {
+        var innerECML = this.getInnerECML();
+        if (!_.isEmpty(innerECML)) {
+            var data = {};
+            var padx = this._data.padX || 0;
+            var pady = this._data.padY || 0;
+            data.x = 0; //padx;
+            data.y = 0; //pady;
+            data.w = 100;// - (2 * padx);
+            data.h = 100;// - (2 * pady);
+            Object.assign(data, innerECML);
+            this.invokeChildren(data, this, this._stage, this._theme);
+            // PluginManager.invoke('g', data, this, this._stage, this._theme);
+        }
     }
 });
 PluginManager.registerPlugin('option', OptionPlugin);
