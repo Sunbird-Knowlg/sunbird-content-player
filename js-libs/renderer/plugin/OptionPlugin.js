@@ -42,7 +42,7 @@ var OptionPlugin = Plugin.extend({
             this._self.hitArea = hit;
             this._value = value.value;
             this.setOptionIndex(data);
-
+            this.initShadow(data);
             if (value.value.type == 'image') {
                 this.renderImage(value.value);
             } else if (value.value.type == 'text') {
@@ -54,6 +54,7 @@ var OptionPlugin = Plugin.extend({
             } else if (this._parent._type == 'mtf') {
                 this.renderMTFOption(value);
             }
+            this._render = true;
         }
     },
     renderMCQOption: function() {
@@ -241,11 +242,8 @@ var OptionPlugin = Plugin.extend({
         data.w = 100 - (2 * padx);
         data.h = 100 - (2 * pady);
 
-        this.initShadow(data);
-
         PluginManager.invoke('image', data, this, this._stage, this._theme);
         this._data.asset = value.asset;
-        this._render = true;
     },
     renderText: function(data) {
         data.$t = data.asset;
@@ -262,11 +260,8 @@ var OptionPlugin = Plugin.extend({
         data.align = align;
         data.valign = valign;
 
-        this.initShadow(data);
-
         PluginManager.invoke('text', data, this, this._stage, this._theme);
         this._data.asset = data.asset;
-        this._render = true;
     },
     initShadow: function(data) {
 
@@ -299,15 +294,12 @@ var OptionPlugin = Plugin.extend({
         var innerECML = this.getInnerECML();
         if (!_.isEmpty(innerECML)) {
             var data = {};
-            var padx = this._data.padX || 0;
-            var pady = this._data.padY || 0;
-            data.x = 0; //padx;
-            data.y = 0; //pady;
-            data.w = 100;// - (2 * padx);
-            data.h = 100;// - (2 * pady);
+            data.x = 0;
+            data.y = 0;
+            data.w = 100;
+            data.h = 100;
             Object.assign(data, innerECML);
             this.invokeChildren(data, this, this._stage, this._theme);
-            // PluginManager.invoke('g', data, this, this._stage, this._theme);
         }
     }
 });

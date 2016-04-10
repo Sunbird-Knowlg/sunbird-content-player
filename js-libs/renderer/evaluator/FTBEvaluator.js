@@ -17,8 +17,10 @@ FTBEvaluator = {
 					res.push(obj);
 				}
 
-				if (model[ans] && answer[ans].value == model[ans]) {
-					score += answer[ans].score;
+				if (model[ans] && answer[ans] && answer[ans].value) {
+					if (_.isString(answer[ans].value)) answer[ans].value = answer[ans].value.toLowerCase();
+					if (_.isString(model[ans])) model[ans] = model[ans].toLowerCase();
+					(answer[ans].value == model[ans]) ? score += answer[ans].score : pass = false;
 				} else {
 					pass = false;
 				}
