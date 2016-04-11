@@ -132,20 +132,24 @@ LoadByStageStrategy = Class.extend({
         if (nextStageId) {
             instance.loadStage(nextStageId, function() {
                 var plugin = PluginManager.getPluginObject('next');
-                plugin.show();
-                var nextContainer = PluginManager.getPluginObject('nextContainer');
-                if (nextContainer) {
-                    nextContainer.show();
+                if(plugin){
+                    plugin.show();
+                    var nextContainer = PluginManager.getPluginObject('nextContainer');
+                    if (nextContainer) {
+                        nextContainer.show();
+                    }                    
                 }
             });
         }
         if (prevStageId) {
             instance.loadStage(prevStageId, function() {
                 var plugin = PluginManager.getPluginObject('previous');
-                plugin.show();
-                var previousContainer = PluginManager.getPluginObject('previousContainer');
-                if (previousContainer) {
-                    previousContainer.show();
+                if(plugin){
+                    plugin.show();
+                    var previousContainer = PluginManager.getPluginObject('previousContainer');
+                    if (previousContainer) {
+                        previousContainer.show();
+                    }
                 }
             });
         }
