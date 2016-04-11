@@ -101,7 +101,8 @@ EventManager = {
 					action.asset = stage.getModelValue(action.asset_model) || '';
 				}
 			}
-			if (!action.asset) {
+			var command = (action.command) ? action.command.toUpperCase() : "";
+			if (!action.asset && ["PLAY", "TOGGLEPLAY"].indexOf(command) == -1) {
 				action.pluginObj = plugin;
 			}
 			if(action.type === 'animation') {
