@@ -19,8 +19,8 @@ var OptionsPlugin = Plugin.extend({
         var cols = undefined;
         var rows = undefined;
     	var count = value.length;
+        cols = this._data.cols = ("undefined" != typeof this._data.cols && count < this._data.cols) ? count : this._data.cols;
         if(this._data.rows && this._data.cols) {
-            cols = this._data.cols; 
             rows = Math.ceil(count/cols);
         } else {
             if(this._data.rows)

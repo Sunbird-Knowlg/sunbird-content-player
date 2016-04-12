@@ -242,7 +242,14 @@ var OptionPlugin = Plugin.extend({
         data.w = 100 - (2 * padx);
         data.h = 100 - (2 * pady);
 
-        PluginManager.invoke('image', data, this, this._stage, this._theme);
+        if (value.count) {
+            data.count = value.count;
+            data.type = "gridLayout";
+            PluginManager.invoke('placeholder', data, this, this._stage, this._theme);
+        } else {
+            PluginManager.invoke('image', data, this, this._stage, this._theme);
+        }
+
         this._data.asset = value.asset;
     },
     renderText: function(data) {
@@ -253,7 +260,7 @@ var OptionPlugin = Plugin.extend({
         data.y = pady;
         data.w = 100 - (2 * padx);
         data.h = 100 - (2 * pady);
-
+        data.fontsize = (data.fontsize) ? data.fontsize: 200;
         var align = (this._data.align ? this._data.align.toLowerCase() : 'center');
         var valign = (this._data.valign ? this._data.valign.toLowerCase() : 'middle');
 
