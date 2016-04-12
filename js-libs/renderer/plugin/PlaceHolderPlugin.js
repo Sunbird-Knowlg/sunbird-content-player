@@ -9,14 +9,47 @@ var PlaceHolderPlugin = Plugin.extend({
             instance.param = this._stage.getModelValue(data.model);
         } else if (data.param) {
             instance.param = this._stage.params[data.param.trim()];
+        } else {
+
+            // Get the model values individually
+            // Either as a direct literal attribute, param or from model
+            var type = data.type;
+            if (type === undefined) {
+                if (data['param-type']) type = this._stage.params[data['param-type'].trim()];
+                else if (data['model-type']) type = this._stage.getModelValue(data['model-type'].trim());
+            }
+
+            var count = data.count;
+            if (count === undefined) {
+                if (data['param-count']) count = this._stage.params[data['param-count'].trim()];
+                else if (data['model-count']) count = this._stage.getModelValue(data['model-count'].trim());
+                else count = 1;
+            }
+
+            var asset = data.asset;
+            if (asset === undefined) {
+                if (data['param-asset']) asset = this._stage.params[data['param-asset'].trim()];
+                else if (data['model-asset']) asset = this._stage.getModelValue(data['model-asset'].trim());
+            }
+
+            instance.param = {
+                type: type,
+                asset: asset,
+                count: count
+            }
         }
+
         if (instance.param) {
-            if (instance.param.type == 'gridLayout') {
-                instance.renderGridLayout(instance._parent, instance, data);
-            } else if (instance.param.type == 'image') {
-                instance.renderImage(instance);
-            } else if (instance.param.type == 'text') {
-                instance.renderText(instance);
+
+            // Asset is mandatory
+            if (instance.param.asset) {
+                if (instance.param.type == 'gridLayout') {
+                    instance.renderGridLayout(instance._parent, instance, data);
+                } else if (instance.param.type == 'image') {
+                    instance.renderImage(instance);
+                } else if (instance.param.type == 'text') {
+                    instance.renderText(instance);
+                }
             }
         }
     },

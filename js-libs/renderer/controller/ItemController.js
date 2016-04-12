@@ -87,6 +87,7 @@ var ItemController = Controller.extend({
                 ControllerManager.addError('ItemController.evalItem() - OE_ASSESS_END error: ' + e);
             }
         }
+        console.info("Item Eval result:", result);
         return result;
     },
     feedback: function() {

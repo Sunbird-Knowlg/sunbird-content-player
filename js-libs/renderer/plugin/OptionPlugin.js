@@ -24,6 +24,9 @@ var OptionPlugin = Plugin.extend({
             var controller = this._parent._controller;
             value = controller.getModelValue(model);
             this._index = parseInt(model.substring(model.indexOf('[') + 1, model.length - 1));
+            var varName = (this._data['var'] ? this._data['var'] : 'option');
+            this._stage._templateVars[varName] = this._parent._data.model + "." + model;
+            var modelValue = this._stage.getModelValue(this._parent._data.model + '.' + model);
         }
         if (value && _.isFinite(this._index) && this._index > -1) {
             this._self = new createjs.Container();
@@ -39,22 +42,19 @@ var OptionPlugin = Plugin.extend({
             this._self.hitArea = hit;
             this._value = value.value;
             this.setOptionIndex(data);
-
+            this.initShadow(data);
             if (value.value.type == 'image') {
                 this.renderImage(value.value);
-                if (this._parent._type == 'mcq') {
-                    this.renderMCQOption();
-                } else if (this._parent._type == 'mtf') {
-                    this.renderMTFOption(value);
-                }
             } else if (value.value.type == 'text') {
                 this.renderText(value.value);
-                if (this._parent._type == 'mcq') {
-                    this.renderMCQOption();
-                } else if (this._parent._type == 'mtf') {
-                    this.renderMTFOption(value);
-                }
             }
+            this.renderInnerECML();
+            if (this._parent._type == 'mcq') {
+                this.renderMCQOption();
+            } else if (this._parent._type == 'mtf') {
+                this.renderMTFOption(value);
+            }
+            this._render = true;
         }
     },
     renderMCQOption: function() {
@@ -242,11 +242,15 @@ var OptionPlugin = Plugin.extend({
         data.w = 100 - (2 * padx);
         data.h = 100 - (2 * pady);
 
-        this.initShadow(data);
+        if (value.count) {
+            data.count = value.count;
+            data.type = "gridLayout";
+            PluginManager.invoke('placeholder', data, this, this._stage, this._theme);
+        } else {
+            PluginManager.invoke('image', data, this, this._stage, this._theme);
+        }
 
-        PluginManager.invoke('image', data, this, this._stage, this._theme);
         this._data.asset = value.asset;
-        this._render = true;
     },
     renderText: function(data) {
         data.$t = data.asset;
@@ -256,18 +260,15 @@ var OptionPlugin = Plugin.extend({
         data.y = pady;
         data.w = 100 - (2 * padx);
         data.h = 100 - (2 * pady);
-
+        data.fontsize = (data.fontsize) ? data.fontsize: 200;
         var align = (this._data.align ? this._data.align.toLowerCase() : 'center');
         var valign = (this._data.valign ? this._data.valign.toLowerCase() : 'middle');
 
         data.align = align;
         data.valign = valign;
 
-        this.initShadow(data);
-
         PluginManager.invoke('text', data, this, this._stage, this._theme);
         this._data.asset = data.asset;
-        this._render = true;
     },
     initShadow: function(data) {
 
@@ -295,6 +296,18 @@ var OptionPlugin = Plugin.extend({
         data = data.replace(new RegExp('\\$current', 'g'), this._index);
         data = JSON.parse(data);
         this._data = data;
+    },
+    renderInnerECML: function() {
+        var innerECML = this.getInnerECML();
+        if (!_.isEmpty(innerECML)) {
+            var data = {};
+            data.x = 0;
+            data.y = 0;
+            data.w = 100;
+            data.h = 100;
+            Object.assign(data, innerECML);
+            this.invokeChildren(data, this, this._stage, this._theme);
+        }
     }
 });
 PluginManager.registerPlugin('option', OptionPlugin);

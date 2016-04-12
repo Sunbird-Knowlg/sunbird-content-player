@@ -19,8 +19,8 @@ var OptionsPlugin = Plugin.extend({
         var cols = undefined;
         var rows = undefined;
     	var count = value.length;
+        cols = this._data.cols = ("undefined" != typeof this._data.cols && count < this._data.cols) ? count : this._data.cols;
         if(this._data.rows && this._data.cols) {
-            cols = this._data.cols; 
             rows = Math.ceil(count/cols);
         } else {
             if(this._data.rows)
@@ -84,6 +84,10 @@ var OptionsPlugin = Plugin.extend({
                     if(this._data.opacity)
                         data.opacity = this._data.opacity;
     				data.option = instance._data.options + '[' + index + ']';
+                    var innerECML = this.getInnerECML();
+                    if (!_.isEmpty(innerECML)) {
+                        Object.assign(data, innerECML);
+                    }
     				index = index + 1;
     				PluginManager.invoke('option', data, instance._parent, instance._stage, instance._theme);
     			}

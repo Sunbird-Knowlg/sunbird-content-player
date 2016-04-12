@@ -11,7 +11,56 @@
     },
     "responseCode": "OK",
     "result": {
-        "content": [
+        "content": [{
+            "identifier": "org.ekstep.item.templates",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/item-templates/logo.png",
+                "subject": "literacy_v2",
+                "description": "Item Templates",
+                "name": "Item Templates",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "A robust test suite is a must-have for any product...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.item.templates",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/item-templates"
+
+        },
+        {
+            "identifier": "org.ekstep.quiz.app.tests.renderer",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/test_cases/logo.png",
+                "subject": "literacy_v2",
+                "description": "Renderer Test Cases",
+                "name": "Renderer Tests",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "A robust test suite is a must-have for any product...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.quiz.app.tests.renderer",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/test_cases"
+
+        },
         {
             "identifier": "org.ekstep.custom.plugin",
             "mimeType": "application/vnd.ekstep.ecml-archive",

@@ -482,5 +482,15 @@ var Plugin = Class.extend({
         } else {
             this.setPluginParam(param, val, incr);
         }
+    },
+    getInnerECML: function() {
+        var children = {};
+        var data = this._data;
+        for (k in data) {
+            if (PluginManager.isPlugin(k) && _.isObject(data[k]) && !_.isEmpty(data[k])) {
+                children[k] = data[k];
+            }
+        }
+        return children;
     }
 });
