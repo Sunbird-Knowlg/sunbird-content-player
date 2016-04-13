@@ -43,6 +43,9 @@ var MTFPlugin = Plugin.extend({
     },
     setAnswer: function(rhsOption, lhsIndex) {
         this._controller.setModelValue(rhsOption._model, lhsIndex, 'selected');
+    },
+    removeAnswer: function(rhsOption, lhsIndex) {
+        this._controller.setModelValue(rhsOption._model, lhsIndex, '');
     }
 });
 PluginManager.registerPlugin('mtf', MTFPlugin);

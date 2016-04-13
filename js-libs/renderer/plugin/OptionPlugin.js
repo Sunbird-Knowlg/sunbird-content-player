@@ -7,11 +7,14 @@ var OptionPlugin = Plugin.extend({
     _value: undefined,
     _answer: undefined,
     _multiple: false,
+    _mapedTo: undefined,
+    _uniqueId: undefined,
     initPlugin: function(data) {
         this._model = undefined;
         this._value = undefined;
         this._answer = undefined;
         this._index = -1;
+        this._uniqueId = _.uniqueId('opt_'); 
 
         var model = data.option;
         var value = undefined;
@@ -136,6 +139,7 @@ var OptionPlugin = Plugin.extend({
                 } else {
                     snapTo = instance._parent._lhs_options;
                 }
+
                 var plugin;
                 var dims;
                 var snapSuccess = false;
@@ -154,6 +158,7 @@ var OptionPlugin = Plugin.extend({
                                 maxY = dims.y + dims.h + yFactor;
                             if (this.x >= x && (this.x + this.width) <= maxX) {
                                 if (this.y >= y && (this.y + this.height) <= maxY) {
+                                    this._mapedTo = snapTo[i];
                                     snapSuccess = true;
                                 }
                             }
@@ -181,7 +186,19 @@ var OptionPlugin = Plugin.extend({
                 if (!snapSuccess) {
                     this.x = this.origX;
                     this.y = this.origY;
-                    instance._parent.setAnswer(instance);
+                    if (_.isArray(snapTo)) {
+                        for (var i = 0; i < snapTo.length; i++) {
+                            var lhsQues = snapTo[i];
+                            if(lhsQues._answer){
+                                if(lhsQues._answer._uniqueId == instance._uniqueId){
+                                    lhsQues._answer = undefined;
+                                    instance._parent.removeAnswer(instance, -1);
+                                    break;
+                                }                                
+                            }
+                        }
+                    }
+                    //instance._parent._lhs_options[instance._currIndex]._answer = undefined;
                 } else {
 
                     var flag = true;
