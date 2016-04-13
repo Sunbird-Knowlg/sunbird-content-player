@@ -16,11 +16,9 @@ FTBEvaluator = {
 					obj[ans] = model[ans];
 					res.push(obj);
 				}
-
-				if (model[ans] && answer[ans] && answer[ans].value) {
-					if (_.isString(answer[ans].value)) answer[ans].value = answer[ans].value.toLowerCase();
-					if (_.isString(model[ans])) model[ans] = model[ans].toLowerCase();
-					(answer[ans].value == model[ans]) ? score += answer[ans].score : pass = false;
+				if (("undefined" != typeof model[ans]) && ("undefined" != typeof answer[ans]) && ("undefined" != typeof answer[ans].value)) {
+					var isCorrect = this._isCorrectAnswer(answer[ans].value, model[ans]);
+					(isCorrect) ? score += answer[ans].score : pass = false;
 				} else {
 					pass = false;
 				}
@@ -37,7 +35,27 @@ FTBEvaluator = {
 		result.res = res;
 		return result;
 	},
-
+	_isCorrectAnswer: function(actual, given) {
+		var isCorrect = false;
+		actual = _.isString(actual) ? actual.toLowerCase() : actual;
+		given = _.isString(given) ? given.toLowerCase() : given;
+		if (_.isString(actual)) {
+			if (-1 < actual.indexOf(",")) {
+				var actualList = actual.split(",");
+				for(var index in actualList) {
+					if (actualList[index] == given) {
+						isCorrect = true;
+						break;
+					}
+				}
+			} else {
+				isCorrect = (actual == given) ? true : false;
+			}
+		} else {
+			isCorrect = (actual == given) ? true : false;
+		}
+		return isCorrect;
+	},
 	reset: function(item) {
 		if (item) {
 			var answer = item.answer;
