@@ -25,9 +25,12 @@ PluginManager = {
         createjs.EventDispatcher.initialize(plugin.prototype);
     },
     registerCustomPlugins: function(manifest, relativePath) { //TODO: Use async.js to load custom plugins
+        relativePath += "/";
         PluginManager.customPluginMap = {};
-        var plugins = manifest.plugin;
         var media = manifest.media;
+        var plugins = _.filter(!_.isArray(media) ? [media] : media, function(media) {
+            return media.type == 'plugin'});;
+        
         media = _.filter(!_.isArray(media) ? [media] : media, function(media) {
             return media.type == 'js' || media.type == 'css'; });
         relativePath = ("undefined" !== typeof cordova && relativePath) ? "file:///" + relativePath : relativePath;

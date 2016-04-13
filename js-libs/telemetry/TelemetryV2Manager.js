@@ -38,14 +38,17 @@ TelemetryV2Manager = Class.extend({
         }
     },
     assess: function(qid, subj, qlevel, data) {
-        if (qid && subj && qlevel) {
+        subj = subj ? subj : "";
+        qlevel = qlevel ? qlevel : "MEDIUM";
+        if (qid) {
             var eks = {
                 qid: qid,
                 params: []
             };
             return this.createEvent("OE_ASSESS", eks).start();
         } else {
-            console.error("qid, subject, qlevel is required to create assess event.", qid, subj, qlevel);
+            console.error("qid is required to create assess event.", qid);
+            // TelemetryService.logError("OE_ASSESS", "qid is required to create assess event.")
             return new InActiveEvent();
         }
 

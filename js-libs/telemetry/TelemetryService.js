@@ -179,7 +179,7 @@ TelemetryService = {
         var $body = angular.element(document.body); // 1
         var $rootScope = $body.scope().$root; // 2
         $rootScope.$broadcast('show-message', {
-            "message": 'Telemetry :' + JSON.stringify(data.message.errors)
+            "message": 'Telemetry :' + JSON.stringify(data.message)
         });
     },
     print: function() {

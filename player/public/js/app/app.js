@@ -127,14 +127,10 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
 
             GlobalContext.init(packageName, version).then(function(appInfo) {
                 launchInitialPage(GlobalContext.config.appInfo, $state);
-            }).catch(function(error) {
-                console.log("Error Globalcontext.init:", error);
-                if (error == 'CONTENT_NOT_FOUND') {
-                    contentNotAvailable();
-                } else {
-                    alert('Please open this app from Genie.');
-                    exitApp();
-                }
+            }).catch(function(res) {
+                console.log("Error Globalcontext.init:", res);
+                alert(res.errors);
+                exitApp();  
             });
         });
     })
