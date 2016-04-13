@@ -119,9 +119,10 @@ PluginManager = {
         PluginManager.registerCustomPlugin(id, data);
     },
     loadCustomPlugin: function(plugin, relativePath) {
+        var pluginUrl = (plugin.src.substring(0,4) == "http") ? plugin.src : relativePath + plugin.src;
         jQuery.ajax({
             async: false,
-            url: relativePath + plugin.src,
+            url: pluginUrl,
             dataType: "text"
         }).error(function(err) {
             console.error('Unable to load custom plugin js source');
@@ -131,13 +132,15 @@ PluginManager = {
         });
     },
     loadCSS: function(href, gameRelPath) {
-        console.info("loading external CSS: ", href);
-        var cssLink = $("<link rel='stylesheet' type='text/css' href='" + gameRelPath + href + "'>");
+        var cssUrl = (href.substring(0,4) == "http") ? href : gameRelPath + href;
+        console.info("loading external CSS: ", cssUrl);
+        var cssLink = $("<link rel='stylesheet' type='text/css' href='" + cssUrl + "'>");
         jQuery("head").append(cssLink);
     },
     loadJS: function(src, gameRelPath) {
-        console.info("loading external JS: ", gameRelPath + src);
-        var jsLink = $("<script type='text/javascript' src=" + gameRelPath + src + ">");
+        var jsUrl = (src.substring(0,4) == "http") ? src : gameRelPath + src;
+        console.info("loading external JS: ", jsUrl);
+        var jsLink = $("<script type='text/javascript' src=" + jsUrl + ">");
         jQuery("head").append(jsLink);
     }
 }

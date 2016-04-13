@@ -34,6 +34,7 @@ CanvasPreview = {
         CanvasPreview.theme = new ThemePlugin(data.theme);
         CanvasPreview.resizeGame(true);
         CanvasPreview.theme.baseDir = gameRelPath;
+        PluginManager.registerCustomPlugins(data.theme.manifest, "");
         if(CanvasPreview.preview){
             CanvasPreview.theme.start(gameRelPath);
         }else{
