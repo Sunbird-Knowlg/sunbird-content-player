@@ -67,7 +67,7 @@ Renderer = {
             Renderer.init(data, canvasId, gameRelPath);
         },null, 'xml')
         .fail(function(err) {
-            alert("Unable to render.", err);
+            alert("Invalid ECML please correct the Ecml : ", err);
         });
     },
     init: function(data, canvasId, gameRelPath) {
