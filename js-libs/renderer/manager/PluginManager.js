@@ -134,8 +134,7 @@ PluginManager = {
     loadCSS: function(href, gameRelPath) {
         var cssUrl = (href.substring(0,4) == "http") ? href : gameRelPath + href;
         console.info("loading external CSS: ", cssUrl);
-        var cssLink = $("<link rel='stylesheet' type='text/css' href='" + cssUrl + "'>");
-        jQuery("head").append(cssLink);
+        jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + cssUrl + "'>");
     },
     loadJS: function(src, gameRelPath) {
         var jsUrl = (src.substring(0,4) == "http") ? src : gameRelPath + src;
