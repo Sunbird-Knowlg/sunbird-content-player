@@ -114,7 +114,11 @@ var Plugin = Class.extend({
 		this._self.removeChild(child);
 	},
 	render: function() {
-		this._parent.addChild(this._self, this);
+        if (this._self) {
+            this._parent.addChild(this._self, this);
+        } else {
+            console.warn("Skipped rendering object because, no element:", this._id);
+        }
 	},
 	update: function() {
 		this._theme.update();
