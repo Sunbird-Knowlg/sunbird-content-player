@@ -18,12 +18,12 @@
         <media id="w-inner" src="wife-inner.png" type="image"/>
         <media id="b-outer" src="barber-outer.png" type="image"/>
         <media id="b-inner" src="barber-inner.png" type="image"/>
-        <plugin id="hello" src="HelloPlugin.js"/>
-        <plugin id="counter" src="CounterPlugin.js"/>
-        <plugin id="clock" src="ClockPlugin.js"/>
         <media id="play_icon" src="play.png" type="image" />
         <media id="mic" src="mic1.png" type="image" />
 
+        <media id="hello" src="HelloPlugin.js" type="plugin"/>
+        <media id="counter" src="CounterPlugin.js" type="plugin"/>
+        <media id="clock" src="ClockPlugin.js" type="plugin"/>
         <media id="counterJS" src="counter.min.js" type="js"/>
 
     </manifest>

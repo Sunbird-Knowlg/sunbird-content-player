@@ -25,7 +25,7 @@ PluginManager = {
         createjs.EventDispatcher.initialize(plugin.prototype);
     },
     registerCustomPlugins: function(manifest, relativePath) { //TODO: Use async.js to load custom plugins
-        relativePath += "/";
+        // relativePath += "/";
         PluginManager.customPluginMap = {};
         var media = manifest.media;
         var plugins = _.filter(!_.isArray(media) ? [media] : media, function(media) {
