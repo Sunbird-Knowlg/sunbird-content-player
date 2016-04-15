@@ -1,5 +1,6 @@
 CommandManager = {
-    audioActions: ['PLAY', 'PAUSE', 'STOP', 'TOGGLEPLAY', 'EXTERNAL', 'WINDOWEVENT', 'STARTGENIE'],
+    // TODO: Change the name 'audioActions'. It is no more valid.
+    audioActions: ['PLAY', 'PAUSE', 'STOP', 'TOGGLEPLAY', 'EXTERNAL', 'WINDOWEVENT', 'STARTGENIE', 'SHOWHTMLELEMENTS', 'HIDEHTMLELEMENTS'],
     handle: function(action) {
         var cmd = '';
         if (_.isString(action.command))
@@ -155,6 +156,12 @@ CommandManager = {
             case 'CUSTOM':
                 if (plugin && action.invoke) plugin[action.invoke](action);
                 break;
+            case 'SHOWHTMLELEMENTS':
+                CommandManager.displayAllHtmlElements(true);
+                break;
+            case 'HIDEHTMLELEMENTS':
+                CommandManager.displayAllHtmlElements(false);
+                break;
             default:
                 console.log("Command '" + cmd +"' not found.");
         }
@@ -170,5 +177,19 @@ CommandManager = {
         });
         action.dataAttributes = dataAttributes;
         action.stageId = Renderer.theme._currentStage;
-    }
+    },
+    displayAllHtmlElements: function(visibility){
+       var elements = jQuery('#'+Renderer.divIds.gameArea).children();
+       elements.each(function(){
+           //If child element is not canvas item, then hide it
+           if(!(jQuery(this).is("canvas"))){
+                if (visibility) {
+                    jQuery(this).show();     
+                } else {
+                    jQuery(this).hide();
+                }
+               
+           }
+       });
+   }
 }
