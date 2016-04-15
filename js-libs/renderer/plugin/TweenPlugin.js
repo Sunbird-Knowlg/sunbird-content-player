@@ -16,7 +16,7 @@ var TweenPlugin = AnimationPlugin.extend({
         var fn = '(function() {return function(plugin){';
         fn += 'createjs.Tween.get(plugin, {override:true ' + loopStr + '})';
         to.forEach(function(to) {
-            var data = JSON.parse(to.__cdata);
+            var data = (_.isString(to.__cdata)) ? JSON.parse(to.__cdata) : to.__cdata;
             var relDims = plugin.getRelativeDims(data);
             data.x = relDims.x;
             data.y = relDims.y;
