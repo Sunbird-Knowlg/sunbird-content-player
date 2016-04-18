@@ -99,6 +99,7 @@ Renderer = {
         AnimationManager.cleanUp();
         AssetManager.destroy();
         TimerManager.destroy();
+        AudioManager.cleanUp();
         Renderer.theme.cleanUp();
         Renderer.theme = undefined;
         TelemetryService.end();

@@ -69,5 +69,8 @@ AudioManager = {
             instance.state = undefined;
             delete AudioManager.instances[soundId];
         }
+    },
+    cleanUp: function() {
+        AudioManager.instances = {};
     }
 }
