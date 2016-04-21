@@ -88,7 +88,7 @@ function contentNotAvailable() {
     exitApp();
 }
 
-angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
+angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'genie-canvas.services'])
     .run(function($ionicPlatform, $ionicModal, $cordovaFile, $cordovaToast, ContentService, $state) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
