@@ -18,5 +18,5 @@ Genie Canvas : Quiz/Story App
 
 The .aar files are created at the below path.
 
-PROJECT_FOLDER/player/platforms/android/build/outputs/aar/geniecanvas-<BUILD_NUMBER>-debug.aar
+PROJECT_FOLDER/player/platforms/android/build/outputs/aar/geniecanvas-BUILD_NUMBER-debug.aar
 PROJECT_FOLDER/player/platforms/android/CordovaLib/build/outputs/aar/CordovaLib-debug.aar
