@@ -231,8 +231,10 @@ var ThemePlugin = Plugin.extend({
         }
     },
     removeHtmlElements: function(){
+
         jQuery('#'+Renderer.divIds.gameArea + ' div').each(function(a) {
-            jQuery(this).remove();
+            if(this.id !="navigation")
+                jQuery(this).remove();
         });
         jQuery('#'+Renderer.divIds.gameArea + ' video').each(function(a) {
             jQuery(this).remove();

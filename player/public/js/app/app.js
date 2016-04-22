@@ -10,21 +10,21 @@ var packageName = "org.ekstep.quiz.app",
 
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
-    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive";
+    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive"
 
 /*
     Delete all recording files from the devices storage.
 */
 function removeRecordingFiles(path) {
-    _.each(RecorderManager.mediaFiles, function(path){
+    _.each(RecorderManager.mediaFiles, function(path) {
         $cordovaFile.removeFile(cordova.file.dataDirectory, path)
             .then(function(success) {
                 // success
-                console.log("success : " , success);
+                console.log("success : ", success);
             }, function(error) {
                 // error
-                console.log("err : " , error);
-         });
+                console.log("err : ", error);
+            });
     })
 }
 
@@ -50,7 +50,7 @@ function exitApp() {
 }
 
 function startApp(app) {
-     if (!app) app = geniePackageName;
+    if (!app) app = geniePackageName;
     navigator.startApp.start(app, function(message) {
             exitApp();
             TelemetryService.exit(packageName, version)
@@ -65,22 +65,22 @@ function startApp(app) {
         });
 }
 
-function launchInitialPage(appInfo, $state) {    
-        TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
-            if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-                $state.go('showContent', {});
-            } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) || 
-                (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
-                $state.go('contentList', {"id": GlobalContext.game.id});
-            } else {
-                alert("App launched with invalid context.");
-                exitApp();
-            }
-        }).catch(function(error) {
-            console.log('TelemetryService init failed');
-            alert('TelemetryService init failed.');
+function launchInitialPage(appInfo, $state) {
+    TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
+        if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
+            $state.go('showContent', {});
+        } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
+            (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
+            $state.go('contentList', { "id": GlobalContext.game.id });
+        } else {
+            alert("App launched with invalid context.");
             exitApp();
-        });
+        }
+    }).catch(function(error) {
+        console.log('TelemetryService init failed');
+        alert('TelemetryService init failed.');
+        exitApp();
+    });
 }
 
 function contentNotAvailable() {
@@ -130,7 +130,7 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             }).catch(function(res) {
                 console.log("Error Globalcontext.init:", res);
                 alert(res.errors);
-                exitApp();  
+                exitApp();
             });
         });
     })
@@ -199,44 +199,45 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
 
         $scope.resetContentListCache = function() {
             // jQuery("#loadingDiv").show();
-            $rootScope.renderMessage("", 0);            
+            $rootScope.renderMessage("", 0);
             ContentService.getContent(id)
-            .then(function(content) {
-                if (COLLECTION_MIMETYPE == content.mimeType) {
-                    $rootScope.title = content.name;
-                    if (!_.isEmpty($rootScope.collection))
-                        TelemetryService.end();
-                    $rootScope.collection = content;
-                    TelemetryService.start(content.identifier, content.pkgVersion);
-                } else {
-                    $rootScope.collection = {};
-                }
-                var childrenIds = (content.children) ? _.pluck(_.sortBy(content.children, function(child) { return child.index; }), "identifier") : null;
-                var filter = (content.filter)? JSON.parse(content.filter) : content.filter;
-                return ContentService.getContentList(filter, childrenIds);
-            })
-            .then(function(result) {
-                $rootScope.$apply(function() {
-                    $rootScope.stories = result;
+                .then(function(content) {
+                    if (COLLECTION_MIMETYPE == content.mimeType) {
+                        $rootScope.title = content.name;
+                        if (!_.isEmpty($rootScope.collection))
+                            TelemetryService.end();
+                        $rootScope.collection = content;
+                        TelemetryService.start(content.identifier, content.pkgVersion);
+                    } else {
+                        $rootScope.collection = {};
+                    }
+                    var childrenIds = (content.children) ? _.pluck(_.sortBy(content.children, function(child) {
+                        return child.index; }), "identifier") : null;
+                    var filter = (content.filter) ? JSON.parse(content.filter) : content.filter;
+                    return ContentService.getContentList(filter, childrenIds);
+                })
+                .then(function(result) {
+                    $rootScope.$apply(function() {
+                        $rootScope.stories = result;
+                    });
+                    if ($rootScope.stories && $rootScope.stories.length <= 0) {
+                        $rootScope.renderMessage(AppMessages.NO_CONTENT_LIST_FOUND);
+                    }
+                })
+                .catch(function(err) {
+                    $rootScope.$apply(function() {
+                        $rootScope.stories = [];
+                    });
+                    console.error(err);
+                    $rootScope.renderMessage(AppMessages.ERR_GET_CONTENT_LIST, 3000);
                 });
-                if($rootScope.stories && $rootScope.stories.length <=0) {
-                    $rootScope.renderMessage(AppMessages.NO_CONTENT_LIST_FOUND);
-                }
-            })
-            .catch(function(err) {
-                $rootScope.$apply(function() {
-                    $rootScope.stories = [];
-                });
-                console.error(err);
-                $rootScope.renderMessage(AppMessages.ERR_GET_CONTENT_LIST, 3000);
-            });
         };
 
         $scope.playContent = function(content) {
             if (content.mimeType == COLLECTION_MIMETYPE) {
-                $state.go('contentList', {"id": content.identifier});
+                $state.go('contentList', { "id": content.identifier });
             } else {
-                $state.go('playContent', {'itemId': content.identifier});    
+                $state.go('playContent', { 'itemId': content.identifier });
             }
         };
 
@@ -253,14 +254,12 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
                 if (fatal === true) {
                     console.log("Simulating fatal crash for Crashlytics");
                     navigator.crashlytics.simulateCrash("Simulated crash");
-                }
-                else {
+                } else {
                     console.log("Simulating non-fatal error for Crashlytics");
                     navigator.crashlytics.logException("Simulated non-fatal error");
                 }
                 console.log("Simulation sent to Crashlytics");
-            }
-            else {
+            } else {
                 console.log("Crashlytics not available for reporting");
             }
         };
@@ -285,9 +284,9 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
 
     }).controller('ContentCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         if ($stateParams.itemId) {
-            $scope.item = _.findWhere($rootScope.stories, {identifier: $stateParams.itemId});
+            $scope.item = _.findWhere($rootScope.stories, { identifier: $stateParams.itemId });
             console.log($scope.item);
-            if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
+            if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                 HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
                     jQuery('#gameAreaLoad').hide();
                     jQuery('#gameArea').hide();
@@ -300,11 +299,18 @@ angular.module('quiz', ['ionic', 'ngCordova', 'quiz.services'])
             }
         } else {
             alert('Name or Launch URL not found.');
-            $state.go('contentList', {"id": GlobalContext.game.id});
+            $state.go('contentList', { "id": GlobalContext.game.id });
         }
+
+        // new methods for new ui impl for GoTOGenie and GoToHome buttons.
+
+        $scope.gotTOHome = function() {
+            CommandManager.handle({ command: "windowevent" })
+        }
+
         $scope.$on('$destroy', function() {
             setTimeout(function() {
-                if($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
+                if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                     HTMLRenderer.cleanUp();
                 } else {
                     Renderer.cleanUp();

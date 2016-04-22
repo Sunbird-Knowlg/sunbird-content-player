@@ -11,6 +11,16 @@
 </div>
 
 <div id="gameArea">
+	<div id="navigation" style=" position:absolute">
+        <a href="javascript:void(0)" ng-click="gotTOHome()" style="background:url(img/icons/icon_home.png) no-repeat right bottom;height:51px;width:51px;float:right;background-size: 40px 40px; margin-right:5px"></a>
+    </div>
+
+	<div id="navigation" style="right:0; position:absolute">
+        <a href="javascript:void(0)" onclick="exitApp()" style="background:url(img/icons/img_bg.png) no-repeat right bottom;height:47px;width:51px;float:right;background-size: 35px 35px; margin-right:10px"></a>
+    </div>
+    <!-- <div class="button button-clear icon">
+        <a href="javascript:void(0)" ng-click="exitApp()" class="button button-clear" style="background:url(img/icons/icn_close_game.png) no-repeat right bottom;height:51px;width:51px;float:right;background-size: 40px 40px; margin-right:5px"></a>
+    </div> -->
   	<canvas id="gameCanvas" width="1366" height="768"></canvas>
 </div>
 <div id="errorDiv" style="z-index: 9999;" ng-show="showMessage" ng-click="showMessage = !showMessage">
