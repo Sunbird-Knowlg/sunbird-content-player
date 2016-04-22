@@ -235,7 +235,6 @@ var ThemePlugin = Plugin.extend({
         var gameAreaEle =  jQuery('#'+Renderer.divIds.gameArea);
         var chilElemtns = gameAreaEle.children();
         jQuery(chilElemtns).each(function(){
-            console.log("remove this: ", this);
             if((this.id !== "overlayHTML") || (this.id !== "gameCanvas")){
                 console.log("this.id: ", this.id);
             }else{
