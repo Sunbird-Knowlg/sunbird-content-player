@@ -61,6 +61,7 @@ angular.module('genie-canvas.theme',[])
 
     $scope.navigate = function(to) {
         var navigation = [];
+        TelemetryService.interact("TOUCH", to, null, {stageId : Renderer.theme._currentStage});
         if (!_.isEmpty(Renderer.theme._currentScene._data.param)) {
             navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
             var direction = _.findWhere(navigation, {name: to});
