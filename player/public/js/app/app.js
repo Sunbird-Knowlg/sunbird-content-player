@@ -153,6 +153,41 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 controller: 'ContentCtrl'
             });
     })
+    .controller('OverlayCtrl', function($scope, $rootScope){
+        $scope.openMenu = function(){
+            //display a layer to disable clicking and scrolling on the gameArea while menu is shown
+            
+            if(jQuery('.menu-overlay').css('display') == "block"){
+                $scope.hideMenu();
+                return;
+            }
+
+            jQuery('.menu-overlay').css('display', 'block');
+            jQuery(".gc-menu").show();
+            //jQuery(".gc-menu-btn").animate({"marginLeft": ["30%", 'easeOutExpo']}, 700);
+            jQuery(".gc-menu").animate({"marginLeft": ["0%", 'easeOutExpo']}, 700, function(){
+            });
+
+            console.log("Open Menu..");
+            jQuery('.menu-overlay').click(function(){
+                //jQuery(".gc-menu-btn").animate({"marginLeft": ["0%", 'easeOutExpo']}, 700);
+                jQuery(".gc-menu").animate({"marginLeft": ["-30%", 'easeOutExpo']}, 700, function(){
+
+                });
+                jQuery('.menu-overlay').css('display', 'none');
+            });
+        }
+
+        $scope.hideMenu = function(){
+            jQuery('.menu-overlay').css('display', 'none');
+            //jQuery(".gc-menu-btn").animate({"marginLeft": ["0%", 'easeOutExpo']}, 700);
+            jQuery(".gc-menu").animate({"marginLeft": ["-30%", 'easeOutExpo']}, 700, function(){
+            });
+            jQuery('.menu-overlay').css('display', 'none');
+        }
+
+
+    })
     .controller('ContentListCtrl', function($scope, $rootScope, $http, $ionicModal, $cordovaFile, $cordovaDialogs, $cordovaToast, $ionicPopover, $state, $stateParams, $q, ContentService, $ionicHistory) {
 
         var id = $stateParams.id;

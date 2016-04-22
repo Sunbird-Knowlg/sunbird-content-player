@@ -84,6 +84,7 @@ var ThemePlugin = Plugin.extend({
         }
         this.update();
         jQuery('#gameAreaLoad').hide();
+        jQuery('#overlayHTML').show();
     },
     addController: function(p) {
         var controller = ControllerManager.get(p, this.baseDir);
@@ -231,12 +232,24 @@ var ThemePlugin = Plugin.extend({
         }
     },
     removeHtmlElements: function(){
-        jQuery('#'+Renderer.divIds.gameArea + ' div').each(function(a) {
-            jQuery(this).remove();
+        var gameAreaEle =  jQuery('#'+Renderer.divIds.gameArea);
+        var chilElemtns = gameAreaEle.children();
+        jQuery(chilElemtns).each(function(){
+            console.log("remove this: ", this);
+            if((this.id !== "overlayHTML") || (this.id !== "gameCanvas")){
+                console.log("this.id: ", this.id);
+            }else{
+                jQuery(this).remove();                
+            }
+        });
+        /*jQuery('#'+Renderer.divIds.gameArea + ' div').each(function(a) {
+           
+                jQuery(this).remove();
+            
         });
         jQuery('#'+Renderer.divIds.gameArea + ' video').each(function(a) {
             jQuery(this).remove();
-        });
+        });*/
     },
     disableInputs: function() {
         //This is to remove all div's added inside 'GameArea' div which are positioned at absolute position
