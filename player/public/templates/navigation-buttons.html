@@ -1,8 +1,8 @@
 <!-- Previous Button -->
-<a id="previous" ng-click="navigate('previous');" href="javascript:void(0);" style="position:absolute;width: 7%;top: 45%;left: 1%;">
-	<img src="img/icons/icon_previous.png" style="width:100%;" />
-</a>
+<div id="navigation" style=" position:absolute">
+	<a href="javascript:void(0)" ng-click="gotTOHome()" style="background:url(img/icons/icon_home.png) no-repeat right bottom;height:51px;width:51px;float:right;background-size: 40px 40px; margin-right:5px"></a>
+</div>
 <!-- Next Button -->
-<a id="next" href="javascript:void(0);" ng-click="navigate('next');" style="position:absolute;width: 7%;top: 45%;right: 1%;">
-	<img src="img/icons/icon_next.png" style="width:100%;" />
-</a>
+<div id="navigation" style="right:0; position:absolute">
+	<a href="javascript:void(0)" onclick="exitApp()" style="background:url(img/icons/img_bg.png) no-repeat right bottom;height:47px;width:51px;float:right;background-size: 35px 35px; margin-right:10px"></a>
+</div>
