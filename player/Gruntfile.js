@@ -214,7 +214,7 @@ module.exports = function(grunt) {
                         'cordova-plugin-crosswalk-webview@1.5.0',
                         'cordova-plugin-file-transfer@1.5.0',
                         'https://github.com/Initsogar/cordova-webintent.git', // no registry in npm and cordova plugins
-                        'com.lampa.startapp@0.0.5',
+                        'com.lampa.startapp@0.1.4',
                         'cordova-plugin-inappbrowser@1.2.0',
                         'cordova-plugin-market@1.1'
                     ]
