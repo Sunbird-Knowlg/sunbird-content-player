@@ -13,6 +13,14 @@
 <div id="gameArea">		
 	<!-- HTML Layer -->
 	<div class="overlay-html" id="overlayHTML" ng-controller="OverlayCtrl" ng-init="initMenu()">
+
+		<div id="navigation" style="position:absolute; margin-left: 60px; top: 5px;">
+			<a href="javascript:void(0)" ng-click="gotTOHome()" style="background:url(img/icons/icon_home.png) no-repeat right bottom;height:51px;width:51px;float:right;background-size: 40px 40px; margin-right:5px"></a>
+			</div>
+		<div id="navigation" style="right:0; position:absolute">
+			<a href="javascript:void(0)" onclick="exitApp()" style="background:url(img/icons/img_bg.png) no-repeat right bottom;height:47px;width:51px;float:right;background-size: 35px 35px; margin-right:10px"></a>
+		</div>
+
 		<navigation-buttons></navigation-buttons>
 
 		<!-- Note: all the HTML elements should be above this menu tag
