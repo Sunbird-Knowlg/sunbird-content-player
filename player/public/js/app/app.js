@@ -153,6 +153,18 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 controller: 'ContentCtrl'
             });
     })
+    .directive('menu', function() {
+      return {
+        restrict: 'E',
+        templateUrl: 'templates/menu.html'
+      }
+    })
+    .directive('navigationButtons', function() {
+      return {
+        restrict: 'E',
+        templateUrl: 'templates/navigation-buttons.html'
+      }
+    })
     .controller('OverlayCtrl', function($scope, $rootScope){
         $scope.openMenu = function(){
             //display a layer to disable clicking and scrolling on the gameArea while menu is shown
