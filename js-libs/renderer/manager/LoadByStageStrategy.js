@@ -139,6 +139,11 @@ LoadByStageStrategy = Class.extend({
                         nextContainer.show();
                     }                    
                 }
+                var overlayScope = Renderer.getOverlayScope();
+                if (overlayScope) {
+                    overlayScope.hasNext = true;
+                    overlayScope.$apply();
+                }
             });
         }
         if (prevStageId) {
@@ -151,6 +156,12 @@ LoadByStageStrategy = Class.extend({
                         previousContainer.show();
                     }
                 }
+                var overlayScope = Renderer.getOverlayScope();
+                if (overlayScope) {
+                    overlayScope.hasPrevious = true;
+                    overlayScope.$apply();
+                }
+                
             });
         }
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);

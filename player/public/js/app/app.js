@@ -198,6 +198,8 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             jQuery('.menu-overlay').css('display', 'none');
         }
 
+        $scope.hasPrevious = false;
+        $scope.hasNext = false;
         $scope.navigate = function(to) {
             var navigation = [];
             if (!_.isEmpty(Renderer.theme._currentScene._data.param)) {
@@ -208,6 +210,8 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     action.transitionType = "previous";
                 }
                 Renderer.theme.transitionTo(action);
+                $scope.hasPrevious = false;
+                $scope.hasNext = false;
             }
         };
     })
