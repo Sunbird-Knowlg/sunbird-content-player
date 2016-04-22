@@ -139,7 +139,6 @@ ion-popover-view.fit ion-content {
     height: 100%;
     width: 100%;
     z-index: 99999;
-    display: none;
 }
 
 .overlay-html * {
@@ -166,14 +165,9 @@ ion-popover-view.fit ion-content {
 
 .gc-menu-btn{
     float: right;
-    height: 40px;
-    width: 40px;
-    margin-right: -55px;
-    margin-top: 15px;
-    margin-left: 0%;
-    background-image: url('../../img/icons/mobile_menu_icon.png');
-    background-size: 40px 40px;
-    background-repeat: no-repeat;
+    width: 16%;
+    margin-top: 6%;
+    margin-right: -22%;
 }
 
 .round-button {

@@ -166,6 +166,9 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
       }
     })
     .controller('OverlayCtrl', function($scope, $rootScope){
+        $scope.hasPrevious = false;
+        $scope.hasNext = false;
+
         $scope.openMenu = function(){
             //display a layer to disable clicking and scrolling on the gameArea while menu is shown
             
@@ -198,8 +201,10 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             jQuery('.menu-overlay').css('display', 'none');
         }
 
-        $scope.hasPrevious = false;
-        $scope.hasNext = false;
+        $scope.showCreditPopup = function(){
+            
+        }
+
         $scope.navigate = function(to) {
             var navigation = [];
             if (!_.isEmpty(Renderer.theme._currentScene._data.param)) {
