@@ -165,9 +165,20 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         templateUrl: 'templates/navigation-buttons.html'
       }
     })
+    .directive('creditsPopup', function() {
+      return {
+        restrict: 'E',
+        templateUrl: 'templates/credits.html'
+      }
+    })
     .controller('OverlayCtrl', function($scope, $rootScope){
         $scope.hasPrevious = false;
         $scope.hasNext = false;
+        $scope.showCreditPopup = false;
+
+        /*jQuery("body").mouseup(function(){ 
+            jQuery('.popup').hide();
+        });*/
 
         $scope.openMenu = function(){
             //display a layer to disable clicking and scrolling on the gameArea while menu is shown
@@ -201,8 +212,12 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             jQuery('.menu-overlay').css('display', 'none');
         }
 
-        $scope.showCreditPopup = function(){
-            
+        $scope.showCreditPop = function(){
+            $scope.showCreditPopup = true;
+        }
+
+        $scope.hideCreditPop = function(){
+           $scope.showCreditPopup = false;
         }
 
         $scope.navigate = function(to) {
