@@ -28,6 +28,10 @@ function removeRecordingFiles(path) {
     })
 }
 
+function goTOHome() {
+    CommandManager.handle({ command: "windowevent" })
+}
+
 function backbuttonPressed() {
     var data = (Renderer.running || HTMLRenderer.running) ? {
         type: 'EXIT_CONTENT',
@@ -71,7 +75,8 @@ function launchInitialPage(appInfo, $state) {
             $state.go('showContent', {});
         } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
             (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
-            $state.go('contentList', { "id": GlobalContext.game.id });
+            // $state.go('showContent', {});
+             $state.go('contentList', { "id": GlobalContext.game.id });
         } else {
             alert("App launched with invalid context.");
             exitApp();
@@ -146,6 +151,11 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 url: "/show/content",
                 templateUrl: "templates/content.html",
                 controller: 'ContentHomeCtrl'
+            })
+            .state('endPage', {
+                url: "/show/endPage",
+                templateUrl: "templates/end-page.html",
+                controller: 'EndPageCtrl'
             })
             .state('playContent', {
                 url: "/play/content/:itemId",
@@ -304,9 +314,10 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
 
         // new methods for new ui impl for GoTOGenie and GoToHome buttons.
 
-        $scope.gotTOHome = function() {
-            CommandManager.handle({ command: "windowevent" })
+        $scope.gotToEndPage = function() {
+            $state.go('endPage', {});
         }
+       
 
         $scope.$on('$destroy', function() {
             setTimeout(function() {
@@ -333,58 +344,4 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 }, 5000);
             }
         });
-    }).controller('ContentHomeCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
-        $rootScope.showMessage = false;
-        if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
-            $scope.playContent = function(content) {
-                $state.go('playContent', {
-                    'itemId': content.identifier
-                });
-            };
-
-            $scope.updateContent = function(content) {
-                ContentService.getContent(content.identifier)
-                    .then(function(data) {
-                        $scope.$apply(function() {
-                            $scope.item = data;
-                        });
-                        $rootScope.stories = [data];
-                    })
-                    .catch(function(err) {
-                        contentNotAvailable();
-                    });
-            }
-
-            $scope.startGenie = function() {
-                console.log("Start Genie.");
-                exitApp();
-            };
-
-            $scope.updateContent(GlobalContext.config.appInfo);
-            $rootScope.$on('show-message', function(event, data) {
-                if (data.message && data.message != '') {
-                    $rootScope.showMessage = true;
-                    $rootScope.message = data.message;
-                    $rootScope.$apply();
-                }
-                if (data.timeout) {
-                    setTimeout(function() {
-                        $rootScope.showMessage = false;
-                        $rootScope.$apply();
-                        if (data.callback) {
-                            data.callback();
-                        }
-                    }, data.timeout);
-                }
-            });
-
-            $rootScope.$on('process-complete', function(event, result) {
-                $scope.$apply(function() {
-                    $scope.item = result.data;
-                });
-            });
-        } else {
-            alert('Sorry. Could not find the content.');
-            startApp();
-        }
     });
