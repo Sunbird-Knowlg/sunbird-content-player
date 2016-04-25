@@ -18,8 +18,8 @@ angular.module('genie-canvas.theme',[])
     }
 })
 .controller('OverlayCtrl', function($scope, $rootScope){
-    $scope.hasPrevious = false;
-    $scope.hasNext = false;
+    $rootScope.hasPrevious = false;
+    $rootScope.hasNext = false;
     $scope.showCreditPopup = false;
 
     $scope.openMenu = function(){
@@ -78,8 +78,8 @@ angular.module('genie-canvas.theme',[])
                 action.transitionType = "previous";
             }
             Renderer.theme.transitionTo(action);
-            $scope.hasPrevious = false;
-            $scope.hasNext = false;
+            $rootScope.hasPrevious = false;
+            $rootScope.hasNext = false;
         }
     };
 });

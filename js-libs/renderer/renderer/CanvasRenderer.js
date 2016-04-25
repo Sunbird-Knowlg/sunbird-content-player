@@ -111,13 +111,5 @@ Renderer = {
     resume: function() {
         if(Renderer.theme)
             Renderer.theme.resume();
-    },
-    getOverlayScope: function() {
-        var overlayScope = null;
-        var overlayDOMElement = document.getElementById('overlayHTML');
-        if ("undefined" != typeof angular && "undefined" != typeof overlayDOMElement) {
-            overlayScope = angular.element(overlayDOMElement).scope();
-        }
-        return overlayScope;
     }
 }
