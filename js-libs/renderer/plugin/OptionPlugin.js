@@ -46,12 +46,15 @@ var OptionPlugin = Plugin.extend({
             this._value = value.value;
             this.setOptionIndex(data);
             this.initShadow(data);
-            if (value.value.type == 'image') {
+            var innerECML = this.getInnerECML();
+            if (!_.isEmpty(innerECML)) {
+                this.renderInnerECML();    
+            } else if (value.value.type == 'image') {
                 this.renderImage(value.value);
             } else if (value.value.type == 'text') {
                 this.renderText(value.value);
             }
-            this.renderInnerECML();
+            
             if (this._parent._type == 'mcq') {
                 this.renderMCQOption();
             } else if (this._parent._type == 'mtf') {
