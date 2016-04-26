@@ -17,9 +17,25 @@ angular.module('genie-canvas.theme',[])
         templateUrl: 'templates/credits.html'
     }
 })
+.directive('assess', function($rootScope) {
+    return {
+        restrict: 'E',
+        scope: {},
+        template: '<div style="position:absolute;width: 7%;bottom: 1%;left: 46%;"><a href="javascript:void(0);"> <!-- enabled --><img src="img/icons/next-circle-icon.png" style="width:100%;" /></a></div>',
+        link: function(scope, element) {
+            element.on("click", function() {
+                var action = {"type":"command","command":"eval","asset":Renderer.theme._currentStage};
+                action.success = "correct_answer";
+                action.failure = "wrong_answer";
+                CommandManager.handle(action);
+            });
+        }
+    }
+})
 .controller('OverlayCtrl', function($scope, $rootScope){
     $scope.hasPrevious = false;
     $scope.hasNext = false;
+    $rootScope.isItemScene = false;
     $scope.showCreditPopup = false;
 
     $scope.openMenu = function(){
@@ -80,6 +96,7 @@ angular.module('genie-canvas.theme',[])
             Renderer.theme.transitionTo(action);
             $scope.hasPrevious = false;
             $scope.hasNext = false;
+            $rootScope.isItemScene = false;
         }
     };
 });
