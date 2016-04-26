@@ -3,71 +3,6 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'quiz' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var packageName = "org.ekstep.quiz.app",
-    version = AppConfig.version,
-    packageNameDelhi = "org.ekstep.delhi.curriculum",
-    geniePackageName = "org.ekstep.genieservices",
-
-    CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
-    COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
-    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive"
-
-/*
-    Delete all recording files from the devices storage.
-*/
-function removeRecordingFiles(path) {
-    _.each(RecorderManager.mediaFiles, function(path) {
-        $cordovaFile.removeFile(cordova.file.dataDirectory, path)
-            .then(function(success) {
-                // success
-                console.log("success : ", success);
-            }, function(error) {
-                // error
-                console.log("err : ", error);
-            });
-    })
-}
-
-function goTOHome() {
-    CommandManager.handle({ command: "windowevent" })
-}
-
-function backbuttonPressed() {
-    var data = (Renderer.running || HTMLRenderer.running) ? {
-        type: 'EXIT_CONTENT',
-        stageId: Renderer.theme._currentStage
-    } : {
-        type: 'EXIT_APP'
-    };
-    TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', data);
-}
-
-// TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
-// So, change exitApp to do the same.
-function exitApp() {
-    try {
-        TelemetryService.exit();
-    } catch (err) {
-        console.error('End telemetry error:', err.message);
-    }
-    genieservice.endGenieCanvas();
-}
-
-function startApp(app) {
-    if (!app) app = geniePackageName;
-    navigator.startApp.start(app, function(message) {
-            exitApp();
-            TelemetryService.exit(packageName, version)
-        },
-        function(error) {
-            if (app == geniePackageName)
-                alert("Unable to start Genie App.");
-            else {
-                var bool = confirm('App not found. Do you want to search on PlayStore?');
-                if (bool) cordova.plugins.market.open(app);
-            }
-        });
-}
 
 function launchInitialPage(appInfo, $state) {
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
@@ -75,7 +10,7 @@ function launchInitialPage(appInfo, $state) {
             $state.go('showContent', {});
         } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
             (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
-            // $state.go('showContent', {});
+            //$state.go('showContent', {});
              $state.go('contentList', { "id": GlobalContext.game.id });
         } else {
             alert("App launched with invalid context.");
@@ -88,12 +23,7 @@ function launchInitialPage(appInfo, $state) {
     });
 }
 
-function contentNotAvailable() {
-    alert(AppMessages.NO_CONTENT_FOUND);
-    exitApp();
-}
-
-angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'genie-canvas.services'])
+angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'genie-canvas.services', 'genie-canvas.template'])
     .run(function($ionicPlatform, $ionicModal, $cordovaFile, $cordovaToast, ContentService, $state) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -154,7 +84,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             })
             .state('endPage', {
                 url: "/show/endPage",
-                templateUrl: "templates/end-page.html",
+                templateUrl: "templates/end.html",
                 controller: 'EndPageCtrl'
             })
             .state('playContent', {
@@ -316,6 +246,14 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
 
         $scope.gotToEndPage = function() {
             $state.go('endPage', {});
+        }
+
+        $scope.goToHome = function() {
+            goToHome();
+        }
+
+        $scope.goToGenie = function() {
+            exitApp();
         }
        
 

@@ -17,91 +17,9 @@ angular.module('genie-canvas.theme',[])
         templateUrl: 'templates/credits.html'
     }
 })
-.controller('ContentHomeCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
-    $rootScope.showMessage = false;
-    if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
-        $scope.playContent = function(content) {
-            $state.go('playContent', {
-                'itemId': content.identifier
-            });
-        };
-
-        $scope.updateContent = function(content) {
-            ContentService.getContent(content.identifier)
-                .then(function(data) {
-                    $scope.$apply(function() {
-                        $scope.item = data;
-                    });
-                    $rootScope.stories = [data];
-                })
-                .catch(function(err) {
-                    contentNotAvailable();
-                });
-        }
-
-        $scope.startGenie = function() {
-            console.log("Start Genie.");
-            exitApp();
-        };
-
-        $scope.updateContent(GlobalContext.config.appInfo);
-        $rootScope.$on('show-message', function(event, data) {
-            if (data.message && data.message != '') {
-                $rootScope.showMessage = true;
-                $rootScope.message = data.message;
-                $rootScope.$apply();
-            }
-            if (data.timeout) {
-                setTimeout(function() {
-                    $rootScope.showMessage = false;
-                    $rootScope.$apply();
-                    if (data.callback) {
-                        data.callback();
-                    }
-                }, data.timeout);
-            }
-        });
-
-        $rootScope.$on('process-complete', function(event, result) {
-            $scope.$apply(function() {
-                $scope.item = result.data;
-            });
-        });
-    } else {
-        alert('Sorry. Could not find the content.');
-        startApp();
-    }
-})
-.controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
-
-    $scope.updateContent(GlobalContext.config.appInfo);
-    $rootScope.$on('show-message', function(event, data) {
-        if (data.message && data.message != '') {
-            $rootScope.showMessage = true;
-            $rootScope.message = data.message;
-            $rootScope.$apply();
-        }
-        if (data.timeout) {
-            setTimeout(function() {
-                $rootScope.showMessage = false;
-                $rootScope.$apply();
-                if (data.callback) {
-                    data.callback();
-                }
-            }, data.timeout);
-        }
-    });
-
-    $rootScope.$on('process-complete', function(event, result) {
-        $scope.$apply(function() {
-            $scope.item = result.data;
-        });
-    });
- 
-})
 .controller('OverlayCtrl', function($scope, $rootScope){
-    $rootScope.hasPrevious = false;
-    $rootScope.hasNext = false;
+    $scope.hasPrevious = false;
+    $scope.hasNext = false;
     $scope.showCreditPopup = false;
 
     $scope.openMenu = function(){
@@ -160,8 +78,8 @@ angular.module('genie-canvas.theme',[])
                 action.transitionType = "previous";
             }
             Renderer.theme.transitionTo(action);
-            $rootScope.hasPrevious = false;
-            $rootScope.hasNext = false;
+            $scope.hasPrevious = false;
+            $scope.hasNext = false;
         }
     };
 });
