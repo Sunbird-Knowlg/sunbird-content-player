@@ -1,10 +1,4 @@
 OverlayHtml = {
-	showNext: function() {
-		this._setRootScope("hasNext", true);
-	},
-	showPrevious: function() {
-		this._setRootScope("hasPrevious", true);
-	},
 	_setRootScope: function(key, value) {
 		var rootScope = this._getRootScope();
 		if (rootScope) {
@@ -33,6 +27,14 @@ OverlayHtml = {
                 console.info("listener for ", event);
                 jQuery("#tryAgainPopup").show();
             });
+        }
+        if ("undefined" != typeof angular) {
+            var navigate = angular.element("navigate");
+            if ("undefined" != typeof navigate) {
+                navigate.trigger("sceneChange");
+            }
+            var rootScope = this._getRootScope();
+            rootScope.$apply();
         }
     },
     isItemScene: function() {

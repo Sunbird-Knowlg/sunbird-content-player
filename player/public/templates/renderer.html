@@ -27,9 +27,9 @@
 			</a>
 		</div>
 		
-		<navigate type="'previous'" image="'img/icons/back-circle-icon.png'" style="position: absolute;width: 7%;top: 45%;left: 1%;" ng-if="hasPrevious"></navigate>
-		<navigate type="'next'" image="'img/icons/next-circle-icon.png'" style="position:absolute;width: 7%;top: 45%;right: 1%;" ng-if="hasNext"></navigate>
-		<assess ng-show="isItemScene" style="position:absolute;width: 7%;bottom: 1%;left: 46%;"></assess>
+		<navigate type="'previous'" enable-image="'img/icons/back.png'" disable-image="'img/icons/back_disabled.png'" style="position: absolute;width: 7%;top: 45%;left: 1%;"></navigate>
+		<navigate type="'next'" enable-image="'img/icons/next.png'" disable-image="'img/icons/next_disabled.png'" style="position:absolute;width: 7%;top: 45%;right: 1%;"></navigate>
+		<assess ng-show="isItemScene" style="position:absolute;width: 15%;bottom: 1%;left: 45%;"></assess>
 
   	<!-- Note: all the HTML elements should be above this menu tag
      Don't add any HTML elements after this menu tag
