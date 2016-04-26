@@ -91,12 +91,13 @@ CommandManager = {
                 break;
             case 'WINDOWEVENT':
                 // TODO: remove the dependency on GlobalContext for this command.
-                var mimeType = GlobalContext.config.appInfo.mimeType;
-                if (COLLECTION_MIMETYPE == mimeType) {
-                    window.location.hash = "#/content/list/"+ GlobalContext.game.id;
+                var mimeType = GlobalContext.previousContentMimeType ? GlobalContext.previousContentMimeType : GlobalContext.currentContentMimeType;
+                if (GlobalContext.previousContentMimeType || COLLECTION_MIMETYPE == mimeType) {
+                    window.location.hash = "#/content/list/"+ GlobalContext.previousContentId;
                 } else if (CONTENT_MIMETYPES.indexOf(mimeType) > -1) {
-                    window.location.hash = "#/show/content";
+                    window.location.hash = "#/show/content/" + GlobalContext.currentContentId;
                 } else {
+                    // window.location.hash = "#/show/endPage";        
                     console.warn("Invalid mimeType to handle WINDOWEVENT:", mimeType);
                 }
                 break;
@@ -127,7 +128,6 @@ CommandManager = {
                 break;
             case 'STARTGENIE':
                 if(TelemetryService._gameData.id != packageName && TelemetryService._gameData.id != packageNameDelhi) {
-                    console.log('Current game is:', TelemetryService._gameData.id, 'so, ending it first.');
                     TelemetryService.end(TelemetryService._gameData.id);
                     setTimeout(function() {
                         exitApp();

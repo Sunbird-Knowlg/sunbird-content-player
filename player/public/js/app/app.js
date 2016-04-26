@@ -7,7 +7,7 @@
 function launchInitialPage(appInfo, $state) {
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
         if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-            $state.go('showContent', {});
+            $state.go('showContent', {"contentId": GlobalContext.game.id});
         } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
             (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
             //$state.go('showContent', {});
@@ -78,11 +78,11 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 controller: 'ContentListCtrl'
             })
             .state('showContent', {
-                url: "/show/content",
+                url: "/show/content/:contentId",
                 templateUrl: "templates/content.html",
                 controller: 'ContentHomeCtrl'
             })
-            .state('endPage', {
+            .state('showEndPage', {
                 url: "/show/endPage",
                 templateUrl: "templates/end.html",
                 controller: 'EndPageCtrl'
@@ -142,10 +142,11 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             $rootScope.renderMessage("", 0);
             ContentService.getContent(id)
                 .then(function(content) {
+                    GlobalContext.previousContentId = content.identifier;
                     if (COLLECTION_MIMETYPE == content.mimeType) {
                         $rootScope.title = content.name;
-                        if (!_.isEmpty($rootScope.collection))
-                            TelemetryService.end();
+                        // if (!_.isEmpty($rootScope.collection))
+                        //     TelemetryService.end();
                         $rootScope.collection = content;
                         TelemetryService.start(content.identifier, content.pkgVersion);
                     } else {
@@ -176,10 +177,18 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         $scope.playContent = function(content) {
             if (content.mimeType == COLLECTION_MIMETYPE) {
                 $state.go('contentList', { "id": content.identifier });
+                GlobalContext.previousContentMimeType = content.mimeType;
+                GlobalContext.previousContentId = content.identifier;
             } else {
-                $state.go('playContent', { 'itemId': content.identifier });
+                GlobalContext.currentContentId = content.identifier;
+                GlobalContext.currentContentMimeType = content.mimeType;
+                // $state.go('playContent', { 'itemId': content.identifier });
+                 $state.go('showContent', {"contentId": content.identifier});
             }
         };
+
+
+        //  
 
         $scope.showAboutUsPage = function() {
             $scope.aboutModal.show();
@@ -225,7 +234,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
     }).controller('ContentCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         if ($stateParams.itemId) {
             $scope.item = _.findWhere($rootScope.stories, { identifier: $stateParams.itemId });
-            console.log($scope.item);
+            console.log($scope.item, $stateParams.itemId, $rootScope.stories);
             if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                 HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
                     jQuery('#gameAreaLoad').hide();
@@ -245,15 +254,19 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         // new methods for new ui impl for GoTOGenie and GoToHome buttons.
 
         $scope.gotToEndPage = function() {
-            $state.go('endPage', {});
+            $state.go('showEndPage', {});
         }
 
         $scope.goToHome = function() {
-            goToHome();
+            goToHome($state, GlobalContext.currentContentId, true);
         }
 
         $scope.goToGenie = function() {
             exitApp();
+        }
+
+        $scope.reloadStage = function() {
+            reloadStage();
         }
        
 

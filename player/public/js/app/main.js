@@ -22,8 +22,21 @@ function removeRecordingFiles(path) {
     })
 }
 
-function goToHome() {
-    CommandManager.handle({ command: "windowevent" })
+function reloadStage(){
+    var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
+     if (plugin) plugin.reload({type:"command" ,command:"reload", asset: Renderer.theme._currentStage});
+}
+
+function goToHome($state, id, flag) {
+
+    TelemetryService.interrupt("OTHER", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : "coverpage");
+    if(flag){
+        $state.go('showContent', { "contentId": id });
+    } else{
+        if(GlobalContext.previousContentId)
+            $state.go('contentList', { "id": id });
+    }
+        
 }
 
 
@@ -40,6 +53,7 @@ function backbuttonPressed() {
 // TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
 // So, change exitApp to do the same.
 function exitApp() {
+    TelemetryService.interrupt("OTHER", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : "coverpage");
     try {
         TelemetryService.exit();
     } catch (err) {
