@@ -26,12 +26,12 @@ OverlayHtml = {
             this._setRootScope("isItemScene", true);
             var currentScene = Renderer.theme._currentScene;
             currentScene.on("correct_answer", function(event) {
-                // TODO: add show Good Job popup.
                 console.info("listener for ", event);
+                jQuery("#goodJobPopup").show();
             });
             currentScene.on("wrong_answer", function(event) {
-                // TODO: add show Try Again popup.
                 console.info("listener for ", event);
+                jQuery("#tryAgainPopup").show();
             });
         }
     },

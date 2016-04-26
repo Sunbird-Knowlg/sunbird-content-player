@@ -22,13 +22,14 @@
 		</a>
 	
 		<div class="round-button btn-credits">
-			<a href="javascript:void(0)" ng-click="showCreditPop()">
+			<a href="javascript:void(0)">
 				<img src="img/icons/credit-circle-icon.png" style="width:100%;" />
 			</a>
 		</div>
 		
-		<navigation-buttons></navigation-buttons>
-		<assess ng-show="isItemScene"></assess>
+		<navigate type="'previous'" image="'img/icons/back-circle-icon.png'" style="position: absolute;width: 7%;top: 45%;left: 1%;" ng-if="hasPrevious"></navigate>
+		<navigate type="'next'" image="'img/icons/next-circle-icon.png'" style="position:absolute;width: 7%;top: 45%;right: 1%;" ng-if="hasNext"></navigate>
+		<assess ng-show="isItemScene" style="position:absolute;width: 7%;bottom: 1%;left: 46%;"></assess>
 
   	<!-- Note: all the HTML elements should be above this menu tag
      Don't add any HTML elements after this menu tag
@@ -37,6 +38,8 @@
 		<menu></menu>
 
 		<!-- All the popup's should add here -->
+		<popup id="goodJobPopup" popup-body="goodJob.body"></popup>
+		<popup id="tryAgainPopup" popup-body="tryAgain.body"></popup>
 		<credits-popup></credits-popup>
 	</div>
 
