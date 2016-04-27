@@ -161,13 +161,26 @@ ion-popover-view.fit ion-content {
     top: 0;
     margin-left: -30%;
     background-color: white;
+    background: url("../../img/icons/menu_background.png") no-repeat center;
+    background-size: cover;
 }
 
 .gc-menu-btn{
     float: right;
-    width: 16%;
+    width: 15%;
     margin-top: 6%;
     margin-right: -22%;
+}
+.gc-menu-btn img{
+    width: 100%;
+}
+
+.btn-next{
+    
+}
+
+.btn-back{
+    
 }
 
 .credit-popup{
