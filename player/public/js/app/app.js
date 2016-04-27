@@ -84,8 +84,8 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 templateUrl: "templates/content.html",
                 controller: 'ContentHomeCtrl'
             })
-            .state('showEndPage', {
-                url: "/show/endPage",
+            .state('showContentEnd', {
+                url: "/content/end/:contentId",
                 templateUrl: "templates/end.html",
                 controller: 'EndPageCtrl'
             })
