@@ -24,7 +24,7 @@ function removeRecordingFiles(path) {
 
 function reloadStage(){
     var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
-     if (plugin) plugin.reload({type:"command" ,command:"reload", asset: Renderer.theme._currentStage});
+     if (plugin) plugin.reload({type:"command" ,command:"reload", duration: "500", ease: "linear", effect: "fadeIn", asset: Renderer.theme._currentStage});
 }
 
 function goToHome($state, id, flag) {
