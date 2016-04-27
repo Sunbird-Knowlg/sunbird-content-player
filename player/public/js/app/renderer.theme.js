@@ -16,11 +16,11 @@ angular.module('genie-canvas.theme',[])
         template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:100%;" /></a><a ng-show="show" ng-click="navigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:100%;" /></a>',
         link: function(scope, element) {
             var to = scope.type;
-            element.bind("sceneChange", function(){
-                if (!_.isEmpty(Renderer.theme._currentScene._data.param)) {
-                    navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
-                    var direction = _.findWhere(navigation, {name: to});
-                    scope.show = (direction) ? true : false;
+            element.bind("navigateUpdate", function(event, data){
+                if (data) {
+                    for(key in data) {
+                        scope[key] = data[key];
+                    };
                 }
             });
             scope.navigate = function() {
@@ -42,6 +42,8 @@ angular.module('genie-canvas.theme',[])
                         action.transitionType = "previous";
                     }
                     Renderer.theme.transitionTo(action);
+                    var navigate = angular.element("navigate");
+                    navigate.trigger("navigateUpdate", {'show': false});
                     $rootScope.isItemScene = false;
                     jQuery('popup').hide();
                 }

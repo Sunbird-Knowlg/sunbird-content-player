@@ -1,4 +1,20 @@
 OverlayHtml = {
+	showNext: function() {
+		this._updateNavigate("next");
+	},
+	showPrevious: function() {
+		this._updateNavigate("previous");
+	},
+    _updateNavigate: function(type) {
+        var search = "navigate[type=\"'"+ type+ "'\"]";
+        var navigates = jQuery(search);
+        if ("undefined" != typeof navigates && "undefined" != typeof angular) {
+            var elements = angular.element(navigates);
+            elements.trigger("navigateUpdate", {show: true});
+            var rootScope = this._getRootScope();
+            rootScope.$apply();
+        }
+    },
 	_setRootScope: function(key, value) {
 		var rootScope = this._getRootScope();
 		if (rootScope) {
@@ -27,14 +43,6 @@ OverlayHtml = {
                 console.info("listener for ", event);
                 jQuery("#tryAgainPopup").show();
             });
-        }
-        if ("undefined" != typeof angular) {
-            var navigate = angular.element("navigate");
-            if ("undefined" != typeof navigate) {
-                navigate.trigger("sceneChange");
-            }
-            var rootScope = this._getRootScope();
-            rootScope.$apply();
         }
     },
     isItemScene: function() {
