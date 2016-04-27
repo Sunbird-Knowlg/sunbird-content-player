@@ -4,6 +4,8 @@
 // 'quiz' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 
+var stack = new Array();
+
 function launchInitialPage(appInfo, $state) {
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
         if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
@@ -143,6 +145,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             ContentService.getContent(id)
                 .then(function(content) {
                     GlobalContext.previousContentId = content.identifier;
+                    stack.push(content.identifier);
                     if (COLLECTION_MIMETYPE == content.mimeType) {
                         $rootScope.title = content.name;
                         // if (!_.isEmpty($rootScope.collection))
@@ -180,6 +183,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 GlobalContext.previousContentMimeType = content.mimeType;
                 GlobalContext.previousContentId = content.identifier;
             } else {
+                stack.pop();
                 GlobalContext.currentContentId = content.identifier;
                 GlobalContext.currentContentMimeType = content.mimeType;
                 // $state.go('playContent', { 'itemId': content.identifier });
@@ -218,15 +222,23 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         };
 
         $scope.goBack = function() {
-            window.history.back();
-            // Note: the below condition is valid only on mobile.
-            setTimeout(function() {
-                if ("file:///android_asset/www/index.html" == window.location.href) {
-                    exitApp();
-                } else if (window.location.href.indexOf('/content/list/') == -1) {
-                    window.history.go(-2);
-                }
-            }, 50);
+            stack.pop();
+            var id = stack.pop();
+            if(id)
+                $state.go('contentList', { "id": id});
+            else
+                exitApp();
+
+            // window.history.back();
+            // // Note: the below condition is valid only on mobile.
+            // setTimeout(function() {
+            //     if ("file:///android_asset/www/index.html" == window.location.href) {
+            //         exitApp();
+            //     } else if (window.location.href.indexOf('/content/list/') == -1) {
+            //         window.history.go(-3);
+            //     }
+            // }, 50);
+
         }
 
         $scope.resetContentListCache();
