@@ -5,6 +5,24 @@ angular.module('genie-canvas.theme',[])
         templateUrl: 'templates/menu.html'
     }
 })
+.directive('home', function() {
+      return {
+        restrict: 'E',
+        template: '<a href="javascript:void(0)" ng-click="goToHome()" style="position: absolute; width:5%; top:3%; left:8%;"><img src="img/icons/home-circle-icon.png" style="width:100%;"/></a>'
+    }
+})
+.directive('genie', function() {
+      return {
+        restrict: 'E',
+        template: '<a href="javascript:void(0)" ng-click="goToGenie()" style="position:absolute;width: 5%; top: 3%; right: 3%;"><img src="img/icons/genie-circle-icon.png" style="width:100%;" /></a>'
+    }
+})
+.directive('reload', function() {
+      return {
+        restrict: 'E',
+        template: '<a href="javascript:void(0)" ng-click="reloadStage()" style="position: absolute; width:7%; bottom: 1%; left:8%;"><img src="img/icons/reload.png" style="width:100%;" /></a>'
+    }
+})
 .directive('navigate', function($rootScope) {
     return {
         restrict: 'E',
