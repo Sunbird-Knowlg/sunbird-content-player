@@ -28,6 +28,7 @@ angular.module('genie-canvas.theme',[])
       return {
         restrict: 'E',
         template: '<a href="javascript:void(0)" ng-click="goToHome()" style="position: absolute; width:5%; top:3%; left:8%;"><img ng-src="{{imageBasePath}}home_icon.png" style="width:100%;"/></a>'
+
     }
 })
 .directive('genie', function($rootScope) {
@@ -60,29 +61,41 @@ angular.module('genie-canvas.theme',[])
                     };
                 }
             });
-            scope.navigate = function() {
+            var getNavigateTo = function() {
                 var navigation = [];
-                TelemetryService.interact("TOUCH", to, null, {stageId : Renderer.theme._currentStage});
+                var getNavigateTo = undefined;
                 if (!_.isEmpty(Renderer.theme._currentScene._data.param)) {
                     navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
                     var direction = _.findWhere(navigation, {name: to});
-                    var action = {
-                            "asset": Renderer.theme._id,
-                            "command": "transitionTo",
-                            "duration": "100",
-                            "ease": "linear",
-                            "effect": "fadeIn",
-                            "type": "command",
-                            "value": direction.value
-                        };
-                    if ("previous" == to) {
-                        action.transitionType = "previous";
-                    }
-                    Renderer.theme.transitionTo(action);
-                    var navigate = angular.element("navigate");
-                    navigate.trigger("navigateUpdate", {'show': false});
-                    $rootScope.isItemScene = false;
-                    jQuery('popup').hide();
+                    if (direction) getNavigateTo = direction.value;
+                }
+                return getNavigateTo;
+            }
+            var navigate = function(navigateTo) {
+                 var action = {
+                        "asset": Renderer.theme._id,
+                        "command": "transitionTo",
+                        "duration": "100",
+                        "ease": "linear",
+                        "effect": "fadeIn",
+                        "type": "command",
+                        "value": navigateTo
+                    };
+                action.transitionType = to;
+                Renderer.theme.transitionTo(action);
+                var navigate = angular.element("navigate");
+                navigate.trigger("navigateUpdate", {'show': false});
+                $rootScope.isItemScene = false;
+                jQuery('popup').hide();
+            }
+            scope.navigate = function() {
+                TelemetryService.interact("TOUCH", to, null, {stageId : Renderer.theme._currentStage});
+                var navigateTo = getNavigateTo();
+                if ("undefined" == typeof navigateTo && "next" == to) {
+                    console.info("redirecting to endpage.");
+                    window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+                } else {
+                    navigate(navigateTo);
                 }
             };
         }
@@ -125,11 +138,11 @@ angular.module('genie-canvas.theme',[])
     $rootScope.isItemScene = false;
 
     $scope.goodJob = {
-        body: '<div><h2>Good Job!...</h2><navigate type="\'next\'" enable-image="\'img/icons/next.png\'" disable-image="\'img/icons/next_disabled.png\'" style="position:absolute;width: 15%;top: 45%;right: 25%;"></navigate></div>'
+        body: '<div><h2>Good Job!...</h2><navigate type="\'next\'" enable-image="\'img/icons/next_icon.png\'" disable-image="\'img/icons/next_disabled.png\'" style="position:absolute;width: 15%;top: 45%;right: 43%;"></navigate></div>'
     };
 
     $scope.tryAgain = {
-        body: '<div><h2>Try Again!...</h2><navigate type="\'next\'" enable-image="\'img/icons/next.png\'" disable-image="\'img/icons/next_disabled.png\'" style="position:absolute;width: 15%;top: 45%;right: 25%;"></navigate></div>'
+        body: '<div><h2>Try Again!...</h2><a ng-click="hidePopup()" href="javascript:void(0);" style="position:absolute;width: 15%;top: 45%;left: 30%;"><img src="img/icons/speaker_icon.png" style="width:100%;" /></a><navigate type="\'next\'" enable-image="\'img/icons/next_icon.png\'" disable-image="\'img/icons/next_disabled.png\'" style="position:absolute;width: 15%;top: 45%;right: 30%;"></navigate></div>'
     };
 
 

@@ -141,6 +141,8 @@ LoadByStageStrategy = Class.extend({
                 }
                 OverlayHtml.showNext();
             });
+        } else {
+            OverlayHtml.showNext();
         }
         if (prevStageId) {
             instance.loadStage(prevStageId, function() {
