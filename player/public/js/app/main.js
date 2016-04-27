@@ -7,8 +7,6 @@ var packageName = "org.ekstep.quiz.app",
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
     ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive"
 
-
-
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
         $cordovaFile.removeFile(cordova.file.dataDirectory, path)

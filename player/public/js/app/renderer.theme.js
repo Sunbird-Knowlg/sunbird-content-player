@@ -1,26 +1,45 @@
 angular.module('genie-canvas.theme',[])
-.directive('menu', function() {
+.run(function($rootScope){
+    $rootScope.isPreview = true;
+    $rootScope.imageBasePath = "";
+})
+.directive('preview', function($rootScope){
+    return{
+        restrict: 'A',
+        scope:{
+            'preview': "="
+        },
+        link: function(scope, element, attr){
+            $rootScope.isPreview = scope.preview;
+            console.log("scope isPreview: ", $rootScope.isPreview);
+            if(!scope.preview){
+                $rootScope.imageBasePath = "img/icons/";
+            }
+        }
+    }
+})
+.directive('menu', function($rootScope) {
       return {
-        restrict: 'E',
+        restrict: 'E',        
         templateUrl: 'templates/menu.html'
     }
 })
-.directive('home', function() {
+.directive('home', function($rootScope) {
       return {
         restrict: 'E',
-        template: '<a href="javascript:void(0)" ng-click="goToHome()" style="position: absolute; width:5%; top:3%; left:8%;"><img src="img/icons/home-circle-icon.png" style="width:100%;"/></a>'
+        template: '<a href="javascript:void(0)" ng-click="goToHome()" style="position: absolute; width:5%; top:3%; left:8%;"><img ng-src="{{imageBasePath}}home_icon.png" style="width:100%;"/></a>'
     }
 })
-.directive('genie', function() {
+.directive('genie', function($rootScope) {
       return {
         restrict: 'E',
-        template: '<a href="javascript:void(0)" ng-click="goToGenie()" style="position:absolute;width: 5%; top: 3%; right: 3%;"><img src="img/icons/genie-circle-icon.png" style="width:100%;" /></a>'
+        template: '<a href="javascript:void(0)" ng-click="goToGenie()" style="position:absolute;width: 5%; top: 3%; right: 3%;"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:100%;" /></a>'
     }
 })
-.directive('reload', function() {
+.directive('reload', function($rootScope) {
       return {
         restrict: 'E',
-        template: '<a href="javascript:void(0)" ng-click="reloadStage()" style="position: absolute; width:7%; bottom: 1%; left:8%;"><img src="img/icons/reload.png" style="width:100%;" /></a>'
+        template: '<a href="javascript:void(0)" ng-click="reloadStage()" style="position: absolute; width:7%; bottom: 1%; left:8%;"><img src="{{imageBasePath}}reload.png" style="width:100%;" /></a>'
     }
 })
 .directive('navigate', function($rootScope) {

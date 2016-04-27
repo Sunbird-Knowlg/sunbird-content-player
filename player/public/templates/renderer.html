@@ -10,19 +10,19 @@
 	</div>
 </div>
 
-<div id="gameArea">		
+<div id="gameArea" preview="false">		
 	<!-- Navigation and Menu  -->
 	<div class="overlay-html" id="overlayHTML" ng-controller="OverlayCtrl" ng-init="initMenu()">
-		<a href="javascript:void(0)" ng-click="goToHome()" style="position: absolute; width:5%; top:3%; left:8%;">
-			<img src="img/icons/home_icon.png" style="width:100%;" />
+		<!-- <a href="javascript:void(0)" ng-click="goToHome()" style="position: absolute; width:5%; top:3%; left:8%;">
+			<img src="{{}}/home_icon.png" style="width:100%;" />
 		</a>
-	
+			
 		<a href="javascript:void(0)" ng-click="goToGenie()" style="position:absolute;width: 5%; top: 3%; right: 3%;">
 			<img src="img/icons/genie_icon.png" style="width:100%;" />
-		</a>
+		</a> 
 		
 		<a href="javascript:void(0)" ng-click="reloadStage()" style="position: absolute; width:5%; top:90%; left:8%;">
-			<img src="img/icons/speaker_icon.png" style="width:100%;" />
+			<img src="img/icons/speaker_icon.png" style="width:100%;" /> -->
 		</a>
 
 		<home></home>
@@ -30,12 +30,12 @@
 		<reload></reload>
 		<div class="round-button btn-credits">
 			<a href="javascript:void(0)">
-				<img src="img/icons/credit-circle-icon.png" style="width:100%;" />
+				<img src="{{imageBasePath}}credit-circle-icon.png" style="width:100%;" />
 			</a>
 		</div>
 		
-		<navigate type="'previous'" enable-image="'img/icons/back_icon.png'" disable-image="'img/icons/back_icon_disabled.png'" style="position: absolute;width: 7%;top: 45%;left: 1%;"></navigate>
-		<navigate type="'next'" enable-image="'img/icons/next_icon.png'" disable-image="'img/icons/next_icon_disabled.png'" style="position:absolute;width: 7%;top: 45%;right: 1%;"></navigate>
+		<navigate type="'previous'" enable-image="'i{{imageBasePath}}back_icon.png'" disable-image="'img/icons/back_icon_disabled.png'" style="position: absolute;width: 7%;top: 45%;left: 1%;"></navigate>
+		<navigate type="'next'" enable-image="'im{{imageBasePath}}next_icon.png'" disable-image="'{{imageBasePath}}next_icon_disabled.png'" style="position:absolute;width: 7%;top: 45%;right: 1%;"></navigate>
 		<assess ng-show="isItemScene" style="position:absolute;width: 15%;bottom: 1%;left: 45%;"></assess>
 
   	<!-- Note: all the HTML elements should be above this menu tag
