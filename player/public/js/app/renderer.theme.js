@@ -2,6 +2,7 @@ angular.module('genie-canvas.theme',[])
 .run(function($rootScope){
     $rootScope.isPreview = true;
     $rootScope.imageBasePath = "";
+    $rootScope.languageSupport = "";
 })
 .directive('preview', function($rootScope){
     return{
@@ -14,6 +15,8 @@ angular.module('genie-canvas.theme',[])
             console.log("scope isPreview: ", $rootScope.isPreview);
             if(!scope.preview){
                 $rootScope.imageBasePath = "img/icons/";
+            }else{
+                $rootScope.imageBasePath = "https://s3-ap-southeast-1.amazonaws.com/ekstep-public/content_app/images/icons"
             }
         }
     }
@@ -40,7 +43,7 @@ angular.module('genie-canvas.theme',[])
 .directive('reload', function($rootScope) {
       return {
         restrict: 'E',
-        template: '<a href="javascript:void(0)" ng-click="reloadStage()" style="position: absolute; width:7%; bottom: 1%; left:8%;"><img src="{{imageBasePath}}reload.png" style="width:100%;" /></a>'
+        template: '<a href="javascript:void(0)" ng-click="reloadStage()" style="position: absolute; width:7%; bottom: 1%; left:8%;"><img ng-src="{{imageBasePath}}reload.png" style="width:100%;" /></a>'
     }
 })
 .directive('navigate', function($rootScope) {
@@ -48,10 +51,10 @@ angular.module('genie-canvas.theme',[])
         restrict: 'E',
         scope: {
             disableImage: '=',
-            enableImage: '=',
+            enableImage: "=",
             type: '=type'
         },
-        template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:100%;" /></a><a ng-show="show" ng-click="navigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:100%;" /></a>',
+        template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{ disableImage }}" style="width:100%;" /></a><a ng-show="show" ng-click="navigate();" href="javascript:void(0);"><img ng-src="'+$rootScope.imageBasePath+'{{enableImage}}" style="width:100%;" /></a>',
         link: function(scope, element) {
             var to = scope.type;
             element.bind("navigateUpdate", function(event, data){
@@ -107,7 +110,7 @@ angular.module('genie-canvas.theme',[])
         scope: {
             popupBody: '=popupBody'
         },
-        template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="credit-popup"><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img src="img/icons/close-circle-icon.png" style="width:100%;" /></a><h2 style="padding-left: 20px;"></h2><div class="popup-body"></div></div></div>',
+        template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="credit-popup"><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="img/icons/close-circle-icon.png" style="width:100%;" /></a><h2 style="padding-left: 20px;"></h2><div class="popup-body"></div></div></div>',
         link: function(scope, element) {
             scope.icons = $rootScope.icons;
             var body = $compile(scope.popupBody)(scope);
