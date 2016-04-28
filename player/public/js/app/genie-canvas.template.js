@@ -64,9 +64,27 @@ angular.module('genie-canvas.template',[])
     }
 })
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
+    var id = $stateParams.contentId;
+    $scope.content = {};
 
-    console.log("inside into end page ctrl........................");
-    $scope.creditsBody = '<div><h2>Try Again!...</h2><a ng-click="hidePopup()" href="javascript:void(0);" style="position:absolute;width: 15%;top: 45%;left: 30%;"><img src="img/icons/speaker_icon.png" style="width:100%;" /></a><navigate type="\'next\'" enable-image="\'img/icons/next_icon.png\'" disable-image="\'img/icons/next_icon_disabled.png\'" style="position:absolute;width: 15%;top: 45%;right: 30%;"></navigate></div>';
+    $scope.arrayToString = function(array) {
+        return (!_.isEmpty(array) && _.isArray(array)) ? array.join(", "): "";   
+    }
+
+    ContentService.getContent(id)
+    .then(function(content) {
+        console.log("Content:", content);
+        content.imageCredits = $scope.arrayToString(content.imageCredits);
+        content.soundCredits = $scope.arrayToString(content.soundCredits);
+        content.voiceCredits = $scope.arrayToString(content.voiceCredits);
+        $rootScope.content = content;
+
+        var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
+        creditsPopup.trigger("popupUpdate", {"content": content});
+        $rootScope.$apply();
+    })
+    $scope.creditsBody = '<div><div style="width:75%;height:50%;left: 15%;top: 15%;position: absolute;font-family: SkaterGirlsRock;font-size: 1em;"><table style="width:100%;"><tr ng-if="content.imageCredits"><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-if="content.voiceCredits"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-if="content.soundCredits"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div>';
+
     $scope.showCredits = function() {
         jQuery("#creditsPopup").show();
     }
@@ -78,5 +96,4 @@ angular.module('genie-canvas.template',[])
         //         'itemId': $stateParams.id
         // });
     }
- 
 });

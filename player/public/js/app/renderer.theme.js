@@ -128,9 +128,16 @@ angular.module('genie-canvas.theme',[])
         scope: {
             popupBody: '=popupBody'
         },
-        template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="credit-popup"><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="img/icons/close-circle-icon.png" style="width:100%;" /></a><h2 style="padding-left: 20px;"></h2><div class="popup-body"></div></div></div>',
+        template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="credit-popup"><img ng-src="{{icons.popup.background}}" style="width:100%;" /><div class="popup-body"></div><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;" /></a></div></div>',
         link: function(scope, element) {
             scope.icons = $rootScope.icons;
+            element.bind("popupUpdate", function(event, data){
+                if (data) {
+                    for(key in data) {
+                        scope[key] = data[key];
+                    };
+                }
+            });
             var body = $compile(scope.popupBody)(scope);
             element.find("div.popup-body").html();
             element.find("div.popup-body").append(body);
@@ -171,6 +178,10 @@ angular.module('genie-canvas.theme',[])
         },
         assess: $rootScope.imageBasePath + "submit.png",
         retry: $rootScope.imageBasePath + "speaker_icon.png",
+        popup: {
+            background: $rootScope.imageBasePath + "popup_background.png",
+            close: $rootScope.imageBasePath + "cross_button.png"
+        }
     };
 
     $scope.goodJob = {
@@ -178,9 +189,8 @@ angular.module('genie-canvas.theme',[])
     };
 
     $scope.tryAgain = {
-        body: '<div><h2>Try Again!...</h2><a ng-click="hidePopup()" href="javascript:void(0);" style="position:absolute;width: 15%;top: 45%;left: 30%;"><img ng-src="{{icons.retry}}" style="width:100%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position:absolute;width: 15%;top: 45%;right: 30%;"></navigate></div>'
+        body: '<div><h2>Try Again!...</h2><a ng-click="hidePopup()" href="javascript:void(0);" style="position:absolute;width: 15%;top: 45%;left: 30%;z-index:1000;"><img ng-src="{{icons.retry}}" style="width:100%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position:absolute;width: 15%;top: 45%;right: 30%;"></navigate></div>'
     };
-
 
 
     $scope.openMenu = function(){
