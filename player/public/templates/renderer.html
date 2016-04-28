@@ -10,23 +10,21 @@
 	</div>
 </div>
 
-<div id="gameArea" preview="false">		
+<div id="gameArea">		
 	<!-- Navigation and Menu  -->
 	<div class="overlay-html" id="overlayHTML" ng-controller="OverlayCtrl" ng-init="initMenu()">
-		</a>
-
-		<home></home>
-		<genie></genie>
-		<reload></reload>
-		<div class="round-button btn-credits">
+		<!-- <home></home>
+		<genie></genie> -->
+		<reload style="position: absolute; width:5%; bottom: 1%; left:2%;"></reload>
+		<!-- <div class="round-button btn-credits">
 			<a href="javascript:void(0)">
-				<img src="{{imageBasePath}}credit-circle-icon.png" style="width:100%;" />
+				<img src="img/icons/credit-circle-icon.png" style="width:100%;" />
 			</a>
-		</div>
+		</div> -->
 		
-		<navigate type="'previous'" enable-image="icons.previous.enable" disable-image="icons.previous.disable" style="position: absolute;width: 7%;top: 45%;left: 1%;"></navigate>
-		<navigate type="'next'" enable-image="icons.next.enable" disable-image="icons.next.enable" style="position:absolute;width: 7%;top: 45%;right: 1%;"></navigate>
-		<assess ng-show="isItemScene" style="position:absolute;width: 15%;bottom: 1%;left: 45%;" image="icons.assess"></assess>
+		<navigate type="'previous'" enable-image="'img/icons/back_icon.png'" disable-image="'img/icons/back_icon_disabled.png'" style="position: absolute;width: 7%;top: 45%;left: 1%;"></navigate>
+		<navigate type="'next'" enable-image="'img/icons/next_icon.png'" disable-image="'img/icons/next_icon_disabled.png'" style="position:absolute;width: 7%;top: 45%;right: 1%;"></navigate>
+		<assess ng-show="isItemScene" style="position:absolute;width: 15%;bottom: 1%;left: 45%;"></assess>
 
   	<!-- Note: all the HTML elements should be above this menu tag
      Don't add any HTML elements after this menu tag

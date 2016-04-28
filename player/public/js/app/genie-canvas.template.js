@@ -26,11 +26,11 @@ angular.module('genie-canvas.template',[])
                     contentNotAvailable();
                 });
         }
-        $scope.goToHome = function() {
-            goToHome($state, GlobalContext.previousContentId);
+        $rootScope.goToHome = function() {
+            goToHome($state, $rootScope, GlobalContext.previousContentId);
         }
 
-        $scope.goToGenie = function() {
+        $rootScope.goToGenie = function() {
             exitApp();
         }
         
@@ -69,6 +69,14 @@ angular.module('genie-canvas.template',[])
     $scope.creditsBody = '<div><h2>Try Again!...</h2><a ng-click="hidePopup()" href="javascript:void(0);" style="position:absolute;width: 15%;top: 45%;left: 30%;"><img src="img/icons/speaker_icon.png" style="width:100%;" /></a><navigate type="\'next\'" enable-image="\'img/icons/next_icon.png\'" disable-image="\'img/icons/next_icon_disabled.png\'" style="position:absolute;width: 15%;top: 45%;right: 30%;"></navigate></div>';
     $scope.showCredits = function() {
         jQuery("#creditsPopup").show();
+    }
+
+    $scope.restartContent = function() {
+        window.history.back();
+        Renderer.theme.restart();
+        // $state.go('playContent', {
+        //         'itemId': $stateParams.id
+        // });
     }
  
 });

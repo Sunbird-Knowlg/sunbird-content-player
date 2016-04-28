@@ -24,23 +24,57 @@ angular.module('genie-canvas.theme',[])
         templateUrl: 'templates/menu.html'
     }
 })
-.directive('home', function($rootScope) {
+.directive('home', function($rootScope, $state) {
       return {
         restrict: 'E',
-        template: '<a href="javascript:void(0)" ng-click="goToHome()" style="position: absolute; width:5%; top:3%; left:8%;"><img ng-src="{{imageBasePath}}home_icon.png" style="width:100%;"/></a>'
-
+        template: '<a ng-show="!showHome" href="javascript:void(0);"><img ng-src="{{imageBasePath}}" style="width:90%;" /></a><a ng-show="showHome" ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imageBasePath}}home_icon.png" style="width:90%;" /></a>',
+        link: function(scope, state){
+            $rootScope.imageBasePath = "img/icons/";
+            $rootScope.goToHome = function() {
+                goToHome($state, $rootScope, GlobalContext.previousContentId);
+            }
+            console.log($rootScope.isCollection);
+            if($rootScope.isCollection) {
+                console.log("inside into skdjbvliasjvnasjkfnv;iajknfv ;ajkdfv");
+                $rootScope.showHome = true;
+            } else {
+                $rootScope.showHome = false;
+            }
+        }
     }
 })
 .directive('genie', function($rootScope) {
       return {
         restrict: 'E',
-        template: '<a href="javascript:void(0)" ng-click="goToGenie()" style="position:absolute;width: 5%; top: 3%; right: 3%;"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:100%;" /></a>'
+        template: '<a href="javascript:void(0)" ng-click="goToGenie()" ><img ng-src="{{imageBasePath}}genie_icon.png" style="width:100%;" /></a>',
+        link: function(scope){
+             $rootScope.imageBasePath = "img/icons/";
+             $rootScope.goToGenie = function() {
+                exitApp();
+            };
+        }
+    }
+})
+.directive('restart', function($rootScope) {
+      return {
+        restrict: 'E',
+        template: '<a href="javascript:void(0)" ng-click="restartContent()" ><img src="{{imageBasePath}}reload.png" style="width:100%;" /></a>',
+        link: function(scope){
+             $rootScope.imageBasePath = "img/icons/";
+            //  $rootScope.restartContent = function() {
+                
+            // };
+        }
     }
 })
 .directive('reload', function($rootScope) {
       return {
         restrict: 'E',
-        template: '<a href="javascript:void(0)" ng-click="reloadStage()" style="position: absolute; width:7%; bottom: 1%; left:8%;"><img src="{{imageBasePath}}reload.png" style="width:100%;" /></a>'
+        template: '<a href="javascript:void(0)" ng-click="reloadStage()" ><img src="{{imageBasePath}}reload.png" style="width:100%;" /></a>',
+        link: function(scope){
+             $rootScope.imageBasePath = "img/icons/";
+        }
+
     }
 })
 .directive('navigate', function($rootScope) {
@@ -51,7 +85,7 @@ angular.module('genie-canvas.theme',[])
             enableImage: '=',
             type: '=type'
         },
-        template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:100%;" /></a><a ng-show="show" ng-click="navigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:100%;" /></a>',
+        template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:90%;" /></a><a ng-show="show" ng-click="navigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:90%;" /></a>',
         link: function(scope, element) {
             var to = scope.type;
             element.bind("navigateUpdate", function(event, data){
@@ -165,6 +199,8 @@ angular.module('genie-canvas.theme',[])
     $scope.openMenu = function(){
         //display a layer to disable clicking and scrolling on the gameArea while menu is shown
         
+        jQuery('.menu-icon').attr('src', "img/icons/menu_close_icon.png");
+
         if(jQuery('.menu-overlay').css('display') == "block"){
             $scope.hideMenu();
             return;
@@ -189,6 +225,7 @@ angular.module('genie-canvas.theme',[])
         jQuery(".gc-menu").animate({"marginLeft": ["-30%", 'easeOutExpo']}, 700, function(){
         });
         jQuery('.menu-overlay').css('display', 'none');
+        jQuery('.menu-icon').attr('src', "img/icons/menu_icon.png");
     }
     
 });

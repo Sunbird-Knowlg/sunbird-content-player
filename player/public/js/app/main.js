@@ -25,15 +25,24 @@ function reloadStage(){
      if (plugin) plugin.reload({type:"command" ,command:"reload", duration: "500", ease: "linear", effect: "fadeIn", asset: Renderer.theme._currentStage});
 }
 
-function goToHome($state, id, flag) {
-
-    TelemetryService.interrupt("OTHER", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : "coverpage");
-    if(flag){
-        $state.go('showContent', { "contentId": id });
-    } else{
-        if(GlobalContext.previousContentId)
-            $state.go('contentList', { "id": id });
+function goToHome($state, $rootScope, id) {
+    
+    if($rootScope.isCollection){
+        console.log("$rootScope.isCollection : ", $rootScope.isCollection);
+        TelemetryService.interrupt("OTHER", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : "coverpage");
+        $state.go('contentList', { "id": id });
     }
+     if(Renderer.running) {
+        console.log("inside into renderer.... Telemetry service Exit.");
+        TelemetryService.exit();
+    }
+
+    // if(Renderer.running){
+    //     $state.go('showContent', { "contentId": id });
+    // } else{
+    //     if(GlobalContext.previousContentId)
+            // $state.go('contentList', { "id": id });
+    // }
         
 }
 

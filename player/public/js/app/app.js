@@ -269,7 +269,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             $state.go('showEndPage', {});
         }
 
-        $scope.goToHome = function() {
+        $rootScope.goToHome = function() {
             goToHome($state, GlobalContext.currentContentId, true);
         }
 
