@@ -25,12 +25,17 @@
                 <img src="img/icons/home_icon.png" style="width:100%;" />
             </a>
 
-            <a href="javascript:void(0)" ng-click="goToGenie()" style="position:absolute;width: 6%; top: -4%; right: 2%;">
+            <a href="javascript:void(0)" ng-click="showCredits()" style="position:absolute;width: 5%; top: 3%; right: 10%;">
+                <img src="img/icons/genie_icon.png" style="width:100%;" />
+            </a>
+
+            <a href="javascript:void(0)" ng-click="goToGenie()" style="position:absolute;width: 5%; top: 3%; right: 2%;">
                 <img src="img/icons/genie_icon.png" style="width:100%;" />
             </a>
         </div>
     </ion-header-bar>
     <ion-content>
+        <popup id="creditsPopup" popup-body="creditsBody"></popup>
         <div class="item-body noBorder" style="margin:-3px;">
             <center>
                 <img ng-src="{{item.appIcon || 'assets/quiz-icon.png'}}" class="preview_posterImg">

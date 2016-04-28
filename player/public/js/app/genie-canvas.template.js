@@ -66,62 +66,9 @@ angular.module('genie-canvas.template',[])
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
 
     console.log("inside into end page ctrl........................");
-
-   
-
- if (GlobalContext.config.appInfo.id ) {
-        $scope.playContent = function(content) {
-            $state.go('playContent', {
-                'itemId': content.identifier
-            });
-        };
-
-        $scope.updateContent = function(content) {
-            ContentService.getContent(content.identifier)
-                .then(function(data) {
-                    $scope.$apply(function() {
-                        $scope.item = data;
-                    });
-                    var game = $scope.item;
-                    $rootScope.stories = [data];
-                    var identifier = (game && game.identifier) ? game.identifier : null;
-                    var version = (game && game.pkgVersion) ? game.pkgVersion : "1";
-                    TelemetryService.start(identifier, version);
-                })
-                .catch(function(err) {
-                    contentNotAvailable();
-                });
-        }
-        $scope.restart = function() {
-                $state.go('playContent', {
-                        'itemId': GlobalContext.config.appInfo.id
-                    });
-                Renderer.theme.restart();
-            }
-        $scope.updateContent(GlobalContext.config.appInfo);
-    // $scope.updateContent(GlobalContext.config.appInfo);
-    // $rootScope.$on('show-message', function(event, data) {
-    //     if (data.message && data.message != '') {
-    //         $rootScope.showMessage = true;
-    //         $rootScope.message = data.message;
-    //         $rootScope.$apply();
-    //     }
-    //     if (data.timeout) {
-    //         setTimeout(function() {
-    //             $rootScope.showMessage = false;
-    //             $rootScope.$apply();
-    //             if (data.callback) {
-    //                 data.callback();
-    //             }
-    //         }, data.timeout);
-    //     }
-    // });
-
-    // $rootScope.$on('process-complete', function(event, result) {
-    //     $scope.$apply(function() {
-    //         $scope.item = result.data;
-    //     });
-    // });
-}
+    $scope.creditsBody = '<div><h2>Try Again!...</h2><a ng-click="hidePopup()" href="javascript:void(0);" style="position:absolute;width: 15%;top: 45%;left: 30%;"><img src="img/icons/speaker_icon.png" style="width:100%;" /></a><navigate type="\'next\'" enable-image="\'img/icons/next_icon.png\'" disable-image="\'img/icons/next_icon_disabled.png\'" style="position:absolute;width: 15%;top: 45%;right: 30%;"></navigate></div>';
+    $scope.showCredits = function() {
+        jQuery("#creditsPopup").show();
+    }
  
-})
+});

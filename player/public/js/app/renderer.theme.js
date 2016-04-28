@@ -109,6 +109,7 @@ angular.module('genie-canvas.theme',[])
         },
         template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="credit-popup"><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img src="img/icons/close-circle-icon.png" style="width:100%;" /></a><h2 style="padding-left: 20px;"></h2><div class="popup-body"></div></div></div>',
         link: function(scope, element) {
+            scope.icons = $rootScope.icons;
             var body = $compile(scope.popupBody)(scope);
             element.find("div.popup-body").html();
             element.find("div.popup-body").append(body);
@@ -122,8 +123,10 @@ angular.module('genie-canvas.theme',[])
 .directive('assess', function($rootScope) {
     return {
         restrict: 'E',
-        scope: {},
-        template: '<a href="javascript:void(0);"> <!-- enabled --><img src="img/icons/submit.png" style="width:100%;" /></a>',
+        scope: {
+            image: '='
+        },
+        template: '<a href="javascript:void(0);"> <!-- enabled --><img ng-src="{{image}}" style="width:100%;" /></a>',
         link: function(scope, element) {
             element.on("click", function() {
                 var action = {"type":"command","command":"eval","asset":Renderer.theme._currentStage};
@@ -136,13 +139,25 @@ angular.module('genie-canvas.theme',[])
 })
 .controller('OverlayCtrl', function($scope, $rootScope){
     $rootScope.isItemScene = false;
+    $rootScope.icons = {
+        previous: {
+            disable: $rootScope.imageBasePath + "back_icon_disabled.png",
+            enable: $rootScope.imageBasePath + "back_icon.png",
+        },
+        next: {
+            disable: $rootScope.imageBasePath + "next_icon_disabled.png",
+            enable: $rootScope.imageBasePath + "next_icon.png",
+        },
+        assess: $rootScope.imageBasePath + "submit.png",
+        retry: $rootScope.imageBasePath + "speaker_icon.png",
+    };
 
     $scope.goodJob = {
-        body: '<div><h2>Good Job!...</h2><navigate type="\'next\'" enable-image="\'img/icons/next_icon.png\'" disable-image="\'img/icons/next_disabled.png\'" style="position:absolute;width: 15%;top: 45%;right: 43%;"></navigate></div>'
+        body: '<div><h2>Good Job!...</h2><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position:absolute;width: 15%;top: 45%;right: 43%;"></navigate></div>'
     };
 
     $scope.tryAgain = {
-        body: '<div><h2>Try Again!...</h2><a ng-click="hidePopup()" href="javascript:void(0);" style="position:absolute;width: 15%;top: 45%;left: 30%;"><img src="img/icons/speaker_icon.png" style="width:100%;" /></a><navigate type="\'next\'" enable-image="\'img/icons/next_icon.png\'" disable-image="\'img/icons/next_disabled.png\'" style="position:absolute;width: 15%;top: 45%;right: 30%;"></navigate></div>'
+        body: '<div><h2>Try Again!...</h2><a ng-click="hidePopup()" href="javascript:void(0);" style="position:absolute;width: 15%;top: 45%;left: 30%;"><img ng-src="{{icons.retry}}" style="width:100%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position:absolute;width: 15%;top: 45%;right: 30%;"></navigate></div>'
     };
 
 
