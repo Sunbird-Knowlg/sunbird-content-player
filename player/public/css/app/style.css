@@ -154,6 +154,13 @@ ion-popover-view.fit ion-content {
     display: none;
 }
 
+.icon-font{
+    font-family: flavours; 
+    color:green; 
+    line-height: 1.2em;
+    text-align: center;
+}
+
 .gc-menu{
     position: absolute;
     width: 30%;

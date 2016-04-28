@@ -2,7 +2,18 @@ angular.module('genie-canvas.theme',[])
 .run(function($rootScope){
     $rootScope.isPreview = true;
     $rootScope.imageBasePath = "";
-    $rootScope.languageSupport = "";
+    $rootScope.languageSupport = {
+        "languageCode": "en",
+        "home": "HOME",
+        "genie": "GENIE",
+        "title": "TITLE",
+        "submit": "SUBMIT",
+        "goodJob": "Good Job",
+        "whatWeDoNext": "What we do next",
+        "image": "Image",
+        "voice": "Voice",
+        "audio": "Audio"
+    }
 })
 .directive('preview', function($rootScope){
     return{
@@ -30,7 +41,7 @@ angular.module('genie-canvas.theme',[])
 .directive('home', function($rootScope, $state) {
       return {
         restrict: 'E',
-        template: '<a ng-show="!showHome" href="javascript:void(0);"><img ng-src="{{imageBasePath}}home_icon.png" style="width:90%;" /></a><a ng-show="showHome" ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imageBasePath}}home_icon.png" style="width:90%;" /></a>',
+        template: '<a ng-show="!showHome" href="javascript:void(0);"><img ng-src="{{imageBasePath}}home_icon.png" style="width:27%;" /></a><a ng-show="showHome" ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imageBasePath}}home_icon.png" style="width:27%;" /></a>',
         link: function(scope, state){
             $rootScope.imageBasePath = "img/icons/";
             $rootScope.goToHome = function() {
@@ -49,7 +60,7 @@ angular.module('genie-canvas.theme',[])
 .directive('genie', function($rootScope) {
       return {
         restrict: 'E',
-        template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:100%;" /></a>'
+        template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:27%;" /></a>'
     }
 })
 .directive('restart', function($rootScope) {
