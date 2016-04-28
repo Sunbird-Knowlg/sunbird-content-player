@@ -139,7 +139,7 @@ angular.module('genie-canvas.theme',[])
         scope: {
             popupBody: '=popupBody'
         },
-        template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="credit-popup"><img ng-src="{{icons.popup.background}}" style="width:100%;" /><div class="popup-body"></div><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;" /></a></div></div>',
+        template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"></div></div>',
         link: function(scope, element) {
             scope.icons = $rootScope.icons;
             element.bind("popupUpdate", function(event, data){
@@ -150,8 +150,8 @@ angular.module('genie-canvas.theme',[])
                 }
             });
             var body = $compile(scope.popupBody)(scope);
-            element.find("div.popup-body").html();
-            element.find("div.popup-body").append(body);
+            element.find("div.popup-full-body").html();
+            element.find("div.popup-full-body").append(body);
             element.hide();
             scope.hidePopup = function() {
                 element.hide();
@@ -192,15 +192,22 @@ angular.module('genie-canvas.theme',[])
         popup: {
             background: $rootScope.imageBasePath + "popup_background.png",
             close: $rootScope.imageBasePath + "cross_button.png"
+        },
+        goodJob: {
+            background: $rootScope.imageBasePath + "goodjob_popup.png"
+        },
+        tryAgain: {
+            background: $rootScope.imageBasePath + "retry_popup.png",
+            retry: $rootScope.imageBasePath + "retry_icon.png"
         }
     };
 
     $scope.goodJob = {
-        body: '<div><h2>Good Job!...</h2><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position:absolute;width: 15%;top: 45%;right: 43%;"></navigate></div>'
+        body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%;" /><div class="popup-body"><h2 style="font-family: SkaterGirlsRock;color: #FC5B20;top: 20%;position: absolute;left: 45%;font-size: 3em;">Good Job!</h2><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 38%;right: 30%;font-size: 3em;"></navigate></div><a style="position: inherit;width: 8%;right: 41.5%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
     };
 
     $scope.tryAgain = {
-        body: '<div><h2>Try Again!...</h2><a ng-click="hidePopup()" href="javascript:void(0);" style="position:absolute;width: 15%;top: 45%;left: 30%;z-index:1000;"><img ng-src="{{icons.retry}}" style="width:100%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position:absolute;width: 15%;top: 45%;right: 30%;"></navigate></div>'
+        body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><h2 style="font-family: SkaterGirlsRock;color: #FC5B20;top: 20%;position: absolute;left: 45%;font-size: 3em;">Try Again!</h2><a ng-click="hidePopup()" href="javascript:void(0);" style="position: absolute;width: 18%;top: 35%;right: 38%;"><img ng-src="{{icons.tryAgain.retry}}" style="width:90%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 35%;right: 15%;"></navigate></div><a style="position: inherit;width: 8%;right: 40%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
     };
 
 

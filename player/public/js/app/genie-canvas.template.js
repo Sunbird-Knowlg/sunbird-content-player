@@ -65,7 +65,7 @@ angular.module('genie-canvas.template',[])
 })
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
     var id = $stateParams.contentId;
-    $scope.content = {};
+    $rootScope.content = {};
 
     $scope.arrayToString = function(array) {
         return (!_.isEmpty(array) && _.isArray(array)) ? array.join(", "): "";   
@@ -83,7 +83,7 @@ angular.module('genie-canvas.template',[])
         creditsPopup.trigger("popupUpdate", {"content": content});
         $rootScope.$apply();
     })
-    $scope.creditsBody = '<div><div style="width:75%;height:50%;left: 15%;top: 15%;position: absolute;font-family: SkaterGirlsRock;font-size: 1em;"><table style="width:100%;"><tr ng-if="content.imageCredits"><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-if="content.voiceCredits"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-if="content.soundCredits"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div>';
+    $scope.creditsBody = '<div class="credit-popup"><img ng-src="{{icons.popup.background}}" style="width:100%;" /><div class="popup-body"><div style="width:75%;height:50%;left: 15%;top: 15%;position: absolute;font-family: SkaterGirlsRock;font-size: 1em;"><table style="width:100%;"><tr ng-if="content.imageCredits"><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-if="content.voiceCredits"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-if="content.soundCredits"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>';
 
     $scope.showCredits = function() {
         jQuery("#creditsPopup").show();
