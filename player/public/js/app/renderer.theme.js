@@ -199,6 +199,9 @@ angular.module('genie-canvas.theme',[])
         tryAgain: {
             background: $rootScope.imageBasePath + "retry_popup.png",
             retry: $rootScope.imageBasePath + "retry_icon.png"
+        },
+        end: {
+            background: $rootScope.imageBasePath + "end_background.png"
         }
     };
 
