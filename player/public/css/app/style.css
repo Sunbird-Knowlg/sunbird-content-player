@@ -53,6 +53,11 @@
     src: url('fonts/Flavors-Regular.ttf') format('truetype')
 }
 
+@font-face {
+    font-family: 'SkaterGirlsRock';
+    src: url('fonts/SKATERGIRLSROCK.TTF') format('truetype')
+}
+
 ion-popover-view.fit {
   height: auto !important;
   width: auto !important;
