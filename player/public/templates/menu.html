@@ -1,8 +1,20 @@
 <div class="menu-overlay"></div>
 <!-- Menu container -->
-<div class="gc-menu">	
-		<a class="gc-menu-btn" href="javascript:void(0)" ng-click="openMenu()">
-			<img src="{{imageBasePath}}menu_icon.png" style="width: 100%" />
-		</a>		
+<div class="gc-menu">
+	<a class="gc-menu-btn" href="javascript:void(0)" ng-click="openMenu()" style="left:5%">
+		<img class="menu-icon" src="img/icons/menu_icon.png" style="width: 100%" />    
+		<!-- menu_close_icon -->
+	</a>
+	<div>
+		<p style="text-align:center; padding-top:9%; padding-right:8%;  font-size:15px; font-family:flavours; color:green">{{item.name}}</p>	
+		<home style="position: absolute; width:27%; top:25%; left:31%;"></home>	
+		<p style="text-align:center; margin-top:58%; padding-right:14%; z-index:999; font-size:15px; font-family:flavours; color:green">Home</p>
+		<genie style="position:absolute;width: 26%; top: 49%; right: 45%;"></genie>
+		<p style="text-align:center; margin-top:36.5%; padding-right:14%;  font-size:15px; font-family:flavours; color:green">Genie</p>
+
+	</div>
+		
+		<!-- style="position: absolute; width:24%; top:25%; left:31%;" -->
+
 	<!-- <a class="gc-menu-btn" href="javascript:void(0)" ng-click="openMenu()"></a> -->
 </div>		

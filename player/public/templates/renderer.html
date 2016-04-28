@@ -12,22 +12,13 @@
 
 <div id="gameArea" preview="true">		
 	<!-- Navigation and Menu  -->
-	<div class="overlay-html" id="overlayHTML" ng-controller="OverlayCtrl" ng-init="initMenu()">
-		</a>
+	<div class="overlay-html" id="overlayHTML" ng-controller="OverlayCtrl" ng-init="initMenu()">		
+    <navigate type="'previous'" enable-image="icons.previous.enable" disable-image="icons.previous.disable" style="position: absolute;width: 7%;top: 45%;left: 1%;"></navigate>
+    <navigate type="'next'" enable-image="icons.next.enable" disable-image="icons.next.enable" style="position:absolute;width: 7%;top: 45%;right: 1%;"></navigate>
+    <assess ng-show="isItemScene" style="position:absolute;width: 15%;bottom: 1%;left: 45%;" image="icons.assess"></assess>
 
-		<home></home>
-		<genie></genie>
-		<reload></reload>
-		<div class="round-button btn-credits">
-			<a href="javascript:void(0)">
-				<img src="{{imageBasePath}}credit-circle-icon.png" style="width:100%;" />
-			</a>
-		</div>
+		<reload-stage  style="position: absolute;width: 5%;bottom: 1%;left: 1%;"></reload-stage>
 		
-		<navigate type="'previous'" enable-image="icons.previous.enable" disable-image="icons.previous.disable" style="position: absolute;width: 7%;top: 45%;left: 1%;"></navigate>
-		<navigate type="'next'" enable-image="icons.next.enable" disable-image="icons.next.enable" style="position:absolute;width: 7%;top: 45%;right: 1%;"></navigate>
-		<assess ng-show="isItemScene" style="position:absolute;width: 15%;bottom: 1%;left: 45%;" image="icons.assess"></assess>
-
   	<!-- Note: all the HTML elements should be above this menu tag
      Don't add any HTML elements after this menu tag
    	-->
@@ -37,7 +28,6 @@
 		<!-- All the popup's should add here -->
 		<popup id="goodJobPopup" popup-body="goodJob.body"></popup>
 		<popup id="tryAgainPopup" popup-body="tryAgain.body"></popup>
-		<credits-popup></credits-popup>
 	</div>
 
 	<!-- HTML plugin elements(dynamically adding here) -->
