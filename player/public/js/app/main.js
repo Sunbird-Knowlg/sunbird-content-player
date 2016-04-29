@@ -25,10 +25,10 @@ function reloadStage(){
      if (plugin) plugin.reload({type:"command" ,command:"reload", duration: "500", ease: "linear", effect: "fadeIn", asset: Renderer.theme._currentStage});
 }
 
-function goToHome($state, $rootScope, id) {
+function goToHome($state, isCollection, id) {
     
-    if($rootScope.isCollection){
-        console.log("$rootScope.isCollection : ", $rootScope.isCollection);
+    if(isCollection){
+        console.log("$rootScope.isCollection : ", isCollection);
         TelemetryService.interrupt("OTHER", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : "coverpage");
         $state.go('contentList', { "id": id });
     }

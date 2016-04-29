@@ -2,6 +2,7 @@ angular.module('genie-canvas.theme',[])
 .run(function($rootScope){
     $rootScope.isPreview = true;
     $rootScope.imageBasePath = "";
+
     $rootScope.languageSupport = {
         "languageCode": "en",
         "home": "HOME",
@@ -41,19 +42,22 @@ angular.module('genie-canvas.theme',[])
 .directive('home', function($rootScope, $state) {
       return {
         restrict: 'E',
-        template: '<a ng-show="!showHome" href="javascript:void(0);"><img ng-src="{{imageBasePath}}home_icon.png" style="width:27%;" /></a><a ng-show="showHome" ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imageBasePath}}home_icon.png" style="width:27%;" /></a>',
+        template: '<a ng-show="!showHome" href="javascript:void(0);"><img ng-src="{{imageBasePath}}home_icon_disabled.png" style="width:27%;" /></a><a ng-show="showHome" ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imageBasePath}}home_icon.png" style="width:27%;" /></a>',
         link: function(scope, state){
-            $rootScope.imageBasePath = "img/icons/";
-            $rootScope.goToHome = function() {
-                goToHome($state, $rootScope, GlobalContext.previousContentId);
+            var isCollection = false;
+            if($rootScope.collection.children){
+                isCollection = $rootScope.collection.children.length > 0 ? true :  false;
             }
-            console.log($rootScope.isCollection);
-            if($rootScope.isCollection) {
-                console.log("inside into skdjbvliasjvnasjkfnv;iajknfv ;ajkdfv");
+            if(isCollection) {
                 $rootScope.showHome = true;
             } else {
                 $rootScope.showHome = false;
             }
+
+            scope.goToHome = function() {
+                goToHome($state, isCollection, GlobalContext.previousContentId);
+            }
+
         }
     }
 })
@@ -237,8 +241,6 @@ angular.module('genie-canvas.theme',[])
         jQuery(".gc-menu").animate({"marginLeft": ["0%", 'easeOutExpo']}, 700, function(){
         });
     }
-
-
 
     $scope.hideMenu = function(){
         $scope.menuOpened = false;
