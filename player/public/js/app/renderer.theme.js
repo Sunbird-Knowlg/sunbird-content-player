@@ -231,21 +231,10 @@ angular.module('genie-canvas.theme',[])
         }
 
         $scope.menuOpened = true;
-        jQuery('.gc-menu-btn').css('margin-right', '0');
-        //jQuery('.menu-icon').attr('src', "img/icons/menu_close_icon.png");
         jQuery('.menu-overlay').css('display', 'block');
         jQuery(".gc-menu").show();
         jQuery(".gc-menu").animate({"marginLeft": ["0%", 'easeOutExpo']}, 700, function(){
         });
-
-        console.log("Open Menu..");
-        /*jQuery('.menu-overlay').click(function(){
-            $scope.menuOpened = flase;
-            jQuery(".gc-menu").animate({"marginLeft": ["-31%", 'easeOutExpo']}, 700, function(){
-
-            });
-            jQuery('.menu-overlay').css('display', 'none');
-        });*/
     }
 
 
@@ -256,8 +245,6 @@ angular.module('genie-canvas.theme',[])
         jQuery(".gc-menu").animate({"marginLeft": ["-31%", 'easeOutExpo']}, 700, function(){
         });
         jQuery('.menu-overlay').css('display', 'none');
-        jQuery('.menu-icon').attr('src', "img/icons/menu_icon.png").attr("");
-        jQuery('.gc-menu-btn').css('margin-right', '-22%');
     }
 
     $scope.init();
