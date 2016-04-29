@@ -183,7 +183,7 @@ angular.module('genie-canvas.theme',[])
     $scope.init = function(){
         if(GlobalContext.config.language_info){
             console.log("Lanugae updated", GlobalContext.config.language_info)
-            $rootScope.languageSupport = GlobalContext.config.language_info;            
+            $rootScope.languageSupport = JSON.parse(GlobalContext.config.language_info);
         }        
     }
 
