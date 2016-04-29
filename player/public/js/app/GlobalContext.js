@@ -26,6 +26,7 @@ GlobalContext = {
                 promises.push(GlobalContext._getIntentExtra('origin', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('contentId', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('appInfo', GlobalContext.config));
+                promises.push(GlobalContext._getIntentExtra('language_info', GlobalContext.config));
                 Promise.all(promises)
                 .then(function(result) {
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {

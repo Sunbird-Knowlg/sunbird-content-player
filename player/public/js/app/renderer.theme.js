@@ -60,7 +60,7 @@ angular.module('genie-canvas.theme',[])
 .directive('genie', function($rootScope) {
       return {
         restrict: 'E',
-        template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:27%;" /></a>'
+        template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:30%;" /></a>'
     }
 })
 .directive('restart', function($rootScope) {
@@ -165,7 +165,7 @@ angular.module('genie-canvas.theme',[])
         scope: {
             image: '='
         },
-        template: '<a href="javascript:void(0);"> <!-- enabled --><img ng-src="{{image}}" style="width:100%;" /></a>',
+        template: '<a class="assess" href="javascript:void(0);"> <!-- enabled --><img ng-src="{{image}}"/><p>'+ $rootScope.languageSupport.submit +'</p></a>',
         link: function(scope, element) {
             element.on("click", function() {
                 var action = {"type":"command","command":"eval","asset":Renderer.theme._currentStage};
@@ -178,6 +178,14 @@ angular.module('genie-canvas.theme',[])
 })
 .controller('OverlayCtrl', function($scope, $rootScope){
     $rootScope.isItemScene = false;
+    $rootScope.menuOpened = false;
+
+    $scope.init = function(){
+        if(GlobalContext.config.lanugage_info){
+            $rootScope.languageSupport = GlobalContext.config.lanugage_info;            
+        }        
+    }
+
     $rootScope.icons = {
         previous: {
             disable: $rootScope.imageBasePath + "back_icon_disabled.png",
@@ -216,14 +224,15 @@ angular.module('genie-canvas.theme',[])
 
     $scope.openMenu = function(){
         //display a layer to disable clicking and scrolling on the gameArea while menu is shown
-        
-        jQuery('.menu-icon').attr('src', "img/icons/menu_close_icon.png");
 
         if(jQuery('.menu-overlay').css('display') == "block"){
             $scope.hideMenu();
             return;
         }
 
+        $socpe.menuOpened = true;
+        jQuery('.gc-menu-btn').css('margin-right', '0');
+        jQuery('.menu-icon').attr('src', "img/icons/menu_close_icon.png");
         jQuery('.menu-overlay').css('display', 'block');
         jQuery(".gc-menu").show();
         jQuery(".gc-menu").animate({"marginLeft": ["0%", 'easeOutExpo']}, 700, function(){
@@ -231,7 +240,8 @@ angular.module('genie-canvas.theme',[])
 
         console.log("Open Menu..");
         jQuery('.menu-overlay').click(function(){
-            jQuery(".gc-menu").animate({"marginLeft": ["-30%", 'easeOutExpo']}, 700, function(){
+            $socpe.menuOpened = true;
+            jQuery(".gc-menu").animate({"marginLeft": ["-31%", 'easeOutExpo']}, 700, function(){
 
             });
             jQuery('.menu-overlay').css('display', 'none');
@@ -239,11 +249,15 @@ angular.module('genie-canvas.theme',[])
     }
 
     $scope.hideMenu = function(){
+        $socpe.menuOpened = false;
         jQuery('.menu-overlay').css('display', 'none');
-        jQuery(".gc-menu").animate({"marginLeft": ["-30%", 'easeOutExpo']}, 700, function(){
+        jQuery(".gc-menu").animate({"marginLeft": ["-31%", 'easeOutExpo']}, 700, function(){
         });
         jQuery('.menu-overlay').css('display', 'none');
-        jQuery('.menu-icon').attr('src', "img/icons/menu_icon.png");
+        jQuery('.menu-icon').attr('src', "img/icons/menu_icon.png").attr("");
+        jQuery('.gc-menu-btn').css('margin-right', '-22%');
     }
+
+    $scope.init();
     
 });

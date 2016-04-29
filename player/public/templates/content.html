@@ -1,9 +1,9 @@
 <style>
-    .swiper-background {
-        background-image: url("img/icons/cover_page_background.png");
+    /* .swiper-background {
+        background-image: url("img/icons/");
         background-size: cover;
         background-repeat: round;
-    }
+    } */
     .swiper-slide {
         background-image:url('img/icons/img_panel.png');
         background-position: center;
@@ -18,12 +18,13 @@
 </style>
 
 <ion-pane class="swiper-background">
-
-    <p style="text-align: center; position: absolute; width: 100%; top:20%; color:#5A3C22;font-size:10vh;font-family:flavours;">{{item.name}}</p>
+    <img ng-src="{{imageBasePath}}cover_page_background.png" style="position: absolute; width: 100%; height: 100%;">
+    <p class="icon-font conver-page-title" style="">{{item.name}}</p>
+    <p class="icon-font conver-page-title conver-page-title1" style=" ">{{item.name}}</p>
     <ion-header-bar class="bar-header" style="background-color:transparent; border-bottom:0px;background-image:none;height:50px">
         <div preview="false">
-            <home style="position: absolute; width:27%; top:40%; left:3%"></home>
-            <genie style="position:absolute; width:27%; top:40%; right:3%; text-align: right;"></genie>
+            <home style="position: absolute; width:30%; top:40%; left:3%"></home>
+            <genie style="position:absolute; width:30%; top:40%; right:3%; text-align: right;"></genie>
         </div>
     </ion-header-bar>
     <ion-content>

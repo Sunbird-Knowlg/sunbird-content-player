@@ -150,6 +150,22 @@ ion-popover-view.fit ion-content {
     pointer-events: all;
 }
 
+.conver-page-title
+{
+    font-family: SkaterGirlsRock;
+    position: absolute; 
+    width: 100%; 
+    top:20%;
+    font-size:10vh;
+    -webkit-text-stroke: 1vh #01ac8a;
+    z-index: 0;
+    /*text-shadow: -3px 3px 0 white, 3px -3px 0 white, -6px 6px 0 yellow, 6px -6px 0 yellow, -9px 9px 0 #01ac8a, -9px -9px 0 #01ac8a;*/
+}
+
+.conver-page-title1{
+    -webkit-text-stroke: 0.4vh yellow;
+    z-index: 1;
+}
 .menu-overlay{
     position: absolute;
     width: 100%;
@@ -159,11 +175,19 @@ ion-popover-view.fit ion-content {
     display: none;
 }
 
+.menu-title-font{
+    text-shadow: 2px 2px 0 yellow, -2px 2px 0 yellow, 2px -2px 0 yellow, -2px -2px 0 yellow;
+}
+
 .icon-font{
-    font-family: flavours; 
-    color:green; 
+    font-family: SkaterGirlsRock; 
+    color: #01ac8a; 
     line-height: 1.2em;
     text-align: center;
+}
+
+.label-white-stoke{
+    -webkit-text-stroke: 0.2vh white;
 }
 
 .gc-menu{
@@ -171,7 +195,7 @@ ion-popover-view.fit ion-content {
     width: 30%;
     height: 100%;
     top: 0;
-    margin-left: -30%;
+    margin-left: -31%;
     background-color: white;
     background: url("../../img/icons/menu_background.png") no-repeat center;
     background-size: cover;
@@ -195,6 +219,31 @@ ion-popover-view.fit ion-content {
     
 }
 
+.assess{
+    text-decoration: none;
+    position:absolute;
+    width: 15%;
+    bottom: 10%;
+    left: 45%
+}
+
+.assess img{
+    position:absolute;
+    width: 100%;
+}
+
+.assess p{
+    position: absolute;
+    line-height: 100%;
+    font-size: 5vh;
+    color: white;
+    font-family: SkaterGirlsRock;
+    -webkit-text-stroke: 0.2vh #62ac0c;
+    text-align: center;
+    width: 100%;
+    padding-top: 10%;
+}
+
 .credit-popup {
     position: absolute;
     width: 60%;
@@ -208,6 +257,7 @@ ion-popover-view.fit ion-content {
     position: absolute;
     width: 100%;
     height: 100%;
+    z-index: 9999;
 }
 
 .popup-overlay{
