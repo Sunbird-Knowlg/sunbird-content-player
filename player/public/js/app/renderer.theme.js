@@ -181,8 +181,9 @@ angular.module('genie-canvas.theme',[])
     $rootScope.menuOpened = false;
 
     $scope.init = function(){
-        if(GlobalContext.config.lanugage_info){
-            $rootScope.languageSupport = GlobalContext.config.lanugage_info;            
+        if(GlobalContext.config.language_info){
+            console.log("Lanugae updated", GlobalContext.config.language_info)
+            $rootScope.languageSupport = GlobalContext.config.language_info;            
         }        
     }
 

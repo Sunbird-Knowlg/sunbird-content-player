@@ -187,7 +187,8 @@ ion-popover-view.fit ion-content {
 }
 
 .label-white-stoke{
-    -webkit-text-stroke: 0.2vh white;
+    /* -webkit-text-stroke: 0.2vh white; */
+    text-shadow: 2px 2px 0 white, -2px 2px 0 white, 2px -2px 0 white, -2px -2px 0 white;
 }
 
 .gc-menu{
