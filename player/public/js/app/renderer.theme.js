@@ -42,20 +42,19 @@ angular.module('genie-canvas.theme',[])
 .directive('home', function($rootScope, $state) {
       return {
         restrict: 'E',
-        template: '<a ng-show="!showHome" href="javascript:void(0);"><img ng-src="{{imageBasePath}}home_icon_disabled.png" style="width:27%;" /></a><a ng-show="showHome" ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imageBasePath}}home_icon.png" style="width:27%;" /></a>',
+        template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imageBasePath}}{{imgSrc}}" style="width:30%;" /></a>',
         link: function(scope, state){
+
             var isCollection = false;
             if($rootScope.collection.children){
                 isCollection = $rootScope.collection.children.length > 0 ? true :  false;
             }
-            if(isCollection) {
-                $rootScope.showHome = true;
-            } else {
-                $rootScope.showHome = false;
-            }
-
+            scope.imgSrc = (isCollection == true) ? "home_icon.png" : "home_icon_disabled.png";
+    
             scope.goToHome = function() {
-                goToHome($state, isCollection, GlobalContext.previousContentId);
+                if(isCollection){
+                    goToHome($state, isCollection, GlobalContext.previousContentId);                    
+                }
             }
 
         }
