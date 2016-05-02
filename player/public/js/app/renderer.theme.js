@@ -9,11 +9,13 @@ angular.module('genie-canvas.theme',[])
         "genie": "GENIE",
         "title": "TITLE",
         "submit": "SUBMIT",
-        "goodJob": "Good Job",
+        "goodJob": "Good Job!",
+        "tryAgain": "Aww,  Seems you goofed it!",
         "whatWeDoNext": "What we do next",
         "image": "Image",
         "voice": "Voice",
-        "audio": "Audio"
+        "audio": "Audio",
+        "author": "Author"
     }
 })
 .directive('preview', function($rootScope){
@@ -65,8 +67,8 @@ angular.module('genie-canvas.theme',[])
       return {
         restrict: 'E',
         template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:30%;" /></a>',
-        link: function() {
-            $rootScope.goToGenie = function() {
+        link: function(scope) {
+            scope.goToGenie = function() {
                 exitApp();
             }
         }
@@ -224,11 +226,11 @@ angular.module('genie-canvas.theme',[])
     };
 
     $scope.goodJob = {
-        body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%;" /><div class="popup-body"><h2 style="font-family: SkaterGirlsRock;color: #FC5B20;top: 20%;position: absolute;left: 45%;font-size: 2em;width:50%;font-weight: bold;">Good Job!</h2><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 38%;right: 30%;font-size: 3em;"></navigate></div><a style="position: inherit;width: 8%;right: 41.5%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
+        body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%;" /><div class="popup-body"><p class="icon-font label-white-stoke gc-popup-title" style="font-size: 10vh; top: 20%;">'+ $rootScope.languageSupport.goodJob +'</p><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 45%;right: 20%;font-size: 3em;"></navigate></div><a style="position: inherit;width: 8%;right: 41.5%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
     };
 
     $scope.tryAgain = {
-        body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><h2 style="font-family: SkaterGirlsRock;color: #FC5B20;top: 20%;position: absolute;left: 45%;font-size: 2em;width:50%;font-weight: bold;">Try Again!</h2><a ng-click="hidePopup()" href="javascript:void(0);" style="position: absolute;width: 18%;top: 35%;right: 38%;"><img ng-src="{{icons.tryAgain.retry}}" style="width:90%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 35%;right: 15%;"></navigate></div><a style="position: inherit;width: 8%;right: 40%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
+        body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><p class="icon-font label-white-stoke gc-popup-title">'+ $rootScope.languageSupport.tryAgain +'</p><a ng-click="hidePopup()" href="javascript:void(0);" style="position: absolute;width: 18%;top: 45%;right: 30%;"><img ng-src="{{icons.tryAgain.retry}}" style="width:90%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 45%;right: 10%;"></navigate></div><a style="position: inherit;width: 8%;right: 40%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
     };
 
 

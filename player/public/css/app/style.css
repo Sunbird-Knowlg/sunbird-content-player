@@ -221,7 +221,7 @@ ion-popover-view.fit ion-content {
     float: left;
     padding: 0 15%;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .gc-menu-btn{
@@ -327,6 +327,7 @@ ion-popover-view.fit ion-content {
     height: 70%;
 }
 
+
 .gc-endpage-title{
     top:20%;
     position: absolute;
@@ -396,4 +397,14 @@ ion-popover-view.fit ion-content {
     width: 10%;
     position: absolute;
     left: 46%;
+}
+
+.gc-popup-title{
+    /*font-family: SkaterGirlsRock;
+    color: #FC5B20; */
+    top: 14%;
+    position: absolute;
+    left: 45%;
+    font-size: 6vh;
+    width:50%;
 }
