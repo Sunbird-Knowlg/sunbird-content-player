@@ -53,8 +53,8 @@ angular.module('genie-canvas.theme',[])
             } else {
                 $rootScope.showHome = false;
             }
-
-            scope.goToHome = function() {
+            $rootScope.goToHome = function() {
+                console.log("inside into goToHome of directive and checking values: ", isCollection, GlobalContext.previousContentId);
                 goToHome($state, isCollection, GlobalContext.previousContentId);
             }
 
@@ -64,13 +64,18 @@ angular.module('genie-canvas.theme',[])
 .directive('genie', function($rootScope) {
       return {
         restrict: 'E',
-        template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:30%;" /></a>'
+        template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:30%;" /></a>',
+        link: function() {
+            $rootScope.goToGenie = function() {
+                exitApp();
+            }
+        }
     }
 })
 .directive('restart', function($rootScope) {
       return {
         restrict: 'E',
-        template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}speaker_icon.png" style="width:100%;" /></a>'
+        template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}retry_icon.png" style="width:100%;" /></a>'
     }
 })
 .directive('reloadStage', function($rootScope) {
