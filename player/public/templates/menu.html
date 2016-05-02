@@ -1,24 +1,29 @@
 <div class="menu-overlay" ng-click="hideMenu()"></div>
 <!-- Menu container -->
 <div class="gc-menu">
+	<img class="gc-menu-bg" ng-src="{{imageBasePath}}menu_background.png">
+
 	<a class="gc-menu-btn" href="javascript:void(0)" ng-click="openMenu()" style="left:5%">
 		<img class="menu-icon" ng-src="{{imageBasePath}}menu_icon.png" ng-hide="menuOpened" style="width: 100%" /> 
-		<img class="menu-icon" ng-src="{{imageBasePath}}menu_close_icon.png" ng-show="menuOpened" style="width: 100%" />    
-		<!-- menu_close_icon -->
 	</a>
+
 	<div>
-		<p class="icon-font menu-title-font" style="padding-top:9%; padding-right:8%;  font-size:5vh; ">{{item.name}}</p>	
-		<div style="position: absolute;  text-align: center;    width: 100%;    top: 25%;    position: absolute;">
+		<div class="gc-menu-title-cont">
+			<p class="icon-font menu-title-font">{{item.name}}</p>	
+
+			<!-- menu_close_icon -->
+			<a class="gc-menu-btn-close" href="javascript:void(0)" ng-click="openMenu()">
+				<img ng-src="{{imageBasePath}}menu_close_icon.png" ng-show="menuOpened" style="width: 100%" />    
+			</a>
+		</div>
+
+		<div class="gc-menu-home-cont">
 			<home></home>	
 			<p class="icon-font label-white-stoke" style="padding-top:2%; font-size:4vh;">{{ languageSupport.home }}</p>
 		</div>
-		<div style="position: absolute;  text-align: center;    width: 100%;    top: 50%;    position: absolute;">
+		<div class="gc-menu-genie-cont">
 			<genie></genie>
 			<p class="icon-font label-white-stoke" style="padding-top:2%; font-size:4vh; ">{{ languageSupport.genie }}</p>
 		</div>
 	</div>
-		
-		<!-- style="position: absolute; width:24%; top:25%; left:31%;" -->
-
-	<!-- <a class="gc-menu-btn" href="javascript:void(0)" ng-click="openMenu()"></a> -->
 </div>		
