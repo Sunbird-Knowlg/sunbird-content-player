@@ -26,13 +26,6 @@ angular.module('genie-canvas.template',[])
                     contentNotAvailable();
                 });
         }
-        $rootScope.goToHome = function() {
-            goToHome($state, $rootScope, GlobalContext.previousContentId);
-        }
-
-        $rootScope.goToGenie = function() {
-            exitApp();
-        }
         
         $scope.updateContent($stateParams.contentId);
         $rootScope.$on('show-message', function(event, data) {
@@ -92,8 +85,5 @@ angular.module('genie-canvas.template',[])
     $scope.restartContent = function() {
         window.history.back();
         Renderer.theme.restart();
-        // $state.go('playContent', {
-        //         'itemId': $stateParams.id
-        // });
-    }
+      }
 });

@@ -33,7 +33,7 @@ function goToHome($state, isCollection, id) {
         $state.go('contentList', { "id": id });
     }
      if(Renderer.running) {
-        console.log("inside into renderer.... Telemetry service Exit.");
+        console.log("inside into renderer....Telemetry service Exit.");
         TelemetryService.exit();
     }
 

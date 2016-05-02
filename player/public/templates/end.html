@@ -31,13 +31,20 @@
         <!-- <a href="javascript:void(0)" ng-click="goToGenie()" style="position:absolute;width: 5%; top: 3%; right: 2%;">
             <img src="img/icons/genie_icon.png" style="width:100%;" />
         </a> -->
+        <div class="gc-restart-cont">
+            <p class="icon-font label-white-stoke">What we do next?</p>
+            <restart class="gc-restart-btn"></restart>
+        </div>
+
     </div>
     
-    <div style="top:25%;position: absolute;width: 100%;text-align: center;" >
-        <p class="icon-font conver-page-title"  ng-if="content.name">{{content.name}}</p>
-        <p class="icon-font conver-page-title conver-page-title1"  ng-if="content.name">{{content.name}}</p>
+    <div class="gc-endpage-title" >
+        <div class="gc-endpage-title-cont">
+            <p class="icon-font conver-page-title"  ng-if="content.name">{{content.name}}</p>
+            <p class="icon-font conver-page-title conver-page-title1"  ng-if="content.name">{{content.name}}</p>
+        </div>
         <!-- <p class="icon-font label-white-stoke"  ng-if="content.name">{{content.name}}</p> -->
-        <p style="font-size:2em;margin-top: 10%;" ng-if="content.owner">Owner: {{content.owner}}</p>
+        <p class="gc-content-owner">Owner: {{content.owner}}</p>
     </div>
     <popup id="creditsPopup" popup-body="creditsBody"></popup>
     <image ng-src="{{icons.end.background}}" style="width:100%;height:100%;"/>

@@ -141,6 +141,8 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
 
         $scope.resetContentListCache = function() {
             // jQuery("#loadingDiv").show();
+
+            $rootScope.isCollection = true;
             $rootScope.renderMessage("", 0);
             ContentService.getContent(id)
                 .then(function(content) {
@@ -267,14 +269,6 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
 
         $scope.gotToEndPage = function() {
             $state.go('showEndPage', {});
-        }
-
-        $rootScope.goToHome = function() {
-            goToHome($state, GlobalContext.currentContentId, true);
-        }
-
-        $scope.goToGenie = function() {
-            exitApp();
         }
 
         $scope.reloadStage = function() {
