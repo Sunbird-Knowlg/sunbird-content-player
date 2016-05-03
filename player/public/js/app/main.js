@@ -25,15 +25,14 @@ function reloadStage(){
      if (plugin) plugin.reload({type:"command" ,command:"reload", duration: "500", ease: "linear", effect: "fadeIn", asset: Renderer.theme._currentStage});
 }
 
-function goToHome($state, isCollection, id) {
+function goToHome($state, isCollection, id, pageId) {
     
     if(isCollection){
-        console.log("$rootScope.isCollection : ", isCollection);
-        TelemetryService.interrupt("OTHER", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : "coverpage");
+        // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
+        TelemetryService.interact("TOUCH", "home", "TOUCH", {stageId : ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
         $state.go('contentList', { "id": id });
     }
      if(Renderer.running) {
-        console.log("inside into renderer....Telemetry service Exit.");
         TelemetryService.exit();
     }
 
@@ -59,8 +58,9 @@ function backbuttonPressed() {
 
 // TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
 // So, change exitApp to do the same.
-function exitApp() {
-    TelemetryService.interrupt("OTHER", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : "coverpage");
+function exitApp(pageId) {
+    // TelemetryService.interrupt("OTHER", );
+    TelemetryService.interact("TOUCH", "genie", "TOUCH", {stageId : ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
     try {
         TelemetryService.exit();
     } catch (err) {

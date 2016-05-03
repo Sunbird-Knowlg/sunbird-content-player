@@ -1,6 +1,7 @@
 angular.module('genie-canvas.template',[])
 .controller('ContentHomeCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
     $rootScope.showMessage = false;
+    $rootScope.pageId = "firstpage";
     if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
         $scope.playContent = function(content) {
             console.log("content : ", content);
@@ -57,6 +58,7 @@ angular.module('genie-canvas.template',[])
     }
 })
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
+    $rootScope.pageId = "endpage";
     var id = $stateParams.contentId;
     $rootScope.content = {};
 
@@ -80,6 +82,7 @@ angular.module('genie-canvas.template',[])
 
     $scope.showCredits = function() {
         jQuery("#creditsPopup").show();
+        TelemetryService.interact("TOUCH", "credit", "TOUCH", {stageId : "endpage"});
     }
 
     $scope.restartContent = function() {
