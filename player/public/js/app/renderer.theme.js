@@ -154,6 +154,7 @@ angular.module('genie-canvas.theme',[])
         template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"></div></div>',
         link: function(scope, element) {
             scope.icons = $rootScope.icons;
+            scope.languageSupport = $rootScope.languageSupport;
             element.bind("popupUpdate", function(event, data){
                 if (data) {
                     for(key in data) {
@@ -180,9 +181,9 @@ angular.module('genie-canvas.theme',[])
         scope: {
             image: '='
         },
-        template: '<a class="assess" href="javascript:void(0);"> <!-- enabled --><img ng-src="{{image}}"/><p>'+ $rootScope.languageSupport.submit +'</p></a>',
+        template: '<a class="assess" href="javascript:void(0);"> <!-- enabled --><img ng-src="{{image}}"/><p>{{labelSubmit}}</p></a>',
         link: function(scope, element) {
-
+            scope.labelSubmit = $rootScope.languageSupport.submit;
             element.on("click", function() {
                 var action = {"type":"command","command":"eval","asset":Renderer.theme._currentStage};
                 action.success = "correct_answer";
@@ -231,14 +232,12 @@ angular.module('genie-canvas.theme',[])
     };
 
     $scope.goodJob = {
-        body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%;" /><div class="popup-body"><p class="icon-font label-white-stoke gc-popup-title" style="font-size: 10vh; top: 20%;">'+ $rootScope.languageSupport.goodJob +'</p><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 45%;right: 20%;font-size: 3em;"></navigate></div><a style="position: inherit;width: 8%;right: 41.5%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
+        body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%;" /><div class="popup-body"><p class="icon-font label-white-stoke gc-popup-title" style="font-size: 10vh; top: 20%;" ng-bind="languageSupport.goodJob"></p><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 45%;right: 20%;font-size: 3em;"></navigate></div><a style="position: inherit;width: 8%;right: 41.5%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
     };
 
     $scope.tryAgain = {
-        body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><p class="icon-font label-white-stoke gc-popup-title">'+ $rootScope.languageSupport.tryAgain +'</p><a ng-click="hidePopup(\'gc_retry\')" href="javascript:void(0);" style="position: absolute;width: 18%;top: 45%;right: 30%;"><img ng-src="{{icons.tryAgain.retry}}" style="width:90%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 45%;right: 10%;"></navigate></div><a style="position: inherit;width: 8%;right: 40%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup(\'gc_popupclose\')"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
-
+        body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><p class="icon-font label-white-stoke gc-popup-title" ng-bind="languageSupport.tryAgain"></p><a ng-click="hidePopup(\'gc_retry\')" href="javascript:void(0);" style="position: absolute;width: 18%;top: 45%;right: 30%;"><img ng-src="{{icons.tryAgain.retry}}" style="width:90%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 45%;right: 10%;"></navigate></div><a style="position: inherit;width: 8%;right: 40%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup(\'gc_popupclose\')"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
     };
-
 
     $scope.openMenu = function(){
         //display a layer to disable clicking and scrolling on the gameArea while menu is shown
