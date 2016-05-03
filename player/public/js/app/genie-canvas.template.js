@@ -1,7 +1,7 @@
 angular.module('genie-canvas.template',[])
 .controller('ContentHomeCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
     $rootScope.showMessage = false;
-    $rootScope.pageId = "firstpage";
+    $rootScope.pageId = "coverpage";
     if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
         $scope.playContent = function(content) {
             console.log("content : ", content);
@@ -21,6 +21,10 @@ angular.module('genie-canvas.template',[])
                         $scope.item = data;
                     });
                     $rootScope.stories = [data];
+                    console.log(data);
+                    var identifier = (data && data.identifier) ? data.identifier : null;
+                    var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
+                    TelemetryService.start(identifier, version);
                 })
                 .catch(function(err) {
                     console.log("contentNotAvailable : ", err);
@@ -82,7 +86,7 @@ angular.module('genie-canvas.template',[])
 
     $scope.showCredits = function() {
         jQuery("#creditsPopup").show();
-        TelemetryService.interact("TOUCH", "credit", "TOUCH", {stageId : "endpage"});
+        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId : "endpage"});
     }
 
     $scope.restartContent = function() {

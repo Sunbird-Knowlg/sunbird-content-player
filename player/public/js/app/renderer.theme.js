@@ -235,7 +235,7 @@ angular.module('genie-canvas.theme',[])
     };
 
     $scope.tryAgain = {
-        body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><p class="icon-font label-white-stoke gc-popup-title">'+ $rootScope.languageSupport.tryAgain +'</p><a ng-click="hidePopup(\'retry\')" href="javascript:void(0);" style="position: absolute;width: 18%;top: 45%;right: 30%;"><img ng-src="{{icons.tryAgain.retry}}" style="width:90%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 45%;right: 10%;"></navigate></div><a style="position: inherit;width: 8%;right: 40%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup(\'popupclose\')"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
+        body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><p class="icon-font label-white-stoke gc-popup-title">'+ $rootScope.languageSupport.tryAgain +'</p><a ng-click="hidePopup(\'gc_retry\')" href="javascript:void(0);" style="position: absolute;width: 18%;top: 45%;right: 30%;"><img ng-src="{{icons.tryAgain.retry}}" style="width:90%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 45%;right: 10%;"></navigate></div><a style="position: inherit;width: 8%;right: 40%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup(\'gc_popupclose\')"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
 
     };
 
@@ -249,7 +249,7 @@ angular.module('genie-canvas.theme',[])
         }
 
         $scope.menuOpened = true;
-        TelemetryService.interact("TOUCH", "menuopen", "TOUCH", {stageId : Renderer.theme._currentStage});
+        TelemetryService.interact("TOUCH", "gc_menuopen", "TOUCH", {stageId : Renderer.theme._currentStage});
         jQuery('.menu-overlay').css('display', 'block');
         jQuery(".gc-menu").show();
         jQuery(".gc-menu").animate({"marginLeft": ["0%", 'easeOutExpo']}, 700, function(){
@@ -258,7 +258,7 @@ angular.module('genie-canvas.theme',[])
 
     $scope.hideMenu = function(){
         $scope.menuOpened = false;
-        TelemetryService.interact("TOUCH", "menuclose", "TOUCH", {stageId : Renderer.theme._currentStage});
+        TelemetryService.interact("TOUCH", "gc_menuclose", "TOUCH", {stageId : Renderer.theme._currentStage});
         jQuery('.menu-overlay').css('display', 'none');
         jQuery(".gc-menu").animate({"marginLeft": ["-31%", 'easeOutExpo']}, 700, function(){
         });

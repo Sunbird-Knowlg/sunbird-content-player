@@ -11,10 +11,8 @@ function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
         $cordovaFile.removeFile(cordova.file.dataDirectory, path)
             .then(function(success) {
-                // success
                 console.log("success : ", success);
             }, function(error) {
-                // error
                 console.log("err : ", error);
             });
     })
@@ -26,23 +24,17 @@ function reloadStage(){
 }
 
 function goToHome($state, isCollection, id, pageId) {
-    
     if(isCollection){
         // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
-        TelemetryService.interact("TOUCH", "home", "TOUCH", {stageId : ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
+        TelemetryService.interact("TOUCH", "gc_home", "TOUCH", {stageId : ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
+        TelemetryService.end();
         $state.go('contentList', { "id": id });
-    }
-     if(Renderer.running) {
-        TelemetryService.exit();
-    }
 
-    // if(Renderer.running){
-    //     $state.go('showContent', { "contentId": id });
-    // } else{
-    //     if(GlobalContext.previousContentId)
-            // $state.go('contentList', { "id": id });
-    // }
-        
+    }
+    //  if(Renderer.running) {
+    //     //TelemetryService.end();
+    //     Renderer.cleanUp();
+    // }   
 }
 
 
@@ -59,8 +51,7 @@ function backbuttonPressed() {
 // TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
 // So, change exitApp to do the same.
 function exitApp(pageId) {
-    // TelemetryService.interrupt("OTHER", );
-    TelemetryService.interact("TOUCH", "genie", "TOUCH", {stageId : ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
+    TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {stageId : ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
     try {
         TelemetryService.exit();
     } catch (err) {

@@ -191,10 +191,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 // $state.go('playContent', { 'itemId': content.identifier });
                  $state.go('showContent', {"contentId": content.identifier});
             }
-        };
-
-
-        //  
+        }; 
 
         $scope.showAboutUsPage = function() {
             $scope.aboutModal.show();
@@ -272,7 +269,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
 
         $scope.reloadStage = function() {
             reloadStage();
-            TelemetryService.interact("TOUCH", "reload", "TOUCH", {stageId : Renderer.theme._currentStage});
+            TelemetryService.interact("TOUCH", "gc_reload", "TOUCH", {stageId : Renderer.theme._currentStage});
         }
        
 
