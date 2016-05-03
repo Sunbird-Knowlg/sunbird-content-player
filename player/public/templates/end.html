@@ -32,7 +32,7 @@
             <img src="img/icons/genie_icon.png" style="width:100%;" />
         </a> -->
         <div class="gc-restart-cont">
-            <p class="icon-font label-white-stoke">What we do next?</p>
+            <p class="icon-font label-white-stoke">{{ languageSupport.whatWeDoNext }}?</p>
             <restart class="gc-restart-btn"></restart>
         </div>
 
@@ -44,7 +44,7 @@
             <p class="icon-font conver-page-title conver-page-title1"  ng-if="content.name">{{content.name}}</p>
         </div>
         <!-- <p class="icon-font label-white-stoke"  ng-if="content.name">{{content.name}}</p> -->
-        <p class="gc-content-owner">Owner: {{content.owner}}</p>
+        <p class="gc-content-owner">{{ languageSupport.author }}: {{content.owner}}</p>
     </div>
     <popup id="creditsPopup" popup-body="creditsBody"></popup>
     <image ng-src="{{icons.end.background}}" style="width:100%;height:100%;"/>
