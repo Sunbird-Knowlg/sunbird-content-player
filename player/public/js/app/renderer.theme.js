@@ -46,14 +46,14 @@ angular.module('genie-canvas.theme',[])
         link: function(scope, state){
 
             var isCollection = false;
-            if($rootScope.collection.children){
+            if($rootScope.collection && $rootScope.collection.children){
                 isCollection = $rootScope.collection.children.length > 0 ? true :  false;
             }
             scope.imgSrc = (isCollection == true) ? "home_icon.png" : "home_icon_disabled.png";
+            var pageId = $rootScope.pageId;
             scope.goToHome = function() {
-                console.log("hi.....");
                 if(isCollection){
-                    goToHome($state, isCollection, GlobalContext.previousContentId);                    
+                    goToHome($state, isCollection, GlobalContext.previousContentId, pageId);                    
                 }
 
             }
@@ -65,9 +65,10 @@ angular.module('genie-canvas.theme',[])
       return {
         restrict: 'E',
         template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:30%;" /></a>',
-        link: function() {
-            $rootScope.goToGenie = function() {
-                exitApp();
+        link: function(scope) {
+            var pageId = $rootScope.pageId;
+            scope.goToGenie = function() {
+                exitApp(pageId);
             }
         }
     }
@@ -162,8 +163,11 @@ angular.module('genie-canvas.theme',[])
             element.find("div.popup-full-body").html();
             element.find("div.popup-full-body").append(body);
             element.hide();
-            scope.hidePopup = function() {
+            scope.hidePopup = function(id) {
                 element.hide();
+                console.log("element : ", id);
+                 $rootScope.pageId
+                TelemetryService.interact("TOUCH", id ? id : "popupclose", "TOUCH", {stageId :  ($rootScope.pageId == "endpage" ? "endpage" : Renderer.theme._currentStage)});
             };
         }
     }
@@ -176,6 +180,7 @@ angular.module('genie-canvas.theme',[])
         },
         template: '<a class="assess" href="javascript:void(0);"> <!-- enabled --><img ng-src="{{image}}"/><p>'+ $rootScope.languageSupport.submit +'</p></a>',
         link: function(scope, element) {
+
             element.on("click", function() {
                 var action = {"type":"command","command":"eval","asset":Renderer.theme._currentStage};
                 action.success = "correct_answer";
@@ -228,7 +233,7 @@ angular.module('genie-canvas.theme',[])
     };
 
     $scope.tryAgain = {
-        body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><h2 style="font-family: SkaterGirlsRock;color: #FC5B20;top: 20%;position: absolute;left: 45%;font-size: 2em;width:50%;font-weight: bold;">Try Again!</h2><a ng-click="hidePopup()" href="javascript:void(0);" style="position: absolute;width: 18%;top: 35%;right: 38%;"><img ng-src="{{icons.tryAgain.retry}}" style="width:90%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 35%;right: 15%;"></navigate></div><a style="position: inherit;width: 8%;right: 40%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
+        body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><h2 style="font-family: SkaterGirlsRock;color: #FC5B20;top: 20%;position: absolute;left: 45%;font-size: 2em;width:50%;font-weight: bold;">Try Again!</h2><a ng-click="hidePopup(\'retry\')" href="javascript:void(0);" style="position: absolute;width: 18%;top: 35%;right: 38%;"><img ng-src="{{icons.tryAgain.retry}}" style="width:90%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 35%;right: 15%;"></navigate></div><a style="position: inherit;width: 8%;right: 40%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup(\'popupclose\')"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
     };
 
 
@@ -241,6 +246,7 @@ angular.module('genie-canvas.theme',[])
         }
 
         $scope.menuOpened = true;
+        TelemetryService.interact("TOUCH", "menuopen", "TOUCH", {stageId : Renderer.theme._currentStage});
         jQuery('.menu-overlay').css('display', 'block');
         jQuery(".gc-menu").show();
         jQuery(".gc-menu").animate({"marginLeft": ["0%", 'easeOutExpo']}, 700, function(){
@@ -249,6 +255,7 @@ angular.module('genie-canvas.theme',[])
 
     $scope.hideMenu = function(){
         $scope.menuOpened = false;
+        TelemetryService.interact("TOUCH", "menuclose", "TOUCH", {stageId : Renderer.theme._currentStage});
         jQuery('.menu-overlay').css('display', 'none');
         jQuery(".gc-menu").animate({"marginLeft": ["-31%", 'easeOutExpo']}, 700, function(){
         });

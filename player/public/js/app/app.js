@@ -246,6 +246,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         $scope.resetContentListCache();
 
     }).controller('ContentCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
+        $rootScope.pageId = "renderer";
         if ($stateParams.itemId) {
             $scope.item = _.findWhere($rootScope.stories, { identifier: $stateParams.itemId });
             console.log($scope.item, $stateParams.itemId, $rootScope.stories);
@@ -265,14 +266,13 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             $state.go('contentList', { "id": GlobalContext.game.id });
         }
 
-        // new methods for new ui impl for GoTOGenie and GoToHome buttons.
-
         $scope.gotToEndPage = function() {
             $state.go('showEndPage', {});
         }
 
         $scope.reloadStage = function() {
             reloadStage();
+            TelemetryService.interact("TOUCH", "reload", "TOUCH", {stageId : Renderer.theme._currentStage});
         }
        
 
