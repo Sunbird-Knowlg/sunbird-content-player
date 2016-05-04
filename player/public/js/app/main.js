@@ -27,14 +27,13 @@ function goToHome($state, isCollection, id, pageId) {
     if(isCollection){
         // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
         TelemetryService.interact("TOUCH", "gc_home", "TOUCH", {stageId : ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
-        TelemetryService.end();
+        if(Renderer.running) 
+            Renderer.cleanUp();
+        else
+            TelemetryService.end();
         $state.go('contentList', { "id": id });
 
     }
-    //  if(Renderer.running) {
-    //     //TelemetryService.end();
-    //     Renderer.cleanUp();
-    // }   
 }
 
 

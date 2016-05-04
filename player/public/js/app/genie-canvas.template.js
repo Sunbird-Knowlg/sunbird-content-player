@@ -4,15 +4,12 @@ angular.module('genie-canvas.template',[])
     $rootScope.pageId = "coverpage";
     if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
         $scope.playContent = function(content) {
-            console.log("content : ", content);
             $state.go('playContent', {
                 'itemId': content.identifier
             });
         };
 
         $scope.updateContent = function(content) {
-            console.log("$stateParams.contentId : ", GlobalContext.currentContentId);
-            console.log("content : ", content);
             ContentService.getContent(content)
                 .then(function(data) {
                     GlobalContext.currentContentId = data.identifier;
@@ -21,13 +18,12 @@ angular.module('genie-canvas.template',[])
                         $scope.item = data;
                     });
                     $rootScope.stories = [data];
-                    console.log(data);
                     var identifier = (data && data.identifier) ? data.identifier : null;
                     var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
                     TelemetryService.start(identifier, version);
                 })
                 .catch(function(err) {
-                    console.log("contentNotAvailable : ", err);
+                    console.info("contentNotAvailable : ", err);
                     contentNotAvailable();
                 });
         }
@@ -53,7 +49,6 @@ angular.module('genie-canvas.template',[])
         $rootScope.$on('process-complete', function(event, result) {
             $scope.$apply(function() {
                 $scope.item = result.data;
-                console.log("$scope.item : ", $scope.item);
             });
         });
     } else {
@@ -72,7 +67,6 @@ angular.module('genie-canvas.template',[])
 
     ContentService.getContent(id)
     .then(function(content) {
-        console.log("Content:", content);
         content.imageCredits = $scope.arrayToString(content.imageCredits);
         content.soundCredits = $scope.arrayToString(content.soundCredits);
         content.voiceCredits = $scope.arrayToString(content.voiceCredits);
@@ -91,6 +85,18 @@ angular.module('genie-canvas.template',[])
 
     $scope.restartContent = function() {
         window.history.back();
-        Renderer.theme.restart();
+
+        var gameId = TelemetryService.getGameId();
+        var version = TelemetryService.getGameVer();;
+
+        var instance = this;
+        // TelemetryService.end();
+
+        setTimeout(function() {
+            if (gameId && version) {
+                TelemetryService.start(gameId, version);
+            }
+        }, 500);
+        // Renderer.theme.restart();
       }
 });

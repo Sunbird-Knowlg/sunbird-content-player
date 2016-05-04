@@ -80,16 +80,20 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 controller: 'ContentListCtrl'
             })
             .state('showContent', {
+                cache: false,
                 url: "/show/content/:contentId",
                 templateUrl: "templates/content.html",
-                controller: 'ContentHomeCtrl'
+                controller: 'ContentHomeCtrl',
+                reload: true
             })
             .state('showContentEnd', {
+                cache: false,
                 url: "/content/end/:contentId",
                 templateUrl: "templates/end.html",
                 controller: 'EndPageCtrl'
             })
             .state('playContent', {
+                cache: false,
                 url: "/play/content/:itemId",
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
@@ -243,24 +247,25 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
 
     }).controller('ContentCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         $rootScope.pageId = "renderer";
+        
         if ($stateParams.itemId) {
-            $scope.item = _.findWhere($rootScope.stories, { identifier: $stateParams.itemId });
-            console.log($scope.item, $stateParams.itemId, $rootScope.stories);
-            if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
-                HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
-                    jQuery('#gameAreaLoad').hide();
-                    jQuery('#gameArea').hide();
-                    var path = $scope.item.baseDir + '/index.html';
-                    $scope.currentProjectUrl = path;
-                    jQuery("#htmlFrame").show();
-                });
-            } else {
-                Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
-            }
+        $scope.item = _.findWhere($rootScope.stories, { identifier: $stateParams.itemId });
+        if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
+            HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
+                jQuery('#gameAreaLoad').hide();
+                jQuery('#gameArea').hide();
+                var path = $scope.item.baseDir + '/index.html';
+                $scope.currentProjectUrl = path;
+                jQuery("#htmlFrame").show();
+            });
+        } else {
+            Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
+        }
         } else {
             alert('Name or Launch URL not found.');
             $state.go('contentList', { "id": GlobalContext.game.id });
         }
+        
 
         $scope.gotToEndPage = function() {
             $state.go('showEndPage', {});
@@ -273,13 +278,13 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
        
 
         $scope.$on('$destroy', function() {
-            setTimeout(function() {
-                if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
-                    HTMLRenderer.cleanUp();
-                } else {
-                    Renderer.cleanUp();
-                }
-            }, 100);
+            // setTimeout(function() {
+            //     if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
+            //         HTMLRenderer.cleanUp();
+            //     } else {
+            //         Renderer.cleanUp();
+            //     }
+            // }, 100);
         })
         $rootScope.showMessage = false;
         $rootScope.$on('show-message', function(event, data) {

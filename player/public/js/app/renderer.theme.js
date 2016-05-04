@@ -168,9 +168,7 @@ angular.module('genie-canvas.theme',[])
             element.hide();
             scope.hidePopup = function(id) {
                 element.hide();
-                console.log("element : ", id);
-                 $rootScope.pageId
-                TelemetryService.interact("TOUCH", id ? id : "popupclose", "TOUCH", {stageId :  ($rootScope.pageId == "endpage" ? "endpage" : Renderer.theme._currentStage)});
+                TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {stageId :  ($rootScope.pageId == "endpage" ? "endpage" : Renderer.theme._currentStage)});
             };
         }
     }
