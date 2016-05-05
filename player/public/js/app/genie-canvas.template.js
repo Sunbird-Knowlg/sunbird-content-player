@@ -85,18 +85,13 @@ angular.module('genie-canvas.template',[])
 
     $scope.restartContent = function() {
         window.history.back();
-
         var gameId = TelemetryService.getGameId();
         var version = TelemetryService.getGameVer();;
-
         var instance = this;
-        // TelemetryService.end();
-
         setTimeout(function() {
             if (gameId && version) {
                 TelemetryService.start(gameId, version);
             }
         }, 500);
-        // Renderer.theme.restart();
       }
 });
