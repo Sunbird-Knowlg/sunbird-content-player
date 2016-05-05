@@ -36,9 +36,6 @@ Renderer = {
         }
         Renderer.running = true;
         Renderer.preview = preview || false;
-        var identifier = (game && game.identifier) ? game.identifier : null;
-        var version = (game && game.pkgVersion) ? game.pkgVersion : "1";
-        TelemetryService.start(identifier, version);
         if (data) {
             Renderer.init(data, canvasId, gameRelPath);
         } else {

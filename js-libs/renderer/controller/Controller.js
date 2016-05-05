@@ -1,12 +1,14 @@
 var Controller = Class.extend({
 	_id: '',
 	_data: undefined,
+    _type: undefined,
 	_model: undefined,
 	_repeat: 0,
 	_index: -1,
 	_loaded: false,
 	_error: false,
 	init: function(c, baseDir) {
+        this._type = c.type;
 		this._id = c.type + '.' + c.id;
         this.initController(c, baseDir);
 	},

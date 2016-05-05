@@ -1,2 +1,3 @@
 player/www/
 web-player/node_modules
+*.todo

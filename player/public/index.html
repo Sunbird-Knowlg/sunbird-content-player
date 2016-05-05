@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="quiz">
+<html ng-app="genie-canvas">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/thirdparty/bookshelf_slider.css" />
     <link rel="stylesheet" type="text/css" href="css/thirdparty/skin02.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="css/thirdparty/hamburger.css" /> -->
 
     <script type="text/javascript" src="js/thirdparty/jquery.min.js"></script>
     <script type="text/javascript" src="js/thirdparty/jquery.easing.1.3.js"></script>
@@ -21,7 +22,7 @@
     <script type="text/javascript" src="js/thirdparty/exclude/Class.js"></script>
 
     <script type="text/javascript" src="js/thirdparty/async.min.js"></script>
-
+    <!-- <script type="text/javascript" src="js/thirdparty/hamburger.js"></script> -->
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
@@ -42,8 +43,19 @@
     <script src="js/app/AppConfig.js"></script>
     <script src="js/app/AppMessages.js"></script>
 
-    <script src="js/app/app.js"></script>   
+    <script src="js/app/app.js"></script>
+    <script src="js/app/main.js"></script>
+
+
+
+
     <script src="js/app/services.js"></script>
+    <script src="js/app/renderer.theme.js"></script>
+    <script src="js/app/OverlayHtml.js"></script>
+    
+    <script src="js/app/genie-canvas.template.js"></script>
+
+
     <script src="js/thirdparty/underscore.js"></script>
     <script src="js/thirdparty/exclude/Class.js"></script>
     <script src="js/thirdparty/exclude/createjs-2015.11.26.min.js"></script>
@@ -122,9 +134,9 @@
     <script src="telemetry/InActiveEvent.js"></script>
     <script src="telemetry/TelemetryEvent.js"></script>
     <script src="telemetry/TelemetryServiceUtil.js"></script>
-    <script src="telemetry/TelemetryService.js"></script>   
-    <script src="telemetry/TelemetryV1Manager.js"></script>   
-    <script src="telemetry/TelemetryV2Manager.js"></script>   
+    <script src="telemetry/TelemetryService.js"></script>
+    <script src="telemetry/TelemetryV1Manager.js"></script>
+    <script src="telemetry/TelemetryV2Manager.js"></script>
 
     <!-- // <script src="js/app/telemetry.js"></script> -->
     <script src="js/app/genieservices.js"></script>

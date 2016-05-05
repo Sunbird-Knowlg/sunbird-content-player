@@ -53,6 +53,11 @@
     src: url('fonts/Flavors-Regular.ttf') format('truetype')
 }
 
+@font-face {
+    font-family: 'SkaterGirlsRock';
+    src: url('fonts/SKATERGIRLSROCK.TTF') format('truetype')
+}
+
 ion-popover-view.fit {
   height: auto !important;
   width: auto !important;
@@ -132,4 +137,274 @@ ion-popover-view.fit ion-content {
     background-size: 38px 38px;
     height: 38px;
     width: 38px;
+}
+.overlay-html{
+    pointer-events: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 99999;
+}
+
+.overlay-html * {
+    pointer-events: all;
+}
+
+.conver-page-title
+{
+    font-family: SkaterGirlsRock;
+    position: absolute; 
+    width: 100%; 
+    top:20%;
+    font-size:10vh;
+    -webkit-text-stroke: 1vh #01ac8a;
+    z-index: 0;
+    /*text-shadow: -3px 3px 0 white, 3px -3px 0 white, -6px 6px 0 yellow, 6px -6px 0 yellow, -9px 9px 0 #01ac8a, -9px -9px 0 #01ac8a;*/
+}
+
+.conver-page-title1{
+    -webkit-text-stroke: 0.4vh yellow;
+    z-index: 1;
+}
+.menu-overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.6;
+    display: none;
+}
+
+.menu-title-font{
+    text-shadow: 2px 2px 0 yellow, -2px 2px 0 yellow, 2px -2px 0 yellow, -2px -2px 0 yellow;
+}
+
+.icon-font{
+    font-family: SkaterGirlsRock; 
+    color: #01ac8a; 
+    line-height: 1.2em;
+    text-align: center;
+}
+
+.label-white-stoke{
+    /* -webkit-text-stroke: 0.2vh white; */
+    text-shadow: 2px 2px 0 white, -2px 2px 0 white, 2px -2px 0 white, -2px -2px 0 white;
+}
+
+.gc-menu{
+    position: absolute;
+    width: 30%;
+    height: 100%;
+    top: 0;
+    margin-left: -31%;
+}
+.gc-menu-cont{
+    height: 100%;
+}
+
+.gc-menu .gc-menu-bg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.gc-menu-title-cont{
+    width: 100%;
+    padding-top: 10%;
+    position: absolute;
+    height: 25%;
+}
+
+.gc-menu-title-cont p{
+    font-size: 5vh;
+    width: 100%;
+    float: left;
+    padding: 0 15%;
+    height: 100%;
+    overflow: auto;
+}
+
+.gc-menu-btn{
+    float: right;
+    width: 20%;
+    margin-top: 6%;
+    margin-right: -30%;
+}
+
+.gc-menu-home-cont{
+    position: absolute;  
+    text-align: center;    
+    width: 100%;    
+    top: 25%;
+}
+
+.gc-menu-genie-cont{
+    position: absolute;  
+    text-align: center;    
+    width: 100%;    
+    top: 55%;
+}
+
+.gc-menu-btn-close{
+    float: right;
+    margin-top: -2%;
+    margin-left: -13%;
+    width: 14%;
+    position: absolute;
+}
+.gc-menu-btn img{
+    width: 100%;
+}
+
+.btn-next{
+    
+}
+
+.btn-back{
+    
+}
+
+.assess{
+    text-decoration: none;
+    position:absolute;
+    width: 15%;
+    bottom: 10%;
+    left: 45%
+}
+
+.assess img{
+    position:absolute;
+    width: 100%;
+}
+
+.assess p{
+    position: absolute;
+    line-height: 100%;
+    font-size: 5vh;
+    color: white;
+    font-family: SkaterGirlsRock;
+    -webkit-text-stroke: 0.2vh #62ac0c;
+    text-align: center;
+    width: 100%;
+    padding-top: 10%;
+}
+
+.credit-popup {
+    position: absolute;
+    width: 60%;
+    height: 80%;
+    border-radius: 10px;
+    top: 10%;
+    left: 20%;
+}
+
+.popup{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+.popup-overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.6;
+}
+
+.popup-close{
+    position: inherit;
+    width: 8%;
+    right: 46.5%;
+    top: 1.5%;
+}
+
+.popup-body {
+    position: absolute;
+    top: 13%;
+    width: 95%;
+    height: 70%;
+}
+
+
+.gc-endpage-title{
+    top:20%;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+.gc-endpage-title-cont{
+
+}
+
+.gc-content-owner{
+    font-size: 2em;
+    margin-top: 10%;
+    padding: 1% 0;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+}
+.btn-credits{
+    position:absolute; 
+    width: 4%; 
+    top: 4%; 
+    right: 9%;
+}
+
+.round-button {   
+    border-radius: 50%;
+    border: 2px solid #f5f5f5;
+    overflow: hidden;
+    background: #464646;
+    box-shadow: 0 0 3px gray;
+}
+.round-button:hover {
+    background: white;
+}
+.round-button img {
+    display: block;
+    width: 100%;
+    padding: 12%;
+    height: auto;
+}
+.credits-title {
+    width: 20%;
+    font-size: 2em;
+    line-height: 2em;
+    padding: 2%;
+    border-right: 2px solid;
+}
+.credits-data {
+    width: 80%;
+    font-size: 1em;
+    padding: 2%;
+}
+
+.gc-restart-cont{
+    position: absolute;
+    width: 100%;
+    bottom: 30%;
+}
+.gc-restart-cont p{
+    width: 100%;
+    padding-bottom: 2%;
+    text-align: center;
+    font-size: 8vh;
+}
+.gc-restart-btn{
+    width: 10%;
+    position: absolute;
+    left: 46%;
+}
+
+.gc-popup-title{
+    /*font-family: SkaterGirlsRock;
+    color: #FC5B20; */
+    top: 14%;
+    position: absolute;
+    left: 45%;
+    font-size: 6vh;
+    width:50%;
 }

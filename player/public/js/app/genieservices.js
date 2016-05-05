@@ -36,30 +36,44 @@ genieservice_web = {
     },
     getContent: function(id, url) {
         return new Promise(function(resolve, reject) {
-            resolve({
-            "identifier": "org.ekstep.quiz.app",
-            "mimeType": "application/vnd.ekstep.content-collection",
-            "localData": {
-                "questionnaire": null,
-                "appIcon": "stories/quizapp_bugs/logo.png",
-                "subject": "literacy_v2",
-                "description": "Ekstep Content App",
-                "name": "Ekstep Content App",
-                "downloadUrl": "",
-                "checksum": null,
-                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
-                "concepts": [{
-                    "identifier": "LO1",
-                    "name": "Receptive Vocabulary",
-                    "objectType": "Concept"
-                }],
-                "identifier": "org.ekstep.quiz.app",
-                "grayScaleAppIcon": null,
-                "pkgVersion": 1
-            },
-            "isAvailable": true,
-            "path": "stories/quizapp_bugs"
-        });
+            jQuery.post(genieservice_web.api.getContentList(), function(resp) {
+                    var result = {};
+                    if (!resp.error) {
+                        result.list = resp.content;
+                        var item = _.findWhere(resp.content, { "identifier": id });
+                        resolve(item);
+                    } else {
+                        reject(resp);
+                    }
+                })
+                .fail(function(err) {
+                    reject(err);
+                });
+        //     resolve({
+        //     "identifier": "org.ekstep.quiz.app",
+        //     "mimeType": "application/vnd.ekstep.content-collection",
+        //     "localData": {
+        //         "questionnaire": null,
+        //         "appIcon": "stories/quizapp_bugs/logo.png",
+        //         "subject": "literacy_v2",
+        //         "description": "Ekstep Content App",
+        //         "name": "Ekstep Content App",
+        //         "downloadUrl": "",
+        //         "checksum": null,
+        //         "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+        //         "concepts": [{
+        //             "identifier": "LO1",
+        //             "name": "Receptive Vocabulary",
+        //             "objectType": "Concept"
+        //         }],
+        //         "identifier": "org.ekstep.quiz.app",
+        //         "grayScaleAppIcon": null,
+        //         "pkgVersion": 1
+        //     },
+        //     "isAvailable": true,
+        //     "path": "stories/quizapp_bugs"
+        // });
+
         });
     },
     getContentList: function(filter) {
@@ -88,7 +102,7 @@ telemetry_web = {
     tList: [],
     send: function(string) {
         return new Promise(function(resolve, reject) {
-            //console.log(string);
+            console.log(string);
             telemetry_web.tList.push(string);
             resolve(true);
         });

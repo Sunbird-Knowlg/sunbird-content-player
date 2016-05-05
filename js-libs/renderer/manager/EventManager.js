@@ -1,5 +1,5 @@
 EventManager = {
-	appEvents: ['enter', 'exit', 'remove', 'add', 'replace', 'show', 'hide'],
+	appEvents: ['enter', 'exit', 'remove', 'add', 'replace', 'show', 'hide', 'correct_answer', 'wrong_answer'],
 	registerEvents: function(plugin, data) {
 		var events = undefined;
 		if(data.events) {

@@ -133,24 +133,28 @@ LoadByStageStrategy = Class.extend({
             instance.loadStage(nextStageId, function() {
                 var plugin = PluginManager.getPluginObject('next');
                 if(plugin){
-                    plugin.show();
+                    plugin.hide();
                     var nextContainer = PluginManager.getPluginObject('nextContainer');
                     if (nextContainer) {
-                        nextContainer.show();
+                        nextContainer.hide();
                     }                    
                 }
+                OverlayHtml.showNext();
             });
+        } else {
+            OverlayHtml.showNext();
         }
         if (prevStageId) {
             instance.loadStage(prevStageId, function() {
                 var plugin = PluginManager.getPluginObject('previous');
                 if(plugin){
-                    plugin.show();
+                    plugin.hide();
                     var previousContainer = PluginManager.getPluginObject('previousContainer');
                     if (previousContainer) {
-                        previousContainer.show();
+                        previousContainer.hide();
                     }
                 }
+                OverlayHtml.showPrevious();
             });
         }
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);

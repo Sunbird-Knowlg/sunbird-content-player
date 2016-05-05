@@ -448,7 +448,7 @@
 		
     </stage>
     <stage id="storyBaseStage" preload="true">
-        <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
+        <!--<image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
         <shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true">
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
@@ -459,7 +459,7 @@
             <event type="click">
                 <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" transitionType="previous"/>
             </event>
-        </shape>
+        </shape> -->
         <text param="body" x="9" y="2" w="85" h="4" font="Georgia" fontsize="45"/>
     </stage>
     <stage id="splash" x="0" y="0" w="100" h="100">
