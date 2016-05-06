@@ -18,26 +18,41 @@ describe('Container Plugin test cases', function() {
                 "w": 50,
                 "h": 50,
                 "hitArea":true,
-                "text":   {
-
-                    "color": "black",
-                    "font": "Arial",
-                    "align": "left",
-                    "valign": "top",
-                    "lineHeight": 0,
-                    "outline": 0,
-                    "fontsize": 20,
-
-                }  
+                
         };
         Renderer.theme = { _currentStage: '' };
         this.plugin = PluginManager.invoke('g', data, parent);
+        spyOn(this.plugin, 'refresh').and.callThrough();
         done();
     });
 
     it('Container plugin initPlugin', function() {
         expect(true).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
     });
+
+    it('Container plugin refrsh', function() {
+        this.plugin.refresh({ primary: true });
+        expect(this.plugin.refresh).toHaveBeenCalled();
+        expect(this.plugin.refresh.calls.count()).toEqual(1);
+    });
+
+    it('Container plugin Container validation',function(){
+         expect(true).toEqual(this.plugin._isContainer == true);
+    });
+
+     it('Container plugin Container validation',function(){
+         expect(false).toEqual(this.plugin._rendrer == true);
+    });
+
+     it('Container plugin init attribute validation',function(){
+        expect(this.plugin._self.x).toBeDefined();
+        expect(this.plugin._self.y).toBeDefined();
+        expect(this.plugin._self.x).not.toBeNull();
+        expect(this.plugin._self.y).not.toBeNull();
+        expect(this.plugin._self.h).not.toBeNull();
+        expect(this.plugin._self.w).not.toBeNull();
+    });
+
 
 
 });
