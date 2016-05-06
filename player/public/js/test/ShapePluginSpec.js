@@ -15,7 +15,7 @@ describe('Shape Plugin test cases', function() {
 
         var data = data || {
             "shape": {
-        		"x": 0,
+                "x": 0,
                 "y": 0,
                 "w": 50,
                 "h": 50,
@@ -23,18 +23,44 @@ describe('Shape Plugin test cases', function() {
                 "stroke": 6,
                 "bgcolor": "skyblue",
                 "color": "yellow",
-                "type": "rect",
+                "type": "rect/circle/roundrect/ellipse",
                 "fill": "#FFF16E"
             }
         };
+
         Renderer.theme = { _currentStage: '' };
         this.plugin = PluginManager.invoke('shape', data, parent);
         done();
     });
 
     it('Shape plugin initPlugin', function() {
-        console.log("this.plugin : ", this.plugin._self);
+
         expect(true).toEqual(this.plugin._self instanceof createjs.Shape);
+
+    });
+    it("shape plugin fill attribute", function() {
+
+        expect(this.plugin._self._filterOffsetX).toBe(0);
+        expect(this.plugin._self.fill).not.toBe(null);
+    });
+    it("check the mouse is enable or not", function() {
+        expect(this.plugin._self.mouseEnabled).toBe(true);
+        expect(this.plugin._self.mouseEnabled).not.toBe(false);
+
+    });
+
+    it("shape pluign comman attribute", function() {
+        expect(this.plugin._self.x).toBeDefined();
+        expect(this.plugin._self.y).toBeDefined();
+        expect(this.plugin._self.x).not.toBeNull();
+        expect(this.plugin._self.y).not.toBeNull();
+        expect(this.plugin._self.h).not.toBeNull();
+        expect(this.plugin._self.w).not.toBeNull();
+
+    });
+
+    it('shape plugin type attribute', function() {
+        expect(this.plugin._self.type).not.toBeNull();
     });
 
 

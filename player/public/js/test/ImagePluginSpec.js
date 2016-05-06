@@ -24,7 +24,7 @@ describe('Image Plugin test cases', function() {
                     w: 500,
                     h: 500
                 }
-            },
+            }, 
             addChild: function() {}
         }
         var data = data || {
@@ -39,12 +39,27 @@ describe('Image Plugin test cases', function() {
         this.theme = new ThemePlugin(themeData);
         this.theme.start('js/test/assets/');
         this.plugin = PluginManager.invoke('image', data, parent, "splash", this.theme);
+
         done();
+        console.log("asset",asset);
     });
 
     it('Image plugin initPlugin', function() {
         expect(true).toEqual(this.plugin._self instanceof createjs.Bitmap);
+        console.log("image",this.plugin._self.x);
     });
 
-
+    it('Image X and Y co-ordinate properties',function(){
+        expect(this.plugin._self.x).toBe(0);
+        expect(this.plugin._self.x).not.toBe(null);
+        expect(this.plugin._self.y).toBe(0);
+        expect(this.plugin._self.y).not.toBe(null);
+        console.log("p",this.plugin._self);
+       
+    });
+     it('Image asset properties',function(){
+       expect(this.plugin._self.asset).not.toBeNull();
+        
+       
+    });
 });
