@@ -487,9 +487,9 @@ var Plugin = Class.extend({
             this.setPluginParam(param, val, incr);
         }
     },
-    getInnerECML: function() {
+    getInnerECML: function(data) {
         var children = {};
-        var data = this._data;
+        data = ("undefined" == typeof data) ? this._data : data;
         for (k in data) {
             if (PluginManager.isPlugin(k) && _.isObject(data[k]) && !_.isEmpty(data[k])) {
                 children[k] = data[k];
