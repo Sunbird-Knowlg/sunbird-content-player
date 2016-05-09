@@ -34,16 +34,6 @@ var LayoutPlugin = Plugin.extend({
         delete this._data.event;   
         
 	},
-	getCellECML: function() {
-    	var children = {};
-    	var data = _.clone(this._data);
-        for (k in data) {
-	        if (PluginManager.isPlugin(k)) {
-	        	children[k] = data[k];
-	        }
-        }
-        return children;
-    },
     generateLayout: function() {
     	PluginManager.addError('Subclasses of layout plugin should implement generateLayout()');
     },
@@ -51,7 +41,7 @@ var LayoutPlugin = Plugin.extend({
     	var instance = this;
     	var index = 0;
     	this._cells.forEach(function(data) {
-            var cellECML = instance.getCellECML();
+            var cellECML = instance.getInnerECML();
             var cellEvents = instance.getCellEvents();
     		instance._stage._templateVars[instance._data['var']] = instance._data.iterate+"["+index+"]";
     		instance._addCellAttributes(data);
