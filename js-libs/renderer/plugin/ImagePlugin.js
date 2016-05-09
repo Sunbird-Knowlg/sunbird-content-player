@@ -37,12 +37,10 @@ var ImagePlugin = Plugin.extend({
             s.x = dims.x;
             s.y = dims.y;
             if(_.isString(assetSrc)){
-                //console.log("ImagePlugin: Image is not present in loaders. So loading asset.");
                 AssetManager.strategy.loadAsset(this._stage._data.id, data.asset, assetSrc, function(){
                     if(_.isString(instance._self)){
-                        //console.log("ImagePlugin: Image load failed", assetSrc);
+                        console.log("ImagePlugin: Image load failed", assetSrc);
                     }
-                    //console.log("ImagePlugin: Asset loaded", assetSrc);
                     var s = instance._self;
                     var dims = instance.relativeDims();
                     var sb = s.getBounds();
@@ -53,7 +51,6 @@ var ImagePlugin = Plugin.extend({
                         instance.setScale(); 
                     }
                     instance._theme.update();
-                    //Renderer.update = true;
                 });                
             }else{
                 var sb = s.getBounds();
@@ -64,7 +61,7 @@ var ImagePlugin = Plugin.extend({
         }        
     },
     alignDims: function() {
-        console.log(this._parent);
+        console.log(this._parent._isContainer);
         var parentDims = this._parent.dimensions();
         var dims = this._dimensions;
 

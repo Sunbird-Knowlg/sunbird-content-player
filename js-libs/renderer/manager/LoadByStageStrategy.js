@@ -199,15 +199,13 @@ LoadByStageStrategy = Class.extend({
     loadAsset: function(stageId, assetId, path, cb) {
         var loader = this.loaders[stageId];
         if (loader) {
-            //loader = this.loaders[stageId];
             var itemLoaded = loader.getItem(assetId);
-            //console.log("LoadByStageStrategy: assetId", assetId, " item ", itemLoaded);
             /*if(itemLoaded){
                 loader.remove(assetId);                
             }*/
             loader.installPlugin(createjs.Sound);
             loader.on("complete", function() {
-                //console.info("LoadByStageStrategy: asset " + assetId + " loaded successfully.");
+                console.info("LoadByStageStrategy: asset " + assetId + " loaded successfully.");
                 if(cb){
                     cb();
                 }
@@ -222,7 +220,6 @@ LoadByStageStrategy = Class.extend({
                     instance.loaders = {};
                 }
                 instance.loaders[stageId] = loader;
-                //console.info("LoadByStageStrategy: asset " + assetId + " loaded successfully.");
                 if(cb){
                     cb();
                 }
