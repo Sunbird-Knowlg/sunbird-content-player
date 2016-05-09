@@ -45,7 +45,6 @@ describe('MCQ Plugin test cases', function() {
 
         expect(true).toEqual(this.plugin._offsetX == 0);
         expect(true).toEqual(this.plugin._offsetY == 0);
-
     });
 
     it('Mcq multiselect validation', function() {

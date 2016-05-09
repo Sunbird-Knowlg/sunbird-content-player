@@ -20,16 +20,13 @@ describe('MTF Plugin test cases', function() {
                     "y": 0,
                     "w": 50,
                     "h": 50
-                   
                 },
-
-
             }
         };
         Renderer.theme = { _currentStage: '' };
         this.plugin = PluginManager.invoke('mtf', data, parent);
         spyOn(this.plugin, 'getLhsOption').and.callThrough();
-        spyOn(this.plugin,'setAnswer').and.callThrough();
+        spyOn(this.plugin, 'setAnswer').and.callThrough();
 
         done();
     });
@@ -44,21 +41,15 @@ describe('MTF Plugin test cases', function() {
 
     });
 
-     it('Mtf plugin getLhsOption', function() {
+    it('Mtf plugin getLhsOption', function() {
         this.plugin.getLhsOption({ primary: true });
         expect(this.plugin.getLhsOption).toHaveBeenCalled();
         expect(this.plugin.getLhsOption.calls.count()).toEqual(1);
     });
 
-    it("mtf force attribute checking ",function(){
+    it("mtf force attribute checking ", function() {
 
-        expect(true).toEqual(this.plugin._force==false)
-     })
-
-
-   
-
-
-
+        expect(true).toEqual(this.plugin._force == false)
+    })
 
 });
