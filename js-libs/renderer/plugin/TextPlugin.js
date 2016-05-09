@@ -6,17 +6,30 @@ var TextPlugin = Plugin.extend({
         var instance = this;
         var fontsize = data.fontsize || 20;
         var dims = this.relativeDims();
-        if (data.w) {
-            var exp = parseFloat(PluginManager.defaultResWidth * data.w / 100);
-            var cw = this._parent.dimensions().w;
-            var width = parseFloat(cw * data.w / 100);
-            var scale = parseFloat(width / exp);
-            fontsize = parseFloat(fontsize * scale);
+        var fontFace = (data.font || 'Arial');
+        var lineHeight = (data.lineHeight ? data.lineHeight : 0);
+        var outline = (data.outline ? data.outline : 0);
+
+        // Resize if the font size is a number
+        if (isFinite(fontsize)) {
+            if (data.w) {
+                var exp = parseFloat(PluginManager.defaultResWidth * data.w / 100);
+                var cw = this._parent.dimensions().w;
+                var width = parseFloat(cw * data.w / 100);
+                var scale = parseFloat(width / exp);
+                fontsize = parseFloat(fontsize * scale);
+                fontsize = fontsize + 'px';
+            }
         }
-        var font = fontsize + 'px ' + data.font || 'Arial';
+
+        // If font size is in "em", "%" or "px", no resizing will be done
+        var font = fontsize + " " + fontFace;
+
         if (data.weight) {
             font = data.weight + ' ' + font;
-        }        
+        }
+
+        // Value of the text
         var textStr = '';
         if (data.$t || data.__text) {
             textStr = (data.$t || data.__text);
@@ -25,15 +38,19 @@ var TextPlugin = Plugin.extend({
         } else if (data.param) {
             textStr = (this.getParam(data.param.trim()) || '');
         }
+
+        // Init text object
         var text = new createjs.Text(textStr, font, data.color || '#000000');
-        
+        text.lineWidth = dims.w;
+        text.maxWidth = dims.w;
+        text.x = dims.x;
+        text.y = dims.y;
+        text.lineHeight = lineHeight * (text.getMeasuredLineHeight());
+        text.outline = outline;
+
+        // H and V alignment
         var align  = (data.align ? data.align.toLowerCase() : 'left');
         var valign = (data.valign ? data.valign.toLowerCase() : 'top');
-        var lineHeight = (data.lineHeight ? data.lineHeight : 0);
-        var outline = (data.outline ? data.outline : 0);
-
-        text.x = dims.x;
-        text.lineWidth = dims.w;
 
         if (align == 'left') {
             text.x = dims.x;
@@ -42,6 +59,7 @@ var TextPlugin = Plugin.extend({
         } else if (align == 'center') {
             text.x = dims.x + dims.w/2;
         }
+
         if (valign == 'top') {
             text.y = dims.y;
             text.textBaseline = 'hanging';
@@ -52,11 +70,9 @@ var TextPlugin = Plugin.extend({
             text.y = dims.y + dims.h/2 - text.getMeasuredHeight()/2;
             text.textBaseline = 'hanging';
         }
-        
+
         text.textAlign = align;
         text.valign = valign;
-        text.lineHeight = lineHeight * (text.getMeasuredLineHeight());
-        text.outline = outline;
         this._self = text;
     },
     refresh: function() {

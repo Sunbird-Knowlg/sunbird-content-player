@@ -14,16 +14,70 @@ var ImagePlugin = Plugin.extend({
         }
         if(_.isEmpty(asset)) {
             this._render = false;
-            console.warn("asset not found", data);
+            console.warn("ImagePlugin: Asset not found", data);
         } else {
-            var s = new createjs.Bitmap(this._theme.getAsset(asset));
+            var assetSrc = this._theme.getAsset(asset);
+
+            var img;
+            if(_.isString(assetSrc)){
+                img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.src = assetSrc;
+            }else{
+                img = assetSrc;
+            }
+            var s = new createjs.Bitmap(img);
+            this._self = s;
+
             var dims = this.relativeDims();
-            var sb = s.getBounds();
+
+            // Align the image in its container
+            var xd = dims.x;
+            dims = this.alignDims();
             s.x = dims.x;
             s.y = dims.y;
-            this._self = s;
-            if(sb) this.setScale();    
+            if(_.isString(assetSrc)){
+                AssetManager.strategy.loadAsset(this._stage._data.id, data.asset, assetSrc, function(){
+                    if(_.isString(instance._self)){
+                        console.log("ImagePlugin: Image load failed", assetSrc);
+                    }
+                    var s = instance._self;
+                    var dims = instance.relativeDims();
+                    var sb = s.getBounds();
+                    s.x = dims.x;
+                    s.y = dims.y;
+                    var sb = s.getBounds();
+                    if(sb) {                    
+                        instance.setScale(); 
+                    }
+                    instance._theme.update();
+                });                
+            }else{
+                var sb = s.getBounds();
+                if(sb) {
+                    this.setScale();
+                }
+            }
         }        
+    },
+    alignDims: function() {
+        console.log(this._parent._isContainer);
+        var parentDims = this._parent.dimensions();
+        var dims = this._dimensions;
+
+        // Alignment of the image in its parent container
+        var align  = (this._data.align ? this._data.align.toLowerCase() : "");
+        var valign = (this._data.valign ? this._data.valign.toLowerCase() : "");
+
+        if (align == "left") dims.x = 0;
+        else if (align == "right") dims.x = (parentDims.w - dims.w);
+        else if (align == "center") dims.x = ((parentDims.w - dims.w)/2);
+
+        if (valign == "top") dims.y = 0;
+        else if (valign == "bottom") dims.y = (parentDims.h - dims.h);
+        else if (valign == "middle") dims.y = ((parentDims.h - dims.h)/2);
+
+        return this._dimensions;
     },
     refresh: function() {
         var asset = '';

@@ -144,22 +144,40 @@ var Plugin = Class.extend({
             x: parseFloat(parentDims.w * (data.x || 0)/100),
             y: parseFloat(parentDims.h * (data.y || 0)/100),
             w: parseFloat(parentDims.w * (data.w || 0)/100),
-            h: parseFloat(parentDims.h * (data.h || 0)/100)
+            h: parseFloat(parentDims.h * (data.h || 0)/100),
+            stretch: ((typeof(data.stretch) != "undefined") ? data.stretch : true)
         }
         return relDimensions;
 	},
 	setScale: function() {
 		var sb = this._self.getBounds();
-		var dims = this.relativeDims();
-		if(dims.h == 0) {
+        var dims = this.relativeDims();
+
+        // To maintain aspect ratio when both h and w are specified
+        if (!dims.stretch) {
+            if ((dims.h != 0) && (dims.w != 0)) {
+                // If h > w, then constrain on w (equivalent to setting h = 0) and vice versa
+                if (sb.height > sb.width)  dims.h = 0;
+                else dims.w = 0;
+            }
+        }
+
+        // Compute constrained dimensions (e.g. if w is specified but not height)
+        if(dims.h == 0) {
             dims.h = dims.w * sb.height / sb.width;
         }
         if(dims.w == 0) {
             dims.w = dims.h * sb.width / sb.height;
         }
-		if (this._self ) {
+
+        // Remember the computed dimensions
+        this._dimensions.h = dims.h;
+        this._dimensions.w = dims.w;
+
+        // Scale the object based on above computations
+        if (this._self ) {
             this._self.scaleY = dims.h / sb.height;
-        	this._self.scaleX = dims.w / sb.width;
+            this._self.scaleX = dims.w / sb.width;
         }
 	},
 	initPlugin: function(data) {
