@@ -17,13 +17,39 @@ var ImagePlugin = Plugin.extend({
             console.warn("asset not found", data);
         } else {
             var s = new createjs.Bitmap(this._theme.getAsset(asset));
-            var dims = this.relativeDims();
-            var sb = s.getBounds();
-            s.x = dims.x;
-            s.y = dims.y;
             this._self = s;
-            if(sb) this.setScale();    
+
+            // Calculate relative dimensions
+            var dims = this.relativeDims();
+
+            // Scale the aspect ratios
+            var sb = s.getBounds();
+            if(sb) this.setScale();
+
+            // Align the image in its container
+            var xd = dims.x;
+            dims = this.alignDims();
+            s.x = dims.x;
+            s.y = dims.y; 
         }        
+    },
+    alignDims: function() {
+        var parentDims = this._parent.dimensions();
+        var dims = this._dimensions;
+
+        // Alignment of the image in its parent container
+        var align  = (this._data.align ? this._data.align.toLowerCase() : "");
+        var valign = (this._data.valign ? this._data.valign.toLowerCase() : "");
+
+        if (align == "left") dims.x = 0;
+        else if (align == "right") dims.x = (parentDims.w - dims.w);
+        else if (align == "center") dims.x = ((parentDims.w - dims.w)/2);
+
+        if (valign == "top") dims.y = 0;
+        else if (valign == "bottom") dims.y = (parentDims.h - dims.h);
+        else if (valign == "middle") dims.y = ((parentDims.h - dims.h)/2);
+
+        return this._dimensions;
     },
     refresh: function() {
         var asset = '';

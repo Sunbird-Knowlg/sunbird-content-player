@@ -322,12 +322,14 @@ var OptionPlugin = Plugin.extend({
         var innerECML = this.getInnerECML();
         if (!_.isEmpty(innerECML)) {
             var data = {};
-            data.x = 0;
-            data.y = 0;
-            data.w = 100;
-            data.h = 100;
+            var padx = this._data.padX || 0;
+            var pady = this._data.padY || 0;
+            data.x = padx;
+            data.y = pady;
+            data.w = 100 - (2 * padx);
+            data.h = 100 - (2 * pady);
             Object.assign(data, innerECML);
-            this.invokeChildren(data, this, this._stage, this._theme);
+            PluginManager.invoke('g', data, this, this._stage, this._theme);
         }
     },
     resolveModelValue: function(data) {
