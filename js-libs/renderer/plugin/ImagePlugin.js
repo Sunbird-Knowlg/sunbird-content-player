@@ -14,26 +14,57 @@ var ImagePlugin = Plugin.extend({
         }
         if(_.isEmpty(asset)) {
             this._render = false;
-            console.warn("asset not found", data);
+            console.warn("ImagePlugin: Asset not found", data);
         } else {
-            var s = new createjs.Bitmap(this._theme.getAsset(asset));
+            var assetSrc = this._theme.getAsset(asset);
+
+            var img;
+            if(_.isString(assetSrc)){
+                img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.src = assetSrc;
+            }else{
+                img = assetSrc;
+            }
+            var s = new createjs.Bitmap(img);
             this._self = s;
 
-            // Calculate relative dimensions
             var dims = this.relativeDims();
-
-            // Scale the aspect ratios
-            var sb = s.getBounds();
-            if(sb) this.setScale();
 
             // Align the image in its container
             var xd = dims.x;
             dims = this.alignDims();
             s.x = dims.x;
-            s.y = dims.y; 
+            s.y = dims.y;
+            if(_.isString(assetSrc)){
+                //console.log("ImagePlugin: Image is not present in loaders. So loading asset.");
+                AssetManager.strategy.loadAsset(this._stage._data.id, data.asset, assetSrc, function(){
+                    if(_.isString(instance._self)){
+                        //console.log("ImagePlugin: Image load failed", assetSrc);
+                    }
+                    //console.log("ImagePlugin: Asset loaded", assetSrc);
+                    var s = instance._self;
+                    var dims = instance.relativeDims();
+                    var sb = s.getBounds();
+                    s.x = dims.x;
+                    s.y = dims.y;
+                    var sb = s.getBounds();
+                    if(sb) {                    
+                        instance.setScale(); 
+                    }
+                    instance._theme.update();
+                    //Renderer.update = true;
+                });                
+            }else{
+                var sb = s.getBounds();
+                if(sb) {
+                    this.setScale();
+                }
+            }
         }        
     },
     alignDims: function() {
+        console.log(this._parent);
         var parentDims = this._parent.dimensions();
         var dims = this._dimensions;
 
