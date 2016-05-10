@@ -54,14 +54,14 @@ CommandManager = {
                 }
                 break;
             case 'STOP':
-                if (plugin) {
+                if (action.sound === true) {
+                    //this is to stop all audios playing
+                    createjs.Sound.stop();
+                }   
+                if (plugin) {                    
                     plugin.stop(action);
                 } else {
-                    if (action.sound === true) {
-                        AudioManager.stopAll(action);
-                    } else {
-                        AudioManager.stop(action);
-                    }
+                    AudioManager.stop(action);                    
                 }
                 break;
             case 'TOGGLEPLAY':

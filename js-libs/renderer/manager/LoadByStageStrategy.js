@@ -205,7 +205,6 @@ LoadByStageStrategy = Class.extend({
             }*/
             loader.installPlugin(createjs.Sound);
             loader.on("complete", function() {
-                console.info("LoadByStageStrategy: asset " + assetId + " loaded successfully.");
                 if(cb){
                     cb();
                 }
