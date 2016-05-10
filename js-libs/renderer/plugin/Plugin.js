@@ -154,7 +154,7 @@ var Plugin = Class.extend({
         var dims = this.relativeDims();
 
         // To maintain aspect ratio when both h and w are specified
-        if (!dims.stretch) {
+        if (dims.stretch) {
             if ((dims.h != 0) && (dims.w != 0)) {
                 // If h > w, then constrain on w (equivalent to setting h = 0) and vice versa
                 if (sb.height > sb.width)  dims.h = 0;

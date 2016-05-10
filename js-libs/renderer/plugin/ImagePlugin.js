@@ -61,7 +61,6 @@ var ImagePlugin = Plugin.extend({
         }        
     },
     alignDims: function() {
-        console.log(this._parent._isContainer);
         var parentDims = this._parent.dimensions();
         var dims = this._dimensions;
 
