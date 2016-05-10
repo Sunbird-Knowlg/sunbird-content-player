@@ -226,6 +226,16 @@ var OptionPlugin = Plugin.extend({
                     instance._parent.setAnswer(instance, plugin._index);
 
                     // Remember the answer so that on overwrite, we can clear it
+                    if (_.isArray(snapTo)) {
+                        for (var i = 0; i < snapTo.length; i++) {
+                            var rhsOption = snapTo[i];
+                            if (rhsOption._answer == instance)
+                                rhsOption._answer = undefined;
+                        }
+                    } else if (snapTo) {
+                        if (snapTo._answer == instance) 
+                            snapTo._answer = undefined;
+                    }   
                     plugin._answer = instance;
                 }
 
