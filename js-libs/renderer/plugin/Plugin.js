@@ -133,7 +133,8 @@ var Plugin = Class.extend({
 	            x: parseFloat(parentDims.w * (this._data.x || 0)/100),
 	            y: parseFloat(parentDims.h * (this._data.y || 0)/100),
 	            w: parseFloat(parentDims.w * (this._data.w || 0)/100),
-	            h: parseFloat(parentDims.h * (this._data.h || 0)/100)
+	            h: parseFloat(parentDims.h * (this._data.h || 0)/100),
+                stretch: ((typeof(this._data.stretch) != "undefined") ? this._data.stretch : true)
 	        }
 		}
         return this._dimensions;
@@ -154,7 +155,7 @@ var Plugin = Class.extend({
         var dims = this.relativeDims();
 
         // To maintain aspect ratio when both h and w are specified
-        if (dims.stretch) {
+        if (!dims.stretch) {
             if ((dims.h != 0) && (dims.w != 0)) {
                 // If h > w, then constrain on w (equivalent to setting h = 0) and vice versa
                 if (sb.height > sb.width)  dims.h = 0;
