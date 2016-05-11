@@ -153,7 +153,8 @@ var Plugin = Class.extend({
 	setScale: function() {
 		var sb = this._self.getBounds();
         var dims = this.relativeDims();
-
+        var parentDims = this._parent.dimensions();
+        
         // To maintain aspect ratio when both h and w are specified
         if (!dims.stretch) {
             if ((dims.h != 0) && (dims.w != 0)) {
@@ -166,9 +167,17 @@ var Plugin = Class.extend({
         // Compute constrained dimensions (e.g. if w is specified but not height)
         if(dims.h == 0) {
             dims.h = dims.w * sb.height / sb.width;
+            if (parentDims.h < dims.h) {
+                dims.h = parentDims.h;
+                dims.w = dims.h * sb.width / sb.height;
+            }
         }
         if(dims.w == 0) {
             dims.w = dims.h * sb.width / sb.height;
+            if (parentDims.w < dims.w) {
+                dims.w = parentDims.w;
+                dims.h = dims.w * sb.height / sb.width;
+            }
         }
 
         // Remember the computed dimensions
