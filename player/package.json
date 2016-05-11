@@ -39,6 +39,7 @@
     "gulp-util": "^2.2.14",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
+    "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^1.0.0",
     "karma-jasmine": "^1.0.2",
     "karma-jasmine-matchers": "^2.0.2",

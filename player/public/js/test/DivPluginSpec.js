@@ -63,13 +63,7 @@ describe('Div Plugin test cases', function() {
 
         expect(this.plugin._self.h).not.toBeNull();
     });
-    it('Div plugin registerEvents function call validation', function() {
-        this.plugin.registerEvents();
-        expect(this.plugin.registerEvents).toHaveBeenCalled();
-        expect(this.plugin.registerEvents.calls.count()).toEqual(1);
-
-    });
-
+    
     it('Div plugin postion validation', function() {
         expect(this.plugin._self.position).not.toBeNull();
         expect(false).toEqual(this.plugin._self.position == "absolute");
@@ -80,6 +74,12 @@ describe('Div Plugin test cases', function() {
     });
     it('Div render validation', function() {
         expect(true).toEqual(this.plugin._render == true);
+
+    });
+    it('Div plugin registerEvents function call validation', function() {
+        this.plugin.registerEvents();
+        expect(this.plugin.registerEvents).toHaveBeenCalled();
+        expect(this.plugin.registerEvents.calls.count()).toEqual(1);
 
     });
 

@@ -25,6 +25,11 @@ module.exports = function(grunt) {
         },
         uglify: {
             js: {
+                options: {
+                    beautify: true,
+                    mangle: false 
+                },
+
                 files: {
                     'public/js/app/renderer.min.js': [
                         'public/js/app/GlobalContext.js',

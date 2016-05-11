@@ -63,5 +63,31 @@ describe('Shape Plugin test cases', function() {
         expect(this.plugin._self.type).not.toBeNull();
     });
 
+    it('Shpae plugin shape instance', function() {
+        expect(true).toEqual(this.plugin._self instanceof createjs.Shape);
+
+    });
+
+    it("The shape plugin stroke defined", function() {
+        expect(this.plugin._self.stroke).not.toBeNull();
+    });
+
+
+    it("The shape plugin stroke defined", function() {
+
+
+        expect(this.plugin.opacity).not.toBeNull();
+    });
+
+    xit('Shape command rect', function() {
+        this.plugin._self.data.type = 'rect';
+        this.plugin.initPlugin(this.plugin.data.type);
+        expect(this.plugin.initPlugin).toHaveBeenCalled();
+        expect(this.plugin.initPlugin.calls.count()).toEqual(1);
+    });
+
+
+
+
 
 });

@@ -63,6 +63,9 @@ describe('MCQ Plugin test cases', function() {
         expect(true).toEqual(this.plugin._render == true);
 
     });
+    xit('Mcq plugin Contaienr instance validation', function() {
+        expect(true).toEqual(this.plugin._self instanceof createjs.Container());
+    });
 
 
 
