@@ -5,7 +5,7 @@ AudioManager = {
         return action.stageId + ':' + action.asset;
     },
     play: function(action, instance) {
-        if ("undefined" != typeof action && "undefined" != typeof action.asset) {
+        if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
             instance = instance || AudioManager.instances[AudioManager.uniqueId(action)] || {};
             if(instance.object) {
                 if(instance.object.paused) {
@@ -31,7 +31,7 @@ AudioManager = {
         }
     },
     togglePlay: function(action) {
-        if ("undefined" != typeof action && "undefined" != typeof action.asset) {
+        if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
             var instance = AudioManager.instances[AudioManager.uniqueId(action)] || {};
             if(instance && instance.object) {
                 if(instance.object.playState === createjs.Sound.PLAY_FINISHED || instance.object.paused) {
@@ -47,7 +47,7 @@ AudioManager = {
         }
     },
     pause: function(action, instance) {
-        if ("undefined" != typeof action && "undefined" != typeof action.asset) {
+        if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
             instance = instance || AudioManager.instances[AudioManager.uniqueId(action)];
             if(instance && instance.object && instance.object.playState === createjs.Sound.PLAY_SUCCEEDED) {
                 instance.object.paused = true;

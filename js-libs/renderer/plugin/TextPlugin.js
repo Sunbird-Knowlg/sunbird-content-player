@@ -42,7 +42,6 @@ var TextPlugin = Plugin.extend({
         // Init text object
         var text = new createjs.Text(textStr, font, data.color || '#000000');
         text.lineWidth = dims.w;
-        text.maxWidth = dims.w;
         text.x = dims.x;
         text.y = dims.y;
         text.lineHeight = lineHeight * (text.getMeasuredLineHeight());

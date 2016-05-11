@@ -31,11 +31,12 @@ var ImagePlugin = Plugin.extend({
 
             var dims = this.relativeDims();
 
-            // Align the image in its container
-            var xd = dims.x;
-            dims = this.alignDims();
-            s.x = dims.x;
-            s.y = dims.y;
+            // // Align the image in its container
+            // var xd = dims.x;
+            // dims = this.alignDims();
+            // s.x = dims.x;
+            // s.y = dims.y;
+
             if(_.isString(assetSrc)){
                 AssetManager.strategy.loadAsset(this._stage._data.id, data.asset, assetSrc, function(){
                     if(_.isString(instance._self)){
@@ -58,6 +59,12 @@ var ImagePlugin = Plugin.extend({
                     this.setScale();
                 }
             }
+
+            // Align the image in its container
+            var xd = dims.x;
+            dims = this.alignDims();
+            s.x = dims.x;
+            s.y = dims.y;
         }        
     },
     alignDims: function() {
