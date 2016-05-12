@@ -71,7 +71,7 @@
 				],
 				"identifier": "domain_14390"
 		    }, {
-            "template": "mcq_template_default",
+            "template": "org.ekstep.mcq.ia",
             "model": {},
             "question_audio": "domain_35036",
             "subject": "domain",
@@ -90,7 +90,7 @@
             "gradeLevel": [
                 "Grade 1"
             ],
-            "question": "1 गाजर की कीमत क्या है ?  ",
+            "question": "1 गाजर की कीमत क्या है ? abc ",
             "language": [
                 "English"
             ],
@@ -99,22 +99,14 @@
             "question_count": "",
             "options": [{
                 "value": {
-                    "type": "text", "asset": "ABC", "fontsize": "150"
+                    "type": "mixed", "image": "barber_img", "audio": "cheers_soft"
                 }
             }, {
                 "value": {
-                    "type": "text", "asset": "DEF", "fontsize": "150"
+                    "type": "mixed", "image": "carpenter_img", "audio": "chimes"
                 },
                 "answer": true,
                 "score": 1
-            }, {
-                "value": {
-                    "type": "text", "asset": "GHI", "fontsize": "150"
-                }
-            }, {
-                "value": {
-                    "type": "text", "asset": "JKLM", "fontsize": "150"
-                }
             }]
         }, {
             "template": "mcq_template_default",
