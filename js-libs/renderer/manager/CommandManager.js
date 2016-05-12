@@ -108,7 +108,12 @@ CommandManager = {
                     startApp(action.app);                                
                 break;
             case 'EVAL':
-                if (plugin) plugin.evaluate(action);
+                if (plugin){
+                    if(action.htmlEval){
+                        //This is to suppress evalution action generating by ECML content
+                        plugin.evaluate(action);
+                    }                   
+                } 
                 break;
             case 'RELOAD':
                 if (plugin) plugin.reload(action);

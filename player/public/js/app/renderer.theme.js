@@ -186,6 +186,7 @@ angular.module('genie-canvas.theme',[])
                 var action = {"type":"command","command":"eval","asset":Renderer.theme._currentStage};
                 action.success = "correct_answer";
                 action.failure = "wrong_answer";
+                action.htmlEval = "true";
                 CommandManager.handle(action);
             });
         }
