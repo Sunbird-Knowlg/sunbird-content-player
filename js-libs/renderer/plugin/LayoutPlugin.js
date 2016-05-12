@@ -23,6 +23,7 @@ var LayoutPlugin = Plugin.extend({
         if ("undefined" != typeof data.count) 
             this._cellsCount = data.count;
         var model = data.iterate;
+        model = data.iterate = this.replaceExpressions(model);
     	var dataObjs = this._stage.getModelValue(model);
         if(dataObjs) {
             var length = dataObjs.length;
