@@ -5,15 +5,36 @@
 // the 2nd parameter is an array of 'requires'
 
 var stack = new Array();
+var newContentId = "";
+var contentMetadata = undefined;
+var contentData = undefined;
+
+
+
+window.test = function (metadata, contentJSON) {
+        console.log("inside into iframe , contentJSON : ", contentJSON);
+        contentData = contentJSON;
+        console.log(metadata.identifier);
+        contentMetadata = metadata;
+}
+
+// function test() {
+//     // window.parent.test();
+//     window.parent.postMessage(
+//             {'func':'alertMyMessage','params':['Thanks for Helping me']},
+//             'http://localhost:3000/'
+//         );
+// }
 
 function launchInitialPage(appInfo, $state) {
+
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
         if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
             $state.go('showContent', {"contentId": GlobalContext.game.id});
         } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
             (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
             //$state.go('showContent', {});
-             $state.go('contentList', { "id": GlobalContext.game.id });
+             // $state.go('contentList', { "id": GlobalContext.game.id });
         } else {
             alert("App launched with invalid context.");
             exitApp();
@@ -97,6 +118,16 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 url: "/play/content/:itemId",
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
+            })
+            .state('previewContent', {
+                cache: false,
+                url: "/preview",
+                controller: 'PreviewCtrl'
+            })
+            .state('previewContentTest', {
+                cache: false,
+                url: "/preview/:id",
+                controller: 'PreviewCtrlTest'
             });
     })
     .controller('ContentListCtrl', function($scope, $rootScope, $http, $ionicModal, $cordovaFile, $cordovaDialogs, $cordovaToast, $ionicPopover, $state, $stateParams, $q, ContentService, $ionicHistory) {
@@ -145,6 +176,9 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
 
         $scope.resetContentListCache = function() {
             // jQuery("#loadingDiv").show();
+            
+            // window.parent.test();
+            // test();
 
             $rootScope.renderMessage("", 0);
             ContentService.getContent(id)
@@ -250,6 +284,9 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         
         if ($stateParams.itemId) {
         $scope.item = _.findWhere($rootScope.stories, { identifier: $stateParams.itemId });
+
+
+        console.log("item data : ", JSON.stringify($scope.item));
         if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
             HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
                 jQuery('#gameAreaLoad').hide();
@@ -258,8 +295,11 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 $scope.currentProjectUrl = path;
                 jQuery("#htmlFrame").show();
             });
-        } else {
-            Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
+        } else { 
+            if (AppConfig.APP_STATUS ==  'AT' && contentData) 
+                Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, contentData, true);
+            else
+                Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
         }
         } else {
             alert('Name or Launch URL not found.');
@@ -301,5 +341,40 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     });
                 }, 5000);
             }
+        });
+    }).controller('PreviewCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
+        setTimeout(function() {
+            newContentId = contentMetadata.identifier;
+            if (CONTENT_MIMETYPES.indexOf(contentMetadata.mimeType) > -1) {
+                $state.go('showContent', {"contentId": newContentId});
+            } else if ((COLLECTION_MIMETYPE == contentMetadata.mimeType) ||
+                (ANDROID_PKG_MIMETYPE == contentMetadata.mimeType && contentMetadata.code == packageName)) {
+                $state.go('contentList', { "id": newContentId });
+            }
+
+        }, 500);
+        
+    }).controller('PreviewCtrlTest', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
+        console.log("inside into PreviewCtrlTest");
+        var id = $stateParams.id;
+        
+        ContentService.getContent(id)
+        .then(function(data) {
+            GlobalContext.currentContentId = data.identifier;
+            GlobalContext.currentContentMimeType = data.mimeType;
+            $scope.$apply(function() {
+                $scope.item = data;
+            });
+            $rootScope.stories = [data];
+            console.log("$rootScope.stories : ", $rootScope.stories);
+
+            $state.go('playContent', {
+                'itemId': id
+            });
+            
+        })
+        .catch(function(err) {
+            console.info("contentNotAvailable : ", err);
+            contentNotAvailable();
         });
     });
