@@ -140,7 +140,7 @@ var ThemePlugin = Plugin.extend({
             Renderer.update = true;
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
-            OverlayHtml.sceneEnter();
+            //OverlayHtml.sceneEnter();
         });
         var nextIdx = this._currIndex++;
         if(this._currentScene) {

@@ -139,10 +139,10 @@ LoadByStageStrategy = Class.extend({
                         nextContainer.hide();
                     }                    
                 }
-                OverlayHtml.showNext();
+                //OverlayHtml.showNext();
             });
         } else {
-            OverlayHtml.showNext();
+            //OverlayHtml.showNext();
         }
         if (prevStageId) {
             instance.loadStage(prevStageId, function() {

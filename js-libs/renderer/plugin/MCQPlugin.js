@@ -78,6 +78,9 @@ var MCQPlugin = Plugin.extend({
         var val = option.toggleShadow();
         controller.setModelValue(option._model, val, 'selected');
 
+        if(!val){
+            MCQEvaluator.isReadyToEvaluate(this._options);
+        }
         // Shadow state has changed, re-render
         Renderer.update = true;
         return val;

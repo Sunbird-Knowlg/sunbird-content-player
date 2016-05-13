@@ -1,4 +1,5 @@
 OverlayHtml = {
+    _rootScope: null,
 	showNext: function() {
 		this._updateNavigate("next");
 	},
@@ -23,13 +24,18 @@ OverlayHtml = {
         }
 	},
 	_getRootScope: function() {
-        var rootScope = null;
-        var overlayDOMElement = document.getElementById('overlayHTML');
-        if ("undefined" != typeof angular && "undefined" != typeof overlayDOMElement) {
-            rootScope = angular.element(overlayDOMElement).scope().$root;
+        if(_.isNull(_rootScope)){
+            var overlayDOMElement = document.getElementById('overlayHTML');
+            if ("undefined" != typeof angular && "undefined" != typeof overlayDOMElement) {
+                _rootScope = angular.element(overlayDOMElement).scope().$root;
+            }
         }
-        return rootScope;
+        return _rootScope;            
     },
+    isReadyToEvalute: function(enableEval){
+        var rootScope = this._getRootScope();
+        rootScope.enableEval = enableEval;
+    }
     sceneEnter: function() {
         var isItemStage = this.isItemScene();
         if (isItemStage) {
