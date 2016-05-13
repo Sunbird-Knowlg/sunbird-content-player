@@ -209,7 +209,7 @@ module.exports = function(grunt) {
                         'cordova-plugin-device@1.1.1',
                         'cordova-plugin-file@4.1.0',
                         'cordova-plugin-splashscreen@3.1.0',
-                        'com.ionic.keyboard@1.0.4',
+                        'ionic-plugin-keyboard@2.2.0',
                         'cordova-plugin-console@1.0.2',
                         'cordova-plugin-whitelist@1.2.1',
                         'cordova-plugin-crosswalk-webview@1.5.0',
