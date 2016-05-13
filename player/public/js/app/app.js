@@ -34,7 +34,7 @@ function launchInitialPage(appInfo, $state) {
         } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
             (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
             //$state.go('showContent', {});
-             // $state.go('contentList', { "id": GlobalContext.game.id });
+             $state.go('contentList', { "id": GlobalContext.game.id });
         } else {
             alert("App launched with invalid context.");
             exitApp();
@@ -119,15 +119,15 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
             })
-            .state('previewContent', {
+            .state('newContentpreview', {
                 cache: false,
                 url: "/preview",
-                controller: 'PreviewCtrl'
+                controller: 'NewContentPreviewCtrl'
             })
-            .state('previewContentTest', {
+            .state('existingContentPreview', {
                 cache: false,
                 url: "/preview/:id",
-                controller: 'PreviewCtrlTest'
+                controller: 'ExistingContentPreviewCtrl'
             });
     })
     .controller('ContentListCtrl', function($scope, $rootScope, $http, $ionicModal, $cordovaFile, $cordovaDialogs, $cordovaToast, $ionicPopover, $state, $stateParams, $q, ContentService, $ionicHistory) {
@@ -342,7 +342,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 }, 5000);
             }
         });
-    }).controller('PreviewCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
+    }).controller('NewContentPreviewCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         setTimeout(function() {
             newContentId = contentMetadata.identifier;
             if (CONTENT_MIMETYPES.indexOf(contentMetadata.mimeType) > -1) {
@@ -352,10 +352,10 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 $state.go('contentList', { "id": newContentId });
             }
 
-        }, 500);
+        }, 400);
         
-    }).controller('PreviewCtrlTest', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
-        console.log("inside into PreviewCtrlTest");
+    }).controller('ExistingContentPreviewCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
+        console.log("inside into ExistingContentPreviewCtrl");
         var id = $stateParams.id;
         
         ContentService.getContent(id)
