@@ -1,22 +1,65 @@
 var PlaceHolderPlugin = Plugin.extend({
     _type: 'placeholder',
-    _isContainer: false,
-    _render: false,
+    _isContainer: true,
+    _render: true,
     initPlugin: function(data) {
+        console.info("Placeholder data", data);
+        this._self = new createjs.Container();
         var dims = this.relativeDims();
+        console.info("dims", dims);
+        this._self.x = dims.x;
+        this._self.y = dims.y;
         var instance = this;
+        this.renderPlaceHolder(instance);
+    },
+    renderPlaceHolder: function(instance) {
+        var data = instance._data;
         if (data.model) {
-            instance.param = this._stage.getModelValue(data.model);
+            instance.param = instance._stage.getModelValue(data.model);
         } else if (data.param) {
-            instance.param = this._stage.params[data.param.trim()];
+            instance.param = instance._stage.params[data.param.trim()];
+        } else {
+
+            // Get the model values individually
+            // Either as a direct literal attribute, param or from model
+            var type = data.type;
+            if (type === undefined) {
+                if (data['param-type']) type = instance.evaluateExpr(data['param-type'].trim());
+                else if (data['model-type']) type = instance._stage.getModelValue(data['model-type'].trim());
+            }
+
+            var count = data.count;
+            if (count === undefined) {
+                if (data['param-count']) count = instance.evaluateExpr(data['param-count'].trim());
+                else if (data['model-count']) count = instance._stage.getModelValue(data['model-count'].trim());
+                else count = 1;
+            }
+
+            var asset = data.asset;
+            if (asset === undefined) {
+                if (data['param-asset']) asset = instance.evaluateExpr(data['param-asset'].trim());
+                else if (data['model-asset']) asset = instance._stage.getModelValue(data['model-asset'].trim());
+            }
+
+            instance.param = {
+                type: type,
+                asset: asset,
+                count: count
+            }
         }
+        console.info("count", count);
+
         if (instance.param) {
-            if (instance.param.type == 'gridLayout') {
-                instance.renderGridLayout(instance._parent, instance, data);
-            } else if (instance.param.type == 'image') {
-                instance.renderImage(instance);
-            } else if (instance.param.type == 'text') {
-                instance.renderText(instance);
+
+            // Asset is mandatory
+            if (instance.param.asset) {
+                if (instance.param.type == 'gridLayout') {
+                    instance.renderGridLayout(instance, instance, data);
+                } else if (instance.param.type == 'image') {
+                    instance.renderImage(instance);
+                } else if (instance.param.type == 'text') {
+                    instance.renderText(instance);
+                }
             }
         }
     },
@@ -33,6 +76,7 @@ var PlaceHolderPlugin = Plugin.extend({
         PluginManager.invoke('image', data, instance._parent, instance._stage, instance._theme);
     },
     renderGridLayout: function(parent, instance, data) {
+        console.info("parent", parent);
         var computePixel = function(area, repeat) {
             return Math.floor(Math.sqrt(parseFloat(area / repeat)))
         }
@@ -86,8 +130,8 @@ var PlaceHolderPlugin = Plugin.extend({
             }
         }
 
-        var x = instance.dimensions().x,
-            y = instance.dimensions().y,
+        var x = 0,
+            y = 0,
             area = instance.dimensions().w * instance.dimensions().h,
             pad = instance.dimensions().pad || 0,
             repeat = instance.param.count;
@@ -106,11 +150,11 @@ var PlaceHolderPlugin = Plugin.extend({
         param.paddedImg.x = x + pad;
         param.paddedImg.y = y + pad;
 
-        var instanceBoundary = instance.dimensions().x + instance.dimensions().w;
+        var instanceBoundary = 0 + instance.dimensions().w;
         for (i = 0; i < param.count; i++) {
             var clonedAsset = param.paddedImg.clone(true);
             if ((x + pixelPerImg) > instanceBoundary) {
-                x = instance.dimensions().x || 0;
+                x = 0;
                 y += pixelPerImg + pad;
             }
             clonedAsset.x = x + pad;
@@ -123,6 +167,12 @@ var PlaceHolderPlugin = Plugin.extend({
             }
             parent.addChild(clonedAsset);
         }
+    },
+    refresh: function() {
+        this._self.removeAllChildren();
+        this._currIndex = 0;
+        this.renderPlaceHolder(this);
+        Renderer.update = true;
     }
 });
 PluginManager.registerPlugin('placeholder', PlaceHolderPlugin);

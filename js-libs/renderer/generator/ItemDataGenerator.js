@@ -27,8 +27,11 @@ var ItemDataGenerator = {
 			if (item_sets && items) {
 				var cumulativeIndex = 0; // How many questions have been there before this set
 				item_sets.forEach(function(map, setidx) {
-					list = ItemDataGenerator._addItems(map.id, map.count, items, list, shuffle, cumulativeIndex);
-					cumulativeIndex += items[map.id].length; // Next iteration will have these many questions
+					if (items[map.id]) {
+						list = ItemDataGenerator._addItems(map.id, map.count, items, list, shuffle, cumulativeIndex);
+						cumulativeIndex += items[map.id].length;
+					}
+					 // Next iteration will have these many questions
 				});
 				if (total_items && list.length > total_items) {
 					list = _.first(list, total_items);

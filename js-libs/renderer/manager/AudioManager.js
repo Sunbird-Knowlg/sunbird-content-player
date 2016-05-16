@@ -5,44 +5,56 @@ AudioManager = {
         return action.stageId + ':' + action.asset;
     },
     play: function(action, instance) {
-        instance = instance || AudioManager.instances[AudioManager.uniqueId(action)] || {};
-        if(instance.object) {
-            if(instance.object.paused) {
-                instance.object.paused = false;
-            } else if([createjs.Sound.PLAY_FINISHED, createjs.Sound.PLAY_INTERRUPTED, createjs.Sound.PLAY_FAILED].indexOf(instance.object.playState) !== -1) {
-                instance.object.play();
+        if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
+            instance = instance || AudioManager.instances[AudioManager.uniqueId(action)] || {};
+            if(instance.object) {
+                if(instance.object.paused) {
+                    instance.object.paused = false;
+                } else if([createjs.Sound.PLAY_FINISHED, createjs.Sound.PLAY_INTERRUPTED, createjs.Sound.PLAY_FAILED].indexOf(instance.object.playState) !== -1) {
+                    instance.object.play();
+                }
+            } else {
+                instance.object = createjs.Sound.play(action.asset, {interrupt:createjs.Sound.INTERRUPT_ANY});
+                instance._data = {id: AudioManager.uniqueId(action)};
+                AudioManager.instances[AudioManager.uniqueId(action)] = instance;
+                AssetManager.addStageAudio(Renderer.theme._currentStage, action.asset);
+            }        
+            if(createjs.Sound.PLAY_FAILED != instance.object.playState) {
+                EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PLAY"});
+            }
+            else {
+                delete AudioManager.instances[AudioManager.uniqueId(action)];
+                console.info( "Audio with 'id :" + action.asset  + "' is not found..")
             }
         } else {
-            instance.object = createjs.Sound.play(action.asset, {interrupt:createjs.Sound.INTERRUPT_ANY});
-            instance._data = {id: AudioManager.uniqueId(action)};
-            AudioManager.instances[AudioManager.uniqueId(action)] = instance;
-            AssetManager.addStageAudio(Renderer.theme._currentStage, action.asset);
-        }        
-        if(createjs.Sound.PLAY_FAILED != instance.object.playState) {
-            EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PLAY"});
-        }
-        else {
-            delete AudioManager.instances[AudioManager.uniqueId(action)];
-            console.info( "Audio with 'id :" + action.asset  + "' is not found..")
+            console.warn("Asset is not given to play.", action);
         }
     },
     togglePlay: function(action) {
-        var instance = AudioManager.instances[AudioManager.uniqueId(action)] || {};
-        if(instance && instance.object) {
-            if(instance.object.playState === createjs.Sound.PLAY_FINISHED || instance.object.paused) {
-                AudioManager.play(action, instance);    
-            } else if (!instance.object.paused) {
-                AudioManager.pause(action, instance);
-            }
+        if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
+            var instance = AudioManager.instances[AudioManager.uniqueId(action)] || {};
+            if(instance && instance.object) {
+                if(instance.object.playState === createjs.Sound.PLAY_FINISHED || instance.object.paused) {
+                    AudioManager.play(action, instance);    
+                } else if (!instance.object.paused) {
+                    AudioManager.pause(action, instance);
+                }
+            } else {
+                AudioManager.play(action, instance);
+            }    
         } else {
-            AudioManager.play(action, instance);
+            console.warn("Asset is not given to toggle play.", action);
         }
     },
     pause: function(action, instance) {
-        instance = instance || AudioManager.instances[AudioManager.uniqueId(action)];
-        if(instance && instance.object && instance.object.playState === createjs.Sound.PLAY_SUCCEEDED) {
-            instance.object.paused = true;
-            EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PAUSE"});
+        if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
+            instance = instance || AudioManager.instances[AudioManager.uniqueId(action)];
+            if(instance && instance.object && instance.object.playState === createjs.Sound.PLAY_SUCCEEDED) {
+                instance.object.paused = true;
+                EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PAUSE"});
+            }    
+        } else {
+            console.warn("Asset is not given to toggle pause.", action);
         }
     },
     stop: function(action) {
@@ -69,5 +81,8 @@ AudioManager = {
             instance.state = undefined;
             delete AudioManager.instances[soundId];
         }
+    },
+    cleanUp: function() {
+        AudioManager.instances = {};
     }
 }

@@ -36,9 +36,6 @@ Renderer = {
         }
         Renderer.running = true;
         Renderer.preview = preview || false;
-        var identifier = (game && game.identifier) ? game.identifier : null;
-        var version = (game && game.pkgVersion) ? game.pkgVersion : "1";
-        TelemetryService.start(identifier, version);
         if (data) {
             Renderer.init(data, canvasId, gameRelPath);
         } else {
@@ -67,7 +64,7 @@ Renderer = {
             Renderer.init(data, canvasId, gameRelPath);
         },null, 'xml')
         .fail(function(err) {
-            alert("Unable to render.", err);
+            alert("Invalid ECML please correct the Ecml : ", err);
         });
     },
     init: function(data, canvasId, gameRelPath) {
@@ -99,6 +96,7 @@ Renderer = {
         AnimationManager.cleanUp();
         AssetManager.destroy();
         TimerManager.destroy();
+        AudioManager.cleanUp();
         Renderer.theme.cleanUp();
         Renderer.theme = undefined;
         TelemetryService.end();

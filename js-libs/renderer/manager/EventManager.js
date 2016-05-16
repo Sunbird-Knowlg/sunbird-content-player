@@ -1,5 +1,5 @@
 EventManager = {
-	appEvents: ['enter', 'exit', 'remove', 'add', 'replace', 'show', 'hide'],
+	appEvents: ['enter', 'exit', 'remove', 'add', 'replace', 'show', 'hide', 'correct_answer', 'wrong_answer'],
 	registerEvents: function(plugin, data) {
 		var events = undefined;
 		if(data.events) {
@@ -95,13 +95,18 @@ EventManager = {
 				if(action.param) {
 					action.value = stage.getParam(action.param) || '';
 				}
-				if (action.asset_param) {
-					action.asset = stage.getParam(action.asset_param) || '';
-				} else if (action.asset_model) {
-					action.asset = stage.getModelValue(action.asset_model) || '';
+				if (action.asset || action.asset_param || action.asset_model) {
+					if (action.asset_param) {
+						action.asset = stage.getParam(action.asset_param) || '';
+					} else if (action.asset_model) {
+						action.asset = stage.getModelValue(action.asset_model) || '';
+					}
+				} else {
+					action.asset = plugin._id;		
 				}
 			}
-			if (!action.asset) {
+			var command = (action.command) ? action.command.toUpperCase() : "";
+			if (!action.asset && ["PLAY", "TOGGLEPLAY"].indexOf(command) == -1) {
 				action.pluginObj = plugin;
 			}
 			if(action.type === 'animation') {

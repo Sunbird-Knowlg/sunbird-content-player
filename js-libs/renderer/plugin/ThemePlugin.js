@@ -17,6 +17,7 @@ var ThemePlugin = Plugin.extend({
     _isContainer: false,
     _templateMap: {},
     _contentParams: {},
+    _isSceneChanging: false,
     initPlugin: function(data) {
         this._controllerMap = {};
         this._canvasId = data.canvasId;
@@ -83,6 +84,7 @@ var ThemePlugin = Plugin.extend({
         }
         this.update();
         jQuery('#gameAreaLoad').hide();
+        jQuery('#overlayHTML').show();
     },
     addController: function(p) {
         var controller = ControllerManager.get(p, this.baseDir);
@@ -132,11 +134,13 @@ var ThemePlugin = Plugin.extend({
         var instance = this;
         child.on('sceneenter', function() {
             instance.enableInputs();
+            instance._isSceneChanging = false;
             childPlugin.dispatchEvent('enter');
             instance.preloadStages();
             Renderer.update = true;
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
+            OverlayHtml.sceneEnter();
         });
         var nextIdx = this._currIndex++;
         if(this._currentScene) {
@@ -159,7 +163,7 @@ var ThemePlugin = Plugin.extend({
     },
     invokeStage: function(stageId) {
         var stage = _.clone(_.findWhere(this._data.stage, {id: stageId}));
-        if(stage.extends) {
+        if(stage && stage.extends) {
             baseStage = _.findWhere(this._data.stage, {id: stage.extends});
             stage = this.mergeStages(stage, baseStage);
         }
@@ -191,9 +195,14 @@ var ThemePlugin = Plugin.extend({
         return stage1;
     },
     transitionTo: function(action) {
+        // not next and previoud are clicked at the same time, 
+        // handle only one actions(next/previous)
+        if(this._isSceneChanging){ return; }
+        
         var stage = this._currentScene;
         TimerManager.stopAll(this._currentStage);
         if (action.transitionType === 'previous') {
+            this._isSceneChanging = true;
             if (stage._stageController && stage._stageController.hasPrevious()) {
                 stage._stageController.decrIndex(2);
                 this.replaceStage(stage._data.id, action);
@@ -212,6 +221,7 @@ var ThemePlugin = Plugin.extend({
             }
             this.replaceStage(action.value, action);
         } else {
+            this._isSceneChanging = true;
             if (stage._stageController && stage._stageController.hasNext()) {
                 this.replaceStage(stage._data.id, action);
             } else {
@@ -222,12 +232,13 @@ var ThemePlugin = Plugin.extend({
             }
         }
     },
-    removeHtmlElements: function(){
-        jQuery('#'+Renderer.divIds.gameArea + ' div').each(function(a) {
-            jQuery(this).remove();
-        });
-        jQuery('#'+Renderer.divIds.gameArea + ' video').each(function(a) {
-            jQuery(this).remove();
+    removeHtmlElements: function() {
+        var gameAreaEle =  jQuery('#'+Renderer.divIds.gameArea);
+        var chilElemtns = gameAreaEle.children();
+        jQuery(chilElemtns).each(function(){
+            if((this.id !== "overlayHTML") && (this.id !== "gameCanvas")){
+                jQuery(this).remove();
+            }
         });
     },
     disableInputs: function() {

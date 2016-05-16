@@ -132,21 +132,29 @@ LoadByStageStrategy = Class.extend({
         if (nextStageId) {
             instance.loadStage(nextStageId, function() {
                 var plugin = PluginManager.getPluginObject('next');
-                plugin.show();
-                var nextContainer = PluginManager.getPluginObject('nextContainer');
-                if (nextContainer) {
-                    nextContainer.show();
+                if(plugin){
+                    plugin.hide();
+                    var nextContainer = PluginManager.getPluginObject('nextContainer');
+                    if (nextContainer) {
+                        nextContainer.hide();
+                    }                    
                 }
+                OverlayHtml.showNext();
             });
+        } else {
+            OverlayHtml.showNext();
         }
         if (prevStageId) {
             instance.loadStage(prevStageId, function() {
                 var plugin = PluginManager.getPluginObject('previous');
-                plugin.show();
-                var previousContainer = PluginManager.getPluginObject('previousContainer');
-                if (previousContainer) {
-                    previousContainer.show();
+                if(plugin){
+                    plugin.hide();
+                    var previousContainer = PluginManager.getPluginObject('previousContainer');
+                    if (previousContainer) {
+                        previousContainer.hide();
+                    }
                 }
+                OverlayHtml.showPrevious();
             });
         }
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);
@@ -192,13 +200,32 @@ LoadByStageStrategy = Class.extend({
         loader.loadManifest(this.templateAssets, true);
         this.templateLoader = loader;
     },
-    loadAsset: function(stageId, assetId, path) {
-        if (this.loaders[stageId]) {
-            var loader = this.loaders[stageId];
-            loader.remove(assetId);
+    loadAsset: function(stageId, assetId, path, cb) {
+        var loader = this.loaders[stageId];
+        if (loader) {
+            var itemLoaded = loader.getItem(assetId);
+            /*if(itemLoaded){
+                loader.remove(assetId);                
+            }*/
             loader.installPlugin(createjs.Sound);
             loader.on("complete", function() {
-                console.info("asset " + assetId + " loaded successfully.");
+                if(cb){
+                    cb();
+                }
+            }, this);
+            loader.loadFile({id:assetId, src: path});
+        }else{
+            //Image is not intianlised to load, So loading image & adding to the loaders
+            loader = this._createLoader();
+            var instance = this;
+            loader.on("complete", function(instance, loader) {
+                if(_.isUndefined(instance.loaders)){
+                    instance.loaders = {};
+                }
+                instance.loaders[stageId] = loader;
+                if(cb){
+                    cb();
+                }
             }, this);
             loader.loadFile({id:assetId, src: path});
         }

@@ -4,7 +4,7 @@ MTFEvaluator = {
 		var pass = true;
 		var score = 0;
 		var res = [];
-		var answer = {};
+		//var answer = {};
 		if (item) {
 			var index = [];
 			_.each(item.lhs_options, function(opt){
@@ -24,13 +24,13 @@ MTFEvaluator = {
 
 						if (opt.answer == opt.selected) {
 							score += opt.score || 1;
-							answer[opt.value.asset] = true;
-						} else {
+							//answer[opt.value.asset] = true;
+						} /*else {
 							if(!(_.contains(index, opt.answer)) && (opt.selected != undefined))
 								pass = false; 
 							else if(_.contains(index, opt.answer) && opt.selected || _.contains(index, opt.answer) && !opt.selected)
 								answer[opt.value.asset] = false;
-						}
+						}*/
  					} else {
  						if(typeof opt.selected != 'undefined') {
  							pass = false;
@@ -42,10 +42,17 @@ MTFEvaluator = {
  					}
 				});
 			}
-			_.map(answer, function(value, key){
+
+			if(pass){
+				var ansMatched = _.isEqual(_.pluck(options, "selected"), _.pluck(options, "answer"));				
+				pass = ansMatched;
+			}
+			
+
+			/*_.map(answer, function(value, key){
 				if(!value)
 					pass = false;
-			})
+			})*/
 
 			if (!pass) {
 				result.feedback = item.feedback;

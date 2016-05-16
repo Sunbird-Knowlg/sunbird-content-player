@@ -1,5 +1,6 @@
 CommandManager = {
-    audioActions: ['PLAY', 'PAUSE', 'STOP', 'TOGGLEPLAY', 'EXTERNAL', 'WINDOWEVENT', 'STARTGENIE'],
+    // TODO: Change the name 'audioActions'. It is no more valid.
+    audioActions: ['PLAY', 'PAUSE', 'STOP', 'TOGGLEPLAY', 'EXTERNAL', 'WINDOWEVENT', 'STARTGENIE', 'SHOWHTMLELEMENTS', 'HIDEHTMLELEMENTS'],
     handle: function(action) {
         var cmd = '';
         if (_.isString(action.command))
@@ -53,14 +54,14 @@ CommandManager = {
                 }
                 break;
             case 'STOP':
-                if (plugin) {
+                if (action.sound === true) {
+                    //this is to stop all audios playing
+                    createjs.Sound.stop();
+                }   
+                if (plugin) {                    
                     plugin.stop(action);
                 } else {
-                    if (action.sound === true) {
-                        AudioManager.stopAll(action);
-                    } else {
-                        AudioManager.stop(action);
-                    }
+                    AudioManager.stop(action);                    
                 }
                 break;
             case 'TOGGLEPLAY':
@@ -90,12 +91,13 @@ CommandManager = {
                 break;
             case 'WINDOWEVENT':
                 // TODO: remove the dependency on GlobalContext for this command.
-                var mimeType = GlobalContext.config.appInfo.mimeType;
-                if (COLLECTION_MIMETYPE == mimeType) {
-                    window.location.hash = "#/content/list/"+ GlobalContext.game.id;
+                var mimeType = GlobalContext.previousContentMimeType ? GlobalContext.previousContentMimeType : GlobalContext.currentContentMimeType;
+                if (GlobalContext.previousContentMimeType || COLLECTION_MIMETYPE == mimeType) {
+                    window.location.hash = "#/content/list/"+ GlobalContext.previousContentId;
                 } else if (CONTENT_MIMETYPES.indexOf(mimeType) > -1) {
-                    window.location.hash = "#/show/content";
+                    window.location.hash = "#/show/content/" + GlobalContext.currentContentId;
                 } else {
+                    // window.location.hash = "#/show/endPage";        
                     console.warn("Invalid mimeType to handle WINDOWEVENT:", mimeType);
                 }
                 break;
@@ -106,7 +108,12 @@ CommandManager = {
                     startApp(action.app);                                
                 break;
             case 'EVAL':
-                if (plugin) plugin.evaluate(action);
+                if (plugin){
+                    if(action.htmlEval){
+                        //This is to suppress evalution action generating by ECML content
+                        plugin.evaluate(action);
+                    }                   
+                } 
                 break;
             case 'RELOAD':
                 if (plugin) plugin.reload(action);
@@ -126,7 +133,6 @@ CommandManager = {
                 break;
             case 'STARTGENIE':
                 if(TelemetryService._gameData.id != packageName && TelemetryService._gameData.id != packageNameDelhi) {
-                    console.log('Current game is:', TelemetryService._gameData.id, 'so, ending it first.');
                     TelemetryService.end(TelemetryService._gameData.id);
                     setTimeout(function() {
                         exitApp();
@@ -155,6 +161,12 @@ CommandManager = {
             case 'CUSTOM':
                 if (plugin && action.invoke) plugin[action.invoke](action);
                 break;
+            case 'SHOWHTMLELEMENTS':
+                CommandManager.displayAllHtmlElements(true);
+                break;
+            case 'HIDEHTMLELEMENTS':
+                CommandManager.displayAllHtmlElements(false);
+                break;
             default:
                 console.log("Command '" + cmd +"' not found.");
         }
@@ -170,5 +182,19 @@ CommandManager = {
         });
         action.dataAttributes = dataAttributes;
         action.stageId = Renderer.theme._currentStage;
-    }
+    },
+    displayAllHtmlElements: function(visibility){
+       var elements = jQuery('#'+Renderer.divIds.gameArea).children();
+       elements.each(function(){
+           //If child element is not canvas item, then hide it
+           if(!(jQuery(this).is("canvas"))){
+                if (visibility) {
+                    jQuery(this).show();     
+                } else {
+                    jQuery(this).hide();
+                }
+               
+           }
+       });
+   }
 }

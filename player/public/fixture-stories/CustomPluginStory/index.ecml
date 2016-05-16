@@ -1,0 +1,165 @@
+<theme id="theme" startStage="helloPluginScene" ver="0.2">
+    <manifest>
+        <media id="previous" src="icon_previous.png" type="image"/>
+        <media id="next" src="icon_next.png" type="image"/>
+        <media id="icon_reload" src="icon_reload.png" type="image"/>
+        <media id="icon_home" src="icon_home.png" type="image"/>
+        <media id="bg" src="felt.png" type="image"/>
+        <media id="t-outer" src="tailor-outer.png" type="image"/>
+        <media id="t-inner" src="tailor-inner.png" type="image"/>
+        <media id="w-outer" src="wife-outer.png" type="image"/>
+        <media id="barber_img" src="barber.png" type="image"/>
+        <media id="carpenter_img" src="carpenter.png" type="image"/>
+        <media id="tailor_img" src="tailor.png" type="image"/>
+        <media id="wife_img" src="wife.png" type="image"/>
+        <media id="grey" src="grey.png" type="image"/>
+        <media id="potatohighlight" src="potato.png" type="image"/>
+        <media id="rabbithighlight" src="rabbit.png" type="image"/>
+        <media id="w-inner" src="wife-inner.png" type="image"/>
+        <media id="b-outer" src="barber-outer.png" type="image"/>
+        <media id="b-inner" src="barber-inner.png" type="image"/>
+        <media id="play_icon" src="play.png" type="image" />
+        <media id="mic" src="mic1.png" type="image" />
+
+        <media id="hello" src="HelloPlugin.js" type="plugin"/>
+        <media id="counter" src="CounterPlugin.js" type="plugin"/>
+        <media id="clock" src="ClockPlugin.js" type="plugin"/>
+        <media id="counterJS" src="counter.min.js" type="js"/>
+
+    </manifest>
+    <stage id="tempBaseStage" preload="true">
+        <image asset="b-outer"/>
+        <image asset="w-outer"/>
+        <image asset="t-outer"/>
+        <image asset="b-inner"/>
+        <image asset="w-inner"/>
+        <image asset="t-inner"/>
+        <image asset="barber_img"/>
+        <image asset="carpenter_img"/>
+        <image asset="tailor_img"/>
+        <image asset="wife_img"/>
+        <audio asset="scene19_audio"/>
+    </stage>
+    <stage id="baseStage" preload="true">
+        <image asset="next" h="8.3" id="next" visible="false" w="5" x="93" y="3"/>
+        <shape h="15" hitArea="true" id="nextContainer" type="rect" visible="false" w="10" x="90" y="1">
+            <event type="click">
+                <action asset="theme" command="transitionTo" direction="left" duration="500" ease="linear" effect="scroll" param="next" type="command"/>
+            </event>
+        </shape>
+        <image asset="previous" h="8.3" id="previous" visible="false" w="5" x="2" y="3"/>
+        <shape h="15" hitArea="true" id="previousContainer" type="rect" visible="false" w="10" x="1" y="1">
+            <event type="click">
+                <action asset="theme" command="transitionTo" direction="right" duration="500" ease="linear" effect="scroll" param="previous" transitionType="previous" type="command"/>
+            </event>
+        </shape>
+        <text color="#fff" fontsize="50" h="23" param="heading" w="62" weight="bold" x="28" y="2"/>
+    </stage>
+    <stage extends="baseStage" h="100" id="helloPluginScene" w="100" x="0" y="0">
+        <param name="next" value="counterPluginScene"/>
+        <!-- <param name="previous" value="textPluginBasic" />-->
+        <hello id="hello1" color="white" fontsize="150" align="center" x="2" y="40" w="90" h="30" z-index="1">World!</hello>
+        <image asset="bg" h="100" w="100" x="0" y="0">
+            <event type="click">
+                <action type="command" command="toggleShow" asset="helloMahesh"/>
+            </event>
+        </image>
+    </stage>
+    <stage extends="baseStage" h="100" id="counterPluginScene" w="100" x="0" y="0">
+        <param name="next" value="clockPluginScene"/>
+        <param name="previous" value="helloPluginScene" />
+        <counter id="counterTest" x="40" y="30" w="30" h="30" style="font-size: 5em; color: white;" duration="20000" from="100" to="1000" />
+        <image asset="bg" h="100" w="100" x="0" y="0"></image>
+    </stage>
+    <stage extends="baseStage" h="100" id="clockPluginScene" w="100" x="0" y="0">
+        <!-- <param name="next" value="textPluginWrap"/> -->
+        <param name="next" value="audiorecorder"/>
+        <param name="previous" value="counterPluginScene" />
+        <image asset="bg" h="100" w="100" x="0" y="0"></image>
+        
+        <clock id="clockTest" x="25" y="30" w="30" h="30" time="5:30"/>
+        <text x="25" y="60" w="20" h="10" color="white" fontsize="100" align="center">5:30</text>
+
+        <clock id="clockTest1" x="55" y="30" w="30" h="30" time="9:00"/>
+        <text x="55" y="60" w="20" h="10" color="white" fontsize="100" align="right">9:00</text>
+        
+    </stage>
+
+    <stage extends="basestage" h="100" id="audiorecorder" w="100" x="0" y="0">
+         <param name="previous" value="clockPluginScene" />
+         <image asset="bg" h="100" w="100" x="0" y="0"></image>
+          <text x="10" y="10" w="80" h="80" font="Georgia" color="white" weight="bold" fontsize="60" align="center">
+                Audio Recorder
+        </text>
+        
+        <text x="10" y="30" w="80" h="80" font="Georgia" color="white" weight="bold" fontsize="40" >
+                Click to mic to record 
+        </text>
+
+         <image  x="30" y="40" w="20" h="20" asset="play_icon" visible="false">
+            <event type="click">
+                <action type="command" command="play" asset="current_rec" loop="1" />
+            </event>
+        </image>
+
+        <image asset="mic" x="43" y="27" w="5" h="9">
+            <event type="click">
+                <action type="command" command="show" asset="youSpeakInfo" />
+            </event>
+        </image>
+
+         <g x="60" y="40" w="20" h="20" id="youSpeakInfo" visible="false">
+            <shape type="roundrect" x="0" y="0" w="100" h="100" fill="green">
+                <event type="click">
+                    <action type="command" command="startRecord" asset="youSpeakInfo" success="recordingInfo"/>
+                    <action type="command" command="hide" asset="youSpeakInfo" />
+                    <action type="command" command="show" asset="recordingInfo" />
+                    
+                </event>
+            </shape>
+           <!--  <shape type="rect" x="2" y="62" w="20" h="36" hitArea="true">
+                <event type="click">
+                    <action type="command" command="play" asset="learning7_sound" />
+                    <action type="command" command="show" asset="sewingMachineInfo" />
+                </event>
+            </shape> -->
+            <text x="10" y="20" w="80" h="80" font="Georgia" weight="bold" fontsize="150" align="center">
+                You Speak
+            </text>
+            <image asset="mic" x="35" y="40" w="30" h="30"/>
+        </g>
+
+    <!--      <image asset="next" x="93" y="50" w="2" h="2.3" id="play_icon" visible="false">
+            <event type="enter">
+                <action type="command" command="play" asset="current_rec" loop="1" />
+            </event>
+        </image> -->
+
+
+        
+
+        <!-- <shape  type="roundrect" x="93" y="50" w="20" h="20.3"  hitArea="true" visible="false">
+            <event type="click">
+                <action type="command" command="play" asset="current_rec" loop="1" />
+            </event>
+        </shape> -->
+
+        <g x="60" y="40" w="20" h="20" id="recordingInfo" visible="false">
+            <shape type="roundrect" x="0" y="0" w="100" h="100" fill="red">
+                <event type="click">
+
+                    <action type="command" command="stopRecord" asset="recordingInfo" />
+                    <action type="command" command="show" asset="play_icon" />
+                    <action type="command" command="show" asset="youSpeakInfo" />
+                    <action type="command" command="hide" asset="recordingInfo" />
+                </event>
+            </shape>
+            <text x="10" y="20" w="80" h="80" font="Georgia" weight="bold" fontsize="150" align="center">
+                Recording...
+            </text>
+            <image asset="mic" x="35" y="40" w="30" h="30"/>
+        </g>
+
+    </stage>
+
+</theme>

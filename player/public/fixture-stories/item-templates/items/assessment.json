@@ -1,0 +1,210 @@
+{
+    "identifier": "haircut_story_1",
+    "title": "Haircut Story Assessment",
+    "total_items": 5,
+    "shuffle": false,
+    "max_score": 4,
+    "subject": "LIT",
+    "item_sets": [{
+        "id": "set_1",
+        "count": 5
+    }],
+    "items": {
+        "set_1": [{
+            "identifier": "hs1_set_1_334",
+            "type": "mtf",
+            "template": "mtf_template_test",
+            "qlevel": "MEDIUM",
+            "title": "Match the tools to the people.",
+            "lhs_options": [{
+                "value": { "type": "image", "asset": "barber_img", "image": "barber_img", "count": 2},
+                "index": 0
+            }, {
+                "value": { "type": "text", "asset": "carpenter", "image": "carpenter_img" },
+                "index": 1
+            }, {
+                "value": { "type": "text", "asset": "tailor", "image": "tailor_img" },
+                "index": 2
+            }, {
+                "value": { "type": "text", "asset": "wife", "image": "wife_img" },
+                "index": 3
+            }],
+            "rhs_options": [{
+                "value": { "type": "text", "asset": "knife", "image": "knife" },
+                "answer": 3
+            }, {
+                "value": { "type": "text", "asset": "razor", "image": "razor" },
+                "answer": 0
+            }, {
+                "value": { "type": "text", "asset": "scissors", "image": "scissors" },
+                "answer": 2
+            }, {
+                "value": { "type": "text", "asset": "saw", "image": "saw" },
+                "answer": 1
+            }],
+            "max_score": 4,
+            "partial_scoring": true,
+            "feedback": ""
+        }, {
+				"answer": {"ans1": {"value": "east","score": 1}},
+				"model": {},
+				"hint": "",
+				"template": "ftb_template_default",
+				"code": "en.qa.fib.1",
+				"lastUpdatedOn": "2016-03-28T16:02:26.138+0000",
+				"type": "ftb",
+				"feedback": "",
+				"createdOn": "2016-03-28T16:02:26.138+0000",
+				"title": "sun rising",
+				"qlevel": "EASY",
+				"name": "sun rising",
+				"domain": "literacy",
+				"owner": "210",
+				"used_for": "worksheet",
+				"max_score": 1,
+				"gradeLevel": [
+				"Grade 1"
+				],
+				"question": "Sun rises in the ___________",
+				"language": [
+				"English"
+				],
+				"identifier": "domain_14390"
+		    }, {
+            "template": "org.ekstep.mcq.ia",
+            "model": {},
+            "question_audio": "domain_35036",
+            "subject": "domain",
+            "code": "ek.d.t.q10000",
+            "lastUpdatedOn": "2016-04-09T11:54:03.463+0000",
+            "type": "mcq",
+            "concepts": "[{\"identifier\":\"M184\",\"relation\":\"associatedTo\"}]",
+            "feedback": "",
+            "createdOn": "2016-04-09T11:54:03.463+0000",
+            "qlevel": "MEDIUM",
+            "partial_scoring": false,
+            "question_image": "domain_35037",
+            "name": "1 गाजर की कीमत क्या है",
+            "owner": "294",
+            "max_score": 1,
+            "gradeLevel": [
+                "Grade 1"
+            ],
+            "question": "1 गाजर की कीमत क्या है ? abc ",
+            "language": [
+                "English"
+            ],
+            "identifier": "ek.d.t.q10000",
+            "media": "[{\"id\":\"domain_35037\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/que1_1460134111505.png\",\"asset_id\":\"domain_35037\"},{\"id\":\"domain_35036\",\"type\":\"audio\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/q1_1460133785285.mp3\",\"asset_id\":\"domain_35036\"}]",
+            "question_count": "",
+            "options": [{
+                "value": {
+                    "type": "mixed", "image": "barber_img", "audio": "cheers_soft"
+                }
+            }, {
+                "value": {
+                    "type": "mixed", "image": "carpenter_img", "audio": "chimes"
+                },
+                "answer": true,
+                "score": 1
+            }]
+        }, {
+            "template": "mcq_template_default",
+            "model": {},
+            "question_audio": "domain_35036",
+            "subject": "domain",
+            "code": "ek.d.t.q10000",
+            "lastUpdatedOn": "2016-04-09T11:54:03.463+0000",
+            "type": "mcq",
+            "concepts": "[{\"identifier\":\"M184\",\"relation\":\"associatedTo\"}]",
+            "feedback": "",
+            "createdOn": "2016-04-09T11:54:03.463+0000",
+            "qlevel": "MEDIUM",
+            "partial_scoring": false,
+            "question_image": "domain_35037",
+            "name": "1 गाजर की कीमत क्या है",
+            "owner": "294",
+            "max_score": 1,
+            "gradeLevel": [
+                "Grade 1"
+            ],
+            "question": "1 गाजर की कीमत क्या है ?  ",
+            "language": [
+                "English"
+            ],
+            "identifier": "ek.d.t.q10000",
+            "media": "[{\"id\":\"domain_35037\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/que1_1460134111505.png\",\"asset_id\":\"domain_35037\"},{\"id\":\"domain_35036\",\"type\":\"audio\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/q1_1460133785285.mp3\",\"asset_id\":\"domain_35036\"}]",
+            "question_count": "",
+            "options": [{
+                "value": {
+                    "type": "text",
+                    "image": "domain_35037",
+                    "audio": "domain_35036",
+                    "text": "ABC",
+                    "asset": "0"
+                }
+            }, {
+                "value": {
+                    "type": "text",
+                    "image": "domain_35037",
+                    "audio": "domain_35036",
+                    "text": "DEF",
+                    "asset": "1"
+                },
+                "answer": true,
+                "score": 1
+            }, {
+                "value": {
+                    "type": "text",
+                    "image": "domain_35037",
+                    "audio": "domain_35036",
+                    "text": "GHI",
+                    "asset": "2"
+                }
+            }, {
+                "value": {
+                    "type": "text",
+                    "image": "domain_35037",
+                    "audio": "domain_35036",
+                    "text": "KLM",
+                    "asset": "3"
+                }
+            }]
+        }, {
+            "identifier": "hs1_set_1_3",
+            "type": "mtf",
+            "template": "mtf_template_default",
+            "qlevel": "MEDIUM",
+            "title": "Match the tools to the people.",
+            "lhs_options": [{
+                "value": { "type": "image", "asset": "barber_img", "image": "barber_img", "count": 5},
+                "index": 0
+            }, {
+                "value": { "type": "text", "asset": "carpenter", "image": "carpenter_img" },
+                "index": 1
+            }, {
+                "value": { "type": "text", "asset": "tailor", "image": "tailor_img" },
+                "index": 2
+            }, {
+                "value": { "type": "text", "asset": "wife", "image": "wife_img" },
+                "index": 3
+            }],
+            "rhs_options": [{
+                "value": { "type": "text", "asset": "knife", "image": "knife" },
+                "answer": 3
+            }, {
+                "value": { "type": "text", "asset": "razor", "image": "razor" },
+                "answer": 0
+            }, {
+                "value": { "type": "text", "asset": "scissors", "image": "scissors" },
+                "answer": 2
+            }, {
+                "value": { "type": "text", "asset": "saw", "image": "saw" },
+                "answer": 1
+            }],
+            "max_score": 4,
+            "partial_scoring": true,
+            "feedback": ""
+        }]
+    }
+}

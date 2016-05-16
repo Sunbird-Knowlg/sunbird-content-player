@@ -30,6 +30,7 @@ module.exports = function(grunt) {
                         'public/js/app/GlobalContext.js',
                         'public/js/app/AppConfig.js',
                         'public/js/app/AppMessages.js',
+                        'public/js/app/OverlayHtml.js',
                         'public/js/app/speech.js',
                         'public/js/app/renderer.js',
                         'public/js/app/telemetry.js'
@@ -225,13 +226,13 @@ module.exports = function(grunt) {
                         'cordova-plugin-device@1.1.1',
                         'cordova-plugin-file@4.1.0',
                         'cordova-plugin-splashscreen@3.1.0',
-                        'com.ionic.keyboard@1.0.4',
+                        'ionic-plugin-keyboard@2.2.0',
                         'cordova-plugin-console@1.0.2',
                         'cordova-plugin-whitelist@1.2.1',
                         'cordova-plugin-crosswalk-webview@1.5.0',
                         'cordova-plugin-file-transfer@1.5.0',
                         'https://github.com/Initsogar/cordova-webintent.git', // no registry in npm and cordova plugins
-                        'com.lampa.startapp@0.0.5',
+                        'com.lampa.startapp@0.1.4',
                         'cordova-plugin-inappbrowser@1.2.0',
                         'cordova-plugin-market@1.1'
                     ]

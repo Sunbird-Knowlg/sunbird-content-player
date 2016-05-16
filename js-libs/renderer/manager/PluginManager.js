@@ -25,9 +25,12 @@ PluginManager = {
         createjs.EventDispatcher.initialize(plugin.prototype);
     },
     registerCustomPlugins: function(manifest, relativePath) { //TODO: Use async.js to load custom plugins
+        // relativePath += "/";
         PluginManager.customPluginMap = {};
-        var plugins = manifest.plugin;
         var media = manifest.media;
+        var plugins = _.filter(!_.isArray(media) ? [media] : media, function(media) {
+            return media.type == 'plugin'});;
+        
         media = _.filter(!_.isArray(media) ? [media] : media, function(media) {
             return media.type == 'js' || media.type == 'css'; });
         relativePath = ("undefined" !== typeof cordova && relativePath) ? "file:///" + relativePath : relativePath;
@@ -116,9 +119,10 @@ PluginManager = {
         PluginManager.registerCustomPlugin(id, data);
     },
     loadCustomPlugin: function(plugin, relativePath) {
+        var pluginUrl = (plugin.src.substring(0,4) == "http") ? plugin.src : relativePath + plugin.src;
         jQuery.ajax({
             async: false,
-            url: relativePath + plugin.src,
+            url: pluginUrl,
             dataType: "text"
         }).error(function(err) {
             console.error('Unable to load custom plugin js source');
@@ -128,13 +132,14 @@ PluginManager = {
         });
     },
     loadCSS: function(href, gameRelPath) {
-        console.info("loading external CSS: ", href);
-        var cssLink = $("<link rel='stylesheet' type='text/css' href='" + gameRelPath + href + "'>");
-        jQuery("head").append(cssLink);
+        var cssUrl = (href.substring(0,4) == "http") ? href : gameRelPath + href;
+        console.info("loading external CSS: ", cssUrl);
+        jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + cssUrl + "'>");
     },
     loadJS: function(src, gameRelPath) {
-        console.info("loading external JS: ", gameRelPath + src);
-        var jsLink = $("<script type='text/javascript' src=" + gameRelPath + src + ">");
+        var jsUrl = (src.substring(0,4) == "http") ? src : gameRelPath + src;
+        console.info("loading external JS: ", jsUrl);
+        var jsLink = $("<script type='text/javascript' src=" + jsUrl + ">");
         jQuery("head").append(jsLink);
     }
 }

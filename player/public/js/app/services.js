@@ -1,4 +1,4 @@
-angular.module('quiz.services', ['ngResource'])
+angular.module('genie-canvas.services', ['ngResource'])
     .factory('ContentService', ['$window', '$rootScope', function($window, $rootScope) {
         var returnObject = {
             _SUPPORTED_MIMETYPES: ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.content-collection"],

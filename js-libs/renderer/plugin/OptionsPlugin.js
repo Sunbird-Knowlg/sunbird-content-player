@@ -19,19 +19,23 @@ var OptionsPlugin = Plugin.extend({
         var cols = undefined;
         var rows = undefined;
     	var count = value.length;
-        if(this._data.rows && this._data.cols) {
-            cols = this._data.cols; 
+        
+        if(this._data.cols) {
+            // Cols specified, rows to compute (rows is ignored even if specified)
+            cols = Math.min(count, this._data.cols);
             rows = Math.ceil(count/cols);
-        } else {
-            if(this._data.rows)
-                rows = this._data.rows; 
-            if(this._data.cols)
-                cols = this._data.cols;        
-            if(this._data.rows)
-                cols = Math.ceil(count/rows);
-            else
-                rows = Math.ceil(count/cols);
-        }    
+        }
+        else if(this._data.rows) {
+            // Rows is specified, cols to compute
+            rows = Math.min(count, this._data.rows);
+            cols = Math.ceil(count/rows);
+        }
+        else {
+            // None of the constraints specified, lay in a single row
+            rows = 1;
+            cols = Math.min(count, this._data.cols);
+        }
+   
     	var instance = this;
     	var marginX = 0;
     	if (_.isFinite(this._data.marginX)) {
@@ -84,6 +88,10 @@ var OptionsPlugin = Plugin.extend({
                     if(this._data.opacity)
                         data.opacity = this._data.opacity;
     				data.option = instance._data.options + '[' + index + ']';
+                    var innerECML = this.getInnerECML();
+                    if (!_.isEmpty(innerECML)) {
+                        Object.assign(data, innerECML);
+                    }
     				index = index + 1;
     				PluginManager.invoke('option', data, instance._parent, instance._stage, instance._theme);
     			}
