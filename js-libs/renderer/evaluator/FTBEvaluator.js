@@ -7,7 +7,7 @@ FTBEvaluator = {
 
 		if (item) {
 			var answer = item.answer;
-			var model = item.model;
+			var model = item.model || {};
 			for (var ans in answer) {
 
 				// each value answered
@@ -59,7 +59,7 @@ FTBEvaluator = {
 	reset: function(item) {
 		if (item) {
 			var answer = item.answer;
-			var model = item.model;
+			var model = item.model || {};
 			for (var ans in answer) {
 				if (model[ans]) {
 					model[ans] = "";

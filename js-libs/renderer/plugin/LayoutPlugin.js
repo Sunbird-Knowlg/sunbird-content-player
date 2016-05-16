@@ -11,9 +11,9 @@ var LayoutPlugin = Plugin.extend({
         this._self.x = dims.x;
         this._self.y = dims.y;
 
-        var hit = new createjs.Shape();
-        hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h);
-        this._self.hitArea = hit;
+        // var hit = new createjs.Shape();
+        // hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h);
+        // this._self.hitArea = hit;
         // If iterate is undefine, then we cant create a layout
         // "Iterate" is Mandatory property
         if(_.isUndefined(data.iterate) && _.isUndefined(data.count)) {
@@ -23,37 +23,34 @@ var LayoutPlugin = Plugin.extend({
         if ("undefined" != typeof data.count) 
             this._cellsCount = data.count;
         var model = data.iterate;
+        model = data.iterate = this.replaceExpressions(model);
     	var dataObjs = this._stage.getModelValue(model);
         if(dataObjs) {
             var length = dataObjs.length;
             this._cellsCount = (length < this._cellsCount || this._cellsCount == 0) ? length : this._cellsCount;
         }       
     	this.generateLayout();
-        this.renderLayout();     
+        this.renderLayout();
+        delete this._data.events;
+        delete this._data.event;   
         
 	},
-	getCellECML: function() {
-    	var children = {};
-    	var data = this._data;
-        for (k in data) {
-	        if (PluginManager.isPlugin(k)) {
-	        	children[k] = data[k];
-	        }
-        }
-        return children;
-    },
     generateLayout: function() {
     	PluginManager.addError('Subclasses of layout plugin should implement generateLayout()');
     },
     renderLayout: function() {
     	var instance = this;
     	var index = 0;
-    	var cellECML = this.getCellECML();
     	this._cells.forEach(function(data) {
+            var cellECML = instance.getInnerECML();
+            var cellEvents = instance.getCellEvents();
     		instance._stage._templateVars[instance._data['var']] = instance._data.iterate+"["+index+"]";
     		instance._addCellAttributes(data);
     		Object.assign(data, cellECML);
+            var resolvedEvents = instance.resolveActionModelValues(cellEvents);
+            Object.assign(data, resolvedEvents);
     		PluginManager.invoke('g', data, instance, instance._stage, instance._theme);
+
     		index++;
     	});
     },
@@ -85,5 +82,66 @@ var LayoutPlugin = Plugin.extend({
         }
         if(this._data.opacity)
             data.opacity = this._data.opacity;
+    },
+    getCellEvents: function() {
+        var events = undefined;
+        var instance = this;
+        if(instance._data.events) {
+            if (_.isArray(instance._data.events)) {
+                events = [];
+                instance._data.events.forEach(function(e) {
+                    events.push.apply(events, e.event);
+                });
+            } else {
+                events = instance._data.events.event;
+            }
+        } else {
+            events = instance._data.event;
+        }
+        return events;
+    },
+    resolveActionModelValues: function(events) {
+        var returnEvents = undefined;
+        var instance = this;
+        var updateAction = function(tempAction) {
+            var action = _.clone(tempAction);
+            if (action.asset_model) {
+                var model = action.asset_model;
+                var val = instance._stage.getModelValue(model);
+                action.asset = val;
+                delete action.asset_model;
+            }
+            if (action["ev-model"]) {
+                var model = action["ev-model"];
+                var val = instance._stage.getModelValue(model);
+                action["value"] = val;
+                action["param-value"] = val;
+                delete action["ev-model"];
+            }
+            return action;
+        }
+        var updateEvent = function(evt) {
+            var returnEvent = {"type" : evt.type};
+            if(_.isArray(evt.action)) {
+                returnEvent.action = [];
+                evt.action.forEach(function(action) {
+                    returnEvent.action.push(updateAction(action));
+                });
+            } else if(evt.action) {
+                returnEvent.action = updateAction(evt.action);
+            }
+            return returnEvent;
+        }
+
+        if(_.isArray(events)) {
+            returnEvents = {"events": [], "hitArea": true};
+            events.forEach(function(e) {
+                returnEvents.events.push(updateEvent(e));
+            });
+        } else if(events) {
+            returnEvents = {"hitArea": true};
+            returnEvents.event = updateEvent(events);
+        }
+        return returnEvents;
     }
 });
