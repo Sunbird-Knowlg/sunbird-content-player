@@ -140,7 +140,7 @@ var ThemePlugin = Plugin.extend({
             Renderer.update = true;
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
-            //OverlayHtml.sceneEnter();
+            OverlayHtml.sceneEnter();
         });
         var nextIdx = this._currIndex++;
         if(this._currentScene) {
@@ -154,6 +154,7 @@ var ThemePlugin = Plugin.extend({
         childPlugin.setIndex(nextIdx);
     },
     replaceStage: function(stageId, effect) {
+        OverlayHtml.isReadyToEvaluate(false);
         this.disableInputs();
         this.inputs = [];
         this.removeHtmlElements();

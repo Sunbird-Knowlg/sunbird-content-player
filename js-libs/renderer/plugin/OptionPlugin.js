@@ -71,6 +71,7 @@ var OptionPlugin = Plugin.extend({
         this._self.cursor = 'pointer';
         var instance = this;
         this._self.on('click', function(event) {
+            OverlayHtml.isReadyToEvaluate(true);
             var eventData = {};
             var val = instance._parent.selectOption(instance);
             var data = {
@@ -136,6 +137,7 @@ var OptionPlugin = Plugin.extend({
                 Renderer.update = true;
             });
             asset.on("pressup", function(evt) {
+                OverlayHtml.isReadyToEvaluate(true);
                 var snapTo;
                 if (instance._parent._force === true) {
                     snapTo = instance._parent.getLhsOption(value.answer);

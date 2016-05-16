@@ -2,6 +2,7 @@ angular.module('genie-canvas.theme',[])
 .run(function($rootScope){
     $rootScope.isPreview = true;
     $rootScope.imageBasePath = "";
+    $rootScope.enableEval = false;
 
     $rootScope.languageSupport = {
         "languageCode": "en",
@@ -179,15 +180,31 @@ angular.module('genie-canvas.theme',[])
         scope: {
             image: '='
         },
-        template: '<a class="assess" href="javascript:void(0);"> <!-- enabled --><img ng-src="{{image}}"/><p>{{labelSubmit}}</p></a>',
+        template: '<a class="assess" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/><p>{{labelSubmit}}</p></a>',
         link: function(scope, element) {
             scope.labelSubmit = $rootScope.languageSupport.submit;
-            element.on("click", function() {
-                var action = {"type":"command","command":"eval","asset":Renderer.theme._currentStage};
-                action.success = "correct_answer";
-                action.failure = "wrong_answer";
-                CommandManager.handle(action);
-            });
+        },
+        controller: function($scope, $rootScope){
+            $scope.isEnabled = false;
+
+            $rootScope.$watch('enableEval', function() {
+                console.log("enableEval watch success");
+                $scope.isEnabled = $rootScope.enableEval;
+                if($scope.isEnabled ){
+                    $scope.image = $rootScope.imageBasePath + "submit.png";//angular.copy($rootScope.icons.assess.enable);
+                }else{
+                    $scope.image = $rootScope.imageBasePath + "submit_disabled.png";//angular.copy($rootScope.icons.assess.disable);
+                }
+            }); 
+
+            $scope.onSubmit = function(){
+                if($scope.isEnabled){
+                    var action = {"type":"command","command":"eval","asset":Renderer.theme._currentStage};
+                    action.success = "correct_answer";
+                    action.failure = "wrong_answer";
+                    CommandManager.handle(action);                    
+                }
+            }          
         }
     }
 })
@@ -205,13 +222,16 @@ angular.module('genie-canvas.theme',[])
     $rootScope.icons = {
         previous: {
             disable: $rootScope.imageBasePath + "back_icon_disabled.png",
-            enable: $rootScope.imageBasePath + "back_icon.png",
+            enable: $rootScope.imageBasePath + "back_icon.png"
         },
         next: {
             disable: $rootScope.imageBasePath + "next_icon_disabled.png",
-            enable: $rootScope.imageBasePath + "next_icon.png",
+            enable: $rootScope.imageBasePath + "next_icon.png"
         },
-        assess: $rootScope.imageBasePath + "submit.png",
+        assess: {
+            enable: $rootScope.imageBasePath + "submit.png",
+            disable: $rootScope.imageBasePath + "submit_disabled.png"
+        },
         retry: $rootScope.imageBasePath + "speaker_icon.png",
         popup: {
             background: $rootScope.imageBasePath + "popup_background.png",

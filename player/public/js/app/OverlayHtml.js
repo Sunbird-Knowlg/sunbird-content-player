@@ -24,18 +24,21 @@ OverlayHtml = {
         }
 	},
 	_getRootScope: function() {
-        if(_.isNull(_rootScope)){
+        if(_.isNull(this._rootScope)){
             var overlayDOMElement = document.getElementById('overlayHTML');
             if ("undefined" != typeof angular && "undefined" != typeof overlayDOMElement) {
-                _rootScope = angular.element(overlayDOMElement).scope().$root;
+                this._rootScope = angular.element(overlayDOMElement).scope().$root;
             }
         }
-        return _rootScope;            
+        return this._rootScope;            
     },
-    isReadyToEvalute: function(enableEval){
+    isReadyToEvaluate: function(enableEval){
         var rootScope = this._getRootScope();
-        rootScope.enableEval = enableEval;
-    }
+        if (rootScope) {
+            rootScope.enableEval = enableEval;
+            rootScope.$apply();
+        }
+    },
     sceneEnter: function() {
         var isItemStage = this.isItemScene();
         if (isItemStage) {

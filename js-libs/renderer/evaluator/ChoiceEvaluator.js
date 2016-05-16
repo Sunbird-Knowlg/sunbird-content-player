@@ -1,5 +1,4 @@
 MCQEvaluator = {
-	readyToEvaluate: false,
 	evaluate: function(item) {
 		var result = {};
 		var pass = true;
@@ -42,25 +41,6 @@ MCQEvaluator = {
 		result.score = score;
 		result.res = res;
 		return result;
-	},
-	isReadyToEvaluate: function(item){
-		if (item) {
-			var options = item.options;
-			if (_.isArray(options)) {
-				options.forEach(function(opt) {
-						
-					// remember in telemetry what the response was 
-					if (opt.selected) {
-						readyToEvaluate = true;
-					}
-				});
-
-				//None of the option is selected
-				readyToEvaluate = false;
-			}else{
-				readyToEvaluate = options.selected;
-			}
-		}
 	},
 	reset: function(item) {
 		if (item) {
