@@ -7,24 +7,30 @@
 var stack = new Array();
 var newContentId = "";
 var contentMetadata = undefined;
-var contentData = undefined;
+var contentBody = undefined;
 
 
 
-window.test = function (metadata, contentJSON) {
-        console.log("inside into iframe , contentJSON : ", contentJSON);
-        contentData = contentJSON;
-        console.log(metadata.identifier);
+window.setContentData = function (metadata, contentJSON) {
+        contentBody = contentJSON;
         contentMetadata = metadata;
+        getContentMetadata();
 }
 
-// function test() {
-//     // window.parent.test();
-//     window.parent.postMessage(
-//             {'func':'alertMyMessage','params':['Thanks for Helping me']},
-//             'http://localhost:3000/'
-//         );
-// }
+function getContentMetadata() {
+    return window.parent.getContentMetadata();
+    // window.parent.postMessage(
+    //         {'func':'alertMyMessage','params':['Thanks for Helping me']},
+    //         'http://localhost:3000/'
+    //     );
+}
+
+function getContentBody() {
+    return window.parent.getContentBody();
+}
+function getContentId() {
+    return window.parent.getContentId();
+}
 
 function launchInitialPage(appInfo, $state) {
 
@@ -44,6 +50,42 @@ function launchInitialPage(appInfo, $state) {
         alert('TelemetryService init failed.');
         exitApp();
     });
+}
+
+function launchPreview(appInfo, $state) {
+     contentMetadata = getContentMetadata();
+     contentBody = getContentBody();
+    var contentId = getContentId();
+
+    if(!contentId) {
+        newContentId = contentMetadata.identifier;
+        if (CONTENT_MIMETYPES.indexOf(contentMetadata.mimeType) > -1) {
+            $state.go('showContent', {"contentId": newContentId});
+        } else if ((COLLECTION_MIMETYPE == contentMetadata.mimeType) ||
+            (ANDROID_PKG_MIMETYPE == contentMetadata.mimeType && contentMetadata.code == packageName)) {
+            $state.go('contentList', { "id": newContentId });
+        }
+    } else {
+        // ContentService.getContent(id)
+        // .then(function(data) {
+        //     GlobalContext.currentContentId = data.identifier;
+        //     GlobalContext.currentContentMimeType = data.mimeType;
+        //     $scope.$apply(function() {
+        //         $scope.item = data;
+        //     });
+        //     $rootScope.stories = [data];
+        //     console.log("$rootScope.stories : ", $rootScope.stories);
+
+        //     $state.go('playContent', {
+        //         'itemId': id
+        //     });
+            
+        // })
+        // .catch(function(err) {
+        //     console.info("contentNotAvailable : ", err);
+        //     contentNotAvailable();
+        // }); 
+    }
 }
 
 angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'genie-canvas.services', 'genie-canvas.template'])
@@ -84,7 +126,10 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
 
 
             GlobalContext.init(packageName, version).then(function(appInfo) {
-                launchInitialPage(GlobalContext.config.appInfo, $state);
+                if(AppConfig.App_RUNTIME == "AT") 
+                    launchPreview("", $state)
+                else
+                    launchInitialPage(GlobalContext.config.appInfo, $state);
             }).catch(function(res) {
                 console.log("Error Globalcontext.init:", res);
                 alert(res.errors);
@@ -177,9 +222,6 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         $scope.resetContentListCache = function() {
             // jQuery("#loadingDiv").show();
             
-            // window.parent.test();
-            // test();
-
             $rootScope.renderMessage("", 0);
             ContentService.getContent(id)
                 .then(function(content) {
@@ -296,8 +338,8 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 jQuery("#htmlFrame").show();
             });
         } else { 
-            if (AppConfig.APP_STATUS ==  'AT' && contentData) 
-                Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, contentData, true);
+            if (AppConfig.APP_STATUS ==  'AT' && contentBody) 
+                Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, contentBody, true);
             else
                 Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
         }
@@ -352,7 +394,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 $state.go('contentList', { "id": newContentId });
             }
 
-        }, 400);
+        }, 500);
         
     }).controller('ExistingContentPreviewCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         console.log("inside into ExistingContentPreviewCtrl");
