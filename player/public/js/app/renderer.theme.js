@@ -180,25 +180,31 @@ angular.module('genie-canvas.theme',[])
         scope: {
             image: '='
         },
-        template: '<a class="assess" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/><p>{{labelSubmit}}</p></a>',
+        template: '<a class="assess" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/><p>{{labelSubmit}}</p></a>',
         link: function(scope, element) {
             scope.labelSubmit = $rootScope.languageSupport.submit;
         },
         controller: function($scope, $rootScope){
             $scope.isEnabled = false;
+            $scope.assessStyle = 'assess-disable';
 
             $rootScope.$watch('enableEval', function() {
-                console.log("enableEval watch success");
+                //Submit buttion style changing(enable/disable) button
                 $scope.isEnabled = $rootScope.enableEval;
                 if($scope.isEnabled ){
-                    $scope.image = $rootScope.imageBasePath + "submit.png";//angular.copy($rootScope.icons.assess.enable);
+                    //Enable state
+                    $scope.assessStyle = 'assess-enable';
+                    $scope.image = $rootScope.imageBasePath + "submit.png";
                 }else{
-                    $scope.image = $rootScope.imageBasePath + "submit_disabled.png";//angular.copy($rootScope.icons.assess.disable);
+                    //Disable state
+                    $scope.assessStyle = 'assess-disable';
+                    $scope.image = $rootScope.imageBasePath + "submit_disabled.png";
                 }
             }); 
 
             $scope.onSubmit = function(){
                 if($scope.isEnabled){
+                    //If any one option is selected, then only allow user to submit
                     var action = {"type":"command","command":"eval","asset":Renderer.theme._currentStage};
                     action.success = "correct_answer";
                     action.failure = "wrong_answer";
