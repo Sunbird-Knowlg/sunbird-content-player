@@ -23,24 +23,7 @@ module.exports = function(config) {
       'public/js/app/*.js',
       'public/js/test/BaseSpec.js',
       'public/js/test/specHelper.js',
-      'public/js/test/ScribblePluginSpec.js',
-      'public/js/test/AnimationManagerSpec.js',
-      'public/js/test/AssetManagerSpec.js',
-      'public/js/test/AudioManagerSpec.js',
-      'public/js/test/CommandManagerSpec.js',
-      'public/js/test/EventManagerSpec.js',
-      'public/js/test/PluginManagerSpec.js',
-      'public/js/test/TelemetrySpec.js',
-      'public/js/test/TimerManagerSpec.js',
-      'public/js/test/ThemePluginSpec.js',
-      'public/js/test/StagePluginSpec.js',
-      'public/js/test/ContainerPluginSpec.js',
-      'public/js/test/ImagePluginSpec.js',
-      'public/js/test/TextPluginSpec.js',
-      'public/js/test/ShapePluginSpec.js',
-      'public/js/test/VideoPluginSpec.js',
-      'public/js/test/MCQPluginSpec.js',
-      'public/js/test/WorksheetSpec.js'
+      'public/js/test/ScribblePluginSpec.js'
     ],
 
 
@@ -48,6 +31,8 @@ module.exports = function(config) {
     exclude: [
         'public/js/app/app.js',
         'public/js/app/services.js',
+        'public/js/app/renderer.theme.js',
+        'public/js/app/genie-canvas.template.js',
         'public/js/thirdparty/jquery.bookshelfslider.min.js'
     ],
 
