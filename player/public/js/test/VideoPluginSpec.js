@@ -59,7 +59,7 @@ describe('Video plugin Jasmine test cases', function () {
         expect(["apples", "oranges", "pears"]).toContain("oranges");
     });*/
 
-    it("Video Plugin initialize", function(){
+    /*it("Video Plugin initialize", function(){
         this.plugin = PluginManager.invoke('video', data, parent);
-    });
+    });*/
 });

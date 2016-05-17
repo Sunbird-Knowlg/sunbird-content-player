@@ -1,7 +1,7 @@
-describe('Div Plugin test cases', function() {
+describe('Testcase Plugin test cases', function() {
 
     beforeEach(function(done) {
-    /*    var themeData = {
+        var themeData = {
             canvasId: "canvas",
             startStage: "splash",
             manifest: {
@@ -19,7 +19,7 @@ describe('Div Plugin test cases', function() {
             div: [
                 { id: "one", x: "10", y: "20", w: "10", h: "10" }
             ]
-        }*/
+        }
         var parent = {
             dimensions: function() {
                 return {
@@ -39,17 +39,23 @@ describe('Div Plugin test cases', function() {
             "h": 100,
             "id": "one",
             "postion": "absolute"
+
+
+
+
         }
-       /* this.theme = new ThemePlugin(themeData);
-        this.theme.start('js/test/assets/');*/
-        this.plugin = PluginManager.invoke('div', data, parent/*, "splash", this.theme*/);
-        spyOn(this.plugin, 'registerEvents').and.callThrough();
+        this.theme = new ThemePlugin(themeData);
+        this.theme.start('js/test/assets/');
+        this.plugin = PluginManager.invoke('testcase', data, parent, "splash", this.theme);
+        
 
 
         done();
     });
 
     it('Div plugin init attribute validation', function() {
+        expect(this.plugin._self.x).toBeDefined();
+        expect(this.plugin._self.y).toBeDefined();
         expect(this.plugin._self.x).not.toBeNull();
         expect(this.plugin._self.y).not.toBeNull();
 
@@ -58,24 +64,15 @@ describe('Div Plugin test cases', function() {
         expect(this.plugin._self.h).not.toBeNull();
     });
     
-    it('Div plugin postion validation', function() {
-        expect(this.plugin._self.position).not.toBeNull();
-        expect(false).toEqual(this.plugin._self.position == "absolute");
-    });
-   /* it('Div container validation', function() {
+    it('Div container validation', function() {
         expect(false).toEqual(this.plugin._isContainer == true);
 
     });
     it('Div render validation', function() {
         expect(true).toEqual(this.plugin._render == true);
 
-    });*/
-    it('Div plugin registerEvents function call validation', function() {
-        this.plugin.registerEvents();
-        expect(this.plugin.registerEvents).toHaveBeenCalled();
-        expect(this.plugin.registerEvents.calls.count()).toEqual(1);
-
     });
+  
 
 
 

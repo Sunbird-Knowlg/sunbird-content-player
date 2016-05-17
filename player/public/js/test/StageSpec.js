@@ -1,24 +1,7 @@
 describe('Stage Plugin test cases', function() {
 
     beforeEach(function(done) {
-        var themeData = {
-            canvasId: "canvas",
-            startStage: "splash",
-            manifest: {
-                media: [
-                    { id: 'sringeri', src: 'sringeri.png', type: 'image' },
-                    { id: 'splash_audio', src: 'splash.ogg', type: 'audio' }
-                ]
-            },
-            stage: [
-                { id: "splash", extends: "splash1", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' }, iterate: "assessment", var: "item" },
-                { id: "splash1", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } },
-                { id: "splash2", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } }
-            ],
-            controller: [
-                { name: "assessment", type: "items", id: "assessment" }
-            ]
-        }
+
         var parent = {
             dimensions: function() {
                 return {
@@ -37,9 +20,10 @@ describe('Stage Plugin test cases', function() {
             img: { asset: 'sringeri' }
 
         }
-        this.theme = new ThemePlugin(themeData);
-        this.theme.start('js/test/assets/');
-        this.plugin = PluginManager.invoke('stage', data, parent, "splash", this.theme);
+        Renderer.theme = {
+            _currentStage: ''
+        };
+        this.plugin = PluginManager.invoke('stage', data, parent);
         spyOn(this.plugin, 'setParamValue').and.callThrough();
         spyOn(this.plugin, 'addController').and.callThrough();
         spyOn(this.plugin, 'getController').and.callThrough();
@@ -72,7 +56,7 @@ describe('Stage Plugin test cases', function() {
 
     });
     it('Stage plugin setParamValue', function() {
-        this.plugin.setParamValue({id:"stage"});
+        this.plugin.setParamValue(200);
         expect(this.plugin.setParamValue).toHaveBeenCalled();
         expect(this.plugin.setParamValue.calls.count()).toEqual(1);
     });
@@ -82,14 +66,14 @@ describe('Stage Plugin test cases', function() {
         expect(this.plugin.addController.calls.count()).toEqual(1);
     });
     it('stage plugin getController', function() {
-        this.plugin.getController({name:"assessment"});
+        this.plugin.getController();
         expect(this.plugin.getController).toHaveBeenCalled();
         expect(this.plugin.getController.calls.count()).toEqual(1);
 
     });
     it('stage plugin getTemplate', function() {
 
-        this.plugin.getTemplate("x");
+        this.plugin.getTemplate();
         expect(this.plugin.getTemplate).toHaveBeenCalled();
         expect(this.plugin.getTemplate.calls.count()).toEqual(1);
 
@@ -109,22 +93,27 @@ describe('Stage Plugin test cases', function() {
         expect(this.plugin.setModelValue.calls.count()).toEqual(1);
 
     });
-
-
     it('stage plugin setParam', function() {
 
         this.plugin.setParam("x", 10, 10, 20);
         expect(this.plugin.setParam).toHaveBeenCalled();
         expect(this.plugin.setParam.calls.count()).toEqual(1);
-
     });
 
     it('stage plugin getParam', function() {
 
-       this.plugin.getParam(['param-name']);
+        this.plugin.getParam(['param-name']);
         expect(this.plugin.getParam).toHaveBeenCalled();
         expect(this.plugin.getParam.calls.count()).toEqual(1);
 
     });
+
+   /* it('stage plugin reload', function() {
+
+        this.plugin.reload("x");
+        expect(this.plugin.relaod).toHaveBeenCalled();
+        expect(this.plugin.reload.calls.count()).toEqual(1);
+
+    });*/
 
 });

@@ -24,12 +24,12 @@ describe('Gridlayout Plugin test cases', function() {
         spyOn(this.plugin,'getTableProperties').and.callThrough()
         spyOn(this.plugin,'generateLayout').and.callThrough()
         done();
-         console.log("grid",this.plugin._self);
+         /*console.log("grid",this.plugin._self);*/
     });
 
     it('Gridlayout plugin initPlugin', function() {
-     expect(true).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
-     console.log("grid",this.plugin._self);
+     expect(false).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
+    /* console.log("grid",this.plugin._self);*/
 
     });
     it('Grid plugin iterate keyword availibality',function(){
@@ -37,7 +37,7 @@ describe('Gridlayout Plugin test cases', function() {
          expect(this.plugin._self.iterate).not.toBeNull();
     });
     it('Gridlayout plugin common attributes checking',function(){
-        console.log(this.plugin._self.x,"tet")
+       /* console.log(this.plugin._self.x,"tet")*/
 
         expect(this.plugin._self.x).toBeDefined();
         expect(this.plugin._self.y).toBeDefined();

@@ -79,12 +79,12 @@ describe('Shape Plugin test cases', function() {
         expect(this.plugin.opacity).not.toBeNull();
     });
 
-    xit('Shape command rect', function() {
+    /*xit('Shape command rect', function() {
         this.plugin._self.data.type = 'rect';
         this.plugin.initPlugin(this.plugin.data.type);
         expect(this.plugin.initPlugin).toHaveBeenCalled();
         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
-    });
+    });*/
 
 
 

@@ -1,7 +1,7 @@
 describe('Image Plugin test cases', function() {
 
     beforeEach(function(done) {
-        var themeData = {
+       /* var themeData = {
             canvasId: "canvas",
             startStage: "splash",
             manifest: {
@@ -15,7 +15,7 @@ describe('Image Plugin test cases', function() {
                 { id: "splash1", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } },
                 { id: "splash2", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } }
             ]
-        }
+        }*/
         var parent = {
             dimensions: function() {
                 return {
@@ -36,14 +36,12 @@ describe('Image Plugin test cases', function() {
                     "asset": "sringeri"
             
         }
-        this.theme = new ThemePlugin(themeData);
-
-        this.theme.start('js/test/assets/');
-        this.plugin = PluginManager.invoke('image', data, parent, "splash", this.theme);
-        spyOn(this.plugin, 'refresh').and.callThrough();
+       /* this.theme = new ThemePlugin(themeData);
+        this.theme.start('js/test/assets/');*/
+        this.plugin = PluginManager.invoke('image', data, parent/*, "splash", this.theme*/);
 
         done();
-        console.log("asset",asset);
+        
     });
 
     it('Image plugin initPlugin', function() {
@@ -59,14 +57,7 @@ describe('Image Plugin test cases', function() {
         console.log("p",this.plugin._self);
        
     });
-    it('Image plugin Refresh function validation', function() {
-        this.plugin.refresh();
-        expect(this.plugin.refresh).toHaveBeenCalled();
-        expect(this.plugin.refresh.calls.count()).toEqual(1);
-    });
-
-
-    it('Image asset properties',function(){
+     it('Image asset properties',function(){
        expect(this.plugin._self.asset).not.toBeNull();
         
        

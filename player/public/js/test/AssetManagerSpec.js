@@ -32,11 +32,10 @@ describe('Asset manager test cases', function() {
                 }
             }]
         }
-
-        AssetManager.init(themeData, '/js/test/assets/');
+        AssetManager.init(themeData, '/home/crazy/Genie/player/public/js/test/assets/');
         window.jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
         setTimeout(function () {
-            console.log('inside timeout');
+           
             done();
         }, 500);
         done();
@@ -66,12 +65,12 @@ describe('Asset manager test cases', function() {
         done();
         expect(AssetManager.stopStageAudio.calls.count()).toEqual(1);
     });
-    it('Test AsssetManager loadAsset function',function(){
+    /*it('Test AsssetManager loadAsset function',function(){
         AssetManager.loadAsset({stageId:"splash", assetId:"splash_audio", path:"/js/test/assets"});
         expect(AssetManager.loadAsset).toHaveBeenCalled();
 
         expect(AssetManager.loadAsset.calls.count()).toEqual(1);
-    });
+    });*/
     /*it('Test AssetManager destroy function',function(){
         AssetManager.destroy({ strategy: undefined, stageAudios: Object({  })});
        

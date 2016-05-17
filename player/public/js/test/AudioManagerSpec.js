@@ -1,8 +1,8 @@
 describe('Audio manager test cases', function() {
 
     // Img plugin is used for all the event manager specs. Make sure the specs of ImagePlugin are successfull
-    /*  beforeAll(function(done) {
-       
+      beforeAll(function(done) {
+       console.info("present dir",__dirname);
      
         var themeData = {
             manifest: {
@@ -16,9 +16,9 @@ describe('Audio manager test cases', function() {
             ]
         }
 
-        AudioManager.init(themeData, '/js/test/assets/');
+        AudioManager.init(themeData, 'public/js/test/assets/');
         done();
-    });*/
+    });
     beforeEach(function(done) {
         Renderer.theme = {
             _currentStage: ''
@@ -34,6 +34,7 @@ describe('Audio manager test cases', function() {
     });
 
     it('Test Audio manager play', function() {
+
         AudioManager.play({asset: 'splash_audio'});
         expect(AudioManager.play).toHaveBeenCalled();
         expect(AudioManager.play.calls.count()).toEqual(1);

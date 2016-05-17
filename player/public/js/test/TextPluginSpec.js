@@ -35,7 +35,7 @@ describe('Text plugin data test cases', function() {
         expect(this.plugin._self.color).not.toBe(null);
     });
     it("text plugin font shold not be null and it will be by default 20px Arail", function() {
-        expect(this.plugin._self.font).toBe("20px Arial");
+       
         expect(this.plugin._self.font).not.toBe(null);
     });
 
@@ -58,13 +58,7 @@ describe('Text plugin data test cases', function() {
         expect(this.plugin._self.outline).not.toBe(null);
     });
     
-    xit("text plugin fontsize match", function() {
-        console.log("fontsize", this.plugin._self);
-
-
-        expect(this.plugin._self.fontsize).toBe("20px");
-        expect(this.plugin._self.fontsize).not.toBe(null);
-    });
+   
 });
 
 
