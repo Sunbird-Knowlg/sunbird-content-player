@@ -36,13 +36,9 @@ describe('Div Plugin test cases', function() {
             "x": 0,
             "y": 0,
             "w": 100,
-            "h": 100
+            "h": 100,
             "id": "one",
             "postion": "absolute"
-
-
-
-
         }
         this.theme = new ThemePlugin(themeData);
         this.theme.start('js/test/assets/');
@@ -77,7 +73,7 @@ describe('Div Plugin test cases', function() {
 
     });
     it('Div plugin registerEvents function call validation', function() {
-        this.plugin.registerEvents();
+        this.plugin.registerEvents({id:"splash"});
         expect(this.plugin.registerEvents).toHaveBeenCalled();
         expect(this.plugin.registerEvents.calls.count()).toEqual(1);
 
