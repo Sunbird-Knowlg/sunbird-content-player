@@ -234,15 +234,28 @@ ion-popover-view.fit ion-content {
 .gc-menu-home-cont{
     position: absolute;  
     text-align: center;    
-    width: 100%;    
-    top: 25%;
+    width: 60%;    
+    top:25%;
+    left:20%;
 }
 
 .gc-menu-genie-cont{
     position: absolute;  
     text-align: center;    
-    width: 100%;    
-    top: 55%;
+    width: 60%;    
+    top: 50%;
+    left:20%;
+    
+}
+
+.gc-menu-mute-cont{
+
+   
+    position: absolute;  
+    text-align: center;    
+    width: 60%;    
+    top: 75%;
+    left:20%;
 }
 
 .gc-menu-btn-close{
