@@ -36,7 +36,6 @@ function goToHome($state, isCollection, id, pageId) {
     }
 }
 
-
 function backbuttonPressed() {
     var data = (Renderer.running || HTMLRenderer.running) ? {
         type: 'EXIT_CONTENT',
@@ -78,4 +77,39 @@ function startApp(app) {
 function contentNotAvailable() {
     alert(AppMessages.NO_CONTENT_FOUND);
     exitApp();
+}
+
+function getNavigateTo(navType) {
+    var navigation = [];
+    var navigateTo = undefined;
+    if (!_.isEmpty(Renderer.theme._currentScene._data.param)) {
+        navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
+        var direction = _.findWhere(navigation, {name: navType});
+        if (direction) navigateTo = direction.value;
+    }
+    return navigateTo;
+}
+
+function navigate(navType) {
+    var navigateTo = getNavigateTo(navType);
+    if ("undefined" == typeof navigateTo && "next" == navType) {
+        console.info("redirecting to endpage.");
+        window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+    }else{
+        var action = {
+            "asset": Renderer.theme._id,
+            "command": "transitionTo",
+            "duration": "100",
+            "ease": "linear",
+            "effect": "fadeIn",
+            "type": "command",
+            "value": navigateTo
+        };
+        action.transitionType = navType;
+        Renderer.theme.transitionTo(action);
+        var navigate = angular.element("navigate");
+        navigate.trigger("navigateUpdate", {'show': false});
+
+        jQuery('popup').hide();        
+    } 
 }
