@@ -14,11 +14,11 @@ describe('Asset manager test cases', function() {
             manifest: {
                 media: [{
                     id: 'sringeri',
-                    src: 'sringeri.png',
+                    src: 'https://sandbox-community.ekstep.in/assets/public/content/1462973537326grey.png',
                     type: 'image'
                 }, {
                     id: 'splash_audio',
-                    src: 'splash.ogg',
+                    src: 'https://sandbox-community.ekstep.in/assets/public/content/friday_345_1463135379_1463135379772.mp3',
                     type: 'audio'
                 }]
             },
@@ -32,13 +32,11 @@ describe('Asset manager test cases', function() {
                 }
             }]
         }
-        AssetManager.init(themeData, '/home/crazy/Genie/player/public/js/test/assets/');
+        AssetManager.init(themeData, '');
         window.jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
         setTimeout(function () {
-           
             done();
         }, 500);
-        done();
     });
 
     it('Test Asset manager init', function() {
@@ -54,10 +52,14 @@ describe('Asset manager test cases', function() {
         });
     });
 
-    it('Test Asset manager getAsset', function() {
-        expect(AssetManager.initStage).toHaveBeenCalled();
-        var img = AssetManager.getAsset('splash', 'sringeri');
-        var abuff = AssetManager.getAsset('splash', 'splash_audio')
+    it('Test Asset manager getAsset', function(done) {
+        AssetManager.initStage('splash', null, null, function() {
+            expect(AssetManager.initStage).toHaveBeenCalled();
+            expect(AssetManager.initStage.calls.count()).toEqual(2);
+            var img = AssetManager.getAsset('splash', 'sringeri');
+            // var abuff = AssetManager.getAsset('splash', 'splash_audio');
+            done();
+        });
     });
     it('Test Asset manager stopStageAudio', function(done) {
         AssetManager.stopStageAudio({stageId:"splash"});

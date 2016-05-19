@@ -32,8 +32,8 @@ module.exports = function(config) {
             'public/js/test/StageSpec.js',
             'public/js/test/TelemetrySpec.js',
             'public/js/test/VideoPluginSpec.js',
-            'public/js/test/MCQPluginSpec.js',
-            'public/js/test/MTFPluginSpec.js',
+            // 'public/js/test/MCQPluginSpec.js',
+            // 'public/js/test/MTFPluginSpec.js',
             'public/js/test/RecordManagerSpec.js',
             'public/js/test/WorksheetSpec.js',
             'public/js/test/PluginManagerSpec.js',
@@ -103,7 +103,7 @@ module.exports = function(config) {
         // Which plugins to enable
         plugins: [
             "karma-phantomjs-launcher",
-            'karma-chrome-launcher',
+            // 'karma-chrome-launcher',
             "karma-jasmine",
             "karma-jasmine-matchers",
             "karma-junit-reporter",
@@ -130,8 +130,8 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        /* browsers: ['PhantomJS'],*/
-        browsers: ['Chrome', 'Chrome_without_security'],
+        browsers: ['PhantomJS'],
+        // browsers: ['Chrome', 'Chrome_without_security'],
 
 
         // Continuous Integration mode

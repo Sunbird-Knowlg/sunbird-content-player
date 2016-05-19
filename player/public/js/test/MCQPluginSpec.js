@@ -25,8 +25,6 @@ describe('MCQ Plugin test cases', function() {
                     "bgcolor": "skyblue",
                     "color": "yellow"
                 },
-
-
             }
         };
         Renderer.theme = { _currentStage: '' };
