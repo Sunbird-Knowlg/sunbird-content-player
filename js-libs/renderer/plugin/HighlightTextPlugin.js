@@ -79,10 +79,7 @@ var HighlightTextPlugin = Plugin.extend({
                     };
                     createjs.Ticker.addEventListener("tick", instance._listener);
                     instance._audioInstance.object.on("complete", function() {
-                        instance._isPlaying = false;
-                        instance._removeHighlight();
-                        createjs.Ticker.removeEventListener("tick", instance._listener);
-                        instance._audioInstance = undefined;
+                        instance._cleanupHighlight();
                     });
                 }
             } else {
@@ -120,7 +117,7 @@ var HighlightTextPlugin = Plugin.extend({
         if (this._timings.length > 0) {
             if (audio) {
                 instance._isPlaying = true;
-                AudioManager.play({asset: audio}, instance._audioInstance);
+                AudioManager.play({asset: audio, stageId: instance._stage._id}, instance._audioInstance);
             } else {
                 // TODO: By calculating the delta time.
             }
@@ -129,7 +126,24 @@ var HighlightTextPlugin = Plugin.extend({
         }
     },
     stop: function(action) {
-
+        var instance = this;
+        var audio = action.audio || this._data.audio;
+        if (this._timings.length > 0) {
+            if (audio) {
+                AudioManager.stop({asset: audio, stageId: instance._stage._id});
+                instance._cleanupHighlight();
+            } else {
+                // TODO: By calculating the delta time.
+            }
+        } else {
+            console.info("No timing data:", this._id);
+        }
+    },
+    _cleanupHighlight: function() {
+        this._isPlaying = false;
+        this._removeHighlight();
+        if (this._listener) createjs.Ticker.removeEventListener("tick", this._listener);
+        if (this._audioInstance) this._audioInstance = undefined;
     },
     _removeHighlight: function() {
         jQuery("."+this._wordClass).css({"background-color": "none", "padding": "0px", "font-weight": "normal"});
