@@ -180,7 +180,15 @@ var StagePlugin = Plugin.extend({
     },
     evaluate: function(action) {
         var valid = false;
+        var showFeeback = true;
         if (this._stageController) {
+
+            //Checking to show feedback or not
+            if(!_.isUndefined(this._stageController._data.showImmediateFeedback)){
+                showFeeback = this._stageController._data.showImmediateFeedback;
+            }else{
+
+            }
             this._inputs.forEach(function(input) {
                 input.setModelValue();
             });
@@ -189,10 +197,16 @@ var StagePlugin = Plugin.extend({
                 valid = result.pass;    
             }
         }
-        if (valid) {
-            this.dispatchEvent(action.success);
-        } else {
-            this.dispatchEvent(action.failure);
+        if(showFeeback){
+            //Show valid feeback
+            if (valid) {
+                this.dispatchEvent(action.success);
+            } else {
+                this.dispatchEvent(action.failure);
+            }            
+        }else{
+            //Directly take user to next stage, without showing feedback popup
+            navigate("next");
         }
     },
     reload: function(action) {
