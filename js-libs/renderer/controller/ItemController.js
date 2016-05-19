@@ -27,10 +27,8 @@ var ItemController = Controller.extend({
             if (item) {
                 // Reset the current state of the item (in case one is going back and forth)
                 this.resetItem(item);
-                if (item.type.toLowerCase() == 'ftb') {
-                    OverlayHtml.isReadyToEvaluate(true);
-                }
-
+    
+                if ("undefined" == typeof item.model || null == item.model) item.model = {};
                 // Start assessment telemetry
                 d = item.model;
 

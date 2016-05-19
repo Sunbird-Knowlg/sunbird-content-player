@@ -154,7 +154,6 @@ var ThemePlugin = Plugin.extend({
         childPlugin.setIndex(nextIdx);
     },
     replaceStage: function(stageId, effect) {
-        OverlayHtml.isReadyToEvaluate(false);
         this.disableInputs();
         this.inputs = [];
         this.removeHtmlElements();
@@ -237,10 +236,8 @@ var ThemePlugin = Plugin.extend({
         var gameAreaEle =  jQuery('#'+Renderer.divIds.gameArea);
         var chilElemtns = gameAreaEle.children();
         jQuery(chilElemtns).each(function(){
-            if((this.id !== "overlayHTML") || (this.id !== "gameCanvas")){
-                console.log("this.id: ", this.id);
-            }else{
-                jQuery(this).remove();                
+            if((this.id !== "overlayHTML") && (this.id !== "gameCanvas")){
+                jQuery(this).remove();
             }
         });
     },

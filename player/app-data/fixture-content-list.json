@@ -35,6 +35,31 @@
             "isAvailable": true,
             "path": "stories/quizapp_bugs"
         },{
+
+            "identifier": "org.ekstep.mtf.text.text",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/org.ekstep.mtf.text.text/logo.png",
+                "subject": "literacy_v2",
+                "description": "org.ekstep.mtf.text.text",
+                "name": "Template Text",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "A robust test suite is a must-have for any product...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.mtf.text.text",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/org.ekstep.mtf.text.text"
+        },{
+
             "identifier": "org.ekstep.worksheet.noah",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {

@@ -210,7 +210,7 @@ angular.module('genie-canvas.theme',[])
                     action.failure = "wrong_answer";
                     CommandManager.handle(action);                    
                 }
-            }          
+            }
         }
     }
 })

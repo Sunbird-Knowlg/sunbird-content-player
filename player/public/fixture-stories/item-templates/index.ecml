@@ -2,7 +2,10 @@
 	<manifest>
 		<media id="previous" src="icon_previous.png" type="image" />
         <media id="next" src="icon_next.png" type="image" />
-        <media id="barber_img" src="icon_next.png" type="image" />
+        <media id="barber_img" src="barber.png" type="image" />
+        <media id="carpenter_img" src="carpenter.png" type="image" />
+        <meida id="cheers_soft" src="cheers_soft.ogg" type="audio" />
+        <meida id="chimes" src="chimes.ogg" type="audio" />
 	</manifest>
 	<controller id="assessment" name="assessment" type="items"/>
 	
@@ -31,7 +34,27 @@
         </mtf>
     </template>
     
+    <template id="org.ekstep.mcq.ia">
+        <text align="center" color="black" font="Verdana" fontsize="70" h="4" lineHeight="1.5" model="item.question" valign="middle" w="100" x="0" y="7"/>
+          <shape h="20" hitArea="true" type="rect" w="80" x="0" y="0">
+           <event type="click">
+                <action asset_model="item.question_audio" command="play" type="command"/>
+            </event>
+         </shape>
+        <!-- <g x="20" y="10" w="60" h="30">
+            <shape x="0" y="0" w="100" h="100" stroke="red"/>
+            <image h="30" w="30" align="center" valign="middle" stretch="false" asset="barber_img" x="5" y="10"/>
+        </g> -->
+        <mcq model="item" multi_select="false" shadow="#56B1F7">
 
+            <options cols="4" h="35" highlight="yellow" layout="table" marginX="2" marginY="5" options="options" stroke="black" w="90" x="5" y="40">
+                <event type="click">
+                       <action asset_model="option.value.audio" command="play" type="command"/>
+                  </event>
+                <image h="80" w="80" align="center" valign="middle" stretch="false" model="option.value.image" x="3" y="0"/>
+            </options>
+        </mcq>
+    </template>
 
     <template id="ftb_template_default">
     	<text font="Georgia" fontsize="40" model="item.title" marginY="10" padX="30" padY="10" w="70" h="12" x="15" y="5" lineHeight="1.2" align="left" />
@@ -44,6 +67,9 @@
 		<image asset="previous"/>
 		<image asset="next"/>
 		<image asset="barber_img"/>
+        <image asset="carpenter_img"/>
+        <audio asset="cheers_soft" />
+        <audio asset="chimes" />
 	</stage>
 	<stage id="baseStage" preload="true">
 		<image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>

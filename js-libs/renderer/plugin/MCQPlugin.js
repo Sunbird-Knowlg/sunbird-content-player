@@ -56,9 +56,20 @@ var MCQPlugin = Plugin.extend({
                 if (_.isFinite(data.offsetY)) {
                     this._offsetY = data.offsetY;
                 }
+                this._multi_select = this.isMultiSelect();
                 this.invokeChildren(data, this, this._stage, this._theme);
         	}
         }
+    },
+    isMultiSelect: function() {
+        var ansLength = 0;
+        var options = this._controller.getModelValue("options");
+        if (options) {
+            ansLength = _.filter(options, function(option) {
+                return option.answer == true;
+            }).length;
+        }
+        return (ansLength > 1) ? true : false;
     },
     selectOption: function(option) {
         

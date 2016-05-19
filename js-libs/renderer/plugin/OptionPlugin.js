@@ -137,7 +137,6 @@ var OptionPlugin = Plugin.extend({
                 Renderer.update = true;
             });
             asset.on("pressup", function(evt) {
-                OverlayHtml.isReadyToEvaluate(true);
                 var snapTo;
                 if (instance._parent._force === true) {
                     snapTo = instance._parent.getLhsOption(value.answer);
@@ -165,6 +164,7 @@ var OptionPlugin = Plugin.extend({
                                 if (this.y >= y && (this.y + this.height) <= maxY) {
                                     this._mapedTo = snapTo[i];
                                     snapSuccess = true;
+                                    OverlayHtml.isReadyToEvaluate(true);
                                 }
                             }
                         }
@@ -228,6 +228,16 @@ var OptionPlugin = Plugin.extend({
                     instance._parent.setAnswer(instance, plugin._index);
 
                     // Remember the answer so that on overwrite, we can clear it
+                    if (_.isArray(snapTo)) {
+                        for (var i = 0; i < snapTo.length; i++) {
+                            var rhsOption = snapTo[i];
+                            if (rhsOption._answer == instance)
+                                rhsOption._answer = undefined;
+                        }
+                    } else if (snapTo) {
+                        if (snapTo._answer == instance) 
+                            snapTo._answer = undefined;
+                    }   
                     plugin._answer = instance;
                 }
 
@@ -323,12 +333,54 @@ var OptionPlugin = Plugin.extend({
         var innerECML = this.getInnerECML();
         if (!_.isEmpty(innerECML)) {
             var data = {};
-            data.x = 0;
-            data.y = 0;
-            data.w = 100;
-            data.h = 100;
+            var padx = this._data.padX || 0;
+            var pady = this._data.padY || 0;
+            data.x = padx;
+            data.y = pady;
+            data.w = 100 - (2 * padx);
+            data.h = 100 - (2 * pady);
             Object.assign(data, innerECML);
-            this.invokeChildren(data, this, this._stage, this._theme);
+            PluginManager.invoke('g', data, this, this._stage, this._theme);
+        }
+    },
+    resolveModelValue: function(data) {
+        var instance = this;
+        var updateAction = function(action) {
+            if (action.asset_model) {
+                var model = action.asset_model;
+                var val = instance._stage.getModelValue(model);
+                action.asset = val;
+                delete action.asset_model;
+            }
+        }
+        var updateEvent = function(evt) {
+            if(_.isArray(evt.action)) {
+                evt.action.forEach(function(action) {
+                    updateAction(action);
+                });
+            } else if(evt.action) {
+                updateAction(evt.action);
+            }
+        }
+        var events = undefined;
+        if(data.events) {
+            if (_.isArray(data.events)) {
+                events = [];
+                data.events.forEach(function(e) {
+                    events.push.apply(events, e.event);
+                });
+            } else {
+                events = data.events.event
+            }
+        } else {
+            events = data.event;
+        }
+        if(_.isArray(events)) {
+            events.forEach(function(e) {
+                updateEvent(e);
+            });
+        } else if(events) {
+            updateEvent(events);
         }
     },
     resolveModelValue: function(data) {

@@ -17,12 +17,12 @@
     <navigate type="'next'" enable-image="icons.next.enable" disable-image="icons.next.enable" style="position:absolute;width: 10%;top: 45%;right: 1%;"></navigate>
     <assess ng-show="isItemScene" image="icons.assess.enable"></assess>
 
-		<reload-stage  style="position: absolute;width: 7%;bottom: 1%;left: 1%;"></reload-stage>
+		<reload-stage style="position: absolute;width: 7%;bottom: 1%;left: 1%;"></reload-stage>
 		
-  	<!-- Note: all the HTML elements should be above this menu tag
-     Don't add any HTML elements after this menu tag
-   	-->
-    <!-- Menu overlay to hide canvas -->
+	  	<!-- Note: all the HTML elements should be above this menu tag
+	     Don't add any HTML elements after this menu tag
+	   	-->
+	    <!-- Menu overlay to hide canvas -->
 		<menu></menu>
 
 		<!-- All the popup's should add here -->
@@ -33,11 +33,10 @@
 	<!-- HTML plugin elements(dynamically adding here) -->
 
 	<!-- Canvas elment(used by CreateJS) -->
-  <canvas id="gameCanvas" width="1366" height="768"></canvas>
+  	<canvas id="gameCanvas" width="1366" height="768"></canvas>
 </div>
 
 <div id="errorDiv" style="z-index: 9999;" ng-show="showMessage" ng-click="showMessage = !showMessage">
-    <div ng-bind-html="message" class="bar bar-energized bookshelf_message">
-    </div>
+    <div ng-bind-html="message" class="bar bar-energized bookshelf_message"></div>
 </div>
-<iframe id="htmlFrame" ng-src="{{currentProjectUrl}}" width="1366" height="768" scrolling="auto" style="display:none;"> </iframe>
+<iframe id="htmlFrame" ng-src="{{currentProjectUrl}}" width="1366" height="768" scrolling="auto" style="display:none;"></iframe>

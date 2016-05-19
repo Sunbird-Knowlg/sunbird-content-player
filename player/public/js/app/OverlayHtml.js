@@ -12,7 +12,8 @@ OverlayHtml = {
         if ("undefined" != typeof navigates && "undefined" != typeof angular) {
             var elements = angular.element(navigates);
             elements.trigger("navigateUpdate", {show: true});
-            var rootScope = this._getRootScope();
+            
+            var rootScope = this._getRootScope(); 
             rootScope.$apply();
         }
     },
@@ -33,11 +34,7 @@ OverlayHtml = {
         return this._rootScope;            
     },
     isReadyToEvaluate: function(enableEval){
-        var rootScope = this._getRootScope();
-        if (rootScope) {
-            rootScope.enableEval = enableEval;
-            rootScope.$apply();
-        }
+        this._setRootScope("enableEval", enableEval);
     },
     sceneEnter: function() {
         var isItemStage = this.isItemScene();
@@ -55,6 +52,15 @@ OverlayHtml = {
         }
     },
     isItemScene: function() {
-    	return ("undefined" != typeof Renderer.theme._currentScene._stageController && "items" == Renderer.theme._currentScene._stageController._type)? true : false;
+        var stageCtrl = Renderer.theme._currentScene._stageController;
+        if(!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type)){
+            var modelItem = stageCtrl._model[stageCtrl._index];
+            // If FTB item, enable submit button directly
+            this._rootScope.enableEval = (modelItem && modelItem.type == 'ftb') ? true : false
+            return true;
+        }else{
+            return false;
+        }
+    	//return ("undefined" != typeof Renderer.theme._currentScene._stageController && "items" == Renderer.theme._currentScene._stageController._type)? true : false;
     }
 };
