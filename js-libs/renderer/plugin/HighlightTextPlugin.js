@@ -1,5 +1,5 @@
 var HighlightTextPlugin = Plugin.extend({
-    _type: 'highlighttext',
+    _type: 'htext',
     _isContainer: false,
     _render: true,
     _div: undefined,
@@ -178,4 +178,4 @@ var HighlightTextPlugin = Plugin.extend({
         plugin.dispatchEvent(event);
     }
 });
-PluginManager.registerPlugin('highlighttext', HighlightTextPlugin);
+PluginManager.registerPlugin('htext', HighlightTextPlugin);
