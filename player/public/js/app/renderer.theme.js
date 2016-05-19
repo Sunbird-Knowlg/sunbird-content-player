@@ -95,7 +95,7 @@ angular.module('genie-canvas.theme',[])
             enableImage: '=',
             type: '=type'
         },
-        template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:90%;" /></a><a ng-show="show" ng-click="navigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:90%;" /></a>',
+        template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:90%;" /></a><a ng-show="show" ng-click="onNavigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:90%;" /></a>',
         link: function(scope, element) {
             var to = scope.type;
             element.bind("navigateUpdate", function(event, data){
@@ -105,42 +105,11 @@ angular.module('genie-canvas.theme',[])
                     };
                 }
             });
-            var getNavigateTo = function() {
-                var navigation = [];
-                var getNavigateTo = undefined;
-                if (!_.isEmpty(Renderer.theme._currentScene._data.param)) {
-                    navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
-                    var direction = _.findWhere(navigation, {name: to});
-                    if (direction) getNavigateTo = direction.value;
-                }
-                return getNavigateTo;
-            }
-            var navigate = function(navigateTo) {
-                 var action = {
-                        "asset": Renderer.theme._id,
-                        "command": "transitionTo",
-                        "duration": "100",
-                        "ease": "linear",
-                        "effect": "fadeIn",
-                        "type": "command",
-                        "value": navigateTo
-                    };
-                action.transitionType = to;
-                Renderer.theme.transitionTo(action);
-                var navigate = angular.element("navigate");
-                navigate.trigger("navigateUpdate", {'show': false});
-                $rootScope.isItemScene = false;
-                jQuery('popup').hide();
-            }
-            scope.navigate = function() {
+            
+            scope.onNavigate = function() {
                 TelemetryService.interact("TOUCH", to, null, {stageId : Renderer.theme._currentStage});
-                var navigateTo = getNavigateTo();
-                if ("undefined" == typeof navigateTo && "next" == to) {
-                    console.info("redirecting to endpage.");
-                    window.location.hash = "/content/end/" + GlobalContext.currentContentId;
-                } else {
-                    navigate(navigateTo);
-                }
+                $rootScope.isItemScene = false;
+                navigate(to);
             };
         }
     }
