@@ -5,9 +5,15 @@ var HighlightTextPlugin = Plugin.extend({
     _div: undefined,
     _wordIds: [],
     _timings: [],
+    _isPlaying: false,
+    _wordClass: "gc-ht-word",
+    _listener: undefined,
+    _audioInstance: undefined,
     initPlugin: function(data) {
         var dims = this.relativeDims();
-        if (!data.id) data.id = _.uniqueId('plugin');
+        if (!data.id) data.id = this._data.id = _.uniqueId('plugin');
+        if (!data.highlight) data.highlight = this._data.highlight = "#DDDDDD";
+        // if (!data["highlight-color"]) data["highlight-color"] = this._data["highlight-color"] = "#000";
         var div = document.createElement('div');
         div.id = data.id;
         div.style.width = dims.w + 'px';
@@ -46,45 +52,90 @@ var HighlightTextPlugin = Plugin.extend({
         var instance = this;
         var audio = action.audio || this._data.audio;
         if (this._timings.length > 0) {
+            this._isPlaying = true;
             if (audio) {
-                var audioInstance = AudioManager.play({asset: audio});
-                var prevPosition = 0;
-                var listener = function() {
-                    var position = Number(audioInstance.object.position.toFixed(0));
-                    if (position) {
-                        var matches = _.filter(instance._timings, function(time) {
-                            return (time >= prevPosition && time < position);
-                        });
-                        if (matches.length >0) {
-                            _.each(matches, function(match) {
-                                var index = instance._timings.indexOf(match);
-                                var wordId = instance.getWordId(index);
-                                jQuery(".gc-ht-word").css("background-color", "none");
-                                jQuery("#"+wordId).css("background-color", "red");
-                            })
-                        };
-                    }
-                    prevPosition = position;
-                };
-                createjs.Ticker.addEventListener("tick", listener);
-                audioInstance.object.on("complete", function() {
-                    jQuery(".gc-ht-word").css("background-color", "none");
-                    createjs.Ticker.removeEventListener("tick", listener)
-
-                });
+                this._data.audio = audio;
+                if (instance._audioInstance) {
+                    instance.resume(action);
+                } else {
+                    instance._audioInstance = AudioManager.play({asset: audio, stageId: this._stage._id});
+                    var prevPosition = 0;
+                    this._listener = function() {
+                        var position = Number(instance._audioInstance.object.position.toFixed(0));
+                        if (position && instance._isPlaying) {
+                            var matches = _.filter(instance._timings, function(time) {
+                                return (time >= prevPosition && time < position);
+                            });
+                            if (matches.length >0) {
+                                _.each(matches, function(match) {
+                                    var index = instance._timings.indexOf(match);
+                                    var wordId = instance.getWordId(index);
+                                    instance._removeHighlight();
+                                    instance._addHighlight(wordId);
+                                });
+                            };
+                        }
+                        prevPosition = position;
+                    };
+                    createjs.Ticker.addEventListener("tick", instance._listener);
+                    instance._audioInstance.object.on("complete", function() {
+                        instance._isPlaying = false;
+                        instance._removeHighlight();
+                        createjs.Ticker.removeEventListener("tick", instance._listener);
+                        instance._audioInstance = undefined;
+                    });
+                }
             } else {
                 // TODO: By calculating the delta time.
             }
+        } else {
+            console.info("No timing data to play highlight text:", this._id);
         }
     },
     pause: function(action) {
+        var instance = this;
+        var audio = action.audio || this._data.audio;
+        if (this._timings.length > 0) {
+            if (audio) {
+                instance._isPlaying = false;
+                AudioManager.pause({asset: audio}, instance._audioInstance);
+            } else {
+                // TODO: By calculating the delta time.
+            }
+        } else {
+            console.info("No timing data:", this._id);
+        }
 
     },
+    togglePlay: function(action) {
+        if (this._isPlaying) {
+            this.pause(action);
+        } else {
+            this.play(action);
+        }
+    },
     resume: function(action) {
-
+        var instance = this;
+        var audio = action.audio || this._data.audio;
+        if (this._timings.length > 0) {
+            if (audio) {
+                instance._isPlaying = true;
+                AudioManager.play({asset: audio}, instance._audioInstance);
+            } else {
+                // TODO: By calculating the delta time.
+            }
+        } else {
+            console.info("No timing data:", this._id);
+        }
     },
     stop: function(action) {
 
+    },
+    _removeHighlight: function() {
+        jQuery("."+this._wordClass).css({"background-color": "none", "padding": "0px", "font-weight": "normal"});
+    },
+    _addHighlight: function(id) {
+        jQuery("#"+id).css({"background": this._data.highlight});
     },
     _tokenize: function(text) {
         var htmlText = "";
