@@ -8,16 +8,6 @@ module.exports = function(grunt) {
                 },
             },
         },
-       watch:{
-            renderer: {
-                files: ['public/js/thirdparty/exclude/**/*',
-                        '../renderer/**/*',
-                        '../speech/**/*',
-                        '../telemetry/*.js'
-                        ],
-                tasks: ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js'] 
-            }
-        },
         karma: {
             unit: {
                 configFile: 'test/karma.conf.js'
@@ -431,12 +421,11 @@ module.exports = function(grunt) {
         if (grunt.file.exists('plugins/org.ekstep.genie.service.plugin')) grunt.task.run(['cordovacli:rm_genie_service']);
         if (grunt.file.exists('plugins/org.ekstep.recorder.service.plugin')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
     });
-    
-    grunt.registerTask('karma-test', ['karma:unit']);
-    grunt.registerTask('watch-def', ['watch:renderer', 'watch:speech', 'watch:telemetry']);
 
     grunt.registerTask('default', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js']);
     grunt.registerTask('build-all', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
+
+    grunt.registerTask('karma-test', ['default','karma:unit', 'clean:minjs']);
 
     grunt.registerTask('build-js', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS', 'clean:minjs']);
     grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'add-cordova-plugin-genieservices']);
