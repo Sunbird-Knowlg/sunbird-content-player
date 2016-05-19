@@ -34,25 +34,23 @@ OverlayHtml = {
     },
     sceneEnter: function() {
         var isItemStage = this.isItemScene();
-
         var queue = new createjs.LoadQueue();
         createjs.Sound.alternateExtensions = ["ogg"];
         queue.installPlugin(createjs.Sound);
 
         function handleComplete(event) {
-            console.log("Preloaded:");
+            console.log("preload the audio:");
         }
         queue.addEventListener("complete", handleComplete);
         queue.loadManifest([{
             id: "good",
-            src: "./img/icons/scene5.mp3"
+            src: "./img/icons/scene1.mp3"
         }, {
             id: "try",
             src: "./img/icons/scene5.mp3"
         }]);
 
         if (isItemStage) {
-
 
             this._setRootScope("isItemScene", true);
             var currentScene = Renderer.theme._currentScene;
@@ -61,33 +59,6 @@ OverlayHtml = {
 
                 if (event.type === "correct_answer") {
                     createjs.Sound.play("good");
-
-
-                    ///////////////////////////////////////////////
-                    /* var assetsPath = "./img/icons/";
-                   var sounds = [{
-                        src: "scene5.mp3",
-                        data: {
-                            audioSprite: [
-                                { preload: true, id: "good_job", startTime: 0, duration: 1000 }
-                            ]
-                        }
-                    }];
-                     createjs.Sound.registerSounds(sounds, assetsPath);
-                        function handleFileLoad(event) {
-                            // A sound has been preloaded. This will fire TWICE
-                            console.log("Preloaded:", event.id, event.src);
-                        }
-                    createjs.Sound.addEventListener("fileload", handleFileLoad);    
-                    
-                    createjs.Sound.alternateExtensions = ["ogg"];
-                    createjs.Sound.play("good_job");
-*/
-
-                    // after load is complete
-
-                    /* var audio = new Audio('http://192.254.184.234/~tangh/01_admin_resources/Shimmer/mp3/Smile.mp3');
-                     audio.play();*/
                 }
                 jQuery("#goodJobPopup").show();
             });
@@ -95,43 +66,7 @@ OverlayHtml = {
                 console.info("listener for ", event);
                 if (event.type === "wrong_answer") {
                     createjs.Sound.play("try");
-                    /* var queue = new createjs.LoadQueue();
-                     createjs.Sound.alternateExtensions = ["mp3"];
-                     queue.installPlugin(createjs.Sound);
-
-                     function handleComplete(event) {
-                         // A sound has been preloaded. This will fire TWICE
-                         console.log("Preloaded:");
-                     }
-                     queue.addEventListener("complete", handleComplete);
-                     queue.loadFile({ id: "mySound", src: "./img/icons/scene5.mp3" });*/
-
-                    /* var assetsPath = "./img/icons/";
-                    var sounds = [{
-                        src: "scene5.mp3",
-                        data: {
-                            audioSprite: [
-                                { id: "try_again", startTime: 0, duration: 1000 }
-                            ]
-                        }
-                    }];
-
-                createjs.Sound.registerSounds(sounds, assetsPath);
-                        function handleFileLoad(event) {
-                            // A sound has been preloaded. This will fire TWICE
-                            console.log("Preloaded:", event.id, event.src);
-                        }
-                    createjs.Sound.addEventListener("fileload", handleFileLoad);    
-                    
-                    createjs.Sound.alternateExtensions = ["ogg"];
-
-                    // after load is complete
-                    createjs.Sound.play("try_again");
-*/
-
                 }
-
-
                 jQuery("#tryAgainPopup").show();
             });
         }

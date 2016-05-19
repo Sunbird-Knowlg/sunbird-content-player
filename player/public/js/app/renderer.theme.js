@@ -115,6 +115,7 @@ angular.module('genie-canvas.theme', [])
         }
     })
     .directive('navigate', function($rootScope) {
+
         return {
             restrict: 'E',
             scope: {
@@ -128,6 +129,7 @@ angular.module('genie-canvas.theme', [])
                 element.bind("navigateUpdate", function(event, data) {
                     if (data) {
                         for (key in data) {
+                            console.log("key find", key);
                             scope[key] = data[key];
                         };
                     }
@@ -135,6 +137,7 @@ angular.module('genie-canvas.theme', [])
                 var getNavigateTo = function() {
                     var navigation = [];
                     var getNavigateTo = undefined;
+                    console.log("sot", Renderer.theme._currentScene._data.param);
                     if (!_.isEmpty(Renderer.theme._currentScene._data.param)) {
                         navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
                         var direction = _.findWhere(navigation, {
@@ -156,10 +159,13 @@ angular.module('genie-canvas.theme', [])
                     };
                     action.transitionType = to;
                     Renderer.theme.transitionTo(action);
+
                     var navigate = angular.element("navigate");
                     navigate.trigger("navigateUpdate", {
                         'show': false
                     });
+                    console.log("itemscene", $rootScope.isItemScene);
+                    console.log("navigate", navigate);
                     $rootScope.isItemScene = false;
                     jQuery('popup').hide();
                 }
@@ -167,10 +173,19 @@ angular.module('genie-canvas.theme', [])
                     TelemetryService.interact("TOUCH", to, null, {
                         stageId: Renderer.theme._currentStage
                     });
+                    console.log("tel", TelemetryService);
+
+
                     var navigateTo = getNavigateTo();
+
+
                     if ("undefined" == typeof navigateTo && "next" == to) {
+
                         console.info("redirecting to endpage.");
+
                         window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+
+
                     } else {
                         navigate(navigateTo);
                     }

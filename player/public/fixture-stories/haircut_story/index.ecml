@@ -1230,7 +1230,7 @@
         </image>
     </template>
     <stage id="scene20" x="0" y="0" w="100" h="100" iterate="assessment" var="item">
-        <param name="next" value="scene21" />
+        <!-- <param name="next" value="scene21" /> -->
         <param name="previous" value="scene19" />
         <shape x="2" y="2" w="96" h="10.5" type="rect" fill="#FFF16E" />
         <shape x="2" y="12" w="96" h="89.5" type="rect" fill="#FFF16E" />
