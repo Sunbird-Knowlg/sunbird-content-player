@@ -3,16 +3,16 @@ describe('Telemetry Service API - inActive', function() {
         // done is called after getting the data. done() - is used to handle asynchronous operations...
         TelemetryService.start();
         TelemetryService.interact("TOUCH", "id", "TOUCH");
-        TelemetryService.assess("qid", "NUM", "MEDIUM").start();
-        TelemetryService.assess("qid").end(true, 1);
-        TelemetryService.assess("qid", "NUM", "MEDIUM").start();
-        TelemetryService.assess("qid").end(false, 0);
-        TelemetryService.assess("qid", "NUM", "MEDIUM").start();
-        TelemetryService.assess("qid").end(true, 1);
-        TelemetryService.assess("qid", "NUM", "MEDIUM").start();
-        TelemetryService.assess("qid").end(true, 1);
-        TelemetryService.assess("qid1", "NUM", "MEDIUM").start();
-        TelemetryService.assess("qid1").end(true, 1);
+        // TelemetryService.assess("qid", "NUM", "MEDIUM").start();
+        // TelemetryService.assess("qid").end(true, 1);
+        // TelemetryService.assess("qid", "NUM", "MEDIUM").start();
+        // TelemetryService.assess("qid").end(false, 0);
+        // TelemetryService.assess("qid", "NUM", "MEDIUM").start();
+        // TelemetryService.assess("qid").end(true, 1);
+        // TelemetryService.assess("qid", "NUM", "MEDIUM").start();
+        // TelemetryService.assess("qid").end(true, 1);
+        // TelemetryService.assess("qid1", "NUM", "MEDIUM").start();
+        // TelemetryService.assess("qid1").end(true, 1);
         TelemetryService.end();
         setTimeout(function() {
             done();
@@ -30,33 +30,33 @@ describe('Telemetry Service API - inActive', function() {
 
 })
 
-describe('Telemetry Service API', function() {
+// describe('Telemetry Service API', function() {
 
-    beforeAll(function(done) {
-        // done is called after getting the data. done() - is used to handle asynchronous operations...
-        var packageName = "org.ekstep.quiz.app";
-        var version = "1.0";
-        GlobalContext.init(packageName, version)
-        .then(function() {
-            return TelemetryService.init(GlobalContext.game);
-        })
-        .then(function() {
-            console.log("Init completed........");
-            TelemetryService.start();
-            TelemetryService.end();
-            setTimeout(function() {
-                done();
-            }, 2000);
-        });
-    });
+//     beforeAll(function(done) {
+//         // done is called after getting the data. done() - is used to handle asynchronous operations...
+//         var packageName = "org.ekstep.quiz.app";
+//         var version = "1.0";
+//         GlobalContext.init(packageName, version)
+//         .then(function() {
+//             return TelemetryService.init(GlobalContext.game);
+//         })
+//         .then(function() {
+//             console.log("Init completed........");
+//             TelemetryService.start();
+//             TelemetryService.end();
+//             setTimeout(function() {
+//                 done();
+//             }, 2000);
+//         });
+//     });
 
-    describe('Telemetry Service initialization', function() {
-        it('service is active.', function() {
-            var expected = TelemetryService.isActive;
-            expect(true).toEqual(expected);
-        });
-    });
-});
+//     describe('Telemetry Service initialization', function() {
+//         it('service is active.', function() {
+//             var expected = TelemetryService.isActive;
+//             expect(false).toEqual(expected);
+//         });
+//     });
+// });
 
 function isValidJson(str) {
     try {
