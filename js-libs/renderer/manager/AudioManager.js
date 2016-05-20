@@ -26,8 +26,10 @@ AudioManager = {
                 delete AudioManager.instances[AudioManager.uniqueId(action)];
                 console.info( "Audio with 'id :" + action.asset  + "' is not found..")
             }
+            return instance;
         } else {
             console.warn("Asset is not given to play.", action);
+            return {};
         }
     },
     togglePlay: function(action) {

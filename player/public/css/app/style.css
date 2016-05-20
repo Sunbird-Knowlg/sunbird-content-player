@@ -315,6 +315,16 @@ ion-popover-view.fit ion-content {
     left: 45%
 }
 
+.assess-enable{
+    opacity: 1;
+    -webkit-text-stroke: 0.2vh #62ac0c;
+}
+
+.assess-disable{
+    opacity: 0.2;
+    -webkit-text-stroke: 0.2vh grey;
+}
+
 .assess img{
     position:absolute;
     width: 100%;
@@ -325,8 +335,7 @@ ion-popover-view.fit ion-content {
     line-height: 100%;
     font-size: 5vh;
     color: white;
-    font-family: SkaterGirlsRock;
-    -webkit-text-stroke: 0.2vh #62ac0c;
+    font-family: SkaterGirlsRock;   
     text-align: center;
     width: 100%;
     padding-top: 10%;
