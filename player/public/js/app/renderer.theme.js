@@ -15,7 +15,8 @@ angular.module('genie-canvas.theme',[])
         "image": "Image",
         "voice": "Voice",
         "audio": "Audio",
-        "author": "Author"
+        "author": "Author",
+        "instructions": "Instructions"
     }
 })
 .directive('preview', function($rootScope){
@@ -72,6 +73,40 @@ angular.module('genie-canvas.theme',[])
             scope.goToGenie = function() {
                 exitApp(pageId);
             }
+        }
+    }
+})
+.directive('stageInstructions', function($rootScope) {
+      return {
+        restrict: 'E',
+        template: '<input type="button" ng-click="showInstructions()" value="Instructions"/>',
+        controller: function($scope, $rootScope){
+            $scope.stageInstMessage = "";
+            $scope.showInst = false;
+
+            /*<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:30%;"/></a>*/
+            $scope.showInstructions = function(){
+                if(Renderer.theme._currentScene.params && Renderer.theme._currentScene.params.instructions){
+                    $scope.showInst = true;
+
+                    //Getting stage instructions from CurrentStage(StagePlugin)
+                    var inst = Renderer.theme._currentScene.params.instructions;
+                    $scope.stageInstMessage = inst;
+                }
+            }
+
+            $scope.closeInstructions = function(){
+                $scope.showInst = false;
+            }
+
+            /*
+             * If meny is getting hide, then hide teacher instructions as well
+             */
+            $scope.$watch("menuOpened", function(){
+                if(!$rootScope.menuOpened){
+                    $scope.showInst = false;
+                }
+            });
         }
     }
 })

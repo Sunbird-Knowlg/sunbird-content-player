@@ -21,9 +21,23 @@
 			<home></home>	
 			<p class="icon-font label-white-stoke" style="padding-top:2%; font-size:4vh;">{{ languageSupport.home }}</p>
 		</div>
+
 		<div class="gc-menu-genie-cont">
 			<genie></genie>
 			<p class="icon-font label-white-stoke" style="padding-top:2%; font-size:4vh; ">{{ languageSupport.genie }}</p>
+		</div>
+
+		<div class="gc-menu-inst-cont">
+			<stage-instructions></stage-instructions>
+			<p class="icon-font label-white-stoke" style="padding-top:2%; font-size:3vh; ">{{ languageSupport.instructions }}</p>
+		</div>
+
+
+		<div class="inst-message-cont" ng-show="showInst">
+			<p class="inst-message">{{ stageInstMessage }}</p>
+			<div class="inst-done">
+				<input type="button" name="Done" value="Done" ng-click="closeInstructions()">
+			</div>
 		</div>
 	</div>
 </div>		
