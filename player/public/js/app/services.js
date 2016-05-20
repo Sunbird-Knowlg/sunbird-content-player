@@ -30,6 +30,30 @@ angular.module('genie-canvas.services', ['ngResource'])
                     });
                 });
             },
+            getContentBody: function(id) {
+                return new Promise(function(resolve, reject) {
+                    genieservice.getContentBody(id)
+                    .then(function(body) {
+                        resolve(body);
+                    })
+                    .catch(function(err) {
+                        console.error(AppErrors.contetnPathFetch, err);
+                        reject(err);
+                    });
+                });
+            },
+            getContentMetadata: function(id) {
+                return new Promise(function(resolve, reject) {
+                    genieservice.getContentMetadata(id)
+                    .then(function(metadata) {
+                        resolve(metadata);
+                    })
+                    .catch(function(err) {
+                        console.error(AppErrors.contetnPathFetch, err);
+                        reject(err);
+                    });
+                });
+            },
             _prepareContent: function(item) {
                 var data = item.localData || item.serverData;
                 if (item.path && data) {

@@ -35,20 +35,37 @@ genieservice_web = {
         });
     },
     getContent: function(id, url) {
-        console.log("AppConfig : ", id);
-        if(AppConfig.APP_STATUS == 'AT') {
+        if(webview) {
             return new Promise(function(resolve, reject) {
-                if(contentMetadata) {
-                    resolve(contentMetadata);
-                } else {
+                if(content) {
+                    resolve(content.metadata);
+                } 
+                // else {
+                //     jQuery.post(genieservice_web.api.getContentList(), function(resp) {
+                //         var result = {};
+                //         if (!resp.error) {
+                //             result.list = resp;
+                //             console.log(result.list);
+                //             var item = _.findWhere(resp.content, { "identifier": id });
+                //             console.log(item);
+                //             resolve(item);
+                //         } else {
+                            
+                //             reject(resp);
+                //         }
+                //     })
+                //     .fail(function(err) {
+                //         reject(err);
+                //     });
+                // }
+            });
+        } else {
+            return new Promise(function(resolve, reject) {
                     jQuery.post(genieservice_web.api.getContentList(), function(resp) {
-                        // console.log("resp : ", resp);
                         var result = {};
                         if (!resp.error) {
                             result.list = resp;
-                            console.log(result.list);
                             var item = _.findWhere(resp.content, { "identifier": id });
-                            console.log(item);
                             resolve(item);
                         } else {
                             
@@ -58,27 +75,8 @@ genieservice_web = {
                     .fail(function(err) {
                         reject(err);
                     });
-                }
-            });
-        } else {
-            return new Promise(function(resolve, reject) {
-                jQuery.post(genieservice_web.api.getContentList(), function(resp) {
-                    var result = {};
-                    if (!resp.error) {
-                        result.list = resp.content;
-                        console.log(result.list);
-                        var item = _.findWhere(resp.content, { "identifier": id });
-                        resolve(item);
-                    } else {
-                        reject(resp);
-                    }
-                })
-                .fail(function(err) {
-                    reject(err);
                 });
-            });
-        }     
-       
+            }     
     },
     getContentList: function(filter) {
         return new Promise(function(resolve, reject) {
@@ -100,13 +98,81 @@ genieservice_web = {
         return endpoint;
     }
 };
-if ("undefined" == typeof cordova) genieservice = genieservice_web;
+genieservice_portal = {
+    getCurrentUser: function() {
+        return new Promise(function(resolve, reject) {
+            var result = {};
+            result.status = "success";
+            result.data = {
+                "avatar": "resource1",
+                "gender": "male",
+                "handle": "handle1",
+                "uid": "8hjh3c4b7b47d570df0ec286bf7adc8ihhnjy",
+                "age": 6,
+                "standard": -1
+            };
+            resolve(result);
+        });
+    },
+    getMetaData: function() {
+        return new Promise(function(resolve, reject) {
+            var result = {};
+            result = {
+                "flavor": "sandbox",
+                "version": "1.0.1"
+            };
+            resolve(result);
+        });
+    },
+    getContentBody: function(id) {
+        return new Promise(function(resolve, reject) {    
+        jQuery.get("//sandbox-community.ekstep.in/api/learning/taxonomy-service/v2/content/" + id + "?fields=body", {"Content-Type" : "application/json"}, function(resp) {
+            var result = {};
+            if (!resp.error) {
+                result.list = resp;
+                resolve(resp.result.content);
+            } else {
+                console.info("err : ", resp.error)
+            }
+        });
+        });
+    },
+    getContent: function(id){
+        return genieservice_web.getContent(id);
+    },
+    getContentMetadata: function(id) {
+        return new Promise(function(resolve, reject) {    
+        jQuery.get("//sandbox-community.ekstep.in/api/learning/taxonomy-service/v2/content/"+ id, {"Content-Type" : "application/json"}, function(resp) {
+            var result = {};
+            if (!resp.error) {
+                result.list = resp;
+                var metadata = resp.result.content;
+                var map = {};
+                map.identifier = metadata.identifier;
+                map.localData = metadata;
+                map.mimeType = metadata.mimeType;
+                map.isAvailable = true;
+                map.path = "stories/" + metadata.code;
+                resolve(map);
+            } else {
+                console.info("err : ", resp.error)
+            }
+        });
+        });
+    }
+
+};
+if ("undefined" == typeof cordova) {
+    if(webview) 
+        genieservice = genieservice_portal;
+    else
+        genieservice = genieservice_web;
+}
 
 telemetry_web = {
     tList: [],
     send: function(string) {
         return new Promise(function(resolve, reject) {
-            console.log(string);
             telemetry_web.tList.push(string);
             resolve(true);
         });
