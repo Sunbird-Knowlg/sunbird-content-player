@@ -19,23 +19,6 @@ angular.module('genie-canvas.theme',[])
             "author": "Author"
         }
     })
-    .directive('preview', function($rootScope){
-        return{
-            restrict: 'A',
-            scope:{
-                'preview': "="
-            },
-            link: function(scope, element, attr){
-                $rootScope.isPreview = scope.preview;
-                console.log("scope isPreview: ", $rootScope.isPreview);
-                if(!scope.preview){
-                    $rootScope.imageBasePath = "img/icons/";
-                }else{
-                    $rootScope.imageBasePath = "https://s3-ap-southeast-1.amazonaws.com/ekstep-public/content_app/images/icons"
-                }
-            }
-        }
-    })
     .directive('preview', function($rootScope) {
         return {
             restrict: 'A',
@@ -275,7 +258,10 @@ angular.module('genie-canvas.theme',[])
             disable: $rootScope.imageBasePath + "next_icon_disabled.png",
             enable: $rootScope.imageBasePath + "next_icon.png",
         },
-        assess: $rootScope.imageBasePath + "submit.png",
+        assess: {
+            enable: $rootScope.imageBasePath + "submit.png",
+            disable: $rootScope.imageBasePath + "submit_disabled.png"
+        },
         retry: $rootScope.imageBasePath + "speaker_icon.png",
         popup: {
             background: $rootScope.imageBasePath + "popup_background.png",
