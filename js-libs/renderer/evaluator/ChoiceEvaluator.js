@@ -42,7 +42,6 @@ MCQEvaluator = {
 		result.res = res;
 		return result;
 	},
-
 	reset: function(item) {
 		if (item) {
 			var options = item.options;

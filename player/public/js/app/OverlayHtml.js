@@ -1,4 +1,5 @@
 OverlayHtml = {
+    _rootScope: null,
 	showNext: function() {
 		this._updateNavigate("next");
 	},
@@ -11,7 +12,8 @@ OverlayHtml = {
         if ("undefined" != typeof navigates && "undefined" != typeof angular) {
             var elements = angular.element(navigates);
             elements.trigger("navigateUpdate", {show: true});
-            var rootScope = this._getRootScope();
+            
+            var rootScope = this._getRootScope(); 
             rootScope.$apply();
         }
     },
@@ -23,12 +25,16 @@ OverlayHtml = {
         }
 	},
 	_getRootScope: function() {
-        var rootScope = null;
-        var overlayDOMElement = document.getElementById('overlayHTML');
-        if ("undefined" != typeof angular && "undefined" != typeof overlayDOMElement) {
-            rootScope = angular.element(overlayDOMElement).scope().$root;
+        if(_.isNull(this._rootScope)){
+            var overlayDOMElement = document.getElementById('overlayHTML');
+            if ("undefined" != typeof angular && "undefined" != typeof overlayDOMElement) {
+                this._rootScope = angular.element(overlayDOMElement).scope().$root;
+            }
         }
-        return rootScope;
+        return this._rootScope;            
+    },
+    isReadyToEvaluate: function(enableEval){
+        this._setRootScope("enableEval", enableEval);
     },
     sceneEnter: function() {
         var isItemStage = this.isItemScene();
@@ -46,6 +52,15 @@ OverlayHtml = {
         }
     },
     isItemScene: function() {
-    	return ("undefined" != typeof Renderer.theme._currentScene._stageController && "items" == Renderer.theme._currentScene._stageController._type)? true : false;
+        var stageCtrl = Renderer.theme._currentScene._stageController;
+        if(!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type)){
+            var modelItem = stageCtrl._model[stageCtrl._index];
+            // If FTB item, enable submit button directly
+            this._rootScope.enableEval = (modelItem && modelItem.type == 'ftb') ? true : false
+            return true;
+        }else{
+            return false;
+        }
+    	//return ("undefined" != typeof Renderer.theme._currentScene._stageController && "items" == Renderer.theme._currentScene._stageController._type)? true : false;
     }
 };

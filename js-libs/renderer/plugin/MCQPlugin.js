@@ -88,7 +88,7 @@ var MCQPlugin = Plugin.extend({
         // If the shadow is visible, toggle it (unselect)
         var val = option.toggleShadow();
         controller.setModelValue(option._model, val, 'selected');
-
+        
         // Shadow state has changed, re-render
         Renderer.update = true;
         return val;
