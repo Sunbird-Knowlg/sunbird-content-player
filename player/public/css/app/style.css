@@ -249,13 +249,19 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-menu-mute-cont{
+    position: absolute;
+    text-align: center;
+    width: 40%;
+    bottom: 3%;
+    right: 12%;
+}
 
-   
+.gc-menu-inst-cont{
     position: absolute;  
     text-align: center;    
-    width: 60%;    
-    top: 75%;
-    left:20%;
+    width: 50%;    
+    bottom: 3%;
+    left: 8%;
 }
 
 .gc-menu-btn-close{
@@ -265,6 +271,30 @@ ion-popover-view.fit ion-content {
     width: 14%;
     position: absolute;
 }
+
+.inst-message-cont{
+    width: 80%;
+    background-color: #ECECEC;
+    border: 1px solid #000;
+    border-radius: 10px;
+    position: absolute;
+    height: 95%;
+    margin: 5%;
+}
+
+.inst-message{
+    font-size: 2em;
+    padding: 5%;
+}
+
+.inst-done{
+    width: 100%;
+    padding: 0 5px;
+    text-align: center;
+    bottom: 2%;
+    position: absolute;
+}
+
 .gc-menu-btn img{
     width: 100%;
 }
