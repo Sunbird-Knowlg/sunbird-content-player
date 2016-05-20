@@ -81,7 +81,7 @@ angular.module('genie-canvas.theme', [])
             restrict: 'E',
             template: '<a href="javascript:void(0)" ng-click="mute()"><img ng-src="{{imageBasePath}}{{mutestatus}}" style="width:30%;" /></a>',
             link: function(scope, url) {
-                scope.mutestatus = "home_icon.png";
+                scope.mutestatus = "speaker_icon.png";
                 scope.textstatus = "Mute";
 
                 scope.mute = function() {
@@ -90,24 +90,18 @@ angular.module('genie-canvas.theme', [])
                     console.log("cstate", createjs.Sound.muted);
                     createjs.Sound.muted = !createjs.Sound.muted;
 
-                    scope.mutestatus = (createjs.Sound.muted == true) ? "speaker_icon.png" : "home_icon.png";
+                    scope.mutestatus = (createjs.Sound.muted == true) ? "speaker_icon.png" : "speaker_icon.png";
                     scope.textstatus = (createjs.Sound.muted == true) ? "Unmute" : "Mute";
-
                 }
-
             }
         }
-
-
     })
-
-
-.directive('restart', function($rootScope) {
-    return {
-        restrict: 'E',
-        template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}retry_icon.png" style="width:100%;" /></a>'
-    }
-})
+    .directive('restart', function($rootScope) {
+        return {
+            restrict: 'E',
+            template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}retry_icon.png" style="width:100%;" /></a>'
+        }
+    })
     .directive('reloadStage', function($rootScope) {
         return {
             restrict: 'E',
@@ -115,7 +109,6 @@ angular.module('genie-canvas.theme', [])
         }
     })
     .directive('navigate', function($rootScope) {
-
         return {
             restrict: 'E',
             scope: {
@@ -123,72 +116,21 @@ angular.module('genie-canvas.theme', [])
                 enableImage: '=',
                 type: '=type'
             },
-            template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:90%;" /></a><a ng-show="show" ng-click="navigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:90%;" /></a>',
+            template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:90%;" /></a><a ng-show="show" ng-click="onNavigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:90%;" /></a>',
             link: function(scope, element) {
                 var to = scope.type;
-                element.bind("navigateUpdate", function(event, data) {
+                element.bind("navigateUpdate", function(event, data){
                     if (data) {
-                        for (key in data) {
-                            console.log("key find", key);
+                        for(key in data) {
                             scope[key] = data[key];
                         };
                     }
                 });
-                var getNavigateTo = function() {
-                    var navigation = [];
-                    var getNavigateTo = undefined;
-                    console.log("sot", Renderer.theme._currentScene._data.param);
-                    if (!_.isEmpty(Renderer.theme._currentScene._data.param)) {
-                        navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
-                        var direction = _.findWhere(navigation, {
-                            name: to
-                        });
-                        if (direction) getNavigateTo = direction.value;
-                    }
-                    return getNavigateTo;
-                }
-                var navigate = function(navigateTo) {
-                    var action = {
-                        "asset": Renderer.theme._id,
-                        "command": "transitionTo",
-                        "duration": "100",
-                        "ease": "linear",
-                        "effect": "fadeIn",
-                        "type": "command",
-                        "value": navigateTo
-                    };
-                    action.transitionType = to;
-                    Renderer.theme.transitionTo(action);
-
-                    var navigate = angular.element("navigate");
-                    navigate.trigger("navigateUpdate", {
-                        'show': false
-                    });
-                    console.log("itemscene", $rootScope.isItemScene);
-                    console.log("navigate", navigate);
+                
+                scope.onNavigate = function() {
+                    TelemetryService.interact("TOUCH", to, null, {stageId : Renderer.theme._currentStage});
                     $rootScope.isItemScene = false;
-                    jQuery('popup').hide();
-                }
-                scope.navigate = function() {
-                    TelemetryService.interact("TOUCH", to, null, {
-                        stageId: Renderer.theme._currentStage
-                    });
-                    console.log("tel", TelemetryService);
-
-
-                    var navigateTo = getNavigateTo();
-
-
-                    if ("undefined" == typeof navigateTo && "next" == to) {
-
-                        console.info("redirecting to endpage.");
-
-                        window.location.hash = "/content/end/" + GlobalContext.currentContentId;
-
-
-                    } else {
-                        navigate(navigateTo);
-                    }
+                    navigate(to);
                 };
             }
         }

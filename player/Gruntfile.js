@@ -8,8 +8,18 @@ module.exports = function(grunt) {
                 },
             },
         },
+        karma: {
+            unit: {
+                configFile: 'test/karma.conf.js'
+              }
+        },
         uglify: {
             js: {
+                options: {
+                    beautify: true,
+                    mangle: false 
+                },
+
                 files: {
                     'public/js/app/renderer.min.js': [
                         'public/js/app/GlobalContext.js',
@@ -27,7 +37,8 @@ module.exports = function(grunt) {
             },
             speech: {
                 options: {
-                    beautify: true
+                    beautify: true,
+                    mangle: false 
                 },
                 files:{
                     'public/js/app/speech.js': ['../js-libs/speech/speech.js', '../js-libs/speech/android-recorder.js']
@@ -60,7 +71,8 @@ module.exports = function(grunt) {
             },
             telemetry: {
                 options: {
-                    beautify:true
+                    beautify:true,
+                    mangle: false 
                 },
                 files: {
                     'public/js/app/telemetry.js': [
@@ -362,6 +374,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-rename');
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-text-replace');
+    grunt.loadNpmTasks('grunt-karma');
 
     var recorder = grunt.option('recorder') || "android";
     recorder = recorder.toLowerCase().trim();
@@ -411,6 +424,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js']);
     grunt.registerTask('build-all', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
+
+    grunt.registerTask('karma-test', ['default','karma:unit', 'clean:minjs']);
 
     grunt.registerTask('build-js', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS', 'clean:minjs']);
     grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'add-cordova-plugin-genieservices']);

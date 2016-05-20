@@ -36,7 +36,7 @@ describe('Plugin manager test cases', function() {
         expect(PluginManager.registerPluginObject.calls.count()).toEqual(1);
     });
 
-    it('Plugin object fetched successfully', function() {
+    xit('Plugin object fetched successfully', function() {
         expect(Object.keys(PluginManager.pluginObjMap).length).toEqual(1);
         expect(PluginManager.getPluginObject.calls.count()).toEqual(0);
         var pluginObj = PluginManager.getPluginObject('testShape');
@@ -45,8 +45,5 @@ describe('Plugin manager test cases', function() {
         expect(this.pluginInstance).toEqual(pluginObj);
     });
 
-    xit('Plugin manager add error');
-    xit('Plugin manager get errors');
-    xit('Plugin manager cleanup');
 
 });
