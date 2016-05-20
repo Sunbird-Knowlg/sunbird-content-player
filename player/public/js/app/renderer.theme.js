@@ -2,6 +2,7 @@ angular.module('genie-canvas.theme',[])
 .run(function($rootScope){
     $rootScope.isPreview = true;
     $rootScope.imageBasePath = "";
+    $rootScope.enableEval = false;
 
     $rootScope.languageSupport = {
         "languageCode": "en",
@@ -148,16 +149,37 @@ angular.module('genie-canvas.theme',[])
         scope: {
             image: '='
         },
-        template: '<a class="assess" href="javascript:void(0);"> <!-- enabled --><img ng-src="{{image}}"/><p>{{labelSubmit}}</p></a>',
+        template: '<a class="assess" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/><p>{{labelSubmit}}</p></a>',
         link: function(scope, element) {
             scope.labelSubmit = $rootScope.languageSupport.submit;
-            element.on("click", function() {
-                var action = {"type":"command","command":"eval","asset":Renderer.theme._currentStage};
-                action.success = "correct_answer";
-                action.failure = "wrong_answer";
-                action.htmlEval = "true";
-                CommandManager.handle(action);
-            });
+        },
+        controller: function($scope, $rootScope){
+            $scope.isEnabled = false;
+            $scope.assessStyle = 'assess-disable';
+
+            $rootScope.$watch('enableEval', function() {
+                //Submit buttion style changing(enable/disable) button
+                $scope.isEnabled = $rootScope.enableEval;
+                if($scope.isEnabled ){
+                    //Enable state
+                    $scope.assessStyle = 'assess-enable';
+                    $scope.image = $rootScope.imageBasePath + "submit.png";
+                }else{
+                    //Disable state
+                    $scope.assessStyle = 'assess-disable';
+                    $scope.image = $rootScope.imageBasePath + "submit_disabled.png";
+                }
+            }); 
+
+            $scope.onSubmit = function(){
+                if($scope.isEnabled){
+                    //If any one option is selected, then only allow user to submit
+                    var action = {"type":"command","command":"eval","asset":Renderer.theme._currentStage};
+                    action.success = "correct_answer";
+                    action.failure = "wrong_answer";
+                    CommandManager.handle(action);                    
+                }
+            }
         }
     }
 })
@@ -175,13 +197,16 @@ angular.module('genie-canvas.theme',[])
     $rootScope.icons = {
         previous: {
             disable: $rootScope.imageBasePath + "back_icon_disabled.png",
-            enable: $rootScope.imageBasePath + "back_icon.png",
+            enable: $rootScope.imageBasePath + "back_icon.png"
         },
         next: {
             disable: $rootScope.imageBasePath + "next_icon_disabled.png",
-            enable: $rootScope.imageBasePath + "next_icon.png",
+            enable: $rootScope.imageBasePath + "next_icon.png"
         },
-        assess: $rootScope.imageBasePath + "submit.png",
+        assess: {
+            enable: $rootScope.imageBasePath + "submit.png",
+            disable: $rootScope.imageBasePath + "submit_disabled.png"
+        },
         retry: $rootScope.imageBasePath + "speaker_icon.png",
         popup: {
             background: $rootScope.imageBasePath + "popup_background.png",
