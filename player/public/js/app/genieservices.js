@@ -173,6 +173,7 @@ telemetry_web = {
     tList: [],
     send: function(string) {
         return new Promise(function(resolve, reject) {
+             console.log(string);
             telemetry_web.tList.push(string);
             resolve(true);
         });

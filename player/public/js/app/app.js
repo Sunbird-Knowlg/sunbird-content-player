@@ -224,10 +224,8 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     stack.push(content.identifier);
                     if (COLLECTION_MIMETYPE == content.mimeType) {
                         $rootScope.title = content.name;
-                        // if (!_.isEmpty($rootScope.collection))
-                        //     TelemetryService.end();
                         $rootScope.collection = content;
-                        TelemetryService.start(content.identifier, content.pkgVersion);
+                            TelemetryService.start(content.identifier, content.pkgVersion);
                     } else {
                         $rootScope.collection = {};
                     }
@@ -295,6 +293,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         };
 
         $scope.goBack = function() {
+            TelemetryService.end();
             stack.pop();
             var id = stack.pop();
             if(id)
