@@ -6,6 +6,11 @@
 
 var stack = new Array(),
     content = {},
+    config = {
+        showStartPage : true,
+        showEndPage : true,
+        showHTMLPages : true
+    },
     webview = getUrlParameter("webview"),
     appState = undefined;
 
@@ -13,8 +18,20 @@ var stack = new Array(),
 window.setContentData = function (metadata, data, config) {
     this.content.metadata = metadata;
     this.content.body = data;
+    _.map(config, function(val, key) {
+        this.config[key] = val;
+    });
     var $state = appState;
-    if(content) {
+    if(!this.config.showHTMLPages){
+        this.config.showStartPage = false;
+        this.config.showEndPage = false;
+    }
+    if(!this.config.showStartPage && !this.config.showHTMLPages) {
+        $state.go('playContent', {
+                'itemId': this.content.metadata.identifier
+        });
+    }
+    else if(content) {
         newContentId = content.metadata.identifier;
         if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
             $state.go('showContent', {"contentId": newContentId});
@@ -24,18 +41,6 @@ window.setContentData = function (metadata, data, config) {
         }
     } 
 }
-
-// function getContentMetadata() {
-//     return window.parent.getContentMetadata();
-//     // window.parent.postMessage(
-//     //         {'func':'alertMyMessage','params':['Thanks for Helping me']},
-//     //         'http://localhost:3000/'
-//     //     );
-// }
-
-// function getContent() {
-//     return window.parent.getContent();
-// }
 
 function launchInitialPage(appInfo, $state) {
 
@@ -56,21 +61,7 @@ function launchInitialPage(appInfo, $state) {
         exitApp();
     });
 }
-
-// window.launchPreview = function(content) {
-//     this.content = content;
-//     console.log("stateParams : ",content);
-//     var $state = appState;
-//     if(content) {
-//         newContentId = content.metadata.identifier;
-//         if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
-//             $state.go('showContent', {"contentId": newContentId});
-//         } else if ((COLLECTION_MIMETYPE == content.metadata.mimeType) ||
-//             (ANDROID_PKG_MIMETYPE == content.metadata.mimeType && content.metadata.code == packageName)) {
-//             $state.go('contentList', { "id": newContentId });
-//         }
-//     } 
-// }   
+ 
 
 angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'genie-canvas.services', 'genie-canvas.template'])
     .run(function($ionicPlatform, $ionicModal, $location,  $cordovaFile, $cordovaToast, ContentService, $state, $stateParams) {

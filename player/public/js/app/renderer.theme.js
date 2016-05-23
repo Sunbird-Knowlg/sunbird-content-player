@@ -130,14 +130,19 @@ angular.module('genie-canvas.theme',[])
                 var navigate = angular.element("navigate");
                 navigate.trigger("navigateUpdate", {'show': false});
                 $rootScope.isItemScene = false;
+
                 jQuery('popup').hide();
             }
             scope.navigate = function() {
                 TelemetryService.interact("TOUCH", to, null, {stageId : Renderer.theme._currentStage});
                 var navigateTo = getNavigateTo();
                 if ("undefined" == typeof navigateTo && "next" == to) {
-                    console.info("redirecting to endpage.");
-                    window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+                    if(config.showEndPage && config.showHTMLPages) {
+                        console.info("redirecting to endpage.");
+                        window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+                    } else {
+                        alert("Cannot move to end page of the content. please check the configurations..");
+                    }
                 } else {
                     navigate(navigateTo);
                 }
