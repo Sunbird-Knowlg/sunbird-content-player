@@ -23,10 +23,12 @@ var InputPlugin = Plugin.extend({
         input.id = data.id;
         input.type = data.type;
 
+        input.style.top = "-1000px"; // position off-screen initially
         input.style.width = dims.w + 'px';
         input.style.height = dims.h + 'px';
         input.style.minWidth = dims.w + 'px';
         input.style.minHeight = dims.h + 'px';
+
         input.style.setProperty("font-size", fontsize, "important");
         input.style.setProperty("font-weight", fontweight, "important");
         input.style.setProperty("font-family", font, "important");
@@ -50,7 +52,7 @@ var InputPlugin = Plugin.extend({
         this._input = input;
         this._self = new createjs.DOMElement(input);
         this._self.x = dims.x;
-        this._self.y = dims.y;
+        this._self.y = dims.y + 1000; // negate the initial off-screen positioning
         this._theme.inputs.push(data.id);
         this._stage._inputs.push(this);
 	},
