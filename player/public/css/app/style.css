@@ -250,12 +250,22 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-menu-mute-cont{
+
     position: absolute;
     text-align: center;
     width: 62%;
-    bottom: 3%;
+    bottom: 1%;
     right: 30%;
 
+
+}
+
+.gc-mute-bg{
+    postion:absolute;
+    width:100%;
+    height: 60%;
+    bottom: 1%;
+    z-index:1;
 }
 
 .gc-menu-inst-cont{

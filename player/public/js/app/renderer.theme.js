@@ -114,10 +114,10 @@ angular.module('genie-canvas.theme',[])
     .directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img ng-src="{{imageBasePath}}{{mutestatus}}" style="width:30%;" /></a>',
+            template: '<a href="javascript:void(0)" ng-click="mute()"><img ng-src="{{imageBasePath}}{{mutestatus}}" style="position:absolute; width:30%; bottom: 30px; left: 72px; z-index: 2;" /></a>',
             link: function(scope, url) {
                 scope.mutestatus = "mute.png";
-                scope.textstatus = "Mute";
+               /* scope.textstatus = "Mute";*/
 
                 scope.mute = function() {
                     //mute function goes here
@@ -125,8 +125,8 @@ angular.module('genie-canvas.theme',[])
                     console.log("cstate", createjs.Sound.muted);
                     createjs.Sound.muted = !createjs.Sound.muted;
 
-                    scope.mutestatus = (createjs.Sound.muted == true) ? "mute.png" : "unmute.png";
-                    scope.textstatus = (createjs.Sound.muted == true) ? "Mute" : "Unmute";
+                    scope.mutestatus = (createjs.Sound.muted == true) ? "unmute.png" : "mute.png";
+                    /*scope.textstatus = (createjs.Sound.muted == true) ? "Mute" : "Unmute";*/
                 }
             }
         }
