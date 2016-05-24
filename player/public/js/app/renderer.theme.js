@@ -16,7 +16,8 @@ angular.module('genie-canvas.theme',[])
             "image": "Image",
             "voice": "Voice",
             "audio": "Audio",
-            "author": "Author"
+            "author": "Author",
+            "instructions":"TEACHER INSTRUCTION"
         }
     })
     .directive('preview', function($rootScope) {
@@ -79,7 +80,7 @@ angular.module('genie-canvas.theme',[])
     .directive('stageInstructions', function($rootScope) {
           return {
             restrict: 'E',
-            template: '<input type="button" ng-click="showInstructions()" value="Instructions"/>',
+            template: '<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}teacher_instructions.png" style="width:30%;"/></a>',
             controller: function($scope, $rootScope){
                 $scope.stageInstMessage = "";
                 $scope.showInst = false;
@@ -115,7 +116,7 @@ angular.module('genie-canvas.theme',[])
             restrict: 'E',
             template: '<a href="javascript:void(0)" ng-click="mute()"><img ng-src="{{imageBasePath}}{{mutestatus}}" style="width:30%;" /></a>',
             link: function(scope, url) {
-                scope.mutestatus = "speaker_icon.png";
+                scope.mutestatus = "mute.png";
                 scope.textstatus = "Mute";
 
                 scope.mute = function() {
@@ -124,8 +125,8 @@ angular.module('genie-canvas.theme',[])
                     console.log("cstate", createjs.Sound.muted);
                     createjs.Sound.muted = !createjs.Sound.muted;
 
-                    scope.mutestatus = (createjs.Sound.muted == true) ? "speaker_icon.png" : "speaker_icon.png";
-                    scope.textstatus = (createjs.Sound.muted == true) ? "Unmute" : "Mute";
+                    scope.mutestatus = (createjs.Sound.muted == true) ? "mute.png" : "unmute.png";
+                    scope.textstatus = (createjs.Sound.muted == true) ? "Mute" : "Unmute";
                 }
             }
         }
