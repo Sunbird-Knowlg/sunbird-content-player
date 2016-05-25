@@ -63,7 +63,7 @@ angular.module('genie-canvas.services', ['ngResource'])
                     if ("undefined" != typeof cordova)
                         data.appIcon = (data.appIcon) ? path + "/" + data.appIcon : path + "/logo.png";
                     else 
-                        data.appIcon = path + "/logo.png";
+                        data.appIcon = (webview) ? data.appIcon : path + "/logo.png";
                     data.mimeType = item.mimeType;
                     data.status = "ready";
                 } else {

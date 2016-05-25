@@ -224,8 +224,10 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     stack.push(content.identifier);
                     if (COLLECTION_MIMETYPE == content.mimeType) {
                         $rootScope.title = content.name;
+                        // if (!_.isEmpty($rootScope.collection))
+                        //     TelemetryService.end();
                         $rootScope.collection = content;
-                            TelemetryService.start(content.identifier, content.pkgVersion);
+                        TelemetryService.start(content.identifier, content.pkgVersion);
                     } else {
                         $rootScope.collection = {};
                     }
@@ -293,7 +295,6 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         };
 
         $scope.goBack = function() {
-            TelemetryService.end();
             stack.pop();
             var id = stack.pop();
             if(id)
@@ -319,8 +320,27 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 jQuery("#htmlFrame").show();
             });
         } else { 
-            if (webview) 
-                Renderer.start("", 'gameCanvas', $scope.item, content.body, true);
+            if (webview) {
+                var contentBody = undefined;
+                if(COLLECTION_MIMETYPE == content.metadata.mimeType) {
+                    ContentService.getContentBody($stateParams.itemId)
+                        .then(function(data) {
+                            var tempData = data;
+                            var x2js = new X2JS({attributePrefix: 'none'});
+                            data = x2js.xml_str2json(tempData.body);
+                            data = data ? data : JSON.parse(tempData.body)
+                            Renderer.start("", 'gameCanvas', $scope.item, data, true);
+                            
+                        })
+                        .catch(function(err) {
+                            console.info("contentNotAvailable : ", err);
+                            contentNotAvailable();
+                        });
+                } else {
+                    Renderer.start("", 'gameCanvas', $scope.item, content.body, true);
+                }
+                
+            }
             else
                 Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
         }

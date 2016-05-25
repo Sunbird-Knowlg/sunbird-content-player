@@ -138,7 +138,15 @@ genieservice_portal = {
         });
     },
     getContent: function(id){
-        return genieservice_web.getContent(id);
+        return new Promise(function(resolve, reject) {
+            if(COLLECTION_MIMETYPE == content.metadata.mimeType) {
+                resolve(genieservice.getContentMetadata(id));
+            } else {
+                if(content) {
+                    resolve(content.metadata);
+                } 
+            }
+        });
     },
     getContentMetadata: function(id) {
         return new Promise(function(resolve, reject) {    
@@ -173,7 +181,6 @@ telemetry_web = {
     tList: [],
     send: function(string) {
         return new Promise(function(resolve, reject) {
-             console.log(string);
             telemetry_web.tList.push(string);
             resolve(true);
         });
