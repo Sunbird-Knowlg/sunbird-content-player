@@ -14,7 +14,9 @@ OverlayHtml = {
             elements.trigger("navigateUpdate", {show: true});
             
             var rootScope = this._getRootScope(); 
-            rootScope.$apply();
+            if (rootScope) {
+                rootScope.$apply();
+            }
         }
     },
 	_setRootScope: function(key, value) {
@@ -28,7 +30,8 @@ OverlayHtml = {
         if(_.isNull(this._rootScope)){
             var overlayDOMElement = document.getElementById('overlayHTML');
             if ("undefined" != typeof angular && "undefined" != typeof overlayDOMElement) {
-                this._rootScope = angular.element(overlayDOMElement).scope().$root;
+                var scope = angular.element(overlayDOMElement).scope();
+                if (scope) this._rootScope = scope.$root;
             }
         }
         return this._rootScope;            
@@ -56,7 +59,9 @@ OverlayHtml = {
         if(!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type)){
             var modelItem = stageCtrl._model[stageCtrl._index];
             // If FTB item, enable submit button directly
-            this._rootScope.enableEval = (modelItem && modelItem.type == 'ftb') ? true : false
+            if(!_.isNull(this._rootScope)){
+                this._rootScope.enableEval = (modelItem && modelItem.type == 'ftb') ? true : false
+            }
             return true;
         }else{
             return false;
