@@ -25,6 +25,7 @@ module.exports = function(grunt) {
                         'public/js/app/GlobalContext.js',
                         'public/js/app/AppConfig.js',
                         'public/js/app/AppMessages.js',
+                        'public/js/app/main.js',
                         'public/js/app/OverlayHtml.js',
                         'public/js/app/speech.js',
                         'public/js/app/renderer.js',
