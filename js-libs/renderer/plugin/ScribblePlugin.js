@@ -17,6 +17,7 @@ var ScribblePlugin = Plugin.extend({
 
         // addEventListener for container
         container.addEventListener("mousedown", this.handleMouseDown.bind(this), true);
+
         container.addEventListener("pressup", this.handleMouseUp.bind(this), true);
         createjs.Ticker.setFPS(50);
 
@@ -35,20 +36,21 @@ var ScribblePlugin = Plugin.extend({
 
         var mousePoint = Renderer.theme.mousePoint();
         this._oldPt = new createjs.Point(mousePoint.x, mousePoint.y);
-        this._self.addEventListener("pressmove", this.handleMouseMove.bind(this), true);
         var dims = this.relativeDims();
         var x = dims.x + dims.w - 5;
         var y = dims.y + dims.h - 5;
         this._shapeEndPoint = new createjs.Point(x, y);
         this._shapePoint = new createjs.Point(dims.x + 5, dims.y + 5);
+        this._self.addEventListener("pressmove", this.handleMouseMove.bind(this), true);
     },
     handleMouseMove: function(event) {
         if (!event.primary) {
             return;
         }
         var mousePoint = Renderer.theme.mousePoint();
+        var thickness = this.isInt(this._data.thickness) ?  this._data.thickness : 3;
         if (((event.stageX > this._shapePoint.x) && (event.stageX < this._shapeEndPoint.x)) && ((event.stageY > this._shapePoint.y) && (event.stageY < this._shapeEndPoint.y))) {
-            this.paintBrush.graphics.setStrokeStyle(this._data.thickness || 3, 'round').beginStroke(this._data.color || "#000");
+            this.paintBrush.graphics.setStrokeStyle(thickness, 'round').beginStroke(this._data.color || "#000");
 
             if (((event.stageX > this._shapePoint.x) && (event.stageX < this._shapeEndPoint.x)) && ((event.stageY > this._shapePoint.y) && (event.stageY < this._shapeEndPoint.y))) {
                 this.paintBrush.graphics.mt(this._oldPt.x, this._oldPt.y).lineTo(mousePoint.x + 1, mousePoint.y + 1);
@@ -67,6 +69,10 @@ var ScribblePlugin = Plugin.extend({
     clear: function() {
         this.paintBrush.graphics.clear();
         Renderer.update = true;
+    },
+    isInt : function(value) {
+      var x = parseFloat(value);
+      return !isNaN(value) && (x | 0) === x;
     }
 });
 PluginManager.registerPlugin('scribble', ScribblePlugin);
