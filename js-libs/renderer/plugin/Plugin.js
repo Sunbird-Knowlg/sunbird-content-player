@@ -378,7 +378,7 @@ var Plugin = Class.extend({
                 expr = expr.substring(0,expr.length-1);
                 value = eval(expr);
             } else {
-                value = expr;
+                value = eval(expr);
             }
         } catch (err) {
             console.warn('expr: '+ expr + ' evaluation faild:', err.message);
