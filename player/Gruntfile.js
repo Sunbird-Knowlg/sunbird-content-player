@@ -59,6 +59,7 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/Class.js',
                         '../js-libs/renderer/controller/Controller.js',
                         '../js-libs/renderer/plugin/Plugin.js',
+                        '../js-libs/renderer/plugin/HTMLPlugin.js',
                         '../js-libs/renderer/manager/*.js',
                         '../js-libs/renderer/controller/*Controller.js',
                         '../js-libs/renderer/generator/*.js',

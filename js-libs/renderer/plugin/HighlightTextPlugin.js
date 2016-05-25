@@ -1,8 +1,5 @@
-var HighlightTextPlugin = Plugin.extend({
+var HighlightTextPlugin = HTMLPlugin.extend({
     _type: 'htext',
-    _isContainer: false,
-    _render: true,
-    _div: undefined,
     _wordIds: [],
     _timings: [],
     _isPlaying: false,
