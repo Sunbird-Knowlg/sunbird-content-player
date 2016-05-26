@@ -34,7 +34,11 @@
 	<stage id="scene1" x="0" y="0" w="100" h="100">
 		<param name="previous" value="splash"/>
 		<param name="next" value="endScene"/>
-		<htext id="ht1" x="15" y="20" w="85" h="4" highlight="rgba(255,0,0,0.5)" fontsize="1.2em" timings="250,400,650,1000,1300,1500,1900,2300,2500,3000,3500,4200" audio="scene4_sound">My cap got stuck on a branch of the old Pipal tree.</htext>
+		<htext id="ht1" x="15" y="20" w="85" h="4" highlight="rgba(255,0,0,0.5)" fontsize="1.2em" timings="250,400,650,1000,1300,1500,1900,2300,2500,3000,3500,4200" audio="scene4_sound">My cap got stuck on a branch of the old Pipal tree.
+			<event type="click">
+				<action type="command" command="play" asset="ht1"/>
+			</event>
+		</htext>
 		<g x="35" y="30" w="20" h="20">
 			<shape x="0" y="0" w="100" h="100" fill="#AAA" type="roundrect"/>
 			<g x="10" y="15" w="30" h="60">
