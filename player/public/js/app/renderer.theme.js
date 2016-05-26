@@ -114,7 +114,7 @@ angular.module('genie-canvas.theme',[])
     .directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img ng-src="{{imageBasePath}}{{mutestatus}}" style="position:absolute;bottom:16%; width:10%;  margin-left:41%; z-index:1; " /><img ng-src="{{imageBasePath}}{{unmute}}" style="position:absolute;  bottom: 16%; width:10.2%; margin-left:41%; z-index: 2; "/> </a>',
+            template: '<a href="javascript:void(0)" ng-click="mute()"><img ng-src="{{imageBasePath}}{{mutestatus}}" style="position:absolute;bottom:16%; width:10%;  margin-left:41%; z-index:1; " /><img ng-src="{{imageBasePath}}{{unmute}}" style="position:absolute;  bottom: 16%; width:12%; margin-left:40%; z-index: 2; "/> </a>',
             link: function(scope, url) {
                 scope.mutestatus = "mute.png";
                /* scope.textstatus = "Mute";*/

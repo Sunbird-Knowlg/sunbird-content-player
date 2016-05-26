@@ -31,16 +31,9 @@
             <p class="icon-font label-white-stoke" style="padding-top:2%; font-size:2.6vh; ">{{ languageSupport.instructions }}</p>
         </div>
         <div class="inst-message-cont" ng-show="showInst">
-            <p class="icon-font teacher-title-font">{{ stageInstMessage }}</p>
-            <div class="inst-done">
-                <!-- <input type="button" name="Done" value="Done" ng-click="closeInstructions()"> -->
-                <img ng-src="{{imageBasePath}}done_button.png" ng-click="closeInstructions()" />
-            </div>
-            <img ng-src="{{imageBasePath}}expand_teacher_instruction.png" ng-click="expeandInstruction()" style="position:absolute;left:37%;" />
-            <!-- <div class="expand_icon">
-				<img ng-src="{{imageBasePath}}expand_teacher_instruction.png" ng-click="expeandInstruction()"/>
-			</div>
- -->
+            <img class="inst-icon" ng-src="{{imageBasePath}}expand_teacher_instruction.png" ng-click="expeandInstruction()"/>
+            <p>{{ stageInstMessage }}</p>
+            <img class="inst-done" ng-src="{{imageBasePath}}done_button.png" ng-click="closeInstructions()"/>
         </div>
     </div>
 </div>
