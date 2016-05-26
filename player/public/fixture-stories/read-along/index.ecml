@@ -59,7 +59,7 @@
 	        </g>
 		</g>
 
-        <htext id="ht2" x="15" y="60" w="85" h="4" highlight="rgba(255,0,0,0.5)" fontsize="1.2em" timings="150,250,550,800,1000,1400,2200,2600,3000,3800,4500,5000,5300,5800" audio="scene3_sound">On the way home, a very strong wind came. It blew my cap away.</htext>
+        <htext id="ht2" x="15" y="60" w="85" h="4" highlight="rgba(255,0,0,0.5)" fontsize="1.2em" timings="150,250,550,800,1000,1400,2200,2600,3000,3800,4500,5000,5300,5800">On the way home, a very strong wind came. It blew my cap away.</htext>
         <g x="35" y="70" w="20" h="20">
             <shape x="0" y="0" w="100" h="100" fill="#AAA" type="roundrect"/>
             <g x="10" y="15" w="30" h="60">
