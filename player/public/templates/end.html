@@ -31,10 +31,15 @@
         <!-- <a href="javascript:void(0)" ng-click="goToGenie()" style="position:absolute;width: 5%; top: 3%; right: 2%;">
             <img src="img/icons/genie_icon.png" style="width:100%;" />
         </a> -->
+
+        
         <div class="gc-restart-cont">
             <p class="icon-font label-white-stoke">{{ languageSupport.whatWeDoNext }}?</p>
             <restart class="gc-restart-btn"></restart>
         </div>
+        <a ng-show="showNextContent" href="javascript:void(0)" ng-click="playNextContent()" style="position:absolute; width: 9%; top: 73%; right: 15%;">
+            <img src="img/icons/next_icon.png" style="width:100%;" />
+        </a>
 
     </div>
     

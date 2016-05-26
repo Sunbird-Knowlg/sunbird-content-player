@@ -180,6 +180,7 @@ if ("undefined" == typeof cordova) {
 telemetry_web = {
     tList: [],
     send: function(string) {
+        console.log(string);
         return new Promise(function(resolve, reject) {
             telemetry_web.tList.push(string);
             resolve(true);

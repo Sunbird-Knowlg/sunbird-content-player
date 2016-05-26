@@ -5,6 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 
 var stack = new Array(),
+    collectionChildrenIds = new Array(),
     content = {},
     config = {
         showStartPage : true,
@@ -109,13 +110,19 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                         .then(function(data) {
                             content["metadata"] = data;
                             newContentId = content.metadata.identifier;
-                            if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
-                                $state.go('showContent', {"contentId": newContentId});
-                            } else if ((COLLECTION_MIMETYPE == content.metadata.mimeType) ||
-                                (ANDROID_PKG_MIMETYPE == content.metadata.mimeType && content.metadata.code == packageName)) {
-                                $state.go('contentList', { "id": newContentId });
-                            }
-                            
+                             TelemetryService.init({id: content.metadata.identifier, ver: "1.0"}, {}).then(function() { 
+                                if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
+                                    $state.go('showContent', {"contentId": newContentId});
+                                } else if ((COLLECTION_MIMETYPE == content.metadata.mimeType) ||
+                                    (ANDROID_PKG_MIMETYPE == content.metadata.mimeType && content.metadata.code == packageName)) {
+                                    $state.go('contentList', { "id": newContentId });
+                                }
+                            }).catch(function(error) {
+                                console.log('TelemetryService init failed');
+                                alert('TelemetryService init failed.');
+                                exitApp();
+                            });
+                                                    
                         })
                         .catch(function(err) {
                             console.info("contentNotAvailable : ", err);
@@ -233,6 +240,8 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     }
                     var childrenIds = (content.children) ? _.pluck(_.sortBy(content.children, function(child) {
                         return child.index; }), "identifier") : null;
+                    if(childrenIds)
+                        collectionChildrenIds = childrenIds;
                     var filter = (content.filter) ? JSON.parse(content.filter) : content.filter;
                     return ContentService.getContentList(filter, childrenIds);
                 })
@@ -295,6 +304,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         };
 
         $scope.goBack = function() {
+            TelemetryService.end();
             stack.pop();
             var id = stack.pop();
             if(id)
@@ -320,6 +330,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 jQuery("#htmlFrame").show();
             });
         } else { 
+           collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1); 
             if (webview) {
                 var contentBody = undefined;
                 if(COLLECTION_MIMETYPE == content.metadata.mimeType) {
