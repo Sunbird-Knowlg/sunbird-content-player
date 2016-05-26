@@ -46,14 +46,14 @@ angular.module('genie-canvas.theme',[])
     .directive('home', function($rootScope, $state) {
         return {
             restrict: 'E',
-            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imageBasePath}}{{imgSrc}}" style="width:30%;" /></a>',
+            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imageBasePath}}{{imgSrc}}" style="width:32%;" /></a>',
             link: function(scope, state) {
 
                 var isCollection = false;
                 if ($rootScope.collection && $rootScope.collection.children) {
                     isCollection = $rootScope.collection.children.length > 0 ? true : false;
                 }
-                scope.imgSrc = (isCollection == true) ? "home_icon.png" : "home_icon_disabled.png";
+                scope.imgSrc = (isCollection == false) ? "home_icon.png" : "home_icon_disabled.png";
                 var pageId = $rootScope.pageId;
                 scope.goToHome = function() {
                     if (isCollection) {
@@ -68,7 +68,7 @@ angular.module('genie-canvas.theme',[])
     .directive('genie', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:30%;" /></a>',
+            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:32%;" /></a>',
             link: function(scope) {
                 var pageId = $rootScope.pageId;
                 scope.goToGenie = function() {
@@ -80,7 +80,7 @@ angular.module('genie-canvas.theme',[])
     .directive('stageInstructions', function($rootScope) {
           return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}teacher_instructions.png" style="width:30%;"/></a>',
+            template: '<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}teacher_instructions.png" style="z-index:2; max-width:32%;"/></a>',
             controller: function($scope, $rootScope){
                 $scope.stageInstMessage = "";
                 $scope.showInst = false;
@@ -114,18 +114,17 @@ angular.module('genie-canvas.theme',[])
     .directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img ng-src="{{imageBasePath}}{{mutestatus}}" style="position:absolute; width:30%; bottom: 30px; left: 72px; z-index: 2;" /></a>',
+            template: '<a href="javascript:void(0)" ng-click="mute()"><img ng-src="{{imageBasePath}}{{mutestatus}}" style="position:absolute;bottom:16%; width:10%;  margin-left:41%; z-index:1; " /><img ng-src="{{imageBasePath}}{{unmute}}" style="position:absolute;  bottom: 16%; width:10.2%; margin-left:41%; z-index: 2; "/> </a>',
             link: function(scope, url) {
                 scope.mutestatus = "mute.png";
                /* scope.textstatus = "Mute";*/
 
                 scope.mute = function() {
                     //mute function goes here
-
-                    console.log("cstate", createjs.Sound.muted);
                     createjs.Sound.muted = !createjs.Sound.muted;
 
-                    scope.mutestatus = (createjs.Sound.muted == true) ? "unmute.png" : "mute.png";
+                    scope.unmute = (createjs.Sound.muted == true) ? "unmute.png" : scope.mutestatus;
+
                     /*scope.textstatus = (createjs.Sound.muted == true) ? "Mute" : "Unmute";*/
                 }
             }
@@ -161,7 +160,6 @@ angular.module('genie-canvas.theme',[])
                         };
                     }
                 });
-                
                 scope.onNavigate = function() {
                     TelemetryService.interact("TOUCH", to, null, {stageId : Renderer.theme._currentStage});
                     $rootScope.isItemScene = false;
@@ -265,28 +263,39 @@ angular.module('genie-canvas.theme',[])
             disable: $rootScope.imageBasePath + "submit_disabled.png"
         },
         retry: $rootScope.imageBasePath + "speaker_icon.png",
-        popup: {
-            background: $rootScope.imageBasePath + "popup_background.png",
+       /* popup: {
+            background: $rootScope.imageBasePath + "popup_BG.png",
             close: $rootScope.imageBasePath + "cross_button.png"
-        },
+        },*/
         goodJob: {
-            background: $rootScope.imageBasePath + "goodjob_popup.png"
+            background: $rootScope.imageBasePath + "popup_BG.png"
         },
         tryAgain: {
-            background: $rootScope.imageBasePath + "retry_popup.png",
+            background: $rootScope.imageBasePath + "popup_dialogue_folded.png",
             retry: $rootScope.imageBasePath + "retry_icon.png"
         },
         end: {
-            background: $rootScope.imageBasePath + "end_background.png"
+            background: $rootScope.imageBasePath + "background.png"
+        },
+        popup:{
+            next:$rootScope.imageBasePath+"next_Green.png",
+            retry:$rootScope.imageBasePath+"retry_green.png",
+            skip:$rootScope.imageBasePath+"skip.png",
+            star:$rootScope.imageBasePath+"star.png"
+        },
+        popup_kid:{
+            good_job:$rootScope.imageBasePath+"LEFT.png",
+            retry:$rootScope.imageBasePath+"Genie_ RETRY.png"
         }
+
     };
 
     $scope.goodJob = {
-        body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%;" /><div class="popup-body"><p class="icon-font label-white-stoke gc-popup-title" style="font-size: 10vh; top: 20%;" ng-bind="languageSupport.goodJob"></p><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 45%;right: 20%;font-size: 3em;"></navigate></div><a style="position: inherit;width: 8%;right: 41.5%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
+        body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"" /><img ng-src="{{icons.popup_kid.good_job}}" style=" width:55%; height:70%;position: absolute;right:55%;top:11%; /><div class="popup-body"><navigate type="\'next\'" enable-image="icons.popup.next" disable-image="icons.next.disable" style="position: absolute;width:22%;top:35%;right: 30%;font-size: 3em;"></navigate></div><a style="position: inherit;width: 8%;right: 43%;top:1%;" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
     };
 
     $scope.tryAgain = {
-        body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><p class="icon-font label-white-stoke gc-popup-title" ng-bind="languageSupport.tryAgain"></p><a ng-click="hidePopup(\'gc_retry\')" href="javascript:void(0);" style="position: absolute;width: 18%;top: 45%;right: 30%;"><img ng-src="{{icons.tryAgain.retry}}" style="width:90%;" /></a><navigate type="\'next\'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position: absolute;width: 18%;top: 45%;right: 10%;"></navigate></div><a style="position: inherit;width: 8%;right: 40%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup(\'gc_popupclose\')"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
+        body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><img ng-src="{{icons.popup_kid.retry}}" style=" width:55%; height:70%; position: absolute;right:47%;top:5%; /> <div class="popup-body"><a ng-click="hidePopup(\'gc_retry\')" href="javascript:void(0);" ><img ng-src="{{icons.popup.retry}}" style="position: absolute;top:25%;right: 30%; width:19%" /></a><navigate type="\'next\'" enable-image="icons.popup.skip" disable-image="icons.popup.skip" style="position: absolute;width: 19%;top: 58%;right:9%;"></navigate></div><a style="position: inherit;width: 8%;right: 40%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup(\'gc_popupclose\')"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
     };
 
     $scope.openMenu = function() {

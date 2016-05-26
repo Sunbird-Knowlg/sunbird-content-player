@@ -177,6 +177,13 @@ ion-popover-view.fit ion-content {
 
 .menu-title-font{
     text-shadow: 2px 2px 0 yellow, -2px 2px 0 yellow, 2px -2px 0 yellow, -2px -2px 0 yellow;
+
+}
+
+.teacher-title-font{
+    text-shadow: 2px 2px 0 yellow, -2px 2px 0 yellow, 2px -2px 0 yellow, -2px -2px 0 yellow;
+    font-size: 4vh;
+    margin-top: 10%;
 }
 
 .icon-font{
@@ -184,6 +191,7 @@ ion-popover-view.fit ion-content {
     color: #01ac8a; 
     line-height: 1.2em;
     text-align: center;
+
 }
 
 .label-white-stoke{
@@ -249,7 +257,7 @@ ion-popover-view.fit ion-content {
     
 }
 
-.gc-menu-mute-cont{
+/*.gc-menu-mute-cont{
 
     position: absolute;
     text-align: center;
@@ -258,22 +266,23 @@ ion-popover-view.fit ion-content {
     right: 30%;
 
 
-}
+}*/
 
-.gc-mute-bg{
+/*.gc-mute-bg{
     postion:absolute;
     width:100%;
     height: 60%;
     bottom: 1%;
     z-index:1;
-}
+}*/
 
 .gc-menu-inst-cont{
     position: absolute;  
     text-align: center;    
     width: 70%;    
-    bottom: 30%;
-    left: 8%;
+    bottom: 35%;
+    left: 10%;
+
 }
 
 .gc-menu-btn-close{
@@ -292,6 +301,7 @@ ion-popover-view.fit ion-content {
     position: absolute;
     height: 95%;
     margin: 5%;
+    z-index: 2;
 }
 
 .inst-message{
@@ -460,7 +470,7 @@ ion-popover-view.fit ion-content {
 .gc-restart-btn{
     width: 10%;
     position: absolute;
-    left: 46%;
+    left: 35%;
 }
 
 .gc-popup-title{
