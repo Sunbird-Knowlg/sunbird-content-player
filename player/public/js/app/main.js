@@ -107,8 +107,12 @@ function getNavigateTo(navType) {
 function navigate(navType) {
     var navigateTo = getNavigateTo(navType);
     if ("undefined" == typeof navigateTo && "next" == navType) {
-        console.info("redirecting to endpage.");
-        window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+         if(config.showEndPage) {
+            console.info("redirecting to endpage.");
+            window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+        } else {
+            alert("Cannot move to end page of the content. please check the configurations..");
+        }
     }else{
         var action = {
             "asset": Renderer.theme._id,
