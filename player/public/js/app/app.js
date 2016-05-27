@@ -54,18 +54,9 @@ function getContentObj(data) {
         return data.body;
     var tempData = data;
     var x2js = new X2JS({attributePrefix: 'none'});
-        data = x2js.xml_str2json(tempData.body);
-        data = data ? data : JSON.parse(tempData.body)
-        return data;
-    // if(!jQuery.isPlainObject(data)) { 
-    //     var x2js = new X2JS({attributePrefix: 'none'});
-    //     data = x2js.xml_str2json(tempData.body);
-    //     data = data ? data : JSON.parse(tempData.body)
-    //     return data;
-    // } else {
-    //     return data.body;
-    // }
-    
+    data = x2js.xml_str2json(tempData.body);
+    data = data ? data : JSON.parse(tempData.body)
+    return data;
     
 }
 

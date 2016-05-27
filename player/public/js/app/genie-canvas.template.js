@@ -20,7 +20,6 @@ angular.module('genie-canvas.template',[])
                     $rootScope.stories = [data];
                     var identifier = (data && data.identifier) ? data.identifier : null;
                     var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
-                    // if(!webview)
                     TelemetryService.start(identifier, version);
                 })
                 .catch(function(err) {
