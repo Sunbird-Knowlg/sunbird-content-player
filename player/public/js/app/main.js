@@ -18,6 +18,10 @@ function removeRecordingFiles(path) {
     })
 }
 
+function createCustomEvent(evtName, data) {
+    var evt = new CustomEvent(evtName, data);
+    // window.dispatchEvent(evt);
+}
 function getUrlParameter(sParam) {
    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
        sURLVariables = sPageURL.split('&'),

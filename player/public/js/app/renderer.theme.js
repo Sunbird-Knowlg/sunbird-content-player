@@ -1,7 +1,7 @@
 angular.module('genie-canvas.theme',[])
 .run(function($rootScope){
     $rootScope.isPreview = true;
-    $rootScope.imageBasePath = "";
+    $rootScope.imageBasePath = "img/icons/";
     $rootScope.enableEval = false;
 
     $rootScope.languageSupport = {
@@ -109,6 +109,8 @@ angular.module('genie-canvas.theme',[])
             
             scope.onNavigate = function() {
                 TelemetryService.interact("TOUCH", to, null, {stageId : Renderer.theme._currentStage});
+                if(webview)
+                    window.parent.$('body').trigger('onStageChange', {"stageId" : Renderer.theme._currentStage});
                 $rootScope.isItemScene = false;
                 navigate(to);
             };
@@ -175,7 +177,7 @@ angular.module('genie-canvas.theme',[])
                 if($scope.isEnabled){
                     //If any one option is selected, then only allow user to submit
                     var action = {"type":"command","command":"eval","asset":Renderer.theme._currentStage};
-                    action.success = "correct_answer";
+                    action.success = "correct_answer"; 
                     action.failure = "wrong_answer";
                     CommandManager.handle(action);                    
                 }
