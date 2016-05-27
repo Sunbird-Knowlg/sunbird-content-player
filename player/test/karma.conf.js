@@ -20,6 +20,11 @@ module.exports = function(config) {
         files: [
             'public/js/thirdparty/jquery.min.js',
             'public/js/thirdparty/*.js',
+            'public/js/thirdparty/exclude/xml2json.js',
+            'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
+            'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
+            'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
+            'public/js/thirdparty/exclude/Class.js',
             'public/js/app/*.js',
             'public/js/test/BaseSpec.js',
             'public/js/test/specHelper.js',
