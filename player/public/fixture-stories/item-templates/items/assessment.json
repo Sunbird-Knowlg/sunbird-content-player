@@ -3,6 +3,7 @@
     "title": "Haircut Story Assessment",
     "total_items": 5,
     "shuffle": false,
+    "showImmediateFeedback": true,
     "max_score": 4,
     "subject": "LIT",
     "item_sets": [{

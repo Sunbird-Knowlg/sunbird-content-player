@@ -184,6 +184,7 @@ ion-popover-view.fit ion-content {
     color: #01ac8a; 
     line-height: 1.2em;
     text-align: center;
+
 }
 
 .label-white-stoke{
@@ -234,15 +235,47 @@ ion-popover-view.fit ion-content {
 .gc-menu-home-cont{
     position: absolute;  
     text-align: center;    
-    width: 100%;    
-    top: 25%;
+    width: 70%; 
+    left:-10%;   
+    top:25%;
+    
 }
 
 .gc-menu-genie-cont{
     position: absolute;  
     text-align: center;    
-    width: 100%;    
-    top: 55%;
+    width: 70%;    
+    top: 25%;
+    left:35%;
+    
+}
+
+/*.gc-menu-mute-cont{
+
+    position: absolute;
+    text-align: center;
+    width: 62%;
+    bottom: 1%;
+    right: 30%;
+
+
+}*/
+
+/*.gc-mute-bg{
+    postion:absolute;
+    width:100%;
+    height: 60%;
+    bottom: 1%;
+    z-index:1;
+}*/
+
+.gc-menu-inst-cont{
+    position: absolute;  
+    text-align: center;    
+    width: 70%;    
+    bottom: 35%;
+    left: 10%;
+
 }
 
 .gc-menu-btn-close{
@@ -252,6 +285,47 @@ ion-popover-view.fit ion-content {
     width: 14%;
     position: absolute;
 }
+
+.inst-message-cont{
+    width: 80%;
+    background-color: #ECECEC;
+    /* border: 1px solid #000; */
+    /* border-radius: 10px; */
+    position: absolute;
+    height: 75%;
+    margin: 35% 7%;
+    z-index: 2;
+}
+
+.inst-message-cont p{
+    font-size: 1.2em;
+    padding: 25% 5%;
+    height: 100%;
+    overflow: auto;
+    text-align: center;
+    font-weight: 500;
+}
+
+.inst-message{
+    font-size: 2em;
+    padding: 5%;
+}
+
+.inst-icon{
+    position: absolute;
+    left: 40%;
+    top: 3%;
+    width: 20%;
+}
+
+.inst-done{
+    text-align: center;
+    bottom: 2%;
+    position: absolute;
+    left: 35%;
+    width: 30%;
+}
+
 .gc-menu-btn img{
     width: 100%;
 }
@@ -405,7 +479,7 @@ ion-popover-view.fit ion-content {
 .gc-restart-btn{
     width: 10%;
     position: absolute;
-    left: 46%;
+    left: 38%;
 }
 
 .gc-popup-title{
@@ -416,4 +490,18 @@ ion-popover-view.fit ion-content {
     left: 45%;
     font-size: 6vh;
     width:50%;
+}
+
+.next-module{
+    position: absolute;
+    width: 10%;
+    top: 70%;
+    left: 52%;
+}
+
+.end-license{
+    position: absolute;
+    bottom: 4%;
+    left: 3%;
+    width: 22%;
 }

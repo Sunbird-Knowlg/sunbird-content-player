@@ -4,6 +4,7 @@
 	"total_items": 1,
 	"max_score": 4,
 	"subject": "LIT",
+	"showImmediateFeedback": false,
 	"item_sets": [
 		{
 			"id": "set_1",
