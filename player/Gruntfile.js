@@ -21,17 +21,24 @@ module.exports = function(grunt) {
                 },
 
                 files: {
-                    'public/js/app/renderer.min.js': [
+                    '../dist/renderer.min.js': [
                         'public/js/app/GlobalContext.js',
                         'public/js/app/AppConfig.js',
                         'public/js/app/AppMessages.js',
                         'public/js/app/main.js',
                         'public/js/app/OverlayHtml.js',
                         'public/js/app/speech.js',
+                        'public/js/thirdparty/exclude/xml2json.js',
+                        'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
+                        'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
+                        'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
+                        'public/js/thirdparty/exclude/Class.js',
                         'public/js/app/renderer.js',
                         'public/js/app/telemetry.js'
                     ],
-                    'public/js/app/telemetry.min.js' : [
+                    '../dist/telemetry.min.js' : [
+                        'public/js/thirdparty/exclude/date-format.js',
+                        'public/js/thirdparty/exclude/Class.js',
                         'public/js/app/telemetry.js'
                     ]
                 }
@@ -48,15 +55,10 @@ module.exports = function(grunt) {
             renderer: {
                 options: {
                     beautify: true,                   
-                    mangle: false                    
+                    mangle: false                 
                 },
                 files: {
                     'public/js/app/renderer.js': [
-                        'public/js/thirdparty/exclude/xml2json.js',
-                        'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
-                        'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
-                        'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
-                        'public/js/thirdparty/exclude/Class.js',
                         '../js-libs/renderer/controller/Controller.js',
                         '../js-libs/renderer/plugin/Plugin.js',
                         '../js-libs/renderer/plugin/HTMLPlugin.js',
@@ -78,8 +80,6 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'public/js/app/telemetry.js': [
-                        'public/js/thirdparty/exclude/date-format.js',
-                        'public/js/thirdparty/exclude/Class.js',
                         '../js-libs/telemetry/*.js',
                     ]
                 }
@@ -169,13 +169,13 @@ module.exports = function(grunt) {
                 options: {
                     bucket: 'ekstep-public',
                     mime: {
-                        'public/js/app/renderer.min.js': 'application/javascript',
-                        'public/js/app/telemetry.min.js': 'application/javascript'
+                        '../dist/renderer.min.js': 'application/javascript',
+                        '../dist/telemetry.min.js': 'application/javascript'
                     }
                 },
                 files: [{
                     expand: true,
-                    cwd: 'public/js/app/',
+                    cwd: '../dist/',
                     src: ['*.min.js'],
                     dest: 'js/'
                 }]
