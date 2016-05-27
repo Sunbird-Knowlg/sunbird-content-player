@@ -72,7 +72,6 @@ Renderer = {
         if(!jQuery.isPlainObject(data)) {
             var x2js = new X2JS({attributePrefix: 'none'});
             data = x2js.xml2json(data);
-            data = data ? data : x2js.xml_str2json(tempData);
         }
         Renderer.gdata = data;
         data.theme.canvasId = canvasId;

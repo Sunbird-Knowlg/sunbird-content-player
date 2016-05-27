@@ -7,6 +7,8 @@
 var stack = new Array(),
     collectionChildrenIds = new Array(),
     content = {},
+    collectionChildren = true,
+    fixtureMetadata = { "identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "localData": { "questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Item Sample Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{ "identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept" }], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true, "path": "fixture-stories/item_sample" },
     config = {
         showStartPage : true,
         showEndPage : true,
@@ -16,20 +18,24 @@ var stack = new Array(),
     appState = undefined;
 
 
-window.setContentData = function (metadata, data, config) {
-    this.content.metadata = metadata;
-    this.content.body = data;
-    _.map(config, function(val, key) {
-        this.config[key] = val;
+window.setContentData = function (metadata, data, configuration) {
+    if(metadata) {
+        content.metadata = metadata;
+    } else {
+        content.metadata = fixtureMetadata;
+    }
+    content.body = data;
+    _.map(configuration, function(val, key) {
+        config[key] = val;
     });
     var $state = appState;
-    if(!this.config.showHTMLPages){
-        this.config.showStartPage = false;
-        this.config.showEndPage = false;
+    if(!config.showHTMLPages){
+        config.showStartPage = false;
+        config.showEndPage = false;
     }
-    if(!this.config.showStartPage && !this.config.showHTMLPages) {
+    if(!config.showStartPage) {
         $state.go('playContent', {
-                'itemId': this.content.metadata.identifier
+                'itemId': content.metadata.identifier
         });
     }
     else if(content) {
@@ -43,6 +49,26 @@ window.setContentData = function (metadata, data, config) {
     } 
 }
 
+function getContentObj(data) {
+    if(_.isObject(data.body))
+        return data.body;
+    var tempData = data;
+    var x2js = new X2JS({attributePrefix: 'none'});
+        data = x2js.xml_str2json(tempData.body);
+        data = data ? data : JSON.parse(tempData.body)
+        return data;
+    // if(!jQuery.isPlainObject(data)) { 
+    //     var x2js = new X2JS({attributePrefix: 'none'});
+    //     data = x2js.xml_str2json(tempData.body);
+    //     data = data ? data : JSON.parse(tempData.body)
+    //     return data;
+    // } else {
+    //     return data.body;
+    // }
+    
+    
+}
+
 function launchInitialPage(appInfo, $state) {
 
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
@@ -50,7 +76,6 @@ function launchInitialPage(appInfo, $state) {
             $state.go('showContent', {"contentId": GlobalContext.game.id});
         } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
             (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
-            //$state.go('showContent', {});
              $state.go('contentList', { "id": GlobalContext.game.id });
         } else {
             alert("App launched with invalid context.");
@@ -242,6 +267,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                         return child.index; }), "identifier") : null;
                     if(childrenIds)
                         collectionChildrenIds = childrenIds;
+                    console.log("collectionChildrenIds : ", collectionChildrenIds);
                     var filter = (content.filter) ? JSON.parse(content.filter) : content.filter;
                     return ContentService.getContentList(filter, childrenIds);
                 })
@@ -271,8 +297,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 stack.pop();
                 GlobalContext.currentContentId = content.identifier;
                 GlobalContext.currentContentMimeType = content.mimeType;
-                // $state.go('playContent', { 'itemId': content.identifier });
-                 $state.go('showContent', {"contentId": content.identifier});
+                $state.go('showContent', {"contentId": content.identifier});
             }
         }; 
 
@@ -304,7 +329,6 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         };
 
         $scope.goBack = function() {
-            TelemetryService.end();
             stack.pop();
             var id = stack.pop();
             if(id)
@@ -330,17 +354,17 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 jQuery("#htmlFrame").show();
             });
         } else { 
-           collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1); 
+            if(collectionChildren) {
+                collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1); 
+                collectionChildren = false;
+            }
             if (webview) {
                 var contentBody = undefined;
                 if(COLLECTION_MIMETYPE == content.metadata.mimeType) {
                     ContentService.getContentBody($stateParams.itemId)
                         .then(function(data) {
-                            var tempData = data;
-                            var x2js = new X2JS({attributePrefix: 'none'});
-                            data = x2js.xml_str2json(tempData.body);
-                            data = data ? data : JSON.parse(tempData.body)
-                            Renderer.start("", 'gameCanvas', $scope.item, data, true);
+                            
+                            Renderer.start("", 'gameCanvas', $scope.item, getContentObj(data), true);
                             
                         })
                         .catch(function(err) {
@@ -348,7 +372,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                             contentNotAvailable();
                         });
                 } else {
-                    Renderer.start("", 'gameCanvas', $scope.item, content.body, true);
+                    Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
                 }
                 
             }

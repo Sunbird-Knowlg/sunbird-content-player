@@ -62,7 +62,7 @@ angular.module('genie-canvas.template',[])
     var id = $stateParams.contentId;
     $rootScope.content = {};
     $scope.showNextContent = true;
-    if(CONTENT_MIMETYPES.indexOf(GlobalContext.config.appInfo.mimeType) > -1)
+    if(!GlobalContext.previousContentId)
         $scope.showNextContent = false;
 
     $scope.arrayToString = function(array) {
