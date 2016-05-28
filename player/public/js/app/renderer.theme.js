@@ -161,6 +161,8 @@ angular.module('genie-canvas.theme',[])
                 });
                 scope.onNavigate = function() {
                     TelemetryService.interact("TOUCH", to, null, {stageId : Renderer.theme._currentStage});
+                    if(webview)
+                        window.parent.$('body').trigger('onstagechange', {"stageId" : Renderer.theme._currentStage});
                     $rootScope.isItemScene = false;
                     navigate(to);
                 };
