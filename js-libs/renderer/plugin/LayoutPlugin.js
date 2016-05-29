@@ -3,6 +3,7 @@ var LayoutPlugin = Plugin.extend({
     _render: true,
 	_cells: [],
 	_cellsCount: 0,
+    _iterateModel: undefined,
 	initPlugin: function(data) {
         this._cells = [];
         this._cellsCount = 0;
@@ -20,20 +21,22 @@ var LayoutPlugin = Plugin.extend({
             console.warn("LayoutPlugin require iterate or count", data);
             return;
         }
-        if ("undefined" != typeof data.count) 
+        if ("undefined" != typeof data.count)
             this._cellsCount = data.count;
         var model = data.iterate;
-        model = data.iterate = this.replaceExpressions(model);
+        model = this._iterateModel = this.replaceExpressions(model);
     	var dataObjs = this._stage.getModelValue(model);
         if(dataObjs) {
             var length = dataObjs.length;
             this._cellsCount = (length < this._cellsCount || this._cellsCount == 0) ? length : this._cellsCount;
-        }       
+        }
     	this.generateLayout();
         this.renderLayout();
-        delete this._data.events;
-        delete this._data.event;   
-        
+
+        // Disable events on the grid itself because these are copied over to children
+        this._enableEvents = false;
+        // delete this._data.events;
+        // delete this._data.event;
 	},
     generateLayout: function() {
     	PluginManager.addError('Subclasses of layout plugin should implement generateLayout()');
@@ -44,7 +47,7 @@ var LayoutPlugin = Plugin.extend({
     	this._cells.forEach(function(data) {
             var cellECML = instance.getInnerECML();
             var cellEvents = instance.getCellEvents();
-    		instance._stage._templateVars[instance._data['var']] = instance._data.iterate+"["+index+"]";
+    		instance._stage._templateVars[instance._data['var']] = instance._iterateModel + "[" + index + "]";
     		instance._addCellAttributes(data);
     		Object.assign(data, cellECML);
             var resolvedEvents = instance.resolveActionModelValues(cellEvents);

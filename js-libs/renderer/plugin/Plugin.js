@@ -11,6 +11,7 @@ var Plugin = Class.extend({
 	_dimensions: undefined,
 	_id: undefined,
     _childIds: [],
+    _enableEvents: true,
 	events: [],
 	appEvents: [],
     _pluginParams: {},
@@ -38,8 +39,13 @@ var Plugin = Class.extend({
 		if(data.appEvents) {
 			this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/));
 		}
-		EventManager.registerEvents(this, this._data);
-		this._id = this._data.id || this._data.asset || _.uniqueId('plugin');
+
+        // Allow child classes to disable event registration (e.g. when they use event as a template)
+        if (this._enableEvents) {
+            EventManager.registerEvents(this, this._data);
+        }
+
+        this._id = this._data.id || this._data.asset || _.uniqueId('plugin');
 		PluginManager.registerPluginObject(this);
 		if (data.visible === false) {
 	    	this._self.visible = false;
@@ -57,7 +63,7 @@ var Plugin = Class.extend({
             }
 			if (typeof exprVal != "undefined") {
 				if (this._self) {
-					this._self.visible = (this._self.visible && exprVal);	
+					this._self.visible = (this._self.visible && exprVal);
 				}
 			}
 		}
@@ -74,7 +80,7 @@ var Plugin = Class.extend({
 	    }
 
 		// Render the plugin component
-		if(this._render) {			
+		if(this._render) {
 			if(this._isContainer && this._type == 'stage') {
 				this.cache();
 			}
@@ -154,7 +160,7 @@ var Plugin = Class.extend({
 		var sb = this._self.getBounds();
         var dims = this.relativeDims();
         var parentDims = this._parent.dimensions();
-        
+
         // To maintain aspect ratio when both h and w are specified
         if (!dims.stretch) {
             if ((dims.h != 0) && (dims.w != 0)) {
@@ -221,7 +227,7 @@ var Plugin = Class.extend({
 	hide: function(action) {
 		if(_.contains(this.events, 'hide')) {
 			EventManager.dispatchEvent(this._data.id, 'hide');
-		} else if(this._self.visible) { 
+		} else if(this._self.visible) {
 			this._self.visible = false;
 			EventManager.processAppTelemetry(action, 'HIDE', this);
 		}
@@ -254,7 +260,7 @@ var Plugin = Class.extend({
 
     	// If the shadow is a plugin, set the visibility to true
         if ((shadowObj) && (shadowObj._self) && ('visible' in shadowObj._self)) {
-            shadowObj._self.visible = true; 
+            shadowObj._self.visible = true;
         }
         else {
         	// Not a plugin, render a normal shadow
@@ -271,7 +277,7 @@ var Plugin = Class.extend({
 
     	// If the shadow is a plugin, set the visibility to false
         if ((shadowObj) && (shadowObj._self) && ('visible' in shadowObj._self)) {
-            shadowObj._self.visible = false;    
+            shadowObj._self.visible = false;
         }
         else {
         	// Not a plugin (normal shadow), unset the object
@@ -372,7 +378,7 @@ var Plugin = Class.extend({
                 expr = expr.substring(0,expr.length-1);
                 value = eval(expr);
             } else {
-                value = expr;
+                value = eval(expr);
             }
         } catch (err) {
             console.warn('expr: '+ expr + ' evaluation faild:', err.message);
