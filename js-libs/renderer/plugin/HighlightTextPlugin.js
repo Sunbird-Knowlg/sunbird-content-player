@@ -35,7 +35,6 @@ var HighlightTextPlugin = HTMLPlugin.extend({
             this._timings = _.map(data.timings.split(","), function(time) {
                 return Number(Number(time).toFixed(0));
             });
-            console.info("timings:", this._timings);
         }
         var text = this._getText();
         var htmlText = this._tokenize(text);
