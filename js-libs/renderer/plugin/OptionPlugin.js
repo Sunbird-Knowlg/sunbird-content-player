@@ -219,11 +219,11 @@ var OptionPlugin = Plugin.extend({
                     }
 
                     // Set the current answer as accepted
-                    if (plugin._data.snapX) {
-                        this.x = dims.x + (dims.w * plugin._data.snapX / 100);
+                    if (!_.isUndefined(plugin._data.snapX)) {
+                        this.x = dims.x + plugin._data.snapX;
                     }
-                    if (plugin._data.snapY) {
-                        this.y = dims.y + (dims.w * plugin._data.snapY / 100);
+                    if (!_.isUndefined(plugin._data.snapY)) {
+                        this.y = dims.y + (dims.h * (plugin._data.snapY/100));
                     }
                     instance._parent.setAnswer(instance, plugin._index);
 

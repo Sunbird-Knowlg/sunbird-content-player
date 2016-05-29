@@ -106,7 +106,33 @@
             "isAvailable": true,
             "path": "fixture-stories/addition_by_grouping"
 
-        },{
+        },
+        {
+            "identifier": "org.ekstep.mtf.mixed.mixed",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/els_org.ekstep.mtf.mixed.mixed/logo.png",
+                "subject": "literacy_v2",
+                "description": "Mixed Templates Horizontal",
+                "name": "Mixed Templates Horizontal",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "A robust test suite is a must-have for any product...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.mtf.mixed.mixed",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/els_org.ekstep.mtf.mixed.mixed"
+
+        },
+        {
             "identifier": "org.ekstep.item.templates",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
