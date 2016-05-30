@@ -1,10 +1,10 @@
 <div class="menu-overlay" ng-click="hideMenu()" ng-cloak></div>
 <!-- Menu container -->
-<div class="gc-menu">
+<div class="gc-menu" >
     <a class="gc-menu-btn" href="javascript:void(0)" ng-click="openMenu()" style="left:5%">
         <img class="menu-icon" ng-src="{{imageBasePath}}menu_icon.png" ng-hide="menuOpened" style="width: 100%" />
     </a>
-    <div class="gc-menu-cont">
+    <div class="gc-menu-cont" ng-show="menuOpened">
         <img class="gc-menu-bg" ng-src="{{imageBasePath}}menu_background.png">
         <div class="gc-menu-title-cont">
             <p class="icon-font menu-title-font">{{item.name}}</p>

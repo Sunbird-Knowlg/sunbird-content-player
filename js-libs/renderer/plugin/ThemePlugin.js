@@ -170,6 +170,10 @@ var ThemePlugin = Plugin.extend({
         this._previousStage = this._currentStage;
         this._currentStage = stageId;
         PluginManager.invoke('stage', stage, this, null, this);
+        
+        // Trigger onstagechange event, which is bind by parent window
+        if(webview && window &&  window.parent && window.parent.$('body'))
+            window.parent.$('body').trigger('onstagechange', {"stageId" : this._currentStage});
     },
     preloadStages: function() {
         var stagesToLoad = this.getStagesToPreLoad(this._currentScene._data);
