@@ -39,7 +39,11 @@ OverlayHtml = {
     isReadyToEvaluate: function(enableEval) {
         this._setRootScope("enableEval", enableEval);
     },
+    resetStage: function(){
+        jQuery('#assessButton').hide();
+    },
     sceneEnter: function() {
+        this.resetStage();
         var isItemStage = this.isItemScene();
         var queue = new createjs.LoadQueue();
         createjs.Sound.alternateExtensions = ["ogg"];
@@ -58,8 +62,7 @@ OverlayHtml = {
         }]);
 
         if (isItemStage) {
-
-            this._setRootScope("isItemScene", true);
+            jQuery('#assessButton').show();
             var currentScene = Renderer.theme._currentScene;
             currentScene.on("correct_answer", function(event) {
                 console.log("listener for ", event);

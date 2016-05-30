@@ -343,7 +343,8 @@ ion-popover-view.fit ion-content {
     position:absolute;
     width: 15%;
     bottom: 10%;
-    left: 45%
+    left: 45%;
+    display: none;
 }
 
 .assess-enable{
