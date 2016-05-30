@@ -14,6 +14,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
     },
     _time: 0,
     initPlugin: function(data) {
+        this._cleanupHighlight();
         var dims = this.relativeDims();
         if (!data.id) data.id = this._data.id = _.uniqueId('plugin');
         if (!data.highlight) data.highlight = this._data.highlight = "#DDDDDD";
