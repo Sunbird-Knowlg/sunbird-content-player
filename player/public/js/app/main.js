@@ -108,18 +108,7 @@ function getNavigateTo(navType) {
 
 function navigate(navType) {
     var navigateTo = getNavigateTo(navType);
-    if (OverlayHtml.isItemScene() && "undefined" == typeof navigateTo && "next" == navType) {
-        count_iterate_item++;
-        var ctrl_total_items = Renderer.theme._currentScene._stageController;
-        if (count_iterate_item > ctrl_total_items._repeat) {
-            window.location.hash = "/content/end/" + GlobalContext.currentContentId;
-        }
-    }
-
-    if ("undefined" == typeof navigateTo && "next" == navType && !OverlayHtml.isItemScene()) {
-        console.info("redirecting to endpage.");
-        window.location.hash = "/content/end/" + GlobalContext.currentContentId;
-    } else {
+    var changeScene = function() {
         var action = {
             "asset": Renderer.theme._id,
             "command": "transitionTo",
@@ -135,7 +124,16 @@ function navigate(navType) {
         navigate.trigger("navigateUpdate", {
             'show': false
         });
-
         jQuery('popup').hide();
+    };
+    if ("undefined" == typeof navigateTo && "next" == navType) {
+        if(OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
+            changeScene();
+        } else {
+            console.info("redirecting to endpage.");
+            window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+        }
+    } else {
+        changeScene();
     }
 }
