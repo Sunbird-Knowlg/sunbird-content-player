@@ -116,7 +116,6 @@ function navigate(navType) {
         }
     }
 
-    
     if ("undefined" == typeof navigateTo && "next" == navType && !OverlayHtml.isItemScene()) {
         console.info("redirecting to endpage.");
         window.location.hash = "/content/end/" + GlobalContext.currentContentId;
