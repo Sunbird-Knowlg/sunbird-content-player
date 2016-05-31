@@ -67,7 +67,15 @@ var TextPlugin = Plugin.extend({
             text.textBaseline = 'hanging';
         } else if (valign == 'middle') {
             text.y = dims.y + dims.h/2 - text.getMeasuredHeight()/2;
-            text.textBaseline = 'hanging';
+            if (data.textBaseline) {
+                text.textBaseline = 'top'; 
+            } else {
+                text.textBaseline = 'hanging';                
+            }
+        }
+ 
+        if (data.textBaseline) {
+             text.textBaseline = data.textBaseline; 
         }
 
         text.textAlign = align;
