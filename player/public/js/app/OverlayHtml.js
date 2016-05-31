@@ -27,6 +27,7 @@ OverlayHtml = {
         this._setRootScope("enableEval", enableEval);
     },
     resetStage: function(){
+        this.isReadyToEvaluate(false);
         jQuery('#assessButton').hide();
     },
     sceneEnter: function() {
