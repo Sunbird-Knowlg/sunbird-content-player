@@ -21,7 +21,7 @@ module.exports = function(grunt) {
                 },
 
                 files: {
-                    '../dist/renderer.min.js': [
+                    'public/js/renderer.min.js': [
                         'public/js/app/GlobalContext.js',
                         'public/js/app/AppConfig.js',
                         'public/js/app/AppMessages.js',
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
                         'public/js/app/renderer.js',
                         'public/js/app/telemetry.js'
                     ],
-                    '../dist/telemetry.min.js' : [
+                    'public/js/telemetry.min.js' : [
                         'public/js/thirdparty/exclude/date-format.js',
                         'public/js/thirdparty/exclude/Class.js',
                         'public/js/app/telemetry.js'
@@ -149,7 +149,7 @@ module.exports = function(grunt) {
             before: ["www", "platforms/android/assets/www", "platforms/android/build"],
             after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html"],
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
-            minjs: ['public/js/app/*.min.js']
+            minjs: ['public/js/*.min.js']
         },
         rename: {
             main: {
@@ -169,13 +169,13 @@ module.exports = function(grunt) {
                 options: {
                     bucket: 'ekstep-public',
                     mime: {
-                        '../dist/renderer.min.js': 'application/javascript',
-                        '../dist/telemetry.min.js': 'application/javascript'
+                        'public/js/renderer.min.js': 'application/javascript',
+                        'public/js/telemetry.min.js': 'application/javascript'
                     }
                 },
                 files: [{
                     expand: true,
-                    cwd: '../dist/',
+                    cwd: 'public/js/',
                     src: ['*.min.js'],
                     dest: 'js/'
                 }]
@@ -333,7 +333,7 @@ module.exports = function(grunt) {
         },
         replace: {
             sensibol: {
-                src: ['www/js/app/AppConfig.js', 'www/js/app/renderer.min.js'],
+                src: ['www/js/app/AppConfig.js', 'www/js/renderer.min.js'],
                 overwrite: true,
                 replacements: [{
                     from: /AUDIO_RECORDER/g,
@@ -341,7 +341,7 @@ module.exports = function(grunt) {
                 }]
             },
             android: {
-                src: ['www/js/app/AppConfig.js', 'www/js/app/renderer.min.js'],
+                src: ['www/js/app/AppConfig.js', 'www/js/renderer.min.js'],
                 overwrite: true,
                 replacements: [{
                     from: /AUDIO_RECORDER/g,
