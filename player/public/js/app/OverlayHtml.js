@@ -39,9 +39,14 @@ OverlayHtml = {
     isReadyToEvaluate: function(enableEval){
         this._setRootScope("enableEval", enableEval);
     },
+    resetStage: function(){
+        jQuery('#assessButton').hide();
+    },
     sceneEnter: function() {
+        this.resetStage();
         var isItemStage = this.isItemScene();
         if (isItemStage) {
+            jQuery('#assessButton').show();
             this._setRootScope("isItemScene", true);
             var currentScene = Renderer.theme._currentScene;
             currentScene.on("correct_answer", function(event) {
