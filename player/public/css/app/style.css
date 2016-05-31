@@ -329,15 +329,23 @@ ion-popover-view.fit ion-content {
 .gc-menu-btn img{
     width: 100%;
 }
-
-.btn-next{
-    
+.nav-icon{
+    position:absolute;
+    width: 9%;
+    top: 45%;
 }
-
-.btn-back{
-    
+.nav-icon img{
+    width: 100%;
 }
-
+.nav-next{    
+    right: 1%;
+}
+.nav-previous{
+    left: 1%;
+}
+.nav-previous-enable{
+    display: none;
+}
 .assess{
     text-decoration: none;
     position:absolute;
