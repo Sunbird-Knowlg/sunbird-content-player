@@ -1,23 +1,10 @@
 OverlayHtml = {
     _rootScope: null,
     showNext: function() {
-        this._updateNavigate("next");
+        jQuery('#navNext').show();
     },
     showPrevious: function() {
-        this._updateNavigate("previous");
-    },
-    _updateNavigate: function(type) {
-        var search = "navigate[type=\"'" + type + "'\"]";
-        var navigates = jQuery(search);
-        if ("undefined" != typeof navigates && "undefined" != typeof angular) {
-            var elements = angular.element(navigates);
-            elements.trigger("navigateUpdate", {show: true});
-            
-            var rootScope = this._getRootScope(); 
-            if (rootScope) {
-                rootScope.$apply();
-            }
-        }
+        jQuery('#navPrev').show();
     },
     _setRootScope: function(key, value) {
         var rootScope = this._getRootScope();

@@ -100,7 +100,7 @@ function contentNotAvailable() {
 function getNavigateTo(navType) {
     var navigation = [];
     var navigateTo = undefined;
-    if (!_.isEmpty(Renderer.theme._currentScene._data.param)) {
+    if (!_.isUndefined(Renderer.theme._currentScene) && !_.isEmpty(Renderer.theme._currentScene._data.param)) {
         navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
         var direction = _.findWhere(navigation, {name: navType});
         if (direction) navigateTo = direction.value;
@@ -109,9 +109,13 @@ function getNavigateTo(navType) {
 }
 
 function navigate(navType) {
+    TelemetryService.interact("TOUCH", navType, null, {stageId : Renderer.theme._currentStage});
     var navigateTo = getNavigateTo(navType);
+    if(_.isUndefined( Renderer.theme._currentScene)){
+        return;
+    }
     if ("undefined" == typeof navigateTo && "next" == navType) {
-         if(config.showEndPage) {
+        if(config.showEndPage) {
             console.info("redirecting to endpage.");
             window.location.hash = "/content/end/" + GlobalContext.currentContentId;
         } else {
@@ -129,9 +133,12 @@ function navigate(navType) {
         };
         action.transitionType = navType;
         Renderer.theme.transitionTo(action);
-        var navigate = angular.element("navigate");
-        navigate.trigger("navigateUpdate", {'show': false});
+        /*var navigate = angular.element("navigate");
+        navigate.trigger("navigateUpdate", {'show': false});*/
+        //jQuery('#navNext').hide();
+        jQuery('#navPrev').show();
 
-        jQuery('popup').hide();        
-    } 
+        jQuery('#popup').hide();
+    };
+    
 }
