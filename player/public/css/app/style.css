@@ -397,6 +397,24 @@ ion-popover-view.fit ion-content {
     z-index: 9999;
 }
 
+.popup-goodjob-next{
+    position: absolute;
+    width: 22%;
+    top: 36%;
+    left: 50%;
+}
+.popup-retry{
+    position: absolute;
+    top: 5%;
+    left: 52%;
+    width: 30%;
+}
+.popup-retry-next{
+    position: absolute;
+    width: 18%;
+    bottom: 0%;
+    right: 7%;
+}
 .popup-overlay{
     position: absolute;
     width: 100%;

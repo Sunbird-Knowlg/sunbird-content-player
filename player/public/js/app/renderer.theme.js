@@ -273,10 +273,10 @@ angular.module('genie-canvas.theme', [])
             close: $rootScope.imageBasePath + "cross_button.png"
         },*/
             goodJob: {
-                background: $rootScope.imageBasePath + "popup_BG.png"
+                background: $rootScope.imageBasePath + "good_job_bg.png"
             },
             tryAgain: {
-                background: $rootScope.imageBasePath + "popup_dialogue_folded.png",
+                background: $rootScope.imageBasePath + "try_again_bg.png",
                 retry: $rootScope.imageBasePath + "retry_icon.png"
             },
             end: {
@@ -303,11 +303,11 @@ angular.module('genie-canvas.theme', [])
         };
 
         $scope.goodJob = {
-            body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"" /><img ng-src="{{icons.popup_kid.good_job}}" style=" width:55%; height:70%;position: absolute;right:55%;top:11%; /><div class="popup-body"><navigate type="\'next\'" enable-image="icons.popup.next" disable-image="icons.next.disable" style="position: absolute;width:22%;top:35%;right: 30%;font-size: 3em;"></navigate></div><a style="position: inherit;width: 8%;right: 43%;top:1%;" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
+            body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><a href="javascript:void(0);" ng-click="hidePopup(\'gc_retry\')"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" onclick="navigate(\'next\')"/></a></div></div>'
         };
 
         $scope.tryAgain = {
-            body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><img ng-src="{{icons.popup_kid.retry}}" style=" width:55%; height:70%; position: absolute;right:47%;top:5%; /> <div class="popup-body"><a ng-click="hidePopup(\'gc_retry\')" href="javascript:void(0);" ><img ng-src="{{icons.popup.retry}}" style="position: absolute;top:25%;right: 30%; width:19%" /></a><navigate type="\'next\'" enable-image="icons.popup.skip" disable-image="icons.popup.skip" style="position: absolute;width: 19%;top: 58%;right:9%;"></navigate></div><a style="position: inherit;width: 8%;right: 40%;top: 4%;" href="javascript:void(0)" ng-click="hidePopup(\'gc_popupclose\')"><img ng-src="{{icons.popup.close}}" style="width:100%;"/></a></div>'
+            body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><a ng-click="hidePopup(\'gc_retry\')" href="javascript:void(0);" ><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><a href="javascript:void(0);" ng-click="hidePopup(\'gc_retry\')"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" onclick="navigate(\'next\')"/></a></div></div>'
         };
 
         $scope.openMenu = function() {

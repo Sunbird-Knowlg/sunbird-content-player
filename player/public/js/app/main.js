@@ -133,12 +133,8 @@ function navigate(navType) {
         };
         action.transitionType = navType;
         Renderer.theme.transitionTo(action);
-        /*var navigate = angular.element("navigate");
-        navigate.trigger("navigateUpdate", {'show': false});*/
-        //jQuery('#navNext').hide();
-        jQuery('#navPrev').show();
 
-        jQuery('#popup').hide();
+        jQuery('#navPrev').show();
     };
     
 }
