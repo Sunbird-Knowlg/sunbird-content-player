@@ -52,7 +52,7 @@ angular.module('genie-canvas.theme', [])
                 if ($rootScope.collection && $rootScope.collection.children) {
                     isCollection = $rootScope.collection.children.length > 0 ? true : false;
                 }
-                scope.imgSrc = (isCollection == false) ? "home_icon.png" : "home_icon_disabled.png";
+                scope.imgSrc = (isCollection == true) ? "home_icon.png" : "home_icon_disabled.png";
                 var pageId = $rootScope.pageId;
                 scope.goToHome = function() {
                     if (isCollection) {
