@@ -114,13 +114,22 @@ angular.module('genie-canvas.theme', [])
     .directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img ng-src="{{imageBasePath}}{{mutestatus}}" style="position:absolute;bottom:16%; width:10%;  margin-left:41%; z-index:1; " /><img ng-src="{{imageBasePath}}{{unmute}}" style="position:absolute;  bottom: 15.6%; width:11.7%; margin-left:40%; z-index: 2; "/> </a>',
+            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position:absolute;bottom:16%; width:10%;  margin-left:41%; z-index:1; " /><img id="unmute_id"  style="position:absolute;  bottom: 15.6%; width:11.7%; margin-left:40%; z-index: 2; visibility:"hidden" "/> </a>',
             link: function(scope, url) {
                 scope.mutestatus = "mute.png";
                 scope.mute = function() {
                     //mute function goes here
                     createjs.Sound.muted = !createjs.Sound.muted;
-                    scope.unmute = (createjs.Sound.muted == true) ? "unmute.png" : scope.mutestatus;
+                    if (createjs.Sound.muted == true) {
+                        document.getElementById("unmute_id").src = "img/icons/unmute.png";
+                        document.getElementById("unmute_id").style.visibility = "visible"
+
+                    } else {
+
+                        document.getElementById("unmute_id").style.visibility = "hidden"
+                    }
+
+
                 }
             }
         }
@@ -142,31 +151,33 @@ angular.module('genie-canvas.theme', [])
 
 
 .directive('navigate', function($rootScope) {
-        return {
-            restrict: 'E',
-            scope: {
-                disableImage: '=',
-                enableImage: '=',
-                type: '=type'
-            },
-            template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:90%;" /></a><a ng-show="show" ng-click="onNavigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:90%;" /></a>',
-            link: function(scope, element) {
-                var to = scope.type;
-                element.bind("navigateUpdate", function(event, data) {
-                    if (data) {
-                        for (key in data) {
-                            scope[key] = data[key];
-                        };
-                    }
+    return {
+        restrict: 'E',
+        scope: {
+            disableImage: '=',
+            enableImage: '=',
+            type: '=type'
+        },
+        template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:90%;" /></a><a ng-show="show" ng-click="onNavigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:90%;" /></a>',
+        link: function(scope, element) {
+            var to = scope.type;
+            element.bind("navigateUpdate", function(event, data) {
+                if (data) {
+                    for (key in data) {
+                        scope[key] = data[key];
+                    };
+                }
+            });
+            scope.onNavigate = function() {
+                TelemetryService.interact("TOUCH", to, null, {
+                    stageId: Renderer.theme._currentStage
                 });
-                scope.onNavigate = function() {
-                    TelemetryService.interact("TOUCH", to, null, { stageId: Renderer.theme._currentStage });
-                    $rootScope.isItemScene = false;
-                    navigate(to);
-                };
-            }
+                $rootScope.isItemScene = false;
+                navigate(to);
+            };
         }
-    })
+    }
+})
     .directive('popup', function($rootScope, $compile) {
         return {
             restrict: 'E',
@@ -228,7 +239,11 @@ angular.module('genie-canvas.theme', [])
                 $scope.onSubmit = function() {
                     if ($scope.isEnabled) {
                         //If any one option is selected, then only allow user to submit
-                        var action = { "type": "command", "command": "eval", "asset": Renderer.theme._currentStage };
+                        var action = {
+                            "type": "command",
+                            "command": "eval",
+                            "asset": Renderer.theme._currentStage
+                        };
                         action.htmlEval = "true";
                         action.success = "correct_answer";
                         action.failure = "wrong_answer";
