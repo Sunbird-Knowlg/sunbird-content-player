@@ -44,7 +44,7 @@ EventManager = {
 			} else { // Handle mouse events
 				var element = plugin._self;
 				if (element) {
-					if(plugin._type == 'div') {
+					if(plugin instanceof HTMLPlugin) {
 						element = plugin._self.htmlElement;
 						element.style.cursor = 'pointer';
 					} else {

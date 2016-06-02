@@ -11,6 +11,7 @@ module.exports = function(config) {
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: [
+            'jasmine-jquery',
             'jasmine',
             'jasmine-matchers'
         ],
@@ -18,7 +19,7 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'public/js/thirdparty/jquery.min.js',
+            'public/js/thirdparty/jquery.min.js',            
             'public/js/thirdparty/*.js',
             'public/js/thirdparty/exclude/xml2json.js',
             'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
@@ -46,6 +47,7 @@ module.exports = function(config) {
             'public/js/test/ScribblePluginSpec.js',
             'public/js/test/AnimationManagerSpec.js',
             'public/js/test/EventManagerSpec.js',
+            'public/js/test/HighlightTextPluginSpec.js'
             /*   'public/js/test/ImagePluginSpec.js',*/
             /*'public/js/test/ThemePluginSpec.js',*/
             /* 'public/js/test/OptionPluginSpec.js'
@@ -76,7 +78,7 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'public/js/app/GlobalContext.js': ['coverage'],
+            // 'public/js/app/GlobalContext.js': ['coverage'],
             'public/js/app/renderer.js': ['coverage'],
             'public/js/app/telemetry.js': ['coverage'],
             'public/js/app/speech.js': ['coverage']
@@ -109,6 +111,7 @@ module.exports = function(config) {
         plugins: [
             "karma-phantomjs-launcher",
             // 'karma-chrome-launcher',
+            "karma-jasmine-jquery",
             "karma-jasmine",
             "karma-jasmine-matchers",
             "karma-junit-reporter",
