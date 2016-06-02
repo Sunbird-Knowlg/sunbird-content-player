@@ -174,7 +174,7 @@ angular.module('genie-canvas.theme',[])
             $scope.onSubmit = function(){
                 if($scope.isEnabled){
                     //If any one option is selected, then only allow user to submit
-                    var action = {"type":"command","command":"eval","asset":Renderer.theme._currentStage};
+                    var action = {"type":"command","command":"eval", "htmlEval" :"true","asset":Renderer.theme._currentStage};
                     action.success = "correct_answer";
                     action.failure = "wrong_answer";
                     CommandManager.handle(action);                    
