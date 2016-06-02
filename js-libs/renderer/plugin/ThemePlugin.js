@@ -200,6 +200,10 @@ var ThemePlugin = Plugin.extend({
         }
         return stage1;
     },
+    isStageChanging: function(){
+        //Return true if stage transition is in progress
+        return this._isSceneChanging;
+    },
     transitionTo: function(action) {
         // not next and previoud are clicked at the same time, 
         // handle only one actions(next/previous)

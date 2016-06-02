@@ -5,7 +5,8 @@ var packageName = "org.ekstep.quiz.app",
 
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
-    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive"
+    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive",
+    count_iterate_item = 1;
 
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
@@ -22,6 +23,7 @@ function createCustomEvent(evtName, data) {
     var evt = new CustomEvent(evtName, data);
     // window.dispatchEvent(evt);
 }
+
 function getUrlParameter(sParam) {
    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
        sURLVariables = sPageURL.split('&'),
@@ -38,18 +40,29 @@ function getUrlParameter(sParam) {
 
 function reloadStage(){
     var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
-     if (plugin) plugin.reload({type:"command" ,command:"reload", duration: "500", ease: "linear", effect: "fadeIn", asset: Renderer.theme._currentStage});
+    if (plugin) plugin.reload({
+        type: "command",
+        command: "reload",
+        duration: "500",
+        ease: "linear",
+        effect: "fadeIn",
+        asset: Renderer.theme._currentStage
+    });
 }
 
 function goToHome($state, isCollection, id, pageId) {
-    if(isCollection){
+    if (isCollection) {
         // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
-        TelemetryService.interact("TOUCH", "gc_home", "TOUCH", {stageId : ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
-        if(Renderer.running) 
+        TelemetryService.interact("TOUCH", "gc_home", "TOUCH", {
+            stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))
+        });
+        if (Renderer.running)
             Renderer.cleanUp();
         else
             TelemetryService.end();
-        $state.go('contentList', { "id": id });
+        $state.go('contentList', {
+            "id": id
+        });
 
     }
 }
@@ -67,7 +80,9 @@ function backbuttonPressed() {
 // TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
 // So, change exitApp to do the same.
 function exitApp(pageId) {
-    TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {stageId : ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
+    TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {
+        stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))
+    });
     try {
         TelemetryService.exit();
     } catch (err) {
@@ -79,17 +94,17 @@ function exitApp(pageId) {
 function startApp(app) {
     if (!app) app = geniePackageName;
     navigator.startApp.start(app, function(message) {
-        exitApp();
-        TelemetryService.exit(packageName, version)
-    },
-    function(error) {
-        if (app == geniePackageName)
-            alert("Unable to start Genie App.");
-        else {
-            var bool = confirm('App not found. Do you want to search on PlayStore?');
-            if (bool) cordova.plugins.market.open(app);
-        }
-    });
+            exitApp();
+            TelemetryService.exit(packageName, version)
+        },
+        function(error) {
+            if (app == geniePackageName)
+                alert("Unable to start Genie App.");
+            else {
+                var bool = confirm('App not found. Do you want to search on PlayStore?');
+                if (bool) cordova.plugins.market.open(app);
+            }
+        });
 }
 
 function contentNotAvailable() {
@@ -102,7 +117,9 @@ function getNavigateTo(navType) {
     var navigateTo = undefined;
     if (!_.isUndefined(Renderer.theme._currentScene) && !_.isEmpty(Renderer.theme._currentScene._data.param)) {
         navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
-        var direction = _.findWhere(navigation, {name: navType});
+        var direction = _.findWhere(navigation, {
+            name: navType
+        });
         if (direction) navigateTo = direction.value;
     }
     return navigateTo;
@@ -111,17 +128,11 @@ function getNavigateTo(navType) {
 function navigate(navType) {
     TelemetryService.interact("TOUCH", navType, null, {stageId : Renderer.theme._currentStage});
     var navigateTo = getNavigateTo(navType);
+
     if(_.isUndefined( Renderer.theme._currentScene)){
         return;
     }
-    if ("undefined" == typeof navigateTo && "next" == navType) {
-        if(config.showEndPage) {
-            console.info("redirecting to endpage.");
-            window.location.hash = "/content/end/" + GlobalContext.currentContentId;
-        } else {
-            alert("Cannot move to end page of the content. please check the configurations..");
-        }
-    }else{
+    var changeScene = function() {
         var action = {
             "asset": Renderer.theme._id,
             "command": "transitionTo",
@@ -133,8 +144,16 @@ function navigate(navType) {
         };
         action.transitionType = navType;
         Renderer.theme.transitionTo(action);
-
         jQuery('#navPrev').show();
     };
-    
+    if ("undefined" == typeof navigateTo && "next" == navType) {
+        if(OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
+            changeScene();
+        } else {
+            console.info("redirecting to endpage.");
+            window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+        }
+    } else {
+        changeScene();
+    }
 }

@@ -1,0 +1,95 @@
+﻿{
+	"identifier": "DAY1_1",
+	"title": "DAY1_1 Assessment",
+	"total_items": 1,
+	"shuffle":false,
+	"max_score": 4,
+	"subject": "LIT",
+	"item_sets": [
+		{
+			"id": "set_1",
+        	"count": 1	
+		}
+	],
+	"items": {
+		"set_1" : [
+		
+			{
+				"type": "mtf",	
+				
+				"template_id": "org.ekstep.mtf.mixed.mixed.horizontal", 
+				"template": "org.ekstep.mtf.mixed.mixed.horizontal",
+
+				"media": [
+				{
+					"id": "friday",
+					"type": "audio",
+					"src": "sounds/friday.mp3", 
+					"asset_id": "friday" 
+				}],
+			
+				"title": "",
+				"question": "Question text goes here",
+				"question_image": "", 
+				"question_audio": "friday",
+				"question_count": "",
+				
+				
+				"lhs_options": [
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "next", "text":"A"},
+						"index": 0
+					},
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "next", "text":"B"},
+						"index": 1
+					},
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "next", "text":"C"},
+						"index": 2
+					},
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "next", "text":"D"},
+						"index": 3
+					},
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "next", "text":"E"},
+						"index": 4
+					}
+					
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "next", "text":"a"},
+						"answer": 0
+					},
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "next", "text":"b"},
+						"answer": 1
+					},
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "next", "text":"c"},
+						"answer": 2
+					},
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "next", "text":"d"},
+						"answer": 3
+					},
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "next", "text":"e"},
+						"answer": 4
+					}
+				],
+				 "model" : {
+    },
+
+    
+    "keywords": ["array", "of", "strings"]
+			}
+			
+			
+			
+			
+		]
+	}
+}

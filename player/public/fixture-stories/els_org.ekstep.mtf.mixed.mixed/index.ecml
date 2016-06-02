@@ -1,0 +1,268 @@
+﻿<theme startStage="splash" id="theme" ver="0.2">
+    <manifest>
+		
+		<media id="previous" src="images/icon_previous.png" type="image" />
+    <media id="next" src="images/3dshapestenth.png" type="image" />
+    <media id="friday" src="sounds/friday.mp3" type="audio" />
+		<media id="literacyBG" src="images/literacy.png" type="image" />
+		<media id="literacyBG" src="images/literacy.png" type="image" />
+		<media id="endScreen" src="images/endScreen.png" type="image" />
+		<media id="grey" src="images/grey.png" type="image" />
+		<media id="retryBg" src="images/retryBg.png" type="image" />
+    <media id="goodjobBg" src="images/goodjobBg.png" type="image" />
+		<media id="validate" src="images/icon_validate.png" type="image" />
+		<media id="popupTint" src="images/PopupTint.png" type="image" />
+		<media id="icon_sound" src="images/icon_sound.png" type="image" />
+		
+    </manifest>
+    
+	<controller name="assessment" type="items" id="assessment"/>
+	
+	<stage id="baseStage" preload="true">
+     
+		<image asset = "literacyBG"/>
+		<image asset = "previous"/> 
+		<image asset = "next"/>
+		<audio asset = "friday"/>
+	 	<image asset = "endScreen"/>
+		<image asset = "targetImage"/>
+		<image asset = "grey"/>
+		<image asset = "retryBg"/>
+		<image asset = "goodjobBg"/>
+		<image asset = "validate"/>
+		<image asset = "popupTint"/>
+		<image asset = "icon_sound"/>
+		
+    </stage>
+	
+	<template id="org.ekstep.mtf.mixed.mixed.horizontal">
+		<text model="item.question" x="10" y="6" w="80" font="Verdana" fontsize="70" color="black" align="center" />
+		<shape type="rect" x="10" y="2" w="80" h="15" visible="true" id="retry" hitArea="true">	
+			<event type="click">
+				<action type="command" command="play" asset_model="item.question_audio"/>
+			</event>
+		</shape>
+		
+		
+		<image asset="grey" x="22" y="40" h="30"/>
+		<image asset="grey" x="42" y="40" h="30"/>
+		<image asset="grey" x="62" y="40" h="30"/>
+		<image asset="grey" x="82" y="40" h="30"/>
+			
+		<mtf model="item" force="true">
+			
+			<option x="3" y="17	" w="15" h="55" snapX="0" snapY="45" option="lhs_options[0]">
+				<shape stroke="red" type="rect" w="100" h="100" x="0" y="0"/>
+				<g  x="0" y="0" w="100" h="45" align="center" >
+				<shape stroke="blue" type="rect" w="100" h="100" x="0" y="0"/>
+					<image w="100" model="option.value.image" align="center" valign="middle" />
+					<text x="0" y="0" w="100" h="100" font="Georgia" weight="bold" align="center" valign="middle" fontsize="700" model="option.value.text" textBaseline="top"/>
+				</g>
+				<image asset="grey" x="0" y="45" w="100" strech="false"/>	
+
+				<event type="click">
+					<action type="command" command="play" asset-model="option.value.audio"/>
+				</event>
+			</option>
+
+      <option x="23" y="17" w="15" h="55" snapX="1" snapY="100" option="lhs_options[1]">
+				<image x="0" y="0"  w="100" h="40" model="option.value.image" />
+				<text x="0" y="0" w="100" h="45" font="Georgia" weight="bold" align="center" valign="top" fontsize="700" model="option.value.text" />
+				<event type="click">
+					<action type="command" command="play" asset-model="option.value.audio"/>
+				</event>
+			</option>
+            <option x="43" y="17" w="15" h="55" snapX="1" snapY="100" option="lhs_options[2]">
+				<image x="0" y="0"  w="100" h="40" model="option.value.image" />
+				<text x="0" y="0" w="100" h="45" font="Georgia" weight="bold" align="center" valign="middle" fontsize="700" model="option.value.text" />
+				<event type="click">
+					<action type="command" command="play" asset-model="option.value.audio"/>
+				</event>
+			</option>
+            <option x="63" y="17" w="15" h="55" snapX="1" snapY="100" option="lhs_options[3]">
+				<image x="0" y="0"  w="100" h="40" model="option.value.image" />
+				<text x="0" y="0" w="100" h="45" font="Georgia" weight="bold" align="center" valign="middle" fontsize="700" model="option.value.text" />
+				<event type="click">
+					<action type="command" command="play" asset-model="option.value.audio"/>
+				</event>
+			</option>
+			<option x="83" y="17" w="15" h="55" snapX="1" snapY="100" option="lhs_options[4]">
+				<image x="0" y="0"  w="100" h="40" model="option.value.image" />
+				<text x="0" y="0" w="100" h="45" font="Georgia" weight="bold" align="center" valign="middle" fontsize="700" model="option.value.text" />
+				<event type="click">
+					<action type="command" command="play" asset-model="option.value.audio"/>
+				</event>
+			</option>
+           
+		   
+			<option x="3" y="75" w="15" h="22" option="rhs_options[0]">
+				<shape stroke="grey" type="rect" w="100" h="100" x="0" y="0"/>
+				<image x="0" y="0" align="center" valign="middle" w="100" strech="false" model="option.value.image" />
+				<text x="0" y="0" w="100" h="100" font="Georgia" weight="bold" align="center" valign="middle" fontsize="600" model="option.value.text" />
+				<event type="click">
+					<action type="command" command="play" asset-model="option.value.audio"/>
+				</event>
+			</option>
+			
+			<option x="23" y="75" w="15" h="22" option="rhs_options[1]">
+				<image x="10" y="0"  h="100" model="option.value.image" />
+				<text x="0" y="0" w="100" h="100" font="Georgia" weight="bold" align="center" valign="middle" fontsize="600" model="option.value.text" />
+				<event type="click">
+					<action type="command" command="play" asset-model="option.value.audio"/>
+				</event>
+			</option> 
+		   
+		   <option x="43" y="75" w="15" h="22" option="rhs_options[2]">
+				<image x="10" y="0"  h="100" model="option.value.image" />
+				<text x="0" y="0" w="100" h="100" font="Georgia" weight="bold" align="center" valign="middle" fontsize="600" model="option.value.text" />
+				<event type="click">
+					<action type="command" command="play" asset-model="option.value.audio"/>
+				</event>
+			</option>
+			
+			<option x="63" y="75" w="15" h="22" option="rhs_options[3]">
+				<image x="10" y="0"  h="100" model="option.value.image" />
+				<text x="0" y="0" w="100" h="100" font="Georgia" weight="bold" align="center" valign="middle" fontsize="600" model="option.value.text" />
+				<event type="click">
+					<action type="command" command="play" asset-model="option.value.audio"/>
+				</event>
+			</option>
+			
+			<option x="83" y="75" w="15" h="22" option="rhs_options[4]">
+				<image x="10" y="0"  h="100" model="option.value.image" />
+				<text x="0" y="0" w="100" h="100" font="Georgia" weight="bold" align="center" valign="middle" fontsize="600" model="option.value.text" />
+				<event type="click">
+					<action type="command" command="play" asset-model="option.value.audio"/>
+				</event>
+			</option>
+			
+		</mtf>
+	</template>
+	
+	<template id="retry">
+	
+		<image asset = "popupTint" x="-100" y="-150" w="550" h="600" visible="true" id="popup-Tint">
+			<event type="click">
+				<action type="command" command="show" asset=""/>
+			</event>
+		</image>
+		<image asset ="retryBg" x="0" y="0" w="100" h="100" visible="true" id="right"/>
+		
+		<shape type="rect" x="20" y="46" w="20" h="40" visible="true" id="retry" hitArea="true">
+			<event type="click">
+				<action type="command" command="hide" asset="retryDialog" />
+			</event>
+		</shape>
+		<shape type="rect" x="60" y="46" w="20" h="40" visible="true" id="continue" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="nextScreen" effect="scroll" direction="left" ease="linear" duration="500" />
+			</event>
+		</shape>
+	
+	</template>
+	
+	<template id="goodjob">
+	
+		<image asset = "popupTint" x="-100" y="-150" w="550" h="600" visible="true" id="popup-Tint">
+			<event type="click">
+				<action type="command" command="show" asset=""/>
+			</event>
+		</image>
+		<image asset ="goodjobBg" x="0" y="0" w="100" h="100" visible="true" id="continue">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="nextScreen" effect="scroll" direction="left" ease="linear" duration="500" />
+			</event>
+		</image>
+			
+	</template>
+	
+	
+	
+   <stage id="splash" x="0" y="0" w="100" h="100">															<!--SPLASH SCREEN-->
+        
+		<image asset="literacyBG" x="0" y="0" w="100" h="100" />
+		<param name="next" value="stage1"/>
+		
+		<shape type="rect" x="37" y="27" w="23" h="48" hitArea="true" id="previous_button">
+            <event type="click">
+               <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="right" ease="linear" duration="600" />            
+            </event>
+        </shape>
+		
+	</stage>
+	
+    <stage id="stage1" x="0" y="0" w="100" h="100" iterate="assessment" var="item">							
+		<param name="previousScreen" value="splash" />
+		<param name="nextScreen" value="endScreen" />
+      <g x="12" y="0" w="76" h="88" stroke="green">
+       	<shape type="rect" x="0" y="0" w="100" h="100" stroke="green"></shape>
+				<embed template="item" var-item="item"/>
+			</g>
+      	<!-- <shape type="rect" x="0" y="0" w="100" h="100" hitArea="true" id="previous_button" stroke="red"/> -->
+		<!-- <image asset="previous" x="1" y="2" w="8" h="13" >
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previousScreen" effect="scroll" direction="right" ease="linear" duration="600" />
+			</event>
+		</image>
+		<image asset="next" x="91" y="2" w="8" h="13" >
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="nextScreen" effect="scroll" direction="right" ease="linear" duration="600" />
+			</event>
+		</image> -->
+		
+				<g x="30" y="15" w="40" h="35" id="retryDialog" visible="false">
+            <embed template-name="retry"></embed>
+        </g>
+        <g x="30" y="15" w="40" h="35" id="goodjobDialog" visible="false">
+            <embed template-name="goodjob"></embed>
+        </g>
+		
+		
+		<appEvents list="correct_response,wrong_response"/>
+        <events>
+           
+			<event type="wrong_response">
+				<action type="command" command="show" asset="retryDialog" />
+				<action type="animation" asset="retryDialog">
+                   <tween id="retryShowAnim">
+                       <to ease="bounceOut " duration="1500"><![CDATA[{"x":30,"y":40,"w":40,"h":30}]]></to>
+                   </tween>
+               </action>
+            </event>
+			
+            <event type="correct_response">
+				<action type="command" command="show" asset="goodjobDialog" />
+				<action type="animation" asset="goodjobDialog">
+                   <tween id="gjShowAnim">
+                       <to ease="bounceOut" duration="1500"><![CDATA[{"x":30,"y":40,"w":40,"h":30}]]></to>
+                   </tween>
+               </action>
+				
+            </event>
+			
+        </events>
+		
+	</stage>
+	
+	<stage id="endScreen" x="0" y="0" w="100" h="100">							
+       <image asset="endScreen" x="0" y="0" w="100" h="100"/>
+	   
+	    <param name="previousScreen" value="stage1" />
+		<param name="nextScreen" value="splash" />
+
+		<image asset="previous" x="40" y="50" w="8" h="13" >
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previousScreen" effect="scroll" direction="right" ease="linear" duration="600" />
+			</event>
+		</image>
+		<image asset="next" x="50" y="50" w="8" h="13" >
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="nextScreen" effect="scroll" direction="right" ease="linear" duration="600" />
+			</event>
+		</image>
+		
+		
+	</stage>
+	
+	
+</theme>
