@@ -51,6 +51,9 @@ OverlayHtml = {
 
         if (isItemStage) {
             jQuery('#assessButton').show();
+
+            this._setRootScope("isItemScene", true);
+
             var currentScene = Renderer.theme._currentScene;
             currentScene.on("correct_answer", function(event) {
                 console.log("listener for ", event);

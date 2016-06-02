@@ -198,6 +198,7 @@ angular.module('genie-canvas.theme', [])
                 };
             }
         }
+
     })
     .directive('assess', function($rootScope) {
         return {
@@ -226,7 +227,7 @@ angular.module('genie-canvas.theme', [])
                         $scope.image = $rootScope.imageBasePath + "submit_disabled.png";
                     }
                 });
-
+                
                 $scope.onSubmit = function() {
                     if ($scope.isEnabled) {
                         //If any one option is selected, then only allow user to submit

@@ -350,7 +350,7 @@ var Plugin = Class.extend({
                         this.x = dims.x + (dims.w * plugin._data.snapX / 100);
                     }
                     if (plugin._data.snapY) {
-                        this.y = dims.y + (dims.w * plugin._data.snapY / 100);
+                        this.y = dims.y + (dims.h * plugin._data.snapY / 100);
                     }
                 }
                 Renderer.update = true;
