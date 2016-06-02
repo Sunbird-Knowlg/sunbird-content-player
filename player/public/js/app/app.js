@@ -117,7 +117,6 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 GlobalContext.config.flavor = flavor;
             });
 
-
             GlobalContext.init(packageName, version).then(function(appInfo) {
                 var id = getUrlParameter("id");  
                 if(webview) {
@@ -155,8 +154,9 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                         });
                     }
                 }
-                else
+                else{
                     launchInitialPage(GlobalContext.config.appInfo, $state);
+                }
             }).catch(function(res) {
                 console.log("Error Globalcontext.init:", res);
                 alert(res.errors);
@@ -333,46 +333,48 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
     }).controller('ContentCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
         $rootScope.pageId = "renderer";
         
-        if ($stateParams.itemId) {
-        $scope.item = _.findWhere($rootScope.stories, { identifier: $stateParams.itemId });
+        $scope.init = function(){   
+            if ($stateParams.itemId) {
+            $scope.item = _.findWhere($rootScope.stories, { identifier: $stateParams.itemId });
 
-        if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
-            HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
-                jQuery('#gameAreaLoad').hide();
-                jQuery('#gameArea').hide();
-                var path = $scope.item.baseDir + '/index.html';
-                $scope.currentProjectUrl = path;
-                jQuery("#htmlFrame").show();
-            });
-        } else { 
-            if(collectionChildren) {
-                collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1); 
-                collectionChildren = false;
-            }
-            if (webview) {
-                var contentBody = undefined;
-                if(COLLECTION_MIMETYPE == content.metadata.mimeType) {
-                    ContentService.getContentBody($stateParams.itemId)
-                        .then(function(data) {
-                            
-                            Renderer.start("", 'gameCanvas', $scope.item, getContentObj(data), true);
-                            
-                        })
-                        .catch(function(err) {
-                            console.info("contentNotAvailable : ", err);
-                            contentNotAvailable();
-                        });
-                } else {
-                    Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
+            if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
+                HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
+                    jQuery('#gameAreaLoad').hide();
+                    jQuery('#gameArea').hide();
+                    var path = $scope.item.baseDir + '/index.html';
+                    $scope.currentProjectUrl = path;
+                    jQuery("#htmlFrame").show();
+                });
+            } else { 
+                if(collectionChildren) {
+                    collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1); 
+                    collectionChildren = false;
                 }
-                
+                if (webview) {
+                    var contentBody = undefined;
+                    if(COLLECTION_MIMETYPE == content.metadata.mimeType) {
+                        ContentService.getContentBody($stateParams.itemId)
+                            .then(function(data) {
+                                
+                                Renderer.start("", 'gameCanvas', $scope.item, getContentObj(data), true);
+                                
+                            })
+                            .catch(function(err) {
+                                console.info("contentNotAvailable : ", err);
+                                contentNotAvailable();
+                            });
+                    } else {
+                        Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
+                    }
+                    
+                }
+                else
+                    Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
             }
-            else
-                Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
-        }
-        } else {
-            alert('Name or Launch URL not found.');
-            $state.go('contentList', { "id": GlobalContext.game.id });
+            } else {
+                alert('Name or Launch URL not found.');
+                $state.go('contentList', { "id": GlobalContext.game.id });
+            }
         }
         
 
@@ -411,4 +413,11 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 }, 5000);
             }
         });
+
+        // This is to fix FTB preview issue of causing by Ionic and Angular combination
+        // childnodes error causing by ionic framework whiel rendering FTB item
+        // reference: http://stackoverflow.com/questions/27776174/type-error-cannot-read-property-childnodes-of-undefined
+        setTimeout(function(){
+            $scope.init();
+        }, 0);
     });
