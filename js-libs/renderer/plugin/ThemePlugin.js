@@ -194,6 +194,9 @@ var ThemePlugin = Plugin.extend({
         }
         return stage1;
     },
+    isStageChanging: function(){
+       return this._isSceneChanging;
+    },
     transitionTo: function(action) {
         // not next and previoud are clicked at the same time, 
         // handle only one actions(next/previous)
