@@ -58,9 +58,7 @@ angular.module('genie-canvas.theme', [])
                     if (isCollection) {
                         goToHome($state, isCollection, GlobalContext.previousContentId, pageId);
                     }
-
                 }
-
             }
         }
     })

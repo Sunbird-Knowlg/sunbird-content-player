@@ -161,7 +161,6 @@ function navigate(navType) {
         };
         action.transitionType = navType;
         Renderer.theme.transitionTo(action);
-        jQuery('#navPrev').show();
     };
     if ("undefined" == typeof navigateTo && "next" == navType) {
         if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
@@ -172,6 +171,15 @@ function navigate(navType) {
         }
     } else {
         changeScene();
+    }
+}
+
+function enablePrevious(){
+    var navigateTo = getNavigateTo('previous');
+    if(_.isUndefined(navigateTo)){
+        jQuery('#navPrev').hide();
+    }else{
+        jQuery('#navPrev').show();
     }
 }
 
