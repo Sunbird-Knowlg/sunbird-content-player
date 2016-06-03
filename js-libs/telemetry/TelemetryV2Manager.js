@@ -19,7 +19,6 @@ TelemetryV2Manager = Class.extend({
         return this.createEvent("OE_START", {});
     },
     end: function(gameId) {
-        // console.log("inside into TelemetryServiceV2........... : ", );
         this._start.pop();
         return this._end.pop().end();
     },
