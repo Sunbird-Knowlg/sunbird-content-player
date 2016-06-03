@@ -21,6 +21,7 @@ angular.module('genie-canvas.template',[])
                     var identifier = (data && data.identifier) ? data.identifier : null;
                     var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
                     TelemetryService.start(identifier, version);
+                    TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID"});
                 })
                 .catch(function(err) {
                     console.info("contentNotAvailable : ", err);
@@ -83,7 +84,7 @@ angular.module('genie-canvas.template',[])
 
     $scope.showCredits = function() {
         jQuery("#creditsPopup").show();
-        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId : "endpage"});
+        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId : "ContnetApp-CreditsScreen", subtype: "ContentID"});
     }
 
     $scope.playNextContent = function() {
@@ -105,4 +106,5 @@ angular.module('genie-canvas.template',[])
             }
         }, 500);
       }
+      TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContnetApp-EndScreen", subtype: "ContentID"});
 });
