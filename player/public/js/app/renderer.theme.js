@@ -113,18 +113,23 @@ angular.module('genie-canvas.theme', [])
     .directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img ng-src="{{imageBasePath}}{{mutestatus}}" style="position:absolute;bottom:16%; width:10%;  margin-left:41%; z-index:1; " /><img ng-src="{{imageBasePath}}{{unmute}}" style="position:absolute;  bottom: 16%; width:12%; margin-left:40%; z-index: 2; "/> </a>',
+            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position:absolute;bottom:16%; width:10%;  margin-left:41%; z-index:1; " /><img id="unmute_id"  style="position:absolute;  bottom: 15.6%; width:11.7%; margin-left:40%; z-index: 2; visibility:"hidden" "/> </a>',
             link: function(scope, url) {
                 scope.mutestatus = "mute.png";
-                /* scope.textstatus = "Mute";*/
 
                 scope.mute = function() {
                     //mute function goes here
                     createjs.Sound.muted = !createjs.Sound.muted;
+                    if (createjs.Sound.muted == true) {
+                        document.getElementById("unmute_id").src = "img/icons/unmute.png";
+                        document.getElementById("unmute_id").style.visibility = "visible"
 
-                    scope.unmute = (createjs.Sound.muted == true) ? "unmute.png" : scope.mutestatus;
+                    } else {
 
-                    /*scope.textstatus = (createjs.Sound.muted == true) ? "Mute" : "Unmute";*/
+                        document.getElementById("unmute_id").style.visibility = "hidden"
+                    }
+
+
                 }
             }
         }
@@ -138,8 +143,9 @@ angular.module('genie-canvas.theme', [])
     .directive('reloadStage', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="reloadStage()"><img src="{{imageBasePath}}speaker_icon.png" style="width:100%;" /></a>'
+            template: '<a href="javascript:void(0)" onclick="reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png"/></a>'
         }
+
     })
     .directive('navigate', function($rootScope) {
         return {
@@ -208,7 +214,6 @@ angular.module('genie-canvas.theme', [])
                 }
             }
         }
-
     })
     .directive('assess', function($rootScope) {
         return {
@@ -237,8 +242,8 @@ angular.module('genie-canvas.theme', [])
                         $scope.image = $rootScope.imageBasePath + "submit_disabled.png";
                     }
                 });
-                
-                $scope.onSubmit = function() {
+
+                 $scope.onSubmit = function() {
                     if ($scope.isEnabled) {
                         evalAndSubmit();
                     }
@@ -273,7 +278,7 @@ angular.module('genie-canvas.theme', [])
             /* popup: {
             background: $rootScope.imageBasePath + "popup_BG.png",
             close: $rootScope.imageBasePath + "cross_button.png"
-        },*/
+            },*/
             goodJob: {
                 background: $rootScope.imageBasePath + "good_job_bg.png"
             },
@@ -300,8 +305,6 @@ angular.module('genie-canvas.theme', [])
             popup_close: {
                 close_icon: $rootScope.imageBasePath + "close_popup.png",
             }
-
-
         };
 
         $scope.goodJob = {

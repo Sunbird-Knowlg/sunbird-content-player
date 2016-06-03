@@ -5,8 +5,7 @@ var packageName = "org.ekstep.quiz.app",
 
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
-    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive",
-    count_iterate_item = 1;
+    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive";
 
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
@@ -38,16 +37,27 @@ function getUrlParameter(sParam) {
    }
 }
 
-function reloadStage(){
-    var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
-    if (plugin) plugin.reload({
-        type: "command",
-        command: "reload",
-        duration: "500",
-        ease: "linear",
-        effect: "fadeIn",
-        asset: Renderer.theme._currentStage
-    });
+var _reloadInProgress = false;
+function reloadStage() {
+    if (_reloadInProgress) {
+        return;
+    }
+    _reloadInProgress = true;
+    setTimeout(function() {
+        var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
+        if (plugin) plugin.reload({
+            type: "command",
+            command: "reload",
+            duration: "100",
+            ease: "linear",
+            effect: "fadeIn",
+            asset: Renderer.theme._currentStage
+        });
+    }, 500);
+}
+
+function enableReload() {
+    _reloadInProgress = false;
 }
 
 function goToHome($state, isCollection, id, pageId) {
@@ -111,7 +121,6 @@ function contentNotAvailable() {
     alert(AppMessages.NO_CONTENT_FOUND);
     exitApp();
 }
-
 function getNavigateTo(navType) {
     var navigation = [];
     var navigateTo = undefined;
@@ -155,7 +164,7 @@ function navigate(navType) {
         jQuery('#navPrev').show();
     };
     if ("undefined" == typeof navigateTo && "next" == navType) {
-        if(OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
+        if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
             changeScene();
         } else {
             console.info("redirecting to endpage.");

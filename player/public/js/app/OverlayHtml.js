@@ -38,7 +38,8 @@ OverlayHtml = {
         queue.installPlugin(createjs.Sound);
 
         function handleComplete(event) {
-            console.log("preload the audio:");
+            
+            enableReload();
         }
         queue.addEventListener("complete", handleComplete);
         queue.loadManifest([{
