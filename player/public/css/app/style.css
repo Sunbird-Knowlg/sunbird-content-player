@@ -509,6 +509,13 @@ ion-popover-view.fit ion-content {
     left: 38%;
 }
 
+.gc-restart-btn-no-next-content{
+    width: 10%;
+    position: absolute;
+    left: 44%;
+}
+
+
 .gc-popup-title{
     /*font-family: SkaterGirlsRock;
     color: #FC5B20; */

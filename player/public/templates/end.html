@@ -29,7 +29,7 @@
             <img src="img/icons/ccby.png" style="width: 100%;" />
         </a>
 
-        <div>
+        <div ng-if="showNextContent">
             <a ng-show="showNextContent" class="next-module" href="javascript:void(0)" ng-click="playNextContent()" >
                 <img src="img/icons/next_icon.png" style="width:100%;" />
             </a>
@@ -37,6 +37,15 @@
             <div class="gc-restart-cont">
                 <p class="icon-font label-white-stoke">{{ languageSupport.whatWeDoNext }}?</p>
                 <restart class="gc-restart-btn"></restart>
+               <!--   -->
+            </div>
+        </div>
+
+        <div ng-if="!showNextContent">
+           
+            <div class="gc-restart-cont">
+                <p class="icon-font label-white-stoke">{{ languageSupport.whatWeDoNext }}?</p>
+                <restart class="gc-restart-btn-no-next-content"></restart>
                <!--   -->
             </div>
         </div>
