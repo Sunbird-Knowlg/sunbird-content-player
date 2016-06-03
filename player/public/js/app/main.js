@@ -125,6 +125,7 @@ function getNavigateTo(navType) {
     return navigateTo;
 }
 
+var submitOnNextClick = true;
 function navigate(navType) {
     TelemetryService.interact("TOUCH", navType, null, {stageId : Renderer.theme._currentStage});
     var navigateTo = getNavigateTo(navType);
@@ -132,6 +133,12 @@ function navigate(navType) {
     if(_.isUndefined( Renderer.theme._currentScene)){
         return;
     }
+    if(submitOnNextClick && OverlayHtml.isItemScene()){
+        evalAndSubmit();
+        return;
+    }
+
+    submitOnNextClick = true;
     var changeScene = function() {
         var action = {
             "asset": Renderer.theme._id,
@@ -156,4 +163,17 @@ function navigate(navType) {
     } else {
         changeScene();
     }
+}
+
+function evalAndSubmit(){
+    //If any one option is selected, then only allow user to submit
+    var action = {
+        "type": "command",
+        "command": "eval",
+        "asset": Renderer.theme._currentStage
+    };
+    action.htmlEval = "true";
+    action.success = "correct_answer";
+    action.failure = "wrong_answer";
+    CommandManager.handle(action);
 }

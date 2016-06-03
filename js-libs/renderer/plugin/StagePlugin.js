@@ -206,6 +206,7 @@ var StagePlugin = Plugin.extend({
             }            
         }else{
             //Directly take user to next stage, without showing feedback popup
+            submitOnNextClick = false;
             navigate("next");
         }
     },
