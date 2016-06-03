@@ -133,7 +133,8 @@ function navigate(navType) {
     if(_.isUndefined( Renderer.theme._currentScene)){
         return;
     }
-    if(submitOnNextClick && OverlayHtml.isItemScene()){
+
+    if(submitOnNextClick && OverlayHtml.isItemScene() && ("next" == navType)){
         evalAndSubmit();
         return;
     }
