@@ -22,19 +22,24 @@ module.exports = function(grunt) {
 
                 files: {
                     'public/js/renderer.min.js': [
+                        'public/js/app/speech.js',
                         'public/js/app/GlobalContext.js',
                         'public/js/app/AppConfig.js',
                         'public/js/app/AppMessages.js',
                         'public/js/app/main.js',
+                        'public/js/app/app.js',
+                        'public/js/app/services.js',
+                        'public/js/app/renderer.theme.js',
                         'public/js/app/OverlayHtml.js',
-                        'public/js/app/speech.js',
+                        'public/js/app/genie-canvas.template.js',
                         'public/js/thirdparty/exclude/xml2json.js',
                         'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
                         'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
                         'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
                         'public/js/thirdparty/exclude/Class.js',
                         'public/js/app/renderer.js',
-                        'public/js/app/telemetry.js'
+                        'public/js/app/telemetry.js',
+                        'public/js/app/genieservices.js'
                     ],
                     'public/js/telemetry.min.js' : [
                         'public/js/thirdparty/exclude/date-format.js',
@@ -96,6 +101,16 @@ module.exports = function(grunt) {
                     }
                 ]
             },
+            previewFiles: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/',
+                        src: ['img/**', 'fonts/**', 'templates/**', 'libs/**', 'json/**', 'css/**', 'assets/**', 'js/**', 'webview.html', 'preview.html'],
+                        dest: 'public/preview/'
+                    }
+                ]
+            },
             unsigned: {
                 files: [
                     {
@@ -149,7 +164,9 @@ module.exports = function(grunt) {
             before: ["www", "platforms/android/assets/www", "platforms/android/build"],
             after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html"],
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
-            minjs: ['public/js/*.min.js']
+            minjs: ['public/js/*.min.js'],
+            preview: ["public/preview"]
+
         },
         rename: {
             main: {
@@ -178,6 +195,17 @@ module.exports = function(grunt) {
                     cwd: 'public/js/',
                     src: ['*.min.js'],
                     dest: 'js/'
+                }]
+            },
+            uploadPreviewFiles : {
+                options: {
+                    bucket: 'ekstep-public'
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'public/',
+                    src: ['preview/**'],
+                    dest: '/'
                 }]
             },
             cleanJS: {
@@ -458,4 +486,5 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build-aar-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalk-library', 'cordovacli:build_android', 'clean:minjs']);
 
+    grunt.registerTask('preview', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:uploadPreviewFiles', 'clean:preview']);
 };
