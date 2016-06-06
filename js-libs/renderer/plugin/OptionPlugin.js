@@ -181,6 +181,7 @@ var OptionPlugin = Plugin.extend({
                     if (this.x >= x && (this.x + this.width) <= maxX) {
                         if (this.y >= y && (this.y + this.height) <= maxY) {
                             snapSuccess = true;
+                            OverlayHtml.isReadyToEvaluate(true);
                         }
                     }
                 }
