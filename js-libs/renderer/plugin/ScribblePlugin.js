@@ -63,7 +63,7 @@ var ScribblePlugin = Plugin.extend({
         var mousePoint = Renderer.theme.mousePoint();
         mousePoint = this._self.globalToLocal(mousePoint.x, mousePoint.y);
         var thickness = this.isInt(this._data.thickness) ?  this._data.thickness : 3;
-        if (((event.stageX > this._startPoint.x) && (event.stageX < this._endPoint.x)) && ((event.stageY > this._startPoint.y) && (event.stageY < this._endPoint.y))) {
+        if (((mousePoint.x > this._startPoint.x) && (mousePoint.x < this._endPoint.x)) && ((mousePoint.y > this._startPoint.y) && (mousePoint.y < this._endPoint.y))) {
             this.paintBrush.graphics.setStrokeStyle(thickness, 'round').beginStroke(this._data.color || "#000");
             this.paintBrush.graphics.mt(this._oldPt.x, this._oldPt.y).lineTo(mousePoint.x + 1, mousePoint.y + 1);
             this._oldPt = { x: mousePoint.x, y: mousePoint.y };
