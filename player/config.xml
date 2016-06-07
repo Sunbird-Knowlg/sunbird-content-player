@@ -22,12 +22,5 @@
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
-    <platform name="android">
-        <icon density="ldpi" src="www/img/icons/app-icon.png" />
-        <icon density="mdpi" src="www/img/icons/app-icon.png" />
-        <icon density="hdpi" src="www/img/icons/app-icon.png" />
-        <icon density="xhdpi" src="www/img/icons/app-icon.png" />
-        <icon density="xxhdpi" src="www/img/icons/app-icon.png" />
-        <icon density="xxxhdpi" src="www/img/icons/app-icon.png" />
-    </platform>
+    <platform name="android" />
 </widget>

@@ -16,7 +16,7 @@ angular.module('genie-canvas.theme', [])
             "voice": "Voice",
             "audio": "Audio",
             "author": "Author",
-            "instructions": "TEACHER INSTRUCTION"
+            "instructions": "TEACHER INSTRUCTION",
         }
     })
     .directive('preview', function($rootScope) {
@@ -255,8 +255,11 @@ angular.module('genie-canvas.theme', [])
 
         $scope.init = function() {
             if (GlobalContext.config.language_info) {
-                console.log("Lanugae updated", GlobalContext.config.language_info)
-                $rootScope.languageSupport = JSON.parse(GlobalContext.config.language_info);
+                console.log("Language updated", GlobalContext.config.language_info);
+                var languageInfo = JSON.parse(GlobalContext.config.language_info);
+                for(key in languageInfo) {
+                    $rootScope.languageSupport[key] = languageInfo[key];
+                }
             }
         }
         $rootScope.icons = {

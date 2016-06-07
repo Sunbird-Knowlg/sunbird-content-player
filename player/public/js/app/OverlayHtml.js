@@ -33,41 +33,23 @@ OverlayHtml = {
     sceneEnter: function() {
         this.resetStage();
         var isItemStage = this.isItemScene();
-        var queue = new createjs.LoadQueue();
-        createjs.Sound.alternateExtensions = ["ogg"];
-        queue.installPlugin(createjs.Sound);
-
-        function handleComplete(event) {
-            enablePrevious();
-            enableReload();
-        }
-        queue.addEventListener("complete", handleComplete);
-        queue.loadManifest([{
-            id: "good",
-            src: "./img/icons/goodjob.mp3"
-        }, {
-            id: "try",
-            src: "./img/icons/letstryagain.mp3"
-        }]);
-
+        enableReload();
         if (isItemStage) {
             jQuery('#assessButton').show();
-
             this._setRootScope("isItemScene", true);
-
             var currentScene = Renderer.theme._currentScene;
             currentScene.on("correct_answer", function(event) {
                 console.log("listener for ", event);
 
                 if (event.type === "correct_answer") {
-                    createjs.Sound.play("good");
+                    createjs.Sound.play("goodjob_sound");
                 }
                 jQuery("#goodJobPopup").show();
             });
             currentScene.on("wrong_answer", function(event) {
                 console.info("listener for ", event);
                 if (event.type === "wrong_answer") {
-                    createjs.Sound.play("try");
+                    createjs.Sound.play("tryagain_sound");
                 }
                 jQuery("#tryAgainPopup").show();
             });
