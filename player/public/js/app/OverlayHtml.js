@@ -31,8 +31,8 @@ OverlayHtml = {
         jQuery('#assessButton').hide();
     },
     sceneEnter: function() {
-        this.resetStage();
         enablePrevious();
+        this.resetStage();
         var isItemStage = this.isItemScene();
         enableReload();
         if (isItemStage) {
