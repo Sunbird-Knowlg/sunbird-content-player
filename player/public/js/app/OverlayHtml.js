@@ -31,13 +31,14 @@ OverlayHtml = {
         jQuery('#assessButton').hide();
     },
     sceneEnter: function() {
-        enablePrevious();
         this.resetStage();
-        var isItemStage = this.isItemScene();
+        enablePrevious();
         enableReload();
+        var isItemStage = this.isItemScene();
         if (isItemStage) {
             jQuery('#assessButton').show();
             this._setRootScope("isItemScene", true);
+
             var currentScene = Renderer.theme._currentScene;
             currentScene.on("correct_answer", function(event) {
                 console.log("listener for ", event);
@@ -62,7 +63,8 @@ OverlayHtml = {
             var modelItem = stageCtrl._model[stageCtrl._index];
             // If FTB item, enable submit button directly
             if(!_.isNull(this._rootScope)){
-                this._rootScope.enableEval = (modelItem && modelItem.type == 'ftb') ? true : false
+                var enableEval = (modelItem && modelItem.type == 'ftb') ? true : false;
+                this._setRootScope("enableEval", enableEval);
             }
             return true;
         } else {

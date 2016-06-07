@@ -223,7 +223,7 @@ angular.module('genie-canvas.theme', [])
             link: function(scope, element) {
                 scope.labelSubmit = $rootScope.languageSupport.submit;
             },
-            controller: function($scope, $rootScope) {
+            controller: function($scope, $rootScope, $timeout) {
                 $scope.isEnabled = false;
                 $scope.assessStyle = 'assess-disable';
 
@@ -232,8 +232,11 @@ angular.module('genie-canvas.theme', [])
                     $scope.isEnabled = $rootScope.enableEval;
                     if ($scope.isEnabled) {
                         //Enable state
-                        $scope.assessStyle = 'assess-enable';
-                        $scope.image = $rootScope.imageBasePath + "submit.png";
+                        $timeout(function(){
+                            // This timeout is required to apply the changes(because it is calling by JS)
+                            $scope.assessStyle = 'assess-enable';
+                            $scope.image = $rootScope.imageBasePath + "submit.png";
+                        }, 100);
                     } else {
                         //Disable state
                         $scope.assessStyle = 'assess-disable';
