@@ -32,6 +32,7 @@ OverlayHtml = {
     },
     sceneEnter: function() {
         this.resetStage();
+        enablePrevious();
         var isItemStage = this.isItemScene();
         enableReload();
         if (isItemStage) {

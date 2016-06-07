@@ -176,14 +176,15 @@ function navigate(navType) {
     }
 }
 
-function enablePrevious(){
+function enablePrevious() {
     var navigateTo = getNavigateTo('previous');
-    if(_.isUndefined(navigateTo)){
+    if (_.isUndefined(navigateTo)) {
+        
         jQuery('#navPrev').hide();
         if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious()) {
             jQuery('#navPrev').show();
         }
-    }else{
+    } else {
         jQuery('#navPrev').show();
     }
 }

@@ -162,7 +162,7 @@ LoadByStageStrategy = Class.extend({
                     }
                 }
                 //OverlayHtml.showPrevious();
-                enablePrevious();
+                //enablePrevious();
             });
         }
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);
