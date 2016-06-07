@@ -168,7 +168,7 @@ function navigate(navType) {
                 console.info("redirecting to endpage.");
                 window.location.hash = "/content/end/" + GlobalContext.currentContentId;
             } else {
-                alert("Cannot move to end page of the content. please check the configurations..");
+                console.warn("Cannot move to end page of the content. please check the configurations..");
             }
         }
     } else {
