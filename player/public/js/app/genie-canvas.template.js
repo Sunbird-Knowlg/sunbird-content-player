@@ -99,22 +99,22 @@ angular.module('genie-canvas.template',[])
         $scope.showNextContent = false;
 
     $scope.arrayToString = function(array) {
-        return (!_.isEmpty(array) && _.isArray(array)) ? array.join(", "): "";   
-    }
-
-    ContentService.getContentMetadata(id)
-    .then(function(content) {
-        content.imageCredits = $scope.arrayToString(content.imageCredits);
-        content.soundCredits = $scope.arrayToString(content.soundCredits);
-        content.voiceCredits = $scope.arrayToString(content.voiceCredits);
-        $rootScope.content = content;
-
-        var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
-        creditsPopup.trigger("popupUpdate", {"content": content});
+        return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", "): "";   
+    };
+    $scope.creditsBody = '<div class="credit-popup"><img ng-src="{{icons.popup.credit_popup}}" style="width:100%;" /><div class="popup-body"><div style="width:75%;height:50%;left: 15%;top: 0%;position: absolute;font-family: SkaterGirlsRock;font-size: 1em;"><table style="width:100%;"><tr><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-if="content.voiceCredits"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-if="content.soundCredits"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup_close.close_icon}}" style="width:100%; left:70%;"/></a></div>';
+    var content = $rootScope.content;
+    $scope.setCredits = function(key) {
+        content[key] = (content[key]) ? $scope.arrayToString(content[key]) : defaultMetadata[key];
+    };
+    $scope.setCredits('imageCredits');
+    $scope.setCredits('soundCredits');
+    $scope.setCredits('voiceCredits');
+    var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
+    creditsPopup.trigger("popupUpdate", {"content": content});
+    setTimeout(function() {
         $rootScope.$apply();
-    })
-    $scope.creditsBody = '<div class="credit-popup"><img ng-src="{{icons.popup.credit_popup}}" style="width:100%;" /><div class="popup-body"><div style="width:75%;height:50%;left: 15%;top: 0%;position: absolute;font-family: SkaterGirlsRock;font-size: 1em;"><table style="width:100%;"><tr ng-if="content.imageCredits"><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-if="content.voiceCredits"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-if="content.soundCredits"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup_close.close_icon}}" style="width:100%; left:70%;"/></a></div>';
-
+    }, 1000);
+    
     $scope.showCredits = function() {
         jQuery("#creditsPopup").show();
         TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId : "ContnetApp-CreditsScreen", subtype: "ContentID"});
