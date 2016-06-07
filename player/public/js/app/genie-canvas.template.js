@@ -31,7 +31,7 @@ angular.module('genie-canvas.template',[])
     
     $scope.init = function(){
         if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
-            if(_.isUndefined(content.metadata) && (webview == true)){
+            if(!_.isUndefined(content.metadata) && (webview == "true")){
                 var data = content.metadata;
                 content.metadata.status = 'ready';
                 $scope.item = content.metadata;
