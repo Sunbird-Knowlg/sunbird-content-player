@@ -31,11 +31,7 @@ angular.module('genie-canvas.template',[])
     
     $scope.init = function(){
         if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
-            if(!_.isUndefined(content.metadata) && false){
-                console.log("cover page get metadata" );
-                $scope.updateContent($stateParams.contentId);
-            }else{
-                console.log("cover page init()" );
+            if(_.isUndefined(content.metadata) && (webview == true)){
                 var data = content.metadata;
                 content.metadata.status = 'ready';
                 $scope.item = content.metadata;
@@ -44,6 +40,8 @@ angular.module('genie-canvas.template',[])
                 var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
                 TelemetryService.start(identifier, version);
                 TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID"});
+            }else{
+                $scope.updateContent($stateParams.contentId);
             }
         } else {
             alert('Sorry. Could not find the content.');
