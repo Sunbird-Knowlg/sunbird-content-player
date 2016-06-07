@@ -107,9 +107,10 @@ function navigate(navType) {
         };
         action.transitionType = navType;
         Renderer.theme.transitionTo(action);
-        var navigate = angular.element("navigate");
-        navigate.trigger("navigateUpdate", {'show': false});
-
-        jQuery('popup').hide();        
+        if("undefined" != typeof angular) {
+            var navigate = angular.element("navigate");
+            navigate.trigger("navigateUpdate", {'show': false});
+        }
+        jQuery('popup').hide();       
     } 
 }
