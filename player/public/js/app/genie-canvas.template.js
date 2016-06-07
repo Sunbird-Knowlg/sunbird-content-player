@@ -2,60 +2,80 @@ angular.module('genie-canvas.template',[])
 .controller('ContentHomeCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
     $rootScope.showMessage = false;
     $rootScope.pageId = "coverpage";
-    if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
-        $scope.playContent = function(content) {
-            $state.go('playContent', {
-                'itemId': content.identifier
-            });
-        };
 
-        $scope.updateContent = function(content) {
-            ContentService.getContent(content)
-                .then(function(data) {
-                    GlobalContext.currentContentId = data.identifier;
-                    GlobalContext.currentContentMimeType = data.mimeType;
-                    $scope.$apply(function() {
-                        $scope.item = data;
-                    });
-                    $rootScope.stories = [data];
-                    var identifier = (data && data.identifier) ? data.identifier : null;
-                    var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
-                    TelemetryService.start(identifier, version);
-                    TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID"});
-                })
-                .catch(function(err) {
-                    console.info("contentNotAvailable : ", err);
-                    contentNotAvailable();
+    $scope.playContent = function(content) {
+        $state.go('playContent', {
+            'itemId': content.identifier
+        });
+    };
+
+    $scope.updateContent = function(content) {
+        ContentService.getContent(content)
+            .then(function(data) {
+                GlobalContext.currentContentId = data.identifier;
+                GlobalContext.currentContentMimeType = data.mimeType;
+                $scope.$apply(function() {
+                    $scope.item = data;
                 });
+                $rootScope.stories = [data];
+                var identifier = (data && data.identifier) ? data.identifier : null;
+                var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
+                TelemetryService.start(identifier, version);
+                TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID"});
+            })
+            .catch(function(err) {
+                console.info("contentNotAvailable : ", err);
+                contentNotAvailable();
+            });
+    }
+    
+    $scope.init = function(){
+        if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
+            if(!_.isUndefined(content.metadata) && false){
+                console.log("cover page get metadata" );
+                $scope.updateContent($stateParams.contentId);
+            }else{
+                console.log("cover page init()" );
+                var data = content.metadata;
+                content.metadata.status = 'ready';
+                $scope.item = content.metadata;
+                $rootScope.stories = [content.metadata];   
+                var identifier = (data && data.identifier) ? data.identifier : null;
+                var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
+                TelemetryService.start(identifier, version);
+                TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID"});
+            }
+        } else {
+            alert('Sorry. Could not find the content.');
+            startApp();
         }
         
-        $scope.updateContent($stateParams.contentId);
-        $rootScope.$on('show-message', function(event, data) {
-            if (data.message && data.message != '') {
-                $rootScope.showMessage = true;
-                $rootScope.message = data.message;
-                $rootScope.$apply();
-            }
-            if (data.timeout) {
-                setTimeout(function() {
-                    $rootScope.showMessage = false;
-                    $rootScope.$apply();
-                    if (data.callback) {
-                        data.callback();
-                    }
-                }, data.timeout);
-            }
-        });
-
-        $rootScope.$on('process-complete', function(event, result) {
-            $scope.$apply(function() {
-                $scope.item = result.data;
-            });
-        });
-    } else {
-        alert('Sorry. Could not find the content.');
-        startApp();
     }
+    
+    $rootScope.$on('show-message', function(event, data) {
+        if (data.message && data.message != '') {
+            $rootScope.showMessage = true;
+            $rootScope.message = data.message;
+            $rootScope.$apply();
+        }
+        if (data.timeout) {
+            setTimeout(function() {
+                $rootScope.showMessage = false;
+                $rootScope.$apply();
+                if (data.callback) {
+                    data.callback();
+                }
+            }, data.timeout);
+        }
+    });
+
+    $rootScope.$on('process-complete', function(event, result) {
+        $scope.$apply(function() {
+            $scope.item = result.data;
+        });
+    });
+
+    $scope.init();
 })
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
     $rootScope.pageId = "endpage";
