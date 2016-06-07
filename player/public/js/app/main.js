@@ -164,8 +164,12 @@ function navigate(navType) {
         if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
             changeScene();
         } else {
-            console.info("redirecting to endpage.");
-            window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+            if(config.showEndPage) {
+                console.info("redirecting to endpage.");
+                window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+            } else {
+                alert("Cannot move to end page of the content. please check the configurations..");
+            }
         }
     } else {
         changeScene();
