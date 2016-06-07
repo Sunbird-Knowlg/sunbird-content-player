@@ -183,6 +183,7 @@ angular.module('genie-canvas.theme', [])
             link: function(scope, element) {
                 scope.icons = $rootScope.icons;
                 scope.languageSupport = $rootScope.languageSupport;
+                scope.content = $rootScope.content;
                 element.bind("popupUpdate", function(event, data) {
                     if (data) {
                         for (key in data) {
