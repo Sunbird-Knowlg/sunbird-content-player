@@ -1,0 +1,707 @@
+{
+	"identifier": "learning_numbers",
+	"title": "Learning Numbers",
+	"total_items": 10,
+	"max_score": 10,
+	"shuffle":false,
+	"subject": "NUM",
+	"item_sets": [
+		{
+			"id": "set_1",
+        	"count": 10
+		}
+	],
+	"items": {
+		"set_1" : [
+			{
+				"identifier": "Q1",
+				"qid": "ek.q1",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_5options",
+				"qlevel": "MEDIUM",
+				"title": "61 और 65",
+				"question":"इन दोनों संख्याओं के बीच संख्या का चयन करें",
+				"question_audio": "mcq2_sound",
+				"stageId" : "stage5",
+				"options": [
+					{
+						"value": {"type": "mixed", "text": "61", "audio": "", "image": ""}
+					},
+					{
+						"value": {"type": "mixed", "text": "64", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "65", "audio": "", "image": ""}
+					},
+					{
+						"value": {"type": "mixed", "text": "62", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "63", "audio": "", "image": ""},
+						"answer": true
+						
+					}
+				],
+				"model":
+				{
+					"title_audio" : {"asset": "", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": "",
+				"concepts": [
+			        {
+			          "identifier": "M53",
+			          "relation": "associatedTo"
+			        },
+					{
+			          "identifier": "M65",
+			          "relation": "associatedTo"
+			        }
+			     ]
+			},
+			{
+				"identifier": "Q2",
+				"qid": "ek.q2",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_5options",
+				"qlevel": "MEDIUM",
+				"title": "62 और 67",
+				"question":"इन दोनों संख्याओं के बीच संख्या का चयन करें",
+				"question_audio": "mcq2_sound",
+				"stageId" : "stage5",
+				"options": [
+					{
+						"value": {"type": "mixed", "text": "65", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "63", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "66", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "62", "audio": "", "image": ""}
+						
+					},
+					{
+						"value": {"type": "mixed", "text": "64", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "67", "audio": "", "image": ""}
+					}
+
+				],
+				"model":
+				{
+					"title_audio" : {"asset": "", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": "",
+				"concepts": [
+			        {
+			          "identifier": "M53",
+			          "relation": "associatedTo"
+			        },
+					{
+			          "identifier": "M65",
+			          "relation": "associatedTo"
+			        }
+			     ]
+			},
+			{
+				"identifier": "Q3",
+				"qid": "ek.q2",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_5options",
+				"qlevel": "MEDIUM",
+				"title": "63 और 69",
+				"question":"इन दोनों संख्याओं के बीच संख्या का चयन करें",
+				"question_audio": "mcq2_sound",
+				"stageId" : "stage5",
+				"options": [
+					{
+						"value": {"type": "mixed", "text": "68", "audio": "", "image": ""},
+						"answer": true
+						
+					},
+					{
+						"value": {"type": "mixed", "text": "65", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "63", "audio": "", "image": ""}
+					},
+					{
+						"value": {"type": "mixed", "text": "66", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "64", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "67", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "69", "audio": "", "image": ""}
+					}
+
+				],
+				"model":
+				{
+					"title_audio" : {"asset": "", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": "",
+				"concepts": [
+			        {
+			          "identifier": "M53",
+			          "relation": "associatedTo"
+			        },
+					{
+			          "identifier": "M65",
+			          "relation": "associatedTo"
+			        }
+			     ]
+			},
+			{
+				"identifier": "Q4",
+				"qid": "ek.q4",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_5options",
+				"qlevel": "MEDIUM",
+				"title": "64 और 71",
+				"question":"इन दोनों संख्याओं के बीच संख्या का चयन करें",
+				"question_audio": "mcq2_sound",
+				"stageId" : "stage5",
+				"options": [
+					{
+						"value": {"type": "mixed", "text": "68", "audio": "", "image": ""},
+						"answer": true	
+					},
+					{
+						"value": {"type": "mixed", "text": "65", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "71", "audio": "", "image": ""}
+					},
+					{
+						"value": {"type": "mixed", "text": "70", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "66", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "64", "audio": "", "image": ""}
+					},
+					{
+						"value": {"type": "mixed", "text": "67", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "69", "audio": "", "image": ""},
+						"answer": true
+					}
+
+				],
+				"model":
+				{
+					"title_audio" : {"asset": "", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": "",
+				"concepts": [
+			        {
+			          "identifier": "M53",
+			          "relation": "associatedTo"
+			        },
+					{
+			          "identifier": "M65",
+			          "relation": "associatedTo"
+			        }
+			     ]
+			},
+			{
+				"identifier": "Q5",
+				"qid": "ek.q5",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_5options",
+				"qlevel": "MEDIUM",
+				"title": "65 और 73",
+				"question":"इन दोनों संख्याओं के बीच संख्या का चयन करें",
+				"question_audio": "mcq2_sound",
+				"stageId" : "stage5",
+				"options": [
+					{
+						"value": {"type": "mixed", "text": "68", "audio": "", "image": ""},
+						"answer": true	
+					},
+					{
+						"value": {"type": "mixed", "text": "65", "audio": "", "image": ""}
+					},
+					{
+						"value": {"type": "mixed", "text": "71", "audio": "", "image": ""},
+						"answer": true	
+					},
+					{
+						"value": {"type": "mixed", "text": "70", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "66", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "72", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "67", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "69", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "73", "audio": "", "image": ""}
+					}
+
+				],
+				"model":
+				{
+					"title_audio" : {"asset": "", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": "",
+				"concepts": [
+			        {
+			          "identifier": "M53",
+			          "relation": "associatedTo"
+			        },
+					{
+			          "identifier": "M65",
+			          "relation": "associatedTo"
+			        }
+			     ]
+			},
+			{
+				"identifier": "Q6",
+				"qid": "ek.q6",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_5options",
+				"qlevel": "MEDIUM",
+				"title": "66 और 75",
+				"question":"इन दोनों संख्याओं के बीच संख्या का चयन करें",
+				"question_audio": "mcq2_sound",
+				"stageId" : "stage5",
+				"options": [
+					{
+						"value": {"type": "mixed", "text": "75", "audio": "", "image": ""}
+					},
+					{
+						"value": {"type": "mixed", "text": "73", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "71", "audio": "", "image": ""},
+						"answer": true	
+					},
+					{
+						"value": {"type": "mixed", "text": "70", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "66", "audio": "", "image": ""}
+					},
+					{
+						"value": {"type": "mixed", "text": "72", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "67", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "68", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "69", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "74", "audio": "", "image": ""},
+						"answer": true
+					}
+
+				],
+				"model":
+				{
+					"title_audio" : {"asset": "", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": "",
+				"concepts": [
+			        {
+			          "identifier": "M53",
+			          "relation": "associatedTo"
+			        },
+					{
+			          "identifier": "M65",
+			          "relation": "associatedTo"
+			        }
+			     ]
+			},
+			{
+				"identifier": "Q7",
+				"qid": "ek.q7",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_5options",
+				"qlevel": "MEDIUM",
+				"title": "67 और 77",
+				"question":"इन दोनों संख्याओं के बीच संख्या का चयन करें",
+				"question_audio": "mcq2_sound",
+				"stageId" : "stage5",
+				"options": [
+					{
+						"value": {"type": "mixed", "text": "75", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "73", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "71", "audio": "", "image": ""},
+						"answer": true	
+					},
+					{
+						"value": {"type": "mixed", "text": "70", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "76", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "72", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "67", "audio": "", "image": ""}
+					},
+					{
+						"value": {"type": "mixed", "text": "68", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "69", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "74", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "77", "audio": "", "image": ""}
+					}
+
+				],
+				"model":
+				{
+					"title_audio" : {"asset": "", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": "",
+				"concepts": [
+			        {
+			          "identifier": "M53",
+			          "relation": "associatedTo"
+			        },
+					{
+			          "identifier": "M65",
+			          "relation": "associatedTo"
+			        }
+			     ]
+			},
+			{
+				"identifier": "Q8",
+				"qid": "ek.q8",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_5options",
+				"qlevel": "MEDIUM",
+				"title": "68 और 79",
+				"question":"इन दोनों संख्याओं के बीच संख्या का चयन करें",
+				"question_audio": "mcq2_sound",
+				"stageId" : "stage5",
+				"options": [
+					{
+						"value": {"type": "mixed", "text": "75", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "73", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "71", "audio": "", "image": ""},
+						"answer": true	
+					},
+					{
+						"value": {"type": "mixed", "text": "70", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "76", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "72", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "78", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "68", "audio": "", "image": ""}
+					},
+					{
+						"value": {"type": "mixed", "text": "69", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "74", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "77", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "79", "audio": "", "image": ""}
+					}
+
+				],
+				"model":
+				{
+					"title_audio" : {"asset": "", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": "",
+				"concepts": [
+			        {
+			          "identifier": "M53",
+			          "relation": "associatedTo"
+			        },
+					{
+			          "identifier": "M65",
+			          "relation": "associatedTo"
+			        }
+			     ]
+			},
+			{
+				"identifier": "Q9",
+				"qid": "ek.q9",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_5options",
+				"qlevel": "MEDIUM",
+				"title": "69 और 80",
+				"question":"इन दोनों संख्याओं के बीच संख्या का चयन करें",
+				"question_audio": "mcq2_sound",
+				"stageId" : "stage5",
+				"options": [
+					{
+						"value": {"type": "mixed", "text": "69", "audio": "", "image": ""}
+					},
+					{
+						"value": {"type": "mixed", "text": "75", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "73", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "71", "audio": "", "image": ""},
+						"answer": true	
+					},
+					{
+						"value": {"type": "mixed", "text": "70", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "76", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "72", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "78", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "80", "audio": "", "image": ""}
+					},
+					
+					{
+						"value": {"type": "mixed", "text": "74", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "77", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "79", "audio": "", "image": ""},
+						"answer": true
+					}
+				],
+				"model":
+				{
+					"title_audio" : {"asset": "", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": "",
+				"concepts": [
+			        {
+			          "identifier": "M53",
+			          "relation": "associatedTo"
+			        },
+					{
+			          "identifier": "M65",
+			          "relation": "associatedTo"
+			        }
+			     ]
+			},
+			{
+				"identifier": "Q10",
+				"qid": "ek.q10",
+				"type": "mcq",
+				"num_answers": 1,
+				"template": "mcq_template_5options",
+				"qlevel": "MEDIUM",
+				"title": "64 और 79",
+				"question":"इन दोनों संख्याओं के बीच संख्या का चयन करें",
+				"question_audio": "mtf1_sound",
+				"stageId" : "stage5",
+				"options": [
+					{
+						"value": {"type": "mixed", "text": "69", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "68", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "75", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "73", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "71", "audio": "", "image": ""},
+						"answer": true	
+					},
+					{
+						"value": {"type": "mixed", "text": "70", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "76", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "72", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "78", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "64", "audio": "", "image": ""}
+					},
+					
+					{
+						"value": {"type": "mixed", "text": "74", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "77", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "79", "audio": "", "image": ""}
+					},
+					
+					{
+						"value": {"type": "mixed", "text": "65", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "66", "audio": "", "image": ""},
+						"answer": true
+					},
+					{
+						"value": {"type": "mixed", "text": "67", "audio": "", "image": ""},
+						"answer": true
+					}
+
+				],
+				"model":
+				{
+					"title_audio" : {"asset": "", "type": "audio"}
+				},
+				"max_score": 1,
+				"partial_scoring": false,
+				"feedback": "",
+				"concepts": [
+			        {
+			          "identifier": "M53",
+			          "relation": "associatedTo"
+			        },
+					{
+			          "identifier": "M65",
+			          "relation": "associatedTo"
+			        }
+			     ]
+			}
+			
+		]
+	}
+}

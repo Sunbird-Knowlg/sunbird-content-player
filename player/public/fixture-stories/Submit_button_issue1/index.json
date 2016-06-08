@@ -1,0 +1,3034 @@
+{
+	"theme" : {
+		"manifest" : {
+			"media" : [{
+					"assetId" : "domain_44049_grey",
+					"id" : "grey",
+					"src" : "1462342752730grey.png",
+					"type" : "image"
+				}, {
+					"id" : "domain_47396",
+					"type" : "image",
+					"src" : "bear_298_1463030172_1463030172752.png",
+					"assetId" : "domain_47396"
+				}, {
+					"id" : "domain_47397",
+					"type" : "image",
+					"src" : "pencil_298_1463030173_1463030173133.png",
+					"assetId" : "domain_47397"
+				}, {
+					"id" : "domain_47398",
+					"type" : "image",
+					"src" : "Banana_298_1463030173_1463030173511.png",
+					"assetId" : "domain_47398"
+				}, {
+					"id" : "domain_47399",
+					"type" : "image",
+					"src" : "tap_298_1463030173_1463030174325.png",
+					"assetId" : "domain_47399"
+				}, {
+					"id" : "domain_47400",
+					"type" : "image",
+					"src" : "eye_298_1463030174_1463030174919.png",
+					"assetId" : "domain_47400"
+				}, {
+					"id" : "domain_47488",
+					"type" : "image",
+					"src" : "Banana_298_1463031028_1463031028303.png",
+					"assetId" : "domain_47488"
+				}, {
+					"id" : "domain_47489",
+					"type" : "image",
+					"src" : "bear_298_1463031033_1463031034071.png",
+					"assetId" : "domain_47489"
+				}, {
+					"id" : "domain_47514",
+					"type" : "image",
+					"src" : "bear_298_1463031548_1463031548727.png",
+					"assetId" : "domain_47514"
+				}, {
+					"id" : "domain_47515",
+					"type" : "image",
+					"src" : "Banana_298_1463031549_1463031549053.png",
+					"assetId" : "domain_47515"
+				}, {
+					"id" : "domain_47546",
+					"type" : "image",
+					"src" : "bear_298_1463032112_1463032112772.png",
+					"assetId" : "domain_47546"
+				}, {
+					"id" : "domain_47547",
+					"type" : "image",
+					"src" : "Banana_298_1463032113_1463032113199.png",
+					"assetId" : "domain_47547"
+				}, {
+					"id" : "domain_47589",
+					"type" : "image",
+					"src" : "tap_298_1463032669_1463032669385.png",
+					"assetId" : "domain_47589"
+				}, {
+					"id" : "domain_47590",
+					"type" : "image",
+					"src" : "pencil_298_1463032669_1463032669815.png",
+					"assetId" : "domain_47590"
+				}, {
+					"id" : "domain_47591",
+					"type" : "image",
+					"src" : "eye_298_1463032670_1463032674272.png",
+					"assetId" : "domain_47591"
+				}, {
+					"id" : "validate",
+					"src" : "btn_ok_highlights_1460705843676.png",
+					"type" : "image"
+				}, {
+					"id" : "popupTint",
+					"src" : "PopupTint_1460636175572.png",
+					"type" : "image"
+				}, {
+					"id" : "goodjobBg",
+					"src" : "goodjobBg_1460727428389.png",
+					"type" : "image"
+				}, {
+					"id" : "retryBg",
+					"src" : "retryBg_1460727370746.png",
+					"type" : "image"
+				}, {
+					"id" : "retry_audio",
+					"src" : "retry_1460636610607.mp3",
+					"type" : "sound"
+				}, {
+					"id" : "goodjob_audio",
+					"src" : "goodJob_1460636677521.mp3",
+					"type" : "sound"
+				}, {
+					"id" : "next",
+					"src" : "btn_next_1461401649059.png",
+					"type" : "image"
+				}, {
+					"id" : "previous",
+					"src" : "btn_back_1461401700215.png",
+					"type" : "image"
+				}, {
+					"id" : "submit",
+					"src" : "icon_submit_1459243202199.png",
+					"type" : "image"
+				}, {
+					"id" : "home",
+					"src" : "icon_home_1459242981364.png",
+					"type" : "image"
+				}, {
+					"id" : "reload",
+					"src" : "icon_reload_1459243110661.png",
+					"type" : "image"
+				}, {
+					"id" : "icon_hint",
+					"src" : "icon_hint_1454918891133.png",
+					"type" : "image"
+				}, {
+					"id" : "speech_bubble",
+					"src" : "speech_bubble_1454918945089.png",
+					"type" : "image"
+				}, {
+					"id" : "yellowbox",
+					"src" : "yellowbox_1458728687443.png",
+					"type" : "image"
+				}, {
+					"id" : "greenbox",
+					"src" : "greenbox_1458728808748.png",
+					"type" : "image"
+				}, {
+					"id" : "bg",
+					"src" : "background_1458729298020.png",
+					"type" : "image"
+				}
+			]
+		},
+		"template" : [{
+				"text" : {
+					"align" : "center",
+					"color" : "black",
+					"font" : "Verdana",
+					"fontsize" : 70,
+					"model" : "item.question",
+					"w" : 80,
+					"x" : 10,
+					"y" : 6
+				},
+				"shape" : {
+					"event" : {
+						"action" : {
+							"asset_model" : "item.question_audio",
+							"command" : "play",
+							"type" : "command"
+						},
+						"type" : "click"
+					},
+					"h" : 15,
+					"hitArea" : true,
+					"id" : "retry",
+					"type" : "rect",
+					"visible" : true,
+					"w" : 80,
+					"x" : 10,
+					"y" : 2
+				},
+				"image" : [{
+						"asset" : "grey",
+						"h" : 20,
+						"w" : 30,
+						"x" : 32,
+						"y" : 17
+					}, {
+						"asset" : "grey",
+						"h" : 20,
+						"w" : 30,
+						"x" : 32,
+						"y" : 37
+					}, {
+						"asset" : "grey",
+						"h" : 20,
+						"w" : 30,
+						"x" : 32,
+						"y" : 57
+					}, {
+						"asset" : "grey",
+						"h" : 20,
+						"w" : 30,
+						"x" : 32,
+						"y" : 77
+					}
+				],
+				"mtf" : {
+					"option" : [{
+							"text" : {
+								"align" : "center",
+								"font" : "Georgia",
+								"fontsize" : 150,
+								"h" : 15.5,
+								"model" : "option.value.text",
+								"w" : 10,
+								"weight" : "bold",
+								"x" : 15,
+								"y" : 10
+							},
+							"image" : {
+								"h" : 90,
+								"model" : "option.value.image",
+								"w" : 20,
+								"x" : 10,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "lhs_options[0]",
+							"snapX" : 50,
+							"snapY" : 1,
+							"w" : 52,
+							"x" : 10,
+							"y" : 17
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Georgia",
+								"fontsize" : 150,
+								"h" : 15.5,
+								"model" : "option.value.text",
+								"w" : 10,
+								"weight" : "bold",
+								"x" : 15,
+								"y" : 10
+							},
+							"image" : {
+								"h" : 90,
+								"model" : "option.value.image",
+								"w" : 20,
+								"x" : 10,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "lhs_options[1]",
+							"snapX" : 50,
+							"snapY" : 1,
+							"w" : 52,
+							"x" : 10,
+							"y" : 37
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Georgia",
+								"fontsize" : 150,
+								"h" : 15.5,
+								"model" : "option.value.text",
+								"w" : 10,
+								"weight" : "bold",
+								"x" : 15,
+								"y" : 10
+							},
+							"image" : {
+								"h" : 90,
+								"model" : "option.value.image",
+								"w" : 20,
+								"x" : 10,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "lhs_options[2]",
+							"snapX" : 50,
+							"snapY" : 1,
+							"w" : 52,
+							"x" : 10,
+							"y" : 57
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Georgia",
+								"fontsize" : 150,
+								"h" : 15.5,
+								"model" : "option.value.text",
+								"w" : 10,
+								"weight" : "bold",
+								"x" : 15,
+								"y" : 10
+							},
+							"image" : {
+								"h" : 90,
+								"model" : "option.value.image",
+								"w" : 20,
+								"x" : 10,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "lhs_options[3]",
+							"snapX" : 50,
+							"snapY" : 1,
+							"w" : 52,
+							"x" : 10,
+							"y" : 77
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Georgia",
+								"fontsize" : 350,
+								"h" : 15.5,
+								"model" : "option.value.text",
+								"w" : 10,
+								"weight" : "bold",
+								"x" : 40,
+								"y" : 0
+							},
+							"image" : {
+								"h" : 90,
+								"model" : "option.value.image",
+								"w" : 45,
+								"x" : 22,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "rhs_options[0]",
+							"w" : 25,
+							"x" : 65,
+							"y" : 18
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Georgia",
+								"fontsize" : 350,
+								"h" : 15.5,
+								"model" : "option.value.text",
+								"w" : 10,
+								"weight" : "bold",
+								"x" : 40,
+								"y" : 0
+							},
+							"image" : {
+								"h" : 90,
+								"model" : "option.value.image",
+								"w" : 45,
+								"x" : 22,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "rhs_options[1]",
+							"w" : 25,
+							"x" : 65,
+							"y" : 38
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Georgia",
+								"fontsize" : 350,
+								"h" : 15.5,
+								"model" : "option.value.text",
+								"w" : 10,
+								"weight" : "bold",
+								"x" : 40,
+								"y" : 0
+							},
+							"image" : {
+								"h" : 90,
+								"model" : "option.value.image",
+								"w" : 45,
+								"x" : 22,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "rhs_options[2]",
+							"w" : 25,
+							"x" : 65,
+							"y" : 58
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Georgia",
+								"fontsize" : 350,
+								"h" : 15.5,
+								"model" : "option.value.text",
+								"w" : 10,
+								"weight" : "bold",
+								"x" : 40,
+								"y" : 0
+							},
+							"image" : {
+								"h" : 90,
+								"model" : "option.value.image",
+								"w" : 45,
+								"x" : 22,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "rhs_options[3]",
+							"w" : 25,
+							"x" : 65,
+							"y" : 80
+						}
+					],
+					"force" : true,
+					"model" : "item"
+				},
+				"id" : "org.ekstep.mtf.mixed.mixed.vertical"
+			}, {
+				"text" : [{
+						"font" : "Georgia",
+						"fontsize" : 40,
+						"model" : "item.title",
+						"marginY" : 10,
+						"padX" : 30,
+						"padY" : 10,
+						"w" : 70,
+						"h" : 12,
+						"x" : 15,
+						"y" : 5,
+						"lineHeight" : 1.2,
+						"align" : "left"
+					}, {
+						"font" : "Georgia",
+						"fontsize" : 60,
+						"model" : "item.question",
+						"marginY" : 10,
+						"padX" : 30,
+						"padY" : 10,
+						"w" : 70,
+						"h" : 12,
+						"x" : 15,
+						"y" : 12,
+						"lineHeight" : 1.2
+					}
+				],
+				"mcq" : {
+					"options" : {
+						"cols" : 1,
+						"h" : 60,
+						"layout" : "table",
+						"marginX" : 5,
+						"marginY" : 8,
+						"options" : "options",
+						"padX" : 30,
+						"padY" : 10,
+						"w" : 40,
+						"x" : 30,
+						"y" : 35,
+						"align" : "left"
+					},
+					"model" : "item",
+					"multi_select" : false,
+					"shadow" : "#FF0000"
+				},
+				"id" : "mcq_template_default"
+			}, {
+				"text" : {
+					"align" : "center",
+					"color" : "black",
+					"font" : "Verdana",
+					"fontsize" : 70,
+					"model" : "item.title",
+					"w" : 80,
+					"x" : 10,
+					"y" : 6
+				},
+				"shape" : {
+					"event" : {
+						"action" : {
+							"asset_model" : "item.question_audio",
+							"command" : "play",
+							"type" : "command"
+						},
+						"type" : "click"
+					},
+					"h" : 15,
+					"hitArea" : true,
+					"id" : "retry",
+					"type" : "rect",
+					"visible" : true,
+					"w" : 80,
+					"x" : 10,
+					"y" : 2
+				},
+				"mtf" : {
+					"option" : [{
+							"image" : {
+								"h" : 100,
+								"model" : "option.value.image",
+								"x" : 10,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 30.5,
+							"option" : "lhs_options[0]",
+							"snapX" : 1,
+							"snapY" : 20,
+							"w" : 20,
+							"x" : 10,
+							"y" : 20
+						}, {
+							"image" : {
+								"h" : 100,
+								"model" : "option.value.image",
+								"x" : 10,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 30.5,
+							"option" : "lhs_options[1]",
+							"snapX" : 1,
+							"snapY" : 20,
+							"w" : 20,
+							"x" : 30,
+							"y" : 20
+						}, {
+							"image" : {
+								"h" : 100,
+								"model" : "option.value.image",
+								"x" : 10,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 30.5,
+							"option" : "lhs_options[2]",
+							"snapX" : 1,
+							"snapY" : 20,
+							"w" : 20,
+							"x" : 50,
+							"y" : 20
+						}, {
+							"image" : {
+								"h" : 100,
+								"model" : "option.value.image",
+								"x" : 10,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 30.5,
+							"option" : "lhs_options[3]",
+							"snapX" : 1,
+							"snapY" : 20,
+							"w" : 20,
+							"x" : 70,
+							"y" : 20
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Georgia",
+								"fontsize" : 400,
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 15.5,
+							"option" : "rhs_options[0]",
+							"stroke" : "red",
+							"w" : 20,
+							"x" : 10,
+							"y" : 75
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Georgia",
+								"fontsize" : 400,
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 15.5,
+							"option" : "rhs_options[1]",
+							"stroke" : "red",
+							"w" : 20,
+							"x" : 30,
+							"y" : 75
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Georgia",
+								"fontsize" : 400,
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 15.5,
+							"option" : "rhs_options[2]",
+							"stroke" : "red",
+							"w" : 20,
+							"x" : 50,
+							"y" : 75
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Georgia",
+								"fontsize" : 400,
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 15.5,
+							"option" : "rhs_options[3]",
+							"stroke" : "red",
+							"w" : 20,
+							"x" : 70,
+							"y" : 75
+						}
+					],
+					"force" : false,
+					"model" : "item"
+				},
+				"id" : "org.ekstep.mtf.image.text"
+			}, {
+				"text" : {
+					"event" : {
+						"action" : [{
+								"command" : "stop",
+								"sound" : true,
+								"type" : "command"
+							}, {
+								"asset_model" : "item.question_audio",
+								"command" : "play",
+								"type" : "command"
+							}
+						],
+						"type" : "click"
+					},
+					"align" : "center",
+					"color" : "black",
+					"font" : "Verdana",
+					"fontsize" : 70,
+					"lineHeight" : 1.4,
+					"model" : "item.question",
+					"w" : 80,
+					"x" : 10,
+					"y" : 2
+				},
+				"image" : [{
+						"asset" : "grey",
+						"h" : 20,
+						"w" : 30,
+						"x" : 32,
+						"y" : 17
+					}, {
+						"asset" : "grey",
+						"h" : 20,
+						"w" : 30,
+						"x" : 32,
+						"y" : 37
+					}, {
+						"asset" : "grey",
+						"h" : 20,
+						"w" : 30,
+						"x" : 32,
+						"y" : 57
+					}, {
+						"asset" : "grey",
+						"h" : 20,
+						"w" : 30,
+						"x" : 32,
+						"y" : 77
+					}
+				],
+				"mtf" : {
+					"option" : [{
+							"text" : {
+								"align" : "left",
+								"font" : "Verdana",
+								"fontsize" : "1.6em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"image" : {
+								"align" : "left",
+								"h" : 80,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "middle",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "lhs_options[0]",
+							"snapX" : 48,
+							"snapY" : 0.2,
+							"w" : 52,
+							"x" : 10,
+							"y" : 17
+						}, {
+							"text" : {
+								"align" : "left",
+								"font" : "Verdana",
+								"fontsize" : "1.6em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"image" : {
+								"align" : "left",
+								"h" : 80,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "middle",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "lhs_options[1]",
+							"snapX" : 48,
+							"snapY" : 0.2,
+							"w" : 52,
+							"x" : 10,
+							"y" : 37
+						}, {
+							"text" : {
+								"align" : "left",
+								"font" : "Verdana",
+								"fontsize" : "1.6em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"image" : {
+								"align" : "left",
+								"h" : 80,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "middle",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "lhs_options[2]",
+							"snapX" : 48,
+							"snapY" : 0.2,
+							"w" : 52,
+							"x" : 10,
+							"y" : 57
+						}, {
+							"text" : {
+								"align" : "left",
+								"font" : "Verdana",
+								"fontsize" : "1.6em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"image" : {
+								"align" : "left",
+								"h" : 80,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "middle",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "lhs_options[3]",
+							"snapX" : 48,
+							"snapY" : 0.2,
+							"w" : 52,
+							"x" : 10,
+							"y" : 77
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "1.6em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"image" : {
+								"align" : "center",
+								"h" : 80,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "middle",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "rhs_options[0]",
+							"w" : 25,
+							"x" : 65,
+							"y" : 18
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "1.6em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"image" : {
+								"align" : "center",
+								"h" : 80,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "middle",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "rhs_options[1]",
+							"w" : 25,
+							"x" : 65,
+							"y" : 38
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "1.6em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"image" : {
+								"align" : "center",
+								"h" : 80,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "middle",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "rhs_options[2]",
+							"w" : 25,
+							"x" : 65,
+							"y" : 58
+						}, {
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "1.6em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"image" : {
+								"align" : "center",
+								"h" : 80,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "middle",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 20,
+							"option" : "rhs_options[3]",
+							"w" : 25,
+							"x" : 65,
+							"y" : 78
+						}
+					],
+					"force" : true,
+					"model" : "item"
+				},
+				"id" : "org.ekstep.mtf.mixed.vertical"
+			}, {
+				"text" : {
+					"event" : {
+						"action" : [{
+								"command" : "stop",
+								"sound" : true,
+								"type" : "command"
+							}, {
+								"asset_model" : "item.question_audio",
+								"command" : "play",
+								"type" : "command"
+							}
+						],
+						"type" : "click"
+					},
+					"align" : "center",
+					"color" : "black",
+					"font" : "Verdana",
+					"fontsize" : 70,
+					"lineHeight" : 1.4,
+					"model" : "item.question",
+					"w" : 80,
+					"x" : 10,
+					"y" : 6
+				},
+				"image" : [{
+						"asset" : "grey",
+						"h" : 30,
+						"x" : 2,
+						"y" : 40
+					}, {
+						"asset" : "grey",
+						"h" : 30,
+						"x" : 22,
+						"y" : 40
+					}, {
+						"asset" : "grey",
+						"h" : 30,
+						"x" : 42,
+						"y" : 40
+					}, {
+						"asset" : "grey",
+						"h" : 30,
+						"x" : 62,
+						"y" : 40
+					}, {
+						"asset" : "grey",
+						"h" : 30,
+						"x" : 82,
+						"y" : 40
+					}
+				],
+				"mtf" : {
+					"option" : [{
+							"image" : {
+								"align" : "center",
+								"h" : 40,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "top",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "2.5em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"padY" : 5,
+								"valign" : "top",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 55,
+							"option" : "lhs_options[0]",
+							"snapX" : 1,
+							"snapY" : 100,
+							"w" : 15,
+							"x" : 3,
+							"y" : 17
+						}, {
+							"image" : {
+								"align" : "center",
+								"h" : 40,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "top",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "2.5em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "top",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 55,
+							"option" : "lhs_options[1]",
+							"snapX" : 1,
+							"snapY" : 100,
+							"w" : 15,
+							"x" : 23,
+							"y" : 17
+						}, {
+							"image" : {
+								"align" : "center",
+								"h" : 40,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "top",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "2.5em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "top",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 55,
+							"option" : "lhs_options[2]",
+							"snapX" : 1,
+							"snapY" : 100,
+							"w" : 15,
+							"x" : 43,
+							"y" : 17
+						}, {
+							"image" : {
+								"align" : "center",
+								"h" : 40,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "top",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "2.5em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "top",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 55,
+							"option" : "lhs_options[3]",
+							"snapX" : 1,
+							"snapY" : 100,
+							"w" : 15,
+							"x" : 63,
+							"y" : 17
+						}, {
+							"image" : {
+								"align" : "center",
+								"h" : 40,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "top",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "2.5em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "top",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 55,
+							"option" : "lhs_options[4]",
+							"snapX" : 1,
+							"snapY" : 100,
+							"w" : 15,
+							"x" : 83,
+							"y" : 17
+						}, {
+							"image" : {
+								"align" : "center",
+								"h" : 90,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "middle",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "2.5em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 22,
+							"option" : "rhs_options[0]",
+							"w" : 15,
+							"x" : 3,
+							"y" : 75
+						}, {
+							"image" : {
+								"align" : "center",
+								"h" : 90,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "middle",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "2.5em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 22,
+							"option" : "rhs_options[1]",
+							"w" : 15,
+							"x" : 23,
+							"y" : 75
+						}, {
+							"image" : {
+								"align" : "center",
+								"h" : 90,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "middle",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "2.5em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 22,
+							"option" : "rhs_options[2]",
+							"w" : 15,
+							"x" : 43,
+							"y" : 75
+						}, {
+							"image" : {
+								"align" : "center",
+								"h" : 90,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "middle",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "2.5em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 22,
+							"option" : "rhs_options[3]",
+							"w" : 15,
+							"x" : 63,
+							"y" : 75
+						}, {
+							"image" : {
+								"align" : "center",
+								"h" : 90,
+								"model" : "option.value.image",
+								"stretch" : false,
+								"valign" : "middle",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"text" : {
+								"align" : "center",
+								"font" : "Verdana",
+								"fontsize" : "2.5em",
+								"h" : 100,
+								"model" : "option.value.text",
+								"valign" : "middle",
+								"w" : 100,
+								"weight" : "bold",
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : [{
+										"command" : "stop",
+										"sound" : true,
+										"type" : "command"
+									}, {
+										"asset_model" : "option.value.audio",
+										"command" : "play",
+										"type" : "command"
+									}
+								],
+								"type" : "click"
+							},
+							"h" : 22,
+							"option" : "rhs_options[4]",
+							"w" : 15,
+							"x" : 83,
+							"y" : 75
+						}
+					],
+					"force" : true,
+					"model" : "item"
+				},
+				"id" : "org.ekstep.mtf.mixed.horizontal"
+			}, {
+				"text" : {
+					"model" : "item.title",
+					"x" : 9,
+					"y" : 7,
+					"w" : 86,
+					"h" : 4,
+					"font" : "Georgia",
+					"fontsize" : 42
+				},
+				"mcq" : {
+					"options" : {
+						"layout" : "table",
+						"x" : 20,
+						"y" : 15,
+						"w" : 70,
+						"h" : 85,
+						"cols" : 2,
+						"marginX" : 10,
+						"marginY" : 5,
+						"options" : "options"
+					},
+					"multi_select" : false,
+					"model" : "item"
+				},
+				"g" : {
+					"image" : {
+						"event" : {
+							"action" : [{
+									"type" : "command",
+									"command" : "stop",
+									"asset_model" : "item.hints[0].asset"
+								}, {
+									"type" : "command",
+									"command" : "toggleShow",
+									"asset" : "hint"
+								}
+							],
+							"type" : "click"
+						},
+						"asset" : "speech_bubble",
+						"x" : 0,
+						"y" : 0,
+						"w" : 100,
+						"h" : 100
+					},
+					"text" : [{
+							"x" : 10,
+							"y" : 20,
+							"w" : 80,
+							"h" : 80,
+							"font" : "Georgia",
+							"weight" : "bold",
+							"fontsize" : 150,
+							"__text" : "Hint"
+						}, {
+							"x" : 10,
+							"y" : 40,
+							"w" : 80,
+							"h" : 80,
+							"font" : "Georgia",
+							"fontsize" : 120,
+							"model" : "item.hints[1].asset"
+						}
+					],
+					"x" : 9,
+					"y" : 17,
+					"w" : 20,
+					"h" : 20,
+					"id" : "hint",
+					"visible" : false
+				},
+				"image" : {
+					"event" : {
+						"action" : [{
+								"type" : "command",
+								"command" : "togglePlay",
+								"asset_model" : "item.hints[0].asset"
+							}, {
+								"type" : "command",
+								"command" : "toggleShow",
+								"asset" : "hint"
+							}
+						],
+						"type" : "click"
+					},
+					"asset" : "icon_hint",
+					"x" : 5,
+					"y" : 35
+				},
+				"id" : "mcq_template_1"
+			}, {
+				"image" : [{
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "show",
+								"asset" : "retryDialog"
+							},
+							"type" : "click"
+						},
+						"asset" : "popupTint",
+						"x" : -100,
+						"y" : -150,
+						"w" : 550,
+						"h" : 600,
+						"visible" : true,
+						"id" : "popup-Tint"
+					}, {
+						"asset" : "retryBg",
+						"x" : 0,
+						"y" : 0,
+						"w" : 150,
+						"h" : 150,
+						"visible" : true,
+						"id" : "right"
+					}
+				],
+				"shape" : [{
+						"event" : {
+							"action" : [{
+									"type" : "command",
+									"command" : "hide",
+									"asset" : "retryDialog"
+								}, {
+									"type" : "command",
+									"command" : "SHOWHTMLELEMENTS",
+									"asset" : "retry"
+								}
+							],
+							"type" : "click"
+						},
+						"type" : "roundrect",
+						"x" : 72,
+						"y" : 25,
+						"w" : 50,
+						"h" : 65,
+						"visible" : true,
+						"id" : "retry",
+						"hitArea" : true
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"type" : "roundrect",
+						"x" : 110,
+						"y" : 100,
+						"w" : 25,
+						"h" : 35,
+						"visible" : true,
+						"id" : "continue",
+						"hitArea" : true
+					}
+				],
+				"id" : "retry"
+			}, {
+				"g" : {
+					"image" : [{
+							"asset" : "popupTint",
+							"x" : 0,
+							"y" : 0,
+							"w" : 100,
+							"h" : 100,
+							"visible" : true,
+							"id" : "popup-Tint"
+						}
+					],
+					"text" : [{
+							"x" : 25,
+							"y" : 25,
+							"w" : 50,
+							"h" : 9,
+							"visible" : true,
+							"editable" : true,
+							"model" : "word.lemma",
+							"weight" : "normal",
+							"font" : "helvetica",
+							"color" : "rgb(0,0,0)",
+							"fontstyle" : "",
+							"fontsize" : 75,
+							"align" : "left",
+							"z-index" : 1,
+							"id" : "lemma"
+						}, {
+							"x" : 25,
+							"y" : 35,
+							"w" : 50,
+							"h" : 40,
+							"visible" : true,
+							"editable" : true,
+							"model" : "word.gloss",
+							"weight" : "normal",
+							"font" : "helvetica",
+							"color" : "rgb(0,0,0)",
+							"fontstyle" : "",
+							"fontsize" : 43,
+							"align" : "left",
+							"z-index" : 2,
+							"id" : "gloss"
+						}
+					],
+					"shape" : [{
+							"x" : 20,
+							"y" : 20,
+							"w" : 60,
+							"h" : 60,
+							"visible" : true,
+							"editable" : true,
+							"type" : "roundrect",
+							"radius" : 10,
+							"opacity" : 1,
+							"fill" : "#45b3a5",
+							"stroke-width" : 1,
+							"z-index" : 0,
+							"id" : "textBg"
+						}
+					],
+					"x" : 0,
+					"y" : 0,
+					"w" : 100,
+					"h" : 100,
+					"event" : {
+						"action" : [{
+								"type" : "command",
+								"command" : "SHOWHTMLELEMENTS",
+								"asset" : "textBg"
+							}, {
+								"type" : "command",
+								"command" : "hide",
+								"parent" : true
+							}
+						],
+						"type" : "click"
+					}
+				},
+				"id" : "infoTemplate"
+			}, {
+				"image" : [{
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "show",
+								"asset" : ""
+							},
+							"type" : "click"
+						},
+						"asset" : "popupTint",
+						"x" : -100,
+						"y" : -150,
+						"w" : 550,
+						"h" : 600,
+						"visible" : true,
+						"id" : "popup-Tint"
+					}, {
+						"event" : {
+							"action" : [{
+									"type" : "command",
+									"command" : "transitionTo",
+									"asset" : "theme",
+									"param" : "next",
+									"effect" : "fadein",
+									"direction" : "left",
+									"ease" : "linear",
+									"duration" : 500
+								}
+							],
+							"type" : "click"
+						},
+						"asset" : "goodjobBg",
+						"x" : 0,
+						"y" : 0,
+						"w" : 150,
+						"h" : 150,
+						"visible" : true,
+						"id" : "continue"
+					}
+				],
+				"id" : "goodjob"
+			}
+		],
+		"controller" : [{
+				"name" : "assessment_29b183d9-362a-4dc5-8fef-b34ff8b00ee7",
+				"type" : "items",
+				"id" : "assessment_29b183d9-362a-4dc5-8fef-b34ff8b00ee7",
+				"__cdata" : {
+					"total_items" : 1,
+					"subject" : "domain",
+					"code" : "ItemSet_e9d2811d-4a40-4e1a-ae3f-cf7d1b4ae7eb",
+					"type" : "materialised",
+					"lastUpdatedOn" : "2016-05-12T05:17:35.821+0000",
+					"SET_TYPE" : "MATERIALISED_SET",
+					"createdOn" : "2016-05-12T05:17:35.770+0000",
+					"title" : "Testing ItemSet_7775e53c-7521-40fe-a3a4-203b83024733",
+					"items" : {
+						"domain_47408" : [{
+								"template" : "org.ekstep.mtf.mixed.mixed.vertical",
+								"subject" : "domain",
+								"keyword" : "[]",
+								"template_id" : "domain_44049",
+								"code" : "org.ekstep.assessmentitem.literacy_5734119f4f21f",
+								"lastUpdatedOn" : "2016-05-12T05:16:15.183+0000",
+								"type" : "mtf",
+								"concepts" : [{
+										"identifier" : "LO39",
+										"name" : "Akshara Recognition",
+										"objectType" : "Concept",
+										"relation" : "associatedTo",
+										"description" : null,
+										"index" : null
+									}
+								],
+								"feedback" : "",
+								"createdOn" : "2016-05-12T05:16:15.183+0000",
+								"title" : "Picture to Word Matching",
+								"qlevel" : "EASY",
+								"name" : "Picture to Word Matching",
+								"domain" : "literacy",
+								"owner" : "298",
+								"used_for" : "worksheet",
+								"max_score" : 5,
+								"lhs_options" : [{
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47396"
+										},
+										"index" : 0
+									}, {
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47397"
+										},
+										"index" : 1
+									}, {
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47398"
+										},
+										"index" : 2
+									}, {
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47399"
+										},
+										"index" : 3
+									}, {
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47400"
+										},
+										"index" : 4
+									}
+								],
+								"gradeLevel" : ["Grade 1"],
+								"language" : ["Telugu"],
+								"question" : "",
+								"identifier" : "domain_47401",
+								"media" : "[{\"id\":\"domain_47396\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/bear_298_1463030172_1463030172752.png\",\"asset_id\":\"domain_47396\"},{\"id\":\"domain_47397\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/pencil_298_1463030173_1463030173133.png\",\"asset_id\":\"domain_47397\"},{\"id\":\"domain_47398\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/Banana_298_1463030173_1463030173511.png\",\"asset_id\":\"domain_47398\"},{\"id\":\"domain_47399\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/tap_298_1463030173_1463030174325.png\",\"asset_id\":\"domain_47399\"},{\"id\":\"domain_47400\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/eye_298_1463030174_1463030174919.png\",\"asset_id\":\"domain_47400\"}]",
+								"rhs_options" : [{
+										"value" : {
+											"type" : "text",
+											"asset" : "అ"
+										}
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "ఎ "
+										},
+										"answer" : 0
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "కు"
+										},
+										"answer" : 0
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "క"
+										},
+										"answer" : 0
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "పె"
+										},
+										"answer" : 0
+									}
+								]
+							}
+						]
+					},
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"shuffle" : false,
+					"used_for" : "assessment",
+					"owner" : "Ilimi",
+					"max_score" : 1,
+					"gradeLevel" : ["Grade 1"],
+					"item_sets" : [{
+							"id" : "domain_47408",
+							"count" : 1
+						}
+					],
+					"language" : ["English"],
+					"identifier" : "domain_47408"
+				}
+			}, {
+				"name" : "assessment_55c95231-e4be-435c-a875-8a6d8e872015",
+				"type" : "items",
+				"id" : "assessment_55c95231-e4be-435c-a875-8a6d8e872015",
+				"__cdata" : {
+					"total_items" : 1,
+					"subject" : "domain",
+					"code" : "ItemSet_5fcf6e77-7668-4ba8-aad0-90df420c1dbf",
+					"type" : "materialised",
+					"lastUpdatedOn" : "2016-05-12T05:23:00.376+0000",
+					"SET_TYPE" : "MATERIALISED_SET",
+					"createdOn" : "2016-05-12T05:23:00.333+0000",
+					"title" : "Testing ItemSet_648e28f6-b8b7-410f-b18a-c90b4f49cd5b",
+					"items" : {
+						"domain_47432" : [{
+								"template" : "org.ekstep.mtf.mixed.mixed.vertical",
+								"subject" : "domain",
+								"keyword" : "[]",
+								"template_id" : "domain_44049",
+								"code" : "org.ekstep.assessmentitem.literacy_5734119f4f21f",
+								"lastUpdatedOn" : "2016-05-12T05:16:15.183+0000",
+								"type" : "mtf",
+								"concepts" : [{
+										"identifier" : "LO39",
+										"name" : "Akshara Recognition",
+										"objectType" : "Concept",
+										"relation" : "associatedTo",
+										"description" : null,
+										"index" : null
+									}
+								],
+								"feedback" : "",
+								"createdOn" : "2016-05-12T05:16:15.183+0000",
+								"title" : "Picture to Word Matching",
+								"qlevel" : "EASY",
+								"name" : "Picture to Word Matching",
+								"domain" : "literacy",
+								"owner" : "298",
+								"used_for" : "worksheet",
+								"max_score" : 5,
+								"lhs_options" : [{
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47396"
+										},
+										"index" : 0
+									}, {
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47397"
+										},
+										"index" : 1
+									}, {
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47398"
+										},
+										"index" : 2
+									}, {
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47399"
+										},
+										"index" : 3
+									}, {
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47400"
+										},
+										"index" : 4
+									}
+								],
+								"gradeLevel" : ["Grade 1"],
+								"language" : ["Telugu"],
+								"question" : "",
+								"identifier" : "domain_47401",
+								"media" : "[{\"id\":\"domain_47396\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/bear_298_1463030172_1463030172752.png\",\"asset_id\":\"domain_47396\"},{\"id\":\"domain_47397\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/pencil_298_1463030173_1463030173133.png\",\"asset_id\":\"domain_47397\"},{\"id\":\"domain_47398\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/Banana_298_1463030173_1463030173511.png\",\"asset_id\":\"domain_47398\"},{\"id\":\"domain_47399\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/tap_298_1463030173_1463030174325.png\",\"asset_id\":\"domain_47399\"},{\"id\":\"domain_47400\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/eye_298_1463030174_1463030174919.png\",\"asset_id\":\"domain_47400\"}]",
+								"rhs_options" : [{
+										"value" : {
+											"type" : "text",
+											"asset" : "అ"
+										}
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "ఎ "
+										},
+										"answer" : 0
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "కు"
+										},
+										"answer" : 0
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "క"
+										},
+										"answer" : 0
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "పె"
+										},
+										"answer" : 0
+									}
+								]
+							}
+						]
+					},
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"shuffle" : true,
+					"used_for" : "assessment",
+					"owner" : "Ilimi",
+					"max_score" : 1,
+					"gradeLevel" : ["Grade 1"],
+					"item_sets" : [{
+							"id" : "domain_47432",
+							"count" : 1
+						}
+					],
+					"language" : ["English"],
+					"identifier" : "domain_47432"
+				}
+			}, {
+				"name" : "assessment_1b92ba3e-31d0-4b43-a161-dfc198baa6e3",
+				"type" : "items",
+				"id" : "assessment_1b92ba3e-31d0-4b43-a161-dfc198baa6e3",
+				"__cdata" : {
+					"total_items" : 1,
+					"subject" : "domain",
+					"code" : "ItemSet_09e0291b-dae8-47df-8aa9-724a20ad52ce",
+					"type" : "materialised",
+					"lastUpdatedOn" : "2016-05-12T05:24:19.658+0000",
+					"SET_TYPE" : "MATERIALISED_SET",
+					"createdOn" : "2016-05-12T05:24:19.600+0000",
+					"title" : "Testing ItemSet_c1bc930d-51d9-4380-9050-06658b06a0e1",
+					"items" : {
+						"domain_47434" : [{
+								"template" : "org.ekstep.mtf.mixed.mixed.vertical",
+								"subject" : "domain",
+								"keyword" : "[]",
+								"template_id" : "domain_44049",
+								"code" : "org.ekstep.assessmentitem.domain_47401",
+								"lastUpdatedOn" : "2016-05-12T05:23:34.875+0000",
+								"type" : "mtf",
+								"concepts" : [{
+										"identifier" : "LO39",
+										"name" : "Akshara Recognition",
+										"objectType" : "Concept",
+										"relation" : "associatedTo",
+										"description" : null,
+										"index" : null
+									}
+								],
+								"feedback" : "",
+								"createdOn" : "2016-05-12T05:16:15.183+0000",
+								"title" : "Picture to Word Matching",
+								"qlevel" : "EASY",
+								"name" : "Picture to Word Matching",
+								"domain" : "literacy",
+								"owner" : "298",
+								"used_for" : "worksheet",
+								"max_score" : 5,
+								"lhs_options" : [{
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47396"
+										},
+										"index" : 0
+									}, {
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47397"
+										},
+										"index" : 1
+									}, {
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47398"
+										},
+										"index" : 2
+									}, {
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47399"
+										},
+										"index" : 3
+									}, {
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47400"
+										},
+										"index" : 4
+									}
+								],
+								"gradeLevel" : ["Grade 1"],
+								"language" : ["Telugu"],
+								"question" : "",
+								"identifier" : "domain_47401",
+								"media" : "[{\"id\":\"domain_47396\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/bear_298_1463030172_1463030172752.png\",\"asset_id\":\"domain_47396\"},{\"id\":\"domain_47397\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/pencil_298_1463030173_1463030173133.png\",\"asset_id\":\"domain_47397\"},{\"id\":\"domain_47398\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/Banana_298_1463030173_1463030173511.png\",\"asset_id\":\"domain_47398\"},{\"id\":\"domain_47399\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/tap_298_1463030173_1463030174325.png\",\"asset_id\":\"domain_47399\"},{\"id\":\"domain_47400\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/eye_298_1463030174_1463030174919.png\",\"asset_id\":\"domain_47400\"}]",
+								"rhs_options" : [{
+										"value" : {
+											"type" : "text",
+											"asset" : "అ"
+										}
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "ఎ "
+										},
+										"answer" : 0
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "కు"
+										},
+										"answer" : 0
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "క"
+										},
+										"answer" : 0
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "పె"
+										},
+										"answer" : 0
+									}
+								]
+							}
+						]
+					},
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"shuffle" : true,
+					"used_for" : "assessment",
+					"owner" : "Ilimi",
+					"max_score" : 1,
+					"gradeLevel" : ["Grade 1"],
+					"item_sets" : [{
+							"id" : "domain_47434",
+							"count" : 1
+						}
+					],
+					"language" : ["English"],
+					"identifier" : "domain_47434"
+				}
+			}, {
+				"name" : "assessment_7c496cb6-a733-4130-99c7-aa90bbf96f52",
+				"type" : "items",
+				"id" : "assessment_7c496cb6-a733-4130-99c7-aa90bbf96f52",
+				"__cdata" : {
+					"total_items" : 1,
+					"subject" : "domain",
+					"code" : "ItemSet_f736a93a-3e97-43b8-b5aa-bd28e79685c8",
+					"type" : "materialised",
+					"lastUpdatedOn" : "2016-05-12T05:32:13.605+0000",
+					"SET_TYPE" : "MATERIALISED_SET",
+					"createdOn" : "2016-05-12T05:32:13.547+0000",
+					"title" : "Testing ItemSet_3fb9db06-b983-42a4-8ec2-ce367ce07eb1",
+					"items" : {
+						"domain_47496" : [{
+								"template" : "org.ekstep.mtf.image.text",
+								"subject" : "domain",
+								"keyword" : "[]",
+								"template_id" : "domain_44070",
+								"code" : "org.ekstep.assessmentitem.literacy_573414fa5c28c",
+								"lastUpdatedOn" : "2016-05-12T05:30:34.234+0000",
+								"type" : "mtf",
+								"feedback" : "",
+								"createdOn" : "2016-05-12T05:30:34.234+0000",
+								"title" : "Picture to Akshara",
+								"qlevel" : "EASY",
+								"name" : "Picture to Akshara",
+								"domain" : "literacy",
+								"owner" : "298",
+								"used_for" : "worksheet",
+								"max_score" : 5,
+								"lhs_options" : [{
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47488"
+										},
+										"index" : 0
+									}, {
+										"value" : {
+											"type" : "image",
+											"count" : "",
+											"asset" : "domain_47489"
+										},
+										"index" : 1
+									}
+								],
+								"gradeLevel" : ["Grade 1"],
+								"language" : ["Telugu"],
+								"question" : "",
+								"identifier" : "domain_47490",
+								"media" : "[{\"id\":\"domain_47488\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/Banana_298_1463031028_1463031028303.png\",\"asset_id\":\"domain_47488\"},{\"id\":\"domain_47489\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/bear_298_1463031033_1463031034071.png\",\"asset_id\":\"domain_47489\"}]",
+								"rhs_options" : [{
+										"value" : {
+											"type" : "text",
+											"asset" : "ఎ "
+										},
+										"answer" : 1
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "అ"
+										},
+										"answer" : 0
+									}
+								]
+							}
+						]
+					},
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"shuffle" : true,
+					"used_for" : "assessment",
+					"owner" : "Ilimi",
+					"max_score" : 1,
+					"gradeLevel" : ["Grade 1"],
+					"item_sets" : [{
+							"id" : "domain_47496",
+							"count" : 1
+						}
+					],
+					"language" : ["English"],
+					"identifier" : "domain_47496"
+				}
+			}, {
+				"name" : "assessment_59af5e9a-0c67-4b6f-8d8c-a730fda162fd",
+				"type" : "items",
+				"id" : "assessment_59af5e9a-0c67-4b6f-8d8c-a730fda162fd",
+				"__cdata" : {
+					"total_items" : 1,
+					"subject" : "domain",
+					"code" : "ItemSet_041d35e1-dda8-4530-8f37-880e44d1b72a",
+					"type" : "materialised",
+					"lastUpdatedOn" : "2016-05-12T05:40:48.184+0000",
+					"SET_TYPE" : "MATERIALISED_SET",
+					"createdOn" : "2016-05-12T05:40:48.132+0000",
+					"title" : "Testing ItemSet_d2ed9db0-74ef-4ce1-88ac-84f764de5a43",
+					"items" : {
+						"domain_47520" : [{
+								"template" : "org.ekstep.mtf.mixed.vertical",
+								"subject" : "domain",
+								"keyword" : "[]",
+								"template_id" : "domain_46784",
+								"code" : "org.ekstep.assessmentitem.literacy_573416fd565c5",
+								"lastUpdatedOn" : "2016-05-12T05:39:09.208+0000",
+								"type" : "mtf",
+								"concepts" : [{
+										"identifier" : "LO39",
+										"name" : "Akshara Recognition",
+										"objectType" : "Concept",
+										"relation" : "associatedTo",
+										"description" : null,
+										"index" : null
+									}
+								],
+								"feedback" : "",
+								"createdOn" : "2016-05-12T05:39:09.208+0000",
+								"title" : "Picture to Akshara",
+								"qlevel" : "EASY",
+								"name" : "Picture to Akshara",
+								"domain" : "literacy",
+								"owner" : "298",
+								"used_for" : "worksheet",
+								"max_score" : 1,
+								"lhs_options" : [{
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_47514",
+											"audio" : null
+										},
+										"index" : 0
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_47515",
+											"audio" : null
+										},
+										"index" : 1
+									}
+								],
+								"gradeLevel" : ["Grade 1"],
+								"language" : ["Telugu"],
+								"question" : "",
+								"identifier" : "domain_47516",
+								"media" : "[{\"id\":\"domain_47514\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/bear_298_1463031548_1463031548727.png\",\"asset_id\":\"domain_47514\"},{\"id\":\"domain_47515\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/Banana_298_1463031549_1463031549053.png\",\"asset_id\":\"domain_47515\"}]",
+								"rhs_options" : [{
+										"value" : {
+											"type" : "mixed",
+											"text" : "అ ",
+											"count" : "",
+											"image" : null,
+											"audio" : null
+										},
+										"answer" : 1
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "ఎ",
+											"count" : "",
+											"image" : null,
+											"audio" : null
+										},
+										"answer" : 0
+									}
+								]
+							}
+						]
+					},
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"shuffle" : false,
+					"used_for" : "assessment",
+					"owner" : "Ilimi",
+					"max_score" : 1,
+					"gradeLevel" : ["Grade 1"],
+					"item_sets" : [{
+							"id" : "domain_47520",
+							"count" : 1
+						}
+					],
+					"language" : ["English"],
+					"identifier" : "domain_47520"
+				}
+			}, {
+				"name" : "assessment_b8cf75bd-7da8-4bd5-b4b2-b9924bdcca0c",
+				"type" : "items",
+				"id" : "assessment_b8cf75bd-7da8-4bd5-b4b2-b9924bdcca0c",
+				"__cdata" : {
+					"total_items" : 1,
+					"subject" : "domain",
+					"code" : "ItemSet_13839d04-d4d8-4073-926d-71eef22b918f",
+					"type" : "materialised",
+					"lastUpdatedOn" : "2016-05-12T05:49:44.376+0000",
+					"SET_TYPE" : "MATERIALISED_SET",
+					"createdOn" : "2016-05-12T05:49:44.342+0000",
+					"title" : "Testing ItemSet_a76a8bd4-4586-4e7b-9a15-cbcee45fa584",
+					"items" : {
+						"domain_47549" : [{
+								"template" : "org.ekstep.mtf.mixed.horizontal",
+								"subject" : "domain",
+								"keyword" : "[]",
+								"template_id" : "domain_46778",
+								"code" : "org.ekstep.assessmentitem.literacy_5734193192c27",
+								"lastUpdatedOn" : "2016-05-12T05:48:33.505+0000",
+								"type" : "mtf",
+								"feedback" : "",
+								"createdOn" : "2016-05-12T05:48:33.505+0000",
+								"title" : "Pictures to Akshara",
+								"qlevel" : "EASY",
+								"name" : "Pictures to Akshara",
+								"domain" : "literacy",
+								"owner" : "298",
+								"used_for" : "worksheet",
+								"max_score" : 1,
+								"lhs_options" : [{
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_47546",
+											"audio" : null
+										},
+										"index" : 0
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_47547",
+											"audio" : null
+										},
+										"index" : 1
+									}
+								],
+								"gradeLevel" : ["Grade 1"],
+								"language" : ["Telugu"],
+								"question" : "",
+								"identifier" : "domain_47548",
+								"media" : "[{\"id\":\"domain_47546\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/bear_298_1463032112_1463032112772.png\",\"asset_id\":\"domain_47546\"},{\"id\":\"domain_47547\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/Banana_298_1463032113_1463032113199.png\",\"asset_id\":\"domain_47547\"}]",
+								"rhs_options" : [{
+										"value" : {
+											"type" : "text",
+											"asset" : "అ"
+										},
+										"answer" : 1
+									}, {
+										"value" : {
+											"type" : "text",
+											"asset" : "ఎ"
+										},
+										"answer" : 0
+									}
+								]
+							}
+						]
+					},
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"shuffle" : false,
+					"used_for" : "assessment",
+					"owner" : "Ilimi",
+					"max_score" : 1,
+					"gradeLevel" : ["Grade 1"],
+					"item_sets" : [{
+							"id" : "domain_47549",
+							"count" : 1
+						}
+					],
+					"language" : ["English"],
+					"identifier" : "domain_47549"
+				}
+			}, {
+				"name" : "assessment_4867d5c7-2ea2-42b2-b050-976fc0dbeb23",
+				"type" : "items",
+				"id" : "assessment_4867d5c7-2ea2-42b2-b050-976fc0dbeb23",
+				"__cdata" : {
+					"total_items" : 1,
+					"subject" : "domain",
+					"code" : "ItemSet_bf59b354-f945-46e4-816c-ec0a0610a684",
+					"type" : "materialised",
+					"lastUpdatedOn" : "2016-05-12T05:52:18.827+0000",
+					"SET_TYPE" : "MATERIALISED_SET",
+					"createdOn" : "2016-05-12T05:52:18.770+0000",
+					"title" : "Testing ItemSet_505cf6aa-5bcf-4080-9966-cbf06f0438f6",
+					"items" : {
+						"domain_47566" : [{
+								"template" : "org.ekstep.mtf.mixed.horizontal",
+								"subject" : "domain",
+								"keyword" : "[]",
+								"template_id" : "domain_46778",
+								"code" : "org.ekstep.assessmentitem.domain_47548",
+								"lastUpdatedOn" : "2016-05-12T05:51:19.647+0000",
+								"type" : "mtf",
+								"feedback" : "",
+								"createdOn" : "2016-05-12T05:48:33.505+0000",
+								"title" : "Pictures to Akshara",
+								"qlevel" : "EASY",
+								"name" : "Pictures to Akshara",
+								"domain" : "literacy",
+								"owner" : "298",
+								"used_for" : "worksheet",
+								"max_score" : 1,
+								"lhs_options" : [{
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_47546",
+											"audio" : ""
+										},
+										"index" : 0
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_47547",
+											"audio" : ""
+										},
+										"index" : 1
+									}
+								],
+								"gradeLevel" : ["Grade 1"],
+								"language" : ["Telugu"],
+								"question" : "",
+								"identifier" : "domain_47548",
+								"media" : "[{\"id\":\"domain_47546\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/bear_298_1463032112_1463032112772.png\",\"asset_id\":\"domain_47546\"},{\"id\":\"domain_47547\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/Banana_298_1463032113_1463032113199.png\",\"asset_id\":\"domain_47547\"}]",
+								"rhs_options" : [{
+										"value" : {
+											"type" : "mixed",
+											"text" : "అ",
+											"count" : "",
+											"image" : "",
+											"audio" : ""
+										},
+										"answer" : 1
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "ఎ",
+											"count" : "",
+											"image" : "",
+											"audio" : ""
+										},
+										"answer" : 0
+									}
+								]
+							}
+						]
+					},
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"shuffle" : false,
+					"used_for" : "assessment",
+					"owner" : "Ilimi",
+					"max_score" : 1,
+					"gradeLevel" : ["Grade 1"],
+					"item_sets" : [{
+							"id" : "domain_47566",
+							"count" : 1
+						}
+					],
+					"language" : ["English"],
+					"identifier" : "domain_47566"
+				}
+			}, {
+				"name" : "assessment_139202fa-2ad9-46b7-8cb0-c31d4af34907",
+				"type" : "items",
+				"id" : "assessment_139202fa-2ad9-46b7-8cb0-c31d4af34907",
+				"__cdata" : {
+					"total_items" : 1,
+					"subject" : "domain",
+					"code" : "ItemSet_03e2febf-a5b9-48e9-b905-d107f644acd0",
+					"type" : "materialised",
+					"lastUpdatedOn" : "2016-05-12T05:59:03.584+0000",
+					"SET_TYPE" : "MATERIALISED_SET",
+					"createdOn" : "2016-05-12T05:59:03.548+0000",
+					"title" : "Testing ItemSet_c6732c00-22dc-4b23-8480-7d5e1c5b887f",
+					"items" : {
+						"domain_47593" : [{
+								"template" : "org.ekstep.mtf.mixed.horizontal",
+								"subject" : "domain",
+								"keyword" : "[]",
+								"template_id" : "domain_46778",
+								"code" : "org.ekstep.assessmentitem.domain_47548",
+								"lastUpdatedOn" : "2016-05-12T05:57:54.517+0000",
+								"type" : "mtf",
+								"feedback" : "",
+								"createdOn" : "2016-05-12T05:48:33.505+0000",
+								"title" : "Pictures to Akshara",
+								"qlevel" : "EASY",
+								"name" : "Pictures to Akshara",
+								"domain" : "literacy",
+								"owner" : "298",
+								"used_for" : "worksheet",
+								"max_score" : 1,
+								"lhs_options" : [{
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_47546",
+											"audio" : ""
+										},
+										"index" : 0
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_47547",
+											"audio" : ""
+										},
+										"index" : 1
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_47589",
+											"audio" : null
+										},
+										"index" : 2
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_47590",
+											"audio" : null
+										},
+										"index" : 3
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_47591",
+											"audio" : null
+										},
+										"index" : 4
+									}
+								],
+								"gradeLevel" : ["Grade 1"],
+								"language" : ["Telugu"],
+								"question" : "",
+								"identifier" : "domain_47548",
+								"media" : "[{\"id\":\"domain_47546\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/bear_298_1463032112_1463032112772.png\",\"asset_id\":\"domain_47546\"},{\"id\":\"domain_47547\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/Banana_298_1463032113_1463032113199.png\",\"asset_id\":\"domain_47547\"},{\"id\":\"domain_47589\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/tap_298_1463032669_1463032669385.png\",\"asset_id\":\"domain_47589\"},{\"id\":\"domain_47590\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/pencil_298_1463032669_1463032669815.png\",\"asset_id\":\"domain_47590\"},{\"id\":\"domain_47591\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/eye_298_1463032670_1463032674272.png\",\"asset_id\":\"domain_47591\"}]",
+								"rhs_options" : [{
+										"value" : {
+											"type" : "mixed",
+											"text" : "అ",
+											"count" : "",
+											"image" : "",
+											"audio" : ""
+										},
+										"answer" : 1
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "ఎ",
+											"count" : "",
+											"image" : "",
+											"audio" : ""
+										},
+										"answer" : 0
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "క",
+											"count" : "",
+											"image" : null,
+											"audio" : null
+										},
+										"answer" : 4
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "పె",
+											"count" : "",
+											"image" : null,
+											"audio" : null
+										},
+										"answer" : 3
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "కు ",
+											"count" : "",
+											"image" : null,
+											"audio" : null
+										},
+										"answer" : 2
+									}
+								]
+							}
+						]
+					},
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"shuffle" : false,
+					"used_for" : "assessment",
+					"owner" : "Ilimi",
+					"max_score" : 1,
+					"gradeLevel" : ["Grade 1"],
+					"item_sets" : [{
+							"id" : "domain_47593",
+							"count" : 1
+						}
+					],
+					"language" : ["English"],
+					"identifier" : "domain_47593"
+				}
+			}, {
+				"name" : "dictionary",
+				"type" : "data",
+				"id" : "dictionary",
+				"__cdata" : {}
+
+			}
+		],
+		"startStage" : "scene139202fa-2ad9-46b7-8cb0-c31d4af34907",
+		"id" : "theme",
+		"ver" : 0.3,
+		"stage" : [{
+				"id" : "baseStage1",
+				"preload" : true,
+				"image" : [{
+						"asset" : "grey"
+					}, {
+						"asset" : "domain_47396"
+					}, {
+						"asset" : "domain_47397"
+					}, {
+						"asset" : "domain_47398"
+					}, {
+						"asset" : "domain_47399"
+					}, {
+						"asset" : "domain_47400"
+					}, {
+						"asset" : "domain_47488"
+					}, {
+						"asset" : "domain_47489"
+					}, {
+						"asset" : "domain_47514"
+					}, {
+						"asset" : "domain_47515"
+					}, {
+						"asset" : "domain_47546"
+					}, {
+						"asset" : "domain_47547"
+					}, {
+						"asset" : "domain_47589"
+					}, {
+						"asset" : "domain_47590"
+					}, {
+						"asset" : "domain_47591"
+					}, {
+						"asset" : "validate"
+					}, {
+						"asset" : "popupTint"
+					}, {
+						"asset" : "goodjobBg"
+					}, {
+						"asset" : "retryBg"
+					}, {
+						"asset" : "next"
+					}, {
+						"asset" : "previous"
+					}, {
+						"asset" : "submit"
+					}, {
+						"asset" : "home"
+					}, {
+						"asset" : "reload"
+					}, {
+						"asset" : "icon_hint"
+					}, {
+						"asset" : "speech_bubble"
+					}, {
+						"asset" : "yellowbox"
+					}, {
+						"asset" : "greenbox"
+					}, {
+						"asset" : "bg"
+					}
+				],
+				"audio" : [{
+						"asset" : "retry_audio"
+					}, {
+						"asset" : "goodjob_audio"
+					}
+				]
+			}, {
+				"id" : "scene139202fa-2ad9-46b7-8cb0-c31d4af34907",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [],
+				"events" : {
+					"event" : [{
+							"action" : [{
+									"type" : "command",
+									"command" : "play",
+									"asset" : "retry_audio"
+								}, {
+									"type" : "command",
+									"command" : "show",
+									"asset" : "retryDialog"
+								}, {
+									"tween" : {
+										"to" : {
+											"ease" : "bounceOut ",
+											"duration" : 1500,
+											"__cdata" : {
+												"x" : 20,
+												"y" : 20,
+												"w" : 40,
+												"h" : 30
+											}
+										},
+										"id" : "retryShowAnim"
+									},
+									"type" : "animation",
+									"asset" : "retryDialog"
+								}
+							],
+							"type" : "wrong_response"
+						}, {
+							"action" : [{
+									"type" : "command",
+									"command" : "play",
+									"asset" : "goodjob_audio"
+								}, {
+									"type" : "command",
+									"command" : "show",
+									"asset" : "goodjobDialog"
+								}, {
+									"tween" : {
+										"to" : {
+											"ease" : "bounceOut",
+											"duration" : 1500,
+											"__cdata" : {
+												"x" : 20,
+												"y" : 20,
+												"w" : 40,
+												"h" : 30
+											}
+										},
+										"id" : "gjShowAnim"
+									},
+									"type" : "animation",
+									"asset" : "goodjobDialog"
+								}
+							],
+							"type" : "correct_response"
+						}
+					]
+				},
+				"image" : [{
+						"event" : {
+							"action" : [{
+									"type" : "command",
+									"command" : "eval",
+									"asset" : "scene139202fa-2ad9-46b7-8cb0-c31d4af34907",
+									"success" : "correct_response",
+									"failure" : "wrong_response"
+								}, {
+									"type" : "command",
+									"command" : "HIDEHTMLELEMENTS",
+									"asset" : "scene139202fa-2ad9-46b7-8cb0-c31d4af34907"
+								}
+							],
+							"type" : "click"
+						},
+						"asset" : "validate",
+						"x" : 91,
+						"y" : 15,
+						"h" : 15
+					}
+				],
+				"text" : [],
+				"shape" : [],
+				"hotspot" : [],
+				"embed" : [],
+				"div" : [],
+				"audio" : [],
+				"scribble" : [],
+				"g" : [{
+						"embed" : {
+							"template" : "item",
+							"var-item" : "item"
+						},
+						"x" : 10,
+						"y" : 0,
+						"w" : 80,
+						"h" : 90
+					}, {
+						"embed" : {
+							"template-name" : "retry"
+						},
+						"x" : 30,
+						"y" : -40,
+						"w" : 40,
+						"h" : 48,
+						"id" : "retryDialog",
+						"visible" : false
+					}, {
+						"embed" : {
+							"template-name" : "goodjob"
+						},
+						"x" : 30,
+						"y" : -40,
+						"w" : 40,
+						"h" : 48,
+						"id" : "goodjobDialog",
+						"visible" : false
+					}
+				],
+				"iterate" : "assessment_139202fa-2ad9-46b7-8cb0-c31d4af34907",
+				"preload" : true,
+				"var" : "item",
+				"appEvents" : {
+					"list" : "next_item,correct_response,wrong_response"
+				}
+			}
+		]
+	}
+}

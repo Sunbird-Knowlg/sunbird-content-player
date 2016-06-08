@@ -1,0 +1,492 @@
+{
+    "identifier": "learning_numbers",
+    "title": "Learning Numbers",
+    "total_items": 10,
+    "max_score": 10,
+    "shuffle": false,
+    "subject": "NUM",
+    "item_sets": [{
+        "id": "set_1",
+        "count": 10
+    }],
+    "items": {
+        "set_1": [{
+                "identifier": "Q1",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_hor_add",
+                "qlevel": "MEDIUM",
+                "title": "11 + 4 = ?",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "horizontal_addition_ten",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "14",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "15",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "23",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "24",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },
+        {
+                "identifier": "Q2",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_hor_add",
+                "qlevel": "MEDIUM",
+                "title": "19 + 2 = ?",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "horizontal_addition_ten",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "12",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "29",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "31",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "21",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },
+        {
+                "identifier": "Q3",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_hor_add",
+                "qlevel": "MEDIUM",
+                "title": "3 + 25 = ?",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "horizontal_addition_ten",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "28",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "82",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "75",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "38",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },{
+                "identifier": "Q4",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_hor_add",
+                "qlevel": "MEDIUM",
+                "title": "12 + 16 = ?",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "horizontal_addition_ten",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "27",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "46",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "28",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "72",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },
+        {
+                "identifier": "Q5",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_hor_add",
+                "qlevel": "MEDIUM",
+                "title": "3 + 47 = ?",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "horizontal_addition_ten",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "60",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "50",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "67",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "40",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },{
+                "identifier": "Q6",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_hor_add",
+                "qlevel": "MEDIUM",
+                "title": "44 + 8 = ?",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "horizontal_addition_ten",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "11",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "50",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "52",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "62",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },{
+                "identifier": "Q7",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_hor_add",
+                "qlevel": "MEDIUM",
+                "title": "25 + 9 = ?",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "horizontal_addition_ten",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "34",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "39",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "45",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "82",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },
+        {
+                "identifier": "Q8",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_hor_add",
+                "qlevel": "MEDIUM",
+                "title": "24 + 34 = ?",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "horizontal_addition_ten",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "64",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "87",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "58",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "39",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },{
+                "identifier": "Q9",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_hor_add",
+                "qlevel": "MEDIUM",
+                "title": "28 + 38 = ?",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "horizontal_addition_ten",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "58",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "66",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "98",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "48",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },
+        {
+                "identifier": "Q10",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_hor_add",
+                "qlevel": "MEDIUM",
+                "title": "7 + 38 = ?",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "horizontal_addition_ten",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "49",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "68",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "56",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "45",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        }
+    ]
+
+    }
+}

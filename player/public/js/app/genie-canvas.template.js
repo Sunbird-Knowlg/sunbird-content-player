@@ -34,8 +34,8 @@ angular.module('genie-canvas.template',[])
             $scope.item = data;
             $rootScope.content = data;
         });
-
-        //$rootScope.stories = [data];
+        // This is used by ContentCtrl.
+        $rootScope.stories = [data];
         var identifier = (data && data.identifier) ? data.identifier : null;
         var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
         TelemetryService.start(identifier, version);
@@ -120,7 +120,12 @@ angular.module('genie-canvas.template',[])
     $scope.arrayToString = function(array) {
         return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", "): "";   
     };
+<<<<<<< HEAD
     
+=======
+    $scope.creditsBody = '<div class="credit-popup"><img ng-src="{{icons.popup.credit_popup}}" style="width:100%;" /><div class="popup-body"><div style="width: 82%;height:75%;left: 12%;top: 0%;position: absolute;font-family: SkaterGirlsRock;font-size: 1em;"><table style="width:100%; table-layout: fixed;"><tr><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-if="content.voiceCredits"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-if="content.soundCredits"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup_close.close_icon}}" style="width:100%; left:70%;"/></a></div>';
+    var content = $rootScope.content;
+>>>>>>> c03aa895ce5a5ff6a4f9474917bcf2b246c712cf
     $scope.setCredits = function(key) {
         content[key] = (content[key]) ? $scope.arrayToString(content[key]) : defaultMetadata[key];
     };

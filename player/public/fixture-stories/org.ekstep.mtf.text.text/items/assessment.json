@@ -1,0 +1,78 @@
+﻿{
+	"identifier": "DAY1_1",
+	"title": "DAY1_1 Assessment",
+	"total_items": 1,
+	"shuffle":false,
+	"showImmediateFeedback": false,
+	"max_score": 4,
+	"subject": "LIT",
+	"item_sets": [
+		{
+			"id": "set_1",
+        	"count": 1	
+		}
+	],
+	"items": {
+		"set_1" : [
+		
+			{"type": "mtf",	
+				
+				"template_id": "org.ekstep.mtf.text.text", 
+				"template": "org.ekstep.mtf.text.text",
+				"title": "Question text goes here ",
+				"question": "",
+				"question_image": "", 
+				"question_audio": "friday",
+				"question_count": "",
+
+				
+				"lhs_options": [
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "", "text":"Dummy Text"},
+						"index": 0
+					},
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "", "text":"Dummy Text"},
+						"index": 1
+					},
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "", "text":"Dummy Text"},
+						"index": 2
+					},
+					{
+						"value": {"type": "mixed", "audio": "friday", "image": "", "text":"Dummy Text"},
+						"index": 3
+					}
+					
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "mixed", "audio": null, "image": "", "text":"Dummy Text"},
+						"answer": 3
+					},
+					{
+						"value": {"type": "mixed", "audio": null, "image": "", "text":"Dummy Text"},
+						"answer": 2
+					},
+					{
+						"value": {"type": "mixed", "audio": null, "image": "", "text":"Dummy Text"},
+						"answer": 1
+					},
+					{
+						"value": {"type": "mixed", "audio": null, "image": "", "text":"Dummy Text"},
+						"answer": 0
+					}
+				],
+				"model" : {
+					},
+
+	   
+				"keywords": ["array", "of", "strings"]
+				}
+			
+			
+			
+			
+		]
+	}
+}

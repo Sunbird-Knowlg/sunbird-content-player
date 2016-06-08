@@ -1,0 +1,1974 @@
+<theme startStage="splash" id="theme" ver="0.2">
+	<manifest>
+		<media id="bgMath" src="images/bg_math.png" type="image" />
+		<media id="home" src="images/home_icon.png" type="image" />
+		<media id="next" src="images/icon_next.png" type="image" />
+		<media id="previous" src="images/icon_previous.png" type="image" />
+		<media id="icon_sound" src="images/icon_sound.png" type="image" />
+		<media id="homeSM" src="images/home_iconSM.png" type="image" />
+        <media id="retrybg" src="images/retryBg.png" type="image" />
+        <media id="goodjobbg" src="images/goodjobBg.png" type="image" />
+		<media id="shape_ellipse" src="images/ellipse.png" type="image"/>
+		<media id="ellipse-1" src="images/ellipse-1.png" type="image"/>
+		<media id="one_stick" src="images/1Pencil.png" type="image"/>
+		<media id="bunch_stick" src="images/10Pencil.png" type="image"/>
+        <media id="onehand" src="images/1h.png" type="image" />
+        <media id="twohand" src="images/2h.png" type="image" />
+        <media id="threehand" src="images/3h.png" type="image" />
+        <media id="fourhand" src="images/4h.png" type="image" />
+        <media id="fivehand" src="images/5h.png" type="image" />
+        <media id="onehand_i" src="images/1hi.png" type="image" />
+        <media id="twohand_i" src="images/2hi.png" type="image" />
+        <media id="threehand_i" src="images/3hi.png" type="image" />
+        <media id="fourhand_i" src="images/4hi.png" type="image" />
+        <media id="fivehand_i" src="images/5hi.png" type="image" />
+        <media src="audios/num_audio/sahijawaab.mp3" id="sahijawaab" type="audio"/>
+        <media src="audios/num_audio/fir prayaas kare.mp3" id="firprayaaskare" type="audio"/>
+        <media src="audios/PC AD XX.mp3" id="add_sound" type="audio"/>
+        <media src="audios/PC AD XX 2.mp3" id="select_ans_sound" type="audio"/>
+        <media src="audios/PC PV XX 1.mp3" id="kitane_gin_sound" type="audio"/>
+        <media src="audios/PC PV XX 2.mp3" id="sahi_tiliya_sound" type="audio"/>
+        <media src="audios/PC SB XX.mp3" id="sub_sound" type="audio"/>
+        <media src="audios/PC NR 01.mp3" id="mcq1_sound" type="audio"/>
+        <media src="audios/PC NR 02.mp3" id="mcq2_sound" type="audio"/>
+        <media src="audios/PC NR 03.mp3" id="mtf1_sound" type="audio"/>
+        <media src="audios/PC NR 04.mp3" id="findNumber_audio" type="audio"/>
+        <media src="audios/num_audio/1_hindi.mp3" id="1_sound" type="audio"/>
+        <media src="audios/num_audio/2_hindi.mp3" id="2_sound" type="audio"/>
+        <media src="audios/num_audio/3_hindi.mp3" id="3_sound" type="audio"/>
+        <media src="audios/num_audio/4_hindi.mp3" id="4_sound" type="audio"/>
+        <media src="audios/num_audio/5_hindi.mp3" id="5_sound" type="audio"/>
+        <media src="audios/num_audio/6_hindi.mp3" id="6_sound" type="audio"/>
+        <media src="audios/num_audio/7_hindi.mp3" id="7_sound" type="audio"/>
+        <media src="audios/num_audio/8_hindi.mp3" id="8_sound" type="audio"/>
+        <media src="audios/num_audio/9_hindi.mp3" id="9_sound" type="audio"/>
+        <media src="audios/num_audio/10_hindi.mp3" id="10_sound" type="audio"/>
+        <media src="audios/num_audio/11_hindi.mp3" id="11_sound" type="audio"/>
+        <media src="audios/num_audio/12_hindi.mp3" id="12_sound" type="audio"/>
+        <media src="audios/num_audio/13_hindi.mp3" id="13_sound" type="audio"/>
+        <media src="audios/num_audio/14_hindi.mp3" id="14_sound" type="audio"/>
+        <media src="audios/num_audio/15_hindi.mp3" id="15_sound" type="audio"/>
+        <media src="audios/num_audio/16_hindi.mp3" id="16_sound" type="audio"/>
+        <media src="audios/num_audio/17_hindi.mp3" id="17_sound" type="audio"/>
+        <media src="audios/num_audio/18_hindi.mp3" id="18_sound" type="audio"/>
+        <media src="audios/num_audio/19_hindi.mp3" id="19_sound" type="audio"/>
+        <media src="audios/num_audio/20_hindi.mp3" id="20_sound" type="audio"/>
+        <media src="audios/num_audio/21_hindi.mp3" id="21_sound" type="audio"/>
+        <media src="audios/num_audio/22_hindi.mp3" id="22_sound" type="audio"/>
+        <media src="audios/num_audio/23_hindi.mp3" id="23_sound" type="audio"/>
+        <media src="audios/num_audio/24_hindi.mp3" id="24_sound" type="audio"/>
+        <media src="audios/num_audio/25_hindi.mp3" id="25_sound" type="audio"/>
+        <media src="audios/num_audio/26_hindi.mp3" id="26_sound" type="audio"/>
+        <media src="audios/num_audio/27_hindi.mp3" id="27_sound" type="audio"/>
+        <media src="audios/num_audio/28_hindi.mp3" id="28_sound" type="audio"/>
+        <media src="audios/num_audio/29_hindi.mp3" id="29_sound" type="audio"/>
+        <media src="audios/num_audio/30_hindi.mp3" id="30_sound" type="audio"/>
+        <media src="audios/num_audio/31_hindi.mp3" id="31_sound" type="audio"/>
+        <media src="audios/num_audio/32_hindi.mp3" id="32_sound" type="audio"/>
+        <media src="audios/num_audio/33_hindi.mp3" id="33_sound" type="audio"/>
+        <media src="audios/num_audio/34_hindi.mp3" id="34_sound" type="audio"/>
+        <media src="audios/num_audio/35_hindi.mp3" id="35_sound" type="audio"/>
+        <media src="audios/num_audio/36_hindi.mp3" id="36_sound" type="audio"/>
+        <media src="audios/num_audio/37_hindi.mp3" id="37_sound" type="audio"/>
+        <media src="audios/num_audio/38_hindi.mp3" id="38_sound" type="audio"/>
+        <media src="audios/num_audio/39_hindi.mp3" id="39_sound" type="audio"/>
+        <media src="audios/num_audio/40_hindi.mp3" id="40_sound" type="audio"/>
+        <media src="audios/num_audio/41_hindi.mp3" id="41_sound" type="audio"/>
+        <media src="audios/num_audio/42_hindi.mp3" id="42_sound" type="audio"/>
+        <media src="audios/num_audio/43_hindi.mp3" id="43_sound" type="audio"/>
+        <media src="audios/num_audio/44_hindi.mp3" id="44_sound" type="audio"/>
+        <media src="audios/num_audio/45_hindi.mp3" id="45_sound" type="audio"/>
+        <media src="audios/num_audio/46_hindi.mp3" id="46_sound" type="audio"/>
+        <media src="audios/num_audio/47_hindi.mp3" id="47_sound" type="audio"/>
+        <media src="audios/num_audio/48_hindi.mp3" id="48_sound" type="audio"/>
+        <media src="audios/num_audio/49_hindi.mp3" id="49_sound" type="audio"/>
+        <media src="audios/num_audio/50_hindi.mp3" id="50_sound" type="audio"/>
+        <media src="audios/num_audio/51_hindi.mp3" id="51_sound" type="audio"/>
+        <media src="audios/num_audio/52_hindi.mp3" id="52_sound" type="audio"/>
+        <media src="audios/num_audio/53_hindi.mp3" id="53_sound" type="audio"/>
+        <media src="audios/num_audio/54_hindi.mp3" id="54_sound" type="audio"/>
+        <media src="audios/num_audio/55_hindi.mp3" id="55_sound" type="audio"/>
+        <media src="audios/num_audio/56_hindi.mp3" id="56_sound" type="audio"/>
+        <media src="audios/num_audio/57_hindi.mp3" id="57_sound" type="audio"/>
+        <media src="audios/num_audio/58_hindi.mp3" id="58_sound" type="audio"/>
+        <media src="audios/num_audio/59_hindi.mp3" id="59_sound" type="audio"/>
+        <media src="audios/num_audio/60_hindi.mp3" id="60_sound" type="audio"/>
+        <media src="audios/num_audio/61_hindi.mp3" id="61_sound" type="audio"/>
+        <media src="audios/num_audio/62_hindi.mp3" id="62_sound" type="audio"/>
+        <media src="audios/num_audio/63_hindi.mp3" id="63_sound" type="audio"/>
+        <media src="audios/num_audio/64_hindi.mp3" id="64_sound" type="audio"/>
+        <media src="audios/num_audio/65_hindi.mp3" id="65_sound" type="audio"/>
+        <media src="audios/num_audio/66_hindi.mp3" id="66_sound" type="audio"/>
+        <media src="audios/num_audio/67_hindi.mp3" id="67_sound" type="audio"/>
+        <media src="audios/num_audio/68_hindi.mp3" id="68_sound" type="audio"/>
+        <media src="audios/num_audio/69_hindi.mp3" id="69_sound" type="audio"/>
+        <media src="audios/num_audio/70_hindi.mp3" id="70_sound" type="audio"/>
+        <media src="audios/num_audio/71_hindi.mp3" id="71_sound" type="audio"/>
+        <media src="audios/num_audio/72_hindi.mp3" id="72_sound" type="audio"/>
+        <media src="audios/num_audio/73_hindi.mp3" id="73_sound" type="audio"/>
+        <media src="audios/num_audio/74_hindi.mp3" id="74_sound" type="audio"/>
+        <media src="audios/num_audio/75_hindi.mp3" id="75_sound" type="audio"/>
+        <media src="audios/num_audio/76_hindi.mp3" id="76_sound" type="audio"/>
+        <media src="audios/num_audio/77_hindi.mp3" id="77_sound" type="audio"/>
+        <media src="audios/num_audio/78_hindi.mp3" id="78_sound" type="audio"/>
+        <media src="audios/num_audio/79_hindi.mp3" id="79_sound" type="audio"/>
+        <media src="audios/num_audio/80_hindi.mp3" id="80_sound" type="audio"/>
+        <media src="audios/num_audio/81_hindi.mp3" id="81_sound" type="audio"/>
+        <media src="audios/num_audio/82_hindi.mp3" id="82_sound" type="audio"/>
+        <media src="audios/num_audio/83_hindi.mp3" id="83_sound" type="audio"/>
+        <media src="audios/num_audio/84_hindi.mp3" id="84_sound" type="audio"/>
+        <media src="audios/num_audio/85_hindi.mp3" id="85_sound" type="audio"/>
+        <media src="audios/num_audio/86_hindi.mp3" id="86_sound" type="audio"/>
+        <media src="audios/num_audio/87_hindi.mp3" id="87_sound" type="audio"/>
+        <media src="audios/num_audio/88_hindi.mp3" id="88_sound" type="audio"/>
+        <media src="audios/num_audio/89_hindi.mp3" id="89_sound" type="audio"/>
+        <media src="audios/num_audio/90_hindi.mp3" id="90_sound" type="audio"/>
+        <media src="audios/num_audio/91_hindi.mp3" id="91_sound" type="audio"/>
+        <media src="audios/num_audio/92_hindi.mp3" id="92_sound" type="audio"/>
+        <media src="audios/num_audio/93_hindi.mp3" id="93_sound" type="audio"/>
+        <media src="audios/num_audio/94_hindi.mp3" id="94_sound" type="audio"/>
+        <media src="audios/num_audio/95_hindi.mp3" id="95_sound" type="audio"/>
+        <media src="audios/num_audio/96_hindi.mp3" id="96_sound" type="audio"/>
+        <media src="audios/num_audio/97_hindi.mp3" id="97_sound" type="audio"/>
+        <media src="audios/num_audio/98_hindi.mp3" id="98_sound" type="audio"/>
+        <media src="audios/num_audio/99_hindi.mp3" id="99_sound" type="audio"/>
+        <media src="audios/num_audio/100_hindi.mp3" id="100_sound" type="audio"/>
+
+	</manifest>
+	<stage id="baseStage" preload="true">
+		<image asset="bgMath" />
+		<image asset="home" />
+		<image asset="homeSM" />
+		<image asset="next" />
+		<image asset="previous" />
+		<image asset="retrybg" />
+		<image asset="goodjobbg" />
+		<image asset="shape_ellipse" />
+		<image asset="ellipse-1" />
+		<audio asset="sahijawaab"/>
+		<audio asset="firprayaaskare"/>
+		<image asset="one_stick"/>
+		<image asset="bunch_stick"/>
+		<audio asset="findNumber_audio"/>
+		<audio asset="mcq1_sound"/>
+		<audio asset="mcq2_sound"/>
+		<audio asset="add_sound"/>
+		<audio asset="sub_sound"/>
+		<image asset="onehand"/>
+		<image asset="twohand"/>
+		<image asset="threehand"/>
+		<image asset="fourhand"/>
+		<image asset="fivehand"/>
+		<image asset="onehand_i"/>
+		<image asset="twohand_i"/>
+		<image asset="threehand_i"/>
+		<image asset="fourhand_i"/>
+		<image asset="fivehand_i"/>
+		<audio asset="mtf1_sound"/>
+		<audio asset="select_ans_sound"/>
+		<audio asset="kitane_gin_sound"/>
+		<audio asset="sahi_tiliya_sound"/>
+		<audio asset="1_sound"/>
+		<audio asset="2_sound"/>
+		<audio asset="3_sound"/>
+		<audio asset="4_sound"/>
+		<audio asset="5_sound"/>
+		<audio asset="6_sound"/>
+		<audio asset="7_sound"/>
+		<audio asset="8_sound"/>
+		<audio asset="9_sound"/>
+		<audio asset="10_sound"/>
+		<audio asset="11_sound"/>
+		<audio asset="12_sound"/>
+		<audio asset="13_sound"/>
+		<audio asset="14_sound"/>
+		<audio asset="15_sound"/>
+		<audio asset="16_sound"/>
+		<audio asset="17_sound"/>
+		<audio asset="18_sound"/>
+		<audio asset="19_sound"/>
+		<audio asset="20_sound"/>
+		<audio asset="21_sound"/>
+		<audio asset="22_sound"/>
+		<audio asset="23_sound"/>
+		<audio asset="24_sound"/>
+		<audio asset="25_sound"/>
+		<audio asset="26_sound"/>
+		<audio asset="27_sound"/>
+		<audio asset="28_sound"/>
+		<audio asset="29_sound"/>
+		<audio asset="30_sound"/>
+		<audio asset="31_sound"/>
+		<audio asset="32_sound"/>
+		<audio asset="33_sound"/>
+		<audio asset="34_sound"/>
+		<audio asset="35_sound"/>
+		<audio asset="36_sound"/>
+		<audio asset="37_sound"/>
+		<audio asset="38_sound"/>
+		<audio asset="39_sound"/>
+		<audio asset="40_sound"/>
+		<audio asset="41_sound"/>
+		<audio asset="42_sound"/>
+		<audio asset="43_sound"/>
+		<audio asset="44_sound"/>
+		<audio asset="45_sound"/>
+		<audio asset="46_sound"/>
+		<audio asset="47_sound"/>
+		<audio asset="48_sound"/>
+		<audio asset="49_sound"/>
+		<audio asset="50_sound"/>
+		<audio asset="51_sound"/>
+		<audio asset="52_sound"/>
+		<audio asset="53_sound"/>
+		<audio asset="54_sound"/>
+		<audio asset="55_sound"/>
+		<audio asset="56_sound"/>
+		<audio asset="57_sound"/>
+		<audio asset="58_sound"/>
+		<audio asset="59_sound"/>
+		<audio asset="60_sound"/>
+		<audio asset="61_sound"/>
+		<audio asset="62_sound"/>
+		<audio asset="63_sound"/>
+		<audio asset="64_sound"/>
+		<audio asset="65_sound"/>
+		<audio asset="66_sound"/>
+		<audio asset="67_sound"/>
+		<audio asset="68_sound"/>
+		<audio asset="69_sound"/>
+		<audio asset="70_sound"/>
+		<audio asset="71_sound"/>
+		<audio asset="72_sound"/>
+		<audio asset="73_sound"/>
+		<audio asset="74_sound"/>
+		<audio asset="75_sound"/>
+		<audio asset="76_sound"/>
+		<audio asset="77_sound"/>
+		<audio asset="78_sound"/>
+		<audio asset="79_sound"/>
+		<audio asset="80_sound"/>
+		<audio asset="81_sound"/>
+		<audio asset="82_sound"/>
+		<audio asset="83_sound"/>
+		<audio asset="84_sound"/>
+		<audio asset="85_sound"/>
+		<audio asset="86_sound"/>
+		<audio asset="87_sound"/>
+		<audio asset="88_sound"/>
+		<audio asset="89_sound"/>
+		<audio asset="90_sound"/>
+		<audio asset="91_sound"/>
+		<audio asset="92_sound"/>
+		<audio asset="93_sound"/>
+		<audio asset="94_sound"/>
+		<audio asset="95_sound"/>
+		<audio asset="96_sound"/>
+		<audio asset="97_sound"/>
+		<audio asset="98_sound"/>
+		<audio asset="99_sound"/>
+		<audio asset="100_sound"/>
+	</stage>
+	<!-- data controller -->
+	<controller id="numberchart" name="chartDetails" type="data" />
+	<controller name="instruct" type="data" id="instruction"/>
+	<!-- count fingers -->
+	<controller id="one_ten_hands" name="one_ten_hands" type="items" />
+	<!-- find numbers within given range -->
+	<controller id="one_twenty" name="one_twenty" type="items" />
+	<controller id="twenty_fourty" name="twenty_fourty" type="items" />
+	<controller id="fourty_sixty" name="fourty_sixty" type="items" />
+	<controller id="sixty_eighty" name="sixty_eighty" type="items" />
+	<controller id="eighty_hundred" name="eighty_hundred" type="items" />
+	<!-- fill the missing number -->
+	<controller id="one_twenty_mtf" name="one_twenty_mtf" type="items" />
+	<controller id="twenty_fourty_mtf" name="twenty_fourty_mtf" type="items" />
+	<controller id="fourty_sixty_mtf" name="fourty_sixty_mtf" type="items" />
+	<controller id="eighty_hundred_mtf" name="eighty_hundred_mtf" type="items" />
+	<controller id="sixty_eighty_mtf" name="sixty_eighty_mtf" type="items" />
+	<!-- touch listen and see the numbers -->
+	<controller id="one_twenty_grid" name="one_twenty_grid" type="items" />
+	<controller id="twenty_fourty_grid" name="twenty_fourty_grid" type="items" />
+	<controller id="fourty_sixty_grid" name="fourty_sixty_grid" type="items" />
+	<controller id="sixty_eighty_grid" name="sixty_eighty_grid" type="items" />
+	<controller id="eighty_hundred_grid" name="eighty_hundred_grid" type="items" />
+	<controller id="one_hundred_grid" name="one_hundred_grid" type="items" />
+	<!-- horizonal addition and subtraction with numbers -->
+	<controller id="hor_add_one" name="hor_add_one" type="items" />
+	<controller id="hor_add_ten" name="hor_add_ten" type="items" />
+	<controller id="hor_sub_one" name="hor_sub_one" type="items" />
+	<controller id="hor_sub_ten" name="hor_sub_ten" type="items" />
+	<!-- horizonal addition  and subtraction with numbers fill the missing number-->
+	<controller id="hor_add_miss_one" name="hor_add_miss_one" type="items" />
+	<controller id="hor_add_miss_ten" name="hor_add_miss_ten" type="items" />
+	<controller id="hor_sub_miss_one" name="hor_sub_miss_one" type="items" />
+	<controller id="hor_sub_miss_ten" name="hor_sub_miss_ten" type="items" />
+	<!-- Vertical addition and subtraction with pictures -->
+	<controller id="ver_add_one" name="ver_add_one" type="items" />
+	<controller id="ver_add_ten" name="ver_add_ten" type="items" />
+	<controller id="ver_add_with_carry" name="ver_add_with_carry" type="items" />
+	<controller id="ver_sub_one" name="ver_sub_one" type="items" />
+	<controller id="ver_sub_ten" name="ver_sub_ten" type="items" />
+	<controller id="ver_sub_with_borrow" name="ver_sub_with_borrow" type="items" />
+	<!-- Counting sticks -->
+	<controller id="count_sticks_one" name="count_sticks_one" type="items" />
+	<controller id="count_sticks_ten" name="count_sticks_ten" type="items" />
+	<!-- picking correct sticks -->
+	<controller id="correct_sticks_one" name="correct_sticks_one" type="items" />
+	<controller id="correct_sticks_ten" name="correct_sticks_ten" type="items" />
+	
+	<!-- Addition through images -->
+	<controller id="add_image_one" name="add_image_one" type="items" />
+	<controller id="add_image_ten_without_carry" name="add_image_ten_without_carry" type="items" />
+	<controller id="add_image_ten_with_carry" name="add_image_ten_with_carry" type="items" />
+	<!-- Subtraction through images -->
+	<controller id="sub_image_one" name="sub_image_one" type="items"/>
+	<controller id="sub_image_ten_without_borrow" name="sub_image_ten_without_borrow" type="items"/>
+
+
+	<template id="retry">
+        <g x="-10" y="-10" w="100" h="100" visible="true" z-index="100">
+            <image asset="retrybg" x="0" y="0" w="100" h="100" visible="true" id="right"/>
+            <shape type="rect" x="15" y="57" w="30" h="30" visible="true" id="right" hitArea="true">
+                <event type="click">
+                    <!-- <action type="command" command="hide" asset="retryDialog" /> -->
+                    <action type="command" command="reload" asset_model="item.stageId" effect="fadeIn" direction="left" ease="linear" duration="500"/>
+                </event>
+            </shape>
+            <shape type="rect" x="55" y="57" w="30" h="30" visible="true" id="right" hitArea="true">
+                <event type="click">
+                    <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+                </event>
+            </shape>
+        </g>
+    </template>
+    <template id="goodjob">
+        <g x="-10" y="-10" w="100" h="100"  visible="true">
+            <image asset="goodjobbg" x="0" y="0" w="100" h="100" visible="true" id="right">
+                <event type="click">
+                    <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+                </event>
+            </image>
+        </g>
+    </template>
+    <template id="mcq_template_add_sub_images">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="10" y="5" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="10" y="5" w="8" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="10" y="5" w="16" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="10" y="5" w="24" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="10" y="5" w="32" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="10" y="5" w="40" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="10" y="5" w="48" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="10" y="5" w="56" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="10" y="5" w="64" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="10" y="5" w="72" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape type="roundrect" x="0" y="0" w="100" h="100" stroke="black"></shape>
+			<text x="3" y="13" w="80" h="5" font="Verdana" fontsize="100" align="center" model="item.question"/>
+			<image asset="icon_sound" x="55" y="11" w="6" h="10" hitarea="true" z-index="100"> 
+	            <event type="click">
+	                <action type="command" command="toggleplay" asset_model="item.question_audio" />
+	            </event>
+	        </image>    
+					<set param="Qnum_lhs" scope="stage" model="item.question_value_lhs"/>
+					<set param="Qnum_rhs" scope="stage" model="item.question_value_rhs"/>
+					
+					<set param="QnumH_lhs" scope="stage" ev-value="Math.floor(stage.Qnum_lhs &#92; 100)"/>
+					<set param="QnumH_rhs" scope="stage" ev-value="Math.floor(stage.Qnum_rhs &#92; 100)"/>
+					
+					<set param="QnumT_lhs" scope="stage" ev-value="Math.floor((stage.Qnum_lhs % 100)/10)"/>
+					<set param="QnumT_rhs" scope="stage" ev-value="Math.floor((stage.Qnum_rhs % 100)/10)"/>
+					
+					<set param="QnumO_lhs" scope="stage" ev-value="stage.Qnum_lhs % 10"/>
+					<set param="QnumO_rhs" scope="stage" ev-value="stage.Qnum_rhs % 10"/>
+
+            		<placeholder ev-if="stage.Qnum_lhs &lt; 10" x="10" y="25" param-count="stage.Qnum_lhs" w="40" h="20" asset="one_stick" type="gridLayout" />
+            		
+            		<placeholder ev-if="stage.Qnum_lhs &gt; 10" x="10" y="25" param-count="stage.QnumT_lhs" w="40" h="5" asset="bunch_stick" type="gridLayout" />
+            		<placeholder ev-if="stage.Qnum_lhs &gt; 10" x="10" y="42.5" param-count="stage.QnumO_lhs" w="40" h="10" asset="one_stick" type="gridLayout" />
+            		
+            		<text x="50" y="35" w="2" h="15" font="Verdana" fontsize="100" align="center" param="operator"/>
+           		
+            		<placeholder ev-if="stage.Qnum_rhs &lt; 10" x="60" y="25" param-count="stage.Qnum_rhs" w="40" h="20" asset="one_stick" type="gridLayout" />
+            	
+					<placeholder ev-if="stage.Qnum_rhs &gt; 10" x="60" y="25" param-count="stage.QnumT_rhs" w="40" h="5" asset="bunch_stick" type="gridLayout" />
+            		<placeholder ev-if="stage.Qnum_rhs &gt; 10" x="60" y="42.5" param-count="stage.QnumO_rhs" w="40" h="10" asset="one_stick" type="gridLayout" />
+            		
+			<mcq multi_select="true" model="item" shadow="#000000" highlight="#feb296" density="10">
+            	<options layout="table" x="10" y="65" w="80" h="30" cols="5" marginX="2" marginY="10" options="options">
+            		
+            		<set param="num" scope="stage" model="option.value.text"/>
+					<set param="numH" scope="stage" ev-value="Math.floor(stage.num / 100)"/>
+					<set param="numT" scope="stage" ev-value="Math.floor((stage.num % 100)/10)"/>
+					<set param="numO" scope="stage" ev-value="stage.num % 10"/>
+            		<shape x="0" y="0" w="100" h="100" stroke="#999"/>
+            		<placeholder ev-if="stage.num &lt; 10 &amp;&amp; stage.numO &lt;= 10" x="0" y="0" param-count="stage.numO" w="100" h="50" asset="one_stick" type="gridLayout" />
+            			
+            		<placeholder ev-if="stage.num &gt;= 10 &amp;&amp; stage.numT &gt; 0" x="0" y="0.5" param-count="stage.numT" w="100" h="23.5" asset="bunch_stick" type="gridLayout" />
+            		<placeholder ev-if="stage.num &gt; 10 &amp;&amp; stage.numO &gt; 0" x="0" y="50" param-count="stage.numO" w="100" h="30" asset="one_stick" type="gridLayout" />
+            	</options>
+        	</mcq>
+		</g>
+	</template>
+    <template id="mcq_template_pick_correct">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="10" y="5" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="10" y="5" w="8" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="10" y="5" w="16" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="10" y="5" w="24" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="10" y="5" w="32" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="10" y="5" w="40" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="10" y="5" w="48" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="10" y="5" w="56" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="10" y="5" w="64" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="10" y="5" w="72" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape type="roundrect" x="0" y="0" w="100" h="100" stroke="black"></shape>
+			<text x="3" y="15" w="80" h="5" font="Verdana" fontsize="100" align="center" model="item.question"/>       
+			<image asset="icon_sound" x="73" y="13" w="6" h="10" hitarea="true" z-index="100"> 
+	            <event type="click">
+	                <action type="command" command="toggleplay" asset_model="item.question_audio" />
+	            </event>
+	        </image>    
+    		<text x="0" y="30" w="100" h="20" font="Verdana" fontsize="12.5em" model="item.question_value" align="center" valign="middle"/>
+			<mcq multi_select="true" model="item" shadow="#000000" highlight="#feb296" density="10">
+            	<options layout="table" x="10" y="60" w="80" h="35" cols="5" marginX="2" marginY="10" options="options">
+            		
+            		<set param="num" scope="stage" model="option.value.text"/>
+					<set param="numH" scope="stage" ev-value="Math.floor(stage.num / 100)"/>
+					<set param="numT" scope="stage" ev-value="Math.floor((stage.num % 100)/10)"/>
+					<set param="numO" scope="stage" ev-value="stage.num % 10"/>            		
+            		<shape x="0" y="0" w="100" h="100" stroke="#999"/>
+            		<placeholder ev-if="stage.num &lt; 10 &amp;&amp; stage.numO &lt;= 10" x="0" y="0" param-count="stage.numO" w="100" h="50" asset="one_stick" type="gridLayout" />
+            			
+            		<placeholder ev-if="stage.num &gt;= 10 &amp;&amp; stage.numT &gt; 0" x="0" y="0.5" param-count="stage.numT" w="100" h="23.5" asset="bunch_stick" type="gridLayout"/>
+            		<placeholder ev-if="stage.num &gt; 10 &amp;&amp; stage.numO &gt; 0" x="0" y="52" param-count="stage.numO" w="100" h="30" asset="one_stick" type="gridLayout" />
+            	</options>
+        	</mcq>
+		</g>
+	</template>
+	<template id="mcq_template_stick_counting">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="10" y="5" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="10" y="5" w="8" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="10" y="5" w="16" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="10" y="5" w="24" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="10" y="5" w="32" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="10" y="5" w="40" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="10" y="5" w="48" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="10" y="5" w="56" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="10" y="5" w="64" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="10" y="5" w="72" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape type="roundrect" x="0" y="0" w="100" h="100" stroke="black"></shape>
+			<text x="3" y="15" w="80" h="5" font="Verdana" fontsize="100" align="center" model="item.question"/>
+			<image asset="icon_sound" x="73" y="13" w="6" h="10" hitarea="true" z-index="100"> 
+	            <event type="click">
+	                <action type="command" command="toggleplay" asset_model="item.question_audio" />
+	            </event>
+	        </image>
+			<placeholder ev-if="item.question_value &lt;= 10" x="12" y="35" model-count="item.question_value_o" w="80" h="10" asset="one_stick" type="gridLayout" />
+			<placeholder ev-if="item.question_value &gt;= 10" x="5" y="25" model-count="item.question_value_t" w="47.5" h="25" asset="bunch_stick" type="gridLayout" />
+			<placeholder ev-if="item.question_value &gt;= 10" x="52.5" y="25" model-count="item.question_value_o" w="50" h="25" asset="one_stick" type="gridLayout" />
+			
+			<mcq multi_select="true" model="item" shadow="#000000" highlight="#feb296" density="10">
+            	<options layout="table" x="10" y="80" w="80" h="12" cols="5" marginX="2" marginY="10" options="options">
+            		<shape x="0" y="0" w="100" h="100" stroke="#999"/>
+            		<text x="0" y="0" w="100" h="100" font="Verdana" fontsize="2.5em" align="center" valign="middle" model="option.value.text"/>
+            	</options>
+        	</mcq>
+		</g>
+	</template>
+    <template id="mcq_hor_add">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="10" y="5" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="10" y="5" w="8" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="10" y="5" w="16" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="10" y="5" w="24" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="10" y="5" w="32" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="10" y="5" w="40" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="10" y="5" w="48" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="10" y="5" w="56" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="10" y="5" w="64" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="10" y="5" w="72" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape type="roundrect" x="0" y="0" w="100" h="100" stroke="black"></shape>
+			<text x="0" y="15" w="90" h="5" font="Verdana" fontsize="100" align="center" model="item.question"/>
+			<image asset="icon_sound" x="55" y="13" w="6" h="10" hitarea="true" z-index="100"> 
+	            <event type="click">
+	                <action type="command" command="toggleplay" asset_model="item.question_audio" />
+	            </event>
+	        </image>    
+	        <text x="0" y="25" w="100" h="30" valign="middle" font="Verdana" fontsize="150" align="center" model="item.title"/>
+			<mcq multi_select="false" model="item" shadow="#000000" highlight="#feb296" density="10">
+            	<options layout="table" x="10" y="60" w="80" h="20" cols="4" marginX="2" marginY="10" options="options">
+            		<shape x="0" y="0" w="100" h="100" stroke="#999"/>
+            		<text x="0" y="0" w="100" h="100" font="Verdana" fontsize="2.5em" align="center" valign="middle" model="option.value.text"/>
+            	</options>
+        	</mcq>
+		</g>
+	</template>
+	<template id="mcq_ver_add">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<set param="lhs_num" scope="stage" model="item.question_value_lhs"/>
+		<set param="lhs_numH" scope="stage" ev-value="Math.floor(stage.lhs_num / 100)"/>
+		<set param="lhs_numT" scope="stage" ev-value="Math.floor((stage.lhs_num % 100)/10)"/>
+		<set param="lhs_numO" scope="stage" ev-value="stage.lhs_num % 10"/>  
+
+		<set param="rhs_num" scope="stage" model="item.question_value_rhs"/>
+		<set param="rhs_numH" scope="stage" ev-value="Math.floor(stage.rhs_num / 100)"/>
+		<set param="rhs_numT" scope="stage" ev-value="Math.floor((stage.rhs_num % 100)/10)"/>
+		<set param="rhs_numO" scope="stage" ev-value="stage.rhs_num % 10"/>  
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="10" y="5" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="10" y="5" w="8" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="10" y="5" w="16" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="10" y="5" w="24" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="10" y="5" w="32" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="10" y="5" w="40" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="10" y="5" w="48" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="10" y="5" w="56" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="10" y="5" w="64" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="10" y="5" w="72" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape type="roundrect" x="0" y="0" w="100" h="100" stroke="black"></shape>
+			<text x="0" y="12" w="90" h="5" font="Verdana" fontsize="100" align="center" model="item.question"/>
+			<image asset="icon_sound" x="55" y="10" w="6" h="10" hitarea="true" z-index="100"> 
+	            <event type="click">
+	                <action type="command" command="toggleplay" asset_model="item.question_audio" />
+	            </event>
+	        </image>    
+	        <shape type="rect" x="20" y="22" w="15" h="20" stroke="black" />
+	        <shape type="rect" x="35" y="22" w="52" h="20" stroke="black" />
+	        <shape type="rect" x="20" y="42" w="15" h="20" stroke="black" />
+	        <shape type="rect" x="35" y="42" w="52" h="20" stroke="black" />
+	        <text  x="20" y="25" w="15" h="20" color="black" align="center" valign="middle" font="Verdana" fontsize="50" model="item.question_value_lhs" />
+	        <text  x="20" y="45" w="15" h="20" color="black" align="center" valign="middle" font="Verdana" fontsize="50" model="item.question_value_rhs" />
+	        <placeholder ev-if="stage.lhs_num &lt; 10 &amp;&amp; stage.lhs_numO &lt;= 10" x="35" y="21" w="40" h="10" param-count="stage.lhs_numO" asset="one_stick" type="gridLayout" />	
+    		<placeholder ev-if="stage.lhs_num &gt;= 10 &amp;&amp; stage.lhs_numT &gt; 0" x="37" y="22" w="25" h="10" param-count="stage.lhs_numT" asset="bunch_stick" type="gridLayout"/>
+    		<placeholder ev-if="stage.lhs_num &gt; 10 &amp;&amp; stage.lhs_numO &gt; 0" x="57" y="22" w="30" h="10" param-count="stage.lhs_numO"  asset="one_stick" type="gridLayout" />
+	        <text x="17" y="45" w="2" h="20" font="Verdana" fontsize="100" align="center" param="operator"/>
+
+	        <placeholder ev-if="stage.rhs_num &lt; 10 &amp;&amp; stage.rhs_numO &lt;= 10" x="35" y="41" w="40" h="10" param-count="stage.rhs_numO" asset="one_stick" type="gridLayout" />	
+    		<placeholder ev-if="stage.rhs_num &gt;= 10 &amp;&amp; stage.rhs_numT &gt; 0" x="35" y="42" w="25" h="10" param-count="stage.rhs_numT" asset="bunch_stick" type="gridLayout"/>
+    		<placeholder ev-if="stage.rhs_num &gt; 10 &amp;&amp; stage.rhs_numO &gt; 0" x="57" y="42" w="30" h="10" param-count="stage.rhs_numO"  asset="one_stick" type="gridLayout" />
+			<mcq multi_select="false" model="item" shadow="#000000" highlight="#feb296" density="10">
+            	<options layout="table" x="10" y="70" w="80" h="20" cols="4" marginX="2" marginY="10" options="options">
+            		<shape x="0" y="0" w="100" h="100" stroke="#999"/>
+            		<text x="0" y="0" w="100" h="100" font="Verdana" fontsize="2.5em" align="center" valign="middle" model="option.value.text"/>
+            	</options>
+        	</mcq>
+		</g>
+	</template>
+	<template id="mtf_miss_one">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="10" y="3" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="10" y="3" w="18" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="10" y="3" w="26" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="10" y="3" w="34" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="10" y="3" w="42" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="10" y="3" w="50" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="10" y="3" w="58" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="10" y="3" w="66" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="10" y="3" w="74" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="10" y="3" w="82" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<text model="item.question" x="10" y="7" w="80" font="Verdana" fontsize="80" color="black" />
+	        <image asset="icon_sound" x="40" y="5" w="6" h="10" hitarea="true" z-index="100"> 
+	            <event type="click">
+	                <action type="command" command="toggleplay" asset_model="item.question_audio" />
+	            </event>
+	        </image>          
+	        <mtf model="item" force="false">
+	            <option x="10" y="18" w="16" h="25" option="lhs_options[0]" snapX="8" snapY="5">
+					<text x="0" y="0" w="100" h="100" font="Verdana" weight="bold" align="center" valign="middle" fontsize="600" model="option.value.text" />
+					<shape ev-if="option.value.text == ''" x="7" y="0" w="85" h="100" fill="#ddd" stroke="#000"/>
+				</option>
+				<text x="26" y="18" w="16" h="25" font="Verdana" weight="bold" align="center" valign="middle" fontsize="90" param="operator" /> 
+				<option x="42" y="18" w="16" h="25" option="lhs_options[1]" snapX="8" snapY="5">
+					<text x="0" y="0" w="100" h="100" font="Verdana" weight="bold" align="center" valign="middle" fontsize="600" model="option.value.text" />
+					<shape ev-if="option.value.text == ''" x="7" y="0" w="85" h="100"	 fill="#ddd" stroke="#000"/>
+				</option>
+				<text x="58" y="18" w="16" h="25" font="Verdana" weight="bold" align="center" valign="middle" fontsize="90"> = </text>
+				<option x="74" y="18" w="16" h="25" option="lhs_options[2]">
+					<text x="0" y="0" w="100" h="100" font="Verdana" weight="bold" align="center" valign="middle" fontsize="600" model="option.value.text" />
+				</option>
+	            <options layout="table" x="20" y="55" w="60" h="25" cols="4" marginX="2.2" marginY="0" options="rhs_options">
+	                <text x="0" y="0" w="100" h="100" align="center" valign="middle" font="Verdana" weight="bold" fontsize="600" model="option.value.text" />
+	            </options>
+	        </mtf>
+
+		</g>    
+        
+    </template>
+    <template id="mcq_hands_template">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="10" y="5" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="10" y="5" w="8" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="10" y="5" w="16" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="10" y="5" w="24" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="10" y="5" w="32" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="10" y="5" w="40" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="10" y="5" w="48" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="10" y="5" w="56" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="10" y="5" w="64" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="10" y="5" w="72" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape type="roundrect" x="0" y="0" w="100" h="100" stroke="black"></shape>
+			<text x="3" y="15" w="80" h="5" font="Verdana" fontsize="100" align="center" model="item.question"/>
+			<image asset="icon_sound" x="80" y="13" w="6" h="10" hitarea="true" z-index="100"> 
+	            <event type="click">
+	                <action type="command" command="toggleplay" asset_model="item.question_audio" />
+	            </event>
+	        </image>    
+			<image ev-if="stage.ques.question_value &lt;= 5" model="item.question_image_s" x="40" y="25" w="40" h="40" stretch="false" />
+			<image ev-if="stage.ques.question_value &gt; 5" asset="fivehand" x="20" y="25" w="40" h="40" stretch="false" />
+			<image ev-if="stage.ques.question_value &gt; 5" model="item.question_image_s" x="55" y="25" w="40" h="40" stretch="false" />
+
+			<mcq multi_select="true" model="item" shadow="#000000" highlight="#feb296" density="10">
+            	<options layout="table" x="10" y="80" w="80" h="12" cols="5" marginX="2" marginY="10" options="options">
+            		<shape x="0" y="0" w="100" h="100" stroke="#999"/>
+            		<text x="0" y="0" w="100" h="100" font="Verdana" fontsize="2.5em" align="center" valign="middle" model="option.value.text"/>
+            	</options>
+        	</mcq>
+		</g>
+	</template>
+	<template id="mcq_template_5options">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="10" y="5" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="10" y="5" w="8" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="10" y="5" w="16" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="10" y="5" w="24" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="10" y="5" w="32" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="10" y="5" w="40" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="10" y="5" w="48" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="10" y="5" w="56" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="10" y="5" w="64" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="10" y="5" w="72" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape type="roundrect" x="0" y="0" w="100" h="100" stroke="black"></shape>
+			<text x="3" y="12" w="80" h="5" font="Verdana" fontsize="70" align="center" valign="middle" model="item.question"/>
+			<image asset="icon_sound" x="82" y="10" w="7" h="13" hitarea="true" z-index="100">
+				<event type="click">
+	                <action type="command" command="toggleplay" asset_model="item.question_audio" />
+	            </event>
+			</image>
+			<text x="3" y="20" w="80" h="5" font="Verdana" fontsize="70" align="center" valign="middle" model="item.title"/>
+			<mcq multi_select="true" model="item" shadow="#000000" highlight="#feb296" density="10">
+            	<options layout="table" x="10" y="30" w="80" h="55" cols="5" marginX="2" marginY="10" options="options">
+            		<shape x="0" y="0" w="100" h="100" stroke="#999"/>
+            		<text x="0" y="0" w="100" h="100" font="Verdana" fontsize="1.6em" align="center" valign="middle" model="option.value.text"/>
+            	</options>
+        	</mcq>	
+		</g>
+	</template>
+    <template id="mtf_5">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="0" y="3" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="0" y="3" w="8" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="0" y="3" w="16" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="0" y="3" w="24" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="0" y="3" w="32" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="0" y="3" w="40" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="0" y="3" w="48" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="0" y="3" w="56" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="0" y="3" w="64" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="0" y="3" w="72" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<text model="item.question" x="0" y="7" w="80" font="Verdana" fontsize="80" color="black" />
+	        <image asset="icon_sound" x="80" y="5" w="6" h="10" hitarea="true" z-index="100"> 
+	            <event type="click">
+	                <action type="command" command="toggleplay" asset_model="item.question_audio" />
+	            </event>
+	        </image>          
+	        <mtf model="item" force="false">
+	            <options layout="table" x="0" y="18" w="100" h="30" cols="5" marginX="0" marginY="0" options="lhs_options" highlight="#feb296" snapX="0.1" snapY="0.1">
+	            	<shape x="0" y="0" w="100" h="100" fill="#ddd" stroke="#000"/>
+	                <text x="0" y="0" w="100" h="100" align="center" valign="middle" font="Verdana" fontsize="400" model="option.value.text" />   
+	            </options>
+	            <options layout="table" x="29" y="55" w="42" h="30" cols="5" marginX="2.2" marginY="0" options="rhs_options">
+	                <shape x="0" y="0"  w="100" h="100" fill="#feb296" />
+	                <text x="0" y="0" w="100" h="100" align="center" valign="middle" font="Verdana" fontsize="400" model="option.value.text" />
+	                <!-- <image asset="icon_sound" x="43" y="67" w="25" h="30" hitarea="true" z-index="100">  
+	                </image> -->
+	                <!-- <event type="click">
+	                    <action type="command" command="play" asset_model="option.value.audio" />
+	                </event> -->
+	            </options>
+	        </mtf>
+
+		</g>    
+        
+    </template>
+    <template id="mtf_8">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="0" y="3" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="0" y="3" w="8" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="0" y="3" w="16" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="0" y="3" w="24" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="0" y="3" w="32" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="0" y="3" w="40" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="0" y="3" w="48" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="0" y="3" w="56" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="0" y="3" w="64" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="0" y="3" w="72" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<text model="item.question" x="0" y="7" w="80" font="Verdana" fontsize="80" color="black" />
+	        <image asset="icon_sound" x="80" y="5" w="6" h="10" hitarea="true" z-index="100"> 
+	            <event type="click">
+	                <action type="command" command="toggleplay" asset_model="item.question_audio" />
+	            </event>
+	        </image>          
+	        <mtf model="item" force="false">
+	            <options layout="table" x="0" y="18" w="100" h="30" cols="8" marginX="0" marginY="0" options="lhs_options" highlight="#feb296" snapX="0.1" snapY="0.1">
+	            	<shape x="0" y="0" w="100" h="100" fill="#ddd" stroke="#000"/>
+	                <text x="0" y="0" w="100" h="100" align="center" valign="middle" font="Verdana" fontsize="400" model="option.value.text" />   
+	            </options>
+	            <options layout="table" x="29" y="55" w="41.5" h="30" cols="8" marginX="2.2" marginY="0" options="rhs_options">
+	                <shape x="0" y="0"  w="100" h="100" fill="#feb296" />
+	                <text x="0" y="0" w="100" h="100" align="center" valign="middle" font="Verdana" fontsize="400" model="option.value.text" />
+	                <!-- <image asset="icon_sound" x="43" y="67" w="25" h="30" hitarea="true" z-index="100">  
+	                </image> -->
+	                <!-- <event type="click">
+	                    <action type="command" command="play" asset_model="option.value.audio" />
+	                </event> -->
+	            </options>
+	        </mtf>
+
+		</g>    
+        
+    </template>
+    <template id="mtf_10">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="0" y="3" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="0" y="3" w="8" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="0" y="3" w="16" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="0" y="3" w="24" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="0" y="3" w="32" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="0" y="3" w="40" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="0" y="3" w="48" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="0" y="3" w="56" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="0" y="3" w="64" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="0" y="3" w="72" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<text model="item.question" x="0" y="7" w="80" font="Verdana" fontsize="80" color="black" />
+	        <image asset="icon_sound" x="80" y="5" w="6" h="10" hitarea="true" z-index="100"> 
+	            <event type="click">
+	                <action type="command" command="toggleplay" asset_model="item.question_audio" />
+	            </event>
+	        </image>          
+	        <mtf model="item" force="false">
+	            <options layout="table" x="0" y="18" w="100" h="50" cols="5" marginX="0" marginY="0" options="lhs_options" highlight="#feb296" snapX="0.1" snapY="0.1">
+	            	<shape x="0" y="0" w="100" h="100" fill="#ddd" stroke="#000"/>
+	                <text x="0" y="0" w="100" h="100" align="center" valign="middle" font="Verdana" fontsize="400" model="option.value.text" />   
+	            </options>
+	            <options layout="table" x="15" y="70" w="64" h="24.8" cols="10" marginX="2.2" marginY="0" options="rhs_options">
+	                <shape x="0" y="0"  w="100" h="100" fill="#feb296" />
+	                <text x="0" y="0" w="100" h="100" align="center" valign="middle" font="Verdana" fontsize="400" model="option.value.text" />
+	                <!-- <image asset="icon_sound" x="43" y="67" w="25" h="30" hitarea="true" z-index="100">  
+	                </image> -->
+	                <!-- <event type="click">
+	                    <action type="command" command="play" asset_model="option.value.audio" />
+	                </event> -->
+	            </options>
+	        </mtf>
+
+		</g>    
+        
+    </template>
+    <template id="mtf_15">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="0" y="3" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="0" y="3" w="8" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="0" y="3" w="16" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="0" y="3" w="24" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="0" y="3" w="32" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="0" y="3" w="40" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="0" y="3" w="48" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="0" y="3" w="56" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="0" y="3" w="64" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="0" y="3" w="72" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<text model="item.question" x="0" y="7" w="80" font="Verdana" fontsize="80" color="black" />
+	        <image asset="icon_sound" x="80" y="5" w="6" h="10" hitarea="true" z-index="100"> 
+	            <event type="click">
+	                <action type="command" command="toggleplay" asset_model="item.question_audio" />
+	            </event>
+	        </image>          
+	        <mtf model="item" force="false">
+	            <options layout="table" x="0" y="18" w="100" h="50" cols="5" marginX="0" marginY="0" options="lhs_options" highlight="#feb296" snapX="0.1" snapY="0.1">
+	            	<shape x="0" y="0" w="100" h="100" fill="#ddd" stroke="#000"/>
+	                <text x="0" y="0" w="100" h="100" align="center" valign="middle" font="Verdana" fontsize="400" model="option.value.text" />   
+	            </options>
+	            <options layout="table" x="0" y="70" w="100" h="16.6" cols="5" marginX="0.2" marginY="0" options="rhs_options">
+	                <shape x="0" y="0"  w="100" h="100" fill="#feb296" />
+	                <text x="0" y="0" w="100" h="100" align="center" valign="middle" font="Verdana" fontsize="400" model="option.value.text" />
+	                <!-- <image asset="icon_sound" x="43" y="67" w="25" h="30" hitarea="true" z-index="100">  
+	                </image> -->
+	                <!-- <event type="click">
+	                    <action type="command" command="play" asset_model="option.value.audio" />
+	                </event> -->
+	            </options>
+	        </mtf>
+
+		</g>    
+        
+    </template>
+    <template id="mtf_20">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="0" y="3" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="0" y="3" w="8" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="0" y="3" w="16" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="0" y="3" w="24" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="0" y="3" w="32" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="0" y="3" w="40" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="0" y="3" w="48" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="0" y="3" w="56" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="0" y="3" w="64" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="0" y="3" w="72" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<text model="item.question" x="0" y="7" w="80" font="Verdana" fontsize="80" color="black" />
+	        <image asset="icon_sound" x="80" y="5" w="6" h="10" hitarea="true" z-index="100"> 
+	            <event type="click">
+	                <action type="command" command="toggleplay" asset_model="item.question_audio" />
+	            </event>
+	        </image>          
+	        <mtf model="item" force="false">
+	            <options layout="table" x="0" y="18" w="100" h="50" cols="8" marginX="0" marginY="0" options="lhs_options" highlight="#feb296" snapX="0.1" snapY="0.1">
+	            	<shape x="0" y="0" w="100" h="100" fill="#ddd" stroke="#000"/>
+	                <text x="0" y="0" w="100" h="100" align="center" valign="middle" font="Verdana" fontsize="400" model="option.value.text" />   
+	            </options>
+	            <options layout="table" x="0" y="70" w="100" h="16.6" cols="8	" marginX="2.2" marginY="0" options="rhs_options">
+	                <shape x="0" y="0"  w="100" h="100" fill="#feb296" />
+	                <text x="0" y="0" w="100" h="100" align="center" valign="middle" font="Verdana" fontsize="400" model="option.value.text" />
+	                <!-- <image asset="icon_sound" x="43" y="67" w="25" h="30" hitarea="true" z-index="100">  
+	                </image> -->
+	                <!-- <event type="click">
+	                    <action type="command" command="play" asset_model="option.value.audio" />
+	                </event> -->
+	            </options>
+	        </mtf>
+
+		</g>    
+        
+    </template>
+    <template id="mcq_number_grid">
+		<set param="ques" scope="stage" ev-model="item"/>
+		<g x="0" y="0" w="100" h="100">
+			<shape type="rect" x="10" y="5" w="80" h="2" stroke="#aaa" fill="#aaa"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q2'" type="rect" x="10" y="5" w="4" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q3'" type="rect" x="10" y="5" w="8" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q4'" type="rect" x="10" y="5" w="12" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q5'" type="rect" x="10" y="5" w="16" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q6'" type="rect" x="10" y="5" w="20" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q7'" type="rect" x="10" y="5" w="24" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q8'" type="rect" x="10" y="5" w="28" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q9'" type="rect" x="10" y="5" w="32" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q10'" type="rect" x="10" y="5" w="36" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q11'" type="rect" x="10" y="5" w="40" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q12'" type="rect" x="10" y="5" w="44" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q13'" type="rect" x="10" y="5" w="48" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q14'" type="rect" x="10" y="5" w="52" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q15'" type="rect" x="10" y="5" w="56" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q16'" type="rect" x="10" y="5" w="60" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q17'" type="rect" x="10" y="5" w="64" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q18'" type="rect" x="10" y="5" w="68" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q19'" type="rect" x="10" y="5" w="72" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape ev-if="stage.ques.identifier == 'Q20'" type="rect" x="10" y="5" w="76" h="2" stroke="#00ff00" fill="#00ff00"></shape>
+			<shape type="roundrect" x="0" y="0" w="100" h="100" stroke="black"></shape>
+			<text x="3" y="10" w="80" h="5" font="Verdana" fontsize="100" align="center" model="item.question"/>
+			<image asset="icon_sound" x="82" y="7" w="7" h="12">
+	            <event type="click">
+	                <action type="command" command="play" asset="findNumber_audio"/>
+	                <action type="command" command="play" asset_model="item.answer_number.asset" delay="3500" />
+	            </event>
+			</image>
+			<mcq multi_select="false" model="item" shadow="#000000" offsetX="5" highlight="#feb296" density="10">
+            	<options layout="table" x="10" y="20" w="80" h="70" cols="10" marginX="1" marginY="1" options="options">
+            		<shape x="0" y="0" w="100" h="100" stroke="#999"/>
+            		<text x="0" y="0" w="100" h="100" font="Verdana" fontsize="1.2em" align="center" valign="middle" model="option.value.text"/>
+            	</options>
+        	</mcq>	
+		</g>
+	</template>
+	<stage id="baseStage1">
+		<shape fill="#d1fff4" type="rect" x="0" y="0" w="100" h="100" z-index="-5"/>
+		<image asset="next" x="90" y="5" w="8" h="14.4" id="next">
+			<event type="click">
+				<action type="command" command="eval" asset_model="item.stageId" success="correct_response" failure="wrong_response"/>
+			</event>
+		</image>
+		<image asset="previous" x="6" y="5" w="8" h="14.4">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" transitionType="previous" duration="600" />
+			</event>
+		</image>
+		<g x="30" y="15" w="40" h="35" id="retryDialog" visible="false">
+            <embed template-name="retry"></embed>
+        </g>
+        <g x="30" y="15" w="40" h="35" id="goodjobDialog" visible="false">
+            <embed template-name="goodjob"></embed>
+        </g>
+		<appEvents list="correct_response,wrong_response" />
+        <events>
+            <event type="correct_response">
+            	<action type="command" command="stop" asset_model="item.question_audio" />
+            	<action ev-if="stage.ques.template == 'mcq_number_grid'" type="command" command="stop" asset="findNumber_audio" delay="0" />
+                <action type="command" command="play" asset="sahijawaab" loop="1" />
+                <action type="command" command="show" asset="goodjobDialog" />
+                <action type="animation" asset="goodjobDialog">
+                   <tween id="gjShowAnim">
+                       <to ease="bounceOut" duration="500"><![CDATA[{"x":38.5,"y":40,"w":40,"h":30}]]></to>
+                   </tween> 
+               </action>
+            </event>
+            <event type="wrong_response">
+            	<action type="command" command="stop" asset_model="item.question_audio" />
+            	<action ev-if="stage.ques.template == 'mcq_number_grid'" type="command" command="stop" asset="findNumber_audio" delay="0" />
+                <action type="command" command="play" asset="firprayaaskare" loop="1" />
+                <action type="command" command="show" asset="retryDialog" />
+                <action type="animation" asset="retryDialog">
+                   <tween id="retryShowAnim">
+                       <to ease="bounceOut" duration="300"><![CDATA[{"x":35,"y":40,"w":29.3,"h":24.6}]]></to> 
+                   </tween>
+               </action>
+            </event>
+            <event type="enter">
+                <action ev-if="stage.ques.identifier == 'Q1'" type="command" command="play" asset_model="item.question_audio" />
+                <action ev-if="stage.ques.template == 'mcq_number_grid' &amp;&amp; stage.ques.identifier == 'Q1'" type="command" command="play" asset="findNumber_audio" delay="0" />
+                <action ev-if="stage.ques.template == 'mcq_number_grid' &amp;&amp; stage.ques.identifier == 'Q1'" type="command" command="play" asset_model="item.answer_number.asset" delay="3500" />
+                 <action ev-if="stage.ques.template == 'mcq_number_grid' &amp;&amp; stage.ques.identifier != 'Q1'" type="command" command="play" asset_model="item.answer_number.asset" delay="300" />
+            </event>
+            <event type="exit">
+                <action type="command" command="stop" asset_model="item.question_audio" />
+                <action ev-if="stage.ques.template == 'mcq_number_grid'" type="command" command="stop" asset="findNumber_audio" delay="0" />
+            </event>
+        </events>
+	</stage> 
+	<stage id="baseStage2">
+		<image asset="next" x="90" y="5" w="8" h="14.4" id="next">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" transitionType="next" duration="600" />
+			</event>
+		</image>
+		<image asset="previous" x="6" y="5" w="8" h="14.4">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" transitionType="previous" duration="600" />
+			</event>
+		</image>
+		<shape fill="#d1fff4" type="rect" x="0" y="0" w="100" h="100" z-index="-5"/>
+		<shape fill="" type="circle" x="32.5" y="36" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="23" y="20" w="20" h="33"/>
+		<text x="23" y="27" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			1-20
+		</text>
+
+		<shape fill="" type="circle" x="67.5" y="36" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="st3" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="58" y="20" w="20" h="33"/>
+		<text x="58" y="27" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			21-40
+		</text>
+
+		<shape fill="" type="circle" x="17.5" y="76" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="st4" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="8" y="60" w="20" h="33"/>
+		<text x="8" y="67" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			41-60
+		</text>
+
+		<shape fill="" type="circle" x="49.5" y="76" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="st5" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="40" y="60" w="20" h="33"/>
+		<text x="40" y="67" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			61-80
+		</text>
+
+		<shape fill="" type="circle" x="82.5" y="76" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="st6" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="73" y="60" w="20" h="33"/>
+		<text x="73" y="67" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			81-100
+		</text>
+	</stage>
+
+	<stage id="baseStage3">
+		<shape fill="#d1fff4" type="rect" x="0" y="0" w="100" h="100" z-index="-5"/>
+		<image asset="next" x="90" y="5" w="8" h="14.4" id="next">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" transitionType="next" duration="600" />
+			</event>
+		</image>
+		<image asset="previous" x="6" y="5" w="8" h="14.4">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" transitionType="previous" duration="600" />
+			</event>
+		</image>
+		<shape fill="" type="circle" x="32.5" y="41" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="23" y="25" w="20" h="33"/>
+		<text x="23" y="32" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			1-9
+		</text>
+
+		<shape fill="" type="circle" x="67.5" y="41" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next1" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="58" y="25" w="20" h="33"/>
+		<text x="58" y="32" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			10-99
+		</text>
+	</stage>
+
+	<stage id="baseStage4">
+		<shape fill="#d1fff4" type="rect" x="0" y="0" w="100" h="100" z-index="-5"/>
+		<image asset="next" x="90" y="5" w="8" h="14.4" id="next">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" transitionType="next" duration="600" />
+			</event>
+		</image>
+		<image asset="previous" x="6" y="5" w="8" h="14.4">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" transitionType="previous" duration="600" />
+			</event>
+		</image>
+		<shape fill="" type="circle" x="32.5" y="41" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="param1" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="23" y="25" w="20" h="33"/>
+		<text x="23" y="32" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			सीखो
+		</text>
+
+		<shape fill="" type="circle" x="67.5" y="41" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="param2" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="58" y="25" w="20" h="33"/>
+		<text x="58" y="32" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			अभ्यास
+		</text>
+	</stage>
+	
+	<stage id="splash" x="0" y="0" w="100" h="100">
+		<param name="next" value="selectionStage" />
+		<shape x="0" y="0" w="100" h="100" hitArea="true" type="rect" id="container">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" transitionType="next" duration="600" />
+			</event>
+		</shape>
+		<image asset="bgMath" x="0" y="0" w="100" h="100" />
+	</stage>
+
+	<stage id="selectionStage"  x="0" y="0" w="100" h="100">
+		<param name="next" value="numberLearningStage"/>
+		<param name="next1" value="placeValueStage"/>
+		<param name="next2" value="additionStage"/>
+		<param name="next3" value="subtractionStage"/>
+		<shape fill="#d1fff4" type="rect" x="0" y="0" w="100" h="100" z-index="-5"/>
+		<shape fill="" type="circle" x="32.5" y="31" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="23" y="15" w="20" h="33"/>
+		<text x="23" y="22" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			संख्या पहचान 
+		</text>
+
+		<shape fill="" type="circle" x="67.5" y="31" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next1" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="58" y="15" w="20" h="33"/>
+		<text x="58" y="22" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			स्थानीय मान
+		</text>
+
+		<shape fill="" type="circle" x="32.5" y="71" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next2" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="23" y="55" w="20" h="33"/>
+		<text x="23" y="62" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			जोड़ 
+		</text>
+
+		<shape fill="" type="circle" x="67.5" y="71" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next3" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="58" y="55" w="20" h="33"/>
+		<text x="58" y="62" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			घटाव
+		</text>
+	</stage>
+
+	<stage id="numberLearningStage" x="0" y="0" w="100" h="100" extends="baseStage4">
+		<param name="next" value="numbchart_stage1" />
+		<param name="previous" value="selectionStage" />
+		<param name="param1" value="numbchart_stage1" />
+		<param name="param2" value="nr_worksheet_stage" />
+		<param name="next1" value="" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="100" align="center" valign="middle">संख्या पहचान </text>
+	</stage>
+	<stage id="placeValueStage" x="0" y="0" w="100" h="100" extends="baseStage4">
+		<param name="next" value="pv_worksheet_stage" />
+		<param name="previous" value="selectionStage" />
+		<param name="param1" value="selectionStage" />
+		<param name="param2" value="pv_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="100" align="center" valign="middle">स्थानीय मान</text>
+	</stage>
+	<stage id="additionStage" x="0" y="0" w="100" h="100" extends="baseStage4">
+		<param name="previous" value="selectionStage" />
+		<param name="next" value="add_worksheet_stage" />
+		<param name="param1" value="selectionStage" />
+		<param name="param2" value="add_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="100" align="center" valign="middle">जोड़</text>
+	</stage>
+	<stage id="subtractionStage" x="0" y="0" w="100" h="100" extends="baseStage4">
+		<param name="next" value="sub_worksheet_stage" />
+		<param name="previous" value="selectionStage" />
+		<param name="param1" value="selectionStage" />
+		<param name="param2" value="sub_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="100" align="center" valign="middle">घटाव</text>
+	</stage>
+
+
+	<stage id="nr_worksheet_stage" x="0" y="0" w="100" h="100">
+		<param name="next" value="hands_stage" />
+		<param name="previous" value="numberLearningStage" />
+		<shape fill="#d1fff4" type="rect" x="0" y="0" w="100" h="100" z-index="-5"/>
+		<image asset="next" x="90" y="5" w="8" h="14.4" id="next">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" transitionType="next" duration="600" />
+			</event>
+		</image>
+		<image asset="previous" x="6" y="5" w="8" h="14.4">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" transitionType="previous" duration="600" />
+			</event>
+		</image>
+		<text x="0" y="5" w="100" h="10" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			 संख्या पहचान (अभ्यास)
+		</text>
+			
+		<shape fill="#feb296" type="roundrect" x="10" y="15" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="hands_stage" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="15" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5" model="instruct.instruct1" />
+			 
+
+		<shape fill="#feb296" type="roundrect" x="10" y="27" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="stage1" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="27" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5" model="instruct.instruct2" />
+
+
+		<shape fill="#feb296" type="roundrect" x="10" y="39" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="stage7" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="39" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5" model="instruct.instruct3" />
+
+		<shape fill="#feb296" type="roundrect" x="10" y="51" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="stage13" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="51" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5" model="instruct.instruct4" />
+
+	</stage>
+
+	<stage id="pv_worksheet_stage" x="0" y="0" w="100" h="100">
+		<param name="next" value="counting_sticks_start" />
+		<param name="previous" value="placeValueStage" />
+		<shape fill="#d1fff4" type="rect" x="0" y="0" w="100" h="100" z-index="-5"/>
+		<image asset="next" x="90" y="5" w="8" h="14.4" id="next">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" transitionType="next" duration="600" />
+			</event>
+		</image>
+		<image asset="previous" x="6" y="5" w="8" h="14.4">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" transitionType="previous" duration="600" />
+			</event>
+		</image>
+		<text x="0" y="5" w="100" h="10" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			 स्थानीय मान (अभ्यास)
+		</text>
+			
+		<shape fill="#feb296" type="roundrect" x="10" y="15" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="counting_sticks_start" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="15" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5">
+			 चित्रों के माध्यम से संख्या पहचान
+		</text>
+
+		<shape fill="#feb296" type="roundrect" x="10" y="27" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="pick_correct_sticks_start" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="27" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5">
+			संख्या के माध्यम से चित्रों की पहचान
+		</text>
+	</stage>
+
+	<stage id="add_worksheet_stage" x="0" y="0" w="100" h="100">
+		<param name="next" value="image_addition_start" />
+		<param name="previous" value="additionStage" />
+		<shape fill="#d1fff4" type="rect" x="0" y="0" w="100" h="100" z-index="-5"/>
+		<image asset="next" x="90" y="5" w="8" h="14.4" id="next">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" transitionType="next" duration="600" />
+			</event>
+		</image>
+		<image asset="previous" x="6" y="5" w="8" h="14.4">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" transitionType="previous" duration="600" />
+			</event>
+		</image>
+		<text x="0" y="5" w="100" h="10" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			 जोड़ (अभ्यास)
+		</text>
+			
+		<shape fill="#feb296" type="roundrect" x="10" y="15" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="image_addition_start" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="15" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5">
+			 चित्रों के माध्यम से जोड़</text>
+
+		<shape fill="#feb296" type="roundrect" x="10" y="27" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="vertical_addition_start" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="27" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5">
+			चित्रों के माध्यम से खड़ा  जोड़
+
+		</text>
+
+		<shape fill="#feb296" type="roundrect" x="10" y="39" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="horizontal_addition_start" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="39" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5">
+			आड़े जोड़
+
+		</text>
+
+		<shape fill="#feb296" type="roundrect" x="10" y="51" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="ftb_addition_start" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="51" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5">
+			आड़े जोड़ - खाली स्थान भरो
+
+		</text>
+	</stage>
+
+	<stage id="sub_worksheet_stage" x="0" y="0" w="100" h="100">
+		<param name="next" value="image_subtraction_start" />
+		<param name="previous" value="subtractionStage" />
+		<shape fill="#d1fff4" type="rect" x="0" y="0" w="100" h="100" z-index="-5"/>
+		<image asset="next" x="90" y="5" w="8" h="14.4" id="next">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" transitionType="next" duration="600" />
+			</event>
+		</image>
+		<image asset="previous" x="6" y="5" w="8" h="14.4">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" transitionType="previous" duration="600" />
+			</event>
+		</image>
+		<text x="0" y="5" w="100" h="10" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			 घटाव (अभ्यास)
+		</text>
+			
+		<shape fill="#feb296" type="roundrect" x="10" y="15" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="image_subtraction_start" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="15" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5">
+			 चित्रों के माध्यम से घटाव</text>
+
+		<shape fill="#feb296" type="roundrect" x="10" y="27" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="vertical_subtraction_start" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="27" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5">
+			चित्रों के माध्यम से खड़ा  घटाव
+
+		</text>
+
+		<shape fill="#feb296" type="roundrect" x="10" y="39" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="horizontal_subtraction_start" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="39" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5">
+			आड़े घटाव
+
+		</text>
+
+		<shape fill="#feb296" type="roundrect" x="10" y="51" w="80" h="10" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" value="ftb_subtraction_start"  effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<text x="10" y="51" w="80" h="10" color="black" fontsize="50" align="center" valign="middle" z-index="5">
+			आड़े घटाव - खाली स्थान भरो
+
+		</text>
+	</stage>
+
+	<stage id="numbchart_stage1" x="0" y="0" w="100" h="100">
+		<param name="next" value="numbchart_stage2"/>
+		<param name="previous" value="numberLearningStage" />
+		<image asset="next" x="90" y="5" w="8" h="14.4" id="next">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" transitionType="next" duration="600" />
+			</event>
+		</image>
+		<image asset="previous" x="6" y="5" w="8" h="14.4">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" transitionType="previous" duration="600" />
+			</event>
+		</image>
+		<set id="selectedSetParam" param="selectedSet" scope="content" ev-model="chartDetails.parentObj.sets[0].num"/>
+		<shape fill="#d1fff4" type="rect" x="0" y="0" w="100" h="100" z-index="-5"/>
+		<shape fill="" type="circle" x="32.5" y="36" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="set" asset="selectedSetParam" param="selectedSet" param-value="numberone" scope="content"/>
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="23" y="20" w="20" h="33"/>
+		<text x="23" y="27" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			1-20
+		</text>
+
+		<shape fill="" type="circle" x="67.5" y="36" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="set" asset="selectedSetParam" param="selectedSet" param-value="numbertwo" scope="content"/>
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="58" y="20" w="20" h="33"/>
+		<text x="58" y="27" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			21-40
+		</text>
+
+		<shape fill="" type="circle" x="17.5" y="76" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="set" asset="selectedSetParam" param="selectedSet" param-value="numberthree" scope="content"/>
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="8" y="60" w="20" h="33"/>
+		<text x="8" y="67" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			41-60
+		</text>
+
+		<shape fill="" type="circle" x="49.5" y="76" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="set" asset="selectedSetParam" param="selectedSet" param-value="numberfour" scope="content"/>
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="40" y="60" w="20" h="33"/>
+		<text x="40" y="67" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			61-80
+		</text>
+
+		<shape fill="" type="circle" x="82.5" y="76" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="set" asset="selectedSetParam" param="selectedSet" param-value="numberfive" scope="content"/>
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="73" y="60" w="20" h="33"/>
+		<text x="73" y="67" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			81-100
+		</text>
+	</stage>
+
+	<stage id="numbchart_stage2" x="0" y="0" w="100" h="100">
+		<param name="next" value="numbchart_stage1"/>
+		<param name="previous" value="numbchart_stage1" />
+		<set id="selectedNumParam" param="selectedNum" scope="content" ev-model="chartDetails.parentObj.${content.selectedSet}[0].num"/>
+		<set id="selectedNumParamTenth" param="selectedNumTenth" scope="content" ev-model="chartDetails.parentObj.${content.selectedSet}[0].tenth"/>
+		<set id="selectedNumParamUnit" param="selectedNumUnit" scope="content" ev-model="chartDetails.parentObj.${content.selectedSet}[0].unit"/>
+		<shape fill="#d1fff4" type="rect" x="0" y="0" w="100" h="100" z-index="-5"/>
+		<image asset="next" x="90" y="5" w="8" h="14.4" id="next">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" transitionType="previous" duration="600"/>
+			</event>
+		</image>
+		<image asset="previous" x="6" y="5" w="8" h="14.4">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" transitionType="previous" duration="600" />
+			</event>
+		</image>
+		<g x="0" y="0" w="100" h="70" id="displayGroup" visible="true">
+			<text x="0" y="5" w="50" h="10" color="black" fontsize="70" align="center" valign="middle">छुओ, सुनो और देखो </text>
+			<image asset="icon_sound" x="45" y="4" w="6" h="12" hitarea="true" z-index="100"> 
+	            <event type="click">
+	                <action type="command" command="toggleplay" asset="" />
+	            </event>
+	        </image> 
+			<g x="10" y="20" w="25" h="55" id="testText" visible="true" >
+				<image asset="ellipse-1" x="0" y="0" w="100" h="100"/>
+				<text x="0" y="5" w="100" h="100" color="white" fontsize="600" param="content.selectedNum" align="center" valign="middle"/>
+			</g>
+			<placeholder id="testPlaceholderTenth" x="60" y="5" w="40" h="23" param-count="${content.selectedNumTenth}" model-asset="chartDetails.bundle" type="gridLayout"/>
+			<placeholder id="testPlaceholder" x="60" y="50" w="40" h="30" param-count="${content.selectedNumUnit}" model-asset="chartDetails.stick" type="gridLayout"/>
+		</g>
+
+		<grid x="10" y="70" id="grid" cols="10" iterate="chartDetails.parentObj.${content.selectedSet}" count="" var="math" w="80" h="20">
+			<shape fill="#feb296" x="0" y="0" w="100" h="100" type="rect" hitArea="true" stroke="black"></shape>
+			<text x="0" y="0" w="100" h="100" color="black" fontsize="600" model="math.num" align="center" valign="middle"/>
+			<event type="click">
+				<action type="command" command="set" asset="selectedNumParam" param="selectedNum" ev-model="math.num" scope="content"/>
+				<action type="command" command="set" asset="selectedNumParamTenth" param="selectedNumTenth" ev-model="math.tenth" scope="content"/>
+				<action type="command" command="set" asset="selectedNumParamUnit" param="selectedNumUnit" ev-model="math.unit" scope="content"/>
+
+				<action type="command" command="refresh" asset="displayGroup"/>
+				<action type="command" command="play" asset_model="math.audio" />
+			</event>
+		</grid>
+
+		<!--
+		<g x="0" y="0" w="100" h="10" id="testText" visible="true" >
+			<text x="10" y="35" w="30" h="50" color="black" fontsize="100" param="content.selectedSet" align="center" valign="middle" />
+		</g>
+-->
+	</stage>
+	<stage id="hands_stage" x="0" y="0" w="100" h="100" iterate="one_ten_hands" var="item" extends="baseStage1">
+		<param name="next" value="nr_worksheet_stage" />
+        <param name="previous" value="nr_worksheet_stage" />    
+		<embed template="item" var-item="item"/>
+	</stage>
+	<stage id="stage1" x="0" y="0" w="100" h="100" extends="baseStage2">
+		<param name="next" value="stage2" />
+		<param name="st3" value="stage3" />
+		<param name="st4" value="stage4" />
+		<param name="st5" value="stage5" />
+		<param name="st6" value="stage6" />
+		<param name="previous" value="nr_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="80" align="center" valign="middle" model="instruct.instruct2" />
+	</stage>
+
+	<stage id="stage2" x="0" y="0" w="100" h="100" iterate="one_twenty" var="item" extends="baseStage1">
+		<param name="next" value="stage1" />
+		<param name="previous" value="stage1" />
+		
+		<g x="10" y="10" w="80" h="80">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage3" x="0" y="0" w="100" h="100" iterate="twenty_fourty" var="item" extends="baseStage1">
+		<param name="next" value="stage1" />
+		<param name="previous" value="stage1" />
+		<g x="10" y="10" w="80" h="80">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage4" x="0" y="0" w="100" h="100" iterate="fourty_sixty" var="item" extends="baseStage1">
+		<param name="next" value="stage1" />
+		<param name="previous" value="stage1" />
+		<g x="10" y="10" w="80" h="80">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage5" x="0" y="0" w="100" h="100" iterate="sixty_eighty" var="item" extends="baseStage1">
+		<param name="next" value="stage1" />
+		<param name="previous" value="stage1" />
+		<g x="10" y="10" w="80" h="80">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage6" x="0" y="0" w="100" h="100" iterate="eighty_hundred" var="item" extends="baseStage1">
+		<param name="next" value="stage1" />
+		<param name="previous" value="stage1" />
+		<g x="10" y="10" w="80" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage7" x="0" y="0" w="100" h="100" extends="baseStage2">
+		<param name="next" value="stage8" />
+		<param name="st3" value="stage9" />
+		<param name="st4" value="stage10" />
+		<param name="st5" value="stage11" />
+		<param name="st6" value="stage12" />
+		<param name="previous" value="nr_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="80" align="center" valign="middle" model="instruct.instruct3" />
+
+	</stage>
+	<stage id="stage8" x="0" y="0" w="100" h="100" iterate="one_twenty_mtf" var="item" extends="baseStage1">
+		<param name="next" value="stage7" />
+		<param name="previous" value="stage7" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage9" x="0" y="0" w="100" h="100" iterate="twenty_fourty_mtf" var="item" extends="baseStage1">
+		<param name="next" value="stage7" />
+		<param name="previous" value="stage7" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage10" x="0" y="0" w="100" h="100" iterate="fourty_sixty_mtf" var="item" extends="baseStage1">
+		<param name="next" value="stage7" />
+		<param name="previous" value="stage7" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage11" x="0" y="0" w="100" h="100" iterate="sixty_eighty_mtf" var="item" extends="baseStage1">
+		<param name="next" value="stage7" />
+		<param name="previous" value="stage7" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage12" x="0" y="0" w="100" h="100" iterate="eighty_hundred_mtf" var="item" extends="baseStage1">
+		<param name="next" value="stage7" />
+		<param name="previous" value="stage7" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage13" x="0" y="0" w="100" h="100">
+		<param name="next" value="stage14" />
+		<param name="st3" value="stage15" />
+		<param name="st4" value="stage16" />
+		<param name="st5" value="stage17" />
+		<param name="st6" value="stage18" />
+		<param name="st7" value="stage19" />
+		<param name="previous" value="nr_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="80" align="center" valign="middle" model="instruct.instruct4" />
+		<image asset="next" x="90" y="5" w="8" h="14.4" id="next">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" transitionType="next" duration="600" />
+			</event>
+		</image>
+		<image asset="previous" x="6" y="5" w="8" h="14.4">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" transitionType="previous" duration="600" />
+			</event>
+		</image>
+		<shape fill="#d1fff4" type="rect" x="0" y="0" w="100" h="100" z-index="-5"/>
+		<shape fill="" type="circle" x="17.5" y="36" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="8" y="20" w="20" h="33"/>
+		<text x="8" y="27" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			1-20
+		</text>
+
+		<shape fill="" type="circle" x="49.5" y="36" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="st3" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="40" y="20" w="20" h="33"/>
+		<text x="40" y="27" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			21-40
+		</text>
+
+		<shape fill="" type="circle" x="82.5" y="36" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="st4" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="73" y="20" w="20" h="33"/>
+		<text x="73" y="27" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			41-60
+		</text>
+
+		<shape fill="" type="circle" x="17.5" y="76" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="st5" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="8" y="60" w="20" h="33"/>
+		<text x="8" y="67" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			60-80
+		</text>
+
+		<shape fill="" type="circle" x="49.5" y="76" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="st6" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="40" y="60" w="20" h="33"/>
+		<text x="40" y="67" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			81-100
+		</text>
+
+		<shape fill="" type="circle" x="82.5" y="76" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="st7" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="73" y="60" w="20" h="33"/>
+		<text x="73" y="67" w="20" h="20" color="black" fontsize="100" align="center" valign="middle" z-index="5">
+			1-100
+		</text>
+
+	</stage>
+	<stage id="stage14" x="0" y="0" w="100" h="100" iterate="one_twenty_grid" var="item" extends="baseStage1">
+		<param name="next" value="stage13" />
+		<param name="previous" value="stage13" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage15" x="0" y="0" w="100" h="100" iterate="twenty_fourty_grid" var="item" extends="baseStage1">
+		<param name="next" value="stage13" />
+		<param name="previous" value="stage13" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage16" x="0" y="0" w="100" h="100" iterate="fourty_sixty_grid" var="item" extends="baseStage1">
+		<param name="next" value="stage13" />
+		<param name="previous" value="stage13" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage17" x="0" y="0" w="100" h="100" iterate="sixty_eighty_grid" var="item" extends="baseStage1">
+		<param name="next" value="stage13" />
+		<param name="previous" value="stage13" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage18" x="0" y="0" w="100" h="100" iterate="eighty_hundred_grid" var="item" extends="baseStage1">
+		<param name="next" value="stage13" />
+		<param name="previous" value="stage13" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="stage19" x="0" y="0" w="100" h="100" iterate="one_hundred_grid" var="item" extends="baseStage1">
+		<param name="next" value="stage13" />
+		<param name="previous" value="stage13" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="counting_sticks_start" x="0" y="0" w="100" h="100" extends="baseStage3">
+		<param name="next" value="counting_sticks_one" />
+		<param name="next1" value="counting_sticks_ten" />
+		<param name="previous" value="pv_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="80" align="center" valign="middle">चित्रों के माध्यम से संख्या पहचान</text>
+	</stage>
+	<stage id="counting_sticks_one" x="0" y="0" w="100" h="100" iterate="count_sticks_one" var="item" extends="baseStage1">
+		<param name="next" value="counting_sticks_start" />
+        <param name="previous" value="counting_sticks_start" />
+        
+		<embed template="item" var-item="item"/>
+
+	</stage>
+	<stage id="counting_sticks_ten" x="0" y="0" w="100" h="100" iterate="count_sticks_ten" var="item" extends="baseStage1">
+		<param name="next" value="counting_sticks_start" />
+        <param name="previous" value="counting_sticks_start" />
+        
+		<embed template="item" var-item="item"/>
+
+	</stage>
+	<stage id="pick_correct_sticks_start" x="0" y="0" w="100" h="100" extends="baseStage3">
+		<param name="next" value="pick_correct_sticks_one" />
+		<param name="next1" value="pick_correct_sticks_ten" />
+		<param name="previous" value="pv_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="80" align="center" valign="middle">संख्या के माध्यम से चित्रों की पहचान</text>
+	</stage>
+	<stage id="pick_correct_sticks_one" x="0" y="0" w="100" h="100" iterate="correct_sticks_one" var="item" extends="baseStage1">
+		<param name="next" value="pick_correct_sticks_start" />
+        <param name="previous" value="pick_correct_sticks_start" />
+        
+		<embed template="item" var-item="item"/>
+
+	</stage>
+	<stage id="pick_correct_sticks_ten" x="0" y="0" w="100" h="100" iterate="correct_sticks_ten" var="item" extends="baseStage1">
+		<param name="next" value="pick_correct_sticks_start" />
+        <param name="previous" value="pick_correct_sticks_start" />
+        
+		<embed template="item" var-item="item"/>
+
+	</stage>
+	<stage id="image_addition_start" x="0" y="0" w="100" h="100" extends="baseStage3">
+		<param name="next" value="image_addition_one" />
+		<param name="next1" value="image_addition_ten" />
+		<param name="next2" value="image_addition_with_carry" />
+		<param name="previous" value="add_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="80" align="center" valign="middle">चित्रों के माध्यम से जोड़</text>
+		<shape fill="" type="circle" x="49.5" y="66" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next2" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="40" y="50" w="20" h="33"/>
+		<text x="40" y="60" w="20" h="20" color="black" fontsize="70" align="center" valign="middle" z-index="5">
+			10-99 हासिल के साथ
+		</text>
+	</stage>
+	<stage id="image_addition_one" x="0" y="0" w="100" h="100" iterate="add_image_one" var="item" extends="baseStage1">
+		<param name="next" value="image_addition_start" />
+		<param name="previous" value="image_addition_start" />
+		<param name="operator" value="+"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="image_addition_ten" x="0" y="0" w="100" h="100" iterate="add_image_ten_without_carry" var="item" extends="baseStage1">
+		<param name="next" value="image_addition_start" />
+		<param name="previous" value="image_addition_start" />
+		<param name="operator" value="+"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="image_addition_with_carry" x="0" y="0" w="100" h="100" iterate="add_image_ten_with_carry" var="item" extends="baseStage1">
+		<param name="next" value="image_addition_start" />
+		<param name="previous" value="image_addition_start" />
+		<param name="operator" value="+"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="horizontal_addition_start" x="0" y="0" w="100" h="100" extends="baseStage3">
+		<param name="next" value="horizontal_addition_one" />
+		<param name="next1" value="horizontal_addition_ten" />
+		<param name="previous" value="add_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="80" align="center" valign="middle">आड़े जोड़ </text>
+	</stage>
+	<stage id="horizontal_addition_one" x="0" y="0" w="100" h="100" iterate="hor_add_one" var="item" extends="baseStage1">
+		<param name="next" value="horizontal_addition_start" />
+		<param name="previous" value="horizontal_addition_start" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="horizontal_addition_ten" x="0" y="0" w="100" h="100" iterate="hor_add_ten" var="item" extends="baseStage1">
+		<param name="next" value="horizontal_addition_start" />
+		<param name="previous" value="horizontal_addition_start" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="image_subtraction_start" x="0" y="0" w="100" h="100" extends="baseStage3">
+		<param name="next" value="image_subtraction_one"/>
+		<param name="next1" value="image_subtraction_ten"/>
+		<param name="previous" value="sub_worksheet_stage"/>
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="80" align="center" valign="middle">चित्रों के माध्यम से घटाव</text>
+	</stage>
+	<stage id="image_subtraction_one" x="0" y="0" w="100" h="100" iterate="sub_image_one" var="item" extends="baseStage1">
+		<param name="next" value="image_subtraction_start"/>
+		<param name="previous" value="image_subtraction_start"/>
+		<param name="operator" value="-"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="image_subtraction_ten" x="0" y="0" w="100" h="100" iterate="sub_image_ten_without_borrow" var="item" extends="baseStage1">
+		<param name="next" value="image_subtraction_start"/>
+		<param name="previous" value="image_subtraction_start"/>
+		<param name="operator" value="-"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="horizontal_subtraction_start" x="0" y="0" w="100" h="100" extends="baseStage3">
+		<param name="next" value="horizontal_subtraction_one" />
+		<param name="next1" value="horizontal_subtraction_ten" />
+		<param name="previous" value="sub_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="80" align="center" valign="middle">आड़े घटाव</text>
+	</stage>
+	<stage id="horizontal_subtraction_one" x="0" y="0" w="100" h="100" iterate="hor_sub_one" var="item" extends="baseStage1">
+		<param name="next" value="horizontal_subtraction_start" />
+		<param name="previous" value="horizontal_subtraction_start" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="horizontal_subtraction_ten" x="0" y="0" w="100" h="100" iterate="hor_sub_ten" var="item" extends="baseStage1">
+		<param name="next" value="horizontal_subtraction_start" />
+		<param name="previous" value="horizontal_subtraction_start" />
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="ftb_addition_start" x="0" y="0" w="100" h="100" extends="baseStage3">
+		<param name="next" value="ftb_addition_one" />
+		<param name="next1" value="ftb_addition_ten" />
+		<param name="previous" value="add_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="80" align="center" valign="middle">आड़े जोड़ - खाली स्थान भरो</text>
+	</stage>
+	<stage id="ftb_addition_one" x="0" y="0" w="100" h="100" iterate="hor_add_miss_one" var="item" extends="baseStage1">
+		<param name="next" value="ftb_addition_start" />
+		<param name="previous" value="ftb_addition_start" />
+		<param name="operator" value="+"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="ftb_addition_ten" x="0" y="0" w="100" h="100" iterate="hor_add_miss_ten" var="item" extends="baseStage1">
+		<param name="next" value="ftb_addition_start" />
+		<param name="previous" value="ftb_addition_start" />
+		<param name="operator" value="+"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="ftb_subtraction_start" x="0" y="0" w="100" h="100" extends="baseStage3">
+		<param name="next" value="ftb_subtraction_one" />
+		<param name="next1" value="ftb_subtraction_ten" />
+		<param name="previous" value="sub_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="80" align="center" valign="middle">आड़े घटाव - खाली स्थान भरो</text>
+	</stage>
+	<stage id="ftb_subtraction_one" x="0" y="0" w="100" h="100" iterate="hor_sub_miss_one" var="item" extends="baseStage1">
+		<param name="next" value="ftb_subtraction_start" />
+		<param name="previous" value="ftb_subtraction_start" />
+		<param name="operator" value="-"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="ftb_subtraction_ten" x="0" y="0" w="100" h="100" iterate="hor_sub_miss_ten" var="item" extends="baseStage1">
+		<param name="next" value="ftb_subtraction_start" />
+		<param name="previous" value="ftb_subtraction_start" />
+		<param name="operator" value="-"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="vertical_addition_start" x="0" y="0" w="100" h="100" extends="baseStage3">
+		<param name="next" value="vertical_addition_one" />
+		<param name="next1" value="vertical_addition_ten" />
+		<param name="next2" value="vertical_addition_with_carry" />
+		<param name="previous" value="add_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="80" align="center" valign="middle">चित्रों के माध्यम से खड़ा  जोड़</text>
+		<shape fill="" type="circle" x="49.5" y="66" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next2" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="40" y="50" w="20" h="33"/>
+		<text x="40" y="60" w="20" h="20" color="black" fontsize="70" align="center" valign="middle" z-index="5">
+			10-99 हासिल के साथ
+		</text>
+	</stage>
+	<stage id="vertical_addition_one" x="0" y="0" w="100" h="100" iterate="ver_add_one" var="item" extends="baseStage1">
+		<param name="next" value="vertical_addition_start" />
+		<param name="previous" value="vertical_addition_start" />
+		<param name="operator" value="+"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="vertical_addition_ten" x="0" y="0" w="100" h="100" iterate="ver_add_ten" var="item" extends="baseStage1">
+		<param name="next" value="vertical_addition_start" />
+		<param name="previous" value="vertical_addition_start" />
+		<param name="operator" value="+"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="vertical_addition_with_carry" x="0" y="0" w="100" h="100" iterate="ver_add_with_carry" var="item" extends="baseStage1">
+		<param name="next" value="vertical_addition_start" />
+		<param name="previous" value="vertical_addition_start" />
+		<param name="operator" value="+"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="vertical_subtraction_start" x="0" y="0" w="100" h="100" extends="baseStage3">
+		<param name="next" value="vertical_subtraction_one" />
+		<param name="next1" value="vertical_subtraction_ten" />
+		<param name="next2" value="vertical_subtraction_with_borrow" />
+		<param name="previous" value="sub_worksheet_stage" />
+		<text x="15" y="10" w="70" h="5" color="black" fontsize="80" align="center" valign="middle">चित्रों के माध्यम से खड़ा  घटाव</text>
+		<shape fill="" type="circle" x="49.5" y="66" w="9.5" hitArea="true">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="next2" effect="scroll" direction="left" ease="linear" duration="600" transitionType="next"/>
+			</event>
+		</shape>
+		<image asset="shape_ellipse" x="40" y="50" w="20" h="33"/>
+		<text x="40" y="60" w="20" h="20" color="black" fontsize="70" align="center" valign="middle" z-index="5">
+			10-99 हासिल के घटाव
+		</text>
+	</stage>
+	<stage id="vertical_subtraction_one" x="0" y="0" w="100" h="100" iterate="ver_sub_one" var="item" extends="baseStage1">
+		<param name="next" value="vertical_subtraction_start" />
+		<param name="previous" value="vertical_subtraction_start" />
+		<param name="operator" value="-"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="vertical_subtraction_ten" x="0" y="0" w="100" h="100" iterate="ver_sub_ten" var="item" extends="baseStage1">
+		<param name="next" value="vertical_subtraction_start" />
+		<param name="previous" value="vertical_subtraction_start" />
+		<param name="operator" value="-"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+	<stage id="vertical_subtraction_with_borrow" x="0" y="0" w="100" h="100" iterate="ver_sub_with_borrow" var="item" extends="baseStage1">
+		<param name="next" value="vertical_subtraction_start" />
+		<param name="previous" value="vertical_subtraction_start" />
+		<param name="operator" value="-"/>
+		<g x="5" y="5" w="90" h="90">
+			<embed template="item" var-item="item"/>
+		</g>
+	</stage>
+
+</theme>

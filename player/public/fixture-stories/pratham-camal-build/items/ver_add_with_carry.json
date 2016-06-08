@@ -1,0 +1,442 @@
+{
+    "identifier": "learning_numbers",
+    "title": "Learning Numbers",
+    "total_items": 10,
+    "max_score": 10,
+    "shuffle": false,
+    "subject": "NUM",
+    "item_sets": [{
+        "id": "set_1",
+        "count": 10
+    }],
+    "items": {
+        "set_1": [{
+                "identifier": "Q1",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_ver_add",
+                "qlevel": "MEDIUM",
+                "question_value_lhs": "16",
+                "question_value_rhs": "24",
+                "title": "",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "vertical_addition_with_carry",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "30",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "40",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "310",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },
+        {
+                "identifier": "Q2",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_ver_add",
+                "qlevel": "MEDIUM",
+                "question_value_lhs": "33",
+                "question_value_rhs": "49",
+                "title": "",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "vertical_addition_with_carry",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "712",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "72",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "82",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },
+        {
+                "identifier": "Q3",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_ver_add",
+                "qlevel": "MEDIUM",
+                "question_value_lhs": "26",
+                "question_value_rhs": "35",
+                "title": "",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "vertical_addition_with_carry",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "61",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "51",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "511",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },{
+                "identifier": "Q4",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_ver_add",
+                "qlevel": "MEDIUM",
+                "question_value_lhs": "77",
+                "question_value_rhs": "16",
+                "title": "",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "vertical_addition_with_carry",
+                "options": [ {
+                    "value": {
+                        "type": "mixed",
+                        "text": "83",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "93",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "813",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },
+        {
+                "identifier": "Q5",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_ver_add",
+                "qlevel": "MEDIUM",
+                "question_value_lhs": "83",
+                "question_value_rhs": "35",
+                "title": "",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "vertical_addition_with_carry",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "18",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "118",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "78",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },{
+                "identifier": "Q6",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_ver_add",
+                "qlevel": "MEDIUM",
+                "question_value_lhs": "64",
+                "question_value_rhs": "38",
+                "title": "",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "vertical_addition_with_carry",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "92",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "102",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "912",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },{
+                "identifier": "Q7",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_ver_add",
+                "qlevel": "MEDIUM",
+                "question_value_lhs": "89",
+                "question_value_rhs": "31",
+                "title": "",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "vertical_addition_with_carry",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "120",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "110",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "1110",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },
+        {
+                "identifier": "Q8",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_ver_add",
+                "qlevel": "MEDIUM",
+                "question_value_lhs": "38",
+                "question_value_rhs": "29",
+                "title": "",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "vertical_addition_with_carry",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "517",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "57",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "67",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },{
+                "identifier": "Q9",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_ver_add",
+                "qlevel": "MEDIUM",
+                "question_value_lhs": "33",
+                "question_value_rhs": "48",
+                "title": "",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "vertical_addition_with_carry",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "711",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "81",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "71",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        },
+        {
+                "identifier": "Q10",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_ver_add",
+                "qlevel": "MEDIUM",
+                "question_value_lhs": "57",
+                "question_value_rhs": "26",
+                "title": "",
+                "question": "जोडीये",
+                "question_audio": "add_sound",
+                "stageId": "vertical_addition_with_carry",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "73",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "713",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "83",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        }
+    ]
+
+    }
+}

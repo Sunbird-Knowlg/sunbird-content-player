@@ -1,0 +1,557 @@
+{
+	"theme" : {
+		"manifest" : {
+			"media" : [{
+					"assetId" : "domain_44068_grey",
+					"id" : "grey",
+					"src" : "https://sandbox-community.ekstep.in/assets/public/content/1462343413759grey.png",
+					"type" : "image"
+				}, {
+					"id" : "domain_46109",
+					"type" : "image",
+					"src" : "https://sandbox-community.ekstep.in/assets/public/content/micro_345_1462884529_1462884529199.png",
+					"assetId" : "domain_46109"
+				}, {
+					"id" : "domain_46110",
+					"type" : "image",
+					"src" : "https://sandbox-community.ekstep.in/assets/public/content/micro_345_1462884529_1462884529465.png",
+					"assetId" : "domain_46110"
+				}, {
+					"id" : "domain_46111",
+					"type" : "image",
+					"src" : "https://sandbox-community.ekstep.in/assets/public/content/micro_345_1462884529_1462884529771.png",
+					"assetId" : "domain_46111"
+				}, {
+					"id" : "domain_46112",
+					"type" : "image",
+					"src" : "https://sandbox-community.ekstep.in/assets/public/content/micro_345_1462884529_1462884530000.png",
+					"assetId" : "domain_46112"
+				}, {
+					"id" : "domain_46113",
+					"type" : "image",
+					"src" : "https://sandbox-community.ekstep.in/assets/public/content/grey_345_1462884530_1462884530227.png",
+					"assetId" : "domain_46113"
+				}, {
+					"id" : "domain_46114",
+					"type" : "image",
+					"src" : "https://sandbox-community.ekstep.in/assets/public/content/grey_345_1462884530_1462884530456.png",
+					"assetId" : "domain_46114"
+				}, {
+					"id" : "domain_46115",
+					"type" : "image",
+					"src" : "https://sandbox-community.ekstep.in/assets/public/content/grey_345_1462884530_1462884530931.png",
+					"assetId" : "domain_46115"
+				}, {
+					"id" : "domain_46116",
+					"type" : "image",
+					"src" : "https://sandbox-community.ekstep.in/assets/public/content/grey_345_1462884531_1462884531153.png",
+					"assetId" : "domain_46116"
+				}
+			]
+		},
+		"template" : [{
+				"text" : {
+					"align" : "center",
+					"color" : "black",
+					"font" : "Verdana",
+					"fontsize" : 70,
+					"model" : "item.title",
+					"w" : 80,
+					"x" : 10,
+					"y" : 6
+				},
+				"shape" : {
+					"event" : {
+						"action" : {
+							"asset_model" : "item.question_audio",
+							"command" : "play",
+							"type" : "command"
+						},
+						"type" : "click"
+					},
+					"h" : 15,
+					"hitArea" : true,
+					"id" : "retry",
+					"type" : "rect",
+					"visible" : true,
+					"w" : 80,
+					"x" : 10,
+					"y" : 2
+				},
+				"image" : [{
+						"asset" : "grey",
+						"h" : 30,
+						"x" : 11.5,
+						"y" : 43
+					}, {
+						"asset" : "grey",
+						"h" : 30,
+						"x" : 31.5,
+						"y" : 43
+					}, {
+						"asset" : "grey",
+						"h" : 30,
+						"x" : 51.5,
+						"y" : 43
+					}, {
+						"asset" : "grey",
+						"h" : 30,
+						"x" : 71.5,
+						"y" : 43
+					}
+				],
+				"mtf" : {
+					"option" : [{
+							"image" : {
+								"h" : 45,
+								"model" : "option.value.image",
+								"w" : 80,
+								"x" : 10,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 50,
+							"option" : "lhs_options[0]",
+							"snapX" : 11,
+							"snapY" : 100,
+							"w" : 16,
+							"x" : 12,
+							"y" : 20
+						}, {
+							"image" : {
+								"h" : 45,
+								"model" : "option.value.image",
+								"w" : 80,
+								"x" : 10,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 50,
+							"option" : "lhs_options[1]",
+							"snapX" : 11,
+							"snapY" : 100,
+							"w" : 16,
+							"x" : 32,
+							"y" : 20
+						}, {
+							"image" : {
+								"h" : 45,
+								"model" : "option.value.image",
+								"w" : 80,
+								"x" : 10,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 50,
+							"option" : "lhs_options[2]",
+							"snapX" : 11,
+							"snapY" : 100,
+							"w" : 16,
+							"x" : 52,
+							"y" : 20
+						}, {
+							"image" : {
+								"h" : 45,
+								"model" : "option.value.image",
+								"w" : 80,
+								"x" : 10,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 50,
+							"option" : "lhs_options[3]",
+							"snapX" : 11,
+							"snapY" : 100,
+							"w" : 16,
+							"x" : 72,
+							"y" : 20
+						}, {
+							"image" : {
+								"h" : 100,
+								"model" : "option.value.image",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 20.5,
+							"option" : "rhs_options[0]",
+							"w" : 12,
+							"x" : 14,
+							"y" : 75
+						}, {
+							"image" : {
+								"h" : 100,
+								"model" : "option.value.image",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 20.5,
+							"option" : "rhs_options[1]",
+							"w" : 12,
+							"x" : 34,
+							"y" : 75
+						}, {
+							"image" : {
+								"h" : 100,
+								"model" : "option.value.image",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 20.5,
+							"option" : "rhs_options[2]",
+							"w" : 12,
+							"x" : 54,
+							"y" : 75
+						}, {
+							"image" : {
+								"h" : 100,
+								"model" : "option.value.image",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							},
+							"event" : {
+								"action" : {
+									"asset-model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								},
+								"type" : "click"
+							},
+							"h" : 20.5,
+							"option" : "rhs_options[3]",
+							"w" : 12,
+							"x" : 74,
+							"y" : 75
+						}
+					],
+					"force" : false,
+					"model" : "item"
+				},
+				"id" : "org.ekstep.mtf.image.image"
+			}, {
+				"text" : [{
+						"font" : "Georgia",
+						"fontsize" : 40,
+						"model" : "item.title",
+						"marginY" : 10,
+						"padX" : 30,
+						"padY" : 10,
+						"w" : 70,
+						"h" : 12,
+						"x" : 15,
+						"y" : 5,
+						"lineHeight" : 1.2,
+						"align" : "left"
+					}, {
+						"font" : "Georgia",
+						"fontsize" : 60,
+						"model" : "item.question",
+						"marginY" : 10,
+						"padX" : 30,
+						"padY" : 10,
+						"w" : 70,
+						"h" : 12,
+						"x" : 15,
+						"y" : 12,
+						"lineHeight" : 1.2
+					}
+				],
+				"mcq" : {
+					"options" : {
+						"cols" : 1,
+						"h" : 60,
+						"layout" : "table",
+						"marginX" : 5,
+						"marginY" : 8,
+						"options" : "options",
+						"padX" : 30,
+						"padY" : 10,
+						"w" : 40,
+						"x" : 30,
+						"y" : 35,
+						"align" : "left"
+					},
+					"model" : "item",
+					"multi_select" : false,
+					"shadow" : "#FF0000"
+				},
+				"id" : "mcq_template_default"
+			}
+		],
+		"controller" : [{
+				"name" : "assessment_8381cda3-ef77-4c07-a19d-c67828f7d461",
+				"type" : "items",
+				"id" : "assessment_8381cda3-ef77-4c07-a19d-c67828f7d461",
+				"__cdata" : {
+					"total_items" : 1,
+					"subject" : "domain",
+					"code" : "ItemSet_a81d0003-821d-4449-a0f4-79abf04056ec",
+					"type" : "materialised",
+					"lastUpdatedOn" : "2016-05-10T13:49:39.019+0000",
+					"SET_TYPE" : "MATERIALISED_SET",
+					"createdOn" : "2016-05-10T13:49:38.989+0000",
+					"title" : "Testing ItemSet_bfd09a99-79ab-45e2-8ccb-1afb6b4bf832",
+					"items" : {
+						"domain_46139" : [{
+								"template" : "org.ekstep.mtf.image.image",
+								"subject" : "domain",
+								"keyword" : "[]",
+								"template_id" : "domain_44068",
+								"code" : "org.ekstep.assessmentitem.literacy_5731d8b33ca8c",
+								"lastUpdatedOn" : "2016-05-10T12:48:51.260+0000",
+								"type" : "mtf",
+								"feedback" : "",
+								"createdOn" : "2016-05-10T12:48:51.260+0000",
+								"title" : "matchthree",
+								"qlevel" : "EASY",
+								"name" : "matchthree",
+								"domain" : "literacy",
+								"owner" : "345",
+								"used_for" : "worksheet",
+								"max_score" : 1,
+								"lhs_options" : [{
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_46109",
+											"audio" : null
+										},
+										"index" : 0
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_46110",
+											"audio" : null
+										},
+										"index" : 1
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_46111",
+											"audio" : null
+										},
+										"index" : 2
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_46112",
+											"audio" : null
+										},
+										"index" : 3
+									}
+								],
+								"gradeLevel" : ["Grade 1"],
+								"language" : ["English"],
+								"question" : "matchthree",
+								"identifier" : "domain_46117",
+								"media" : "[{\"id\":\"domain_46109\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/micro_345_1462884529_1462884529199.png\",\"asset_id\":\"domain_46109\"},{\"id\":\"domain_46110\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/micro_345_1462884529_1462884529465.png\",\"asset_id\":\"domain_46110\"},{\"id\":\"domain_46111\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/micro_345_1462884529_1462884529771.png\",\"asset_id\":\"domain_46111\"},{\"id\":\"domain_46112\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/micro_345_1462884529_1462884530000.png\",\"asset_id\":\"domain_46112\"},{\"id\":\"domain_46113\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/grey_345_1462884530_1462884530227.png\",\"asset_id\":\"domain_46113\"},{\"id\":\"domain_46114\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/grey_345_1462884530_1462884530456.png\",\"asset_id\":\"domain_46114\"},{\"id\":\"domain_46115\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/grey_345_1462884530_1462884530931.png\",\"asset_id\":\"domain_46115\"},{\"id\":\"domain_46116\",\"type\":\"image\",\"src\":\"https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/grey_345_1462884531_1462884531153.png\",\"asset_id\":\"domain_46116\"}]",
+								"rhs_options" : [{
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_46113",
+											"audio" : null
+										},
+										"answer" : "0"
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_46114",
+											"audio" : null
+										},
+										"answer" : "1"
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_46115",
+											"audio" : null
+										},
+										"answer" : "2"
+									}, {
+										"value" : {
+											"type" : "mixed",
+											"text" : "",
+											"count" : "",
+											"image" : "domain_46116",
+											"audio" : null
+										},
+										"answer" : "3"
+									}
+								]
+							}
+						]
+					},
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"shuffle" : false,
+					"used_for" : "assessment",
+					"owner" : "Ilimi",
+					"max_score" : 1,
+					"gradeLevel" : ["Grade 1"],
+					"item_sets" : [{
+							"id" : "domain_46139",
+							"count" : 1
+						}
+					],
+					"language" : ["English"],
+					"identifier" : "domain_46139"
+				}
+			}, {
+				"name" : "dictionary",
+				"type" : "data",
+				"id" : "dictionary",
+				"__cdata" : {}
+
+			}
+		],
+		"startStage" : "scene1",
+		"id" : "theme",
+		"ver" : 0.3,
+		"stage" : [{
+				"id" : "baseStage1",
+				"preload" : true,
+				"image" : [{
+						"asset" : "grey"
+					}, {
+						"asset" : "domain_46109"
+					}, {
+						"asset" : "domain_46110"
+					}, {
+						"asset" : "domain_46111"
+					}, {
+						"asset" : "domain_46112"
+					}, {
+						"asset" : "domain_46113"
+					}, {
+						"asset" : "domain_46114"
+					}, {
+						"asset" : "domain_46115"
+					}, {
+						"asset" : "domain_46116"
+					}
+				],
+				"audio" : []
+			}, {
+				"id" : "scene1",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "next",
+						"value" : "scene8381cda3-ef77-4c07-a19d-c67828f7d461"
+					}
+				],
+				"events" : {
+					"event" : []
+				},
+				"image" : [],
+				"text" : [],
+				"shape" : [],
+				"hotspot" : [],
+				"embed" : [],
+				"div" : [],
+				"audio" : [],
+				"scribble" : []
+			}, {
+				"id" : "scene8381cda3-ef77-4c07-a19d-c67828f7d461",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "previous",
+						"value" : "scene1"
+					}
+				],
+				"events" : {
+					"event" : []
+				},
+				"image" : [],
+				"text" : [],
+				"shape" : [],
+				"hotspot" : [],
+				"embed" : [{
+						"template" : "item",
+						"var-item" : "item"
+					}
+				],
+				"div" : [],
+				"audio" : [],
+				"scribble" : [],
+				"iterate" : "assessment_8381cda3-ef77-4c07-a19d-c67828f7d461",
+				"preload" : true,
+				"var" : "item",
+				"appEvents" : {
+					"list" : "next_item,correct_response,wrong_response"
+				}
+			}
+		]
+	}
+}

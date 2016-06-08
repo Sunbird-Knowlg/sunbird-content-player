@@ -1,0 +1,228 @@
+{
+	"theme" : {
+		"manifest" : {
+			"media" : [{
+					"id" : "domain_49048",
+					"type" : "image",
+					"src" : "https://sandbox-community.ekstep.in/assets/public/content/icon_next_345_1463568965_1463568965554.png",
+					"assetId" : "domain_49048"
+				}, {
+					"assetId" : "domain_49025_keyboard",
+					"id" : "keyboard",
+					"src" : "https://sandbox-community.ekstep.in/assets/public/content/1463562666028CustomKeyboard.js",
+					"type" : "plugin"
+				}, {
+					"assetId" : "domain_49025_keyboard_css",
+					"id" : "keyboard_css",
+					"src" : "https://sandbox-community.ekstep.in/assets/public/content/1463562665758keyboard.css",
+					"type" : "css"
+				}
+			]
+		},
+		"template" : [{
+				"text" : [{
+						"align" : "center",
+						"color" : "black",
+						"font" : "Verdana",
+						"fontsize" : 70,
+						"model" : "item.title",
+						"w" : 80,
+						"x" : 10,
+						"y" : 6,
+						"z-index" : 101
+					}, {
+						"align" : "center",
+						"color" : "black",
+						"font" : "Verdana",
+						"fontsize" : 100,
+						"h" : 15,
+						"id" : "newText",
+						"model" : "item.ans1",
+						"valign" : "middle",
+						"w" : 35,
+						"x" : 58,
+						"y" : 68,
+						"z-index" : 100
+					}
+				],
+				"shape" : [{
+						"event" : {
+							"type" : "click"
+						},
+						"h" : 15,
+						"hitArea" : true,
+						"opacity" : 1,
+						"w" : 80,
+						"x" : 10,
+						"y" : 6,
+						"z-index" : 99
+					}, {
+						"event" : {
+							"action" : {
+								"asset" : "bKeyboard",
+								"command" : "custom",
+								"id" : "newText",
+								"invoke" : "switchTarget",
+								"type" : "command"
+							},
+							"type" : "click"
+						},
+						"h" : 15,
+						"hitArea" : true,
+						"stroke" : "black",
+						"stroke-width" : 5,
+						"w" : 35,
+						"x" : 58,
+						"y" : 67,
+						"z-index" : 99
+					}, {
+						"event" : {
+							"action" : {
+								"asset_model" : "item.question_audio",
+								"command" : "play",
+								"type" : "command"
+							},
+							"type" : "click"
+						},
+						"h" : 40,
+						"hitArea" : true,
+						"stroke-width" : 5,
+						"w" : 20,
+						"x" : 10,
+						"y" : 58,
+						"z-index" : 99
+					}
+				],
+				"keyboard" : {
+					"id" : "bKeyboard",
+					"keys" : "item.keys",
+					"limit" : 10,
+					"target" : "newText",
+					"type" : "custom",
+					"x" : 5,
+					"y" : 15
+				},
+				"g" : {
+					"image" : {
+						"h" : 75,
+						"model" : "item.question_image",
+						"w" : 100,
+						"x" : 0,
+						"y" : 0,
+						"z-index" : 102
+					},
+					"text" : {
+						"align" : "center",
+						"color" : "black",
+						"font" : "Verdana",
+						"fontsize" : "2em",
+						"h" : 25,
+						"model" : "item.question",
+						"valign" : "middle",
+						"w" : 100,
+						"x" : 0,
+						"y" : 75,
+						"z-index" : 103
+					},
+					"h" : 40,
+					"w" : 20,
+					"x" : 10,
+					"y" : 58
+				},
+				"id" : "org.ekstep.ftb.barakhadi"
+			}
+		],
+		"controller" : [{
+				"name" : "sampleAssessment",
+				"type" : "items",
+				"id" : "sampleAssessment",
+				"__cdata" : {
+					"total_items" : 1,
+					"SET_TYPE" : "MATERIALISED_SET",
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"item_sets" : [{
+							"id" : "sampleItemSet",
+							"count" : 1
+						}
+					],
+					"items" : {
+						"sampleItemSet" : [{
+								"template" : "org.ekstep.ftb.barakhadi",
+								"model" : {
+									"keys" : "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z"
+								},
+								"subject" : "domain",
+								"keyword" : "[]",
+								"answer" : {
+									"ans1" : {
+										"value" : "a",
+										"score" : 1
+									}
+								},
+								"template_id" : "domain_49025",
+								"code" : "org.ekstep.assessmentitem.literacy_573c4a45b620e",
+								"lastUpdatedOn" : "2016-05-18T10:56:05.785+0000",
+								"type" : "ftb",
+								"feedback" : "",
+								"createdOn" : "2016-05-18T10:56:05.785+0000",
+								"qlevel" : "EASY",
+								"title" : "baraenglish",
+								"question_image" : "domain_49048",
+								"name" : "baraenglish",
+								"domain" : "literacy",
+								"owner" : "345",
+								"used_for" : "worksheet",
+								"max_score" : 1,
+								"gradeLevel" : ["Grade 1"],
+								"language" : ["English"],
+								"question" : "baraenglish",
+								"identifier" : "domain_49049",
+								"media" : [{
+										"id" : "domain_49048",
+										"type" : "image",
+										"src" : "https://sandbox-community.ekstep.in/assets/public/content/icon_next_345_1463568965_1463568965554.png",
+										"assetId" : "domain_49048"
+									}
+								]
+							}
+						]
+					},
+					"identifier" : "sampleItemSet"
+				}
+			}
+		],
+		"startStage" : "sampleAssessmentStage",
+		"id" : "theme",
+		"ver" : 0.3,
+		"stage" : [{
+				"id" : "baseStage1",
+				"preload" : true,
+				"image" : [{
+						"asset" : "domain_49048"
+					}
+				],
+				"audio" : [],
+				"voice" : []
+			}, {
+				"id" : "sampleAssessmentStage",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"g" : [{
+						"embed" : {
+							"template" : "item",
+							"var-item" : "item"
+						},
+						"x" : 10,
+						"y" : 0,
+						"w" : 80,
+						"h" : 90
+					}
+				],
+				"iterate" : "sampleAssessment",
+				"var" : "item"
+			}
+		]
+	}
+}

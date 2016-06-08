@@ -1,0 +1,159 @@
+{
+	"theme" : {
+		"manifest" : {
+			"media" : [{
+					"id" : "domain_51721",
+					"type" : "audio",
+					"src" : "https://sandbox-community.ekstep.in/assets/public/content/friday_345_1464240928_1464240928614.mp3",
+					"assetId" : "domain_51721"
+				}
+			]
+		},
+		"template" : [{
+				"text" : [{
+						"event" : {
+							"action" : [{
+									"command" : "stop",
+									"sound" : true,
+									"type" : "command"
+								}, {
+									"asset_model" : "item.question_audio",
+									"command" : "play",
+									"type" : "command"
+								}
+							],
+							"type" : "click"
+						},
+						"align" : "center",
+						"color" : "black",
+						"font" : "Verdana",
+						"fontsize" : 70,
+						"h" : 4,
+						"lineHeight" : 1.4,
+						"model" : "item.title",
+						"w" : 80,
+						"x" : 10,
+						"y" : 7
+					}, {
+						"align" : "center",
+						"color" : "#000",
+						"font" : "Courier",
+						"fontsize" : 60,
+						"h" : 16,
+						"lineHeight" : 2,
+						"model" : "item.question",
+						"valign" : "middle",
+						"w" : 50,
+						"x" : 25,
+						"y" : 37
+					}
+				],
+				"input" : {
+					"align" : "center",
+					"class" : "inputText",
+					"h" : 10,
+					"id" : "text1",
+					"model" : "item.ans1",
+					"type" : "number",
+					"valign" : "middle",
+					"w" : 14,
+					"x" : 45,
+					"y" : 55
+				},
+				"id" : "org.ekstep.ftb.text.input1_1"
+			}
+		],
+		"controller" : [{
+				"name" : "sampleAssessment",
+				"type" : "items",
+				"id" : "sampleAssessment",
+				"__cdata" : {
+					"total_items" : 1,
+					"SET_TYPE" : "MATERIALISED_SET",
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"item_sets" : [{
+							"id" : "sampleItemSet",
+							"count" : 1
+						}
+					],
+					"items" : {
+						"sampleItemSet" : [{
+								"template" : "org.ekstep.ftb.text.input1_1",
+								"question_audio" : "domain_51721",
+								"subject" : "domain",
+								"keyword" : "[]",
+								"answer" : {
+									"ans1" : {
+										"value" : "888",
+										"score" : 1
+									}
+								},
+								"template_id" : "domain_46780",
+								"code" : "org.ekstep.assessmentitem.literacy_57468b210d195",
+								"lastUpdatedOn" : "2016-05-26T05:35:28.829+0000",
+								"type" : "ftb",
+								"feedback" : "",
+								"createdOn" : "2016-05-26T05:35:28.829+0000",
+								"qlevel" : "EASY",
+								"title" : "26six",
+								"name" : "26six",
+								"domain" : "literacy",
+								"owner" : "345",
+								"used_for" : "worksheet",
+								"max_score" : 1,
+								"gradeLevel" : ["Grade 1"],
+								"language" : ["English"],
+								"question" : "555 + 333 = ",
+								"identifier" : "domain_51722",
+								"media" : [{
+										"id" : "domain_51721",
+										"type" : "audio",
+										"src" : "https://sandbox-community.ekstep.in/assets/public/content/friday_345_1464240928_1464240928614.mp3",
+										"assetId" : "domain_51721"
+									}
+								],
+								"qindex" : 1,
+								"model" : {}
+
+							}
+						]
+					},
+					"identifier" : "sampleItemSet"
+				}
+			}
+		],
+		"startStage" : "sampleAssessmentStage",
+		"id" : "theme",
+		"ver" : 0.3,
+		"stage" : [{
+				"id" : "baseStage1",
+				"preload" : true,
+				"image" : [],
+				"audio" : [{
+						"asset" : "domain_51721"
+					}
+				],
+				"voice" : []
+			}, {
+				"id" : "sampleAssessmentStage",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"g" : [{
+						"embed" : {
+							"template" : "item",
+							"var-item" : "item"
+						},
+						"x" : 10,
+						"y" : 0,
+						"w" : 80,
+						"h" : 90
+					}
+				],
+				"iterate" : "sampleAssessment",
+				"var" : "item"
+			}
+		]
+	}
+}

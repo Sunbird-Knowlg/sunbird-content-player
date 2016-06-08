@@ -1,0 +1,547 @@
+{
+    "identifier": "learning_numbers",
+    "title": "Learning Numbers",
+    "total_items": 10,
+    "max_score": 10,
+    "shuffle": false,
+    "subject": "NUM",
+    "item_sets": [{
+        "id": "set_1",
+        "count": 10
+    }],
+    "items": {
+        "set_1": [{
+                "identifier": "Q1",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_template_stick_counting",
+                "qlevel": "MEDIUM",
+                "title": "",
+                "question": "आप कितने गिन सकते हैं?",
+                "question_audio": "kitane_gin_sound",
+                "question_image_s": "fivehand_i",
+                "question_image_d": "fivehand",
+                "question_value": "16",
+                "question_value_o": "6",
+                "question_value_t": "1",
+
+                "stageId": "counting_sticks_one",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "17",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "16",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "78",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "65",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        }, {
+                "identifier": "Q2",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_template_stick_counting",
+                "qlevel": "MEDIUM",
+                "title": "",
+                "question": "आप कितने गिन सकते हैं?",
+                "question_audio": "kitane_gin_sound",
+                "question_image_s": "fivehand_i",
+                "question_image_d": "fivehand",
+                "question_value": "23",
+                "question_value_o": "3",
+                "question_value_t": "2",
+
+                "stageId": "counting_sticks_one",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "23",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "58",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "24",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "16",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        }, {
+                "identifier": "Q3",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_template_stick_counting",
+                "qlevel": "MEDIUM",
+                "title": "",
+                "question": "आप कितने गिन सकते हैं?",
+                "question_audio": "kitane_gin_sound",
+                "question_image_s": "fivehand_i",
+                "question_image_d": "fivehand",
+                "question_value": "37",
+                "question_value_o": "7",
+                "question_value_t": "3",
+
+                "stageId": "counting_sticks_one",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "38",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "46",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "73",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "37",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        }, {
+                "identifier": "Q4",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_template_stick_counting",
+                "qlevel": "MEDIUM",
+                "title": "",
+                "question": "आप कितने गिन सकते हैं?",
+                "question_audio": "kitane_gin_sound",
+                "question_image_s": "fivehand_i",
+                "question_image_d": "fivehand",
+                "question_value": "41",
+                "question_value_o": "1",
+                "question_value_t": "4",
+
+                "stageId": "counting_sticks_one",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "14",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "41",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "42",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "91",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        }, {
+                "identifier": "Q5",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_template_stick_counting",
+                "qlevel": "MEDIUM",
+                "title": "",
+                "question": "आप कितने गिन सकते हैं?",
+                "question_audio": "kitane_gin_sound",
+                "question_image_s": "fivehand_i",
+                "question_image_d": "fivehand",
+                "question_value": "59",
+                "question_value_o": "9",
+                "question_value_t": "5",
+
+                "stageId": "counting_sticks_one",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "75",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "56",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "59",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "95",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        }, {
+                "identifier": "Q6",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_template_stick_counting",
+                "qlevel": "MEDIUM",
+                "title": "",
+                "question": "आप कितने गिन सकते हैं?",
+                "question_audio": "kitane_gin_sound",
+                "question_image_s": "fivehand_i",
+                "question_image_d": "fivehand",
+                "question_value": "63",
+                "question_value_o": "3",
+                "question_value_t": "6",
+
+                "stageId": "counting_sticks_one",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "63",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "36",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "64",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "89",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        }, {
+                "identifier": "Q7",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_template_stick_counting",
+                "qlevel": "MEDIUM",
+                "title": "",
+                "question": "आप कितने गिन सकते हैं?",
+                "question_audio": "kitane_gin_sound",
+                "question_image_s": "fivehand_i",
+                "question_image_d": "fivehand",
+                "question_value": "74",
+                "question_value_o": "4",
+                "question_value_t": "7",
+
+                "stageId": "counting_sticks_one",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "79",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "75",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "19",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "74",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        }, {
+                "identifier": "Q8",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_template_stick_counting",
+                "qlevel": "MEDIUM",
+                "title": "",
+                "question": "आप कितने गिन सकते हैं?",
+                "question_audio": "kitane_gin_sound",
+                "question_image_s": "fivehand_i",
+                "question_image_d": "fivehand",
+                "question_value": "86",
+                "question_value_o": "6",
+                "question_value_t": "8",
+
+                "stageId": "counting_sticks_one",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "86",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "87",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "31",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "54",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        }, {
+                "identifier": "Q9",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_template_stick_counting",
+                "qlevel": "MEDIUM",
+                "title": "",
+                "question": "आप कितने गिन सकते हैं?",
+                "question_audio": "kitane_gin_sound",
+                "question_image_s": "fivehand_i",
+                "question_image_d": "fivehand",
+                "question_value": "93",
+                "question_value_o": "3",
+                "question_value_t": "9",
+
+                "stageId": "counting_sticks_one",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "39",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "94",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "93",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "45",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        }, {
+                "identifier": "Q10",
+                "qid": "ek.q1",
+                "type": "mcq",
+                "num_answers": 1,
+                "template": "mcq_template_stick_counting",
+                "qlevel": "MEDIUM",
+                "title": "",
+                "question": "आप कितने गिन सकते हैं?",
+                "question_audio": "kitane_gin_sound",
+                "question_image_s": "fivehand_i",
+                "question_image_d": "fivehand",
+                "question_value": "97",
+                "question_value_o": "7",
+                "question_value_t": "9",
+
+                "stageId": "counting_sticks_one",
+                "options": [{
+                    "value": {
+                        "type": "mixed",
+                        "text": "13",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "67",
+                        "audio": "",
+                        "image": ""
+                    }
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "98",
+                        "audio": "",
+                        "image": ""
+                    },
+                    "answer": true
+                }, {
+                    "value": {
+                        "type": "mixed",
+                        "text": "97",
+                        "audio": "",
+                        "image": ""
+                    }
+                }],
+                "model": {
+                    "title_audio": {
+                        "asset": "",
+                        "type": "audio"
+                    }
+                }
+        }
+    ]
+
+    }
+}

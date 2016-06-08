@@ -1,0 +1,18 @@
+{
+	"model": {
+		"instruct1" : "उन्गलिओं की मदद से 1-10 तक की संख्याओं को गिनना",
+		"instruct2" : "बीच की संख्याओं को पहचानना",
+		"instruct3" : " छुटी हुए संख्या को लिखना",
+		"instruct4" : "बताये हुए संख्या को लिखना",
+		"instruct5" : "",
+		"instruct6" : "",
+		"instruct7" : "",
+		"instruct8" : "",
+		"instruct9" : "",
+		"instruct10" : "",
+		"instruct11" :"",
+		"instruct12" :"",
+		"instruct13" :""
+	
+	}
+}

@@ -1,0 +1,86 @@
+﻿{
+	"identifier": "DAY1_1",
+	"title": "DAY1_1 Assessment",
+	"total_items": 1,
+	"shuffle":false,
+	"max_score": 4,
+	"subject": "LIT",
+	"item_sets": [
+		{
+			"id": "set_1",
+        	"count": 1	
+		}
+	],
+	"items": {
+		"set_1" : [
+		
+			{"type": "mtf",	
+				
+				"template_id": "MTF_Vertical", 
+				"template": "MTF_Vertical",
+
+				"media": [
+				{
+					"id": "friday",
+					"type": "audio",
+					"src": "sounds/friday.mp3", 
+					"asset_id": "friday" 
+				}],
+			
+				"title": "",
+				"question": "Question text goes here ",
+				"question_image": "", 
+				"question_audio": "friday",
+				"question_count": "",
+
+				
+				"lhs_options": [
+					{
+						"value": {"type": "image", "asset": "next"},
+						"index": 0
+					},
+					{
+						"value": {"type": "image", "asset": "next"},
+						"index": 1
+					},
+					{
+						"value": {"type": "image", "asset": "next"},
+						"index": 2
+					},
+					{
+						"value": {"type": "image", "asset": "next"},
+						"index": 3
+					}
+					
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "image", "asset": "next"},
+						"answer": 3
+					},
+					{
+						"value": { "type": "image", "asset": "next"},
+						"answer": 2
+					},
+					{
+						"value": {"type": "image", "asset": "next"},
+						"answer": 1
+					},
+					{
+						"value": {"type": "image", "asset": "next"},
+						"answer": 0
+					}
+				],
+				"model" : {
+					},
+
+	   
+				"keywords": ["array", "of", "strings"]
+				}
+			
+			
+			
+			
+		]
+	}
+}

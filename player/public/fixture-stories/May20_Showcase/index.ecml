@@ -1,0 +1,92 @@
+<theme startStage="splash" id="theme" ver="0.2">
+	<manifest>
+		<media src="page2.ogg" id="hs_p1_audio" type="audiosprite">
+            <data>
+                <audioSprite id="hs_s1_ramu_sound" startTime="386" duration="804.0"></audioSprite>
+                <audioSprite id="hs_s1_fair_sound" startTime="7775" duration="772.0"></audioSprite>
+                <audioSprite id="hs_s1_dial_sound" startTime="1836" duration="4553.0"></audioSprite>
+            </data>
+        </media>
+        <media src="dialogues.ogg" id="scene_audio" type="audiosprite">
+            <data>
+                <audioSprite id="splash_sound" startTime="880" duration="1972.0"></audioSprite>
+                <audioSprite id="scene1_sound" startTime="4197" duration="3034.0"></audioSprite>
+                <audioSprite id="scene2_sound" startTime="8064" duration="9328.0"></audioSprite>
+                <audioSprite id="scene3_sound" startTime="18177" duration="6851.0"></audioSprite>
+                <audioSprite id="scene4_sound" startTime="26393" duration="5435.0"></audioSprite>
+                <audioSprite id="scene5_sound" startTime="33016" duration="4222.0"  ></audioSprite>
+                <audioSprite id="scene6_sound" startTime="38274" duration="7382.0"></audioSprite>
+                <audioSprite id="scene7_sound" startTime="46642" duration="7382.0"></audioSprite>
+                <audioSprite id="scene8_sound" startTime="54808" duration="8570.0"></audioSprite>
+                <audioSprite id="scene9_sound" startTime="64515" duration="7635.0"></audioSprite>
+                <audioSprite id="scene10_sound" startTime="73490" duration="2654.0"></audioSprite>
+            </data>
+        </media>
+	</manifest>
+	<stage id="preloadStage" preload="true">
+        <audio asset="scene_audio" />
+		<audio asset="hs_p1_audio" />
+	</stage>
+	<stage id="splash" x="0" y="0" w="100" h="100">
+		<param name="next" value="scene1"/>
+		<text x="10" y="30" w="80" h="40" font="Arial" fontsize="150" align="center">Highlight Text Sample Story</text>
+	</stage>
+	<stage id="scene1" x="0" y="0" w="100" h="100">
+		<param name="previous" value="splash"/>
+		<param name="next" value="endScene"/>
+		<htext id="ht1" x="15" y="20" w="85" h="4" highlight="rgba(255,0,0,0.5)" highlight-color="white" fontsize="1.2em" timings="250,400,650,1000,1300,1500,1900,2300" audio="scene1_sound">All of us went to the Dasara fair</htext>
+		<g x="35" y="30" w="20" h="20">
+			<shape x="0" y="0" w="100" h="100" fill="#AAA" type="roundrect"/>
+			<g x="10" y="15" w="30" h="60">
+				<shape x="0" y="0" w="100" h="100" stroke="yellow" type="roundrect" hitArea="true">
+		            <event type="click">
+		                <action type="command" command="pause" asset="ht1"/>
+		            </event>
+		        </shape>
+		        <text x="0" y="0" w="100" h="100" valign="middle" fontsize="8px" align="center" color="white">PAUSE</text>
+	    	</g>
+	        <g x="55" y="15" w="30" h="60">
+	        	<shape x="0" y="0" w="100" h="100" stroke="red" type="roundrect" hitArea="true">
+		            <event type="click">
+		                <action type="command" command="togglePlay" asset="ht1"/>
+		            </event>
+		        </shape>
+		        <text x="0" y="0" w="100" h="100" valign="middle" fontsize="8px" align="center" color="white">TOGGLE</text>
+	        </g>
+		</g>
+
+        <htext id="ht2" x="15" y="60" w="85" h="4" highlight="rgba(255,0,0,0.5)" highlight-color="white" fontsize="1.2em" timings="150,250,550,800,1000,1400,2200,2600,3000,3800,4500,5000,5300,5800" audio="scene3_sound">On the way home, a very strong wind came. It blew my cap away.</htext>
+        <g x="35" y="70" w="20" h="20">
+            <shape x="0" y="0" w="100" h="100" fill="#AAA" type="roundrect"/>
+            <g x="10" y="15" w="30" h="60">
+                <shape x="0" y="0" w="100" h="100" stroke="yellow" type="roundrect" hitArea="true">
+                    <event type="click">
+                        <action type="command" command="pause" asset="ht2"/>
+                    </event>
+                </shape>
+                <text x="0" y="0" w="100" h="100" valign="middle" fontsize="8px" align="center" color="white">PAUSE</text>
+            </g>
+            <g x="55" y="15" w="30" h="60">
+                <shape x="0" y="0" w="100" h="100" stroke="red" type="roundrect" hitArea="true">
+                    <event type="click">
+                        <action type="command" command="togglePlay" asset="ht2"/>
+                    </event>
+                </shape>
+                <text x="0" y="0" w="100" h="100" valign="middle" fontsize="8px" align="center" color="white">TOGGLE</text>
+            </g>
+        </g>
+
+		<events>
+			<event type="enter">
+				<action type="command" command="play" asset="ht1" audio="scene1_sound" />
+			</event>
+			<event type="exit">
+				<action type="command" command="stop" asset="ht1" audio="scene1_sound" />
+			</event>
+		</events>
+	</stage>
+	<stage id="endScene" x="0" y="0" w="100" h="100">
+		<param name="previous" value="scene1"/>
+		<text x="10" y="40" w="80" h="40" font="Arial" fontsize="150" align="center">END</text>
+	</stage>
+</theme>
