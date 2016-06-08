@@ -19,7 +19,6 @@ module.exports = function(grunt) {
                     beautify: true,
                     mangle: false 
                 },
-
                 files: {
                     'public/js/renderer.min.js': [
                         'public/js/app/GlobalContext.js',
@@ -33,8 +32,7 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
                         'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
                         'public/js/thirdparty/exclude/Class.js',
-                        'public/js/app/renderer.js',
-                        'public/js/app/telemetry.js'
+                        'public/js/app/renderer.js'
                     ],
                     'public/js/telemetry.min.js' : [
                         'public/js/thirdparty/exclude/date-format.js',
@@ -157,7 +155,7 @@ module.exports = function(grunt) {
         },
         clean: {
             before: ["www", "platforms/android/assets/www", "platforms/android/build"],
-            after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html"],
+            after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html", "www/webview.html", "www/preview.html"],
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
             minjs: ['public/js/*.min.js']
         },
