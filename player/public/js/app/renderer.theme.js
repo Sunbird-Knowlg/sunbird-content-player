@@ -117,14 +117,13 @@ angular.module('genie-canvas.theme', [])
 
                 scope.mute = function() {
                     //mute function goes here
-                    createjs.Sound.muted = !createjs.Sound.muted;
-                    if (createjs.Sound.muted == true) {
+                    if (AudioManager.muted) {
+                        AudioManager.unmute();
+                        document.getElementById("unmute_id").style.visibility = "hidden"
+                    } else {
+                        AudioManager.mute();
                         document.getElementById("unmute_id").src = "img/icons/unmute.png";
                         document.getElementById("unmute_id").style.visibility = "visible"
-
-                    } else {
-
-                        document.getElementById("unmute_id").style.visibility = "hidden"
                     }
 
 

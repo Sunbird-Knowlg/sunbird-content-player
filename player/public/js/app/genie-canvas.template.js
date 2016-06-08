@@ -34,8 +34,8 @@ angular.module('genie-canvas.template',[])
             $scope.item = data;
             $rootScope.content = data;
         });
-
-        //$rootScope.stories = [data];
+        // This is used by ContentCtrl.
+        $rootScope.stories = [data];
         var identifier = (data && data.identifier) ? data.identifier : null;
         var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
         TelemetryService.start(identifier, version);
