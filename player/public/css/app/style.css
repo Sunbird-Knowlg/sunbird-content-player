@@ -506,6 +506,10 @@ ion-popover-view.fit ion-content {
 .gc-restart-btn{
     width: 10%;
     position: absolute;
+    left: 45%;
+}
+
+.gc-restart-btn-pad{
     left: 38%;
 }
 
@@ -522,7 +526,10 @@ ion-popover-view.fit ion-content {
 .next-module{
     position: absolute;
     width: 10%;
-    top: 70%;
+    left: 45%; 
+}
+
+.next-module-pad{
     left: 52%;
 }
 
