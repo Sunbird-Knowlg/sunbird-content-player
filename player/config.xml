@@ -19,6 +19,7 @@
     <preference name="Orientation" value="landscape" />
     <preference name="Fullscreen" value="true" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+	<preference name="LoadUrlTimeoutValue" value="999999" />
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
