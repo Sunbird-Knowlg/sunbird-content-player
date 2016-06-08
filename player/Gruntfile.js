@@ -155,7 +155,7 @@ module.exports = function(grunt) {
         },
         clean: {
             before: ["www", "platforms/android/assets/www", "platforms/android/build"],
-            after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html"],
+            after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html", "www/webview.html", "www/preview.html"],
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
             minjs: ['public/js/*.min.js']
         },
