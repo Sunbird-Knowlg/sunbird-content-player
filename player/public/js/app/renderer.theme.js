@@ -11,12 +11,12 @@ angular.module('genie-canvas.theme', [])
             "submit": "SUBMIT",
             "goodJob": "Good Job!",
             "tryAgain": "Aww,  Seems you goofed it!",
-            "whatWeDoNext": "What we do next",
+            "whatWeDoNext": "What should we do next?",
             "image": "Image",
             "voice": "Voice",
             "audio": "Audio",
             "author": "Author",
-            "instructions": "TEACHER INSTRUCTION",
+            "instructions": "TEACHER INSTRUCTION"
         }
     })
     .directive('preview', function($rootScope) {
