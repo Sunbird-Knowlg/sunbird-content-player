@@ -58,6 +58,16 @@
     src: url('fonts/SKATERGIRLSROCK.TTF') format('truetype')
 }
 
+@font-face {
+    font-family: 'NotoSansRegular';
+    src: url('fonts/NotoSans-Regular.ttf') format('truetype')
+}
+
+@font-face {
+    font-family: 'baloobhai';
+    src: url('fonts/baloobhai.otf') format('opentype')
+}
+
 ion-popover-view.fit {
   height: auto !important;
   width: auto !important;
@@ -152,7 +162,7 @@ ion-popover-view.fit ion-content {
 
 .conver-page-title
 {
-    font-family: SkaterGirlsRock;
+    font-family: baloobhai;
     position: absolute; 
     width: 100%; 
     top:20%;
@@ -180,7 +190,7 @@ ion-popover-view.fit ion-content {
 }
 
 .icon-font{
-    font-family: SkaterGirlsRock; 
+    font-family: baloobhai; 
     color: #01ac8a; 
     line-height: 1.2em;
     text-align: center;
@@ -298,6 +308,7 @@ ion-popover-view.fit ion-content {
 }
 
 .inst-message-cont p{
+    font-family: NotoSansRegular;
     font-size: 1.2em;
     padding: 25% 5%;
     height: 100%;
@@ -441,6 +452,16 @@ ion-popover-view.fit ion-content {
 
 }
 
+
+.credit-body-icon-font {
+    width: 82%;
+    height:75%;
+    left: 12%;
+    top: 0%;
+    position: absolute;
+    font-family: NotoSansRegular;
+    font-size: 0.7em;
+}
 
 .gc-endpage-title{
     top:20%;
