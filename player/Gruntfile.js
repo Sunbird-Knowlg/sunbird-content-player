@@ -21,17 +21,19 @@ module.exports = function(grunt) {
                 },
 
                 files: {
-                    'public/js/renderer.min.js': [
-                        'public/js/app/speech.js',
+                    'public/js/script.min.js': [
                         'public/js/app/GlobalContext.js',
                         'public/js/app/AppConfig.js',
                         'public/js/app/AppMessages.js',
                         'public/js/app/main.js',
                         'public/js/app/app.js',
-                        'public/js/app/services.js',
                         'public/js/app/renderer.theme.js',
                         'public/js/app/OverlayHtml.js',
                         'public/js/app/genie-canvas.template.js',
+                    ],
+                    'public/js/renderer.min.js': [
+                        'public/js/app/speech.js',
+                        'public/js/app/services.js',
                         'public/js/thirdparty/exclude/xml2json.js',
                         'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
                         'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
@@ -197,15 +199,26 @@ module.exports = function(grunt) {
                     dest: 'js/'
                 }]
             },
-            uploadPreviewFiles : {
+            uploadPreviewFilesToSandbox : {
                 options: {
                     bucket: 'ekstep-public'
                 },
                 files: [{
                     expand: true,
-                    cwd: 'public/',
-                    src: ['preview/**'],
-                    dest: '/'
+                    cwd: 'public/preview/',
+                    src: ['**'],
+                    dest: '/preview/sandbox/'
+                }]
+            },
+            uploadPreviewFilesToProduction : {
+                options: {
+                    bucket: 'ekstep-public'
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'public/preview/',
+                    src: ['**'],
+                    dest: '/preview/production/'
                 }]
             },
             cleanJS: {
@@ -486,5 +499,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build-aar-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalk-library', 'cordovacli:build_android', 'clean:minjs']);
 
-    grunt.registerTask('preview', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:uploadPreviewFiles', 'clean:preview']);
+    grunt.registerTask('preview-sandbox', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:uploadPreviewFilesToSandbox', 'clean:preview']);
+    grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:uploadPreviewFilesToProduction', 'clean:preview']);
 };
