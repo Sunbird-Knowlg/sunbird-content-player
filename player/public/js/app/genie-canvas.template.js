@@ -96,27 +96,6 @@ angular.module('genie-canvas.template',[])
     $scope.creditsBody = '<div class="credit-popup"><img ng-src="{{icons.popup.credit_popup}}" style="width:100%;" /><div class="popup-body"><div style="width: 82%;height:75%;left: 12%;top: 0%;position: absolute;font-family: SkaterGirlsRock;font-size: 1em;"><table style="width:100%; table-layout: fixed;"><tr><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-if="content.voiceCredits"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-if="content.soundCredits"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup_close.close_icon}}" style="width:100%; left:70%;"/></a></div>';
     //$rootScope.content = {};
 
-    $scope.init = function(){
-        //var id = $stateParams.contentId;
-        var content = $rootScope.content;
-        
-        if(!GlobalContext.previousContentId){
-            $scope.showNextContent = false;
-        }
-
-        $scope.setCredits('imageCredits');
-        $scope.setCredits('soundCredits');
-        $scope.setCredits('voiceCredits');
-
-        var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
-        creditsPopup.trigger("popupUpdate", {"content": content});
-        setTimeout(function() {
-            $rootScope.$apply();
-        }, 1000);
-
-        TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContnetApp-EndScreen", subtype: "ContentID"});
-    }
-
     $scope.arrayToString = function(array) {
         return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", "): "";   
     };
@@ -124,6 +103,24 @@ angular.module('genie-canvas.template',[])
     $scope.setCredits = function(key) {
         content[key] = (content[key]) ? $scope.arrayToString(content[key]) : defaultMetadata[key];
     };
+
+    var content = $rootScope.content;
+        
+    if(!GlobalContext.previousContentId){
+        $scope.showNextContent = false;
+    }
+
+    $scope.setCredits('imageCredits');
+    $scope.setCredits('soundCredits');
+    $scope.setCredits('voiceCredits');
+
+    var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
+    creditsPopup.trigger("popupUpdate", {"content": content});
+    setTimeout(function() {
+        $rootScope.$apply();
+    }, 1000);
+
+    TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContnetApp-EndScreen", subtype: "ContentID"});
     
     $scope.showCredits = function() {
         jQuery("#creditsPopup").show();
@@ -150,6 +147,4 @@ angular.module('genie-canvas.template',[])
             }
         }, 500);
     }
-
-    $scope.init();
 });

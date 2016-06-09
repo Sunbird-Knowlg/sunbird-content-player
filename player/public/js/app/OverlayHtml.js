@@ -44,14 +44,14 @@ OverlayHtml = {
                 console.log("listener for ", event);
 
                 if (event.type === "correct_answer") {
-                    createjs.Sound.play("goodjob_sound");
+                    AudioManager.play({asset: "goodjob_sound"});
                 }
                 jQuery("#goodJobPopup").show();
             });
             currentScene.on("wrong_answer", function(event) {
                 console.info("listener for ", event);
                 if (event.type === "wrong_answer") {
-                    createjs.Sound.play("tryagain_sound");
+                    AudioManager.play({asset: "tryagain_sound"});
                 }
                 jQuery("#tryAgainPopup").show();
             });

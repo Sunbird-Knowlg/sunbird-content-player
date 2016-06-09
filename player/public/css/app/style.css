@@ -72,46 +72,46 @@ ion-popover-view.fit ion-content {
 }
 
 .menu-item {
-	font-size: 25px !important;
-	margin: -8px !important;
+    font-size: 25px !important;
+    margin: -8px !important;
     padding: 18px !important;
 }
 
 .clearList {
-	padding: 0px !important;
-	border: 0px !important;
-	box-shadow: none !important;
+    padding: 0px !important;
+    border: 0px !important;
+    box-shadow: none !important;
 }
 
 .noPad {
-	padding: 0px !important;
+    padding: 0px !important;
 }
 
 .noBorder {
-	border: 0px !important;
+    border: 0px !important;
 }
 
 .preview_posterImg {
-	max-height: 100px;
-	max-width: 100px;
+    max-height: 100px;
+    max-width: 100px;
 }
 
 .preview_txt {
-	font-family: 'flavours' !important;
+    font-family: 'flavours' !important;
 }
 
 .preview_description {
-	font-size: 1.25em !important;
-	color: #000 !important;
+    font-size: 1.25em !important;
+    color: #000 !important;
 }
 
 .preview_subtext {
-	font-family: 'flavours' !important;
-	margin: 0px !important;
+    font-family: 'flavours' !important;
+    margin: 0px !important;
 }
 
 .preview_button_bg {
-	background-image: url('../../img/icons/btn_play_selected.png');
+    background-image: url('../../img/icons/btn_play_selected.png');
     background-repeat: no-repeat;
     background-size: 140px 45px;
     padding-top: 13px;
@@ -122,18 +122,18 @@ ion-popover-view.fit ion-content {
 }
 
 .preview_button {
-	font-family: 'flavours';
-	font-size: 1.5em;
+    font-family: 'flavours';
+    font-size: 1.5em;
 }
 
 .preview_bottom_bg {
-	background-image: url('../../img/skin/bottom_bg.png');
-	height: 66px;
-	margin-top: 10px;
+    background-image: url('../../img/skin/bottom_bg.png');
+    height: 66px;
+    margin-top: 10px;
 }
 
 .worksheet_exit {
-	background: url(../assets/skin02/btn_close.png) no-repeat left bottom;
+    background: url(../assets/skin02/btn_close.png) no-repeat left bottom;
     background-size: 38px 38px;
     height: 38px;
     width: 38px;
@@ -405,14 +405,14 @@ ion-popover-view.fit ion-content {
 }
 .popup-retry{
     position: absolute;
-    top: 5%;
-    left: 52%;
+    top: 12%;
+    left: 39%;
     width: 30%;
 }
 .popup-retry-next{
     position: absolute;
     width: 18%;
-    bottom: 0%;
+    bottom: 10%;
     right: 7%;
 }
 .popup-overlay{
@@ -433,15 +433,29 @@ ion-popover-view.fit ion-content {
 .popup-body {
     position: absolute;
     top: 14%;
-    width: 80%;
+    width: 70%;
     height: 65%;
     left: 7%;
     padding: 0;
     margin: 10px;
+}
+.popup-body{
+    /*position: absolute;
+    top: 14%;
+    width: 70%;
+    height: 65%;
+    left: 7%;
+    padding: 0;
+    margin: 10px;*/
+    position: absolute;
+    top: 14%;
+    width: 70%;
+    height: 70%;
+    left: 17%;
+    padding: 0;
+    margin: 10px;
 
 }
-
-
 .gc-endpage-title{
     top:20%;
     position: absolute;
@@ -484,7 +498,7 @@ ion-popover-view.fit ion-content {
     height: auto;
 }
 .credits-title {
-     width: 40%;
+     width: 43%;
     font-size: 2em;
     line-height: 2em;
     border-right: 2px solid;
@@ -510,10 +524,6 @@ ion-popover-view.fit ion-content {
 .gc-restart-btn{
     width: 10%;
     position: absolute;
-    left: 45%;
-}
-
-.gc-restart-btn-pad{
     left: 38%;
 }
 
@@ -528,10 +538,7 @@ ion-popover-view.fit ion-content {
 .next-module{
     position: absolute;
     width: 10%;
-    left: 45%; 
-}
-
-.next-module-pad{
+    top: 70%;
     left: 52%;
 }
 
