@@ -6,7 +6,7 @@ AppConfig = {
 	sandbox: "//sandbox-community.ekstep.in/api/learning/taxonomy-service",
 	production: "//community.ekstep.in/api/learning/taxonomy-service",
 	recorder: "AUDIO_RECORDER",
-	flavor: "sandbox"
+	flavor: "DEPLOYMENT"
 }
 
 
