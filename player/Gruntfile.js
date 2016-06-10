@@ -250,7 +250,7 @@ module.exports = function(grunt) {
                     bucket: 'ekstep-public'
                 },
                 files: [{
-                    dest: 'preview-test/sandbox',
+                    dest: 'preview/sandbox',
                     action: 'delete'
                 }]
             },
@@ -259,7 +259,7 @@ module.exports = function(grunt) {
                     bucket: 'ekstep-public'
                 },
                 files: [{
-                    dest: 'preview-test/production',
+                    dest: 'preview/production',
                     action: 'delete'
                 }]
             }
