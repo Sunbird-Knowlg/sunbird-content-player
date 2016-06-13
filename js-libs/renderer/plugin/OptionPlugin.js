@@ -242,6 +242,11 @@ var OptionPlugin = Plugin.extend({
                     plugin._answer = instance;
                 }
 
+                 if(!(("undefined" != typeof drop_idx) && ("" !== drop_idx))) {
+                    instance._parent.setAnswer(instance, undefined);
+                 }
+                        
+
                 instance.removeShadow();
 
                 var data = {
