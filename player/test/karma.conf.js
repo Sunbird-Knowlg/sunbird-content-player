@@ -17,6 +17,7 @@ module.exports = function(config) {
         ],
 
 
+
         // list of files / patterns to load in the browser
         files: [
             'public/js/thirdparty/jquery.min.js',            
@@ -26,6 +27,9 @@ module.exports = function(config) {
             'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
             'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
             'public/js/thirdparty/exclude/Class.js',
+            'public/libs/ionic/js/ionic.bundle.min.js',
+            'public/js/app/AppConfig.js',
+            'public/js/app/main.js',
             'public/js/app/*.js',
             'public/js/test/BaseSpec.js',
             'public/js/test/specHelper.js',
@@ -67,11 +71,12 @@ module.exports = function(config) {
 
         // list of files to exclude
         exclude: [
-            'public/js/app/app.js',
-            'public/js/app/services.js',
-            'public/js/app/renderer.theme.js',
-            'public/js/app/genie-canvas.template.js',
-            'public/js/thirdparty/jquery.bookshelfslider.min.js'
+            // 'public/js/app/app.js',
+            // 'public/js/app/genieservices.js',
+            // 'public/js/app/services.js',
+            // 'public/js/app/renderer.theme.js',
+            // 'public/js/app/genie-canvas.template.js',
+            // 'public/js/thirdparty/jquery.bookshelfslider.min.js'
         ],
 
 
