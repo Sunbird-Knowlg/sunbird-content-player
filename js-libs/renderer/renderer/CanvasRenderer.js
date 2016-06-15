@@ -33,6 +33,7 @@ Renderer = {
     start: function(gameRelPath, canvasId, game, data, preview) {
         if(Renderer.running) {
             Renderer.cleanUp();
+            TelemetryService.start(game.identifier, game.pkgVersion);
         }
         Renderer.running = true;
         Renderer.preview = preview || false;

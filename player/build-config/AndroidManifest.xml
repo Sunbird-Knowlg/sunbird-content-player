@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <manifest android:versionCode="1" android:versionName="0.0.1" package="org.ekstep.geniecanvas" xmlns:android="http://schemas.android.com/apk/res/android">
     <application android:hardwareAccelerated="true" android:supportsRtl="true">
-        <activity android:launchMode="singleTop" android:name="MainActivity" android:screenOrientation="sensorLandscape" />
+        <activity android:launchMode="singleTop" android:name="MainActivity" android:screenOrientation="sensorLandscape" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="22" />
