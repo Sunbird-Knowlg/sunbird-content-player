@@ -1,0 +1,6559 @@
+{
+	"theme" : {
+		"manifest" : {
+			"media" : [{
+					"assetId" : "domain_3946_previous",
+					"id" : "previous",
+					"src" : "1463730546188icon_previous.png",
+					"type" : "image"
+				}, {
+					"assetId" : "domain_3946_next",
+					"id" : "next",
+					"src" : "1463730545861icon_next.png",
+					"type" : "image"
+				}, {
+					"assetId" : "domain_3946_literacyBG",
+					"id" : "literacyBG",
+					"src" : "1463730545614literacy.png",
+					"type" : "image"
+				}, {
+					"assetId" : "domain_3946_menuBG",
+					"id" : "menuBG",
+					"src" : "1463730545273pagesel_bg.png",
+					"type" : "image"
+				}, {
+					"assetId" : "domain_3946_endScreen",
+					"id" : "endScreen",
+					"src" : "1463730546861endscreen.png",
+					"type" : "image"
+				}, {
+					"assetId" : "domain_3946_blacktint",
+					"id" : "blacktint",
+					"src" : "1463730546335blacktint.png",
+					"type" : "image"
+				}, {
+					"assetId" : "domain_3946_mic",
+					"id" : "mic",
+					"src" : "1463730546614mic.png",
+					"type" : "image"
+				}, {
+					"assetId" : "domain_3946_record",
+					"id" : "record",
+					"src" : "1463730545464record.png",
+					"type" : "image"
+				}, {
+					"assetId" : "domain_3946_stop_record",
+					"id" : "stop_record",
+					"src" : "1463730546472stop.png",
+					"type" : "image"
+				}, {
+					"assetId" : "domain_3946_icon_sound",
+					"id" : "icon_sound",
+					"src" : "1463730546009icon_sound.png",
+					"type" : "image"
+				}, {
+					"assetId" : "domain_4171_keyboard",
+					"id" : "keyboard",
+					"src" : "1463746544016customkeyboard.js",
+					"type" : "plugin"
+				}, {
+					"assetId" : "domain_4171_keyboard_css",
+					"id" : "keyboard_css",
+					"src" : "1463746543887keyboard.css",
+					"type" : "css"
+				}, {
+					"id" : "domain_4636",
+					"type" : "image",
+					"src" : "photo7.1_323_1464002358_1464002358343.jpg",
+					"assetId" : "domain_4636"
+				}, {
+					"id" : "domain_4641",
+					"type" : "image",
+					"src" : "photo5.0_323_1464002534_1464002534887.jpg",
+					"assetId" : "domain_4641"
+				}, {
+					"id" : "domain_8312",
+					"type" : "audio",
+					"src" : "a1_323_1465820326_1465820326631.mp3",
+					"assetId" : "domain_8312"
+				}, {
+					"id" : "domain_7516",
+					"type" : "audio",
+					"src" : "title3_1465577025982.mp3",
+					"assetId" : "domain_7516"
+				}, {
+					"id" : "domain_8313",
+					"type" : "audio",
+					"src" : "question_323_1465820454_1465820454662.mp3",
+					"assetId" : "domain_8313"
+				}, {
+					"id" : "domain_8314",
+					"type" : "audio",
+					"src" : "a1_323_1465820492_1465820492571.mp3",
+					"assetId" : "domain_8314"
+				}, {
+					"id" : "domain_8315",
+					"type" : "audio",
+					"src" : "a2_323_1465820502_1465820502818.mp3",
+					"assetId" : "domain_8315"
+				}, {
+					"id" : "domain_8316",
+					"type" : "audio",
+					"src" : "a3_323_1465820518_1465820518264.mp3",
+					"assetId" : "domain_8316"
+				}, {
+					"id" : "domain_8317",
+					"type" : "audio",
+					"src" : "a4_323_1465820530_1465820530081.mp3",
+					"assetId" : "domain_8317"
+				}, {
+					"id" : "domain_10624",
+					"type" : "image",
+					"src" : "roti_323_1465971255_1465971255545.jpg",
+					"assetId" : "domain_10624"
+				}, {
+					"id" : "domain_10561",
+					"type" : "audio",
+					"src" : "story11q4a1_141_1465970351_1465970351272.mp3",
+					"assetId" : "domain_10561"
+				}, {
+					"id" : "validate",
+					"src" : "btn_ok_highlights_1460705843676.png",
+					"type" : "image",
+					"assetId" : "domain_38852"
+				}, {
+					"id" : "popupTint",
+					"src" : "popuptint_1460636175572.png",
+					"type" : "image",
+					"assetId" : "domain_38606"
+				}, {
+					"id" : "goodjobBg",
+					"src" : "goodjobbg_1460727428389.png",
+					"type" : "image",
+					"assetId" : "domain_38939"
+				}, {
+					"id" : "retryBg",
+					"src" : "retrybg_1460727370746.png",
+					"type" : "image",
+					"assetId" : "domain_38938"
+				}, {
+					"id" : "retry_audio",
+					"src" : "retry_1460636610607.mp3",
+					"type" : "sound",
+					"assetId" : "domain_38624"
+				}, {
+					"id" : "goodjob_audio",
+					"src" : "goodjob_1460636677521.mp3",
+					"type" : "sound",
+					"assetId" : "domain_38625"
+				}, {
+					"id" : "next",
+					"src" : "1463730545861icon_next.png",
+					"type" : "image",
+					"assetId" : "domain_40358"
+				}, {
+					"id" : "previous",
+					"src" : "1463730546188icon_previous.png",
+					"type" : "image",
+					"assetId" : "domain_40359"
+				}, {
+					"id" : "submit",
+					"src" : "icon_submit_1459243202199.png",
+					"type" : "image",
+					"assetId" : "domain_14524"
+				}, {
+					"id" : "home",
+					"src" : "icon_home_1459242981364.png",
+					"type" : "image",
+					"assetId" : "domain_14519"
+				}, {
+					"id" : "reload",
+					"src" : "icon_reload_1459243110661.png",
+					"type" : "image",
+					"assetId" : "domain_14522"
+				}, {
+					"id" : "icon_hint",
+					"src" : "icon_hint_1454918891133.png",
+					"type" : "image",
+					"assetId" : "domain_799"
+				}, {
+					"id" : "bg",
+					"src" : "background_1458729298020.png",
+					"type" : "image"
+				}, {
+					"id" : "domain_3126",
+					"type" : "image",
+					"src" : "story7_1463142340653.png",
+					"assetId" : "domain_3126"
+				}, {
+					"id" : "domain_3989",
+					"src" : "title_1463734256916.mp3",
+					"type" : "audio",
+					"assetId" : "domain_3989"
+				}, {
+					"id" : "domain_7592",
+					"src" : "title1-bandhar_1465580942077.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7592"
+				}, {
+					"id" : "domain_7593",
+					"src" : "title2-aroue_1465580985727.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7593"
+				}, {
+					"id" : "domain_7594",
+					"src" : "title3-biliaya_1465581022896.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7594"
+				}, {
+					"id" : "mic",
+					"type" : "image",
+					"src" : "1463730546614mic.png",
+					"assetId" : "mic"
+				}, {
+					"id" : "domain_3993",
+					"src" : "p1_1463734370517.mp3",
+					"type" : "audio",
+					"assetId" : "domain_3993"
+				}, {
+					"id" : "domain_7595",
+					"src" : "p1dho1_1465581099294.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7595"
+				}, {
+					"id" : "domain_7596",
+					"src" : "p1biliaya2_1465581147220.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7596"
+				}, {
+					"id" : "domain_7597",
+					"src" : "p1the3_1465581197691.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7597"
+				}, {
+					"id" : "domain_7598",
+					"src" : "p1younahey4_1465581270966.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7598"
+				}, {
+					"id" : "domain_7599",
+					"src" : "p1ake5_1465581320910.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7599"
+				}, {
+					"id" : "domain_7600",
+					"src" : "p1rotey6_1465581524147.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7600"
+				}, {
+					"id" : "domain_7601",
+					"src" : "p1meley7_1465581600404.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7601"
+				}, {
+					"id" : "domain_7602",
+					"src" : "p1dhode8_1465581706098.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7602"
+				}, {
+					"id" : "domain_7603",
+					"src" : "p1jagayane9_1465581765144.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7603"
+				}, {
+					"id" : "domain_7604",
+					"src" : "p1leghe10_1465581818677.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7604"
+				}, {
+					"id" : "domain_3995",
+					"src" : "p2_1463734449218.mp3",
+					"type" : "audio",
+					"assetId" : "domain_3995"
+				}, {
+					"id" : "domain_7605",
+					"src" : "p2bandhar1_1465582024973.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7605"
+				}, {
+					"id" : "domain_7606",
+					"src" : "p2bola2_1465582082077.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7606"
+				}, {
+					"id" : "domain_7607",
+					"src" : "p2maye3_1465582125852.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7607"
+				}, {
+					"id" : "domain_7608",
+					"src" : "p2roti4_1465582185129.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7608"
+				}, {
+					"id" : "domain_7609",
+					"src" : "p2barabar5_1465582250382.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7609"
+				}, {
+					"id" : "domain_7610",
+					"src" : "p2band6_1465582304131.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7610"
+				}, {
+					"id" : "domain_7611",
+					"src" : "p2detha7_1465582357445.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7611"
+				}, {
+					"id" : "domain_7612",
+					"src" : "p2hu8_1465582400404.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7612"
+				}, {
+					"id" : "domain_3997",
+					"src" : "p3_1463734499947.mp3",
+					"type" : "audio",
+					"assetId" : "domain_3997"
+				}, {
+					"id" : "domain_7613",
+					"src" : "p3bandar1_1465582489815.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7613"
+				}, {
+					"id" : "domain_7614",
+					"src" : "p3naye2_1465582536795.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7614"
+				}, {
+					"id" : "domain_7615",
+					"src" : "p3tukudaye3_1465582583741.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7615"
+				}, {
+					"id" : "domain_7616",
+					"src" : "p3paraz4_1465582640435.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7616"
+				}, {
+					"id" : "domain_7617",
+					"src" : "p3maye5_1465582702342.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7617"
+				}, {
+					"id" : "domain_7618",
+					"src" : "p3rakhey6_1465582758023.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7618"
+				}, {
+					"id" : "domain_3999",
+					"src" : "p4_1463734564190.mp3",
+					"type" : "audio",
+					"assetId" : "domain_3999"
+				}, {
+					"id" : "domain_7619",
+					"src" : "p4har1_1465582846373.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7619"
+				}, {
+					"id" : "domain_7620",
+					"src" : "p4bahar2_1465582889378.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7620"
+				}, {
+					"id" : "domain_7621",
+					"src" : "p4bharie3_1465582945892.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7621"
+				}, {
+					"id" : "domain_7622",
+					"src" : "p4palodo4_1465582995722.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7622"
+				}, {
+					"id" : "domain_7623",
+					"src" : "p4saye5_1465583034479.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7623"
+				}, {
+					"id" : "domain_7624",
+					"src" : "p4dibandar6_1465583079457.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7624"
+				}, {
+					"id" : "domain_7625",
+					"src" : "p4roty7_1465583120460.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7625"
+				}, {
+					"id" : "domain_7626",
+					"src" : "p4thodokar8_1465583171811.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7626"
+				}, {
+					"id" : "domain_7627",
+					"src" : "p4kha9_1465583221859.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7627"
+				}, {
+					"id" : "domain_7628",
+					"src" : "p4letha10_1465583277770.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7628"
+				}, {
+					"id" : "domain_4001",
+					"src" : "p5_1463734666686.mp3",
+					"type" : "audio",
+					"assetId" : "domain_4001"
+				}, {
+					"id" : "domain_7630",
+					"src" : "p5is1_1465583491778.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7630"
+				}, {
+					"id" : "domain_7631",
+					"src" : "p5taraf2_1465583543544.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7631"
+				}, {
+					"id" : "domain_7632",
+					"src" : "p5bandar3_1465583584307.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7632"
+				}, {
+					"id" : "domain_7633",
+					"src" : "p5poori4_1465583627699.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7633"
+				}, {
+					"id" : "domain_7634",
+					"src" : "p5rooti5_1465583671556.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7634"
+				}, {
+					"id" : "domain_7635",
+					"src" : "p5kha6_1465583715782.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7635"
+				}, {
+					"id" : "domain_7636",
+					"src" : "p5ghaya7_1465583758984.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7636"
+				}, {
+					"id" : "domain_4002",
+					"src" : "p6_1463734735377.mp3",
+					"type" : "audio",
+					"assetId" : "domain_4002"
+				}, {
+					"id" : "domain_7637",
+					"src" : "p6bilayadh1_1465583880108.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7637"
+				}, {
+					"id" : "domain_7638",
+					"src" : "p6dhakethe2_1465583926077.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7638"
+				}, {
+					"id" : "domain_7639",
+					"src" : "p6hee3_1465583964412.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7639"
+				}, {
+					"id" : "domain_7640",
+					"src" : "p6raha4_1465584008134.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7640"
+				}, {
+					"id" : "domain_7641",
+					"src" : "p6ghaye5_1465584059779.mp3",
+					"type" : "audio",
+					"assetId" : "domain_7641"
+				}, {
+					"id" : "domain_10713",
+					"src" : "in_shabdon_ko_chunein_1465974086287.mp3",
+					"type" : "audio",
+					"assetId" : "domain_10713"
+				}, {
+					"id" : "domain_10719",
+					"src" : "unhone_1465974300699.mp3",
+					"type" : "audio",
+					"assetId" : "domain_10719"
+				}, {
+					"id" : "domain_10721",
+					"src" : "unhe_1465974397309.mp3",
+					"type" : "audio",
+					"assetId" : "domain_10721"
+				}, {
+					"id" : "domain_10723",
+					"src" : "billiyaan_1465974660828.mp3",
+					"type" : "audio",
+					"assetId" : "domain_10723"
+				}, {
+					"id" : "domain_10724",
+					"src" : "bandar_1465974724548.mp3",
+					"type" : "audio",
+					"assetId" : "domain_10724"
+				}, {
+					"id" : "domain_10727",
+					"src" : "dono_1465974791095.mp3",
+					"type" : "audio",
+					"assetId" : "domain_10727"
+				}, {
+					"id" : "domain_10729",
+					"src" : "todkar_1465974902390.mp3",
+					"type" : "audio",
+					"assetId" : "domain_10729"
+				}, {
+					"id" : "domain_10733",
+					"src" : "jhagadne_1465974987774.mp3",
+					"type" : "audio",
+					"assetId" : "domain_10733"
+				}, {
+					"id" : "domain_4228",
+					"type" : "image",
+					"src" : "question_1463829748432.jpg",
+					"assetId" : "domain_4228"
+				}, {
+					"id" : "domain_10511",
+					"src" : "chitrakopehchaano_1465964912354.mp3",
+					"type" : "audio",
+					"assetId" : "domain_10511"
+				}, {
+					"id" : "domain_11825",
+					"src" : "chitrakopehchaano_1465983909330.mp3",
+					"type" : "audio",
+					"assetId" : "domain_11825"
+				}, {
+					"id" : "endScreen",
+					"type" : "image",
+					"src" : "1463730546861endscreen.png",
+					"assetId" : "endScreen"
+				}, {
+					"id" : "previous",
+					"type" : "image",
+					"src" : "1463730546188icon_previous.png",
+					"assetId" : "previous"
+				}, {
+					"id" : "next",
+					"type" : "image",
+					"src" : "1463730545861icon_next.png",
+					"assetId" : "next"
+				}
+			]
+		},
+		"id" : "theme",
+		"startStage" : "scene55138843-9f04-487d-bf33-1920769f2c96",
+		"ver" : 0.2,
+		"controller" : [{
+				"name" : "assessment_5de719ed-207c-4f01-a7e8-e1eb4abf77ed",
+				"type" : "items",
+				"id" : "assessment_5de719ed-207c-4f01-a7e8-e1eb4abf77ed",
+				"__cdata" : {
+					"total_items" : 1,
+					"subject" : "domain",
+					"code" : "ItemSet_add02458-e772-4afb-a72f-113aa5da7f53",
+					"type" : "materialised",
+					"lastUpdatedOn" : "2016-06-13T12:23:59.067+0000",
+					"showImmediateFeedback" : false,
+					"SET_TYPE" : "MATERIALISED_SET",
+					"createdOn" : "2016-06-13T12:23:59.061+0000",
+					"title" : "Assessment Title",
+					"items" : {
+						"domain_8318" : [{
+								"model" : {
+									"keys" : "ब,बा,बि,बी,बु,बू,बे,बै,बौ,बं,बः,द,दा,दि,दी,दु,दू,र,रा,रि,री,रु,रू"
+								},
+								"question_audio" : "domain_8312",
+								"subject" : "domain",
+								"template_id" : "domain_4171",
+								"type" : "ftb",
+								"feedback" : "",
+								"qlevel" : "EASY",
+								"title" : "Story7Q1",
+								"question_image" : "domain_4636",
+								"name" : "Story7Q1",
+								"domain" : "literacy",
+								"max_score" : 1,
+								"question" : "",
+								"template" : "org.ekstep.ftb.barakhadi",
+								"answer" : {
+									"ans1" : {
+										"value" : "बंदर",
+										"score" : 1
+									}
+								},
+								"code" : "org.ekstep.assessmentitem.domain_4637",
+								"lastUpdatedOn" : "2016-06-13T12:19:36.969+0000",
+								"concepts" : [{
+										"identifier" : "LO1",
+										"name" : "Receptive Vocabulary",
+										"objectType" : "Concept",
+										"relation" : "associatedTo",
+										"description" : null,
+										"index" : null
+									}
+								],
+								"createdOn" : "2016-05-23T11:19:18.573+0000",
+								"lastUpdatedBy" : "323",
+								"used_for" : "worksheet",
+								"owner" : "323",
+								"gradeLevel" : ["Other"],
+								"language" : ["Hindi"],
+								"identifier" : "domain_4637",
+								"media" : [{
+										"id" : "domain_4636",
+										"type" : "image",
+										"src" : "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/photo7.1_323_1464002358_1464002358343.jpg",
+										"asset_id" : "domain_4636",
+										"preload" : true
+									}, {
+										"id" : "domain_8312",
+										"type" : "audio",
+										"src" : "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/a1_323_1465820326_1465820326631.mp3",
+										"asset_id" : "domain_8312",
+										"preload" : true
+									}
+								]
+							}
+						]
+					},
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"shuffle" : false,
+					"lastUpdatedBy" : "323",
+					"owner" : "Ilimi",
+					"used_for" : "assessment",
+					"max_score" : 1,
+					"gradeLevel" : ["Grade 1"],
+					"item_sets" : [{
+							"id" : "domain_8318",
+							"count" : 1
+						}
+					],
+					"language" : ["English"],
+					"identifier" : "domain_8318"
+				}
+			}, {
+				"name" : "assessment_a3cc8a52-833a-4a9d-b6e6-3be6b266b70f",
+				"type" : "items",
+				"id" : "assessment_a3cc8a52-833a-4a9d-b6e6-3be6b266b70f",
+				"__cdata" : {
+					"total_items" : 1,
+					"subject" : "domain",
+					"code" : "ItemSet_acf0f5af-7e41-45d4-930d-2c8812762597",
+					"type" : "materialised",
+					"lastUpdatedOn" : "2016-06-13T12:24:21.617+0000",
+					"showImmediateFeedback" : false,
+					"SET_TYPE" : "MATERIALISED_SET",
+					"createdOn" : "2016-06-13T12:24:21.610+0000",
+					"title" : "Assessment Title",
+					"items" : {
+						"domain_8322" : [{
+								"template" : "org.ekstep.mcq.ta",
+								"question_audio" : "domain_8313",
+								"subject" : "domain",
+								"template_id" : "domain_3491",
+								"code" : "org.ekstep.assessmentitem.domain_4647",
+								"lastUpdatedOn" : "2016-06-13T12:22:13.874+0000",
+								"type" : "mcq",
+								"createdOn" : "2016-05-23T11:24:07.674+0000",
+								"feedback" : "",
+								"qlevel" : "EASY",
+								"title" : "Story7Q3",
+								"name" : "Story7Q3",
+								"lastUpdatedBy" : "323",
+								"owner" : "323",
+								"used_for" : "worksheet",
+								"domain" : "literacy",
+								"max_score" : 1,
+								"gradeLevel" : ["Other"],
+								"question" : "बंदर ने रोटी के टुकड़े को कहाँ रखा?",
+								"language" : ["Hindi"],
+								"identifier" : "domain_4647",
+								"media" : [{
+										"id" : "domain_8313",
+										"type" : "audio",
+										"src" : "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/question_323_1465820454_1465820454662.mp3",
+										"asset_id" : "domain_8313",
+										"preload" : true
+									}, {
+										"id" : "domain_8314",
+										"type" : "audio",
+										"src" : "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/a1_323_1465820492_1465820492571.mp3",
+										"asset_id" : "domain_8314",
+										"preload" : true
+									}, {
+										"id" : "domain_8315",
+										"type" : "audio",
+										"src" : "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/a2_323_1465820502_1465820502818.mp3",
+										"asset_id" : "domain_8315",
+										"preload" : true
+									}, {
+										"id" : "domain_8316",
+										"type" : "audio",
+										"src" : "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/a3_323_1465820518_1465820518264.mp3",
+										"asset_id" : "domain_8316",
+										"preload" : true
+									}, {
+										"id" : "domain_8317",
+										"type" : "audio",
+										"src" : "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/a4_323_1465820530_1465820530081.mp3",
+										"asset_id" : "domain_8317",
+										"preload" : true
+									}
+								],
+								"options" : [{
+										"marks" : "0",
+										"value" : {
+											"type" : "mixed",
+											"text" : "घर",
+											"count" : "",
+											"image" : null,
+											"audio" : "domain_8314",
+											"fontsize" : 150
+										}
+									}, {
+										"marks" : "1",
+										"value" : {
+											"type" : "mixed",
+											"text" : "तराजू",
+											"count" : "",
+											"image" : null,
+											"audio" : "domain_8315",
+											"fontsize" : 150
+										},
+										"score" : 1,
+										"answer" : true
+									}, {
+										"marks" : "0",
+										"value" : {
+											"type" : "mixed",
+											"text" : "पेड़",
+											"count" : "",
+											"image" : null,
+											"audio" : "domain_8316",
+											"fontsize" : 150
+										}
+									}, {
+										"marks" : "0",
+										"value" : {
+											"type" : "mixed",
+											"text" : "नदी",
+											"count" : "",
+											"image" : null,
+											"audio" : "domain_8317",
+											"fontsize" : 150
+										}
+									}
+								]
+							}
+						]
+					},
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"shuffle" : false,
+					"lastUpdatedBy" : "323",
+					"owner" : "Ilimi",
+					"used_for" : "assessment",
+					"max_score" : 1,
+					"gradeLevel" : ["Grade 1"],
+					"item_sets" : [{
+							"id" : "domain_8322",
+							"count" : 1
+						}
+					],
+					"language" : ["English"],
+					"identifier" : "domain_8322"
+				}
+			}, {
+				"name" : "assessment_185d692a-1841-4a35-96c1-67cebcde42a2",
+				"type" : "items",
+				"id" : "assessment_185d692a-1841-4a35-96c1-67cebcde42a2",
+				"__cdata" : {
+					"total_items" : 1,
+					"subject" : "domain",
+					"code" : "ItemSet_921ee047-c676-4e0b-9a71-42f371f7b843",
+					"type" : "materialised",
+					"lastUpdatedOn" : "2016-06-15T09:42:19.585+0000",
+					"showImmediateFeedback" : false,
+					"SET_TYPE" : "MATERIALISED_SET",
+					"createdOn" : "2016-06-15T09:42:19.575+0000",
+					"title" : "Assessment Title",
+					"items" : {
+						"domain_11824" : [{
+								"model" : {
+									"keys" : "र,रा,रि,री,रु,रू,रे,रै,रो,रौ,रं,रः,ट,टा,टि,टी,टु,टू,टे,टै,टो,टौ,टं,टः"
+								},
+								"question_audio" : "domain_10561",
+								"subject" : "domain",
+								"template_id" : "domain_4171",
+								"type" : "ftb",
+								"feedback" : "",
+								"qlevel" : "EASY",
+								"title" : "Story5Q1",
+								"question_image" : "domain_10624",
+								"name" : "Story5Q1",
+								"domain" : "literacy",
+								"max_score" : 1,
+								"question" : "",
+								"template" : "org.ekstep.ftb.barakhadi",
+								"answer" : {
+									"ans1" : {
+										"value" : "रोटी",
+										"score" : 1
+									}
+								},
+								"code" : "org.ekstep.assessmentitem.domain_4533",
+								"lastUpdatedOn" : "2016-06-15T09:40:54.289+0000",
+								"concepts" : [{
+										"identifier" : "LO1",
+										"name" : "Receptive Vocabulary",
+										"objectType" : "Concept",
+										"relation" : "associatedTo",
+										"description" : null,
+										"index" : null
+									}
+								],
+								"createdOn" : "2016-05-23T10:09:03.976+0000",
+								"lastUpdatedBy" : "323",
+								"used_for" : "worksheet",
+								"owner" : "323",
+								"gradeLevel" : ["Other"],
+								"language" : ["Hindi"],
+								"identifier" : "domain_4533",
+								"media" : [{
+										"id" : "domain_10624",
+										"type" : "image",
+										"src" : "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/roti_323_1465971255_1465971255545.jpg",
+										"asset_id" : "domain_10624",
+										"preload" : true
+									}, {
+										"id" : "domain_10561",
+										"type" : "audio",
+										"src" : "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/content/story11q4a1_141_1465970351_1465970351272.mp3",
+										"asset_id" : "domain_10561",
+										"preload" : true
+									}
+								]
+							}
+						]
+					},
+					"SET_OBJECT_TYPE_KEY" : "AssessmentItem",
+					"shuffle" : false,
+					"lastUpdatedBy" : "323",
+					"owner" : "Ilimi",
+					"used_for" : "assessment",
+					"max_score" : 1,
+					"gradeLevel" : ["Grade 1"],
+					"item_sets" : [{
+							"id" : "domain_11824",
+							"count" : 1
+						}
+					],
+					"language" : ["English"],
+					"identifier" : "domain_11824"
+				}
+			}, {
+				"name" : "dictionary",
+				"type" : "data",
+				"id" : "dictionary",
+				"__cdata" : {}
+
+			}
+		],
+		"template" : [{
+				"text" : [{
+						"font" : "Georgia",
+						"fontsize" : 40,
+						"model" : "item.title",
+						"marginY" : 10,
+						"padX" : 30,
+						"padY" : 10,
+						"w" : 70,
+						"h" : 12,
+						"x" : 15,
+						"y" : 5,
+						"lineHeight" : 1.2,
+						"align" : "left"
+					}, {
+						"font" : "Georgia",
+						"fontsize" : 60,
+						"model" : "item.question",
+						"marginY" : 10,
+						"padX" : 30,
+						"padY" : 10,
+						"w" : 70,
+						"h" : 12,
+						"x" : 15,
+						"y" : 12,
+						"lineHeight" : 1.2
+					}
+				],
+				"mcq" : {
+					"options" : {
+						"cols" : 1,
+						"h" : 60,
+						"layout" : "table",
+						"marginX" : 5,
+						"marginY" : 8,
+						"options" : "options",
+						"padX" : 30,
+						"padY" : 10,
+						"w" : 40,
+						"x" : 30,
+						"y" : 35,
+						"align" : "left"
+					},
+					"model" : "item",
+					"multi_select" : false,
+					"shadow" : "#FF0000"
+				},
+				"id" : "mcq_template_default"
+			}, {
+				"text" : [{
+						"align" : "center",
+						"color" : "black",
+						"font" : "Verdana",
+						"fontsize" : 70,
+						"model" : "item.title",
+						"w" : 80,
+						"x" : 10,
+						"y" : 6,
+						"z-index" : 101
+					}, {
+						"align" : "center",
+						"color" : "black",
+						"font" : "Verdana",
+						"fontsize" : 100,
+						"h" : 15,
+						"id" : "newText",
+						"model" : "item.ans1",
+						"valign" : "middle",
+						"w" : 35,
+						"x" : 58,
+						"y" : 68,
+						"z-index" : 100
+					}
+				],
+				"shape" : [{
+						"event" : {
+							"type" : "click"
+						},
+						"h" : 15,
+						"hitArea" : true,
+						"opacity" : 1,
+						"w" : 80,
+						"x" : 10,
+						"y" : 6,
+						"z-index" : 99
+					}, {
+						"event" : {
+							"action" : {
+								"asset" : "bKeyboard",
+								"command" : "custom",
+								"id" : "newText",
+								"invoke" : "switchTarget",
+								"type" : "command"
+							},
+							"type" : "click"
+						},
+						"h" : 15,
+						"hitArea" : true,
+						"stroke" : "black",
+						"stroke-width" : 5,
+						"w" : 35,
+						"x" : 58,
+						"y" : 67,
+						"z-index" : 99
+					}, {
+						"event" : {
+							"action" : {
+								"asset_model" : "item.question_audio",
+								"command" : "play",
+								"type" : "command"
+							},
+							"type" : "click"
+						},
+						"h" : 40,
+						"hitArea" : true,
+						"stroke-width" : 5,
+						"w" : 20,
+						"x" : 10,
+						"y" : 58,
+						"z-index" : 99
+					}
+				],
+				"keyboard" : {
+					"id" : "bKeyboard",
+					"keys" : "item.keys",
+					"limit" : 10,
+					"target" : "newText",
+					"type" : "custom",
+					"x" : 5,
+					"y" : 15
+				},
+				"g" : {
+					"image" : {
+						"h" : 75,
+						"model" : "item.question_image",
+						"w" : 100,
+						"x" : 0,
+						"y" : 0,
+						"z-index" : 102
+					},
+					"text" : {
+						"align" : "center",
+						"color" : "black",
+						"font" : "Verdana",
+						"fontsize" : "2em",
+						"h" : 25,
+						"model" : "item.question",
+						"valign" : "middle",
+						"w" : 100,
+						"x" : 0,
+						"y" : 75,
+						"z-index" : 103
+					},
+					"h" : 40,
+					"w" : 20,
+					"x" : 10,
+					"y" : 58
+				},
+				"id" : "org.ekstep.ftb.barakhadi"
+			}, {
+				"text" : {
+					"event" : {
+						"action" : [{
+								"command" : "stop",
+								"sound" : true,
+								"type" : "command"
+							}, {
+								"asset_model" : "item.question_audio",
+								"command" : "play",
+								"type" : "command"
+							}
+						],
+						"type" : "click"
+					},
+					"align" : "center",
+					"color" : "black",
+					"font" : "Verdana",
+					"fontsize" : "2em",
+					"lineHeight" : 2,
+					"model" : "item.question",
+					"valign" : "middle",
+					"w" : 100,
+					"x" : 0,
+					"y" : 15
+				},
+				"shape" : {
+					"event" : {
+						"action" : [{
+								"command" : "stop",
+								"sound" : true,
+								"type" : "command"
+							}, {
+								"asset_model" : "item.question_audio",
+								"command" : "play",
+								"type" : "command"
+							}
+						],
+						"type" : "click"
+					},
+					"h" : 10,
+					"hitArea" : true,
+					"type" : "rect",
+					"w" : 100,
+					"x" : 0,
+					"y" : 15
+				},
+				"mcq" : {
+					"options" : {
+						"shape" : {
+							"h" : 100,
+							"stroke" : "black",
+							"type" : "roundrect",
+							"w" : 100,
+							"x" : 0,
+							"y" : 0
+						},
+						"text" : {
+							"align" : "center",
+							"font" : "Verdana",
+							"fontsize" : "1.6em",
+							"h" : 100,
+							"model" : "option.value.text",
+							"valign" : "middle",
+							"w" : 100,
+							"x" : 0,
+							"y" : 0
+						},
+						"event" : {
+							"action" : [{
+									"command" : "stop",
+									"sound" : true,
+									"type" : "command"
+								}, {
+									"asset_model" : "option.value.audio",
+									"command" : "play",
+									"type" : "command"
+								}
+							],
+							"type" : "click"
+						},
+						"cols" : 4,
+						"h" : 30,
+						"highlight" : "yellow",
+						"layout" : "table",
+						"marginX" : 5,
+						"marginY" : 5,
+						"options" : "options",
+						"w" : 97,
+						"x" : 1.5,
+						"y" : 50
+					},
+					"model" : "item",
+					"multi_select" : false,
+					"shadow" : "#56B1F7"
+				},
+				"id" : "org.ekstep.mcq.ta"
+			}, {
+				"text" : {
+					"model" : "item.title",
+					"x" : 9,
+					"y" : 7,
+					"w" : 86,
+					"h" : 4,
+					"font" : "Georgia",
+					"fontsize" : 42
+				},
+				"mcq" : {
+					"options" : {
+						"layout" : "table",
+						"x" : 20,
+						"y" : 15,
+						"w" : 70,
+						"h" : 85,
+						"cols" : 2,
+						"marginX" : 10,
+						"marginY" : 5,
+						"options" : "options"
+					},
+					"multi_select" : false,
+					"model" : "item"
+				},
+				"g" : {
+					"image" : {
+						"event" : {
+							"action" : [{
+									"type" : "command",
+									"command" : "stop",
+									"asset_model" : "item.hints[0].asset"
+								}, {
+									"type" : "command",
+									"command" : "toggleShow",
+									"asset" : "hint"
+								}
+							],
+							"type" : "click"
+						},
+						"asset" : "speech_bubble",
+						"x" : 0,
+						"y" : 0,
+						"w" : 100,
+						"h" : 100
+					},
+					"text" : [{
+							"x" : 10,
+							"y" : 20,
+							"w" : 80,
+							"h" : 80,
+							"font" : "Georgia",
+							"weight" : "bold",
+							"fontsize" : 150,
+							"__text" : "Hint"
+						}, {
+							"x" : 10,
+							"y" : 40,
+							"w" : 80,
+							"h" : 80,
+							"font" : "Georgia",
+							"fontsize" : 120,
+							"model" : "item.hints[1].asset"
+						}
+					],
+					"x" : 9,
+					"y" : 17,
+					"w" : 20,
+					"h" : 20,
+					"id" : "hint",
+					"visible" : false
+				},
+				"image" : {
+					"event" : {
+						"action" : [{
+								"type" : "command",
+								"command" : "togglePlay",
+								"asset_model" : "item.hints[0].asset"
+							}, {
+								"type" : "command",
+								"command" : "toggleShow",
+								"asset" : "hint"
+							}
+						],
+						"type" : "click"
+					},
+					"asset" : "icon_hint",
+					"x" : 5,
+					"y" : 35
+				},
+				"id" : "mcq_template_1"
+			}, {
+				"image" : [{
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "show",
+								"asset" : "retryDialog"
+							},
+							"type" : "click"
+						},
+						"asset" : "popupTint",
+						"x" : -100,
+						"y" : -150,
+						"w" : 550,
+						"h" : 600,
+						"visible" : true,
+						"id" : "popup-Tint"
+					}, {
+						"asset" : "retryBg",
+						"x" : 0,
+						"y" : 0,
+						"w" : 150,
+						"h" : 150,
+						"visible" : true,
+						"id" : "right"
+					}
+				],
+				"shape" : [{
+						"event" : {
+							"action" : [{
+									"type" : "command",
+									"command" : "hide",
+									"asset" : "retryDialog"
+								}, {
+									"type" : "command",
+									"command" : "SHOWHTMLELEMENTS",
+									"asset" : "retry"
+								}
+							],
+							"type" : "click"
+						},
+						"type" : "roundrect",
+						"x" : 72,
+						"y" : 25,
+						"w" : 50,
+						"h" : 65,
+						"visible" : true,
+						"id" : "retry",
+						"hitArea" : true
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"type" : "roundrect",
+						"x" : 110,
+						"y" : 100,
+						"w" : 25,
+						"h" : 35,
+						"visible" : true,
+						"id" : "continue",
+						"hitArea" : true
+					}
+				],
+				"id" : "retry"
+			}, {
+				"g" : {
+					"image" : [{
+							"asset" : "popupTint",
+							"x" : 0,
+							"y" : 0,
+							"w" : 100,
+							"h" : 100,
+							"visible" : true,
+							"id" : "popup-Tint"
+						}
+					],
+					"text" : [{
+							"x" : 25,
+							"y" : 25,
+							"w" : 50,
+							"h" : 9,
+							"visible" : true,
+							"editable" : true,
+							"model" : "word.lemma",
+							"weight" : "normal",
+							"font" : "helvetica",
+							"color" : "rgb(0,0,0)",
+							"fontstyle" : "",
+							"fontsize" : 75,
+							"align" : "left",
+							"z-index" : 1,
+							"id" : "lemma"
+						}, {
+							"x" : 25,
+							"y" : 35,
+							"w" : 50,
+							"h" : 40,
+							"visible" : true,
+							"editable" : true,
+							"model" : "word.gloss",
+							"weight" : "normal",
+							"font" : "helvetica",
+							"color" : "rgb(0,0,0)",
+							"fontstyle" : "",
+							"fontsize" : 43,
+							"align" : "left",
+							"z-index" : 2,
+							"id" : "gloss"
+						}
+					],
+					"shape" : [{
+							"x" : 20,
+							"y" : 20,
+							"w" : 60,
+							"h" : 60,
+							"visible" : true,
+							"editable" : true,
+							"type" : "roundrect",
+							"radius" : 10,
+							"opacity" : 1,
+							"fill" : "#45b3a5",
+							"stroke-width" : 1,
+							"z-index" : 0,
+							"id" : "textBg"
+						}
+					],
+					"x" : 0,
+					"y" : 0,
+					"w" : 100,
+					"h" : 100,
+					"event" : {
+						"action" : [{
+								"type" : "command",
+								"command" : "SHOWHTMLELEMENTS",
+								"asset" : "textBg"
+							}, {
+								"type" : "command",
+								"command" : "hide",
+								"parent" : true
+							}
+						],
+						"type" : "click"
+					}
+				},
+				"id" : "infoTemplate"
+			}, {
+				"image" : [{
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "show",
+								"asset" : ""
+							},
+							"type" : "click"
+						},
+						"asset" : "popupTint",
+						"x" : -100,
+						"y" : -150,
+						"w" : 550,
+						"h" : 600,
+						"visible" : true,
+						"id" : "popup-Tint"
+					}, {
+						"event" : {
+							"action" : [{
+									"type" : "command",
+									"command" : "transitionTo",
+									"asset" : "theme",
+									"param" : "next",
+									"effect" : "fadein",
+									"direction" : "left",
+									"ease" : "linear",
+									"duration" : 500
+								}
+							],
+							"type" : "click"
+						},
+						"asset" : "goodjobBg",
+						"x" : 0,
+						"y" : 0,
+						"w" : 150,
+						"h" : 150,
+						"visible" : true,
+						"id" : "continue"
+					}
+				],
+				"id" : "goodjob"
+			}
+		],
+		"stage" : [{
+				"id" : "baseStage",
+				"preload" : true,
+				"image" : [{
+						"asset" : "previous"
+					}, {
+						"asset" : "next"
+					}, {
+						"asset" : "literacyBG"
+					}, {
+						"asset" : "menuBG"
+					}, {
+						"asset" : "endScreen"
+					}, {
+						"asset" : "blacktint"
+					}, {
+						"asset" : "mic"
+					}, {
+						"asset" : "record"
+					}, {
+						"asset" : "stop_record"
+					}, {
+						"asset" : "icon_sound"
+					}, {
+						"asset" : "domain_4636"
+					}, {
+						"asset" : "domain_4641"
+					}, {
+						"asset" : "domain_10624"
+					}, {
+						"asset" : "validate"
+					}, {
+						"asset" : "popupTint"
+					}, {
+						"asset" : "goodjobBg"
+					}, {
+						"asset" : "retryBg"
+					}, {
+						"asset" : "next"
+					}, {
+						"asset" : "previous"
+					}, {
+						"asset" : "submit"
+					}, {
+						"asset" : "home"
+					}, {
+						"asset" : "reload"
+					}, {
+						"asset" : "icon_hint"
+					}, {
+						"asset" : "bg"
+					}, {
+						"asset" : "domain_3126"
+					}, {
+						"asset" : "mic"
+					}, {
+						"asset" : "domain_4228"
+					}, {
+						"asset" : "endScreen"
+					}, {
+						"asset" : "previous"
+					}, {
+						"asset" : "next"
+					}
+				],
+				"audio" : [{
+						"asset" : "domain_8312"
+					}, {
+						"asset" : "domain_7516"
+					}, {
+						"asset" : "domain_8313"
+					}, {
+						"asset" : "domain_8314"
+					}, {
+						"asset" : "domain_8315"
+					}, {
+						"asset" : "domain_8316"
+					}, {
+						"asset" : "domain_8317"
+					}, {
+						"asset" : "domain_10561"
+					}, {
+						"asset" : "retry_audio"
+					}, {
+						"asset" : "goodjob_audio"
+					}, {
+						"asset" : "domain_3989"
+					}, {
+						"asset" : "domain_7592"
+					}, {
+						"asset" : "domain_7593"
+					}, {
+						"asset" : "domain_7594"
+					}, {
+						"asset" : "domain_3993"
+					}, {
+						"asset" : "domain_7595"
+					}, {
+						"asset" : "domain_7596"
+					}, {
+						"asset" : "domain_7597"
+					}, {
+						"asset" : "domain_7598"
+					}, {
+						"asset" : "domain_7599"
+					}, {
+						"asset" : "domain_7600"
+					}, {
+						"asset" : "domain_7601"
+					}, {
+						"asset" : "domain_7602"
+					}, {
+						"asset" : "domain_7603"
+					}, {
+						"asset" : "domain_7604"
+					}, {
+						"asset" : "domain_3995"
+					}, {
+						"asset" : "domain_7605"
+					}, {
+						"asset" : "domain_7606"
+					}, {
+						"asset" : "domain_7607"
+					}, {
+						"asset" : "domain_7608"
+					}, {
+						"asset" : "domain_7609"
+					}, {
+						"asset" : "domain_7610"
+					}, {
+						"asset" : "domain_7611"
+					}, {
+						"asset" : "domain_7612"
+					}, {
+						"asset" : "domain_3997"
+					}, {
+						"asset" : "domain_7613"
+					}, {
+						"asset" : "domain_7614"
+					}, {
+						"asset" : "domain_7615"
+					}, {
+						"asset" : "domain_7616"
+					}, {
+						"asset" : "domain_7617"
+					}, {
+						"asset" : "domain_7618"
+					}, {
+						"asset" : "domain_3999"
+					}, {
+						"asset" : "domain_7619"
+					}, {
+						"asset" : "domain_7620"
+					}, {
+						"asset" : "domain_7621"
+					}, {
+						"asset" : "domain_7622"
+					}, {
+						"asset" : "domain_7623"
+					}, {
+						"asset" : "domain_7624"
+					}, {
+						"asset" : "domain_7625"
+					}, {
+						"asset" : "domain_7626"
+					}, {
+						"asset" : "domain_7627"
+					}, {
+						"asset" : "domain_7628"
+					}, {
+						"asset" : "domain_4001"
+					}, {
+						"asset" : "domain_7630"
+					}, {
+						"asset" : "domain_7631"
+					}, {
+						"asset" : "domain_7632"
+					}, {
+						"asset" : "domain_7633"
+					}, {
+						"asset" : "domain_7634"
+					}, {
+						"asset" : "domain_7635"
+					}, {
+						"asset" : "domain_7636"
+					}, {
+						"asset" : "domain_4002"
+					}, {
+						"asset" : "domain_7637"
+					}, {
+						"asset" : "domain_7638"
+					}, {
+						"asset" : "domain_7639"
+					}, {
+						"asset" : "domain_7640"
+					}, {
+						"asset" : "domain_7641"
+					}, {
+						"asset" : "domain_10713"
+					}, {
+						"asset" : "domain_10719"
+					}, {
+						"asset" : "domain_10721"
+					}, {
+						"asset" : "domain_10723"
+					}, {
+						"asset" : "domain_10724"
+					}, {
+						"asset" : "domain_10727"
+					}, {
+						"asset" : "domain_10729"
+					}, {
+						"asset" : "domain_10733"
+					}, {
+						"asset" : "domain_10511"
+					}, {
+						"asset" : "domain_11825"
+					}
+				]
+			}, {
+				"id" : "scene55138843-9f04-487d-bf33-1920769f2c96",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "instructions",
+						"value" : ""
+					}, {
+						"name" : "next",
+						"value" : "recordAudio2"
+					}
+				],
+				"events" : {
+					"event" : [{
+							"action" : {
+								"type" : "command",
+								"command" : "play",
+								"asset" : "domain_3989",
+								"loop" : 1
+							},
+							"type" : "enter"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "stop",
+								"asset" : "domain_3989",
+								"loop" : 1
+							},
+							"type" : "exit"
+						}
+					]
+				},
+				"image" : [{
+						"x" : 11.38888888888889,
+						"y" : 21.777777777777775,
+						"w" : 69.44444444444444,
+						"h" : 77.77777777777779,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "domain_3126",
+						"z-index" : 4
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 500
+							},
+							"type" : "click"
+						},
+						"asset" : "next",
+						"x" : 93,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "next",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}
+				],
+				"text" : [{
+						"x" : 26.38888888888889,
+						"y" : 10.444444444444445,
+						"w" : 92.36111111111111,
+						"h" : 12.817777777777778,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "बंदर और बिल्लियाँ",
+						"weight" : "bold",
+						"font" : "Helvetica",
+						"color" : "rgb(0,0,0)",
+						"fontstyle" : "",
+						"fontsize" : 117,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 3
+					}
+				],
+				"shape" : [],
+				"hotspot" : [{
+						"x" : 26.319444444444446,
+						"y" : 9.333333333333334,
+						"w" : 11.527777777777779,
+						"h" : 10.666666666666668,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7592"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 0
+					}, {
+						"x" : 39.58333333333333,
+						"y" : 8.222222222222223,
+						"w" : 10.13888888888889,
+						"h" : 10.666666666666668,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7593"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 1
+					}, {
+						"x" : 51.388888888888886,
+						"y" : 8.222222222222223,
+						"w" : 21.805555555555557,
+						"h" : 11.555555555555555,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7594"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 2
+					}
+				],
+				"embed" : [],
+				"div" : [],
+				"audio" : [{
+						"asset" : "domain_3989"
+					}, {
+						"asset" : "domain_7592"
+					}, {
+						"asset" : "domain_7593"
+					}, {
+						"asset" : "domain_7594"
+					}
+				],
+				"scribble" : [],
+				"g" : []
+			}, {
+				"id" : "recordAudio2",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "previousScreen",
+						"value" : "recordAudio1"
+					}, {
+						"name" : "nextScreen",
+						"value" : "recordAudio3"
+					}, {
+						"name" : "next",
+						"value" : "recordAudio3"
+					}, {
+						"name" : "previous",
+						"value" : "scene55138843-9f04-487d-bf33-1920769f2c96"
+					}
+				],
+				"events" : {
+					"event" : [{
+							"action" : [{
+									"asset" : "startrec",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "stoprec",
+									"command" : "show",
+									"type" : "command"
+								}, {
+									"asset" : "mover",
+									"command" : "show",
+									"type" : "command"
+								}, {
+									"tween" : {
+										"to" : [{
+												"duration" : 0,
+												"ease" : "linear",
+												"__cdata" : {
+													"x" : 47,
+													"y" : 45
+												}
+											}, {
+												"duration" : 1000,
+												"ease" : "sineInOut",
+												"__cdata" : {
+													"x" : 62,
+													"y" : 45
+												}
+											}, {
+												"duration" : 1000,
+												"ease" : "sineInOut",
+												"__cdata" : {
+													"x" : 47,
+													"y" : 45
+												}
+											}
+										],
+										"id" : "mover",
+										"loop" : true
+									},
+									"asset" : "mover",
+									"type" : "animation"
+								}
+							],
+							"type" : "rec_started"
+						}, {
+							"action" : [{
+									"asset" : "stoprec",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "mover",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "playback",
+									"command" : "show",
+									"type" : "command"
+								}
+							],
+							"type" : "rec_stopped"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "play",
+								"asset" : "domain_3993",
+								"loop" : 1
+							},
+							"type" : "enter"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "stop",
+								"asset" : "domain_3993",
+								"loop" : 1
+							},
+							"type" : "exit"
+						}
+					]
+				},
+				"image" : [{
+						"x" : 16.52777777777778,
+						"y" : 20.666666666666668,
+						"w" : 69.44444444444444,
+						"h" : 77.77777777777779,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "domain_3126",
+						"z-index" : 0
+					}, {
+						"x" : 45,
+						"y" : 80,
+						"w" : 10,
+						"h" : 18,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "mic",
+						"event" : {
+							"action" : {
+								"asset" : "recorder",
+								"command" : "toggleShow",
+								"type" : "command"
+							},
+							"type" : "click"
+						},
+						"z-index" : 1
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 500
+							},
+							"type" : "click"
+						},
+						"asset" : "next",
+						"x" : 93,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "next",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "previous",
+								"effect" : "fadein",
+								"direction" : "right",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"asset" : "previous",
+						"x" : 2,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "previous",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}
+				],
+				"text" : [{
+						"x" : 19.02777777777778,
+						"y" : 3.111111111111111,
+						"w" : 109.16666666666666,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "दो बिल्लियाँ थी। उन्हें एक रोटी मिली। ",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "rgb(0,0,0)",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 12
+					}, {
+						"x" : 34.166666666666664,
+						"y" : 13.555555555555557,
+						"w" : 48.61111111111111,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "दोनों झगड़ने लगीं। ",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "rgb(0,0,0)",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 13
+					}
+				],
+				"shape" : [],
+				"hotspot" : [{
+						"x" : 24.166666666666668,
+						"y" : 1.3333333333333335,
+						"w" : 14.722222222222223,
+						"h" : 8.666666666666668,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7596"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 2
+					}, {
+						"x" : 18.88888888888889,
+						"y" : 2,
+						"w" : 4.444444444444445,
+						"h" : 8.444444444444445,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7595"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 3
+					}, {
+						"x" : 39.861111111111114,
+						"y" : 2,
+						"w" : 3.8888888888888897,
+						"h" : 7.777777777777778,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7597"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 4
+					}, {
+						"x" : 46.666666666666664,
+						"y" : 1.7777777777777777,
+						"w" : 7.5,
+						"h" : 9.11111111111111,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7598"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 5
+					}, {
+						"x" : 55.13888888888889,
+						"y" : 4,
+						"w" : 6.527777777777779,
+						"h" : 6.888888888888889,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7599"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 6
+					}, {
+						"x" : 62.638888888888886,
+						"y" : 2,
+						"w" : 6.944444444444445,
+						"h" : 8.222222222222223,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7600"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 7
+					}, {
+						"x" : 70.69444444444444,
+						"y" : 2,
+						"w" : 8.75,
+						"h" : 7.777777777777778,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7601"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 8
+					}, {
+						"x" : 34.02777777777778,
+						"y" : 12.444444444444445,
+						"w" : 8.333333333333332,
+						"h" : 8.222222222222223,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7602"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 9
+					}, {
+						"x" : 43.05555555555556,
+						"y" : 12.444444444444445,
+						"w" : 12.083333333333334,
+						"h" : 9.11111111111111,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7603"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 10
+					}, {
+						"x" : 56.666666666666664,
+						"y" : 12.444444444444445,
+						"w" : 7.638888888888889,
+						"h" : 8.222222222222223,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7604"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 11
+					}
+				],
+				"embed" : [],
+				"div" : [],
+				"audio" : [{
+						"asset" : "domain_3993"
+					}, {
+						"asset" : "domain_7595"
+					}, {
+						"asset" : "domain_7596"
+					}, {
+						"asset" : "domain_7597"
+					}, {
+						"asset" : "domain_7598"
+					}, {
+						"asset" : "domain_7599"
+					}, {
+						"asset" : "domain_7600"
+					}, {
+						"asset" : "domain_7601"
+					}, {
+						"asset" : "domain_7602"
+					}, {
+						"asset" : "domain_7603"
+					}, {
+						"asset" : "domain_7604"
+					}
+				],
+				"scribble" : [],
+				"g" : [{
+						"g" : [{
+								"image" : {
+									"event" : {
+										"action" : {
+											"asset" : "recorder",
+											"command" : "hide",
+											"type" : "command"
+										},
+										"type" : "click"
+									},
+									"asset" : "blacktint",
+									"h" : 100,
+									"w" : 100,
+									"x" : 0,
+									"y" : 0
+								},
+								"h" : 100,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : {
+												"asset" : "startrec",
+												"command" : "startRecord",
+												"failure" : "rec_start_fail",
+												"success" : "rec_started",
+												"type" : "command"
+											},
+											"type" : "click"
+										},
+										"fill" : "#34e941",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}
+								],
+								"image" : {
+									"asset" : "record",
+									"h" : 10,
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"text" : {
+									"color" : "darkgreen",
+									"font" : "sans-serif",
+									"fontsize" : 50,
+									"h" : 5,
+									"w" : 20,
+									"x" : 47,
+									"y" : 43,
+									"__text" : "Start"
+								},
+								"h" : 100,
+								"id" : "startrec",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : {
+												"asset" : "stoprec",
+												"command" : "stopRecord",
+												"failure" : "rec_stop_failed",
+												"success" : "rec_stopped",
+												"type" : "command"
+											},
+											"type" : "click"
+										},
+										"fill" : "#e93441",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}, {
+										"fill" : "#e98888",
+										"h" : 2,
+										"id" : "mover",
+										"type" : "circle",
+										"visible" : false,
+										"w" : 2,
+										"x" : 47,
+										"y" : 45
+									}
+								],
+								"image" : {
+									"asset" : "stop_record",
+									"h" : 10,
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"h" : 100,
+								"id" : "stoprec",
+								"visible" : false,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : [{
+													"asset" : "current_rec",
+													"command" : "TOGGLEPLAY",
+													"type" : "command"
+												}, {
+													"asset" : "recorder",
+													"command" : "hide",
+													"type" : "command"
+												}, {
+													"asset" : "playback",
+													"command" : "hide",
+													"type" : "command"
+												}, {
+													"asset" : "startrec",
+													"command" : "show",
+													"type" : "command"
+												}
+											],
+											"type" : "click"
+										},
+										"fill" : "#34e941",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}
+								],
+								"image" : {
+									"asset" : "icon_sound",
+									"h" : 10,
+									"id" : "story_audio_button",
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"text" : {
+									"color" : "darkgreen",
+									"font" : "sans-serif",
+									"fontsize" : 50,
+									"h" : 5,
+									"w" : 20,
+									"x" : 47,
+									"y" : 43,
+									"__text" : "Play"
+								},
+								"h" : 100,
+								"id" : "playback",
+								"visible" : false,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}
+						],
+						"h" : 100,
+						"id" : "recorder",
+						"z-index" : 200,
+						"visible" : false,
+						"w" : 100,
+						"x" : 0,
+						"y" : 0
+					}
+				],
+				"appEvents" : {
+					"list" : "rec_started,rec_start_fail,rec_stopped,rec_stop_failed"
+				}
+			}, {
+				"id" : "recordAudio3",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "previousScreen",
+						"value" : "recordAudio2"
+					}, {
+						"name" : "nextScreen",
+						"value" : "recordAudio4"
+					}, {
+						"name" : "next",
+						"value" : "recordAudio4"
+					}, {
+						"name" : "previous",
+						"value" : "recordAudio2"
+					}
+				],
+				"events" : {
+					"event" : [{
+							"action" : [{
+									"asset" : "startrec",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "stoprec",
+									"command" : "show",
+									"type" : "command"
+								}, {
+									"asset" : "mover",
+									"command" : "show",
+									"type" : "command"
+								}, {
+									"tween" : {
+										"to" : [{
+												"duration" : 0,
+												"ease" : "linear",
+												"__cdata" : {
+													"x" : 47,
+													"y" : 45
+												}
+											}, {
+												"duration" : 1000,
+												"ease" : "sineInOut",
+												"__cdata" : {
+													"x" : 62,
+													"y" : 45
+												}
+											}, {
+												"duration" : 1000,
+												"ease" : "sineInOut",
+												"__cdata" : {
+													"x" : 47,
+													"y" : 45
+												}
+											}
+										],
+										"id" : "mover",
+										"loop" : true
+									},
+									"asset" : "mover",
+									"type" : "animation"
+								}
+							],
+							"type" : "rec_started"
+						}, {
+							"action" : [{
+									"asset" : "stoprec",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "mover",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "playback",
+									"command" : "show",
+									"type" : "command"
+								}
+							],
+							"type" : "rec_stopped"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "play",
+								"asset" : "domain_3995",
+								"loop" : 1
+							},
+							"type" : "enter"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "stop",
+								"asset" : "domain_3995",
+								"loop" : 1
+							},
+							"type" : "exit"
+						}
+					]
+				},
+				"image" : [{
+						"x" : 15.972222222222221,
+						"y" : 20,
+						"w" : 69.44444444444444,
+						"h" : 77.77777777777779,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "domain_3126",
+						"z-index" : 0
+					}, {
+						"x" : 45,
+						"y" : 80,
+						"w" : 10,
+						"h" : 18,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "mic",
+						"event" : {
+							"action" : {
+								"asset" : "recorder",
+								"command" : "toggleShow",
+								"type" : "command"
+							},
+							"type" : "click"
+						},
+						"z-index" : 9
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 500
+							},
+							"type" : "click"
+						},
+						"asset" : "next",
+						"x" : 93,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "next",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "previous",
+								"effect" : "fadein",
+								"direction" : "right",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"asset" : "previous",
+						"x" : 2,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "previous",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}
+				],
+				"text" : [{
+						"x" : 18.194444444444443,
+						"y" : 6.222222222222222,
+						"w" : 104.44444444444446,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "बंदर बोला, मैं रोटी बराबर बाँट देता हूँ। ",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "rgb(0,0,0)",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 10
+					}
+				],
+				"shape" : [],
+				"hotspot" : [{
+						"x" : 17.5,
+						"y" : 6,
+						"w" : 8.61111111111111,
+						"h" : 7.333333333333333,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7605"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 1
+					}, {
+						"x" : 42.22222222222222,
+						"y" : 5.111111111111112,
+						"w" : 7.222222222222221,
+						"h" : 8.444444444444445,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7608"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 2
+					}, {
+						"x" : 26.805555555555554,
+						"y" : 4.888888888888889,
+						"w" : 8.75,
+						"h" : 8.444444444444445,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7606"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 3
+					}, {
+						"x" : 37.361111111111114,
+						"y" : 4.666666666666667,
+						"w" : 3.8888888888888897,
+						"h" : 8.222222222222223,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7607"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 4
+					}, {
+						"x" : 50.416666666666664,
+						"y" : 6.888888888888889,
+						"w" : 11.38888888888889,
+						"h" : 5.777777777777778,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7609"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 5
+					}, {
+						"x" : 62.638888888888886,
+						"y" : 5.333333333333334,
+						"w" : 6.805555555555555,
+						"h" : 7.555555555555555,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7610"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 6
+					}, {
+						"x" : 70.27777777777777,
+						"y" : 5.555555555555555,
+						"w" : 6.805555555555555,
+						"h" : 7.333333333333333,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7611"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 7
+					}, {
+						"x" : 78.19444444444444,
+						"y" : 5.111111111111112,
+						"w" : 3.3333333333333335,
+						"h" : 10.222222222222223,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7612"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 8
+					}
+				],
+				"embed" : [],
+				"div" : [],
+				"audio" : [{
+						"asset" : "domain_3995"
+					}, {
+						"asset" : "domain_7605"
+					}, {
+						"asset" : "domain_7606"
+					}, {
+						"asset" : "domain_7607"
+					}, {
+						"asset" : "domain_7608"
+					}, {
+						"asset" : "domain_7609"
+					}, {
+						"asset" : "domain_7610"
+					}, {
+						"asset" : "domain_7611"
+					}, {
+						"asset" : "domain_7612"
+					}
+				],
+				"scribble" : [],
+				"g" : [{
+						"g" : [{
+								"image" : {
+									"event" : {
+										"action" : {
+											"asset" : "recorder",
+											"command" : "hide",
+											"type" : "command"
+										},
+										"type" : "click"
+									},
+									"asset" : "blacktint",
+									"h" : 100,
+									"w" : 100,
+									"x" : 0,
+									"y" : 0
+								},
+								"h" : 100,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : {
+												"asset" : "startrec",
+												"command" : "startRecord",
+												"failure" : "rec_start_fail",
+												"success" : "rec_started",
+												"type" : "command"
+											},
+											"type" : "click"
+										},
+										"fill" : "#34e941",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}
+								],
+								"image" : {
+									"asset" : "record",
+									"h" : 10,
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"text" : {
+									"color" : "darkgreen",
+									"font" : "sans-serif",
+									"fontsize" : 50,
+									"h" : 5,
+									"w" : 20,
+									"x" : 47,
+									"y" : 43,
+									"__text" : "Start"
+								},
+								"h" : 100,
+								"id" : "startrec",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : {
+												"asset" : "stoprec",
+												"command" : "stopRecord",
+												"failure" : "rec_stop_failed",
+												"success" : "rec_stopped",
+												"type" : "command"
+											},
+											"type" : "click"
+										},
+										"fill" : "#e93441",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}, {
+										"fill" : "#e98888",
+										"h" : 2,
+										"id" : "mover",
+										"type" : "circle",
+										"visible" : false,
+										"w" : 2,
+										"x" : 47,
+										"y" : 45
+									}
+								],
+								"image" : {
+									"asset" : "stop_record",
+									"h" : 10,
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"h" : 100,
+								"id" : "stoprec",
+								"visible" : false,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : [{
+													"asset" : "current_rec",
+													"command" : "TOGGLEPLAY",
+													"type" : "command"
+												}, {
+													"asset" : "recorder",
+													"command" : "hide",
+													"type" : "command"
+												}, {
+													"asset" : "playback",
+													"command" : "hide",
+													"type" : "command"
+												}, {
+													"asset" : "startrec",
+													"command" : "show",
+													"type" : "command"
+												}
+											],
+											"type" : "click"
+										},
+										"fill" : "#34e941",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}
+								],
+								"image" : {
+									"asset" : "icon_sound",
+									"h" : 10,
+									"id" : "story_audio_button",
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"text" : {
+									"color" : "darkgreen",
+									"font" : "sans-serif",
+									"fontsize" : 50,
+									"h" : 5,
+									"w" : 20,
+									"x" : 47,
+									"y" : 43,
+									"__text" : "Play"
+								},
+								"h" : 100,
+								"id" : "playback",
+								"visible" : false,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}
+						],
+						"h" : 100,
+						"id" : "recorder",
+						"z-index" : 200,
+						"visible" : false,
+						"w" : 100,
+						"x" : 0,
+						"y" : 0
+					}
+				],
+				"appEvents" : {
+					"list" : "rec_started,rec_start_fail,rec_stopped,rec_stop_failed"
+				}
+			}, {
+				"id" : "recordAudio4",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "previousScreen",
+						"value" : "recordAudio3"
+					}, {
+						"name" : "nextScreen",
+						"value" : "recordAudio5"
+					}, {
+						"name" : "next",
+						"value" : "recordAudio5"
+					}, {
+						"name" : "previous",
+						"value" : "recordAudio3"
+					}
+				],
+				"events" : {
+					"event" : [{
+							"action" : [{
+									"asset" : "startrec",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "stoprec",
+									"command" : "show",
+									"type" : "command"
+								}, {
+									"asset" : "mover",
+									"command" : "show",
+									"type" : "command"
+								}, {
+									"tween" : {
+										"to" : [{
+												"duration" : 0,
+												"ease" : "linear",
+												"__cdata" : {
+													"x" : 47,
+													"y" : 45
+												}
+											}, {
+												"duration" : 1000,
+												"ease" : "sineInOut",
+												"__cdata" : {
+													"x" : 62,
+													"y" : 45
+												}
+											}, {
+												"duration" : 1000,
+												"ease" : "sineInOut",
+												"__cdata" : {
+													"x" : 47,
+													"y" : 45
+												}
+											}
+										],
+										"id" : "mover",
+										"loop" : true
+									},
+									"asset" : "mover",
+									"type" : "animation"
+								}
+							],
+							"type" : "rec_started"
+						}, {
+							"action" : [{
+									"asset" : "stoprec",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "mover",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "playback",
+									"command" : "show",
+									"type" : "command"
+								}
+							],
+							"type" : "rec_stopped"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "play",
+								"asset" : "domain_3997",
+								"loop" : 1
+							},
+							"type" : "enter"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "stop",
+								"asset" : "domain_3997",
+								"loop" : 1
+							},
+							"type" : "exit"
+						}
+					]
+				},
+				"image" : [{
+						"x" : 16.805555555555557,
+						"y" : 19.11111111111111,
+						"w" : 69.44444444444444,
+						"h" : 77.77777777777779,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "domain_3126",
+						"z-index" : 0
+					}, {
+						"x" : 45,
+						"y" : 80,
+						"w" : 10,
+						"h" : 18,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "mic",
+						"event" : {
+							"action" : {
+								"asset" : "recorder",
+								"command" : "toggleShow",
+								"type" : "command"
+							},
+							"type" : "click"
+						},
+						"z-index" : 7
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 500
+							},
+							"type" : "click"
+						},
+						"asset" : "next",
+						"x" : 93,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "next",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "previous",
+								"effect" : "fadein",
+								"direction" : "right",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"asset" : "previous",
+						"x" : 2,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "previous",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}
+				],
+				"text" : [{
+						"x" : 25.27777777777778,
+						"y" : 7.111111111111111,
+						"w" : 89.16666666666667,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "बंदर ने टुकड़े तराज़ू में रखे। ",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "rgb(0,0,0)",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 8
+					}
+				],
+				"shape" : [],
+				"hotspot" : [{
+						"x" : 25.13888888888889,
+						"y" : 6.666666666666667,
+						"w" : 8.333333333333332,
+						"h" : 7.555555555555555,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7613"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 1
+					}, {
+						"x" : 34.44444444444444,
+						"y" : 6,
+						"w" : 2.7777777777777777,
+						"h" : 7.555555555555555,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7614"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 2
+					}, {
+						"x" : 38.05555555555556,
+						"y" : 6.222222222222222,
+						"w" : 9.86111111111111,
+						"h" : 9.777777777777779,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7615"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 3
+					}, {
+						"x" : 48.888888888888886,
+						"y" : 8,
+						"w" : 10.694444444444445,
+						"h" : 7.555555555555555,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7616"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 4
+					}, {
+						"x" : 60,
+						"y" : 6,
+						"w" : 2.638888888888889,
+						"h" : 8,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7617"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 5
+					}, {
+						"x" : 63.61111111111111,
+						"y" : 6.222222222222222,
+						"w" : 6.388888888888888,
+						"h" : 8,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7618"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 6
+					}
+				],
+				"embed" : [],
+				"div" : [],
+				"audio" : [{
+						"asset" : "domain_3997"
+					}, {
+						"asset" : "domain_7613"
+					}, {
+						"asset" : "domain_7614"
+					}, {
+						"asset" : "domain_7615"
+					}, {
+						"asset" : "domain_7616"
+					}, {
+						"asset" : "domain_7617"
+					}, {
+						"asset" : "domain_7618"
+					}
+				],
+				"scribble" : [],
+				"g" : [{
+						"g" : [{
+								"image" : {
+									"event" : {
+										"action" : {
+											"asset" : "recorder",
+											"command" : "hide",
+											"type" : "command"
+										},
+										"type" : "click"
+									},
+									"asset" : "blacktint",
+									"h" : 100,
+									"w" : 100,
+									"x" : 0,
+									"y" : 0
+								},
+								"h" : 100,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : {
+												"asset" : "startrec",
+												"command" : "startRecord",
+												"failure" : "rec_start_fail",
+												"success" : "rec_started",
+												"type" : "command"
+											},
+											"type" : "click"
+										},
+										"fill" : "#34e941",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}
+								],
+								"image" : {
+									"asset" : "record",
+									"h" : 10,
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"text" : {
+									"color" : "darkgreen",
+									"font" : "sans-serif",
+									"fontsize" : 50,
+									"h" : 5,
+									"w" : 20,
+									"x" : 47,
+									"y" : 43,
+									"__text" : "Start"
+								},
+								"h" : 100,
+								"id" : "startrec",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : {
+												"asset" : "stoprec",
+												"command" : "stopRecord",
+												"failure" : "rec_stop_failed",
+												"success" : "rec_stopped",
+												"type" : "command"
+											},
+											"type" : "click"
+										},
+										"fill" : "#e93441",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}, {
+										"fill" : "#e98888",
+										"h" : 2,
+										"id" : "mover",
+										"type" : "circle",
+										"visible" : false,
+										"w" : 2,
+										"x" : 47,
+										"y" : 45
+									}
+								],
+								"image" : {
+									"asset" : "stop_record",
+									"h" : 10,
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"h" : 100,
+								"id" : "stoprec",
+								"visible" : false,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : [{
+													"asset" : "current_rec",
+													"command" : "TOGGLEPLAY",
+													"type" : "command"
+												}, {
+													"asset" : "recorder",
+													"command" : "hide",
+													"type" : "command"
+												}, {
+													"asset" : "playback",
+													"command" : "hide",
+													"type" : "command"
+												}, {
+													"asset" : "startrec",
+													"command" : "show",
+													"type" : "command"
+												}
+											],
+											"type" : "click"
+										},
+										"fill" : "#34e941",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}
+								],
+								"image" : {
+									"asset" : "icon_sound",
+									"h" : 10,
+									"id" : "story_audio_button",
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"text" : {
+									"color" : "darkgreen",
+									"font" : "sans-serif",
+									"fontsize" : 50,
+									"h" : 5,
+									"w" : 20,
+									"x" : 47,
+									"y" : 43,
+									"__text" : "Play"
+								},
+								"h" : 100,
+								"id" : "playback",
+								"visible" : false,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}
+						],
+						"h" : 100,
+						"id" : "recorder",
+						"z-index" : 200,
+						"visible" : false,
+						"w" : 100,
+						"x" : 0,
+						"y" : 0
+					}
+				],
+				"appEvents" : {
+					"list" : "rec_started,rec_start_fail,rec_stopped,rec_stop_failed"
+				}
+			}, {
+				"id" : "recordAudio5",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "previousScreen",
+						"value" : "recordAudio4"
+					}, {
+						"name" : "nextScreen",
+						"value" : "recordAudio6"
+					}, {
+						"name" : "next",
+						"value" : "recordAudio6"
+					}, {
+						"name" : "previous",
+						"value" : "recordAudio4"
+					}
+				],
+				"events" : {
+					"event" : [{
+							"action" : [{
+									"asset" : "startrec",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "stoprec",
+									"command" : "show",
+									"type" : "command"
+								}, {
+									"asset" : "mover",
+									"command" : "show",
+									"type" : "command"
+								}, {
+									"tween" : {
+										"to" : [{
+												"duration" : 0,
+												"ease" : "linear",
+												"__cdata" : {
+													"x" : 47,
+													"y" : 45
+												}
+											}, {
+												"duration" : 1000,
+												"ease" : "sineInOut",
+												"__cdata" : {
+													"x" : 62,
+													"y" : 45
+												}
+											}, {
+												"duration" : 1000,
+												"ease" : "sineInOut",
+												"__cdata" : {
+													"x" : 47,
+													"y" : 45
+												}
+											}
+										],
+										"id" : "mover",
+										"loop" : true
+									},
+									"asset" : "mover",
+									"type" : "animation"
+								}
+							],
+							"type" : "rec_started"
+						}, {
+							"action" : [{
+									"asset" : "stoprec",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "mover",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "playback",
+									"command" : "show",
+									"type" : "command"
+								}
+							],
+							"type" : "rec_stopped"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "play",
+								"asset" : "domain_3999",
+								"loop" : 1
+							},
+							"type" : "enter"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "stop",
+								"asset" : "domain_3999",
+								"loop" : 1
+							},
+							"type" : "exit"
+						}
+					]
+				},
+				"image" : [{
+						"x" : 16.11111111111111,
+						"y" : 19.77777777777778,
+						"w" : 69.44444444444444,
+						"h" : 77.77777777777779,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "domain_3126",
+						"z-index" : 0
+					}, {
+						"x" : 45,
+						"y" : 80,
+						"w" : 10,
+						"h" : 18,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "mic",
+						"event" : {
+							"action" : {
+								"asset" : "recorder",
+								"command" : "toggleShow",
+								"type" : "command"
+							},
+							"type" : "click"
+						},
+						"z-index" : 1
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 500
+							},
+							"type" : "click"
+						},
+						"asset" : "next",
+						"x" : 93,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "next",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "previous",
+								"effect" : "fadein",
+								"direction" : "right",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"asset" : "previous",
+						"x" : 2,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "previous",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}
+				],
+				"text" : [{
+						"x" : 21.25,
+						"y" : 4.222222222222222,
+						"w" : 81.38888888888889,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "हर बार, भारी पलड़े से बंदर रोटी ",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "rgb(0,0,0)",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 12
+					}, {
+						"x" : 33.75,
+						"y" : 12.88888888888889,
+						"w" : 48.61111111111111,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "तोड़कर खा लेता।",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "rgb(0,0,0)",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 13
+					}
+				],
+				"shape" : [],
+				"hotspot" : [{
+						"x" : 21.38888888888889,
+						"y" : 5.111111111111112,
+						"w" : 4.861111111111112,
+						"h" : 6.666666666666667,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7619"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 2
+					}, {
+						"x" : 27.083333333333332,
+						"y" : 5.333333333333334,
+						"w" : 6.527777777777779,
+						"h" : 6,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7620"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 3
+					}, {
+						"x" : 35.97222222222222,
+						"y" : 3.5555555555555554,
+						"w" : 7.7777777777777795,
+						"h" : 7.777777777777778,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7621"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 4
+					}, {
+						"x" : 44.72222222222222,
+						"y" : 3.111111111111111,
+						"w" : 9.722222222222223,
+						"h" : 9.333333333333334,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7622"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 5
+					}, {
+						"x" : 55.00000000000001,
+						"y" : 2.888888888888889,
+						"w" : 3.75,
+						"h" : 7.777777777777778,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7623"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 6
+					}, {
+						"x" : 59.30555555555556,
+						"y" : 4,
+						"w" : 7.7777777777777795,
+						"h" : 7.111111111111111,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7624"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 7
+					}, {
+						"x" : 68.47222222222223,
+						"y" : 3.111111111111111,
+						"w" : 7.7777777777777795,
+						"h" : 8.222222222222223,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7625"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 8
+					}, {
+						"x" : 33.19444444444444,
+						"y" : 13.111111111111112,
+						"w" : 13.88888888888889,
+						"h" : 7.777777777777778,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7626"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 9
+					}, {
+						"x" : 48.05555555555556,
+						"y" : 14.000000000000002,
+						"w" : 5,
+						"h" : 5.555555555555555,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7627"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 10
+					}, {
+						"x" : 54.166666666666664,
+						"y" : 13.333333333333334,
+						"w" : 7.222222222222221,
+						"h" : 6.444444444444445,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7628"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 11
+					}
+				],
+				"embed" : [],
+				"div" : [],
+				"audio" : [{
+						"asset" : "domain_3999"
+					}, {
+						"asset" : "domain_7619"
+					}, {
+						"asset" : "domain_7620"
+					}, {
+						"asset" : "domain_7621"
+					}, {
+						"asset" : "domain_7622"
+					}, {
+						"asset" : "domain_7623"
+					}, {
+						"asset" : "domain_7624"
+					}, {
+						"asset" : "domain_7625"
+					}, {
+						"asset" : "domain_7626"
+					}, {
+						"asset" : "domain_7627"
+					}, {
+						"asset" : "domain_7628"
+					}
+				],
+				"scribble" : [],
+				"g" : [{
+						"g" : [{
+								"image" : {
+									"event" : {
+										"action" : {
+											"asset" : "recorder",
+											"command" : "hide",
+											"type" : "command"
+										},
+										"type" : "click"
+									},
+									"asset" : "blacktint",
+									"h" : 100,
+									"w" : 100,
+									"x" : 0,
+									"y" : 0
+								},
+								"h" : 100,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : {
+												"asset" : "startrec",
+												"command" : "startRecord",
+												"failure" : "rec_start_fail",
+												"success" : "rec_started",
+												"type" : "command"
+											},
+											"type" : "click"
+										},
+										"fill" : "#34e941",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}
+								],
+								"image" : {
+									"asset" : "record",
+									"h" : 10,
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"text" : {
+									"color" : "darkgreen",
+									"font" : "sans-serif",
+									"fontsize" : 50,
+									"h" : 5,
+									"w" : 20,
+									"x" : 47,
+									"y" : 43,
+									"__text" : "Start"
+								},
+								"h" : 100,
+								"id" : "startrec",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : {
+												"asset" : "stoprec",
+												"command" : "stopRecord",
+												"failure" : "rec_stop_failed",
+												"success" : "rec_stopped",
+												"type" : "command"
+											},
+											"type" : "click"
+										},
+										"fill" : "#e93441",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}, {
+										"fill" : "#e98888",
+										"h" : 2,
+										"id" : "mover",
+										"type" : "circle",
+										"visible" : false,
+										"w" : 2,
+										"x" : 47,
+										"y" : 45
+									}
+								],
+								"image" : {
+									"asset" : "stop_record",
+									"h" : 10,
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"h" : 100,
+								"id" : "stoprec",
+								"visible" : false,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : [{
+													"asset" : "current_rec",
+													"command" : "TOGGLEPLAY",
+													"type" : "command"
+												}, {
+													"asset" : "recorder",
+													"command" : "hide",
+													"type" : "command"
+												}, {
+													"asset" : "playback",
+													"command" : "hide",
+													"type" : "command"
+												}, {
+													"asset" : "startrec",
+													"command" : "show",
+													"type" : "command"
+												}
+											],
+											"type" : "click"
+										},
+										"fill" : "#34e941",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}
+								],
+								"image" : {
+									"asset" : "icon_sound",
+									"h" : 10,
+									"id" : "story_audio_button",
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"text" : {
+									"color" : "darkgreen",
+									"font" : "sans-serif",
+									"fontsize" : 50,
+									"h" : 5,
+									"w" : 20,
+									"x" : 47,
+									"y" : 43,
+									"__text" : "Play"
+								},
+								"h" : 100,
+								"id" : "playback",
+								"visible" : false,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}
+						],
+						"h" : 100,
+						"id" : "recorder",
+						"z-index" : 200,
+						"visible" : false,
+						"w" : 100,
+						"x" : 0,
+						"y" : 0
+					}
+				],
+				"appEvents" : {
+					"list" : "rec_started,rec_start_fail,rec_stopped,rec_stop_failed"
+				}
+			}, {
+				"id" : "recordAudio6",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "previousScreen",
+						"value" : "recordAudio5"
+					}, {
+						"name" : "nextScreen",
+						"value" : "recordAudio7"
+					}, {
+						"name" : "next",
+						"value" : "recordAudio7"
+					}, {
+						"name" : "previous",
+						"value" : "recordAudio5"
+					}
+				],
+				"events" : {
+					"event" : [{
+							"action" : [{
+									"asset" : "startrec",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "stoprec",
+									"command" : "show",
+									"type" : "command"
+								}, {
+									"asset" : "mover",
+									"command" : "show",
+									"type" : "command"
+								}, {
+									"tween" : {
+										"to" : [{
+												"duration" : 0,
+												"ease" : "linear",
+												"__cdata" : {
+													"x" : 47,
+													"y" : 45
+												}
+											}, {
+												"duration" : 1000,
+												"ease" : "sineInOut",
+												"__cdata" : {
+													"x" : 62,
+													"y" : 45
+												}
+											}, {
+												"duration" : 1000,
+												"ease" : "sineInOut",
+												"__cdata" : {
+													"x" : 47,
+													"y" : 45
+												}
+											}
+										],
+										"id" : "mover",
+										"loop" : true
+									},
+									"asset" : "mover",
+									"type" : "animation"
+								}
+							],
+							"type" : "rec_started"
+						}, {
+							"action" : [{
+									"asset" : "stoprec",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "mover",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "playback",
+									"command" : "show",
+									"type" : "command"
+								}
+							],
+							"type" : "rec_stopped"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "play",
+								"asset" : "domain_4001",
+								"loop" : 1
+							},
+							"type" : "enter"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "stop",
+								"asset" : "domain_4001",
+								"loop" : 1
+							},
+							"type" : "exit"
+						}
+					]
+				},
+				"image" : [{
+						"x" : 16.666666666666664,
+						"y" : 20,
+						"w" : 69.44444444444444,
+						"h" : 77.77777777777779,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "domain_3126",
+						"z-index" : 0
+					}, {
+						"x" : 45,
+						"y" : 80,
+						"w" : 10,
+						"h" : 18,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "mic",
+						"event" : {
+							"action" : {
+								"asset" : "recorder",
+								"command" : "toggleShow",
+								"type" : "command"
+							},
+							"type" : "click"
+						},
+						"z-index" : 8
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 500
+							},
+							"type" : "click"
+						},
+						"asset" : "next",
+						"x" : 93,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "next",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "previous",
+								"effect" : "fadein",
+								"direction" : "right",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"asset" : "previous",
+						"x" : 2,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "previous",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}
+				],
+				"text" : [{
+						"x" : 21.805555555555557,
+						"y" : 5.333333333333334,
+						"w" : 84.72222222222221,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "इस तरह बन्दर पूरी रोटी खा गया। ",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "rgb(0,0,0)",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 9
+					}
+				],
+				"shape" : [],
+				"hotspot" : [{
+						"x" : 21.805555555555557,
+						"y" : 6.222222222222222,
+						"w" : 6.111111111111111,
+						"h" : 7.111111111111111,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7630"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 1
+					}, {
+						"x" : 28.61111111111111,
+						"y" : 6.666666666666667,
+						"w" : 8.055555555555555,
+						"h" : 6,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7631"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 2
+					}, {
+						"x" : 37.638888888888886,
+						"y" : 6.444444444444445,
+						"w" : 8.75,
+						"h" : 6.222222222222222,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7632"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 3
+					}, {
+						"x" : 47.77777777777778,
+						"y" : 4.444444444444445,
+						"w" : 6.25,
+						"h" : 9.777777777777779,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7633"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 4
+					}, {
+						"x" : 55.27777777777778,
+						"y" : 4.222222222222222,
+						"w" : 6.666666666666667,
+						"h" : 8,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7634"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 5
+					}, {
+						"x" : 63.888888888888886,
+						"y" : 6.666666666666667,
+						"w" : 4.166666666666666,
+						"h" : 5.333333333333334,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7635"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 6
+					}, {
+						"x" : 69.58333333333333,
+						"y" : 6.222222222222222,
+						"w" : 6.666666666666667,
+						"h" : 5.555555555555555,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7636"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 7
+					}
+				],
+				"embed" : [],
+				"div" : [],
+				"audio" : [{
+						"asset" : "domain_4001"
+					}, {
+						"asset" : "domain_7630"
+					}, {
+						"asset" : "domain_7631"
+					}, {
+						"asset" : "domain_7632"
+					}, {
+						"asset" : "domain_7633"
+					}, {
+						"asset" : "domain_7634"
+					}, {
+						"asset" : "domain_7635"
+					}, {
+						"asset" : "domain_7636"
+					}
+				],
+				"scribble" : [],
+				"g" : [{
+						"g" : [{
+								"image" : {
+									"event" : {
+										"action" : {
+											"asset" : "recorder",
+											"command" : "hide",
+											"type" : "command"
+										},
+										"type" : "click"
+									},
+									"asset" : "blacktint",
+									"h" : 100,
+									"w" : 100,
+									"x" : 0,
+									"y" : 0
+								},
+								"h" : 100,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : {
+												"asset" : "startrec",
+												"command" : "startRecord",
+												"failure" : "rec_start_fail",
+												"success" : "rec_started",
+												"type" : "command"
+											},
+											"type" : "click"
+										},
+										"fill" : "#34e941",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}
+								],
+								"image" : {
+									"asset" : "record",
+									"h" : 10,
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"text" : {
+									"color" : "darkgreen",
+									"font" : "sans-serif",
+									"fontsize" : 50,
+									"h" : 5,
+									"w" : 20,
+									"x" : 47,
+									"y" : 43,
+									"__text" : "Start"
+								},
+								"h" : 100,
+								"id" : "startrec",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : {
+												"asset" : "stoprec",
+												"command" : "stopRecord",
+												"failure" : "rec_stop_failed",
+												"success" : "rec_stopped",
+												"type" : "command"
+											},
+											"type" : "click"
+										},
+										"fill" : "#e93441",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}, {
+										"fill" : "#e98888",
+										"h" : 2,
+										"id" : "mover",
+										"type" : "circle",
+										"visible" : false,
+										"w" : 2,
+										"x" : 47,
+										"y" : 45
+									}
+								],
+								"image" : {
+									"asset" : "stop_record",
+									"h" : 10,
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"h" : 100,
+								"id" : "stoprec",
+								"visible" : false,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : [{
+													"asset" : "current_rec",
+													"command" : "TOGGLEPLAY",
+													"type" : "command"
+												}, {
+													"asset" : "recorder",
+													"command" : "hide",
+													"type" : "command"
+												}, {
+													"asset" : "playback",
+													"command" : "hide",
+													"type" : "command"
+												}, {
+													"asset" : "startrec",
+													"command" : "show",
+													"type" : "command"
+												}
+											],
+											"type" : "click"
+										},
+										"fill" : "#34e941",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}
+								],
+								"image" : {
+									"asset" : "icon_sound",
+									"h" : 10,
+									"id" : "story_audio_button",
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"text" : {
+									"color" : "darkgreen",
+									"font" : "sans-serif",
+									"fontsize" : 50,
+									"h" : 5,
+									"w" : 20,
+									"x" : 47,
+									"y" : 43,
+									"__text" : "Play"
+								},
+								"h" : 100,
+								"id" : "playback",
+								"visible" : false,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}
+						],
+						"h" : 100,
+						"id" : "recorder",
+						"z-index" : 200,
+						"visible" : false,
+						"w" : 100,
+						"x" : 0,
+						"y" : 0
+					}
+				],
+				"appEvents" : {
+					"list" : "rec_started,rec_start_fail,rec_stopped,rec_stop_failed"
+				}
+			}, {
+				"id" : "recordAudio7",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "previousScreen",
+						"value" : "recordAudio6"
+					}, {
+						"name" : "nextScreen",
+						"value" : "recordAudio8"
+					}, {
+						"name" : "next",
+						"value" : "scene7b2e5492-b134-4945-9cde-803a094fb430"
+					}, {
+						"name" : "previous",
+						"value" : "recordAudio6"
+					}
+				],
+				"events" : {
+					"event" : [{
+							"action" : [{
+									"asset" : "startrec",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "stoprec",
+									"command" : "show",
+									"type" : "command"
+								}, {
+									"asset" : "mover",
+									"command" : "show",
+									"type" : "command"
+								}, {
+									"tween" : {
+										"to" : [{
+												"duration" : 0,
+												"ease" : "linear",
+												"__cdata" : {
+													"x" : 47,
+													"y" : 45
+												}
+											}, {
+												"duration" : 1000,
+												"ease" : "sineInOut",
+												"__cdata" : {
+													"x" : 62,
+													"y" : 45
+												}
+											}, {
+												"duration" : 1000,
+												"ease" : "sineInOut",
+												"__cdata" : {
+													"x" : 47,
+													"y" : 45
+												}
+											}
+										],
+										"id" : "mover",
+										"loop" : true
+									},
+									"asset" : "mover",
+									"type" : "animation"
+								}
+							],
+							"type" : "rec_started"
+						}, {
+							"action" : [{
+									"asset" : "stoprec",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "mover",
+									"command" : "hide",
+									"type" : "command"
+								}, {
+									"asset" : "playback",
+									"command" : "show",
+									"type" : "command"
+								}
+							],
+							"type" : "rec_stopped"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "play",
+								"asset" : "domain_4002",
+								"loop" : 1
+							},
+							"type" : "enter"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "stop",
+								"asset" : "domain_4002",
+								"loop" : 1
+							},
+							"type" : "exit"
+						}
+					]
+				},
+				"image" : [{
+						"x" : 16.38888888888889,
+						"y" : 20.22222222222222,
+						"w" : 69.44444444444444,
+						"h" : 77.77777777777779,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "domain_3126",
+						"z-index" : 0
+					}, {
+						"x" : 45,
+						"y" : 80,
+						"w" : 10,
+						"h" : 18,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "mic",
+						"event" : {
+							"action" : {
+								"asset" : "recorder",
+								"command" : "toggleShow",
+								"type" : "command"
+							},
+							"type" : "click"
+						},
+						"z-index" : 6
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 500
+							},
+							"type" : "click"
+						},
+						"asset" : "next",
+						"x" : 93,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "next",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "previous",
+								"effect" : "fadein",
+								"direction" : "right",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"asset" : "previous",
+						"x" : 2,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "previous",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}
+				],
+				"text" : [{
+						"x" : 25.27777777777778,
+						"y" : 6.222222222222222,
+						"w" : 71.11111111111111,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "बिल्लियाँ देखती ही रह गई |",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "rgb(0,0,0)",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 7
+					}
+				],
+				"shape" : [],
+				"hotspot" : [{
+						"x" : 25.208333333333332,
+						"y" : 4.888888888888889,
+						"w" : 14.722222222222223,
+						"h" : 8.444444444444445,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7637"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 1
+					}, {
+						"x" : 40.97222222222222,
+						"y" : 5.111111111111112,
+						"w" : 10.277777777777777,
+						"h" : 8,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7638"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 2
+					}, {
+						"x" : 52.361111111111114,
+						"y" : 5.111111111111112,
+						"w" : 3.75,
+						"h" : 8.666666666666668,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7639"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 3
+					}, {
+						"x" : 57.36111111111111,
+						"y" : 7.333333333333333,
+						"w" : 4.861111111111112,
+						"h" : 6.888888888888889,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7640"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 4
+					}, {
+						"x" : 63.47222222222222,
+						"y" : 4.888888888888889,
+						"w" : 5.555555555555555,
+						"h" : 9.777777777777779,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_7641"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 5
+					}
+				],
+				"embed" : [],
+				"div" : [],
+				"audio" : [{
+						"asset" : "domain_4002"
+					}, {
+						"asset" : "domain_7637"
+					}, {
+						"asset" : "domain_7638"
+					}, {
+						"asset" : "domain_7639"
+					}, {
+						"asset" : "domain_7640"
+					}, {
+						"asset" : "domain_7641"
+					}
+				],
+				"scribble" : [],
+				"g" : [{
+						"g" : [{
+								"image" : {
+									"event" : {
+										"action" : {
+											"asset" : "recorder",
+											"command" : "hide",
+											"type" : "command"
+										},
+										"type" : "click"
+									},
+									"asset" : "blacktint",
+									"h" : 100,
+									"w" : 100,
+									"x" : 0,
+									"y" : 0
+								},
+								"h" : 100,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : {
+												"asset" : "startrec",
+												"command" : "startRecord",
+												"failure" : "rec_start_fail",
+												"success" : "rec_started",
+												"type" : "command"
+											},
+											"type" : "click"
+										},
+										"fill" : "#34e941",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}
+								],
+								"image" : {
+									"asset" : "record",
+									"h" : 10,
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"text" : {
+									"color" : "darkgreen",
+									"font" : "sans-serif",
+									"fontsize" : 50,
+									"h" : 5,
+									"w" : 20,
+									"x" : 47,
+									"y" : 43,
+									"__text" : "Start"
+								},
+								"h" : 100,
+								"id" : "startrec",
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : {
+												"asset" : "stoprec",
+												"command" : "stopRecord",
+												"failure" : "rec_stop_failed",
+												"success" : "rec_stopped",
+												"type" : "command"
+											},
+											"type" : "click"
+										},
+										"fill" : "#e93441",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}, {
+										"fill" : "#e98888",
+										"h" : 2,
+										"id" : "mover",
+										"type" : "circle",
+										"visible" : false,
+										"w" : 2,
+										"x" : 47,
+										"y" : 45
+									}
+								],
+								"image" : {
+									"asset" : "stop_record",
+									"h" : 10,
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"h" : 100,
+								"id" : "stoprec",
+								"visible" : false,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}, {
+								"shape" : [{
+										"fill" : "gray",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 36,
+										"y" : 37
+									}, {
+										"event" : {
+											"action" : [{
+													"asset" : "current_rec",
+													"command" : "TOGGLEPLAY",
+													"type" : "command"
+												}, {
+													"asset" : "recorder",
+													"command" : "hide",
+													"type" : "command"
+												}, {
+													"asset" : "playback",
+													"command" : "hide",
+													"type" : "command"
+												}, {
+													"asset" : "startrec",
+													"command" : "show",
+													"type" : "command"
+												}
+											],
+											"type" : "click"
+										},
+										"fill" : "#34e941",
+										"h" : 20,
+										"type" : "roundrect",
+										"w" : 30,
+										"x" : 35,
+										"y" : 35
+									}
+								],
+								"image" : {
+									"asset" : "icon_sound",
+									"h" : 10,
+									"id" : "story_audio_button",
+									"w" : 6,
+									"x" : 38,
+									"y" : 40
+								},
+								"text" : {
+									"color" : "darkgreen",
+									"font" : "sans-serif",
+									"fontsize" : 50,
+									"h" : 5,
+									"w" : 20,
+									"x" : 47,
+									"y" : 43,
+									"__text" : "Play"
+								},
+								"h" : 100,
+								"id" : "playback",
+								"visible" : false,
+								"w" : 100,
+								"x" : 0,
+								"y" : 0
+							}
+						],
+						"h" : 100,
+						"id" : "recorder",
+						"z-index" : 200,
+						"visible" : false,
+						"w" : 100,
+						"x" : 0,
+						"y" : 0
+					}
+				],
+				"appEvents" : {
+					"list" : "rec_started,rec_start_fail,rec_stopped,rec_stop_failed"
+				}
+			}, {
+				"id" : "scene7b2e5492-b134-4945-9cde-803a094fb430",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "next",
+						"value" : "scenebcf88b7f-db7c-425b-bcb8-ba2cb207ea69"
+					}, {
+						"name" : "previous",
+						"value" : "recordAudio7"
+					}
+				],
+				"events" : {
+					"event" : [{
+							"action" : {
+								"type" : "command",
+								"command" : "play",
+								"asset" : "domain_10713",
+								"loop" : 1
+							},
+							"type" : "enter"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "stop",
+								"asset" : "domain_10713",
+								"loop" : 1
+							},
+							"type" : "exit"
+						}
+					]
+				},
+				"image" : [{
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 500
+							},
+							"type" : "click"
+						},
+						"asset" : "next",
+						"x" : 93,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "next",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "previous",
+								"effect" : "fadein",
+								"direction" : "right",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"asset" : "previous",
+						"x" : 2,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "previous",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}
+				],
+				"text" : [{
+						"x" : 29.444444444444446,
+						"y" : 7.333333333333333,
+						"w" : 48.61111111111111,
+						"h" : 13.982222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "कठिन शब्द",
+						"weight" : "bold",
+						"font" : "Helvetica",
+						"color" : "#000000",
+						"fontstyle" : "",
+						"fontsize" : 128,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 2
+					}, {
+						"x" : 18.88888888888889,
+						"y" : 25.555555555555554,
+						"w" : 48.61111111111111,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "उन्हें",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "#000000",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 3
+					}, {
+						"x" : 63.47222222222222,
+						"y" : 24.88888888888889,
+						"w" : 48.61111111111111,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "बिल्लियाँ",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "#000000",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 4
+					}, {
+						"x" : 18.055555555555554,
+						"y" : 44.44444444444444,
+						"w" : 48.61111111111111,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "बन्दर",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "#000000",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 6
+					}, {
+						"x" : 65.83333333333333,
+						"y" : 44,
+						"w" : 48.61111111111111,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "झगड़ने",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "#000000",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 8
+					}, {
+						"x" : 16.666666666666664,
+						"y" : 65.77777777777779,
+						"w" : 48.61111111111111,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : " तोड़कर",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "#000000",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 11
+					}, {
+						"x" : 67.5,
+						"y" : 65.55555555555556,
+						"w" : 48.61111111111111,
+						"h" : 9.322222222222223,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "दोनों",
+						"weight" : "normal",
+						"font" : "Helvetica",
+						"color" : "#000000",
+						"fontstyle" : "",
+						"fontsize" : 85,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 12
+					}
+				],
+				"shape" : [],
+				"hotspot" : [{
+						"x" : 63.47222222222222,
+						"y" : 24,
+						"w" : 14.027777777777779,
+						"h" : 7.555555555555555,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_10723"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 0
+					}, {
+						"x" : 18.541666666666668,
+						"y" : 24,
+						"w" : 7.638888888888889,
+						"h" : 9.11111111111111,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_10721"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 1
+					}, {
+						"x" : 17.77777777777778,
+						"y" : 45.111111111111114,
+						"w" : 9.583333333333334,
+						"h" : 6.444444444444445,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_10724"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 5
+					}, {
+						"x" : 65.41666666666667,
+						"y" : 42.44444444444444,
+						"w" : 12.916666666666668,
+						"h" : 9.555555555555555,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_10733"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 7
+					}, {
+						"x" : 17.5,
+						"y" : 64.44444444444444,
+						"w" : 13.88888888888889,
+						"h" : 9.333333333333334,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_10729"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 9
+					}, {
+						"x" : 67.08333333333333,
+						"y" : 64.44444444444444,
+						"w" : 8.61111111111111,
+						"h" : 8.444444444444445,
+						"visible" : true,
+						"editable" : true,
+						"type" : "roundrect",
+						"radius" : 1,
+						"fill" : "red",
+						"stroke-width" : 1,
+						"keyword" : "",
+						"event" : [{
+								"action" : {
+									"type" : "command",
+									"command" : "play",
+									"asset" : "domain_10727"
+								},
+								"type" : "click"
+							}
+						],
+						"hitArea" : true,
+						"z-index" : 10
+					}
+				],
+				"embed" : [],
+				"div" : [],
+				"audio" : [{
+						"asset" : "domain_10713"
+					}, {
+						"asset" : "domain_10719"
+					}, {
+						"asset" : "domain_10721"
+					}, {
+						"asset" : "domain_10723"
+					}, {
+						"asset" : "domain_10724"
+					}, {
+						"asset" : "domain_10727"
+					}, {
+						"asset" : "domain_10729"
+					}, {
+						"asset" : "domain_10733"
+					}
+				],
+				"scribble" : [],
+				"g" : []
+			}, {
+				"id" : "scenebcf88b7f-db7c-425b-bcb8-ba2cb207ea69",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "next",
+						"value" : "scene5de719ed-207c-4f01-a7e8-e1eb4abf77ed"
+					}, {
+						"name" : "previous",
+						"value" : "scene7b2e5492-b134-4945-9cde-803a094fb430"
+					}
+				],
+				"events" : {
+					"event" : []
+				},
+				"image" : [{
+						"x" : 26.805555555555554,
+						"y" : 21.91333333333333,
+						"w" : 45.9375,
+						"h" : 73.5,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "domain_4228",
+						"z-index" : 0
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 500
+							},
+							"type" : "click"
+						},
+						"asset" : "next",
+						"x" : 93,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "next",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "previous",
+								"effect" : "fadein",
+								"direction" : "right",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"asset" : "previous",
+						"x" : 2,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "previous",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}
+				],
+				"text" : [{
+						"x" : 30.694444444444446,
+						"y" : 9.777777777777779,
+						"w" : 48.61111111111111,
+						"h" : 12.817777777777778,
+						"visible" : true,
+						"editable" : true,
+						"__text" : "सवाल - जवाब",
+						"weight" : "bold",
+						"font" : "Helvetica",
+						"color" : "#000000",
+						"fontstyle" : "",
+						"fontsize" : 117,
+						"lineHeight" : 1.3,
+						"align" : "left",
+						"z-index" : 1
+					}
+				],
+				"shape" : [],
+				"hotspot" : [],
+				"embed" : [],
+				"div" : [],
+				"audio" : [],
+				"scribble" : [],
+				"g" : []
+			}, {
+				"id" : "scene5de719ed-207c-4f01-a7e8-e1eb4abf77ed",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "next",
+						"value" : "scene185d692a-1841-4a35-96c1-67cebcde42a2"
+					}, {
+						"name" : "previous",
+						"value" : "scenebcf88b7f-db7c-425b-bcb8-ba2cb207ea69"
+					}
+				],
+				"events" : {
+					"event" : [{
+							"action" : {
+								"type" : "command",
+								"command" : "play",
+								"asset" : "domain_10511",
+								"loop" : 1
+							},
+							"type" : "enter"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "stop",
+								"asset" : "domain_10511",
+								"loop" : 1
+							},
+							"type" : "exit"
+						}, {
+							"action" : [{
+									"type" : "command",
+									"command" : "play",
+									"asset" : "retry_audio"
+								}, {
+									"type" : "command",
+									"command" : "show",
+									"asset" : "retryDialog"
+								}, {
+									"tween" : {
+										"to" : {
+											"ease" : "bounceOut ",
+											"duration" : 1500,
+											"__cdata" : {
+												"x" : 20,
+												"y" : 20,
+												"w" : 40,
+												"h" : 30
+											}
+										},
+										"id" : "retryShowAnim"
+									},
+									"type" : "animation",
+									"asset" : "retryDialog"
+								}
+							],
+							"type" : "wrong_response"
+						}, {
+							"action" : [{
+									"type" : "command",
+									"command" : "play",
+									"asset" : "goodjob_audio"
+								}, {
+									"type" : "command",
+									"command" : "show",
+									"asset" : "goodjobDialog"
+								}, {
+									"tween" : {
+										"to" : {
+											"ease" : "bounceOut",
+											"duration" : 1500,
+											"__cdata" : {
+												"x" : 20,
+												"y" : 20,
+												"w" : 40,
+												"h" : 30
+											}
+										},
+										"id" : "gjShowAnim"
+									},
+									"type" : "animation",
+									"asset" : "goodjobDialog"
+								}
+							],
+							"type" : "correct_response"
+						}
+					]
+				},
+				"image" : [{
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 500
+							},
+							"type" : "click"
+						},
+						"asset" : "next",
+						"x" : 93,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "next",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "previous",
+								"effect" : "fadein",
+								"direction" : "right",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"asset" : "previous",
+						"x" : 2,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "previous",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : [{
+									"type" : "command",
+									"command" : "eval",
+									"asset" : "scene5de719ed-207c-4f01-a7e8-e1eb4abf77ed",
+									"success" : "correct_response",
+									"failure" : "wrong_response"
+								}, {
+									"type" : "command",
+									"command" : "HIDEHTMLELEMENTS",
+									"asset" : "scene5de719ed-207c-4f01-a7e8-e1eb4abf77ed"
+								}
+							],
+							"type" : "click"
+						},
+						"asset" : "validate",
+						"x" : 91,
+						"y" : 15,
+						"h" : 15
+					}
+				],
+				"text" : [],
+				"shape" : [],
+				"hotspot" : [],
+				"embed" : [],
+				"div" : [],
+				"audio" : [{
+						"asset" : "domain_10511"
+					}
+				],
+				"scribble" : [],
+				"g" : [{
+						"embed" : {
+							"template" : "item",
+							"var-item" : "item"
+						},
+						"x" : 10,
+						"y" : 0,
+						"w" : 80,
+						"h" : 90
+					}, {
+						"embed" : {
+							"template-name" : "retry"
+						},
+						"x" : 30,
+						"y" : -40,
+						"w" : 40,
+						"h" : 48,
+						"id" : "retryDialog",
+						"visible" : false
+					}, {
+						"embed" : {
+							"template-name" : "goodjob"
+						},
+						"x" : 30,
+						"y" : -40,
+						"w" : 40,
+						"h" : 48,
+						"id" : "goodjobDialog",
+						"visible" : false
+					}
+				],
+				"iterate" : "assessment_5de719ed-207c-4f01-a7e8-e1eb4abf77ed",
+				"preload" : true,
+				"var" : "item",
+				"appEvents" : {
+					"list" : "next_item,correct_response,wrong_response"
+				}
+			}, {
+				"id" : "scene185d692a-1841-4a35-96c1-67cebcde42a2",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "next",
+						"value" : "scenea3cc8a52-833a-4a9d-b6e6-3be6b266b70f"
+					}, {
+						"name" : "previous",
+						"value" : "scene5de719ed-207c-4f01-a7e8-e1eb4abf77ed"
+					}
+				],
+				"events" : {
+					"event" : [{
+							"action" : {
+								"type" : "command",
+								"command" : "play",
+								"asset" : "domain_11825",
+								"loop" : 1
+							},
+							"type" : "enter"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "stop",
+								"asset" : "domain_11825",
+								"loop" : 1
+							},
+							"type" : "exit"
+						}, {
+							"action" : [{
+									"type" : "command",
+									"command" : "play",
+									"asset" : "retry_audio"
+								}, {
+									"type" : "command",
+									"command" : "show",
+									"asset" : "retryDialog"
+								}, {
+									"tween" : {
+										"to" : {
+											"ease" : "bounceOut ",
+											"duration" : 1500,
+											"__cdata" : {
+												"x" : 20,
+												"y" : 20,
+												"w" : 40,
+												"h" : 30
+											}
+										},
+										"id" : "retryShowAnim"
+									},
+									"type" : "animation",
+									"asset" : "retryDialog"
+								}
+							],
+							"type" : "wrong_response"
+						}, {
+							"action" : [{
+									"type" : "command",
+									"command" : "play",
+									"asset" : "goodjob_audio"
+								}, {
+									"type" : "command",
+									"command" : "show",
+									"asset" : "goodjobDialog"
+								}, {
+									"tween" : {
+										"to" : {
+											"ease" : "bounceOut",
+											"duration" : 1500,
+											"__cdata" : {
+												"x" : 20,
+												"y" : 20,
+												"w" : 40,
+												"h" : 30
+											}
+										},
+										"id" : "gjShowAnim"
+									},
+									"type" : "animation",
+									"asset" : "goodjobDialog"
+								}
+							],
+							"type" : "correct_response"
+						}
+					]
+				},
+				"image" : [{
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 500
+							},
+							"type" : "click"
+						},
+						"asset" : "next",
+						"x" : 93,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "next",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "previous",
+								"effect" : "fadein",
+								"direction" : "right",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"asset" : "previous",
+						"x" : 2,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "previous",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : [{
+									"type" : "command",
+									"command" : "eval",
+									"asset" : "scene185d692a-1841-4a35-96c1-67cebcde42a2",
+									"success" : "correct_response",
+									"failure" : "wrong_response"
+								}, {
+									"type" : "command",
+									"command" : "HIDEHTMLELEMENTS",
+									"asset" : "scene185d692a-1841-4a35-96c1-67cebcde42a2"
+								}
+							],
+							"type" : "click"
+						},
+						"asset" : "validate",
+						"x" : 91,
+						"y" : 15,
+						"h" : 15
+					}
+				],
+				"text" : [],
+				"shape" : [],
+				"hotspot" : [],
+				"embed" : [],
+				"div" : [],
+				"audio" : [{
+						"asset" : "domain_11825"
+					}
+				],
+				"scribble" : [],
+				"g" : [{
+						"embed" : {
+							"template" : "item",
+							"var-item" : "item"
+						},
+						"x" : 10,
+						"y" : 0,
+						"w" : 80,
+						"h" : 90
+					}, {
+						"embed" : {
+							"template-name" : "retry"
+						},
+						"x" : 30,
+						"y" : -40,
+						"w" : 40,
+						"h" : 48,
+						"id" : "retryDialog",
+						"visible" : false
+					}, {
+						"embed" : {
+							"template-name" : "goodjob"
+						},
+						"x" : 30,
+						"y" : -40,
+						"w" : 40,
+						"h" : 48,
+						"id" : "goodjobDialog",
+						"visible" : false
+					}
+				],
+				"iterate" : "assessment_185d692a-1841-4a35-96c1-67cebcde42a2",
+				"preload" : true,
+				"var" : "item",
+				"appEvents" : {
+					"list" : "next_item,correct_response,wrong_response"
+				}
+			}, {
+				"id" : "scenea3cc8a52-833a-4a9d-b6e6-3be6b266b70f",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "next",
+						"value" : "endScreen"
+					}, {
+						"name" : "previous",
+						"value" : "scene185d692a-1841-4a35-96c1-67cebcde42a2"
+					}
+				],
+				"events" : {
+					"event" : [{
+							"action" : {
+								"type" : "command",
+								"command" : "play",
+								"asset" : "domain_8313",
+								"loop" : 1
+							},
+							"type" : "enter"
+						}, {
+							"action" : {
+								"type" : "command",
+								"command" : "stop",
+								"asset" : "domain_8313",
+								"loop" : 1
+							},
+							"type" : "exit"
+						}, {
+							"action" : [{
+									"type" : "command",
+									"command" : "play",
+									"asset" : "retry_audio"
+								}, {
+									"type" : "command",
+									"command" : "show",
+									"asset" : "retryDialog"
+								}, {
+									"tween" : {
+										"to" : {
+											"ease" : "bounceOut ",
+											"duration" : 1500,
+											"__cdata" : {
+												"x" : 20,
+												"y" : 20,
+												"w" : 40,
+												"h" : 30
+											}
+										},
+										"id" : "retryShowAnim"
+									},
+									"type" : "animation",
+									"asset" : "retryDialog"
+								}
+							],
+							"type" : "wrong_response"
+						}, {
+							"action" : [{
+									"type" : "command",
+									"command" : "play",
+									"asset" : "goodjob_audio"
+								}, {
+									"type" : "command",
+									"command" : "show",
+									"asset" : "goodjobDialog"
+								}, {
+									"tween" : {
+										"to" : {
+											"ease" : "bounceOut",
+											"duration" : 1500,
+											"__cdata" : {
+												"x" : 20,
+												"y" : 20,
+												"w" : 40,
+												"h" : 30
+											}
+										},
+										"id" : "gjShowAnim"
+									},
+									"type" : "animation",
+									"asset" : "goodjobDialog"
+								}
+							],
+							"type" : "correct_response"
+						}
+					]
+				},
+				"image" : [{
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "next",
+								"effect" : "fadein",
+								"direction" : "left",
+								"ease" : "linear",
+								"duration" : 500
+							},
+							"type" : "click"
+						},
+						"asset" : "next",
+						"x" : 93,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "next",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "previous",
+								"effect" : "fadein",
+								"direction" : "right",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"asset" : "previous",
+						"x" : 2,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "previous",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}, {
+						"event" : {
+							"action" : [{
+									"type" : "command",
+									"command" : "eval",
+									"asset" : "scenea3cc8a52-833a-4a9d-b6e6-3be6b266b70f",
+									"success" : "correct_response",
+									"failure" : "wrong_response"
+								}, {
+									"type" : "command",
+									"command" : "HIDEHTMLELEMENTS",
+									"asset" : "scenea3cc8a52-833a-4a9d-b6e6-3be6b266b70f"
+								}
+							],
+							"type" : "click"
+						},
+						"asset" : "validate",
+						"x" : 91,
+						"y" : 15,
+						"h" : 15
+					}
+				],
+				"text" : [],
+				"shape" : [],
+				"hotspot" : [],
+				"embed" : [],
+				"div" : [],
+				"audio" : [{
+						"asset" : "domain_8313"
+					}
+				],
+				"scribble" : [],
+				"g" : [{
+						"embed" : {
+							"template" : "item",
+							"var-item" : "item"
+						},
+						"x" : 10,
+						"y" : 0,
+						"w" : 80,
+						"h" : 90
+					}, {
+						"embed" : {
+							"template-name" : "retry"
+						},
+						"x" : 30,
+						"y" : -40,
+						"w" : 40,
+						"h" : 48,
+						"id" : "retryDialog",
+						"visible" : false
+					}, {
+						"embed" : {
+							"template-name" : "goodjob"
+						},
+						"x" : 30,
+						"y" : -40,
+						"w" : 40,
+						"h" : 48,
+						"id" : "goodjobDialog",
+						"visible" : false
+					}
+				],
+				"iterate" : "assessment_a3cc8a52-833a-4a9d-b6e6-3be6b266b70f",
+				"preload" : true,
+				"var" : "item",
+				"appEvents" : {
+					"list" : "next_item,correct_response,wrong_response"
+				}
+			}, {
+				"id" : "endScreen",
+				"x" : 0,
+				"y" : 0,
+				"w" : 100,
+				"h" : 100,
+				"param" : [{
+						"name" : "previousScreen",
+						"value" : "recordAudio9"
+					}, {
+						"name" : "nextScreen",
+						"value" : "splash"
+					}, {
+						"name" : "previous",
+						"value" : "scenea3cc8a52-833a-4a9d-b6e6-3be6b266b70f"
+					}
+				],
+				"events" : {
+					"event" : []
+				},
+				"image" : [{
+						"x" : 0,
+						"y" : 0,
+						"w" : 100,
+						"h" : 100,
+						"visible" : true,
+						"editable" : true,
+						"asset" : "endScreen",
+						"z-index" : 0
+					}, {
+						"x" : 40,
+						"y" : 50,
+						"w" : 8,
+						"h" : 13,
+						"visible" : false,
+						"editable" : true,
+						"asset" : "previous",
+						"event" : {
+							"action" : {
+								"asset" : "theme",
+								"command" : "transitionTo",
+								"direction" : "right",
+								"duration" : 600,
+								"ease" : "linear",
+								"effect" : "scroll",
+								"param" : "previousScreen",
+								"type" : "command"
+							},
+							"type" : "click"
+						},
+						"z-index" : 1
+					}, {
+						"x" : 50,
+						"y" : 50,
+						"w" : 8,
+						"h" : 13,
+						"visible" : false,
+						"editable" : true,
+						"asset" : "next",
+						"event" : {
+							"action" : {
+								"asset" : "theme",
+								"command" : "transitionTo",
+								"direction" : "right",
+								"duration" : 600,
+								"ease" : "linear",
+								"effect" : "scroll",
+								"param" : "nextScreen",
+								"type" : "command"
+							},
+							"type" : "click"
+						},
+						"z-index" : 2
+					}, {
+						"event" : {
+							"action" : {
+								"type" : "command",
+								"command" : "transitionTo",
+								"asset" : "theme",
+								"param" : "previous",
+								"effect" : "fadein",
+								"direction" : "right",
+								"ease" : "linear",
+								"duration" : 100
+							},
+							"type" : "click"
+						},
+						"asset" : "previous",
+						"x" : 2,
+						"y" : 3,
+						"w" : 5,
+						"h" : 8.3,
+						"id" : "previous",
+						"visible" : true,
+						"editable" : true,
+						"z-index" : 100
+					}
+				],
+				"text" : [],
+				"shape" : [],
+				"hotspot" : [],
+				"embed" : [],
+				"div" : [],
+				"audio" : [],
+				"scribble" : [],
+				"g" : []
+			}
+		]
+	}
+}
