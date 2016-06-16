@@ -54,6 +54,7 @@ function reloadStage() {
             asset: Renderer.theme._currentStage
         });
     }, 500);
+    TelemetryService.interact("TOUCH", "gc_reload", "TOUCH", {stageId : Renderer.theme._currentStage});
 }
 
 function enableReload() {
