@@ -154,6 +154,8 @@ var ThemePlugin = Plugin.extend({
         childPlugin.setIndex(nextIdx);
     },
     replaceStage: function(stageId, effect) {
+        this._self.clear();
+        this._self.removeAllChildren();
         this.disableInputs();
         this.inputs = [];
         this.removeHtmlElements();
