@@ -3,8 +3,10 @@ angular.module('genie-canvas.template',[])
     $rootScope.showMessage = false;
     $rootScope.pageId = "coverpage";
     $rootScope.content;
+    $scope.showPage = true;
 
     $scope.playContent = function(content) {
+        $scope.showPage = false;
         $state.go('playContent', {
             'itemId': content.identifier
         });
@@ -43,6 +45,7 @@ angular.module('genie-canvas.template',[])
     }
     
     $scope.init = function(){
+        $scope.showPage = true;
         if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
             if( (webview == "true")){
                 if(content.metadata && (content.metadata.mimeType != COLLECTION_MIMETYPE)){
