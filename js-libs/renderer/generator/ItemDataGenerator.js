@@ -22,13 +22,16 @@ var ItemDataGenerator = {
 			var item_sets = data.item_sets;
 			var items = data.items;
 			var shuffle = true;
+			var optionShuffle = true;
 			if (typeof data.shuffle != 'undefined')
 				shuffle = data.shuffle;
+			if (typeof data.optionShuffle != 'undefined')
+				optionShuffle = data.optionShuffle;
 			if (item_sets && items) {
 				var cumulativeIndex = 0; // How many questions have been there before this set
 				item_sets.forEach(function(map, setidx) {
 					if (items[map.id]) {
-						list = ItemDataGenerator._addItems(map.id, map.count, items, list, shuffle, cumulativeIndex);
+						list = ItemDataGenerator._addItems(map.id, map.count, items, list, shuffle, optionShuffle, cumulativeIndex);
 						cumulativeIndex += items[map.id].length;
 					}
 					 // Next iteration will have these many questions
@@ -40,7 +43,7 @@ var ItemDataGenerator = {
     	}
 		return list;
 	},
-	_addItems: function(id, count, items, list, shuffle, cumulativeIndex) {
+	_addItems: function(id, count, items, list, shuffle, optionShuffle, cumulativeIndex) {
 		var set = items[id];
 		if (_.isArray(set)) {
 			var indexArr = [];
@@ -65,6 +68,10 @@ var ItemDataGenerator = {
 					pick[i] = set[indexArr[i]];
 					qindex = i; // When not shuffling, the iterator is the index
 				}
+
+				// Shuffles the options if given "optionShuffle": false
+				if (optionShuffle)
+					set[i].options = _.shuffle(set[i].options);
 
 				// Set the qindex value on the item
 				pick[i].qindex = (cumulativeIndex + qindex + 1);
