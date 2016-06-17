@@ -2,12 +2,10 @@ LoadByStageStrategy = Class.extend({
     assetMap: {},
     spriteSheetMap: {},
     commonAssets: [],
-    commonAssetsLoaded: false,
     templateAssets: [],
     loaders: {},
     commonLoader: undefined,
     templateLoader: undefined,
-    assetLoadTimeout: undefined,
     stageManifests: {},
     init: function(themeData, basePath) {
         //console.info('createjs.CordovaAudioPlugin.isSupported()', createjs.CordovaAudioPlugin.isSupported());
@@ -170,36 +168,12 @@ LoadByStageStrategy = Class.extend({
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);
     },
     loadStage: function(stageId, cb) {
-        console.log("Common assets loaded: ", this.commonLoader.loaded, " stageId: ", stageId );     
-        this.waitToLoadAssets(stageId, cb);
-    },
-    waitToLoadAssets: function(stageId, cb){
-        //Wait till all common assets get loaded
-        var instance = this;
-        if(this.commonAssetsLoaded){
-            //Assets loaded, start stage rendering now
-            instance.loadStageNow(stageId, cb);
-            return;
-        }
-        instance.assetLoadTimeout = setTimeout(function(){
-            //Assets are not yet loaded
-            clearTimeout(instance.assetLoadTimeout);
-            instance.waitToLoadAssets(stageId, cb);
-        }, 400, instance, stageId, cb);
-    },
-    loadStageNow: function(stageId, cb){
         var instance = this;
         if (!instance.loaders[stageId]) {
-        var manifestObj = instance.stageManifests[stageId];
-        var manifestStr = JSON.stringify(manifestObj);
-        if(_.isUndefined(manifestStr)){
-            instance.loadStageNow(stageId, cb);
-        }   
-
-        var manifest = JSON.parse(manifestStr);
+            var manifest = JSON.parse(JSON.stringify(instance.stageManifests[stageId]));
             if (_.isArray(manifest) && manifest.length > 0) {
                 var loader = this._createLoader();
-                loader.setMaxConnections(manifestObj.length);
+                loader.setMaxConnections(instance.stageManifests[stageId].length);
                 if (cb) {
                     loader.addEventListener("complete", cb);
                 }
@@ -221,15 +195,10 @@ LoadByStageStrategy = Class.extend({
         }                
     },
     loadCommonAssets: function() {
-        var instance = this;
         var loader = this._createLoader();
         loader.setMaxConnections(this.commonAssets.length);
         loader.installPlugin(createjs.Sound);
         loader.loadManifest(this.commonAssets, true);
-        loader.on("complete", function(){
-            console.log("Common assets loaded.. ");
-            instance.commonAssetsLoaded = true;
-        }, instance);
         this.commonLoader = loader;
     },
     loadTemplateAssets: function() {
