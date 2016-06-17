@@ -32,26 +32,11 @@ OverlayHtml = {
     },
     sceneEnter: function() {
         this.resetStage();
+        enablePrevious();
+        enableReload();
         var isItemStage = this.isItemScene();
-        var queue = new createjs.LoadQueue();
-        createjs.Sound.alternateExtensions = ["ogg"];
-        queue.installPlugin(createjs.Sound);
-
-        function handleComplete(event) {
-            console.log("preload the audio:");
-        }
-        queue.addEventListener("complete", handleComplete);
-        queue.loadManifest([{
-            id: "good",
-            src: "./img/icons/goodjob.mp3"
-        }, {
-            id: "try",
-            src: "./img/icons/letstryagain.mp3"
-        }]);
-
         if (isItemStage) {
             jQuery('#assessButton').show();
-
             this._setRootScope("isItemScene", true);
 
             var currentScene = Renderer.theme._currentScene;
@@ -59,14 +44,14 @@ OverlayHtml = {
                 console.log("listener for ", event);
 
                 if (event.type === "correct_answer") {
-                    createjs.Sound.play("good");
+                    AudioManager.play({asset: "goodjob_sound"});
                 }
                 jQuery("#goodJobPopup").show();
             });
             currentScene.on("wrong_answer", function(event) {
                 console.info("listener for ", event);
                 if (event.type === "wrong_answer") {
-                    createjs.Sound.play("try");
+                    AudioManager.play({asset: "tryagain_sound"});
                 }
                 jQuery("#tryAgainPopup").show();
             });
@@ -74,11 +59,12 @@ OverlayHtml = {
     },
     isItemScene: function() {
         var stageCtrl = Renderer.theme._currentScene._stageController;
-        if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type)) {
+        if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type) && !_.isUndefined(stageCtrl._model)) {
             var modelItem = stageCtrl._model[stageCtrl._index];
             // If FTB item, enable submit button directly
             if(!_.isNull(this._rootScope)){
-                this._rootScope.enableEval = (modelItem && modelItem.type == 'ftb') ? true : false
+                var enableEval = (modelItem && modelItem.type == 'ftb') ? true : false;
+                this._setRootScope("enableEval", enableEval);
             }
             return true;
         } else {

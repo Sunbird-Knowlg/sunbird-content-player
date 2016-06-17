@@ -11,7 +11,7 @@ angular.module('genie-canvas.theme', [])
             "submit": "SUBMIT",
             "goodJob": "Good Job!",
             "tryAgain": "Aww,  Seems you goofed it!",
-            "whatWeDoNext": "What we do next",
+            "whatWeDoNext": "What should we do next?",
             "image": "Image",
             "voice": "Voice",
             "audio": "Audio",
@@ -52,15 +52,13 @@ angular.module('genie-canvas.theme', [])
                 if ($rootScope.collection && $rootScope.collection.children) {
                     isCollection = $rootScope.collection.children.length > 0 ? true : false;
                 }
-                scope.imgSrc = (isCollection == false) ? "home_icon.png" : "home_icon_disabled.png";
+                scope.imgSrc = (isCollection == true) ? "home_icon.png" : "home_icon_disabled.png";
                 var pageId = $rootScope.pageId;
                 scope.goToHome = function() {
                     if (isCollection) {
                         goToHome($state, isCollection, GlobalContext.previousContentId, pageId);
                     }
-
                 }
-
             }
         }
     })
@@ -113,18 +111,22 @@ angular.module('genie-canvas.theme', [])
     .directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img ng-src="{{imageBasePath}}{{mutestatus}}" style="position:absolute;bottom:16%; width:10%;  margin-left:41%; z-index:1; " /><img ng-src="{{imageBasePath}}{{unmute}}" style="position:absolute;  bottom: 16%; width:12%; margin-left:40%; z-index: 2; "/> </a>',
+            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position:absolute;bottom:16%; width:10%;  margin-left:41%; z-index:1; " /><img id="unmute_id"  style="position:absolute;  bottom: 15.6%; width:11.7%; margin-left:40%; z-index: 2; visibility:"hidden" "/> </a>',
             link: function(scope, url) {
                 scope.mutestatus = "mute.png";
-                /* scope.textstatus = "Mute";*/
 
                 scope.mute = function() {
                     //mute function goes here
-                    createjs.Sound.muted = !createjs.Sound.muted;
+                    if (AudioManager.muted) {
+                        AudioManager.unmute();
+                        document.getElementById("unmute_id").style.visibility = "hidden"
+                    } else {
+                        AudioManager.mute();
+                        document.getElementById("unmute_id").src = "img/icons/unmute.png";
+                        document.getElementById("unmute_id").style.visibility = "visible"
+                    }
 
-                    scope.unmute = (createjs.Sound.muted == true) ? "unmute.png" : scope.mutestatus;
 
-                    /*scope.textstatus = (createjs.Sound.muted == true) ? "Mute" : "Unmute";*/
                 }
             }
         }
@@ -138,8 +140,9 @@ angular.module('genie-canvas.theme', [])
     .directive('reloadStage', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="reloadStage()"><img src="{{imageBasePath}}speaker_icon.png" style="width:100%;" /></a>'
+            template: '<a href="javascript:void(0)" onclick="reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
         }
+
     })
     .directive('navigate', function($rootScope) {
         return {
@@ -179,6 +182,7 @@ angular.module('genie-canvas.theme', [])
             link: function(scope, element) {
                 scope.icons = $rootScope.icons;
                 scope.languageSupport = $rootScope.languageSupport;
+                scope.content = $rootScope.content;
                 element.bind("popupUpdate", function(event, data) {
                     if (data) {
                         for (key in data) {
@@ -190,15 +194,24 @@ angular.module('genie-canvas.theme', [])
                 element.find("div.popup-full-body").html();
                 element.find("div.popup-full-body").append(body);
                 element.hide();
+                scope.retryAssessment = function(id){
+                    submitOnNextClick = true;
+                    scope.hidePopup(id);
+                }
+
                 scope.hidePopup = function(id) {
                     element.hide();
                     TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
                         stageId: ($rootScope.pageId == "endpage" ? "endpage" : Renderer.theme._currentStage)
                     });
                 };
+
+                scope.moveToNextStage = function(navType){
+                    submitOnNextClick = false;
+                    navigate(navType);
+                }
             }
         }
-
     })
     .directive('assess', function($rootScope) {
         return {
@@ -210,7 +223,7 @@ angular.module('genie-canvas.theme', [])
             link: function(scope, element) {
                 scope.labelSubmit = $rootScope.languageSupport.submit;
             },
-            controller: function($scope, $rootScope) {
+            controller: function($scope, $rootScope, $timeout) {
                 $scope.isEnabled = false;
                 $scope.assessStyle = 'assess-disable';
 
@@ -219,27 +232,21 @@ angular.module('genie-canvas.theme', [])
                     $scope.isEnabled = $rootScope.enableEval;
                     if ($scope.isEnabled) {
                         //Enable state
-                        $scope.assessStyle = 'assess-enable';
-                        $scope.image = $rootScope.imageBasePath + "submit.png";
+                        $timeout(function(){
+                            // This timeout is required to apply the changes(because it is calling by JS)
+                            $scope.assessStyle = 'assess-enable';
+                            $scope.image = $rootScope.imageBasePath + "submit.png";
+                        }, 100);
                     } else {
                         //Disable state
                         $scope.assessStyle = 'assess-disable';
                         $scope.image = $rootScope.imageBasePath + "submit_disabled.png";
                     }
                 });
-                
-                $scope.onSubmit = function() {
+
+                 $scope.onSubmit = function() {
                     if ($scope.isEnabled) {
-                        //If any one option is selected, then only allow user to submit
-                        var action = {
-                            "type": "command",
-                            "command": "eval",
-                            "asset": Renderer.theme._currentStage
-                        };
-                        action.htmlEval = "true";
-                        action.success = "correct_answer";
-                        action.failure = "wrong_answer";
-                        CommandManager.handle(action);
+                        evalAndSubmit();
                     }
                 }
             }
@@ -251,8 +258,11 @@ angular.module('genie-canvas.theme', [])
 
         $scope.init = function() {
             if (GlobalContext.config.language_info) {
-                console.log("Lanugae updated", GlobalContext.config.language_info)
-                $rootScope.languageSupport = JSON.parse(GlobalContext.config.language_info);
+                console.log("Language updated", GlobalContext.config.language_info);
+                var languageInfo = JSON.parse(GlobalContext.config.language_info);
+                for(key in languageInfo) {
+                    $rootScope.languageSupport[key] = languageInfo[key];
+                }
             }
         }
         $rootScope.icons = {
@@ -272,7 +282,7 @@ angular.module('genie-canvas.theme', [])
             /* popup: {
             background: $rootScope.imageBasePath + "popup_BG.png",
             close: $rootScope.imageBasePath + "cross_button.png"
-        },*/
+            },*/
             goodJob: {
                 background: $rootScope.imageBasePath + "good_job_bg.png"
             },
@@ -299,16 +309,14 @@ angular.module('genie-canvas.theme', [])
             popup_close: {
                 close_icon: $rootScope.imageBasePath + "close_popup.png",
             }
-
-
         };
 
         $scope.goodJob = {
-            body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><a href="javascript:void(0);" ng-click="hidePopup(\'gc_retry\')"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" onclick="navigate(\'next\')"/></a></div></div>'
+            body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><a href="javascript:void(0);" ng-click="hidePopup(\'gc_retry\')"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')"/></a></div></div>'
         };
 
         $scope.tryAgain = {
-            body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><a ng-click="hidePopup(\'gc_retry\')" href="javascript:void(0);" ><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><a href="javascript:void(0);" ng-click="hidePopup(\'gc_retry\')"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" onclick="navigate(\'next\')"/></a></div></div>'
+            body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><a ng-click="retryAssessment(\'gc_retry\')" href="javascript:void(0);" ><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><a href="javascript:void(0);" ng-click="hidePopup(\'gc_retry\')"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')"/></a></div></div>'
         };
 
         $scope.openMenu = function() {

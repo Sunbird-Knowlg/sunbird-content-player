@@ -17,41 +17,7 @@
 </style>
 
 <div style="width:100%;height:100%;">
-    <div>
-        <home style="position: absolute; width:30%; top:4%; left:3%"></home>
-        <genie style="position:absolute; width:30%; top:4%; right:3%; text-align: right;"></genie>
 
-        <a href="javascript:void(0)" ng-click="showCredits()" style="position:absolute; width: 9%; top: 4%; right: 15%;">
-            <img src="img/icons/credits_icon.png" style="width:100%;" />
-        </a>
-
-        <a class="end-license" href="javascript:void(0)" ng-click="showCredits()">
-            <img src="img/icons/ccby.png" style="width: 100%;" />
-        </a>
-
-        <div ng-if="showNextContent">
-            <a ng-show="showNextContent" class="next-module" href="javascript:void(0)" ng-click="playNextContent()" >
-                <img src="img/icons/next_icon.png" style="width:100%;" />
-            </a>
-
-            <div class="gc-restart-cont">
-                <p class="icon-font label-white-stoke">{{ languageSupport.whatWeDoNext }}?</p>
-                <restart class="gc-restart-btn"></restart>
-               <!--   -->
-            </div>
-        </div>
-
-        <div ng-if="!showNextContent">
-           
-            <div class="gc-restart-cont">
-                <p class="icon-font label-white-stoke">{{ languageSupport.whatWeDoNext }}?</p>
-                <restart class="gc-restart-btn-no-next-content"></restart>
-               <!--   -->
-            </div>
-        </div>
-
-    </div>
-    
     <div class="gc-endpage-title" >
         <div class="gc-endpage-title-cont">
             <p class="icon-font conver-page-title"  ng-if="content.name">{{content.name}}</p>
@@ -60,6 +26,30 @@
         <!-- <p class="icon-font label-white-stoke"  ng-if="content.name">{{content.name}}</p> -->
         <p class="gc-content-owner">{{ languageSupport.author }}: {{content.owner}}</p>
     </div>
+    
+    <div>
+        <home style="position: absolute; width:30%; top:4%; left:3%"></home>
+        <genie style="position:absolute; width:30%; top:4%; right:3%; text-align: right;"></genie>
+
+        <a href="javascript:void(0)" ng-click="showCredits()" style="position:absolute; width: 9%; top: 4%; right: 15%;">
+            <img src="img/icons/credits_icon.png" style="width:100%;" />
+        </a>
+
+        <a class="end-license">
+            <img src="img/icons/ccby.png" style="width: 100%;" />
+        </a>
+
+
+        <div class="gc-restart-cont">
+            <p class="icon-font label-white-stoke">{{ languageSupport.whatWeDoNext }}</p>s
+        </div>
+        <div style="position:absolute; width: 100%; top: 70%; text-align:center;">
+            <restart class="gc-restart-btn" ng-class="{'gc-restart-collection': showNextContent == true  }"></restart>               
+            <a ng-show="showNextContent" class="next-module" ng-class="{'next-module-pad': showNextContent == true }" href="javascript:void(0)" ng-click="playNextContent()" >
+                <img src="img/icons/next_icon.png" style="width:100%;" />
+            </a>                
+        </div>
+    
     <popup id="creditsPopup" popup-body="creditsBody"></popup>
     <image ng-src="{{icons.end.background}}" style="width:100%;height:100%;"/>
 </div>

@@ -23,12 +23,6 @@ var ScribblePlugin = Plugin.extend({
         this._self.addEventListener("pressup", this.handleMouseUp.bind(this), true);
         createjs.Ticker.setFPS(50);
 
-        // create paint brush
-        this.paintBrush = new createjs.Shape();
-        this.paintBrush.x = 0;
-        this.paintBrush.y = 0;
-        this._self.addChild(this.paintBrush);
-
         bgShape.graphics = new createjs.Graphics().beginFill(background).drawRect(0, 0, dims.w, dims.h);
         bgShape.alpha = data.opacity || 1;
         this._self.addChild(bgShape);
@@ -38,19 +32,28 @@ var ScribblePlugin = Plugin.extend({
         if (data.stroke) shapeData.shape.stroke = data.stroke;
         if (data["stroke-width"]) shapeData.shape["stroke-width"] = data["stroke-width"];
         this.invokeChildren(shapeData, this, this._stage, this._theme);
-        this.setBounderies();
+
+        // create paint brush
+        this.paintBrush = new createjs.Shape();
+        this.paintBrush.x = 0;
+        this.paintBrush.y = 0;
+        this._self.addChild(this.paintBrush);
     },
     setBounderies: function() {
+        if (this._startPoint && this._endPoint) 
+            return;
         var dims = this.relativeDims();
-        var x = dims.x + dims.w - 5;
-        var y = dims.y + dims.h - 5;
+        var startPoint = this._self.localToGlobal(0, 0);
+        this._startPoint = new createjs.Point(startPoint.x + 5, startPoint.y + 5);
+        var x = startPoint.x + dims.w - 5;
+        var y = startPoint.y + dims.h - 5;
         this._endPoint = new createjs.Point(x, y);
-        this._startPoint = new createjs.Point(dims.x + 5, dims.y + 5);
     },
     handleMouseDown: function(event) {
         if (!event.primary) {
             return;
         }
+        this.setBounderies();
         var mousePoint = Renderer.theme.mousePoint();
         mousePoint = this._self.globalToLocal(mousePoint.x, mousePoint.y);
         this._oldPt = new createjs.Point(mousePoint.x, mousePoint.y);
@@ -61,14 +64,14 @@ var ScribblePlugin = Plugin.extend({
             return;
         }
         var mousePoint = Renderer.theme.mousePoint();
-        mousePoint = this._self.globalToLocal(mousePoint.x, mousePoint.y);
         var thickness = this.isInt(this._data.thickness) ?  this._data.thickness : 3;
-        if (((event.stageX > this._startPoint.x) && (event.stageX < this._endPoint.x)) && ((event.stageY > this._startPoint.y) && (event.stageY < this._endPoint.y))) {
+        if (((mousePoint.x > this._startPoint.x) && (mousePoint.x < this._endPoint.x)) && ((mousePoint.y > this._startPoint.y) && (mousePoint.y < this._endPoint.y))) {
+            mousePoint = this._self.globalToLocal(mousePoint.x, mousePoint.y);
             this.paintBrush.graphics.setStrokeStyle(thickness, 'round').beginStroke(this._data.color || "#000");
             this.paintBrush.graphics.mt(this._oldPt.x, this._oldPt.y).lineTo(mousePoint.x + 1, mousePoint.y + 1);
             this._oldPt = { x: mousePoint.x, y: mousePoint.y };
+            Renderer.update = true;
         }
-        Renderer.update = true;
     },
     handleMouseUp: function(event) {
         if (!event.primary) {

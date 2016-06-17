@@ -58,6 +58,16 @@
     src: url('fonts/SKATERGIRLSROCK.TTF') format('truetype')
 }
 
+@font-face {
+    font-family: 'NotoSansRegular';
+    src: url('fonts/NotoSans-Regular.ttf') format('truetype')
+}
+
+@font-face {
+    font-family: 'baloobhai';
+    src: url('fonts/baloobhai.otf') format('opentype')
+}
+
 ion-popover-view.fit {
   height: auto !important;
   width: auto !important;
@@ -72,46 +82,46 @@ ion-popover-view.fit ion-content {
 }
 
 .menu-item {
-	font-size: 25px !important;
-	margin: -8px !important;
+    font-size: 25px !important;
+    margin: -8px !important;
     padding: 18px !important;
 }
 
 .clearList {
-	padding: 0px !important;
-	border: 0px !important;
-	box-shadow: none !important;
+    padding: 0px !important;
+    border: 0px !important;
+    box-shadow: none !important;
 }
 
 .noPad {
-	padding: 0px !important;
+    padding: 0px !important;
 }
 
 .noBorder {
-	border: 0px !important;
+    border: 0px !important;
 }
 
 .preview_posterImg {
-	max-height: 100px;
-	max-width: 100px;
+    max-height: 100px;
+    max-width: 100px;
 }
 
 .preview_txt {
-	font-family: 'flavours' !important;
+    font-family: 'flavours' !important;
 }
 
 .preview_description {
-	font-size: 1.25em !important;
-	color: #000 !important;
+    font-size: 1.25em !important;
+    color: #000 !important;
 }
 
 .preview_subtext {
-	font-family: 'flavours' !important;
-	margin: 0px !important;
+    font-family: 'flavours' !important;
+    margin: 0px !important;
 }
 
 .preview_button_bg {
-	background-image: url('../../img/icons/btn_play_selected.png');
+    background-image: url('../../img/icons/btn_play_selected.png');
     background-repeat: no-repeat;
     background-size: 140px 45px;
     padding-top: 13px;
@@ -122,18 +132,18 @@ ion-popover-view.fit ion-content {
 }
 
 .preview_button {
-	font-family: 'flavours';
-	font-size: 1.5em;
+    font-family: 'flavours';
+    font-size: 1.5em;
 }
 
 .preview_bottom_bg {
-	background-image: url('../../img/skin/bottom_bg.png');
-	height: 66px;
-	margin-top: 10px;
+    background-image: url('../../img/skin/bottom_bg.png');
+    height: 66px;
+    margin-top: 10px;
 }
 
 .worksheet_exit {
-	background: url(../assets/skin02/btn_close.png) no-repeat left bottom;
+    background: url(../assets/skin02/btn_close.png) no-repeat left bottom;
     background-size: 38px 38px;
     height: 38px;
     width: 38px;
@@ -152,7 +162,7 @@ ion-popover-view.fit ion-content {
 
 .conver-page-title
 {
-    font-family: SkaterGirlsRock;
+    font-family: baloobhai;
     position: absolute; 
     width: 100%; 
     top:20%;
@@ -180,7 +190,7 @@ ion-popover-view.fit ion-content {
 }
 
 .icon-font{
-    font-family: SkaterGirlsRock; 
+    font-family: baloobhai; 
     color: #01ac8a; 
     line-height: 1.2em;
     text-align: center;
@@ -298,6 +308,7 @@ ion-popover-view.fit ion-content {
 }
 
 .inst-message-cont p{
+    font-family: NotoSansRegular;
     font-size: 1.2em;
     padding: 25% 5%;
     height: 100%;
@@ -405,18 +416,18 @@ ion-popover-view.fit ion-content {
 }
 .popup-retry{
     position: absolute;
-    top: 5%;
-    left: 52%;
+    top: 12%;
+    left: 39%;
     width: 30%;
 }
 .popup-retry-next{
     position: absolute;
     width: 18%;
-    bottom: 0%;
+    bottom: 10%;
     right: 7%;
 }
 .popup-overlay{
-    position: absolute;
+    position: relative;
     width: 100%;
     height: 100%;
     background-color: black;
@@ -432,10 +443,41 @@ ion-popover-view.fit ion-content {
 
 .popup-body {
     position: absolute;
-    top: 13%;
-    width: 95%;
-    height: 70%;
+    top: 14%;
+    width: 70%;
+    height: 65%;
+    left: 7%;
+    padding: 0;
+    margin: 10px;
 }
+.popup-body{
+    /*position: absolute;
+    top: 14%;
+    width: 70%;
+    height: 65%;
+    left: 7%;
+    padding: 0;
+    margin: 10px;*/
+    position: absolute;
+    top: 14%;
+    width: 70%;
+    height: 70%;
+    left: 17%;
+    padding: 0;
+    margin: 10px;
+
+}
+
+.credit-body-icon-font {
+    width: 82%;
+    height:75%;
+    left: 12%;
+    top: 0%;
+    position: absolute;
+    font-family: NotoSansRegular;
+    font-size: 0.7em;
+}
+
 
 
 .gc-endpage-title{
@@ -480,11 +522,11 @@ ion-popover-view.fit ion-content {
     height: auto;
 }
 .credits-title {
-    width: 20%;
+     width: 43%;
     font-size: 2em;
     line-height: 2em;
-    padding: 2%;
     border-right: 2px solid;
+
 }
 .credits-data {
     width: 80%;
@@ -506,19 +548,14 @@ ion-popover-view.fit ion-content {
 .gc-restart-btn{
     width: 10%;
     position: absolute;
-    left: 38%;
-}
-
-.gc-restart-btn-no-next-content{
-    width: 10%;
-    position: absolute;
     left: 44%;
 }
 
+.gc-restart-collection{
+    left: 38%;
+}
 
 .gc-popup-title{
-    /*font-family: SkaterGirlsRock;
-    color: #FC5B20; */
     top: 14%;
     position: absolute;
     left: 45%;

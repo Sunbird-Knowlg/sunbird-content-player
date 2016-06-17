@@ -13,7 +13,7 @@ Genie Canvas : Quiz/Story App
 * Change to PROJECT_FOLDER/player (cd player)
 * Run `npm install`
 * Run `grunt init-setup`
-* Run `grunt build-aar` - to build noraml aar files.
+* Run `grunt build-aar` - to build normal aar files.
 * Run `grunt build-aar-xwalk` - to build xwalk aar files.
 
 The .aar files are created at the below path.

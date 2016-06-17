@@ -8,7 +8,7 @@ var stack = new Array(),
     collectionChildrenIds = new Array(),
     content = {},
     collectionChildren = true,
-    fixtureMetadata = { "identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "localData": { "questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Item Sample Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{ "identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept" }], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true, "path": "fixture-stories/item_sample" },
+    defaultMetadata = { "identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author":"EkStep", "localData": { "questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{ "identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept" }], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true, "imageCredits":"EkStep", "soundCredits":"EkStep", "voiceCredits":"EkStep",  "path": "fixture-stories/item_sample" },
     config = {
         showStartPage : true,
         showEndPage : true,
@@ -22,7 +22,7 @@ window.setContentData = function (metadata, data, configuration) {
     if(metadata) {
         content.metadata = metadata;
     } else {
-        content.metadata = fixtureMetadata;
+        content.metadata = defaultMetadata;
     }
     content.body = data;
     _.map(configuration, function(val, key) {

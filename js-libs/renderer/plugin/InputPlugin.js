@@ -1,7 +1,5 @@
-var InputPlugin = Plugin.extend({
+var InputPlugin = HTMLPlugin.extend({
 	_type: 'input',
-	_isContainer: false,
-    _render: true,
     _input: undefined,
 	initPlugin: function(data) {
         this._input = undefined;
