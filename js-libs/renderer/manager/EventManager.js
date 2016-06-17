@@ -54,8 +54,6 @@ EventManager = {
 						EventManager.processMouseTelemetry(evt, event, plugin);
 						EventManager.handleActions(evt, plugin);
 					});	
-				} else {
-					console.log("Element is null:", plugin);
 				}
 			}
 		}

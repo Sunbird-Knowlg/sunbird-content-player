@@ -38,7 +38,7 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
                         'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
                         'public/js/thirdparty/exclude/Class.js',
-                        'public/js/app/genieservices.js'
+                        'public/js/app/genieservices.js',
                         'public/js/app/renderer.js'
                     ],
                     'public/js/telemetry.min.js' : [
@@ -499,9 +499,11 @@ module.exports = function(grunt) {
     });
 
     var flavor = grunt.option('deployment');
-    flavor = flavor.toLowerCase().trim();
-    if (['sandbox', 'production'].indexOf(flavor) == -1)
-        grunt.fail.fatal("deployment argument value should be any one of: ['sandbox', 'production'].");
+    if (flavor) {
+        flavor = flavor.toLowerCase().trim();
+        if (['sandbox', 'production'].indexOf(flavor) == -1)
+            grunt.fail.fatal("deployment argument value should be any one of: ['sandbox', 'production'].");   
+    }
 
     grunt.registerTask('deploy-preview', function() {
         var tasks = ['clean:appConfig','copy:appConfig'];
