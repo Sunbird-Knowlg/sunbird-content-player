@@ -37,8 +37,12 @@ RecorderManager = {
 			});
 
 			setTimeout(function(){ 
-				if(RecorderManager.recording = true)
-					RecorderManager.stopRecording(action);
+				if(RecorderManager.recording = true) {
+					var stopAction = _.clone(action);
+					stopAction["success"] = ("undefined" != typeof stopAction["timeout-success"])? (stopAction["timeout-success"]): "";
+					stopAction["failure"] = ("undefined" != typeof stopAction["timeout-failure"])? (stopAction["timeout-failure"]): "";
+					RecorderManager.stopRecording(stopAction);
+				}
 			}, action.timeout ? action.timeout : 10000)
 		}
 
