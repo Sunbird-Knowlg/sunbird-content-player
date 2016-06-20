@@ -301,24 +301,16 @@ var Plugin = Class.extend({
 
     	return visibleShadow;
     },
-  
     drawBorder: function(data, dims) {
-        if (data.stroke) {
-            
-            var strokeWidth = (data['stroke-width'] || 1);
-            var border = new createjs.Shape();
-            var graphics = border.graphics;
-            graphics.beginStroke(data.stroke);
-            graphics.setStrokeStyle(strokeWidth);
-            if(this._isContainer) {
-                graphics.dr(0,0, dims.w, dims.h);
-                this._self.addChild(border);
-            } else {
-                graphics.dr(dims.x, dims.y, dims.w, dims.h);
-                this._stage.addChild(border);
-            }
-            
-        }
+    	if (data.stroke) {
+			var strokeWidth = (data['stroke-width'] || 1);
+			var border = new createjs.Shape();
+			var graphics = border.graphics;
+			graphics.beginStroke(data.stroke);
+			graphics.setStrokeStyle(strokeWidth);
+			graphics.dr(dims.x, dims.y, dims.w, dims.h);
+			this._stage.addChild(border);
+		}
     },
     enableDrag: function(asset, snapTo) {
         asset.cursor = "pointer";

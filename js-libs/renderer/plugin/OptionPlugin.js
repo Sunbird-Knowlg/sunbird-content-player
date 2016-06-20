@@ -1,6 +1,6 @@
 var OptionPlugin = Plugin.extend({
     _type: 'option',
-    _isContainer: true,
+    _isContainer: false,
     _render: false,
     _index: -1,
     _model: undefined,
