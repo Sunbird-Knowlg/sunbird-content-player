@@ -69,7 +69,7 @@ var ItemDataGenerator = {
 					qindex = i; // When not shuffling, the iterator is the index
 				}
 
-				// Shuffles the options if given "optionShuffle": false
+				// Shuffles the options if given "optionShuffle": true
 				if (optionShuffle)
 					set[i].options = _.shuffle(set[i].options);
 
