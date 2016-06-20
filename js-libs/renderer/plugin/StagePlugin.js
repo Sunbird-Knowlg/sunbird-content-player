@@ -23,9 +23,9 @@ var StagePlugin = Plugin.extend({
             var controllerName = data.var.trim();
             var stageController = this._theme._controllerMap[data.iterate.trim()];
             if (stageController) {
-                if (this._theme._previousStage && this._theme._previousStage != data.id) {
+                /*if (this._theme._previousStage && this._theme._previousStage != data.id) {
                     stageController.reset();
-                }
+                }*/
                 this._stageControllerName = controllerName;
                 this._stageController = stageController;
                 this._stageController.next();
