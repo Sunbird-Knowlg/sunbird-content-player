@@ -5,7 +5,7 @@ var packageName = "org.ekstep.quiz.app",
 
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
-    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive"
+    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive";
 
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
@@ -18,20 +18,60 @@ function removeRecordingFiles(path) {
     })
 }
 
-function reloadStage(){
-    var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
-     if (plugin) plugin.reload({type:"command" ,command:"reload", duration: "500", ease: "linear", effect: "fadeIn", asset: Renderer.theme._currentStage});
+function createCustomEvent(evtName, data) {
+    var evt = new CustomEvent(evtName, data);
+    // window.dispatchEvent(evt);
+}
+
+function getUrlParameter(sParam) {
+   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+       sURLVariables = sPageURL.split('&'),
+       sParameterName,
+       i;
+   for (i = 0; i < sURLVariables.length; i++) {
+       sParameterName = sURLVariables[i].split('=');
+
+       if (sParameterName[0] === sParam) {
+           return sParameterName[1] === undefined ? true : sParameterName[1];
+       }
+   }
+}
+
+var _reloadInProgress = false;
+function reloadStage() {
+    if (_reloadInProgress) {
+        return;
+    }
+    _reloadInProgress = true;
+    setTimeout(function() {
+        var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
+        if (plugin) plugin.reload({
+            type: "command",
+            command: "reload",
+            duration: "100",
+            ease: "linear",
+            effect: "fadeIn",
+            asset: Renderer.theme._currentStage
+        });
+    }, 500);
+    TelemetryService.interact("TOUCH", "gc_reload", "TOUCH", {stageId : Renderer.theme._currentStage});
+}
+
+function enableReload() {
+    _reloadInProgress = false;
 }
 
 function goToHome($state, isCollection, id, pageId) {
-    if(isCollection){
+    if (isCollection) {
         // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
-        TelemetryService.interact("TOUCH", "gc_home", "TOUCH", {stageId : ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
-        if(Renderer.running) 
+        TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
+        if (Renderer.running)
             Renderer.cleanUp();
         else
             TelemetryService.end();
-        $state.go('contentList', { "id": id });
+        $state.go('contentList', {
+            "id": id
+        });
 
     }
 }
@@ -49,7 +89,9 @@ function backbuttonPressed() {
 // TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
 // So, change exitApp to do the same.
 function exitApp(pageId) {
-    TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {stageId : ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
+    TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {
+        stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))
+    });
     try {
         TelemetryService.exit();
     } catch (err) {
@@ -61,41 +103,52 @@ function exitApp(pageId) {
 function startApp(app) {
     if (!app) app = geniePackageName;
     navigator.startApp.start(app, function(message) {
-        exitApp();
-        TelemetryService.exit(packageName, version)
-    },
-    function(error) {
-        if (app == geniePackageName)
-            alert("Unable to start Genie App.");
-        else {
-            var bool = confirm('App not found. Do you want to search on PlayStore?');
-            if (bool) cordova.plugins.market.open(app);
-        }
-    });
+            exitApp();
+            TelemetryService.exit(packageName, version)
+        },
+        function(error) {
+            if (app == geniePackageName)
+                alert("Unable to start Genie App.");
+            else {
+                var bool = confirm('App not found. Do you want to search on PlayStore?');
+                if (bool) cordova.plugins.market.open(app);
+            }
+        });
 }
 
 function contentNotAvailable() {
     alert(AppMessages.NO_CONTENT_FOUND);
     exitApp();
 }
-
 function getNavigateTo(navType) {
     var navigation = [];
     var navigateTo = undefined;
-    if (!_.isEmpty(Renderer.theme._currentScene._data.param)) {
+    if (!_.isUndefined(Renderer.theme._currentScene) && !_.isEmpty(Renderer.theme._currentScene._data.param)) {
         navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
-        var direction = _.findWhere(navigation, {name: navType});
+        var direction = _.findWhere(navigation, {
+            name: navType
+        });
         if (direction) navigateTo = direction.value;
     }
     return navigateTo;
 }
 
+var submitOnNextClick = true;
 function navigate(navType) {
+    TelemetryService.interact("TOUCH", navType, null, {stageId : Renderer.theme._currentStage});
     var navigateTo = getNavigateTo(navType);
-    if ("undefined" == typeof navigateTo && "next" == navType) {
-        console.info("redirecting to endpage.");
-        window.location.hash = "/content/end/" + GlobalContext.currentContentId;
-    }else{
+
+    if(_.isUndefined( Renderer.theme._currentScene)){
+        return;
+    }
+
+    if(submitOnNextClick && OverlayHtml.isItemScene() && ("next" == navType)){
+        evalAndSubmit();
+        return;
+    }
+
+    submitOnNextClick = true;
+    var changeScene = function() {
         var action = {
             "asset": Renderer.theme._id,
             "command": "transitionTo",
@@ -107,10 +160,45 @@ function navigate(navType) {
         };
         action.transitionType = navType;
         Renderer.theme.transitionTo(action);
-        if("undefined" != typeof angular) {
-            var navigate = angular.element("navigate");
-            navigate.trigger("navigateUpdate", {'show': false});
+    };
+    if ("undefined" == typeof navigateTo && "next" == navType) {
+        if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
+            changeScene();
+        } else {
+            if(config.showEndPage) {
+                console.info("redirecting to endpage.");
+                window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+            } else {
+                console.warn("Cannot move to end page of the content. please check the configurations..");
+            }
         }
-        jQuery('popup').hide();       
-    } 
+    } else {
+        changeScene();
+    }
+}
+
+function enablePrevious() {
+    var navigateTo = getNavigateTo('previous');
+    if (_.isUndefined(navigateTo)) {
+        
+        jQuery('#navPrev').hide();
+        if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious()) {
+            jQuery('#navPrev').show();
+        }
+    } else {
+        jQuery('#navPrev').show();
+    }
+}
+
+function evalAndSubmit(){
+    //If any one option is selected, then only allow user to submit
+    var action = {
+        "type": "command",
+        "command": "eval",
+        "asset": Renderer.theme._currentStage
+    };
+    action.htmlEval = "true";
+    action.success = "correct_answer";
+    action.failure = "wrong_answer";
+    CommandManager.handle(action);
 }

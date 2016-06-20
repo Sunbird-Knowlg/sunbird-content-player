@@ -8,6 +8,7 @@ TelemetryService = {
     _gameErrorFile: undefined,
     _gameData: undefined,
     _data: [],
+    _gameIds:[],
     _user: {},
     mouseEventMapping: {
         click: 'TOUCH',
@@ -94,7 +95,10 @@ TelemetryService = {
             return new InActiveEvent();
         } else {
             ver = (ver) ? ver + "" : "1"; // setting default ver to 1
-            return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver));
+            if(_.findWhere(TelemetryService.instance._start, {id: id}))
+                return new InActiveEvent();
+            else
+                return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver));
         }
     },
     end: function() {
@@ -162,10 +166,16 @@ TelemetryService = {
     exit: function() {
         if (TelemetryService.isActive) {
             TelemetryService._data = [];
-            var event = TelemetryService.instance._end;
-            if ("undefined" !=  event && event._isStarted)
-                TelemetryService.end();
-            TelemetryService.isActive = false;
+            if(!_.isEmpty(TelemetryService.instance._end)) {
+                var len = TelemetryService.instance._end.length;
+                for(var i = 0; i < len; i++)
+                    TelemetryService.end();
+            }
+            // if ("undefined" !=  event && event._isStarted)
+            //     TelemetryService.end(); 
+            if(_.isEmpty(TelemetryService.instance._end)) {
+                TelemetryService.isActive = false;
+            }
         }
     },
     logError: function(eventName, error) {

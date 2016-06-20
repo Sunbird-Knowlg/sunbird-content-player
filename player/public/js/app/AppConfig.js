@@ -1,8 +1,14 @@
 AppConfig = {
 	version: "BUILD_NUMBER",
 	PROCESSING_TIMEOUT: 10, // in minutes
-	APP_STATUS: "LIVE",
-	sandbox: "http://lp-sandbox.ekstep.org:8080/taxonomy-service",
-	production: "https://platform.ekstep.org:8080/taxonomy-service",
-	recorder: "AUDIO_RECORDER"
+	APP_STATUS: "AT",
+	App_RUNTIME: "AT",
+	sandbox: "//sandbox-community.ekstep.in/api/learning/taxonomy-service",
+	production: "//community.ekstep.in/api/learning/taxonomy-service",
+	recorder: "AUDIO_RECORDER",
+	flavor: "sandbox"
 }
+
+
+
+

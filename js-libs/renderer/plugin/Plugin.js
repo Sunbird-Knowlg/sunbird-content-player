@@ -47,7 +47,7 @@ var Plugin = Class.extend({
 
         this._id = this._data.id || this._data.asset || _.uniqueId('plugin');
 		PluginManager.registerPluginObject(this);
-		if (data.visible === false) {
+		if (this._self && data.visible === false) {
 	    	this._self.visible = false;
 		}
 
@@ -227,7 +227,7 @@ var Plugin = Class.extend({
 	hide: function(action) {
 		if(_.contains(this.events, 'hide')) {
 			EventManager.dispatchEvent(this._data.id, 'hide');
-		} else if(this._self.visible) {
+		} else if(this._self && this._self.visible) {
 			this._self.visible = false;
 			EventManager.processAppTelemetry(action, 'HIDE', this);
 		}

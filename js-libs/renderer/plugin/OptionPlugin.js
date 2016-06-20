@@ -181,6 +181,7 @@ var OptionPlugin = Plugin.extend({
                     if (this.x >= x && (this.x + this.width) <= maxX) {
                         if (this.y >= y && (this.y + this.height) <= maxY) {
                             snapSuccess = true;
+                            OverlayHtml.isReadyToEvaluate(true);
                         }
                     }
                 }
@@ -240,6 +241,11 @@ var OptionPlugin = Plugin.extend({
                     }   
                     plugin._answer = instance;
                 }
+
+                 if(!(("undefined" != typeof drop_idx) && ("" !== drop_idx))) {
+                    instance._parent.setAnswer(instance, undefined);
+                 }
+                        
 
                 instance.removeShadow();
 

@@ -13,9 +13,11 @@ LoadByStageStrategy = Class.extend({
         createjs.Sound.registerPlugins([createjs.CordovaAudioPlugin, createjs.WebAudioPlugin, createjs.HTMLAudioPlugin]);
         createjs.Sound.alternateExtensions = ["mp3"];
         this.destroy();
+        this.loadAppAssets();
         if (themeData.manifest.media) {
             if (!_.isArray(themeData.manifest.media)) themeData.manifest.media = [themeData.manifest.media];
         }
+
         themeData.manifest.media.forEach(function(media) {
             if ((media) && (media.src)) {
                 media.src = (media.src.substring(0,4) == "http") ? media.src : basePath + media.src;
@@ -62,6 +64,11 @@ LoadByStageStrategy = Class.extend({
             instance.populateTemplateAssets(template);
         });
         instance.loadTemplateAssets();
+    },
+    loadAppAssets: function() {
+        var localPath = "undefined" == typeof cordova ? "": "file:///android_asset/www/";
+        this.commonAssets.push({id: "goodjob_sound",src:  localPath+ "assets/sounds/goodjob.mp3"});
+        this.commonAssets.push({id: "tryagain_sound",src:  localPath+ "assets/sounds/letstryagain.mp3"});
     },
     populateAssets: function(data, stageId, preload) {
         var instance = this;
@@ -139,10 +146,10 @@ LoadByStageStrategy = Class.extend({
                         nextContainer.hide();
                     }                    
                 }
-                OverlayHtml.showNext();
+                //OverlayHtml.showNext();
             });
         } else {
-            OverlayHtml.showNext();
+            //OverlayHtml.showNext();
         }
         if (prevStageId) {
             instance.loadStage(prevStageId, function() {
@@ -154,7 +161,8 @@ LoadByStageStrategy = Class.extend({
                         previousContainer.hide();
                     }
                 }
-                OverlayHtml.showPrevious();
+                //OverlayHtml.showPrevious();
+                //enablePrevious();
             });
         }
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);
@@ -184,7 +192,7 @@ LoadByStageStrategy = Class.extend({
             if (cb) {
                 cb();
             }
-        }
+        }                
     },
     loadCommonAssets: function() {
         var loader = this._createLoader();

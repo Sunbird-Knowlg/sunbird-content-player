@@ -1,8 +1,5 @@
-var DivPlugin = Plugin.extend({
+var DivPlugin = HTMLPlugin.extend({
     _type: 'div',
-    _isContainer: false,
-    _render: true,
-    _div: undefined,
     initPlugin: function(data) {
         this._input = undefined;
         var dims = this.relativeDims();

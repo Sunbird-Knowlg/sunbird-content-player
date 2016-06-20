@@ -33,6 +33,7 @@ Renderer = {
     start: function(gameRelPath, canvasId, game, data, preview) {
         if(Renderer.running) {
             Renderer.cleanUp();
+            TelemetryService.start(game.identifier, game.pkgVersion);
         }
         Renderer.running = true;
         Renderer.preview = preview || false;
@@ -68,6 +69,7 @@ Renderer = {
         });
     },
     init: function(data, canvasId, gameRelPath) {
+        tempData = data;
         if(!jQuery.isPlainObject(data)) {
             var x2js = new X2JS({attributePrefix: 'none'});
             data = x2js.xml2json(data);

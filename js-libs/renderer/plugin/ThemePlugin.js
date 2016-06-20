@@ -170,6 +170,12 @@ var ThemePlugin = Plugin.extend({
         this._previousStage = this._currentStage;
         this._currentStage = stageId;
         PluginManager.invoke('stage', stage, this, null, this);
+        
+        // Trigger onstagechange event, which is bind by parent window
+        if(webview && window &&  window.parent && window.parent.jQuery('body')){
+            var retObj = {"stageId" : stageId};
+            window.parent.jQuery('body').trigger('onstagechange', retObj);
+        }
     },
     preloadStages: function() {
         var stagesToLoad = this.getStagesToPreLoad(this._currentScene._data);
@@ -193,6 +199,9 @@ var ThemePlugin = Plugin.extend({
             }
         }
         return stage1;
+    },
+    isStageChanging: function(){
+       return this._isSceneChanging;
     },
     transitionTo: function(action) {
         // not next and previoud are clicked at the same time, 

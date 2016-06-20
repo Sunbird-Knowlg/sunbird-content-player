@@ -19,22 +19,27 @@ module.exports = function(grunt) {
                     beautify: true,
                     mangle: false 
                 },
-
                 files: {
-                    'public/js/renderer.min.js': [
+                    'public/js/script.min.js': [
                         'public/js/app/GlobalContext.js',
                         'public/js/app/AppConfig.js',
                         'public/js/app/AppMessages.js',
                         'public/js/app/main.js',
+                        'public/js/app/app.js',
+                        'public/js/app/renderer.theme.js',
                         'public/js/app/OverlayHtml.js',
+                        'public/js/app/genie-canvas.template.js',
+                    ],
+                    'public/js/renderer.min.js': [
                         'public/js/app/speech.js',
+                        'public/js/app/services.js',
                         'public/js/thirdparty/exclude/xml2json.js',
                         'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
                         'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
                         'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
                         'public/js/thirdparty/exclude/Class.js',
-                        'public/js/app/renderer.js',
-                        'public/js/app/telemetry.js'
+                        'public/js/app/genieservices.js',
+                        'public/js/app/renderer.js'
                     ],
                     'public/js/telemetry.min.js' : [
                         'public/js/thirdparty/exclude/date-format.js',
@@ -96,6 +101,16 @@ module.exports = function(grunt) {
                     }
                 ]
             },
+            previewFiles: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/',
+                        src: ['img/**', 'fonts/**', 'templates/**', 'libs/**', 'json/**', 'css/**', 'assets/**', 'js/**', 'webview.html', 'preview.html'],
+                        dest: 'public/preview/'
+                    }
+                ]
+            },
             unsigned: {
                 files: [
                     {
@@ -143,13 +158,34 @@ module.exports = function(grunt) {
                         dest: 'platforms/android/'
                     }
                 ]
+            },
+            appConfig: {
+                files: [
+                    {
+                        src: 'public/js/app/DefaultAppConfig.js',
+                        dest: 'public/js/app/AppConfig.js'
+                    }
+                ]
+            },
+            customActivity: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'build-config',
+                        src: 'MainActivity.java',
+                        dest: 'platforms/android/src/org/ekstep/geniecanvas'
+                    }
+                ]
             }
         },
         clean: {
             before: ["www", "platforms/android/assets/www", "platforms/android/build"],
-            after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html"],
+            after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html", "www/webview.html", "www/preview.html"],
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
-            minjs: ['public/js/*.min.js']
+            minjs: ['public/js/*.min.js'],
+            preview: ["public/preview"],
+            appConfig: ["public/js/app/AppConfig.js"]
+
         },
         rename: {
             main: {
@@ -180,6 +216,28 @@ module.exports = function(grunt) {
                     dest: 'js/'
                 }]
             },
+            uploadPreviewFilesToSandbox : {
+                options: {
+                    bucket: 'ekstep-public'
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'public/preview',
+                    src: ['**'],
+                    dest: '/preview/sandbox/'
+                }]
+            },
+            uploadPreviewFilesToProduction : {
+                options: {
+                    bucket: 'ekstep-public'
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'public/preview',
+                    src: ['**'],
+                    dest: '/preview/production'
+                }]
+            },  
             cleanJS: {
                 options: {
                     bucket: 'ekstep-public'
@@ -194,7 +252,26 @@ module.exports = function(grunt) {
                     exclude: "**/.*",
                     action: 'delete'
                 }]
+            },
+            cleanSandboxPreview: {
+                options: {
+                    bucket: 'ekstep-public'
+                },
+                files: [{
+                    dest: 'preview/sandbox',
+                    action: 'delete'
+                }]
+            },
+            cleanProductionPreview: {
+                options: {
+                    bucket: 'ekstep-public'
+                },
+                files: [{
+                    dest: 'preview/production',
+                    action: 'delete'
+                }]
             }
+
         },
         cordovacli: {
             options: {
@@ -260,7 +337,20 @@ module.exports = function(grunt) {
                     action: 'add',
                     plugins: [
                         'cordova-plugin-crosswalk-webview@1.5.0'
-                    ]
+                    ],
+					args:['--variable','XWALK_MODE=embedded']
+                }
+            },
+			add_xwalk_shared: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: [
+                        'cordova-plugin-crosswalk-webview@1.5.0'
+                    ],
+                    args:['--variable','XWALK_MODE=shared']
+
+
                 }
             },
             rm_xwalk: {
@@ -348,6 +438,23 @@ module.exports = function(grunt) {
                     to: "android"
                 }]
             },
+
+            preview_production: {
+                src: ['public/js/app/AppConfig.js'],
+                overwrite: true,
+                replacements: [{
+                    from: /DEPLOYMENT/g,
+                    to: "production"
+                }]
+            },
+            preview_sandbox: {
+                src: ['public/js/app/AppConfig.js'],
+                overwrite: true,
+                replacements: [{
+                    from: /DEPLOYMENT/g,
+                    to: "sandbox"
+                }]
+            },
             androidLib: {
                 src: ['platforms/android/build.gradle'],
                 overwrite: true,
@@ -390,6 +497,33 @@ module.exports = function(grunt) {
             grunt.task.run(['cordovacli:add_platforms']);
         }
     });
+
+    var flavor = grunt.option('deployment');
+    if (flavor) {
+        flavor = flavor.toLowerCase().trim();
+        if (['sandbox', 'production'].indexOf(flavor) == -1)
+            grunt.fail.fatal("deployment argument value should be any one of: ['sandbox', 'production'].");   
+    }
+
+    grunt.registerTask('deploy-preview', function() {
+        var tasks = ['clean:appConfig','copy:appConfig'];
+        if ("sandbox" == flavor) {
+            tasks.push('replace:preview_sandbox');
+            tasks.push('preview-sandbox');
+        } else if("production" == flavor) {
+            tasks.push('replace:preview_production');
+            tasks.push('preview-production');
+        } else {
+            grunt.fail.fatal("deployment argument value should be any one of: ['sandbox', 'production'].");
+            return;
+        }
+        if (tasks.length > 0) {
+            grunt.task.run(tasks);
+        }
+    });
+
+    grunt.registerTask('preview-sandbox', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanSandboxPreview', 'aws_s3:uploadPreviewFilesToSandbox', 'clean:preview']);
+    grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction', 'clean:preview']);
 
     grunt.registerTask('rm-cordova-plugin-sensibol', function() {
         if (grunt.file.exists('plugins/cordova-plugin-sensibol')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
@@ -451,11 +585,15 @@ module.exports = function(grunt) {
 
     grunt.registerTask('set-android-library',['copy:androidLib', 'replace:androidLib']);
     grunt.registerTask('set-xwalk-library', ['cordovacli:add_xwalk','replace:xwalk_library']);
+	grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared','replace:xwalk_library']);
 
     grunt.registerTask('build-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('build-unsigned-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
     grunt.registerTask('build-signed-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
 
     grunt.registerTask('build-aar-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalk-library', 'cordovacli:build_android', 'clean:minjs']);
+	grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
 
+    
+    // grunt.registerTask('deletep', ['aws_s3:cleanSandboxPreview'])
 };

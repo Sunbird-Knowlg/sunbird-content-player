@@ -1,5 +1,6 @@
 TelemetryV2Manager = Class.extend({
-    _end: undefined,
+    _end: new Array(),
+    _start: new Array(),
      init: function() {
         console.info("TelemetryService Version 2 initialized..");
     },
@@ -13,11 +14,13 @@ TelemetryV2Manager = Class.extend({
     },
     start: function(id, ver) {
         TelemetryService._gameData = {id: id , ver : ver};
-        this._end = this.createEvent("OE_END", {}).start();
+        this._end.push(this.createEvent("OE_END", {}).start());
+        this._start.push({id: id , ver : ver});
         return this.createEvent("OE_START", {});
     },
     end: function(gameId) {
-        return this._end.end();
+        this._start.pop();
+        return this._end.pop().end();
     },
     interact: function(type, id, extype, eks) {
         if (eks.optionTag)

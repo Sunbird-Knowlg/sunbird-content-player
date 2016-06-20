@@ -1,5 +1,6 @@
 AudioManager = {
     instances: {},
+    muted: false, 
     // creating unique id for each audio instance using stageId.
     uniqueId: function(action) {
         return action.stageId + ':' + action.asset;
@@ -13,8 +14,10 @@ AudioManager = {
                 } else if([createjs.Sound.PLAY_FINISHED, createjs.Sound.PLAY_INTERRUPTED, createjs.Sound.PLAY_FAILED].indexOf(instance.object.playState) !== -1) {
                     instance.object.play();
                 }
+                instance.object.muted = this.muted;
             } else {
                 instance.object = createjs.Sound.play(action.asset, {interrupt:createjs.Sound.INTERRUPT_ANY});
+                instance.object.muted = this.muted;
                 instance._data = {id: AudioManager.uniqueId(action)};
                 AudioManager.instances[AudioManager.uniqueId(action)] = instance;
                 AssetManager.addStageAudio(Renderer.theme._currentStage, action.asset);
@@ -26,8 +29,10 @@ AudioManager = {
                 delete AudioManager.instances[AudioManager.uniqueId(action)];
                 console.info( "Audio with 'id :" + action.asset  + "' is not found..")
             }
+            return instance;
         } else {
             console.warn("Asset is not given to play.", action);
+            return {};
         }
     },
     togglePlay: function(action) {
@@ -84,5 +89,17 @@ AudioManager = {
     },
     cleanUp: function() {
         AudioManager.instances = {};
+    },
+    mute: function() {
+        this.muted = true;
+        if (!_.isEmpty(AudioManager.instances)) {
+            _.map(_.pluck(_.values(AudioManager.instances), "object"), function(obj) {obj.muted = true; return obj})    
+        }
+    },
+    unmute: function() {
+        this.muted = false;
+        if (!_.isEmpty(AudioManager.instances)) {
+            _.map(_.pluck(_.values(AudioManager.instances), "object"), function(obj) {obj.muted = false; return obj})    
+        }
     }
 }

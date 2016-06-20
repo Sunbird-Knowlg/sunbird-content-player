@@ -17,8 +17,10 @@
     }
 </style>
 
-<ion-pane class="swiper-background">
-    <img ng-src="{{imageBasePath}}cover_page_background.png" style="position: absolute; width: 100%; height: 100%;">
+<ion-pane class="swiper-background" ng-show="showPage">
+   <!--  <img ng-src="{{imageBasePath}}cover_page_background.png" style="position: absolute; width: 100%; height: 100%;"> -->
+    <img ng-src="{{imageBasePath}}background.png" style="position: absolute; width: 100%; height: 100%;">
+    <img ng-src="{{imageBasePath}}cover_backdrop.png" style="position: absolute; width: 100%; height: 100%;">
     <p class="icon-font conver-page-title" style="">{{item.name}}</p>
     <p class="icon-font conver-page-title conver-page-title1" style=" ">{{item.name}}</p>
     <ion-header-bar class="bar-header" style="background-color:transparent; border-bottom:0px;background-image:none;height:50px">

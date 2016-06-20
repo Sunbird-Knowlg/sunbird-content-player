@@ -464,6 +464,7 @@
     </stage>
     <stage id="splash" x="0" y="0" w="100" h="100">
         <param name="next" value="scene1"/>
+        <param name="instructions" value="Stage 1 instructions"/>
         <audio asset="scene_audio" />
         <audio asset="delayed_intro_audio" />
         <image asset="page1" x="2" y="2" w="96" h="70" />
@@ -513,6 +514,7 @@
 		
         <param name="next" value="scene2" />
         <param name="previous" value="splash" />
+        <param name="instructions" value="Stage 2 instructions"/>
         <param name="body" model="storyData.scene1_body"/>
         <!-- <shape x="2" y="90" w="96" h="10.5" type="rect" fill="#F3CCDE" /> -->
         <image asset="page2" x="2" y="12" w="96" h="86" />
@@ -662,6 +664,7 @@
     
 		<param name="next" value="scene3" />
         <param name="previous" value="scene1" />
+        <param name="instructions" value="Stage 3 instructions"/>
         <param name="body" model="storyData.scene2_body"/>
         <image asset="page3" x="2" y="12" w="96" h="86" />
         
@@ -2185,7 +2188,7 @@
 	
 	
 	<stage id="scene11" x="0" y="0" w="100" h="100" iterate="funtime" var="item">
-        <param name="next" value="scene12" />
+        <!-- <param name="next" value="scene12" /> -->
         <param name="previous" value="scene10" />
 		<audio asset="ft_1_audio" />
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>

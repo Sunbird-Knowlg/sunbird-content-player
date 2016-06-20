@@ -1,0 +1,1035 @@
+{
+    "theme": {
+        "manifest": {
+            "media": [
+                {
+                    "id": "previous",
+                    "src": "icon_previous.png",
+                    "type": "image"
+                },
+                {
+                    "id": "next",
+                    "src": "icon_next.png",
+                    "type": "image"
+                },
+                {
+                    "id": "karaoke",
+                    "src": "karaoke.js",
+                    "type": "plugin"
+                },
+                {
+                    "id": "tock",
+                    "src": "tock.min.js",
+                    "type": "js"
+                },
+                {
+                    "id": "page_Cover_image_0",
+                    "src": "scenes/7a0840e8de.jpg",
+                    "type": "image",
+                    "asset_id": "page_Cover_image_0"
+                },
+                {
+                    "id": "page_1_audio_0",
+                    "src": "sounds/db9f3b6a05.mp3",
+                    "type": "sound",
+                    "asset_id": "page_1_audio_0"
+                },
+                {
+                    "id": "page_1_image_0",
+                    "src": "scenes/636746166f.jpg",
+                    "type": "image",
+                    "asset_id": "page_1_image_0"
+                },
+                {
+                    "id": "page_2_audio_0",
+                    "src": "sounds/f6b032da31.mp3",
+                    "type": "sound",
+                    "asset_id": "page_2_audio_0"
+                },
+                {
+                    "id": "page_2_image_0",
+                    "src": "scenes/c9953f59a4.jpg",
+                    "type": "image",
+                    "asset_id": "page_2_image_0"
+                },
+                {
+                    "id": "page_3_audio_0",
+                    "src": "sounds/6f09c53257.mp3",
+                    "type": "sound",
+                    "asset_id": "page_3_audio_0"
+                },
+                {
+                    "id": "page_3_image_0",
+                    "src": "scenes/fd6e72555d.jpg",
+                    "type": "image",
+                    "asset_id": "page_3_image_0"
+                },
+                {
+                    "id": "page_4_audio_0",
+                    "src": "sounds/06eb65c6d4.mp3",
+                    "type": "sound",
+                    "asset_id": "page_4_audio_0"
+                },
+                {
+                    "id": "page_4_image_0",
+                    "src": "scenes/bb1a04a6af.jpg",
+                    "type": "image",
+                    "asset_id": "page_4_image_0"
+                },
+                {
+                    "id": "page_5_audio_0",
+                    "src": "sounds/00f6e35e0a.mp3",
+                    "type": "sound",
+                    "asset_id": "page_5_audio_0"
+                },
+                {
+                    "id": "page_5_image_1",
+                    "src": "scenes/94495d79b6.jpg",
+                    "type": "image",
+                    "asset_id": "page_5_image_1"
+                },
+                {
+                    "id": "page_6_audio_0",
+                    "src": "sounds/a5de978b88.mp3",
+                    "type": "sound",
+                    "asset_id": "page_6_audio_0"
+                },
+                {
+                    "id": "page_6_image_0",
+                    "src": "scenes/aa9b9a6345.jpg",
+                    "type": "image",
+                    "asset_id": "page_6_image_0"
+                },
+                {
+                    "id": "page_7_audio_0",
+                    "src": "sounds/283c4395b4.mp3",
+                    "type": "sound",
+                    "asset_id": "page_7_audio_0"
+                },
+                {
+                    "id": "page_7_image_0",
+                    "src": "scenes/64ea5f73f7.jpg",
+                    "type": "image",
+                    "asset_id": "page_7_image_0"
+                },
+                {
+                    "id": "page_8_audio_0",
+                    "src": "sounds/851fa62956.mp3",
+                    "type": "sound",
+                    "asset_id": "page_8_audio_0"
+                },
+                {
+                    "id": "page_8_image_0",
+                    "src": "scenes/36eb94c8c9.jpg",
+                    "type": "image",
+                    "asset_id": "page_8_image_0"
+                },
+                {
+                    "id": "page_9_audio_0",
+                    "src": "sounds/6c8cfa8402.mp3",
+                    "type": "sound",
+                    "asset_id": "page_9_audio_0"
+                },
+                {
+                    "id": "page_9_image_0",
+                    "src": "scenes/79d7f3b365.jpg",
+                    "type": "image",
+                    "asset_id": "page_9_image_0"
+                },
+                {
+                    "id": "page_10_audio_0",
+                    "src": "sounds/3c73cb3915.mp3",
+                    "type": "sound",
+                    "asset_id": "page_10_audio_0"
+                },
+                {
+                    "id": "page_10_image_0",
+                    "src": "scenes/11c55b7f7f.jpg",
+                    "type": "image",
+                    "asset_id": "page_10_image_0"
+                }
+            ]
+        },
+        "controller": [],
+        "template": [],
+        "startStage": "scene0",
+        "id": "theme",
+        "ver": 0.3,
+        "stage": [
+            {
+                "id": "base_stage",
+                "preload": true,
+                "param": {
+                    "name": "home_stage",
+                    "value": "scene0"
+                },
+                "image": [
+                    {
+                        "id": "next",
+                        "asset": "next",
+                        "x": 93,
+                        "y": 3,
+                        "w": 5,
+                        "h": 8.3,
+                        "visible": false
+                    },
+                    {
+                        "id": "previous",
+                        "asset": "previous",
+                        "x": 2,
+                        "y": 3,
+                        "w": 5,
+                        "h": 8.3,
+                        "visible": false
+                    }
+                ],
+                "shape": [
+                    {
+                        "id": "nextContainer",
+                        "type": "roundrect",
+                        "x": 93,
+                        "y": 3,
+                        "w": 5,
+                        "h": 8.3,
+                        "visible": false,
+                        "hitArea": true,
+                        "event": {
+                            "type": "click",
+                            "action": {
+                                "type": "command",
+                                "command": "transitionTo",
+                                "asset": "theme",
+                                "param": "next",
+                                "effect": "scroll",
+                                "direction": "left",
+                                "ease": "linear",
+                                "duration": 500
+                            }
+                        }
+                    },
+                    {
+                        "id": "previousContainer",
+                        "type": "roundrect",
+                        "x": 2,
+                        "y": 3,
+                        "w": 5,
+                        "h": 8.3,
+                        "visible": false,
+                        "hitArea": true,
+                        "event": {
+                            "type": "click",
+                            "action": {
+                                "type": "command",
+                                "command": "transitionTo",
+                                "asset": "theme",
+                                "param": "previous",
+                                "effect": "scroll",
+                                "direction": "right",
+                                "ease": "linear",
+                                "duration": 500
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "scene0",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "extends": "base_stage",
+                "param": [
+                    {
+                        "name": "next",
+                        "value": "scene1"
+                    }
+                ],
+                "events": {
+                    "event": []
+                },
+                "audio": [],
+                "image": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 100,
+                        "h": 100,
+                        "visible": true,
+                        "editable": true,
+                        "asset": "page_Cover_image_0",
+                        "z-index": 0
+                    }
+                ],
+                "text": [],
+                "div": []
+            },
+            {
+                "id": "scene1",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "extends": "base_stage",
+                "param": [
+                    {
+                        "name": "previous",
+                        "value": "scene0"
+                    },
+                    {
+                        "name": "next",
+                        "value": "scene2"
+                    }
+                ],
+                "events": {
+                    "event": [
+                        {
+                            "type": "enter",
+                            "action": {
+                                "type": "command",
+                                "command": "play",
+                                "asset": "page_1_audio_0",
+                                "loop": 1,
+                                "delay": "0"
+                            }
+                        },
+                        {
+                            "type": "exit",
+                            "action": {
+                                "type": "command",
+                                "command": "stop",
+                                "asset": "page_1_audio_0",
+                                "audio": true,
+                                "loop": 1
+                            }
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "asset": "page_1_audio_0"
+                    }
+                ],
+                "image": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 100,
+                        "h": 100,
+                        "visible": true,
+                        "editable": true,
+                        "asset": "page_1_image_0",
+                        "z-index": 0
+                    }
+                ],
+                "text": [],
+                "div": [
+                    {
+                        "id": "page_1_text_1",
+                        "x": 22.48687744140625,
+                        "y": 2.872721354166667,
+                        "w": 55.078125,
+                        "h": 8.333333333333332,
+                        "style": "font-family: Calibri;font-size: 19px;",
+                        "__cdata": "<span class=\"word\" id=\"word-1\" style=\"\">All </span> <span class=\"word\" id=\"word-2\" style=\"\">of</span> <span class=\"word\" id=\"word-3\" style=\"\">us</span> <span class=\"word\" id=\"word-4\" style=\"\">went</span> <span class=\"word\" id=\"word-5\" style=\"\">to</span> <span class=\"word\" id=\"word-6\" style=\"\">the</span> <span class=\"word\" id=\"word-7\" style=\"\">Dasara</span> <span class=\"word\" id=\"word-8\" >fair.</span><br>"
+                    }
+                ],
+                "karaoke": {
+                    "id": "scene1karaoke",
+                    "wordqueue": {
+                        "data": "3.776045,4.158545,4.282034,4.536545,4.785033,5.070545,5.202033,5.696545"
+                    }
+                }
+            },
+            {
+                "id": "scene2",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "extends": "base_stage",
+                "param": [
+                    {
+                        "name": "previous",
+                        "value": "scene1"
+                    },
+                    {
+                        "name": "next",
+                        "value": "scene3"
+                    }
+                ],
+                "events": {
+                    "event": [
+                        {
+                            "type": "enter",
+                            "action": {
+                                "type": "command",
+                                "command": "play",
+                                "asset": "page_2_audio_0",
+                                "loop": 1,
+                                "delay": "0"
+                            }
+                        },
+                        {
+                            "type": "exit",
+                            "action": {
+                                "type": "command",
+                                "command": "stop",
+                                "asset": "page_2_audio_0",
+                                "audio": true,
+                                "loop": 1
+                            }
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "asset": "page_2_audio_0"
+                    }
+                ],
+                "image": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 100,
+                        "h": 100,
+                        "visible": true,
+                        "editable": true,
+                        "asset": "page_2_image_0",
+                        "z-index": 0
+                    }
+                ],
+                "text": [],
+                "div": [
+                    {
+                        "id": "page_2_text_1",
+                        "x": 11.328125,
+                        "y": 2.734375,
+                        "w": 72.36328125,
+                        "h": 12.760416666666666,
+                        "style": "font-family: Calibri;font-size: 19px;",
+                        "__cdata": "\n    \n    <span class=\"innerText\" style=\"\">\n   <span class=\"word\" id=\"word-1\" style=\"\">Papa </span> <span class=\"word\" id=\"word-2\" style=\"\">bought</span> <span class=\"word\" id=\"word-3\" style=\"\">Chintu</span> <span class=\"word\" id=\"word-4\" style=\"\">fancy</span> <span class=\"word\" id=\"word-5\" style=\"\">glasses.</span> <span class=\"word\" id=\"word-6\" style=\"\">Mother</span> <span class=\"word\" id=\"word-7\" style=\"\">bought</span> <span class=\"word\" id=\"word-8\" style=\"\">me</span> <span class=\"word\" id=\"word-9\" style=\"\">a</span> <span class=\"word\" id=\"word-10\" style=\"\">bright</span> <span class=\"word\" id=\"word-11\" style=\"\">blue</span> <span class=\"word\" id=\"word-12\" style=\"\">cap.</span> <span class=\"word\" id=\"word-13\" style=\"\">The</span> <span class=\"word\" id=\"word-14\" style=\"\">baby</span> <span class=\"word\" id=\"word-15\" style=\"\">got</span> <span class=\"word\" id=\"word-16\" style=\"\">sugar</span> <span class=\"word\" id=\"word-17\" >candy.</span><br>\n    </span>\n  "
+                    }
+                ],
+                "karaoke": {
+                    "id": "scene2karaoke",
+                    "wordqueue": {
+                        "data": "2.040732,2.236035,2.589541,2.938142,3.468737,5.400733,5.5876280000000005,5.98313,6.1532350000000005,6.33173,6.504635,6.722341,8.130733,8.830026,9.224828,9.581135,9.933235"
+                    }
+                }
+            },
+            {
+                "id": "scene3",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "extends": "base_stage",
+                "param": [
+                    {
+                        "name": "previous",
+                        "value": "scene2"
+                    },
+                    {
+                        "name": "next",
+                        "value": "scene4"
+                    }
+                ],
+                "events": {
+                    "event": [
+                        {
+                            "type": "enter",
+                            "action": {
+                                "type": "command",
+                                "command": "play",
+                                "asset": "page_3_audio_0",
+                                "loop": 1,
+                                "delay": "0"
+                            }
+                        },
+                        {
+                            "type": "exit",
+                            "action": {
+                                "type": "command",
+                                "command": "stop",
+                                "asset": "page_3_audio_0",
+                                "audio": true,
+                                "loop": 1
+                            }
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "asset": "page_3_audio_0"
+                    }
+                ],
+                "image": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 100,
+                        "h": 100,
+                        "visible": true,
+                        "editable": true,
+                        "asset": "page_3_image_0",
+                        "z-index": 0
+                    }
+                ],
+                "text": [],
+                "div": [
+                    {
+                        "id": "page_3_text_1",
+                        "x": 11.5509033203125,
+                        "y": 4.305013020833334,
+                        "w": 77.9296875,
+                        "h": 12.239583333333332,
+                        "style": "font-family: Calibri;font-size: 19px;",
+                        "__cdata": "\n    \n    <span class=\"innerText\" style=\"\">\n   <span class=\"word\" id=\"word-1\" style=\"\">On </span> <span class=\"word\" id=\"word-2\" style=\"\">the</span> <span class=\"word\" id=\"word-3\" style=\"\">way</span> <span class=\"word\" id=\"word-4\" style=\"\">home,</span> <span class=\"word\" id=\"word-5\" style=\"\">a</span> <span class=\"word\" id=\"word-6\" style=\"\">very</span> <span class=\"word\" id=\"word-7\" style=\"\">strong</span> <span class=\"word\" id=\"word-8\" style=\"\">wind</span> <span class=\"word\" id=\"word-9\" style=\"\">came.</span> <span class=\"word\" id=\"word-10\" style=\"\">It</span> <span class=\"word\" id=\"word-11\" style=\"\">blew</span> <span class=\"word\" id=\"word-12\" style=\"\">my</span> <span class=\"word\" id=\"word-13\" style=\"\">cap</span> <span class=\"word\" id=\"word-14\" >away.</span><br>\n    </span>\n  "
+                    }
+                ],
+                "karaoke": {
+                    "id": "scene3karaoke",
+                    "wordqueue": {
+                        "data": "1.475126,1.8685209999999999,2.041432,2.224828,2.565721,2.938142,3.11313,3.8173310000000003,4.365439,5.7668230000000005,5.946735,6.119623,6.496928,6.675423"
+                    }
+                }
+            },
+            {
+                "id": "scene4",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "extends": "base_stage",
+                "param": [
+                    {
+                        "name": "previous",
+                        "value": "scene3"
+                    },
+                    {
+                        "name": "next",
+                        "value": "scene5"
+                    }
+                ],
+                "events": {
+                    "event": [
+                        {
+                            "type": "enter",
+                            "action": {
+                                "type": "command",
+                                "command": "play",
+                                "asset": "page_4_audio_0",
+                                "loop": 1,
+                                "delay": "0"
+                            }
+                        },
+                        {
+                            "type": "exit",
+                            "action": {
+                                "type": "command",
+                                "command": "stop",
+                                "asset": "page_4_audio_0",
+                                "audio": true,
+                                "loop": 1
+                            }
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "asset": "page_4_audio_0"
+                    }
+                ],
+                "image": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 100,
+                        "h": 100,
+                        "visible": true,
+                        "editable": true,
+                        "asset": "page_4_image_0",
+                        "z-index": 0
+                    }
+                ],
+                "text": [],
+                "div": [
+                    {
+                        "id": "page_4_text_1",
+                        "x": 0.09765625,
+                        "y": 1.1678059895833335,
+                        "w": 27.44140625,
+                        "h": 15.755208333333334,
+                        "style": "font-family: Calibri;font-size: 19px;",
+                        "__cdata": "<span class=\"word\" id=\"word-1\" style=\"\">My </span> <span class=\"word\" id=\"word-2\" style=\"\">cap</span> <span class=\"word\" id=\"word-3\" style=\"\">got</span> <span class=\"word\" id=\"word-4\" style=\"\">stuck</span> <span class=\"word\" id=\"word-5\" style=\"\">on</span> <span class=\"word\" id=\"word-6\" style=\"\">a</span> <span class=\"word\" id=\"word-7\" style=\"\">branch</span> <span class=\"word\" id=\"word-8\" style=\"\">of</span> <span class=\"word\" id=\"word-9\" style=\"\">the</span> <span class=\"word\" id=\"word-10\" style=\"\">old</span> <span class=\"word\" id=\"word-11\" style=\"\">Pipal</span> <span class=\"word\" id=\"word-12\" >tree.</span><br>"
+                    }
+                ],
+                "karaoke": {
+                    "id": "scene4karaoke",
+                    "wordqueue": {
+                        "data": "0.80383,0.988626,1.162237,1.5521319999999998,1.725021,2.110032,2.293428,2.466333,2.646928,2.861135,3.029839,3.387539"
+                    }
+                }
+            },
+            {
+                "id": "scene5",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "extends": "base_stage",
+                "param": [
+                    {
+                        "name": "previous",
+                        "value": "scene4"
+                    },
+                    {
+                        "name": "next",
+                        "value": "scene6"
+                    }
+                ],
+                "events": {
+                    "event": [
+                        {
+                            "type": "enter",
+                            "action": {
+                                "type": "command",
+                                "command": "play",
+                                "asset": "page_5_audio_0",
+                                "loop": 1,
+                                "delay": "0"
+                            }
+                        },
+                        {
+                            "type": "exit",
+                            "action": {
+                                "type": "command",
+                                "command": "stop",
+                                "asset": "page_5_audio_0",
+                                "audio": true,
+                                "loop": 1
+                            }
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "asset": "page_5_audio_0"
+                    }
+                ],
+                "image": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 100,
+                        "h": 100,
+                        "visible": true,
+                        "editable": true,
+                        "asset": "page_5_image_1",
+                        "z-index": 0
+                    }
+                ],
+                "text": [],
+                "div": [
+                    {
+                        "id": "page_5_text_0",
+                        "x": 14.4775390625,
+                        "y": 3.778076171875,
+                        "w": 62.79296875,
+                        "h": 8.854166666666668,
+                        "style": "font-family: Calibri;font-size: 19px;",
+                        "__cdata": "<span class=\"word\" id=\"word-1\" style=\"\">I </span> <span class=\"word\" id=\"word-2\" style=\"\">cried</span> <span class=\"word\" id=\"word-3\" style=\"\">a</span> <span class=\"word\" id=\"word-4\" style=\"\">lot.</span> <span class=\"word\" id=\"word-5\" style=\"\">And</span> <span class=\"word\" id=\"word-6\" style=\"\">I</span> <span class=\"word\" id=\"word-7\" style=\"\">did</span> <span class=\"word\" id=\"word-8\" style=\"\">not</span> <span class=\"word\" id=\"word-9\" style=\"\">eat</span> <span class=\"word\" id=\"word-10\" style=\"\">my</span> <span class=\"word\" id=\"word-11\" >dinner.</span><br>"
+                    }
+                ],
+                "karaoke": {
+                    "id": "scene5karaoke",
+                    "wordqueue": {
+                        "data": "1.257442,1.441537,1.794337,1.966526,3.3679259999999998,3.916041,4.09173,4.264635,4.44803,4.621641,4.793831"
+                    }
+                }
+            },
+            {
+                "id": "scene6",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "extends": "base_stage",
+                "param": [
+                    {
+                        "name": "previous",
+                        "value": "scene5"
+                    },
+                    {
+                        "name": "next",
+                        "value": "scene7"
+                    }
+                ],
+                "events": {
+                    "event": [
+                        {
+                            "type": "enter",
+                            "action": {
+                                "type": "command",
+                                "command": "play",
+                                "asset": "page_6_audio_0",
+                                "loop": 1,
+                                "delay": "0"
+                            }
+                        },
+                        {
+                            "type": "exit",
+                            "action": {
+                                "type": "command",
+                                "command": "stop",
+                                "asset": "page_6_audio_0",
+                                "audio": true,
+                                "loop": 1
+                            }
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "asset": "page_6_audio_0"
+                    }
+                ],
+                "image": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 100,
+                        "h": 100,
+                        "visible": true,
+                        "editable": true,
+                        "asset": "page_6_image_0",
+                        "z-index": 0
+                    }
+                ],
+                "text": [],
+                "div": [
+                    {
+                        "id": "page_6_text_1",
+                        "x": 8.0078125,
+                        "y": 2.335611979166667,
+                        "w": 81.54296875,
+                        "h": 10.9375,
+                        "style": "font-family: Calibri;font-size: 19px;",
+                        "__cdata": "<span class=\"word\" id=\"word-1\" style=\"\">Later </span> <span class=\"word\" id=\"word-2\" style=\"\">that</span> <span class=\"word\" id=\"word-3\" style=\"\">night,</span> <span class=\"word\" id=\"word-4\" style=\"\">the</span> <span class=\"word\" id=\"word-5\" style=\"\">moon</span> <span class=\"word\" id=\"word-6\" style=\"\">came</span> <span class=\"word\" id=\"word-7\" style=\"\">up.</span> <span class=\"word\" id=\"word-8\" style=\"\">It</span> <span class=\"word\" id=\"word-9\" style=\"\">looked</span> <span class=\"word\" id=\"word-10\" style=\"\">at</span> <span class=\"word\" id=\"word-11\" style=\"\">my</span> <span class=\"word\" id=\"word-12\" style=\"\">cap</span> <span class=\"word\" id=\"word-13\" style=\"\">on</span> <span class=\"word\" id=\"word-14\" style=\"\">the</span> <span class=\"word\" id=\"word-15\" style=\"\">old</span> <span class=\"word\" id=\"word-16\" style=\"\">Pipal</span> <span class=\"word\" id=\"word-17\" >tree.</span><br>"
+                    }
+                ],
+                "karaoke": {
+                    "id": "scene6karaoke",
+                    "wordqueue": {
+                        "data": "0.421642,0.766041,0.94243,1.466042,1.652937,1.8559299999999999,2.257739,2.957033,4.186928,4.354933,4.539728,4.748328,5.14173,5.314635,5.503637,5.8620280000000005,6.387039"
+                    }
+                }
+            },
+            {
+                "id": "scene7",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "extends": "base_stage",
+                "param": [
+                    {
+                        "name": "previous",
+                        "value": "scene6"
+                    },
+                    {
+                        "name": "next",
+                        "value": "scene8"
+                    }
+                ],
+                "events": {
+                    "event": [
+                        {
+                            "type": "enter",
+                            "action": {
+                                "type": "command",
+                                "command": "play",
+                                "asset": "page_7_audio_0",
+                                "loop": 1,
+                                "delay": "0"
+                            }
+                        },
+                        {
+                            "type": "exit",
+                            "action": {
+                                "type": "command",
+                                "command": "stop",
+                                "asset": "page_7_audio_0",
+                                "audio": true,
+                                "loop": 1
+                            }
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "asset": "page_7_audio_0"
+                    }
+                ],
+                "image": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 100,
+                        "h": 100,
+                        "visible": true,
+                        "editable": true,
+                        "asset": "page_7_image_0",
+                        "z-index": 0
+                    }
+                ],
+                "text": [],
+                "div": [
+                    {
+                        "id": "page_7_text_1",
+                        "x": 12.01171875,
+                        "y": 1.8147786458333333,
+                        "w": 74.12109375,
+                        "h": 14.713541666666666,
+                        "style": "font-family: Calibri;font-size: 19px;",
+                        "__cdata": "<span class=\"word\" id=\"word-1\" style=\"\">It </span> <span class=\"word\" id=\"word-2\" style=\"\">tried</span> <span class=\"word\" id=\"word-3\" style=\"\">on</span> <span class=\"word\" id=\"word-4\" style=\"\">my</span> <span class=\"word\" id=\"word-5\" style=\"\">cap.</span> <span class=\"word\" id=\"word-6\" style=\"\">The</span> <span class=\"word\" id=\"word-7\" style=\"\">moon</span> <span class=\"word\" id=\"word-8\" style=\"\">smiled</span> <span class=\"word\" id=\"word-9\" style=\"\">happily.</span> <span class=\"word\" id=\"word-10\" style=\"\">I</span> <span class=\"word\" id=\"word-11\" style=\"\">had</span> <span class=\"word\" id=\"word-12\" style=\"\">to</span> <span class=\"word\" id=\"word-13\" style=\"\">smile</span> <span class=\"word\" id=\"word-14\" >too.</span><br>"
+                    }
+                ],
+                "karaoke": {
+                    "id": "scene7karaoke",
+                    "wordqueue": {
+                        "data": "0.45243,0.651239,0.831135,1.070539,1.277039,2.154828,3.029139,3.413428,3.93774,4.996124,5.188626,5.397226,5.572237,5.921537"
+                    }
+                }
+            },
+            {
+                "id": "scene8",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "extends": "base_stage",
+                "param": [
+                    {
+                        "name": "previous",
+                        "value": "scene7"
+                    },
+                    {
+                        "name": "next",
+                        "value": "scene9"
+                    }
+                ],
+                "events": {
+                    "event": [
+                        {
+                            "type": "enter",
+                            "action": {
+                                "type": "command",
+                                "command": "play",
+                                "asset": "page_8_audio_0",
+                                "loop": 1,
+                                "delay": "0"
+                            }
+                        },
+                        {
+                            "type": "exit",
+                            "action": {
+                                "type": "command",
+                                "command": "stop",
+                                "asset": "page_8_audio_0",
+                                "audio": true,
+                                "loop": 1
+                            }
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "asset": "page_8_audio_0"
+                    }
+                ],
+                "image": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 100,
+                        "h": 100,
+                        "visible": true,
+                        "editable": true,
+                        "asset": "page_8_image_0",
+                        "z-index": 0
+                    }
+                ],
+                "text": [],
+                "div": [
+                    {
+                        "id": "page_8_text_1",
+                        "x": 8.59375,
+                        "y": 2.4658203125,
+                        "w": 80.76171875,
+                        "h": 12.760416666666666,
+                        "style": "font-family: Calibri;font-size: 19px;",
+                        "__cdata": "<span class=\"word\" id=\"word-1\" style=\"\">After </span> <span class=\"word\" id=\"word-2\" style=\"\">school</span> <span class=\"word\" id=\"word-3\" style=\"\">the</span> <span class=\"word\" id=\"word-4\" style=\"\">next</span> <span class=\"word\" id=\"word-5\" style=\"\">day,</span> <span class=\"word\" id=\"word-6\" style=\"\">my</span> <span class=\"word\" id=\"word-7\" style=\"\">mother</span> <span class=\"word\" id=\"word-8\" style=\"\">gave</span> <span class=\"word\" id=\"word-9\" style=\"\">me</span> <span class=\"word\" id=\"word-10\" style=\"\">a</span> <span class=\"word\" id=\"word-11\" style=\"\">shiny</span> <span class=\"word\" id=\"word-12\" style=\"\">new</span> <span class=\"word\" id=\"word-13\" style=\"\">red</span> <span class=\"word\" id=\"word-14\" style=\"\">cap.</span> <span class=\"word\" id=\"word-15\" style=\"\">\"The</span> <span class=\"word\" id=\"word-16\" style=\"\">moon</span> <span class=\"word\" id=\"word-17\" style=\"\">sent</span> <span class=\"word\" id=\"word-18\" style=\"\">it,\"</span> <span class=\"word\" id=\"word-19\" style=\"\">she</span> <span class=\"word\" id=\"word-20\" >said.</span><br>"
+                    }
+                ],
+                "karaoke": {
+                    "id": "scene8karaoke",
+                    "wordqueue": {
+                        "data": "1.8552300000000002,2.033042,2.55803,2.733726,2.91153,3.264322,3.432327,3.792833,3.960137,4.146332,4.496339,4.842832,5.199832,5.54774,6.60334,7.130435,7.475528,7.654724,8.054426,8.264426"
+                    }
+                }
+            },
+            {
+                "id": "scene9",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "extends": "base_stage",
+                "param": [
+                    {
+                        "name": "previous",
+                        "value": "scene8"
+                    },
+                    {
+                        "name": "next",
+                        "value": "scene10"
+                    }
+                ],
+                "events": {
+                    "event": [
+                        {
+                            "type": "enter",
+                            "action": {
+                                "type": "command",
+                                "command": "play",
+                                "asset": "page_9_audio_0",
+                                "loop": 1,
+                                "delay": "0"
+                            }
+                        },
+                        {
+                            "type": "exit",
+                            "action": {
+                                "type": "command",
+                                "command": "stop",
+                                "asset": "page_9_audio_0",
+                                "audio": true,
+                                "loop": 1
+                            }
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "asset": "page_9_audio_0"
+                    }
+                ],
+                "image": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 100,
+                        "h": 100,
+                        "visible": true,
+                        "editable": true,
+                        "asset": "page_9_image_0",
+                        "z-index": 0
+                    }
+                ],
+                "text": [],
+                "div": [
+                    {
+                        "id": "page_9_text_1",
+                        "x": 7.53173828125,
+                        "y": 1.8208821614583333,
+                        "w": 83.984375,
+                        "h": 12.890625,
+                        "style": "font-family: Calibri;font-size: 19px;",
+                        "__cdata": "<span class=\"word\" id=\"word-1\" style=\"\">That </span> <span class=\"word\" id=\"word-2\" style=\"\">night,</span> <span class=\"word\" id=\"word-3\" style=\"\">both</span> <span class=\"word\" id=\"word-4\" style=\"\">the</span> <span class=\"word\" id=\"word-5\" style=\"\">moon</span> <span class=\"word\" id=\"word-6\" style=\"\">and</span> <span class=\"word\" id=\"word-7\" style=\"\">I</span> <span class=\"word\" id=\"word-8\" style=\"\">wore</span> <span class=\"word\" id=\"word-9\" style=\"\">our</span> <span class=\"word\" id=\"word-10\" style=\"\">caps</span> <span class=\"word\" id=\"word-11\" style=\"\">and</span> <span class=\"word\" id=\"word-12\" style=\"\">smiled.</span> <span class=\"word\" id=\"word-13\" style=\"\">We</span> <span class=\"word\" id=\"word-14\" style=\"\">were</span> <span class=\"word\" id=\"word-15\" >happy.</span><br>"
+                    }
+                ],
+                "karaoke": {
+                    "id": "scene9karaoke",
+                    "wordqueue": {
+                        "data": "0.626742,0.979535,1.50453,1.893726,2.071537,2.418737,2.590941,2.769437,3.124337,3.301426,4.004933,4.378737,5.250241,6.839237,7.03523"
+                    }
+                }
+            },
+            {
+                "id": "scene10",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "extends": "base_stage",
+                "param": [
+                    {
+                        "name": "previous",
+                        "value": "scene9"
+                    }
+                ],
+                "events": {
+                    "event": [
+                        {
+                            "type": "enter",
+                            "action": {
+                                "type": "command",
+                                "command": "play",
+                                "asset": "page_10_audio_0",
+                                "loop": 1,
+                                "delay": "0"
+                            }
+                        },
+                        {
+                            "type": "exit",
+                            "action": {
+                                "type": "command",
+                                "command": "stop",
+                                "asset": "page_10_audio_0",
+                                "audio": true,
+                                "loop": 1
+                            }
+                        }
+                    ]
+                },
+                "audio": [
+                    {
+                        "asset": "page_10_audio_0"
+                    }
+                ],
+                "image": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 100,
+                        "h": 100,
+                        "visible": true,
+                        "editable": true,
+                        "asset": "page_10_image_0",
+                        "z-index": 0
+                    }
+                ],
+                "text": [],
+                "div": [
+                    {
+                        "id": "page_10_text_1",
+                        "x": 14.94140625,
+                        "y": 8.723958333333332,
+                        "w": 45.1171875,
+                        "h": 7.421875,
+                        "style": "font-family: Calibri;font-size: 19px;",
+                        "__cdata": "<span class=\"word\" id=\"word-1\" style=\"\">Do </span> <span class=\"word\" id=\"word-2\" style=\"\">you</span> <span class=\"word\" id=\"word-3\" style=\"\">think</span> <span class=\"word\" id=\"word-4\" style=\"\">the</span> <span class=\"word\" id=\"word-5\" style=\"\">sun</span> <span class=\"word\" id=\"word-6\" style=\"\">needs</span> <span class=\"word\" id=\"word-7\" style=\"\">a</span> <span class=\"word\" id=\"word-8\" >hat?</span><br>"
+                    }
+                ],
+                "karaoke": {
+                    "id": "scene10karaoke",
+                    "wordqueue": {
+                        "data": "1.010533,1.264545,1.387534,1.5115340000000002,1.7000000000000002,1.9000000000000001,2.283545,2.408033"
+                    }
+                }
+            }
+        ]
+    }
+}
