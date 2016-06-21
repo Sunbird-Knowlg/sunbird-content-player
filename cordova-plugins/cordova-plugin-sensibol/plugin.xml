@@ -20,10 +20,10 @@
         <framework src="sensibol.gradle" custom="true" type="gradleReference" />
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="SensibolPlugin" >
-                <param name="android-package" value="SensibolPlugin"/>
+                <param name="android-package" value="org.ekstep.geniecanvas.SensibolPlugin"/>
             </feature>
         </config-file>
-        <source-file src="src/android/SensibolPlugin.java" target-dir="src/" />
+        <source-file src="src/android/SensibolPlugin.java" target-dir="src/org/ekstep/geniecanvas" />
         <resource-file src="libs/sensibol-ekstep-speechengine-v.1.0.15.jar" target="libs/sensibol-ekstep-speechengine-v.1.0.15.jar" />
         <resource-file src="libs/armeabi-v7a/libsensibol-ekstep-speechengine.so" target="libs/armeabi-v7a/libsensibol-ekstep-speechengine.so" />
     </platform>
