@@ -55,9 +55,8 @@ angular.module('genie-canvas.theme', [])
                 scope.imgSrc = (isCollection == true) ? "home_icon.png" : "home_icon_disabled.png";
                 var pageId = $rootScope.pageId;
                 scope.goToHome = function() {
-                    if (isCollection) {
-                        goToHome($state, isCollection, GlobalContext.previousContentId, pageId);
-                    }
+                    
+                   isCollection ? goToHome($state, isCollection, GlobalContext.previousContentId, pageId): window.location.hash = "/show/content/" + GlobalContext.currentContentId;
                 }
             }
         }
