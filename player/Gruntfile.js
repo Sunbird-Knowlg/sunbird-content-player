@@ -199,7 +199,8 @@ module.exports = function(grunt) {
                 secretAccessKey: process.env.AWSSecretKey, // You can also use env variables
                 region: 'ap-southeast-1',
                 uploadConcurrency: 5, // 5 simultaneous uploads
-                downloadConcurrency: 5 // 5 simultaneous downloads
+                downloadConcurrency: 5, // 5 simultaneous downloads
+                progress: 'progressBar'
             },
             uploadJS: {
                 options: {
