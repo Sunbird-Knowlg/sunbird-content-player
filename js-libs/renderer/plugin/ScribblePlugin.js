@@ -79,7 +79,7 @@ var ScribblePlugin = Plugin.extend({
         }
         this._self.removeEventListener("pressmove", this.handleMouseMove.bind(this), true);
     },
-    clear: function() {
+    clear: function(action) {
         this.paintBrush.graphics.clear();
         Renderer.update = true;
     },
