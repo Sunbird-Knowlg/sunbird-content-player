@@ -15,7 +15,7 @@ angular.module('genie-canvas.template',[])
     $scope.getContentMetadata = function(content) {
         ContentService.getContent(content)
         .then(function(data) {
-           $scope.setConentMetadata(data);
+           $scope.setContentMetadata(data);
         })
         .catch(function(err) {
             console.info("contentNotAvailable : ", err);
@@ -23,7 +23,7 @@ angular.module('genie-canvas.template',[])
         });
     }
 
-    $scope.setConentMetadata = function(data){
+    $scope.setContentMetadata = function(data){
         GlobalContext.currentContentId = data.identifier;
         GlobalContext.currentContentMimeType = data.mimeType;
         if(_.isUndefined(data.localData)){
@@ -50,7 +50,7 @@ angular.module('genie-canvas.template',[])
             if( (webview == "true")){
                 if(content.metadata && (content.metadata.mimeType != COLLECTION_MIMETYPE)){
                     //For JSON and Direct contentID
-                    $scope.setConentMetadata(content.metadata);
+                    $scope.setContentMetadata(content.metadata);
                 }else{
                     //For collections
                     $scope.getContentMetadata($stateParams.contentId);
@@ -133,10 +133,24 @@ angular.module('genie-canvas.template',[])
     $scope.playNextContent = function() {
         var id = collectionChildrenIds.pop();
         Renderer.cleanUp();
-        if(id)
-            $state.go('showContent', {"contentId": id});
-        else
+        if(id) {
+            ContentService.getContent(id)
+            .then(function(content) {
+                if (COLLECTION_MIMETYPE == content.mimeType) {
+                    $state.go('contentList', { "id": id });
+                } else {
+                    $state.go('showContent', {"contentId": id});
+                }
+            })
+            .catch(function(err) {
+                if(!_.isEmpty(collectionChildrenIds))
+                     $scope.playNextContent();
+                console.info("contentNotAvailable : ", err);
+                contentNotAvailable();
+            });
+        } else {
             $state.go('contentList', { "id": GlobalContext.previousContentId });
+        }
     }
 
     $scope.restartContent = function() {
