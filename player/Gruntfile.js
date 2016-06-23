@@ -227,6 +227,17 @@ module.exports = function(grunt) {
                     dest: '/preview/sandbox/'
                 }]
             },
+            uploadPreviewFilesToQA : {
+                options: {
+                    bucket: 'ekstep-public'
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'public/preview',
+                    src: ['**'],
+                    dest: '/preview/QA/'
+                }]
+            },
             uploadPreviewFilesToProduction : {
                 options: {
                     bucket: 'ekstep-public'
@@ -250,6 +261,15 @@ module.exports = function(grunt) {
                 {
                     dest: 'js/telemetry.min.js',
                     exclude: "**/.*",
+                    action: 'delete'
+                }]
+            },
+            cleanQAPreview: {
+                options: {
+                    bucket: 'ekstep-public'
+                },
+                files: [{
+                    dest: 'preview/QA',
                     action: 'delete'
                 }]
             },
@@ -522,6 +542,7 @@ module.exports = function(grunt) {
         }
     });
 
+    grunt.registerTask('preview-QA', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA', 'clean:preview']);
     grunt.registerTask('preview-sandbox', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanSandboxPreview', 'aws_s3:uploadPreviewFilesToSandbox', 'clean:preview']);
     grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction', 'clean:preview']);
 
