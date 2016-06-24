@@ -138,8 +138,9 @@ angular.module('genie-canvas.template',[])
     $scope.showCredits = function(key) {
         if(content.imageCredits==null&& content.voiceCredits==null && content.soundCredits==null){
 
-        jQuery("#creditsPopup").hide();
+        
         console.warn("No metadata imageCredits,voiceCredites and soundCredits");
+        return;
 
         }
         else{
