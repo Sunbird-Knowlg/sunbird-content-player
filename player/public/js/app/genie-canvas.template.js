@@ -132,7 +132,8 @@ angular.module('genie-canvas.template',[])
 
     $scope.playNextContent = function() {
         var id = collectionChildrenIds.pop();
-        Renderer.cleanUp();
+        if(Renderer.running)
+            Renderer.cleanUp();
         if(id) {
             ContentService.getContent(id)
             .then(function(content) {
@@ -145,8 +146,10 @@ angular.module('genie-canvas.template',[])
             .catch(function(err) {
                 if(!_.isEmpty(collectionChildrenIds))
                      $scope.playNextContent();
-                console.info("contentNotAvailable : ", err);
-                contentNotAvailable();
+                else {
+                    console.info("contentNotAvailable : ", err);
+                    contentNotAvailable();
+                }
             });
         } else {
             $state.go('contentList', { "id": GlobalContext.previousContentId });
