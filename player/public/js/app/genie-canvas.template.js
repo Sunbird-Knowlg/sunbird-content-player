@@ -136,15 +136,21 @@ angular.module('genie-canvas.template',[])
     TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContnetApp-EndScreen", subtype: "ContentID"});
     
     $scope.showCredits = function(key) {
-        if (content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null) {
-            console.warn("No metadata imageCredits,voiceCredites and soundCredits");
-            return;
+        if(content.imageCredits==null&& content.voiceCredits==null && content.soundCredits==null){
+
+        
+        console.warn("No metadata imageCredits,voiceCredites and soundCredits");
+        return;
+
         }
-        jQuery("#creditsPopup").show();
-        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {
-            stageId: "ContnetApp-CreditsScreen",
-            subtype: "ContentID"
-        });
+        else{
+            jQuery("#creditsPopup").show();
+
+        }
+        
+        
+
+        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId : "ContnetApp-CreditsScreen", subtype: "ContentID"});
     }
 
     $scope.playNextContent = function() {
