@@ -60,19 +60,53 @@ EventManager = {
 	},
 	dispatchEvent: function(id, event) {
 		var plugin = PluginManager.getPluginObject(id);
-		if(_.contains(EventManager.appEvents, event) || _.contains(plugin.appEvents, event)) { // Dispatch app events
-			plugin.dispatchEvent(event);
-		} else { // Dispatch touch events
+		if (_.contains(createjs.DisplayObject._MOUSE_EVENTS, event)) {
 			plugin._self.dispatchEvent(event);
+		} else {
+			plugin.dispatchEvent(event);
 		}
 	},
 	handleActions: function(evt, plugin) {
+		var unmuteActions = _.clone(evt.action);
+		evt.action = this._chainActions(evt.action, unmuteActions);
 		if(_.isArray(evt.action)) {
 			evt.action.forEach(function(action) {
 				EventManager.handleAction(_.clone(action), plugin);
 			});
 		} else if(evt.action) {
 			EventManager.handleAction(_.clone(evt.action), plugin);
+		}
+	},
+	_chainActions: function(actions, unmuteActions) {
+		if(_.isArray(actions)) {
+			var filter = _.filter(actions, function(action) {
+				return (action.with || action.after);
+			});
+			if (filter.length > 0) {
+				var action = filter[0];
+				var parentId = action.after || action.with;
+				var p = _.findWhere(unmuteActions, {"id": parentId});
+				if (p) {
+					if (action.after) {
+						if(!p.children) p.children = [];
+						p.children.push(action);
+					}
+					if (action.with) {
+						if(!p.siblings) p.siblings = [];
+						p.siblings.push(action);
+					}
+					actions = _.without(actions, action);
+				} else {
+					console.warn("Didn't find action with id:", parentId);
+				}
+				delete action.after;
+				delete action.with;
+				return this._chainActions(actions, unmuteActions);
+			} else {
+				return actions;
+			}
+		} else {
+			return actions;
 		}
 	},
 	handleAction: function(action, plugin) {

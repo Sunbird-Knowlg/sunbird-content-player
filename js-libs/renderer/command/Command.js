@@ -1,13 +1,18 @@
+// TODO: need to combine all the sync commands.
 var Command = Class.extend({
 	_name: undefined,
 	_methodName: undefined,
 	_action: undefined,
 	_isPluginAction: true,
+	_isAsync: false,
 	init: function(action) {
 		this._action = action;
 		CommandManager._setDataAttributes(action);
-		console.info("Calling action:", this._name);
-		this.invoke(action);
+		this._action.cb = this._callBack.bind(this);
+		this.invoke(this._action);
+		if (!this._isAsync) {
+			this._action.cb({status: "success"});
+		}
 	},
 	getPluginObject: function() {
 		var plugin = PluginManager.getPluginObject(this._action.asset);
@@ -22,5 +27,15 @@ var Command = Class.extend({
 	invoke: function(action) {
 		var plugin = this.getPluginObject();
 		plugin[this._methodName](action);
+	},
+	_callBack: function(response) {
+		if ("undefined" != typeof response && "success" == response.status) {
+			console.info(this._name+" completed.");
+			if (this._action.children && this._action.children.length > 0) {
+				_.each(this._action.children, function(action) {
+					CommandManager.handle(action);
+				});
+			}
+		}
 	}
 });

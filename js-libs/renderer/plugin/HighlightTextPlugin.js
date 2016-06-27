@@ -61,7 +61,12 @@ var HighlightTextPlugin = HTMLPlugin.extend({
                 this._isPlaying = true;
                 var prevPosition = 0;
                 if (audio) {
-                    this._playAudio(audio);
+                    var soundInstance = this._playAudio(audio);
+                    soundInstance.on("complete", function() {
+                        instance._cleanupHighlight();
+                        if ("undefined" != typeof action.cb)
+                            action.cb({"status":"success"});
+                    });
                     this._listener = function() {
                         instance._position.current = Number(instance._audioInstance.object.position.toFixed(0));
                         instance._highlight();
@@ -75,6 +80,8 @@ var HighlightTextPlugin = HTMLPlugin.extend({
                             instance._highlight();
                             if (instance._position.previous > instance._timings[instance._timings.length -1] + 500) {
                                 instance._cleanupHighlight();
+                                if ("undefined" != typeof action.cb)
+                                    action.cb({"status":"success"});
                             }
                             instance._position.previous = instance._position.current;
                         }
@@ -107,6 +114,8 @@ var HighlightTextPlugin = HTMLPlugin.extend({
     togglePlay: function(action) {
         if (this._isPlaying && !this._isPaused) {
             this.pause(action);
+            if ("undefined" != typeof action.cb)
+                action.cb({"status":"success"});
         } else {
             this.play(action);
         }
@@ -141,9 +150,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         var instance = this;
         instance._data.audio = audio;
         instance._audioInstance = AudioManager.play({asset: audio, stageId: this._stage._id});
-        instance._audioInstance.object.on("complete", function() {
-            instance._cleanupHighlight();
-        });
+        return instance._audioInstance.object;
     },
     _highlight: function() {
         var instance = this;
