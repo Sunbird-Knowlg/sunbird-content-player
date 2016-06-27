@@ -37,11 +37,7 @@ EventManager = {
 		}
 		if (register) {
 			plugin.events.push(evt.type);
-			if(_.contains(EventManager.appEvents, evt.type) || _.contains(plugin.appEvents, evt.type)) { // Handle app events
-				plugin.on(evt.type, function() {
-					EventManager.handleActions(evt, plugin);
-				});
-			} else { // Handle mouse events
+			if (_.contains(createjs.DisplayObject._MOUSE_EVENTS, evt.type)) {
 				var element = plugin._self;
 				if (element) {
 					if(plugin instanceof HTMLPlugin) {
@@ -55,6 +51,10 @@ EventManager = {
 						EventManager.handleActions(evt, plugin);
 					});	
 				}
+			} else {
+				plugin.on(evt.type, function() {
+					EventManager.handleActions(evt, plugin);
+				});
 			}
 		}
 	},
@@ -70,11 +70,19 @@ EventManager = {
 		var unmuteActions = _.clone(evt.action);
 		evt.action = this._chainActions(evt.action, unmuteActions);
 		if(_.isArray(evt.action)) {
-			evt.action.forEach(function(action) {
-				EventManager.handleAction(_.clone(action), plugin);
+			evt.action.forEach(function(a) {
+				var action = _.clone(a);
+				if (EventManager._canIHandle(action, plugin)) {
+					EventManager._setActionAsset(action, plugin);
+					EventManager.handleAction(action);
+				}
 			});
 		} else if(evt.action) {
-			EventManager.handleAction(_.clone(evt.action), plugin);
+			var action = _.clone(evt.action)
+			if (EventManager._canIHandle(action, plugin)) {
+				EventManager._setActionAsset(action, plugin);
+				EventManager.handleAction(action);
+			}
 		}
 	},
 	_chainActions: function(actions, unmuteActions) {
@@ -109,7 +117,38 @@ EventManager = {
 			return actions;
 		}
 	},
-	handleAction: function(action, plugin) {
+	handleAction: function(action) {
+		if(action.type === 'animation') {
+			AnimationManager.handle(action);
+		} else {
+			if(action.delay) {
+				TimerManager.start(action);
+			} else {
+				CommandManager.handle(action);
+			}
+		}
+	},
+	_setActionAsset: function(action, plugin) {
+		var stage = plugin._stage;
+		if (!stage || stage == null) {
+			stage = plugin;
+		}
+		if (stage && stage._type === 'stage') {
+			if(action.param) {
+				action.value = stage.getParam(action.param) || '';
+			}
+			if (action.asset || action.asset_param || action.asset_model) {
+				if (action.asset_param) {
+					action.asset = stage.getParam(action.asset_param) || '';
+				} else if (action.asset_model) {
+					action.asset = stage.getModelValue(action.asset_model) || '';
+				}
+			} else {
+				action.asset = plugin._id;
+			}
+		}
+	},
+	_canIHandle: function(action, plugin) {
 		var handle = true;
 		// Conditional evaluation for handle action.
 		if (action['ev-if']) {
@@ -118,39 +157,7 @@ EventManager = {
             if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}"
 			handle = plugin.evaluateExpr(expr);
 		}
-		if (handle) {
-			var stage = plugin._stage;
-			if (!stage || stage == null) {
-				stage = plugin;
-			}
-			if (stage && stage._type === 'stage') {
-				if(action.param) {
-					action.value = stage.getParam(action.param) || '';
-				}
-				if (action.asset || action.asset_param || action.asset_model) {
-					if (action.asset_param) {
-						action.asset = stage.getParam(action.asset_param) || '';
-					} else if (action.asset_model) {
-						action.asset = stage.getModelValue(action.asset_model) || '';
-					}
-				} else {
-					action.asset = plugin._id;		
-				}
-			}
-			var command = (action.command) ? action.command.toUpperCase() : "";
-			if (!action.asset && ["PLAY", "TOGGLEPLAY"].indexOf(command) == -1) {
-				action.pluginObj = plugin;
-			}
-			if(action.type === 'animation') {
-				AnimationManager.handle(action, plugin);
-			} else {
-				if(action.delay) {
-					TimerManager.start(action);
-				} else {
-					CommandManager.handle(action);
-				}
-			}
-		}
+		return handle;
 	},
 	processMouseTelemetry: function(action, event, plugin) {
 		var data = {

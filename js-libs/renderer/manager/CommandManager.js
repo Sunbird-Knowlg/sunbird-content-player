@@ -5,7 +5,7 @@ CommandManager = {
     },
     handle: function(action) {
         var c, cId = '';
-        if (_.isString(action.command)) cId = (action.command).toUpperCase();
+        if (_.isString(action.command)) cId = action.command.toUpperCase();
         var command = CommandManager.commandMap[cId];
         c = new command(action);
         return c;
