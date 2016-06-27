@@ -499,14 +499,13 @@ module.exports = function(grunt) {
         }
     });
 
-    var flavor = grunt.option('deployment');
-    if (flavor) {
+    grunt.registerTask('deploy-preview', function(flavor) {
+        if(!flavor){
+            grunt.fail.fatal("deployment argument value should be any one of: ['sandbox', 'production', 'QA'].");
+            return;
+        }
+        grunt.log.writeln("Starting", flavor, "deployment");
         flavor = flavor.toLowerCase().trim();
-        if (['sandbox', 'production'].indexOf(flavor) == -1)
-            grunt.fail.fatal("deployment argument value should be any one of: ['sandbox', 'production'].");   
-    }
-
-    grunt.registerTask('deploy-preview', function() {
         var tasks = ['clean:appConfig','copy:appConfig'];
         if ("sandbox" == flavor) {
             tasks.push('replace:preview_sandbox');
@@ -514,10 +513,11 @@ module.exports = function(grunt) {
         } else if("production" == flavor) {
             tasks.push('replace:preview_production');
             tasks.push('preview-production');
-        } else {
-            grunt.fail.fatal("deployment argument value should be any one of: ['sandbox', 'production'].");
-            return;
-        }
+        } else if("qa" == flavor) {
+            //tasks.push('replace:preview_production');
+            //tasks.push('preview-QA');
+        } 
+
         if (tasks.length > 0) {
             grunt.task.run(tasks);
         }
