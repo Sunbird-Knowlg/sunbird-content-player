@@ -450,16 +450,16 @@ module.exports = function(grunt) {
                 src: ['public/js/app/AppConfig.js'],
                 overwrite: true,
                 replacements: [{
-                    from: /sandbox/g,
-                    to: "DEPLOYMENT"
+                    from: /flavor: 'sandbox'/g,
+                    to: "flavor: 'DEPLOYMENT'"
                 }]
             },
             flavor_productionToDeployment: {
                 src: ['public/js/app/AppConfig.js'],
                 overwrite: true,
                 replacements: [{
-                    from: /production/g,
-                    to: "DEPLOYMENT"
+                    from: /flavor: 'production'/g,
+                    to: "flavor: 'DEPLOYMENT'"
                 }]
             },
             androidLib: {
