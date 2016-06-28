@@ -219,11 +219,11 @@ ion-popover-view.fit ion-content {
     width: 100%;
     padding-top: 10%;
     position: absolute;
-    height: 25%;
+    height: 30%;
 }
 
 .gc-menu-title-cont p{
-    font-size: 5vh;
+    font-size:5vh;
     width: 100%;
     float: left;
     padding: 0 15%;
@@ -243,7 +243,7 @@ ion-popover-view.fit ion-content {
     text-align: center;    
     width: 70%; 
     left:-10%;   
-    top:25%;
+    top:30%;
     
 }
 
@@ -251,10 +251,11 @@ ion-popover-view.fit ion-content {
     position: absolute;  
     text-align: center;    
     width: 70%;    
-    top: 25%;
+    top: 30%;
     left:35%;
     
 }
+
 
 /*.gc-menu-mute-cont{
 
@@ -279,8 +280,8 @@ ion-popover-view.fit ion-content {
     position: absolute;  
     text-align: center;    
     width: 70%;    
-    bottom: 35%;
-    left: 10%;
+    bottom: 28%;
+    left: 11%;
 
 }
 

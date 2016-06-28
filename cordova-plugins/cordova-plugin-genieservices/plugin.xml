@@ -20,13 +20,13 @@
         <framework src="genieservice.gradle" custom="true" type="gradleReference" />
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="GenieServicePlugin" >
-                <param name="android-package" value="GenieServicePlugin"/>
+                <param name="android-package" value="org.ekstep.geniecanvas.GenieServicePlugin"/>
             </feature>
         </config-file>
-        <source-file src="src/android/GenieServicePlugin.java" target-dir="src/" />
-        <source-file src="src/android/TelemetryResponse.java" target-dir="src/" />
-        <source-file src="src/android/UserProfileResponse.java" target-dir="src/" />
-        <source-file src="src/android/GenieServicesResponse.java" target-dir="src/" />
-        <source-file src="src/android/GenieServicesListResponse.java" target-dir="src/" />
+        <source-file src="src/android/GenieServicePlugin.java" target-dir="src/org/ekstep/geniecanvas" />
+        <source-file src="src/android/TelemetryResponse.java" target-dir="src/org/ekstep/geniecanvas" />
+        <source-file src="src/android/UserProfileResponse.java" target-dir="src/org/ekstep/geniecanvas" />
+        <source-file src="src/android/GenieServicesResponse.java" target-dir="src/org/ekstep/geniecanvas" />
+        <source-file src="src/android/GenieServicesListResponse.java" target-dir="src/org/ekstep/geniecanvas" />
     </platform>
 </plugin>
