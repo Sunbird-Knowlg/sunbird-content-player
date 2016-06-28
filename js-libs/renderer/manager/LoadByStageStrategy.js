@@ -55,7 +55,7 @@ LoadByStageStrategy = Class.extend({
         stages.forEach(function(stage) {
             instance.stageManifests[stage.id] = [];
             AssetManager.stageAudios[stage.id] = [];
-            instance.populateAssets(stage, stage.id, stage.preload);
+            instance.populateAssets(stage, stage.id, stage.preload, themeData.startStage);
         });
         instance.loadCommonAssets();
 
@@ -71,7 +71,7 @@ LoadByStageStrategy = Class.extend({
         this.commonAssets.push({id: "goodjob_sound",src:  localPath+ "assets/sounds/goodjob.mp3"});
         this.commonAssets.push({id: "tryagain_sound",src:  localPath+ "assets/sounds/letstryagain.mp3"});
     },
-    populateAssets: function(data, stageId, preload) {
+    populateAssets: function(data, stageId, preload, startStageId) {
         var instance = this;
         for (k in data) {
             var plugins = data[k];
@@ -84,7 +84,7 @@ LoadByStageStrategy = Class.extend({
                 plugins.forEach(function(plugin) {
                     var asset = instance.assetMap[plugin.asset];
                     if (asset) {
-                        if (preload === true) {
+                        if ((preload === true) && (stageId !== startStageId)) {
                             instance.commonAssets.push(_.clone(asset));
                         } else {
                             instance.stageManifests[stageId].push(_.clone(asset));
