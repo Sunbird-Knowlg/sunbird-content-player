@@ -467,6 +467,14 @@ module.exports = function(grunt) {
                     to: "sandbox"
                 }]
             },
+            preview_QA: {
+                src: ['public/js/app/AppConfig.js'],
+                overwrite: true,
+                replacements: [{
+                    from: /DEPLOYMENT/g,
+                    to: "sandbox"
+                }]
+            },
             flavor_sandboxToDeployment: {
                 src: ['public/js/app/AppConfig.js'],
                 overwrite: true,
@@ -549,8 +557,8 @@ module.exports = function(grunt) {
             tasks.push('replace:preview_production');
             tasks.push('preview-production');
         } else if("qa" == flavor) {
-            //tasks.push('replace:preview_production');
-            //tasks.push('preview-QA');
+            tasks.push('replace:preview_QA');
+            tasks.push('preview-QA');
         } 
 
         if (tasks.length > 0) {
