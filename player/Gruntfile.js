@@ -455,22 +455,6 @@ module.exports = function(grunt) {
                     to: "sandbox"
                 }]
             },
-            flavor_sandboxToDeployment: {
-                src: ['public/js/app/AppConfig.js'],
-                overwrite: true,
-                replacements: [{
-                    from: /sandbox/g,
-                    to: "DEPLOYMENT"
-                }]
-            },
-            flavor_productionToDeployment: {
-                src: ['public/js/app/AppConfig.js'],
-                overwrite: true,
-                replacements: [{
-                    from: /production/g,
-                    to: "DEPLOYMENT"
-                }]
-            },
             androidLib: {
                 src: ['platforms/android/build.gradle'],
                 overwrite: true,
