@@ -9,37 +9,10 @@
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
     <title></title>
-
     <link href="libs/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/app/style.css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="css/thirdparty/bookshelf_slider.css" />
     <link rel="stylesheet" type="text/css" href="css/thirdparty/skin02.css" />
-
-    <script type="text/javascript" src="js/thirdparty/jquery.min.js"></script>
-    <script type="text/javascript" src="js/thirdparty/jquery.easing.1.3.js"></script>
-    <script type="text/javascript" src="js/thirdparty/jquery.bookshelfslider.min.js"></script>
-    <script type="text/javascript" src="js/thirdparty/async.min.js"></script>
-    <!-- ionic/angularjs js -->
-    <script src="libs/ionic/js/ionic.bundle.min.js"></script>
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
-
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="libs/ngCordova/ng-cordova.min.js"></script>
-    <script src="libs/angular-resource/angular-resource.min.js"></script>
-    <!-- your app's js -->
-    <script src="js/app/GlobalContext.js"></script>
-    <script src="js/app/AppConfig.js"></script>
-    <script src="js/app/AppMessages.js"></script>
-    <script src="js/app/main.js"></script>
-    <script src="js/app/app.js"></script>  
-    <script src="js/app/services.js"></script>
-    <script src="js/app/renderer.theme.js"></script>
-    <script src="js/app/genie-canvas.template.js"></script>
-    <script src="js/renderer.min.js"></script>
-    <script src="js/telemetry.min.js"></script>
-    <script src="js/thirdparty/underscore.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/thirdparty/bookshelf_slider.css" />
     <style>
         #gameArea {
             position: absolute;
@@ -65,8 +38,42 @@
     </head>
     <body>
         <ion-nav-view></ion-nav-view>
-        <div id="loading" style="z-index:1000;padding-top:45%;width:100%;height:100%;text-align:center;background-color:white; display: none;" class="view-container">
-            <span style="font-size: 3em;">Loading...</span>
+        <div id="loading" style="margin:auto; position:absolute;width:100%;height:100%; z-index: 0;">
+            <div style="margin: auto; width: 100%; position: fixed; text-align: center; top: 40%;">
+                <div style="margin-bottom: 2%;">
+                    <!-- <ion-spinner icon="bubbles"></ion-spinner> -->
+                    <img id="loading-image" style="width:5%" src="img/icons/loadingSpinner.gif"/>
+                </div>
+                <div style="margin: auto; width: 100%; position: fixed; text-align: center;">
+                    <div style="font-weight: bold; font-size: 40px;margin-bottom:3%;margin-left:3%">Loading...</div>
+                </div>
+            </div>
         </div>
+
+        <script type="text/javascript" src="js/thirdparty/jquery.min.js"></script>
+        <script type="text/javascript" src="js/thirdparty/jquery.easing.1.3.js"></script>
+        <script type="text/javascript" src="js/thirdparty/jquery.bookshelfslider.min.js"></script>
+        <script type="text/javascript" src="js/thirdparty/async.min.js"></script>
+        <!-- ionic/angularjs js -->
+        <script src="libs/ionic/js/ionic.bundle.min.js"></script>
+        <!-- cordova script (this will be a 404 during development) -->
+        <script src="cordova.js"></script>
+
+        <!-- cordova script (this will be a 404 during development) -->
+        <script src="libs/ngCordova/ng-cordova.min.js"></script>
+        <script src="libs/angular-resource/angular-resource.min.js"></script>
+        <!-- your app's js -->
+        <script src="js/app/GlobalContext.js"></script>
+        <script src="js/app/AppConfig.js"></script>
+        <script src="js/app/AppMessages.js"></script>
+        <script src="js/app/main.js"></script>
+        <script src="js/app/app.js"></script>
+        <script src="js/app/services.js"></script>
+        <script src="js/app/renderer.theme.js"></script>
+        <script src="js/app/genie-canvas.template.js"></script>
+        <script src="js/app/OverlayHtml.js"></script>
+        <script src="js/renderer.min.js"></script>
+        <script src="js/telemetry.min.js"></script>
+        <script src="js/thirdparty/underscore.js"></script>
     </body>
 </html>

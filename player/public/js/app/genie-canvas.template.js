@@ -42,8 +42,9 @@ angular.module('genie-canvas.template',[])
         var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
         TelemetryService.start(identifier, version);
         TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID"});
+        $('#loading').hide();
     }
-    
+
     $scope.init = function(){
         $scope.showPage = true;
         if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
