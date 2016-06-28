@@ -219,6 +219,17 @@ module.exports = function(grunt) {
                     dest: '/preview/sandbox/'
                 }]
             },
+            uploadPreviewFilesToQA : {
+                options: {
+                    bucket: 'ekstep-public'
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'public/preview',
+                    src: ['**'],
+                    dest: '/preview/QA/'
+                }]
+            },
             uploadPreviewFilesToProduction : {
                 options: {
                     bucket: 'ekstep-public'
@@ -242,6 +253,15 @@ module.exports = function(grunt) {
                 {
                     dest: 'js/telemetry.min.js',
                     exclude: "**/.*",
+                    action: 'delete'
+                }]
+            },
+            cleanQAPreview: {
+                options: {
+                    bucket: 'ekstep-public'
+                },
+                files: [{
+                    dest: 'preview/QA',
                     action: 'delete'
                 }]
             },
@@ -463,6 +483,14 @@ module.exports = function(grunt) {
                     to: "flavor: 'DEPLOYMENT'"
                 }]
             },
+            flavor_QAToDeployment: {
+                src: ['public/js/app/AppConfig.js'],
+                overwrite: true,
+                replacements: [{
+                    from: /flavor: 'sandbox'/g,
+                    to: "flavor: 'DEPLOYMENT'"
+                }]
+            },
             androidLib: {
                 src: ['platforms/android/build.gradle'],
                 overwrite: true,
@@ -530,9 +558,11 @@ module.exports = function(grunt) {
         }
     });
 
+
     grunt.registerTask('preview-sandbox', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanSandboxPreview', 'aws_s3:uploadPreviewFilesToSandbox', 'clean:preview', 'replace:flavor_sandboxToDeployment']);
     grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction', 'clean:preview', 'replace:flavor_productionToDeployment']);
-    
+    grunt.registerTask('preview-QA', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA', 'clean:preview', 'replace:flavor_QAToDeployment']);
+  
     grunt.registerTask('rm-cordova-plugin-sensibol', function() {
         if (grunt.file.exists('plugins/cordova-plugin-sensibol')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
     });
