@@ -10,6 +10,7 @@ var Command = Class.extend({
 		CommandManager._setDataAttributes(action);
 		this._action.cb = this._callBack.bind(this);
 		this.invoke(this._action);
+		this._invokeRelatedActions('siblings');
 		if (!this._isAsync) {
 			this._action.cb({status: "success"});
 		}
@@ -28,14 +29,17 @@ var Command = Class.extend({
 		var plugin = this.getPluginObject();
 		plugin[this._methodName](action);
 	},
+	_invokeRelatedActions: function(relation) {
+		if (this._action[relation] && this._action[relation].length > 0) {
+			_.each(this._action[relation], function(action) {
+				EventManager.handleAction(action);
+			});
+		}
+	},
 	_callBack: function(response) {
 		if ("undefined" != typeof response && "success" == response.status) {
 			console.info(this._name+" completed.");
-			if (this._action.children && this._action.children.length > 0) {
-				_.each(this._action.children, function(action) {
-					CommandManager.handle(action);
-				});
-			}
+			this._invokeRelatedActions('children');
 		}
 	}
 });

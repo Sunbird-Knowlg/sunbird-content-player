@@ -118,14 +118,10 @@ EventManager = {
 		}
 	},
 	handleAction: function(action) {
-		if(action.type === 'animation') {
-			AnimationManager.handle(action);
+		if(action.delay) {
+			TimerManager.start(action);
 		} else {
-			if(action.delay) {
-				TimerManager.start(action);
-			} else {
-				CommandManager.handle(action);
-			}
+			(action.type === 'animation') ? AnimationManager.handle(action) : CommandManager.handle(action);
 		}
 	},
 	_setActionAsset: function(action, plugin) {
