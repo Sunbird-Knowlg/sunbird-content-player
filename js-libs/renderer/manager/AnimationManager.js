@@ -24,8 +24,7 @@ AnimationManager = {
             	} else {
             		console.info("Playing from cache...");
             	}
-            	if(!action.cb) action.cb = function() {}
-            	pluginObj.animate(instance);
+            	pluginObj.animate(instance, action.cb);
             }
         }
 	},

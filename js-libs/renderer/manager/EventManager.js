@@ -121,7 +121,11 @@ EventManager = {
 		if(action.delay) {
 			TimerManager.start(action);
 		} else {
-			(action.type === 'animation') ? AnimationManager.handle(action) : CommandManager.handle(action);
+			if (action.type === 'animation') {
+				action.type = 'command';
+				action.command = 'ANIMATE';
+			}
+			CommandManager.handle(action);
 		}
 	},
 	_setActionAsset: function(action, plugin) {
