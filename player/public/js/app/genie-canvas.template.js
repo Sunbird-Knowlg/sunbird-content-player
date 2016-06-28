@@ -136,7 +136,7 @@ angular.module('genie-canvas.template',[])
         Renderer.cleanUp();
         if(id)
             $state.go('showContent', {"contentId": id});
-        else 
+        else
             $state.go('contentList', { "id": GlobalContext.previousContentId });
     }
 
