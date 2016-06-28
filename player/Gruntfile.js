@@ -159,14 +159,6 @@ module.exports = function(grunt) {
                     }
                 ]
             },
-            appConfig: {
-                files: [
-                    {
-                        src: 'public/js/app/DefaultAppConfig.js',
-                        dest: 'public/js/app/AppConfig.js'
-                    }
-                ]
-            },
             customActivity: {
                 files: [
                     {
@@ -183,8 +175,7 @@ module.exports = function(grunt) {
             after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html", "www/webview.html", "www/preview.html"],
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
             minjs: ['public/js/*.min.js'],
-            preview: ["public/preview"],
-            appConfig: ["public/js/app/AppConfig.js"]
+            preview: ["public/preview"]
 
         },
         rename: {
@@ -455,6 +446,22 @@ module.exports = function(grunt) {
                     to: "sandbox"
                 }]
             },
+            flavor_sandboxToDeployment: {
+                src: ['public/js/app/AppConfig.js'],
+                overwrite: true,
+                replacements: [{
+                    from: /flavor: 'sandbox'/g,
+                    to: "flavor: 'DEPLOYMENT'"
+                }]
+            },
+            flavor_productionToDeployment: {
+                src: ['public/js/app/AppConfig.js'],
+                overwrite: true,
+                replacements: [{
+                    from: /flavor: 'production'/g,
+                    to: "flavor: 'DEPLOYMENT'"
+                }]
+            },
             androidLib: {
                 src: ['platforms/android/build.gradle'],
                 overwrite: true,
@@ -506,7 +513,7 @@ module.exports = function(grunt) {
     }
 
     grunt.registerTask('deploy-preview', function() {
-        var tasks = ['clean:appConfig','copy:appConfig'];
+        var tasks = [];
         if ("sandbox" == flavor) {
             tasks.push('replace:preview_sandbox');
             tasks.push('preview-sandbox');
@@ -522,9 +529,9 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('preview-sandbox', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanSandboxPreview', 'aws_s3:uploadPreviewFilesToSandbox', 'clean:preview']);
-    grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction', 'clean:preview']);
-
+    grunt.registerTask('preview-sandbox', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanSandboxPreview', 'aws_s3:uploadPreviewFilesToSandbox', 'clean:preview', 'replace:flavor_sandboxToDeployment']);
+    grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction', 'clean:preview', 'replace:flavor_productionToDeployment']);
+    
     grunt.registerTask('rm-cordova-plugin-sensibol', function() {
         if (grunt.file.exists('plugins/cordova-plugin-sensibol')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
     });
