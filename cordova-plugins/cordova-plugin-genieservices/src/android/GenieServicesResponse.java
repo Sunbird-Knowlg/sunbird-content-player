@@ -1,3 +1,5 @@
+package org.ekstep.geniecanvas;
+
 import android.text.TextUtils;
 
 import org.apache.cordova.CallbackContext;
