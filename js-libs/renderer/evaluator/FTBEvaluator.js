@@ -18,7 +18,13 @@ FTBEvaluator = {
 				}
 				if (("undefined" != typeof model[ans]) && ("undefined" != typeof answer[ans]) && ("undefined" != typeof answer[ans].value)) {
 					var isCorrect = this._isCorrectAnswer(answer[ans].value, model[ans]);
-					(isCorrect) ? score += answer[ans].score : pass = false;
+					if (isCorrect) {
+						var s = answer[ans].score;
+						score += (_.isNumber(s) ? s: 1);
+						pass = true;
+					} else {
+						pass = false;
+					}
 				} else {
 					pass = false;
 				}

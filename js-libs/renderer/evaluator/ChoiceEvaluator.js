@@ -20,7 +20,7 @@ MCQEvaluator = {
 						if (!opt.selected) {
 							pass = false;
 						} else {
-							score += opt.score || 1;
+							score += (_.isNumber(opt.score)) ? opt.score: 1;
 						}
 					} else {
 						if (opt.selected === true) {
