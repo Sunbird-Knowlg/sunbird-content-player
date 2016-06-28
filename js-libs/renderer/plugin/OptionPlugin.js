@@ -196,11 +196,12 @@ var OptionPlugin = Plugin.extend({
                         for (var i = 0; i < snapTo.length; i++) {
                             var lhsQues = snapTo[i];
                             if(lhsQues._answer){
-                                if(lhsQues._answer._uniqueId == instance._uniqueId){
+                                if (lhsQues._answer._uniqueId == instance._uniqueId) {
                                     lhsQues._answer = undefined;
-                                    instance._parent.removeAnswer(instance, -1);
+                                    /* instance._parent.removeAnswer(instance, -1);*/
+                                    instance._parent.setAnswer(instance, undefined);
                                     break;
-                                }                                
+                                }
                             }
                         }
                     }
