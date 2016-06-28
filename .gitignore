@@ -1,4 +1,12 @@
 player/www/
 web-player/node_modules
 *.todo
+player/public/fixture-stories/domain_Base_6444
+player/public/fixture-stories/domain_Stage_6444
+player/public/fixture-stories/isaksham
+player/public/fixture-stories/mar8
+player/public/fixture-stories/pratham-camal_barakhadi
+player/public/fixture-stories/read-along
+player/public/fixture-stories/*.zip
+player/public/fixture-stories/*.ecar
 dist/
