@@ -181,12 +181,6 @@ LoadByStageStrategy = Class.extend({
                 loader.on('error', function(evt) {
                     console.error('Asset preload error', evt);
                 });
-                loader.on('fileerror', function(evt) {
-                   console.warn('Asset preload fileerror', evt); 
-                });
-                loader.on('fileload', function(evt) {
-                    console.info('Asset preload fileload', evt);
-                });
                 loader.installPlugin(createjs.Sound);
                 loader.loadManifest(manifest, true);
                 instance.loaders[stageId] = loader;
