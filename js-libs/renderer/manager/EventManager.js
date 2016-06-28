@@ -1,5 +1,5 @@
 EventManager = {
-	appEvents: ['enter', 'exit', 'remove', 'add', 'replace', 'show', 'hide', 'correct_answer', 'wrong_answer'],
+	// appEvents: ['enter', 'exit', 'remove', 'add', 'replace', 'show', 'hide', 'correct_answer', 'wrong_answer'],
 	registerEvents: function(plugin, data) {
 		var events = undefined;
 		if(data.events) {
@@ -67,22 +67,28 @@ EventManager = {
 		}
 	},
 	handleActions: function(evt, plugin) {
+		EventManager._setPluginId(evt.action, plugin._id);
 		var unmuteActions = _.clone(evt.action);
-		evt.action = this._chainActions(evt.action, unmuteActions);
+		evt.action = EventManager._chainActions(evt.action, unmuteActions);
 		if(_.isArray(evt.action)) {
 			evt.action.forEach(function(a) {
 				var action = _.clone(a);
-				if (EventManager._canIHandle(action, plugin)) {
-					EventManager._setActionAsset(action, plugin);
-					EventManager.handleAction(action);
-				}
+				action.pluginId = plugin._id;
+				CommandManager.handle(action);
 			});
 		} else if(evt.action) {
 			var action = _.clone(evt.action)
-			if (EventManager._canIHandle(action, plugin)) {
-				EventManager._setActionAsset(action, plugin);
-				EventManager.handleAction(action);
-			}
+			action.pluginId = plugin._id;
+			CommandManager.handle(action);
+		}
+	},
+	_setPluginId: function(actions, pluginId) {
+		if(_.isArray(actions)) {
+			actions.forEach(function(action) {
+				action.pluginId = pluginId;
+			});
+		} else if(actions) {
+			actions.pluginId = pluginId;
 		}
 	},
 	_chainActions: function(actions, unmuteActions) {
@@ -109,55 +115,13 @@ EventManager = {
 				}
 				delete action.after;
 				delete action.with;
-				return this._chainActions(actions, unmuteActions);
+				return EventManager._chainActions(actions, unmuteActions);
 			} else {
 				return actions;
 			}
 		} else {
 			return actions;
 		}
-	},
-	handleAction: function(action) {
-		if(action.delay) {
-			TimerManager.start(action);
-		} else {
-			if (action.type === 'animation') {
-				action.type = 'command';
-				action.command = 'ANIMATE';
-			}
-			CommandManager.handle(action);
-		}
-	},
-	_setActionAsset: function(action, plugin) {
-		var stage = plugin._stage;
-		if (!stage || stage == null) {
-			stage = plugin;
-		}
-		if (stage && stage._type === 'stage') {
-			if(action.param) {
-				action.value = stage.getParam(action.param) || '';
-			}
-			if (action.asset || action.asset_param || action.asset_model) {
-				if (action.asset_param) {
-					action.asset = stage.getParam(action.asset_param) || '';
-				} else if (action.asset_model) {
-					action.asset = stage.getModelValue(action.asset_model) || '';
-				}
-			} else {
-				action.asset = plugin._id;
-			}
-		}
-	},
-	_canIHandle: function(action, plugin) {
-		var handle = true;
-		// Conditional evaluation for handle action.
-		if (action['ev-if']) {
-			var expr = action['ev-if'].trim();
-			if (!(expr.substring(0,2) == "${")) expr = "${" + expr;
-            if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}"
-			handle = plugin.evaluateExpr(expr);
-		}
-		return handle;
 	},
 	processMouseTelemetry: function(action, event, plugin) {
 		var data = {

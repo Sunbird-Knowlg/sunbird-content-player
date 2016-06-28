@@ -32,7 +32,7 @@ var Command = Class.extend({
 	_invokeRelatedActions: function(relation) {
 		if (this._action[relation] && this._action[relation].length > 0) {
 			_.each(this._action[relation], function(action) {
-				EventManager.handleAction(action);
+				CommandManager.handle(action);
 			});
 		}
 	},
