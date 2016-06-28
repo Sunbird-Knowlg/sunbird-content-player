@@ -1,5 +1,6 @@
 AudioManager = {
     instances: {},
+    MAX_INSTANCES: 10,
     muted: false, 
     // creating unique id for each audio instance using stageId.
     uniqueId: function(action) {
@@ -16,6 +17,9 @@ AudioManager = {
                 }
                 instance.object.muted = this.muted;
             } else {
+                // Reclaim a space if necessary
+                AudioManager.reclaim();
+                // Instantiate the current audio to play
                 instance.object = createjs.Sound.play(action.asset, {interrupt:createjs.Sound.INTERRUPT_ANY});
                 instance.object.muted = this.muted;
                 instance._data = {id: AudioManager.uniqueId(action)};
@@ -73,9 +77,34 @@ AudioManager = {
         createjs.Sound.stop();
         EventManager.processAppTelemetry(action, 'LISTEN',instance, {subtype : "STOP_ALL"});
     },
+    reclaim: function() {
+        // On devices, audio stops playing after resource limit is reached
+        // To handle this case, we are clearing any old audio instance
+        // We are clearing the first instance in the audio
+        // Ideally we should check if that audio is not playing currently before destroying it
+        // TODO - Check and fix later
+
+        var keys = _.keys(AudioManager.instances);
+        if (keys.length > AudioManager.MAX_INSTANCES) {
+            for(index in keys) {
+                var key = keys[index];
+                var instance = AudioManager.instances[key];
+                // Reclaim only if the audio is not playing
+                if (instance.object.playState != createjs.Sound.PLAY_INITED && instance.object.playState != createjs.Sound.PLAY_SUCCEEDED) {
+                    AudioManager.destroyObject(instance, key);
+                    break;
+                }
+            }
+        }
+        // If all audios were playing, then nothing will get reclaimed.
+        // But this is an issue anyway because you can't have 10+ audios playing concurrently.
+    },
     destroy: function(stageId, assetId) {
         var soundId = AudioManager.uniqueId({stageId: stageId, asset: assetId});
         var instance = AudioManager.instances[soundId] || {};
+        AudioManager.destroyObject(instance, soundId);
+    },
+    destroyObject: function(instance, soundId) {
         if(instance.object) {
             try {
                 instance.object.destroy();

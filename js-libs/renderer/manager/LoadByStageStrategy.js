@@ -1,4 +1,5 @@
 LoadByStageStrategy = Class.extend({
+    MAX_CONNECTIONS: 50,
     assetMap: {},
     spriteSheetMap: {},
     commonAssets: [],
@@ -173,12 +174,18 @@ LoadByStageStrategy = Class.extend({
             var manifest = JSON.parse(JSON.stringify(instance.stageManifests[stageId]));
             if (_.isArray(manifest) && manifest.length > 0) {
                 var loader = this._createLoader();
-                loader.setMaxConnections(instance.stageManifests[stageId].length);
+                loader.setMaxConnections(instance.MAX_CONNECTIONS);
                 if (cb) {
                     loader.addEventListener("complete", cb);
                 }
                 loader.on('error', function(evt) {
                     console.error('Asset preload error', evt);
+                });
+                loader.on('fileerror', function(evt) {
+                   console.warn('Asset preload fileerror', evt); 
+                });
+                loader.on('fileload', function(evt) {
+                    console.info('Asset preload fileload', evt);
                 });
                 loader.installPlugin(createjs.Sound);
                 loader.loadManifest(manifest, true);
