@@ -5,6 +5,13 @@ RecorderManager = {
 	appDataDirectory: undefined,
 	recordingInstances: {},
 	mediaFiles: [],
+	// Here we hardcoding the timeout events (Because some stores don't have timeout-success, timeout-failure attributes).
+	// We should deprecate once all the stories are updated.
+	_timeout: {
+		success: "rec_stopped",
+		failure: "rec_stop_failed",
+		method: undefined
+	},
 	_root: undefined,
 	init: function() {
 		document.addEventListener("deviceready", function() {
@@ -36,9 +43,13 @@ RecorderManager = {
 				}
 			});
 
-			setTimeout(function(){ 
-				if(RecorderManager.recording = true)
-					RecorderManager.stopRecording(action);
+			RecorderManager._timeout.method = setTimeout(function() {
+				if(RecorderManager.recording = true) {
+					var stopAction = _.clone(action);
+					stopAction["success"] = RecorderManager._getTimeoutEventName("success", stopAction);
+					stopAction["failure"] = RecorderManager._getTimeoutEventName("failure", stopAction);
+					RecorderManager.stopRecording(stopAction);
+				}
 			}, action.timeout ? action.timeout : 10000)
 		}
 
@@ -55,6 +66,7 @@ RecorderManager = {
 		speech.stopRecording(function(response) {
 			RecorderManager.recording = false;
 			if("success" == response.status) {
+				clearTimeout(RecorderManager._timeout.method);
 				var currentRecId = "current_rec";
 				AssetManager.loadAsset(stageId, currentRecId, response.filePath);
 				AudioManager.destroy(stageId, currentRecId);
@@ -103,5 +115,20 @@ RecorderManager = {
 
 		RecorderManager.mediaFiles.push(path);
 		return path;
+	},
+	// Here we hardcoding the timeout events (Because some stores don't have timeout-success, timeout-failure attributes).
+	// We should deprecate once all the stories are updated.
+	_getTimeoutEventName: function(status, action) {
+		var eventName = "";
+		if ("undefined" != typeof action["timeout-"+status]) {
+			eventName = action["timeout-"+status];
+		} else {
+			if (Renderer.theme._currentScene.appEvents.indexOf(RecorderManager._timeout[status]) > -1) {
+				eventName = RecorderManager._timeout[status];
+			} else {
+				console.error("Invalid stopRecord events for timeout:", Renderer.theme._currentScene.appEvents);
+			}
+		}
+		return eventName;
 	}
 }
