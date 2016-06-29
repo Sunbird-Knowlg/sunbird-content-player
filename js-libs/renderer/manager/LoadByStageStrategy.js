@@ -179,7 +179,7 @@ LoadByStageStrategy = Class.extend({
                     loader.addEventListener("complete", cb);
                 }
                 loader.on('error', function(evt) {
-                    console.error('Asset preload error', evt);
+                    console.error('StageLoader Asset preload error', evt);
                 });
                 loader.installPlugin(createjs.Sound);
                 loader.loadManifest(manifest, true);
@@ -191,22 +191,28 @@ LoadByStageStrategy = Class.extend({
             }
         } else {
             if (cb) {
-                cb();
+                cb(); 
             }
         }
     },
     loadCommonAssets: function() {
         var loader = this._createLoader();
-        loader.setMaxConnections(this.commonAssets.length);
+        loader.setMaxConnections(this.MAX_CONNECTIONS);
         loader.installPlugin(createjs.Sound);
         loader.loadManifest(this.commonAssets, true);
+        loader.on("error", function(evt) {
+            console.error("CommonLoader - asset preload error", evt);
+        });
         this.commonLoader = loader;
     },
     loadTemplateAssets: function() {
         var loader = this._createLoader();
-        loader.setMaxConnections(this.templateAssets.length);
+        loader.setMaxConnections(this.MAX_CONNECTIONS);
         loader.installPlugin(createjs.Sound);
         loader.loadManifest(this.templateAssets, true);
+        loader.on("error", function(evt) {
+            console.error("TemplateLoader - asset preload error", evt);
+        });
         this.templateLoader = loader;
     },
     loadAsset: function(stageId, assetId, path, cb) {
@@ -236,6 +242,9 @@ LoadByStageStrategy = Class.extend({
                     cb();
                 }
             }, this);
+            loader.on("error", function(evt) {
+                console.error("AssetLoader - asset preload error", evt);
+            });
             loader.loadFile({id:assetId, src: path});
         }
     },
