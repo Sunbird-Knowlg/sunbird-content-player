@@ -173,30 +173,25 @@
 
 		<events>
 			<event type="enter">
-				<action id="audio1Action1" asset="splash_sound" command="play" type="command" delay="5000" />
+				<action id="audio1Action1" asset="scene1_sound" command="play" type="command" delay="5000" />
 				<action type="command" command="set" param="audio1Status" param-value="Playing." asset="audio1StatusParam" scope="stage" with="audio1Action1"/>
 				<action asset="audio1_state" type="command" command="refresh" with="audio1Action1"/>
 				<action type="command" command="set" param="audio1Status" param-value="Completed." asset="audio1StatusParam" scope="stage" after="audio1Action1"/>
 				<action asset="audio1_state" type="command" command="refresh" after="audio1Action1"/>
 
-				<action id="audio2Action1" asset="scene1_sound" command="play" type="command" delay="3000" after="audio1Action1" />
+				<action id="audio2Action1" asset="scene2_sound" command="play" type="command" delay="3000" after="audio1Action1" />
 				<action type="command" command="set" param="audio2Status" param-value="Playing." asset="audio1StatusParam" scope="stage" with="audio2Action1"/>
 				<action asset="audio2_state" type="command" command="refresh" with="audio2Action1"/>
 
 				<action type="command" command="set" param="audio2Status" param-value="Completed." asset="audio2StatusParam" scope="stage" after="audio2Action1"/>
 				<action asset="audio2_state" type="command" command="refresh" after="audio2Action1"/>
 
-				<action id="audio3Action1" asset="scene2_sound" command="play" type="command" delay="3000" after="audio2Action1" />
+				<action id="audio3Action1" asset="scene3_sound" command="play" type="command" delay="3000" after="audio2Action1" />
 				<action type="command" command="set" param="audio3Status" param-value="Playing." asset="audio1StatusParam" scope="stage" with="audio3Action1"/>
 				<action asset="audio3_state" type="command" command="refresh" with="audio3Action1"/>
 
 				<action type="command" command="set" param="audio3Status" param-value="Completed." asset="audio3StatusParam" scope="stage" after="audio3Action1"/>
 				<action asset="audio3_state" type="command" command="refresh" after="audio3Action1"/>
-
-
-				<!-- 
-				<action id="action3" asset="scene2_sound" command="play" type="command" after="action2" />
-				<action id="action4" asset="scene3_sound" command="play" type="command" after="action3" /> -->
 			</event>
 			<event type="exit">
 				<action type="command" command="stop" asset="ht1" audio="scene4_sound" />
