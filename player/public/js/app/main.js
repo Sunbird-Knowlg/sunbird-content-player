@@ -195,7 +195,8 @@ function evalAndSubmit(){
     var action = {
         "type": "command",
         "command": "eval",
-        "asset": Renderer.theme._currentStage
+        "asset": Renderer.theme._currentStage,
+        "pluginId": Renderer.theme._currentStage
     };
     action.htmlEval = "true";
     action.success = "correct_answer";

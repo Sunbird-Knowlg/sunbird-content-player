@@ -4,17 +4,20 @@ CommandManager = {
         CommandManager.commandMap[id] = command;
     },
     handle: function(action) {
-        var c, cId = '';
-        if (this._canHandle(action)) {
-            this._setAnimationAsCommand(action); // We can deprecate this in future.
-            this._setActionAsset(action);
-            if (_.isString(action.command)) cId = action.command.toUpperCase();
-            var command = CommandManager.commandMap[cId];
-            c = new command(action);
+        if(action.delay) {
+            TimerManager.start(action);
         } else {
-            console.info("action ev-if failed. So, it is not called.");
+            var c, cId = '';
+            if (this._canHandle(action)) {
+                this._setAnimationAsCommand(action); // We can deprecate this in future.
+                this._setActionAsset(action);
+                if (_.isString(action.command)) cId = action.command.toUpperCase();
+                var command = CommandManager.commandMap[cId];
+                c = new command(action);
+            } else {
+                console.info("action ev-if failed. So, it is not called.");
+            }
         }
-        return c;
     },
     // We can deprecate this in future. Once all the animation actions used as command we can remove this.
     _setAnimationAsCommand: function(action) {
