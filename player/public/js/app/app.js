@@ -8,7 +8,7 @@ var stack = new Array(),
     collectionChildrenIds = new Array(),
     content = {},
     collectionChildren = true,
-    defaultMetadata = { "identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author":"EkStep", "localData": { "questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{ "identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept" }], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true, "imageCredits":"EkStep", "soundCredits":"EkStep", "voiceCredits":"EkStep",  "path": "fixture-stories/item_sample" },
+    defaultMetadata = { "identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author":"EkStep", "localData": { "questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{ "identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept" }], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true,   "path": "fixture-stories/item_sample" },
     config = {
         showStartPage : true,
         showEndPage : true,
@@ -55,9 +55,9 @@ function getContentObj(data) {
     var tempData = data;
     var x2js = new X2JS({attributePrefix: 'none'});
     data = x2js.xml_str2json(tempData.body);
-    data = data ? data : JSON.parse(tempData.body)
+    if(!data || data.parsererror)
+        data = JSON.parse(tempData.body)
     return data;
-    
 }
 
 function launchInitialPage(appInfo, $state) {
@@ -191,7 +191,6 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
             });
-        // $urlRouterProvider.otherWise('/');
     })
     .controller('ContentListCtrl', function($scope, $rootScope, $http, $ionicModal, $cordovaFile, $cordovaDialogs, $cordovaToast, $ionicPopover, $state, $stateParams, $q, ContentService, $ionicHistory) {
 
@@ -244,11 +243,10 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             ContentService.getContent(id)
                 .then(function(content) {
                     GlobalContext.previousContentId = content.identifier;
-                    stack.push(content.identifier);
+                    if(!_.contains(stack, content.identifier))
+                        stack.push(content.identifier);
                     if (COLLECTION_MIMETYPE == content.mimeType) {
                         $rootScope.title = content.name;
-                        // if (!_.isEmpty($rootScope.collection))
-                        //     TelemetryService.end();
                         $rootScope.collection = content;
                         TelemetryService.start(content.identifier, content.pkgVersion);
                     } else {
@@ -258,7 +256,8 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                         return child.index; }), "identifier") : null;
                     if(childrenIds)
                         collectionChildrenIds = childrenIds;
-                    console.log("collectionChildrenIds : ", collectionChildrenIds);
+                    collectionChildren = true;
+                    console.info("collectionChildrenIds : ", collectionChildrenIds);
                     var filter = (content.filter) ? JSON.parse(content.filter) : content.filter;
                     return ContentService.getContentList(filter, childrenIds);
                 })
@@ -285,7 +284,6 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 GlobalContext.previousContentMimeType = content.mimeType;
                 GlobalContext.previousContentId = content.identifier;
             } else {
-                stack.pop();
                 GlobalContext.currentContentId = content.identifier;
                 GlobalContext.currentContentMimeType = content.mimeType;
                 $state.go('showContent', {"contentId": content.identifier});
@@ -320,6 +318,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         };
 
         $scope.goBack = function() {
+            TelemetryService.end();
             stack.pop();
             var id = stack.pop();
             if(id)
@@ -355,7 +354,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     if(COLLECTION_MIMETYPE == content.metadata.mimeType) {
                         ContentService.getContentBody($stateParams.itemId)
                             .then(function(data) {
-                                
+                               
                                 Renderer.start("", 'gameCanvas', $scope.item, getContentObj(data), true);
                                 
                             })

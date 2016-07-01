@@ -1,3 +1,5 @@
+package org.ekstep.geniecanvas;
+
 import android.util.Log;
 import org.apache.cordova.CordovaActivity;
 import org.apache.cordova.CordovaPlugin;
