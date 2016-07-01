@@ -23,7 +23,7 @@ MTFEvaluator = {
 						} 
 
 						if (opt.answer == opt.selected) {
-							score += opt.score || 1;
+							score += (_.isNumber(opt.score)) ? opt.score: 1;
 							//answer[opt.value.asset] = true;
 						} /*else {
 							if(!(_.contains(index, opt.answer)) && (opt.selected != undefined))
