@@ -14,7 +14,7 @@ var OptionPlugin = Plugin.extend({
         this._value = undefined;
         this._answer = undefined;
         this._index = -1;
-        this._uniqueId = _.uniqueId('opt_'); 
+        this._uniqueId = _.uniqueId('opt_');
 
         var model = data.option;
         var value = undefined;
@@ -48,13 +48,13 @@ var OptionPlugin = Plugin.extend({
             this.initShadow(data);
             var innerECML = this.getInnerECML();
             if (!_.isEmpty(innerECML)) {
-                this.renderInnerECML();    
+                this.renderInnerECML();
             } else if (value.value.type == 'image') {
                 this.renderImage(value.value);
             } else if (value.value.type == 'text') {
                 this.renderText(value.value);
             }
-            
+
             if (this._parent._type == 'mcq') {
                 this.renderMCQOption();
             } else if (this._parent._type == 'mtf') {
@@ -78,10 +78,10 @@ var OptionPlugin = Plugin.extend({
                 type: event.type,
                 x: event.stageX,
                 y: event.stageY,
-                choice_id: instance._value.asset,
+                choice_id: instance._value.resindex,
                 itemId: itemId,
                 res: [{
-                    "option": instance._value.asset
+                    "option": instance._value.resvalue
                 }],
                 state: val ? 'SELECTED' : 'UNSELECTED',
                 optionTag: "MCQ"
@@ -114,7 +114,7 @@ var OptionPlugin = Plugin.extend({
                     x: this.x - evt.stageX,
                     y: this.y - evt.stageY
                 };
-                dragItem = instance._value.asset;
+                dragItem = instance._value.resvalue;
                 dragPos = {
                     x: evt.stageX,
                     y: evt.stageY
@@ -123,7 +123,7 @@ var OptionPlugin = Plugin.extend({
                     type: evt.type,
                     x: evt.stageX,
                     y: evt.stageY,
-                    drag_id: instance._value.asset,
+                    drag_id: instance._value.resvalue,
                     itemId: itemId
                 }
                 EventManager.processAppTelemetry({}, 'DRAG', instance, data);
@@ -188,6 +188,8 @@ var OptionPlugin = Plugin.extend({
 
                 var drop_id = (snapSuccess ? plugin._id : '');
                 var drop_idx = (snapSuccess ? plugin._index : '');
+                var drop_rsv = (snapSuccess ? plugin._value.resvalue : '');
+                var drag_rsv = instance._value.resvalue;
 
                 if (!snapSuccess) {
                     this.x = this.origX;
@@ -198,8 +200,8 @@ var OptionPlugin = Plugin.extend({
                             if(lhsQues._answer){
                                 if (lhsQues._answer._uniqueId == instance._uniqueId) {
                                     lhsQues._answer = undefined;
-                                    /* instance._parent.removeAnswer(instance, -1);*/
-                                    instance._parent.setAnswer(instance, undefined);
+                                    // instance._parent.setAnswer(instance, undefined);
+                                    instance._parent.setAnswerMapping(instance, undefined);
                                     break;
                                 }
                             }
@@ -215,7 +217,9 @@ var OptionPlugin = Plugin.extend({
                     // If there is an existing answer, nudge it out
                     if (plugin._answer && flag) {
                         var existing = plugin._answer;
-                        existing._parent.setAnswer(existing);
+                        // existing._parent.setAnswer(existing);
+                        existing._parent.setAnswerMapping(existing, undefined);
+
                         existing._self.x = existing._self.origX;
                         existing._self.y = existing._self.origY;
                     }
@@ -227,7 +231,10 @@ var OptionPlugin = Plugin.extend({
                     if (!_.isUndefined(plugin._data.snapY)) {
                         this.y = dims.y + (dims.h * (plugin._data.snapY/100));
                     }
-                    instance._parent.setAnswer(instance, plugin._index);
+
+                    // instance._parent.setAnswer(instance, plugin._index);
+                    instance._parent.setAnswerMapping(instance, plugin);
+
 
                     // Remember the answer so that on overwrite, we can clear it
                     if (_.isArray(snapTo)) {
@@ -237,35 +244,37 @@ var OptionPlugin = Plugin.extend({
                                 rhsOption._answer = undefined;
                         }
                     } else if (snapTo) {
-                        if (snapTo._answer == instance) 
+                        if (snapTo._answer == instance)
                             snapTo._answer = undefined;
-                    }   
+                    }
                     plugin._answer = instance;
                 }
 
                  if(!(("undefined" != typeof drop_idx) && ("" !== drop_idx))) {
-                    instance._parent.setAnswer(instance, undefined);
+                    // instance._parent.setAnswer(instance, undefined);
+                    instance._parent.setAnswerMapping(instance, undefined);
                  }
-                        
 
                 instance.removeShadow();
 
                 var data = {
-                        type: evt.type,
-                        x: evt.stageX,
-                        y: evt.stageY,
-                        choice_id: instance._value.asset,
-                        itemId: itemId,
-                        drop_id: drop_id,
-                        drop_idx: drop_idx,
-                        pos: [{x: evt.stageX, y: evt.stageY}, dragPos],
-                        res: [{
-                            dragItem: drop_idx
-                        }],
-                        state: (("undefined" != typeof drop_idx) && ("" !== drop_idx)) ? "SELECTED" : "UNSELECTED",
-                        optionTag: "MTF"
-                    }
-                    // data.res[dragItem] = drop_idx;
+                    type: evt.type,
+                    x: evt.stageX,
+                    y: evt.stageY,
+                    choice_id: instance._value.resindex,
+                    itemId: itemId,
+                    drop_id: drop_id,
+                    drop_idx: drop_idx,
+                    pos: [{x: evt.stageX, y: evt.stageY}, dragPos],
+                    res: [{
+                        "rhs" : drag_rsv
+                    },{
+                        "lhs" : drop_rsv
+                    }],
+                    state: (("undefined" != typeof drop_idx) && ("" !== drop_idx)) ? "SELECTED" : "UNSELECTED",
+                    optionTag: "MTF"
+                }
+
                 EventManager.processAppTelemetry({}, 'DROP', instance, data);
                 Renderer.update = true;
             });

@@ -4,55 +4,41 @@ MTFEvaluator = {
 		var pass = true;
 		var score = 0;
 		var res = [];
-		//var answer = {};
+
 		if (item) {
-			var index = [];
-			_.each(item.lhs_options, function(opt){
-				index.push(opt.index);
-			});
+			// var index = [];
+			// _.each(item.lhs_options, function(opt){
+			// 	index.push(opt.index);
+			// });
 			var options = item.rhs_options;
 			if (_.isArray(options)) {
 				_.each(options ,function(opt) {
+
+					// Generate telemetry if there was a response to this option (rhs -> lhs)
+					if (typeof opt.selected != 'undefined') {
+						var obj = {};
+						obj[opt.value.resvalue] = opt.value.mapped;
+						res.push(obj);
+					}
+
+					// Answer is specified and correctly matched
 					if (typeof opt.answer != 'undefined') {
-
-						// rhs id -> lhs index
-						if (typeof opt.selected != 'undefined') {
-							var obj = {};
-							obj[opt.value.asset] = opt.selected;
-							res.push(obj);
-						} 
-
 						if (opt.answer == opt.selected) {
 							score += (_.isNumber(opt.score)) ? opt.score: 1;
-							//answer[opt.value.asset] = true;
-						} /*else {
-							if(!(_.contains(index, opt.answer)) && (opt.selected != undefined))
-								pass = false; 
-							else if(_.contains(index, opt.answer) && opt.selected || _.contains(index, opt.answer) && !opt.selected)
-								answer[opt.value.asset] = false;
-						}*/
+						}
  					} else {
+ 						// Answer is not specified, but still matched (distractor)
  						if(typeof opt.selected != 'undefined') {
  							pass = false;
- 							var key = opt.value.asset;
- 							var obj = {};
- 							obj[opt.value.asset] = opt.selected;
- 							res.push(obj);
  						}
  					}
 				});
 			}
 
 			if(pass){
-				var ansMatched = _.isEqual(_.pluck(options, "selected"), _.pluck(options, "answer"));				
+				var ansMatched = _.isEqual(_.pluck(options, "selected"), _.pluck(options, "answer"));
 				pass = ansMatched;
 			}
-			
-
-			/*_.map(answer, function(value, key){
-				if(!value)
-					pass = false;
-			})*/
 
 			if (!pass) {
 				result.feedback = item.feedback;
@@ -75,6 +61,7 @@ MTFEvaluator = {
 			if (_.isArray(options)) {
 				options.forEach(function(opt) {
 					opt.selected = undefined;
+					delete opt.value.mapped;
 				});
 			}
 		}
