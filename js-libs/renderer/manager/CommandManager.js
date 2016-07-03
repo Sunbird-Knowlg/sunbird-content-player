@@ -13,7 +13,11 @@ CommandManager = {
                 this._setActionAsset(action);
                 if (_.isString(action.command)) cId = action.command.toUpperCase();
                 var command = CommandManager.commandMap[cId];
-                c = new command(action);
+                if (command) {
+                    c = new command(action);    
+                } else {
+                    console.warn("No command registered with name: ", cId);
+                }
             } else {
                 console.info("action ev-if failed. So, it is not called.");
             }
