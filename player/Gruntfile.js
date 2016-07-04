@@ -349,10 +349,10 @@ module.exports = function(grunt) {
                     plugins: [
                         'cordova-plugin-crosswalk-webview@1.5.0'
                     ],
-					args:['--variable','XWALK_MODE=embedded']
+                    args:['--variable','XWALK_MODE=embedded']
                 }
             },
-			add_xwalk_shared: {
+            add_xwalk_shared: {
                 options: {
                     command: 'plugin',
                     action: 'add',
@@ -630,7 +630,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('set-android-library',['copy:androidLib', 'replace:androidLib']);
     grunt.registerTask('set-xwalk-library', ['cordovacli:add_xwalk','replace:xwalk_library']);
-	grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared','replace:xwalk_library']);
+    grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared','replace:xwalk_library']);
 
     grunt.registerTask('build-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'clean:preview', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('build-unsigned-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
