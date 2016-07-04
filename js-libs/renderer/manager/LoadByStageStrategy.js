@@ -193,7 +193,7 @@ LoadByStageStrategy = Class.extend({
             if (cb) {
                 cb(); 
             }
-        }
+        }                
     },
     loadCommonAssets: function() {
         var loader = this._createLoader();

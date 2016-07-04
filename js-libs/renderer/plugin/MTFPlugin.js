@@ -10,7 +10,7 @@ var MTFPlugin = Plugin.extend({
         this._lhs_options = [];
         this._rhs_options = [];
         this._force  = false;
-        
+
         var model = data.model;
         if (model) {
         	var controller = this._stage.getController(model);
@@ -41,8 +41,19 @@ var MTFPlugin = Plugin.extend({
         });
         return option;
     },
+    // Deprecated - Use setAnswerMapping instead
     setAnswer: function(rhsOption, lhsIndex) {
         this._controller.setModelValue(rhsOption._model, lhsIndex, 'selected');
+    },
+    setAnswerMapping: function(rhsOption, lhsOption) {
+        if (!_.isUndefined(lhsOption)) {
+            rhsOption._value.mapped = lhsOption._value.resvalue;
+            this._controller.setModelValue(rhsOption._model, lhsOption._index, 'selected');
+        }
+        else {
+            delete rhsOption._value.mapped;
+            this._controller.setModelValue(rhsOption._model, undefined, 'selected');
+        }
     },
     removeAnswer: function(rhsOption, lhsIndex) {
         this._controller.setModelValue(rhsOption._model, lhsIndex, '');

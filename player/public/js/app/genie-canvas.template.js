@@ -3,8 +3,10 @@ angular.module('genie-canvas.template',[])
     $rootScope.showMessage = false;
     $rootScope.pageId = "coverpage";
     $rootScope.content;
+    $scope.showPage = true;
 
     $scope.playContent = function(content) {
+        $scope.showPage = false;
         $state.go('playContent', {
             'itemId': content.identifier
         });
@@ -13,7 +15,7 @@ angular.module('genie-canvas.template',[])
     $scope.getContentMetadata = function(content) {
         ContentService.getContent(content)
         .then(function(data) {
-           $scope.setConentMetadata(data);
+           $scope.setContentMetadata(data);
         })
         .catch(function(err) {
             console.info("contentNotAvailable : ", err);
@@ -21,7 +23,7 @@ angular.module('genie-canvas.template',[])
         });
     }
 
-    $scope.setConentMetadata = function(data){
+    $scope.setContentMetadata = function(data){
         GlobalContext.currentContentId = data.identifier;
         GlobalContext.currentContentMimeType = data.mimeType;
         if(_.isUndefined(data.localData)){
@@ -40,14 +42,16 @@ angular.module('genie-canvas.template',[])
         var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
         TelemetryService.start(identifier, version);
         TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID"});
+        $('#loading').hide();
     }
-    
+
     $scope.init = function(){
+        $scope.showPage = true;
         if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
             if( (webview == "true")){
                 if(content.metadata && (content.metadata.mimeType != COLLECTION_MIMETYPE)){
                     //For JSON and Direct contentID
-                    $scope.setConentMetadata(content.metadata);
+                    $scope.setContentMetadata(content.metadata);
                 }else{
                     //For collections
                     $scope.getContentMetadata($stateParams.contentId);
@@ -93,7 +97,7 @@ angular.module('genie-canvas.template',[])
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
     $scope.showNextContent = true;
     $rootScope.pageId = "endpage";
-    $scope.creditsBody = '<div class="credit-popup"><img ng-src="{{icons.popup.credit_popup}}" style="width:100%;" /><div class="popup-body"><div style="width: 82%;height:75%;left: 12%;top: 0%;position: absolute;font-family: SkaterGirlsRock;font-size: 1em;"><table style="width:100%; table-layout: fixed;"><tr><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-if="content.voiceCredits"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-if="content.soundCredits"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup_close.close_icon}}" style="width:100%; left:70%;"/></a></div>';
+    $scope.creditsBody = '<div class="credit-popup"><img ng-src="{{icons.popup.credit_popup}}" style="width:100%;" /><div class="popup-body"><div class="credit-body-icon-font"><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup_close.close_icon}}" style="width:100%; left:70%;"/></a></div>';
     //$rootScope.content = {};
 
     $scope.arrayToString = function(array) {
@@ -101,9 +105,12 @@ angular.module('genie-canvas.template',[])
     };
 
     $scope.setCredits = function(key) {
-        content[key] = (content[key]) ? $scope.arrayToString(content[key]) : defaultMetadata[key];
+        if (content[key]) {
+            content[key] = $scope.arrayToString(content[key]);
+        } else {
+            content[key] = null;
+        }
     };
-
     var content = $rootScope.content;
         
     if(!GlobalContext.previousContentId){
@@ -122,18 +129,41 @@ angular.module('genie-canvas.template',[])
 
     TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContnetApp-EndScreen", subtype: "ContentID"});
     
-    $scope.showCredits = function() {
+    $scope.showCredits = function(key) {
+        if (content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null) {
+            console.warn("No metadata imageCredits,voiceCredites and soundCredits");
+            return;
+        }
         jQuery("#creditsPopup").show();
-        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId : "ContnetApp-CreditsScreen", subtype: "ContentID"});
+        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {
+            stageId: "ContnetApp-CreditsScreen",
+            subtype: "ContentID"
+        });
     }
-
     $scope.playNextContent = function() {
         var id = collectionChildrenIds.pop();
-        Renderer.cleanUp();
-        if(id)
-            $state.go('showContent', {"contentId": id});
-        else
+        if(Renderer.running)
+            Renderer.cleanUp();
+        if(id) {
+            ContentService.getContent(id)
+            .then(function(content) {
+                if (COLLECTION_MIMETYPE == content.mimeType) {
+                    $state.go('contentList', { "id": id });
+                } else {
+                    $state.go('showContent', {"contentId": id});
+                }
+            })
+            .catch(function(err) {
+                if(!_.isEmpty(collectionChildrenIds))
+                     $scope.playNextContent();
+                else {
+                    console.info("contentNotAvailable : ", err);
+                    contentNotAvailable();
+                }
+            });
+        } else {
             $state.go('contentList', { "id": GlobalContext.previousContentId });
+        }
     }
 
     $scope.restartContent = function() {

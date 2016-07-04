@@ -22,6 +22,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         div.id = data.id;
         div.style.width = dims.w + 'px';
         div.style.height = dims.h + 'px';
+        div.style.top = "-1000px"; // position off-screen initially
         div.style.position = 'absolute';
         if (data.fontsize) {
             div.style["font-size"] = data.fontsize;
@@ -44,7 +45,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         this._div = div;
         this._self = new createjs.DOMElement(div);
         this._self.x = dims.x;
-        this._self.y = dims.y;
+        this._self.y = dims.y + 1000;
         this._registerEvents(data.id);
     },
     getWordId: function(index) {

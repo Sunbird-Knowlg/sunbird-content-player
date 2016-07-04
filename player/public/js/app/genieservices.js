@@ -40,24 +40,6 @@ genieservice_web = {
                 if(content) {
                     resolve(content.metadata);
                 } 
-                // else {
-                //     jQuery.post(genieservice_web.api.getContentList(), function(resp) {
-                //         var result = {};
-                //         if (!resp.error) {
-                //             result.list = resp;
-                //             console.log(result.list);
-                //             var item = _.findWhere(resp.content, { "identifier": id });
-                //             console.log(item);
-                //             resolve(item);
-                //         } else {
-                            
-                //             reject(resp);
-                //         }
-                //     })
-                //     .fail(function(err) {
-                //         reject(err);
-                //     });
-                // }
             });
         } else {
             return new Promise(function(resolve, reject) {
@@ -99,6 +81,12 @@ genieservice_web = {
     }
 };
 genieservice_portal = {
+    api: {
+        basePath: '/v2/content/',
+        getFullAPI: function() {
+            return AppConfig[AppConfig.flavor] + this.basePath;
+        }
+    },
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
@@ -126,7 +114,7 @@ genieservice_portal = {
     },
     getContentBody: function(id) {
         return new Promise(function(resolve, reject) {    
-        jQuery.get("//sandbox-community.ekstep.in/api/learning/taxonomy-service/v2/content/" + id + "?fields=body", {"Content-Type" : "application/json"}, function(resp) {
+        jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", {"Content-Type" : "application/json"}, function(resp) {
             var result = {};
             if (!resp.error) {
                 result.list = resp;
@@ -150,7 +138,7 @@ genieservice_portal = {
     },
     getContentMetadata: function(id) {
         return new Promise(function(resolve, reject) {    
-        jQuery.get("//sandbox-community.ekstep.in/api/learning/taxonomy-service/v2/content/"+ id, {"Content-Type" : "application/json"}, function(resp) {
+        jQuery.get(genieservice_portal.api.getFullAPI() + id, {"Content-Type" : "application/json"}, function(resp) {
             var result = {};
             if (!resp.error) {
                 result.list = resp;

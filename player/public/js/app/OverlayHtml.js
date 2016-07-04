@@ -59,7 +59,7 @@ OverlayHtml = {
     },
     isItemScene: function() {
         var stageCtrl = Renderer.theme._currentScene._stageController;
-        if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type)) {
+        if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type) && !_.isUndefined(stageCtrl._model)) {
             var modelItem = stageCtrl._model[stageCtrl._index];
             // If FTB item, enable submit button directly
             if(!_.isNull(this._rootScope)){

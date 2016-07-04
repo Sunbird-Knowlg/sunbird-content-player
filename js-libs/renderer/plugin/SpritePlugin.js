@@ -17,7 +17,12 @@ var SpritePlugin = Plugin.extend({
             grant.x = dims.x;
             grant.y = dims.y;
             this._self = grant;
-            this.setScale();
+
+            // this._self.scaleY = 0.5;
+            // this._self.scaleX = 0.5;
+
+            this._self.scaleX = dims.w / spriteJSON.frames.width;
+            this._self.scaleY = dims.h / spriteJSON.frames.height;
 
             grant.addEventListener('change', function() {
                 Renderer.update = true;

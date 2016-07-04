@@ -9,10 +9,12 @@ MCQEvaluator = {
 			var options = item.options;
 			if (_.isArray(options)) {
 				options.forEach(function(opt) {
-					
-					// remember in telemetry what the response was 
+
+					// remember in telemetry what the response was
 					if (opt.selected) {
-						res.push({"0": opt.value.asset});
+						var tuple = {};
+						tuple[opt.value.resindex] = opt.value.resvalue;
+						res.push(tuple);
 					}
 
 					// evaluate if this is correct answer
