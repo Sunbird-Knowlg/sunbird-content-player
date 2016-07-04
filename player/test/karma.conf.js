@@ -51,7 +51,8 @@ module.exports = function(config) {
             'public/js/test/ScribblePluginSpec.js',
             'public/js/test/AnimationManagerSpec.js',
             'public/js/test/EventManagerSpec.js',
-            'public/js/test/HighlightTextPluginSpec.js'
+            'public/js/test/HighlightTextPluginSpec.js',
+            'public/js/test/CommandManagerSpec.js'
             /*   'public/js/test/ImagePluginSpec.js',*/
             /*'public/js/test/ThemePluginSpec.js',*/
             /* 'public/js/test/OptionPluginSpec.js'

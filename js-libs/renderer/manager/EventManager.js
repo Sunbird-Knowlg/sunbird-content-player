@@ -1,5 +1,4 @@
 EventManager = {
-	// appEvents: ['enter', 'exit', 'remove', 'add', 'replace', 'show', 'hide', 'correct_answer', 'wrong_answer'],
 	registerEvents: function(plugin, data) {
 		var events = undefined;
 		if(data.events) {
@@ -159,7 +158,6 @@ EventManager = {
 				if (id) {
 					if (data)
 						data.stageId = Renderer.theme._currentStage;
-					// console.log("inside processAppTelemetry.....");
 					TelemetryService.interact(type, id, type, data ? data : {stageId : Renderer.theme._currentStage});
 				}
 			}
