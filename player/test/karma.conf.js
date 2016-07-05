@@ -50,8 +50,8 @@ module.exports = function(config) {
             'public/js/test/ShapePluginSpec.js',
             'public/js/test/ScribblePluginSpec.js',
             'public/js/test/AnimationManagerSpec.js',
-            'public/js/test/EventManagerSpec.js',
             'public/js/test/HighlightTextPluginSpec.js',
+            'public/js/test/EventManagerSpec.js',
             'public/js/test/CommandManagerSpec.js'
             /*   'public/js/test/ImagePluginSpec.js',*/
             /*'public/js/test/ThemePluginSpec.js',*/
@@ -94,7 +94,7 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'coverage'],
+        reporters: ['verbose', 'progress', 'coverage'],
 
 
         junitReporter: {
@@ -116,13 +116,13 @@ module.exports = function(config) {
         // Which plugins to enable
         plugins: [
             "karma-phantomjs-launcher",
-            // 'karma-chrome-launcher',
             "karma-jasmine-jquery",
             "karma-jasmine",
             "karma-jasmine-matchers",
             "karma-junit-reporter",
             'karma-coverage',
             "karma-ng-html2js-preprocessor",
+            "karma-verbose-reporter"
         ],
 
         // web server port

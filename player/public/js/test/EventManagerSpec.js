@@ -17,14 +17,14 @@ describe('Event manager test cases', function() {
         }, 500);
     });
 
-    it('Events registered and registered only once', function() {
+    it('events registered and registered only once', function() {
         expect(EventManager.registerEvents).toHaveBeenCalled();
         expect(EventManager.registerEvents.calls.count()).toEqual(1);
         expect(EventManager.registerEvent).toHaveBeenCalled();
         expect(EventManager.registerEvent.calls.count()).toEqual(2);
     });
 
-    it('Test dispatch app event', function(done) {
+    it('test dispatch app event', function(done) {
         spyOn(CommandManager, 'handle').and.callFake(function() {
             var action = CommandManager.handle.calls.argsFor(0)[0];
             expect(action.command).toEqual('toggleShow');
@@ -34,7 +34,7 @@ describe('Event manager test cases', function() {
         EventManager.dispatchEvent('testShape', 'toggle');
     });
 
-    it('Test dispatch event and event execution', function(done) {
+    it('test dispatch event and event execution', function(done) {
         spyOn(CommandManager, 'handle').and.callThrough();
         EventManager.dispatchEvent('testShape', 'toggle');
         setTimeout(function() {
@@ -48,7 +48,7 @@ describe('Event manager test cases', function() {
         }, 1000);
     });
 
-    it('Test dispatch mouse event', function(done) {
+    it('test dispatch mouse event', function(done) {
         spyOn(CommandManager, 'handle').and.callFake(function() {
             var action = CommandManager.handle.calls.argsFor(0)[0];
             expect(action.command).toEqual('show');
@@ -58,7 +58,7 @@ describe('Event manager test cases', function() {
         EventManager.dispatchEvent('testShape', 'click');
     });
 
-    it('Test dispatch mouse event and event execution', function(done) {
+    it('test dispatch mouse event and event execution', function(done) {
         spyOn(CommandManager, 'handle').and.callThrough();
         EventManager.dispatchEvent('testShape', 'click');
         setTimeout(function() {

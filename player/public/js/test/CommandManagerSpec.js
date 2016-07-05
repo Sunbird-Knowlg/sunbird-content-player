@@ -5,165 +5,210 @@ describe('Command manager test cases', function() {
         startRenderer(data);
         spyOn(CommandManager, 'handle').and.callThrough();
         setTimeout(function() {
-            var data = {"event":[{"action":{"type":"command","command":"show","asset":"testShape"},"type":"click"},{"action":{"type":"command","command":"toggleShow","asset":"testShape"},"type":"toggle"}],"type":"rect","x":87,"y":82,"w":13,"h":18,"hitArea":true,"id":"testShape"};
-            var stagePlugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
-            PluginManager.invoke('shape', data, stagePlugin, stagePlugin, Renderer.theme);
             done();
         }, 500);
     });
 
-    it('Test command hide', function() {
-        var action = {"command": "hide", "type": "command", "asset": "testShape", "pluginId": "testShape"};
-        CommandManager.handle(action);
-        expect(CommandManager.handle).toHaveBeenCalled();
-        expect(CommandManager.handle.calls.count()).toEqual(1);
-        var plugin = PluginManager.getPluginObject("testShape");
-        expect(plugin._self.visible).toEqual(false);
+    describe("using shape", function() {
+        beforeEach(function() {
+            var data = {"event":[{"action":{"type":"command","command":"show","asset":"testShape"},"type":"click"},{"action":{"type":"command","command":"toggleShow","asset":"testShape"},"type":"toggle"}],"type":"rect","x":87,"y":82,"w":13,"h":18,"hitArea":true,"id":"testShape"};
+            var stagePlugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
+            PluginManager.invoke('shape', data, stagePlugin, stagePlugin, Renderer.theme);
+        }, 500);
+
+        it('test command hide', function() {
+            var action = {"command": "hide", "type": "command", "asset": "testShape", "pluginId": "testShape"};
+            CommandManager.handle(action);
+            expect(CommandManager.handle).toHaveBeenCalled();
+            expect(CommandManager.handle.calls.count()).toEqual(1);
+            var plugin = PluginManager.getPluginObject("testShape");
+            expect(plugin._self.visible).toEqual(false);
+        });
+
+        it('test command show', function() {
+            var action = {"command": "show", "type": "command", "asset": "testShape", "pluginId": "testShape"};
+            CommandManager.handle(action);
+            expect(CommandManager.handle).toHaveBeenCalled();
+            expect(CommandManager.handle.calls.count()).toEqual(1);
+            var plugin = PluginManager.getPluginObject("testShape");
+            expect(plugin._self.visible).toEqual(true);
+        });
+
+        it('test command toggleshow', function() {
+            var action = {"command": "toggleShow", "type": "command", "asset": "testShape", "pluginId": "testShape"};
+            CommandManager.handle(action);
+            expect(CommandManager.handle).toHaveBeenCalled();
+            expect(CommandManager.handle.calls.count()).toEqual(1);
+            var plugin = PluginManager.getPluginObject("testShape");
+            expect(plugin._self.visible).toEqual(false);
+
+            CommandManager.handle(action);
+            expect(CommandManager.handle).toHaveBeenCalled();
+            expect(CommandManager.handle.calls.count()).toEqual(2);
+            expect(plugin._self.visible).toEqual(true);
+        });
+
+        it('Test command toggleshadow', function() {
+            var plugin = PluginManager.getPluginObject("testShape");
+            var action = {"command": "toggleShadow", "type": "command", "asset": "testShape", "pluginId": "testShape"};
+            CommandManager.handle(action);
+            expect(CommandManager.handle).toHaveBeenCalled();
+            expect(CommandManager.handle.calls.count()).toEqual(1);
+            expect(plugin._self.shadow).not.toEqual(null);
+
+            CommandManager.handle(action);
+            expect(CommandManager.handle).toHaveBeenCalled();
+            expect(CommandManager.handle.calls.count()).toEqual(2);
+            expect(plugin._self.shadow).toEqual(undefined);
+        });
     });
 
-    it('Test command show', function() {
-        var action = {"command": "show", "type": "command", "asset": "testShape", "pluginId": "testShape"};
-        CommandManager.handle(action);
-        expect(CommandManager.handle).toHaveBeenCalled();
-        expect(CommandManager.handle.calls.count()).toEqual(1);
-        var plugin = PluginManager.getPluginObject("testShape");
-        expect(plugin._self.visible).toEqual(true);
+    describe("using audio manager", function() {
+        beforeEach(function() {
+            var data = {"event":[{"action":{"type":"command","command":"play"},"type":"click"}],"id":"audio1", "asset": "goodjob_audio"};
+            var stagePlugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
+            PluginManager.invoke('audio', data, stagePlugin, stagePlugin, Renderer.theme);
+        }, 500);
+
+        it('test command play', function() {
+            spyOn(AudioManager, 'play').and.callFake(function() {
+                var action = CommandManager.handle.calls.argsFor(0)[0];
+                expect('play').toEqual(action.command);
+                expect('goodjob_audio').toEqual(action.asset);
+            });
+            var action = {"type": "command", "command": "play", "asset": "goodjob_audio", "pluginId": "audio1"};
+            CommandManager.handle(action);
+        });
+
+        it('test command pause', function() {
+            spyOn(AudioManager, 'pause').and.callFake(function() {
+                var action = CommandManager.handle.calls.argsFor(0)[0];
+                expect('pause').toEqual(action.command);
+                expect('goodjob_audio').toEqual(action.asset);
+            });
+            var action = {"type": "command", "command": "pause", "asset": "goodjob_audio", "pluginId": "audio1"};
+            CommandManager.handle(action);
+        });
+
+        it('test command stop', function() {
+            spyOn(AudioManager, 'stop').and.callFake(function() {
+                var action = CommandManager.handle.calls.argsFor(0)[0];
+                expect('stop').toEqual(action.command);
+                expect('goodjob_audio').toEqual(action.asset);
+            });
+            var action = {"type": "command", "command": "stop", "asset": "goodjob_audio", "pluginId": "audio1"};
+            CommandManager.handle(action);
+        });
+
+        it('test command toggleplay', function() {
+            spyOn(AudioManager, 'togglePlay').and.callFake(function() {
+                var action = CommandManager.handle.calls.argsFor(0)[0];
+                expect('toggleplay').toEqual(action.command);
+                expect('goodjob_audio').toEqual(action.asset);
+            });
+            var action = {"type": "command", "command": "toggleplay", "asset": "goodjob_audio", "pluginId": "audio1"};
+            CommandManager.handle(action);
+        });
     });
 
-    it('Test command toggleShow', function() {
-        var action = {"command": "toggleShow", "type": "command", "asset": "testShape", "pluginId": "testShape"};
-        CommandManager.handle(action);
-        expect(CommandManager.handle).toHaveBeenCalled();
-        expect(CommandManager.handle.calls.count()).toEqual(1);
-        var plugin = PluginManager.getPluginObject("testShape");
-        expect(plugin._self.visible).toEqual(false);
+    describe("using recorder manager", function() {
+        it('test command startrecord', function(done) {
+            spyOn(RecorderManager, 'startRecording').and.callFake(function() {
+                var action = CommandManager.handle.calls.argsFor(0)[0];
+                expect(action).toBeDefined();
+                expect('startrecord').toEqual(action.command);
+                expect('scene1').toEqual(action.asset);
+                expect('90000').toEqual(action.timeout);
+                done();
+            });
+            var action = {"type": "command", "command": "startrecord", "asset": "scene1", "pluginId": "scene1", "failure": "rec_start_fail", "success": "rec_started", "timeout": "90000"};
+            CommandManager.handle(action);           
+        });
 
-        CommandManager.handle(action);
-        expect(CommandManager.handle).toHaveBeenCalled();
-        expect(CommandManager.handle.calls.count()).toEqual(2);
-        expect(plugin._self.visible).toEqual(true);
+        it('test command stoprecord', function(done) {
+            spyOn(RecorderManager, 'stopRecording').and.callFake(function() {
+                var action = CommandManager.handle.calls.argsFor(0)[0];
+                expect(action).toBeDefined();
+                expect('stoprecord').toEqual(action.command);
+                expect('scene1').toEqual(action.asset);
+                done();
+            });
+            var action = {"type": "command", "command": "stoprecord", "asset": "scene1", "pluginId": "scene1", "failure": "rec_stop_failed", "success": "rec_stopped"};
+            CommandManager.handle(action);
+        });
+
+        it('test command processrecord', function(done) {
+            spyOn(RecorderManager, 'processRecording').and.callFake(function() {
+                var action = CommandManager.handle.calls.argsFor(0)[0];
+                expect(action).toBeDefined();
+                expect('processrecord').toEqual(action.command);
+                expect('scene1').toEqual(action.asset);
+                expect('1').toEqual(action["data-lineindex"]);
+                done();
+            });
+            var action = {"type": "command", "command": "processrecord", "asset": "scene1", "pluginId": "scene1", "data-lineindex": "1", "failure": "rec_process_fail", "success": "rec_processed"};
+            CommandManager.handle(action);
+        });
     });
 
-    // it('Test command play', function() {
-    //     // this.action.command = 'play';
-    //     // CommandManager.handle(this.action);
-    //     // expect(CommandManager.handle).toHaveBeenCalled();
-    //     // expect(CommandManager.handle.calls.count()).toEqual(1);
-    //     console.info("plugin:", this.plugin);
-    //     expect(true).toEqual(true);
-    // });
+    describe("using stage", function() {
+        it('test command reload', function(done) {
+            var stagePlugin = PluginManager.getPluginObject("scene1");
+            expect(stagePlugin).toBeDefined();
+            spyOn(stagePlugin, 'reload').and.callFake(function() {
+                var action = CommandManager.handle.calls.argsFor(0)[0];
+                expect(action).toBeDefined();
+                expect('reload').toEqual(action.command);
+                expect('scene1').toEqual(action.asset);
+                done();
+            });
+            var action = {"command": "reload", "type": "command", "asset": "scene1", "pluginId": "scene1"};
+            CommandManager.handle(action);
+        });
 
-    // it('Test command pause', function() {
-    //     this.action.command = 'pause';
-    //     CommandManager.handle(this.action);
-    //     expect(CommandManager.handle).toHaveBeenCalled();
-    //     expect(CommandManager.handle.calls.count()).toEqual(1);
-    // });
+        it('test command transitionto', function(done) {
+            var themePlugin = PluginManager.getPluginObject("theme");
+            expect(themePlugin).toBeDefined();
+            spyOn(themePlugin, 'transitionTo').and.callFake(function() {
+                var action = CommandManager.handle.calls.argsFor(0)[0];
+                expect(action).toBeDefined();
+                expect('transitionTo').toEqual(action.command);
+                expect('theme').toEqual(action.asset);
+                expect('next').toEqual(action.param);
+                expect('scroll').toEqual(action.effect);
+                expect('left').toEqual(action.direction);
+                done();
+            });
+            var action = {"type": "command", "command": "transitionTo", "asset": "theme", "pluginId": "theme", "param": "next", "effect": "scroll", "direction": "left", "ease": "linear", "duration": "500"};
+            CommandManager.handle(action);
+        });
 
-    // it('Test command stop', function() {
-    //     this.action.command = 'stop';
-    //     CommandManager.handle(this.action);
-    //     expect(CommandManager.handle).toHaveBeenCalled();
-    //     expect(CommandManager.handle.calls.count()).toEqual(1);
-    // });
+        it('test command restart', function(done) {
+            var themePlugin = PluginManager.getPluginObject("theme");
+            expect(themePlugin).toBeDefined();
+            spyOn(themePlugin, 'restart').and.callFake(function() {
+                var action = CommandManager.handle.calls.argsFor(0)[0];
+                expect(action).toBeDefined();
+                expect('restart').toEqual(action.command);
+                expect('theme').toEqual(action.asset);
+                done();
+            });
+            var action = {"type": "command", "command": "restart", "asset": "theme", "pluginId": "theme"};
+            CommandManager.handle(action);
+        });
 
-    // it('Test command togglePlay', function() {
-    //     this.action.command = 'togglePlay';
-    //     CommandManager.handle(this.action);
-    //     expect(CommandManager.handle).toHaveBeenCalled();
-    //     expect(CommandManager.handle.calls.count()).toEqual(1);
-    // });
-
-    // it('Throw error on invalid plugin', function() {
-    //     this.action.command = 'show';
-    //     this.action.asset = '123';
-    //     CommandManager.handle(this.action);
-    //     expect(CommandManager.handle).toHaveBeenCalled();
-    //     expect(CommandManager.handle.calls.count()).toEqual(1);
-    //     expect(_.contains(PluginManager.errors, 'Plugin not found for action - ' + JSON.stringify(this.action))).toEqual(true);
-    // });
-
-    /*
-
-    it('Test command transitionTo', function() {
-        this.action.command = 'transitionTo';
-        CommandManager.handle(this.action);
-        expect(CommandManager.handle).toHaveBeenCalled();
-        expect(CommandManager.handle.calls.count()).toEqual(1);
-        expect(_.contains(PluginManager.errors, 'Subclasses of plugin should implement transitionTo()')).toEqual(true);
-    });*/
-
-    /*it('Test command toggleShadow', function() {
-        this.action.command = 'toggleShadow';
-        CommandManager.handle(this.action);
-        expect(CommandManager.handle).toHaveBeenCalled();
-        expect(CommandManager.handle.calls.count()).toEqual(1);
-        expect(this.plugin._self.shadow).not.toEqual(null);
-
-        CommandManager.handle(this.action);
-        expect(CommandManager.handle).toHaveBeenCalled();
-        expect(CommandManager.handle.calls.count()).toEqual(2);
-        expect(this.plugin._self.shadow).toEqual(undefined);
-    });*/
-
-   /* it('Test command eval', function() {
-        this.action.command = 'eval';
-        CommandManager.handle(this.action);
-        expect(CommandManager.handle).toHaveBeenCalled();
-        expect(CommandManager.handle.calls.count()).toEqual(1);
-        expect(_.contains(PluginManager.errors, 'Subclasses of plugin should implement transitionTo()')).toEqual(true);
-    });*/
-
-    // it('Test command reload', function() {
-    //     this.action.command = 'reload';
-    //     CommandManager.handle(this.action);
-    //     expect(CommandManager.handle).toHaveBeenCalled();
-    //     expect(CommandManager.handle.calls.count()).toEqual(1);
-    //     expect(_.contains(PluginManager.errors, 'Subclasses of plugin should implement transitionTo()')).toEqual(false);
-    // });
-
-    /*it('Test command restart', function() {
-        this.action.command = 'restart';
-        CommandManager.handle(this.action);
-        expect(CommandManager.handle).toHaveBeenCalled();
-        expect(CommandManager.handle.calls.count()).toEqual(1);
-        expect(_.contains(PluginManager.errors, 'Subclasses of plugin should implement transitionTo()')).toEqual(true);
-    });*/
-
-    // it('Test command startrecord', function(done) {
-    //     var action = this.action;
-    //     this.action.command = 'startrecord';
-    //     CommandManager.handle(this.action);
-    //     expect(CommandManager.handle).toHaveBeenCalled();
-    //     expect(CommandManager.handle.calls.count()).toEqual(1);
-    //     setTimeout(function() {
-    //         console.log("startrecord RecorderManager.recording:", RecorderManager.recording);
-    //         expect(false).toEqual(RecorderManager.recording);
-    //         done();
-    //     }, 1000);
-    // });
-
-    // it('Test command stoprecord', function(done) {
-    //     this.action.command = 'stoprecord';
-    //     CommandManager.handle(this.action);
-    //     expect(CommandManager.handle).toHaveBeenCalled();
-    //     expect(CommandManager.handle.calls.count()).toEqual(1);
-    //     setTimeout(function() {
-    //        /* console.log("RecorderManager.recording:", RecorderManager.recording);*/
-    //         expect(false).toEqual(RecorderManager.recording);
-    //         done();
-    //     }, 1000);
-    // });
-
-    // it('Test command processrecord', function(done) {
-    //     this.action.command = 'processrecord';
-    //     this.action.success = "processedrecording";
-    //     CommandManager.handle(this.action);
-    //     expect(CommandManager.handle).toHaveBeenCalled();
-    //     expect(CommandManager.handle.calls.count()).toEqual(1);
-    //     done();
-    //     // TODO: check for success event dispatched.
-    // });
-
-
+        it('test command eval', function(done) {
+            var stagePlugin = PluginManager.getPluginObject("scene1");
+            expect(stagePlugin).toBeDefined();
+            spyOn(stagePlugin, 'evaluate').and.callFake(function() {
+                var action = CommandManager.handle.calls.argsFor(0)[0];
+                expect(action).toBeDefined();
+                expect('eval').toEqual(action.command);
+                expect('scene1').toEqual(action.asset);
+                done();
+            });
+            var action = {"command": "eval", "type": "command", "asset": "scene1", "pluginId": "scene1", "htmlEval": "true"};
+            CommandManager.handle(action);
+        });
+    });
 });
