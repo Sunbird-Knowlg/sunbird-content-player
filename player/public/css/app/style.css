@@ -147,6 +147,7 @@ ion-popover-view.fit ion-content {
 .overlay-html{
     pointer-events: none;
     position: absolute;
+    display: none;
     height: 100%;
     width: 100%;
     z-index: 99999;

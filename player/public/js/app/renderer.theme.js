@@ -45,19 +45,33 @@ angular.module('genie-canvas.theme', [])
     .directive('home', function($rootScope, $state) {
         return {
             restrict: 'E',
-            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imageBasePath}}{{imgSrc}}" style="width:32%;" /></a>',
-            link: function(scope, state) {
+             scope: {
+                disableHome: '=info'
 
+            },
+            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imgSrc}}" style="width:32%;" /></a>',
+            link: function(scope, state) {
                 var isCollection = false;
                 if ($rootScope.collection && $rootScope.collection.children) {
                     isCollection = $rootScope.collection.children.length > 0 ? true : false;
                 }
-                scope.imgSrc = (isCollection == true) ? "home_icon.png" : "home_icon_disabled.png";
-                var pageId = $rootScope.pageId;
+
+            console.info("scope.disableHome", scope.disableHome);
+            if (isCollection == true) {
+                scope.imgSrc = "img/icons/home_icon.png";
+            } else {
+                if (scope.disableHome == true) {
+
+                    scope.imgSrc = "img/icons/home_icon_disabled.png";
+                } else {
+                    scope.imgSrc = "img/icons/home_icon.png";
+                }
+            }
+               var pageId = $rootScope.pageId;
                 scope.goToHome = function() {
-                    
                    isCollection ? goToHome($state, isCollection, GlobalContext.previousContentId, pageId): window.location.hash = "/show/content/" + GlobalContext.currentContentId;
                 }
+
             }
         }
     })
@@ -101,6 +115,7 @@ angular.module('genie-canvas.theme', [])
                  */
                 $scope.$watch("menuOpened", function() {
                     if (!$rootScope.menuOpened) {
+
                         $scope.showInst = false;
                     }
                 });
@@ -311,14 +326,16 @@ angular.module('genie-canvas.theme', [])
         };
 
         $scope.goodJob = {
-            body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><a href="javascript:void(0);" ng-click="hidePopup(\'gc_retry\')"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')"/></a></div></div>'
+            body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')"/></a></div></div>'
         };
 
         $scope.tryAgain = {
-            body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><a ng-click="retryAssessment(\'gc_retry\')" href="javascript:void(0);" ><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><a href="javascript:void(0);" ng-click="hidePopup(\'gc_retry\')"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')"/></a></div></div>'
+            body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><a ng-click="retryAssessment(\'gc_retry\')" href="javascript:void(0);" ><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')"/></a></div></div>'
         };
 
+
         $scope.openMenu = function() {
+
             //display a layer to disable clicking and scrolling on the gameArea while menu is shown
 
             if (jQuery('.menu-overlay').css('display') == "block") {
@@ -335,6 +352,7 @@ angular.module('genie-canvas.theme', [])
             jQuery(".gc-menu").animate({
                 "marginLeft": ["0%", 'easeOutExpo']
             }, 700, function() {});
+
         }
 
         $scope.hideMenu = function() {
@@ -350,5 +368,6 @@ angular.module('genie-canvas.theme', [])
         }
 
         $scope.init();
+
 
     });
