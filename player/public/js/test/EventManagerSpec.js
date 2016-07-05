@@ -88,7 +88,6 @@ describe('Event manager test cases', function() {
             spyOn(CommandManager, 'handle').and.callFake(function() {
                 var action = CommandManager.handle.calls.argsFor(0)[0];
                 expect(action).toBeDefined();
-                console.info("action sequence:", JSON.stringify(action));
                 expect(action.children.length).toEqual(1);
                 expect(action.siblings.length).toEqual(1);
                 done();
