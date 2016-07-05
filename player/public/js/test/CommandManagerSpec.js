@@ -19,8 +19,6 @@ describe('Command manager test cases', function() {
         it('test command hide', function() {
             var action = {"command": "hide", "type": "command", "asset": "testShape", "pluginId": "testShape"};
             CommandManager.handle(action);
-            expect(CommandManager.handle).toHaveBeenCalled();
-            expect(CommandManager.handle.calls.count()).toEqual(1);
             var plugin = PluginManager.getPluginObject("testShape");
             expect(plugin._self.visible).toEqual(false);
         });
@@ -28,8 +26,6 @@ describe('Command manager test cases', function() {
         it('test command show', function() {
             var action = {"command": "show", "type": "command", "asset": "testShape", "pluginId": "testShape"};
             CommandManager.handle(action);
-            expect(CommandManager.handle).toHaveBeenCalled();
-            expect(CommandManager.handle.calls.count()).toEqual(1);
             var plugin = PluginManager.getPluginObject("testShape");
             expect(plugin._self.visible).toEqual(true);
         });
@@ -37,29 +33,33 @@ describe('Command manager test cases', function() {
         it('test command toggleshow', function() {
             var action = {"command": "toggleShow", "type": "command", "asset": "testShape", "pluginId": "testShape"};
             CommandManager.handle(action);
-            expect(CommandManager.handle).toHaveBeenCalled();
-            expect(CommandManager.handle.calls.count()).toEqual(1);
             var plugin = PluginManager.getPluginObject("testShape");
             expect(plugin._self.visible).toEqual(false);
 
             CommandManager.handle(action);
-            expect(CommandManager.handle).toHaveBeenCalled();
-            expect(CommandManager.handle.calls.count()).toEqual(2);
             expect(plugin._self.visible).toEqual(true);
         });
 
-        it('Test command toggleshadow', function() {
+        it('test command toggleshadow', function() {
             var plugin = PluginManager.getPluginObject("testShape");
             var action = {"command": "toggleShadow", "type": "command", "asset": "testShape", "pluginId": "testShape"};
             CommandManager.handle(action);
-            expect(CommandManager.handle).toHaveBeenCalled();
-            expect(CommandManager.handle.calls.count()).toEqual(1);
             expect(plugin._self.shadow).not.toEqual(null);
 
             CommandManager.handle(action);
-            expect(CommandManager.handle).toHaveBeenCalled();
-            expect(CommandManager.handle.calls.count()).toEqual(2);
             expect(plugin._self.shadow).toEqual(undefined);
+        });
+
+        it('test command with delay', function(done) {
+            var plugin = PluginManager.getPluginObject("testShape");
+            expect(plugin._self.visible).toEqual(true);
+            var action = {"command": "hide", "type": "command", "asset": "testShape", "pluginId": "testShape", "delay": "3000"};
+            CommandManager.handle(action);
+            expect(plugin._self.visible).toEqual(true);
+            setTimeout(function() {
+                expect(plugin._self.visible).toEqual(false);
+                done();
+            }, 4000)
         });
     });
 
