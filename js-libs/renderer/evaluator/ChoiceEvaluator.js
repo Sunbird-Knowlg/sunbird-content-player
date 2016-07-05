@@ -8,6 +8,25 @@ MCQEvaluator = {
 		if (item) {
 			var options = item.options;
 			if (_.isArray(options)) {
+				var isMCQ = false;
+				var answersCount = 0;
+                options.forEach(function(opt) {
+                    if (opt.answer == true) {
+                        answersCount++;
+                    }
+                });
+                if (answersCount > 1) {
+                    //if multiple ans is present then it is MMCQ
+
+                    isMCQ = false;
+
+                } else if (answersCount == 1) {
+                    //if answer count is equalto one then it is MCQ
+                    isMCQ = true;
+                } else {
+                    consle.warn("Its not MCQ and MMCQ");
+                    return;
+                }
 				options.forEach(function(opt) {
 
 					// remember in telemetry what the response was
@@ -27,7 +46,8 @@ MCQEvaluator = {
 					} else {
 						if (opt.selected === true) {
 							pass = false;
-							delete opt.selected;
+							if(isMCQ==true)
+								delete opt.selected;
 						}
 					}
 				});
