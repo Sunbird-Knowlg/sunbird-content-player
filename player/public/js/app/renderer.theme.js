@@ -1,45 +1,11 @@
 angular.module('genie-canvas.theme', [])
     .run(function($rootScope) {
-        $rootScope.isPreview = true;
-        $rootScope.imageBasePath = "img/icons/";
         $rootScope.enableEval = false;
-        $rootScope.languageSupport = {
-            "languageCode": "en",
-            "home": "HOME",
-            "genie": "GENIE",
-            "title": "TITLE",
-            "submit": "SUBMIT",
-            "goodJob": "Good Job!",
-            "tryAgain": "Aww,  Seems you goofed it!",
-            "whatWeDoNext": "What should we do next?",
-            "image": "Image",
-            "voice": "Voice",
-            "audio": "Audio",
-            "author": "Author",
-            "instructions": "TEACHER INSTRUCTION"
-        }
     })
-    .directive('preview', function($rootScope) {
-        return {
-            restrict: 'A',
-            scope: {
-                'preview': "="
-            },
-            link: function(scope, element, attr) {
-                $rootScope.isPreview = scope.preview;
-                console.log("scope isPreview: ", $rootScope.isPreview);
-                if (!scope.preview) {
-                    $rootScope.imageBasePath = "img/icons/";
-                } else {
-                    $rootScope.imageBasePath = "https://s3-ap-southeast-1.amazonaws.com/ekstep-public/content_app/images/icons"
-                }
-            }
-        }
-    })
-    .directive('menu', function($rootScope) {
+    .directive('menu', function($rootScope, $sce) {
         return {
             restrict: 'E',
-            templateUrl: 'templates/menu.html'
+            templateUrl: ("undefined" != typeof localPreview && localPreview == "local") ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
         }
     })
     .directive('home', function($rootScope, $state) {
@@ -57,16 +23,15 @@ angular.module('genie-canvas.theme', [])
                 }
 
             console.info("scope.disableHome", scope.disableHome);
-            if (isCollection == true) {
-                scope.imgSrc = "img/icons/home_icon.png";
-            } else {
+            ;
+            var homeSrc = "home_icon.png";
+            if (!isCollection) {
                 if (scope.disableHome == true) {
-
-                    scope.imgSrc = "img/icons/home_icon_disabled.png";
-                } else {
-                    scope.imgSrc = "img/icons/home_icon.png";
+                    homeSrc = "home_icon_disabled.png";
                 }
             }
+            scope.imgSrc = $rootScope.imageBasePath + homeSrc;
+
                var pageId = $rootScope.pageId;
                 scope.goToHome = function() {
                    isCollection ? goToHome($state, isCollection, GlobalContext.previousContentId, pageId): window.location.hash = "/show/content/" + GlobalContext.currentContentId;

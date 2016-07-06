@@ -81,7 +81,25 @@ function launchInitialPage(appInfo, $state) {
  
 
 angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'genie-canvas.services', 'genie-canvas.template'])
-    .run(function($ionicPlatform, $ionicModal, $location,  $cordovaFile, $cordovaToast, ContentService, $state, $stateParams) {
+    .run(function($rootScope, $ionicPlatform, $ionicModal, $location,  $cordovaFile, $cordovaToast, ContentService, $state, $stateParams) {
+        $rootScope.imageBasePath = "img/icons/";
+        if("undefined" != typeof localPreview && localPreview == "local")
+            $rootScope.imageBasePath = serverPath + $rootScope.imageBasePath;
+        $rootScope.languageSupport = {
+            "languageCode": "en",
+            "home": "HOME",
+            "genie": "GENIE",
+            "title": "TITLE",
+            "submit": "SUBMIT",
+            "goodJob": "Good Job!",
+            "tryAgain": "Aww,  Seems you goofed it!",
+            "whatWeDoNext": "What should we do next?",
+            "image": "Image",
+            "voice": "Voice",
+            "audio": "Audio",
+            "author": "Author",
+            "instructions": "TEACHER INSTRUCTION"
+        }
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -118,6 +136,8 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             });
 
             GlobalContext.init(packageName, version).then(function(appInfo) {
+                if("undefined" != typeof localPreview && localPreview == "local")
+                    return;
                 var id = getUrlParameter("id");  
                 if(webview) {
                     if ("undefined" != typeof $location && id) {

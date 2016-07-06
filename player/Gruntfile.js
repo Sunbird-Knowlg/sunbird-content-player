@@ -111,6 +111,26 @@ module.exports = function(grunt) {
                     }
                 ]
             },
+            localPreviewFiles: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/',
+                        src: ['img/**', 'css/**', 'libs/**', 'templates/**', 'js/**'],
+                        dest: 'public/local-preview/'
+                    }
+                ]
+            },
+            localPreviewMinjs: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/js/',
+                        src: ['renderer.min.js','telemetry.min.js', 'script.min.js'],
+                        dest: 'public/local-preview/'
+                    }
+                ]
+            },
             unsigned: {
                 files: [
                     {
@@ -175,7 +195,8 @@ module.exports = function(grunt) {
             after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html", "www/webview.html", "www/preview.html"],
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
             minjs: ['public/js/*.min.js'],
-            preview: ["public/preview"]
+            preview: ["public/preview"],
+            localPreview: ["public/local-preview"],
         },
         rename: {
             main: {
@@ -205,6 +226,20 @@ module.exports = function(grunt) {
                     cwd: 'public/js/',
                     src: ['*.min.js'],
                     dest: 'js/'
+                }]
+            },
+            uploadLocalPreviewZip : {
+                options: {
+                    bucket: 'ekstep-public',
+                    access: 'public-read',
+                    uploadConcurrency : 4,
+                    progress: 'progressBar'
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'public/local-preview/',
+                    src: ['**'],
+                    dest: '/preview/local/'
                 }]
             },
             uploadPreviewFilesToSandbox : {
@@ -663,4 +698,6 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build-aar-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'clean:preview', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalk-library', 'cordovacli:build_android', 'clean:minjs']);
 	grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'clean:preview', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+
+    grunt.registerTask('local-preview-build', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js','copy:localPreviewFiles', 'copy:localPreviewMinjs', 'aws_s3:uploadLocalPreviewZip', 'clean:localPreview']);
 };
