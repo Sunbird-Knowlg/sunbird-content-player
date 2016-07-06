@@ -213,7 +213,10 @@ module.exports = function(grunt) {
             },
             uploadPreviewFilesToSandbox : {
                 options: {
-                    bucket: 'ekstep-public'
+                    bucket: 'ekstep-public',
+                    access: 'public-read',
+                    uploadConcurrency : 4,
+                    progress: 'progressBar'
                 },
                 files: [{
                     expand: true,
@@ -222,20 +225,25 @@ module.exports = function(grunt) {
                     dest: '/preview/local/'
                 }]
             },
-            uploadPreviewFilesToQA : {
+            copySandboxPreviewFilesToQA : {
                 options: {
-                    bucket: 'ekstep-public'
+                    bucket: 'ekstep-public',
+                    access: 'public-read',
+                    uploadConcurrency : 4,
+                    progress: 'progressBar'
                 },
                 files: [{
-                    expand: true,
-                    cwd: 'www/preview',
-                    src: ['**'],
-                    dest: '/preview/QA/'
+                    src: ['preview/sandbox/'],
+                    dest: 'preview/QA/',
+                    action: 'copy'
                 }]
             },
             uploadPreviewFilesToProduction : {
                 options: {
-                    bucket: 'ekstep-public'
+                    bucket: 'ekstep-public',
+                    access: 'public-read',
+                    uploadConcurrency : 4,
+                    progress: 'progressBar'
                 },
                 files: [{
                     expand: true,
@@ -462,6 +470,22 @@ module.exports = function(grunt) {
                     to: "production"
                 }]
             },
+            webviewLinksSanbox: {
+                src: ['public/preview/webview.html'],
+                overwrite: true,
+                replacements: [{
+                    from: /DEPLOYMENT/g,
+                    to: "sandbox"
+                }]
+            },
+            webviewLinksProduction: {
+                src: ['public/preview/webview.html'],
+                overwrite: true,
+                replacements: [{
+                    from: /DEPLOYMENT/g,
+                    to: "production"
+                }]
+            },
             preview_sandbox: {
                 src: ['www/preview/js/AppConfig.js'],
                 overwrite: true,
@@ -534,6 +558,10 @@ module.exports = function(grunt) {
         } else if("production" == flavor) {
             tasks.push('preview-production');
         } else if("qa" == flavor) {
+<<<<<<< HEAD
+=======
+            //tasks.push('replace:preview_QA');
+>>>>>>> 281269af56a007b95ff2c1876937cfa2aa76ff35
             tasks.push('preview-QA');
         } 
 
@@ -543,9 +571,16 @@ module.exports = function(grunt) {
     });
 
 
+<<<<<<< HEAD
     grunt.registerTask('preview-sandbox', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_sandbox', 'aws_s3:cleanSandboxPreview', 'aws_s3:uploadPreviewFilesToSandbox']);
     grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
     grunt.registerTask('preview-QA', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
+=======
+    grunt.registerTask('preview-sandbox', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'replace:webviewLinksSanbox', 'aws_s3:cleanSandboxPreview', 'aws_s3:uploadPreviewFilesToSandbox', 'clean:preview', 'replace:flavor_sandboxToDeployment']);
+    grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'replace:webviewLinksProduction','aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction', 'clean:preview', 'replace:flavor_productionToDeployment']);
+    grunt.registerTask('preview-QA', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanQAPreview', 'aws_s3:copySandboxPreviewFilesToQA', 'clean:preview', 'replace:flavor_QAToDeployment']);
+
+>>>>>>> 281269af56a007b95ff2c1876937cfa2aa76ff35
   
     grunt.registerTask('rm-cordova-plugin-sensibol', function() {
         if (grunt.file.exists('plugins/cordova-plugin-sensibol')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
