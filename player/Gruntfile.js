@@ -491,7 +491,7 @@ module.exports = function(grunt) {
                 overwrite: true,
                 replacements: [{
                     from: /DEPLOYMENT/g,
-                    to: "dev"
+                    to: "sandbox"
                 }]
             },
             preview_QA: {
