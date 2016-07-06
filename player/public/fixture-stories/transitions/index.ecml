@@ -1,0 +1,96 @@
+<theme startStage="intro" id="theme" ver="0.2">
+    <manifest>
+        <media id="cover" src="cover.jpg" type="image" />
+        <media id="landscape" src="landscape.png" type="image" />
+        <media id="icon" src="sun.png" type="image" />
+        <media id="play" src="icon_play.png" type="image" />
+        <media id="moon" src="moon.png" type="image" />
+        <media id="sun" src="sun.png" type="image" />
+        <media id="ekstep" src="eksteplogo.png" type="image" />
+    </manifest>
+
+    <stage id="preloadStage" preload="true">
+        <image asset="play"/>
+        <image asset="ekstep"/>
+        <image asset="icon"/>
+        <image asset="landscape"/>
+        <image asset="cover"/>
+        <image asset="moon"/>
+        <image asset="sun"/>
+    </stage>
+
+    <stage id="intro" x="0" y="0" w="100" h="100">
+        <param name="next" value="day" />
+
+        <image asset="cover" x="0" y="0" w="100" h="100" z-index="-1"/>
+        <image asset="icon" x="40" y="35" w="25" h="45" z-index="100"/>
+
+        <shape type="rect" x="-10" y="75" w="120" h="65" fill="white" opacity="0.8" stroke="white" stroke-width="5"/>
+
+        <image asset="ekstep" x="10" y="80" w="7" h="18" z-index="100"/>
+        <text x="18" y="82" w="15" h="10" font="Georgia" fontsize="50" shadow="white">Showcase Series</text>
+        <text x="18" y="94" w="80" h="10" font="Georgia" fontsize="30" shadow="white" color="">Literacy Platform</text>
+
+        <text x="85" y="82" w="12" h="5" align="center" font="Arial" fontsize="35" color="black" z-index="100">Level 1</text>
+        <text x="85" y="92" w="12" h="5" align="center" font="Arial" fontsize="35" color="black" z-index="100">Vocabulary</text>
+
+        <shape type="rect" x="85" y="80" w="12" h="7" fill="#FF9500" stroke="white" stroke-width="5"/>
+        <shape type="rect" x="85" y="90" w="12" h="7" fill="#FF9500" stroke="white" stroke-width="5"/>
+    </stage>
+
+    <stage id="day" x="0" y="0" w="100" h="100">
+
+        <param name="previous" value="intro" />
+        <param name="next" value="night" />
+
+        <image asset="sun" x="15" y="50" w="9" h="16">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="next" effect="fadein" ease="linear" duration="1500" />
+            </event>
+        </image>
+        <image asset="landscape" x="0" y="0" w="100" h="100"/>
+
+        <events>
+            <event type="enter">
+                <action type="animation" asset="sun"><tween><to ease="linear" duration="1000"><![CDATA[{"x":15,"y":5}]]></to></tween></action>
+            </event>
+            <event type="exit">
+                <action type="animation" asset="sun"><tween><to ease="linear" duration="1000"><![CDATA[{"x":15,"y":50}]]></to></tween></action>
+            </event>
+        </events>
+    </stage>
+
+    <stage id="night" x="0" y="0" w="100" h="100">
+
+        <param name="previous" value="day" />
+        <param name="next" value="endstage" />
+
+        <image asset="moon" x="80" y="40" w="9" h="14" z-index="120" visible="false">
+            <event type="click">
+                <action type="command" command="transitionTo" asset="theme" param="previous" effect="fadeout" ease="linear" duration="1500" />
+            </event>
+        </image>
+
+        <shape type="rect" x="0" y="0" w="100" h="100" fill="black" opacity="0.5" z-index="100"/>
+        <image asset="landscape" x="0" y="0" w="100" h="100" z-index="95"/>
+
+        <events>
+            <event type="enter">
+                <action type="command" command="show" asset="moon" delay="200"/>
+                <action type="animation" asset="moon"><tween><to ease="linear" duration="1000"><![CDATA[{"x":80,"y":5}]]></to></tween></action>
+            </event>
+            <event type="exit">
+                <action type="animation" asset="moon"><tween><to ease="linear" duration="1000"><![CDATA[{"x":80,"y":30}]]></to></tween></action>
+            </event>
+        </events>
+    </stage>
+
+    <stage id="endstage" x="0" y="0" w="100" h="100">
+
+        <image asset="cover" x="0" y="0" w="100" h="100" z-index="-1"/>
+        <image asset="icon" x="40" y="5" w="25" h="45" z-index="100"/>
+
+        <text x="10" y="62" w="80" h="10" align="center" font="Georgia" fontsize="50" color="white" shadow="gray">Isn't day and night beautiful !</text>
+    </stage>
+
+</theme>
