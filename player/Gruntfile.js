@@ -222,7 +222,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'www/preview',
                     src: ['**'],
-                    dest: '/preview/local/'
+                    dest: '/preview/sandbox/'
                 }]
             },
             copySandboxPreviewFilesToQA : {
