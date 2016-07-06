@@ -225,7 +225,7 @@ module.exports = function(grunt) {
                     dest: '/preview/sandbox/'
                 }]
             },
-            copySandboxPreviewFilesToQA : {
+            uploadPreviewFilesToQA : {
                 options: {
                     bucket: 'ekstep-public',
                     access: 'public-read',
@@ -233,9 +233,10 @@ module.exports = function(grunt) {
                     progress: 'progressBar'
                 },
                 files: [{
-                    src: ['preview/sandbox/'],
-                    dest: 'preview/QA/',
-                    action: 'copy'
+                    expand: true,
+                    cwd: 'www/preview',
+                    src: ['**'],
+                    dest: '/preview/qa/'
                 }]
             },
             uploadPreviewFilesToProduction : {
@@ -272,7 +273,7 @@ module.exports = function(grunt) {
                     bucket: 'ekstep-public'
                 },
                 files: [{
-                    dest: 'preview/QA',
+                    dest: 'preview/qa',
                     action: 'delete'
                 }]
             },
@@ -281,7 +282,7 @@ module.exports = function(grunt) {
                     bucket: 'ekstep-public'
                 },
                 files: [{
-                    dest: 'preview/local',
+                    dest: 'preview/sandbox',
                     action: 'delete'
                 }]
             },
@@ -446,7 +447,7 @@ module.exports = function(grunt) {
         },
         replace: {
             sensibol: {
-                src: ['www/js/app/AppConfig.js', 'www/js/renderer.min.js'],
+                src: ['www/js/AppConfig.js', 'www/js/renderer.min.js'],
                 overwrite: true,
                 replacements: [{
                     from: /AUDIO_RECORDER/g,
@@ -454,52 +455,35 @@ module.exports = function(grunt) {
                 }]
             },
             android: {
-                src: ['www/js/app/AppConfig.js', 'www/js/renderer.min.js'],
+                src: ['www/js/AppConfig.js', 'www/js/renderer.min.js'],
                 overwrite: true,
                 replacements: [{
                     from: /AUDIO_RECORDER/g,
                     to: "android"
                 }]
             },
-
-            preview_production: {
-                src: ['www/preview/js/AppConfig.js'],
-                overwrite: true,
-                replacements: [{
-                    from: /DEPLOYMENT/g,
-                    to: "production"
-                }]
-            },
-            webviewLinksSanbox: {
-                src: ['public/preview/webview.html'],
-                overwrite: true,
-                replacements: [{
-                    from: /DEPLOYMENT/g,
-                    to: "sandbox"
-                }]
-            },
-            webviewLinksProduction: {
-                src: ['public/preview/webview.html'],
-                overwrite: true,
-                replacements: [{
-                    from: /DEPLOYMENT/g,
-                    to: "production"
-                }]
-            },
             preview_sandbox: {
-                src: ['www/preview/js/AppConfig.js'],
+                src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html'],
                 overwrite: true,
                 replacements: [{
                     from: /DEPLOYMENT/g,
                     to: "sandbox"
+                }]
+            },
+            preview_production: {
+                src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html'],
+                overwrite: true,
+                replacements: [{
+                    from: /DEPLOYMENT/g,
+                    to: "production"
                 }]
             },
             preview_QA: {
-                src: ['www/preview/js/AppConfig.js'],
+                src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html'],
                 overwrite: true,
                 replacements: [{
                     from: /DEPLOYMENT/g,
-                    to: "QA"
+                    to: "qa"
                 }]
             },
             androidLib: {
@@ -547,7 +531,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('deploy-preview', function(flavor) {
         if(!flavor){
-            grunt.fail.fatal("deployment argument value should be any one of: ['sandbox', 'production', 'QA'].");
+            grunt.fail.fatal("deployment argument value should be any one of: ['sandbox/dev', 'production', 'qa'].");
             return;
         }
         grunt.log.writeln("Starting", flavor, "deployment");
@@ -558,7 +542,7 @@ module.exports = function(grunt) {
         } else if("production" == flavor) {
             tasks.push('preview-production');
         } else if("qa" == flavor) {
-            tasks.push('preview-QA');
+            tasks.push('preview-qa');
         } 
 
         if (tasks.length > 0) {
@@ -569,7 +553,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('preview-sandbox', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_sandbox', 'aws_s3:cleanSandboxPreview', 'aws_s3:uploadPreviewFilesToSandbox']);
     grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
-    grunt.registerTask('preview-QA', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
+    grunt.registerTask('preview-qa', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
   
     grunt.registerTask('rm-cordova-plugin-sensibol', function() {
         if (grunt.file.exists('plugins/cordova-plugin-sensibol')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
