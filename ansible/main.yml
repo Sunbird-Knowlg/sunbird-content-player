@@ -1,18 +1,13 @@
 ---
 # tasks file for deploy
 - hosts: localhost
-  tasks: 
-        - name: copy dev
-          shell: aws s3 cp dev/AppConfig.js s3://ekstep-public/preview/sandbox/
-          tags: 
-               - dev
-
+  tasks:
         - name: copy QA
-          shell: aws s3 cp qa/AppConfig.js s3://ekstep-public/preview/QA/
+          shell: aws s3 cp qa/AppConfig.js s3://ekstep-public/preview/qa/js/
           tags: 
                - qa
 
         - name: copy Prod
-          shell: aws s3 cp prod/AppConfig.js s3://ekstep-public/preview/production/
+          shell: aws s3 cp prod/AppConfig.js s3://ekstep-public/preview/production/js/
           tags: 
                - prod
