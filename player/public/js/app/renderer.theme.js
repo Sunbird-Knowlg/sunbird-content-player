@@ -5,7 +5,7 @@ angular.module('genie-canvas.theme', [])
     .directive('menu', function($rootScope, $sce) {
         return {
             restrict: 'E',
-            templateUrl: ("undefined" != typeof localPreview && localPreview == "local") ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
+            templateUrl: ("undefined" != typeof localPreview && "local" == localPreview) ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
         }
     })
     .directive('home', function($rootScope, $state) {
