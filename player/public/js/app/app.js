@@ -83,6 +83,7 @@ function launchInitialPage(appInfo, $state) {
 angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'genie-canvas.services', 'genie-canvas.template'])
     .run(function($rootScope, $ionicPlatform, $ionicModal, $location,  $cordovaFile, $cordovaToast, ContentService, $state, $stateParams) {
         $rootScope.imageBasePath = "img/icons/";
+        // serverPath and localPreview is a global variable defined in index.html file inside a story
         if("undefined" != typeof localPreview && "local" == localPreview)
             $rootScope.imageBasePath = serverPath + $rootScope.imageBasePath;
         $rootScope.languageSupport = {
@@ -136,6 +137,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             });
 
             GlobalContext.init(packageName, version).then(function(appInfo) {
+                // localPreview is a global variable defined in index.html file inside a story, 
                 if("undefined" != typeof localPreview &&  "local" == localPreview)
                     return;
                 var id = getUrlParameter("id");  
