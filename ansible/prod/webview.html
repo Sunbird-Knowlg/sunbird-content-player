@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"/> -->
+    <script src="js/thirdparty/jquery.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <div style="left: 20%; position: absolute;">
+            <input type="text" id="identifier"  placeholder="Enter content id" style="width: 144px;">
+            <button style="top: 165%;position: absolute; width: 150px;" onclick="loadContentWithId()"> Pass ContentId to iframe</button>
+        </div>
+        
+        <div style="left: 37%;position: absolute; ">
+            <input type="text" id="metadata" style="" placeholder="Enter content metadata">
+            <input type="text" id="body" style="" placeholder="Enter content body(data)">
+            <input type="text" id="config" style="" placeholder="Enter configurations">
+        </div>
+        <div style="position: absolute; left: 49%;top: 40px;">
+            <button style="top: 10%;right: 41%; position: absolute; width:150px" onclick="loadContent()">Calling iframe JS function</button> 
+            <label style="top: 10%; left: -18%; width: 300px; position: absolute;">setContentData(metadata, data, config)</label>
+        </div>
+        
+    </div>
+        
+    
+    <iframe id="contentIFrame" width="800px" height="500px" style = "position: absolute;top: 15%; right: 20%;">
+    </iframe>
+   
+
+      <script type="text/javascript">
+    var contentBody = {
+        "theme": {
+            "manifest": {
+                "media": [{
+                    "id": "validate",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/btn_ok_highlights_1460705843676.png",
+                    "type": "image"
+                }, {
+                    "id": "popupTint",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/PopupTint_1460636175572.png",
+                    "type": "image"
+                }, {
+                    "id": "goodjobBg",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/goodjobBg_1460727428389.png",
+                    "type": "image"
+                }, {
+                    "id": "retryBg",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/retryBg_1460727370746.png",
+                    "type": "image"
+                }, {
+                    "id": "retry_audio",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/retry_1460636610607.mp3",
+                    "type": "sound"
+                }, {
+                    "id": "goodjob_audio",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/goodJob_1460636677521.mp3",
+                    "type": "sound"
+                }, {
+                    "id": "next",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/btn_next_1461401649059.png",
+                    "type": "image"
+                }, {
+                    "id": "previous",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/btn_back_1461401700215.png",
+                    "type": "image"
+                }, {
+                    "id": "submit",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/icon_submit_1459243202199.png",
+                    "type": "image"
+                }, {
+                    "id": "home",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/icon_home_1459242981364.png",
+                    "type": "image"
+                }, {
+                    "id": "reload",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/icon_reload_1459243110661.png",
+                    "type": "image"
+                }, {
+                    "id": "icon_hint",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/icon_hint_1454918891133.png",
+                    "type": "image"
+                }, {
+                    "id": "speech_bubble",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/speech_bubble_1454918945089.png",
+                    "type": "image"
+                }, {
+                    "id": "yellowbox",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/yellowbox_1458728687443.png",
+                    "type": "image"
+                }, {
+                    "id": "greenbox",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/greenbox_1458728808748.png",
+                    "type": "image"
+                }, {
+                    "id": "bg",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/background_1458729298020.png",
+                    "type": "image"
+                }, {
+                    "id": "domain_654",
+                    "type": "image",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/under_water_1454405579256.png",
+                    "assetId": "domain_654"
+                }, {
+                    "id": "previous",
+                    "type": "image",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/1454011997727icon_previous.png",
+                    "assetId": "previous"
+                }, {
+                    "id": "nextButton",
+                    "type": "image",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/1454011990208nextButton.png",
+                    "assetId": "nextButton"
+                }, {
+                    "id": "icon_home",
+                    "type": "image",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/1454011999244icon_home.png",
+                    "assetId": "icon_home"
+                }, {
+                    "id": "icon_reload",
+                    "type": "image",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/1454011999995icon_reload.png",
+                    "assetId": "icon_reload"
+                }]
+            },
+            "template": [{
+                "text": {
+                    "model": "item.title",
+                    "x": 9,
+                    "y": 7,
+                    "w": 86,
+                    "h": 4,
+                    "font": "Georgia",
+                    "fontsize": 42
+                },
+                "mcq": {
+                    "options": {
+                        "layout": "table",
+                        "x": 20,
+                        "y": 15,
+                        "w": 70,
+                        "h": 85,
+                        "cols": 2,
+                        "marginX": 10,
+                        "marginY": 5,
+                        "options": "options"
+                    },
+                    "multi_select": false,
+                    "model": "item"
+                },
+                "g": {
+                    "image": {
+                        "event": {
+                            "action": [{
+                                "type": "command",
+                                "command": "stop",
+                                "asset_model": "item.hints[0].asset"
+                            }, {
+                                "type": "command",
+                                "command": "toggleShow",
+                                "asset": "hint"
+                            }],
+                            "type": "click"
+                        },
+                        "asset": "speech_bubble",
+                        "x": 0,
+                        "y": 0,
+                        "w": 100,
+                        "h": 100
+                    },
+                    "text": [{
+                        "x": 10,
+                        "y": 20,
+                        "w": 80,
+                        "h": 80,
+                        "font": "Georgia",
+                        "weight": "bold",
+                        "fontsize": 150,
+                        "__text": "Hint"
+                    }, {
+                        "x": 10,
+                        "y": 40,
+                        "w": 80,
+                        "h": 80,
+                        "font": "Georgia",
+                        "fontsize": 120,
+                        "model": "item.hints[1].asset"
+                    }],
+                    "x": 9,
+                    "y": 17,
+                    "w": 20,
+                    "h": 20,
+                    "id": "hint",
+                    "visible": false
+                },
+                "image": {
+                    "event": {
+                        "action": [{
+                            "type": "command",
+                            "command": "togglePlay",
+                            "asset_model": "item.hints[0].asset"
+                        }, {
+                            "type": "command",
+                            "command": "toggleShow",
+                            "asset": "hint"
+                        }],
+                        "type": "click"
+                    },
+                    "asset": "icon_hint",
+                    "x": 5,
+                    "y": 35
+                },
+                "id": "mcq_template_1"
+            }, {
+                "image": [{
+                    "event": {
+                        "action": {
+                            "type": "command",
+                            "command": "show",
+                            "asset": "retryDialog"
+                        },
+                        "type": "click"
+                    },
+                    "asset": "popupTint",
+                    "x": -100,
+                    "y": -150,
+                    "w": 550,
+                    "h": 600,
+                    "visible": true,
+                    "id": "popup-Tint"
+                }, {
+                    "asset": "retryBg",
+                    "x": 0,
+                    "y": 0,
+                    "w": 150,
+                    "h": 150,
+                    "visible": true,
+                    "id": "right"
+                }],
+                "shape": [{
+                    "event": {
+                        "action": [{
+                            "type": "command",
+                            "command": "hide",
+                            "asset": "retryDialog"
+                        }, {
+                            "type": "command",
+                            "command": "SHOWHTMLELEMENTS",
+                            "asset": "retry"
+                        }],
+                        "type": "click"
+                    },
+                    "type": "roundrect",
+                    "x": 72,
+                    "y": 25,
+                    "w": 50,
+                    "h": 65,
+                    "visible": true,
+                    "id": "retry",
+                    "hitArea": true
+                }, {
+                    "event": {
+                        "action": {
+                            "type": "command",
+                            "command": "transitionTo",
+                            "asset": "theme",
+                            "param": "next",
+                            "effect": "fadein",
+                            "direction": "left",
+                            "ease": "linear",
+                            "duration": 100
+                        },
+                        "type": "click"
+                    },
+                    "type": "roundrect",
+                    "x": 110,
+                    "y": 100,
+                    "w": 25,
+                    "h": 35,
+                    "visible": true,
+                    "id": "continue",
+                    "hitArea": true
+                }],
+                "id": "retry"
+            }, {
+                "g": {
+                    "image": [{
+                        "asset": "popupTint",
+                        "x": 0,
+                        "y": 0,
+                        "w": 100,
+                        "h": 100,
+                        "visible": true,
+                        "id": "popup-Tint"
+                    }],
+                    "text": [{
+                        "x": 25,
+                        "y": 25,
+                        "w": 50,
+                        "h": 9,
+                        "visible": true,
+                        "editable": true,
+                        "model": "word.lemma",
+                        "weight": "normal",
+                        "font": "helvetica",
+                        "color": "rgb(0,0,0)",
+                        "fontstyle": "",
+                        "fontsize": 75,
+                        "align": "left",
+                        "z-index": 1,
+                        "id": "lemma"
+                    }, {
+                        "x": 25,
+                        "y": 35,
+                        "w": 50,
+                        "h": 40,
+                        "visible": true,
+                        "editable": true,
+                        "model": "word.gloss",
+                        "weight": "normal",
+                        "font": "helvetica",
+                        "color": "rgb(0,0,0)",
+                        "fontstyle": "",
+                        "fontsize": 43,
+                        "align": "left",
+                        "z-index": 2,
+                        "id": "gloss"
+                    }],
+                    "shape": [{
+                        "x": 20,
+                        "y": 20,
+                        "w": 60,
+                        "h": 60,
+                        "visible": true,
+                        "editable": true,
+                        "type": "roundrect",
+                        "radius": 10,
+                        "opacity": 1,
+                        "fill": "#45b3a5",
+                        "stroke-width": 1,
+                        "z-index": 0,
+                        "id": "textBg"
+                    }],
+                    "x": 0,
+                    "y": 0,
+                    "w": 100,
+                    "h": 100,
+                    "event": {
+                        "action": [{
+                            "type": "command",
+                            "command": "SHOWHTMLELEMENTS",
+                            "asset": "textBg"
+                        }, {
+                            "type": "command",
+                            "command": "hide",
+                            "parent": true
+                        }],
+                        "type": "click"
+                    }
+                },
+                "id": "infoTemplate"
+            }, {
+                "image": [{
+                    "event": {
+                        "action": {
+                            "type": "command",
+                            "command": "show",
+                            "asset": ""
+                        },
+                        "type": "click"
+                    },
+                    "asset": "popupTint",
+                    "x": -100,
+                    "y": -150,
+                    "w": 550,
+                    "h": 600,
+                    "visible": true,
+                    "id": "popup-Tint"
+                }, {
+                    "event": {
+                        "action": [{
+                            "type": "command",
+                            "command": "transitionTo",
+                            "asset": "theme",
+                            "param": "next",
+                            "effect": "fadein",
+                            "direction": "left",
+                            "ease": "linear",
+                            "duration": 500
+                        }],
+                        "type": "click"
+                    },
+                    "asset": "goodjobBg",
+                    "x": 0,
+                    "y": 0,
+                    "w": 150,
+                    "h": 150,
+                    "visible": true,
+                    "id": "continue"
+                }],
+                "id": "goodjob"
+            }],
+            "controller": [{
+                "name": "dictionary",
+                "type": "data",
+                "id": "dictionary",
+                "__cdata": {}
+            }],
+            "startStage": "scene1",
+            "id": "theme",
+            "ver": 0.3,
+            "stage": [{
+                "id": "scene1",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "param": [{
+                    "name": "next",
+                    "value": "scenedb0f96df-5efe-4ac2-94dd-4ce6255bbaab"
+                }],
+                "events": {
+                    "event": []
+                },
+                "image": [{
+                    "x": 7.013888888888889,
+                    "y": -3.5555555555555554,
+                    "w": 119.44444444444444,
+                    "h": 99.55555555555556,
+                    "visible": true,
+                    "editable": true,
+                    "asset": "domain_654",
+                    "z-index": 0
+                }, {
+                    "event": {
+                        "action": {
+                            "type": "command",
+                            "command": "transitionTo",
+                            "asset": "theme",
+                            "param": "next",
+                            "effect": "fadein",
+                            "direction": "left",
+                            "ease": "linear",
+                            "duration": 500
+                        },
+                        "type": "click"
+                    },
+                    "asset": "next",
+                    "x": 93,
+                    "y": 3,
+                    "w": 5,
+                    "h": 8.3,
+                    "id": "next",
+                    "visible": true,
+                    "editable": true,
+                    "z-index": 100
+                }],
+                "text": [],
+                "shape": [],
+                "hotspot": [],
+                "embed": [],
+                "div": [],
+                "audio": [],
+                "scribble": []
+            }, {
+                "id": "scenedb0f96df-5efe-4ac2-94dd-4ce6255bbaab",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "param": [{
+                    "name": "next",
+                    "value": "scene23e82aa5-71ae-43df-ba26-dbdb4c901332"
+                }, {
+                    "name": "previous",
+                    "value": "scene1"
+                }],
+                "events": {
+                    "event": []
+                },
+                "image": [{
+                    "x": 0,
+                    "y": 0,
+                    "w": 6.375,
+                    "h": 10.2,
+                    "visible": false,
+                    "editable": true,
+                    "asset": "previous",
+                    "z-index": 0
+                }, {
+                    "x": 83.98611111111111,
+                    "y": 87.28888888888889,
+                    "w": 13.0625,
+                    "h": 9.626666666666665,
+                    "visible": true,
+                    "editable": true,
+                    "asset": "nextButton",
+                    "z-index": 1
+                }, {
+                    "x": 0.6944444444444444,
+                    "y": 87.94444444444444,
+                    "w": 7.2250000000000005,
+                    "h": 11.56,
+                    "visible": true,
+                    "editable": true,
+                    "asset": "icon_home",
+                    "z-index": 2
+                }, {
+                    "event": {
+                        "action": {
+                            "type": "command",
+                            "command": "transitionTo",
+                            "asset": "theme",
+                            "param": "next",
+                            "effect": "fadein",
+                            "direction": "left",
+                            "ease": "linear",
+                            "duration": 500
+                        },
+                        "type": "click"
+                    },
+                    "asset": "next",
+                    "x": 93,
+                    "y": 3,
+                    "w": 5,
+                    "h": 8.3,
+                    "id": "next",
+                    "visible": true,
+                    "editable": true,
+                    "z-index": 100
+                }, {
+                    "event": {
+                        "action": {
+                            "type": "command",
+                            "command": "transitionTo",
+                            "asset": "theme",
+                            "param": "previous",
+                            "effect": "fadein",
+                            "direction": "right",
+                            "ease": "linear",
+                            "duration": 100
+                        },
+                        "type": "click"
+                    },
+                    "asset": "previous",
+                    "x": 2,
+                    "y": 3,
+                    "w": 5,
+                    "h": 8.3,
+                    "id": "previous",
+                    "visible": true,
+                    "editable": true,
+                    "z-index": 100
+                }],
+                "text": [{
+                    "x": 32.22222222222222,
+                    "y": 4.666666666666667,
+                    "w": 43.43245833333334,
+                    "h": 14.761555555555558,
+                    "visible": true,
+                    "editable": true,
+                    "__text": "Tap and Type",
+                    "weight": "normal",
+                    "font": "helvetica",
+                    "color": "rgb(0,0,0)",
+                    "fontstyle": "",
+                    "fontsize": 135,
+                    "lineHeight": 1.3,
+                    "align": "left",
+                    "z-index": 3
+                }, {
+                    "x": 14.166666666666666,
+                    "y": 33.55555555555556,
+                    "w": 80.38604166666669,
+                    "h": 27.32111111111111,
+                    "visible": true,
+                    "editable": true,
+                    "__text": "Tap and Type",
+                    "weight": "normal",
+                    "font": "helvetica",
+                    "color": "rgb(0,0,0)",
+                    "fontstyle": "",
+                    "fontsize": 250,
+                    "lineHeight": 1.3,
+                    "align": "left",
+                    "z-index": 4
+                }],
+                "shape": [],
+                "hotspot": [],
+                "embed": [],
+                "div": [],
+                "audio": [],
+                "scribble": []
+            }, {
+                "id": "scene23e82aa5-71ae-43df-ba26-dbdb4c901332",
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100,
+                "param": [{
+                    "name": "previous",
+                    "value": "scenedb0f96df-5efe-4ac2-94dd-4ce6255bbaab"
+                }],
+                "events": {
+                    "event": []
+                },
+                "image": [{
+                    "x": 14.583333333333334,
+                    "y": 40.22222222222222,
+                    "w": 21.25,
+                    "h": 34,
+                    "visible": true,
+                    "editable": true,
+                    "asset": "icon_home",
+                    "z-index": 0
+                }, {
+                    "x": 48.888888888888886,
+                    "y": 38.666666666666664,
+                    "w": 21.25,
+                    "h": 34,
+                    "visible": true,
+                    "editable": true,
+                    "asset": "icon_reload",
+                    "z-index": 1
+                }, {
+                    "event": {
+                        "action": {
+                            "type": "command",
+                            "command": "transitionTo",
+                            "asset": "theme",
+                            "param": "previous",
+                            "effect": "fadein",
+                            "direction": "right",
+                            "ease": "linear",
+                            "duration": 100
+                        },
+                        "type": "click"
+                    },
+                    "asset": "previous",
+                    "x": 2,
+                    "y": 3,
+                    "w": 5,
+                    "h": 8.3,
+                    "id": "previous",
+                    "visible": true,
+                    "editable": true,
+                    "z-index": 100
+                }],
+                "text": [{
+                    "x": 29.02777777777778,
+                    "y": 11.555555555555555,
+                    "w": 33.409736111111116,
+                    "h": 13.130444444444448,
+                    "visible": true,
+                    "editable": true,
+                    "__text": "What next? ",
+                    "weight": "normal",
+                    "font": "helvetica",
+                    "color": "rgb(0,0,0)",
+                    "fontstyle": "",
+                    "fontsize": 120,
+                    "lineHeight": 1.3,
+                    "align": "left",
+                    "z-index": 2
+                }],
+                "shape": [],
+                "hotspot": [],
+                "embed": [],
+                "div": [],
+                "audio": [],
+                "scribble": []
+            }]
+        }
+    }
+
+    var contentMetadata = {
+        "identifier": "org.ekstep.worksheet.noah",
+        "mimeType": "application/vnd.ekstep.ecml-archive",
+        "localData": {
+            "questionnaire": null,
+            "appIcon": "fixture-stories/addition_by_grouping/logo.png",
+            "subject": "literacy_v2",
+            "description": "Ekstep Content App",
+            "name": "Ekstep Content App",
+            "downloadUrl": "",
+            "checksum": null,
+            "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+            "concepts": [{
+                "identifier": "LO1",
+                "name": "Receptive Vocabulary",
+                "objectType": "Concept"
+            }],
+            "identifier": "org.ekstep.worksheet.noah",
+            "grayScaleAppIcon": null,
+            "pkgVersion": 1
+        },
+        "isAvailable": true,
+        "path": "fixture-stories/addition_by_grouping"
+    };
+
+    var contentId = "org.ekstep.story.hi.sweet";
+
+    var content = {
+        body : contentBody,
+        metadata: contentMetadata,
+        id: contentId
+    }
+
+    function getContentMetadata() {
+      return contentMetadata;
+    }
+
+    function getContentBody() {
+      return contentBody;
+    }
+
+    function getContentId() {
+      return contentId;
+    }
+
+    function getContent() {
+        return content;
+    }
+
+
+    $('body').bind('onstagechange', function(evt, data){
+        console.log("Hi, This is the sample code for passing custon event from iframe to parent  with stageId : ", data.stageId);
+        //alert('StageId : ' + data.stageId);
+    }) ;
+
+    // Case 1: When not passing any data as url parameter
+    function loadContent() {
+        var iframe = document.getElementById('contentIFrame');
+        // iframe.contentWindow.location.reload();
+        iframe.src = "//ekstep-public.s3.amazonaws.com/preview/production/preview.html?webview=true";
+        document.getElementById("contentIFrame").addEventListener('load', function() {
+           var meta = document.getElementById("metadata").value;
+            if(meta.length)
+                meta = JSON.parse(meta);
+            var data = document.getElementById("body").value;
+            if(data.length)
+                data = JSON.parse(data);
+            var config = document.getElementById("config").value;
+            config = JSON.parse(!config.length ? "{}" : config);
+            iframe.contentWindow.setContentData(meta, data, config);
+
+        });
+    }
+
+
+    // Case 2: When passing contentId as url parameter  
+    function loadContentWithId() {
+        var iframe = document.getElementById('contentIFrame');
+        // iframe.contentWindow.location.reload(); 
+        var id = document.getElementById("identifier").value;
+        iframe.src = "//ekstep-public.s3.amazonaws.com/preview/production/preview.html?webview=true&id=" + id;
+    }
+    </script>
+   
+</body>
+
+</html>
+
+
+
+ <!-- <input type="text" id="identifier" style="width:25%; margin-left:10%" placeholder="Please Enter content id">
+
+    <button style="margin-top: -28%;margin-left: 2%;" onclick="loadContentWithId()"> Play Content with identifier</button>
+    <input type="text" id="metadata" style="width:25%; margin-left:20%">
+    <input type="text" id="body" style="width:25%; margin-left:10%">
+    <input type="text" id="config" style="width:25%; margin-left:10%">
+    <button style="width:28% margin-right: 5%; margin-left: 50%;" onclick="loadContent()"> Play Content without identifier</button>
+    <iframe id="contentIFrame" width="75%" height="510px" style = "margin-top: 2.5%; margin-left:10%">
+    </iframe> -->
+
+
+
+
+
+
+<!-- working sample  code related to <iframe> -->
+ <!-- // if (window.addEventListener) {
+    //     window.addEventListener ("message", receive, false);        
+    // }
+    // else {
+    //     if (window.attachEvent) {
+    //         window.attachEvent("onmessage",receive, false);
+    //     }
+    // }
+
+    function receive(event) {
+        var data = event.data;
+        if (typeof(window[data.func]) == "function") {
+            window[data.func].call(null, data.params[0]);
+        }
+    }
+
+    function alertMyMessage(msg) {
+        alert(msg);
+    } -->
