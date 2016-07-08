@@ -60,35 +60,39 @@ var StagePlugin = Plugin.extend({
 
         this.invokeChildren(data, this, this, this._theme);
     },
-    keyboardShowHandler: function (e){
-        this._self.y =  -(e.keyboardHeight - 30);
+    keyboardShowHandler: function (e) {
+        this._self.y =  -(e.keyboardHeight);
+        if (!this._self.hitArea) {
+            var hit = new createjs.Shape();
+            hit.graphics.beginFill("#000").drawRect(0, 0, this._self.width, this._self.height);
+            this._self.hitArea = hit;
+            console.info("HitArea added to the stage.");
+        }
         Renderer.update = true;
         this.keyboardH = e.keyboardHeight;
-        this._self.addEventListener("mousedown", this._startDrag, true); 
+        this._self.addEventListener("mousedown", this._startDrag); 
         this.offset = new createjs.Point();
         
     },
     startDrag: function () {
         this.offset.x = Renderer.theme._self.mouseX - this._self.x;
         this.offset.y = Renderer.theme._self.mouseY - this._self.y;
-        this._self.addEventListener("pressmove", this._doDrag, true); 
-        
+        this._self.addEventListener("pressmove", this._doDrag);
     },
     doDrag: function (event) {
-         if(this._self.y >= this.keyboardH || this._self.y >= -this.keyboardH || this._self.y == 0){
+         if(this._self.y >= this.keyboardH || this._self.y >= -this.keyboardH) {
             this._self.y = event.stageY - this.offset.y;
             if( this._self.y < -this.keyboardH)
-                 this._self.y = -this.keyboardH + 1;
+                this._self.y = -this.keyboardH + 1;
              if( this._self.y > 0)
-                 this._self.y = 0;
+                this._self.y = 0;
             Renderer.update = true;
         }
-        
     },
-    keyboardHideHandler: function (e){  
+    keyboardHideHandler: function (e) {  
         this._self.y = 0;          
-        this._self.removeEventListener("mousedown", this._startDrag, true); 
-        this._self.removeEventListener("pressmove", this._doDrag, true); 
+        this._self.removeEventListener("mousedown", this._startDrag); 
+        this._self.removeEventListener("pressmove", this._doDrag);
         Renderer.update = true;
     },
     setParamValue: function(p) {
