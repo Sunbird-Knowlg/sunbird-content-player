@@ -4,15 +4,21 @@ angular.module('genie-canvas.template',[])
     $rootScope.pageId = "coverpage";
     $rootScope.content;
     $scope.showPage = true;
-
     $scope.playContent = function(content) {
         $scope.showPage = false;
         $state.go('playContent', {
             'itemId': content.identifier
         });
+        jQuery('#loadingText').text(GlobalContext.config.appInfo.name);
+        jQuery('#loadingText1').text(GlobalContext.config.appInfo.name);
+        jQuery("#progressBar").width(0);
+        jQuery('#loading').show();
+        startProgressBar(40, 0.6);
+
     };
 
     $scope.getContentMetadata = function(content) {
+        jQuery('#loading').hide();
         ContentService.getContent(content)
         .then(function(data) {
            $scope.setContentMetadata(data);
@@ -42,7 +48,6 @@ angular.module('genie-canvas.template',[])
         var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
         TelemetryService.start(identifier, version);
         TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID"});
-        $('#loading').hide();
     }
 
     $scope.init = function(){
