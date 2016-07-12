@@ -211,6 +211,7 @@ var ThemePlugin = Plugin.extend({
         if(this._isSceneChanging){ return; }
         
         var stage = this._currentScene;
+        RecorderManager.stopRecording();
         TimerManager.stopAll(this._currentStage);
         if (action.transitionType === 'previous') {
             this._isSceneChanging = true;

@@ -7,10 +7,11 @@ RecorderManager = {
 	mediaFiles: [],
 	// Here we hardcoding the timeout events (Because some stores don't have timeout-success, timeout-failure attributes).
 	// We should deprecate once all the stories are updated.
-	_timeout: {
-		success: "rec_stopped",
-		failure: "rec_stop_failed",
-		method: undefined
+	_autostop: {
+		default_success: "rec_stopped",
+		default_failure: "rec_stop_failed",
+		method: undefined,
+		action: undefined
 	},
 	_root: undefined,
 	init: function() {
@@ -42,17 +43,11 @@ RecorderManager = {
 					stagePlugin.dispatchEvent(action.failure);
 				}
 			});
-
-			RecorderManager._timeout.method = setTimeout(function() {
-				if(RecorderManager.recording = true) {
-					var stopAction = _.clone(action);
-					stopAction["success"] = RecorderManager._getTimeoutEventName("success", stopAction);
-					stopAction["failure"] = RecorderManager._getTimeoutEventName("failure", stopAction);
-					RecorderManager.stopRecording(stopAction);
-				}
+			RecorderManager._setAutostopAction(action);
+			RecorderManager._autostop.method = setTimeout(function() {
+				RecorderManager.stopRecording(RecorderManager._autostop.action);
 			}, action.timeout ? action.timeout : 10000)
 		}
-
 		RecorderManager.recording = true;
  	},
 	/*
@@ -60,23 +55,27 @@ RecorderManager = {
 	* 	Dispatch success OR failure events.
 	*/
 	stopRecording: function(action) {
-		var plugin = PluginManager.getPluginObject(action.asset);
-		var stagePlugin = plugin._stage || plugin;
-		var stageId = stagePlugin._id;
-		speech.stopRecording(function(response) {
-			RecorderManager.recording = false;
-			if("success" == response.status) {
-				clearTimeout(RecorderManager._timeout.method);
-				var currentRecId = "current_rec";
-				AssetManager.loadAsset(stageId, currentRecId, response.filePath);
-				AudioManager.destroy(stageId, currentRecId);
-			}
-			if ("success" == response.status && action.success) {
-				stagePlugin.dispatchEvent(action.success);
-			} else if("error" == response.status && action.failure) {
-				stagePlugin.dispatchEvent(action.failure);
-			}
-		});
+		if (RecorderManager.recording == true) {
+			speech.stopRecording(function(response) {
+				RecorderManager.recording = false;
+				if("success" == response.status) {
+					RecorderManager._cleanRecording();
+				}
+				if (("undefined" != typeof action) && action.asset) {
+					var plugin = PluginManager.getPluginObject(action.asset);
+					var stagePlugin = plugin._stage || plugin;
+					var stageId = stagePlugin._id;
+					if ("success" == response.status) {
+						var currentRecId = "current_rec";
+						AssetManager.loadAsset(stageId, currentRecId, response.filePath);
+						AudioManager.destroy(stageId, currentRecId);
+						if (action.success) stagePlugin.dispatchEvent(action.success);
+					} else if("error" == response.status && action.failure) {
+						stagePlugin.dispatchEvent(action.failure);
+					}
+				}
+			});
+		}
 	},
 	processRecording: function(action) {
 		var plugin = PluginManager.getPluginObject(action.asset);
@@ -123,12 +122,23 @@ RecorderManager = {
 		if ("undefined" != typeof action["timeout-"+status]) {
 			eventName = action["timeout-"+status];
 		} else {
-			if (Renderer.theme._currentScene.appEvents.indexOf(RecorderManager._timeout[status]) > -1) {
-				eventName = RecorderManager._timeout[status];
+			if (Renderer.theme._currentScene.appEvents.indexOf(RecorderManager._autostop["default_"+status]) > -1) {
+				eventName = RecorderManager._autostop["default_"+status];
 			} else {
 				console.error("Invalid stopRecord events for timeout:", Renderer.theme._currentScene.appEvents);
 			}
 		}
 		return eventName;
+	},
+	_setAutostopAction: function(startAction) {
+		var stopAction = _.clone(startAction);
+		stopAction["success"] = RecorderManager._getTimeoutEventName("success", stopAction);
+		stopAction["failure"] = RecorderManager._getTimeoutEventName("failure", stopAction);
+		RecorderManager._autostop.action = stopAction;
+	},
+	_cleanRecording: function() {
+		clearTimeout(RecorderManager._autostop.method);
+		RecorderManager._autostop.method = undefined;
+		RecorderManager._autostop.action = undefined;
 	}
 }
