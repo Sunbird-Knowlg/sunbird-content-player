@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<theme id="theme" startStage="intro" ver="0.2">
+    <manifest>
+        <media assetId="do_20093891_background" id="background" src="1467696062423background.jpg" type="image"/>
+        <media assetId="do_20093891_icon" id="icon" src="1467696063627icon.png" type="image"/>
+        <media assetId="do_20093891_play" id="play" src="1467696062772icon_play.png" type="image"/>
+        <media assetId="do_20093891_ekstep" id="ekstep" src="1467696062599eksteplogo.png" type="image"/>
+        <media assetId="do_20093891_add_video" id="add_video" src="1467696061698addition.webm" type="video"/>
+    </manifest>
+
+    <stage id="preloadStage" preload="true">
+        <image asset="play"/>
+        <image asset="ekstep"/>
+        <image asset="icon"/>
+        <image asset="background"/>
+    </stage>
+
+    <stage h="100" id="intro" w="100" x="0" y="0">
+        <param name="next" value="play_video"/>
+
+        <image asset="background" h="100" w="100" x="0" y="0" z-index="-1"/>
+        <image asset="icon" h="65" w="35" x="35" y="35" z-index="100"/>
+
+        <shape fill="white" h="65" opacity="0.8" stroke="white" stroke-width="5" type="rect" w="120" x="-10" y="75"/>
+
+        <image asset="ekstep" h="18" w="7" x="10" y="80" z-index="100"/>
+        <text font="Georgia" fontsize="50" h="10" shadow="white" w="15" x="18" y="82">Showcase Series</text>
+        <text color="" font="Georgia" fontsize="30" h="10" shadow="white" w="80" x="18" y="94">Numeracy Platform</text>
+
+        <text align="center" color="black" font="Arial" fontsize="35" h="5" w="12" x="85" y="82" z-index="100">Level 1</text>
+        <text align="center" color="black" font="Arial" fontsize="35" h="5" w="12" x="85" y="92" z-index="100">Videos</text>
+
+        <shape fill="#FF9500" h="7" stroke="white" stroke-width="5" type="rect" w="12" x="85" y="80"/>
+        <shape fill="#FF9500" h="7" stroke="white" stroke-width="5" type="rect" w="12" x="85" y="90"/>
+    </stage>
+
+    <stage h="100" id="play_video" w="100" x="0" y="0">
+        <param name="previous" value="intro"/>
+        <param name="next" value="endstage"/>
+        <image asset="background" h="100" w="100" x="0" y="0" z-index="-1"/>
+        <video asset="add_video" autoplay="true" controls="true" h="78" type="video/webm" w="80" x="10" y="10"/>
+    </stage>
+
+    <stage h="100" id="endstage" w="100" x="0" y="0">
+        <image asset="background" h="100" w="100" x="0" y="0" z-index="-1"/>
+        <text align="center" color="#283919" font="Georgia" fontsize="2.5em" h="10" shadow="white" w="80" weight="bold" x="10" y="50">Wasn't that fun?</text>
+    </stage>
+
+</theme>

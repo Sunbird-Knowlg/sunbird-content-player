@@ -1,5 +1,5 @@
 {
-    "framerate": 50,
+    "framerate": 20,
     "images": ["fixture-stories/verbs/assets/walk.png"],
     "frames": {"regX": 0, "height": 484, "count": 10, "regY": 0, "width": 562},
     "animations": {

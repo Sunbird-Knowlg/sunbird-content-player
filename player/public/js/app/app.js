@@ -81,7 +81,7 @@ function launchInitialPage(appInfo, $state) {
  
 
 angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'genie-canvas.services', 'genie-canvas.template'])
-    .run(function($ionicPlatform, $ionicModal, $location,  $cordovaFile, $cordovaToast, ContentService, $state, $stateParams) {
+    .run(function($rootScope, $ionicPlatform, $ionicModal, $location,  $cordovaFile, $cordovaToast, ContentService, $state, $stateParams) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -237,8 +237,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         }
 
         $scope.resetContentListCache = function() {
-            // jQuery("#loadingDiv").show();
-            
+            jQuery('#loading').hide();
             $rootScope.renderMessage("", 0);
             ContentService.getContent(id)
                 .then(function(content) {
@@ -262,12 +261,14 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     return ContentService.getContentList(filter, childrenIds);
                 })
                 .then(function(result) {
+
                     $rootScope.$apply(function() {
                         $rootScope.stories = result;
                     });
                     if ($rootScope.stories && $rootScope.stories.length <= 0) {
                         $rootScope.renderMessage(AppMessages.NO_CONTENT_LIST_FOUND);
                     }
+                    //$rootScope.showLoader = false;
                 })
                 .catch(function(err) {
                     $rootScope.$apply(function() {

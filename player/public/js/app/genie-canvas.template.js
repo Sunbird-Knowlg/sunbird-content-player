@@ -4,15 +4,21 @@ angular.module('genie-canvas.template',[])
     $rootScope.pageId = "coverpage";
     $rootScope.content;
     $scope.showPage = true;
-
     $scope.playContent = function(content) {
         $scope.showPage = false;
         $state.go('playContent', {
             'itemId': content.identifier
         });
+        jQuery('#loadingText').text(GlobalContext.config.appInfo.name);
+        jQuery('#loadingText1').text(GlobalContext.config.appInfo.name);
+        jQuery("#progressBar").width(0);
+        jQuery('#loading').show();
+        startProgressBar(40, 0.6);
+
     };
 
     $scope.getContentMetadata = function(content) {
+        jQuery('#loading').hide();
         ContentService.getContent(content)
         .then(function(data) {
            $scope.setContentMetadata(data);
@@ -42,7 +48,6 @@ angular.module('genie-canvas.template',[])
         var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
         TelemetryService.start(identifier, version);
         TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID"});
-        $('#loading').hide();
     }
 
     $scope.init = function(){
@@ -97,7 +102,7 @@ angular.module('genie-canvas.template',[])
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
     $scope.showNextContent = true;
     $rootScope.pageId = "endpage";
-    $scope.creditsBody = '<div class="credit-popup"><img ng-src="{{icons.popup.credit_popup}}" style="width:100%;" /><div class="popup-body"><div class="credit-body-icon-font"><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup_close.close_icon}}" style="width:100%; left:70%;"/></a></div>';
+    $scope.creditsBody = '<div class="credit-popup"><img ng-src="{{icons.popup.credit_popup}}" style="width:100%;" /><div class="popup-body"><div class="credit-body-icon-font"><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">There is no credits available</div></div></div><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup_close.close_icon}}" style="width:100%; left:70%;"/></a></div>';
     //$rootScope.content = {};
 
     $scope.arrayToString = function(array) {
@@ -132,7 +137,6 @@ angular.module('genie-canvas.template',[])
     $scope.showCredits = function(key) {
         if (content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null) {
             console.warn("No metadata imageCredits,voiceCredites and soundCredits");
-            return;
         }
         jQuery("#creditsPopup").show();
         TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {

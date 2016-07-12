@@ -14,7 +14,7 @@ CommandManager = {
                 if (_.isString(action.command)) cId = action.command.toUpperCase();
                 var command = CommandManager.commandMap[cId];
                 if (command) {
-                    c = new command(action);    
+                    c = new command(action);
                 } else {
                     console.warn("No command registered with name: ", cId);
                 }

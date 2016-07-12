@@ -21,8 +21,7 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'public/js/script.min.js': [
-                        'public/js/app/GlobalContext.js',
-                        'public/js/app/AppConfig.js',
+                        'public/js/app/GlobalContext.js',                        
                         'public/js/app/AppMessages.js',
                         'public/js/app/main.js',
                         'public/js/app/app.js',
@@ -100,6 +99,9 @@ module.exports = function(grunt) {
                         cwd: 'public/',
                         src: ['**', '!**/controller/**', '!**/evaluator/**', '!**/manager/**', '!**/plugin/**', '!**/renderer/**', '!**/generator/**', '!**/telemetry/**', '!**/test/**', '!**/tests/**', '!**/jasmine-2.3.4/**', '!**/exclude/**'],
                         dest: 'www/'
+                    },
+                    {
+                        src: ['public/js/app/AppConfig.js'], dest: 'www/js/AppConfig.js'
                     }
                 ]
             },
@@ -109,7 +111,10 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: 'public/',
                         src: ['img/**', 'fonts/**', 'templates/**', 'libs/**', 'json/**', 'css/**', 'assets/**', 'js/**', 'webview.html', 'preview.html'],
-                        dest: 'public/preview/'
+                        dest: 'www/preview/'
+                    },
+                    {
+                        src: ['public/js/app/AppConfig.js'], dest: 'www/preview/js/AppConfig.js'
                     }
                 ]
             },
@@ -176,8 +181,7 @@ module.exports = function(grunt) {
             before: ["www", "platforms/android/assets/www", "platforms/android/build"],
             after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html", "www/webview.html", "www/preview.html"],
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
-            minjs: ['public/js/*.min.js'],
-            preview: ["public/preview"]
+            minjs: ['public/js/*.min.js']
         },
         rename: {
             main: {
@@ -218,12 +222,12 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'public/preview',
+                    cwd: 'www/preview',
                     src: ['**'],
                     dest: '/preview/sandbox/'
                 }]
             },
-            copySandboxPreviewFilesToQA : {
+            uploadPreviewFilesToQA : {
                 options: {
                     bucket: 'ekstep-public',
                     access: 'public-read',
@@ -231,9 +235,10 @@ module.exports = function(grunt) {
                     progress: 'progressBar'
                 },
                 files: [{
-                    src: ['preview/sandbox/'],
-                    dest: 'preview/QA/',
-                    action: 'copy'
+                    expand: true,
+                    cwd: 'www/preview',
+                    src: ['**'],
+                    dest: '/preview/qa/'
                 }]
             },
             uploadPreviewFilesToProduction : {
@@ -245,7 +250,7 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'public/preview',
+                    cwd: 'www/preview',
                     src: ['**'],
                     dest: '/preview/production'
                 }]
@@ -270,7 +275,7 @@ module.exports = function(grunt) {
                     bucket: 'ekstep-public'
                 },
                 files: [{
-                    dest: 'preview/QA',
+                    dest: 'preview/qa',
                     action: 'delete'
                 }]
             },
@@ -444,7 +449,7 @@ module.exports = function(grunt) {
         },
         replace: {
             sensibol: {
-                src: ['www/js/app/AppConfig.js', 'www/js/renderer.min.js'],
+                src: ['www/js/AppConfig.js', 'www/js/renderer.min.js'],
                 overwrite: true,
                 replacements: [{
                     from: /AUDIO_RECORDER/g,
@@ -452,76 +457,35 @@ module.exports = function(grunt) {
                 }]
             },
             android: {
-                src: ['www/js/app/AppConfig.js', 'www/js/renderer.min.js'],
+                src: ['www/js/AppConfig.js', 'www/js/renderer.min.js'],
                 overwrite: true,
                 replacements: [{
                     from: /AUDIO_RECORDER/g,
                     to: "android"
                 }]
             },
-
-            preview_production: {
-                src: ['public/js/app/AppConfig.js'],
-                overwrite: true,
-                replacements: [{
-                    from: /DEPLOYMENT/g,
-                    to: "production"
-                }]
-            },
-            webviewLinksSanbox: {
-                src: ['public/preview/webview.html'],
-                overwrite: true,
-                replacements: [{
-                    from: /DEPLOYMENT/g,
-                    to: "sandbox"
-                }]
-            },
-            webviewLinksProduction: {
-                src: ['public/preview/webview.html'],
-                overwrite: true,
-                replacements: [{
-                    from: /DEPLOYMENT/g,
-                    to: "production"
-                }]
-            },
             preview_sandbox: {
-                src: ['public/js/app/AppConfig.js'],
+                src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html'],
                 overwrite: true,
                 replacements: [{
                     from: /DEPLOYMENT/g,
                     to: "sandbox"
+                }]
+            },
+            preview_production: {
+                src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html'],
+                overwrite: true,
+                replacements: [{
+                    from: /DEPLOYMENT/g,
+                    to: "production"
                 }]
             },
             preview_QA: {
-                src: ['public/js/app/AppConfig.js'],
+                src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html'],
                 overwrite: true,
                 replacements: [{
                     from: /DEPLOYMENT/g,
-                    to: "sandbox"
-                }]
-            },
-            flavor_sandboxToDeployment: {
-                src: ['public/js/app/AppConfig.js'],
-                overwrite: true,
-                replacements: [{
-                    from: /flavor: 'sandbox'/g,
-                    to: "flavor: 'DEPLOYMENT'"
-                }]
-            },
-            flavor_productionToDeployment: {
-                src: ['public/js/app/AppConfig.js'],
-                overwrite: true,
-                replacements: [{
-                    from: /flavor: 'production'/g,
-                    to: "flavor: 'DEPLOYMENT'"
-                }]
-            },
-            flavor_QAToDeployment: {
-                src: ['public/js/app/AppConfig.js'],
-                overwrite: true,
-                replacements: [{
-                    from: /flavor: 'sandbox'/g,
-                    to: "flavor: 'DEPLOYMENT'"
+                    to: "qa"
                 }]
             },
             androidLib: {
@@ -569,21 +533,18 @@ module.exports = function(grunt) {
 
     grunt.registerTask('deploy-preview', function(flavor) {
         if(!flavor){
-            grunt.fail.fatal("deployment argument value should be any one of: ['sandbox', 'production', 'QA'].");
+            grunt.fail.fatal("deployment argument value should be any one of: ['sandbox/dev', 'production', 'qa'].");
             return;
         }
         grunt.log.writeln("Starting", flavor, "deployment");
         flavor = flavor.toLowerCase().trim();
         var tasks = [];
-        if ("sandbox" == flavor) {
-            tasks.push('replace:preview_sandbox');
+        if (("sandbox" == flavor) || ("dev" == flavor)) {
             tasks.push('preview-sandbox');
         } else if("production" == flavor) {
-            tasks.push('replace:preview_production');
             tasks.push('preview-production');
         } else if("qa" == flavor) {
-            //tasks.push('replace:preview_QA');
-            tasks.push('preview-QA');
+            tasks.push('preview-qa');
         } 
 
         if (tasks.length > 0) {
@@ -592,10 +553,9 @@ module.exports = function(grunt) {
     });
 
 
-    grunt.registerTask('preview-sandbox', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'replace:webviewLinksSanbox', 'aws_s3:cleanSandboxPreview', 'aws_s3:uploadPreviewFilesToSandbox', 'clean:preview', 'replace:flavor_sandboxToDeployment']);
-    grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'replace:webviewLinksProduction','aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction', 'clean:preview', 'replace:flavor_productionToDeployment']);
-    grunt.registerTask('preview-QA', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:preview', 'copy:previewFiles', 'aws_s3:cleanQAPreview', 'aws_s3:copySandboxPreviewFilesToQA', 'clean:preview', 'replace:flavor_QAToDeployment']);
-
+    grunt.registerTask('preview-sandbox', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_sandbox', 'aws_s3:cleanSandboxPreview', 'aws_s3:uploadPreviewFilesToSandbox']);
+    grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
+    grunt.registerTask('preview-qa', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
   
     grunt.registerTask('rm-cordova-plugin-sensibol', function() {
         if (grunt.file.exists('plugins/cordova-plugin-sensibol')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
@@ -659,10 +619,10 @@ module.exports = function(grunt) {
     grunt.registerTask('set-xwalk-library', ['cordovacli:add_xwalk','replace:xwalk_library']);
     grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared','replace:xwalk_library']);
 
-    grunt.registerTask('build-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'clean:preview', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('build-unsigned-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
     grunt.registerTask('build-signed-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
 
-    grunt.registerTask('build-aar-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'clean:preview', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalk-library', 'cordovacli:build_android', 'clean:minjs']);
-	grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'clean:preview', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-aar-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalk-library', 'cordovacli:build_android', 'clean:minjs']);
+	grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
 };

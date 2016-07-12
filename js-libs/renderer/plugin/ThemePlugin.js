@@ -83,7 +83,9 @@ var ThemePlugin = Plugin.extend({
             this.invokeStage(this._data.startStage);
         }
         this.update();
-        jQuery('#gameAreaLoad').hide();
+        //document.getElementById("progressBar").style.width = 100 + '%';
+        jQuery("#progressBar").width(100);
+        jQuery('#loading').hide();
         jQuery('#overlayHTML').show();
     },
     addController: function(p) {
@@ -209,6 +211,7 @@ var ThemePlugin = Plugin.extend({
         if(this._isSceneChanging){ return; }
         
         var stage = this._currentScene;
+        RecorderManager.stopRecording();
         TimerManager.stopAll(this._currentStage);
         if (action.transitionType === 'previous') {
             this._isSceneChanging = true;
