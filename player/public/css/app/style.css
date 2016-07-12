@@ -490,7 +490,7 @@ ion-popover-view.fit ion-content {
 
 .gc-content-owner{
     font-size: 2em;
-    margin-top: 10%;
+    margin-top: 12%;
     padding: 1% 0;
     width: 100%;
     text-align: center;
@@ -528,7 +528,7 @@ ion-popover-view.fit ion-content {
 }
 
 .content-noCredits {
-    font-size: 3em;
+    font-size: 3.0vh;
     padding: 3%;
     line-height: 1em;
     width: 100%;
