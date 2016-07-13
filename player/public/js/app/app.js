@@ -259,8 +259,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         }
 
         $scope.resetContentListCache = function() {
-            // jQuery("#loadingDiv").show();
-            
+            jQuery('#loading').hide();
             $rootScope.renderMessage("", 0);
             ContentService.getContent(id)
                 .then(function(content) {

@@ -36,6 +36,15 @@ CommandManager = {
         CommandManager._setDataAttributes(action);
 
         switch (cmd) {
+            case 'RESET':
+              /*  var final=action.cType+"."+action.controller;*/
+                var c = ControllerManager.instanceMap[action.cType+"."+action.controller];
+                if ("undefined" != typeof c) {
+                    c.reset();
+                } else {
+                    console.warn("No controller find with id:", action.controller);
+                }
+                break;
             case 'ERASE':
                 plugin.clear();
                 break;
@@ -168,6 +177,8 @@ CommandManager = {
             case 'HIDEHTMLELEMENTS':
                 CommandManager.displayAllHtmlElements(false);
                 break;
+
+
             default:
                 console.log("Command '" + cmd +"' not found.");
         }
