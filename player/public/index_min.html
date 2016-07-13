@@ -80,22 +80,6 @@
         </div> 
 
         <script type="text/javascript" src="js/thirdparty/jquery.min.js"></script>
-        <script>
-            var startProgressBar = function(w, setInter) {
-                var elem = document.getElementById("progressBar");
-                var width = w ? w : 20;
-                var id = setInterval(frame, setInter ? setInter : 0.7);
-                function frame() {
-                    if (width >= 100) {
-                     clearInterval(id);
-                    } else {
-                    width++;
-                    elem.style.width = width + '%';
-                    }
-                }
-            }
-            startProgressBar();
-        </script>
 
          <!-- cordova script (this will be a 404 during development) -->
         <script src="cordova.js"></script>
