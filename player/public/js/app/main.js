@@ -7,6 +7,19 @@ var packageName = "org.ekstep.quiz.app",
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
     ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive";
 
+function startProgressBar(w, setInter) {
+    var elem = document.getElementById("progressBar");
+    var width = w ? w : 20;
+    var id = setInterval(frame, setInter ? setInter : 0.7);
+    function frame() {
+        if (width >= 100) {
+         clearInterval(id);
+        } else {
+        width++;
+        elem.style.width = width + '%';
+        }
+    }
+}
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
         $cordovaFile.removeFile(cordova.file.dataDirectory, path)
@@ -115,6 +128,7 @@ function startApp(app) {
             }
         });
 }
+startProgressBar(40, 0.6);
 
 function contentNotAvailable() {
     alert(AppMessages.NO_CONTENT_FOUND);
