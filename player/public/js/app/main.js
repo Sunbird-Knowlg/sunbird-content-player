@@ -16,10 +16,12 @@ function startProgressBar(w, setInter) {
          clearInterval(id);
         } else {
         width++;
-        elem.style.width = width + '%';
+        if(elem && elem.style)
+            elem.style.width = width + '%';
         }
     }
 }
+startProgressBar();
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
         $cordovaFile.removeFile(cordova.file.dataDirectory, path)
@@ -128,7 +130,6 @@ function startApp(app) {
             }
         });
 }
-startProgressBar(40, 0.6);
 
 function contentNotAvailable() {
     alert(AppMessages.NO_CONTENT_FOUND);
