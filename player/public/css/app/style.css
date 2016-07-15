@@ -221,15 +221,19 @@ ion-popover-view.fit ion-content {
     padding-top: 10%;
     position: absolute;
     height: 30%;
+    text-overflow:ellipsis;
+
+    overflow: hidden;
 }
 
 .gc-menu-title-cont p{
     font-size:5vh;
     width: 100%;
     float: left;
-    padding: 0 15%;
+    /*padding: 0 1%;*/
+     padding-right: 13%;
     height: 100%;
-    overflow: auto;
+   
 }
 
 .gc-menu-btn{
