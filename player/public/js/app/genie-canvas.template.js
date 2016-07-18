@@ -55,6 +55,7 @@ angular.module('genie-canvas.template',[])
         if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
             if( (webview == "true")){
                 if(content.metadata && (content.metadata.mimeType != COLLECTION_MIMETYPE)){
+                    jQuery('#loading').hide();
                     //For JSON and Direct contentID
                     $scope.setContentMetadata(content.metadata);
                 }else{
