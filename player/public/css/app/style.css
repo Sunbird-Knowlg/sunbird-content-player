@@ -603,6 +603,14 @@ ion-popover-view.fit ion-content {
     position: absolute;
 }
 
+
+@media(min-width:1024px) {
+    .gc-content-owner {
+        margin-top: 15%;
+    }
+}
+
+
 .btn-credits {
     position: absolute;
     width: 4%;
