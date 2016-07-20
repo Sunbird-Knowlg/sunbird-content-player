@@ -65,26 +65,27 @@ var ItemDataGenerator = {
                 }
 
                 // Shuffle the options and check resvalues
-                if (set[i].type.toLowerCase() == 'mcq' || set[i].type.toLowerCase() == 'mmcq') {
+                var item = pick[i];
+                if (item.type.toLowerCase() == 'mcq' || item.type.toLowerCase() == 'mmcq') {
 
 		            // Shuffles the options if given "optionShuffle": true
-	                if (optionShuffle) set[i].options = _.shuffle(set[i].options);
+	                if (optionShuffle) item.options = _.shuffle(item.options);
 
 	                // Register the res value for the options
-	                ItemDataGenerator._registerResValues(set[i].options);
+                    ItemDataGenerator._registerResValues(item.options);
 
-	            } else if (set[i].type.toLowerCase() == 'mtf') {
+	            } else if (item.type.toLowerCase() == 'mtf') {
 
 	                // Shuffles the options if given "optionShuffle": true
 	                // When shuffling options, ONLY RHS should be shuffled
                     // If we also shuffle LHS, then the RHS answer mappings become incorred
                     // therefore we DO NOT SHUFFLE LHS OPTIONS
 
-	                if (optionShuffle) set[i].rhs_options = _.shuffle(set[i].rhs_options);
+	                if (optionShuffle) item.rhs_options = _.shuffle(item.rhs_options);
 
 	                // Register the res value for the options
-	                ItemDataGenerator._registerResValues(set[i].lhs_options);
-	                ItemDataGenerator._registerResValues(set[i].rhs_options);
+	                ItemDataGenerator._registerResValues(item.lhs_options);
+	                ItemDataGenerator._registerResValues(item.rhs_options);
 
 	            }
 
