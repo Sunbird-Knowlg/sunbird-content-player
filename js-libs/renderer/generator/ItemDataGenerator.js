@@ -103,13 +103,16 @@ var ItemDataGenerator = {
         	// the following order of precedence
         	// resvalue > asset > text > count > image > audio
 
-			if (typeof option.value.resvalue == 'undefined') option.value.resvalue = option.value.asset;
+			/*if (typeof option.value.resvalue == 'undefined') option.value.resvalue = option.value.asset;
 			if (typeof option.value.resvalue == 'undefined') option.value.resvalue = option.value.text;
 			if (typeof option.value.resvalue == 'undefined') option.value.resvalue = option.value.count;
             if (typeof option.value.resvalue == 'undefined') option.value.resvalue = option.value.image;
             if (typeof option.value.resvalue == 'undefined') option.value.resvalue = option.value.audio;
             if (typeof option.value.resvalue == 'undefined') option.value.resvalue = 'option' + index;
+*/           if(typeof option.value.resvalue == 'undefined'){
+                option.value.resvalue = option.value.asset || option.value.text || option.value.image || option.value.count || option.value.audio || 'option' + index;  
 
+            }
 			option.value.resindex = index;
         });
     }
