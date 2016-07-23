@@ -18,6 +18,7 @@ function startProgressBar(w, setInter) {
         width++;
         if(elem && elem.style)
             elem.style.width = width + '%';
+        jQuery('#progressCount').text(width + '%');
         }
     }
 }

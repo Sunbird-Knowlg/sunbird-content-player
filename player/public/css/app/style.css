@@ -163,7 +163,7 @@ ion-popover-view.fit ion-content {
 
 }*/
 .conver-page-title {
-     white-space: nowrap; 
+    white-space: nowrap; 
     overflow: hidden;
     padding: 0 2%;
     text-overflow: ellipsis;
@@ -176,7 +176,7 @@ ion-popover-view.fit ion-content {
     height: 24%;
     -webkit-line-clamp: 2;
     font-size: 10vh;
-    -webkit-text-stroke: 1vh #01ac8a;
+    -webkit-text-stroke: 0.2vh #00cccc;
     z-index: 0;
     /* text-shadow: -3px 3px 0 white, 3px -3px 0 white, -6px 6px 0 yellow, 6px -6px 0 yellow, -9px 9px 0 #01ac8a, -9px -9px 0 #01ac8a; */
 }
@@ -219,7 +219,7 @@ ion-popover-view.fit ion-content {
 
 .icon-font {
     font-family: baloobhai;
-    color: #01ac8a;
+    color: #FFFFFF;
     line-height: 1.2em;
     text-align: center;
 }
@@ -249,7 +249,7 @@ ion-popover-view.fit ion-content {
 
 .gc-menu-title-cont {
     width: 100%;
-    padding-top: 7%;
+    top: -7%;
     position: absolute;
     height: 30%;
    
@@ -300,14 +300,14 @@ ion-popover-view.fit ion-content {
     text-align: center;
     width: 70%;
     left: -10%;
-    top: 30%;
+    top: 23%;
 }
 
 .gc-menu-genie-cont {
     position: absolute;
     text-align: center;
     width: 70%;
-    top: 30%;
+    top: 23%;
     left: 35%;
 }
 
@@ -336,7 +336,7 @@ ion-popover-view.fit ion-content {
     position: absolute;
     text-align: center;
     width: 70%;
-    bottom: 28%;
+    bottom: 32%;
     left: 11%;
 }
 

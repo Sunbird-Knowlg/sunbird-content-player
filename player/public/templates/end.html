@@ -21,14 +21,14 @@
     <div class="gc-endpage-title" >
         <div class="gc-endpage-title-cont">
             <p class="icon-font conver-page-title"  ng-if="content.name">{{content.name}}</p>
-            <p class="icon-font conver-page-title conver-page-title1"  ng-if="content.name">{{content.name}}</p>
+            <!-- <p class="icon-font conver-page-title conver-page-title1"  ng-if="content.name">{{content.name}}</p> -->
         </div>
         <!-- <p class="icon-font label-white-stoke"  ng-if="content.name">{{content.name}}</p> -->
         <p class="gc-content-owner">{{ languageSupport.author }}: {{content.owner}}</p>
     </div>
     
     <div>
-        <home info="false" style="position: absolute; width:30%; top:4%; left:3%"></home>
+        <home info="false" style="position: absolute; width:30%; top:3%; left:3%"></home>
         
         <genie style="position:absolute; width:30%; top:4%; right:3%; text-align: right;"></genie>
 
@@ -39,7 +39,7 @@
             <img src="img/icons/ccby.png" style="width: 100%;" />
         </div>
         <div class="gc-restart-cont">
-            <p class="icon-font label-white-stoke">{{ languageSupport.whatWeDoNext }}</p>
+            <p class="icon-font">{{ languageSupport.whatWeDoNext }}</p>
         </div>
         <div style="position:absolute; width: 100%; top: 70%; text-align:center;">
             <restart class="gc-restart-btn" ng-class="{'gc-restart-collection': showNextContent == true  }"></restart>               

@@ -9,8 +9,8 @@ angular.module('genie-canvas.template',[])
         $state.go('playContent', {
             'itemId': content.identifier
         });
-        jQuery('#loadingText').text(GlobalContext.config.appInfo.name);
-        jQuery('#loadingText1').text(GlobalContext.config.appInfo.name);
+        jQuery('#loadingText').text(content.name);
+        jQuery('#loadingText1').text(content.name);
         jQuery("#progressBar").width(0);
         jQuery('#loading').show();
         startProgressBar(40, 0.6);
@@ -48,6 +48,10 @@ angular.module('genie-canvas.template',[])
         var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
         TelemetryService.start(identifier, version);
         TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID"});
+        setTimeout(function() {
+            if($('#collectionIcon').css("opacity"))
+                jQuery('#collectionIcon').css('opacity', 0.4);
+        }, 500);
     }
 
     $scope.init = function(){

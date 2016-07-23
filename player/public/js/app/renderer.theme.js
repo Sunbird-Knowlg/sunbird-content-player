@@ -49,7 +49,7 @@ angular.module('genie-canvas.theme', [])
                 disableHome: '=info'
 
             },
-            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imgSrc}}" style="width:32%;" /></a>',
+            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img id="collectionIcon" ng-src="{{imgSrc}}" style="width:32%;" /></a>',
             link: function(scope, state) {
                 var isCollection = false;
                 if ($rootScope.collection && $rootScope.collection.children) {
@@ -58,13 +58,15 @@ angular.module('genie-canvas.theme', [])
 
             console.info("scope.disableHome", scope.disableHome);
             if (isCollection == true) {
-                scope.imgSrc = "img/icons/home_icon.png";
+                scope.imgSrc = "img/icons/collection_icon.png";
+                jQuery('#collectionIcon').css('opacity', 1.0);
             } else {
                 if (scope.disableHome == true) {
-
-                    scope.imgSrc = "img/icons/home_icon_disabled.png";
+                    jQuery('#collectionIcon').css('opacity', 0.4);
+                    scope.imgSrc = "img/icons/collection_icon.png";
                 } else {
-                    scope.imgSrc = "img/icons/home_icon.png";
+                    scope.imgSrc = "img/icons/collection_icon.png";
+                    jQuery('#collectionIcon').css('opacity', 1.0);
                 }
             }
                var pageId = $rootScope.pageId;
@@ -78,7 +80,7 @@ angular.module('genie-canvas.theme', [])
     .directive('genie', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:32%;" /></a>',
+            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}mybag_icon.png" style="width:28%;" /></a>',
             link: function(scope) {
                 var pageId = $rootScope.pageId;
                 scope.goToGenie = function() {
@@ -125,7 +127,7 @@ angular.module('genie-canvas.theme', [])
     .directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position:absolute;bottom:12%; width:10%;  margin-left:41%; z-index:1; " /><img id="unmute_id"  style="position:absolute;  bottom:12%; width:11.7%; margin-left:40%; z-index: 2; visibility:"hidden" "/> </a>',
+            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position:absolute;bottom:12%; width:10%;  margin-left:31%; z-index:1; " /><img id="unmute_id"  style="position:absolute;  bottom:12%; width:11.7%; margin-left:31%; z-index: 2; visibility:"hidden" "/> </a>',
             link: function(scope, url) {
                 scope.mutestatus = "mute.png";
 

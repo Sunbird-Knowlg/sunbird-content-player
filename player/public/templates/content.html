@@ -20,18 +20,18 @@
 <ion-pane class="swiper-background pane" ng-show="showPage">
     <!--  <img ng-src="{{imageBasePath}}cover_page_background.png" style="position: absolute; width: 100%; height: 100%;"> -->
     <img ng-src="{{imageBasePath}}background.png" style="position: absolute; width: 100%; height: 100%;">
-    <img ng-src="{{imageBasePath}}cover_backdrop.png" style="position: absolute; width: 100%; height: 100%;">
+    <!-- <img ng-src="{{imageBasePath}}cover_backdrop.png" style="position: absolute; width: 100%; height: 100%;"> -->
     <div id="cover">
-        <p class="icon-font conver-page-title ng-binding" style="">{{item.name}}</p>
-        <p class="icon-font conver-page-title conver-page-title1 ng-binding" style=" ">{{item.name}}</p>
+        <p class="icon-font conver-page-title">{{item.name}}</p>
+        <!-- <p class="icon-font conver-page-title conver-page-title1 ng-binding" style=" ">{{item.name}}</p> -->
     </div>
     <ion-header-bar class="bar-header bar disable-user-behavior" style="background-color:transparent;border-bottom:0px;background-image:none;height: 20%;">
         <div preview="false">
-            <home info='true' ; style="position: absolute; width:30%; top:20%; left:3%">
-                <a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="img/icons/home_icon_disabled.png" style="width:32%;" src="img/icons/home_icon_disabled.png"></a>
+            <home info='true' ; style="position: absolute; width:30%; top:14%; left:3%">
+                <!-- <a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="img/icons/home_icon_disabled.png" style="width:32%;" src="img/icons/home_icon_disabled.png"></a> -->
             </home>
             <genie style="position:absolute; width:30%; top:20%; right:3%; text-align: right;">
-                <a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="img/icons/genie_icon.png" style="width:32%;" src="img/icons/genie_icon.png"></a>
+<!--                 <a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="img/icons/genie_icon.png" style="width:32%;" src="img/icons/genie_icon.png"></a> -->
             </genie>
         </div>
     </ion-header-bar>
