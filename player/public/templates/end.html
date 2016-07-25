@@ -16,28 +16,63 @@
     }
 </style>
 
-<div style="width:100%;height:100%;">
+<div class="gc-ep-cont">
+    <image ng-src="{{icons.end.background}}" style="width:100%;height:100%;position: absolute;
+    z-index: -1;" />
 
-    <div class="gc-endpage-title" >
-        <div class="gc-endpage-title-cont">
-            <p class="icon-font conver-page-title"  ng-if="content.name">{{content.name}}</p>
-            <!-- <p class="icon-font conver-page-title conver-page-title1"  ng-if="content.name">{{content.name}}</p> -->
-        </div>
-        <!-- <p class="icon-font label-white-stoke"  ng-if="content.name">{{content.name}}</p> -->
-        <p class="gc-content-owner">{{ languageSupport.author }}: {{content.owner}}</p>
-    </div>
-    
-    <div>
-        <home info="false" style="position: absolute; width:30%; top:3%; left:3%"></home>
+    <home info="false" style="position: absolute; width:30%; top:3%; left:3%"></home>
         
-        <genie style="position:absolute; width:30%; top:4%; right:3%; text-align: right;"></genie>
+    <genie style="position:absolute; width:30%; top:4%; right:3%; text-align: right;"></genie>
+    <!-- <div class="gc-endpage-title" >
+        <div class="gc-endpage-title-cont">
+            <p class="icon-font cover-page-title"  ng-if="content.name">{{content.name}}</p>
+            <p class="icon-font cover-page-title cover-page-title1"  ng-if="content.name">{{content.name}}</p>
+        </div>
+        <p class="icon-font label-white-stoke"  ng-if="content.name">{{content.name}}</p>
+        <p class="gc-content-owner">{{ languageSupport.author }}: {{content.owner}}</p>
+    </div> -->
+    
+    <div class="gc-endpage-title-cont">
+        <p class="icon-font gc-ep-title gc-text-elipsis"  ng-if="content.name">{{content.name}}</p>
+        <!-- <p class="icon-font end-page-title cover-page-title1"  ng-if="content.name">{{content.name}}</p> -->
+    </div>
+    <div class="gc-ep-content-holder">
+       
+        <div class="gc-ep-assessment-cont">
+            <div>
+                <p class="gc-ep-cong gc-text-elipsis">Congratulations! You just completed</p>
+                <p class="gc-content-owner gc-text-elipsis">{{ languageSupport.author }}: {{content.owner}}</p>
+                <center>
+                    <input class="gc-btn-credits btn-black" type="button" ng-click="showCredits()" value="Credits" />                    
+                </center>
+            </div>
 
-        <a href="javascript:void(0)" ng-click="showCredits()" style="position:absolute; width: 9%; top: 4%; right: 15%;">
+            <div class="gc-ep-time-score">
+                <div class="gc-ep-time">
+                    <p class="gc-white-text gc-ep-white-title">10:26</p>
+                    <p class="gc-white-text">mm:ss</p>
+                    <p class="gc-white-bg">Time</p>
+                </div>
+                <div class="gc-ep-score">
+                    <p class="gc-white-text gc-ep-white-title">9/16</p>
+                    <p style="visibility: hidden;">-</p>
+                    <p class="gc-white-bg">Score</p>  
+                </div>
+            </div>
+
+            <div class="gc-ep-rating-cont">
+                <p class="gc-ep-feedback">Feedback</p>
+                <div class="gc-ep-rating"></div>
+                <div class="gc-ep-comments"></div>
+            </div>
+        </div>
+        <div class="gc-ep-related-cont">
+            <p class="gc-ep-cong gc-text-elipsis">{{ languageSupport.whatWeDoNext }}</p>
+        </div>
+        <!-- <a class="gc-btn-credits" href="javascript:void(0)" ng-click="showCredits()">
             <img src="img/icons/credits_icon.png" style="width:100%;" />
         </a>
-        <div class="end-license">
-            <img src="img/icons/ccby.png" style="width: 100%;" />
-        </div>
+        
         <div class="gc-restart-cont">
             <p class="icon-font">{{ languageSupport.whatWeDoNext }}</p>
         </div>
@@ -45,10 +80,12 @@
             <restart class="gc-restart-btn" ng-class="{'gc-restart-collection': showNextContent == true  }"></restart>               
             <a ng-show="showNextContent" class="next-module" ng-class="{'next-module-pad': showNextContent == true }" href="javascript:void(0)" ng-click="playNextContent()" >
                 <img src="img/icons/next_icon.png" style="width:100%;" />
-            </a>                
-        </div>
+            </a>    -->            
+    </div> 
     
     <popup id="creditsPopup" popup-body="creditsBody"></popup>
-    <image ng-src="{{icons.end.background}}" style="width:100%;height:100%;position: absolute;
-    z-index: -1;" />
+    
+    <div class="end-license">
+        <img src="img/icons/ccby.png" style="width: 100%;" />
+    </div>
 </div>
