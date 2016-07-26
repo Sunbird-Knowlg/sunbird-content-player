@@ -346,10 +346,10 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     jQuery("#htmlFrame").show();
                 });
             } else { 
-                if(collectionChildren) {
-                    collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1); 
-                    collectionChildren = false;
-                }
+                // if(collectionChildren) {
+                //     collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1); 
+                //     collectionChildren = false;
+                // }
                 if (webview) {
                     var contentBody = undefined;
                     if(COLLECTION_MIMETYPE == content.metadata.mimeType) {

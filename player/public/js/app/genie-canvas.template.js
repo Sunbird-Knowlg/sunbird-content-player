@@ -43,15 +43,11 @@ angular.module('genie-canvas.template',[])
             $rootScope.content = data;
         });
         // This is used by ContentCtrl.
-        $rootScope.stories = [data];
+        //$rootScope.stories = [data];
         var identifier = (data && data.identifier) ? data.identifier : null;
         var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
         TelemetryService.start(identifier, version);
         TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID"});
-        setTimeout(function() {
-            if($('#collectionIcon').css("opacity"))
-                jQuery('#collectionIcon').css('opacity', 0.4);
-        }, 500);
     }
 
     $scope.init = function(){
@@ -122,7 +118,7 @@ angular.module('genie-canvas.template',[])
         }
     };
     var content = $rootScope.content;
-        
+    console.log(" Content metadata : ", content);
     if(!GlobalContext.previousContentId){
         $scope.showNextContent = false;
     }
@@ -186,4 +182,85 @@ angular.module('genie-canvas.template',[])
             }
         }, 500);
     }
+
+     $scope.playRelatedContent = function(content) {
+        console.log("content : ", content);
+        if(content.isAvailable) {
+            ContentService.getContent(content.identifier)
+            .then(function(content) {
+                if (COLLECTION_MIMETYPE == content.mimeType) {
+                    $state.go('contentList', { "id": content.identifier});
+                } else {
+                    $state.go('showContent', {"contentId": content.identifier});
+                }
+            })
+        } else {
+            console.log("inside into playRelatedContent else condition ( open in deep link ).............. ")
+            window.open("http://www.ekstep.in/c/" + content.identifier, "_system");
+            exitApp();
+        }
+    }
+
+    $scope.renderRelatedContent = function(id) {
+        if(GlobalContext.config.appInfo.mimeType != COLLECTION_MIMETYPE) {
+            // ContentService.getRelatedContent(id)
+            // .then(function(item) {
+            //     console.log("item : ", item);
+            //     if(!_.isEmpty(item)) {
+            //         item.unshift(content);
+            //         $scope.$apply(function() {
+            //             $rootScope.relatedContent = item;
+            //         });
+            //     } else {
+            //         // TODO : Hide Related Content Ui Element and Show restart icon for current game.
+            //     }
+            // })
+
+            // This for testing purpose. 
+            ContentService.getContentList()
+            .then(function(item) {
+                console.log("item : ", item);
+                if(!_.isEmpty(item)) {
+                    $scope.showRelatedContent = true;
+                    item.unshift(content);
+                    $scope.$apply(function() {
+                        $rootScope.relatedContent = item;
+                    });
+                } else {
+                    // TODO : Hide Related Content Ui Element and Show restart icon for current game.
+                    $scope.showRelatedContent = false;
+                }
+            })
+        } else {
+            if(rootScope.stories.length == 1) {
+                // TODO : Hide Related Content UI Element and Show restart icon for current game.
+                $scope.showRelatedContent = false;
+             } else {
+                $scope.showRelatedContent = true;
+                var swapIndex = undefined,
+                tempMetadata = undefined;
+                collectionContent = $rootScope.stories;
+    
+                // Swaping the current played content metadata to the top of Array.
+                for(var i = 0; i < collectionContent.length; i++) {
+                    if(collectionContent[i].identifier == $stateParams.contentId) {
+                        swapIndex = i;
+                        break;
+                    }
+                }
+                tempMetadata = collectionContent[swapIndex];
+                collectionContent[swapIndex] = collectionContent[0];
+                collectionContent[0] = tempMetadata;
+                console.log("collectionContent : ", collectionContent);
+                $scope.$apply(function() {
+                    $rootScope.relatedContent = collectionContent;
+                });
+             }
+        }
+    }
+
+    setTimeout(function() {
+        $scope.renderRelatedContent($stateParams.contentId);
+    }, 0);
+
 });
