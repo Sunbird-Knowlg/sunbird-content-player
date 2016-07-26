@@ -22,7 +22,7 @@
 
     <!-- <home style="position: absolute; width:30%; top:3%; left:6%"> -->
     <collection style="position: absolute; width:30%; top:3%; left:3%"></collection>
-    <home info="true" style="position: absolute; width:30%; top:5%; left:13%"></home>
+    <home info="true" style="position: absolute; width:30%; top:3%; left:13%"></home>
 
     <!-- <a ng-click="goToHome();" href="javascript:void(0);" style="position: absolute; width:30%; top:5%; left:13%"><img ng-src="img/icons/home_icon.png" style="width:26%;"/></a> -->
         
@@ -52,13 +52,13 @@
             </div>
 
             <div class="gc-ep-time-score">
-                <div class="gc-ep-time">
-                    <p class="gc-white-text gc-ep-white-title">10:26</p>
+                <div class="gc-ep-time" id="timeSpentArea">
+                    <p class="gc-white-text gc-ep-white-title">{{totalTimeSpent}}</p>
                     <p class="gc-white-text">mm:ss</p>
                     <p class="gc-white-bg">Time</p>
                 </div>
-                <div class="gc-ep-score">
-                    <p class="gc-white-text gc-ep-white-title">9/16</p>
+                <div class="gc-ep-score" ng-show="showScore">
+                    <p class="gc-white-text gc-ep-white-title">{{totalScore}}</p>
                     <p style="visibility: hidden;">-</p>
                     <p class="gc-white-bg">Score</p>  
                 </div>

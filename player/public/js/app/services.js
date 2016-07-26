@@ -46,6 +46,18 @@ angular.module('genie-canvas.services', ['ngResource'])
                     });
                 });
             },
+            // Get the Total Assessment score of particular user of particular content.
+            getLearnerAssessment: function(uid, id) {
+                return new Promise(function(resolve, reject) {
+                    genieservice.getLearnerAssessment(uid, id)
+                    .then(function(score){
+                        if(score)
+                            resolve(score);
+                        else
+                            reject("Score is not available.")
+                    });
+                });
+            },
             getContentBody: function(id) {
                 return new Promise(function(resolve, reject) {
                     genieservice.getContentBody(id)

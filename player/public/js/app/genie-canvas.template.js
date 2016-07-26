@@ -207,12 +207,14 @@ angular.module('genie-canvas.template',[])
             // .then(function(item) {
             //     console.log("item : ", item);
             //     if(!_.isEmpty(item)) {
+                        // $scope.showRelatedContent = true;
             //         item.unshift(content);
             //         $scope.$apply(function() {
             //             $rootScope.relatedContent = item;
             //         });
             //     } else {
             //         // TODO : Hide Related Content Ui Element and Show restart icon for current game.
+                        // $scope.showRelatedContent = false;
             //     }
             // })
 
@@ -259,8 +261,36 @@ angular.module('genie-canvas.template',[])
         }
     }
 
+    $scope.setTotalTimeSpent = function() {
+        var totalTime = Math.round((new Date().getTime() - (TelemetryService.instance._end[TelemetryService.instance._end.length -1 ].startTime))/1000);
+        var mm = Math.round(totalTime/60);
+        var ss = Math.round(totalTime%60);
+        $scope.totalTimeSpent = (mm > 9 ? mm : ("0" + mm))  + ":" + (ss > 9 ? ss : ("0" + ss));
+        console.log("totalTime : ", $scope.totalTimeSpent);
+
+    }
+
+    $scope.getTotalScore = function(id) {
+        // uncomment when genieservice will give getContentTotalScore Api to get total score, obtained by user.
+        // ContentService.getLearnerAssessment(GlobalContext.user.uid, id);
+        // .then(function(score){
+        //     if(score) {
+        //         $scope.showScore = true;
+        //         $scope.totalScore = score;
+        //     } else {
+        //         $scope.showScore = false
+        //         jQuery('#timeSpentArea').attr('margin-left', 23);
+        //     }
+        // })
+
+        $scope.showScore = false
+        jQuery('#timeSpentArea').css('margin-left', 23 + '%');
+    }
+
     setTimeout(function() {
         $scope.renderRelatedContent($stateParams.contentId);
+         $scope.setTotalTimeSpent();
+         $scope.getTotalScore();
     }, 0);
 
 });

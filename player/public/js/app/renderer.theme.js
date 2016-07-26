@@ -45,7 +45,7 @@ angular.module('genie-canvas.theme', [])
     .directive('collection', function($rootScope, $state) {
         return {
             restrict: 'E',
-            template: '<a ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection != true}" ng-src="{{imgSrc}}" style="width:30%;" /></a>',
+            template: '<a ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection != true}" ng-src="{{imgSrc}}" style="width:27%;" /></a>',
             link: function(scope, state) {
                 scope.imgSrc = "img/icons/collection_icon.png";
                 scope.isCollection = false;
@@ -69,7 +69,7 @@ angular.module('genie-canvas.theme', [])
                 disableHome: '=info'
 
             },
-            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-class="{\'icon-opacity\': !showHome}" ng-src="{{imgSrc}}" style="width:26%;"/></a>',
+            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-class="{\'icon-opacity\': !showHome}" ng-src="{{imgSrc}}" style="width:27%;"/></a>',
             link: function(scope, state) {
                 scope.imgSrc = "img/icons/home_icon.png";
                 scope.showHome = false;
@@ -94,7 +94,7 @@ angular.module('genie-canvas.theme', [])
     .directive('genie', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}mybag_icon.png" style="width:27%;" /></a>',
+            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}mybag_icon.png" style="width:23%;" /></a>',
             link: function(scope) {
                 var pageId = $rootScope.pageId;
                 scope.goToGenie = function() {
@@ -106,7 +106,7 @@ angular.module('genie-canvas.theme', [])
     .directive('stageInstructions', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}teacher_instructions.png" style="z-index:2; max-width:30%;"/></a>',
+            template: '<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}teacher_instructions.png" style="z-index:2; max-width:28%;"/></a>',
             controller: function($scope, $rootScope) {
                 $scope.stageInstMessage = "";
                 $scope.showInst = false;

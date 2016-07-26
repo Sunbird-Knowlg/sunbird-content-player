@@ -29,6 +29,14 @@ genieservice.prototype.getContent = function(id) {
     return this.handleAction("getContent", [id]);
 }
 
+genieservice.prototype.getRelatedContent = function(id) {
+    return this.handleAction("getRelatedContent", [id]);
+}
+
+genieservice.prototype.getLearnerAssessment = function(uid, id) {
+    return this.handleAction("getLearnerAssessment", [uid,id]);
+}
+
 genieservice.prototype.getContentList = function(filter) {
     return this.handleAction("getContentList", [filter]);
 }
