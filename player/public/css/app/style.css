@@ -656,6 +656,25 @@ ion-popover-view.fit ion-content {
     margin: 0 8%;
 }
 
+.gc-ep-footer-icons{
+    position: absolute;
+    width: 60%;
+    margin-left: -12%;
+}
+
+.gc-ep-footer-icons img{
+    width: 50%;
+    height: 100%
+}
+.gc-ep-replay{
+    left: 5%
+}
+.gc-ep-genie{
+    left: 30%
+}
+.gc-ep-collection{
+    left: 55%
+}
 .gc-ep-rating-cont{
     position: absolute;
     bottom: 5%;
@@ -737,6 +756,14 @@ ion-popover-view.fit ion-content {
     padding: 2%;
 }
 
+.gc-ep-footer{
+    position: absolute;
+    bottom: 10%;
+    text-align: center;
+    width: 100%;
+    height: 20%;
+}
+
 .gc-related-item p {
     margin: 0;
 }
@@ -762,7 +789,7 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-repeat-content{
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.3);
     position: absolute;
     top: 0;
     width: 100%;
