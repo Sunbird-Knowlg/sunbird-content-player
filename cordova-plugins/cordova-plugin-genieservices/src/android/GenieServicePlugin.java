@@ -93,6 +93,10 @@ public class GenieServicePlugin extends CordovaPlugin {
         } else if(action.equals("getRelatedContent")) {
             String contentId = args.getString(0);
             // content.getRelatedContent(contentId, new GenieServicesResponse(callbackContext));
+        }
+        else if(action.equals("sendFeedback")) {
+            String evt = args.getString(0);
+            content.sendFeedback(evt, new GenieServicesResponse(callbackContext));
         }else if(action.equals("getLearnerAssessment")) {
             String uid = args.getString(0);
             String contentId = args.getString(1);

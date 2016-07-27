@@ -41,6 +41,10 @@ genieservice.prototype.getContentList = function(filter) {
     return this.handleAction("getContentList", [filter]);
 }
 
+genieservice.prototype.sendFeedback = function(evt) {
+    return this.handleAction("sendFeedback", [evt]);
+}
+
 genieservice.prototype.endGenieCanvas = function() {
     // return this.handleAction("endGenieCanvas", []);
     exec(function(result) {
