@@ -62,8 +62,12 @@
 
             <div class="gc-ep-rating-cont">
                 <p class="gc-ep-feedback">Feedback</p>
-                <div class="gc-ep-rating"></div>
-                <div class="gc-ep-comments"></div>
+                <div class="gc-ep-rating">
+                    <div star-rating rating="userRating" read-only="false" max-rating="5" click="showFeedback(param)"></div>
+                </div>
+                <div class="gc-ep-comments">
+                    <img src="img/icons/feedback_icon.png"/>
+                </div>
             </div>
         </div>
         <div class="gc-ep-related-cont">
@@ -89,7 +93,7 @@
                     <div class="gc-rel-content-img">
                         <img src="img/icons/img_panel.png"/>
                         <div class="gc-repeat-content">
-                            <img src="img/icons/next_icon.png"/>
+                            <img src="img/icons/replay_icon.png"/>
                         </div>
                     </div>
                 </div>
@@ -110,6 +114,24 @@
     </div> 
     
     <popup id="creditsPopup" popup-body="creditsBody"></popup>
+
+    <div class="popup" ng-if="showFeedbackPopup">
+        <div class="popup-overlay" ng-click="hideFeedback()"></div>
+        <div class="gc-popup-new gc-fc-popup">
+            <div class="gc-popup-title-new"> FEEDBACK</div>
+            <div class="gc-popup-body-new">
+                <div class="gc-feedback-popup">
+                    <div star-rating rating="userRating" read-only="false" max-rating="5" click="updateRating(param)"> </div>
+                    <div class="gc-fd-comments">
+                       <textarea class="gc-fd-text" max-length="130"></textarea> 
+                   </div>
+                   <div class="gc-fd-footer">
+                       <input class="btn-black" type="button" value="Submit"  ng-click="submitFeedback()">
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div class="end-license">
         <img src="img/icons/ccby.png" style="width: 100%;" />

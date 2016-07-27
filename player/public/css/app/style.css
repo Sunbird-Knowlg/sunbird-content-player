@@ -471,12 +471,10 @@ ion-popover-view.fit ion-content {
 }
 
 .credit-popup {
-    position: absolute;
     width: 60%;
-    height: 80%;
-    border-radius: 10px;
-    top: 10%;
-    left: 20%;
+    height: 60%;
+    top: 20%;
+    left: 25%;
 }
 
 .popup {
@@ -592,7 +590,7 @@ ion-popover-view.fit ion-content {
     color: #ffffff;
     font-size: 1.2em;
     background: #413a36;
-    padding: 1% 5%;
+    padding: 1% 10%;
     text-decoration: none;
     border: none;
 }
@@ -628,6 +626,8 @@ ion-popover-view.fit ion-content {
     background: #fff;
     border-radius: 15px;
     font-size: 1.2em;
+    display: initial;
+    padding: 0px 25px;
 }
 .gc-white-text{
     color: #fff;
@@ -669,6 +669,7 @@ ion-popover-view.fit ion-content {
     background: rgba(255, 255, 255, 0.6);
     float: left;
     left: 25%;
+    text-align: center;
 }
 
 .gc-ep-comments{
@@ -678,6 +679,12 @@ ion-popover-view.fit ion-content {
     width: 10%;
     height: 100%;
     float: right;
+    text-align: center;
+}
+
+.gc-ep-comments img{
+    width: 100%;
+    height: 100%;
 }
 
 .gc-ep-assessment-cont{
@@ -760,6 +767,47 @@ ion-popover-view.fit ion-content {
     left: 20%;
 }
 
+.gc-popup-new{
+    width:50%;  
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    background: #fff;
+    position: absolute; 
+}
+.gc-fc-popup{
+    width:50%;  
+    top: 35%;
+    right: 20%;
+}
+.gc-popup-title-new{
+    padding: 3% 5%;
+    border-bottom: solid #4FD3F6;
+    border-width: 2px;
+}
+.gc-popup-body-new{
+    padding: 2% 5%;
+}
+.gc-fd-comments{
+    margin: 5px 0px;
+    padding: 5px 0px;
+    width: 100%;
+    height: 70px;
+    border-width: 2px;
+    border-color: #ccc;
+    border-bottom-style: solid;
+    border-top-style: solid;
+}
+.gc-fd-text{
+    resize: none;
+    height: 100%;
+    width: 99%;
+    border: solid 1px #cccccc;
+    border-radius: 5px;
+}
+.gc-fd-footer{
+    width: 100%;
+    text-align: center;
+}
 .round-button {
     border-radius: 50%;
     border: 2px solid #f5f5f5;
@@ -843,4 +891,24 @@ ion-popover-view.fit ion-content {
     bottom: 2%;
     left: 3%;
     width: 22%;
+}
+
+.starRating {
+    margin: 0;
+    padding: 0;
+    color: #a9a9a9;
+    padding-top: 6px;
+}
+
+.starRating li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 2px;
+    font-size: 2.5em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.starRating .filled {
+  color: #444;
 }

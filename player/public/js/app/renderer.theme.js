@@ -268,6 +268,55 @@ angular.module('genie-canvas.theme', [])
             }
         }
     })
+    .directive('starRating', function($rootScope) {
+        return {
+        //reference: http://jsfiddle.net/manishpatil/2fahpk7s/
+        scope: {
+            rating: '=',
+            maxRating: '@',
+            readOnly: '@',
+            click: "&",
+            mouseHover: "&",
+            mouseLeave: "&"
+        },
+        restrict: 'EA',
+        template:
+            "<div style='display: inline-block; margin: 0px; padding: 3px 5px; cursor:pointer;' ng-repeat='idx in maxRatings track by $index'> \
+                    <img ng-src='{{((hoverValue + _rating) <= $index) && rating_empty || rating_selected }}' \
+                    ng-Click='isolatedClick($index + 1)' \></img> \
+            </div>",
+        compile: function (element, attrs) {
+            if (!attrs.maxRating || (Number(attrs.maxRating) <= 0)) {
+                attrs.maxRating = '5';
+            };
+        },
+        controller: function ($scope, $element, $attrs, $rootScope) {
+            $scope.maxRatings = [];
+            $scope.rating_empty =  $rootScope.imageBasePath + "star_inactive.png";
+            $scope.rating_selected =  $rootScope.imageBasePath + "star_active.png";
+
+            for (var i = 1; i <= $scope.maxRating; i++) {
+                $scope.maxRatings.push({});
+            };
+
+            $scope._rating = $scope.rating;
+            
+            $scope.isolatedClick = function (param) {
+                if ($scope.readOnly == 'true') return;
+
+                $scope.rating = $scope._rating = param;
+                $scope.hoverValue = 0;
+                $scope.click({
+                    param: param
+                });
+            };
+
+            /*$scope.updateRating = function(param){
+               $scope.isolatedClick(param)
+            };*/
+        }
+    };
+      })
     .controller('OverlayCtrl', function($scope, $rootScope) {
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
@@ -315,8 +364,6 @@ angular.module('genie-canvas.theme', [])
                 skip: $rootScope.imageBasePath + "skip.png",
                 star: $rootScope.imageBasePath + "star.png",
                 credit_popup: $rootScope.imageBasePath + "popup.png"
-
-
             },
             popup_kid: {
                 good_job: $rootScope.imageBasePath + "LEFT.png",
