@@ -77,19 +77,18 @@
             <p class="gc-ep-cong gc-text-elipsis">{{ languageSupport.whatWeDoNext }}</p>
 
             <div class="gc-related-cont">
-                <div  ng-show="showRelatedContent" class="gc-related-list" ng-repeat="story in relatedContent" ng-click="playRelatedContent(story);">
+                <div  ng-show="showRelatedContent" class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
                     <div class="gc-related-item">
                         <p class="gc-text-elipsis" style="font-size: 1.1em">{{story.name}}</p>
-                        <p style="font-size: 0.9em">ENGLISH</p>
+                        <p style="font-size: 0.9em">{{story.language}}</p>
                         <div class="gc-rel-content-img">
-                            <img src="img/icons/img_panel.png"/>
+                            <img src="{{story.appIcon}}"/>
                             <div class="gc-repeat-content">
                                 <img src="img/icons/next_icon.png"/>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="gc-ep-footer">
                 <div class="gc-ep-footer-icons gc-ep-replay">
@@ -105,19 +104,7 @@
                     <p>Collection</p>
                 </div>
             </div>
-        </div>
-        <!-- <a class="gc-btn-credits" href="javascript:void(0)" ng-click="showCredits()">
-            <img src="img/icons/credits_icon.png" style="width:100%;" />
-        </a>
-        
-        <div class="gc-restart-cont">
-            <p class="icon-font">{{ languageSupport.whatWeDoNext }}</p>
-        </div>
-        <div style="position:absolute; width: 100%; top: 70%; text-align:center;">
-            <restart class="gc-restart-btn" ng-class="{'gc-restart-collection': showNextContent == true  }"></restart>               
-            <a ng-show="showNextContent" class="next-module" ng-class="{'next-module-pad': showNextContent == true }" href="javascript:void(0)" ng-click="playNextContent()" >
-                <img src="img/icons/next_icon.png" style="width:100%;" />
-            </a>    -->            
+        </div>           
     </div> 
     
     <popup id="creditsPopup" popup-body="creditsBody"></popup>

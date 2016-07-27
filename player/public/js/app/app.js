@@ -335,7 +335,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         
         $scope.init = function(){   
             if ($stateParams.itemId) {
-            $scope.item = _.findWhere($rootScope.stories, { identifier: $stateParams.itemId });
+            $scope.item = $rootScope.content;
 
             if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                 HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
@@ -346,10 +346,10 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     jQuery("#htmlFrame").show();
                 });
             } else { 
-                // if(collectionChildren) {
-                //     collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1); 
-                //     collectionChildren = false;
-                // }
+                if(collectionChildren) {
+                    collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1); 
+                    collectionChildren = false;
+                }
                 if (webview) {
                     var contentBody = undefined;
                     if(COLLECTION_MIMETYPE == content.metadata.mimeType) {

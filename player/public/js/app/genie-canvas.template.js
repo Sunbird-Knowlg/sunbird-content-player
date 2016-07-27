@@ -38,12 +38,9 @@ angular.module('genie-canvas.template',[])
             data =data.localData;
         }
         data.status = "ready";
-        $scope.$apply(function() {
-            $scope.item = data;
-            $rootScope.content = data;
-        });
-        // This is used by ContentCtrl.
-        //$rootScope.stories = [data];
+        $scope.item = data;
+        $rootScope.content = data;
+
         var identifier = (data && data.identifier) ? data.identifier : null;
         var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
         TelemetryService.start(identifier, version);
@@ -101,9 +98,11 @@ angular.module('genie-canvas.template',[])
     }, 0);
 })
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
-    $scope.showNextContent = true;
+    $scope.showRelatedContent = false;
+    $scope.relatedContents = [];
     $scope.showFeedbackPopup = false;
     $scope.userRating = 0;
+
     $rootScope.pageId = "endpage";
     $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> CREDITS</div> <div class="gc-popup-body-new"><div class="credit-body-icon-font"><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">There is no credits available</div></div></div></div>';
    
@@ -120,9 +119,6 @@ angular.module('genie-canvas.template',[])
     };
     var content = $rootScope.content;
     console.log(" Content metadata : ", content);
-    if(!GlobalContext.previousContentId){
-        $scope.showNextContent = false;
-    }
 
     $scope.setCredits('imageCredits');
     $scope.setCredits('soundCredits');
@@ -199,7 +195,7 @@ angular.module('genie-canvas.template',[])
     $scope.restartContent = function() {
         window.history.back();
         var gameId = TelemetryService.getGameId();
-        var version = TelemetryService.getGameVer();;
+        var version = TelemetryService.getGameVer();
         var instance = this;
         setTimeout(function() {
             if (gameId && version) {
@@ -220,83 +216,63 @@ angular.module('genie-canvas.template',[])
                 }
             })
         } else {
-            console.log("inside into playRelatedContent else condition ( open in deep link ).............. ")
             window.open("http://www.ekstep.in/c/" + content.identifier, "_system");
             exitApp();
         }
     }
 
-    $scope.renderRelatedContent = function(id) {
+    $scope.showAllRelatedContent = function(id) {
+        window.open("http://www.ekstep.in/c/" + id, "_system");
+        exitApp();
+    }
+
+
+    $scope.renderRelatedContent = function() {
         if(GlobalContext.config.appInfo.mimeType != COLLECTION_MIMETYPE) {
+            // TODO: Use this when genie services provide this API
             // ContentService.getRelatedContent(id)
             // .then(function(item) {
-            //     console.log("item : ", item);
-            //     if(!_.isEmpty(item)) {
-                        // $scope.showRelatedContent = true;
-            //         item.unshift(content);
-            //         $scope.$apply(function() {
-            //             $rootScope.relatedContent = item;
-            //         });
-            //     } else {
-            //         // TODO : Hide Related Content Ui Element and Show restart icon for current game.
-                        // $scope.showRelatedContent = false;
-            //     }
+                    // if(!_.isEmpty(item)) {
+                    //     $scope.showRelatedContent = true;
+                    //     $scope.relatedContents = _.isArray(item) ? item : [item]; 
+                    // }
             // })
 
             // This for testing purpose. 
-            ContentService.getContentList()
-            .then(function(item) {
-                console.log("item : ", item);
-                if(!_.isEmpty(item)) {
-                    $scope.showRelatedContent = true;
-                    item.unshift(content);
-                    $scope.$apply(function() {
-                        $rootScope.relatedContent = item;
-                    });
-                } else {
-                    // TODO : Hide Related Content Ui Element and Show restart icon for current game.
-                    $scope.showRelatedContent = false;
-                }
-            })
-        } else {
-            if(rootScope.stories.length == 1) {
-                // TODO : Hide Related Content UI Element and Show restart icon for current game.
-                $scope.showRelatedContent = false;
-             } else {
-                $scope.showRelatedContent = true;
-                var swapIndex = undefined,
-                tempMetadata = undefined;
-                collectionContent = $rootScope.stories;
-    
-                // Swaping the current played content metadata to the top of Array.
-                for(var i = 0; i < collectionContent.length; i++) {
-                    if(collectionContent[i].identifier == $stateParams.contentId) {
-                        swapIndex = i;
-                        break;
+            if(("undefined" != typeof cordova)) {
+                ContentService.getContentList()
+                .then(function(item) {
+                    console.log("item : ", item);
+                    if(!_.isEmpty(item)) {
+                        $scope.showRelatedContent = true;
+                        $scope.relatedContents = _.isArray(item) ? item : [item]; 
                     }
+                })
+            } 
+        } else {
+            var id = collectionChildrenIds.pop();
+            if(id) {
+                $scope.showNextContent = true;
+                var metadata = _.findWhere($rootScope.stories, { identifier: id });
+                $scope.relatedContents = "undefined" != typeof metadata ? metadata : [];
+                if(_.isEmpty($scope.relatedContents)) {
+                    $scope.renderRelatedContent();
                 }
-                tempMetadata = collectionContent[swapIndex];
-                collectionContent[swapIndex] = collectionContent[0];
-                collectionContent[0] = tempMetadata;
-                console.log("collectionContent : ", collectionContent);
-                $scope.$apply(function() {
-                    $rootScope.relatedContent = collectionContent;
-                });
-             }
+            }
         }
     }
 
     $scope.setTotalTimeSpent = function() {
         var totalTime = Math.round((new Date().getTime() - (TelemetryService.instance._end[TelemetryService.instance._end.length -1 ].startTime))/1000);
-        var mm = Math.round(totalTime/60);
-        var ss = Math.round(totalTime%60);
+        var mm = Math.floor(totalTime / 60);
+        var ss = Math.floor(totalTime % 60);
         $scope.totalTimeSpent = (mm > 9 ? mm : ("0" + mm))  + ":" + (ss > 9 ? ss : ("0" + ss));
         console.log("totalTime : ", $scope.totalTimeSpent);
 
     }
 
     $scope.getTotalScore = function(id) {
-        // uncomment when genieservice will give getContentTotalScore Api to get total score, obtained by user.
+    // uncomment when genieservice will give getLearnerAssessment Api to get total score, obtained by user.
         // ContentService.getLearnerAssessment(GlobalContext.user.uid, id);
         // .then(function(score){
         //     if(score) {
@@ -314,8 +290,8 @@ angular.module('genie-canvas.template',[])
 
     setTimeout(function() {
         $scope.renderRelatedContent($stateParams.contentId);
-         $scope.setTotalTimeSpent();
-         $scope.getTotalScore();
+        $scope.setTotalTimeSpent();
+        $scope.getTotalScore();
     }, 0);
 
 });
