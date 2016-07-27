@@ -77,8 +77,8 @@ function enableReload() {
     _reloadInProgress = false;
 }
 
-function goToHome($state, isCollection, id, pageId) {
-    if (isCollection) {
+function goToCollection($state, id, pageId) {
+        console.log(" id : ", id);
         // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
         TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
         if (Renderer.running)
@@ -88,9 +88,19 @@ function goToHome($state, isCollection, id, pageId) {
         $state.go('contentList', {
             "id": id
         });
-
-    }
 }
+
+// function goToHome($state, isCollection, id, pageId) {
+//     if (isCollection) {
+//         // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
+//         TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
+//         if (Renderer.running)
+//             Renderer.cleanUp();
+//         else
+//             TelemetryService.end();
+//     }
+// }
+
 
 function backbuttonPressed() {
     var data = (Renderer.running || HTMLRenderer.running) ? {

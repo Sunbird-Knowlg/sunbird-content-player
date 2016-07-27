@@ -12,8 +12,13 @@
                 <img ng-src="{{imageBasePath}}menu_close_icon.png" ng-show="menuOpened" style="width: 100%" />
             </a> -->
         </div>
-        <div class="gc-menu-home-cont">
-            <home info="false"></home>
+         <div class="gc-menu-home-cont">
+            <home info="true" ></home>
+            <!-- <a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="img/icons/home_icon.png" style="width:26%;"/></a> -->
+            <p class="icon-font" style="padding-top:2%; font-size:2.6vh;">HOME</p>
+        </div>
+        <div class="gc-menu-collection-cont">
+            <collection></collection>
             <p class="icon-font" style="padding-top:2%; font-size:2.6vh;">COLLECTION</p>
         </div>
         <div class="gc-menu-mute-cont">
@@ -21,9 +26,9 @@
             <!-- <p class="icon-font label-white-stoke" style="padding-top:2%; font-size:4vh; ">{{ stextstatus}}</p> -->
            <!--  <img class="gc-mute-bg" ng-src="{{imageBasePath}}unmute.png" style="position:absolute; bottom:10%; width:60%; height:10%;  left:27%;" />
  -->        <img class="gc-mute-bg" ng-src="{{imageBasePath}}base.png" style="position:absolute;                bottom:10%;width:60%;height:10%;left:19%;" />
-            <img class="gc-mute-bg" ng-src="{{imageBasePath}}autoplay_icon.png" style=" position: absolute; bottom: 12%; width: 12%; height: 6%; left: 56%;" />
+            <!-- <img class="gc-mute-bg" ng-src="{{imageBasePath}}autoplay_icon.png" style=" position: absolute; bottom: 12%; width: 12%; height: 6%; left: 56%;" /> -->
         </div>
-        <div class="gc-menu-genie-cont" style="top:24.5%">
+        <div class="gc-menu-genie-cont">
             <genie></genie>
             <p class="icon-font" style="padding-top:2%; font-size:2.6vh; ">MY BAG</p>
         </div>

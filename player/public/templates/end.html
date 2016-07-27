@@ -20,7 +20,11 @@
     <image ng-src="{{icons.end.background}}" style="width:100%;height:100%;position: absolute;
     z-index: -1;" />
 
-    <home info="false" style="position: absolute; width:30%; top:3%; left:3%"></home>
+    <!-- <home style="position: absolute; width:30%; top:3%; left:6%"> -->
+    <collection style="position: absolute; width:30%; top:3%; left:3%"></collection>
+    <home info="true" style="position: absolute; width:30%; top:3%; left:13%"></home>
+
+    <!-- <a ng-click="goToHome();" href="javascript:void(0);" style="position: absolute; width:30%; top:5%; left:13%"><img ng-src="img/icons/home_icon.png" style="width:26%;"/></a> -->
         
     <genie style="position:absolute; width:30%; top:4%; right:3%; text-align: right;"></genie>
     <!-- <div class="gc-endpage-title" >
@@ -48,13 +52,13 @@
             </div>
 
             <div class="gc-ep-time-score">
-                <div class="gc-ep-time">
-                    <p class="gc-white-text gc-ep-white-title">10:26</p>
+                <div class="gc-ep-time" id="timeSpentArea">
+                    <p class="gc-white-text gc-ep-white-title">{{totalTimeSpent}}</p>
                     <p class="gc-white-text">mm:ss</p>
                     <p class="gc-white-bg">Time</p>
                 </div>
-                <div class="gc-ep-score">
-                    <p class="gc-white-text gc-ep-white-title">9/16</p>
+                <div class="gc-ep-score" ng-show="showScore">
+                    <p class="gc-white-text gc-ep-white-title">{{totalScore}}</p>
                     <p style="visibility: hidden;">-</p>
                     <p class="gc-white-bg">Score</p>  
                 </div>
@@ -74,9 +78,9 @@
             <p class="gc-ep-cong gc-text-elipsis">{{ languageSupport.whatWeDoNext }}</p>
 
             <div class="gc-related-cont">
-                <div  class="gc-related-list">
+                <div  ng-show="showRelatedContent" class="gc-related-list" ng-repeat="story in relatedContent" ng-click="playRelatedContent(story);">
                     <div class="gc-related-item">
-                        <p class="gc-text-elipsis" style="font-size: 1.1em">Content Title</p>
+                        <p class="gc-text-elipsis" style="font-size: 1.1em">{{story.name}}</p>
                         <p style="font-size: 0.9em">ENGLISH</p>
                         <div class="gc-rel-content-img">
                             <img src="img/icons/img_panel.png"/>
@@ -87,7 +91,7 @@
                     </div>
                 </div>
 
-                <div class="gc-related-item gc-no-rel-items">
+                <div ng-show="!showRelatedContent" class="gc-related-item gc-no-rel-items">
                     <p class="gc-text-elipsis" style="font-size: 1.1em">Content Title</p>
                     <p style="font-size: 0.9em">ENGLISH</p>
                     <div class="gc-rel-content-img">

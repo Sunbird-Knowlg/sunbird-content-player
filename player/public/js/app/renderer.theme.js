@@ -42,6 +42,26 @@ angular.module('genie-canvas.theme', [])
             templateUrl: 'templates/menu.html'
         }
     })
+    .directive('collection', function($rootScope, $state) {
+        return {
+            restrict: 'E',
+            template: '<a ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection != true}" ng-src="{{imgSrc}}" style="width:27%;" /></a>',
+            link: function(scope, state) {
+                scope.imgSrc = "img/icons/collection_icon.png";
+                scope.isCollection = false;
+                if ($rootScope.collection && $rootScope.collection.children) {
+                    scope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
+                }
+
+
+               var pageId = $rootScope.pageId;
+                scope.goToCollection = function() {
+                   goToCollection($state, GlobalContext.previousContentId, pageId);
+                }
+
+            }
+        }
+    })
     .directive('home', function($rootScope, $state) {
         return {
             restrict: 'E',
@@ -49,29 +69,23 @@ angular.module('genie-canvas.theme', [])
                 disableHome: '=info'
 
             },
-            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img id="collectionIcon" ng-src="{{imgSrc}}" style="width:32%;" /></a>',
+            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-class="{\'icon-opacity\': !showHome}" ng-src="{{imgSrc}}" style="width:27%;"/></a>',
             link: function(scope, state) {
-                var isCollection = false;
-                if ($rootScope.collection && $rootScope.collection.children) {
-                    isCollection = $rootScope.collection.children.length > 0 ? true : false;
-                }
-
-            console.info("scope.disableHome", scope.disableHome);
-            if (isCollection == true) {
-                scope.imgSrc = "img/icons/collection_icon.png";
-                jQuery('#collectionIcon').css('opacity', 1.0);
-            } else {
-                if (scope.disableHome == true) {
-                    jQuery('#collectionIcon').css('opacity', 0.4);
-                    scope.imgSrc = "img/icons/collection_icon.png";
-                } else {
-                    scope.imgSrc = "img/icons/collection_icon.png";
-                    jQuery('#collectionIcon').css('opacity', 1.0);
-                }
-            }
-               var pageId = $rootScope.pageId;
+                scope.imgSrc = "img/icons/home_icon.png";
+                scope.showHome = false;
+                if (scope.disableHome == true)
+                    scope.showHome = true;
+                console.log( scope.showHome);
+                var pageId = $rootScope.pageId;
                 scope.goToHome = function() {
-                   isCollection ? goToHome($state, isCollection, GlobalContext.previousContentId, pageId): window.location.hash = "/show/content/" + GlobalContext.currentContentId;
+                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
+                    if (Renderer.running)
+                        Renderer.cleanUp();
+                    else
+                        TelemetryService.end();
+                    $state.go('showContent', {"contentId": GlobalContext.currentContentId});
+                     //window.location.hash = "/show/content/" + GlobalContext.currentContentId;
+                        
                 }
 
             }
@@ -80,7 +94,7 @@ angular.module('genie-canvas.theme', [])
     .directive('genie', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}mybag_icon.png" style="width:28%;" /></a>',
+            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}mybag_icon.png" style="width:23%;" /></a>',
             link: function(scope) {
                 var pageId = $rootScope.pageId;
                 scope.goToGenie = function() {
@@ -92,7 +106,7 @@ angular.module('genie-canvas.theme', [])
     .directive('stageInstructions', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}teacher_instructions.png" style="z-index:2; max-width:32%;"/></a>',
+            template: '<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}teacher_instructions.png" style="z-index:2; max-width:28%;"/></a>',
             controller: function($scope, $rootScope) {
                 $scope.stageInstMessage = "";
                 $scope.showInst = false;
@@ -127,7 +141,7 @@ angular.module('genie-canvas.theme', [])
     .directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position:absolute;bottom:12%; width:10%;  margin-left:31%; z-index:1; " /><img id="unmute_id"  style="position:absolute;  bottom:12%; width:11.7%; margin-left:31%; z-index: 2; visibility:"hidden" "/> </a>',
+            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position:absolute;bottom:12%; width:10%;  margin-left:43%; z-index:1; " /><img id="unmute_id"  style="position:absolute;  bottom:12%; width:11.7%; margin-left:43%; z-index: 2; visibility:"hidden" "/> </a>',
             link: function(scope, url) {
                 scope.mutestatus = "mute.png";
 
