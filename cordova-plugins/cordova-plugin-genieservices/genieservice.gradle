@@ -1,5 +1,5 @@
 repositories {
-     maven { url  "https://api.ekstep.in/downloads/content/repositories/releases" }
+    maven { url "https://platform.ekstep.org/downloads/content/repositories/releases" }
 }
 
 dependencies {
