@@ -630,6 +630,12 @@ ion-popover-view.fit ion-content {
     text-align: center;
 }
 
+.gc-ep-time-mid{
+    width: 100%;
+    padding: 5%;
+    text-align: center;
+}
+
 .gc-white-bg{
     background: #fff;
     border-radius: 15px;
