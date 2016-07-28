@@ -275,7 +275,7 @@ angular.module('genie-canvas.template',[])
     }
 
     $scope.setTotalTimeSpent = function() {
-        var startTime =  TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ] ? TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ].startTime : 0;
+        var startTime =  (TelemetryService && TelemetryService.instance && TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ]) ? TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ].startTime : 0;
         var totalTime = Math.round((new Date().getTime() - startTime) /1000);
         var mm = Math.floor(totalTime / 60);
         var ss = Math.floor(totalTime % 60);
