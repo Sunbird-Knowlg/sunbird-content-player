@@ -51,7 +51,7 @@
             </div>
 
             <div class="gc-ep-time-score">
-                <div class="gc-ep-time" id="timeSpentArea">
+                <div ng-class="showScore ? 'gc-ep-time' : 'gc-ep-time-mid'" id="timeSpentArea">
                     <p class="gc-white-text gc-ep-white-title">{{totalTimeSpent}}</p>
                     <p class="gc-white-text">mm:ss</p>
                     <p class="gc-white-bg">Time</p>
@@ -82,9 +82,9 @@
                         <p class="gc-text-elipsis" style="font-size: 1.1em">{{story.name}}</p>
                         <p style="font-size: 0.9em">{{story.language}}</p>
                         <div class="gc-rel-content-img">
-                            <img src="{{story.appIcon}}"/>
+                            <img ng-src="{{story.appIcon}}"/>
                             <div class="gc-repeat-content">
-                                <img src="img/icons/next_icon.png"/>
+                                <img ng-src="img/icons/next_icon.png"/>
                             </div>
                         </div>
                     </div>
