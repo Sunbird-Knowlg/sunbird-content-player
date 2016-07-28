@@ -38,8 +38,13 @@ angular.module('genie-canvas.template',[])
             data =data.localData;
         }
         data.status = "ready";
-        $scope.item = data;
-        $rootScope.content = data;
+        $scope.$apply(function() {
+            $scope.item = data;
+            $rootScope.content = data;
+        });
+
+        // $scope.item = data;
+        // $rootScope.content = data;
 
         var identifier = (data && data.identifier) ? data.identifier : null;
         var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
@@ -245,7 +250,12 @@ angular.module('genie-canvas.template',[])
                     console.log("item : ", item);
                     if(!_.isEmpty(item)) {
                         $scope.showRelatedContent = true;
-                        $scope.relatedContents = _.isArray(item) ? item : [item]; 
+                        $scope.$apply(function() {
+                            $scope.relatedContents = _.isArray(item) ? item : [item]; 
+                        });
+
+                        
+                        console.log("relatedContents : ", $scope.relatedContents);
                     }
                 })
             } 
@@ -254,7 +264,9 @@ angular.module('genie-canvas.template',[])
             if(id) {
                 $scope.showNextContent = true;
                 var metadata = _.findWhere($rootScope.stories, { identifier: id });
-                $scope.relatedContents = "undefined" != typeof metadata ? metadata : [];
+                $scope.$apply(function() {
+                    $scope.relatedContents = "undefined" != typeof metadata ? metadata : [];
+                });
                 if(_.isEmpty($scope.relatedContents)) {
                     $scope.renderRelatedContent();
                 }
@@ -263,7 +275,8 @@ angular.module('genie-canvas.template',[])
     }
 
     $scope.setTotalTimeSpent = function() {
-        var totalTime = Math.round((new Date().getTime() - (TelemetryService.instance._end[TelemetryService.instance._end.length -1 ].startTime))/1000);
+        var startTime =  TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ] ? TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ].startTime : 0;
+        var totalTime = Math.round((new Date().getTime() - startTime) /1000);
         var mm = Math.floor(totalTime / 60);
         var ss = Math.floor(totalTime % 60);
         $scope.totalTimeSpent = (mm > 9 ? mm : ("0" + mm))  + ":" + (ss > 9 ? ss : ("0" + ss));
@@ -275,9 +288,12 @@ angular.module('genie-canvas.template',[])
         if("undefined" != typeof cordova) {
             ContentService.getLearnerAssessment(GlobalContext.user.uid, id)
             .then(function(score){
+                console.log("score : ", score)
                 if(score) {
                     $scope.showScore = true;
-                    $scope.totalScore = score;
+                    $scope.$apply(function() {
+                        $scope.totalScore = (score.total_correct + "/" + score.total_questions);
+                    });
                 } else {
                     $scope.showScore = false
                 }
