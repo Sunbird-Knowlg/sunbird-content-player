@@ -239,7 +239,7 @@ angular.module('genie-canvas.template',[])
             // })
 
             // This for testing purpose. 
-            if(("undefined" != typeof cordova)) {
+            if(("undefined" == typeof cordova)) {
                 ContentService.getContentList()
                 .then(function(item) {
                     console.log("item : ", item);
