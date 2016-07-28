@@ -272,20 +272,16 @@ angular.module('genie-canvas.template',[])
     }
 
     $scope.getTotalScore = function(id) {
-    // uncomment when genieservice will give getLearnerAssessment Api to get total score, obtained by user.
-        // ContentService.getLearnerAssessment(GlobalContext.user.uid, id);
-        // .then(function(score){
-        //     if(score) {
-        //         $scope.showScore = true;
-        //         $scope.totalScore = score;
-        //     } else {
-        //         $scope.showScore = false
-        //         jQuery('#timeSpentArea').attr('margin-left', 23);
-        //     }
-        // })
-
-        $scope.showScore = false
-        jQuery('#timeSpentArea').css('margin-left', 23 + '%');
+        ContentService.getLearnerAssessment(GlobalContext.user.uid, id);
+        .then(function(score){
+            if(score) {
+                $scope.showScore = true;
+                $scope.totalScore = score;
+            } else {
+                $scope.showScore = false
+                jQuery('#timeSpentArea').attr('margin-left', 23);
+            }
+        })
     }
 
     setTimeout(function() {
