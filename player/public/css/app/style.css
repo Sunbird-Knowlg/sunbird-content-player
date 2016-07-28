@@ -479,10 +479,12 @@ ion-popover-view.fit ion-content {
 }
 
 .credit-popup {
+    position: absolute;
     width: 60%;
-    height: 60%;
-    top: 20%;
-    left: 25%;
+    height: 80%;
+    border-radius: 10px;
+    top: 10%;
+    left: 20%;
 }
 
 .popup {
@@ -743,14 +745,16 @@ ion-popover-view.fit ion-content {
 .gc-related-cont{
     width: 100%;
     position: absolute;
-    height: 42%;
-    overflow: auto;
+    height: 50%;
+    display: table;
+    left: 0;
+    padding: 0px 10px;
+    overflow: hidden;
 }
 
 .gc-related-list{
-    width: 100%;
-    padding: 0 15%;
-    height: 100%;
+    width: 45%;
+    display: table-cell;
 }
 
 .gc-related-item{
