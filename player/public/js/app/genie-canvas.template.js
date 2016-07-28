@@ -272,16 +272,21 @@ angular.module('genie-canvas.template',[])
     }
 
     $scope.getTotalScore = function(id) {
-        ContentService.getLearnerAssessment(GlobalContext.user.uid, id);
-        .then(function(score){
-            if(score) {
-                $scope.showScore = true;
-                $scope.totalScore = score;
-            } else {
-                $scope.showScore = false
-                jQuery('#timeSpentArea').attr('margin-left', 23);
-            }
-        })
+        if("undefined" != typeof cordova) {
+            ContentService.getLearnerAssessment(GlobalContext.user.uid, id);
+            .then(function(score){
+                if(score) {
+                    $scope.showScore = true;
+                    $scope.totalScore = score;
+                } else {
+                    $scope.showScore = false
+                    jQuery('#timeSpentArea').attr('margin-left', 23);
+                }
+            })
+        } else {
+            $scope.showScore = false
+            jQuery('#timeSpentArea').attr('margin-left', 23);
+        }
     }
 
     setTimeout(function() {
