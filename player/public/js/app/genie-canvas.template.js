@@ -273,7 +273,7 @@ angular.module('genie-canvas.template',[])
 
     $scope.getTotalScore = function(id) {
         if("undefined" != typeof cordova) {
-            ContentService.getLearnerAssessment(GlobalContext.user.uid, id);
+            ContentService.getLearnerAssessment(GlobalContext.user.uid, id)
             .then(function(score){
                 if(score) {
                     $scope.showScore = true;
