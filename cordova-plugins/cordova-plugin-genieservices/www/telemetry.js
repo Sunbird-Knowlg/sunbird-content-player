@@ -2,7 +2,7 @@ var exec = require('cordova/exec');
 
 function telemetry() {}
 
-telemetry.prototype.send = function(aString) {
+telemetry.prototype.send = function(aString, apiName) {
     console.log("telemetry send: ", aString);
     return new Promise(function(resolve, reject) {
         exec(function(result) {
@@ -16,7 +16,7 @@ telemetry.prototype.send = function(aString) {
             function(error) {
                 reject(error);
             },
-            "GenieServicePlugin", "sendTelemetry", [aString]);
+            "GenieServicePlugin", apiName, [aString]);
     });
 }
 
