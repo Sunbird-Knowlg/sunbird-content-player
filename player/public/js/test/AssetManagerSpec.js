@@ -14,11 +14,11 @@ describe('Asset manager test cases', function() {
             manifest: {
                 media: [{
                     id: 'sringeri',
-                    src: 'https://sandbox-community.ekstep.in/assets/public/content/1462973537326grey.png',
+                    src: 'sringeri.png',
                     type: 'image'
                 }, {
                     id: 'splash_audio',
-                    src: 'https://sandbox-community.ekstep.in/assets/public/content/friday_345_1463135379_1463135379772.mp3',
+                    src: 'splash.ogg',
                     type: 'audio'
                 }]
             },

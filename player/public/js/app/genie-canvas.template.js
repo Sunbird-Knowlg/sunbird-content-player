@@ -105,6 +105,7 @@ angular.module('genie-canvas.template',[])
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
     $scope.showRelatedContent = false;
     $scope.relatedContents = [];
+    $scope.commentModel = '';
     $scope.showFeedbackPopup = false;
     $scope.userRating = 0;
 
@@ -160,11 +161,22 @@ angular.module('genie-canvas.template',[])
     }
 
     $scope.updateRating = function(param){
-        $scope.userRating = param;
+        $scope.userRating = param; 
     }
 
     $scope.submitFeedback = function(){
         $scope.hideFeedback();
+        var eks = {
+            type : "Rating",
+            rating : $scope.userRating,
+            context : {
+                src : "",
+                id : "",
+                stageid: $rootScope.pageId
+            },
+            comments: jQuery('#commentText').val()
+        }
+        // TelemetryService.sendFeedback(eks);
     }
 
     $scope.hideFeedback = function(){
@@ -227,34 +239,25 @@ angular.module('genie-canvas.template',[])
     }
 
     $scope.showAllRelatedContent = function(id) {
-        window.open("http://www.ekstep.in/c/" + id, "_system");
+        window.open("http://www.ekstep.in/l/" + id, "_system");
         exitApp();
     }
 
 
     $scope.renderRelatedContent = function() {
         if(GlobalContext.config.appInfo.mimeType != COLLECTION_MIMETYPE) {
-            // TODO: Use this when genie services provide this API
-            // ContentService.getRelatedContent(id)
-            // .then(function(item) {
-                    // if(!_.isEmpty(item)) {
-                    //     $scope.showRelatedContent = true;
-                    //     $scope.relatedContents = _.isArray(item) ? item : [item]; 
-                    // }
-            // })
 
             // This for testing purpose. 
-            if(("undefined" == typeof cordova)) {
-                ContentService.getContentList()
+            if(("undefined" != typeof cordova)) {
+                ContentService.getRelatedContent(id)
                 .then(function(item) {
-                    console.log("item : ", item);
+                    console.log("Related Content : ", item);
                     if(!_.isEmpty(item)) {
                         $scope.showRelatedContent = true;
+                        var list = _.isArray(item) ? item : [item];  
                         $scope.$apply(function() {
-                            $scope.relatedContents = _.isArray(item) ? item : [item]; 
+                            $scope.relatedContents = _.first(list, 2);
                         });
-
-                        
                         console.log("relatedContents : ", $scope.relatedContents);
                     }
                 })
@@ -289,7 +292,7 @@ angular.module('genie-canvas.template',[])
             ContentService.getLearnerAssessment(GlobalContext.user.uid, id)
             .then(function(score){
                 console.log("score : ", score)
-                if(score) {
+                if(score && score.total_questions) {
                     $scope.showScore = true;
                     $scope.$apply(function() {
                         $scope.totalScore = (score.total_correct + "/" + score.total_questions);

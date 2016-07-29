@@ -10,6 +10,10 @@ TelemetryService = {
     _data: [],
     _gameIds:[],
     _user: {},
+    apis: {
+        telemetry : "sendTelemetry",
+        feedback : "sendFeedback"
+    },
     mouseEventMapping: {
         click: 'TOUCH',
         dblclick: 'CHOOSE',
@@ -84,10 +88,10 @@ TelemetryService = {
         if (error) message += ' Error: ' + JSON.stringify(error);
         TelemetryService.instance.exitApp();
     },
-    flushEvent: function(event) {
+    flushEvent: function(event, apiName) {
         TelemetryService._data.push(event);
         if (event)
-            event.flush();
+            event.flush(apiName);
         return event;
     },
     start: function(id, ver) {
@@ -98,20 +102,20 @@ TelemetryService = {
             if(_.findWhere(TelemetryService.instance._start, {id: id}))
                 return new InActiveEvent();
             else
-                return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver));
+                return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver), TelemetryService.apis.telemetry);
         }
     },
     end: function() {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return this.flushEvent(TelemetryService.instance.end());
+        return this.flushEvent(TelemetryService.instance.end(), TelemetryService.apis.telemetry);
     },
     interact: function(type, id, extype, data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.interact(type, id, extype, data));
+        return TelemetryService.flushEvent(TelemetryService.instance.interact(type, id, extype, data), TelemetryService.apis.telemetry);
     },
     assess: function(qid, subj, qlevel, data) {
         if (!TelemetryService.isActive) {
@@ -123,7 +127,7 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.assessEnd(event, data));
+        return TelemetryService.flushEvent(TelemetryService.instance.assessEnd(event, data), TelemetryService.apis.telemetry);
     },
     levelSet: function(eventData) {
         if (TelemetryService.isActive) {
@@ -135,7 +139,7 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.interrupt(type, id));
+        return TelemetryService.flushEvent(TelemetryService.instance.interrupt(type, id), TelemetryService.apis.telemetry);
     },
     exitApp: function() {
         setTimeout(function() {
@@ -146,7 +150,13 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService._version == "1.0" ? "" : this.flushEvent(TelemetryService.instance.navigate(stageid, stageto));
+        return TelemetryService._version == "1.0" ? "" : this.flushEvent(TelemetryService.instance.navigate(stageid, stageto), TelemetryService.apis.telemetry);
+    },
+    sendFeedback: function(eks) {
+        if (!TelemetryService.isActive) {
+            return new InActiveEvent();
+        }
+        return this.flushEvent(TelemetryService.instance.sendFeedback(eks), TelemetryService.apis.feedback);
     },
     itemResponse: function(data) {
         if (!TelemetryService.isActive) {

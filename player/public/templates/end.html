@@ -73,7 +73,7 @@
         </div>
         <div class="gc-ep-related-cont">
             <p class="gc-ep-cong gc-text-elipsis">{{ languageSupport.whatWeDoNext }}</p>
-            <div class="gc-ep-rel-title">
+            <div class="gc-ep-rel-title" style="display:none">
                 <p>Related Content</p>
                 <a class="gc-ep-show-all-rel" href="javscript:void(0)">Show more</a>
             </div>
@@ -118,7 +118,7 @@
                 <div class="gc-feedback-popup">
                     <div star-rating rating="userRating" read-only="false" max-rating="5" click="updateRating(param)"> </div>
                     <div class="gc-fd-comments">
-                       <textarea class="gc-fd-text" max-length="130"></textarea> 
+                        <textarea class="gc-fd-text" max-length="130" id="commentText"></textarea> 
                    </div>
                    <div class="gc-fd-footer">
                        <input class="btn-black" type="button" value="Submit"  ng-click="submitFeedback()">
