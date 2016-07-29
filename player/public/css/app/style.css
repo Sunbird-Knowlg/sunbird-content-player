@@ -702,7 +702,6 @@ ion-popover-view.fit ion-content {
     padding: 0 5%;
 }
 .gc-ep-feedback{
-    float: left;
     vertical-align: middle;
     top: 20%;
     position: absolute;
@@ -713,8 +712,7 @@ ion-popover-view.fit ion-content {
     height: 100%;
     position: absolute;
     background: rgba(255, 255, 255, 0.6);
-    float: left;
-    left: 25%;
+    left: 30%;
     text-align: center;
 }
 

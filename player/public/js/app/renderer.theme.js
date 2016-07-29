@@ -295,9 +295,9 @@ angular.module('genie-canvas.theme', [])
         },
         restrict: 'EA',
         template:
-            "<div style='display: inline-block; margin: 0px; padding: 3px 5px; cursor:pointer;' ng-repeat='idx in maxRatings track by $index'> \
+            "<div style='display: inline-block; padding: 2%; cursor:pointer; width:20%; height:100%;' ng-repeat='idx in maxRatings track by $index'> \
                     <img ng-src='{{((hoverValue + _rating) <= $index) && rating_empty || rating_selected }}' \
-                    ng-Click='isolatedClick($index + 1)' \></img> \
+                    ng-Click='isolatedClick($index + 1)' style='height:100%;' \></img> \
             </div>",
         compile: function (element, attrs) {
             if (!attrs.maxRating || (Number(attrs.maxRating) <= 0)) {
