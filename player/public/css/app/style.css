@@ -195,9 +195,9 @@ ion-popover-view.fit ion-content {
 .gc-ep-title{
     position: absolute;
     width: 100%;
-    top: 18%;
+    top: 12%;
     padding: 0 10%;
-    font-size: 3.5em;
+    font-size: 3em;
     -webkit-text-stroke: 0.2vh #00cccc;
 }
 
@@ -614,12 +614,12 @@ ion-popover-view.fit ion-content {
     text-align: center;
     font-size: 1.2em;
     font-weight: bold;
-    margin: 5% 0;
+    margin: 3% 0%;
     padding: 0 5%;
 }
 
 .gc-content-owner {
-    font-size: 1.1em;
+    font-size: 1em;
     width: 100%;
     text-align: center;
     margin: 0;
@@ -651,9 +651,10 @@ ion-popover-view.fit ion-content {
     -moz-border-radius: 5;
     border-radius: 5px;
     color: #ffffff;
-    font-size: 1.2em;
+    font-size: 1em;
+    font-weight: bold;
     background: #413a36;
-    padding: 1% 10%;
+    padding: 1% 8%;
     text-decoration: none;
     border: none;
 }
@@ -665,8 +666,8 @@ ion-popover-view.fit ion-content {
 
 .gc-ep-time-score{
     position: absolute;
-    border: 2px solid #fff;
-    top: 37%;
+    border: 1px solid #fff;
+    top: 35%;
     margin: 5%;
     width: 90%;
 }
@@ -694,26 +695,32 @@ ion-popover-view.fit ion-content {
 .gc-white-bg{
     background: #fff;
     border-radius: 15px;
-    font-size: 1.2em;
+    font-size: 1em;
     display: initial;
     padding: 0px 25px;
+    text-transform: capitalize;
 }
 .gc-white-text{
     color: #fff;
 }
 .gc-ep-white-title{
-    font-size: 2em;
+    font-size: 1.6em;
     margin: 0;
 }
 .gc-ep-white-subtitle{
-   
+    margin-top: -4px;
+    margin-bottom: 4px;
+    font-size: 0.9em;
+}
+.gc-ep-white-btn{
+    text-transform: capitalize;
 }
 
 .gc-ep-content-holder{
     position: absolute;
-    top: 30%;
+    top: 25%;
     width: 84%;
-    height: 60%;
+    height: 65%;
     margin: 0 8%;
 }
 
@@ -723,6 +730,9 @@ ion-popover-view.fit ion-content {
     height: 100%;
 }
 
+.gc-ep-footer p{
+    white-space: nowrap;
+}
 .gc-ep-footer-icons img{
     /* width: 50%; */
     height: 100%
@@ -730,15 +740,16 @@ ion-popover-view.fit ion-content {
 
 .gc-ep-rating-cont{
     position: absolute;
-    bottom: 5%;
+    bottom: 8%;
     width: 100%;
-    height: 10%;
+    height: 11%;
     padding: 0 5%;
 }
 .gc-ep-feedback{
     vertical-align: middle;
     top: 20%;
     position: absolute;
+    font-size: 0.9em;
 }
 
 .gc-ep-rating{
@@ -785,37 +796,55 @@ ion-popover-view.fit ion-content {
     border-radius: 5px;
 }
 
+.gc-ep-rel-title {
+    position: relative;
+    margin: 0 5%;
+}
+
+.gc-ep-rel-title p{
+    margin-bottom: 2px;
+}
+
+.gc-ep-show-all-rel{
+    display: inline-block;
+    right: 10px;
+    position: absolute;
+    top: 0;
+}
+
 .gc-related-cont{
     width: 100%;
-    position: relative;
-    height: 50%;
-    display: table;
-    left: 0;
-    padding: 0px 10px;
+    height: 52%;
+    padding: 0px 4%;
     overflow: hidden;
 }
 
 .gc-related-list{
-    width: 45%;
-    display: table-cell;
+    width: 50%;
+    position: relative;
+    display: inline-block;
+    padding: 0px 5px;
+    height: 100%;
 }
 
 .gc-related-item{
     background: white;
-    max-height: 150px;
     height: 100%;
-    width: 130px;
-    position: absolute;
+    width: 100%;
     border-radius: 5px;
     padding: 2%;
 }
 
 .gc-ep-footer{
     position: absolute;
-    padding-top: 5%;
     text-align: center;
     width: 100%;
-    height: 20%;
+    height: 14%;
+    bottom: 8%;
+}
+
+.gc-ep-footer p{
+    margin-top: -5px;
 }
 
 .gc-related-item p {

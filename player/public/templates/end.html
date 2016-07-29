@@ -51,13 +51,13 @@
             <div class="gc-ep-time-score">
                 <div ng-class="showScore ? 'gc-ep-time' : 'gc-ep-time-mid'" id="timeSpentArea">
                     <p class="gc-white-text gc-ep-white-title">{{totalTimeSpent}}</p>
-                    <p class="gc-white-text">mm:ss</p>
-                    <p class="gc-white-bg">Time</p>
+                    <p class="gc-white-text gc-ep-white-subtitle">mm:ss</p>
+                    <p class="gc-white-bg gc-ep-white-btn">Time</p>
                 </div>
                 <div class="gc-ep-score" ng-show="showScore">
                     <p class="gc-white-text gc-ep-white-title">{{totalScore}}</p>
-                    <p style="visibility: hidden;">-</p>
-                    <p class="gc-white-bg">Score</p>  
+                    <p class="gc-ep-white-subtitle" style="visibility: hidden;">-</p>
+                    <p class="gc-white-bg gc-ep-white-btn">Score</p>  
                 </div>
             </div>
 
@@ -73,7 +73,10 @@
         </div>
         <div class="gc-ep-related-cont">
             <p class="gc-ep-cong gc-text-elipsis">{{ languageSupport.whatWeDoNext }}</p>
-
+            <div class="gc-ep-rel-title">
+                <p>Related Content</p>
+                <a class="gc-ep-show-all-rel" href="javscript:void(0)">Show more</a>
+            </div>
             <div class="gc-related-cont">
                 <div  ng-show="showRelatedContent" class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
                     <div class="gc-related-item">
@@ -91,7 +94,7 @@
             <div class="gc-ep-footer">
                 <div class="gc-ep-footer-icons gc-ep-replay">
                     <restart></restart>
-                    <p>Reply</p>
+                    <p>Replay</p>
                 </div>
                 <div class="gc-ep-footer-icons gc-ep-genie">
                     <genie></genie>
