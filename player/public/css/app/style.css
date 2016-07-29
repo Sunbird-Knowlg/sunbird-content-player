@@ -323,12 +323,19 @@ ion-popover-view.fit ion-content {
     top: 34%;
 }
 
+.gc-menu-collection-cont img{
+    width: 27%;
+}
 .gc-menu-home-cont {
     position: absolute;
     text-align: center;
     width: 70%;
     left: 11%;
     top: 15%;
+}
+
+.gc-menu-home-cont img{
+    width: 30%;
 }
 
 .gc-menu-genie-cont {
@@ -339,6 +346,9 @@ ion-popover-view.fit ion-content {
     left: 35%;
 }
 
+.gc-menu-genie-cont img{
+    width: 27%;
+}
 
 /*.gc-menu-mute-cont{
 
@@ -578,10 +588,31 @@ ion-popover-view.fit ion-content {
     font-size: 0.7em;
 }
 
+.gc-cp-coll{
+    position: absolute; 
+    width:30%; 
+    left:3%;
+}
+
+.gc-cp-coll img{
+    width: 27%;
+}
+
+.gc-cp-genie{
+    position: absolute; 
+    width:30%; 
+    right:3%;
+    text-align: right;
+}
+
+.gc-cp-genie img{
+    width: 27%;
+}
+
 .gc-ep-cong{
     width: 100%;
     text-align: center;
-    font-size: 1.4em;
+    font-size: 1.2em;
     font-weight: bold;
     margin: 5% 0;
     padding: 0 5%;
@@ -598,6 +629,17 @@ ion-popover-view.fit ion-content {
     width:100%;
     height:100%;
     font-family: baloobhai;
+}
+
+.gc-ep-home{
+    position: absolute; 
+    width:30%; 
+    left:3%; 
+    top: 3%
+}
+
+.gc-ep-home img{
+    width: 27%;
 }
 
 .gc-btn-credits {
@@ -676,24 +718,16 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-ep-footer-icons{
-    position: absolute;
-    width: 60%;
-    margin-left: -12%;
+    display: inline-block;
+    width: 25%;
+    height: 100%;
 }
 
 .gc-ep-footer-icons img{
-    width: 50%;
+    /* width: 50%; */
     height: 100%
 }
-.gc-ep-replay{
-    left: 5%
-}
-.gc-ep-genie{
-    left: 30%
-}
-.gc-ep-collection{
-    left: 55%
-}
+
 .gc-ep-rating-cont{
     position: absolute;
     bottom: 5%;
@@ -753,7 +787,7 @@ ion-popover-view.fit ion-content {
 
 .gc-related-cont{
     width: 100%;
-    position: absolute;
+    position: relative;
     height: 50%;
     display: table;
     left: 0;
@@ -768,7 +802,8 @@ ion-popover-view.fit ion-content {
 
 .gc-related-item{
     background: white;
-    height: 150px;
+    max-height: 150px;
+    height: 100%;
     width: 130px;
     position: absolute;
     border-radius: 5px;
@@ -777,7 +812,7 @@ ion-popover-view.fit ion-content {
 
 .gc-ep-footer{
     position: absolute;
-    bottom: 10%;
+    padding-top: 5%;
     text-align: center;
     width: 100%;
     height: 20%;

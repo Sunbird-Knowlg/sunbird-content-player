@@ -27,48 +27,21 @@
     </div>
     <ion-header-bar class="bar-header bar disable-user-behavior" style="background-color:transparent;border-bottom:0px;background-image:none;height: 20%;">
         <div preview="false" style="position: absolute; top: 15%; width: 100%;">
-            <genie style="position:absolute; width:30%;  right:3%; text-align: right;"></genie>
-            <home style="position: absolute; width:30%;  left:13%"></home>
-            <!-- <a  href="javascript:void(0);" style="position: absolute; width:30%; top:18%; left:12%"><img class="icon-opacity" ng-src="img/icons/home_icon.png" style="width:26%;"/></a> -->
-                <!-- <a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="img/icons/home_icon_disabled.png" style="width:32%;" src="img/icons/home_icon_disabled.png"></a> -->
-            
-<!--                 <a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="img/icons/genie_icon.png" style="width:32%;" src="img/icons/genie_icon.png"></a> -->
-
-            <collection style="position: absolute; width:30%; left:3%"></collection>
+            <collection class="gc-cp-coll"></collection>
+            <genie class="gc-cp-genie"></genie>
         </div>
     </ion-header-bar>
     <ion-content class="scroll-content ionic-scroll  has-header">
         <div class="scroll" style="transform: translate3d(0px, -28px, 0px) scale(1); height: 100%;">
             <div class="item-body noBorder" style="margin:-3px;">
-                <center>
-                    <!--                 <img ng-src="{{item.appIcon || 'assets/quiz-icon.png'}}" class="preview_posterImg">
-                <p class="preview_description" ng-if="item.language">
-                    {{item.language}}
-                </p>
-                <p class="preview_description" ng-if="item.owner">
-                    {{item.owner}}
-                </p>
-                <p class="preview_description" ng-if="item.description">
-                    {{item.description}}
-                </p>
-                <p ng-show="item.pkgVersion || item.processingStart" class="preview_subtext" >
-                    <span ng-show="item.pkgVersion" style="margin-right: 20px; font-size: 1.25em;">Version: {{item.pkgVersion}}</span>
-                </p> -->
-                </center>
             </div>
             <div class="item-body clearList" style="HEIGHT: 100%;">
                 <center>
                     <div ng-show="item.status == 'ready'" style="top: 100%;position: absolute;width: 100%;height: 20%;margin-top: 23%;" class="">
                         <img class="play_image" ng-click="playContent(item)" src="img/icons/btn_play_selected.png" style="width: 18%;">
                     </div>
-                    <!-- <div style="margin-bottom:10px; margin-top:10%" MARng-show="showMessage">
-                    <div ng-bind-html="message" style="margin: auto; text-align: center; font-weight: bold;"></div>
-                </div> -->
                 </center>
             </div>
         </div>
-       <!--  <div class="scroll-bar scroll-bar-v">
-            <div class="scroll-bar-indicator scroll-bar-fade-out" style="transform: translate3d(0px, 27px, 0px) scaleY(1); height: 651px;"></div>
-        </div> -->
     </ion-content>
 </ion-pane>
