@@ -295,17 +295,14 @@ ion-popover-view.fit ion-content {
     height: 100%;*/
     font-size: 5vh;
     width: 100%;
-    white-space: nowrap;
-    float: left;
     text-overflow: ellipsis;
     overflow: hidden;
-    /* word-break: break-word; */
-    padding: 0 1%;
-    word-wrap: break-word;
-    padding-right: 10%;
-    padding-left: 6%;
-    height: 100%;
+    word-break: break-word;
+    padding: 0 5%;
     margin-top: 25%;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
 }
 
 .gc-menu-btn {
@@ -320,46 +317,41 @@ ion-popover-view.fit ion-content {
     text-align: center;
     width: 70%;
     left: -10%;
-    top: 34%;
+    top: 45%;
 }
 
 .gc-menu-collection-cont img{
-    width: 27%;
+    width: 32%;
 }
 .gc-menu-home-cont {
     position: absolute;
     text-align: center;
     width: 70%;
     left: 11%;
-    top: 15%;
+    top: 25%;
 }
 
 .gc-menu-home-cont img{
-    width: 30%;
+    width: 35%;
 }
 
 .gc-menu-genie-cont {
     position: absolute;
     text-align: center;
     width: 70%;
-    top: 35%;
+    top: 45%;
     left: 35%;
 }
 
 .gc-menu-genie-cont img{
-    width: 27%;
+    width: 32%;
 }
 
-/*.gc-menu-mute-cont{
-
+.gc-menu-mute-cont{
+    bottom: 14%;
     position: absolute;
-    text-align: center;
-    width: 62%;
-    bottom: 1%;
-    right: 30%;
-
-
-}*/
+    width: 100%;
+}
 
 
 /*.gc-mute-bg{
@@ -374,8 +366,12 @@ ion-popover-view.fit ion-content {
     position: absolute;
     text-align: center;
     width: 70%;
-    bottom: 27%;
+    bottom: 15%;
     left: 11%;
+}
+
+.gc-menu-inst-cont img{
+    max-width:32%;
 }
 
 .gc-menu-btn-close {
@@ -582,10 +578,22 @@ ion-popover-view.fit ion-content {
 .credit-body-icon-font {
     width: 82%;
     height: 75%;
-    left: 12%;
+    left: 10%;
     position: absolute;
     font-family: NotoSansRegular;
     font-size: 0.7em;
+}
+
+.credit-body-icon-font table{
+    width: 100%;
+    table-layout: fixed;
+    height: 100%;
+}
+
+.credit-body-icon-font tbody{
+    height: 100%;
+    overflow: auto;
+    display: inline-block;
 }
 
 .gc-cp-coll{
@@ -612,7 +620,7 @@ ion-popover-view.fit ion-content {
 .gc-ep-cong{
     width: 100%;
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: bold;
     margin: 3% 0%;
     padding: 0 5%;
@@ -949,17 +957,16 @@ ion-popover-view.fit ion-content {
 
 .credits-title {
     width: 43%;
-    font-size: 2em;
+    font-size: 1.4em;
     line-height: 2em;
     border-right: 2px solid;
 }
 
 .content-noCredits {
     font-size: 3.0vh;
-    padding: 3%;
-    line-height: 1em;
     width: 100%;
-    margin-top: 30%;
+    text-align: center;
+    margin-top: 20%;
 }
 
 .credits-data {
