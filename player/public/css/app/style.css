@@ -843,6 +843,10 @@ ion-popover-view.fit ion-content {
     padding: 2%;
 }
 
+.gc-no-rel-cont{
+    bottom: 45%;
+}
+
 .gc-ep-footer{
     position: absolute;
     text-align: center;
@@ -904,8 +908,8 @@ ion-popover-view.fit ion-content {
 }
 .gc-fc-popup{
     width:50%;  
-    top: 35%;
-    right: 20%;
+    top: 25%;
+    right: 25%;
 }
 .gc-popup-title-new{
     padding: 3% 5%;
