@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <div class="gc-ep-footer">
+            <div ng-class="showRelatedContent ?'gc-ep-footer' : 'gc-ep-footer-mid'">
                 <div class="gc-ep-footer-icons gc-ep-replay">
                     <restart></restart>
                     <p>Replay</p>
@@ -113,7 +113,7 @@
     <div class="popup" ng-if="showFeedbackPopup">
         <div class="popup-overlay" ng-click="hideFeedback()"></div>
         <div class="gc-popup-new gc-fc-popup">
-            <div class="gc-popup-title-new"> FEEDBACK</div>
+            <div class="gc-popup-title-new">FEEDBACK</div>
             <div class="gc-popup-body-new">
                 <div class="gc-feedback-popup">
                     <div star-rating rating="userRating" read-only="false" max-rating="5" click="updateRating(param)"> </div>

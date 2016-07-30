@@ -855,6 +855,14 @@ ion-popover-view.fit ion-content {
     bottom: 8%;
 }
 
+.gc-ep-footer-mid{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    height: 14%;
+    bottom: 45%;
+}
+
 .gc-ep-footer p{
     margin-top: -5px;
 }
