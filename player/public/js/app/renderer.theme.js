@@ -94,12 +94,18 @@ angular.module('genie-canvas.theme', [])
     .directive('genie', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png"/></a>',
+            scope: {
+                mybag: '='
+
+            },
+            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imgsrc}}"/></a>',
             link: function(scope) {
                 var pageId = $rootScope.pageId;
                 scope.goToGenie = function() {
                     exitApp(pageId);
                 }
+                scope.imgsrc= scope.mybag==true ? "img/icons/mybag_icon.png":"img/icons/genie_icon.png";
+                
             }
         }
     })
@@ -395,7 +401,6 @@ angular.module('genie-canvas.theme', [])
         $scope.tryAgain = {
             body: '<div class="assess-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><a ng-click="retryAssessment(\'gc_retry\')" href="javascript:void(0);" ><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')"/></a></div></div>'
         };
-
 
         $scope.openMenu = function() {
 
