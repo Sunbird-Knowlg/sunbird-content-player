@@ -73,12 +73,12 @@
         </div>
         <div class="gc-ep-related-cont">
             <p class="gc-ep-cong gc-text-elipsis">{{ languageSupport.whatWeDoNext }}</p>
-            <div class="gc-ep-rel-title" style="display:none">
+            <div class="gc-ep-rel-title" ng-show="showRelatedContent">
                 <p>Related Content</p>
                 <a class="gc-ep-show-all-rel" href="javscript:void(0)">Show more</a>
             </div>
             <div class="gc-related-cont">
-                <div  ng-show="showRelatedContent" class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
+                <div ng-show="showRelatedContent" class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
                     <div class="gc-related-item">
                         <p class="gc-text-elipsis" style="font-size: 1.1em">{{story.name}}</p>
                         <p style="font-size: 0.9em">{{story.language}}</p>
