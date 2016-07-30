@@ -45,7 +45,7 @@ angular.module('genie-canvas.theme', [])
     .directive('collection', function($rootScope, $state) {
         return {
             restrict: 'E',
-            template: '<a ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection != true}" ng-src="{{imgSrc}}"/></a>',
+            template: '<a ng-class="{\'icon-opacity\': isCollection != true}" ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection != true}" ng-src="{{imgSrc}}"/></a>',
             link: function(scope, state) {
                 scope.imgSrc = "img/icons/collection_icon.png";
                 scope.isCollection = false;
