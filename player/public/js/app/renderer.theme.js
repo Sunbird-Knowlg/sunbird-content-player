@@ -46,7 +46,7 @@ angular.module('genie-canvas.theme', [])
         return {
             restrict: 'E',
             template: '<a ng-class="{\'icon-opacity\': isCollection != true}" ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection != true}" ng-src="{{imgSrc}}"/></a>',
-            link: function(scope, state) {
+             link: function(scope, state) {
                 scope.imgSrc = "img/icons/collection_icon.png";
                 scope.isCollection = false;
                 if ($rootScope.collection && $rootScope.collection.children) {
@@ -91,21 +91,15 @@ angular.module('genie-canvas.theme', [])
             }
         }
     })
-    .directive('genie', function($rootScope) {
+   .directive('genie', function($rootScope) {
         return {
             restrict: 'E',
-            scope: {
-                mybag: '='
-
-            },
-            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imgsrc}}"/></a>',
+            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png"/></a>',
             link: function(scope) {
                 var pageId = $rootScope.pageId;
                 scope.goToGenie = function() {
                     exitApp(pageId);
                 }
-                scope.imgsrc= scope.mybag==true ? "img/icons/mybag_icon.png":"img/icons/genie_icon.png";
-                
             }
         }
     })
