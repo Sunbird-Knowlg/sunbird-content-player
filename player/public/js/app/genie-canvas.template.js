@@ -210,6 +210,7 @@ angular.module('genie-canvas.template',[])
     }
 
     $scope.restartContent = function() {
+        jQuery('#loading').show();
         window.history.back();
         var gameId = TelemetryService.getGameId();
         var version = TelemetryService.getGameVer();
