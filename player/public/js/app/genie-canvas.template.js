@@ -176,7 +176,7 @@ angular.module('genie-canvas.template',[])
             },
             comments: jQuery('#commentText').val()
         }
-        // TelemetryService.sendFeedback(eks);
+        TelemetryService.sendFeedback(eks);
     }
 
     $scope.hideFeedback = function(){

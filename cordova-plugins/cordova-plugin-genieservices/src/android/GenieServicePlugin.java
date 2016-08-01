@@ -11,7 +11,6 @@ import org.ekstep.genieservices.sdks.Telemetry;
 import org.ekstep.genieservices.sdks.UserProfile;
 import org.ekstep.genieservices.sdks.Content;
 import org.ekstep.genieservices.sdks.Summarizer;
-// import org.ekstep.genieservices.sdks.FeedbackService;
 import org.ekstep.genieservices.sdks.GenieServices;
 import org.ekstep.genieservices.sdks.response.IResponseHandler;
 import org.json.JSONArray;
@@ -75,11 +74,6 @@ public class GenieServicePlugin extends CordovaPlugin {
                 summarizer = new Summarizer(activity);
             }
         }
-        // if(null == summarizer) {
-        //     if(null != activity) {
-        //         feedbackService = new FeedbackService(activity);
-        //     }
-        // }
         Log.v(TAG, "GenieServicePlugin received:" + action);
         System.out.println("Genie Service action: " + action);
         if(action.equals("sendTelemetry")) {
@@ -102,7 +96,7 @@ public class GenieServicePlugin extends CordovaPlugin {
         }
         else if(action.equals("sendFeedback")) {
             String evt = args.getString(0);
-            // feedbackService.saveFeedbackEvent(evt, new GenieServicesResponse(callbackContext));
+            content.sendFeedback(evt, new TelemetryResponse(callbackContext));
         }else if(action.equals("getLearnerAssessment")) {
             String uid = args.getString(0);
             String contentId = args.getString(1);
