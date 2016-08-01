@@ -721,7 +721,7 @@ ion-popover-view.fit ion-content {
     font-size: 0.9em;
 }
 .gc-ep-white-btn{
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 .gc-ep-content-holder{
