@@ -342,8 +342,16 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     jQuery('#loading').hide();
                     jQuery('#gameArea').hide();
                     var path = $scope.item.baseDir + '/index.html';
-                    $scope.currentProjectUrl = path;
-                    jQuery("#htmlFrame").show();
+                    /*$scope.currentProjectUrl = path;
+                    jQuery("#htmlFrame").show();*/
+                    if (window.cordova){
+                        console.log("Opening through cordova InAppBrowser.");
+                        cordova.InAppBrowser.open(path, '_self', 'location=no');
+                        //window.open(path, '_self');   
+                    }else{
+                        window.location.replace(path);                    
+                    }
+
                 });
             } else { 
                 if(collectionChildren) {

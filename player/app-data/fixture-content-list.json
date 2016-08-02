@@ -12,14 +12,14 @@
     "responseCode": "OK",
     "result": {
         "content": [{
-            "identifier": "org.ekstep.debug",
+            "identifier": "org.ekstep.mar8",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
                 "questionnaire": null,
-                "appIcon": "fixture-stories/debug/logo.png",
+                "appIcon": "fixture-stories/mar8/logo.png",
                 "subject": "literacy_v2",
                 "description": "Debug Content",
-                "name": "Debug Content",
+                "name": "mar8 demo",
                 "downloadUrl": "",
                 "checksum": null,
                 "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
@@ -28,12 +28,35 @@
                     "name": "Receptive Vocabulary",
                     "objectType": "Concept"
                 }],
-                "identifier": "org.ekstep.debug",
+                "identifier": "org.ekstep.mar8",
                 "grayScaleAppIcon": null,
                 "pkgVersion": 1
             },
             "isAvailable": true,
-            "path": "fixture-stories/debug"
+            "path": "fixture-stories/mar8"
+        },{
+            "identifier": "org.ekstep.showcase.HTMLContent",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/HTMLContent/logo.png",
+                "subject": "literacy_v2",
+                "description": "HTML Content",
+                "name": "HTML Content",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.showcase.HTMLContent",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/HTMLContent"
         },{
             "identifier": "org.ekstep.showcase.video",
             "mimeType": "application/vnd.ekstep.ecml-archive",
