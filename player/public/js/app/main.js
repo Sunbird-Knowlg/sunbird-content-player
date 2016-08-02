@@ -78,6 +78,7 @@ function enableReload() {
 }
 
 function goToCollection($state, id, pageId) {
+        collectionPath.pop();
         console.log(" id : ", id);
         // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
         TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});

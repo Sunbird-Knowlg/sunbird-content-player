@@ -6,6 +6,7 @@
 
 var stack = new Array(),
     collectionChildrenIds = new Array(),
+    collectionPath = new Array(),
     content = {},
     collectionChildren = true,
     defaultMetadata = { "identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author":"EkStep", "localData": { "questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{ "identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept" }], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true,   "path": "fixture-stories/item_sample" },
@@ -242,6 +243,8 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             ContentService.getContent(id)
                 .then(function(content) {
                     GlobalContext.previousContentId = content.identifier;
+                    if(!_.findWhere(collectionPath, { identifier: id }))
+                        collectionPath.push( {identifier : content.identifier, mediaType : "Collection"});
                     if(!_.contains(stack, content.identifier))
                         stack.push(content.identifier);
                     if (COLLECTION_MIMETYPE == content.mimeType) {
@@ -287,6 +290,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             } else {
                 GlobalContext.currentContentId = content.identifier;
                 GlobalContext.currentContentMimeType = content.mimeType;
+                collectionPath.push( {identifier : content.identifier, mediaType : "Content"});
                 $state.go('showContent', {"contentId": content.identifier});
             }
         }; 
@@ -321,6 +325,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         $scope.goBack = function() {
             TelemetryService.end();
             stack.pop();
+            collectionPath.pop();
             var id = stack.pop();
             if(id)
                 $state.go('contentList', { "id": id});

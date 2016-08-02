@@ -91,8 +91,23 @@ public class GenieServicePlugin extends CordovaPlugin {
             String contentId = args.getString(0);
             content.get(contentId, new GenieServicesResponse(callbackContext));
         } else if(action.equals("getRelatedContent")) {
-            String contentId = args.getString(0);
-            content.getRelatedContent(contentId, new ArrayList<String>(), new GenieServicesResponse(callbackContext));
+            String uid = args.getString(0);
+            List<HashMap<String, Object>> filterList = new ArrayList<HashMap<String, Object>>();
+            JSONArray jsonArray = args.getJSONArray(1);
+            if(jsonArray != null && jsonArray.length() > 0) {
+                for(int i=0;i<jsonArray.length();i++) {
+                    HashMap<String, Object> map = new HashMap<String, Object>();
+                    Iterator keys = jsonArray.getJSONObject(i).keys();
+                    while (keys.hasNext()) {
+                        String key = (String) keys.next();
+                        map.put(key, jsonArray.getJSONObject(i).get(key));
+                    }
+                    filterList.add(map);
+                }
+                    
+            } 
+            content.getRelatedContent(uid, filterList, new GenieServicesResponse(callbackContext));
+
         }
         else if(action.equals("sendFeedback")) {
             String evt = args.getString(0);

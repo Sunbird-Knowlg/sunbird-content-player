@@ -10,7 +10,6 @@ angular.module('genie-canvas.template',[])
             'itemId': content.identifier
         });
         jQuery('#loadingText').text(content.name);
-        jQuery('#loadingText1').text(content.name);
         jQuery("#progressBar").width(0);
         jQuery('#loading').show();
         startProgressBar(40, 0.6);
@@ -42,9 +41,6 @@ angular.module('genie-canvas.template',[])
             $scope.item = data;
             $rootScope.content = data;
         });
-
-        // $scope.item = data;
-        // $rootScope.content = data;
 
         var identifier = (data && data.identifier) ? data.identifier : null;
         var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
@@ -105,6 +101,7 @@ angular.module('genie-canvas.template',[])
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
     $scope.showRelatedContent = false;
     $scope.relatedContents = [];
+    $scope.relatedContentPath = [];
     $scope.commentModel = '';
     $scope.showFeedbackPopup = false;
     $scope.userRating = 0;
@@ -124,7 +121,6 @@ angular.module('genie-canvas.template',[])
         }
     };
     var content = $rootScope.content;
-    console.log(" Content metadata : ", content);
 
     $scope.setCredits('imageCredits');
     $scope.setCredits('soundCredits');
@@ -156,8 +152,6 @@ angular.module('genie-canvas.template',[])
             subtype: "ContentID"
         });
         $scope.showFeedbackPopup = true;
-        //$scope.feedbackBody.replace("userRating", $scope.userRating);
-        //jQuery("#feedbackPopup").show();
     }
 
     $scope.updateRating = function(param){
@@ -223,8 +217,9 @@ angular.module('genie-canvas.template',[])
     }
 
      $scope.playRelatedContent = function(content) {
-        console.log("content : ", content);
-        if(content.isAvailable) {
+        TelemetryService.end();
+        if(GlobalContext.config.appInfo.mimeType == COLLECTION_MIMETYPE) {
+            collectionPath = $scope.relatedContentPath;
             ContentService.getContent(content.identifier)
             .then(function(content) {
                 if (COLLECTION_MIMETYPE == content.mimeType) {
@@ -234,47 +229,62 @@ angular.module('genie-canvas.template',[])
                 }
             })
         } else {
-            window.open("http://www.ekstep.in/c/" + content.identifier, "_system");
-            exitApp();
+            if(content.isAvailable) {
+                if (COLLECTION_MIMETYPE == content.mimeType) {
+                    $state.go('contentList', { "id": content.identifier});
+                } else {
+                    $state.go('showContent', {"contentId": content.identifier});
+                }
+            } else {
+                window.open("http://www.ekstep.in/c/" + content.identifier, "_system");
+                exitApp();
+            }
+            
         }
     }
 
-    $scope.showAllRelatedContent = function(id) {
-        window.open("http://www.ekstep.in/l/" + id, "_system");
+    $scope.showAllRelatedContent = function() {
+        window.open("http://www.ekstep.in/l/" + $stateParams.contentId, "_system");
         exitApp();
     }
 
 
-    $scope.renderRelatedContent = function() {
-        if(GlobalContext.config.appInfo.mimeType != COLLECTION_MIMETYPE) {
+    $scope.getRelatedContent = function(list) {
+        ContentService.getRelatedContent(GlobalContext.user.uid, list)
+        .then(function(item) {      
+            if(!_.isEmpty(item)) {
+                $scope.showRelatedContent = true;
+                var list = [];
+                if(!_.isEmpty(item.collection)) {
+                    $scope.relatedContentPath = item.collection;
+                    list = [item.collection[item.collection.length - 1]]; 
+                }
+                else {
+                    list = _.first(_.isArray(item.content) ? item.content : [item.content],2); 
+                }
+                $scope.$apply(function() {
+                    $scope.relatedContents = list;
+                });
+            }
+        })
+    }
 
-            // This for testing purpose. 
+
+    $scope.renderRelatedContent = function(id) {
+        var list = [];
+        if(GlobalContext.config.appInfo.mimeType != COLLECTION_MIMETYPE) {
+            // For Content
             if(("undefined" != typeof cordova)) {
-                ContentService.getRelatedContent(id)
-                .then(function(item) {
-                    console.log("Related Content : ", item);
-                    if(!_.isEmpty(item)) {
-                        $scope.showRelatedContent = true;
-                        var list = _.isArray(item) ? item : [item];  
-                        $scope.$apply(function() {
-                            $scope.relatedContents = _.first(list, 2);
-                        });
-                        console.log("relatedContents : ", $scope.relatedContents);
-                    }
-                })
+                list = [{
+                    "identifier":id,
+                    "mediaType":"Content"
+                }]
+                $scope.getRelatedContent(list);
             } 
         } else {
-            var id = collectionChildrenIds.pop();
-            if(id) {
-                $scope.showNextContent = true;
-                var metadata = _.findWhere($rootScope.stories, { identifier: id });
-                $scope.$apply(function() {
-                    $scope.relatedContents = "undefined" != typeof metadata ? metadata : [];
-                });
-                if(_.isEmpty($scope.relatedContents)) {
-                    $scope.renderRelatedContent();
-                }
-            }
+            // For Collection
+            list = collectionPath;
+            $scope.getRelatedContent(list);
         }
     }
 
@@ -284,15 +294,12 @@ angular.module('genie-canvas.template',[])
         var mm = Math.floor(totalTime / 60);
         var ss = Math.floor(totalTime % 60);
         $scope.totalTimeSpent = (mm > 9 ? mm : ("0" + mm))  + ":" + (ss > 9 ? ss : ("0" + ss));
-        console.log("totalTime : ", $scope.totalTimeSpent);
-
     }
 
     $scope.getTotalScore = function(id) {
         if("undefined" != typeof cordova) {
             ContentService.getLearnerAssessment(GlobalContext.user.uid, id)
             .then(function(score){
-                console.log("score : ", score)
                 if(score && score.total_questions) {
                     $scope.showScore = true;
                     $scope.$apply(function() {
@@ -307,8 +314,9 @@ angular.module('genie-canvas.template',[])
         }
     }
 
-    $scope.renderRelatedContent($stateParams.contentId);
+    if("undefined" != typeof cordova) 
+        $scope.renderRelatedContent($stateParams.contentId);
     $scope.setTotalTimeSpent();
-    $scope.getTotalScore();
+    $scope.getTotalScore($stateParams.contentId);
 
 });

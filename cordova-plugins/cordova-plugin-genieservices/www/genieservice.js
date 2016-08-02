@@ -29,8 +29,8 @@ genieservice.prototype.getContent = function(id) {
     return this.handleAction("getContent", [id]);
 }
 
-genieservice.prototype.getRelatedContent = function(id) {
-    return this.handleAction("getRelatedContent", [id]);
+genieservice.prototype.getRelatedContent = function(uid, listOfContentIds) {
+    return this.handleAction("getRelatedContent", [uid, listOfContentIds]);
 }
 
 genieservice.prototype.getLearnerAssessment = function(uid, id) {
@@ -39,10 +39,6 @@ genieservice.prototype.getLearnerAssessment = function(uid, id) {
 
 genieservice.prototype.getContentList = function(filter) {
     return this.handleAction("getContentList", [filter]);
-}
-
-genieservice.prototype.sendFeedback = function(evt) {
-    return this.handleAction("sendFeedback", [evt]);
 }
 
 genieservice.prototype.endGenieCanvas = function() {
