@@ -5,8 +5,8 @@ angular.module('genie-canvas.theme', [])
         $rootScope.enableEval = false;
         $rootScope.languageSupport = {
             "languageCode": "en",
-            "home": "HOME",
-            "genie": "GENIE",
+            "home": "Home",
+            "genie": "Genie",
             "title": "TITLE",
             "submit": "SUBMIT",
             "goodJob": "Good Job!",
@@ -16,7 +16,19 @@ angular.module('genie-canvas.theme', [])
             "voice": "Voice",
             "audio": "Audio",
             "author": "Author",
-            "instructions": "TEACHER INSTRUCTION"
+            "instructions": "NOTES FOR TEACHER",
+            "replay": "Replay",
+            "time": "TIME",
+            "result": "RESULT",
+            "feedback":"Feedback",
+            "collection":"Collection",
+            "relatedContent":"Related Content",
+            "showMore":"Show More",
+            "noCreditsAvailable":"There are no credits available",
+            "congratulations":"Congratulations! You just completed this lesson!",
+            "credit":"Credits",
+           
+
         }
     })
     .directive('preview', function($rootScope) {

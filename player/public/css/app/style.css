@@ -258,6 +258,7 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-menu-cont {
+
     height: 100%;
 }
 
@@ -314,6 +315,8 @@ ion-popover-view.fit ion-content {
 
 .gc-menu-collection-cont {
     position: absolute;
+    text-transform: uppercase;
+
     text-align: center;
     width: 70%;
     left: -10%;
@@ -325,6 +328,7 @@ ion-popover-view.fit ion-content {
 }
 .gc-menu-home-cont {
     position: absolute;
+    text-transform: uppercase;
     text-align: center;
     width: 70%;
     left: 11%;
@@ -336,6 +340,7 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-menu-genie-cont {
+    text-transform: uppercase;
     position: absolute;
     text-align: center;
     width: 70%;
@@ -733,6 +738,7 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-ep-footer-icons{
+
     display: inline-block;
     width: 25%;
     height: 100%;

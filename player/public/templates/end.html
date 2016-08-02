@@ -41,7 +41,7 @@
        
         <div class="gc-ep-assessment-cont">
             <div>
-                <p class="gc-ep-cong gc-text-elipsis">Congratulations! You just completed</p>
+                <p class="gc-ep-cong gc-text-elipsis">{{languageSupport.congratulations}}</p>
                 <p class="gc-content-owner gc-text-elipsis">{{ languageSupport.author }}: {{content.owner}}</p>
                 <center>
                     <input class="gc-btn-credits btn-black" type="button" ng-click="showCredits()" value="Credits" />                    
@@ -52,17 +52,17 @@
                 <div ng-class="showScore ? 'gc-ep-time' : 'gc-ep-time-mid'" id="timeSpentArea">
                     <p class="gc-white-text gc-ep-white-title">{{totalTimeSpent}}</p>
                     <p class="gc-white-text gc-ep-white-subtitle">mm:ss</p>
-                    <p class="gc-white-bg gc-ep-white-btn">Time</p>
+                    <p class="gc-white-bg gc-ep-white-btn">{{languageSupport.time}}</p>
                 </div>
                 <div class="gc-ep-score" ng-show="showScore">
                     <p class="gc-white-text gc-ep-white-title">{{totalScore}}</p>
                     <p class="gc-ep-white-subtitle" style="visibility: hidden;">-</p>
-                    <p class="gc-white-bg gc-ep-white-btn">Result</p>  
+                    <p class="gc-white-bg gc-ep-white-btn">{{languageSupport.result}}</p>  
                 </div>
             </div>
 
             <div class="gc-ep-rating-cont">
-                <p class="gc-ep-feedback gc-text-elipsis">Feedback</p>
+                <p class="gc-ep-feedback gc-text-elipsis">{{languageSupport.feedback}}</p>
                 <div class="gc-ep-rating">
                     <div star-rating rating="userRating" read-only="false" max-rating="5" click="showFeedback(param)" style="height: 100%;"></div>
                 </div>
@@ -74,8 +74,8 @@
         <div class="gc-ep-related-cont">
             <p class="gc-ep-cong gc-text-elipsis">{{ languageSupport.whatWeDoNext }}</p>
             <div class="gc-ep-rel-title" ng-show="showRelatedContent">
-                <p>Related Content</p>
-                <a class="gc-ep-show-all-rel" href="javscript:void(0)">Show more</a>
+                <p>{{languageSupport.relatedContent}}</p>
+                <a class="gc-ep-show-all-rel" href="javscript:void(0)">{{languageSupport.showMore}}</a>
             </div>
             <div class="gc-related-cont">
                 <div ng-show="showRelatedContent" class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
@@ -94,15 +94,15 @@
             <div ng-class="showRelatedContent ?'gc-ep-footer' : 'gc-ep-footer-mid'">
                 <div class="gc-ep-footer-icons gc-ep-replay">
                     <restart></restart>
-                    <p>Replay</p>
+                    <p>{{languageSupport.replay}}</p>
                 </div>
                 <div class="gc-ep-footer-icons gc-ep-genie">
                     <genie></genie>
-                    <p>Genie</p>
+                    <p>{{languageSupport.genie}}</p>
                 </div>
                 <div class="gc-ep-footer-icons gc-ep-collection">
                     <collection></collection>
-                    <p>Collection</p>
+                    <p>{{languageSupport.collection}}</p>
                 </div>
             </div>
         </div>           
@@ -113,7 +113,7 @@
     <div class="popup" ng-if="showFeedbackPopup">
         <div class="popup-overlay" ng-click="hideFeedback()"></div>
         <div class="gc-popup-new gc-fc-popup">
-            <div class="gc-popup-title-new">FEEDBACK</div>
+            <div class="gc-popup-title-new">{{languageSupport.feedback}}</div>
             <div class="gc-popup-body-new">
                 <div class="gc-feedback-popup">
                     <div star-rating rating="userRating" read-only="false" max-rating="5" click="updateRating(param)"> </div>
