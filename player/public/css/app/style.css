@@ -858,7 +858,7 @@ ion-popover-view.fit ion-content {
     text-align: center;
     width: 100%;
     height: 14%;
-    bottom: 8%;
+    bottom: 9%;
 }
 
 .gc-ep-footer-mid{
@@ -871,6 +871,7 @@ ion-popover-view.fit ion-content {
 
 .gc-ep-footer p{
     margin-top: -5px;
+    font-size: 0.8em;
 }
 
 .gc-related-item p {
@@ -898,7 +899,7 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-repeat-content{
-    background: rgba(0, 0, 0, 0.3);
+    /* background: rgba(0, 0, 0, 0.3); */
     position: absolute;
     top: 0;
     width: 100%;
