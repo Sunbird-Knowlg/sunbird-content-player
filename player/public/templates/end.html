@@ -81,7 +81,7 @@
                 <div ng-show="showRelatedContent" class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
                     <div class="gc-related-item">
                         <p class="gc-text-elipsis" style="font-size: 1.1em">{{story.name}}</p>
-                        <p style="font-size: 0.9em">{{story.language}}</p>
+                        <!--  <p style="font-size: 0.9em">{{story.language}}</p> -->
                         <div class="gc-rel-content-img">
                             <img ng-src="{{story.appIcon}}"/>
                             <div class="gc-repeat-content">
@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <div ng-class="showRelatedContent ?'gc-ep-footer' : 'gc-ep-footer-mid'">
+            <div class="gc-ep-footer">
                 <div class="gc-ep-footer-icons gc-ep-replay">
                     <restart></restart>
                     <p>{{languageSupport.replay}}</p>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="gc-ep-footer-icons gc-ep-collection">
                     <collection></collection>
-                    <p>{{languageSupport.collection}}</p>
+                    <p style="display: inline-block;">{{languageSupport.collection}}</p>
                 </div>
             </div>
         </div>           
