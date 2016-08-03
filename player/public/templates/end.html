@@ -80,12 +80,13 @@
             <div class="gc-related-cont">
                 <div ng-show="showRelatedContent" class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
                     <div class="gc-related-item">
-                        <p class="gc-text-elipsis" style="font-size: 1.1em">{{story.name}}</p>
+                        <p class="gc-text-elipsis" style="padding-left: 10%;font-size: 1em">Title{{story.name}}</p>
                         <!--  <p style="font-size: 0.9em">{{story.language}}</p> -->
                         <div class="gc-rel-content-img">
-                            <img ng-src="{{story.appIcon}}"/>
+                            <img class="img-center" ng-src="{{story.appIcon}}"/>
+                            <!-- <img class="img-center" ng-src="img/icons/good_job_bg.png"/> -->
                             <div class="gc-repeat-content">
-                                <img ng-src="img/icons/next_icon.png"/>
+                                <img ng-src="img/icons/icn_play.png"/>
                             </div>
                         </div>
                     </div>

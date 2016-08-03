@@ -828,7 +828,7 @@ ion-popover-view.fit ion-content {
 
 .gc-related-cont{
     width: 100%;
-    height: 52%;
+    height: 50%;
     padding: 0px 4%;
     overflow: hidden;
 }
@@ -836,7 +836,7 @@ ion-popover-view.fit ion-content {
 .gc-related-list{
     width: 50%;
     position: relative;
-    display: inline-block;
+    display: inline-table;
     padding: 0px 5px;
     height: 100%;
 }
@@ -858,7 +858,7 @@ ion-popover-view.fit ion-content {
     text-align: center;
     width: 100%;
     height: 14%;
-    bottom: 9%;
+    bottom: 10%;
 }
 
 .gc-ep-footer-mid{
@@ -883,14 +883,27 @@ ion-popover-view.fit ion-content {
     text-align: center;
     width: 70%;
     left: 15%;
-    height: 65%;
-    border: 1px solid #000;
-    border-radius: 5px;
+    height: 70%;
+    border: 1px solid;
+    border-style: outset;
+    border-radius: 10px;
+    border-width: thin;
+}
+
+.img-center{
+    max-width: 100%;
+    max-height: 100%;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    vertical-align: middle;
 }
 
 .gc-rel-content-img img{
     width: 100%;
-    height: 100%;
+    height: auto;
+        display: block;
 }
 
 .gc-no-rel-items{
