@@ -318,9 +318,14 @@ angular.module('genie-canvas.template',[])
         }
     }
 
-    if("undefined" != typeof cordova) 
-        $scope.renderRelatedContent($stateParams.contentId);
-    $scope.setTotalTimeSpent();
-    $scope.getTotalScore($stateParams.contentId);
 
+    $scope.init = function(){
+        if("undefined" != typeof cordova) {
+            $scope.renderRelatedContent($stateParams.contentId);
+        }
+        $scope.setTotalTimeSpent();
+        $scope.getTotalScore($stateParams.contentId);
+        $scope.showFeedback(0);
+    }
+    $scope.init();
 });
