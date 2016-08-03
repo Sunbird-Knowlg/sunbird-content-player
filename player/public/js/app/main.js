@@ -7,6 +7,22 @@ var packageName = "org.ekstep.quiz.app",
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
     ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive";
 
+function startProgressBar(w, setInter) {
+    var elem = document.getElementById("progressBar");
+    var width = w ? w : 20;
+    var id = setInterval(frame, setInter ? setInter : 0.7);
+    function frame() {
+        if (width >= 100) {
+         clearInterval(id);
+        } else {
+        width++;
+        if(elem && elem.style)
+            elem.style.width = width + '%';
+        jQuery('#progressCount').text(width + '%');
+        }
+    }
+}
+startProgressBar();
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
         $cordovaFile.removeFile(cordova.file.dataDirectory, path)
@@ -61,8 +77,8 @@ function enableReload() {
     _reloadInProgress = false;
 }
 
-function goToHome($state, isCollection, id, pageId) {
-    if (isCollection) {
+function goToCollection($state, id, pageId) {
+        console.log(" id : ", id);
         // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
         TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
         if (Renderer.running)
@@ -72,9 +88,19 @@ function goToHome($state, isCollection, id, pageId) {
         $state.go('contentList', {
             "id": id
         });
-
-    }
 }
+
+// function goToHome($state, isCollection, id, pageId) {
+//     if (isCollection) {
+//         // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
+//         TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
+//         if (Renderer.running)
+//             Renderer.cleanUp();
+//         else
+//             TelemetryService.end();
+//     }
+// }
+
 
 function backbuttonPressed() {
     var data = (Renderer.running || HTMLRenderer.running) ? {

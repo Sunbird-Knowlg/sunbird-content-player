@@ -355,11 +355,11 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         
         $scope.init = function(){   
             if ($stateParams.itemId) {
-            $scope.item = _.findWhere($rootScope.stories, { identifier: $stateParams.itemId });
+            $scope.item = $rootScope.content;
 
             if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                 HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
-                    jQuery('#gameAreaLoad').hide();
+                    jQuery('#loading').hide();
                     jQuery('#gameArea').hide();
                     var path = $scope.item.baseDir + '/index.html';
                     $scope.currentProjectUrl = path;

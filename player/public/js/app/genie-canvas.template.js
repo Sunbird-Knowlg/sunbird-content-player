@@ -9,8 +9,8 @@ angular.module('genie-canvas.template',[])
         $state.go('playContent', {
             'itemId': content.identifier
         });
-        jQuery('#loadingText').text(GlobalContext.config.appInfo.name);
-        jQuery('#loadingText1').text(GlobalContext.config.appInfo.name);
+        jQuery('#loadingText').text(content.name);
+        jQuery('#loadingText1').text(content.name);
         jQuery("#progressBar").width(0);
         jQuery('#loading').show();
         startProgressBar(40, 0.6);
@@ -42,8 +42,10 @@ angular.module('genie-canvas.template',[])
             $scope.item = data;
             $rootScope.content = data;
         });
-        // This is used by ContentCtrl.
-        $rootScope.stories = [data];
+
+        // $scope.item = data;
+        // $rootScope.content = data;
+
         var identifier = (data && data.identifier) ? data.identifier : null;
         var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
         TelemetryService.start(identifier, version);
@@ -55,6 +57,7 @@ angular.module('genie-canvas.template',[])
         if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
             if( (webview == "true")){
                 if(content.metadata && (content.metadata.mimeType != COLLECTION_MIMETYPE)){
+                    jQuery('#loading').hide();
                     //For JSON and Direct contentID
                     $scope.setContentMetadata(content.metadata);
                 }else{
@@ -100,11 +103,15 @@ angular.module('genie-canvas.template',[])
     }, 0);
 })
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
-    $scope.showNextContent = true;
-    $rootScope.pageId = "endpage";
-    $scope.creditsBody = '<div class="credit-popup"><img ng-src="{{icons.popup.credit_popup}}" style="width:100%;" /><div class="popup-body"><div class="credit-body-icon-font"><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">There is no credits available</div></div></div><a class="popup-close" href="javascript:void(0)" ng-click="hidePopup()"><img ng-src="{{icons.popup_close.close_icon}}" style="width:100%; left:70%;"/></a></div>';
-    //$rootScope.content = {};
+    $scope.showRelatedContent = false;
+    $scope.relatedContents = [];
+    $scope.commentModel = '';
+    $scope.showFeedbackPopup = false;
+    $scope.userRating = 0;
 
+    $rootScope.pageId = "endpage";
+    $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> CREDITS</div> <div class="gc-popup-body-new"><div class="credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">There are no credits available</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">Image</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">Voice</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">Sound</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
+   
     $scope.arrayToString = function(array) {
         return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", "): "";   
     };
@@ -117,10 +124,7 @@ angular.module('genie-canvas.template',[])
         }
     };
     var content = $rootScope.content;
-        
-    if(!GlobalContext.previousContentId){
-        $scope.showNextContent = false;
-    }
+    console.log(" Content metadata : ", content);
 
     $scope.setCredits('imageCredits');
     $scope.setCredits('soundCredits');
@@ -144,6 +148,41 @@ angular.module('genie-canvas.template',[])
             subtype: "ContentID"
         });
     }
+
+    $scope.showFeedback = function(param){
+        $scope.userRating = param;
+        TelemetryService.interact("TOUCH", "gc_feedback", "TOUCH", {
+            stageId: "ContnetApp-FeedbackScreen",
+            subtype: "ContentID"
+        });
+        $scope.showFeedbackPopup = true;
+        //$scope.feedbackBody.replace("userRating", $scope.userRating);
+        //jQuery("#feedbackPopup").show();
+    }
+
+    $scope.updateRating = function(param){
+        $scope.userRating = param; 
+    }
+
+    $scope.submitFeedback = function(){
+        $scope.hideFeedback();
+        var eks = {
+            type : "Rating",
+            rating : $scope.userRating,
+            context : {
+                src : "",
+                id : "",
+                stageid: $rootScope.pageId
+            },
+            comments: jQuery('#commentText').val()
+        }
+        // TelemetryService.sendFeedback(eks);
+    }
+
+    $scope.hideFeedback = function(){
+        $scope.showFeedbackPopup = false;
+    }
+
     $scope.playNextContent = function() {
         var id = collectionChildrenIds.pop();
         if(Renderer.running)
@@ -173,7 +212,7 @@ angular.module('genie-canvas.template',[])
     $scope.restartContent = function() {
         window.history.back();
         var gameId = TelemetryService.getGameId();
-        var version = TelemetryService.getGameVer();;
+        var version = TelemetryService.getGameVer();
         var instance = this;
         setTimeout(function() {
             if (gameId && version) {
@@ -181,4 +220,94 @@ angular.module('genie-canvas.template',[])
             }
         }, 500);
     }
+
+     $scope.playRelatedContent = function(content) {
+        console.log("content : ", content);
+        if(content.isAvailable) {
+            ContentService.getContent(content.identifier)
+            .then(function(content) {
+                if (COLLECTION_MIMETYPE == content.mimeType) {
+                    $state.go('contentList', { "id": content.identifier});
+                } else {
+                    $state.go('showContent', {"contentId": content.identifier});
+                }
+            })
+        } else {
+            window.open("http://www.ekstep.in/c/" + content.identifier, "_system");
+            exitApp();
+        }
+    }
+
+    $scope.showAllRelatedContent = function(id) {
+        window.open("http://www.ekstep.in/l/" + id, "_system");
+        exitApp();
+    }
+
+
+    $scope.renderRelatedContent = function() {
+        if(GlobalContext.config.appInfo.mimeType != COLLECTION_MIMETYPE) {
+
+            // This for testing purpose. 
+            if(("undefined" != typeof cordova)) {
+                ContentService.getRelatedContent(id)
+                .then(function(item) {
+                    console.log("Related Content : ", item);
+                    if(!_.isEmpty(item)) {
+                        $scope.showRelatedContent = true;
+                        var list = _.isArray(item) ? item : [item];  
+                        $scope.$apply(function() {
+                            $scope.relatedContents = _.first(list, 2);
+                        });
+                        console.log("relatedContents : ", $scope.relatedContents);
+                    }
+                })
+            } 
+        } else {
+            var id = collectionChildrenIds.pop();
+            if(id) {
+                $scope.showNextContent = true;
+                var metadata = _.findWhere($rootScope.stories, { identifier: id });
+                $scope.$apply(function() {
+                    $scope.relatedContents = "undefined" != typeof metadata ? metadata : [];
+                });
+                if(_.isEmpty($scope.relatedContents)) {
+                    $scope.renderRelatedContent();
+                }
+            }
+        }
+    }
+
+    $scope.setTotalTimeSpent = function() {
+        var startTime =  (TelemetryService && TelemetryService.instance && TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ]) ? TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ].startTime : 0;
+        var totalTime = Math.round((new Date().getTime() - startTime) /1000);
+        var mm = Math.floor(totalTime / 60);
+        var ss = Math.floor(totalTime % 60);
+        $scope.totalTimeSpent = (mm > 9 ? mm : ("0" + mm))  + ":" + (ss > 9 ? ss : ("0" + ss));
+        console.log("totalTime : ", $scope.totalTimeSpent);
+
+    }
+
+    $scope.getTotalScore = function(id) {
+        if("undefined" != typeof cordova) {
+            ContentService.getLearnerAssessment(GlobalContext.user.uid, id)
+            .then(function(score){
+                console.log("score : ", score)
+                if(score && score.total_questions) {
+                    $scope.showScore = true;
+                    $scope.$apply(function() {
+                        $scope.totalScore = (score.total_correct + "/" + score.total_questions);
+                    });
+                } else {
+                    $scope.showScore = false
+                }
+            })
+        } else {
+            $scope.showScore = false
+        }
+    }
+
+    $scope.renderRelatedContent($stateParams.contentId);
+    $scope.setTotalTimeSpent();
+    $scope.getTotalScore();
+
 });

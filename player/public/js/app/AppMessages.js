@@ -22,5 +22,6 @@ AppMessages = {
 var AppErrors = {
 	contentListFetch: 'Error while fetching content list: ',
 	contentListFilterFetch: 'Error while fetching and filtering content list: ',
-	contetnPathFetch: 'Error while fetching content path: '
+	contetnPathFetch: 'Error while fetching content path: ',
+	sendFeedbackStatus: 'Unable to send feedback event'
 };

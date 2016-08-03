@@ -3,8 +3,8 @@ AppConfig = {
 	PROCESSING_TIMEOUT: 10, // in minutes
 	APP_STATUS: "AT",
 	App_RUNTIME: "AT",
-	sandbox: "//sandbox-community.ekstep.in/api/learning/taxonomy-service",
-	production: "//community.ekstep.in/api/learning/taxonomy-service",
+	sandbox: "//sandbox-community.ekstep.in/api/learning",
+	production: "//community.ekstep.in/api/learning",
 	recorder: "AUDIO_RECORDER",
 	flavor: "production"
 }

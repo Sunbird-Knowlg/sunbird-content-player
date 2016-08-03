@@ -26,6 +26,7 @@ FTBEvaluator = {
 						pass = false;
 					}
 				} else {
+					console.warn('Answer is undefined', answer);
 					pass = false;
 				}
 			}
