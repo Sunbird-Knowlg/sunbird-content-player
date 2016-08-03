@@ -100,6 +100,7 @@ angular.module('genie-canvas.template',[])
 })
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
     $scope.showRelatedContent = false;
+    $scope.showMore = false;
     $scope.relatedContents = [];
     $scope.relatedContentPath = [];
     $scope.commentModel = '';
@@ -253,13 +254,16 @@ angular.module('genie-canvas.template',[])
         ContentService.getRelatedContent(GlobalContext.user.uid, list)
         .then(function(item) {      
             if(!_.isEmpty(item)) {
-                $scope.showRelatedContent = true;
                 var list = [];
                 if(!_.isEmpty(item.collection)) {
+                    $scope.showRelatedContent = true;
                     $scope.relatedContentPath = item.collection;
                     list = [item.collection[item.collection.length - 1]]; 
+                    list[0].appIcon = list[0].path + '/' + list[0].appIcon;
                 }
-                else {
+                else if(!_.isEmpty(item.content)) {
+                    $scope.showRelatedContent = true;
+                    $scope.showMore = true;
                     list = _.first(_.isArray(item.content) ? item.content : [item.content],2); 
                 }
                 $scope.$apply(function() {
