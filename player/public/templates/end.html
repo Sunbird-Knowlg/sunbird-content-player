@@ -73,9 +73,9 @@
         </div>
         <div class="gc-ep-related-cont">
             <p class="gc-ep-cong gc-text-elipsis">{{ languageSupport.whatWeDoNext }}</p>
-            <div class="gc-ep-rel-title" ng-show="showRelatedContent">
+            <div class="gc-ep-rel-title">
                 <p>{{languageSupport.relatedContent}}</p>
-                <a class="gc-ep-show-all-rel" href="javscript:void(0)">{{languageSupport.showMore}}</a>
+                <a class="gc-ep-show-all-rel" href="javscript:void(0)" ng-show="showMore">{{languageSupport.showMore}}</a>
             </div>
             <div class="gc-related-cont">
                 <div ng-show="showRelatedContent" class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
