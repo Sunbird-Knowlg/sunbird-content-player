@@ -73,12 +73,17 @@
         </div>
         <div class="gc-ep-related-cont">
             <p class="gc-ep-cong gc-text-elipsis">{{ languageSupport.whatWeDoNext }}</p>
-            <div class="gc-ep-rel-title">
+            <div class="gc-ep-rel-title" ng-show="showRelatedContentHeader">
                 <p>{{languageSupport.relatedContent}}</p>
-                <a class="gc-ep-show-all-rel" href="javscript:void(0)" ng-show="showMore">{{languageSupport.showMore}}</a>
+                <a class="gc-ep-show-all-rel" href="javscript:void(0)" ng-show="contentShowMore" ng-click="showAllRelatedContent()">{{languageSupport.showMore}}</a>
             </div>
-            <div class="gc-related-cont">
-                <div ng-show="showRelatedContent" class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
+            <div id="endPageLoader" style="width: 100%;height: 52%;padding: 0px 4%;overflow: hidden;text-align: center;">
+                <div style="margin-top: 20%;">
+                    <ion-spinner icon="bubbles"></ion-spinner>
+                </div>                             
+            </div>
+            <div class="gc-related-cont" ng-show="showRelatedContent">
+                <div class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
                     <div class="gc-related-item">
                         <p class="gc-text-elipsis" style="padding-left: 10%;font-size: 1em">Title{{story.name}}</p>
                         <!--  <p style="font-size: 0.9em">{{story.language}}</p> -->

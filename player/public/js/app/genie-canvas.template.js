@@ -100,7 +100,8 @@ angular.module('genie-canvas.template',[])
 })
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
     $scope.showRelatedContent = false;
-    $scope.showMore = false;
+    $scope.contentShowMore = false;
+    $scope.showRelatedContentHeader = true;
     $scope.relatedContents = [];
     $scope.relatedContentPath = [];
     $scope.commentModel = '';
@@ -218,6 +219,11 @@ angular.module('genie-canvas.template',[])
     }
 
      $scope.playRelatedContent = function(content) {
+        $scope.showRelatedContent = false;
+        $scope.contentShowMore = false;
+        $scope.showRelatedContentHeader = false;
+        
+        jQuery('#endPageLoader').show();
         TelemetryService.end();
         if(GlobalContext.config.appInfo.mimeType == COLLECTION_MIMETYPE) {
             collectionPath = $scope.relatedContentPath;
@@ -237,7 +243,7 @@ angular.module('genie-canvas.template',[])
                     $state.go('showContent', {"contentId": content.identifier});
                 }
             } else {
-                window.open("http://www.ekstep.in/c/" + content.identifier, "_system");
+                window.open("ekstep://c/" + content.identifier, "_system");
                 exitApp();
             }
             
@@ -245,7 +251,7 @@ angular.module('genie-canvas.template',[])
     }
 
     $scope.showAllRelatedContent = function() {
-        window.open("http://www.ekstep.in/l/" + $stateParams.contentId, "_system");
+        window.open("ekstep://l/related/" + $stateParams.contentId, "_system");
         exitApp();
     }
 
@@ -263,11 +269,13 @@ angular.module('genie-canvas.template',[])
                 }
                 else if(!_.isEmpty(item.content)) {
                     $scope.showRelatedContent = true;
-                    $scope.showMore = true;
-                    list = _.first(_.isArray(item.content) ? item.content : [item.content],2); 
+                    $scope.contentShowMore = true;
+                    list = _.first(_.isArray(item.content) ? item.content : [item.content], 2); 
                 }
+
                 $scope.$apply(function() {
                     $scope.relatedContents = list;
+                    jQuery('#endPageLoader').hide();
                 });
             }
         })
@@ -288,6 +296,7 @@ angular.module('genie-canvas.template',[])
         } else {
             // For Collection
             list = collectionPath;
+            collectionPathMap[GlobalContext.previousContentId] = collectionPath;
             $scope.getRelatedContent(list);
         }
     }
