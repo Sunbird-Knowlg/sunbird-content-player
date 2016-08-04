@@ -1,57 +1,11 @@
 angular.module('genie-canvas.theme', [])
     .run(function($rootScope) {
-        $rootScope.isPreview = true;
-        $rootScope.imageBasePath = "img/icons/";
         $rootScope.enableEval = false;
-        $rootScope.languageSupport = {
-            "languageCode": "en",
-            "home": "Home",
-            "genie": "Genie",
-            "title": "TITLE",
-            "submit": "SUBMIT",
-            "goodJob": "Good Job!",
-            "tryAgain": "Aww,  Seems you goofed it!",
-            "whatWeDoNext": "What should we do next?",
-            "image": "Image",
-            "voice": "Voice",
-            "audio": "Audio",
-            "author": "Author",
-            "instructions": "NOTES FOR TEACHER",
-            "replay": "Replay",
-            "time": "TIME",
-            "result": "RESULT",
-            "feedback":"Feedback",
-            "collection":"Collection",
-            "relatedContent":"Related Content",
-            "showMore":"Show More",
-            "noCreditsAvailable":"There are no credits available",
-            "congratulations":"Congratulations! You just completed this lesson!",
-            "credit":"Credits",
-           
-
-        }
     })
-    .directive('preview', function($rootScope) {
-        return {
-            restrict: 'A',
-            scope: {
-                'preview': "="
-            },
-            link: function(scope, element, attr) {
-                $rootScope.isPreview = scope.preview;
-                console.log("scope isPreview: ", $rootScope.isPreview);
-                if (!scope.preview) {
-                    $rootScope.imageBasePath = "img/icons/";
-                } else {
-                    $rootScope.imageBasePath = "https://s3-ap-southeast-1.amazonaws.com/ekstep-public/content_app/images/icons"
-                }
-            }
-        }
-    })
-    .directive('menu', function($rootScope) {
+    .directive('menu', function($rootScope, $sce) {
         return {
             restrict: 'E',
-            templateUrl: 'templates/menu.html'
+            templateUrl: ("undefined" != typeof localPreview && "local" == localPreview) ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
         }
     })
     .directive('collection', function($rootScope, $state) {
@@ -87,8 +41,8 @@ angular.module('genie-canvas.theme', [])
                 scope.showHome = false;
                 if (scope.disableHome == true)
                     scope.showHome = true;
-                console.log( scope.showHome);
                 var pageId = $rootScope.pageId;
+
                 scope.goToHome = function() {
                     TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
                     if (Renderer.running)

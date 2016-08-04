@@ -116,6 +116,26 @@ module.exports = function(grunt) {
                     }
                 ]
             },
+            localPreviewFiles: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/',
+                        src: ['img/**', 'css/**', 'libs/**', 'templates/**', 'js/**'],
+                        dest: 'public/local-preview/'
+                    }
+                ]
+            },
+            localPreviewMinjs: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/js/',
+                        src: ['renderer.min.js','telemetry.min.js', 'script.min.js'],
+                        dest: 'public/local-preview/'
+                    }
+                ]
+            },
             unsigned: {
                 files: [
                     {
@@ -179,7 +199,8 @@ module.exports = function(grunt) {
             before: ["www", "platforms/android/assets/www", "platforms/android/build"],
             after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html", "www/webview.html", "www/preview.html"],
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
-            minjs: ['public/js/*.min.js']
+            minjs: ['public/js/*.min.js'],
+            localPreview: ["public/local-preview"]
         },
         rename: {
             main: {
@@ -620,6 +641,10 @@ module.exports = function(grunt) {
     grunt.registerTask('build-unsigned-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
     grunt.registerTask('build-signed-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
 
+
     grunt.registerTask('build-aar-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalk-library', 'cordovacli:build_android', 'clean:minjs']);
-	grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+
+    grunt.registerTask('local-preview-build', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js','copy:localPreviewFiles', 'copy:localPreviewMinjs', 'aws_s3:uploadLocalPreviewZip', 'clean:localPreview']);
+
 };
