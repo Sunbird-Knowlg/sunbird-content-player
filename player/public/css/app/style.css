@@ -840,7 +840,7 @@ ion-popover-view.fit ion-content {
 .gc-related-list{
     width: 50%;
     position: relative;
-    display: inline-table;
+    display: inline-block;
     padding: 0px 5px;
     height: 100%;
 }
@@ -888,10 +888,10 @@ ion-popover-view.fit ion-content {
     width: 70%;
     left: 15%;
     height: 70%;
-    border: 1px solid;
+    /* border: 1px solid;
     border-style: outset;
     border-radius: 10px;
-    border-width: thin;
+    border-width: thin; */
 }
 
 .img-center{
@@ -907,7 +907,16 @@ ion-popover-view.fit ion-content {
 .gc-rel-content-img img{
     width: 100%;
     height: auto;
-        display: block;
+    display: block;
+}
+
+.gc-rel-content-img > img
+{
+    height: 100%;
+    border: 1px solid;
+    border-style: none;
+    border-radius: 10px;
+    border-width: thin;
 }
 
 .gc-no-rel-items{
