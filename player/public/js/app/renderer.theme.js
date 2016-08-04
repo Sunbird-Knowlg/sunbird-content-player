@@ -13,7 +13,7 @@ angular.module('genie-canvas.theme', [])
             restrict: 'E',
             template: '<a ng-class="{\'icon-opacity\': isCollection != true}" ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection != true}" ng-src="{{imgSrc}}"/></a>',
              link: function(scope, state) {
-                scope.imgSrc = "img/icons/collection_icon.png";
+                scope.imgSrc = $rootScope.imageBasePath + 'collection_icon.png';
                 scope.isCollection = false;
                 if ($rootScope.collection && $rootScope.collection.children) {
                     scope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
@@ -37,7 +37,7 @@ angular.module('genie-canvas.theme', [])
             },
             template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imgSrc}}"/></a>',
             link: function(scope, state) {
-                scope.imgSrc = "img/icons/home_icon.png";
+                scope.imgSrc = $rootScope.imageBasePath + 'home_icon.png';
                 scope.showHome = false;
                 if (scope.disableHome == true)
                     scope.showHome = true;
