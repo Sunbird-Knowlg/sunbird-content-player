@@ -118,7 +118,7 @@ angular.module('genie-canvas.theme', [])
                         document.getElementById("unmute_id").style.visibility = "hidden"
                     } else {
                         AudioManager.mute();
-                        document.getElementById("unmute_id").src = "img/icons/unmute.png";
+                        document.getElementById("unmute_id").src = $rootScope.imageBasePath + "unmute.png";
                         document.getElementById("unmute_id").style.visibility = "visible"
                     }
 
