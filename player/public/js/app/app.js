@@ -90,8 +90,8 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             $rootScope.imageBasePath = serverPath + $rootScope.imageBasePath;
         $rootScope.languageSupport = {
             "languageCode": "en",
-            "home": "HOME",
-            "genie": "GENIE",
+            "home": "Home",
+            "genie": "Genie",
             "title": "TITLE",
             "submit": "SUBMIT",
             "goodJob": "Good Job!",
@@ -101,7 +101,17 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             "voice": "Voice",
             "audio": "Audio",
             "author": "Author",
-            "instructions": "TEACHER INSTRUCTION"
+            "instructions": "NOTES FOR TEACHER",
+            "replay": "Replay",
+            "time": "TIME",
+            "result": "RESULT",
+            "feedback":"Feedback",
+            "collection":"Collection",
+            "relatedContent":"Related Content",
+            "showMore":"Show More",
+            "noCreditsAvailable":"There are no credits available",
+            "congratulations":"Congratulations! You just completed this lesson!",
+            "credit":"Credits"
         }
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
