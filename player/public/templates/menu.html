@@ -1,6 +1,6 @@
 <div class="menu-overlay" ng-click="hideMenu()" ng-cloak></div>
 <!-- Menu container -->
-<div class="gc-menu" >
+<div class="gc-menu">
     <a class="gc-menu-btn" href="javascript:void(0)" ng-click="openMenu()" style="left:5%">
         <img class="menu-icon" ng-src="{{imageBasePath}}menu_icon.png" ng-hide="menuOpened" style="width: 100%" />
     </a>
@@ -12,34 +12,34 @@
                 <img ng-src="{{imageBasePath}}menu_close_icon.png" ng-show="menuOpened" style="width: 100%" />
             </a> -->
         </div>
-         <div class="gc-menu-home-cont">
-            <home class="gc-home" info="true" ></home>
+        <div class="gc-menu-home-cont">
+            <home class="gc-home" info="true"></home>
             <!-- <a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="img/icons/home_icon.png" style="width:26%;"/></a> -->
-            <p class="icon-font" style="padding-top:2%; font-size:2.6vh;">HOME</p>
+            <p class="icon-font" style="padding-top:2%; font-size:2.6vh;">{{languageSupport.home}}</p>
         </div>
         <div class="gc-menu-collection-cont">
             <collection class="gc-coll-"></collection>
-            <p class="icon-font" style="padding-top:2%; font-size:2.6vh;">COLLECTION</p>
+            <p class="icon-font" style="padding-top:2%; font-size:2.6vh;">{{languageSupport.collection}}</p>
         </div>
         <div class="gc-menu-mute-cont">
             <mute></mute>
             <!-- <p class="icon-font label-white-stoke" style="padding-top:2%; font-size:4vh; ">{{ stextstatus}}</p> -->
-           <!--  <img class="gc-mute-bg" ng-src="{{imageBasePath}}unmute.png" style="position:absolute; bottom:10%; width:60%; height:10%;  left:27%;" />
- -->        <img class="gc-mute-bg" ng-src="{{imageBasePath}}base.png" style="position:absolute;width:70%;left:13%;" />
+            <!--  <img class="gc-mute-bg" ng-src="{{imageBasePath}}unmute.png" style="position:absolute; bottom:10%; width:60%; height:10%;  left:27%;" />
+ -->    <img class="gc-mute-bg" ng-src="{{imageBasePath}}base.png" style="    position:absolute;width:70%;left:13%;" />
             <!-- <img class="gc-mute-bg" ng-src="{{imageBasePath}}autoplay_icon.png" style=" position: absolute; bottom: 12%; width: 12%; height: 6%; left: 56%;" /> -->
         </div>
         <div class="gc-menu-genie-cont">
             <genie></genie>
-            <p class="icon-font" style="padding-top:2%; font-size:2.6vh; ">GENIE</p>
+            <p class="icon-font" style="padding-top:2%; font-size:2.6vh; ">{{languageSupport.genie}}</p>
         </div>
         <div class="gc-menu-inst-cont">
             <stage-instructions></stage-instructions>
-            <p class="icon-font" style="padding-top:2%; font-size:2.6vh; ">NOTES FOR TEACHER</p>
+            <p class="icon-font" style="padding-top:2%; font-size:2.6vh; ">{{languageSupport.instructions}}</p>
         </div>
         <div class="inst-message-cont" ng-show="showInst">
-            <img class="inst-icon" ng-src="{{imageBasePath}}expand_teacher_instruction.png" ng-click="expeandInstruction()"/>
+            <img class="inst-icon" ng-src="{{imageBasePath}}expand_teacher_instruction.png" ng-click="expeandInstruction()" />
             <p>{{ stageInstMessage }}</p>
-            <img class="inst-done" ng-src="{{imageBasePath}}done_button.png" ng-click="closeInstructions()"/>
+            <img class="inst-done" ng-src="{{imageBasePath}}done_button.png" ng-click="closeInstructions()" />
         </div>
     </div>
 </div>

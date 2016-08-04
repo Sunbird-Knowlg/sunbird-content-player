@@ -258,6 +258,7 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-menu-cont {
+
     height: 100%;
 }
 
@@ -314,6 +315,8 @@ ion-popover-view.fit ion-content {
 
 .gc-menu-collection-cont {
     position: absolute;
+    text-transform: uppercase;
+
     text-align: center;
     width: 70%;
     left: -10%;
@@ -325,6 +328,7 @@ ion-popover-view.fit ion-content {
 }
 .gc-menu-home-cont {
     position: absolute;
+    text-transform: uppercase;
     text-align: center;
     width: 70%;
     left: 11%;
@@ -336,6 +340,7 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-menu-genie-cont {
+    text-transform: uppercase;
     position: absolute;
     text-align: center;
     width: 70%;
@@ -639,6 +644,10 @@ ion-popover-view.fit ion-content {
     font-family: baloobhai;
 }
 
+.gc-fc-popup-keyboard{
+    margin-top: -25%;
+}
+
 .gc-ep-home{
     position: absolute; 
     width:30%; 
@@ -721,7 +730,7 @@ ion-popover-view.fit ion-content {
     font-size: 0.9em;
 }
 .gc-ep-white-btn{
-    text-transform: capitalize;
+    text-transform: uppercase;
 }
 
 .gc-ep-content-holder{
@@ -733,6 +742,7 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-ep-footer-icons{
+
     display: inline-block;
     width: 25%;
     height: 100%;
@@ -822,7 +832,7 @@ ion-popover-view.fit ion-content {
 
 .gc-related-cont{
     width: 100%;
-    height: 52%;
+    height: 50%;
     padding: 0px 4%;
     overflow: hidden;
 }
@@ -852,7 +862,7 @@ ion-popover-view.fit ion-content {
     text-align: center;
     width: 100%;
     height: 14%;
-    bottom: 8%;
+    bottom: 10%;
 }
 
 .gc-ep-footer-mid{
@@ -865,6 +875,7 @@ ion-popover-view.fit ion-content {
 
 .gc-ep-footer p{
     margin-top: -5px;
+    font-size: 0.8em;
 }
 
 .gc-related-item p {
@@ -876,14 +887,36 @@ ion-popover-view.fit ion-content {
     text-align: center;
     width: 70%;
     left: 15%;
-    height: 65%;
-    border: 1px solid #000;
-    border-radius: 5px;
+    height: 70%;
+    /* border: 1px solid;
+    border-style: outset;
+    border-radius: 10px;
+    border-width: thin; */
+}
+
+.img-center{
+    max-width: 100%;
+    max-height: 100%;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    vertical-align: middle;
 }
 
 .gc-rel-content-img img{
     width: 100%;
+    height: auto;
+    display: block;
+}
+
+.gc-rel-content-img > img
+{
     height: 100%;
+    border: 1px solid;
+    border-style: none;
+    border-radius: 10px;
+    border-width: thin;
 }
 
 .gc-no-rel-items{
@@ -892,7 +925,7 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-repeat-content{
-    background: rgba(0, 0, 0, 0.3);
+    /* background: rgba(0, 0, 0, 0.3); */
     position: absolute;
     top: 0;
     width: 100%;
