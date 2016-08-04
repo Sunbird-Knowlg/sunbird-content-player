@@ -108,7 +108,7 @@
                 </div>
                 <div class="gc-ep-footer-icons gc-ep-collection">
                     <collection></collection>
-                    <p style="display: inline-block;">{{languageSupport.collection}}</p>
+                    <p>{{languageSupport.collection}}</p>
                 </div>
             </div>
         </div>           
@@ -116,7 +116,7 @@
     
     <popup id="creditsPopup" popup-body="creditsBody"></popup>
 
-    <div class="popup" ng-if="showFeedbackPopup">
+    <div id="gcFbPopup" class="popup" ng-if="showFeedbackPopup">
         <div class="popup-overlay" ng-click="hideFeedback()"></div>
         <div class="gc-popup-new gc-fc-popup">
             <div class="gc-popup-title-new">{{languageSupport.feedback}}</div>

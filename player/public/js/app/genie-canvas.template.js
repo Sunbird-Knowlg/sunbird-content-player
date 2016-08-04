@@ -329,6 +329,9 @@ angular.module('genie-canvas.template',[])
 
 
     $scope.init = function(){
+        window.addEventListener('native.keyboardshow', epKeyboardShowHandler, true);
+        window.addEventListener('native.keyboardhide', epKeyboardHideHandler, true);
+
         if("undefined" != typeof cordova) {
             $scope.renderRelatedContent($stateParams.contentId);
         }
@@ -336,5 +339,14 @@ angular.module('genie-canvas.template',[])
         $scope.getTotalScore($stateParams.contentId);
         $scope.showFeedback(0);
     }
+
+    function epKeyboardShowHandler(){
+        jQuery('#gcFbPopup').addClass('gc-fc-popup-keyboard');
+    }
+
+    function epKeyboardHideHandler(){
+        jQuery('#gcFbPopup').removeClass('gc-fc-popup-keyboard');
+    }
+
     $scope.init();
 });

@@ -644,6 +644,10 @@ ion-popover-view.fit ion-content {
     font-family: baloobhai;
 }
 
+.gc-fc-popup-keyboard{
+    margin-top: -25%;
+}
+
 .gc-ep-home{
     position: absolute; 
     width:30%; 
