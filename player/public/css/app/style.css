@@ -168,6 +168,7 @@ ion-popover-view.fit ion-content {
 }
 
 .cover-page-title {
+    text-transform: uppercase;
     white-space: nowrap; 
     overflow: hidden;
     padding: 0 2%;
@@ -251,6 +252,7 @@ ion-popover-view.fit ion-content {
 
 .gc-menu {
     position: absolute;
+    text-transform: uppercase;
     width: 30%;
     height: 100%;
     top: 0;
