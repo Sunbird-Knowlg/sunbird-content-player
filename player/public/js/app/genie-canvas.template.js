@@ -276,10 +276,14 @@ angular.module('genie-canvas.template',[])
                     list = _.first(_.isArray(item.content) ? item.content : [item.content], 2); 
                 }
 
-                $scope.$apply(function() {
-                    $scope.relatedContents = list;
-                    jQuery('#endPageLoader').hide();
-                });
+                if(!_.isEmpty(list)) {
+                    $scope.$apply(function() {
+                        $scope.relatedContents = list;
+                        jQuery('#endPageLoader').hide();    
+                    });
+                } else {
+                    $scope.showRelatedContentHeader = false;
+                }
             }
         })
     }
@@ -337,6 +341,9 @@ angular.module('genie-canvas.template',[])
 
         if("undefined" != typeof cordova) {
             $scope.renderRelatedContent($stateParams.contentId);
+        } else {
+            jQuery('#endPageLoader').hide();
+            $scope.showRelatedContentHeader = false;
         }
         $scope.setTotalTimeSpent();
         $scope.getTotalScore($stateParams.contentId);
