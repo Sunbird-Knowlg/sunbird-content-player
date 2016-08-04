@@ -63,8 +63,8 @@
 
             <div class="gc-ep-rating-cont">
                 <p class="gc-ep-feedback gc-text-elipsis">{{languageSupport.feedback}}</p>
-                <div class="gc-ep-rating">
-                    <div star-rating rating="userRating" read-only="false" max-rating="5" click="showFeedback(param)" style="height: 100%;"></div>
+                <div class="gc-ep-rating" ng-if="!showFeedbackPopup">
+                    <star-rating rating="userRating" read-only="false" max-rating="5" click="showFeedback(param)" style="height: 100%;"></star-rating>
                 </div>
                 <div class="gc-ep-comments" style="display:none">
                     <img src="img/icons/feedback_icon.png"/>
@@ -122,7 +122,7 @@
             <div class="gc-popup-title-new">{{languageSupport.feedback}}</div>
             <div class="gc-popup-body-new">
                 <div class="gc-feedback-popup">
-                    <div star-rating rating="userRating" read-only="false" max-rating="5" click="updateRating(param)"> </div>
+                    <div star-rating rating="popUserRating" read-only="false" max-rating="5" click="updatePopUserRating(param)"></div>
                     <div class="gc-fd-comments">
                         <textarea class="gc-fd-text" max-length="130" id="commentText"></textarea> 
                    </div>
