@@ -247,7 +247,6 @@ angular.module('genie-canvas.template',[])
                 }
             } else {
                 window.open("ekstep://c/" + content.identifier, "_system");
-                exitApp();
             }
             
         }
