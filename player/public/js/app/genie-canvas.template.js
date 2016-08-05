@@ -166,11 +166,11 @@ angular.module('genie-canvas.template',[])
         $scope.userRating = $scope.popUserRating;
         $scope.hideFeedback();
         var eks = {
-            type : "Rating",
+            type : "RATING",
             rating : $scope.userRating,
             context : {
-                src : "",
-                id : "",
+                type : "Content",
+                id : $rootScope.content.identifier,
                 stageid: $rootScope.pageId
             },
             comments: jQuery('#commentText').val()
