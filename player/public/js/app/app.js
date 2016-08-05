@@ -84,6 +84,35 @@ function launchInitialPage(appInfo, $state) {
 
 angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'genie-canvas.services', 'genie-canvas.template'])
     .run(function($rootScope, $ionicPlatform, $ionicModal, $location,  $cordovaFile, $cordovaToast, ContentService, $state, $stateParams) {
+        $rootScope.imageBasePath = "img/icons/";
+        // serverPath and localPreview is a global variable defined in index.html file inside a story
+        if("undefined" != typeof localPreview && "local" == localPreview)
+            $rootScope.imageBasePath = serverPath + $rootScope.imageBasePath;
+        $rootScope.languageSupport = {
+            "languageCode": "en",
+            "home": "Home",
+            "genie": "Genie",
+            "title": "TITLE",
+            "submit": "SUBMIT",
+            "goodJob": "Good Job!",
+            "tryAgain": "Aww,  Seems you goofed it!",
+            "whatWeDoNext": "What should we do next?",
+            "image": "Image",
+            "voice": "Voice",
+            "audio": "Audio",
+            "author": "Author",
+            "instructions": "NOTES FOR TEACHER",
+            "replay": "Replay",
+            "time": "TIME",
+            "result": "RESULT",
+            "feedback":"Feedback",
+            "collection":"Collection",
+            "relatedContent":"Related Content",
+            "showMore":"Show More",
+            "noCreditsAvailable":"There are no credits available",
+            "congratulations":"Congratulations! You just completed this lesson!",
+            "credit":"Credits"
+        }
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -120,6 +149,9 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             });
 
             GlobalContext.init(packageName, version).then(function(appInfo) {
+                // localPreview is a global variable defined in index.html file inside a story, 
+                if("undefined" != typeof localPreview &&  "local" == localPreview)
+                    return;
                 var id = getUrlParameter("id");  
                 if(webview) {
                     if ("undefined" != typeof $location && id) {
@@ -276,14 +308,12 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     return ContentService.getContentList(filter, childrenIds);
                 })
                 .then(function(result) {
-
                     $rootScope.$apply(function() {
                         $rootScope.stories = result;
                     });
                     if ($rootScope.stories && $rootScope.stories.length <= 0) {
                         $rootScope.renderMessage(AppMessages.NO_CONTENT_LIST_FOUND);
                     }
-                    //$rootScope.showLoader = false;
                 })
                 .catch(function(err) {
                     $rootScope.$apply(function() {

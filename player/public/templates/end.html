@@ -20,22 +20,9 @@
     <image ng-src="{{icons.end.background}}" style="width:100%;height:100%;position: absolute;
     z-index: -1;" />
 
-    <!-- <home style="position: absolute; width:30%; top:3%; left:6%"> -->
     <home class="gc-ep-home"></home>
-    <!-- <a ng-click="goToHome();" href="javascript:void(0);" style="position: absolute; width:30%; top:5%; left:13%"><img ng-src="img/icons/home_icon.png" style="width:26%;"/></a> -->
-    
-    <!-- <div class="gc-endpage-title" >
-        <div class="gc-endpage-title-cont">
-            <p class="icon-font cover-page-title"  ng-if="content.name">{{content.name}}</p>
-            <p class="icon-font cover-page-title cover-page-title1"  ng-if="content.name">{{content.name}}</p>
-        </div>
-        <p class="icon-font label-white-stoke"  ng-if="content.name">{{content.name}}</p>
-        <p class="gc-content-owner">{{ languageSupport.author }}: {{content.owner}}</p>
-    </div> -->
-    
     <div class="gc-endpage-title-cont">
         <p class="icon-font gc-ep-title gc-text-elipsis"  ng-if="content.name">{{content.name}}</p>
-        <!-- <p class="icon-font end-page-title cover-page-title1"  ng-if="content.name">{{content.name}}</p> -->
     </div>
     <div class="gc-ep-content-holder">
        
@@ -58,6 +45,7 @@
                     <p class="gc-white-text gc-ep-white-title">{{totalScore}}</p>
                     <p class="gc-ep-white-subtitle" style="visibility: hidden;">-</p>
                     <p class="gc-white-bg gc-ep-white-btn">{{languageSupport.result}}</p>  
+
                 </div>
             </div>
 
@@ -77,7 +65,7 @@
                 <p>{{languageSupport.relatedContent}}</p>
                 <a class="gc-ep-show-all-rel" href="javscript:void(0)" ng-show="contentShowMore" ng-click="showAllRelatedContent()">{{languageSupport.showMore}}</a>
             </div>
-            <div id="endPageLoader" style="width: 100%;height: 52%;padding: 0px 4%;overflow: hidden;text-align: center;">
+            <div id="endPageLoader" class="gc-ep-loader">
                 <div style="margin-top: 20%;">
                     <ion-spinner icon="bubbles"></ion-spinner>
                 </div>                             
@@ -124,7 +112,7 @@
                 <div class="gc-feedback-popup">
                     <div star-rating rating="popUserRating" read-only="false" max-rating="5" click="updatePopUserRating(param)"></div>
                     <div class="gc-fd-comments">
-                        <textarea class="gc-fd-text" max-length="130" id="commentText"></textarea> 
+                        <textarea class="gc-fd-text" maxlength="130" id="commentText"></textarea> 
                    </div>
                    <div class="gc-fd-footer">
                        <input class="btn-black" type="button" value="Submit"  ng-click="submitFeedback()">

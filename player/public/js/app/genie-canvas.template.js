@@ -110,7 +110,7 @@ angular.module('genie-canvas.template',[])
     $scope.popUserRating = 0;
 
     $rootScope.pageId = "endpage";
-    $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.sound}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
+    $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
    
     $scope.arrayToString = function(array) {
         return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", "): "";   
@@ -166,11 +166,11 @@ angular.module('genie-canvas.template',[])
         $scope.userRating = $scope.popUserRating;
         $scope.hideFeedback();
         var eks = {
-            type : "Rating",
+            type : "RATING",
             rating : $scope.userRating,
             context : {
-                src : "",
-                id : "",
+                type : "Content",
+                id : $rootScope.content.identifier,
                 stageid: $rootScope.pageId
             },
             comments: jQuery('#commentText').val()
@@ -210,7 +210,10 @@ angular.module('genie-canvas.template',[])
 
     $scope.restartContent = function() {
         jQuery('#loading').show();
-        window.history.back();
+       /* window.history.back();*/
+     $state.go('playContent', {
+            'itemId': content.identifier
+        });
         var gameId = TelemetryService.getGameId();
         var version = TelemetryService.getGameVer();
         var instance = this;
@@ -247,10 +250,10 @@ angular.module('genie-canvas.template',[])
                 }
             } else {
                 window.open("ekstep://c/" + content.identifier, "_system");
-                exitApp();
             }
             
         }
+        
     }
 
     $scope.showAllRelatedContent = function() {
@@ -276,10 +279,15 @@ angular.module('genie-canvas.template',[])
                     list = _.first(_.isArray(item.content) ? item.content : [item.content], 2); 
                 }
 
-                $scope.$apply(function() {
-                    $scope.relatedContents = list;
-                    jQuery('#endPageLoader').hide();
-                });
+                if(!_.isEmpty(list)) {
+                    $scope.$apply(function() {
+                        $scope.relatedContents = list;
+                        jQuery('#endPageLoader').hide();    
+                    });
+                } else {
+                    $scope.showRelatedContentHeader = false;
+                    jQuery('#endPageLoader').hide();    
+                }
             }
         })
     }
@@ -337,6 +345,9 @@ angular.module('genie-canvas.template',[])
 
         if("undefined" != typeof cordova) {
             $scope.renderRelatedContent($stateParams.contentId);
+        } else {
+            jQuery('#endPageLoader').hide();
+            $scope.showRelatedContentHeader = false;
         }
         $scope.setTotalTimeSpent();
         $scope.getTotalScore($stateParams.contentId);
