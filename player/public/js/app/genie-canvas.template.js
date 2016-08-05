@@ -286,6 +286,7 @@ angular.module('genie-canvas.template',[])
                     });
                 } else {
                     $scope.showRelatedContentHeader = false;
+                    jQuery('#endPageLoader').hide();    
                 }
             }
         })
