@@ -20,15 +20,33 @@
     <image ng-src="{{icons.end.background}}" style="width:100%;height:100%;position: absolute;
     z-index: -1;" />
 
+    <!-- <home style="position: absolute; width:30%; top:3%; left:6%"> -->
     <home class="gc-ep-home"></home>
-    <div class="gc-endpage-title-cont">
-        <p class="icon-font gc-ep-title gc-text-elipsis"  ng-if="content.name">{{content.name}}</p>
-    </div>
+    <!-- <a ng-click="goToHome();" href="javascript:void(0);" style="position: absolute; width:30%; top:5%; left:13%"><img ng-src="img/icons/home_icon.png" style="width:26%;"/></a> -->
+    
+    <!-- <div class="gc-endpage-title" >
+        <div class="gc-endpage-title-cont">
+            <p class="icon-font cover-page-title"  ng-if="content.name">{{content.name}}</p>
+            <p class="icon-font cover-page-title cover-page-title1"  ng-if="content.name">{{content.name}}</p>
+        </div>
+        <p class="icon-font label-white-stoke"  ng-if="content.name">{{content.name}}</p>
+        <p class="gc-content-owner">{{ languageSupport.author }}: {{content.owner}}</p>
+    </div> -->
+    
+    
+        <!-- <p class="icon-font gc-ep-title gc-text-elipsis"  ng-if="content.name">{{content.name}}</p>
+       -->  <!-- <p class="icon-font end-page-title cover-page-title1"  ng-if="content.name">{{content.name}}</p> -->
+   
     <div class="gc-ep-content-holder">
        
         <div class="gc-ep-assessment-cont">
             <div>
                 <p class="gc-ep-cong gc-text-elipsis">{{languageSupport.congratulations}}</p>
+                <div class="gc-endpage-title-cont">
+        <p class="icon-font gc-ep-title gc-text-elipsis"  ng-if="content.name">{{content.name}}</p>
+    </div>
+        <!-- <p class="icon-font end-page-title cover-page-title1"  ng-if="content.name">{{content.name}}</p> -->
+    
                 <p class="gc-content-owner gc-text-elipsis">{{ languageSupport.author }}: {{content.owner}}</p>
                 <center>
                     <input class="gc-btn-credits btn-black" type="button" ng-click="showCredits()" value="Credits" />                    
@@ -36,16 +54,19 @@
             </div>
 
             <div class="gc-ep-time-score">
-                <div ng-class="showScore ? 'gc-ep-time' : 'gc-ep-time-mid'" id="timeSpentArea">
+                <div ng-class="showScore ? 'gc-ep-time ' : 'gc-ep-time-mid '" id="timeSpentArea">
+                     <image ng-class="showScore ? 'img-float-left':'img-float-mid' "  ng-src="{{imageBasePath}}time_icon.png" style="position:relative;" />
                     <p class="gc-white-text gc-ep-white-title">{{totalTimeSpent}}</p>
-                    <p class="gc-white-text gc-ep-white-subtitle">mm:ss</p>
-                    <p class="gc-white-bg gc-ep-white-btn">{{languageSupport.time}}</p>
+<!--                     <p class="gc-white-text gc-ep-white-subtitle">mm:ss</p>
+                    <p class="gc-white-bg gc-ep-white-btn">{{languageSupport.time}}</p> -->
                 </div>
-                <div class="gc-ep-score" ng-show="showScore">
-                    <p class="gc-white-text gc-ep-white-title">{{totalScore}}</p>
-                    <p class="gc-ep-white-subtitle" style="visibility: hidden;">-</p>
-                    <p class="gc-white-bg gc-ep-white-btn">{{languageSupport.result}}</p>  
 
+                <div class="gc-ep-score" ng-show="showScore" >
+                     <image ng-src="{{imageBasePath}}result_icon.png" style="position:relative;width:20%" />
+
+                    <p class="gc-white-text gc-ep-white-title">{{totalScore}}</p>
+                   <!--  <p class="gc-ep-white-subtitle" style="visibility: hidden;">-</p>
+                    <p class="gc-white-bg gc-ep-white-btn">{{languageSupport.result}}</p>   -->
                 </div>
             </div>
 
