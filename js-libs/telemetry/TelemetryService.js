@@ -45,6 +45,8 @@ TelemetryService = {
                 };
                 resolve(true);
             });
+        }else{
+            console.log("TelemetryService instance is not create")
         }
     },
     webInit: function(gameData, user) {
@@ -89,6 +91,7 @@ TelemetryService = {
         TelemetryService.instance.exitApp();
     },
     flushEvent: function(event, apiName) {
+        console.log("TelemetryService flushEvent", event);
         TelemetryService._data.push(event);
         if (event)
             event.flush(apiName);
@@ -96,6 +99,7 @@ TelemetryService = {
     },
     start: function(id, ver) {
         if (!TelemetryService.isActive) {
+            console.log("TelemetryService is not active.");
             return new InActiveEvent();
         } else {
             ver = (ver) ? ver + "" : "1"; // setting default ver to 1

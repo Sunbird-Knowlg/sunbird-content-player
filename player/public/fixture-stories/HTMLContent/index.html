@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>HTML Content</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Security-Policy" content="default-src * data: filesystem:; style-src 'self' 'unsafe-inline';  script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src *;" >
+</head>
+<body>
+	<h1>HTML Content</h1>
+		<!-- <script src="assets/js/jquery.min.js"></script> -->
+		<script src="assets/js/underscore.js"></script>
+		<script src="assets/js/cordova.js"></script>
+  	<script src="assets/js/genieservices.js"></script>
+    <script src="assets/js/telemetry.min.js"></script>
+    <!--<script src="assets/js/cordova_plugins.js"></script> -->
+
+  	<script type="text/javascript">
+      function onDeviceReady(event){
+        console.log("onDeviceReady()", event);
+        TelemetryService.start("game1", "2.0");
+        TelemetryService.interact("TOUCH", "game1", "TOUCH", { stageId: "HTML Page", subtype: "ContentID"});
+      }
+      //document.addEventListener("deviceready", onDeviceReady, false);
+
+      function getContentMetadata(){
+        genieservice.getCurrentUser()
+        .then(function(result) {
+          if (result && result.status == 'success') {
+              if (result.data.uid) {
+                  var user = result.data;
+                  //GlobalContext._params.user = GlobalContext.user;
+                  console.log("Login user", user);
+                  //resolve(true);
+              } else {
+                console.log("Login user uid not found", result);
+                  //reject('INVALID_USER');
+              }
+          } else {
+            console.log("Login user no data", result);
+              //reject('INVALID_USER');
+          }
+        })
+        .catch(function(err) {
+          console.log("Login user error", err);
+          //reject(err);
+        });
+      }
+
+      function init() {
+  		 	TelemetryService.init({id:"game1", ver:"2.0"}, {id:"34", name:"Vid"}).then(function() {
+
+          TelemetryService.start("game1", "2.0");
+          TelemetryService.interact("TOUCH", "game1", "TOUCH", { stageId: "HTML Page", subtype: "ContentID"});
+          getContentMetadata();
+  		 	})
+  		 	.catch(function(error){
+  		 		console.log(error);
+  		 	});
+  		 }
+			window.onload = init;
+  	</script>
+</body>
+</html>

@@ -14,7 +14,7 @@ var stack = new Array(),
         showEndPage : true,
         showHTMLPages : true
     },
-    webview = getUrlParameter("webview"),
+    isbrowserpreview = getUrlParameter("webview"),
     appState = undefined;
 
 
@@ -119,7 +119,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
 
             GlobalContext.init(packageName, version).then(function(appInfo) {
                 var id = getUrlParameter("id");  
-                if(webview) {
+                if(isbrowserpreview) {
                     if ("undefined" != typeof $location && id) {
                         ContentService.getContentMetadata(id)
                         .then(function(data) {
@@ -345,11 +345,14 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     /*$scope.currentProjectUrl = path;
                     jQuery("#htmlFrame").show();*/
                     if (window.cordova){
-                        console.log("Opening through cordova InAppBrowser.");
-                        cordova.InAppBrowser.open(path, '_self', 'location=no');
+                        console.log("Opening through cordova custom webview.");
+                        webview.Show(path);
+                        //cordova.InAppBrowser.open(path, '_self', 'location=no');
                         //window.open(path, '_self');   
                     }else{
-                        window.location.replace(path);                    
+                        console.log("Opening through window.open");
+                        window.open(path, '_self'); 
+                        //window.location.replace(path);                    
                     }
 
                 });
@@ -358,7 +361,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1); 
                     collectionChildren = false;
                 }
-                if (webview) {
+                if (isbrowserpreview) {
                     var contentBody = undefined;
                     if(COLLECTION_MIMETYPE == content.metadata.mimeType) {
                         ContentService.getContentBody($stateParams.itemId)

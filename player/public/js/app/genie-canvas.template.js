@@ -55,7 +55,7 @@ angular.module('genie-canvas.template',[])
     $scope.init = function(){
         $scope.showPage = true;
         if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
-            if( (webview == "true")){
+            if( (isbrowserpreview == "true")){
                 if(content.metadata && (content.metadata.mimeType != COLLECTION_MIMETYPE)){
                     jQuery('#loading').hide();
                     //For JSON and Direct contentID
