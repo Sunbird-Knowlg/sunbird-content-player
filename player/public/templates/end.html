@@ -133,7 +133,7 @@
                 <div class="gc-feedback-popup">
                     <div star-rating rating="popUserRating" read-only="false" max-rating="5" click="updatePopUserRating(param)"></div>
                     <div class="gc-fd-comments">
-                        <textarea class="gc-fd-text" maxlength="130" id="commentText"></textarea> 
+                        <textarea class="gc-fd-text" maxlength="130" onkeypress="if(this.value.length >= 130) return false;" id="commentText"></textarea> 
                    </div>
                    <div class="gc-fd-footer">
                        <input class="btn-black" type="button" value="Submit"  ng-click="submitFeedback()">

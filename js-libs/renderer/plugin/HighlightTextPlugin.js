@@ -40,7 +40,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
             }
         }
         div.style["font-size"] = fontsize;
-        div.style["line-height"] = data.lineHeight ? data.lineHeight : 0;
+        div.style["line-height"] = data.lineHeight ? data.lineHeight : "1.2em";
         
         console.log("data", data, " Div", div);
         var parentDiv = document.getElementById(Renderer.divIds.gameArea);
