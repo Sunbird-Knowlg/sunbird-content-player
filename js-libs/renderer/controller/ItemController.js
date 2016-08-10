@@ -59,6 +59,7 @@ var ItemController = Controller.extend({
         var result;
         var pass = false;
         if (item.max_score == 0) {
+            console.warn("Max score(max_score) is not defined for this item.", item);
             result = {};
         } else {
             if (item.type.toLowerCase() == 'ftb') {

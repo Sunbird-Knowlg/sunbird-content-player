@@ -1,45 +1,31 @@
 angular.module('genie-canvas.theme', [])
     .run(function($rootScope) {
-        $rootScope.isPreview = true;
-        $rootScope.imageBasePath = "img/icons/";
         $rootScope.enableEval = false;
-        $rootScope.languageSupport = {
-            "languageCode": "en",
-            "home": "HOME",
-            "genie": "GENIE",
-            "title": "TITLE",
-            "submit": "SUBMIT",
-            "goodJob": "Good Job!",
-            "tryAgain": "Aww,  Seems you goofed it!",
-            "whatWeDoNext": "What should we do next?",
-            "image": "Image",
-            "voice": "Voice",
-            "audio": "Audio",
-            "author": "Author",
-            "instructions": "TEACHER INSTRUCTION"
-        }
     })
-    .directive('preview', function($rootScope) {
-        return {
-            restrict: 'A',
-            scope: {
-                'preview': "="
-            },
-            link: function(scope, element, attr) {
-                $rootScope.isPreview = scope.preview;
-                console.log("scope isPreview: ", $rootScope.isPreview);
-                if (!scope.preview) {
-                    $rootScope.imageBasePath = "img/icons/";
-                } else {
-                    $rootScope.imageBasePath = "https://s3-ap-southeast-1.amazonaws.com/ekstep-public/content_app/images/icons"
-                }
-            }
-        }
-    })
-    .directive('menu', function($rootScope) {
+    .directive('menu', function($rootScope, $sce) {
         return {
             restrict: 'E',
-            templateUrl: 'templates/menu.html'
+            templateUrl: ("undefined" != typeof localPreview && "local" == localPreview) ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
+        }
+    })
+    .directive('collection', function($rootScope, $state) {
+        return {
+            restrict: 'E',
+            template: '<a ng-class="{\'icon-opacity\': isCollection != true}" ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection != true}" ng-src="{{imgSrc}}"/></a>',
+             link: function(scope, state) {
+                scope.imgSrc = $rootScope.imageBasePath + 'collection_icon.png';
+                scope.isCollection = false;
+                if ($rootScope.collection && $rootScope.collection.children) {
+                    scope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
+                }
+
+
+               var pageId = $rootScope.pageId;
+                scope.goToCollection = function() {
+                   goToCollection($state, GlobalContext.previousContentId, pageId);
+                }
+
+            }
         }
     })
     .directive('home', function($rootScope, $state) {
@@ -49,36 +35,32 @@ angular.module('genie-canvas.theme', [])
                 disableHome: '=info'
 
             },
-            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imgSrc}}" style="width:32%;" /></a>',
+            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imgSrc}}"/></a>',
             link: function(scope, state) {
-                var isCollection = false;
-                if ($rootScope.collection && $rootScope.collection.children) {
-                    isCollection = $rootScope.collection.children.length > 0 ? true : false;
-                }
+                scope.imgSrc = $rootScope.imageBasePath + 'home_icon.png';
+                scope.showHome = false;
+                if (scope.disableHome == true)
+                    scope.showHome = true;
+                var pageId = $rootScope.pageId;
 
-            console.info("scope.disableHome", scope.disableHome);
-            if (isCollection == true) {
-                scope.imgSrc = "img/icons/home_icon.png";
-            } else {
-                if (scope.disableHome == true) {
-
-                    scope.imgSrc = "img/icons/home_icon_disabled.png";
-                } else {
-                    scope.imgSrc = "img/icons/home_icon.png";
-                }
-            }
-               var pageId = $rootScope.pageId;
                 scope.goToHome = function() {
-                   isCollection ? goToHome($state, isCollection, GlobalContext.previousContentId, pageId): window.location.hash = "/show/content/" + GlobalContext.currentContentId;
+                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
+                    if (Renderer.running)
+                        Renderer.cleanUp();
+                    else
+                        TelemetryService.end();
+                    $state.go('showContent', {"contentId": GlobalContext.currentContentId});
+                     //window.location.hash = "/show/content/" + GlobalContext.currentContentId;
+                        
                 }
 
             }
         }
     })
-    .directive('genie', function($rootScope) {
+   .directive('genie', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:32%;" /></a>',
+            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png"/></a>',
             link: function(scope) {
                 var pageId = $rootScope.pageId;
                 scope.goToGenie = function() {
@@ -90,7 +72,7 @@ angular.module('genie-canvas.theme', [])
     .directive('stageInstructions', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}teacher_instructions.png" style="z-index:2; max-width:32%;"/></a>',
+            template: '<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}teacher_instructions.png" style="z-index:2;"/></a>',
             controller: function($scope, $rootScope) {
                 $scope.stageInstMessage = "";
                 $scope.showInst = false;
@@ -125,7 +107,7 @@ angular.module('genie-canvas.theme', [])
     .directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position:absolute;bottom:12%; width:10%;  margin-left:41%; z-index:1; " /><img id="unmute_id"  style="position:absolute;  bottom:12%; width:11.7%; margin-left:40%; z-index: 2; visibility:"hidden" "/> </a>',
+            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position: absolute;margin: 3%;width: 10%;z-index: 1;margin-left: 40%;" /><img id="unmute_id"  style="position: absolute;margin: 3% 3% 3% 40%;display: list-item;width: 12%;z-index: 1;visibility: visible;"/> </a>',
             link: function(scope, url) {
                 scope.mutestatus = "mute.png";
 
@@ -136,7 +118,7 @@ angular.module('genie-canvas.theme', [])
                         document.getElementById("unmute_id").style.visibility = "hidden"
                     } else {
                         AudioManager.mute();
-                        document.getElementById("unmute_id").src = "img/icons/unmute.png";
+                        document.getElementById("unmute_id").src = $rootScope.imageBasePath + "unmute.png";
                         document.getElementById("unmute_id").style.visibility = "visible"
                     }
 
@@ -148,13 +130,13 @@ angular.module('genie-canvas.theme', [])
     .directive('restart', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}retry_icon.png" style="width:100%;" /></a>'
+            template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}retry_icon.png"/></a>'
         }
     })
     .directive('reloadStage', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" onclick="reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
+            template: '<a href="javascript:void(0)" onclick="reloadStage()"><img id="reload_id" src="{{imageBasePath}}retry_icon.png" style="width:100%;"/></a>'
         }
 
     })
@@ -266,6 +248,55 @@ angular.module('genie-canvas.theme', [])
             }
         }
     })
+    .directive('starRating', function($rootScope) {
+        return {
+        //reference: http://jsfiddle.net/manishpatil/2fahpk7s/
+        scope: {
+            rating: '=',
+            maxRating: '@',
+            readOnly: '@',
+            click: "&",
+            mouseHover: "&",
+            mouseLeave: "&"
+        },
+        restrict: 'EA',
+        template:
+            "<div style='display: inline-block; padding: 2%; cursor:pointer; width:20%; height:100%;' ng-repeat='idx in maxRatings track by $index'> \
+                    <img ng-src='{{((hoverValue + _rating) <= $index) && rating_empty || rating_selected }}' \
+                    ng-Click='isolatedClick($index + 1)' style='height:100%;' \></img> \
+            </div>",
+        compile: function (element, attrs) {
+            if (!attrs.maxRating || (Number(attrs.maxRating) <= 0)) {
+                attrs.maxRating = '5';
+            };
+        },
+        controller: function ($scope, $element, $attrs, $rootScope) {
+            $scope.maxRatings = [];
+            $scope.rating_empty =  $rootScope.imageBasePath + "star_inactive.png";
+            $scope.rating_selected =  $rootScope.imageBasePath + "star_active.png";
+
+            for (var i = 1; i <= $scope.maxRating; i++) {
+                $scope.maxRatings.push({});
+            };
+
+            $scope._rating = $scope.rating;
+            
+            $scope.isolatedClick = function (param) {
+                if ($scope.readOnly == 'true') return;
+
+                $scope.rating = $scope._rating = param;
+                $scope.hoverValue = 0;
+                $scope.click({
+                    param: param
+                });
+            };
+
+            /*$scope.updateRating = function(param){
+               $scope.isolatedClick(param)
+            };*/
+        }
+    };
+      })
     .controller('OverlayCtrl', function($scope, $rootScope) {
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
@@ -313,8 +344,6 @@ angular.module('genie-canvas.theme', [])
                 skip: $rootScope.imageBasePath + "skip.png",
                 star: $rootScope.imageBasePath + "star.png",
                 credit_popup: $rootScope.imageBasePath + "popup.png"
-
-
             },
             popup_kid: {
                 good_job: $rootScope.imageBasePath + "LEFT.png",
@@ -326,13 +355,12 @@ angular.module('genie-canvas.theme', [])
         };
 
         $scope.goodJob = {
-            body: '<div class="credit-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')"/></a></div></div>'
+            body: '<div class="assess-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')"/></a></div></div>'
         };
 
         $scope.tryAgain = {
-            body: '<div class="credit-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><a ng-click="retryAssessment(\'gc_retry\')" href="javascript:void(0);" ><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')"/></a></div></div>'
+            body: '<div class="assess-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><a ng-click="retryAssessment(\'gc_retry\')" href="javascript:void(0);" ><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')"/></a></div></div>'
         };
-
 
         $scope.openMenu = function() {
 

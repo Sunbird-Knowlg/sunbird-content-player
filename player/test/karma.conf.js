@@ -34,7 +34,7 @@ module.exports = function(config) {
             'public/js/test/BaseSpec.js',
             'public/js/test/specHelper.js',
             'public/js/test/AudioPluginSpec.js',
-            'public/js/test/AssetManagerSpec.js',
+            // 'public/js/test/AssetManagerSpec.js',
 
             'public/js/test/HotspotPluginSpec.js',
             'public/js/test/ContainerPluginSpec.js',
@@ -150,6 +150,8 @@ module.exports = function(config) {
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
-        singleRun: true
+        singleRun: true,
+
+        browserNoActivityTimeout : 600000
     })
 }

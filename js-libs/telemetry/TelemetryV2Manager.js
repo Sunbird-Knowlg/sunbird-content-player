@@ -24,7 +24,7 @@ TelemetryV2Manager = Class.extend({
     },
     interact: function(type, id, extype, eks) {
         if (eks.optionTag)
-            TelemetryService.flushEvent(this.itemResponse(eks));
+            TelemetryService.flushEvent(this.itemResponse(eks), TelemetryService.apis.telemetry);
         if (type != "DRAG") {
             var eks = {
                 "stageid": eks.stageId ? eks.stageId : "",
@@ -115,5 +115,8 @@ TelemetryV2Manager = Class.extend({
                 "resvalues": _.isEmpty(data.res) ? [] : data.res
             };
         return this.createEvent("OE_ITEM_RESPONSE", eks);
+    },
+    sendFeedback: function(eks) {
+        return this.createEvent("", eks);
     }
 })

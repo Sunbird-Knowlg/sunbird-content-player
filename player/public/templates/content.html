@@ -1,62 +1,47 @@
 <style>
-    /* .swiper-background {
+/* .swiper-background {
         background-image: url("img/icons/");
         background-size: cover;
         background-repeat: round;
     } */
-    .swiper-slide {
-        background-image:url('img/icons/img_panel.png');
-        background-position: center;
-        background-size: cover;
-        width: 150px;
-        height: 190px;
-        padding: 15px;
-        margin-left:30px !important;
-        margin-bottom:30px !important;
-        margin-top:10px !important;
-    }
-</style>
 
-<ion-pane class="swiper-background" ng-show="showPage">
-   <!--  <img ng-src="{{imageBasePath}}cover_page_background.png" style="position: absolute; width: 100%; height: 100%;"> -->
+.swiper-slide {
+    background-image: url('img/icons/img_panel.png');
+    background-position: center;
+    background-size: cover;
+    width: 150px;
+    height: 190px;
+    padding: 15px;
+    margin-left: 30px !important;
+    margin-bottom: 30px !important;
+    margin-top: 10px !important;
+}
+</style>
+<ion-pane class="swiper-background pane" ng-show="showPage">
+    <!--  <img ng-src="{{imageBasePath}}cover_page_background.png" style="position: absolute; width: 100%; height: 100%;"> -->
     <img ng-src="{{imageBasePath}}background.png" style="position: absolute; width: 100%; height: 100%;">
-    <img ng-src="{{imageBasePath}}cover_backdrop.png" style="position: absolute; width: 100%; height: 100%;">
-    <p class="icon-font conver-page-title" style="">{{item.name}}</p>
-    <p class="icon-font conver-page-title conver-page-title1" style=" ">{{item.name}}</p>
-    <ion-header-bar class="bar-header" style="background-color:transparent; border-bottom:0px;background-image:none;height:50px">
-        <div preview="false">
-            <home info='true'; style="position: absolute; width:30%; top:40%; left:3%"></home>
-            <genie style="position:absolute; width:30%; top:40%; right:3%; text-align: right;"></genie>
+    <!-- <img ng-src="{{imageBasePath}}cover_backdrop.png" style="position: absolute; width: 100%; height: 100%;"> -->
+    <div id="cover">
+        <p class="icon-font cover-page-title">{{item.name}}</p>
+        <!-- <p class="icon-font cover-page-title cover-page-title1 ng-binding" style=" ">{{item.name}}</p> -->
+    </div>
+    <ion-header-bar class="bar-header bar disable-user-behavior" style="background-color:transparent;border-bottom:0px;background-image:none;height: 20%;">
+        <div preview="false" style="position: absolute; top: 15%; width: 100%;">
+            <collection class="gc-cp-coll"></collection>
+            <genie class="gc-cp-genie"></genie>
         </div>
     </ion-header-bar>
-    <ion-content>
-        <div class="item-body noBorder" style="margin:-3px;">
-            <center>
-<!--                 <img ng-src="{{item.appIcon || 'assets/quiz-icon.png'}}" class="preview_posterImg">
-                <p class="preview_description" ng-if="item.language">
-                    {{item.language}}
-                </p>
-                <p class="preview_description" ng-if="item.owner">
-                    {{item.owner}}
-                </p>
-                <p class="preview_description" ng-if="item.description">
-                    {{item.description}}
-                </p>
-                <p ng-show="item.pkgVersion || item.processingStart" class="preview_subtext" >
-                    <span ng-show="item.pkgVersion" style="margin-right: 20px; font-size: 1.25em;">Version: {{item.pkgVersion}}</span>
-                </p> -->
-            </center>
-        </div>
-
-        <div class="item-body clearList" style="margin-top: 15%;">
-            <center>
-                <!-- <div style="margin-bottom:10px; margin-top:10%" MARng-show="showMessage">
-                    <div ng-bind-html="message" style="margin: auto; text-align: center; font-weight: bold;"></div>
-                </div> -->
-                <div ng-show="item.status == 'ready'" style="margin-right: 10px;">
-                    <img ng-click="playContent(item)" src="img/icons/btn_play_selected.png" style="width: 18%;"/>
-                </div>
-            </center>
+    <ion-content class="scroll-content ionic-scroll  has-header">
+        <div class="scroll" style="transform: translate3d(0px, -28px, 0px) scale(1); height: 100%;">
+            <div class="item-body noBorder" style="margin:-3px;">
+            </div>
+            <div class="item-body clearList" style="HEIGHT: 100%;">
+                <center>
+                    <div ng-show="item.status == 'ready'" style="top: 100%;position: absolute;width: 100%;height: 20%;margin-top: 23%;" class="">
+                        <img class="play_image" ng-click="playContent(item)" src="img/icons/btn_play_selected.png" style="width: 18%;">
+                    </div>
+                </center>
+            </div>
         </div>
     </ion-content>
-</ion-pane>    
+</ion-pane>

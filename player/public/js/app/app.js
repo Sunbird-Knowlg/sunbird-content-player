@@ -6,6 +6,8 @@
 
 var stack = new Array(),
     collectionChildrenIds = new Array(),
+    collectionPath = new Array(),
+    collectionPathMap = {},
     content = {},
     collectionChildren = true,
     defaultMetadata = { "identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author":"EkStep", "localData": { "questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{ "identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept" }], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true,   "path": "fixture-stories/item_sample" },
@@ -82,6 +84,35 @@ function launchInitialPage(appInfo, $state) {
 
 angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'genie-canvas.services', 'genie-canvas.template'])
     .run(function($rootScope, $ionicPlatform, $ionicModal, $location,  $cordovaFile, $cordovaToast, ContentService, $state, $stateParams) {
+        $rootScope.imageBasePath = "img/icons/";
+        // serverPath and localPreview is a global variable defined in index.html file inside a story
+        if("undefined" != typeof localPreview && "local" == localPreview)
+            $rootScope.imageBasePath = serverPath + $rootScope.imageBasePath;
+        $rootScope.languageSupport = {
+            "languageCode": "en",
+            "home": "Home",
+            "genie": "Genie",
+            "title": "TITLE",
+            "submit": "SUBMIT",
+            "goodJob": "Good Job!",
+            "tryAgain": "Aww,  Seems you goofed it!",
+            "whatWeDoNext": "What should we do next?",
+            "image": "Image",
+            "voice": "Voice",
+            "audio": "Audio",
+            "author": "Author",
+            "instructions": "NOTES FOR TEACHER",
+            "replay": "Replay",
+            "time": "TIME",
+            "result": "RESULT",
+            "feedback":"Feedback",
+            "collection":"Collection",
+            "relatedContent":"Related Content",
+            "showMore":"Show More",
+            "noCreditsAvailable":"There are no credits available",
+            "congratulations":"Congratulations! You just completed this lesson!",
+            "credit":"Credits"
+        }
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -118,6 +149,9 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             });
 
             GlobalContext.init(packageName, version).then(function(appInfo) {
+                // localPreview is a global variable defined in index.html file inside a story, 
+                if("undefined" != typeof localPreview &&  "local" == localPreview)
+                    return;
                 var id = getUrlParameter("id");  
                 if(webview) {
                     if ("undefined" != typeof $location && id) {
@@ -242,6 +276,19 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             ContentService.getContent(id)
                 .then(function(content) {
                     GlobalContext.previousContentId = content.identifier;
+                    if(!_.findWhere(collectionPath, { identifier: id }))
+                        collectionPath.push( {identifier : content.identifier, mediaType : "Collection"});
+
+                    if(collectionPathMap[content.identifier]) {
+                        var pathArr = collectionPathMap[content.identifier];
+                        if( pathArr[pathArr.length - 1].mediaType.toLowerCase() == "content") {
+                            collectionPath = pathArr;
+                            collectionPath.pop()
+                        } else {
+                            collectionPath = pathArr;
+                        }
+                    }
+
                     if(!_.contains(stack, content.identifier))
                         stack.push(content.identifier);
                     if (COLLECTION_MIMETYPE == content.mimeType) {
@@ -261,14 +308,12 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                     return ContentService.getContentList(filter, childrenIds);
                 })
                 .then(function(result) {
-
                     $rootScope.$apply(function() {
                         $rootScope.stories = result;
                     });
                     if ($rootScope.stories && $rootScope.stories.length <= 0) {
                         $rootScope.renderMessage(AppMessages.NO_CONTENT_LIST_FOUND);
                     }
-                    //$rootScope.showLoader = false;
                 })
                 .catch(function(err) {
                     $rootScope.$apply(function() {
@@ -287,6 +332,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             } else {
                 GlobalContext.currentContentId = content.identifier;
                 GlobalContext.currentContentMimeType = content.mimeType;
+                collectionPath.push( {identifier : content.identifier, mediaType : "Content"});
                 $state.go('showContent', {"contentId": content.identifier});
             }
         }; 
@@ -321,6 +367,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         $scope.goBack = function() {
             TelemetryService.end();
             stack.pop();
+            collectionPath.pop();
             var id = stack.pop();
             if(id)
                 $state.go('contentList', { "id": id});
@@ -335,11 +382,11 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         
         $scope.init = function(){   
             if ($stateParams.itemId) {
-            $scope.item = _.findWhere($rootScope.stories, { identifier: $stateParams.itemId });
+            $scope.item = $rootScope.content;
 
             if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                 HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
-                    jQuery('#gameAreaLoad').hide();
+                    jQuery('#loading').hide();
                     jQuery('#gameArea').hide();
                     var path = $scope.item.baseDir + '/index.html';
                     $scope.currentProjectUrl = path;

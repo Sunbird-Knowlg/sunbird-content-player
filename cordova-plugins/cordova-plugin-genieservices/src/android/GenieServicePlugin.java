@@ -10,6 +10,7 @@ import org.apache.cordova.CordovaInterface;
 import org.ekstep.genieservices.sdks.Telemetry;
 import org.ekstep.genieservices.sdks.UserProfile;
 import org.ekstep.genieservices.sdks.Content;
+import org.ekstep.genieservices.sdks.Summarizer;
 import org.ekstep.genieservices.sdks.GenieServices;
 import org.ekstep.genieservices.sdks.response.IResponseHandler;
 import org.json.JSONArray;
@@ -28,6 +29,7 @@ public class GenieServicePlugin extends CordovaPlugin {
     private UserProfile userProfile;
     private GenieServices genieServices;
     private Content content;
+    private Summarizer summarizer;
 
 	public GenieServicePlugin() {
 		System.out.println("Genie Service Constructor..........");
@@ -67,6 +69,11 @@ public class GenieServicePlugin extends CordovaPlugin {
                 content = new Content(activity);
             }
         }
+        if(null == summarizer) {
+            if(null != activity) {
+                summarizer = new Summarizer(activity);
+            }
+        }
         Log.v(TAG, "GenieServicePlugin received:" + action);
         System.out.println("Genie Service action: " + action);
         if(action.equals("sendTelemetry")) {
@@ -83,6 +90,32 @@ public class GenieServicePlugin extends CordovaPlugin {
         } else if(action.equals("getContent")) {
             String contentId = args.getString(0);
             content.get(contentId, new GenieServicesResponse(callbackContext));
+        } else if(action.equals("getRelatedContent")) {
+            String uid = args.getString(0);
+            List<HashMap<String, Object>> filterList = new ArrayList<HashMap<String, Object>>();
+            JSONArray jsonArray = args.getJSONArray(1);
+            if(jsonArray != null && jsonArray.length() > 0) {
+                for(int i=0;i<jsonArray.length();i++) {
+                    HashMap<String, Object> map = new HashMap<String, Object>();
+                    Iterator keys = jsonArray.getJSONObject(i).keys();
+                    while (keys.hasNext()) {
+                        String key = (String) keys.next();
+                        map.put(key, jsonArray.getJSONObject(i).get(key));
+                    }
+                    filterList.add(map);
+                }
+                    
+            } 
+            content.getRelatedContent(uid, filterList, new GenieServicesResponse(callbackContext));
+
+        }
+        else if(action.equals("sendFeedback")) {
+            String evt = args.getString(0);
+            content.sendFeedback(evt, new TelemetryResponse(callbackContext));
+        }else if(action.equals("getLearnerAssessment")) {
+            String uid = args.getString(0);
+            String contentId = args.getString(1);
+            summarizer.getLearnerAssessment(uid, contentId, new GenieServicesResponse(callbackContext));
         } else if(action.equals("getContentList")) {
             String[] filter = null;
             JSONArray jsonArray = args.getJSONArray(0);

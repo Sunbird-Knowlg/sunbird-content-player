@@ -24,7 +24,7 @@ MCQEvaluator = {
                     //if answer count is equalto one then it is MCQ
                     isMCQ = true;
                 } else {
-                    consle.warn("Its not MCQ and MMCQ");
+                    console.warn("Its not MCQ and MMCQ");
                     return;
                 }
 				options.forEach(function(opt) {

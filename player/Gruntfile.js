@@ -118,6 +118,26 @@ module.exports = function(grunt) {
                     }
                 ]
             },
+            localPreviewFiles: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/',
+                        src: ['img/**', 'css/**', 'libs/**', 'templates/**', 'js/**'],
+                        dest: 'public/local-preview/'
+                    }
+                ]
+            },
+            localPreviewMinjs: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/js/',
+                        src: ['renderer.min.js','telemetry.min.js', 'script.min.js'],
+                        dest: 'public/local-preview/'
+                    }
+                ]
+            },
             unsigned: {
                 files: [
                     {
@@ -181,7 +201,8 @@ module.exports = function(grunt) {
             before: ["www", "platforms/android/assets/www", "platforms/android/build"],
             after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html", "www/webview.html", "www/preview.html"],
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
-            minjs: ['public/js/*.min.js']
+            minjs: ['public/js/*.min.js'],
+            localPreview: ["public/local-preview"]
         },
         rename: {
             main: {
@@ -213,7 +234,7 @@ module.exports = function(grunt) {
                     dest: 'js/'
                 }]
             },
-            uploadPreviewFilesToSandbox : {
+            uploadPreviewFilesToDev : {
                 options: {
                     bucket: 'ekstep-public',
                     access: 'public-read',
@@ -224,7 +245,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'www/preview',
                     src: ['**'],
-                    dest: '/preview/sandbox/'
+                    dest: '/preview/dev/'
                 }]
             },
             uploadPreviewFilesToQA : {
@@ -279,12 +300,12 @@ module.exports = function(grunt) {
                     action: 'delete'
                 }]
             },
-            cleanSandboxPreview: {
+            cleanDevPreview: {
                 options: {
                     bucket: 'ekstep-public'
                 },
                 files: [{
-                    dest: 'preview/sandbox',
+                    dest: 'preview/dev',
                     action: 'delete'
                 }]
             },
@@ -464,12 +485,12 @@ module.exports = function(grunt) {
                     to: "android"
                 }]
             },
-            preview_sandbox: {
+            preview_dev: {
                 src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html'],
                 overwrite: true,
                 replacements: [{
                     from: /DEPLOYMENT/g,
-                    to: "sandbox"
+                    to: "dev"
                 }]
             },
             preview_production: {
@@ -533,14 +554,14 @@ module.exports = function(grunt) {
 
     grunt.registerTask('deploy-preview', function(flavor) {
         if(!flavor){
-            grunt.fail.fatal("deployment argument value should be any one of: ['sandbox/dev', 'production', 'qa'].");
+            grunt.fail.fatal("deployment argument value should be any one of: ['dev', 'production', 'qa'].");
             return;
         }
         grunt.log.writeln("Starting", flavor, "deployment");
         flavor = flavor.toLowerCase().trim();
         var tasks = [];
-        if (("sandbox" == flavor) || ("dev" == flavor)) {
-            tasks.push('preview-sandbox');
+        if ("dev" == flavor) {
+            tasks.push('preview-dev');
         } else if("production" == flavor) {
             tasks.push('preview-production');
         } else if("qa" == flavor) {
@@ -552,8 +573,7 @@ module.exports = function(grunt) {
         }
     });
 
-
-    grunt.registerTask('preview-sandbox', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_sandbox', 'aws_s3:cleanSandboxPreview', 'aws_s3:uploadPreviewFilesToSandbox']);
+    grunt.registerTask('preview-dev', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_dev', 'aws_s3:cleanDevPreview', 'aws_s3:uploadPreviewFilesToDev']);
     grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
     grunt.registerTask('preview-qa', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
   
@@ -623,6 +643,10 @@ module.exports = function(grunt) {
     grunt.registerTask('build-unsigned-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
     grunt.registerTask('build-signed-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
 
+
     grunt.registerTask('build-aar-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalk-library', 'cordovacli:build_android', 'clean:minjs']);
-	grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+
+    grunt.registerTask('local-preview-build', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js','copy:localPreviewFiles', 'copy:localPreviewMinjs', 'aws_s3:uploadLocalPreviewZip', 'clean:localPreview']);
+
 };

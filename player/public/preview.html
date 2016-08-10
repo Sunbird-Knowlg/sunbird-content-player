@@ -15,38 +15,23 @@
     <link rel="stylesheet" type="text/css" href="css/thirdparty/skin02.css" />
     <!-- <link rel="stylesheet" type="text/css" href="css/thirdparty/hamburger.css" /> -->
 
-    <script type="text/javascript" src="js/thirdparty/jquery.min.js"></script>
-    <script type="text/javascript" src="js/thirdparty/jquery.easing.1.3.js"></script>
-    <script type="text/javascript" src="js/thirdparty/jquery.bookshelfslider.min.js"></script>
-    <script type="text/javascript" src="js/thirdparty/exclude/xml2json.min.js"></script>
-    <script type="text/javascript" src="js/thirdparty/exclude/Class.js"></script>
-    <script type="text/javascript" src="js/thirdparty/async.min.js"></script>
-    <!-- <script type="text/javascript" src="js/thirdparty/hamburger.js"></script> -->
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
-    <!-- ionic/angularjs js -->
-    <script src="libs/ionic/js/ionic.bundle.min.js"></script>
-
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
-
-    
-    <script src="libs/ngCordova/ng-cordova.min.js"></script>
-    <script src="libs/angular-resource/angular-resource.min.js"></script>
-    <script src="js/thirdparty/underscore.js"></script>
-
-    
-    <!-- your app's js -->
-    <script src="js/AppConfig.js"></script>
-    <script src="js/script.min.js"></script>
-    <script src="js/renderer.min.js"></script>
-    <!-- // <script src="/js/app/renderer.min.js"></script> -->
-    <script src="js/telemetry.min.js"></script>
-    
-    
-
     <style>
+        #progressArea {
+          position: relative;
+          top: 51%;
+          left: 35%;
+          width: 29%;
+          height: 17px;
+          border-radius: 90px;
+          background-color: #ddd;
+        }
+        #progressBar {
+          position: absolute;
+          width: 1%;
+          height: 17px;
+          border-radius: 90px;
+          background-color: #e67300;
+        }
         #gameArea {
             position: absolute;
             left:     50%;
@@ -71,8 +56,38 @@
   </head>
   <body>
     <ion-nav-view></ion-nav-view>
-    <div id="loading" style="z-index:1000;padding-top:45%;width:100%;height:100%;text-align:center;background-color:white; display: none;" class="view-container">
-        <span style="font-size: 3em;">Loading...</span>
-    </div>
+    <div id="loading" class="gc-loader-area">
+        <img src="img/icons/background.png" class="gc-loader-img">
+        <div id="progressArea">
+          <div id="progressBar"></div>
+          <p id="progressCount" class="gc-loader-prog"></p>
+        </div>
+        <p class="icon-font cover-page-title" id="loadingText"></p>
+    </div> 
+    <script type="text/javascript" src="js/thirdparty/jquery.min.js"></script>
+    <script type="text/javascript" src="js/thirdparty/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="js/thirdparty/jquery.bookshelfslider.min.js"></script>
+    <script type="text/javascript" src="js/thirdparty/exclude/xml2json.min.js"></script>
+    <script type="text/javascript" src="js/thirdparty/exclude/Class.js"></script>
+    <script type="text/javascript" src="js/thirdparty/async.min.js"></script>
+    
+    <!-- ionic/angularjs js -->
+    <script src="libs/ionic/js/ionic.bundle.min.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    
+    <script src="libs/ngCordova/ng-cordova.min.js"></script>
+    <script src="libs/angular-resource/angular-resource.min.js"></script>
+    <script src="js/thirdparty/underscore.js"></script>
+
+    
+    <!-- your app's js -->
+    <script src="js/AppConfig.js"></script>
+    <script src="js/script.min.js"></script>
+    <script src="js/renderer.min.js"></script>
+    <!-- // <script src="/js/app/renderer.min.js"></script> -->
+    <script src="js/telemetry.min.js"></script>
   </body>
 </html>

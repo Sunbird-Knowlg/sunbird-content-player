@@ -22,10 +22,10 @@ TelemetryEvent = Class.extend({
         };
         TelemetryService._version == "1.0" ? this.event.ts = getTime(this.createdTime) : this.event.ets = getTime(this.createdTime);
     },
-    flush: function() {
+    flush: function(apiName) {
         if (this.event) {
             if ("undefined" != typeof telemetry) {
-                telemetry.send(JSON.stringify(this.event)).then(function() {
+                telemetry.send(JSON.stringify(this.event), apiName).then(function() {
                     return JSON.stringify(this.event);
                 }).catch(function(err) {
                     TelemetryService.logError(this.name, err);

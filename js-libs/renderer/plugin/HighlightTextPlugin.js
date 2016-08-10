@@ -24,12 +24,25 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         div.style.height = dims.h + 'px';
         div.style.top = "-1000px"; // position off-screen initially
         div.style.position = 'absolute';
+        
+        var fontsize = "1.2em";
         if (data.fontsize) {
-            div.style["font-size"] = data.fontsize;
-        } else {
-            div.style["font-size"] = "1.2em";
+            fontsize = data.fontsize;
         }
-
+        if (isFinite(fontsize)) {
+            if (data.w) {
+                var exp = parseFloat(PluginManager.defaultResWidth * data.w / 100);
+                var cw = this._parent.dimensions().w;
+                var width = parseFloat(cw * data.w / 100);
+                var scale = parseFloat(width / exp);
+                fontsize = parseFloat(fontsize * scale);
+                fontsize = fontsize + 'px';
+            }
+        }
+        div.style["font-size"] = fontsize;
+        div.style["line-height"] = data.lineHeight ? data.lineHeight : "1.2em";
+        
+        console.log("data", data, " Div", div);
         var parentDiv = document.getElementById(Renderer.divIds.gameArea);
         parentDiv.insertBefore(div, parentDiv.childNodes[0]);
 

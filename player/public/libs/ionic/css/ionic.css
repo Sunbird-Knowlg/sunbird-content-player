@@ -2576,17 +2576,17 @@ body.grade-b, body.grade-c {
   position: relative; }
 
 .scroll-content {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
-  margin-top: -1px;
-  padding-top: 1px;
-  margin-bottom: -1px;
-  width: auto;
-  height: auto; }
+     position: absolute;
+    /* top: 0; */
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    margin-top: -1px;
+    padding-top: 1px;
+    margin-bottom: -1px;
+    width: auto;
+    height: 90%; }
 
 .menu .scroll-content.scroll-content-false {
   z-index: 11; }
@@ -2711,7 +2711,7 @@ ion-infinite-scroll {
 
 /* If you change these, change platform.scss as well */
 .has-header {
-  top: 44px; }
+  /*top: 44px;*/ }
 
 .no-header {
   top: 0; }
@@ -2772,7 +2772,7 @@ ion-infinite-scroll {
  * --------------------------------------------------
  */
 p {
-  margin: 0 0 10px; }
+  margin: 0 0 1px; }
 
 small {
   font-size: 85%; }
@@ -5078,7 +5078,7 @@ a.item-content {
 
 .item-body {
   overflow: auto;
-  padding: 16px;
+  /*padding: 16px;*/
   text-overflow: inherit;
   white-space: normal; }
   .item-body h1, .item-body h2, .item-body h3, .item-body h4, .item-body h5, .item-body h6, .item-body p {

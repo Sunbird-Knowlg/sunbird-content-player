@@ -1,19 +1,16 @@
-<div id="gameArea" preview="false">		
+<div id="gameArea">		
 	<!-- Navigation and Menu  -->
-
 	<div class="overlay-html" id="overlayHTML" ng-controller="OverlayCtrl" ng-init="initMenu()" ng-cloak>
         <div>
-            <a class="nav-icon nav-previous" href="javascript:void(0);"><img ng-src="img/icons/back_icon_disabled.png"></a>
-            <a class="nav-icon nav-previous nav-previous-enable" id="navPrev" href="javascript:void(0);"><img ng-src="img/icons/back_icon.png" onclick="navigate('previous')"></a>
+            <a class="nav-icon nav-previous" href="javascript:void(0);"><img style="opacity:0.4;" ng-src="{{imageBasePath}}back_icon.png"></a>
+            <a class="nav-icon nav-previous nav-previous-enable" id="navPrev" href="javascript:void(0);"><img ng-src="{{imageBasePath}}back_icon.png" onclick="navigate('previous')"></a>
         </div>
 
         <div>
-            <a class="nav-icon nav-next" href="javascript:void(0);"><img ng-src="img/icons/next_icon_disabled.png"></a>    
-            <a class="nav-icon nav-next"  id="navNext" href="javascript:void(0);"><img ng-src="img/icons/next_icon.png" onclick="navigate('next')"></a>
+            <a class="nav-icon nav-next" href="javascript:void(0);"><img style="opacity:0.4;"  ng-src="{{imageBasePath}}next_icon.png"></a>    
+            <a class="nav-icon nav-next"  id="navNext" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next_icon.png" onclick="navigate('next')"></a>
         </div>
-    <!-- <navigate type="'previous'" enable-image="icons.previous.enable" disable-image="icons.previous.disable" style="position: absolute;width: 10%;top: 45%;left: 1%;"></navigate>
-    <navigate type="'next'" enable-image="icons.next.enable" disable-image="icons.next.disable" style="position:absolute;width: 10%;top: 45%;right: 1%;"></navigate> -->
-
+        
         <assess image="icons.assess.enable"></assess>
 
 		<reload-stage style="position: absolute;width: 7%;bottom: 1%;left: 1%;"></reload-stage>

@@ -30,6 +30,34 @@ angular.module('genie-canvas.services', ['ngResource'])
                     });
                 });
             },
+            getRelatedContent: function(uid, list) {
+                return new Promise(function(resolve, reject) {
+                    genieservice.getRelatedContent(uid, list)
+                    .then(function(item) {
+                        if (item) {
+                            resolve(item);
+                        } else {
+                            reject("Content is not available.");
+                        }
+                    })
+                    .catch(function(err) {
+                        console.error(AppErrors.contetnPathFetch, err);
+                        reject(err);
+                    });
+                });
+            },
+            // Get the Total Assessment score of particular user of particular content.
+            getLearnerAssessment: function(uid, id) {
+                return new Promise(function(resolve, reject) {
+                    genieservice.getLearnerAssessment(uid, id)
+                    .then(function(score){
+                        if(score)
+                            resolve(score);
+                        else
+                            reject("Score is not available.")
+                    });
+                });
+            },
             getContentBody: function(id) {
                 return new Promise(function(resolve, reject) {
                     genieservice.getContentBody(id)
@@ -66,6 +94,7 @@ angular.module('genie-canvas.services', ['ngResource'])
                         data.appIcon = (webview) ? data.appIcon : path + "/logo.png";
                     data.mimeType = item.mimeType;
                     data.status = "ready";
+                    data.isAvailable = true;
                 } else {
                     if(!data) data = {};
                     data.status = "error";
