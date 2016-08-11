@@ -338,24 +338,34 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             $scope.item = $rootScope.content;
 
             if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
-                HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
-                    jQuery('#loading').hide();
-                    jQuery('#gameArea').hide();
-                    var path = $scope.item.baseDir + '/index.html';
-                    /*$scope.currentProjectUrl = path;
-                    jQuery("#htmlFrame").show();*/
-                    if (window.cordova){
-                        console.log("Opening through cordova custom webview.");
-                        webview.Show(path);
-                        //cordova.InAppBrowser.open(path, '_self', 'location=no');
-                        //window.open(path, '_self');   
-                    }else{
-                        console.log("Opening through window.open");
-                        window.open(path, '_self'); 
-                        //window.location.replace(path);                    
-                    }
-
-                });
+                // HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
+                //     jQuery('#loading').hide();
+                //     jQuery('#gameArea').hide();
+                //     var path = $scope.item.baseDir + '/index.html';
+                //     /*$scope.currentProjectUrl = path;
+                //     jQuery("#htmlFrame").show();*/
+                //     if (window.cordova){
+                //         console.log("Opening through cordova custom webview.");
+                //         webview.Show(path);
+                //         //cordova.InAppBrowser.open(path, '_self', 'location=no');
+                //         //window.open(path, '_self');   
+                //     }else{
+                //         console.log("Opening through window.open");
+                //         window.open(path, '_self'); 
+                //         //window.location.replace(path);                    
+                //     }
+                // });
+                var path = $scope.item.baseDir + '/index.html?eksCid='+ $stateParams.itemId;
+                if (window.cordova){
+                    console.log("Opening through cordova custom webview.");
+                    //webview.Show(path);
+                    cordova.InAppBrowser.open(path, '_self', 'location=no,hardwareback=no');
+                    //window.open(path, '_self');   
+                }else{
+                    console.log("Opening through window.open");
+                    window.open(path, '_self'); 
+                    //window.location.replace(path);                    
+                }
             } else { 
                 if(collectionChildren) {
                     collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1); 
