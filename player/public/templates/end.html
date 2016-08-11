@@ -53,7 +53,7 @@
                 </center>
             </div>
 
-            <div class="gc-ep-time-score">
+            <div class="gc-ep-time-score" ng-show="showFeedbackArea">
                 <div ng-class="showScore ? 'gc-ep-time ' : 'gc-ep-time-mid '" id="timeSpentArea">
                      <image ng-class="showScore ? 'img-float-left':'img-float-mid' "  ng-src="{{imageBasePath}}time_icon.png" style="position:relative;" />
                     <p class="gc-white-text gc-ep-white-title">{{totalTimeSpent}}</p>

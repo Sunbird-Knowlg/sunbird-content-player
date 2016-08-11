@@ -99,6 +99,7 @@ angular.module('genie-canvas.template',[])
     }, 0);
 })
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
+    $scope.showFeedbackArea = true;
     $scope.showRelatedContent = false;
     $scope.contentShowMore = false;
     $scope.showRelatedContentHeader = true;
@@ -314,10 +315,14 @@ angular.module('genie-canvas.template',[])
 
     $scope.setTotalTimeSpent = function() {
         var startTime =  (TelemetryService && TelemetryService.instance && TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ]) ? TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ].startTime : 0;
-        var totalTime = Math.round((new Date().getTime() - startTime) /1000);
-        var mm = Math.floor(totalTime / 60);
-        var ss = Math.floor(totalTime % 60);
-        $scope.totalTimeSpent = (mm > 9 ? mm : ("0" + mm))  + ":" + (ss > 9 ? ss : ("0" + ss));
+        if(startTime) {
+            var totalTime = Math.round((new Date().getTime() - startTime) /1000);
+            var mm = Math.floor(totalTime / 60);
+            var ss = Math.floor(totalTime % 60);
+            $scope.totalTimeSpent = (mm > 9 ? mm : ("0" + mm))  + ":" + (ss > 9 ? ss : ("0" + ss));
+        } else {
+            $scope.showFeedbackArea = false;
+        }
     }
 
     $scope.getTotalScore = function(id) {
