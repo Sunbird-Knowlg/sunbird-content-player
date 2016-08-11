@@ -159,9 +159,12 @@ genieservice_portal = {
 
 };
 if ("undefined" == typeof cordova) {
-    genieservice = isbrowserpreview ? genieservice_portal : genieservice_web;
-}else{
-    genieservice = genieservice_web;
+    if(isbrowserpreview) {
+        genieservice = genieservice_portal;
+    }
+    else{
+        genieservice = genieservice_web;
+    }
 }
 
 telemetry_web = {

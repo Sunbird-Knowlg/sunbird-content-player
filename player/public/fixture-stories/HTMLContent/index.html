@@ -8,41 +8,56 @@
 <body>
 	<h1>HTML Content</h1>
 		<!-- <script src="assets/js/jquery.min.js"></script> -->
-		<script src="assets/js/underscore.js"></script>
-		<script src="assets/js/cordova.js"></script>
-  	<script src="assets/js/genieservices.js"></script>
-    <script src="assets/js/telemetry.min.js"></script>
-    <!--<script src="assets/js/cordova_plugins.js"></script> -->
+		<!-- <script src="assets/js/underscore.js"></script>
+        <script src="assets/js/cordova.js"></script>
+        <script src="assets/js/genieservices.js"></script>
+        <script src="assets/js/telemetry.min.js"></script> -->
 
+        <script src="///android_asset/www/js/thirdparty/underscore.js"></script>
+        <script src="///android_asset/www/cordova.js"></script>
+        <script src="///android_asset/www/js/telemetry.min.js"></script>
+    
   	<script type="text/javascript">
+      var content = {};
+
       function onDeviceReady(event){
         console.log("onDeviceReady()", event);
-        TelemetryService.start("game1", "2.0");
-        TelemetryService.interact("TOUCH", "game1", "TOUCH", { stageId: "HTML Page", subtype: "ContentID"});
+        init();
       }
-      //document.addEventListener("deviceready", onDeviceReady, false);
+      document.addEventListener("deviceready", onDeviceReady, false);
 
       function getContentMetadata(){
+        var url = window.location.href;
+        var contID = /eksCid=([^&]+)/.exec(url)[1];
+        console.log("ContentID", contID);
+
+        genieservice.getContent(contID)
+        .then(function(metadata) {
+          content['metadata'] = metadata;
+          console.log("Content", content);
+          document.body.innerHTML += "<p><b>Content id:</b> "+metadata.identifier+ "</p><p><b>Name:</b> "+metadata.localData.name+"</p>";
+        })
+        .catch(function(err) {
+            console.error("Get content metadata failed", err);
+            //reject(err);
+        });
+
         genieservice.getCurrentUser()
         .then(function(result) {
           if (result && result.status == 'success') {
               if (result.data.uid) {
                   var user = result.data;
-                  //GlobalContext._params.user = GlobalContext.user;
+                  document.body.innerHTML += "<p><b>User id:</b> "+user.uid+ "</p><p><b>Age:</b> "+user.age+"</p>";
                   console.log("Login user", user);
-                  //resolve(true);
               } else {
                 console.log("Login user uid not found", result);
-                  //reject('INVALID_USER');
               }
           } else {
             console.log("Login user no data", result);
-              //reject('INVALID_USER');
           }
         })
         .catch(function(err) {
           console.log("Login user error", err);
-          //reject(err);
         });
       }
 
@@ -57,7 +72,7 @@
   		 		console.log(error);
   		 	});
   		 }
-			window.onload = init;
+			//window.onload = init;
   	</script>
 </body>
 </html>
