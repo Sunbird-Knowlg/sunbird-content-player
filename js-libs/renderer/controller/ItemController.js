@@ -41,6 +41,10 @@ var ItemController = Controller.extend({
                 }
             }
         }
+        else{
+            //when we have only one item then call reset
+            this.resetItem(this._model[this._index]);
+        }
         return d;
     },
     resetItem: function(item) {
