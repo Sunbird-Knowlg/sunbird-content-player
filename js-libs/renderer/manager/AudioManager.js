@@ -28,8 +28,11 @@ AudioManager = {
             }        
             if(createjs.Sound.PLAY_FAILED != instance.object.playState) {
                 EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PLAY"});
-            }
-            else {
+                instance.object.on("complete", function() {
+                    if ("undefined" != typeof action.cb)
+                        action.cb({"status":"success"});
+                }, action);
+            } else {
                 delete AudioManager.instances[AudioManager.uniqueId(action)];
                 console.info( "Audio with 'id :" + action.asset  + "' is not found..")
             }

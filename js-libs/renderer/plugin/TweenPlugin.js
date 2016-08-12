@@ -13,7 +13,7 @@ var TweenPlugin = AnimationPlugin.extend({
             loopStr = ', loop:true';
         }
 
-        var fn = '(function() {return function(plugin){';
+        var fn = '(function() {return function(plugin, cb){';
         fn += 'createjs.Tween.get(plugin, {override:true ' + loopStr + '})';
         to.forEach(function(to) {
             var data = (_.isString(to.__cdata)) ? JSON.parse(to.__cdata) : to.__cdata;
@@ -24,17 +24,19 @@ var TweenPlugin = AnimationPlugin.extend({
             data.height = relDims.h;
             fn += '.to(' + JSON.stringify(data) + ',' + to.duration + ', createjs.Ease.' + to.ease + ')';
         });
+        fn += '.call(function() {cb({status: "success"})})';
         fn += '.addEventListener("change", function(event) {Renderer.update = true;';
         if(data.widthChangeEvent) {
             fn += 'AnimationManager.widthHandler(event, plugin);';
         }
         fn += '})}})()';
         this._animateFn = fn;
-        this.animate(plugin);
     },
-    animate: function(plugin) {
-        var animationFn = eval(this._animateFn);
-        animationFn.apply(null, [plugin._self]);
+    animate: function(plugin, cb) {
+        if (!cb) cb = function(resp) {console.info("Tween execution completed.")};
+        var fn = this._animateFn.replace("COMPLETE_CALLBACK", cb.toString());
+        var animationFn = eval(fn);
+        animationFn.apply(null, [plugin._self,cb]);
     }
 });
 AnimationManager.registerPlugin('tween', TweenPlugin);

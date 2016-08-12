@@ -5,9 +5,10 @@ TimerManager = {
 		var stageId = Renderer.theme._currentStage;
 		var instance = setTimeout(function() {
 			if(stageId == Renderer.theme._currentStage) {
-				CommandManager.handle(action);
+				CommandManager.handle(_.omit(action, 'delay'));
 			}
 		}, delay);
+		console.info("action: "+ (action.command || action.type) + " delayed by "+action.delay +"ms.");
 		if(TimerManager.instances[stageId]) {
 			TimerManager.instances[stageId].push({'timeout': instance, 'action': action});
 		} else {

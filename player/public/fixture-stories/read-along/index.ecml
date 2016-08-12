@@ -40,7 +40,7 @@
 				<action type="command" command="play" asset="ht1"/>
 			</event>
 		</htext>
-		<g x="35" y="30" w="20" h="20">
+		<g id="g2" x="35" y="30" w="20" h="20" visible="false">
 			<shape x="0" y="0" w="100" h="100" fill="#AAA" type="roundrect"/>
 			<g x="10" y="15" w="30" h="60">
 				<shape x="0" y="0" w="100" h="100" stroke="yellow" type="roundrect" hitArea="true">
@@ -61,7 +61,7 @@
 		</g>
 
         <htext id="ht2" x="15" y="60" w="85" h="4" highlight="rgba(255,0,0,0.5)" fontsize="1.2em" timings="150,250,550,800,1000,1400,2200,2600,3000,3800,4500,5000,5300,5800" audio="scene3_sound">On the way home, a very strong wind came. It blew my cap away.</htext>
-        <g x="35" y="70" w="20" h="20">
+        <g x="35" y="70" w="20" h="20" id="g3" visible="false">
             <shape x="0" y="0" w="100" h="100" fill="#AAA" type="roundrect"/>
             <g x="10" y="15" w="30" h="60">
                 <shape x="0" y="0" w="100" h="100" stroke="yellow" type="roundrect" hitArea="true">
@@ -83,7 +83,10 @@
 
 		<events>
 			<event type="enter">
-				<action type="command" command="play" asset="ht1" audio="scene4_sound" />
+				<action id="action_ht1" type="command" command="play" asset="ht1" audio="scene4_sound" delay="3000" />
+				<action id="action_ht2" type="command" command="play" asset="ht2" after="action_ht1" />
+				<action id="action6" asset="g2" command="show" type="command" after="action_ht1" />
+				<action id="action5" asset="g3" command="show" type="command" after="action_ht2" />
 			</event>
 			<event type="exit">
 				<action type="command" command="stop" asset="ht1" audio="scene4_sound" />
@@ -92,7 +95,7 @@
 	</stage>
 	<stage id="scene2" x="0" y="0" w="100" h="100">
 		<param name="previous" value="scene1"/>
-		<param name="next" value="endScene"/>
+		<param name="next" value="scene3"/>
 		<text x="10" y="5" w="80" h="8" fontsize="1.5em" align="center">Highligh-text with and without audio</text>
 		<htext id="ht1" x="15" y="20" w="85" h="4" highlight="rgba(255,0,0,0.5)" fontsize="1.2em" timings="250,400,650,1000,1300,1500,1900,2300,2500,3000,3500,4200" audio="scene4_sound">My cap got stuck on a branch of the old Pipal tree.
 			<event type="click">
@@ -143,6 +146,52 @@
 		<events>
 			<event type="enter">
 				<action type="command" command="play" asset="ht1" audio="scene4_sound" />
+			</event>
+			<event type="exit">
+				<action type="command" command="stop" asset="ht1" audio="scene4_sound" />
+			</event>
+		</events>
+	</stage>
+	<stage id="scene3" x="0" y="0" w="100" h="100">
+		<param name="previous" value="scene2"/>
+		<param name="next" value="endScene"/>
+		<set id="audio1StatusParam" param="audio1Status" scope="stage" value="Not started."/>
+		<set id="audio2StatusParam" param="audio2Status" scope="stage" value="Not started."/>
+		<set id="audio3StatusParam" param="audio3Status" scope="stage" value="Not started."/>
+		<text x="10" y="5" w="80" h="8" fontsize="2em" align="center" weight="bold" color="#0089C9">Chaining Actions</text>
+		<g x="28" y="15" w="45" h="70">
+			<shape x="0" y="0" w="100" h="55" type="rect" stroke="red"/>
+			<text x="5" y="10" w="30" h="10" fontsize="1.5em">Audio 1</text>
+			<text id="audio1_state" x="55" y="10" w="50" h="10" fontsize="1.5em" param="audio1Status"></text>
+
+			<text x="5" y="25" w="30" h="10" fontsize="1.5em">Audio 2</text>
+			<text id="audio2_state" x="55" y="25" w="50" h="10" fontsize="1.5em" param="audio2Status"></text>
+
+			<text x="5" y="40" w="30" h="10" fontsize="1.5em">Audio 3</text>
+			<text id="audio3_state" x="55" y="40" w="50" h="10" fontsize="1.5em" param="audio3Status"></text>
+		</g>
+
+		<events>
+			<event type="enter">
+				<action id="audio1Action1" asset="scene1_sound" command="play" type="command" delay="5000" />
+				<action type="command" command="set" param="audio1Status" param-value="Playing." asset="audio1StatusParam" scope="stage" with="audio1Action1"/>
+				<action asset="audio1_state" type="command" command="refresh" with="audio1Action1"/>
+				<action type="command" command="set" param="audio1Status" param-value="Completed." asset="audio1StatusParam" scope="stage" after="audio1Action1"/>
+				<action asset="audio1_state" type="command" command="refresh" after="audio1Action1"/>
+
+				<action id="audio2Action1" asset="scene2_sound" command="play" type="command" delay="3000" after="audio1Action1" />
+				<action type="command" command="set" param="audio2Status" param-value="Playing." asset="audio1StatusParam" scope="stage" with="audio2Action1"/>
+				<action asset="audio2_state" type="command" command="refresh" with="audio2Action1"/>
+
+				<action type="command" command="set" param="audio2Status" param-value="Completed." asset="audio2StatusParam" scope="stage" after="audio2Action1"/>
+				<action asset="audio2_state" type="command" command="refresh" after="audio2Action1"/>
+
+				<action id="audio3Action1" asset="scene3_sound" command="play" type="command" delay="3000" after="audio2Action1" />
+				<action type="command" command="set" param="audio3Status" param-value="Playing." asset="audio1StatusParam" scope="stage" with="audio3Action1"/>
+				<action asset="audio3_state" type="command" command="refresh" with="audio3Action1"/>
+
+				<action type="command" command="set" param="audio3Status" param-value="Completed." asset="audio3StatusParam" scope="stage" after="audio3Action1"/>
+				<action asset="audio3_state" type="command" command="refresh" after="audio3Action1"/>
 			</event>
 			<event type="exit">
 				<action type="command" command="stop" asset="ht1" audio="scene4_sound" />

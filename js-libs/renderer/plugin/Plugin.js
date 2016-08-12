@@ -242,7 +242,7 @@ var Plugin = Class.extend({
 		}
 		Renderer.update = true;
 	},
-	toggleShadow: function() {
+	toggleShadow: function(action) {
 		var isVisible = false;
 
         if (this.hasShadow()) {
@@ -436,7 +436,7 @@ var Plugin = Class.extend({
 	restart: function() {
 		PluginManager.addError('Subclasses of plugin should implement reload()');
 	},
-    blur: function() {
+    blur: function(action) {
         var instance = this;
         var obj = instance._self;
         var blurFilter = new createjs.BlurFilter(25, 25, 1);
@@ -445,7 +445,7 @@ var Plugin = Class.extend({
         obj.cache(bounds.x,bounds.y, bounds.w, bounds.h);
         Renderer.update = true;
     },
-    unblur: function() {
+    unblur: function(action) {
         var instance = this;
         instance._self.filters = [];
         instance._self.uncache();

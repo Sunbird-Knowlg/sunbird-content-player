@@ -2,12 +2,12 @@ AnimationManager = {
 	animationsCache: {},
 	pluginMap: {},
 	pluginObjMap: {},
-	handle: function(action, plugin) {
+	handle: function(action) {
 		var instance;
 		if(action.asset) {
 			instance = PluginManager.getPluginObject(action.asset);
 		} else {
-			instance = plugin;
+			return;
 		}
 		if (action.parent === true && instance._parent) {
 			instance = instance._parent;
@@ -19,12 +19,12 @@ AnimationManager = {
             	if(data.id) {
             		pluginObj = AnimationManager.getPluginObject(data.id);
             	}
-            	if(pluginObj) {
-            		console.info("Playing from cache...");
-            		pluginObj.animate(instance);
+            	if("undefined" == typeof pluginObj) {
+            		pluginObj = AnimationManager.invokePlugin(k, action[k], instance);
             	} else {
-            		AnimationManager.invokePlugin(k, action[k], instance);
+            		console.info("Playing from cache...");
             	}
+            	pluginObj.animate(instance, action.cb);
             }
         }
 	},

@@ -29,7 +29,7 @@ PluginManager = {
         PluginManager.customPluginMap = {};
         var media = manifest.media;
         var plugins = _.filter(!_.isArray(media) ? [media] : media, function(media) {
-            return media.type == 'plugin'});;
+            return media.type == 'plugin'});
         
         media = _.filter(!_.isArray(media) ? [media] : media, function(media) {
             return media.type == 'js' || media.type == 'css'; });
