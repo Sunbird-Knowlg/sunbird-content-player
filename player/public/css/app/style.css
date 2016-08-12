@@ -14,6 +14,7 @@
 }
 
 
+
 /*@font-face {
     font-family: 'NotoSansGujarati';
     src: url('fonts/NotoSansGujarati-Regular.ttf') format('truetype')
@@ -1057,6 +1058,34 @@ ion-popover-view.fit ion-content {
 
 .gc-restart-collection {
     left: 38%;
+}
+.gc-loader-area {
+    margin: auto;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
+
+.gc-loader-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.gc-loader-prog {
+    margin-left: 46%;
+    position: absolute;
+    font-family: baloobhai;
+    color: white;
+}
+
+.gc-ep-loader {
+    width: 100%;
+    height: 52%;
+    padding: 0px 4%;
+    overflow: hidden;
+    text-align: center;
 }
 
 .gc-popup-title {

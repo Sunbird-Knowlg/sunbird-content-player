@@ -211,6 +211,8 @@ angular.module('genie-canvas.template',[])
 
     $scope.restartContent = function() {
         jQuery('#loading').show();
+        jQuery("#progressBar").width(0);
+      
        /* window.history.back();*/
      $state.go('playContent', {
             'itemId': content.identifier
