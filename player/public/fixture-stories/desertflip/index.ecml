@@ -88,6 +88,23 @@
 
         <image asset="desert" x="0" y="0" w="100" h="100"/>
 
+        <image id="imgCamel" asset="camel" x="30" y="70" w="15" h="15">
+         <event type="click">
+                <action type="animation" asset="imgCamel">
+                    <tween>
+                        <to ease="linear" duration="100">
+                            <![CDATA[
+                            {
+                                "x": 45,
+                                "y": 70,
+                                "scaleX": -0.5
+                            }
+                            ]]>
+                        </to>
+                    </tween>
+                </action>
+            </event>
+        </image>
         <g id="conCamel" x="50" y="50" w="18" h="32">
             <image asset="camel" x="0" y="0" w="100" h="100" >
             <event type="click">
