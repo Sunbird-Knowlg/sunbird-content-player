@@ -584,11 +584,16 @@ ion-popover-view.fit ion-content {
 
 .credit-body-icon-font {
     width: 82%;
+    overflow-y:scroll;
+    overflow-x: hidden; 
+   word-wrap: break-word;
     height: 75%;
     left: 10%;
     position: absolute;
     font-family: NotoSansRegular;
     font-size: 0.7em;
+
+    
 }
 
 .credit-body-icon-font table{
