@@ -11,7 +11,31 @@
     },
     "responseCode": "OK",
     "result": {
-        "content": [{
+        "content": [
+            {
+            "identifier": "org.ekstep.desertflip",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/desertflip/logo.png",
+                "subject": "literacy_v2",
+                "description": "desertflip",
+                "name": "Desert Flip",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.desertflip",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/desertflip"
+        },{
             "identifier": "org.ekstep.debug",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
