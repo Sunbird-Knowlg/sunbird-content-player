@@ -170,23 +170,21 @@ ion-popover-view.fit ion-content {
 
 .cover-page-title {
     text-transform: uppercase;
-    white-space: nowrap; 
+    
     overflow: hidden;
     padding: 0 2%;
     text-overflow: ellipsis;
-    
-    position: absolute;
+    /* position: absolute; */
     width: 100%;
-    top: 23%;
-   /* display: -webkit-box;*/
+    margin-top: 10%;
+    display: -webkit-box;
     -webkit-box-orient: vertical;
     height: 24%;
     -webkit-line-clamp: 2;
     font-size: 10vh;
     -webkit-text-stroke: 0.2vh #00cccc;
     z-index: 0;
-    /* text-shadow: -3px 3px 0 white, 3px -3px 0 white, -6px 6px 0 yellow, 6px -6px 0 yellow, -9px 9px 0 #01ac8a, -9px -9px 0 #01ac8a; */
-}
+    /* text-shadow: -3px 3px 0 white, 3px -3px 0 white, -6px 6px 0 yellow, 6px -6px 0 yellow, -9px 9px 0 #01ac8a, -9px -9px 0 #01ac8a; */}
 
 .gc-text-elipsis{
     text-overflow: ellipsis;
