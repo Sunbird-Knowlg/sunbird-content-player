@@ -51,12 +51,35 @@
                     "name": "Receptive Vocabulary",
                     "objectType": "Concept"
                 }],
-                "identifier": "org.ekstep.showcase.HTMLContent",
+                "identifier": "do_20043647",
                 "grayScaleAppIcon": null,
                 "pkgVersion": 1
             },
             "isAvailable": true,
             "path": "fixture-stories/HTMLContent"
+        },{
+            "identifier": "org.ekstep.showcase.HTMLContent2",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/HTMLContent/logo.png",
+                "subject": "literacy_v2",
+                "description": "HTML Content2",
+                "name": "HTML Content2",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "do_20045479",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/HTMLContent2"
         },{
             "identifier": "org.ekstep.showcase.video",
             "mimeType": "application/vnd.ekstep.ecml-archive",

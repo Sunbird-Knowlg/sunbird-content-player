@@ -7,9 +7,8 @@
    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 </head>
 <body>
-  <h1>HTML Content</h1>
-  <p>This acts like Game Launcher</p>
-  <input type="button" value="Launch Another HTML content" onclick="launchAnotherHTMLContent()" />
+  <h1>HTML Content2</h1>
+  <p>Actual HTML Game or Content</p>
   <!-- <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/underscore.js"></script>
     <script src="assets/js/genieservices.js"></script>
@@ -93,7 +92,7 @@
         console.log("ContentID", contID);
 
         // API call to get user details
-        getCurrentUser(); 
+        // getCurrentUser(); 
 
         // API call to get Content details
         getContentMetadata(contID, function(resp){
@@ -110,7 +109,7 @@
 
     function launchAnotherHTMLContent(anotherContId){
       if("undefined" == typeof anotherContId){
-        anotherContId = "do_20045479"
+        anotherContId = "org.ekstep.showcase.HTMLContent2"
       }
 
       //Get new content data from GenieService
@@ -177,7 +176,6 @@
     }
 
     var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
-
     if (!isMobile) {
       //window.onload = init;
 
