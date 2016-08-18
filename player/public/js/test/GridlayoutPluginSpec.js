@@ -12,7 +12,7 @@ describe('Gridlayout Plugin test cases', function() {
             },
             addChild: function() {}
         }
-        var mydata = {
+        var data = {
             "grid": {
                 "cols": "2",
                 "h": "20",
@@ -46,12 +46,11 @@ describe('Gridlayout Plugin test cases', function() {
         };
 
         Renderer.theme = { _currentStage: '' };
-        this.plugin = PluginManager.invoke('grid', mydata, parent);
-        this.layoutPlugin = PluginManager.invoke()
+        this.plugin = PluginManager.invoke('grid', data, parent);
+
         spyOn(this.plugin,'getTableProperties').and.callThrough()
         spyOn(this.plugin,'generateLayout').and.callThrough()
         done();
-         /*console.log("grid",this.plugin._self);*/
     });
 
     it('Gridlayout plugin initPlugin', function() {
@@ -64,8 +63,6 @@ describe('Gridlayout Plugin test cases', function() {
          expect(this.plugin._self.iterate).not.toBeNull();
     });
     it('Gridlayout plugin common attributes checking',function(){
-       /* console.log(this.plugin._self.x,"tet")*/
-
         expect(this.plugin._self.x).toBeDefined();
         expect(this.plugin._self.y).toBeDefined();
         expect(this.plugin._self.x).not.toBeNull();

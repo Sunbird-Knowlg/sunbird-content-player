@@ -1,25 +1,6 @@
 describe('Div Plugin test cases', function() {
 
     beforeEach(function(done) {
-    /*    var themeData = {
-            canvasId: "canvas",
-            startStage: "splash",
-            manifest: {
-                media: [
-                    { id: 'sringeri', src: 'sringeri.png', type: 'image' },
-                    { id: 'splash_audio', src: 'splash.ogg', type: 'audio' }
-                ]
-            },
-            stage: [
-                { id: "splash", extends: "splash1", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' }, iterate: "assessment", var: "item" },
-                { id: "splash1", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } },
-                { id: "splash2", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } }
-            ],
-
-            div: [
-                { id: "one", x: "10", y: "20", w: "10", h: "10" }
-            ]
-        }*/
         var parent = {
             dimensions: function() {
                 return {
@@ -32,24 +13,43 @@ describe('Div Plugin test cases', function() {
             addChild: function() {}
         }
         var data = data || {
-
-            "x": 0,
-            "y": 0,
-            "w": 100,
-            "h": 100,
-            "id": "one",
-            "postion": "absolute"
+            "fontsize": "10",
+            "h": "50",
+            "id": "testDiv",
+            "style": "color:red; text-align:center;",
+            "w": "40",
+            "x": "30",
+            "y": "73"
         }
-       /* this.theme = new ThemePlugin(themeData);
-        this.theme.start('js/test/assets/');*/
-        this.plugin = PluginManager.invoke('div', data, parent/*, "splash", this.theme*/);
+        setFixtures('<div id="gameArea"><canvas id="gameCanvas" width="1366" height="768"></canvas></div>');
+        this.plugin = PluginManager.invoke('div', data, parent);
+        spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'registerEvents').and.callThrough();
-
+        spyOn(this.plugin, '_triggerEvent').and.callThrough();
 
         done();
     });
 
-    it('Div plugin init attribute validation', function() {
+    it('Gridlayout plugin initPlugin function call', function() {
+        this.plugin.initPlugin({ primary: true });
+        expect(this.plugin.initPlugin).toHaveBeenCalled();
+        expect(this.plugin.initPlugin.calls.count()).toEqual(1);
+    });
+
+    it('Div plugin registerEvents function call validation', function() {
+        this.plugin.registerEvents('testDiv');
+        expect(this.plugin.registerEvents).toHaveBeenCalled();
+        expect(this.plugin.registerEvents.calls.count()).toEqual(1);
+
+    });
+
+    it('Gridlayout plugin _triggerEvent function call', function() {
+        this.plugin._triggerEvent();
+        expect(this.plugin._triggerEvent).toHaveBeenCalled();
+        expect(this.plugin._triggerEvent.calls.count()).toEqual(1);
+    });
+
+    xit('Div plugin init attribute validation', function() {
         expect(this.plugin._self.x).not.toBeNull();
         expect(this.plugin._self.y).not.toBeNull();
 
@@ -58,7 +58,7 @@ describe('Div Plugin test cases', function() {
         expect(this.plugin._self.h).not.toBeNull();
     });
     
-    it('Div plugin postion validation', function() {
+    xit('Div plugin postion validation', function() {
         expect(this.plugin._self.position).not.toBeNull();
         expect(false).toEqual(this.plugin._self.position == "absolute");
     });
@@ -70,12 +70,7 @@ describe('Div Plugin test cases', function() {
         expect(true).toEqual(this.plugin._render == true);
 
     });*/
-    it('Div plugin registerEvents function call validation', function() {
-        this.plugin.registerEvents();
-        expect(this.plugin.registerEvents).toHaveBeenCalled();
-        expect(this.plugin.registerEvents.calls.count()).toEqual(1);
-
-    });
+    
 
 
 

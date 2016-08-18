@@ -1,28 +1,6 @@
 describe('MTF Plugin test cases', function() {
 
     beforeEach(function(done) {
-     /*   var themeData = {
-            canvasId: "canvas",
-            startStage: "splash",
-            manifest: {
-                media: [
-                    { id: 'sringeri', src: 'sringeri.png', type: 'image' },
-                    { id: 'splash_audio', src: 'splash.ogg', type: 'audio' }
-                ]
-            },
-             controller: {
-                    name: "funtime",
-                    type: "data",
-                    id: "mtf"
-                },
-            
-            stage: [
-                { id: "splash", extends: "splash1", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } },
-                { id: "splash1", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } },
-                { id: "splash2", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } }
-            ]
-        };*/
-
         var parent = {
             dimensions: function() {
                 return {
