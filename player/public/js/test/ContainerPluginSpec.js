@@ -22,12 +22,16 @@ describe('Container Plugin test cases', function() {
         };
         Renderer.theme = { _currentStage: '' };
         this.plugin = PluginManager.invoke('g', data, parent);
+        spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'refresh').and.callThrough();
         done();
     });
 
     it('Container plugin initPlugin', function() {
         expect(true).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
+        this.plugin.initPlugin({ primary: true });
+        expect(this.plugin.initPlugin).toHaveBeenCalled();
+        expect(this.plugin.initPlugin.calls.count()).toEqual(1);
     });
 
     it('Container plugin refrsh', function() {
@@ -52,7 +56,4 @@ describe('Container Plugin test cases', function() {
         expect(this.plugin._self.h).not.toBeNull();
         expect(this.plugin._self.w).not.toBeNull();
     });
-
-
-
 });

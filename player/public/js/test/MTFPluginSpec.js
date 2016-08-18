@@ -50,11 +50,40 @@ describe('MTF Plugin test cases', function() {
         this.theme.start('js/test/assets/');
         this.theme.start('js/test/items/');*/
         this.plugin = PluginManager.invoke('mtf', data, parent/*, "splash", this.theme*/);
+        spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'getLhsOption').and.callThrough();
         spyOn(this.plugin, 'setAnswer').and.callThrough();
+        spyOn(this.plugin, 'removeAnswer').and.callThrough();
 
         done();
     });
+    
+    it('MTF plugin initPlugin', function() {
+        this.plugin.initPlugin({ primary: true });
+        expect(this.plugin.initPlugin).toHaveBeenCalled();
+        expect(this.plugin.initPlugin.calls.count()).toEqual(1);
+    });
+
+    it('MTF plugin getLhsOption', function() {
+        this.plugin.getLhsOption({ primary: true });
+        expect(this.plugin.getLhsOption).toHaveBeenCalled();
+        expect(this.plugin.getLhsOption.calls.count()).toEqual(1);
+    });
+
+
+    xit('MTF plugin setAnswer', function() {
+        this.plugin.setAnswer({ primary: true });
+        expect(this.plugin.setAnswer).toHaveBeenCalled();
+        expect(this.plugin.setAnswer.calls.count()).toEqual(1);
+    });
+
+    xit('MTF plugin removeAnswer', function() {
+        this.plugin.removeAnswer({ primary: true });
+        expect(this.plugin.removeAnswer).toHaveBeenCalled();
+        expect(this.plugin.removeAnswer.calls.count()).toEqual(1);
+    });
+
+
 
     it('MTF plugin container field validation', function() {
         expect(true).toEqual(this.plugin._isContainer == true);

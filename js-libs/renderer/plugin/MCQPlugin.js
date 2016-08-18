@@ -63,7 +63,8 @@ var MCQPlugin = Plugin.extend({
     },
     isMultiSelect: function() {
         var ansLength = 0;
-        var options = this._controller.getModelValue("options");
+
+        var options = this._controller ? this._controller.getModelValue("options") : undefined;
         if (options) {
             ansLength = _.filter(options, function(option) {
                 return option.answer == true;
