@@ -6,8 +6,72 @@ describe('Image Plugin test cases', function() {
                 "media": [{
                     "id": "validate",
                     "src": "https://ekstep-public.s3.amazonaws.com/preview/dev/img/icons/splash.png",
+                    "type": "image",
+                    "assetId": "domain_38852"
+                }, {
+                    "id": "popupTint",
+                    "src": "https://ekstep-public.s3.amazonaws.com/preview/dev/img/icons/splash.png",
+                    "type": "image",
+                    "assetId": "domain_38606"
+                }, {
+                    "id": "goodjobBg",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/goodjobBg_1460727428389.png",
+                    "type": "image",
+                    "assetId": "domain_38939"
+                }, {
+                    "id": "retryBg",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/retryBg_1460727370746.png",
+                    "type": "image",
+                    "assetId": "domain_38938"
+                }, {
+                    "id": "retry_audio",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/retry_1460636610607.mp3",
+                    "type": "sound",
+                    "assetId": "domain_38624"
+                }, {
+                    "id": "goodjob_audio",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/goodJob_1460636677521.mp3",
+                    "type": "sound",
+                    "assetId": "domain_38625"
+                }, {
+                    "id": "next",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/btn_back_1461401700215.png",
+                    "type": "image",
+                    "assetId": "domain_40358"
+                }, {
+                    "id": "previous",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/btn_back_1461401700215.png",
+                    "type": "image",
+                    "assetId": "domain_40359"
+                }, {
+                    "id": "submit",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/icon_submit_1459243202199.png",
+                    "type": "image",
+                    "assetId": "domain_14524"
+                }, {
+                    "id": "home",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/icon_home_1459242981364.png",
+                    "type": "image",
+                    "assetId": "domain_14519"
+                }, {
+                    "id": "reload",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/icon_reload_1459243110661.png",
+                    "type": "image",
+                    "assetId": "domain_14522"
+                }, {
+                    "id": "icon_hint",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/icon_hint_1454918891133.png",
+                    "type": "image",
+                    "assetId": "domain_799"
+                }, {
+                    "id": "bg",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/background_1458729298020.png",
                     "type": "image"
-
+                }, {
+                    "id": "domain_665",
+                    "type": "image",
+                    "src": "https://sandbox-community.ekstep.in/assets/public/content/ekstep-placeholder-blue-eye1_1454412631459.png",
+                    "assetId": "domain_665"
                 }]
             },
             "startStage": "scene1",
@@ -35,29 +99,6 @@ describe('Image Plugin test cases', function() {
                     "editable": true,
                     "asset": "validate",
                     "z-index": 1
-                }, {
-                    "event": {
-                        "action": {
-                            "type": "command",
-                            "command": "transitionTo",
-                            "asset": "validate",
-                            "param": "next",
-                            "effect": "fadein",
-                            "direction": "left",
-                            "ease": "linear",
-                            "duration": 500
-                        },
-                        "type": "click"
-                    },
-                    "asset": "next",
-                    "x": 93,
-                    "y": 3,
-                    "w": 5,
-                    "h": 8.3,
-                    "id": "next",
-                    "visible": true,
-                    "editable": true,
-                    "z-index": 100
                 }],
                 "text": [{
                     "x": 39.30555555555556,
@@ -103,14 +144,14 @@ describe('Image Plugin test cases', function() {
                     "h": 34.66666666666667,
                     "visible": true,
                     "editable": true,
-                    "asset": "validate",
+                    "asset": "domain_665",
                     "z-index": 1
                 }, {
                     "event": {
                         "action": {
                             "type": "command",
                             "command": "transitionTo",
-                            "asset": "validate",
+                            "asset": "theme",
                             "param": "previous",
                             "effect": "fadein",
                             "direction": "right",
@@ -119,7 +160,7 @@ describe('Image Plugin test cases', function() {
                         },
                         "type": "click"
                     },
-                    "asset": "validate",
+                    "asset": "previous",
                     "x": 2,
                     "y": 3,
                     "w": 5,
@@ -155,9 +196,8 @@ describe('Image Plugin test cases', function() {
                 "g": []
             }]
         }
-
     };
-    startRenderer(data);
+  /*startRenderer(data);*/
     beforeEach(function(done) {
         var parent = {
             dimensions: function() {
