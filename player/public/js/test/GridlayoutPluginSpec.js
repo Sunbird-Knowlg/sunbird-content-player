@@ -1,4 +1,5 @@
 describe('Gridlayout Plugin test cases', function() {
+
     beforeEach(function(done) {            
         var parent = {
             dimensions: function() {
@@ -11,15 +12,41 @@ describe('Gridlayout Plugin test cases', function() {
             },
             addChild: function() {}
         }
-        var data = data || {
-        		"x": 0,
-                "y": 0,
-                "w": 50,
-                "h": 50 ,
-                "cols":"2"
+        var mydata = {
+            "grid": {
+                "cols": "2",
+                "h": "20",
+                "id": "grid1",
+                "count": "3",
+                "var": "user",
+                "w": "30",
+                "x": "32",
+                "y": "47",
+                "shape": {
+                    "fill": "#0099FF ",
+                    "h": "100",
+                    "stroke": "black",
+                    "type": "rect",
+                    "w": "100",
+                    "x": "0",
+                    "y": "0"
+                },
+                "text": {
+                    "color": "black",
+                    "fontsize": "600",
+                    "h": "90",
+                    "model": "user.name",
+                    "valign": "middle",
+                    "w": "90",
+                    "x": "40",
+                    "y": "10"
+                }
+            }
+
         };
+
         Renderer.theme = { _currentStage: '' };
-        this.plugin = PluginManager.invoke('grid', data, parent);
+        this.plugin = PluginManager.invoke('grid', mydata, parent);
         this.layoutPlugin = PluginManager.invoke()
         spyOn(this.plugin,'getTableProperties').and.callThrough()
         spyOn(this.plugin,'generateLayout').and.callThrough()
@@ -29,8 +56,8 @@ describe('Gridlayout Plugin test cases', function() {
 
     it('Gridlayout plugin initPlugin', function() {
      expect(false).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
-    /* console.log("grid",this.plugin._self);*/
-
+    
+    
     });
     it('Grid plugin iterate keyword availibality',function(){
          
@@ -51,7 +78,7 @@ describe('Gridlayout Plugin test cases', function() {
     });
 
      it('Gridlayout plugin getTableProperties function call', function() {
-        this.plugin.getTableProperties({ primary: true });
+        this.plugin.getTableProperties({ count: 10 });
         expect(this.plugin.getTableProperties).toHaveBeenCalled();
         expect(this.plugin.getTableProperties.calls.count()).toEqual(1);
     });
