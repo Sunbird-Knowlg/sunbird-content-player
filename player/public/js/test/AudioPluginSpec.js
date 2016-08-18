@@ -36,6 +36,13 @@ describe('Audio Plugin test cases', function() {
     it('Audio plugin render validation', function() {
         expect(true).toEqual(this.plugin._render == false);
     });
+    it('Audio plugin play controller', function() {
+        this.plugin.play({
+            asset: 'splash_audio'
+        });
+        expect(this.plugin.play).toHaveBeenCalled();
+        expect(this.plugin.play.calls.count()).toEqual(1);
+    });
     it('Audio plugin stop controller', function() {
         this.plugin.stop({
             asset: 'splash_audio'
