@@ -329,37 +329,37 @@ angular.module('genie-canvas.theme', [])
             close: $rootScope.imageBasePath + "cross_button.png"
             },*/
             goodJob: {
-                background: $rootScope.imageBasePath + "good_job_bg.png"
+                background: $rootScope.imageBasePath + "good_job_popup.png"
             },
             tryAgain: {
-                background: $rootScope.imageBasePath + "try_again_bg.png",
+                background: $rootScope.imageBasePath + "try_again_popup.png",
                 retry: $rootScope.imageBasePath + "retry_icon.png"
             },
             end: {
                 background: $rootScope.imageBasePath + "background.png"
             },
             popup: {
-                next: $rootScope.imageBasePath + "next_Green.png",
-                retry: $rootScope.imageBasePath + "retry_green.png",
-                skip: $rootScope.imageBasePath + "skip.png",
+                next: $rootScope.imageBasePath + "next_button_good_job_popup_.png",
+                retry: $rootScope.imageBasePath + "replay_button_try_again_popup_.png",
+                skip: $rootScope.imageBasePath + "next_button_try_again_popup_.png",
                 star: $rootScope.imageBasePath + "star.png",
                 credit_popup: $rootScope.imageBasePath + "popup.png"
             },
-            popup_kid: {
+           /* popup_kid: {
                 good_job: $rootScope.imageBasePath + "LEFT.png",
                 retry: $rootScope.imageBasePath + "Genie_ RETRY.png"
-            },
+            },*/
             popup_close: {
                 close_icon: $rootScope.imageBasePath + "close_popup.png",
             }
         };
 
         $scope.goodJob = {
-            body: '<div class="assess-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')"/></a></div></div>'
+            body: '<div class="assess-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p style="padding: 0%;">Next</p></div></div>'
         };
 
         $scope.tryAgain = {
-            body: '<div class="assess-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="popup-body"><a ng-click="retryAssessment(\'gc_retry\')" href="javascript:void(0);" ><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')"/></a></div></div>'
+            body: '<div class="assess-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="tryagain_retry_div"><a ng-click="retryAssessment(\'gc_retry\')" href="javascript:void(0);"><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><p style="padding:0%;">Replay</p></div><div class="tryagian_next_div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')" /></a><p style="padding: 0%;">Next</p></div></div></div>'
         };
 
         $scope.openMenu = function() {

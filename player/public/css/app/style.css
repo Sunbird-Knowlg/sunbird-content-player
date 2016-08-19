@@ -520,24 +520,31 @@ ion-popover-view.fit ion-content {
 }
 
 .popup-goodjob-next {
-    position: absolute;
-    width: 22%;
-    top: 36%;
-    left: 50%;
+    /*position: absolute;*/
+       width: 30%;
+        display: inline-block;
+    margin: 4% 4%;
+    /*top: 36%;
+    left: 50%;*/
 }
 
 .popup-retry {
-    position: absolute;
+    /*position: absolute;
     top: 12%;
-    left: 39%;
-    width: 30%;
+    left: 39%;*/
+    width: 35%;
+     display: inline-block;
+    margin: 4% 4%;
 }
 
 .popup-retry-next {
-    position: absolute;
-    width: 18%;
-    bottom: 10%;
-    right: 7%;
+    /*position: absolute;*/
+    width: 20%;
+    display: inline-block;
+    margin:2% 3%;
+   /* margin: 3% 4%;*/
+    /*bottom: 10%;
+    right: 7%;*/
 }
 
 .popup-overlay {
@@ -557,22 +564,49 @@ ion-popover-view.fit ion-content {
 
 .popup-body {
     position: absolute;
+    font-family: baloobhai;
+    font-size: 2vw;
+    top: 30%;
+    text-align: center;
+    width: 50%;
+    height: 40%;
+    left: 33%;
+    padding: 0;
+    margin: 10px;
+}
+.tryagain_retry_div{
+    position: absolute;
+    font-family: baloobhai;
+    font-size: 2vw;
+    top: 17%;
+    text-align: center;
+    width: 50%;
+    height: 40%;
+    left: 40%;
+    padding: 0;
+    margin: 10px;
+}
+.tryagian_next_div{
+       position: absolute;
+    font-family: baloobhai;
+    font-size: 2vw;
+    top: 55%;
+    text-align: center;
+    width: 50%;
+    height: 40%;
+    left: 65%;
+    padding: 0%;
+    
+}
+
+/*.popup-body {
+    position: absolute;
     top: 14%;
     width: 70%;
     height: 65%;
     left: 7%;
     padding: 0;
     margin: 10px;
-}
-
-.popup-body {
-    /*position: absolute;
-    top: 14%;
-    width: 70%;
-    height: 65%;
-    left: 7%;
-    padding: 0;
-    margin: 10px;*/
     position: absolute;
     top: 14%;
     width: 70%;
@@ -580,7 +614,7 @@ ion-popover-view.fit ion-content {
     left: 17%;
     padding: 0;
     margin: 10px;
-}
+}*/
 
 .credit-body-icon-font {
     width: 82%;
