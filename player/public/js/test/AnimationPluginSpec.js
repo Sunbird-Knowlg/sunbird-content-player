@@ -1,4 +1,4 @@
-describe('Audio manager test cases', function() {
+describe('Animation Plugin test cases', function() {
 
     // Img plugin is used for all the event manager specs. Make sure the specs of ImagePlugin are successfull
     beforeAll(function(done) {
@@ -18,33 +18,23 @@ describe('Audio manager test cases', function() {
             ]
         }
 
-        AnimationPlugin.init(themeData, '/js/test/assets/');
+        AnimationPlugin.init(themeData, '');
         done();
     });
 
-    it('Test Asset manager init', function() {
-        /*expect(AnimationPlugin.init).toHaveBeenCalled();
-        expect(AnimationPlugin.init.calls.count()).toEqual(1);*/
+    it('Animation Plugin init test', function() {
+        expect(AnimationPlugin.init).toHaveBeenCalled();
+        expect(AnimationPlugin.init.calls.count()).toEqual(1);
     });
 
-    /*it('Test Asset manager initStage', function(done) {
-        AssetManager.initStage('splash', null, null, function() {
-            expect(AssetManager.initStage).toHaveBeenCalled();
-            expect(AssetManager.initStage.calls.count()).toEqual(1);
-            done();
-        });
+    it('Animation Plugin initPlugin test', function() {
+        expect(AnimationPlugin.initPlugin).toHaveBeenCalled();
+        expect(AnimationPlugin.initPlugin.calls.count()).toEqual(0);
     });
 
-    it('Test Asset manager getAsset', function() {
-        expect(AssetManager.initStage).toHaveBeenCalled();
-        var img = AssetManager.getAsset('splash', 'sringeri');
-        // TODO: img.src is starting with blob:localhost (need to update with correct test case) 
-        //         - this is changed because of LoadQueue initialize changes.
-        // expect(img.src.indexOf('/js/test/assets/sringeri.png') > -1).toEqual(true);
-        var abuff = AssetManager.getAsset('splash', 'splash_audio')
-        // expect(abuff.length).toEqual(396901);
-        // expect(abuff.duration).toEqual(9.000022675736961);            
-    });*/
-
+    it('Animation Plugin animate test', function() {
+        expect(AnimationPlugin.animate).toHaveBeenCalled();
+        expect(AnimationPlugin.animate.calls.count()).toEqual(1);
+    });
    
 });

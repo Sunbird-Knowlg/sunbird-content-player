@@ -1,6 +1,9 @@
-describe('Set Plugin test cases', function() {
+/*Todo*/
 
-    beforeEach(function(done) {
+
+describe('set Plugin test cases', function() {
+
+     beforeEach(function(done) {
         var themeData = {
             canvasId: "canvas",
             startStage: "splash",
@@ -24,72 +27,57 @@ describe('Set Plugin test cases', function() {
                     w: 500,
                     h: 500
                 }
-            },
+            }, 
             addChild: function() {}
         }
         var data = data || {
-
-            "x": 0,
-            "y": 0,
-            "w": 50,
-            "h": 50,
-            "asset": "sringeri",
-            "parmaExpr":"ev-value"
-
+             
+                    param: "explore", scope: "content", value:"true"
+            
         }
-        this.theme = new ThemePlugin(themeData);
-        this.theme.start('js/test/assets/');
+        setFixtures('<div id="gameArea"><canvas id="gameCanvas" width="1366" height="768"></canvas></div>');
+        // this.theme = new ThemePlugin(themeData);
+        // this.theme.start('');
+
         this.plugin = PluginManager.invoke('set', data, parent, "splash", this.theme);
-        spyOn(this.plugin, 'replaceExpressions').and.callThrough();
-        spyOn(this.plugin, 'setParamValue').and.callThrough();
         spyOn(this.plugin, 'setParam').and.callThrough();
-        spyOn(this.plugin, 'getParam').and.callThrough();
+        spyOn(this.plugin, 'setParamValue').and.callThrough();
+        spyOn(this.plugin, 'replaceExpressions').and.callThrough();
 
         done();
-       /* console.log("param", this.plugin._self.param);*/
+        console.log("asset",asset);
+    });
+
+
+    it('Embed plugin container field validation', function() {
+        expect(true).toEqual(this.plugin._isContainer == false);
 
     });
 
-    it('Set plugin setParamValue function validation', function() {
-        this.plugin.setParamValue({ primary: true });
-        expect(this.plugin.setParamValue).toHaveBeenCalled();
-        expect(this.plugin.setParamValue.calls.count()).toEqual(1);
+    it('Embed plugin render field validation', function() {
+        expect(false).toEqual(this.plugin._render == true);
+
     });
-    it('Set plugin setParam function validation', function() {
-        this.plugin.setParam({ primary: true });
+
+    it('Set plugin setParam', function() {
+
+        this.plugin.setParam({param:"Param_name", value:"12", incr:12, scope:"stage", max:10});
         expect(this.plugin.setParam).toHaveBeenCalled();
         expect(this.plugin.setParam.calls.count()).toEqual(1);
     });
-    it(' param attribute validation', function() {
-        expect(this.plugin.param).not.toBeNull();
-    });
-    it("Scope attribute validation",function(){
-        expect(this.plugin.scope).not.toBeNull();
-    });
-    it("model attribute validation",function(){
-        expect(this.plugin.model).not.toBeNull();
 
-    });
-   
-    it("id attribute validation",function(){
-        expect(this.plugin.id).not.toBeNull();
+    xit('Set plugin getParam', function() {
 
-    })
-    it('Param key and paramExpr attribute validation',function(){
-        expect(this.plugin.paramKey).not.toBeNull();
-        expect(this.plugin.paramExpr).not.toBeNull();
-       
+        this.plugin.getParam("param");
+        expect(this.plugin.getParam).toHaveBeenCalled();
+        expect(this.plugin.getParam.calls.count()).toEqual(1);
     });
-    it('Set plugin _render validation',function(){
 
-       expect(false).toEqual(this.plugin._render == true);
+    it('Set plugin setParamValue', function() {
+
+        this.plugin.setParamValue("previous");
+        expect(this.plugin.setParamValue).toHaveBeenCalled();
+        expect(this.plugin.setParamValue.calls.count()).toEqual(1);
 
     });
-    it('Set plugin _isContainer validation',function(){
-
-       expect(true).toEqual(this.plugin._isContainer == false);
-
-    });
-    
-
 });

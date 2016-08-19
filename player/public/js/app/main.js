@@ -106,7 +106,7 @@ function goToCollection($state, id, pageId) {
 function backbuttonPressed() {
     var data = (Renderer.running || HTMLRenderer.running) ? {
         type: 'EXIT_CONTENT',
-        stageId: Renderer.theme._currentStage
+        stageId: Renderer.theme ? Renderer.theme._currentStage : ""
     } : {
         type: 'EXIT_APP'
     };
