@@ -104,6 +104,7 @@ function goToCollection($state, id, pageId) {
 
 
 function backbuttonPressed() {
+   
     var data = (Renderer.running || HTMLRenderer.running) ? {
         type: 'EXIT_CONTENT',
         stageId: Renderer.theme ? Renderer.theme._currentStage : ""
@@ -111,6 +112,7 @@ function backbuttonPressed() {
         type: 'EXIT_APP'
     };
     TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', data);
+    AudioManager.stopAll();
 }
 
 // TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
