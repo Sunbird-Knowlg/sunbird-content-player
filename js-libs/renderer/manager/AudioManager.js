@@ -78,7 +78,7 @@ AudioManager = {
     },
     stopAll: function(action) {
         createjs.Sound.stop();
-        EventManager.processAppTelemetry(action, 'LISTEN',instance, {subtype : "STOP_ALL"});
+        EventManager.processAppTelemetry({}, 'LISTEN','', {subtype : "STOP_ALL"});
     },
     reclaim: function() {
         // On devices, audio stops playing after resource limit is reached
