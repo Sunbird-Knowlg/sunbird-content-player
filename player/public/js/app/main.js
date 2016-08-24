@@ -197,6 +197,7 @@ function navigate(navType) {
             if(config.showEndPage) {
                 console.info("redirecting to endpage.");
                 window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+                AudioManager.stopAll();
             } else {
                 console.warn("Cannot move to end page of the content. please check the configurations..");
             }
