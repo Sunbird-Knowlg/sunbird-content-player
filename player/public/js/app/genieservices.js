@@ -156,15 +156,58 @@ genieservice_portal = {
         });
         });
     }
+};
 
+genieservice_HTMLdev = {
+    localData: {},
+    getCurrentUser: function() {
+        return new Promise(function(resolve, reject) {
+            var result = {};
+            result.status = "success";
+            result.data = {
+                "avatar": "resource1",
+                "gender": "male",
+                "handle": "handle1",
+                "uid": "8hjh3c4b7b47d570df0ec286bf7adc8ihhnjy",
+                "age": 6,
+                "standard": -1
+            };
+            resolve(result);
+        });
+    },
+    getContent: function(id) {
+         return new Promise(function(resolve, reject) {
+            var result = _.findWhere(genieservice_HTMLdev.localData.content, {"identifier": id});
+            resolve(result);
+        });
+    },
+    getLocalData: function(){
+       jQuery.getJSON("test/localData.json", function(json) {
+            genieservice_HTMLdev.localData = json;
+            console.log("LocalData json loaded", genieservice_HTMLdev.localData);
+        });
+    }
 };
 if ("undefined" == typeof cordova) {
-    if(isbrowserpreview) {
+    if("undefined" == typeof isbrowserpreview) {
+        if("undefined" == typeof AppConfig){
+            genieservice = genieservice_HTMLdev;
+            genieservice.getLocalData();
+            console.log("Local genieservice", genieservice);
+        }else{
+             genieservice = genieservice_web;
+        }
+    }
+    else{
+        genieservice = genieservice_portal;
+        console.log("Portal genieservice", genieservice);
+    }
+    /*if(isbrowserpreview) {
         genieservice = genieservice_portal;
     }
     else{
         genieservice = genieservice_web;
-    }
+    }*/
 }
 
 telemetry_web = {

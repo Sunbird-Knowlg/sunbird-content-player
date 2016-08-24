@@ -35,7 +35,7 @@
             "isAvailable": true,
             "path": "fixture-stories/mar8"
         },{
-            "identifier": "org.ekstep.showcase.HTMLContent",
+            "identifier": "do_20043647",
             "mimeType": "application/vnd.ekstep.html-archive",
             "localData": {
                 "questionnaire": null,
@@ -51,6 +51,13 @@
                     "name": "Receptive Vocabulary",
                     "objectType": "Concept"
                 }],
+                "config": {
+                    "languageL2": "en",
+                    "sid": "de305d54-75b4-431b-adb2-eb6b9e546013",
+                    "uid": "123e4567-e89b-12d3-a456-426655440000",
+                    "did": "ff305d54-85b4-341b-da2f-eb6b9e5460fa", 
+                    "level": "5"
+                },
                 "identifier": "do_20043647",
                 "grayScaleAppIcon": null,
                 "pkgVersion": 1
@@ -58,7 +65,7 @@
             "isAvailable": true,
             "path": "fixture-stories/HTMLContent"
         },{
-            "identifier": "org.ekstep.showcase.HTMLContent2",
+            "identifier": "do_20045479",
             "mimeType": "application/vnd.ekstep.html-archive",
             "localData": {
                 "questionnaire": null,
@@ -74,6 +81,13 @@
                     "name": "Receptive Vocabulary",
                     "objectType": "Concept"
                 }],
+                "config": {
+                    "languageL2": "en",
+                    "sid": "de305d54-75b4-431b-adb2-eb6b9e546013",
+                    "uid": "123e4567-e89b-12d3-a456-426655440000",
+                    "did": "ff305d54-85b4-341b-da2f-eb6b9e5460fa", 
+                    "level": "5"
+                },
                 "identifier": "do_20045479",
                 "grayScaleAppIcon": null,
                 "pkgVersion": 1

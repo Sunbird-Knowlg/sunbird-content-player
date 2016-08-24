@@ -336,7 +336,6 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         $scope.init = function(){   
             if ($stateParams.itemId) {
             $scope.item = $rootScope.content;
-
             if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                 // HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
                 //     jQuery('#loading').hide();
@@ -355,7 +354,10 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 //         //window.location.replace(path);                    
                 //     }
                 // });
-                var path = $scope.item.baseDir + '/index.html?eksCid='+ $stateParams.itemId;
+                var path = $scope.item.baseDir + '/index.html?cid='+ $stateParams.itemId;
+                if($scope.item.config){
+                    path += "&config=" + JSON.stringify($scope.item.config);
+                }
                 if (window.cordova){
                     console.log("Opening through cordova custom webview.");
                     //webview.Show(path);

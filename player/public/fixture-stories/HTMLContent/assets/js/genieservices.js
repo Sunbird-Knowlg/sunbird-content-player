@@ -1,14 +1,5 @@
-genieservice_web = {
-    api: {
-        basePath: '/genie-canvas/v2/',
-        contentList: 'content/list',
-        getFullAPI: function(specificApi) {
-            return this.basePath + specificApi;
-        },
-        getContentList: function() {
-            return this.getFullAPI(this.contentList);
-        }
-    },
+genieservice_HTMLdev = {
+    localData: {},
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
@@ -24,60 +15,50 @@ genieservice_web = {
             resolve(result);
         });
     },
-    getMetaData: function() {
-        return new Promise(function(resolve, reject) {
-            var result = {};
-            result = {
-                "flavor": "sandbox",
-                "version": "1.0.1"
-            };
+    getContent: function(id) {
+         return new Promise(function(resolve, reject) {
+            var result = _.findWhere(genieservice_HTMLdev.localData.content, {"identifier": id});
             resolve(result);
         });
     },
-    getContent: function(id, url) {
-        if(isbrowserpreview) {
-            return new Promise(function(resolve, reject) {
-                if(content) {
-                    resolve(content.metadata);
-                } 
-            });
-        } else {
-            return new Promise(function(resolve, reject) {
-                    jQuery.post(genieservice_web.api.getContentList(), function(resp) {
-                        var result = {};
-                        if (!resp.error) {
-                            result.list = resp;
-                            var item = _.findWhere(resp.content, { "identifier": id });
-                            resolve(item);
-                        } else {
-                            
-                            reject(resp);
-                        }
-                    })
-                    .fail(function(err) {
-                        reject(err);
-                    });
-                });
-            }     
-    },
-    getContentList: function(filter) {
-        return new Promise(function(resolve, reject) {
-            jQuery.post(genieservice_web.api.getContentList(), function(resp) {
-                    var result = {};
-                    if (!resp.error) {
-                        result.list = resp.content;
-                        resolve(result);
-                    } else {
-                        reject(resp);
-                    }
-                })
-                .fail(function(err) {
-                    reject(err);
-                });
+    getLocalData: function(){
+       jQuery.getJSON("test/localData.json", function(json) {
+            genieservice_HTMLdev.localData = json;
+            console.log("LocalData json loaded", genieservice_HTMLdev.localData);
         });
     },
-    setAPIEndpoint: function(endpoint) {
-        return endpoint;
+    languageSearch: function(inputFilter){
+        return new Promise(function(resolve, reject) {
+            resolve(genieservice_HTMLdev.localData.languageSearch);
+        });
+    },
+    launchContent:function(contentId, config){
+        if("undefined" == typeof contentId){
+            contentId = "do_20045479"
+        }
+
+        //Get new content data from GenieService
+        var newContent = {};
+        genieservice_HTMLdev.getContent(contentId)
+        .then(function(resp){
+            newContent.metadata = resp;
+            console.log("Launch new HTML content..");
+            if (newContent && newContent.metadata.mimeType && newContent.metadata.mimeType == 'application/vnd.ekstep.html-archive') {
+              // Launching new content 
+              var basePath = (newContent.metadata.path.charAt(newContent.metadata.path.length-1) == '/')? newContent.metadata.path.substring(0, newContent.metadata.path.length-1): newContent.metadata.path;
+              var path = "http://"+ location.host + "/" + basePath; 
+
+              newContent.metadata.baseDir =  path;
+              var contentUrl =  newContent.metadata.baseDir + '/index.html?cid='+ contentId + "&config="+ config;
+              console.log("Opening through window.open");
+              window.open(contentUrl, '_self');              
+            }else{
+
+            }
+        })
+        .catch(function(err){
+            console.log("Failed", err);
+        })
     }
 };
 genieservice_portal = {
@@ -155,15 +136,46 @@ genieservice_portal = {
             }
         });
         });
+    },
+    launchContent:function(contentId){
+        if("undefined" == typeof contentId){
+            contentId = "do_20045479"
+        }
+
+        //Get new content data from GenieService
+        var newContent = {};
+        genieservice_HTMLdev.getContent(contentId)
+        .then(function(resp){
+            newContent.metadata = resp;
+            console.log("Launch new HTML content..");
+            if (newContent && newContent.metadata.mimeType && newContent.metadata.mimeType == 'application/vnd.ekstep.html-archive') {
+              // Launching new content 
+              var basePath = (newContent.metadata.path.charAt(newContent.metadata.path.length-1) == '/')? newContent.metadata.path.substring(0, newContent.metadata.path.length-1): newContent.metadata.path;
+              var path = "http://"+ location.host + "/" + basePath; 
+
+              newContent.metadata.baseDir =  path;
+              var contentUrl =  newContent.metadata.baseDir + '/index.html?eksCid='+ contentId;
+              console.log("Opening through window.open");
+              window.open(contentUrl, '_self');              
+            }
+        })
+        .catch(function(err){
+            console.log("Failed", err);
+        })
     }
 
 };
 if ("undefined" == typeof cordova) {
-    if("undefined" != typeof isbrowserpreview) {
-        genieservice = genieservice_web;
+    if("undefined" == typeof isbrowserpreview) {
+        if("undefined" == typeof AppConfig){
+            genieservice = genieservice_HTMLdev;
+            genieservice.getLocalData();
+            console.log("Local genieservice", genieservice);
+        }
     }
     else{
         genieservice = genieservice_portal;
+         console.log("Portal genieservice", genieservice);
     }
 }
 

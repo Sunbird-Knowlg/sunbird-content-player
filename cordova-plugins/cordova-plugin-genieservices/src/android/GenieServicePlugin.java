@@ -124,7 +124,9 @@ public class GenieServicePlugin extends CordovaPlugin {
             } else {
                 content.filter(filter, new GenieServicesListResponse(callbackContext));
             }
-        } else if("endGenieCanvas".equals(action)) {
+        } else if(action.equals("languageSearch")) {
+            return true;   
+        }else if("endGenieCanvas".equals(action)) {
             System.out.println("*** Activity:" + activity);
             activity.finish();
         }

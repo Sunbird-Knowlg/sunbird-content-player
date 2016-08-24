@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>HTML Content</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: filesystem:; style-src 'self' 'unsafe-inline';  script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src *;" >
+   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+</head>
+<body>
+  <h1>HTML Content</h1>
+  <p>This acts like Game Launcher</p>
+  <input type="button" value="Launch Another HTML content" onclick="launchAnotherHTMLContent()" />
+  <!-- <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/underscore.js"></script>
+    <script src="assets/js/genieservices.js"></script>
+    <script src="assets/js/telemetry.min.js"></script> -->
+
+  <!--  <script src="///android_asset/www/js/thirdparty/underscore.js"></script>
+  <script src="///android_asset/www/cordova.js"></script>
+  <script src="///android_asset/www/js/telemetry.min.js"></script> -->
+  
+  <script type="text/javascript">
+    // An array of scripts you want to load in order
+    var scriptLibrary = [];
+
+    var content = {};
+    var isbrowserpreview = false;
+
+    /* Cordova plugins can access only on device ready state */
+    function onDeviceReady(event){
+      console.log("onDeviceReady()", event);
+     
+      init();
+    }
+    document.addEventListener("deviceready", onDeviceReady, false);
+   
+   
+    /* To get content metadata*/
+    function getContentMetadata(contID, callback){
+      if(undefined == contID) {
+        console.warn("ContentId is undefined..");
+        return;
+      }
+
+      // Calling API to get Cotennt metadata
+      genieservice.getContent(contID)
+      .then(function(metadata) {
+        var contData = {};
+        if(metadata){
+          contData['metadata'] = metadata;          
+        }
+       
+        if(callback){
+          callback(contData)
+        }
+        //return contData;
+      })
+      .catch(function(err) {
+          console.error("Get content metadata failed", err);
+          //reject(err);
+      });
+    }
+
+    /*To get Current User details*/
+    function getCurrentUser(){
+       genieservice.getCurrentUser()
+      .then(function(result) {
+        if (result && result.status == 'success') {
+            if (result.data.uid) {
+                var user = result.data;
+                document.body.innerHTML += "<p><b>User id:</b> "+user.uid+ "</p><p><b>Age:</b> "+user.age+"</p>";
+                console.log("Login user", user);
+            } else {
+              console.log("Login user uid not found", result);
+            }
+        } else {
+          console.log("Login user no data", result);
+        }
+      })
+      .catch(function(err) {
+        console.log("Login user error", err);
+      });
+    }
+
+    function init() {
+      TelemetryService.init({id:"game1", ver:"2.0"}, {id:"34", name:"Vid"}).then(function() {
+
+        TelemetryService.start("game1", "2.0");
+        TelemetryService.interact("TOUCH", "game1", "TOUCH", { stageId: "HTML Page", subtype: "ContentID"});
+
+        var url = window.location.href;
+        var contID = /eksCid=([^&]+)/.exec(url)[1];
+        console.log("ContentID", contID);
+
+        // API call to get user details
+        getCurrentUser(); 
+
+        // API call to get Content details
+        getContentMetadata(contID, function(resp){
+          console.log("Callback success..", resp);
+          content = resp;
+          console.log("Content", content);
+          document.body.innerHTML += "<p><b>Content id:</b> "+content.metadata.identifier+ "</p><p><b>Name:</b> "+content.metadata.localData.name+"</p>";
+        });        
+      })
+      .catch(function(error){
+        console.log(error);
+      });
+    }
+
+    function launchAnotherHTMLContent(anotherContId){
+      if("undefined" == typeof anotherContId){
+        anotherContId = "do_20045479"
+      }
+
+      //Get new content data from GenieService
+      var newContent = {};
+      getContentMetadata(anotherContId, function(resp){
+        newContent = resp;
+        console.log("Launch new HTML content..");
+        if (newContent && newContent.metadata.mimeType && newContent.metadata.mimeType == 'application/vnd.ekstep.html-archive') {
+          // Launching new content 
+          // Launching new content 
+          var basePath = (newContent.metadata.path.charAt(newContent.metadata.path.length-1) == '/')? newContent.metadata.path.substring(0, newContent.metadata.path.length-1): newContent.metadata.path;
+          var path = ("undefined" != typeof cordova)? "file://" + basePath : "http://"+ location.host + "/" + basePath; 
+
+          newContent.metadata.baseDir =  path;
+          //var basePath = newContent.metadata.baseDir ? newContent.metadata.baseDir: newContent.metadata.path;
+          /*if(newContent.metadata.baseDir){
+            basePath = newContent.metadata.baseDir
+          }*/
+          var contentUrl =  newContent.metadata.baseDir + '/index.html?eksCid='+ anotherContId;
+          if (window.cordova){
+              console.log("Opening through cordova custom webview.");
+              //webview.Show(contentUrl);
+              cordova.InAppBrowser.open(contentUrl, '_self', 'location=no,hardwareback=no');
+              //window.open(contentUrl, '_self');   
+          }else{
+              console.log("Opening through window.open");
+              window.open(contentUrl, '_self');
+              //window.location.replace(contentUrl);                    
+          }
+        }
+      });  
+    }
+
+    
+
+    /*
+     * Reference: Dynamically Loading JavaScript Files In a Sequence
+     * http://www.frontendjunkie.com/2012/04/dynamically-loading-javascript-files-in.html
+     * https://github.com/newbreedofgeek/dynamic-js-script-loader/blob/master/script.html
+     */
+
+    // Main function that load the dynamic sequential loading of the JS files.
+    function loadJsFilesSequentially(scriptsCollection, startIndex, librariesLoadedCallback) {
+        if (scriptsCollection[startIndex]) {
+            var fileref = document.createElement('script');
+            fileref.setAttribute("type","text/javascript");
+            fileref.setAttribute("src", scriptsCollection[startIndex]);
+            fileref.onload = function(){
+                startIndex = startIndex + 1;
+                loadJsFilesSequentially(scriptsCollection, startIndex, librariesLoadedCallback)
+            };
+            document.getElementsByTagName("head")[0].appendChild(fileref)
+        }
+        else {
+            librariesLoadedCallback();
+        }
+    }
+
+    // All files are loaded so start the program.
+    function startProgram(){
+        //alert("All JS files have been loaded and are now available! - View your console for more debug info.");
+        // You can now call functions from those JS files.
+        init();
+    }
+
+    var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
+
+    if (!isMobile) {
+      //window.onload = init;
+
+      scriptLibrary.push("assets/js/jquery.min.js");
+      scriptLibrary.push("assets/js/underscore.js");
+      scriptLibrary.push("assets/js/genieservices.js");
+      scriptLibrary.push("assets/js/telemetry.min.js");
+    }else{
+      scriptLibrary.push("///android_asset/www/js/thirdparty/underscore.js");
+      scriptLibrary.push("///android_asset/www/cordova.js");
+      scriptLibrary.push("///android_asset/www/js/telemetry.min.js");
+    }
+
+   // Pass the array of scripts you want loaded in order and a callback function to invoke when its done.
+    loadJsFilesSequentially(scriptLibrary, 0, function(){
+        // application is "ready to be executed"
+        if(!isMobile){
+          init();
+        } 
+    });
+    
+  </script>
+</body>
+</html>
