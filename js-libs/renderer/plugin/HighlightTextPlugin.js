@@ -87,7 +87,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
                     };
                 } else {
                     this._time = Date.now();
-                    this._listener = function() {
+                     this._listener = function() {
                         if (!instance._isPaused) {
                             instance._position.current = Date.now() - instance._time + instance._position.pause;
                             instance._highlight();
@@ -167,15 +167,18 @@ var HighlightTextPlugin = HTMLPlugin.extend({
     },
     _highlight: function() {
         var instance = this;
+      
         if (instance._position.current && instance._isPlaying) {
             var matches = _.filter(instance._timings, function(time) {
                 return (time >= instance._position.previous && time < instance._position.current);
             });
+         
             if (matches.length >0) {
                 _.each(matches, function(match) {
                     var index = instance._timings.indexOf(match);
                     var wordId = instance.getWordId(index);
                     instance._removeHighlight();
+                    console.info(wordId,"wordid")
                     instance._addHighlight(wordId);
                 });
             };
@@ -203,10 +206,17 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         var htmlText = "";
         var words = text.split(' ');
         this._wordIds = [];
-        for(i=0;i<words.length;i++) {
-            var wordId = this.getWordId(i);
-            this._wordIds.push(wordId);
-            htmlText += "<span id=\""+ wordId +"\" class=\"gc-ht-word\">" + words[i] + "</span> ";
+        var index = 0;
+        for (i = 0; i < words.length; i++) {
+            if (words[i] === '') {
+                htmlText += "<span class=\"gc-ht-word\">&nbsp;</span> ";
+            } else {
+                var wordId = this.getWordId(index);
+                this._wordIds.push(wordId);
+                htmlText += "<span id=\"" + wordId + "\" class=\"gc-ht-word\">" + words[i] + "</span> ";
+                index++;
+            }
+
         }
         return htmlText;
     },
