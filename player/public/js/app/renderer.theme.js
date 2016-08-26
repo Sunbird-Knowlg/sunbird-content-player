@@ -343,7 +343,8 @@ angular.module('genie-canvas.theme', [])
                 retry: $rootScope.imageBasePath + "replay_button_try_again_popup_.png",
                 skip: $rootScope.imageBasePath + "next_button_try_again_popup_.png",
                 star: $rootScope.imageBasePath + "star.png",
-                credit_popup: $rootScope.imageBasePath + "popup.png"
+                credit_popup: $rootScope.imageBasePath + "popup.png",
+                goodjob_stars:$rootScope.imageBasePath+"img_stars.png"
             },
            /* popup_kid: {
                 good_job: $rootScope.imageBasePath + "LEFT.png",
@@ -355,7 +356,7 @@ angular.module('genie-canvas.theme', [])
         };
 
         $scope.goodJob = {
-            body: '<div class="assess-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p style="padding: 0%;">Next</p></div></div>'
+            body: '<div class="assess-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><img class="goodjob_stars" ng-src="{{ icons.popup.goodjob_stars }}"/><a href="javascript:void(0);" ng-click="hidePopup()"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p style="padding: 0%;position: absolute;left: 64%;bottom: 35%;">Next</p></div></div>'
         };
 
         $scope.tryAgain = {
