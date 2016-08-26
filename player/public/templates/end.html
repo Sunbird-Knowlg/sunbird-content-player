@@ -49,7 +49,7 @@
     
                 <p class="gc-content-owner gc-text-elipsis">{{ languageSupport.author }}: {{content.owner}}</p>
                 <center>
-                    <input class="gc-btn-credits btn-black" type="button" ng-click="showCredits()" value="Credits" />                    
+                    <input class="gc-btn-credits btn-normal" type="button" ng-click="showCredits()" value="Credits" />                    
                 </center>
             </div>
 
@@ -71,7 +71,7 @@
             </div>
 
             <div class="gc-ep-rating-cont">
-                <p class="gc-ep-feedback gc-text-elipsis">{{languageSupport.feedback}}</p>
+                <!-- <p class="gc-ep-feedback gc-text-elipsis">{{languageSupport.feedback}}</p> -->
                 <div class="gc-ep-rating" ng-if="!showFeedbackPopup">
                     <star-rating rating="userRating" read-only="false" max-rating="5" click="showFeedback(param)" style="height: 100%;"></star-rating>
                 </div>

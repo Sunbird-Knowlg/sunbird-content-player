@@ -726,10 +726,25 @@ ion-popover-view.fit ion-content {
     -moz-border-radius: 4;
     border-radius: 4px;
     border-color: #413a36;
+    color: #ffffff;
+    font-size: 1em;
+    font-weight: bold;
+    background: #413a36;
+    padding: 1% 8%;
+    text-decoration: none;
+   border-style: solid;
+  /* background-color: transparent;*/
+
+}
+.btn-normal{
+    -webkit-border-radius: 4;
+    -moz-border-radius: 4;
+    border-radius: 4px;
+    border-color: #413a36;
     /*color: #ffffff;*/
     font-size: 1em;
     font-weight: bold;
-   /* background: #413a36;*/
+    background: #413a36;
     padding: 1% 8%;
     text-decoration: none;
    border-style: solid;
@@ -740,6 +755,7 @@ ion-popover-view.fit ion-content {
 .btn-black:hover {
     background: #454545;
     text-decoration: none;
+    color:white;
 }
 
 .gc-ep-time-score{
@@ -843,7 +859,7 @@ ion-popover-view.fit ion-content {
     height: 100%;
     position: absolute;
     background: rgba(255, 255, 255, 0.6);
-    left: 30%;
+    left: 20%;
     text-align: center;
 }
 
