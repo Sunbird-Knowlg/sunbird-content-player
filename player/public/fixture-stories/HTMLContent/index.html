@@ -7,18 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
 </head>
 <body>
-	<!-- External Libraries -->
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/underscore.js"></script>
 	
-	<!--  -->
-  <!-- <script src="assets/js/genieservices.js"></script>
-  <script src="assets/js/telemetry.min.js"></script> -->
-  <script src="assets/js/genieServiceMediator.js"></script>
-
   <h1>HTML Content</h1>
-  <p>This acts like Game Launcher</p>
-  <input type="button" value="Launch Another HTML content" onclick="launchAnotherHTMLContent('do_20045479')" />
   
   <script type="text/javascript">
     // Storing current logged in user 
@@ -34,19 +24,29 @@
     var currentContent = {};
 
     /**
-     * This is to GenieService and Telemetry
-     * callback function will be called after initalization
+     * First initialisation function
      */
-    genieServiceMediator.init(function(){
-      // GenieService initalisation success
-      onGenieServiceInit();
-    });
+    function initialize(){
+      var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
 
-    /**
-     * Starting method of HTML content 
-     * Now it use GenieService or Telemetry 
-     */
-    function onGenieServiceInit(){
+      if(isMobile){ 
+        //load cordova library only for mobile
+        var fileref = document.createElement('script');
+        fileref.setAttribute("type","text/javascript");
+        fileref.setAttribute("src", "///android_asset/www/cordova.js");
+        fileref.onload = function(){
+          // Cordova file loaded
+          // Add event listener for "deviceReady" to access cordova plugins
+          // On device ready event, we can access all cordova plugins
+          document.addEventListener("deviceready", onDeviceReady, false);
+        }
+        document.getElementsByTagName("head")[0].appendChild(fileref);
+      }
+    };
+
+    /* Cordova plugins can access only on device ready state */
+    function onDeviceReady(event){
+      console.log("onDeviceReady()", event); 
       // Get content configuration from url pararmeter. 
       config = getUrlParameter('config');
       console.log("config", config);
@@ -55,93 +55,36 @@
       // Required to get more information of this content from GenieService 
       contentId = getUrlParameter('cid'); 
 
-      // Get current user data is required to log telemetry
-      getCurrentUser();
+      searchWord();
 
-      // Get content metadata from GenieService API
-      getContent(contentId);      
-    }
+      logTelemetry();
+    };
 
     /**
-     * Get current user details to log telemetry
-     * User session is madatory to log telemetry data
+     * This is to log telemetry
      */
-    function getCurrentUser(){
-       genieservice.getCurrentUser()
-       .then(function(result) {
-          if (result && result.status == 'success') {
-              if (result.data.uid) {
-                currentUser = result.data;                 
-                console.log("currentUser", currentUser);
-              } else {
-                console.log('INVALID_USER');
-              }
-          } else {
-              console.log('INVALID_USER');
-          }
+    function sendTelemetry(){
+      // Game start Dummy data(OE_START)
+      var evtObj = '{"ver":"2.0","sid":"8hjh3c4b7b47d570df0ec286bf7adc8ihhnjy","uid":"8hjh3c4b7b47d570df0ec286bf7adc8ihhnjy","did":"8hjh3c4b7b47d570df0ec286bf7adc8ihhnjy","edata":{"eks":{}},"eid":"OE_START","gdata":{"id":"org.ekstep.quiz.app","ver":"1"},"ets":1472133108928}';
+
+      // Calling cordova telemetry function to log data
+      telemetry.send(evtObj, "sendTelemetry").then(function() {
+          console.log("HTML telemetry success.");
+        }).catch(function(err) {
+          console.log("HTML telemetry failed.");
+        })
+    }
+
+    function searchWord(){
+      var filter = '{ "traversals": ["filament_boundary"], "filter":  { "language_id": ["hi"], "status": ["Draft"] }, "limit":100} } }';
+      // Get current user data is required to log telemetry
+      genieservice.languageSearch(filter)
+      .then(function(resp) {
+        console.log("genieservice.searchWord()", resp);
       })
       .catch(function(err) {
-          console.log("Failed - getCurrentUser", err);
+        console.error("Failed: getContent()", err);
       });
-    }
-
-    /**
-     * get content data from GenieService
-     */
-    function getContent(contentId){
-      // Calling GenieService API to get Content metadata
-      // contentId: required input parameter(content identifier)
-      genieservice.getContent(contentId)
-      .then(function(result) {
-        // genieservice getcontent call success(success callback function)
-        console.log("Success - getContent", result);
-        currentContent = {};
-        currentContent.metadata = result;
-
-        //Start telemetry log for the game
-        startTelemetry();	
-
-        // Language search
-        getDictionaryWords();
-
-        // Adding content information to the body
-        document.body.innerHTML += "<p><b>Content id:</b> "+currentContent.metadata.identifier+ "</p><p><b>Name:</b> "+currentContent.metadata.localData.name+"</p>";
-      })
-      .catch(function(err){
-        console.log("Failed", err);
-      }) 
-    }
-
-    /**
-     * Start telemetry log for the current game
-     * Required: UserData, content metadata
-     */
-    function startTelemetry(){
-      var gameInfo = {}
-      gameInfo.id = currentContent.metadata.localData.identifier;
-      gameInfo.ver = currentContent.metadata.localData.pkgVersion || "1";
-
-      TelemetryService.init(gameInfo, currentUser).then(function() {
-        console.log("TelemetryService is ready..");
-        TelemetryService.start(gameInfo);
-      });
-    }
-
-    function launchAnotherHTMLContent(id){
-      genieservice.launchContent(id, config);
-    }
-
-    /**
-     * Do dictionary search
-     */
-    function getDictionaryWords(){
-    	genieservice.languageSearch('{ "traversals": ["akshara_boundary"], "filter": {} }')
-    	.then(function(resp){
-    		console.log("languageSearch resp", resp);
-    	})
-    	.catch(function(err){
-    		console.log("Failed - languageSearch", err);
-    	})
     }
 
     /** 
@@ -161,6 +104,8 @@
          }
      }
     }
+
+    initialize();
   </script>
 </body>
 </html>
