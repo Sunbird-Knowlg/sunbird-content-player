@@ -156,9 +156,10 @@ EventManager = {
 					id = plugin._type || 'none';
 				}
 				if (id) {
+					var stageId = Renderer.theme ? Renderer.theme._currentStage : ""
 					if (data)
-						data.stageId = Renderer.theme._currentStage;
-					TelemetryService.interact(type, id, type, data ? data : {stageId : Renderer.theme._currentStage});
+						data.stageId = stageId;
+					TelemetryService.interact(type, id, type, data ? data : {stageId : stageId});
 				}
 			}
 		}

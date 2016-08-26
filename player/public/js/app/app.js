@@ -132,7 +132,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             }
 
             $ionicPlatform.onHardwareBackButton(function() {
-                backbuttonPressed();
+                backbuttonPressed($rootScope.pageId);
             });
             $ionicPlatform.on("pause", function() {
                 Renderer.pause();

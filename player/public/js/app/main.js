@@ -103,8 +103,7 @@ function goToCollection($state, id, pageId) {
 // }
 
 
-function backbuttonPressed() {
-   
+function backbuttonPressed(pageId) {
     var data = (Renderer.running || HTMLRenderer.running) ? {
         type: 'EXIT_CONTENT',
         stageId: Renderer.theme ? Renderer.theme._currentStage : ""
@@ -112,6 +111,9 @@ function backbuttonPressed() {
         type: 'EXIT_APP'
     };
     TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', data);
+    if(pageId == "coverpage") {
+        TelemetryService.end();
+    }
     AudioManager.stopAll();
 }
 
