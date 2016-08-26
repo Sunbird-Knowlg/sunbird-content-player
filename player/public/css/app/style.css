@@ -13,7 +13,15 @@
     src: url('fonts/NotoSansKannada-Regular.ttf') format('truetype')
 }
 
+@font-face {
+    font-family: 'NotoSansOriya';
+    src: url('fonts/NotoSansOriya-Regular.ttf') format('truetype')
+}
 
+@font-face {
+    font-family: 'NotoSansBengali';
+    src: url('fonts/NotoSansBengali-Regula.ttf') format('truetype')
+}
 
 /*@font-face {
     font-family: 'NotoSansGujarati';
@@ -26,18 +34,8 @@
 }
 
 @font-face {
-    font-family: 'NotoSansOriya';
-    src: url('fonts/NotoSansOriya-Regular.ttf') format('truetype')
-}
-
-@font-face {
     font-family: 'NotoNastaliqUrdu';
     src: url('fonts/NotoNastaliqUrdu-Regular.ttf') format('truetype')
-}
-
-@font-face {
-    font-family: 'NotoSansBengali';
-    src: url('fonts/NotoSansBengali-Regular.ttf') format('truetype')
 }
 
 @font-face {
