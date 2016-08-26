@@ -168,11 +168,15 @@ ion-popover-view.fit ion-content {
 
 .cover-page-title {
     text-transform: uppercase;
+    font-family: baloobhai;
+    color: #FFFFFF;
+    
+    text-align: center;
     
     overflow: hidden;
     padding: 0 2%;
     text-overflow: ellipsis;
-    /* position: absolute; */
+    line-height: 1.5em;
     width: 100%;
     margin-top: 10%;
     display: -webkit-box;
