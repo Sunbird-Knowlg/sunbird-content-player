@@ -651,7 +651,7 @@ ion-popover-view.fit ion-content {
 .credit-body-icon-font table{
     width: 100%;
     table-layout: fixed;
-    height: 100%;
+    height: auto;
 }
 
 .credit-body-icon-font tbody{
