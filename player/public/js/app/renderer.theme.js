@@ -215,8 +215,8 @@ angular.module('genie-canvas.theme', [])
             scope: {
                 image: '='
             },
-            template: '<a class="assess" id="assessButton" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/><p>{{labelSubmit}}</p></a>',
-            link: function(scope, element) {
+              template: '<a class="assess" id="assessButton" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/></a>',
+                link: function(scope, element) {
                 scope.labelSubmit = $rootScope.languageSupport.submit;
             },
             controller: function($scope, $rootScope, $timeout) {

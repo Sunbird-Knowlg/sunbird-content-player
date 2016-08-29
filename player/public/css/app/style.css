@@ -459,12 +459,12 @@ ion-popover-view.fit ion-content {
 }
 
 .assess {
-    text-decoration: none;
-    position: absolute;
-    width: 15%;
-    bottom: 10%;
-    left: 45%;
-    display: none;
+   text-decoration: none;
+   position: absolute;
+   width: 7%;
+   bottom: 14%;
+   left: 47%;
+   display: none;
 }
 
 .assess-enable {
