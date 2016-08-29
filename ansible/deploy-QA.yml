@@ -1,4 +1,4 @@
 ---
 - hosts: all
   tasks:
-    - shell: aws s3 sync s3://ekstep-public/preview/dev/ s3://ekstep-public/preview/qa/
+    - shell: aws s3 cp s3://ekstep-public/preview/dev/ s3://ekstep-public/preview/qa/ --recursive
