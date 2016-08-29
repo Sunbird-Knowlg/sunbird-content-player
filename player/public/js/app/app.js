@@ -112,8 +112,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
             "noCreditsAvailable":"There are no credits available",
             "congratulations":"Congratulations! You just completed this lesson!",
             "credit":"Credits",
-            "Next":"Next",
-            "Replay":"Replay"
+            "next":"Next",
         }
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
