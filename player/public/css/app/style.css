@@ -568,6 +568,7 @@ ion-popover-view.fit ion-content {
 
 .popup-body {
     position: relative;
+    overflow: hidden;
     font-family: baloobhai;
     font-size: 2vw;
     margin: 10px;
