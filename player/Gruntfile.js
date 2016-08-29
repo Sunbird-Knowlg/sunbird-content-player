@@ -89,6 +89,25 @@ module.exports = function(grunt) {
                         '../js-libs/telemetry/*.js',
                     ]
                 }
+            },
+            pluginLib: {
+                options: {
+                    beautify: true,                   
+                    mangle: false                 
+                },
+                files: {
+                    'public/js/app/plugin-lib.js': [
+                        'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
+                        'public/js/thirdparty/exclude/Class.js',
+                        '../js-libs/renderer/plugin/Plugin.js',
+                        '../js-libs/renderer/plugin/HTMLPlugin.js',
+                        '../js-libs/renderer/manager/PluginManager.js',
+                        '../js-libs/renderer/manager/AnimationManager.js',
+                        '../js-libs/renderer/plugin/LayoutPlugin.js',
+                        '../js-libs/renderer/plugin/ShapePlugin.js',
+                        '../js-libs/renderer/plugin/*Plugin.js'
+                    ]
+                }
             }
         },
         copy: {

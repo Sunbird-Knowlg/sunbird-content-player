@@ -141,5 +141,8 @@ PluginManager = {
         console.info("loading external JS: ", jsUrl);
         var jsLink = $("<script type='text/javascript' src=" + jsUrl + ">");
         jQuery("head").append(jsLink);
+    },
+    getPlugins: function() {
+        return Object.keys(PluginManager.pluginMap);
     }
 }
