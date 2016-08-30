@@ -53,6 +53,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         }
         var text = this._getText();
         var htmlText = this._tokenize(text);
+        console.info(htmlText,"Htmltext");
 
         jQuery("#" + data.id).append(htmlText);
         this._div = div;
@@ -208,15 +209,17 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         this._wordIds = [];
         var index = 0;
         for (i = 0; i < words.length; i++) {
+            var match = /\r|\n/.exec(words[i]);//Finding the LineBreakup in the Text 
             if (words[i] === '') {
                 htmlText += "<span class=\"gc-ht-word\">&nbsp;</span> ";
+            } else if (match) {
+                htmlText += "<span class=\"gc-ht-word\"></br></span> ";
             } else {
                 var wordId = this.getWordId(index);
                 this._wordIds.push(wordId);
                 htmlText += "<span id=\"" + wordId + "\" class=\"gc-ht-word\">" + words[i] + "</span> ";
                 index++;
             }
-
         }
         return htmlText;
     },
