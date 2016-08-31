@@ -63,7 +63,7 @@ OverlayHtml = {
             var modelItem = stageCtrl._model[stageCtrl._index];
             // If FTB item, enable submit button directly
             if(!_.isNull(this._rootScope)){
-                var enableEval = (modelItem && modelItem.type == 'ftb') ? true : false;
+                var enableEval = (modelItem && modelItem.type.toLowerCase() == 'ftb') ? true : false;
                 this._setRootScope("enableEval", enableEval);
             }
             return true;
