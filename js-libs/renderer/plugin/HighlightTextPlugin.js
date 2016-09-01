@@ -178,7 +178,6 @@ var HighlightTextPlugin = HTMLPlugin.extend({
                     var index = instance._timings.indexOf(match);
                     var wordId = instance.getWordId(index);
                     instance._removeHighlight();
-                    console.info(wordId,"wordid")
                     instance._addHighlight(wordId);
                 });
             };
@@ -204,12 +203,15 @@ var HighlightTextPlugin = HTMLPlugin.extend({
     },
     _tokenize: function(text) {
         var htmlText = "";
-        var words = text.split(' ');
+        Replaced_text = text.replace(/(\r\n|\n|\r)/gm, " </br> "); // Replaces the Brek-line(/n or /r) with </br> tag
+        var words = Replaced_text.split(' ');
         this._wordIds = [];
         var index = 0;
         for (i = 0; i < words.length; i++) {
             if (words[i] === '') {
                 htmlText += "<span class=\"gc-ht-word\">&nbsp;</span> ";
+            } else if (words[i] === '</br>') {
+                htmlText += "<span class=\"gc-ht-word\"></br></span> ";
             } else {
                 var wordId = this.getWordId(index);
                 this._wordIds.push(wordId);
