@@ -42,7 +42,6 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         div.style["font-size"] = fontsize;
         div.style["line-height"] = data.lineHeight ? data.lineHeight : "1.2em";
         
-        console.log("data", data, " Div", div);
         var parentDiv = document.getElementById(Renderer.divIds.gameArea);
         parentDiv.insertBefore(div, parentDiv.childNodes[0]);
 
@@ -81,10 +80,17 @@ var HighlightTextPlugin = HTMLPlugin.extend({
                             action.cb({"status":"success"});
                     });
                     this._listener = function() {
+                        if((_.isUndefined(instance._audioInstance)) || (_.isUndefined(instance._audioInstance.object))) {
+                            //removing previous interupted audio instance listener
+                            if (instance._listener) {
+                                createjs.Ticker.removeEventListener("tick", instance._listener);
+                                return;
+                            }
+                        }
                         instance._position.current = Number(instance._audioInstance.object.position.toFixed(0));
                         instance._highlight();
                         instance._position.previous = instance._position.current;
-                    };
+                    }
                 } else {
                     this._time = Date.now();
                      this._listener = function() {
