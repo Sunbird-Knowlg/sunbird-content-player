@@ -11,18 +11,6 @@
   <h1>HTML Content</h1>
   
   <script type="text/javascript">
-    // Storing current logged in user 
-    var currentUser = {};
-
-    // Storing query parameter "config" 
-    var config = {};
-
-    // Storing query parameter "cid"
-    var contentId = {};
-
-    // Storing GenieService response content metadata(for contentID passed in query string)
-    var currentContent = {};
-
     /**
      * First initialisation function
      */
@@ -34,6 +22,7 @@
         var fileref = document.createElement('script');
         fileref.setAttribute("type","text/javascript");
         fileref.setAttribute("src", "///android_asset/www/cordova.js");
+
         fileref.onload = function(){
           // Cordova file loaded
           // Add event listener for "deviceReady" to access cordova plugins
@@ -46,18 +35,13 @@
 
     /* Cordova plugins can access only on device ready state */
     function onDeviceReady(event){
-      console.log("onDeviceReady()", event); 
-      // Get content configuration from url pararmeter. 
-      config = getUrlParameter('config');
-      console.log("config", config);
+      //console.log("onDeviceReady()", event); 
+      
+      // Calling wordchain API
+      callWordChainAPI();
 
-      // Get contentId(cid) from URL parameter
-      // Required to get more information of this content from GenieService 
-      contentId = getUrlParameter('cid'); 
-
-      searchWord();
-
-      logTelemetry();
+      // Logging telemetry
+      sendTelemetry();
     };
 
     /**
@@ -70,39 +54,26 @@
       // Calling cordova telemetry function to log data
       telemetry.send(evtObj, "sendTelemetry").then(function() {
           console.log("HTML telemetry success.");
+          document.body.innerHTML += "<p><b>Telemetry response:</b> Success";
         }).catch(function(err) {
           console.log("HTML telemetry failed.");
         })
     }
 
-    function searchWord(){
-      var filter = '{ "traversals": ["filament_boundary"], "filter":  { "language_id": ["hi"], "status": ["Draft"] }, "limit":100} } }';
+    /**
+     * Call genie service word chain API
+     */
+    function callWordChainAPI(){
+      var filter = '{"traversals":["rhyming_boundary_rule"],"filters":{"language_id":["hi"],"status":["Draft"]},"limit":100}';
       // Get current user data is required to log telemetry
       genieservice.languageSearch(filter)
       .then(function(resp) {
         console.log("genieservice.searchWord()", resp);
+        document.body.innerHTML += '<p><b>LanguageSearch Response:</b> Success</p><p style="height:150px;overflow:auto;">'+ JSON.stringify(resp) +'</p>';
       })
       .catch(function(err) {
         console.error("Failed: getContent()", err);
       });
-    }
-
-    /** 
-     * Get url parameter value
-     * sPram: input url paramater name to get its value in url
-     */
-    function getUrlParameter(sParam) {
-     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-         sURLVariables = sPageURL.split('&'),
-         sParameterName,
-         i;
-     for (i = 0; i < sURLVariables.length; i++) {
-         sParameterName = sURLVariables[i].split('=');
-
-         if (sParameterName[0] === sParam) {
-             return sParameterName[1] === undefined ? true : sParameterName[1];
-         }
-     }
     }
 
     initialize();

@@ -354,19 +354,29 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
                 //         //window.location.replace(path);                    
                 //     }
                 // });
-                var path = $scope.item.baseDir + '/index.html?cid='+ $stateParams.itemId;
+
+                //Checking is mobile or not
+                var isMobile = window.cordova ? true : false;
+                
+                // For HTML content, lunach eve is required
+                // setting launch evironment as "app"/"portal" for "mobile"/"portal(web)"
+                var envHTML = isMobile ? "app" : "portal";
+
+                var launchData = {"env": envHTML, "envpath": AppConfig[AppConfig.flavor]};
+                //Adding contentId and LaunchData as query parameter
+                var path = $scope.item.baseDir + '/index.html?cid='+ $stateParams.itemId + '&launchdata=' + JSON.stringify(launchData);
+                
+                //Adding config as query parameter for HTML content
                 if($scope.item.config){
                     path += "&config=" + JSON.stringify($scope.item.config);
                 }
-                if (window.cordova){
+                
+                if (isMobile){
                     console.log("Opening through cordova custom webview.");
-                    //webview.Show(path);
                     cordova.InAppBrowser.open(path, '_self', 'location=no,hardwareback=no');
-                    //window.open(path, '_self');   
                 }else{
                     console.log("Opening through window.open");
-                    window.open(path, '_self'); 
-                    //window.location.replace(path);                    
+                    window.open(path, '_self');              
                 }
             } else { 
                 if(collectionChildren) {

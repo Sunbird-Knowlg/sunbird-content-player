@@ -11,6 +11,7 @@ import org.ekstep.genieservices.sdks.Telemetry;
 import org.ekstep.genieservices.sdks.UserProfile;
 import org.ekstep.genieservices.sdks.Content;
 import org.ekstep.genieservices.sdks.Summarizer;
+import org.ekstep.genieservices.sdks.Language;
 // import org.ekstep.genieservices.sdks.FeedbackService;
 import org.ekstep.genieservices.sdks.GenieServices;
 import org.ekstep.genieservices.sdks.response.IResponseHandler;
@@ -31,6 +32,7 @@ public class GenieServicePlugin extends CordovaPlugin {
     private GenieServices genieServices;
     private Content content;
     private Summarizer summarizer;
+    private Language language;
 
 	public GenieServicePlugin() {
 		System.out.println("Genie Service Constructor..........");
@@ -75,6 +77,11 @@ public class GenieServicePlugin extends CordovaPlugin {
                 summarizer = new Summarizer(activity);
             }
         }
+         if(null == language) {
+            if(null != activity) {
+                language = new Language(activity);
+            }
+        }
         // if(null == summarizer) {
         //     if(null != activity) {
         //         feedbackService = new FeedbackService(activity);
@@ -99,8 +106,7 @@ public class GenieServicePlugin extends CordovaPlugin {
         } /*else if(action.equals("getRelatedContent")) {
             String contentId = args.getString(0);
             content.getRelatedContent(contentId, new ArrayList<String>(), new GenieServicesResponse(callbackContext));
-        }*/
-        else if(action.equals("sendFeedback")) {
+        }*/ else if(action.equals("sendFeedback")) {
             String evt = args.getString(0);
             // feedbackService.saveFeedbackEvent(evt, new GenieServicesResponse(callbackContext));
         }else if(action.equals("getLearnerAssessment")) {
@@ -125,7 +131,8 @@ public class GenieServicePlugin extends CordovaPlugin {
                 content.filter(filter, new GenieServicesListResponse(callbackContext));
             }
         } else if(action.equals("languageSearch")) {
-            return true;   
+            String inputFilter = args.getString(0);
+            language.languageSearch(inputFilter, new GenieServicesResponse(callbackContext));  
         }else if("endGenieCanvas".equals(action)) {
             System.out.println("*** Activity:" + activity);
             activity.finish();
