@@ -328,7 +328,7 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-menu-collection-cont img{
-    width: 32%;
+    width: 35%;
 }
 .gc-menu-home-cont {
     position: absolute;
@@ -353,7 +353,7 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-menu-genie-cont img{
-    width: 32%;
+    width: 35%;
 }
 
 .gc-menu-mute-cont{
@@ -380,7 +380,7 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-menu-inst-cont img{
-    max-width:32%;
+    width:35%;
 }
 
 .gc-menu-btn-close {
