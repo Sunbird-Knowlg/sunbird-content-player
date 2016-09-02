@@ -28,7 +28,9 @@ TelemetryEvent = Class.extend({
                 telemetry.send(JSON.stringify(this.event), apiName).then(function() {
                     return JSON.stringify(this.event);
                 }).catch(function(err) {
-                    TelemetryService.logError(this.name, err);
+                    if(this.event.uid){    // TODO Find the Unknow events from(Jquery/cordova/ionic)
+                         TelemetryService.logError(this.name, err);
+                    }
                 });
             } else {
                 console.log(JSON.stringify(this.event));
