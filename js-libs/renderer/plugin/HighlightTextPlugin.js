@@ -25,6 +25,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         div.style.top = "-1000px"; // position off-screen initially
         div.style.position = 'absolute';
         
+        
         var fontsize = "1.2em";
         if (data.fontsize) {
             fontsize = data.fontsize;
@@ -41,6 +42,12 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         }
         div.style["font-size"] = fontsize;
         div.style["line-height"] = data.lineHeight ? data.lineHeight : "1.2em";
+        div.style["color"] = data.color ? data.color.toLowerCase() : "black";
+        div.style["font-weight"] = data.weight ? data.weight : "normal";
+        div.style["fontFamily"] = data.font ? data.font.toLowerCase() : "Arial";
+        div.style["outline"] = data.outline ? data.outline : 0;
+        div.style["text-align"]=data.align ? data.align.toLowerCase():"left";
+        div.style["vertical-align"]=data.valign ? data.valign.toLowerCase():"top";
         
         var parentDiv = document.getElementById(Renderer.divIds.gameArea);
         parentDiv.insertBefore(div, parentDiv.childNodes[0]);
@@ -203,7 +210,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         };
     },
     _removeHighlight: function() {
-        jQuery("."+this._wordClass).css({"background-color": "none", "padding": "0px", "font-weight": "normal"});
+        jQuery("."+this._wordClass).css({"background-color": "none", "padding": "0px" });
     },
     _addHighlight: function(id) {
         jQuery("#"+id).css({"background": this._data.highlight});
