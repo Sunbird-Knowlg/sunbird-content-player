@@ -82,6 +82,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
                     this._listener = function() {
                         if((_.isUndefined(instance._audioInstance)) || (_.isUndefined(instance._audioInstance.object))) {
                             //removing previous interupted audio instance listener
+                            //TODO: Has to remove this event listener properly, This will create performance issue
                             if (instance._listener) {
                                 createjs.Ticker.removeEventListener("tick", instance._listener);
                                 return;
