@@ -49,9 +49,11 @@ var LayoutPlugin = Plugin.extend({
             var cellEvents = instance.getCellEvents();
     		instance._stage._templateVars[instance._data['var']] = instance._iterateModel + "[" + index + "]";
     		instance._addCellAttributes(data);
-    		Object.assign(data, cellECML);
+            if(Object.assign)
+    		  Object.assign(data, cellECML);
             var resolvedEvents = instance.resolveActionModelValues(cellEvents);
-            Object.assign(data, resolvedEvents);
+            if(Object.assign)
+                Object.assign(data, resolvedEvents);
     		PluginManager.invoke('g', data, instance, instance._stage, instance._theme);
 
     		index++;

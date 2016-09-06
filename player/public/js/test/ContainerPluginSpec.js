@@ -1,27 +1,44 @@
+var container_data = {
+    "x": 0,
+    "y": 0,
+    "w": 50,
+    "h": 50,
+    "hitArea":true,
+    "shape" : [
+        {
+            "x": 20,
+            "y": 20,
+            "w": 60,
+            "h": 60,
+            "visible": true,
+            "editable": true,
+            "type": "roundrect",
+            "radius": 10,
+            "opacity": 1,
+            "fill": "#45b3a5",
+            "stroke-width": 1,
+            "z-index": 0,
+            "id": "textBg"
+        }
+    ]
+        
+};
+var parent = {
+    dimensions: function() {
+        return {
+            x: 0,
+            y: 0,
+            w: 500,
+            h: 500
+        }
+    },
+    addChild: function() {}
+}
 describe('Container Plugin test cases', function() {
 
     beforeEach(function(done) {            
-        var parent = {
-            dimensions: function() {
-                return {
-                    x: 0,
-                    y: 0,
-                    w: 500,
-                    h: 500
-                }
-            },
-            addChild: function() {}
-        }
-        var data = data || {
-        		"x": 0,
-                "y": 0,
-                "w": 50,
-                "h": 50,
-                "hitArea":true,
-                
-        };
         Renderer.theme = { _currentStage: '' };
-        this.plugin = PluginManager.invoke('g', data, parent);
+        this.plugin = PluginManager.invoke('g', container_data, parent);
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'refresh').and.callThrough();
         done();

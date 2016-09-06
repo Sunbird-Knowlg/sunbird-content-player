@@ -47,21 +47,25 @@ module.exports = function(config) {
             'public/js/test/HotspotPluginSpec.js',
             'public/js/test/ContainerPluginSpec.js',
             'public/js/test/StageSpec.js',
-            'public/js/test/MCQPluginSpec.js', // TODO: Incomplete
-            'public/js/test/MTFPluginSpec.js', // TODO: Incomplete
+            'public/js/test/MCQPluginSpec.js', 
+            'public/js/test/MTFPluginSpec.js', 
             'public/js/test/ShapePluginSpec.js',
             'public/js/test/ScribblePluginSpec.js',
             'public/js/test/GridlayoutPluginSpec.js',
-            'public/js/test/OptionPluginSpec.js', // TODO: Incomplete
+            'public/js/test/OptionPluginSpec.js', 
             'public/js/test/OptionsPluginSpec.js',
             'public/js/test/DivPluginSpec.js',
             'public/js/test/AudioPluginSpec.js',
-            'public/js/test/EmbedPluginSpec.js', // TODO: Incomplete
+            'public/js/test/EmbedPluginSpec.js', 
             'public/js/test/PlaceholderPluginSpec.js', // TODO: Incomplete
             'public/js/test/SetPluginSpec.js', // TODO: Incomplete 
+            
             'public/js/test/LayoutPluginSpec.js', // TODO: Not covered all cases 
             'public/js/test/VideoPluginSpec.js', // TODO: Not covered all cases 
             'public/js/test/ThemePluginSpec.js', // TODO: Incomplete
+           
+
+
             // 'public/js/test/HighlightTextPluginSpec.js',
             // 'public/js/test/PluginSpec.js', // TODO: Incomplete 
 

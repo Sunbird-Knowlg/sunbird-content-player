@@ -14,17 +14,11 @@ describe('Hotspot Plugin test cases', function() {
         }
 
         var data = data || {
-            "hotspot": {
-                "options": {
                     "x": 0,
                     "y": 0,
                     "w": 50,
-                    "h": 50,
-                },
-
-
-            }
-        };
+                    "h": 50
+                };
 
         Renderer.theme = {
             _currentStage: ''
@@ -52,9 +46,5 @@ describe('Hotspot Plugin test cases', function() {
     it('Hotspot plugin hitArea validation', function() {
         expect(true).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
     });
-    
-
-
-
 
 });

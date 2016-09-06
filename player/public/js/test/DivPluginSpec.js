@@ -49,7 +49,7 @@ describe('Div Plugin test cases', function() {
         expect(this.plugin._triggerEvent.calls.count()).toEqual(1);
     });
 
-    xit('Div plugin init attribute validation', function() {
+    it('Div plugin init attribute validation', function() {
         expect(this.plugin._self.x).not.toBeNull();
         expect(this.plugin._self.y).not.toBeNull();
 
@@ -58,7 +58,7 @@ describe('Div Plugin test cases', function() {
         expect(this.plugin._self.h).not.toBeNull();
     });
     
-    xit('Div plugin postion validation', function() {
+    it('Div plugin postion validation', function() {
         expect(this.plugin._self.position).not.toBeNull();
         expect(false).toEqual(this.plugin._self.position == "absolute");
     });

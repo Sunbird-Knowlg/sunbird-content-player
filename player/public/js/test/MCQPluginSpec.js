@@ -1,7 +1,28 @@
+
+var data = {
+    model:"item",
+    shadow: "red",
+    multi_select: "false",
+    blur: 30,
+    offsetX: 2,
+    offsetY: 3,
+    option: {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 50,
+        "z-index": "10",
+        "stroke": 6,
+        "bgcolor": "skyblue",
+        "color": "yellow"
+    },
+};
+
 describe('MCQ Plugin test cases', function() {
 
     beforeEach(function(done) {
         var parent = {
+            _data : {x:0, y:0, w:50, h:50},
             dimensions: function() {
                 return {
                     x: 0,
@@ -13,24 +34,9 @@ describe('MCQ Plugin test cases', function() {
             addChild: function() {}
         }
 
-        var data = data || {
-            "mcq": {
-                "option": {
-                    "x": 0,
-                    "y": 0,
-                    "w": 50,
-                    "h": 50,
-                    "z-index": "10",
-                    "stroke": 6,
-                    "bgcolor": "skyblue",
-                    "color": "yellow"
-                },
-            },
-
-        };
         Renderer.theme = { _currentStage: '' };
-        this.plugin = PluginManager.invoke('mcq', data, parent);
-        this.option = PluginManager.invoke('option', data, parent, "splash", this.theme);
+        this.plugin = PluginManager.invoke('mcq', data, parent, {getController: function(){return {getModelValue : function(){}};}}, {});
+        this.option = PluginManager.invoke('option', data, parent, "splash", {});
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'isMultiSelect').and.callThrough();
         spyOn(this.plugin, 'selectOption').and.callThrough();
@@ -50,8 +56,8 @@ describe('MCQ Plugin test cases', function() {
         expect(this.plugin.isMultiSelect.calls.count()).toEqual(1);
     });
 
-    xit('MCQ plugin selectOption', function() {
-        this.plugin.selectOption({ primary: true });
+    it('MCQ plugin selectOption', function() {
+        this.plugin.selectOption();
         expect(this.plugin.selectOption).toHaveBeenCalled();
         expect(this.plugin.selectOption.calls.count()).toEqual(1);
     });
@@ -63,8 +69,8 @@ describe('MCQ Plugin test cases', function() {
     });
     it('Mcq plugin offsetX and ofsetY field validation', function() {
 
-        expect(true).toEqual(this.plugin._offsetX == 0);
-        expect(true).toEqual(this.plugin._offsetY == 0);
+        expect(true).toEqual(this.plugin._offsetX == 2);
+        expect(true).toEqual(this.plugin._offsetY == 3);
     });
 
     it('Mcq multiselect validation', function() {
@@ -82,10 +88,6 @@ describe('MCQ Plugin test cases', function() {
     it("Mcq plugin Renderer validation", function() {
         expect(true).toEqual(this.plugin._render == true);
 
-    });
-
-    xit('Mcq plugin Contaienr instance validation', function() {
-        expect(true).toEqual(this.plugin._self instanceof createjs.Container());
     });
 
 });
