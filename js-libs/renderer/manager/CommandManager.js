@@ -58,7 +58,7 @@ CommandManager = {
                 } else if (action.asset_model) {
                     action.asset = stage.getModelValue(action.asset_model) || '';
                 }
-            } else {
+            } else if(!action.sound){
                 action.asset = plugin._id;
             }
         }
