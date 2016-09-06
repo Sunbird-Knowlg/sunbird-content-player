@@ -30,6 +30,8 @@ TelemetryEvent = Class.extend({
                 }).catch(function(err) {
                     if(this.event.uid){    // TODO Find the Unknow events from(Jquery/cordova/ionic)
                          TelemetryService.logError(this.name, err);
+                    }else{
+                        console.info("uid is not Present")
                     }
                 });
             } else {
