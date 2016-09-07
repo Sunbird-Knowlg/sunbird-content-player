@@ -1,3 +1,6 @@
+/*Wiki link for ref
+https://github.com/ekstep/Common-Design/wiki/ECML-How-to-Guide#highlighting-text*/
+
 var HighlightTextPlugin = HTMLPlugin.extend({
     _type: 'htext',
     _wordIds: [],
@@ -24,7 +27,6 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         div.style.height = dims.h + 'px';
         div.style.top = "-1000px"; // position off-screen initially
         div.style.position = 'relative';
-       
         
         
         var fontsize = "1.2em";
@@ -41,32 +43,27 @@ var HighlightTextPlugin = HTMLPlugin.extend({
                 fontsize = fontsize + 'px';
             }
         }
-
-    //text-shadow: horizontal-offset vertical-offset blur color;
+        /*Style properties to handle highlighting text
+        syntax of text-shadow: h_offset v-offset Blur shadow_color;*/
         var h_offset = data.offsetX ? data.offsetX : 0;
         var v_offset = data.offsetY ? data.offsetY : 0;
-        var Blur=data.blur ? data.blur :1;
-        var shadow_color = data.shadow ? data.shadow.toLowerCase() : 0;
-        var shadow=h_offset+"px"+" "+ v_offset +"px"+" "+Blur+"px"+" "+shadow_color;
+        var Blur = data.blur ? data.blur : 1;
+        var shadow_color = data.shadow ? data.shadow : "#ccc";
+        /*handling shadow with px */
+        var shadow = h_offset + "px" + " " + v_offset + "px" + " " + Blur + "px" + " " + shadow_color;
         div.style["font-size"] = fontsize;
         div.style["line-height"] = data.lineHeight ? data.lineHeight : "1.2em";
-        div.style["color"] = data.color ? data.color.toLowerCase() : "black";
+        div.style["color"] = data.color ? data.color : "black";
         div.style["font-weight"] = data.weight ? data.weight : "normal";
         div.style["fontFamily"] = data.font ? data.font.toLowerCase() : "Arial";
         div.style["outline"] = data.outline ? data.outline : 0;
-        div.style["text-align"]=data.align ? data.align.toLowerCase():"left";
-        div.style["vertical-align"]=data.valign ? data.valign.toLowerCase():"top";
+        div.style["text-align"] = data.align ? data.align : "left";
+        div.style["vertical-align"] = data.valign ? data.valign : "top";
         div.style["textShadow"] = shadow;
-        
 
-       
-
-        
         var parentDiv = document.getElementById(Renderer.divIds.gameArea);
 
         parentDiv.insertBefore(div, parentDiv.childNodes[0]);
-        console.info(parentDiv,"div")
-
         if (data.timings) {
             this._timings = _.map(data.timings.split(","), function(time) {
                 return Number(Number(time).toFixed(0));
@@ -77,10 +74,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
 
         jQuery("#" + data.id).append(htmlText);
         this._div = div;
-       
         this._self = new createjs.DOMElement(div);
-
-       
         this._self.x = dims.x;
         this._self.y = dims.y + 1000;
         this._registerEvents(data.id);
@@ -287,3 +281,4 @@ var HighlightTextPlugin = HTMLPlugin.extend({
     }
 });
 PluginManager.registerPlugin('htext', HighlightTextPlugin);
+
