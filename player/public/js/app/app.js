@@ -10,18 +10,18 @@ var stack = new Array(),
     collectionPathMap = {},
     content = {},
     collectionChildren = true,
-    defaultMetadata = { "identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author":"EkStep", "localData": { "questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{ "identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept" }], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true,   "path": "fixture-stories/item_sample" },
+    defaultMetadata = { "identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author": "EkStep", "localData": { "questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{ "identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept" }], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true, "path": "fixture-stories/item_sample" },
     config = {
-        showStartPage : true,
-        showEndPage : true,
-        showHTMLPages : true
+        showStartPage: true,
+        showEndPage: true,
+        showHTMLPages: true
     },
     webview = getUrlParameter("webview"),
     appState = undefined;
 
 
-window.setContentData = function (metadata, data, configuration) {
-    if(metadata) {
+window.setContentData = function(metadata, data, configuration) {
+    if (metadata) {
         content.metadata = metadata;
     } else {
         content.metadata = defaultMetadata;
@@ -31,33 +31,32 @@ window.setContentData = function (metadata, data, configuration) {
         config[key] = val;
     });
     var $state = appState;
-    if(!config.showHTMLPages){
+    if (!config.showHTMLPages) {
         config.showStartPage = false;
         config.showEndPage = false;
     }
-    if(!config.showStartPage) {
+    if (!config.showStartPage) {
         $state.go('playContent', {
-                'itemId': content.metadata.identifier
+            'itemId': content.metadata.identifier
         });
-    }
-    else if(content) {
+    } else if (content) {
         newContentId = content.metadata.identifier;
         if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
-            $state.go('showContent', {"contentId": newContentId});
+            $state.go('showContent', { "contentId": newContentId });
         } else if ((COLLECTION_MIMETYPE == content.metadata.mimeType) ||
             (ANDROID_PKG_MIMETYPE == content.metadata.mimeType && content.metadata.code == packageName)) {
             $state.go('contentList', { "id": newContentId });
         }
-    } 
+    }
 }
 
 function getContentObj(data) {
-    if(_.isObject(data.body))
+    if (_.isObject(data.body))
         return data.body;
     var tempData = data;
-    var x2js = new X2JS({attributePrefix: 'none'});
+    var x2js = new X2JS({ attributePrefix: 'none' });
     data = x2js.xml_str2json(tempData.body);
-    if(!data || data.parsererror)
+    if (!data || data.parsererror)
         data = JSON.parse(tempData.body)
     return data;
 }
@@ -66,10 +65,10 @@ function launchInitialPage(appInfo, $state) {
 
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
         if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-            $state.go('showContent', {"contentId": GlobalContext.game.id});
+            $state.go('showContent', { "contentId": GlobalContext.game.id });
         } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
             (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
-             $state.go('contentList', { "id": GlobalContext.game.id });
+            $state.go('contentList', { "id": GlobalContext.game.id });
         } else {
             alert("App launched with invalid context.");
             exitApp();
@@ -80,14 +79,14 @@ function launchInitialPage(appInfo, $state) {
         exitApp();
     });
 }
- 
+
 
 angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
-    .run(function($rootScope, $ionicPlatform, $ionicModal, $location,  $cordovaFile, $cordovaToast, ContentService, $state, $stateParams) {
+    .run(function($rootScope, $ionicPlatform, $location, $state, $stateParams, ContentService) {
         $rootScope.imageBasePath = "img/icons/";
         $rootScope.enableEval = false;
         // serverPath and localPreview is a global variable defined in index.html file inside a story
-        if("undefined" != typeof localPreview && "local" == localPreview)
+        if ("undefined" != typeof localPreview && "local" == localPreview)
             $rootScope.imageBasePath = serverPath + $rootScope.imageBasePath;
         $rootScope.languageSupport = {
             "languageCode": "en",
@@ -106,14 +105,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "replay": "Replay",
             "time": "TIME",
             "result": "RESULT",
-            "feedback":"Feedback",
-            "collection":"Collection",
-            "relatedContent":"Related Content",
-            "showMore":"Show More",
-            "noCreditsAvailable":"There are no credits available",
-            "congratulations":"Congratulations! You just completed this lesson!",
-            "credit":"Credits",
-            "next":"Next",
+            "feedback": "Feedback",
+            "collection": "Collection",
+            "relatedContent": "Related Content",
+            "showMore": "Show More",
+            "noCreditsAvailable": "There are no credits available",
+            "congratulations": "Congratulations! You just completed this lesson!",
+            "credit": "Credits",
+            "next": "Next",
         }
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -152,45 +151,44 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
             GlobalContext.init(packageName, version).then(function(appInfo) {
                 // localPreview is a global variable defined in index.html file inside a story, 
-                if("undefined" != typeof localPreview &&  "local" == localPreview)
+                if ("undefined" != typeof localPreview && "local" == localPreview)
                     return;
-                var id = getUrlParameter("id");  
-                if(webview) {
+                var id = getUrlParameter("id");
+                if (webview) {
                     if ("undefined" != typeof $location && id) {
                         ContentService.getContentMetadata(id)
-                        .then(function(data) {
-                            content["metadata"] = data;
-                            newContentId = content.metadata.identifier;
-                             TelemetryService.init({id: content.metadata.identifier, ver: "1.0"}, {}).then(function() { 
-                                if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
-                                    $state.go('showContent', {"contentId": newContentId});
-                                } else if ((COLLECTION_MIMETYPE == content.metadata.mimeType) ||
-                                    (ANDROID_PKG_MIMETYPE == content.metadata.mimeType && content.metadata.code == packageName)) {
-                                    $state.go('contentList', { "id": newContentId });
-                                }
-                            }).catch(function(error) {
-                                console.log('TelemetryService init failed');
-                                alert('TelemetryService init failed.');
-                                exitApp();
+                            .then(function(data) {
+                                content["metadata"] = data;
+                                newContentId = content.metadata.identifier;
+                                TelemetryService.init({ id: content.metadata.identifier, ver: "1.0" }, {}).then(function() {
+                                    if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
+                                        $state.go('showContent', { "contentId": newContentId });
+                                    } else if ((COLLECTION_MIMETYPE == content.metadata.mimeType) ||
+                                        (ANDROID_PKG_MIMETYPE == content.metadata.mimeType && content.metadata.code == packageName)) {
+                                        $state.go('contentList', { "id": newContentId });
+                                    }
+                                }).catch(function(error) {
+                                    console.log('TelemetryService init failed');
+                                    alert('TelemetryService init failed.');
+                                    exitApp();
+                                });
+
+                            })
+                            .catch(function(err) {
+                                console.info("contentNotAvailable : ", err);
+                                contentNotAvailable();
                             });
-                                                    
-                        })
-                        .catch(function(err) {
-                            console.info("contentNotAvailable : ", err);
-                            contentNotAvailable();
-                        });
                         ContentService.getContentBody(id)
-                        .then(function(data) {
-                            content["body"] = data.body;
-                            
-                        })
-                        .catch(function(err) {
-                            console.info("contentNotAvailable : ", err);
-                            contentNotAvailable();
-                        });
+                            .then(function(data) {
+                                content["body"] = data.body;
+
+                            })
+                            .catch(function(err) {
+                                console.info("contentNotAvailable : ", err);
+                                contentNotAvailable();
+                            });
                     }
-                }
-                else{
+                } else {
                     launchInitialPage(GlobalContext.config.appInfo, $state);
                 }
             }).catch(function(res) {
@@ -199,8 +197,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 exitApp();
             });
         });
-    })
-    .config(function($stateProvider, $urlRouterProvider) {
+    }).config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('contentList', {
                 cache: false,
@@ -227,17 +224,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
             });
-    })
-    .controller('ContentListCtrl', function($scope, $rootScope, $http, $ionicModal, $cordovaFile, $cordovaDialogs, $cordovaToast, $ionicPopover, $state, $stateParams, $q, ContentService, $ionicHistory) {
+    }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
 
         var id = $stateParams.id;
 
-        $ionicModal.fromTemplateUrl('about.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            $scope.aboutModal = modal;
-        });
+        // $ionicModal.fromTemplateUrl('about.html', {
+        //     scope: $scope,
+        //     animation: 'slide-in-up'
+        // }).then(function(modal) {
+        //     $scope.aboutModal = modal;
+        // });
 
         $scope.version = GlobalContext.game.ver;
         $scope.flavor = GlobalContext.config.flavor;
@@ -278,12 +274,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             ContentService.getContent(id)
                 .then(function(content) {
                     GlobalContext.previousContentId = content.identifier;
-                    if(!_.findWhere(collectionPath, { identifier: id }))
-                        collectionPath.push( {identifier : content.identifier, mediaType : "Collection"});
+                    if (!_.findWhere(collectionPath, { identifier: id }))
+                        collectionPath.push({ identifier: content.identifier, mediaType: "Collection" });
 
-                    if(collectionPathMap[content.identifier]) {
+                    if (collectionPathMap[content.identifier]) {
                         var pathArr = collectionPathMap[content.identifier];
-                        if( pathArr[pathArr.length - 1].mediaType.toLowerCase() == "content") {
+                        if (pathArr[pathArr.length - 1].mediaType.toLowerCase() == "content") {
                             collectionPath = pathArr;
                             collectionPath.pop()
                         } else {
@@ -291,7 +287,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         }
                     }
 
-                    if(!_.contains(stack, content.identifier))
+                    if (!_.contains(stack, content.identifier))
                         stack.push(content.identifier);
                     if (COLLECTION_MIMETYPE == content.mimeType) {
                         $rootScope.title = content.name;
@@ -301,8 +297,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         $rootScope.collection = {};
                     }
                     var childrenIds = (content.children) ? _.pluck(_.sortBy(content.children, function(child) {
-                        return child.index; }), "identifier") : null;
-                    if(childrenIds)
+                        return child.index;
+                    }), "identifier") : null;
+                    if (childrenIds)
                         collectionChildrenIds = childrenIds;
                     collectionChildren = true;
                     console.info("collectionChildrenIds : ", collectionChildrenIds);
@@ -334,10 +331,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             } else {
                 GlobalContext.currentContentId = content.identifier;
                 GlobalContext.currentContentMimeType = content.mimeType;
-                collectionPath.push( {identifier : content.identifier, mediaType : "Content"});
-                $state.go('showContent', {"contentId": content.identifier});
+                collectionPath.push({ identifier: content.identifier, mediaType: "Content" });
+                $state.go('showContent', { "contentId": content.identifier });
             }
-        }; 
+        };
 
         $scope.showAboutUsPage = function() {
             $scope.aboutModal.show();
@@ -371,61 +368,157 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             stack.pop();
             collectionPath.pop();
             var id = stack.pop();
-            if(id)
-                $state.go('contentList', { "id": id});
+            if (id)
+                $state.go('contentList', { "id": id });
             else
                 exitApp();
         }
 
         $scope.resetContentListCache();
+    }).controller('ContentHomeCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
+        $rootScope.showMessage = false;
+        $rootScope.pageId = "coverpage";
+        $rootScope.content;
+        $scope.showPage = true;
+        $scope.playContent = function(content) {
+            $scope.showPage = false;
+            $state.go('playContent', {
+                'itemId': content.identifier
+            });
+            jQuery('#loadingText').text(content.name);
+            jQuery("#progressBar").width(0);
+            jQuery('#loading').show();
+            startProgressBar(40, 0.6);
 
-    }).controller('ContentCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
-        $rootScope.pageId = "renderer";
-        
-        $scope.init = function(){   
-            if ($stateParams.itemId) {
-            $scope.item = $rootScope.content;
+        };
 
-            if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
-                HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
-                    jQuery('#loading').hide();
-                    jQuery('#gameArea').hide();
-                    var path = $scope.item.baseDir + '/index.html';
-                    $scope.currentProjectUrl = path;
-                    jQuery("#htmlFrame").show();
+        $scope.getContentMetadata = function(content) {
+            jQuery('#loading').hide();
+            ContentService.getContent(content)
+                .then(function(data) {
+                    $scope.setContentMetadata(data);
+                })
+                .catch(function(err) {
+                    console.info("contentNotAvailable : ", err);
+                    contentNotAvailable();
                 });
-            } else { 
-                if(collectionChildren) {
-                    collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1); 
-                    collectionChildren = false;
-                }
-                if (webview) {
-                    var contentBody = undefined;
-                    if(COLLECTION_MIMETYPE == content.metadata.mimeType) {
-                        ContentService.getContentBody($stateParams.itemId)
-                            .then(function(data) {
-                               
-                                Renderer.start("", 'gameCanvas', $scope.item, getContentObj(data), true);
-                                
-                            })
-                            .catch(function(err) {
-                                console.info("contentNotAvailable : ", err);
-                                contentNotAvailable();
-                            });
-                    } else {
-                        Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
-                    }
-                    
-                }
-                else
-                    Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
+        }
+
+        $scope.setContentMetadata = function(data) {
+            GlobalContext.currentContentId = data.identifier;
+            GlobalContext.currentContentMimeType = data.mimeType;
+            if (_.isUndefined(data.localData)) {
+                data.localData = data;
+            } else {
+                data = data.localData;
             }
+            data.status = "ready";
+            $scope.$apply(function() {
+                $scope.item = data;
+                $rootScope.content = data;
+            });
+
+            var identifier = (data && data.identifier) ? data.identifier : null;
+            var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
+            TelemetryService.start(identifier, version);
+            TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID" });
+        }
+
+        $scope.init = function() {
+            $scope.showPage = true;
+            if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
+                if ((webview == "true")) {
+                    if (content.metadata && (content.metadata.mimeType != COLLECTION_MIMETYPE)) {
+                        jQuery('#loading').hide();
+                        //For JSON and Direct contentID
+                        $scope.setContentMetadata(content.metadata);
+                    } else {
+                        //For collections
+                        $scope.getContentMetadata($stateParams.contentId);
+                    }
+                } else {
+                    //For mobile
+                    $scope.getContentMetadata($stateParams.contentId);
+                }
+            } else {
+                alert('Sorry. Could not find the content.');
+                startApp();
+            }
+
+        }
+
+        $rootScope.$on('show-message', function(event, data) {
+            if (data.message && data.message != '') {
+                $rootScope.showMessage = true;
+                $rootScope.message = data.message;
+                $rootScope.$apply();
+            }
+            if (data.timeout) {
+                setTimeout(function() {
+                    $rootScope.showMessage = false;
+                    $rootScope.$apply();
+                    if (data.callback) {
+                        data.callback();
+                    }
+                }, data.timeout);
+            }
+        });
+
+        $rootScope.$on('process-complete', function(event, result) {
+            $scope.$apply(function() {
+                $scope.item = result.data;
+            });
+        });
+
+        setTimeout(function() {
+            $scope.init();
+        }, 0);
+    }).controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
+        $rootScope.pageId = "renderer";
+
+        $scope.init = function() {
+            if ($stateParams.itemId) {
+                $scope.item = $rootScope.content;
+
+                if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
+                    HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
+                        jQuery('#loading').hide();
+                        jQuery('#gameArea').hide();
+                        var path = $scope.item.baseDir + '/index.html';
+                        $scope.currentProjectUrl = path;
+                        jQuery("#htmlFrame").show();
+                    });
+                } else {
+                    if (collectionChildren) {
+                        collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1);
+                        collectionChildren = false;
+                    }
+                    if (webview) {
+                        var contentBody = undefined;
+                        if (COLLECTION_MIMETYPE == content.metadata.mimeType) {
+                            ContentService.getContentBody($stateParams.itemId)
+                                .then(function(data) {
+
+                                    Renderer.start("", 'gameCanvas', $scope.item, getContentObj(data), true);
+
+                                })
+                                .catch(function(err) {
+                                    console.info("contentNotAvailable : ", err);
+                                    contentNotAvailable();
+                                });
+                        } else {
+                            Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
+                        }
+
+                    } else
+                        Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
+                }
             } else {
                 alert('Name or Launch URL not found.');
                 $state.go('contentList', { "id": GlobalContext.game.id });
             }
         }
-        
+
 
         $scope.gotToEndPage = function() {
             $state.go('showEndPage', {});
@@ -433,9 +526,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.reloadStage = function() {
             reloadStage();
-            TelemetryService.interact("TOUCH", "gc_reload", "TOUCH", {stageId : Renderer.theme._currentStage});
+            TelemetryService.interact("TOUCH", "gc_reload", "TOUCH", { stageId: Renderer.theme._currentStage });
         }
-       
+
 
         $scope.$on('$destroy', function() {
             // setTimeout(function() {
@@ -466,577 +559,183 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         // This is to fix FTB preview issue of causing by Ionic and Angular combination
         // childnodes error causing by ionic framework whiel rendering FTB item
         // reference: http://stackoverflow.com/questions/27776174/type-error-cannot-read-property-childnodes-of-undefined
-        setTimeout(function(){
+        setTimeout(function() {
             $scope.init();
         }, 0);
-    }).controller('ContentHomeCtrl', function($scope, $rootScope, $http, $cordovaFile, $cordovaToast, $ionicPopover, $state, ContentService, $stateParams) {
-    $rootScope.showMessage = false;
-    $rootScope.pageId = "coverpage";
-    $rootScope.content;
-    $scope.showPage = true;
-    $scope.playContent = function(content) {
-        $scope.showPage = false;
-        $state.go('playContent', {
-            'itemId': content.identifier
-        });
-        jQuery('#loadingText').text(content.name);
-        jQuery("#progressBar").width(0);
-        jQuery('#loading').show();
-        startProgressBar(40, 0.6);
-
-    };
-
-    $scope.getContentMetadata = function(content) {
-        jQuery('#loading').hide();
-        ContentService.getContent(content)
-        .then(function(data) {
-           $scope.setContentMetadata(data);
-        })
-        .catch(function(err) {
-            console.info("contentNotAvailable : ", err);
-            contentNotAvailable();
-        });
-    }
-
-    $scope.setContentMetadata = function(data){
-        GlobalContext.currentContentId = data.identifier;
-        GlobalContext.currentContentMimeType = data.mimeType;
-        if(_.isUndefined(data.localData)){
-            data.localData = data;
-        }else{
-            data =data.localData;
-        }
-        data.status = "ready";
-        $scope.$apply(function() {
-            $scope.item = data;
-            $rootScope.content = data;
-        });
-
-        var identifier = (data && data.identifier) ? data.identifier : null;
-        var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
-        TelemetryService.start(identifier, version);
-        TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID"});
-    }
-
-    $scope.init = function(){
-        $scope.showPage = true;
-        if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
-            if( (webview == "true")){
-                if(content.metadata && (content.metadata.mimeType != COLLECTION_MIMETYPE)){
-                    jQuery('#loading').hide();
-                    //For JSON and Direct contentID
-                    $scope.setContentMetadata(content.metadata);
-                }else{
-                    //For collections
-                    $scope.getContentMetadata($stateParams.contentId);
-                }
-            }else{
-                //For mobile
-                $scope.getContentMetadata($stateParams.contentId);
-            }
-        } else {
-            alert('Sorry. Could not find the content.');
-            startApp();
-        }
-        
-    }
-    
-    $rootScope.$on('show-message', function(event, data) {
-        if (data.message && data.message != '') {
-            $rootScope.showMessage = true;
-            $rootScope.message = data.message;
-            $rootScope.$apply();
-        }
-        if (data.timeout) {
-            setTimeout(function() {
-                $rootScope.showMessage = false;
-                $rootScope.$apply();
-                if (data.callback) {
-                    data.callback();
-                }
-            }, data.timeout);
-        }
-    });
-
-    $rootScope.$on('process-complete', function(event, result) {
-        $scope.$apply(function() {
-            $scope.item = result.data;
-        });
-    });
-
-    setTimeout(function(){
-        $scope.init();
-    }, 0);
-})
-.controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
-    $scope.showFeedbackArea = true;
-    $scope.commentModel = '';
-    $scope.showFeedbackPopup = false;
-    $scope.userRating = 0;
-    $scope.popUserRating = 0;
-
-    $rootScope.pageId = "endpage";
-    $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
-   
-    $scope.arrayToString = function(array) {
-        return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", "): "";   
-    };
-
-    $scope.setCredits = function(key) {
-        if (content[key]) {
-            content[key] = $scope.arrayToString(content[key]);
-        } else {
-            content[key] = null;
-        }
-    };
-    var content = $rootScope.content;
-
-    $scope.setCredits('imageCredits');
-    $scope.setCredits('soundCredits');
-    $scope.setCredits('voiceCredits');
-
-    var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
-    creditsPopup.trigger("popupUpdate", {"content": content});
-    setTimeout(function() {
-        $rootScope.$apply();
-    }, 1000);
-
-    TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContnetApp-EndScreen", subtype: "ContentID"});
-    
-    $scope.showCredits = function(key) {
-        if (content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null) {
-            console.warn("No metadata imageCredits,voiceCredites and soundCredits");
-        }
-        jQuery("#creditsPopup").show();
-        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {
-            stageId: "ContnetApp-CreditsScreen",
-            subtype: "ContentID"
-        });
-    }
-
-    $scope.showFeedback = function(param){
-        $scope.userRating = param;
-        $scope.popUserRating = param; 
-        TelemetryService.interact("TOUCH", "gc_feedback", "TOUCH", {
-            stageId: "ContnetApp-FeedbackScreen",
-            subtype: "ContentID"
-        });
-        $scope.showFeedbackPopup = true;
-    }
-
-    $scope.updatePopUserRating = function(param){
-        $scope.popUserRating = param; 
-    }
-
-    $scope.submitFeedback = function(){
-        $scope.userRating = $scope.popUserRating;
-        $scope.hideFeedback();
-        var eks = {
-            type : "RATING",
-            rating : $scope.userRating,
-            context : {
-                type : "Content",
-                id : $rootScope.content.identifier,
-                stageid: $rootScope.pageId
-            },
-            comments: jQuery('#commentText').val()
-        }
-        TelemetryService.sendFeedback(eks);
-    }
-
-    $scope.hideFeedback = function(){
+    }).controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
+        $scope.showFeedbackArea = true;
+        $scope.commentModel = '';
         $scope.showFeedbackPopup = false;
-    }
+        $scope.userRating = 0;
+        $scope.popUserRating = 0;
 
-    $scope.playNextContent = function() {
-        var id = collectionChildrenIds.pop();
-        if(Renderer.running)
-            Renderer.cleanUp();
-        if(id) {
-            ContentService.getContent(id)
-            .then(function(content) {
-                if (COLLECTION_MIMETYPE == content.mimeType) {
-                    $state.go('contentList', { "id": id });
-                } else {
-                    $state.go('showContent', {"contentId": id});
-                }
-            })
-            .catch(function(err) {
-                if(!_.isEmpty(collectionChildrenIds))
-                     $scope.playNextContent();
-                else {
-                    console.info("contentNotAvailable : ", err);
-                    contentNotAvailable();
-                }
-            });
-        } else {
-            $state.go('contentList', { "id": GlobalContext.previousContentId });
-        }
-    }
+        $rootScope.pageId = "endpage";
+        $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
 
-    $scope.restartContent = function() {
-        jQuery('#loading').show();
-        jQuery("#progressBar").width(0);
-      
-       /* window.history.back();*/
-     $state.go('playContent', {
-            'itemId': content.identifier
-        });
-        var gameId = TelemetryService.getGameId();
-        var version = TelemetryService.getGameVer();
-        var instance = this;
+        $scope.arrayToString = function(array) {
+            return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";
+        };
+
+        $scope.setCredits = function(key) {
+            if (content[key]) {
+                content[key] = $scope.arrayToString(content[key]);
+            } else {
+                content[key] = null;
+            }
+        };
+        var content = $rootScope.content;
+
+        $scope.setCredits('imageCredits');
+        $scope.setCredits('soundCredits');
+        $scope.setCredits('voiceCredits');
+
+        var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
+        creditsPopup.trigger("popupUpdate", { "content": content });
         setTimeout(function() {
-            if (gameId && version) {
-                TelemetryService.start(gameId, version);
+            $rootScope.$apply();
+        }, 1000);
+
+        TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContnetApp-EndScreen", subtype: "ContentID" });
+
+        $scope.showCredits = function(key) {
+            if (content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null) {
+                console.warn("No metadata imageCredits,voiceCredites and soundCredits");
             }
-        }, 500);
-    }
-
-    $scope.setTotalTimeSpent = function() {
-        var startTime =  (TelemetryService && TelemetryService.instance && TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ]) ? TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ].startTime : 0;
-        if(startTime) {
-            var totalTime = Math.round((new Date().getTime() - startTime) /1000);
-            var mm = Math.floor(totalTime / 60);
-            var ss = Math.floor(totalTime % 60);
-            $scope.totalTimeSpent = (mm > 9 ? mm : ("0" + mm))  + ":" + (ss > 9 ? ss : ("0" + ss));
-        } else {
-            $scope.showFeedbackArea = false;
+            jQuery("#creditsPopup").show();
+            TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {
+                stageId: "ContnetApp-CreditsScreen",
+                subtype: "ContentID"
+            });
         }
-    }
 
-    $scope.getTotalScore = function(id) {
-        if("undefined" != typeof cordova) {
-            ContentService.getLearnerAssessment(GlobalContext.user.uid, id)
-            .then(function(score){
-                if(score && score.total_questions) {
-                    $scope.showScore = true;
-                    $scope.$apply(function() {
-                        $scope.totalScore = (score.total_correct + "/" + score.total_questions);
+        $scope.showFeedback = function(param) {
+            $scope.userRating = param;
+            $scope.popUserRating = param;
+            TelemetryService.interact("TOUCH", "gc_feedback", "TOUCH", {
+                stageId: "ContnetApp-FeedbackScreen",
+                subtype: "ContentID"
+            });
+            $scope.showFeedbackPopup = true;
+        }
+
+        $scope.updatePopUserRating = function(param) {
+            $scope.popUserRating = param;
+        }
+
+        $scope.submitFeedback = function() {
+            $scope.userRating = $scope.popUserRating;
+            $scope.hideFeedback();
+            var eks = {
+                type: "RATING",
+                rating: $scope.userRating,
+                context: {
+                    type: "Content",
+                    id: $rootScope.content.identifier,
+                    stageid: $rootScope.pageId
+                },
+                comments: jQuery('#commentText').val()
+            }
+            TelemetryService.sendFeedback(eks);
+        }
+
+        $scope.hideFeedback = function() {
+            $scope.showFeedbackPopup = false;
+        }
+
+        $scope.playNextContent = function() {
+            var id = collectionChildrenIds.pop();
+            if (Renderer.running)
+                Renderer.cleanUp();
+            if (id) {
+                ContentService.getContent(id)
+                    .then(function(content) {
+                        if (COLLECTION_MIMETYPE == content.mimeType) {
+                            $state.go('contentList', { "id": id });
+                        } else {
+                            $state.go('showContent', { "contentId": id });
+                        }
+                    })
+                    .catch(function(err) {
+                        if (!_.isEmpty(collectionChildrenIds))
+                            $scope.playNextContent();
+                        else {
+                            console.info("contentNotAvailable : ", err);
+                            contentNotAvailable();
+                        }
                     });
-                } else {
-                    $scope.showScore = false
-                }
-            })
-        } else {
-            $scope.showScore = false
-        }
-    }
-
-
-    $scope.init = function(){
-        window.addEventListener('native.keyboardshow', epKeyboardShowHandler, true);
-        window.addEventListener('native.keyboardhide', epKeyboardHideHandler, true);
-
-        $scope.setTotalTimeSpent();
-        $scope.getTotalScore($stateParams.contentId);
-        $scope.showFeedback(0);
-    }
-
-    function epKeyboardShowHandler(){
-        jQuery('#gcFbPopup').addClass('gc-fc-popup-keyboard');
-    }
-
-    function epKeyboardHideHandler(){
-        jQuery('#gcFbPopup').removeClass('gc-fc-popup-keyboard');
-    }
-
-    $scope.init();
-}).directive('menu', function($rootScope, $sce) {
-        return {
-            restrict: 'E',
-            templateUrl: ("undefined" != typeof localPreview && "local" == localPreview) ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
-        }
-    })
-    .directive('collection', function($rootScope, $state) {
-        return {
-            restrict: 'E',
-            template: '<a ng-class="{\'icon-opacity\': isCollection != true}" ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection != true}" ng-src="{{imgSrc}}"/></a>',
-             link: function(scope, state) {
-                scope.imgSrc = $rootScope.imageBasePath + 'collection_icon.png';
-                scope.isCollection = false;
-                if ($rootScope.collection && $rootScope.collection.children) {
-                    scope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
-                }
-
-
-               var pageId = $rootScope.pageId;
-                scope.goToCollection = function() {
-                   goToCollection($state, GlobalContext.previousContentId, pageId);
-                }
-
+            } else {
+                $state.go('contentList', { "id": GlobalContext.previousContentId });
             }
         }
-    })
-    .directive('home', function($rootScope, $state) {
-        return {
-            restrict: 'E',
-             scope: {
-                disableHome: '=info'
 
-            },
-            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imgSrc}}"/></a>',
-            link: function(scope, state) {
-                scope.imgSrc = $rootScope.imageBasePath + 'home_icon.png';
-                scope.showHome = false;
-                if (scope.disableHome == true)
-                    scope.showHome = true;
-                var pageId = $rootScope.pageId;
+        $scope.restartContent = function() {
+            jQuery('#loading').show();
+            jQuery("#progressBar").width(0);
 
-                scope.goToHome = function() {
-                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
-                    if (Renderer.running)
-                        Renderer.cleanUp();
-                    else
-                        TelemetryService.end();
-                    $state.go('showContent', {"contentId": GlobalContext.currentContentId});
-                     //window.location.hash = "/show/content/" + GlobalContext.currentContentId;
-                        
+            /* window.history.back();*/
+            $state.go('playContent', {
+                'itemId': content.identifier
+            });
+            var gameId = TelemetryService.getGameId();
+            var version = TelemetryService.getGameVer();
+            var instance = this;
+            setTimeout(function() {
+                if (gameId && version) {
+                    TelemetryService.start(gameId, version);
                 }
+            }, 500);
+        }
 
+        $scope.setTotalTimeSpent = function() {
+            var startTime = (TelemetryService && TelemetryService.instance && TelemetryService.instance._end[TelemetryService.instance._end.length - 1]) ? TelemetryService.instance._end[TelemetryService.instance._end.length - 1].startTime : 0;
+            if (startTime) {
+                var totalTime = Math.round((new Date().getTime() - startTime) / 1000);
+                var mm = Math.floor(totalTime / 60);
+                var ss = Math.floor(totalTime % 60);
+                $scope.totalTimeSpent = (mm > 9 ? mm : ("0" + mm)) + ":" + (ss > 9 ? ss : ("0" + ss));
+            } else {
+                $scope.showFeedbackArea = false;
             }
         }
-    })
-   .directive('genie', function($rootScope) {
-        return {
-            restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png"/></a>',
-            link: function(scope) {
-                var pageId = $rootScope.pageId;
-                scope.goToGenie = function() {
-                    exitApp(pageId);
-                }
+
+        $scope.getTotalScore = function(id) {
+            if ("undefined" != typeof cordova) {
+                ContentService.getLearnerAssessment(GlobalContext.user.uid, id)
+                    .then(function(score) {
+                        if (score && score.total_questions) {
+                            $scope.showScore = true;
+                            $scope.$apply(function() {
+                                $scope.totalScore = (score.total_correct + "/" + score.total_questions);
+                            });
+                        } else {
+                            $scope.showScore = false
+                        }
+                    })
+            } else {
+                $scope.showScore = false
             }
         }
-    })
-    .directive('stageInstructions', function($rootScope) {
-        return {
-            restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}teacher_instructions.png" style="z-index:2;"/></a>',
-            controller: function($scope, $rootScope) {
-                $scope.stageInstMessage = "";
-                $scope.showInst = false;
-
-                /*<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:30%;"/></a>*/
-                $scope.showInstructions = function() {
-                    if (Renderer.theme._currentScene.params && Renderer.theme._currentScene.params.instructions) {
-                        $scope.showInst = true;
-
-                        //Getting stage instructions from CurrentStage(StagePlugin)
-                        var inst = Renderer.theme._currentScene.params.instructions;
-                        $scope.stageInstMessage = inst;
-                    }
-                }
-
-                $scope.closeInstructions = function() {
-                    $scope.showInst = false;
-                }
-
-                /*
-                 * If meny is getting hide, then hide teacher instructions as well
-                 */
-                $scope.$watch("menuOpened", function() {
-                    if (!$rootScope.menuOpened) {
-
-                        $scope.showInst = false;
-                    }
-                });
-            }
-        }
-    })
-    .directive('mute', function($rootScope) {
-        return {
-            restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position: absolute;margin: 3%;width: 10%;z-index: 1;margin-left: 40%;" /><img id="unmute_id"  style="position: absolute;margin: 3% 3% 3% 40%;display: list-item;width: 12%;z-index: 1;visibility: visible;"/> </a>',
-            link: function(scope, url) {
-                scope.mutestatus = "mute.png";
-
-                scope.mute = function() {
-                    //mute function goes here
-                    if (AudioManager.muted) {
-                        AudioManager.unmute();
-                        document.getElementById("unmute_id").style.visibility = "hidden"
-                    } else {
-                        AudioManager.mute();
-                        document.getElementById("unmute_id").src = $rootScope.imageBasePath + "unmute.png";
-                        document.getElementById("unmute_id").style.visibility = "visible"
-                    }
 
 
-                }
-            }
-        }
-    })
-    .directive('restart', function($rootScope) {
-        return {
-            restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}retry_icon.png"/></a>'
-        }
-    })
-    .directive('reloadStage', function($rootScope) {
-        return {
-            restrict: 'E',
-            template: '<a href="javascript:void(0)" onclick="reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
+        $scope.init = function() {
+            window.addEventListener('native.keyboardshow', epKeyboardShowHandler, true);
+            window.addEventListener('native.keyboardhide', epKeyboardHideHandler, true);
+
+            $scope.setTotalTimeSpent();
+            $scope.getTotalScore($stateParams.contentId);
+            $scope.showFeedback(0);
         }
 
-    })
-    .directive('navigate', function($rootScope) {
-        return {
-            restrict: 'E',
-            scope: {
-                disableImage: '=',
-                enableImage: '=',
-                type: '=type'
-            },
-            template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:90%;" /></a><a ng-show="show" ng-click="onNavigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:90%;" /></a>',
-            link: function(scope, element) {
-                var to = scope.type;
-                element.bind("navigateUpdate", function(event, data) {
-                    if (data) {
-                        for (key in data) {
-                            scope[key] = data[key];
-                        };
-                    }
-                });
-                scope.onNavigate = function() {
-                    TelemetryService.interact("TOUCH", to, null, {
-                        stageId: Renderer.theme._currentStage
-                    });
-                    $rootScope.isItemScene = false;
-                    navigate(to);
-                };
-            }
+        function epKeyboardShowHandler() {
+            jQuery('#gcFbPopup').addClass('gc-fc-popup-keyboard');
         }
-    })
-    .directive('popup', function($rootScope, $compile) {
-        return {
-            restrict: 'E',
-            scope: {
-                popupBody: '=popupBody'
-            },
-            template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"></div></div>',
-            link: function(scope, element) {
-                scope.icons = $rootScope.icons;
-                scope.languageSupport = $rootScope.languageSupport;
-                scope.content = $rootScope.content;
-                element.bind("popupUpdate", function(event, data) {
-                    if (data) {
-                        for (key in data) {
-                            scope[key] = data[key];
-                        };
-                    }
-                });
-                var body = $compile(scope.popupBody)(scope);
-                element.find("div.popup-full-body").html();
-                element.find("div.popup-full-body").append(body);
-                element.hide();
-                scope.retryAssessment = function(id){
-                    submitOnNextClick = true;
-                    scope.hidePopup(id);
-                }
 
-                scope.hidePopup = function(id) {
-                    element.hide();
-                    TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
-                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : Renderer.theme._currentStage)
-                    });
-                };
-
-                scope.moveToNextStage = function(navType){
-                    submitOnNextClick = false;
-                    navigate(navType);
-                }
-            }
+        function epKeyboardHideHandler() {
+            jQuery('#gcFbPopup').removeClass('gc-fc-popup-keyboard');
         }
-    })
-    .directive('assess', function($rootScope) {
-        return {
-            restrict: 'E',
-            scope: {
-                image: '='
-            },
-              template: '<a class="assess" id="assessButton" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/></a>',
-                link: function(scope, element) {
-                scope.labelSubmit = $rootScope.languageSupport.submit;
-            },
-            controller: function($scope, $rootScope, $timeout) {
-                $scope.isEnabled = false;
-                $scope.assessStyle = 'assess-disable';
 
-                $rootScope.$watch('enableEval', function() {
-                    //Submit buttion style changing(enable/disable) button
-                    $scope.isEnabled = $rootScope.enableEval;
-                    if ($scope.isEnabled) {
-                        //Enable state
-                        $timeout(function(){
-                            // This timeout is required to apply the changes(because it is calling by JS)
-                            $scope.assessStyle = 'assess-enable';
-                            $scope.image = $rootScope.imageBasePath + "submit.png";
-                        }, 100);
-                    } else {
-                        //Disable state
-                        $scope.assessStyle = 'assess-disable';
-                        $scope.image = $rootScope.imageBasePath + "submit_disabled.png";
-                    }
-                });
-
-                 $scope.onSubmit = function() {
-                    if ($scope.isEnabled) {
-                        evalAndSubmit();
-                    }
-                }
-            }
-        }
-    })
-    .directive('starRating', function($rootScope) {
-        return {
-        //reference: http://jsfiddle.net/manishpatil/2fahpk7s/
-        scope: {
-            rating: '=',
-            maxRating: '@',
-            readOnly: '@',
-            click: "&",
-            mouseHover: "&",
-            mouseLeave: "&"
-        },
-        restrict: 'EA',
-        template:
-            "<div style='display: inline-block; padding: 2%; cursor:pointer; width:20%; height:100%;' ng-repeat='idx in maxRatings track by $index'> \
-                    <img ng-src='{{((hoverValue + _rating) <= $index) && rating_empty || rating_selected }}' \
-                    ng-Click='isolatedClick($index + 1)' style='height:100%;' \></img> \
-            </div>",
-        compile: function (element, attrs) {
-            if (!attrs.maxRating || (Number(attrs.maxRating) <= 0)) {
-                attrs.maxRating = '5';
-            };
-        },
-        controller: function ($scope, $element, $attrs, $rootScope) {
-            $scope.maxRatings = [];
-            $scope.rating_empty =  $rootScope.imageBasePath + "star_inactive.png";
-            $scope.rating_selected =  $rootScope.imageBasePath + "star_active.png";
-
-            for (var i = 1; i <= $scope.maxRating; i++) {
-                $scope.maxRatings.push({});
-            };
-
-            $scope._rating = $scope.rating;
-            
-            $scope.isolatedClick = function (param) {
-                if ($scope.readOnly == 'true') return;
-
-                $scope.rating = $scope._rating = param;
-                $scope.hoverValue = 0;
-                $scope.click({
-                    param: param
-                });
-            };
-
-            /*$scope.updateRating = function(param){
-               $scope.isolatedClick(param)
-            };*/
-        }
-    };
-    })
-    .controller('OverlayCtrl', function($scope, $rootScope) {
+        $scope.init();
+    }).controller('OverlayCtrl', function($scope, $rootScope) {
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
 
@@ -1044,7 +743,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if (GlobalContext.config.language_info) {
                 console.log("Language updated", GlobalContext.config.language_info);
                 var languageInfo = JSON.parse(GlobalContext.config.language_info);
-                for(key in languageInfo) {
+                for (key in languageInfo) {
                     $rootScope.languageSupport[key] = languageInfo[key];
                 }
             }
@@ -1083,12 +782,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 skip: $rootScope.imageBasePath + "next_button_try_again_popup_.png",
                 star: $rootScope.imageBasePath + "star.png",
                 credit_popup: $rootScope.imageBasePath + "popup.png",
-                goodjob_stars:$rootScope.imageBasePath+"img_stars.png"
+                goodjob_stars: $rootScope.imageBasePath + "img_stars.png"
             },
-           /* popup_kid: {
-                good_job: $rootScope.imageBasePath + "LEFT.png",
-                retry: $rootScope.imageBasePath + "Genie_ RETRY.png"
-            },*/
+            /* popup_kid: {
+                 good_job: $rootScope.imageBasePath + "LEFT.png",
+                 retry: $rootScope.imageBasePath + "Genie_ RETRY.png"
+             },*/
             popup_close: {
                 close_icon: $rootScope.imageBasePath + "close_popup.png",
             }
@@ -1136,9 +835,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.init();
-
-
-    }).controller('RelatedContentCtrl', function($scope, $rootScope){
+    }).controller('RelatedContentCtrl', function($scope, $rootScope) {
         $scope.showRelatedContent = false;
         $scope.contentShowMore = false;
         $scope.showRelatedContentHeader = true;
@@ -1154,75 +851,74 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.showRelatedContent = false;
             $scope.contentShowMore = false;
             $scope.showRelatedContentHeader = false;
-            
+
             jQuery('#endPageLoader').show();
             TelemetryService.end();
-            if(GlobalContext.config.appInfo.mimeType == COLLECTION_MIMETYPE) {
+            if (GlobalContext.config.appInfo.mimeType == COLLECTION_MIMETYPE) {
                 collectionPath = $scope.relatedContentPath;
                 ContentService.getContent(content.identifier)
-                .then(function(content) {
-                    if (COLLECTION_MIMETYPE == content.mimeType) {
-                        $state.go('contentList', { "id": content.identifier});
-                    } else {
-                        $state.go('showContent', {"contentId": content.identifier});
-                    }
-                })
+                    .then(function(content) {
+                        if (COLLECTION_MIMETYPE == content.mimeType) {
+                            $state.go('contentList', { "id": content.identifier });
+                        } else {
+                            $state.go('showContent', { "contentId": content.identifier });
+                        }
+                    })
             } else {
-                if(content.isAvailable) {
+                if (content.isAvailable) {
                     if (COLLECTION_MIMETYPE == content.mimeType) {
-                        $state.go('contentList', { "id": content.identifier});
+                        $state.go('contentList', { "id": content.identifier });
                     } else {
-                        $state.go('showContent', {"contentId": content.identifier});
+                        $state.go('showContent', { "contentId": content.identifier });
                     }
                 } else {
                     window.open("ekstep://c/" + content.identifier, "_system");
                 }
-                
+
             }
-            
+
         }
 
         $scope.getRelatedContent = function(list) {
             ContentService.getRelatedContent(GlobalContext.user.uid, list)
-            .then(function(item) {      
-                if(!_.isEmpty(item)) {
-                    var list = [];
-                    if(!_.isEmpty(item.collection)) {
-                        $scope.showRelatedContent = true;
-                        $scope.relatedContentPath = item.collection;
-                        list = [item.collection[item.collection.length - 1]]; 
-                        list[0].appIcon = list[0].path + '/' + list[0].appIcon;
-                    }
-                    else if(!_.isEmpty(item.content)) {
-                        $scope.showRelatedContent = true;
-                        $scope.contentShowMore = true;
-                        list = _.first(_.isArray(item.content) ? item.content : [item.content], 2); 
-                    }
+                .then(function(item) {
+                    if (!_.isEmpty(item)) {
+                        var list = [];
+                        if (!_.isEmpty(item.collection)) {
+                            $scope.showRelatedContent = true;
+                            $scope.relatedContentPath = item.collection;
+                            list = [item.collection[item.collection.length - 1]];
+                            list[0].appIcon = list[0].path + '/' + list[0].appIcon;
+                        } else if (!_.isEmpty(item.content)) {
+                            $scope.showRelatedContent = true;
+                            $scope.contentShowMore = true;
+                            list = _.first(_.isArray(item.content) ? item.content : [item.content], 2);
+                        }
 
-                    if(!_.isEmpty(list)) {
-                        $scope.$apply(function() {
-                            $scope.relatedContents = list;
-                            jQuery('#endPageLoader').hide();    
-                        });
-                    } else {
-                        $scope.showRelatedContentHeader = false;
-                        jQuery('#endPageLoader').hide();    
+                        if (!_.isEmpty(list)) {
+                            $scope.$apply(function() {
+                                $scope.relatedContents = list;
+                                jQuery('#endPageLoader').hide();
+                            });
+                        } else {
+                            $scope.showRelatedContentHeader = false;
+                            jQuery('#endPageLoader').hide();
+                        }
                     }
-                }
-            })
+                })
         }
 
         $scope.renderRelatedContent = function(id) {
             var list = [];
-            if(GlobalContext.config.appInfo.mimeType != COLLECTION_MIMETYPE) {
+            if (GlobalContext.config.appInfo.mimeType != COLLECTION_MIMETYPE) {
                 // For Content
-                if(("undefined" != typeof cordova)) {
+                if (("undefined" != typeof cordova)) {
                     list = [{
-                        "identifier":id,
-                        "mediaType":"Content"
+                        "identifier": id,
+                        "mediaType": "Content"
                     }]
                     $scope.getRelatedContent(list);
-                } 
+                }
             } else {
                 // For Collection
                 list = collectionPath;
@@ -1231,10 +927,291 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         }
 
-        if("undefined" != typeof cordova) {
+        if ("undefined" != typeof cordova) {
             $scope.renderRelatedContent($stateParams.contentId);
         } else {
             jQuery('#endPageLoader').hide();
             $scope.showRelatedContentHeader = false;
         }
+    }).directive('menu', function($rootScope, $sce) {
+        return {
+            restrict: 'E',
+            templateUrl: ("undefined" != typeof localPreview && "local" == localPreview) ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
+        }
+    }).directive('collection', function($rootScope, $state) {
+        return {
+            restrict: 'E',
+            template: '<a ng-class="{\'icon-opacity\': isCollection != true}" ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection != true}" ng-src="{{imgSrc}}"/></a>',
+            link: function(scope, state) {
+                scope.imgSrc = $rootScope.imageBasePath + 'collection_icon.png';
+                scope.isCollection = false;
+                if ($rootScope.collection && $rootScope.collection.children) {
+                    scope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
+                }
+
+
+                var pageId = $rootScope.pageId;
+                scope.goToCollection = function() {
+                    goToCollection($state, GlobalContext.previousContentId, pageId);
+                }
+
+            }
+        }
+    }).directive('home', function($rootScope, $state) {
+        return {
+            restrict: 'E',
+            scope: {
+                disableHome: '=info'
+
+            },
+            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imgSrc}}"/></a>',
+            link: function(scope, state) {
+                scope.imgSrc = $rootScope.imageBasePath + 'home_icon.png';
+                scope.showHome = false;
+                if (scope.disableHome == true)
+                    scope.showHome = true;
+                var pageId = $rootScope.pageId;
+
+                scope.goToHome = function() {
+                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId)) });
+                    if (Renderer.running)
+                        Renderer.cleanUp();
+                    else
+                        TelemetryService.end();
+                    $state.go('showContent', { "contentId": GlobalContext.currentContentId });
+                    //window.location.hash = "/show/content/" + GlobalContext.currentContentId;
+
+                }
+
+            }
+        }
+    }).directive('genie', function($rootScope) {
+        return {
+            restrict: 'E',
+            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png"/></a>',
+            link: function(scope) {
+                var pageId = $rootScope.pageId;
+                scope.goToGenie = function() {
+                    exitApp(pageId);
+                }
+            }
+        }
+    }).directive('stageInstructions', function($rootScope) {
+        return {
+            restrict: 'E',
+            template: '<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}teacher_instructions.png" style="z-index:2;"/></a>',
+            controller: function($scope, $rootScope) {
+                $scope.stageInstMessage = "";
+                $scope.showInst = false;
+
+                /*<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:30%;"/></a>*/
+                $scope.showInstructions = function() {
+                    if (Renderer.theme._currentScene.params && Renderer.theme._currentScene.params.instructions) {
+                        $scope.showInst = true;
+
+                        //Getting stage instructions from CurrentStage(StagePlugin)
+                        var inst = Renderer.theme._currentScene.params.instructions;
+                        $scope.stageInstMessage = inst;
+                    }
+                }
+
+                $scope.closeInstructions = function() {
+                    $scope.showInst = false;
+                }
+
+                /*
+                 * If meny is getting hide, then hide teacher instructions as well
+                 */
+                $scope.$watch("menuOpened", function() {
+                    if (!$rootScope.menuOpened) {
+
+                        $scope.showInst = false;
+                    }
+                });
+            }
+        }
+    }).directive('mute', function($rootScope) {
+        return {
+            restrict: 'E',
+            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position: absolute;margin: 3%;width: 10%;z-index: 1;margin-left: 40%;" /><img id="unmute_id"  style="position: absolute;margin: 3% 3% 3% 40%;display: list-item;width: 12%;z-index: 1;visibility: visible;"/> </a>',
+            link: function(scope, url) {
+                scope.mutestatus = "mute.png";
+
+                scope.mute = function() {
+                    //mute function goes here
+                    if (AudioManager.muted) {
+                        AudioManager.unmute();
+                        document.getElementById("unmute_id").style.visibility = "hidden"
+                    } else {
+                        AudioManager.mute();
+                        document.getElementById("unmute_id").src = $rootScope.imageBasePath + "unmute.png";
+                        document.getElementById("unmute_id").style.visibility = "visible"
+                    }
+
+
+                }
+            }
+        }
+    }).directive('restart', function($rootScope) {
+        return {
+            restrict: 'E',
+            template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}retry_icon.png"/></a>'
+        }
+    }).directive('reloadStage', function($rootScope) {
+        return {
+            restrict: 'E',
+            template: '<a href="javascript:void(0)" onclick="reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
+        }
+    }).directive('navigate', function($rootScope) {
+        return {
+            restrict: 'E',
+            scope: {
+                disableImage: '=',
+                enableImage: '=',
+                type: '=type'
+            },
+            template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:90%;" /></a><a ng-show="show" ng-click="onNavigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:90%;" /></a>',
+            link: function(scope, element) {
+                var to = scope.type;
+                element.bind("navigateUpdate", function(event, data) {
+                    if (data) {
+                        for (key in data) {
+                            scope[key] = data[key];
+                        };
+                    }
+                });
+                scope.onNavigate = function() {
+                    TelemetryService.interact("TOUCH", to, null, {
+                        stageId: Renderer.theme._currentStage
+                    });
+                    $rootScope.isItemScene = false;
+                    navigate(to);
+                };
+            }
+        }
+    }).directive('popup', function($rootScope, $compile) {
+        return {
+            restrict: 'E',
+            scope: {
+                popupBody: '=popupBody'
+            },
+            template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"></div></div>',
+            link: function(scope, element) {
+                scope.icons = $rootScope.icons;
+                scope.languageSupport = $rootScope.languageSupport;
+                scope.content = $rootScope.content;
+                element.bind("popupUpdate", function(event, data) {
+                    if (data) {
+                        for (key in data) {
+                            scope[key] = data[key];
+                        };
+                    }
+                });
+                var body = $compile(scope.popupBody)(scope);
+                element.find("div.popup-full-body").html();
+                element.find("div.popup-full-body").append(body);
+                element.hide();
+                scope.retryAssessment = function(id) {
+                    submitOnNextClick = true;
+                    scope.hidePopup(id);
+                }
+
+                scope.hidePopup = function(id) {
+                    element.hide();
+                    TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
+                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : Renderer.theme._currentStage)
+                    });
+                };
+
+                scope.moveToNextStage = function(navType) {
+                    submitOnNextClick = false;
+                    navigate(navType);
+                }
+            }
+        }
+    }).directive('assess', function($rootScope) {
+        return {
+            restrict: 'E',
+            scope: {
+                image: '='
+            },
+            template: '<a class="assess" id="assessButton" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/></a>',
+            link: function(scope, element) {
+                scope.labelSubmit = $rootScope.languageSupport.submit;
+            },
+            controller: function($scope, $rootScope, $timeout) {
+                $scope.isEnabled = false;
+                $scope.assessStyle = 'assess-disable';
+
+                $rootScope.$watch('enableEval', function() {
+                    //Submit buttion style changing(enable/disable) button
+                    $scope.isEnabled = $rootScope.enableEval;
+                    if ($scope.isEnabled) {
+                        //Enable state
+                        $timeout(function() {
+                            // This timeout is required to apply the changes(because it is calling by JS)
+                            $scope.assessStyle = 'assess-enable';
+                            $scope.image = $rootScope.imageBasePath + "submit.png";
+                        }, 100);
+                    } else {
+                        //Disable state
+                        $scope.assessStyle = 'assess-disable';
+                        $scope.image = $rootScope.imageBasePath + "submit_disabled.png";
+                    }
+                });
+
+                $scope.onSubmit = function() {
+                    if ($scope.isEnabled) {
+                        evalAndSubmit();
+                    }
+                }
+            }
+        }
+    }).directive('starRating', function($rootScope) {
+        return {
+            //reference: http://jsfiddle.net/manishpatil/2fahpk7s/
+            scope: {
+                rating: '=',
+                maxRating: '@',
+                readOnly: '@',
+                click: "&",
+                mouseHover: "&",
+                mouseLeave: "&"
+            },
+            restrict: 'EA',
+            template: "<div style='display: inline-block; padding: 2%; cursor:pointer; width:20%; height:100%;' ng-repeat='idx in maxRatings track by $index'> \
+                    <img ng-src='{{((hoverValue + _rating) <= $index) && rating_empty || rating_selected }}' \
+                    ng-Click='isolatedClick($index + 1)' style='height:100%;' \></img> \
+            </div>",
+            compile: function(element, attrs) {
+                if (!attrs.maxRating || (Number(attrs.maxRating) <= 0)) {
+                    attrs.maxRating = '5';
+                };
+            },
+            controller: function($scope, $element, $attrs, $rootScope) {
+                $scope.maxRatings = [];
+                $scope.rating_empty = $rootScope.imageBasePath + "star_inactive.png";
+                $scope.rating_selected = $rootScope.imageBasePath + "star_active.png";
+
+                for (var i = 1; i <= $scope.maxRating; i++) {
+                    $scope.maxRatings.push({});
+                };
+
+                $scope._rating = $scope.rating;
+
+                $scope.isolatedClick = function(param) {
+                    if ($scope.readOnly == 'true') return;
+
+                    $scope.rating = $scope._rating = param;
+                    $scope.hoverValue = 0;
+                    $scope.click({
+                        param: param
+                    });
+                };
+
+                /*$scope.updateRating = function(param){
+                   $scope.isolatedClick(param)
+                };*/
+            }
+        };
     });
