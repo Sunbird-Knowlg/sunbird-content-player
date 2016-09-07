@@ -570,11 +570,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 })
 .controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
     $scope.showFeedbackArea = true;
-    $scope.showRelatedContent = false;
-    $scope.contentShowMore = false;
-    $scope.showRelatedContentHeader = true;
-    $scope.relatedContents = [];
-    $scope.relatedContentPath = [];
     $scope.commentModel = '';
     $scope.showFeedbackPopup = false;
     $scope.userRating = 0;
@@ -697,94 +692,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }, 500);
     }
 
-     $scope.playRelatedContent = function(content) {
-        $scope.showRelatedContent = false;
-        $scope.contentShowMore = false;
-        $scope.showRelatedContentHeader = false;
-        
-        jQuery('#endPageLoader').show();
-        TelemetryService.end();
-        if(GlobalContext.config.appInfo.mimeType == COLLECTION_MIMETYPE) {
-            collectionPath = $scope.relatedContentPath;
-            ContentService.getContent(content.identifier)
-            .then(function(content) {
-                if (COLLECTION_MIMETYPE == content.mimeType) {
-                    $state.go('contentList', { "id": content.identifier});
-                } else {
-                    $state.go('showContent', {"contentId": content.identifier});
-                }
-            })
-        } else {
-            if(content.isAvailable) {
-                if (COLLECTION_MIMETYPE == content.mimeType) {
-                    $state.go('contentList', { "id": content.identifier});
-                } else {
-                    $state.go('showContent', {"contentId": content.identifier});
-                }
-            } else {
-                window.open("ekstep://c/" + content.identifier, "_system");
-            }
-            
-        }
-        
-    }
-
-    $scope.showAllRelatedContent = function() {
-        window.open("ekstep://l/related/" + $stateParams.contentId, "_system");
-        exitApp();
-    }
-
-
-    $scope.getRelatedContent = function(list) {
-        ContentService.getRelatedContent(GlobalContext.user.uid, list)
-        .then(function(item) {      
-            if(!_.isEmpty(item)) {
-                var list = [];
-                if(!_.isEmpty(item.collection)) {
-                    $scope.showRelatedContent = true;
-                    $scope.relatedContentPath = item.collection;
-                    list = [item.collection[item.collection.length - 1]]; 
-                    list[0].appIcon = list[0].path + '/' + list[0].appIcon;
-                }
-                else if(!_.isEmpty(item.content)) {
-                    $scope.showRelatedContent = true;
-                    $scope.contentShowMore = true;
-                    list = _.first(_.isArray(item.content) ? item.content : [item.content], 2); 
-                }
-
-                if(!_.isEmpty(list)) {
-                    $scope.$apply(function() {
-                        $scope.relatedContents = list;
-                        jQuery('#endPageLoader').hide();    
-                    });
-                } else {
-                    $scope.showRelatedContentHeader = false;
-                    jQuery('#endPageLoader').hide();    
-                }
-            }
-        })
-    }
-
-
-    $scope.renderRelatedContent = function(id) {
-        var list = [];
-        if(GlobalContext.config.appInfo.mimeType != COLLECTION_MIMETYPE) {
-            // For Content
-            if(("undefined" != typeof cordova)) {
-                list = [{
-                    "identifier":id,
-                    "mediaType":"Content"
-                }]
-                $scope.getRelatedContent(list);
-            } 
-        } else {
-            // For Collection
-            list = collectionPath;
-            collectionPathMap[GlobalContext.previousContentId] = collectionPath;
-            $scope.getRelatedContent(list);
-        }
-    }
-
     $scope.setTotalTimeSpent = function() {
         var startTime =  (TelemetryService && TelemetryService.instance && TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ]) ? TelemetryService.instance._end[ TelemetryService.instance._end.length -1 ].startTime : 0;
         if(startTime) {
@@ -820,12 +727,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         window.addEventListener('native.keyboardshow', epKeyboardShowHandler, true);
         window.addEventListener('native.keyboardhide', epKeyboardHideHandler, true);
 
-        if("undefined" != typeof cordova) {
-            $scope.renderRelatedContent($stateParams.contentId);
-        } else {
-            jQuery('#endPageLoader').hide();
-            $scope.showRelatedContentHeader = false;
-        }
         $scope.setTotalTimeSpent();
         $scope.getTotalScore($stateParams.contentId);
         $scope.showFeedback(0);
@@ -1237,4 +1138,103 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.init();
 
 
+    }).controller('RelatedContentCtrl', function($scope, $rootScope){
+        $scope.showRelatedContent = false;
+        $scope.contentShowMore = false;
+        $scope.showRelatedContentHeader = true;
+        $scope.relatedContents = [];
+        $scope.relatedContentPath = [];
+
+        $scope.showAllRelatedContent = function() {
+            window.open("ekstep://l/related/" + $stateParams.contentId, "_system");
+            exitApp();
+        }
+
+        $scope.playRelatedContent = function(content) {
+            $scope.showRelatedContent = false;
+            $scope.contentShowMore = false;
+            $scope.showRelatedContentHeader = false;
+            
+            jQuery('#endPageLoader').show();
+            TelemetryService.end();
+            if(GlobalContext.config.appInfo.mimeType == COLLECTION_MIMETYPE) {
+                collectionPath = $scope.relatedContentPath;
+                ContentService.getContent(content.identifier)
+                .then(function(content) {
+                    if (COLLECTION_MIMETYPE == content.mimeType) {
+                        $state.go('contentList', { "id": content.identifier});
+                    } else {
+                        $state.go('showContent', {"contentId": content.identifier});
+                    }
+                })
+            } else {
+                if(content.isAvailable) {
+                    if (COLLECTION_MIMETYPE == content.mimeType) {
+                        $state.go('contentList', { "id": content.identifier});
+                    } else {
+                        $state.go('showContent', {"contentId": content.identifier});
+                    }
+                } else {
+                    window.open("ekstep://c/" + content.identifier, "_system");
+                }
+                
+            }
+            
+        }
+
+        $scope.getRelatedContent = function(list) {
+            ContentService.getRelatedContent(GlobalContext.user.uid, list)
+            .then(function(item) {      
+                if(!_.isEmpty(item)) {
+                    var list = [];
+                    if(!_.isEmpty(item.collection)) {
+                        $scope.showRelatedContent = true;
+                        $scope.relatedContentPath = item.collection;
+                        list = [item.collection[item.collection.length - 1]]; 
+                        list[0].appIcon = list[0].path + '/' + list[0].appIcon;
+                    }
+                    else if(!_.isEmpty(item.content)) {
+                        $scope.showRelatedContent = true;
+                        $scope.contentShowMore = true;
+                        list = _.first(_.isArray(item.content) ? item.content : [item.content], 2); 
+                    }
+
+                    if(!_.isEmpty(list)) {
+                        $scope.$apply(function() {
+                            $scope.relatedContents = list;
+                            jQuery('#endPageLoader').hide();    
+                        });
+                    } else {
+                        $scope.showRelatedContentHeader = false;
+                        jQuery('#endPageLoader').hide();    
+                    }
+                }
+            })
+        }
+
+        $scope.renderRelatedContent = function(id) {
+            var list = [];
+            if(GlobalContext.config.appInfo.mimeType != COLLECTION_MIMETYPE) {
+                // For Content
+                if(("undefined" != typeof cordova)) {
+                    list = [{
+                        "identifier":id,
+                        "mediaType":"Content"
+                    }]
+                    $scope.getRelatedContent(list);
+                } 
+            } else {
+                // For Collection
+                list = collectionPath;
+                collectionPathMap[GlobalContext.previousContentId] = collectionPath;
+                $scope.getRelatedContent(list);
+            }
+        }
+
+        if("undefined" != typeof cordova) {
+            $scope.renderRelatedContent($stateParams.contentId);
+        } else {
+            jQuery('#endPageLoader').hide();
+            $scope.showRelatedContentHeader = false;
+        }
     });
