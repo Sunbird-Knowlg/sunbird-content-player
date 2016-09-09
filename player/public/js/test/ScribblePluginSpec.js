@@ -1,3 +1,17 @@
+var scribbleData = {
+    "x": 0,
+    "y": 0,
+    "w": 50,
+    "h": 50,
+    "fill": "red",
+    "stroke": "green",
+    "stroke-width": 10,
+    "thickness": 30,
+    "z-index": "10",
+    "stroke": 6,
+    "bgcolor": "skyblue",
+    "color": "yellow"
+};
 describe('Scribble Plugin test cases', function() {
 
     beforeEach(function(done) {
@@ -12,27 +26,16 @@ describe('Scribble Plugin test cases', function() {
             },
             addChild: function() {}
         }
-        var data = data || {
-            "scribble": {
-                "x": 0,
-                "y": 0,
-                "w": 50,
-                "h": 50,
-                "z-index": "10",
-                "stroke": 6,
-                "bgcolor": "skyblue",
-                "color": "yellow"
-            }
-        };
 
         Renderer.theme = { _currentStage: '', mousePoint: function() {
                 return { x: 200, y: 200 } } };
-        this.plugin = PluginManager.invoke('scribble', data, parent);
+        this.plugin = PluginManager.invoke('scribble', scribbleData, parent);
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'handleMouseDown').and.callThrough();
         spyOn(this.plugin, 'handleMouseMove').and.callThrough();
         spyOn(this.plugin, 'handleMouseUp').and.callThrough();
         spyOn(this.plugin, 'setBounderies').and.callThrough();
+        spyOn(this.plugin, 'isInt').and.callThrough();
         spyOn(this.plugin, 'clear').and.callThrough();
         done();
     });
@@ -69,6 +72,12 @@ describe('Scribble Plugin test cases', function() {
         this.plugin.handleMouseUp({ primary: true });
         expect(this.plugin.handleMouseUp).toHaveBeenCalled();
         expect(this.plugin.handleMouseUp.calls.count()).toEqual(1);
+    });
+
+    it('Scribble plugin isInt', function() {
+        this.plugin.isInt({ primary: true });
+        expect(this.plugin.isInt).toHaveBeenCalled();
+        expect(this.plugin.isInt.calls.count()).toEqual(1);
     });
 
     it('Scribble plugin clear', function() {

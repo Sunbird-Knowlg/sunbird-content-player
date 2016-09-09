@@ -42,13 +42,8 @@ describe('Embed Plugin test cases', function() {
         expect(this.plugin.refresh.calls.count()).toEqual(1);
     });
 
-    xit("Embed replaceExpressions function validation", function() {
-        this.plugin.replaceExpressions({
-            "model": {
-                "ts_textpg_align": "Text Plugin - Align",
-                "ts_textpg_wrap": "Text Plugin - Wrap"
-            }
-        });
+    it("Embed replaceExpressions function validation", function() {
+        this.plugin.replaceExpressions("${item.ten}");
         expect(this.plugin.replaceExpressions).toHaveBeenCalled();
         expect(this.plugin.replaceExpressions.calls.count()).toEqual(1);
     });

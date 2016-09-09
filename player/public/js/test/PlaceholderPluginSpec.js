@@ -1,47 +1,7 @@
 describe('Placeholder Plugin test cases', function() {
 
     beforeEach(function(done) {
-        var themeData = {
-            canvasId: "canvas",
-            startStage: "splash",
-            manifest: {
-                media: [{
-                    id: 'sringeri',
-                    src: 'sringeri.png',
-                    type: 'image'
-                }, {
-                    id: 'splash_audio',
-                    src: 'splash.ogg',
-                    type: 'audio'
-                }]
-            },
-            stage: [{
-                id: "splash",
-                extends: "splash1",
-                audio: {
-                    asset: 'splash_audio'
-                },
-                img: {
-                    asset: 'sringeri'
-                }
-            }, {
-                id: "splash1",
-                audio: {
-                    asset: 'splash_audio'
-                },
-                img: {
-                    asset: 'sringeri'
-                }
-            }, {
-                id: "splash2",
-                audio: {
-                    asset: 'splash_audio'
-                },
-                img: {
-                    asset: 'sringeri'
-                }
-            }]
-        }
+        
         var parent = {
             dimensions: function() {
                 return {
@@ -61,8 +21,8 @@ describe('Placeholder Plugin test cases', function() {
             "asset": "sringeri",
             "dimensions": "10"
         }
-        
-        this.plugin = PluginManager.invoke('placeholder', data, parent, "splash", this.theme);
+        AssetManager.strategy = { loadAsset: function(){return}}
+        this.plugin = PluginManager.invoke('placeholder', data, parent, {_data: {id: "splash"}}, {getAsset: function(){return "next.png"}});
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'renderPlaceHolder').and.callThrough();
         spyOn(this.plugin, 'renderText').and.callThrough();
@@ -79,26 +39,26 @@ describe('Placeholder Plugin test cases', function() {
         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
     });
 
-    xit('Placeholder plugin renderPlaceHolder function call', function() {
-        this.plugin.renderPlaceHolder({ primary: true });
+    it('Placeholder plugin renderPlaceHolder function call', function() {
+        this.plugin.renderPlaceHolder(this.plugin);
         expect(this.plugin.renderPlaceHolder).toHaveBeenCalled();
         expect(this.plugin.renderPlaceHolder.calls.count()).toEqual(1);
     });
 
-    xit('Placeholder plugin renderText function call', function() {
-        this.plugin.renderText({ param: {asset : 'sringeri'} });
+    it('Placeholder plugin renderText function call', function() {
+        this.plugin.renderText(this.plugin);
         expect(this.plugin.renderText).toHaveBeenCalled();
         expect(this.plugin.renderText.calls.count()).toEqual(1);
     });
 
-    xit('Placeholder plugin renderImage function call', function() {
-        this.plugin.renderImage({ param: {asset : 'sringeri'} });
+    it('Placeholder plugin renderImage function call', function() {
+        this.plugin.renderImage(this.plugin);
         expect(this.plugin.renderImage).toHaveBeenCalled();
         expect(this.plugin.renderImage.calls.count()).toEqual(1);
     });
 
     xit('Placeholder plugin renderGridLayout function call', function() {
-        this.plugin.renderGridLayout({ primary: true });
+        this.plugin.renderGridLayout(parent, this.plugin, data);
         expect(this.plugin.renderGridLayout).toHaveBeenCalled();
         expect(this.plugin.renderGridLayout.calls.count()).toEqual(1);
     });

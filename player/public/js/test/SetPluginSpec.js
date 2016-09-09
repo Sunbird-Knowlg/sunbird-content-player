@@ -30,7 +30,7 @@ describe('set Plugin test cases', function() {
             }, 
             addChild: function() {}
         }
-        var data = data || {
+        var data = {
              
                     param: "explore", scope: "content", value:"true"
             
@@ -40,12 +40,13 @@ describe('set Plugin test cases', function() {
         // this.theme.start('');
 
         this.plugin = PluginManager.invoke('set', data, parent, "splash", this.theme);
+        spyOn(this.plugin, 'initPlugin').and.callThrough();
+        spyOn(this.plugin, 'replaceExpressions').and.callThrough();
         spyOn(this.plugin, 'setParam').and.callThrough();
         spyOn(this.plugin, 'setParamValue').and.callThrough();
-        spyOn(this.plugin, 'replaceExpressions').and.callThrough();
+        spyOn(this.plugin, 'getParam').and.callThrough();
 
         done();
-        console.log("asset",asset);
     });
 
 
@@ -59,6 +60,20 @@ describe('set Plugin test cases', function() {
 
     });
 
+    it('Set plugin initPlugin', function() {
+
+        this.plugin.initPlugin({primary: true});
+        expect(this.plugin.initPlugin).toHaveBeenCalled();
+        expect(this.plugin.initPlugin.calls.count()).toEqual(1);
+    });
+
+    it('Set plugin replaceExpressions', function() {
+
+        this.plugin.replaceExpressions("${item.tens}");
+        expect(this.plugin.replaceExpressions).toHaveBeenCalled();
+        expect(this.plugin.replaceExpressions.calls.count()).toEqual(1);
+    });
+
     it('Set plugin setParam', function() {
 
         this.plugin.setParam({param:"Param_name", value:"12", incr:12, scope:"stage", max:10});
@@ -66,7 +81,7 @@ describe('set Plugin test cases', function() {
         expect(this.plugin.setParam.calls.count()).toEqual(1);
     });
 
-    xit('Set plugin getParam', function() {
+    xit('Get plugin getParam', function() {
 
         this.plugin.getParam("param");
         expect(this.plugin.getParam).toHaveBeenCalled();
