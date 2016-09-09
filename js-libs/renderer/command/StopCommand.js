@@ -8,7 +8,7 @@ var StopCommand = Command.extend({
 			plugin = AudioManager; 
 		}
         if (action.sound === true) {
-            plugin[this._stopAllMethod](action);
+            AudioManager[this._stopAllMethod](action);
         } else {
             plugin[this._stopMethod](action);
         }
