@@ -57,10 +57,10 @@ module.exports = function(config) {
             'public/js/test/DivPluginSpec.js',
             'public/js/test/AudioPluginSpec.js',
             'public/js/test/EmbedPluginSpec.js', 
-            'public/js/test/PlaceholderPluginSpec.js', // TODO: Incomplete
-            'public/js/test/SetPluginSpec.js', // TODO: Incomplete 
+            'public/js/test/PlaceholderPluginSpec.js', 
+            'public/js/test/SetPluginSpec.js', 
             
-            'public/js/test/LayoutPluginSpec.js', // TODO: Not covered all cases 
+            'public/js/test/LayoutPluginSpec.js', 
             'public/js/test/VideoPluginSpec.js', // TODO: Not covered all cases 
             'public/js/test/ThemePluginSpec.js', // TODO: Incomplete
            
