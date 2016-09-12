@@ -1065,6 +1065,7 @@ ion-popover-view.fit ion-content {
     width: 99%;
     border: solid 1px #cccccc;
     border-radius: 5px;
+    padding: 5px;
 }
 .gc-fd-footer{
     width: 100%;
@@ -1187,4 +1188,25 @@ ion-popover-view.fit ion-content {
     opacity: 0.5;
     pointer-events: none;
     cursor: default;
+}
+
+.gc-fd-commentInfo {
+    position: absolute;
+    right: 6%;
+    bottom: 23%;
+    width: 26px;
+    height: 26px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: rgba(65, 58, 54, 0.8);
+    vertical-align: middle;
+    display: table;
+}
+
+.gc-fd-commentInfo > p {
+    color: #fdfdfd;
+    font-size: 0.8em;
+    vertical-align: middle;
+    display: table-cell;
+    font-family: NotoSans;
 }
