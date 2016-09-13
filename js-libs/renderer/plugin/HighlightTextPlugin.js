@@ -24,7 +24,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         div.style.height = dims.h + 'px';
         div.style.top = "-1000px"; // position off-screen initially
         div.style.position = 'absolute';
-        
+
         var fontsize = "1.2em";
         if (data.fontsize) {
             fontsize = data.fontsize;
@@ -40,6 +40,8 @@ var HighlightTextPlugin = HTMLPlugin.extend({
             }
         }
         div.style["font-size"] = fontsize;
+        var fontFace = (data.font || this.getDefaultFont());
+        div.style["font-family"] = fontFace;
         div.style["line-height"] = data.lineHeight ? data.lineHeight : "1.2em";
         
         var parentDiv = document.getElementById(Renderer.divIds.gameArea);

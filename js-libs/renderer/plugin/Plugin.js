@@ -1,5 +1,6 @@
 var Plugin = Class.extend({
 	_isContainer: false,
+    _defaultFont: undefined,
 	_render: true,
 	_theme: undefined,
 	_parent: undefined,
@@ -423,6 +424,17 @@ var Plugin = Class.extend({
             value = this._stage.getParam(param);
         }
         return value;
+    },
+    getDefaultFont: function() {
+        if(this._defaultFont == undefined) {
+            var contentLang = GlobalContext.config.appInfo.languge;
+            if(contentLang != undefined) {
+                this._defaultFont = LANGUAGE_FONTS[contentLang[0]];                
+            } else {
+                this._defaultFont = LANGUAGE_FONTS['english'];
+            }
+        }
+        return this._defaultFont;
     },
 	transitionTo: function() {
 		PluginManager.addError('Subclasses of plugin should implement transitionTo()');

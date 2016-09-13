@@ -6,7 +6,8 @@ var TextPlugin = Plugin.extend({
         var instance = this;
         var fontsize = data.fontsize || 20;
         var dims = this.relativeDims();
-        var fontFace = (data.font || 'Arial');
+        //var fontFace = (data.font || 'Arial');
+        var fontFace = (data.font || this.getDefaultFont());
         var lineHeight = (data.lineHeight ? data.lineHeight : 0);
         var outline = (data.outline ? data.outline : 0);
 
