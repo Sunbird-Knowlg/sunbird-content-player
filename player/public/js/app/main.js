@@ -6,10 +6,10 @@ var packageName = "org.ekstep.quiz.app",
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
     ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive",
-    LANGUAGE_FONTS= {"english": "NotoSansDevanagari", 
+    LANGUAGE_FONTS = {"english": "NotoSansDevanagari", 
                     "kannada":"NotoSansKannada",
                     "telugu": "NotoSansTelugu", 
-                    "oriya": "NotoSansOriya", 
+                    "odia": "NotoSansOriya", 
                     "bengali": "NotoSansBengali" 
                     };
                     
