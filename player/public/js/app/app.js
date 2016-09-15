@@ -384,7 +384,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
         $scope.init = function(){   
             if ($stateParams.itemId) {
             $scope.item = $rootScope.content;
-            GlobalContext.config.appInfo.language = $scope.item.language ? $scope.item.language[0] : undefined;
+            GlobalContext.config.appInfo.language = ($scope.item && $scope.item.language) ? $scope.item.language[0] : undefined;
             if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                 HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
                     jQuery('#loading').hide();
