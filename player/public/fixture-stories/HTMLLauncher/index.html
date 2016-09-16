@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>HTML Content</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: filesystem:; style-src 'self' 'unsafe-inline';  script-src 'self' 'unsafe-inline' 'unsafe-eval';" >
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+</head>
+<body>
+	
+  <h1>HTML Content</h1>
+  
+  <script type="text/javascript">
+    /**
+     * First initialisation function
+     */
+    function initialize(){
+      var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
+
+      if(isMobile){ 
+        //load cordova library only for mobile
+        var fileref = document.createElement('script');
+        fileref.setAttribute("type","text/javascript");
+        fileref.setAttribute("src", "///android_asset/www/cordova.js");
+
+        fileref.onload = function(){
+          // Cordova file loaded
+          // Add event listener for "deviceReady" to access cordova plugins
+          // On device ready event, we can access all cordova plugins
+          document.addEventListener("deviceready", onDeviceReady, false);
+        }
+        document.getElementsByTagName("head")[0].appendChild(fileref);
+      }
+    };
+
+    /* Cordova plugins can access only on device ready state */
+    function onDeviceReady(event){
+      //console.log("onDeviceReady()", event); 
+
+      // Get contentId from URL parameter
+      // Required to get more information of this content from GenieService 
+      var contentId = getUrlParameter('contentId'); 
+
+      //Launch Content
+      getContent(contentId); 
+    };
+
+    /**
+     * get content data from GenieService
+     */
+    function getContent(contentId){
+      // Calling GenieService API to get Content metadata
+      // contentId: required input parameter(content identifier)
+      genieservice.getContent(contentId)
+      .then(function(result) {
+        // genieservice getcontent call success(success callback function)
+        console.log("Success - getContent", result);
+        currentContent = {};
+        currentContent.metadata = result;
+
+        // Adding content information to the body
+        document.body.innerHTML += "<p><b>Content id:</b> "+currentContent.metadata.identifier+ "</p><p><b>Name:</b> "+currentContent.metadata.localData.name+"</p>";
+
+        if( currentContent.metadata.localData.launchContent != undefined){
+          var launchContentId = currentContent.metadata.localData.launchContent;
+          launchTaregerContent(launchContentId);
+        }else{
+          console.log("Launch content is not defined", content.metadata);
+        }
+        
+      })
+      .catch(function(err){
+        console.log("Failed", err);
+      }) 
+    }
+
+    //Get new content data from GenieService
+   
+    launchTaregerContent(launchcOnteNtId, function(resp){
+       var lauNchcontent = resp;
+        console.log("Launch new HTML content..");
+        if (lauNchcontent && lauNchcontent.metadata.mimeType && lauNchcontent.metadata.mimeType == 'application/vnd.ekstep.html-archive') {
+          // Launching new content 
+          // Launching new content 
+          var basePath = (lauNchcontent.metadata.path.charAt(lauNchcontent.metadata.path.length-1) == '/')? lauNchcontent.metadata.path.substring(0, lauNchcontent.metadata.path.length-1): lauNchcontent.metadata.path;
+          var path = ("undefined" != typeof cordova)? "file://" + basePath : "http://"+ location.host + "/" + basePath; 
+          lauNchcontent.metadata.baseDir =  path;
+          //var basePath = lauNchcontent.metadata.baseDir ? lauNchcontent.metadata.baseDir: lauNchcontent.metadata.path;
+          /*if(lauNchcontent.metadata.baseDir){
+            basePath = lauNchcontent.metadata.baseDir
+          }*/
+          var contentUrl =  lauNchcontent.metadata.baseDir + '/index.html?eksCid='+ launchcOnteNtId;
+          if (window.cordova){
+              console.log("Opening through cordova custom webview.");
+              //webview.Show(contentUrl);
+              cordova.InAppBrowser.open(contentUrl, '_self', 'location=no,hardwareback=no');
+              //window.open(contentUrl, '_self');   
+          }else{
+              console.log("Opening through window.open");
+              window.open(contentUrl, '_self');
+              //window.location.replace(contentUrl);                    
+          }
+        }
+      });  
+
+    /** 
+     * Get url parameter value
+     * sPram: input url paramater name to get its value in url
+     */
+    function getUrlParameter(sParam) {
+     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+         sURLVariables = sPageURL.split('&'),
+         sParameterName,
+         i;
+     for (i = 0; i < sURLVariables.length; i++) {
+         sParameterName = sURLVariables[i].split('=');
+
+         if (sParameterName[0] === sParam) {
+             return sParameterName[1] === undefined ? true : sParameterName[1];
+         }
+     }
+    }
+
+    initialize();
+  </script>
+</body>
+</html>

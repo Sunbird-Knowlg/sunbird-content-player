@@ -26,7 +26,7 @@
     // Storing query parameter "config" 
     var config = {};
 
-    // Storing query parameter "cid"
+    // Storing query parameter "contentId"
     var contentId = {};
 
     // Storing GenieService response content metadata(for contentID passed in query string)
@@ -50,9 +50,9 @@
       config = getUrlParameter('config');
       console.log("config", config);
 
-      // Get contentId(cid) from URL parameter
+      // Get contentId(contentId) from URL parameter
       // Required to get more information of this content from GenieService 
-      contentId = getUrlParameter('cid'); 
+      contentId = getUrlParameter('contentId'); 
 
       // Get current user data is required to log telemetry
       getCurrentUser();
