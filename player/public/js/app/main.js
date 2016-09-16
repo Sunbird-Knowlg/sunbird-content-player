@@ -10,7 +10,9 @@ var packageName = "org.ekstep.quiz.app",
                     "kannada":"NotoSansKannada",
                     "telugu": "NotoSansTelugu", 
                     "odia": "NotoSansOriya", 
-                    "bengali": "NotoSansBengali" 
+                    "bengali": "NotoSansBengali",
+                    "assamese": "NotoSansBengali",
+                    "tamil": "NotoSansTamil"
                     };
                     
 function startProgressBar(w, setInter) {
