@@ -36,6 +36,7 @@ speech = {
 			speech.getRecorder().stop(speech.mediaInstance)
 			.then(function(response) {
 				if ("success" == response.status) {
+					RecorderManager._isPlaying();
 					speech.recording = false;
 					console.info("Audio file saved at ", speech.mediaInstance.filePath);
 					cb(speech.mediaInstance);

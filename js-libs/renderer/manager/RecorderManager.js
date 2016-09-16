@@ -1,9 +1,9 @@
 RecorderManager = {
 	mediaInstance: undefined,
 	recording: false, // status - true: recording audio, false: not recording audio.
-	recorder: AppConfig.recorder, // 'android' - uses cordova-plugin-media for recording audio. :: 'sensibol': uses sensibol api for recording audio.
+	//recorder: AppConfig.recorder, // 'android' - uses cordova-plugin-media for recording audio. :: 'sensibol': uses sensibol api for recording audio.
 	appDataDirectory: undefined,
-	recordingInstances: {},
+	//recordingInstances: {},
 	mediaFiles: [],
 	// Here we hardcoding the timeout events (Because some stores don't have timeout-success, timeout-failure attributes).
 	// We should deprecate once all the stories are updated.
@@ -15,6 +15,7 @@ RecorderManager = {
 	},
 	_root: undefined,
 	init: function() {
+		
 		document.addEventListener("deviceready", function() {
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
                 RecorderManager._root = fileSystem.root;
@@ -30,6 +31,7 @@ RecorderManager = {
 	* 	Dispatch success OR failure events.
 	*/
 	startRecording: function(action) {
+		AudioManager.stopAll();
 		var plugin = PluginManager.getPluginObject(action.asset);
 		var stagePlugin = plugin._stage || plugin;
 		var stageId = stagePlugin._id;
@@ -55,6 +57,7 @@ RecorderManager = {
 	* 	Dispatch success OR failure events.
 	*/
 	stopRecording: function(action) {
+		this._isPlaying();
 		if (RecorderManager.recording == true) {
 			speech.stopRecording(function(response) {
 				RecorderManager.recording = false;
@@ -140,5 +143,31 @@ RecorderManager = {
 		clearTimeout(RecorderManager._autostop.method);
 		RecorderManager._autostop.method = undefined;
 		RecorderManager._autostop.action = undefined;
-	}
+	},
+	_isPlaying:function(){
+		if(AudioManager.IsPlayfinished){
+			console.info("================yes Finished===============")
+			this._DeleteRecordedAudio();
+		}
+	},
+	_DeleteRecordedAudio: function() {
+    console.info(speech.mediaInstance.filePath, "filepath");
+    var relativeFilePath = speech.mediaInstance.filePath;
+    document.addEventListener("deviceready", function() {
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+                fileSystem.root.getFile(relativeFilePath, { create: false }, function(fileEntry) {
+                    fileEntry.remove(function(file) {
+                        console.info("Recorded Audio File is Removed");
+                    }, function() {
+                        console.warn("error deleting the file " + error.code);
+                    });
+                }, function() {
+                    console.info("file does not exist");
+                });
+            }, function(evt) {
+                console.info(evt.target.error.code);
+            });
+
+        });
+    }
 }
