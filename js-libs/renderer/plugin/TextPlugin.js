@@ -7,6 +7,12 @@ var TextPlugin = Plugin.extend({
         var fontsize = data.fontsize || 20;
         var dims = this.relativeDims();
         //var fontFace = (data.font || 'Arial');
+        if(!(_.isUndefined(data.font)) && (data.font.toLowerCase() == "verdana")){
+           // By default template creators are adding font as "Verdana" for template.
+           // This is causing font rendering issue for other languages(tamil, bengali etc..)
+           // This is fallback to support old published contents. Informed template creators not to specify any font for text element in templates
+           data.font = undefined;
+        }
         var fontFace = (data.font || this.getDefaultFont());
         var lineHeight = (data.lineHeight ? data.lineHeight : 0);
         var outline = (data.outline ? data.outline : 0);
