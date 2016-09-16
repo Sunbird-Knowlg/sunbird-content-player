@@ -427,7 +427,7 @@ var Plugin = Class.extend({
     },
     getDefaultFont: function() {
         if(this._defaultFont == undefined) {
-            var contentLang = GlobalContext.config.appInfo.language.toLowerCase();
+            var contentLang = (GlobalContext.config.appInfo && GlobalContext.config.appInfo.language) ? GlobalContext.config.appInfo.language.toLowerCase() : undefined;
             if(!(_.isUndefined(contentLang)) && !(_.isUndefined(LANGUAGE_FONTS[contentLang]))) {
                 this._defaultFont = LANGUAGE_FONTS[contentLang];                
             } else {
