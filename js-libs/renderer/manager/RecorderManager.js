@@ -152,8 +152,8 @@ RecorderManager = {
 		RecorderManager._autostop.action = undefined;
 	},
 	_DeleteRecordedAudio: function() {
-		console.info("Delete Status4",speech._deleteMyRecFile)
 		if(speech._deleteMyRecFile==true){
+		 this._ResetRecorder();
 		console.info(speech.mediaInstance.filePath , "Recorded Audio file Path");
         var relativeFilePath = speech.mediaInstance.filePath;
         document.addEventListener("deviceready", function() {
@@ -175,5 +175,8 @@ RecorderManager = {
 		}
       
 },
+_ResetRecorder:function(){
+	speech._deleteMyRecFile=false;
+}
 
 }
