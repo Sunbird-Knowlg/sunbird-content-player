@@ -154,8 +154,8 @@ RecorderManager = {
 	_DeleteRecordedAudio: function() {
 		console.info("Delete Status4",speech._deleteMyRecFile)
 		if(speech._deleteMyRecFile==true){
-		console.info(RecorderManager.appDataDirectory , "Recorded Audio file Path");
-        var relativeFilePath = RecorderManager.appDataDirectory ;
+		console.info(speech.mediaInstance.filePath , "Recorded Audio file Path");
+        var relativeFilePath = speech.mediaInstance.filePath;
         document.addEventListener("deviceready", function() {
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
                 fileSystem.root.getFile(relativeFilePath, { create: false }, function(fileEntry) {
