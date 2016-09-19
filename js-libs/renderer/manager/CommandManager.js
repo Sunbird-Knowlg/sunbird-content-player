@@ -75,17 +75,29 @@ CommandManager = {
         }
         return handle;
     },
+    navigateToCommand: function(visibility) {
+      navigate(visibility);
+    },
+    evalAndSubmit: function (){
+      evalAndSubmit();
+    },
+    reloadStage: function (){
+      reloadStage();
+    },
+    openMenu: function (){
+      openMenu();
+    },
     displayAllHtmlElements: function(visibility) {
        var elements = jQuery('#'+Renderer.divIds.gameArea).children();
        elements.each(function(){
            //If child element is not canvas item, then hide it
            if(!(jQuery(this).is("canvas"))){
                 if (visibility) {
-                    jQuery(this).show();     
+                    jQuery(this).show();
                 } else {
                     jQuery(this).hide();
                 }
-               
+
            }
        });
    }

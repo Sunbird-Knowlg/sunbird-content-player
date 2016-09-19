@@ -150,7 +150,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             });
 
             GlobalContext.init(packageName, version).then(function(appInfo) {
-                // localPreview is a global variable defined in index.html file inside a story, 
+                // localPreview is a global variable defined in index.html file inside a story,
                 if ("undefined" != typeof localPreview && "local" == localPreview)
                     return;
                 var id = getUrlParameter("id");
@@ -519,7 +519,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         }
 
-
+        $scope.navigateTo = function (vanigateTo){
+          CommandManager.navigateToCommand (vanigateTo);
+        }
         $scope.gotToEndPage = function() {
             $state.go('showEndPage', {});
         }
@@ -1067,7 +1069,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('reloadStage', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" onclick="reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
+            template: '<a href="javascript:void(0)" onclick="CommandManager.reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
         }
     }).directive('navigate', function($rootScope) {
         return {
@@ -1169,7 +1171,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 $scope.onSubmit = function() {
                     if ($scope.isEnabled) {
-                        evalAndSubmit();
+                        CommandManager.evalAndSubmit();
                     }
                 }
             }
