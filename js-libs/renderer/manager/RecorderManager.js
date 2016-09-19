@@ -5,7 +5,6 @@ RecorderManager = {
 	appDataDirectory: undefined,
 	//recordingInstances: {},
 	mediaFiles: [],
-	/*deleteFile:true,*/
 	
 	// Here we hardcoding the timeout events (Because some stores don't have timeout-success, timeout-failure attributes).
 	// We should deprecate once all the stories are updated.
@@ -34,6 +33,7 @@ RecorderManager = {
 	*/
 	startRecording: function(action) {
     AudioManager.stopAll();
+    console.info("RecorderManager",RecorderManager._deleteMyRecFile);
     var plugin = PluginManager.getPluginObject(action.asset);
     var stagePlugin = plugin._stage || plugin;
     var stageId = stagePlugin._id;
@@ -43,11 +43,13 @@ RecorderManager = {
         speech.startRecording(path, function(response) {
             if ("success" == response.status && action.success) {
                 stagePlugin.dispatchEvent(action.success);
-               /* if (action.DeleteRecordedAudio == true) {
-                    this.deleteFile=true;
-                } else if (action.DeleteRecordedAudio === undefined) {
-                    this.deleteFile=true;
-                }*/
+                if (action.Delete_RecordedAudio == true) {
+                    speech._deleteMyRecFile=true;
+                } else if (action.Delete_RecordedAudio === undefined) {
+                    speech._deleteMyRecFile=true;
+                }else{
+                	speech._deleteMyRecFile=false;
+                }
             } else if ("error" == response.status && action.failure) {
                 stagePlugin.dispatchEvent(action.failure);
             }
@@ -64,28 +66,28 @@ RecorderManager = {
 	* 	Dispatch success OR failure events.
 	*/
 	stopRecording: function(action) {
-		if (RecorderManager.recording == true) {
-			speech.stopRecording(function(response) {
-				RecorderManager.recording = false;
-				if("success" == response.status) {
-					RecorderManager._cleanRecording();
-				}
-				if (("undefined" != typeof action) && action.asset) {
-					var plugin = PluginManager.getPluginObject(action.asset);
-					var stagePlugin = plugin._stage || plugin;
-					var stageId = stagePlugin._id;
-					if ("success" == response.status) {
-						var currentRecId = "current_rec";
-						AssetManager.loadAsset(stageId, currentRecId, response.filePath);
-						AudioManager.destroy(stageId, currentRecId);
-						if (action.success) stagePlugin.dispatchEvent(action.success);
-					} else if("error" == response.status && action.failure) {
-						stagePlugin.dispatchEvent(action.failure);
-					}
-				}
-			});
-		}
-	},
+    if (RecorderManager.recording == true) {
+        speech.stopRecording(function(response) {
+            RecorderManager.recording = false;
+            if ("success" == response.status) {
+                RecorderManager._cleanRecording();
+            }
+            if (("undefined" != typeof action) && action.asset) {
+                var plugin = PluginManager.getPluginObject(action.asset);
+                var stagePlugin = plugin._stage || plugin;
+                var stageId = stagePlugin._id;
+                if ("success" == response.status) {
+                    var currentRecId = "current_rec";
+                    AssetManager.loadAsset(stageId, currentRecId, response.filePath);
+                    AudioManager.destroy(stageId, currentRecId);
+                    if (action.success) stagePlugin.dispatchEvent(action.success);
+                } else if ("error" == response.status && action.failure) {
+                    stagePlugin.dispatchEvent(action.failure);
+                }
+            }
+        });
+    }
+},
 	processRecording: function(action) {
 		var plugin = PluginManager.getPluginObject(action.asset);
 		var stagePlugin = plugin._stage || plugin;
@@ -150,7 +152,9 @@ RecorderManager = {
 		RecorderManager._autostop.action = undefined;
 	},
 	_DeleteRecordedAudio: function() {
-       console.info(RecorderManager.appDataDirectory , "Recorded Audio file Path");
+		console.info("Delete Status4",speech._deleteMyRecFile)
+		if(speech._deleteMyRecFile==true){
+		console.info(RecorderManager.appDataDirectory , "Recorded Audio file Path");
         var relativeFilePath = RecorderManager.appDataDirectory ;
         document.addEventListener("deviceready", function() {
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
@@ -168,6 +172,8 @@ RecorderManager = {
             });
         });
 
+		}
+      
 },
 
 }
