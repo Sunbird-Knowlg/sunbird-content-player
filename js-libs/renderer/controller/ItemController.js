@@ -59,43 +59,43 @@ var ItemController = Controller.extend({
         }
     },
     evalItem: function() {
-        var item = this.getModel();
-        var result;
-        var pass = false;
-        if (item.max_score == 0) {
-            console.warn("Max score(max_score) is not defined for this item.", item);
-            result = {};
-        } else {
-            if (item.type.toLowerCase() == 'ftb') {
-                result = FTBEvaluator.evaluate(item);
-            } else if (item.type.toLowerCase() == 'mcq' || item.type.toLowerCase() == 'mmcq') {
-                result = MCQEvaluator.evaluate(item);
-            } else if (item.type.toLowerCase() == 'mtf') {
-                result = MTFEvaluator.evaluate(item);
-            }
-            if (result) {
-                pass = result.pass;
-                item.score = result.score;
-            }
-            try {
-                var data = {
-                    pass: result.pass,
-                    score: item.score,
-                    res: result.res,
-                    mmc: item.mmc,
-                    qindex: item.qindex,
-                    mc: _.pluck(item.concepts, 'identifier')
-                };
-                TelemetryService.assessEnd(this.assessStartEvent, data);
+      var item = this.getModel();
+      var result;
+      var pass = false;
+      /*if (item.max_score == 0) {
+          console.warn("Max score(max_score) is not defined for this item.", item);
+          result = {};
+      }*/
+      if (item.type.toLowerCase() == 'ftb') {
+          result = FTBEvaluator.evaluate(item);
+      } else if (item.type.toLowerCase() == 'mcq' || item.type.toLowerCase() == 'mmcq') {
+          result = MCQEvaluator.evaluate(item);
+      } else if (item.type.toLowerCase() == 'mtf') {
+          result = MTFEvaluator.evaluate(item);
+      }
+      if (result) {
+          pass = result.pass;
+          item.score = result.score;
+      }
+      try {
+          var data = {
+              pass: result.pass,
+              score: item.score,
+              res: result.res,
+              mmc: item.mmc,
+              qindex: item.qindex,
+              mc: _.pluck(item.concepts, 'identifier')
+          };
+          TelemetryService.assessEnd(this.assessStartEvent, data);
 
-            } catch (e) {
-                console.log(e);
-                ControllerManager.addError('ItemController.evalItem() - OE_ASSESS_END error: ' + e);
-            }
-        }
-        console.info("Item Eval result:", result);
-        return result;
-    },
+      } catch (e) {
+          console.log(e);
+          ControllerManager.addError('ItemController.evalItem() - OE_ASSESS_END error: ' + e);
+      }
+
+      console.info("Item Eval result:", result);
+      return result;
+  },
     feedback: function() {
         var message;
         var feedback = this._data.feedback;
