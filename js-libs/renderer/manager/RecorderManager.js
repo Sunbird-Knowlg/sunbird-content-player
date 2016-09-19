@@ -5,6 +5,8 @@ RecorderManager = {
 	appDataDirectory: undefined,
 	//recordingInstances: {},
 	mediaFiles: [],
+	/*deleteFile:true,*/
+	
 	// Here we hardcoding the timeout events (Because some stores don't have timeout-success, timeout-failure attributes).
 	// We should deprecate once all the stories are updated.
 	_autostop: {
@@ -31,33 +33,37 @@ RecorderManager = {
 	* 	Dispatch success OR failure events.
 	*/
 	startRecording: function(action) {
-		AudioManager.stopAll();
-		var plugin = PluginManager.getPluginObject(action.asset);
-		var stagePlugin = plugin._stage || plugin;
-		var stageId = stagePlugin._id;
-		var path = RecorderManager._getFilePath(stageId);
+    AudioManager.stopAll();
+    var plugin = PluginManager.getPluginObject(action.asset);
+    var stagePlugin = plugin._stage || plugin;
+    var stageId = stagePlugin._id;
+    var path = RecorderManager._getFilePath(stageId);
 
-		if(!RecorderManager.recording) {
-			speech.startRecording(path, function(response) {
-				if ("success" == response.status && action.success) {
-					stagePlugin.dispatchEvent(action.success);
-				} else if("error" == response.status && action.failure) {
-					stagePlugin.dispatchEvent(action.failure);
-				}
-			});
-			RecorderManager._setAutostopAction(action);
-			RecorderManager._autostop.method = setTimeout(function() {
-				RecorderManager.stopRecording(RecorderManager._autostop.action);
-			}, action.timeout ? action.timeout : 10000)
-		}
-		RecorderManager.recording = true;
- 	},
+    if (!RecorderManager.recording) {
+        speech.startRecording(path, function(response) {
+            if ("success" == response.status && action.success) {
+                stagePlugin.dispatchEvent(action.success);
+               /* if (action.DeleteRecordedAudio == true) {
+                    this.deleteFile=true;
+                } else if (action.DeleteRecordedAudio === undefined) {
+                    this.deleteFile=true;
+                }*/
+            } else if ("error" == response.status && action.failure) {
+                stagePlugin.dispatchEvent(action.failure);
+            }
+        });
+        RecorderManager._setAutostopAction(action);
+        RecorderManager._autostop.method = setTimeout(function() {
+            RecorderManager.stopRecording(RecorderManager._autostop.action);
+        }, action.timeout ? action.timeout : 10000)
+    }
+    RecorderManager.recording = true;
+},
 	/*
 	*	If the recording is inprogress, It will take the instance and try to stop recording.
 	* 	Dispatch success OR failure events.
 	*/
 	stopRecording: function(action) {
-		this._isPlaying();
 		if (RecorderManager.recording == true) {
 			speech.stopRecording(function(response) {
 				RecorderManager.recording = false;
@@ -114,7 +120,6 @@ RecorderManager = {
 		if (TelemetryService && TelemetryService._gameData && TelemetryService._gameData.id)
 			path = path + TelemetryService._gameData.id + '_';
 		path = path + stageId + "_"+ currentDate.getTime()  + ".wav";
-
 		RecorderManager.mediaFiles.push(path);
 		return path;
 	},
@@ -144,16 +149,10 @@ RecorderManager = {
 		RecorderManager._autostop.method = undefined;
 		RecorderManager._autostop.action = undefined;
 	},
-	_isPlaying:function(){
-		if(AudioManager.IsPlayfinished){
-			console.info("================yes Finished===============")
-			this._DeleteRecordedAudio();
-		}
-	},
 	_DeleteRecordedAudio: function() {
-    console.info(speech.mediaInstance.filePath, "filepath");
-    var relativeFilePath = speech.mediaInstance.filePath;
-    document.addEventListener("deviceready", function() {
+       console.info(RecorderManager.appDataDirectory , "Recorded Audio file Path");
+        var relativeFilePath = RecorderManager.appDataDirectory ;
+        document.addEventListener("deviceready", function() {
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
                 fileSystem.root.getFile(relativeFilePath, { create: false }, function(fileEntry) {
                     fileEntry.remove(function(file) {
@@ -167,7 +166,8 @@ RecorderManager = {
             }, function(evt) {
                 console.info(evt.target.error.code);
             });
-
         });
-    }
+
+},
+
 }
