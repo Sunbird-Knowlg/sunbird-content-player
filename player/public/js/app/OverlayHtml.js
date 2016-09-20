@@ -30,10 +30,22 @@ OverlayHtml = {
         this.isReadyToEvaluate(false);
         jQuery('#assessButton').hide();
     },
+    getNavigateTo: function (navType) {
+        var navigation = [];
+        var navigateTo = undefined;
+        if (!_.isUndefined(Renderer.theme._currentScene) && !_.isEmpty(Renderer.theme._currentScene._data.param)) {
+            navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
+            var direction = _.findWhere(navigation, {
+                name: navType
+            });
+            if (direction) navigateTo = direction.value;
+        }
+        return navigateTo;
+    },
     sceneEnter: function() {
         this.resetStage();
-        enablePrevious();
-        enableReload();
+        this.enablePrevious();
+        this.enableReload();
         var isItemStage = this.isItemScene();
         if (isItemStage) {
             jQuery('#assessButton').show();
@@ -57,6 +69,24 @@ OverlayHtml = {
             });
         }
     },
+
+    enablePrevious: function () {
+        var navigateTo = this.getNavigateTo('previous');
+        if (_.isUndefined(navigateTo)) {
+
+            jQuery('#navPrev').hide();
+            if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious()) {
+                jQuery('#navPrev').show();
+            }
+        } else {
+            jQuery('#navPrev').show();
+        }
+    },
+
+    enableReload: function () {
+        _reloadInProgress = false;
+    },
+
     isItemScene: function() {
         var stageCtrl = Renderer.theme._currentScene ? Renderer.theme._currentScene._stageController : undefined;
         if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type) && !_.isUndefined(stageCtrl._model)) {

@@ -3,12 +3,12 @@
 	<div class="overlay-html" id="overlayHTML" ng-controller="OverlayCtrl" ng-init="initMenu()" ng-cloak>
         <div>
             <a class="nav-icon nav-previous" href="javascript:void(0);"><img style="opacity:0.4;" ng-src="{{imageBasePath}}back_icon.png"></a>
-            <a class="nav-icon nav-previous nav-previous-enable" id="navPrev" href="javascript:void(0);"><img ng-src="{{imageBasePath}}back_icon.png" ng-click="navigateTo('previous')"></a>
+            <a class="nav-icon nav-previous nav-previous-enable" id="navPrev" href="javascript:void(0);"><img ng-src="{{imageBasePath}}back_icon.png" ng-click="navigate('previous')"></a>
         </div>
 
         <div>
             <a class="nav-icon nav-next" href="javascript:void(0);"><img style="opacity:0.4;"  ng-src="{{imageBasePath}}next_icon.png"></a>
-            <a class="nav-icon nav-next"  id="navNext" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next_icon.png" ng-click="navigateTo('next')"></a>
+            <a class="nav-icon nav-next"  id="navNext" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next_icon.png" ng-click="navigate('next')"></a>
         </div>
 
         <assess image="icons.assess.enable"></assess>

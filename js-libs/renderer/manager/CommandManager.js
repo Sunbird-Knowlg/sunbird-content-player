@@ -75,18 +75,6 @@ CommandManager = {
         }
         return handle;
     },
-    navigateToCommand: function(visibility) {
-      navigate(visibility);
-    },
-    evalAndSubmit: function (){
-      evalAndSubmit();
-    },
-    reloadStage: function (){
-      reloadStage();
-    },
-    openMenu: function (){
-      openMenu();
-    },
     displayAllHtmlElements: function(visibility) {
        var elements = jQuery('#'+Renderer.divIds.gameArea).children();
        elements.each(function(){

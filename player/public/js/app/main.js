@@ -73,36 +73,6 @@ function reloadStage() {
     TelemetryService.interact("TOUCH", "gc_reload", "TOUCH", {stageId : Renderer.theme._currentStage});
 }
 
-function enableReload() {
-    _reloadInProgress = false;
-}
-
-function goToCollection($state, id, pageId) {
-        collectionPath.pop();
-        console.log(" id : ", id);
-        // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
-        TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
-        if (Renderer.running)
-            Renderer.cleanUp();
-        else
-            TelemetryService.end();
-        $state.go('contentList', {
-            "id": id
-        });
-}
-
-// function goToHome($state, isCollection, id, pageId) {
-//     if (isCollection) {
-//         // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
-//         TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
-//         if (Renderer.running)
-//             Renderer.cleanUp();
-//         else
-//             TelemetryService.end();
-//     }
-// }
-
-
 function backbuttonPressed(pageId) {
     var data = (Renderer.running || HTMLRenderer.running) ? {
         type: 'EXIT_CONTENT',
@@ -151,6 +121,19 @@ function contentNotAvailable() {
     alert(AppMessages.NO_CONTENT_FOUND);
     exitApp();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 function getNavigateTo(navType) {
     var navigation = [];
     var navigateTo = undefined;
@@ -206,19 +189,6 @@ function navigate(navType) {
         }
     } else {
         changeScene();
-    }
-}
-
-function enablePrevious() {
-    var navigateTo = getNavigateTo('previous');
-    if (_.isUndefined(navigateTo)) {
-
-        jQuery('#navPrev').hide();
-        if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious()) {
-            jQuery('#navPrev').show();
-        }
-    } else {
-        jQuery('#navPrev').show();
     }
 }
 

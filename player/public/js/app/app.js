@@ -519,16 +519,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         }
 
-        $scope.navigateTo = function (vanigateTo){
-          CommandManager.navigateToCommand (vanigateTo);
-        }
         $scope.gotToEndPage = function() {
             $state.go('showEndPage', {});
         }
 
         $scope.reloadStage = function() {
             reloadStage();
-            TelemetryService.interact("TOUCH", "gc_reload", "TOUCH", { stageId: Renderer.theme._currentStage });
         }
 
 
@@ -747,6 +743,68 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).controller('OverlayCtrl', function($scope, $rootScope) {
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
+        $scope.submitOnNextClick = true;
+
+        $rootScope.evalAndSubmit = function () {
+            //If any one option is selected, then only allow user to submit
+            var action = {
+                "type": "command",
+                "command": "eval",
+                "asset": Renderer.theme._currentStage,
+                "pluginId": Renderer.theme._currentStage
+            };
+            action.htmlEval = "true";
+            action.success = "correct_answer";
+            action.failure = "wrong_answer";
+            CommandManager.handle(action);
+        }
+
+        $scope.changeScene = function(navType, navigateTo) {
+            var action = {
+                "asset": Renderer.theme._id,
+                "command": "transitionTo",
+                "duration": "100",
+                "ease": "linear",
+                "effect": "fadeIn",
+                "type": "command",
+                "pluginId": Renderer.theme._id,
+                "value": navigateTo
+            };
+            action.transitionType = navType;
+            // Renderer.theme.transitionTo(action);
+            CommandManager.handle(action);
+        };
+
+        $scope.navigate = function (navType) {
+          var navigateTo = OverlayHtml.getNavigateTo(navType);
+            TelemetryService.interact("TOUCH", navType, null, {stageId : Renderer.theme._currentStage});
+            if(_.isUndefined( Renderer.theme._currentScene)){
+                return;
+            }
+
+            if($scope.submitOnNextClick && OverlayHtml.isItemScene() && ("next" == navType)){
+                $rootScope.evalAndSubmit();
+                return;
+            }
+
+            $scope.submitOnNextClick = true;
+
+            if ("undefined" == typeof navigateTo && "next" == navType) {
+                if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
+                    $scope.changeScene(navType, navigateTo);
+                } else {
+                    if(config.showEndPage) {
+                        console.info("redirecting to endpage.");
+                        window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+                        AudioManager.stopAll();
+                    } else {
+                        console.warn("Cannot move to end page of the content. please check the configurations..");
+                    }
+                }
+            } else {
+                $scope.changeScene(navType, navigateTo);
+            }
+        }
 
         $scope.init = function() {
             if (GlobalContext.config.language_info) {
@@ -958,12 +1016,19 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     scope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
                 }
 
-
                 var pageId = $rootScope.pageId;
-                scope.goToCollection = function() {
-                    goToCollection($state, GlobalContext.previousContentId, pageId);
+                scope.goToCollection = function () {
+                    collectionPath.pop();
+                    console.log(" id : ", GlobalContext.previousContentId);
+                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
+                    if (Renderer.running)
+                        Renderer.cleanUp();
+                    else
+                        TelemetryService.end();
+                    $state.go('contentList', {
+                        "id": GlobalContext.previousContentId
+                    });
                 }
-
             }
         }
     }).directive('home', function($rootScope, $state) {
@@ -1069,7 +1134,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('reloadStage', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" onclick="CommandManager.reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
+            template: '<a href="javascript:void(0)" onclick="reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
         }
     }).directive('navigate', function($rootScope) {
         return {
@@ -1094,7 +1159,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         stageId: Renderer.theme._currentStage
                     });
                     $rootScope.isItemScene = false;
-                    navigate(to);
+                    $scope.navigate(to);
                 };
             }
         }
@@ -1134,7 +1199,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 scope.moveToNextStage = function(navType) {
                     submitOnNextClick = false;
-                    navigate(navType);
+                    $scope.navigate(navType);
                 }
             }
         }
@@ -1171,7 +1236,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 $scope.onSubmit = function() {
                     if ($scope.isEnabled) {
-                        CommandManager.evalAndSubmit();
+                        $rootScope.evalAndSubmit();
                     }
                 }
             }
