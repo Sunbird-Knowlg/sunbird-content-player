@@ -122,18 +122,6 @@ function contentNotAvailable() {
     exitApp();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 function getNavigateTo(navType) {
     var navigation = [];
     var navigateTo = undefined;
