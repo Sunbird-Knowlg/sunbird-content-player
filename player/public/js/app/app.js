@@ -844,7 +844,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.init();
-    }).controller('RelatedContentCtrl', function($scope, $rootScope) {
+    }).controller('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $scope.showRelatedContent = false;
         $scope.contentShowMore = false;
         $scope.showRelatedContentHeader = true;
