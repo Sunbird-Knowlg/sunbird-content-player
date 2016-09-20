@@ -83,6 +83,14 @@ OverlayHtml = {
         }
     },
 
+    navigate: function(navType) {
+      navigate(navType);
+    },
+
+    evalAndSubmit: function () {
+      evalAndSubmit();
+    },
+
     enableReload: function () {
         _reloadInProgress = false;
     },

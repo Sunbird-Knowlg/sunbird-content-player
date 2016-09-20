@@ -4,6 +4,7 @@ CommandManager = {
         CommandManager.commandMap[id] = command;
     },
     handle: function(action) {
+      // alert(action);
         if(action.delay) {
             TimerManager.start(action);
         } else {

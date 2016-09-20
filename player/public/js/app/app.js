@@ -743,67 +743,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).controller('OverlayCtrl', function($scope, $rootScope) {
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
-        $scope.submitOnNextClick = true;
+        // $scope.submitOnNextClick = true;
 
         $rootScope.evalAndSubmit = function () {
-            //If any one option is selected, then only allow user to submit
-            var action = {
-                "type": "command",
-                "command": "eval",
-                "asset": Renderer.theme._currentStage,
-                "pluginId": Renderer.theme._currentStage
-            };
-            action.htmlEval = "true";
-            action.success = "correct_answer";
-            action.failure = "wrong_answer";
-            CommandManager.handle(action);
+          OverlayHtml.evalAndSubmit();
         }
 
-        $scope.changeScene = function(navType, navigateTo) {
-            var action = {
-                "asset": Renderer.theme._id,
-                "command": "transitionTo",
-                "duration": "100",
-                "ease": "linear",
-                "effect": "fadeIn",
-                "type": "command",
-                "pluginId": Renderer.theme._id,
-                "value": navigateTo
-            };
-            action.transitionType = navType;
-            // Renderer.theme.transitionTo(action);
-            CommandManager.handle(action);
-        };
-
         $scope.navigate = function (navType) {
-          var navigateTo = OverlayHtml.getNavigateTo(navType);
-            TelemetryService.interact("TOUCH", navType, null, {stageId : Renderer.theme._currentStage});
-            if(_.isUndefined( Renderer.theme._currentScene)){
-                return;
-            }
-
-            if($scope.submitOnNextClick && OverlayHtml.isItemScene() && ("next" == navType)){
-                $rootScope.evalAndSubmit();
-                return;
-            }
-
-            $scope.submitOnNextClick = true;
-
-            if ("undefined" == typeof navigateTo && "next" == navType) {
-                if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
-                    $scope.changeScene(navType, navigateTo);
-                } else {
-                    if(config.showEndPage) {
-                        console.info("redirecting to endpage.");
-                        window.location.hash = "/content/end/" + GlobalContext.currentContentId;
-                        AudioManager.stopAll();
-                    } else {
-                        console.warn("Cannot move to end page of the content. please check the configurations..");
-                    }
-                }
-            } else {
-                $scope.changeScene(navType, navigateTo);
-            }
+          OverlayHtml.navigate(navType);
         }
 
         $scope.init = function() {
@@ -941,9 +888,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 } else {
                     window.open("ekstep://c/" + content.identifier, "_system");
                 }
-
             }
-
         }
 
         $scope.getRelatedContent = function(list) {

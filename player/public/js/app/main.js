@@ -170,10 +170,12 @@ function navigate(navType) {
             "ease": "linear",
             "effect": "fadeIn",
             "type": "command",
+            "pluginId": Renderer.theme._id,
             "value": navigateTo
         };
         action.transitionType = navType;
-        Renderer.theme.transitionTo(action);
+        // Renderer.theme.transitionTo(action);
+        CommandManager.handle(action);
     };
     if ("undefined" == typeof navigateTo && "next" == navType) {
         if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
