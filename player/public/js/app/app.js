@@ -364,7 +364,7 @@ angular.module('genie-canvas', ['genie-canvas.theme','ionic', 'ngCordova', 'geni
 
                 var launchData = {"env": envHTML, "envpath": AppConfig[AppConfig.flavor]};
                 //Adding contentId and LaunchData as query parameter
-                var path = $scope.item.baseDir + '/index.html?contentId='+ $stateParams.itemId + '&launchdata=' + JSON.stringify(launchData);
+                var path = $scope.item.baseDir + '/index.html?contentId='+ $stateParams.itemId + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
                 
                 //Adding config as query parameter for HTML content
                 if($scope.item.config){

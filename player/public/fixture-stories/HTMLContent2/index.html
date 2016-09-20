@@ -104,7 +104,9 @@
         getDictionaryWords();
 
         // Adding content information to the body
-        document.body.innerHTML += "<p><b>Content id:</b> "+currentContent.metadata.identifier+ "</p><p><b>Name:</b> "+currentContent.metadata.localData.name+"</p>";
+        document.body.innerHTML += "<p><b>Content id:</b> "+currentContent.metadata.identifier+ "</p><p><b>Name:</b> "+currentContent.metadata.localData.name+"</p></br>";
+		
+		    document.body.innerHTML += "<p><b>Launch Data:</b> " + getUrlParameter('launchdata') + "</p><p><b>Config:</b> "+ getUrlParameter('config') + "</p><p><b>AppInfo:</b> "+ getUrlParameter('appInfo');
       })
       .catch(function(err){
         console.log("Failed", err);

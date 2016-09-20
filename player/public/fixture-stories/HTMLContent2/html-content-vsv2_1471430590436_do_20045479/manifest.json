@@ -50,6 +50,13 @@
 			"artifactUrl": "do_20045479/htmlcontent2_1471430587088.zip",
 			"language": ["English"],
 			"objectType": "Content",
+			"config": {
+                    "languageL2": "en",
+                    "sid": "de305d54-75b4-431b-adb2-eb6b9e546006",
+                    "uid": "123e4567-e89b-12d3-a456-426655440044",
+                    "did": "ff305d54-85b4-341b-da2f-eb6b9e5460ab", 
+                    "level": "1"
+                },
 			"identifier": "do_20045479",
 			"portalOwner": "350"
 		}]
