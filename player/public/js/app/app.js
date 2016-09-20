@@ -389,7 +389,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             jQuery("#progressBar").width(0);
             jQuery('#loading').show();
             startProgressBar(40, 0.6);
-
         };
 
         $scope.getContentMetadata = function(content) {
@@ -479,7 +478,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.init = function() {
             if ($stateParams.itemId) {
                 $scope.item = $rootScope.content;
-
+                GlobalContext.config.appInfo.language = ($scope.item && $scope.item.language) ? $scope.item.language[0] : undefined;
+            
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                     HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
                         jQuery('#loading').hide();

@@ -27,8 +27,6 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         div.style.height = dims.h + 'px';
         div.style.top = "-1000px"; // position off-screen initially
         div.style.position = 'relative';
-        
-        
         var fontsize = "1.2em";
         if (data.fontsize) {
             fontsize = data.fontsize;
@@ -52,6 +50,8 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         /*handling shadow with px */
         var shadow = h_offset + "px" + " " + v_offset + "px" + " " + Blur + "px" + " " + shadow_color;
         div.style["font-size"] = fontsize;
+        var fontFace = (data.font || this.getDefaultFont());
+        div.style["font-family"] = fontFace;
         div.style["line-height"] = data.lineHeight ? data.lineHeight : "1.2em";
         div.style["color"] = data.color ? data.color : "black";
         div.style["font-weight"] = data.weight ? data.weight : "normal";

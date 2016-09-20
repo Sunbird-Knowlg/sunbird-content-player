@@ -42,11 +42,11 @@
     font-family: 'NotoSansGurmukhi';
     src: url('fonts/NotoSansGurmukhi-Regular.ttf') format('truetype')
 }
-
+*/
 @font-face {
     font-family: 'NotoSansTamil';
     src: url('fonts/NotoSansTamil-Regular.ttf') format('truetype')
-}*/
+}
 
 @font-face {
     font-family: 'flavours';
