@@ -479,7 +479,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if ($stateParams.itemId) {
                 $scope.item = $rootScope.content;
                 GlobalContext.config.appInfo.language = ($scope.item && $scope.item.language) ? $scope.item.language[0] : undefined;
-            
+
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                     HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
                         jQuery('#loading').hide();
@@ -1104,7 +1104,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         stageId: Renderer.theme._currentStage
                     });
                     $rootScope.isItemScene = false;
-                    $scope.navigate(to);
+                    OverlayHtml.navigate(to);
                 };
             }
         }
@@ -1144,7 +1144,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 scope.moveToNextStage = function(navType) {
                     submitOnNextClick = false;
-                    $scope.navigate(navType);
+                    OverlayHtml.navigate(navType);
                 }
             }
         }
