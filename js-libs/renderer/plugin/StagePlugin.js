@@ -11,6 +11,7 @@ var StagePlugin = Plugin.extend({
     _inputs: [],
     _startDrag: undefined,
     _doDrag: undefined,
+    _stageInstanceId: undefined,
     initPlugin: function(data) {
         this._inputs = [];
         var instance = this;
@@ -19,6 +20,7 @@ var StagePlugin = Plugin.extend({
         var dims = this.relativeDims();
         this._self.x = dims.x;
         this._self.y = dims.y;
+        this.createStageInstanceId();
         if (data.iterate && data.var) {
             var controllerName = data.var.trim();
             var stageController = this._theme._controllerMap[data.iterate.trim()];
@@ -239,6 +241,10 @@ var StagePlugin = Plugin.extend({
         var params = instance.params;
         var expr = 'params.' + param;
         return eval(expr);
+    },
+    createStageInstanceId: function() {
+        //Generating and adding unique stageInstanceId to stage.
+        this._stageInstanceId = this._theme._currentStage + '__' + Math.random().toString(36).substr(2, 9);
     }
 });
 PluginManager.registerPlugin('stage', StagePlugin);
