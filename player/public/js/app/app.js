@@ -816,13 +816,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 close_icon: $rootScope.imageBasePath + "close_popup.png",
             }
         };
-
         $scope.goodJob = {
             body: '<div class="assess-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><img class="goodjob_stars" ng-src="{{ icons.popup.goodjob_stars }}"/><a href="javascript:void(0);" ng-click="hidePopup()"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p style="padding: 0%;position: absolute;left: 64%;bottom: 35%;">{{languageSupport.next}}</p></div></div>'
         };
 
         $scope.tryAgain = {
-            body: '<div class="assess-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="tryagain_retry_div"><a ng-click="retryAssessment(\'gc_retry\')" href="javascript:void(0);"><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><p style="padding:0%;">{{languageSupport.replay}}</p></div><div class="tryagian_next_div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')" /></a><p style="padding: 0%;">{{languageSupport.next}}</p></div></div></div>'
+            body: '<div class="assess-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="tryagain_retry_div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><p style="padding:0%;">{{languageSupport.replay}}</p></div><div class="tryagian_next_div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')" /></a><p style="padding: 0%;">{{languageSupport.next}}</p></div></div></div>'
         };
 
         $scope.openMenu = function() {
@@ -1089,7 +1088,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('reloadStage', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" onclick="reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
+            template: '<a href="javascript:void(0)" onclick="OverlayHtml.reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
         }
     }).directive('navigate', function($rootScope) {
         return {
@@ -1140,9 +1139,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 element.find("div.popup-full-body").html();
                 element.find("div.popup-full-body").append(body);
                 element.hide();
-                scope.retryAssessment = function(id) {
+                scope.retryAssessment = function(id,e) {
+                    console.log(e);
+                    // e.stopPropagation();
+                    // e.stopImmediatePropagation();
                     submitOnNextClick = true;
                     scope.hidePopup(id);
+                    // return false;
                 }
 
                 scope.hidePopup = function(id) {
