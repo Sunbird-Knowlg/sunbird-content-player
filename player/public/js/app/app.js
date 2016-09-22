@@ -615,6 +615,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 subtype: "ContentID"
             });
             $scope.showFeedbackPopup = true;
+            $scope.enableFeedbackSubmit();
         }
 
         $scope.updatePopUserRating = function(param) {
