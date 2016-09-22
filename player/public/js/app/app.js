@@ -619,6 +619,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.updatePopUserRating = function(param) {
             $scope.popUserRating = param;
+            $scope.enableFeedbackSubmit();
+        }
+
+        $scope.enableFeedbackSubmit =function() {
+            if($scope.popUserRating > 0 || $scope.stringLeft < 130) 
+                jQuery('#feedbackSubmitBtn').removeClass('icon-opacity');
+            else
+                jQuery('#feedbackSubmitBtn').addClass('icon-opacity');
         }
 
         $scope.submitFeedback = function() {
@@ -720,6 +728,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if ($('#commentText').val().length > 130)
                 $('#commentText').val($('#commentText').val().slice(0,130));
             $scope.stringLeft = 130 - $('#commentText').val().length;
+            $scope.enableFeedbackSubmit();
         }
 
         $scope.init = function() {
