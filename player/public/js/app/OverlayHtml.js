@@ -83,6 +83,10 @@ OverlayHtml = {
         }
     },
 
+    reloadStage: function() {
+      reloadStage();
+    },
+
     navigate: function(navType) {
       navigate(navType);
     },
