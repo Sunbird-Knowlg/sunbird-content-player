@@ -143,6 +143,7 @@ var ThemePlugin = Plugin.extend({
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
             OverlayHtml.sceneEnter();
+
         });
         var nextIdx = this._currIndex++;
         if(this._currentScene) {
@@ -209,9 +210,9 @@ var ThemePlugin = Plugin.extend({
         // not next and previoud are clicked at the same time, 
         // handle only one actions(next/previous)
         if(this._isSceneChanging){ return; }
-        
         var stage = this._currentScene;
         RecorderManager.stopRecording();
+       // RecorderManager._deleteRecordedaudio();
         TimerManager.stopAll(this._currentStage);
         if (action.transitionType === 'previous') {
             this._isSceneChanging = true;

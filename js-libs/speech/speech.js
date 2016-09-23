@@ -4,6 +4,7 @@ speech = {
 	recorder: "undefined" != typeof AppConfig && AppConfig.recorder ? AppConfig.recorder : "android", // 'android' - uses cordova-plugin-media for recording audio. :: 'sensibol': uses sensibol api for recording audio.
 	recordingInstances: {},
 	_root: undefined,
+	//_deleteMyrecFile:false,
 	getRecorder: function() {
         return "sensibol" == speech.recorder ? sensibol.recorder : android.recorder;
     },
