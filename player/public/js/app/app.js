@@ -753,7 +753,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).controller('OverlayCtrl', function($scope, $rootScope) {
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
-        // $scope.submitOnNextClick = true;
 
         $rootScope.evalAndSubmit = function () {
           OverlayHtml.evalAndSubmit();
@@ -786,10 +785,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 disable: $rootScope.imageBasePath + "submit_disabled.png"
             },
             retry: $rootScope.imageBasePath + "speaker_icon.png",
-            /* popup: {
-            background: $rootScope.imageBasePath + "popup_BG.png",
-            close: $rootScope.imageBasePath + "cross_button.png"
-            },*/
             goodJob: {
                 background: $rootScope.imageBasePath + "good_job_popup.png"
             },
@@ -1140,12 +1135,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 element.find("div.popup-full-body").append(body);
                 element.hide();
                 scope.retryAssessment = function(id,e) {
-                    console.log(e);
-                    // e.stopPropagation();
-                    // e.stopImmediatePropagation();
                     submitOnNextClick = true;
                     scope.hidePopup(id);
-                    // return false;
                 }
 
                 scope.hidePopup = function(id) {

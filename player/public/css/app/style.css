@@ -170,9 +170,9 @@ ion-popover-view.fit ion-content {
     text-transform: uppercase;
     font-family: baloobhai;
     color: #FFFFFF;
-    
+
     text-align: center;
-    
+
     overflow: hidden;
     padding: 0 2%;
     text-overflow: ellipsis;
@@ -277,8 +277,8 @@ ion-popover-view.fit ion-content {
     top: -8%;
     position: absolute;
     height: 30%;
-   
-   
+
+
 }
 
 .gc-menu-title-cont p {
@@ -296,7 +296,7 @@ ion-popover-view.fit ion-content {
     padding: 2%;
     padding-top: 11%;
     padding-right: 5%;
-    /* background: red; 
+    /* background: red;
     height: 100%;*/
     font-size: 5vh;
     width: 100%;
@@ -597,7 +597,7 @@ ion-popover-view.fit ion-content {
     height: 40%;
     left: 65%;
     padding: 0%;
-    
+
 }
 
 /*.popup-body {
@@ -629,7 +629,7 @@ ion-popover-view.fit ion-content {
     font-size: 0.7em;
     overflow-y: auto;
     overflow-x:hidden;
-    
+
 }
 .credit-body-icon-font::-webkit-scrollbar {
     width: 3%;
@@ -662,8 +662,8 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-cp-coll{
-    position: absolute; 
-    width:30%; 
+    position: absolute;
+    width:30%;
     left:3%;
 }
 
@@ -672,8 +672,8 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-cp-genie{
-    position: absolute; 
-    width:30%; 
+    position: absolute;
+    width:30%;
     right:3%;
     text-align: right;
 }
@@ -710,9 +710,9 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-ep-home{
-    position: absolute; 
-    width:30%; 
-    left:3%; 
+    position: absolute;
+    width:30%;
+    left:3%;
     top: 3%
 }
 
@@ -1028,14 +1028,14 @@ ion-popover-view.fit ion-content {
 }
 
 .gc-popup-new{
-    width:50%;  
+    width:50%;
     border: solid 1px #ccc;
     border-radius: 5px;
     background: #fff;
-    position: absolute; 
+    position: absolute;
 }
 .gc-fc-popup{
-    width:50%;  
+    width:50%;
     top: 25%;
     right: 25%;
 }
