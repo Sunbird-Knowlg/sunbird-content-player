@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>HTML Content</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: filesystem:; style-src 'self' 'unsafe-inline';  script-src 'self' 'unsafe-inline' 'unsafe-eval';" >
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+</head>
+<body style="display:none">  
+  <script type="text/javascript">
+    /**
+     * First initialisation function
+     */
+    function initialize(){
+      // While navigating back from lauched HTML content(device back button pressed)
+      // Laucher should not show. It should take directly to coverpage of the laucher
+      if(history.state != null){
+        // User coming back from HTML content(Launched by this launcher)
+        // So dont show this laucher. Directly take hime to cover page
+        history.go(-1);
+        return;
+      }else{
+        // To Hable device back button from HTML content launched by this launcher.
+        history.replaceState("Launch", "Launch");
+      }
+
+      var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
+
+      if(isMobile){ 
+        //load cordova library only for mobile
+        var fileref = document.createElement('script');
+        fileref.setAttribute("type","text/javascript");
+        fileref.setAttribute("src", "///android_asset/www/cordova.js");
+
+        fileref.onload = function(){
+          // Cordova file loaded
+          // Add event listener for "deviceReady" to access cordova plugins
+          // On device ready event, we can access all cordova plugins
+          document.addEventListener("deviceready", onDeviceReady, false);
+        }
+        document.getElementsByTagName("head")[0].appendChild(fileref);
+      }
+    };
+
+    /* Cordova plugins can access only on device ready state */
+    function onDeviceReady(event){
+      //console.log("onDeviceReady()", event); 
+
+      // Get contentId from URL parameter
+      // Required to get more information of this content from GenieService 
+      var contentId = getUrlParameter('contentId'); 
+
+      //Launch Content
+      getContent(contentId); 
+    };
+
+    /**
+     * get current content data from GenieService
+     */
+    function getContent(contentId){
+      // Calling GenieService API to get Content metadata
+      // contentId: required input parameter(content identifier)
+      genieservice.getContent(contentId)
+      .then(function(result) {
+        // genieservice getcontent call success(success callback function)
+        console.log("Success - getContent", result);
+        currentContent = {};
+        currentContent.metadata = result;
+
+        if( currentContent.metadata.localData.launchContent != undefined){
+          var launchContentId = currentContent.metadata.localData.launchContent;
+
+          // Launching targetContent
+          launchTargetContent(launchContentId); 
+        }else{
+          console.log("Launch content is not defined", content.metadata);
+        }
+        
+      })
+      .catch(function(err){
+        console.log("Failed", err);
+      }) 
+    }
+
+    //Get launcher content data from GenieService   
+    function launchTargetContent(launchContentId){
+      // Calling GenieService API to get Content metadata
+      // contentId: required input parameter(content identifier)
+
+      genieservice.getContent(launchContentId)
+      .then(function(result) {
+        var launchContent = {};
+        launchContent.metadata = result;
+        console.log("Launch new HTML content..");
+        if (launchContent && launchContent.metadata.mimeType && launchContent.metadata.mimeType == 'application/vnd.ekstep.html-archive') {
+          
+          // Launching new content 
+          var basePath = (launchContent.metadata.path.charAt(launchContent.metadata.path.length-1) == '/')? launchContent.metadata.path.substring(0, launchContent.metadata.path.length-1): launchContent.metadata.path;
+          var path = ("undefined" != typeof cordova)? "file://" + basePath : "http://"+ location.host + "/" + basePath;
+          launchContent.metadata.baseDir =  path;
+          
+
+          var launchData = getUrlParameter('launchData');
+          var launchConfig = getUrlParameter('config');
+          var appInfo = getUrlParameter('appInfo');
+          var contentUrl =  launchContent.metadata.baseDir + '/index.html?contentId='+ launchContentId + '&launchData=' + launchData + "&appInfo=" + appInfo;
+          //Adding config as query parameter for HTML content
+          if(launchConfig){
+              contentUrl += "&config=" + launchConfig;
+          }
+
+          if (window.cordova){
+              console.log("Opening through cordova custom webview.");
+              cordova.InAppBrowser.open(contentUrl, '_self', 'location=no,hidden=true');
+          }else{
+              console.log("Opening through window.open");
+              window.open(contentUrl, '_self');                  
+          }
+        }else{
+          console.log("This is not HTML content.");
+        }
+      }); 
+    } 
+
+    /** 
+     * Get url parameter value
+     * sPram: input url paramater name to get its value in url
+     */
+    function getUrlParameter(sParam) {
+     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+         sURLVariables = sPageURL.split('&'),
+         sParameterName,
+         i;
+     for (i = 0; i < sURLVariables.length; i++) {
+         sParameterName = sURLVariables[i].split('=');
+
+         if (sParameterName[0] === sParam) {
+             return sParameterName[1] === undefined ? true : sParameterName[1];
+         }
+     }
+    }
+
+    initialize();
+  </script>
+</body>
+</html>

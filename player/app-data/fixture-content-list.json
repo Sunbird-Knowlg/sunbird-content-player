@@ -40,10 +40,10 @@
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
                 "questionnaire": null,
-                "appIcon": "fixture-stories/debug/logo.png",
+                "appIcon": "fixture-stories/mar8/logo.png",
                 "subject": "literacy_v2",
                 "description": "Debug Content",
-                "name": "Debug Content",
+                "name": "mar8 demo",
                 "downloadUrl": "",
                 "checksum": null,
                 "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
@@ -52,12 +52,103 @@
                     "name": "Receptive Vocabulary",
                     "objectType": "Concept"
                 }],
-                "identifier": "org.ekstep.debug",
+                "identifier": "org.ekstep.mar8",
                 "grayScaleAppIcon": null,
                 "pkgVersion": 1
             },
             "isAvailable": true,
-            "path": "fixture-stories/debug"
+            "path": "fixture-stories/mar8"
+        },{
+            "identifier": "do_20043647",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/HTMLLauncher/logo.png",
+                "subject": "literacy_v2",
+                "description": "HTML Launcher",
+                "name": "HTML Launcher",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "config": {
+                    "languageL2": "en",
+                    "sid": "de305d54-75b4-431b-adb2-eb6b9e546013",
+                    "uid": "123e4567-e89b-12d3-a456-426655440000",
+                    "did": "ff305d54-85b4-341b-da2f-eb6b9e5460fa", 
+                    "level": "5"
+                },
+                "launchContent": "do_20045479",
+                "identifier": "do_20043647",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/HTMLLauncher"
+        },{
+            "identifier": "do_20043647",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/HTMLContent/logo.png",
+                "subject": "literacy_v2",
+                "description": "HTML Content",
+                "name": "HTML Content",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "config": {
+                    "languageL2": "en",
+                    "sid": "de305d54-75b4-431b-adb2-eb6b9e546013",
+                    "uid": "123e4567-e89b-12d3-a456-426655440000",
+                    "did": "ff305d54-85b4-341b-da2f-eb6b9e5460fa", 
+                    "level": "5"
+                },
+                "identifier": "do_20043647",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/HTMLContent"
+        },{
+            "identifier": "do_20045479",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/HTMLContent/logo.png",
+                "subject": "literacy_v2",
+                "description": "HTML Content2",
+                "name": "HTML Content2",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "config": {
+                    "languageL2": "en",
+                    "sid": "de305d54-75b4-431b-adb2-eb6b9e546013",
+                    "uid": "123e4567-e89b-12d3-a456-426655440000",
+                    "did": "ff305d54-85b4-341b-da2f-eb6b9e5460fa", 
+                    "level": "5"
+                },
+                "identifier": "do_20045479",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/HTMLContent2"
         },{
             "identifier": "org.ekstep.showcase.video",
             "mimeType": "application/vnd.ekstep.ecml-archive",

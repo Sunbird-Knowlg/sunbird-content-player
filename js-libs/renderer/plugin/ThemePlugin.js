@@ -174,7 +174,7 @@ var ThemePlugin = Plugin.extend({
         PluginManager.invoke('stage', stage, this, null, this);
         
         // Trigger onstagechange event, which is bind by parent window
-        if(webview && window &&  window.parent && window.parent.jQuery('body')){
+        if(isbrowserpreview && window &&  window.parent && window.parent.jQuery('body')){
             var retObj = {"stageId" : stageId};
             window.parent.jQuery('body').trigger('onstagechange', retObj);
         }

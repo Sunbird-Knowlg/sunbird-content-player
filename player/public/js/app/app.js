@@ -16,7 +16,7 @@ var stack = new Array(),
         showEndPage: true,
         showHTMLPages: true
     },
-    webview = getUrlParameter("webview"),
+    isbrowserpreview = getUrlParameter("webview"),
     appState = undefined;
 
 
@@ -153,8 +153,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // localPreview is a global variable defined in index.html file inside a story,
                 if ("undefined" != typeof localPreview && "local" == localPreview)
                     return;
-                var id = getUrlParameter("id");
-                if (webview) {
+                var id = getUrlParameter("id");  
+                if(isbrowserpreview) {
                     if ("undefined" != typeof $location && id) {
                         ContentService.getContentMetadata(id)
                             .then(function(data) {
@@ -426,7 +426,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.init = function() {
             $scope.showPage = true;
             if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
-                if ((webview == "true")) {
+                if ((isbrowserpreview == "true")) {
                     if (content.metadata && (content.metadata.mimeType != COLLECTION_MIMETYPE)) {
                         jQuery('#loading').hide();
                         //For JSON and Direct contentID
@@ -481,19 +481,35 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 GlobalContext.config.appInfo.language = ($scope.item && $scope.item.language) ? $scope.item.language[0] : undefined;
 
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
-                    HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
-                        jQuery('#loading').hide();
-                        jQuery('#gameArea').hide();
-                        var path = $scope.item.baseDir + '/index.html';
-                        $scope.currentProjectUrl = path;
-                        jQuery("#htmlFrame").show();
-                    });
+                    //Checking is mobile or not
+                    var isMobile = window.cordova ? true : false;
+                    
+                    // For HTML content, lunach eve is required
+                    // setting launch evironment as "app"/"portal" for "mobile"/"portal(web)"
+                    var envHTML = isMobile ? "app" : "portal";
+
+                    var launchData = {"env": envHTML, "envpath": AppConfig[AppConfig.flavor]};
+                    //Adding contentId and LaunchData as query parameter
+                    var path = $scope.item.baseDir + '/index.html?contentId='+ $stateParams.itemId + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
+                    
+                    //Adding config as query parameter for HTML content
+                    if($scope.item.config){
+                        path += "&config=" + JSON.stringify($scope.item.config);
+                    }
+                    
+                    if (isMobile){
+                        console.log("Opening through cordova custom webview.");
+                        cordova.InAppBrowser.open(path, '_self', 'location=no,hardwareback=no');
+                    }else{
+                        console.log("Opening through window.open");
+                        window.open(path, '_self');              
+                    }
                 } else {
                     if (collectionChildren) {
                         collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1);
                         collectionChildren = false;
                     }
-                    if (webview) {
+                    if (isbrowserpreview) {
                         var contentBody = undefined;
                         if (COLLECTION_MIMETYPE == content.metadata.mimeType) {
                             ContentService.getContentBody($stateParams.itemId)
