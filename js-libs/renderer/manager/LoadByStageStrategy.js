@@ -147,10 +147,10 @@ LoadByStageStrategy = Class.extend({
                         nextContainer.hide();
                     }                    
                 }
-                //OverlayHtml.showNext();
+                //Overlay.showNext();
             });
         } else {
-            //OverlayHtml.showNext();
+            //Overlay.showNext();
         }
         if (prevStageId) {
             instance.loadStage(prevStageId, function() {
@@ -162,7 +162,7 @@ LoadByStageStrategy = Class.extend({
                         previousContainer.hide();
                     }
                 }
-                //OverlayHtml.showPrevious();
+                //Overlay.showPrevious();
                 //enablePrevious();
             });
         }

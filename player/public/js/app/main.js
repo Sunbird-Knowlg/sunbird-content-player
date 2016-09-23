@@ -152,7 +152,7 @@ function navigate(navType) {
         return;
     }
 
-    if(submitOnNextClick && OverlayHtml.isItemScene() && ("next" == navType)){
+    if(submitOnNextClick && Overlay.isItemScene() && ("next" == navType)){
         evalAndSubmit();
         return;
     }
@@ -174,7 +174,7 @@ function navigate(navType) {
         CommandManager.handle(action);
     };
     if ("undefined" == typeof navigateTo && "next" == navType) {
-        if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
+        if (Overlay.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
             changeScene();
         } else {
             if(config.showEndPage) {
