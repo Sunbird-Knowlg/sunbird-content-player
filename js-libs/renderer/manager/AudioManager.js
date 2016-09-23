@@ -2,7 +2,6 @@ AudioManager = {
     instances: {},
     MAX_INSTANCES: 10,
     muted: false, 
-    /*IsRecaudio_Playfinished:false,*/
     // creating unique id for each audio instance using stageId.
     uniqueId: function(action) {
         return action.stageId + ':' + action.asset;
@@ -31,18 +30,13 @@ AudioManager = {
             if(createjs.Sound.PLAY_FAILED != instance.object.playState) {
                 EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PLAY"});
                 instance.object.on("complete", function() {
-                    /*if(instance.object.playState=="playFinished" && action.asset=='do_30080880'){
-                        console.info("Rec Audio Play Finished");
-                    }*/
-                   //this.IsPlayfinished=instance.object.playstate=='playFinished'?true:false; 
-
                     if ("undefined" != typeof action.cb)
                         action.cb({"status":"success"});
                 }, action);
             } else {
                 delete AudioManager.instances[AudioManager.uniqueId(action)];
                 console.info( "Audio with 'id :" + action.asset  + "' is not found..")
-                   this.IsPlayfinished=false;
+                  
              }
             return instance;
         } else {
