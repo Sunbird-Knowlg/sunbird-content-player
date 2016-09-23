@@ -44,7 +44,8 @@ var DivPlugin = HTMLPlugin.extend({
     _triggerEvent: function(event) {
         var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
         event = new createjs.Event(event);
-        plugin.dispatchEvent(event);
+        if(plugin)
+            plugin.dispatchEvent(event);
     }
 });
 PluginManager.registerPlugin('div', DivPlugin);

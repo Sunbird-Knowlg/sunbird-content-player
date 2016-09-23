@@ -99,8 +99,9 @@ var ImagePlugin = Plugin.extend({
         } else {
             asset = this._data.asset;
         }
-        if (asset) {
-            var image = this._theme.getAsset(asset);
+        
+        if (asset && this._theme && this._self) {
+            var image = this._theme.getAsset(asset) ;
             this._self.image = image;
             Renderer.update = true;
         }

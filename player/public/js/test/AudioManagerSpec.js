@@ -16,7 +16,7 @@ describe('Audio manager test cases', function() {
             ]
         }
 
-        AudioManager.init(themeData, 'public/js/test/assets/');
+        AudioManager.init(themeData, '');
         done();
     });
     beforeEach(function(done) {

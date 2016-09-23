@@ -88,7 +88,6 @@ var OptionPlugin = Plugin.extend({
             }
             EventManager.processAppTelemetry({}, 'CHOOSE', instance, data);
         });
-
     },
     renderMTFOption: function(value) {
         var enableDrag = false;
@@ -357,46 +356,6 @@ var OptionPlugin = Plugin.extend({
             data.h = 100 - (2 * pady);
             Object.assign(data, innerECML);
             PluginManager.invoke('g', data, this, this._stage, this._theme);
-        }
-    },
-    resolveModelValue: function(data) {
-        var instance = this;
-        var updateAction = function(action) {
-            if (action.asset_model) {
-                var model = action.asset_model;
-                var val = instance._stage.getModelValue(model);
-                action.asset = val;
-                delete action.asset_model;
-            }
-        }
-        var updateEvent = function(evt) {
-            if(_.isArray(evt.action)) {
-                evt.action.forEach(function(action) {
-                    updateAction(action);
-                });
-            } else if(evt.action) {
-                updateAction(evt.action);
-            }
-        }
-        var events = undefined;
-        if(data.events) {
-            if (_.isArray(data.events)) {
-                events = [];
-                data.events.forEach(function(e) {
-                    events.push.apply(events, e.event);
-                });
-            } else {
-                events = data.events.event
-            }
-        } else {
-            events = data.event;
-        }
-        if(_.isArray(events)) {
-            events.forEach(function(e) {
-                updateEvent(e);
-            });
-        } else if(events) {
-            updateEvent(events);
         }
     },
     resolveModelValue: function(data) {

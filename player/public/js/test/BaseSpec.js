@@ -38,8 +38,7 @@ function invokePlugin(data) {
         "w": 13,
         "h": 18,
         "hitArea": true,
-        "id": "testShape",
-        "appEvents": {list: "toggle"}
+        "id": "testShape"
     };
     return PluginManager.invoke('shapeext', data, parent);
 }
@@ -47,4 +46,9 @@ function invokePlugin(data) {
 function createAndInvokePlugin(data) {
     newPlugin();
     return invokePlugin(data);
+}
+
+function startRenderer(data) {
+    var fixture = setFixtures('<div id="gameArea"><canvas id="gameCanvas" width="1366" height="768"></canvas></div>');
+    Renderer.start("", "gameCanvas", {}, data);
 }

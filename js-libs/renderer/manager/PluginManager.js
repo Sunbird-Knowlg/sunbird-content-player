@@ -29,7 +29,7 @@ PluginManager = {
         PluginManager.customPluginMap = {};
         var media = manifest.media;
         var plugins = _.filter(!_.isArray(media) ? [media] : media, function(media) {
-            return media.type == 'plugin'});;
+            return media.type == 'plugin'});
         
         media = _.filter(!_.isArray(media) ? [media] : media, function(media) {
             return media.type == 'js' || media.type == 'css'; });
@@ -141,5 +141,8 @@ PluginManager = {
         console.info("loading external JS: ", jsUrl);
         var jsLink = $("<script type='text/javascript' src=" + jsUrl + ">");
         jQuery("head").append(jsLink);
+    },
+    getPlugins: function() {
+        return Object.keys(PluginManager.pluginMap);
     }
 }

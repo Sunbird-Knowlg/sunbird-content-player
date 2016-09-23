@@ -14,11 +14,11 @@ describe('Asset manager test cases', function() {
             manifest: {
                 media: [{
                     id: 'sringeri',
-                    src: 'sringeri.png',
+                    src: 'https://ekstep-public.s3.amazonaws.com/preview/dev/img/icons/splash.png',
                     type: 'image'
                 }, {
                     id: 'splash_audio',
-                    src: 'splash.ogg',
+                    src: 'https://ekstep-public.s3.amazonaws.com/preview/dev/assets/sounds/goodjob.mp3',
                     type: 'audio'
                 }]
             },
@@ -67,18 +67,19 @@ describe('Asset manager test cases', function() {
         done();
         expect(AssetManager.stopStageAudio.calls.count()).toEqual(1);
     });
-    /*it('Test AsssetManager loadAsset function',function(){
+
+    xit('Test AsssetManager loadAsset function',function(){
         AssetManager.loadAsset({stageId:"splash", assetId:"splash_audio", path:"/js/test/assets"});
         expect(AssetManager.loadAsset).toHaveBeenCalled();
 
         expect(AssetManager.loadAsset.calls.count()).toEqual(1);
-    });*/
-    /*it('Test AssetManager destroy function',function(){
+    });
+    it('Test AssetManager destroy function',function(){
         AssetManager.destroy({ strategy: undefined, stageAudios: Object({  })});
        
-        expect(AssetManager).toHaveBeenCalled();
+        expect(AssetManager.destroy).toHaveBeenCalled();
         expect(AssetManager.destroy.calls.count()).toEqual(1);
 
-    });*/
+    });
 
 });

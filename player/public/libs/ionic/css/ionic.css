@@ -2772,7 +2772,7 @@ ion-infinite-scroll {
  * --------------------------------------------------
  */
 p {
-  margin: 0 0 10px; }
+  margin: 0 0 1px; }
 
 small {
   font-size: 85%; }

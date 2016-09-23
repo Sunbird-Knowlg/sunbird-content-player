@@ -23,6 +23,9 @@ var AudioPlugin = Plugin.extend({
         } else {
             AudioManager.stop(action);
         }
+    },
+    stopAll: function(action) {
+        AudioManager.stopAll(action);
     }
 
 });

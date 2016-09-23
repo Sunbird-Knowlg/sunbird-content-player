@@ -28,8 +28,11 @@ AudioManager = {
             }        
             if(createjs.Sound.PLAY_FAILED != instance.object.playState) {
                 EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PLAY"});
-            }
-            else {
+                instance.object.on("complete", function() {
+                    if ("undefined" != typeof action.cb)
+                        action.cb({"status":"success"});
+                }, action);
+            } else {
                 delete AudioManager.instances[AudioManager.uniqueId(action)];
                 console.info( "Audio with 'id :" + action.asset  + "' is not found..")
             }
@@ -75,7 +78,7 @@ AudioManager = {
     },
     stopAll: function(action) {
         createjs.Sound.stop();
-        EventManager.processAppTelemetry(action, 'LISTEN',instance, {subtype : "STOP_ALL"});
+        EventManager.processAppTelemetry({}, 'LISTEN','', {subtype : "STOP_ALL"});
     },
     reclaim: function() {
         // On devices, audio stops playing after resource limit is reached

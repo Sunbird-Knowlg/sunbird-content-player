@@ -1,5 +1,6 @@
 var Plugin = Class.extend({
 	_isContainer: false,
+    _defaultFont: undefined,
 	_render: true,
 	_theme: undefined,
 	_parent: undefined,
@@ -242,7 +243,7 @@ var Plugin = Class.extend({
 		}
 		Renderer.update = true;
 	},
-	toggleShadow: function() {
+	toggleShadow: function(action) {
 		var isVisible = false;
 
         if (this.hasShadow()) {
@@ -424,6 +425,17 @@ var Plugin = Class.extend({
         }
         return value;
     },
+    getDefaultFont: function() {
+        if(this._defaultFont == undefined) {
+            var contentLang = (GlobalContext.config.appInfo && GlobalContext.config.appInfo.language) ? GlobalContext.config.appInfo.language.toLowerCase() : undefined;
+            if(!(_.isUndefined(contentLang)) && !(_.isUndefined(LANGUAGE_FONTS[contentLang]))) {
+                this._defaultFont = LANGUAGE_FONTS[contentLang];                
+            } else {
+                this._defaultFont = LANGUAGE_FONTS['english'];
+            }
+        }
+        return this._defaultFont;
+    },
 	transitionTo: function() {
 		PluginManager.addError('Subclasses of plugin should implement transitionTo()');
 	},
@@ -436,7 +448,7 @@ var Plugin = Class.extend({
 	restart: function() {
 		PluginManager.addError('Subclasses of plugin should implement reload()');
 	},
-    blur: function() {
+    blur: function(action) {
         var instance = this;
         var obj = instance._self;
         var blurFilter = new createjs.BlurFilter(25, 25, 1);
@@ -445,7 +457,7 @@ var Plugin = Class.extend({
         obj.cache(bounds.x,bounds.y, bounds.w, bounds.h);
         Renderer.update = true;
     },
-    unblur: function() {
+    unblur: function(action) {
         var instance = this;
         instance._self.filters = [];
         instance._self.uncache();

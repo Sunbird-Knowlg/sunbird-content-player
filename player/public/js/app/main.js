@@ -5,8 +5,16 @@ var packageName = "org.ekstep.quiz.app",
 
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
-    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive";
-
+    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive",
+    LANGUAGE_FONTS = {"english": "NotoSansDevanagari", 
+                    "kannada":"NotoSansKannada",
+                    "telugu": "NotoSansTelugu", 
+                    "odia": "NotoSansOriya", 
+                    "bengali": "NotoSansBengali",
+                    "assamese": "NotoSansBengali",
+                    "tamil": "NotoSansTamil"
+                    };
+                    
 function startProgressBar(w, setInter) {
     var elem = document.getElementById("progressBar");
     var width = w ? w : 20;
@@ -73,43 +81,18 @@ function reloadStage() {
     TelemetryService.interact("TOUCH", "gc_reload", "TOUCH", {stageId : Renderer.theme._currentStage});
 }
 
-function enableReload() {
-    _reloadInProgress = false;
-}
-
-function goToCollection($state, id, pageId) {
-        console.log(" id : ", id);
-        // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
-        TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
-        if (Renderer.running)
-            Renderer.cleanUp();
-        else
-            TelemetryService.end();
-        $state.go('contentList', {
-            "id": id
-        });
-}
-
-// function goToHome($state, isCollection, id, pageId) {
-//     if (isCollection) {
-//         // TelemetryService.interract("TOUCH", (Renderer && Renderer.theme && Renderer.theme._currentStage) ? Renderer.theme._currentStage : pageId);
-//         TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
-//         if (Renderer.running)
-//             Renderer.cleanUp();
-//         else
-//             TelemetryService.end();
-//     }
-// }
-
-
-function backbuttonPressed() {
+function backbuttonPressed(pageId) {
     var data = (Renderer.running || HTMLRenderer.running) ? {
         type: 'EXIT_CONTENT',
-        stageId: Renderer.theme._currentStage
+        stageId: Renderer.theme ? Renderer.theme._currentStage : ""
     } : {
         type: 'EXIT_APP'
     };
     TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', data);
+    if(pageId == "coverpage") {
+        TelemetryService.end();
+    }
+    AudioManager.stopAll();
 }
 
 // TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
@@ -146,6 +129,7 @@ function contentNotAvailable() {
     alert(AppMessages.NO_CONTENT_FOUND);
     exitApp();
 }
+
 function getNavigateTo(navType) {
     var navigation = [];
     var navigateTo = undefined;
@@ -182,10 +166,12 @@ function navigate(navType) {
             "ease": "linear",
             "effect": "fadeIn",
             "type": "command",
+            "pluginId": Renderer.theme._id,
             "value": navigateTo
         };
         action.transitionType = navType;
-        Renderer.theme.transitionTo(action);
+        // Renderer.theme.transitionTo(action);
+        CommandManager.handle(action);
     };
     if ("undefined" == typeof navigateTo && "next" == navType) {
         if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
@@ -194,6 +180,7 @@ function navigate(navType) {
             if(config.showEndPage) {
                 console.info("redirecting to endpage.");
                 window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+                AudioManager.stopAll();
             } else {
                 console.warn("Cannot move to end page of the content. please check the configurations..");
             }
@@ -203,25 +190,13 @@ function navigate(navType) {
     }
 }
 
-function enablePrevious() {
-    var navigateTo = getNavigateTo('previous');
-    if (_.isUndefined(navigateTo)) {
-        
-        jQuery('#navPrev').hide();
-        if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious()) {
-            jQuery('#navPrev').show();
-        }
-    } else {
-        jQuery('#navPrev').show();
-    }
-}
-
 function evalAndSubmit(){
     //If any one option is selected, then only allow user to submit
     var action = {
         "type": "command",
         "command": "eval",
-        "asset": Renderer.theme._currentStage
+        "asset": Renderer.theme._currentStage,
+        "pluginId": Renderer.theme._currentStage
     };
     action.htmlEval = "true";
     action.success = "correct_answer";

@@ -57,17 +57,13 @@
   </head>
   <body>
     <ion-nav-view></ion-nav-view>
-    <div id="loading" style="margin:auto; position:absolute;width:100%;height:100%; z-index: 999;">
-        <img src="img/icons/background.png" style="position: absolute; width: 100%; height: 100%;">
-        <!-- <img src="img/icons/cover_backdrop.png" style="position: absolute; width: 100%; height: 100%;"/> -->
-        <!-- <img src="img/icons/loadingSpinner2.gif" style="position: absolute;width: 5%;height: 9%;top: 45%;left: 47%;"/> -->
+    <div id="loading" class="gc-loader-area">
+        <img src="img/icons/background.png" class="gc-loader-img">
         <div id="progressArea">
           <div id="progressBar"></div>
-          <p id="progressCount" style=" margin-left: 46%; position: absolute; font-family: baloobhai; color: white;"></p>
+          <p id="progressCount" class="gc-loader-prog"></p>
         </div>
-        <p class="icon-font conver-page-title" id="loadingText"></p>
-        <!-- <p class="icon-font " id="loadingText1"></p> -->
-        <!-- <p class="icon-font conver-page-title conver-page-title1" style="top: 55%;right: -1%;FONT-SIZE: 2EM;">Please wait...</p> -->
+        <p class="icon-font cover-page-title" id="loadingText"></p>
     </div> 
 
     <script type="text/javascript" src="js/thirdparty/jquery.min.js"></script>
@@ -77,10 +73,7 @@
     <script type="text/javascript" src="js/thirdparty/exclude/Class.js"></script>
 
     <script type="text/javascript" src="js/thirdparty/async.min.js"></script>
-    <!-- <script type="text/javascript" src="js/thirdparty/hamburger.js"></script> -->
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
+
     <!-- ionic/angularjs js -->
     <script src="libs/ionic/js/ionic.bundle.min.js"></script>
 
@@ -106,10 +99,10 @@
 
 
     <script src="js/app/services.js"></script>
-    <script src="js/app/renderer.theme.js"></script>
+    <!-- // <script src="js/app/renderer.theme.js"></script> -->
     <script src="js/app/OverlayHtml.js"></script>
     
-    <script src="js/app/genie-canvas.template.js"></script>
+    <!-- // <script src="js/app/genie-canvas.template.js"></script> -->
 
 
     <script src="js/thirdparty/underscore.js"></script>
@@ -137,6 +130,7 @@
     <script src="renderer/manager/AudioManager.js"></script>
     <script src="renderer/manager/CommandManager.js"></script>
     <script src="renderer/manager/EventManager.js"></script>
+    
     <script src="renderer/manager/LoadByStageStrategy.js"></script>
     <script src="renderer/manager/PluginManager.js"></script>
     <script src="renderer/manager/RecorderManager.js"></script>
@@ -146,6 +140,38 @@
     <script src="renderer/generator/DataGenerator.js"></script>
     <script src="renderer/generator/ItemDataGenerator.js"></script>
     <!-- // <script src="renderer/generator/TemplateDataGenerator.js"></script> -->
+
+    <!-- command -->
+    <script src="renderer/command/Command.js"></script>
+    <script src="renderer/command/BlurCommand.js"></script>
+    <script src="renderer/command/CustomCommand.js"></script>
+    <script src="renderer/command/EraseCommand.js"></script>
+    <script src="renderer/command/EvalCommand.js"></script>
+    <script src="renderer/command/EventCommand.js"></script>
+    <script src="renderer/command/ExternalCommand.js"></script>
+    <script src="renderer/command/HideCommand.js"></script>
+    <script src="renderer/command/HideHTMLElementsCommand.js"></script>
+    <script src="renderer/command/PauseCommand.js"></script>
+    <script src="renderer/command/PlayCommand.js"></script>
+    <script src="renderer/command/ProcessRecordCommand.js"></script>
+    <script src="renderer/command/RefreshCommand.js"></script>
+    <script src="renderer/command/ReloadCommand.js"></script>
+    <script src="renderer/command/RestartCommand.js"></script>
+    <script src="renderer/command/SetCommand.js"></script>
+    <script src="renderer/command/ShowCommand.js"></script>
+    <script src="renderer/command/ShowHTMLElementsCommand.js"></script>
+    <script src="renderer/command/StartGenieCommand.js"></script>
+    <script src="renderer/command/StartRecordCommand.js"></script>
+    <script src="renderer/command/StopCommand.js"></script>
+    <script src="renderer/command/StopRecordCommand.js"></script>
+    <script src="renderer/command/TogglePlayCommand.js"></script>
+    <script src="renderer/command/ToggleShadowCommand.js"></script>
+    <script src="renderer/command/ToggleShowCommand.js"></script>
+    <script src="renderer/command/TransitionToCommand.js"></script>
+    <script src="renderer/command/UnblurCommand.js"></script>
+    <script src="renderer/command/WindowEventCommand.js"></script>
+    <script src="renderer/command/AnimateCommand.js"></script>
+    <script src="renderer/command/ResetCommand.js"></script>
 
     <!-- plugin -->
     <script src="renderer/plugin/Plugin.js"></script>

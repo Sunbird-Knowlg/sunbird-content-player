@@ -132,7 +132,7 @@ var SetPlugin = Plugin.extend({
         } else if (scope && scope.toLowerCase() == 'parent') {
             this._parent.setPluginParam(param, value, incr, max);
         } else {
-            this._theme.setParam(param, value, incr, max);
+            this._theme ? this._theme.setParam(param, value, incr, max) : undefined;
         }
     },
     getParam: function(param) {

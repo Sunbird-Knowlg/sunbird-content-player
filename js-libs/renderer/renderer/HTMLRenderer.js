@@ -1,14 +1,14 @@
 HTMLRenderer = {
 	running: false,
 	start: function(gameRelPath, canvasId, game, cb) {
-		if(HTMLRenderer.running) {
+        if(HTMLRenderer.running) {
             HTMLRenderer.cleanUp();
-        } else {
-        	HTMLRenderer.running = true;
-	        (game && game.identifier && game.pkgVersion) ? TelemetryService.start(game.identifier, game.pkgVersion): TelemetryService.start();
-            HTMLRenderer.resizeFrame();
-            cb();
         }
+        HTMLRenderer.running = true;
+        (game && game.identifier && game.pkgVersion) ? TelemetryService.start(game.identifier, game.pkgVersion): TelemetryService.start();
+        HTMLRenderer.resizeFrame();
+        cb();
+        
 	},
 	resizeFrame: function() {
         var gameArea = document.getElementById('htmlFrame');
@@ -29,6 +29,6 @@ HTMLRenderer = {
 	cleanUp: function() {
 		HTMLRenderer.running = false;
 		TelemetryService.end();
-		window.location.hash = '#/content/list';
+		// window.location.hash = '#/content/list';
 	}
 }

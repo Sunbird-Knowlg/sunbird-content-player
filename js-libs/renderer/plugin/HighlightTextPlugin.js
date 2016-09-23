@@ -1,3 +1,6 @@
+/*Wiki link for ref
+https://github.com/ekstep/Common-Design/wiki/ECML-How-to-Guide#highlighting-text*/
+
 var HighlightTextPlugin = HTMLPlugin.extend({
     _type: 'htext',
     _wordIds: [],
@@ -23,8 +26,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         div.style.width = dims.w + 'px';
         div.style.height = dims.h + 'px';
         div.style.top = "-1000px"; // position off-screen initially
-        div.style.position = 'absolute';
-        
+        div.style.position = 'relative';
         var fontsize = "1.2em";
         if (data.fontsize) {
             fontsize = data.fontsize;
@@ -39,13 +41,29 @@ var HighlightTextPlugin = HTMLPlugin.extend({
                 fontsize = fontsize + 'px';
             }
         }
+        /*Style properties to handle highlighting text
+        syntax of text-shadow: h_offset v-offset Blur shadow_color;*/
+        var h_offset = data.offsetX ? data.offsetX : 0;
+        var v_offset = data.offsetY ? data.offsetY : 0;
+        var Blur = data.blur ? data.blur : 1;
+        var shadow_color = data.shadow ? data.shadow : "#ccc";
+        /*handling shadow with px */
+        var shadow = h_offset + "px" + " " + v_offset + "px" + " " + Blur + "px" + " " + shadow_color;
         div.style["font-size"] = fontsize;
-        div.style["line-height"] = data.lineHeight ? data.lineHeight : 0;
-        
-        console.log("data", data, " Div", div);
-        var parentDiv = document.getElementById(Renderer.divIds.gameArea);
-        parentDiv.insertBefore(div, parentDiv.childNodes[0]);
+        var fontFace = (data.font || this.getDefaultFont());
+        div.style["font-family"] = fontFace;
+        div.style["line-height"] = data.lineHeight ? data.lineHeight : "1.2em";
+        div.style["color"] = data.color ? data.color : "black";
+        div.style["font-weight"] = data.weight ? data.weight : "normal";
+        div.style["fontFamily"] = data.font ? data.font.toLowerCase() : "Arial";
+        div.style["outline"] = data.outline ? data.outline : 0;
+        div.style["text-align"] = data.align ? data.align : "left";
+        div.style["vertical-align"] = data.valign ? data.valign : "top";
+        div.style["textShadow"] = shadow;
 
+        var parentDiv = document.getElementById(Renderer.divIds.gameArea);
+
+        parentDiv.insertBefore(div, parentDiv.childNodes[0]);
         if (data.timings) {
             this._timings = _.map(data.timings.split(","), function(time) {
                 return Number(Number(time).toFixed(0));
@@ -74,20 +92,35 @@ var HighlightTextPlugin = HTMLPlugin.extend({
                 this._isPlaying = true;
                 var prevPosition = 0;
                 if (audio) {
-                    this._playAudio(audio);
+                    var soundInstance = this._playAudio(audio);
+                    soundInstance.on("complete", function() {
+                        instance._cleanupHighlight();
+                        if ("undefined" != typeof action.cb)
+                            action.cb({"status":"success"});
+                    });
                     this._listener = function() {
+                        if((_.isUndefined(instance._audioInstance)) || (_.isUndefined(instance._audioInstance.object))) {
+                            //removing previous interupted audio instance listener
+                            //TODO: Has to remove this event listener properly, This will create performance issue
+                            if (instance._listener) {
+                                createjs.Ticker.removeEventListener("tick", instance._listener);
+                                return;
+                            }
+                        }
                         instance._position.current = Number(instance._audioInstance.object.position.toFixed(0));
                         instance._highlight();
                         instance._position.previous = instance._position.current;
-                    };
+                    }
                 } else {
                     this._time = Date.now();
-                    this._listener = function() {
+                     this._listener = function() {
                         if (!instance._isPaused) {
                             instance._position.current = Date.now() - instance._time + instance._position.pause;
                             instance._highlight();
                             if (instance._position.previous > instance._timings[instance._timings.length -1] + 500) {
                                 instance._cleanupHighlight();
+                                if ("undefined" != typeof action.cb)
+                                    action.cb({"status":"success"});
                             }
                             instance._position.previous = instance._position.current;
                         }
@@ -120,6 +153,8 @@ var HighlightTextPlugin = HTMLPlugin.extend({
     togglePlay: function(action) {
         if (this._isPlaying && !this._isPaused) {
             this.pause(action);
+            if ("undefined" != typeof action.cb)
+                action.cb({"status":"success"});
         } else {
             this.play(action);
         }
@@ -154,16 +189,16 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         var instance = this;
         instance._data.audio = audio;
         instance._audioInstance = AudioManager.play({asset: audio, stageId: this._stage._id});
-        instance._audioInstance.object.on("complete", function() {
-            instance._cleanupHighlight();
-        });
+        return instance._audioInstance.object;
     },
     _highlight: function() {
         var instance = this;
+      
         if (instance._position.current && instance._isPlaying) {
             var matches = _.filter(instance._timings, function(time) {
                 return (time >= instance._position.previous && time < instance._position.current);
             });
+         
             if (matches.length >0) {
                 _.each(matches, function(match) {
                     var index = instance._timings.indexOf(match);
@@ -187,19 +222,31 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         };
     },
     _removeHighlight: function() {
-        jQuery("."+this._wordClass).css({"background-color": "none", "padding": "0px", "font-weight": "normal"});
+        jQuery("."+this._wordClass).css({"background-color": "none", "padding": "0px" });
     },
     _addHighlight: function(id) {
         jQuery("#"+id).css({"background": this._data.highlight});
+        
     },
     _tokenize: function(text) {
+
         var htmlText = "";
-        var words = text.split(' ');
+        Replaced_text = text.replace(/(\r\n|\n|\r)/gm, " </br> "); // Replaces the Brek-line(/n or /r) with </br> tag
+        var words = Replaced_text.split(' ');
         this._wordIds = [];
-        for(i=0;i<words.length;i++) {
-            var wordId = this.getWordId(i);
-            this._wordIds.push(wordId);
-            htmlText += "<span id=\""+ wordId +"\" class=\"gc-ht-word\">" + words[i] + "</span> ";
+        var index = 0;
+        for (i = 0; i < words.length; i++) {
+            if (words[i] === '') {
+                htmlText += "<span class=\"gc-ht-word\">&nbsp;</span> ";
+            } else if (words[i] === '</br>') {
+                htmlText += "<span class=\"gc-ht-word\"></br></span> ";
+            } else {
+                var wordId = this.getWordId(index);
+                this._wordIds.push(wordId);
+                htmlText += "<span id=\"" + wordId + "\" class=\"gc-ht-word\">" + words[i] + "</span> ";
+                index++;
+            }
+
         }
         return htmlText;
     },
@@ -234,3 +281,4 @@ var HighlightTextPlugin = HTMLPlugin.extend({
     }
 });
 PluginManager.registerPlugin('htext', HighlightTextPlugin);
+

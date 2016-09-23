@@ -1,35 +1,60 @@
+var parent = {
+    dimensions: function() {
+        return {
+            x: 0,
+            y: 0,
+            w: 500,
+            h: 500
+        }
+    },
+    addChild: function() {}
+}
+var data = {
+    id: "splash1",
+    x: 10,
+    y: 10,
+    w: 90,
+    h: 90,
+    audio: { asset: 'splash_audio' },
+    param:[{
+        name: "next",
+        value: "Scene2"
+    }],
+    shape: {
+        "x": 20,
+        "y": 20,
+        "w": 60,
+        "h": 60,
+        "visible": true,
+        "editable": true,
+        "type": "roundrect",
+        "radius": 10,
+        "opacity": 1,
+        "fill": "#45b3a5",
+        "stroke-width": 1,
+        "z-index": 0,
+        "id": "textBg"
+    },
+    iterate:"assessment",
+    var: "item"
+
+}
 describe('Stage Plugin test cases', function() {
 
     beforeEach(function(done) {
-
-        var parent = {
-            dimensions: function() {
-                return {
-                    x: 0,
-                    y: 0,
-                    w: 500,
-                    h: 500
-                }
-            },
-            addChild: function() {}
-        }
-        var data = data || {
-
-            id: "splash1",
-            audio: { asset: 'splash_audio' },
-            img: { asset: 'sringeri' }
-
-        }
         Renderer.theme = {
             _currentStage: ''
         };
-        this.plugin = PluginManager.invoke('stage', data, parent);
+        this.plugin = PluginManager.invoke('stage', data, parent, {}, {replaceStage : function(){}});
+        spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'setParamValue').and.callThrough();
         spyOn(this.plugin, 'addController').and.callThrough();
         spyOn(this.plugin, 'getController').and.callThrough();
         spyOn(this.plugin, 'getTemplate').and.callThrough();
         spyOn(this.plugin, 'getModelValue').and.callThrough();
         spyOn(this.plugin, 'setModelValue').and.callThrough();
+        spyOn(this.plugin, 'evaluate').and.callThrough();
+        spyOn(this.plugin, 'reload').and.callThrough();
 
         spyOn(this.plugin, 'setParam').and.callThrough();
         spyOn(this.plugin, 'getParam').and.callThrough();
@@ -38,6 +63,11 @@ describe('Stage Plugin test cases', function() {
 
     it('Stage plugin initPlugin', function() {
         expect(true).toEqual(this.plugin._self instanceof creatine.Scene);
+        this.plugin.initPlugin({
+            primary: true
+        });
+        expect(this.plugin.initPlugin).toHaveBeenCalled();
+        expect(this.plugin.initPlugin.calls.count()).toEqual(1);
     });
 
     it('Stage attributes validation', function() {
@@ -93,6 +123,22 @@ describe('Stage Plugin test cases', function() {
         expect(this.plugin.setModelValue.calls.count()).toEqual(1);
 
     });
+
+    it('stage plugin evaluate', function() {
+    
+        this.plugin.evaluate({failure : "next_item"});
+        expect(this.plugin.evaluate).toHaveBeenCalled();
+        expect(this.plugin.evaluate.calls.count()).toEqual(1);
+
+    });
+
+    it('stage plugin reload', function() { 
+        this.plugin.reload();
+        expect(this.plugin.reload).toHaveBeenCalled();
+        expect(this.plugin.reload.calls.count()).toEqual(1);
+
+    });
+
     it('stage plugin setParam', function() {
 
         this.plugin.setParam("x", 10, 10, 20);
@@ -107,13 +153,5 @@ describe('Stage Plugin test cases', function() {
         expect(this.plugin.getParam.calls.count()).toEqual(1);
 
     });
-
-   /* it('stage plugin reload', function() {
-
-        this.plugin.reload("x");
-        expect(this.plugin.relaod).toHaveBeenCalled();
-        expect(this.plugin.reload.calls.count()).toEqual(1);
-
-    });*/
 
 });

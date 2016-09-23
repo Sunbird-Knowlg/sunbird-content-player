@@ -25,9 +25,7 @@ module.exports = function(grunt) {
                         'public/js/app/AppMessages.js',
                         'public/js/app/main.js',
                         'public/js/app/app.js',
-                        'public/js/app/renderer.theme.js',
                         'public/js/app/OverlayHtml.js',
-                        'public/js/app/genie-canvas.template.js',
                     ],
                     'public/js/renderer.min.js': [
                         'public/js/app/speech.js',
@@ -56,6 +54,25 @@ module.exports = function(grunt) {
                     'public/js/app/speech.js': ['../js-libs/speech/speech.js', '../js-libs/speech/android-recorder.js']
                 }
             },
+            pluginLib: {
+                options: {
+                    beautify: true,                   
+                    mangle: false                 
+                },
+                files: {
+                    'public/js/app/plugin-lib.js': [
+                        'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
+                        'public/js/thirdparty/exclude/Class.js',
+                        '../js-libs/renderer/plugin/Plugin.js',
+                        '../js-libs/renderer/plugin/HTMLPlugin.js',
+                        '../js-libs/renderer/manager/PluginManager.js',
+                        '../js-libs/renderer/manager/AnimationManager.js',
+                        '../js-libs/renderer/plugin/LayoutPlugin.js',
+                        '../js-libs/renderer/plugin/ShapePlugin.js',
+                        '../js-libs/renderer/plugin/*Plugin.js'
+                    ]
+                }
+            },
             renderer: {
                 options: {
                     beautify: true,                   
@@ -67,6 +84,8 @@ module.exports = function(grunt) {
                         '../js-libs/renderer/plugin/Plugin.js',
                         '../js-libs/renderer/plugin/HTMLPlugin.js',
                         '../js-libs/renderer/manager/*.js',
+                        '../js-libs/renderer/command/Command.js',
+                        '../js-libs/renderer/command/*.js',
                         '../js-libs/renderer/controller/*Controller.js',
                         '../js-libs/renderer/generator/*.js',
                         '../js-libs/renderer/evaluator/*.js',
@@ -113,6 +132,26 @@ module.exports = function(grunt) {
                     },
                     {
                         src: ['public/js/app/AppConfig.js'], dest: 'www/preview/js/AppConfig.js'
+                    }
+                ]
+            },
+            localPreviewFiles: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/',
+                        src: ['img/**', 'css/**', 'libs/**', 'templates/**', 'js/**'],
+                        dest: 'public/local-preview/'
+                    }
+                ]
+            },
+            localPreviewMinjs: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'public/js/',
+                        src: ['renderer.min.js','telemetry.min.js', 'script.min.js'],
+                        dest: 'public/local-preview/'
                     }
                 ]
             },
@@ -179,7 +218,8 @@ module.exports = function(grunt) {
             before: ["www", "platforms/android/assets/www", "platforms/android/build"],
             after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html", "www/webview.html", "www/preview.html"],
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
-            minjs: ['public/js/*.min.js']
+            minjs: ['public/js/*.min.js'],
+            localPreview: ["public/local-preview"]
         },
         rename: {
             main: {
@@ -566,9 +606,9 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('preview-dev', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_dev', 'aws_s3:cleanDevPreview', 'aws_s3:uploadPreviewFilesToDev']);
-    grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
-    grunt.registerTask('preview-qa', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
+    grunt.registerTask('preview-dev', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_dev', 'aws_s3:cleanDevPreview', 'aws_s3:uploadPreviewFilesToDev']);
+    grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
+    grunt.registerTask('preview-qa', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
   
     grunt.registerTask('rm-cordova-plugin-sensibol', function() {
         if (grunt.file.exists('plugins/cordova-plugin-sensibol')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
@@ -611,12 +651,12 @@ module.exports = function(grunt) {
         if (grunt.file.exists('plugins/org.ekstep.recorder.service.plugin')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
     });
 
-    grunt.registerTask('default', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js']);
+    grunt.registerTask('default', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js']);
     grunt.registerTask('build-all', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
 
     grunt.registerTask('karma-test', ['default','karma:unit', 'clean:minjs']);
 
-    grunt.registerTask('build-js', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS', 'clean:minjs']);
+    grunt.registerTask('build-js', ['uglify:renderer', 'uglify:pluginLib',  'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS', 'clean:minjs']);
     grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'add-cordova-plugin-genieservices']);
     grunt.registerTask('build-unsigned-apk-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
     grunt.registerTask('build-apk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
@@ -640,10 +680,14 @@ module.exports = function(grunt) {
     grunt.registerTask('set-xwalk-library', ['cordovacli:add_xwalk','replace:xwalk_library']);
     grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared','replace:xwalk_library']);
 
-    grunt.registerTask('build-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-aar', ['uglify:renderer', 'uglify:pluginLib', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('build-unsigned-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
     grunt.registerTask('build-signed-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
 
+
     grunt.registerTask('build-aar-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalk-library', 'cordovacli:build_android', 'clean:minjs']);
-	grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+
+    grunt.registerTask('local-preview-build', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js','copy:localPreviewFiles', 'copy:localPreviewMinjs', 'aws_s3:uploadLocalPreviewZip', 'clean:localPreview']);
+
 };

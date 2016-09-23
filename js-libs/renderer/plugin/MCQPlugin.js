@@ -63,7 +63,8 @@ var MCQPlugin = Plugin.extend({
     },
     isMultiSelect: function() {
         var ansLength = 0;
-        var options = this._controller.getModelValue("options");
+
+        var options = this._controller ? this._controller.getModelValue("options") : undefined;
         if (options) {
             ansLength = _.filter(options, function(option) {
                 return option.answer == true;
@@ -86,8 +87,13 @@ var MCQPlugin = Plugin.extend({
     	}
     	
         // If the shadow is visible, toggle it (unselect)
-        var val = option.toggleShadow();
-        controller.setModelValue(option._model, val, 'selected');
+        console.log("option : ", option);
+        var val = undefined;
+        if(option) {
+            val = option.toggleShadow();
+            controller.setModelValue(option._model, val, 'selected');  
+        }
+        
         
         // Shadow state has changed, re-render
         Renderer.update = true;

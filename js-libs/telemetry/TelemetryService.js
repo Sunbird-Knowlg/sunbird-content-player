@@ -202,9 +202,10 @@ TelemetryService = {
         console.log('TelemetryService Error:', JSON.stringify(data));
         var $body = angular.element(document.body); // 1
         var $rootScope = $body.scope().$root; // 2
-        $rootScope.$broadcast('show-message', {
-            "message": 'Telemetry :' + JSON.stringify(data.message)
-        });
+        /*$rootScope.$broadcast('show-message', { 
+            "message": 'Telemetry :' + JSON.stringify(data.message) // Hide the message display on the device screen
+        });*/
+        console.info('Telemetry :' + JSON.stringify(data.message));
     },
     print: function() {
         if (TelemetryService._data.length > 0) {
