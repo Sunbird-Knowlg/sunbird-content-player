@@ -176,7 +176,7 @@ LoadByStageStrategy = Class.extend({
                 var loader = this._createLoader();
                 loader.setMaxConnections(instance.MAX_CONNECTIONS);
                 if (cb) {
-                    loader.addEventListener("complete", cb);
+                    loader.on("complete", cb, null, true);
                 }
                 loader.on('error', function(evt) {
                     console.error('StageLoader Asset preload error', evt);
