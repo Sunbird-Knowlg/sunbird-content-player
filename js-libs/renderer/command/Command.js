@@ -30,6 +30,9 @@ var Command = Class.extend({
 		plugin[this._methodName](action);
 	},
 	_invokeRelatedActions: function(relation) {
+        if ((!_.isUndefined(this._action.stageInstanceId)) && (this._action.stageInstanceId != Renderer.theme._currentScene._stageInstanceId)) {
+            return
+        }
 		if (this._action[relation] && this._action[relation].length > 0) {
 			_.each(this._action[relation], function(action) {
 				CommandManager.handle(action);

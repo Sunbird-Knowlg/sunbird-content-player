@@ -5,6 +5,7 @@ CommandManager = {
     },
     handle: function(action) {
       // alert(action);
+        action.stageInstanceId =  _.clone(Renderer.theme._currentScene._stageInstanceId);
         if(action.delay) {
             TimerManager.start(action);
         } else {

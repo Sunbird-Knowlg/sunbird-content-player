@@ -66,6 +66,9 @@ EventManager = {
 		}
 	},
 	handleActions: function(evt, plugin) {
+        var data = JSON.parse(JSON.stringify(evt.action));
+        delete evt.action;
+        evt.action = data;
 		EventManager._setPluginId(evt.action, plugin._id);
 		var unmuteActions = _.clone(evt.action);
 		evt.action = EventManager._chainActions(evt.action, unmuteActions);

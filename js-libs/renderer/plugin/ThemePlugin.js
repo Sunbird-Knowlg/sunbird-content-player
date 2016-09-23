@@ -162,6 +162,7 @@ var ThemePlugin = Plugin.extend({
         this.removeHtmlElements();
         this.htmlElements = [];
         this._animationEffect = effect;
+        TimerManager.destroy();
         this.invokeStage(stageId);
     },
     invokeStage: function(stageId) {
