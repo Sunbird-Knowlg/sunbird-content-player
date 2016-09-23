@@ -20,7 +20,8 @@ var StagePlugin = Plugin.extend({
         var dims = this.relativeDims();
         this._self.x = dims.x;
         this._self.y = dims.y;
-        this.createStageInstanceId();
+        //Generating and adding unique stageInstanceId to stage.
+        this._stageInstanceId = this._theme._currentStage + '__' + Math.random().toString(36).substr(2, 9);
         if (data.iterate && data.var) {
             var controllerName = data.var.trim();
             var stageController = this._theme._controllerMap[data.iterate.trim()];
@@ -241,10 +242,6 @@ var StagePlugin = Plugin.extend({
         var params = instance.params;
         var expr = 'params.' + param;
         return eval(expr);
-    },
-    createStageInstanceId: function() {
-        //Generating and adding unique stageInstanceId to stage.
-        this._stageInstanceId = this._theme._currentStage + '__' + Math.random().toString(36).substr(2, 9);
     }
 });
 PluginManager.registerPlugin('stage', StagePlugin);
