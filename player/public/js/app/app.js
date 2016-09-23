@@ -481,24 +481,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 GlobalContext.config.appInfo.language = ($scope.item && $scope.item.language) ? $scope.item.language[0] : undefined;
 
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
-                    // HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
-                    //     jQuery('#loading').hide();
-                    //     jQuery('#gameArea').hide();
-                    //     var path = $scope.item.baseDir + '/index.html';
-                    //     /*$scope.currentProjectUrl = path;
-                    //     jQuery("#htmlFrame").show();*/
-                    //     if (window.cordova){
-                    //         console.log("Opening through cordova custom webview.");
-                    //         webview.Show(path);
-                    //         //cordova.InAppBrowser.open(path, '_self', 'location=no');
-                    //         //window.open(path, '_self');   
-                    //     }else{
-                    //         console.log("Opening through window.open");
-                    //         window.open(path, '_self'); 
-                    //         //window.location.replace(path);                    
-                    //     }
-                    // });
-
                     //Checking is mobile or not
                     var isMobile = window.cordova ? true : false;
                     
