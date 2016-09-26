@@ -81,19 +81,16 @@ function launchInitialPage(appInfo, $state) {
 }
 
 //Handling the logerror event from the Telemetry.js
-document.body.addEventListener("logerror", telemetryError, false);
+document.body.addEventListener("logError", telemetryError, false);
 function telemetryError(e) {
     var $body = angular.element(document.body); // 1
-     var $rootScope = $body.scope().$root; // 2
-     console.info("Event Error:",$rootScope);
-     //Message to display events on the Screen device
-
+    var $rootScope = $body.scope().$root;
+    document.body.removeEventListener("logError");
+    //Message to display events on the Screen device
     /*$rootScope.$broadcast('show-message', { 
         "message": 'Telemetry :' + JSON.stringify(data.message) 
     });*/
 }
-
-
 
 angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     .run(function($rootScope, $ionicPlatform, $location, $state, $stateParams, ContentService) {
@@ -645,10 +642,19 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 subtype: "ContentID"
             });
             $scope.showFeedbackPopup = true;
+            $scope.enableFeedbackSubmit();
         }
 
         $scope.updatePopUserRating = function(param) {
             $scope.popUserRating = param;
+            $scope.enableFeedbackSubmit();
+        }
+
+        $scope.enableFeedbackSubmit =function() {
+            if($scope.popUserRating > 0 || $scope.stringLeft < 130) 
+                jQuery('#feedbackSubmitBtn').removeClass('icon-opacity');
+            else
+                jQuery('#feedbackSubmitBtn').addClass('icon-opacity');
         }
 
         $scope.submitFeedback = function() {
@@ -750,6 +756,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if ($('#commentText').val().length > 130)
                 $('#commentText').val($('#commentText').val().slice(0,130));
             $scope.stringLeft = 130 - $('#commentText').val().length;
+            $scope.enableFeedbackSubmit();
         }
 
         $scope.init = function() {
