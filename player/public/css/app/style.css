@@ -463,7 +463,7 @@ ion-popover-view.fit ion-content {
     position: absolute;
     width: 10%;
     bottom: 20%;
-    left: 86%;
+    left: 89%;
 
 }
 
@@ -473,7 +473,7 @@ ion-popover-view.fit ion-content {
 }
 
 .assess-disable {
-    opacity: 0.2;
+    opacity: 1;
     -webkit-text-stroke: 0.2vh grey;
 }
 
