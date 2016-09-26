@@ -80,6 +80,20 @@ function launchInitialPage(appInfo, $state) {
     });
 }
 
+//Handling the logerror event from the Telemetry.js
+document.body.addEventListener("logerror", telemetryError, false);
+function telemetryError(e) {
+    var $body = angular.element(document.body); // 1
+     var $rootScope = $body.scope().$root; // 2
+     console.info("Event Error:",$rootScope);
+     //Message to display events on the Screen device
+
+    /*$rootScope.$broadcast('show-message', { 
+        "message": 'Telemetry :' + JSON.stringify(data.message) 
+    });*/
+}
+
+
 
 angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     .run(function($rootScope, $ionicPlatform, $location, $state, $stateParams, ContentService) {
