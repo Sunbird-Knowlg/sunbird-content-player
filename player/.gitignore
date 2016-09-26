@@ -14,3 +14,4 @@ public/js/app/renderer.js
 public/js/app/telemetry.js
 app-data/content-list.json
 coverage/
+*.log
