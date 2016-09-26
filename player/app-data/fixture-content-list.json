@@ -13,6 +13,30 @@
     "result": {
         "content": [
             {
+            "identifier": "org.ekstep.font",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/font/logo.png",
+                "subject": "literacy_v2",
+                "description": "Font",
+                "name": "ଦୂର મોટા ರಾಜ್ தேவ ঔদা గాణ সকGon",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.font",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "language": ["english"],
+            "path": "fixture-stories/font"
+        },{
             "identifier": "org.ekstep.desertflip",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {

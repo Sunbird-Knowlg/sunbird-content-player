@@ -19,13 +19,13 @@
 }
 
 @font-face {
-    font-family: 'NotoSansBengali';
-    src: url('fonts/NotoSansBengali-Regula.ttf') format('truetype')
-}
-
-/*@font-face {
     font-family: 'NotoSansGujarati';
     src: url('fonts/NotoSansGujarati-Regular.ttf') format('truetype')
+}
+
+@font-face {
+    font-family: 'NotoSansBengali';
+    src: url('fonts/NotoSansBengali-Regula.ttf') format('truetype')
 }
 
 @font-face {
@@ -33,7 +33,7 @@
     src: url('fonts/NotoSansMalayalam-Regular.ttf') format('truetype')
 }
 
-@font-face {
+/*@font-face {
     font-family: 'NotoNastaliqUrdu';
     src: url('fonts/NotoNastaliqUrdu-Regular.ttf') format('truetype')
 }
@@ -59,8 +59,39 @@
 }
 
 @font-face {
-    font-family: 'baloobhai';
-    src: url('fonts/baloobhai.otf') format('opentype')
+    /* reference: https://github.com/EkType/Baloo */
+    font-family: 'Baloo';
+    src: url('fonts/baloo/BalooBhai-Regular.ttf') format('opentype')
+}
+
+@font-face {
+    font-family: 'BalooBhai';
+    src: url('fonts/baloo/BalooBhai-Regular.ttf') format('opentype')
+}
+
+@font-face {
+    font-family: 'BalooTamma';
+    src: url('fonts/baloo/BalooTamma-Regular.ttf') format('opentype')
+}
+
+@font-face {
+    font-family: 'BalooTammudu';
+    src: url('fonts/baloo/BalooTammudu-Regular.ttf') format('opentype')
+}
+
+@font-face {
+    font-family: 'BalooBhaina';
+    src: url('fonts/baloo/BalooBhaina-Regular.ttf') format('opentype')
+}
+
+@font-face {
+    font-family: 'BalooDa';
+    src: url('fonts/baloo/BalooDa-Regular.ttf') format('opentype')
+}
+
+@font-face {
+    font-family: 'BalooThambi';
+    src: url('fonts/baloo/BalooThambi-Regular.ttf') format('opentype')
 }
 
 ion-popover-view.fit {
@@ -71,6 +102,11 @@ ion-popover-view.fit {
 ion-popover-view.fit ion-content {
     position: relative !important;
 }
+
+body{
+    font-family: NotoSansOriya, NotoSansGujarati, NotoSansMalayalam;
+    /* 'NotoSansRegular', 'NotoSansDevanagari', 'NotoSansGujarati', 'NotoSansOriya', 'NotoSansBengali', 'NotoSansTelugu', 'NotoSansKannada', 'NotoSansTamil'; */
+} 
 
 .platform-android ion-popover-view.fit {
     margin-top: 10px !important;
@@ -163,12 +199,12 @@ ion-popover-view.fit ion-content {
 }*/
 
 .page-title{
-    font-family: baloobhai;
+    font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
 }
 
 .cover-page-title {
     text-transform: uppercase;
-    font-family: baloobhai;
+    font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
     color: #FFFFFF;
 
     text-align: center;
@@ -241,7 +277,7 @@ ion-popover-view.fit ion-content {
 }
 
 .icon-font {
-    font-family: baloobhai;
+    font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
     color: #FFFFFF;
     line-height: 1.2em;
     text-align: center;
@@ -569,7 +605,7 @@ ion-popover-view.fit ion-content {
 .popup-body {
     position: relative;
     overflow: hidden;
-    font-family: baloobhai;
+    font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
     font-size: 2vw;
     margin: 10px;
     left: -2%;
@@ -577,7 +613,7 @@ ion-popover-view.fit ion-content {
 }
 .tryagain_retry_div{
     position: absolute;
-    font-family: baloobhai;
+    font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
     font-size: 2vw;
     top: 17%;
     text-align: center;
@@ -588,8 +624,8 @@ ion-popover-view.fit ion-content {
     margin: 10px;
 }
 .tryagian_next_div{
-       position: absolute;
-    font-family: baloobhai;
+    position: absolute;
+    font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
     font-size: 2vw;
     top: 55%;
     text-align: center;
@@ -625,7 +661,7 @@ ion-popover-view.fit ion-content {
     height: 75%;
     left: 10%;
     position: absolute;
-    font-family: baloobhai;
+    font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
     font-size: 0.7em;
     overflow-y: auto;
     overflow-x:hidden;
@@ -702,7 +738,7 @@ ion-popover-view.fit ion-content {
 .gc-ep-cont{
     width:100%;
     height:100%;
-    font-family: baloobhai;
+    font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
 }
 
 .gc-fc-popup-keyboard{
@@ -1150,7 +1186,7 @@ ion-popover-view.fit ion-content {
 .gc-loader-prog {
     margin-left: 46%;
     position: absolute;
-    font-family: baloobhai;
+    font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa;
     color: white;
 }
 
