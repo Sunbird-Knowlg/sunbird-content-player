@@ -167,7 +167,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // localPreview is a global variable defined in index.html file inside a story,
                 if ("undefined" != typeof localPreview && "local" == localPreview)
                     return;
-                var id = getUrlParameter("id");  
+                var id = getUrlParameter("id");
                 if(isbrowserpreview) {
                     if ("undefined" != typeof $location && id) {
                         ContentService.getContentMetadata(id)
@@ -497,7 +497,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                     //Checking is mobile or not
                     var isMobile = window.cordova ? true : false;
-                    
+
                     // For HTML content, lunach eve is required
                     // setting launch evironment as "app"/"portal" for "mobile"/"portal(web)"
                     var envHTML = isMobile ? "app" : "portal";
@@ -505,18 +505,18 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     var launchData = {"env": envHTML, "envpath": AppConfig[AppConfig.flavor]};
                     //Adding contentId and LaunchData as query parameter
                     var path = $scope.item.baseDir + '/index.html?contentId='+ $stateParams.itemId + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
-                    
+
                     //Adding config as query parameter for HTML content
                     if($scope.item.config){
                         path += "&config=" + JSON.stringify($scope.item.config);
                     }
-                    
+
                     if (isMobile){
                         console.log("Opening through cordova custom webview.");
                         cordova.InAppBrowser.open(path, '_self', 'location=no,hardwareback=no');
                     }else{
                         console.log("Opening through window.open");
-                        window.open(path, '_self');              
+                        window.open(path, '_self');
                     }
                 } else {
                     if (collectionChildren) {
