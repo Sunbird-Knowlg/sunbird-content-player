@@ -150,7 +150,18 @@ angular.module('genie-canvas.services', ['ngResource'])
                             returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err));
                         })
                     } else {
-                        returnResult(list, "Error while fetching filtered content: Empty Collection");
+                        if ("undefined" != typeof cordova){
+                            returnResult(list, "Error while fetching filtered content: Empty Collection");
+                        }
+                        else {
+                            genieservice.getContentList([])
+                            .then(function(result) {
+                                returnResult(result.list);
+                            })
+                            .catch(function(err) {
+                                returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err));
+                            });
+                        }
                     }
                 });
             },
