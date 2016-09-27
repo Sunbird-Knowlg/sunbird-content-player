@@ -202,7 +202,7 @@ TelemetryService = {
      console.log('TelemetryService Error:', JSON.stringify(data));
      // create the event and Dispatch the Event
      var evt = document.createEvent('Event');
-     evt.initEvent('logerror', true, true);
+     evt.initEvent('logError', true, true);
      document.body.dispatchEvent(evt);
      console.info('Telemetry :' + JSON.stringify(data.message));
  },
