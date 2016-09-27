@@ -80,6 +80,20 @@ function launchInitialPage(appInfo, $state) {
     });
 }
 
+//Handling the logerror event from the Telemetry.js
+document.body.addEventListener("logerror", telemetryError, false);
+function telemetryError(e) {
+    var $body = angular.element(document.body); // 1
+     var $rootScope = $body.scope().$root; // 2
+     console.info("Event Error:",$rootScope);
+     //Message to display events on the Screen device
+
+    /*$rootScope.$broadcast('show-message', { 
+        "message": 'Telemetry :' + JSON.stringify(data.message) 
+    });*/
+}
+
+
 
 angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     .run(function($rootScope, $ionicPlatform, $location, $state, $stateParams, ContentService) {
@@ -153,7 +167,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // localPreview is a global variable defined in index.html file inside a story,
                 if ("undefined" != typeof localPreview && "local" == localPreview)
                     return;
-                var id = getUrlParameter("id");  
+                var id = getUrlParameter("id");
                 if(isbrowserpreview) {
                     if ("undefined" != typeof $location && id) {
                         ContentService.getContentMetadata(id)
@@ -482,7 +496,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                     //Checking is mobile or not
                     var isMobile = window.cordova ? true : false;
-                    
+
                     // For HTML content, lunach eve is required
                     // setting launch evironment as "app"/"portal" for "mobile"/"portal(web)"
                     var envHTML = isMobile ? "app" : "portal";
@@ -490,18 +504,18 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     var launchData = {"env": envHTML, "envpath": AppConfig[AppConfig.flavor]};
                     //Adding contentId and LaunchData as query parameter
                     var path = $scope.item.baseDir + '/index.html?contentId='+ $stateParams.itemId + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
-                    
+
                     //Adding config as query parameter for HTML content
                     if($scope.item.config){
                         path += "&config=" + JSON.stringify($scope.item.config);
                     }
-                    
+
                     if (isMobile){
                         console.log("Opening through cordova custom webview.");
                         cordova.InAppBrowser.open(path, '_self', 'location=no,hardwareback=no');
                     }else{
                         console.log("Opening through window.open");
-                        window.open(path, '_self');              
+                        window.open(path, '_self');
                     }
                 } else {
                     if (collectionChildren) {
@@ -630,19 +644,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 subtype: "ContentID"
             });
             $scope.showFeedbackPopup = true;
-            $scope.enableFeedbackSubmit();
         }
 
         $scope.updatePopUserRating = function(param) {
             $scope.popUserRating = param;
-            $scope.enableFeedbackSubmit();
-        }
-
-        $scope.enableFeedbackSubmit =function() {
-            if($scope.popUserRating > 0 || $scope.stringLeft < 130) 
-                jQuery('#feedbackSubmitBtn').removeClass('icon-opacity');
-            else
-                jQuery('#feedbackSubmitBtn').addClass('icon-opacity');
         }
 
         $scope.submitFeedback = function() {
@@ -744,7 +749,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if ($('#commentText').val().length > 130)
                 $('#commentText').val($('#commentText').val().slice(0,130));
             $scope.stringLeft = 130 - $('#commentText').val().length;
-            $scope.enableFeedbackSubmit();
         }
 
         $scope.init = function() {

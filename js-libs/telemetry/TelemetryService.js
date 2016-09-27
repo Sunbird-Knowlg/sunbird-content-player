@@ -193,20 +193,19 @@ TelemetryService = {
         }
     },
     logError: function(eventName, error) {
-        var data = {
-                'eventName': eventName,
-                'message': error,
-                'time': getCurrentTime()
-            }
-            // change this to write to file??
-        console.log('TelemetryService Error:', JSON.stringify(data));
-        var $body = angular.element(document.body); // 1
-        var $rootScope = $body.scope().$root; // 2
-        /*$rootScope.$broadcast('show-message', { 
-            "message": 'Telemetry :' + JSON.stringify(data.message) // Hide the message display on the device screen
-        });*/
-        console.info('Telemetry :' + JSON.stringify(data.message));
-    },
+     var data = {
+             'eventName': eventName,
+             'message': error,
+             'time': getCurrentTime()
+         }
+         // change this to write to file??
+     console.log('TelemetryService Error:', JSON.stringify(data));
+     // create the event and Dispatch the Event
+     var evt = document.createEvent('Event');
+     evt.initEvent('logerror', true, true);
+     document.body.dispatchEvent(evt);
+     console.info('Telemetry :' + JSON.stringify(data.message));
+ },
     print: function() {
         if (TelemetryService._data.length > 0) {
             var events = TelemetryService._data.cleanUndefined();
