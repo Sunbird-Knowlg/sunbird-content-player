@@ -236,8 +236,13 @@ var ThemePlugin = Plugin.extend({
             this.replaceStage(action.value, action);
         } else {
             this._isSceneChanging = true;
-            if (stage._stageController && stage._stageController.hasNext()) {
-                this.replaceStage(stage._data.id, action);
+            if(stage._stageController && stage._stageController.hasNext()){
+                    if(action.transitionType!== 'next'){
+                        this.replaceStage(action.value, action);
+                    }else{
+                        this.replaceStage(stage._data.id, action);
+                    }
+                     
             } else {
                 if (stage._stageController && action.reset == true) {
                     stage._stageController.reset();
