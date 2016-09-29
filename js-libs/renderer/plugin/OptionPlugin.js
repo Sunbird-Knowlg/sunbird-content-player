@@ -71,7 +71,7 @@ var OptionPlugin = Plugin.extend({
         this._self.cursor = 'pointer';
         var instance = this;
         this._self.on('click', function(event) {
-            OverlayHtml.isReadyToEvaluate(true);
+            Overlay.isReadyToEvaluate(true);
             var eventData = {};
             var val = instance._parent.selectOption(instance);
             var data = {
@@ -163,7 +163,7 @@ var OptionPlugin = Plugin.extend({
                                 if (this.y >= y && (this.y + this.height) <= maxY) {
                                     this._mapedTo = snapTo[i];
                                     snapSuccess = true;
-                                    OverlayHtml.isReadyToEvaluate(true);
+                                    Overlay.isReadyToEvaluate(true);
                                 }
                             }
                         }
@@ -180,7 +180,7 @@ var OptionPlugin = Plugin.extend({
                     if (this.x >= x && (this.x + this.width) <= maxX) {
                         if (this.y >= y && (this.y + this.height) <= maxY) {
                             snapSuccess = true;
-                            OverlayHtml.isReadyToEvaluate(true);
+                            Overlay.isReadyToEvaluate(true);
                         }
                     }
                 }
