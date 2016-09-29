@@ -137,13 +137,11 @@ var ThemePlugin = Plugin.extend({
         child.on('sceneenter', function() {
             instance.enableInputs();
             instance._isSceneChanging = false;
-            childPlugin.dispatchEvent('enter');
             instance.preloadStages();
             Renderer.update = true;
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
             OverlayHtml.sceneEnter();
-
         });
         var nextIdx = this._currIndex++;
         if(this._currentScene) {
@@ -183,7 +181,12 @@ var ThemePlugin = Plugin.extend({
     },
     preloadStages: function() {
         var stagesToLoad = this.getStagesToPreLoad(this._currentScene._data);
-        AssetManager.initStage(stagesToLoad.stage, stagesToLoad.next, stagesToLoad.prev);
+        var instance = this;
+        // removed "enter" event dispatch function from addchild "sceneenter" event & adding as a callback here
+        // (waiting for asset to load completely then "enter event is trigurred")
+        AssetManager.initStage(stagesToLoad.stage, stagesToLoad.next, stagesToLoad.prev, function(){
+            instance._currentScene.dispatchEvent('enter');
+        });
     },
     mergeStages: function(stage1, stage2) {
         for(k in stage2) {
