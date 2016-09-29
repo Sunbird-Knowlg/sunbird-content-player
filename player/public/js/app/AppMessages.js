@@ -1,5 +1,5 @@
 AppMessages = {
-	NO_CONTENT_LIST_FOUND: "There are no stories or worksheets available. You can always download new ones !",
+	NO_CONTENT_LIST_FOUND: "There are no stories or worksheets available in this collection. You can always download new ones !",
 	NO_CONTENT_FOUND: "There is no content available. You can always download !",
 	SUCCESS_GET_CONTENT_LIST: "Content list synced.",
 	ERR_GET_CONTENT_LIST: "Error while getting content list. Please try again.",

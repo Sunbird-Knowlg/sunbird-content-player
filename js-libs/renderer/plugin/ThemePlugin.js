@@ -137,7 +137,6 @@ var ThemePlugin = Plugin.extend({
         child.on('sceneenter', function() {
             instance.enableInputs();
             instance._isSceneChanging = false;
-            childPlugin.dispatchEvent('enter');
             instance.preloadStages();
             Renderer.update = true;
             childPlugin.uncache();
@@ -161,6 +160,7 @@ var ThemePlugin = Plugin.extend({
         this.removeHtmlElements();
         this.htmlElements = [];
         this._animationEffect = effect;
+        TimerManager.destroy();
         this.invokeStage(stageId);
     },
     invokeStage: function(stageId) {
@@ -174,14 +174,19 @@ var ThemePlugin = Plugin.extend({
         PluginManager.invoke('stage', stage, this, null, this);
 
         // Trigger onstagechange event, which is bind by parent window
-        if(webview && window &&  window.parent && window.parent.jQuery('body')){
+        if(isbrowserpreview && window &&  window.parent && window.parent.jQuery('body')){
             var retObj = {"stageId" : stageId};
             window.parent.jQuery('body').trigger('onstagechange', retObj);
         }
     },
     preloadStages: function() {
         var stagesToLoad = this.getStagesToPreLoad(this._currentScene._data);
-        AssetManager.initStage(stagesToLoad.stage, stagesToLoad.next, stagesToLoad.prev);
+        var instance = this;
+        // removed "enter" event dispatch function from addchild "sceneenter" event & adding as a callback here
+        // (waiting for asset to load completely then "enter event is trigurred")
+        AssetManager.initStage(stagesToLoad.stage, stagesToLoad.next, stagesToLoad.prev, function(){
+            instance._currentScene.dispatchEvent('enter');
+        });
     },
     mergeStages: function(stage1, stage2) {
         for(k in stage2) {
@@ -209,9 +214,9 @@ var ThemePlugin = Plugin.extend({
         // not next and previoud are clicked at the same time,
         // handle only one actions(next/previous)
         if(this._isSceneChanging){ return; }
-
         var stage = this._currentScene;
         RecorderManager.stopRecording();
+       // RecorderManager._deleteRecordedaudio();
         TimerManager.stopAll(this._currentStage);
         if (action.transitionType === 'previous') {
             this._isSceneChanging = true;
@@ -234,8 +239,13 @@ var ThemePlugin = Plugin.extend({
             this.replaceStage(action.value, action);
         } else {
             this._isSceneChanging = true;
-            if (stage._stageController && stage._stageController.hasNext()) {
-                this.replaceStage(stage._data.id, action);
+            if(stage._stageController && stage._stageController.hasNext()){
+                    if(action.transitionType!== 'next'){
+                        this.replaceStage(action.value, action);
+                    }else{
+                        this.replaceStage(stage._data.id, action);
+                    }
+
             } else {
                 if (stage._stageController && action.reset == true) {
                     stage._stageController.reset();

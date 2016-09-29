@@ -91,7 +91,7 @@ angular.module('genie-canvas.services', ['ngResource'])
                     if ("undefined" != typeof cordova)
                         data.appIcon = (data.appIcon) ? path + "/" + data.appIcon : path + "/logo.png";
                     else 
-                        data.appIcon = (webview) ? data.appIcon : path + "/logo.png";
+                        data.appIcon = (isbrowserpreview) ? data.appIcon : path + "/logo.png";
                     data.mimeType = item.mimeType;
                     data.status = "ready";
                     data.isAvailable = true;
@@ -150,13 +150,18 @@ angular.module('genie-canvas.services', ['ngResource'])
                             returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err));
                         })
                     } else {
-                        genieservice.getContentList([])
-                        .then(function(result) {
-                            returnResult(result.list);
-                        })
-                        .catch(function(err) {
-                            returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err));
-                        });
+                        if ("undefined" != typeof cordova){
+                            returnResult(list, "Error while fetching filtered content: Empty Collection");
+                        }
+                        else {
+                            genieservice.getContentList([])
+                            .then(function(result) {
+                                returnResult(result.list);
+                            })
+                            .catch(function(err) {
+                                returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err));
+                            });
+                        }
                     }
                 });
             },

@@ -385,6 +385,15 @@ module.exports = function(grunt) {
                     ]
                 }
             },
+            add_kunder_webview: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: [
+                        '../cordova-plugins/cordova-plugin-webview/'
+                    ]
+                }
+            },
             add_crashlytics_plugin: {
                 options: {
                     command: 'plugin',
@@ -463,6 +472,13 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'rm',
                     plugins: ['cordova-plugin-genieservices']
+                }
+            },
+            rm_kunder_webview: {
+                options: {
+                    command: 'plugin',
+                    action: 'rm',
+                    plugins: ['cordova-plugin-webview']
                 }
             },
             build_android: {
@@ -621,6 +637,14 @@ module.exports = function(grunt) {
     grunt.registerTask('add-cordova-plugin-genieservices', function() {
         grunt.task.run(['rm-cordova-plugin-genieservices', 'cordovacli:add_genie_services']);
     });
+
+
+    grunt.registerTask('rm-cordova-plugin-kunder-webview', function() {
+        if (grunt.file.exists('plugins/cordova-plugin-webview')) grunt.task.run(['cordovacli:rm_kunder_webview']);
+    });
+    grunt.registerTask('add-cordova-plugin-kunder-webview', function() {
+        grunt.task.run(['rm-cordova-plugin-kunder-webview', 'cordovacli:add_kunder_webview']);
+    });    
 
     grunt.registerTask('rm_custom_plugins', function() {
         if (grunt.file.exists('plugins/org.ekstep.genie.service.plugin')) grunt.task.run(['cordovacli:rm_genie_service']);

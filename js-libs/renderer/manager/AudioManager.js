@@ -7,6 +7,7 @@ AudioManager = {
         return action.stageId + ':' + action.asset;
     },
     play: function(action, instance) {
+        
         if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
             instance = instance || AudioManager.instances[AudioManager.uniqueId(action)] || {};
             if(instance.object) {
@@ -35,7 +36,8 @@ AudioManager = {
             } else {
                 delete AudioManager.instances[AudioManager.uniqueId(action)];
                 console.info( "Audio with 'id :" + action.asset  + "' is not found..")
-            }
+                  
+             }
             return instance;
         } else {
             console.warn("Asset is not given to play.", action);
@@ -59,6 +61,7 @@ AudioManager = {
         }
     },
     pause: function(action, instance) {
+        console.info("yes pause")
         if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
             instance = instance || AudioManager.instances[AudioManager.uniqueId(action)];
             if(instance && instance.object && instance.object.playState === createjs.Sound.PLAY_SUCCEEDED) {

@@ -19,13 +19,13 @@
 }
 
 @font-face {
-    font-family: 'NotoSansBengali';
-    src: url('fonts/NotoSansBengali-Regula.ttf') format('truetype')
-}
-
-/*@font-face {
     font-family: 'NotoSansGujarati';
     src: url('fonts/NotoSansGujarati-Regular.ttf') format('truetype')
+}
+
+@font-face {
+    font-family: 'NotoSansBengali';
+    src: url('fonts/NotoSansBengali-Regula.ttf') format('truetype')
 }
 
 @font-face {
@@ -33,7 +33,7 @@
     src: url('fonts/NotoSansMalayalam-Regular.ttf') format('truetype')
 }
 
-@font-face {
+/*@font-face {
     font-family: 'NotoNastaliqUrdu';
     src: url('fonts/NotoNastaliqUrdu-Regular.ttf') format('truetype')
 }
@@ -43,6 +43,7 @@
     src: url('fonts/NotoSansGurmukhi-Regular.ttf') format('truetype')
 }
 */
+
 @font-face {
     font-family: 'NotoSansTamil';
     src: url('fonts/NotoSansTamil-Regular.ttf') format('truetype')
@@ -59,8 +60,39 @@
 }
 
 @font-face {
-    font-family: 'baloobhai';
-    src: url('fonts/baloobhai.otf') format('opentype')
+    /* reference: https://github.com/EkType/Baloo */
+    font-family: 'Baloo';
+    src: url('fonts/baloo/BalooBhai-Regular.ttf') format('opentype')
+}
+
+@font-face {
+    font-family: 'BalooBhai';
+    src: url('fonts/baloo/BalooBhai-Regular.ttf') format('opentype')
+}
+
+@font-face {
+    font-family: 'BalooTamma';
+    src: url('fonts/baloo/BalooTamma-Regular.ttf') format('opentype')
+}
+
+@font-face {
+    font-family: 'BalooTammudu';
+    src: url('fonts/baloo/BalooTammudu-Regular.ttf') format('opentype')
+}
+
+@font-face {
+    font-family: 'BalooBhaina';
+    src: url('fonts/baloo/BalooBhaina-Regular.ttf') format('opentype')
+}
+
+@font-face {
+    font-family: 'BalooDa';
+    src: url('fonts/baloo/BalooDa-Regular.ttf') format('opentype')
+}
+
+@font-face {
+    font-family: 'BalooThambi';
+    src: url('fonts/baloo/BalooThambi-Regular.ttf') format('opentype')
 }
 
 ion-popover-view.fit {
@@ -71,6 +103,11 @@ ion-popover-view.fit {
 ion-popover-view.fit ion-content {
     position: relative !important;
 }
+
+body{
+    font-family: NotoSansOriya, NotoSansGujarati, NotoSansMalayalam;
+    /* 'NotoSansRegular', 'NotoSansDevanagari', 'NotoSansGujarati', 'NotoSansOriya', 'NotoSansBengali', 'NotoSansTelugu', 'NotoSansKannada', 'NotoSansTamil'; */
+} 
 
 .platform-android ion-popover-view.fit {
     margin-top: 10px !important;
@@ -157,22 +194,14 @@ ion-popover-view.fit ion-content {
     pointer-events: all;
 }
 
-/*#cover {
-    style="overflow: hidden;text-overflow: ellipsis;
-
-}*/
-
-.page-title{
-    font-family: baloobhai;
+.font-baloo {
+    font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
 }
 
 .cover-page-title {
     text-transform: uppercase;
-    font-family: baloobhai;
     color: #FFFFFF;
-
     text-align: center;
-
     overflow: hidden;
     padding: 0 2%;
     text-overflow: ellipsis;
@@ -186,7 +215,7 @@ ion-popover-view.fit ion-content {
     font-size: 10vh;
     -webkit-text-stroke: 0.2vh #00cccc;
     z-index: 0;
-    /* text-shadow: -3px 3px 0 white, 3px -3px 0 white, -6px 6px 0 yellow, 6px -6px 0 yellow, -9px 9px 0 #01ac8a, -9px -9px 0 #01ac8a; */}
+  }
 
 .gc-text-elipsis{
     text-overflow: ellipsis;
@@ -203,24 +232,6 @@ ion-popover-view.fit ion-content {
     font-size: 2em;
     -webkit-text-stroke: 0.2vh #00cccc;
 }
-
-    /* text-shadow: -3px 3px 0 white, 3px -3px 0 white, -6px 6px 0 yellow, 6px -6px 0 yellow, -9px 9px 0 #01ac8a, -9px -9px 0 #01ac8a; */
-
-   /* white-space: nowrap;
-    overflow: hidden;
-    padding:0 2%;
-    text-overflow: ellipsis;
-    font-family: baloobhai;
-    position: absolute;
-    width: 100%;
-    top: 20%;
-    font-size: 10vh;
-    -webkit-text-stroke: 1vh #01ac8a;
-    z-index: 0;*/
-
-
-    /*text-shadow: -3px 3px 0 white, 3px -3px 0 white, -6px 6px 0 yellow, 6px -6px 0 yellow, -9px 9px 0 #01ac8a, -9px -9px 0 #01ac8a;*/
-
 
 .cover-page-title1 {
     -webkit-text-stroke: 0.4vh yellow;
@@ -241,14 +252,13 @@ ion-popover-view.fit ion-content {
 }
 
 .icon-font {
-    font-family: baloobhai;
+    font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
     color: #FFFFFF;
     line-height: 1.2em;
     text-align: center;
 }
 
 .label-white-stoke {
-    /* -webkit-text-stroke: 0.2vh white; */
     text-shadow: 2px 2px 0 white, -2px 2px 0 white, 2px -2px 0 white, -2px -2px 0 white;
 }
 
@@ -272,42 +282,26 @@ ion-popover-view.fit ion-content {
     height: 100%;
 }
 
-.gc-menu-title-cont {
-    width: 100%;
-    top: -8%;
-    position: absolute;
-    height: 30%;
-
-
-}
-
 .gc-menu-title-cont p {
-    /*font-size: 5vh;
-    width: 100%;
-    float: left;
-    padding: 0 1%;
-    padding-right: 13%;
-    height: 100%;*/
-    /*font-size: 5vh;
-    width: 100%;
-    float: left;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    padding: 2%;
-    padding-top: 11%;
-    padding-right: 5%;
-    /* background: red;
-    height: 100%;*/
-    font-size: 5vh;
+  position: absolute;
+  color: #FFFFFF;
+  line-height: 1.2em;
+  text-align: center;
+
+    font-size: 2.8vw;
     width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-word;
-    padding: 0 5%;
-    margin-top: 25%;
+    padding: 2% 5%;
+    margin-top: 2%;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     display: -webkit-box;
+
+    height: 20%;
+    line-height: 1.3em;
+
 }
 
 .gc-menu-btn {
@@ -362,15 +356,6 @@ ion-popover-view.fit ion-content {
     width: 100%;
 }
 
-
-/*.gc-mute-bg{
-    postion:absolute;
-    width:100%;
-    height: 60%;
-    bottom: 1%;
-    z-index:1;
-}*/
-
 .gc-menu-inst-cont {
     position: absolute;
     text-align: center;
@@ -394,8 +379,6 @@ ion-popover-view.fit ion-content {
 .inst-message-cont {
     width: 80%;
     background-color: #ECECEC;
-    /* border: 1px solid #000; */
-    /* border-radius: 10px; */
     position: absolute;
     height: 75%;
     margin: 35% 7%;
@@ -458,13 +441,15 @@ ion-popover-view.fit ion-content {
     display: none;
 }
 
+.overlay-html>assess{
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+    width: 9%;
+}
+
 .assess {
     text-decoration: none;
-    position: absolute;
-    width: 10%;
-    bottom: 20%;
-    left: 86%;
-
 }
 
 .assess-enable {
@@ -473,12 +458,11 @@ ion-popover-view.fit ion-content {
 }
 
 .assess-disable {
-    opacity: 0.2;
+    opacity: 1;
     -webkit-text-stroke: 0.2vh grey;
 }
 
 .assess img {
-    position: absolute;
     width: 100%;
 }
 
@@ -502,12 +486,6 @@ ion-popover-view.fit ion-content {
     left: 20%;
 }
 .credit-popup {
-    /* position: absolute;
-    width: 60%;
-    height: 80%;
-    border-radius: 10px;
-    top: 10%;
-    left: 20%; */
     width: 60%;
     height: 60%;
     top: 20%;
@@ -529,22 +507,15 @@ ion-popover-view.fit ion-content {
 }
 
 .popup-retry {
-    /*position: absolute;
-    top: 12%;
-    left: 39%;*/
     width: 35%;
      display: inline-block;
     margin: 4% 4%;
 }
 
 .popup-retry-next {
-    /*position: absolute;*/
     width: 20%;
     display: inline-block;
     margin:2% 3%;
-   /* margin: 3% 4%;*/
-    /*bottom: 10%;
-    right: 7%;*/
 }
 
 .popup-overlay {
@@ -569,15 +540,13 @@ ion-popover-view.fit ion-content {
 .popup-body {
     position: relative;
     overflow: hidden;
-    font-family: baloobhai;
     font-size: 2vw;
     margin: 10px;
     left: -2%;
     top: 5%;
 }
-.tryagain_retry_div{
+.tryagain-retry-div{
     position: absolute;
-    font-family: baloobhai;
     font-size: 2vw;
     top: 17%;
     text-align: center;
@@ -587,9 +556,8 @@ ion-popover-view.fit ion-content {
     padding: 0;
     margin: 10px;
 }
-.tryagian_next_div{
-       position: absolute;
-    font-family: baloobhai;
+.tryagian-next-div{
+    position: absolute;
     font-size: 2vw;
     top: 55%;
     text-align: center;
@@ -600,23 +568,6 @@ ion-popover-view.fit ion-content {
 
 }
 
-/*.popup-body {
-    position: absolute;
-    top: 14%;
-    width: 70%;
-    height: 65%;
-    left: 7%;
-    padding: 0;
-    margin: 10px;
-    position: absolute;
-    top: 14%;
-    width: 70%;
-    height: 70%;
-    left: 17%;
-    padding: 0;
-    margin: 10px;
-}*/
-
 .credit-body-icon-font {
     width: 82%;
    /* overflow-y:scroll;
@@ -625,7 +576,6 @@ ion-popover-view.fit ion-content {
     height: 75%;
     left: 10%;
     position: absolute;
-    font-family: baloobhai;
     font-size: 0.7em;
     overflow-y: auto;
     overflow-x:hidden;
@@ -637,7 +587,6 @@ ion-popover-view.fit ion-content {
 }
 .credit-body-icon-font::-webkit-scrollbar-track {
     background-color: #ffd18f;
-   /* border-left: 1px solid #f6661f;*/
     border-radius: 10%;
 }
 .credit-body-icon-font::-webkit-scrollbar-thumb {
@@ -658,7 +607,6 @@ ion-popover-view.fit ion-content {
 .credit-body-icon-font tbody{
     height: 100%;
     overflow: auto;
-    /*display: inline-block;*/
 }
 
 .gc-cp-coll{
@@ -695,14 +643,12 @@ ion-popover-view.fit ion-content {
     font-size: 1em;
     width: 100%;
     text-align: center;
-    /*margin: 0;*/
     margin-top:12%;
 }
 
 .gc-ep-cont{
     width:100%;
     height:100%;
-    font-family: baloobhai;
 }
 
 .gc-fc-popup-keyboard{
@@ -736,7 +682,6 @@ ion-popover-view.fit ion-content {
     padding: 1% 8%;
     text-decoration: none;
    border-style: solid;
-  /* background-color: transparent;*/
 
 }
 .btn-normal{
@@ -744,7 +689,6 @@ ion-popover-view.fit ion-content {
     -moz-border-radius: 4;
     border-radius: 4px;
     border-color: #413a36;
-    /*color: #ffffff;*/
     font-size: 1em;
     font-weight: bold;
     background: #413a36;
@@ -839,7 +783,6 @@ ion-popover-view.fit ion-content {
     white-space: nowrap;
 }
 .gc-ep-footer-icons img{
-    /* width: 50%; */
     height: 100%
 }
 
@@ -892,7 +835,6 @@ ion-popover-view.fit ion-content {
 
 .gc-ep-related-cont{
     position: absolute;
-    /*overflow: auto;*/
     width: 50%;
     height: 100%;
     left: 50%;
@@ -975,10 +917,6 @@ ion-popover-view.fit ion-content {
     width: 70%;
     left: 15%;
     height: 70%;
-    /* border: 1px solid;
-    border-style: outset;
-    border-radius: 10px;
-    border-width: thin; */
 }
 
 .img-center{
@@ -1150,7 +1088,6 @@ ion-popover-view.fit ion-content {
 .gc-loader-prog {
     margin-left: 46%;
     position: absolute;
-    font-family: baloobhai;
     color: white;
 }
 

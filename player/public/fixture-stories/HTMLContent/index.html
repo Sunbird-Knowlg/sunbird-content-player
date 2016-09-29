@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>HTML Content</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: filesystem:; style-src 'self' 'unsafe-inline';  script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src *;" >
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+</head>
+<body>
+	
+  <h1>HTML Content</h1>
+  
+  <script type="text/javascript">
+    /**
+     * First initialisation function
+     */
+    function initialize(){
+      var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
+
+      if(isMobile){ 
+        //load cordova library only for mobile
+        var fileref = document.createElement('script');
+        fileref.setAttribute("type","text/javascript");
+        fileref.setAttribute("src", "///android_asset/www/cordova.js");
+
+        fileref.onload = function(){
+          // Cordova file loaded
+          // Add event listener for "deviceReady" to access cordova plugins
+          // On device ready event, we can access all cordova plugins
+          document.addEventListener("deviceready", onDeviceReady, false);
+        }
+        document.getElementsByTagName("head")[0].appendChild(fileref);
+      }
+    };
+
+    /* Cordova plugins can access only on device ready state */
+    function onDeviceReady(event){
+      //console.log("onDeviceReady()", event); 
+      
+      // Calling wordchain API
+      callWordChainAPI();
+
+      // Logging telemetry
+      sendTelemetry();
+    };
+
+    /**
+     * This is to log telemetry
+     */
+    function sendTelemetry(){
+      // Game start Dummy data(OE_START)
+      var evtObj = '{"ver":"2.0","sid":"8hjh3c4b7b47d570df0ec286bf7adc8ihhnjy","uid":"8hjh3c4b7b47d570df0ec286bf7adc8ihhnjy","did":"8hjh3c4b7b47d570df0ec286bf7adc8ihhnjy","edata":{"eks":{}},"eid":"OE_START","gdata":{"id":"org.ekstep.quiz.app","ver":"1"},"ets":1472133108928}';
+
+      // Calling cordova telemetry function to log data
+      telemetry.send(evtObj, "sendTelemetry").then(function() {
+          console.log("HTML telemetry success.");
+          document.body.innerHTML += "<p><b>Telemetry response:</b> Success";
+        }).catch(function(err) {
+          console.log("HTML telemetry failed.");
+        })
+    }
+
+    /**
+     * Call genie service word chain API
+     */
+    function callWordChainAPI(){
+      var filter = '{"traversals":["rhyming_boundary_rule"],"filters":{"language_id":["hi"],"status":["Draft"]},"limit":100}';
+      // Get current user data is required to log telemetry
+      genieservice.languageSearch(filter)
+      .then(function(resp) {
+        console.log("genieservice.searchWord()", resp);
+        document.body.innerHTML += '<p><b>LanguageSearch Response:</b> Success</p><p style="height:150px;overflow:auto;">'+ JSON.stringify(resp) +'</p>';
+      })
+      .catch(function(err) {
+        console.error("Failed: getContent()", err);
+      });
+    }
+
+    initialize();
+  </script>
+</body>
+</html>

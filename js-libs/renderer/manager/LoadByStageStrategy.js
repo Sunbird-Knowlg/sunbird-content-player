@@ -176,7 +176,7 @@ LoadByStageStrategy = Class.extend({
                 var loader = this._createLoader();
                 loader.setMaxConnections(instance.MAX_CONNECTIONS);
                 if (cb) {
-                    loader.addEventListener("complete", cb);
+                    loader.on("complete", cb, null, true);
                 }
                 loader.on('error', function(evt) {
                     console.error('StageLoader Asset preload error', evt);
@@ -191,7 +191,17 @@ LoadByStageStrategy = Class.extend({
             }
         } else {
             if (cb) {
-                cb(); 
+                var currentStageLoader = instance.loaders[stageId];
+                // Check if loader for current satge is loaded completely
+                if (!currentStageLoader.loaded) {
+                    // if loader for current stage is not loaded, wait for loader to complete and call callback function
+                    currentStageLoader.on("complete", function() {
+                        cb();
+                    })
+                } else {
+                    // if loader for current stage is loaded call callback
+                    cb();
+                }
             }
         }                
     },

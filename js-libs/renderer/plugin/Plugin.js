@@ -426,14 +426,7 @@ var Plugin = Class.extend({
         return value;
     },
     getDefaultFont: function() {
-        if(this._defaultFont == undefined) {
-            var contentLang = (GlobalContext.config.appInfo && GlobalContext.config.appInfo.language) ? GlobalContext.config.appInfo.language.toLowerCase() : undefined;
-            if(!(_.isUndefined(contentLang)) && !(_.isUndefined(LANGUAGE_FONTS[contentLang]))) {
-                this._defaultFont = LANGUAGE_FONTS[contentLang];                
-            } else {
-                this._defaultFont = LANGUAGE_FONTS['english'];
-            }
-        }
+        this._defaultFont = 'NotoSansGujarati, NotoSansOriya, NotoSansMalayalam';
         return this._defaultFont;
     },
 	transitionTo: function() {

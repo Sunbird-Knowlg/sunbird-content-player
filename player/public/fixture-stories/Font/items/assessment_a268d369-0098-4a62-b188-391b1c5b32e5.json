@@ -1,0 +1,957 @@
+{
+  "owner": "Ilimi",
+  "lastUpdatedBy": "371",
+  "identifier": "do_20046674",
+  "code": "ItemSet_79fd33fa-0eab-4274-9f84-9327c210496e",
+  "subject": "domain",
+  "SET_OBJECT_TYPE_KEY": "AssessmentItem",
+  "language": [
+    "English"
+  ],
+  "type": "materialised",
+  "title": "Assessment Title",
+  "total_items": 10,
+  "createdOn": "2016-09-21T08:16:40.926+0000",
+  "showImmediateFeedback": true,
+  "gradeLevel": [
+    "Grade 1"
+  ],
+  "max_score": 10,
+  "lastUpdatedOn": "2016-09-21T08:16:40.952+0000",
+  "used_for": "assessment",
+  "shuffle": false,
+  "item_sets": [
+    {
+      "count": 10,
+      "id": "do_20046674"
+    }
+  ],
+  "items": {
+    "do_20046674": [
+      {
+        "template": "org.ekstep.mcq.t.ta",
+        "lastUpdatedBy": "371",
+        "identifier": "do_20046665",
+        "code": "org.ekstep.assessmentitem.do_20046665",
+        "question": "આતંકવાદી ઠાર, સેનાએ સ્ટાન્ડર્ડ ઓપરેશન પ્રોસિજરમાં લીધા 5 મોટા નિર્ણય",
+        "subject": "domain",
+        "qlevel": "EASY",
+        "portalOwner": "371",
+        "language": [
+          "Gujarati"
+        ],
+        "type": "mcq",
+        "title": "Gujarathi_question",
+        "createdOn": "2016-09-21T07:21:12.477+0000",
+        "gradeLevel": [
+          "Kindergarten",
+          "Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Other"
+        ],
+        "concepts": [
+          {
+            "identifier": "LO47",
+            "name": "Comprehension Of Poems",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO51",
+            "name": "Roots And Derivations",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO45",
+            "name": "Comprehension Of Essays",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO52",
+            "name": "More Than One Meaning",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          }
+        ],
+        "max_score": 1,
+        "name": "Gujarathi_question",
+        "options": [
+          {
+            "value": {
+              "type": "mixed",
+              "text": "મોટા નિર્ણય",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "મોટા નિર્ણય",
+              "resindex": 0,
+              "fontsize": 150
+            },
+            "score": 1,
+            "answer": true
+          },
+          {
+            "value": {
+              "type": "mixed",
+              "text": "નિર્ણય",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "નિર્ણય",
+              "resindex": 1,
+              "fontsize": 150
+            }
+          }
+        ],
+        "lastUpdatedOn": "2016-09-21T07:23:06.595+0000",
+        "used_for": "worksheet",
+        "template_id": "domain_3490"
+      },
+      {
+        "template": "org.ekstep.mcq.t.ta",
+        "lastUpdatedBy": "371",
+        "identifier": "do_20046667",
+        "code": "org.ekstep.assessmentitem.do_20046667",
+        "question": "ପିନ୍ଟୁ ର ଗାଁ ଦୂର  ପାହାଡ ଉପରେ ଥିଲା | ତା ବାପା ଜଣେ କୃଷକ ଥିଲେ | ତାଙ୍କ ପାଖରେ ଗୋଟେ ବଡ ଆମ୍ବ ବଗିଚା ଥିଲା ଆଉ ଗୋଟେ ଛୋଟ ଖେତ ବି | ",
+        "subject": "domain",
+        "qlevel": "EASY",
+        "portalOwner": "371",
+        "language": [
+          "Odia"
+        ],
+        "type": "mcq",
+        "title": "Odia_question",
+        "createdOn": "2016-09-21T07:24:55.249+0000",
+        "gradeLevel": [
+          "Kindergarten",
+          "Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Other"
+        ],
+        "concepts": [
+          {
+            "identifier": "LO51",
+            "name": "Roots And Derivations",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO45",
+            "name": "Comprehension Of Essays",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO52",
+            "name": "More Than One Meaning",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO47",
+            "name": "Comprehension Of Poems",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          }
+        ],
+        "max_score": 1,
+        "name": "Odia_question",
+        "options": [
+          {
+            "value": {
+              "type": "mixed",
+              "text": "ଖେତ ",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "ଖେତ ",
+              "resindex": 0,
+              "fontsize": 150
+            },
+            "score": 1,
+            "answer": true
+          },
+          {
+            "value": {
+              "type": "mixed",
+              "text": "ଥିଲେ ",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "ଥିଲେ ",
+              "resindex": 1,
+              "fontsize": 150
+            }
+          }
+        ],
+        "lastUpdatedOn": "2016-09-21T08:15:31.778+0000",
+        "used_for": "worksheet",
+        "template_id": "domain_3490"
+      },
+      {
+        "template": "org.ekstep.mcq.t.ta",
+        "lastUpdatedBy": "371",
+        "identifier": "do_20046660",
+        "code": "org.ekstep.assessmentitem._57e23315e9ca2",
+        "question": "ರಾಜ್ಯದ ನಗರಗಳಿನ್ನು ಯುವಕನ ಬೀಭತ್ಸ ಕೃತ್ಯಕ್ಕೆ ಬೆಚ್ಚಿದ ರಾಷ್ಟ್ರ ರಾಜಧಾನಿ ದಿಲ್ಲಿ",
+        "subject": "domain",
+        "qlevel": "EASY",
+        "portalOwner": "371",
+        "language": [
+          "Kannada"
+        ],
+        "type": "mcq",
+        "title": "  kannada_question",
+        "createdOn": "2016-09-21T07:16:04.765+0000",
+        "gradeLevel": [
+          "Kindergarten",
+          "Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Other"
+        ],
+        "concepts": [
+          {
+            "identifier": "LO45",
+            "name": "Comprehension Of Essays",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO51",
+            "name": "Roots And Derivations",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO52",
+            "name": "More Than One Meaning",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO47",
+            "name": "Comprehension Of Poems",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          }
+        ],
+        "domain": [
+          "literacy"
+        ],
+        "max_score": 1,
+        "name": "  kannada_question",
+        "options": [
+          {
+            "value": {
+              "type": "mixed",
+              "text": "ರಾಜಧಾನಿ ದಿಲ್ಲಿ",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "ರಾಜಧಾನಿ ದಿಲ್ಲಿ",
+              "resindex": 0,
+              "fontsize": 150
+            },
+            "score": 1,
+            "answer": true
+          },
+          {
+            "value": {
+              "type": "mixed",
+              "text": "ನಗರಗಳಿನ್ನು ",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "ನಗರಗಳಿನ್ನು ",
+              "resindex": 1,
+              "fontsize": 150
+            }
+          }
+        ],
+        "lastUpdatedOn": "2016-09-21T07:16:04.765+0000",
+        "used_for": "worksheet",
+        "template_id": "domain_3490"
+      },
+      {
+        "template": "org.ekstep.mcq.t.ta",
+        "lastUpdatedBy": "371",
+        "identifier": "do_20046661",
+        "code": "org.ekstep.assessmentitem.do_20046661",
+        "question": "उड़ी हमले की जांच कर रही राष्ट्रीय जांच एजेंसी (एनआइए) के हाथ कुछ महत्वपूर्ण जानकारियां लगी हैं।",
+        "subject": "domain",
+        "qlevel": "EASY",
+        "portalOwner": "371",
+        "language": [
+          "Hindi"
+        ],
+        "type": "mcq",
+        "title": "Hindi_question",
+        "createdOn": "2016-09-21T07:16:05.447+0000",
+        "gradeLevel": [
+          "Kindergarten",
+          "Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Other"
+        ],
+        "concepts": [
+          {
+            "identifier": "LO47",
+            "name": "Comprehension Of Poems",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO51",
+            "name": "Roots And Derivations",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO52",
+            "name": "More Than One Meaning",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO45",
+            "name": "Comprehension Of Essays",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          }
+        ],
+        "max_score": 1,
+        "name": "Hindi_question",
+        "options": [
+          {
+            "value": {
+              "type": "mixed",
+              "text": "जानकारियां",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "जानकारियां",
+              "resindex": 0,
+              "fontsize": 150
+            },
+            "score": 1,
+            "answer": true
+          },
+          {
+            "value": {
+              "type": "mixed",
+              "text": "जांच ",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "जांच ",
+              "resindex": 1,
+              "fontsize": 150
+            }
+          }
+        ],
+        "lastUpdatedOn": "2016-09-21T07:17:30.526+0000",
+        "used_for": "worksheet",
+        "template_id": "domain_3490"
+      },
+      {
+        "template": "org.ekstep.mcq.t.ta",
+        "lastUpdatedBy": "371",
+        "identifier": "do_20046662",
+        "code": "org.ekstep.assessmentitem.do_20046662",
+        "question": "விரி.. சுப்ரீம் கோர்ட் தீர்ப்பை எதிர்த்து தேவெ கெளடா கட்சி எம்.எல்.ஏக்கள் .",
+        "subject": "domain",
+        "qlevel": "EASY",
+        "portalOwner": "371",
+        "language": [
+          "Tamil"
+        ],
+        "type": "mcq",
+        "title": "Tamil_question",
+        "createdOn": "2016-09-21T07:17:30.998+0000",
+        "gradeLevel": [
+          "Kindergarten",
+          "Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Other"
+        ],
+        "concepts": [
+          {
+            "identifier": "LO51",
+            "name": "Roots And Derivations",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO52",
+            "name": "More Than One Meaning",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO45",
+            "name": "Comprehension Of Essays",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO47",
+            "name": "Comprehension Of Poems",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          }
+        ],
+        "max_score": 1,
+        "name": "Tamil_question",
+        "options": [
+          {
+            "value": {
+              "type": "mixed",
+              "text": "கெளடா",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "கெளடா",
+              "resindex": 0,
+              "fontsize": 150
+            },
+            "score": 1,
+            "answer": true
+          },
+          {
+            "value": {
+              "type": "mixed",
+              "text": "கட்சி",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "கட்சி",
+              "resindex": 1,
+              "fontsize": 150
+            }
+          }
+        ],
+        "lastUpdatedOn": "2016-09-21T07:18:30.366+0000",
+        "used_for": "worksheet",
+        "template_id": "domain_3490"
+      },
+      {
+        "template": "org.ekstep.mcq.t.ta",
+        "lastUpdatedBy": "371",
+        "identifier": "do_20046663",
+        "code": "org.ekstep.assessmentitem.do_20046663",
+        "question": "ঔদাসীন্য বলব? আমানবিকতা বলব? নাকি কল্পনাতীত আত্মকেন্দ্রিকতা বলব? যা-ই বলি, যে নামেই ডাকি, লজ্জা",
+        "subject": "domain",
+        "qlevel": "EASY",
+        "portalOwner": "371",
+        "language": [
+          "Bengali"
+        ],
+        "type": "mcq",
+        "title": "Bengali_question",
+        "createdOn": "2016-09-21T07:18:30.842+0000",
+        "gradeLevel": [
+          "Kindergarten",
+          "Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Other"
+        ],
+        "concepts": [
+          {
+            "identifier": "LO52",
+            "name": "More Than One Meaning",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO51",
+            "name": "Roots And Derivations",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO45",
+            "name": "Comprehension Of Essays",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO47",
+            "name": "Comprehension Of Poems",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          }
+        ],
+        "max_score": 1,
+        "name": "Bengali_question",
+        "options": [
+          {
+            "value": {
+              "type": "mixed",
+              "text": "যে নামেই ডাকি",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "যে নামেই ডাকি",
+              "resindex": 0,
+              "fontsize": 150
+            },
+            "score": 1,
+            "answer": true
+          },
+          {
+            "value": {
+              "type": "mixed",
+              "text": "ঔদাসীন্য ",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "ঔদাসীন্য ",
+              "resindex": 1,
+              "fontsize": 150
+            }
+          }
+        ],
+        "lastUpdatedOn": "2016-09-21T07:19:56.618+0000",
+        "used_for": "worksheet",
+        "template_id": "domain_3490"
+      },
+      {
+        "template": "org.ekstep.mcq.t.ta",
+        "lastUpdatedBy": "371",
+        "identifier": "do_20046664",
+        "code": "org.ekstep.assessmentitem.do_20046664",
+        "question": "हॅरी पॉटर' चित्रपटाच्या पहिल्या भागात हॅरी मावशीसोबत ज्या घराहतानारात  दाखवले आहे, ते घर विक्रीस काढण्यात.",
+        "subject": "domain",
+        "qlevel": "EASY",
+        "portalOwner": "371",
+        "language": [
+          "Bengali"
+        ],
+        "type": "mcq",
+        "title": "marathi_question",
+        "createdOn": "2016-09-21T07:19:57.136+0000",
+        "gradeLevel": [
+          "Kindergarten",
+          "Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Other"
+        ],
+        "concepts": [
+          {
+            "identifier": "LO51",
+            "name": "Roots And Derivations",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO52",
+            "name": "More Than One Meaning",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO47",
+            "name": "Comprehension Of Poems",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO45",
+            "name": "Comprehension Of Essays",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          }
+        ],
+        "max_score": 1,
+        "name": "marathi_question",
+        "options": [
+          {
+            "value": {
+              "type": "mixed",
+              "text": "दाखवले ",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "दाखवले ",
+              "resindex": 0,
+              "fontsize": 150
+            },
+            "score": 1,
+            "answer": true
+          },
+          {
+            "value": {
+              "type": "mixed",
+              "text": "विक्रीस",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "विक्रीस",
+              "resindex": 1,
+              "fontsize": 150
+            }
+          }
+        ],
+        "lastUpdatedOn": "2016-09-21T07:21:12.012+0000",
+        "used_for": "worksheet",
+        "template_id": "domain_3490"
+      },
+      {
+        "template": "org.ekstep.mcq.t.ta",
+        "lastUpdatedBy": "371",
+        "identifier": "do_20046666",
+        "code": "org.ekstep.assessmentitem.do_20046666",
+        "question": "తెలంగాణ ఎఫెక్ట్: బాబును కార్నర్ చేసేందుకు ఛాన్సిచ్చిన రేవంత్ రెడ్డి!",
+        "subject": "domain",
+        "qlevel": "EASY",
+        "portalOwner": "371",
+        "language": [
+          "Telugu"
+        ],
+        "type": "mcq",
+        "title": "Telgu_question",
+        "createdOn": "2016-09-21T07:23:07.065+0000",
+        "gradeLevel": [
+          "Kindergarten",
+          "Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Other"
+        ],
+        "concepts": [
+          {
+            "identifier": "LO52",
+            "name": "More Than One Meaning",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO45",
+            "name": "Comprehension Of Essays",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO51",
+            "name": "Roots And Derivations",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO47",
+            "name": "Comprehension Of Poems",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          }
+        ],
+        "max_score": 1,
+        "name": "Telgu_question",
+        "options": [
+          {
+            "value": {
+              "type": "mixed",
+              "text": "ఛాన్సిచ్చిన",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "ఛాన్సిచ్చిన",
+              "resindex": 0,
+              "fontsize": 150
+            },
+            "score": 1,
+            "answer": true
+          },
+          {
+            "value": {
+              "type": "mixed",
+              "text": "బాబును కా",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "బాబును కా",
+              "resindex": 1,
+              "fontsize": 150
+            }
+          }
+        ],
+        "lastUpdatedOn": "2016-09-21T07:24:54.722+0000",
+        "used_for": "worksheet",
+        "template_id": "domain_3490"
+      },
+      {
+        "template": "org.ekstep.mcq.t.ta",
+        "lastUpdatedBy": "371",
+        "identifier": "do_20046668",
+        "code": "org.ekstep.assessmentitem.do_20046668",
+        "question": " সকলো মানুহে স্বাধীনভাৱে সমান মৰ্যদা আৰু অধিকাৰে জন্মগ্ৰহণ কৰে । সিহঁতৰ বিবেক আৰু বুদ্ধি আছে আৰু সিহঁতে পৰস্পৰ ভাতৃত্বৰে আচৰণ কৰিব লাগে",
+        "subject": "domain",
+        "qlevel": "EASY",
+        "portalOwner": "371",
+        "language": [
+          "Assamese"
+        ],
+        "type": "mcq",
+        "title": "Assamese_question",
+        "createdOn": "2016-09-21T07:25:41.852+0000",
+        "gradeLevel": [
+          "Kindergarten",
+          "Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Other"
+        ],
+        "concepts": [
+          {
+            "identifier": "LO47",
+            "name": "Comprehension Of Poems",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO45",
+            "name": "Comprehension Of Essays",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO52",
+            "name": "More Than One Meaning",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO51",
+            "name": "Roots And Derivations",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          }
+        ],
+        "max_score": 1,
+        "name": "Assamese_question",
+        "options": [
+          {
+            "value": {
+              "type": "mixed",
+              "text": "সিহঁতে",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "সিহঁতে",
+              "resindex": 0,
+              "fontsize": 150
+            },
+            "score": 1,
+            "answer": true
+          },
+          {
+            "value": {
+              "type": "mixed",
+              "text": "ভাতৃত্বৰে ",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "ভাতৃত্বৰে ",
+              "resindex": 1,
+              "fontsize": 150
+            }
+          }
+        ],
+        "lastUpdatedOn": "2016-09-21T07:29:30.187+0000",
+        "used_for": "worksheet",
+        "template_id": "domain_3490"
+      },
+      {
+        "template": "org.ekstep.mcq.t.ta",
+        "lastUpdatedBy": "371",
+        "identifier": "do_20046670",
+        "code": "org.ekstep.assessmentitem.do_20046670",
+        "question": " Gone is the exuberant American desire to be peacemaker. Washington now knows that it has been played by Islamabad, it's false ally in the war on terror.",
+        "subject": "domain",
+        "qlevel": "EASY",
+        "portalOwner": "371",
+        "language": [
+          "English"
+        ],
+        "type": "mcq",
+        "title": "English_question",
+        "createdOn": "2016-09-21T07:29:30.665+0000",
+        "gradeLevel": [
+          "Kindergarten",
+          "Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Other"
+        ],
+        "concepts": [
+          {
+            "identifier": "LO51",
+            "name": "Roots And Derivations",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO47",
+            "name": "Comprehension Of Poems",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO45",
+            "name": "Comprehension Of Essays",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "LO52",
+            "name": "More Than One Meaning",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          }
+        ],
+        "max_score": 1,
+        "name": "English_question",
+        "options": [
+          {
+            "value": {
+              "type": "mixed",
+              "text": "slamabad",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "slamabad",
+              "resindex": 0,
+              "fontsize": 150
+            },
+            "score": 1,
+            "answer": true
+          },
+          {
+            "value": {
+              "type": "mixed",
+              "text": "peacemaker",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "peacemaker",
+              "resindex": 1,
+              "fontsize": 150
+            }
+          }
+        ],
+        "lastUpdatedOn": "2016-09-21T08:14:57.622+0000",
+        "used_for": "worksheet",
+        "template_id": "domain_3490"
+      }
+    ]
+  },
+  "SET_TYPE": "MATERIALISED_SET"
+}

@@ -16,7 +16,7 @@ var stack = new Array(),
         showEndPage: true,
         showHTMLPages: true
     },
-    webview = getUrlParameter("webview"),
+    isbrowserpreview = getUrlParameter("webview"),
     appState = undefined;
 
 
@@ -80,6 +80,17 @@ function launchInitialPage(appInfo, $state) {
     });
 }
 
+//Handling the logerror event from the Telemetry.js
+document.body.addEventListener("logError", telemetryError, false);
+function telemetryError(e) {
+    var $body = angular.element(document.body); // 1
+    var $rootScope = $body.scope().$root;
+    document.body.removeEventListener("logError");
+    //Message to display events on the Screen device
+    /*$rootScope.$broadcast('show-message', { 
+        "message": 'Telemetry :' + JSON.stringify(data.message) 
+    });*/
+}
 
 angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     .run(function($rootScope, $ionicPlatform, $location, $state, $stateParams, ContentService) {
@@ -154,7 +165,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 if ("undefined" != typeof localPreview && "local" == localPreview)
                     return;
                 var id = getUrlParameter("id");
-                if (webview) {
+                if(isbrowserpreview) {
                     if ("undefined" != typeof $location && id) {
                         ContentService.getContentMetadata(id)
                             .then(function(data) {
@@ -426,7 +437,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.init = function() {
             $scope.showPage = true;
             if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
-                if ((webview == "true")) {
+                if ((isbrowserpreview == "true")) {
                     if (content.metadata && (content.metadata.mimeType != COLLECTION_MIMETYPE)) {
                         jQuery('#loading').hide();
                         //For JSON and Direct contentID
@@ -478,22 +489,37 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.init = function() {
             if ($stateParams.itemId) {
                 $scope.item = $rootScope.content;
-                GlobalContext.config.appInfo.language = ($scope.item && $scope.item.language) ? $scope.item.language[0] : undefined;
-
+               
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
-                    HTMLRenderer.start($scope.item.baseDir, 'gameCanvas', $scope.item, function() {
-                        jQuery('#loading').hide();
-                        jQuery('#gameArea').hide();
-                        var path = $scope.item.baseDir + '/index.html';
-                        $scope.currentProjectUrl = path;
-                        jQuery("#htmlFrame").show();
-                    });
+                    //Checking is mobile or not
+                    var isMobile = window.cordova ? true : false;
+
+                    // For HTML content, lunach eve is required
+                    // setting launch evironment as "app"/"portal" for "mobile"/"portal(web)"
+                    var envHTML = isMobile ? "app" : "portal";
+
+                    var launchData = {"env": envHTML, "envpath": AppConfig[AppConfig.flavor]};
+                    //Adding contentId and LaunchData as query parameter
+                    var path = $scope.item.baseDir + '/index.html?contentId='+ $stateParams.itemId + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
+
+                    //Adding config as query parameter for HTML content
+                    if($scope.item.config){
+                        path += "&config=" + JSON.stringify($scope.item.config);
+                    }
+
+                    if (isMobile){
+                        console.log("Opening through cordova custom webview.");
+                        cordova.InAppBrowser.open(path, '_self', 'location=no,hardwareback=no');
+                    }else{
+                        console.log("Opening through window.open");
+                        window.open(path, '_self');
+                    }
                 } else {
                     if (collectionChildren) {
                         collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1);
                         collectionChildren = false;
                     }
-                    if (webview) {
+                    if (isbrowserpreview) {
                         var contentBody = undefined;
                         if (COLLECTION_MIMETYPE == content.metadata.mimeType) {
                             ContentService.getContentBody($stateParams.itemId)
@@ -569,7 +595,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.stringLeft = 130;
 
         $rootScope.pageId = "endpage";
-        $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
+        $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-baloo credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
 
         $scope.arrayToString = function(array) {
             return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";
@@ -812,11 +838,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         };
         $scope.goodJob = {
-            body: '<div class="assess-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><img class="goodjob_stars" ng-src="{{ icons.popup.goodjob_stars }}"/><a href="javascript:void(0);" ng-click="hidePopup()"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p style="padding: 0%;position: absolute;left: 64%;bottom: 35%;">{{languageSupport.next}}</p></div></div>'
+            body: '<div class="font-baloo assess-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><img class="goodjob_stars" ng-src="{{ icons.popup.goodjob_stars }}"/><a href="javascript:void(0);" ng-click="hidePopup()"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p style="padding: 0%;position: absolute;left: 64%;bottom: 35%;">{{languageSupport.next}}</p></div></div>'
         };
 
         $scope.tryAgain = {
-            body: '<div class="assess-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="tryagain_retry_div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><p style="padding:0%;">{{languageSupport.replay}}</p></div><div class="tryagian_next_div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')" /></a><p style="padding: 0%;">{{languageSupport.next}}</p></div></div></div>'
+            body: '<div class="font-baloo assess-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="tryagain-retry-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><p style="padding:0%;">{{languageSupport.replay}}</p></div><div class="tryagian-next-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')" /></a><p style="padding: 0%;">{{languageSupport.next}}</p></div></div></div>'
         };
 
         $scope.openMenu = function() {
