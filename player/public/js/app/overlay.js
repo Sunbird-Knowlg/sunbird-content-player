@@ -1,4 +1,4 @@
-OverlayHtml = {
+Overlay = {
     _rootScope: null,
     showNext: function() {
         jQuery('#navNext').show();
@@ -15,7 +15,7 @@ OverlayHtml = {
     },
     _getRootScope: function() {
         if (_.isNull(this._rootScope)) {
-            var overlayDOMElement = document.getElementById('overlayHTML');
+            var overlayDOMElement = document.getElementById('overlay');
             if ("undefined" != typeof angular && "undefined" != typeof overlayDOMElement) {
                 var scope = angular.element(overlayDOMElement).scope();
                 if (scope) this._rootScope = scope.$root;
@@ -75,7 +75,7 @@ OverlayHtml = {
         if (_.isUndefined(navigateTo)) {
 
             jQuery('#navPrev').hide();
-            if (OverlayHtml.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious()) {
+            if (Overlay.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious()) {
                 jQuery('#navPrev').show();
             }
         } else {

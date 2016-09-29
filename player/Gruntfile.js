@@ -17,15 +17,15 @@ module.exports = function(grunt) {
             js: {
                 options: {
                     beautify: true,
-                    mangle: false 
+                    mangle: false
                 },
                 files: {
                     'public/js/script.min.js': [
-                        'public/js/app/GlobalContext.js',                        
+                        'public/js/app/GlobalContext.js',
                         'public/js/app/AppMessages.js',
                         'public/js/app/main.js',
                         'public/js/app/app.js',
-                        'public/js/app/OverlayHtml.js',
+                        'public/js/app/overlay.js',
                     ],
                     'public/js/renderer.min.js': [
                         'public/js/app/speech.js',
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
             speech: {
                 options: {
                     beautify: true,
-                    mangle: false 
+                    mangle: false
                 },
                 files:{
                     'public/js/app/speech.js': ['../js-libs/speech/speech.js', '../js-libs/speech/android-recorder.js']
@@ -56,8 +56,8 @@ module.exports = function(grunt) {
             },
             pluginLib: {
                 options: {
-                    beautify: true,                   
-                    mangle: false                 
+                    beautify: true,
+                    mangle: false
                 },
                 files: {
                     'public/js/app/plugin-lib.js': [
@@ -75,8 +75,8 @@ module.exports = function(grunt) {
             },
             renderer: {
                 options: {
-                    beautify: true,                   
-                    mangle: false                 
+                    beautify: true,
+                    mangle: false
                 },
                 files: {
                     'public/js/app/renderer.js': [
@@ -99,7 +99,7 @@ module.exports = function(grunt) {
             telemetry: {
                 options: {
                     beautify:true,
-                    mangle: false 
+                    mangle: false
                 },
                 files: {
                     'public/js/app/telemetry.js': [
@@ -292,7 +292,7 @@ module.exports = function(grunt) {
                     src: ['**'],
                     dest: '/preview/production'
                 }]
-            },  
+            },
             cleanJS: {
                 options: {
                     bucket: 'ekstep-public'
@@ -556,7 +556,7 @@ module.exports = function(grunt) {
                 replacements: [{
                     from: "applicationVariants",
                     to: "libraryVariants"
-                }]  
+                }]
             }
         }
     });
@@ -599,7 +599,7 @@ module.exports = function(grunt) {
             tasks.push('preview-production');
         } else if("qa" == flavor) {
             tasks.push('preview-qa');
-        } 
+        }
 
         if (tasks.length > 0) {
             grunt.task.run(tasks);
@@ -609,7 +609,7 @@ module.exports = function(grunt) {
     grunt.registerTask('preview-dev', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_dev', 'aws_s3:cleanDevPreview', 'aws_s3:uploadPreviewFilesToDev']);
     grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
     grunt.registerTask('preview-qa', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
-  
+
     grunt.registerTask('rm-cordova-plugin-sensibol', function() {
         if (grunt.file.exists('plugins/cordova-plugin-sensibol')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
     });
@@ -636,7 +636,7 @@ module.exports = function(grunt) {
     });
     grunt.registerTask('add-cordova-plugin-genieservices', function() {
         grunt.task.run(['rm-cordova-plugin-genieservices', 'cordovacli:add_genie_services']);
-    });    
+    });
 
 
     grunt.registerTask('rm-cordova-plugin-kunder-webview', function() {
