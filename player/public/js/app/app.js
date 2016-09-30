@@ -507,6 +507,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         path += "&config=" + JSON.stringify($scope.item.config);
                     }
 
+                    //Adding Flavor(environment) as query parameter to identify HTML content showing in dev/qa/prdocution 
+                    path += "&flavor=" + AppConfig.flavor;
+
                     if (isMobile){
                         console.log("Opening through cordova custom webview.");
                         cordova.InAppBrowser.open(path, '_self', 'location=no,hardwareback=no');

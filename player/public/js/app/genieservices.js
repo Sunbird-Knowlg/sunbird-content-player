@@ -127,12 +127,14 @@ genieservice_portal = {
     },
     getContent: function(id){
         return new Promise(function(resolve, reject) {
-            if(COLLECTION_MIMETYPE == content.metadata.mimeType) {
+            if(!(typeof content == 'undefined')) {
+                if("application/vnd.ekstep.content-collection" == content.metadata.mimeType) {
+                    resolve(genieservice.getContentMetadata(id));
+                } else {                
+                    resolve(content.metadata);                
+                }
+            } else{
                 resolve(genieservice.getContentMetadata(id));
-            } else {
-                if(content) {
-                    resolve(content.metadata);
-                } 
             }
         });
     },
@@ -158,11 +160,14 @@ genieservice_portal = {
     }
 };
 
-genieservice_HTMLdev = {
+genieservice_html = {
     localData: {},
+    _jsFilesToLoad: [],
+    _callback: undefined,
+    _jsFileIndex: 0,
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
-            var result = {};
+            /*var result = {};
             result.status = "success";
             result.data = {
                 "avatar": "resource1",
@@ -172,28 +177,57 @@ genieservice_HTMLdev = {
                 "age": 6,
                 "standard": -1
             };
-            resolve(result);
+            resolve(result);*/
+            if(genieservice_html.localData.user) {
+                var user = {};
+                _.isArray(genieservice_html.localData.user) ? resolve(genieservice_html.localData.user[0]) : resolve(genieservice_html.localData.user);
+            } else {
+                reject("no user found.")
+            }
+            
         });
     },
     getContent: function(id) {
          return new Promise(function(resolve, reject) {
-            var result = _.findWhere(genieservice_HTMLdev.localData.content, {"identifier": id});
+            var result = _.findWhere(genieservice_html.localData.content, {"identifier": id});
             resolve(result);
         });
     },
-    getLocalData: function(){
-       jQuery.getJSON("test/localData.json", function(json) {
-            genieservice_HTMLdev.localData = json;
-            console.log("LocalData json loaded", genieservice_HTMLdev.localData);
-        });
+    getLocalData: function(callback){
+        genieservice_html._callback = callback;
+        genieservice_html._jsFileIndex = 0;
+        genieservice_html._jsFilesToLoad = [];
+        
+        genieservice_html._jsFilesToLoad.push("test/fixture-content-list.json");
+        genieservice_html._jsFilesToLoad.push("test/fixture-user-list.json");
+        genieservice_html._jsFilesToLoad.push("test/fixture-word-list.json");
+        genieservice_html.loadJsFilesSequentially();
+    },
+    loadJsFilesSequentially: function(){
+         if (genieservice_html._jsFilesToLoad[genieservice_html._jsFileIndex]) {
+            var fileLoaded = genieservice_html._jsFilesToLoad[genieservice_html._jsFileIndex];
+            jQuery.getJSON(fileLoaded, function(json) {
+                _.extend(genieservice_html.localData, json);
+                console.log("LocalData json loaded", genieservice_html.localData);
+                genieservice_html._jsFileIndex = genieservice_html._jsFileIndex + 1;
+                genieservice_html.loadJsFilesSequentially();
+            });
+        } else {
+            console.log("js files load complete.");
+            if(genieservice_html._callback){
+                console.log("local Files loaded successfully.");
+                genieservice_html._callback();                
+            }else{
+                console.log("local Files loaded successfully. But no callback function");
+            }
+        }
     }
 };
 if ("undefined" == typeof cordova) {
     if("undefined" == typeof isbrowserpreview) {
         if("undefined" == typeof AppConfig){
-            genieservice = genieservice_HTMLdev;
-            genieservice.getLocalData();
-            console.log("Local genieservice", genieservice);
+            genieservice = genieservice_html;
+            console.log("HTML Local genieservice", genieservice);
         }else{
              genieservice = genieservice_web;
         }

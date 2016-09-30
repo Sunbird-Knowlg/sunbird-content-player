@@ -14,7 +14,7 @@
   <!--  -->
   <!-- <script src="assets/js/genieservices.js"></script>
   <script src="assets/js/telemetry.min.js"></script> -->
-  <script src="assets/js/genieServiceMediator.js"></script>
+  <script src="assets/js/genieservice-bridge.min.js"></script>
 
   <h1>New Game - HTML Content</h1>
   <p>This is actual game</p>
@@ -36,7 +36,7 @@
      * This is to GenieService and Telemetry
      * callback function will be called after initalization
      */
-    genieServiceMediator.init(function(){
+    genieServiceBridge.init(function(){
       // GenieService initalisation success
       onGenieServiceInit();
     });
@@ -68,9 +68,9 @@
     function getCurrentUser(){
        genieservice.getCurrentUser()
        .then(function(result) {
-          if (result && result.status == 'success') {
-              if (result.data.uid) {
-                currentUser = result.data;                 
+          if (result) {
+              if (result.uid) {
+                currentUser = result;                 
                 console.log("currentUser", currentUser);
               } else {
                 console.log('INVALID_USER');
@@ -106,7 +106,7 @@
         // Adding content information to the body
         document.body.innerHTML += "<p><b>Content id:</b> "+currentContent.metadata.identifier+ "</p><p><b>Name:</b> "+currentContent.metadata.localData.name+"</p></br>";
 		
-		    document.body.innerHTML += "<p><b>Launch Data:</b> " + getUrlParameter('launchdata') + "</p><p><b>Config:</b> "+ getUrlParameter('config') + "</p><p><b>AppInfo:</b> "+ getUrlParameter('appInfo');
+		    document.body.innerHTML += "<p><b>Launch Data:</b> " + getUrlParameter('launchData') + "</p><p><b>Config:</b> "+ getUrlParameter('config') + "</p><p><b>AppInfo:</b> "+ getUrlParameter('appInfo');
       })
       .catch(function(err){
         console.log("Failed", err);

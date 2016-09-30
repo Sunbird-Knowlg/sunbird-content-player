@@ -38,6 +38,13 @@ module.exports = function(grunt) {
                         'public/js/app/genieservices.js',
                         'public/js/app/renderer.js'
                     ],
+                    'public/js/genieservice-bridge.min.js' : [
+                        'public/js/app/genieservices.js',
+                        'public/js/thirdparty/exclude/date-format.js',
+                        'public/js/thirdparty/exclude/Class.js',
+                        'public/js/app/telemetry.js',
+                        'public/js/app/genieservice-bridge.js'
+                    ],
                     'public/js/telemetry.min.js' : [
                         'public/js/thirdparty/exclude/date-format.js',
                         'public/js/thirdparty/exclude/Class.js',
