@@ -17,6 +17,7 @@ ControllerManager = {
 	},
 	get: function(c, baseDir) {
 		var d,
+		
 			controllerMap = ControllerManager.controllerMap;
 		if (c.type && c.id) {
 			if(!controllerMap[c.type]) {
@@ -29,6 +30,7 @@ ControllerManager = {
 				}
 			}
 		}
+		
 		return d;
 	},
 	registerControllerInstance: function(id, instance) {
@@ -42,5 +44,18 @@ ControllerManager = {
 	},
 	getErrors: function() {
 		return ControllerManager.errors;
-	}
+	},
+	resetController: function(id) {
+    _.find(ControllerManager.instanceMap, function(id) {
+        var c = ControllerManager.instanceMap[id._id];
+        if ("undefined" != typeof c) {
+            c.reset();
+        } else {
+            console.warn("No controller find with id:",id);
+        }
+
+
+    });
+}
+	
 }
