@@ -4,10 +4,11 @@ FTBEvaluator = {
 		var pass = true;
 		var score = 0;
 		var res = [];
-		var ansCount=0;
+		
 
 		if (item) {
 			var answer = item.answer;
+			var passCount=0;
 			var model = item.model || {};
 			for (var ans in answer) {
 
@@ -24,12 +25,12 @@ FTBEvaluator = {
 						var s = answer[ans].score;
 						score += (_.isNumber(s) ? s: 1);
 						//pass = true;
-						ansCount++;
+						passCount++;
 					} else {
 						//pass = false;
-						ansCount--;
+						passCount--;
 					}
-					if(ansCount==res.length){
+					if(passCount==res.length){
 						pass=true;
 					}else{
 						pass=false;
