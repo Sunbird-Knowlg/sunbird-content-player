@@ -4,9 +4,11 @@ FTBEvaluator = {
 		var pass = true;
 		var score = 0;
 		var res = [];
+		
 
 		if (item) {
 			var answer = item.answer;
+			var passCount=0;
 			var model = item.model || {};
 			for (var ans in answer) {
 
@@ -18,13 +20,22 @@ FTBEvaluator = {
 				}
 				if (("undefined" != typeof model[ans]) && ("undefined" != typeof answer[ans]) && ("undefined" != typeof answer[ans].value)) {
 					var isCorrect = this._isCorrectAnswer(answer[ans].value, model[ans]);
+					console.info(isCorrect,"isCorrect");
 					if (isCorrect) {
 						var s = answer[ans].score;
 						score += (_.isNumber(s) ? s: 1);
-						pass = true;
+						//pass = true;
+						passCount++;
 					} else {
-						pass = false;
+						//pass = false;
+						passCount--;
 					}
+					if(passCount==res.length){
+						pass=true;
+					}else{
+						pass=false;
+					}
+
 				} else {
 					console.warn('Answer is undefined', answer);
 					pass = false;

@@ -86,7 +86,7 @@ var ThemePlugin = Plugin.extend({
         //document.getElementById("progressBar").style.width = 100 + '%';
         jQuery("#progressBar").width(100);
         jQuery('#loading').hide();
-        jQuery('#overlayHTML').show();
+        jQuery('#overlay').show();
     },
     addController: function(p) {
         var controller = ControllerManager.get(p, this.baseDir);
@@ -137,13 +137,11 @@ var ThemePlugin = Plugin.extend({
         child.on('sceneenter', function() {
             instance.enableInputs();
             instance._isSceneChanging = false;
-            childPlugin.dispatchEvent('enter');
             instance.preloadStages();
             Renderer.update = true;
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
-            OverlayHtml.sceneEnter();
-
+            Overlay.sceneEnter();
         });
         var nextIdx = this._currIndex++;
         if(this._currentScene) {
@@ -174,7 +172,7 @@ var ThemePlugin = Plugin.extend({
         this._previousStage = this._currentStage;
         this._currentStage = stageId;
         PluginManager.invoke('stage', stage, this, null, this);
-        
+
         // Trigger onstagechange event, which is bind by parent window
         if(isbrowserpreview && window &&  window.parent && window.parent.jQuery('body')){
             var retObj = {"stageId" : stageId};
@@ -183,7 +181,12 @@ var ThemePlugin = Plugin.extend({
     },
     preloadStages: function() {
         var stagesToLoad = this.getStagesToPreLoad(this._currentScene._data);
-        AssetManager.initStage(stagesToLoad.stage, stagesToLoad.next, stagesToLoad.prev);
+        var instance = this;
+        // removed "enter" event dispatch function from addchild "sceneenter" event & adding as a callback here
+        // (waiting for asset to load completely then "enter event is trigurred")
+        AssetManager.initStage(stagesToLoad.stage, stagesToLoad.next, stagesToLoad.prev, function(){
+            instance._currentScene.dispatchEvent('enter');
+        });
     },
     mergeStages: function(stage1, stage2) {
         for(k in stage2) {
@@ -208,7 +211,7 @@ var ThemePlugin = Plugin.extend({
        return this._isSceneChanging;
     },
     transitionTo: function(action) {
-        // not next and previoud are clicked at the same time, 
+        // not next and previoud are clicked at the same time,
         // handle only one actions(next/previous)
         if(this._isSceneChanging){ return; }
         var stage = this._currentScene;
@@ -236,8 +239,13 @@ var ThemePlugin = Plugin.extend({
             this.replaceStage(action.value, action);
         } else {
             this._isSceneChanging = true;
-            if (stage._stageController && stage._stageController.hasNext()) {
-                this.replaceStage(stage._data.id, action);
+            if(stage._stageController && stage._stageController.hasNext()){
+                    if(action.transitionType!== 'next'){
+                        this.replaceStage(action.value, action);
+                    }else{
+                        this.replaceStage(stage._data.id, action);
+                    }
+
             } else {
                 if (stage._stageController && action.reset == true) {
                     stage._stageController.reset();
@@ -250,7 +258,7 @@ var ThemePlugin = Plugin.extend({
         var gameAreaEle =  jQuery('#'+Renderer.divIds.gameArea);
         var chilElemtns = gameAreaEle.children();
         jQuery(chilElemtns).each(function(){
-            if((this.id !== "overlayHTML") && (this.id !== "gameCanvas")){
+            if((this.id !== "overlay") && (this.id !== "gameCanvas")){
                 jQuery(this).remove();
             }
         });
@@ -344,7 +352,7 @@ var ThemePlugin = Plugin.extend({
             if ("undefined" == typeof fval) fval = 0;
             fval = (fval + incr);
         } else {
-            fval = value    
+            fval = value
         }
         if (0 > fval) fval = 0;
         if ("undefined" != typeof max && fval >= max) fval = 0;

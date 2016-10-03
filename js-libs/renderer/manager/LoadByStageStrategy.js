@@ -147,10 +147,10 @@ LoadByStageStrategy = Class.extend({
                         nextContainer.hide();
                     }                    
                 }
-                //OverlayHtml.showNext();
+                //Overlay.showNext();
             });
         } else {
-            //OverlayHtml.showNext();
+            //Overlay.showNext();
         }
         if (prevStageId) {
             instance.loadStage(prevStageId, function() {
@@ -162,7 +162,7 @@ LoadByStageStrategy = Class.extend({
                         previousContainer.hide();
                     }
                 }
-                //OverlayHtml.showPrevious();
+                //Overlay.showPrevious();
                 //enablePrevious();
             });
         }
@@ -191,7 +191,17 @@ LoadByStageStrategy = Class.extend({
             }
         } else {
             if (cb) {
-                cb(); 
+                var currentStageLoader = instance.loaders[stageId];
+                // Check if loader for current satge is loaded completely
+                if (!currentStageLoader.loaded) {
+                    // if loader for current stage is not loaded, wait for loader to complete and call callback function
+                    currentStageLoader.on("complete", function() {
+                        cb();
+                    })
+                } else {
+                    // if loader for current stage is loaded call callback
+                    cb();
+                }
             }
         }                
     },
