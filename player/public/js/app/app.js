@@ -784,11 +784,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.menuOpened = false;
 
         $rootScope.evalAndSubmit = function () {
-          OverlayHtml.evalAndSubmit();
+          Overlay.evalAndSubmit();
         }
 
         $scope.navigate = function (navType) {
-          OverlayHtml.navigate(navType);
+          Overlay.navigate(navType);
         }
 
         $scope.init = function() {
@@ -1112,7 +1112,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('reloadStage', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" onclick="OverlayHtml.reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
+            template: '<a href="javascript:void(0)" onclick="Overlay.reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
         }
     }).directive('navigate', function($rootScope) {
         return {
@@ -1137,7 +1137,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         stageId: Renderer.theme._currentStage
                     });
                     $rootScope.isItemScene = false;
-                    OverlayHtml.navigate(to);
+                    Overlay.navigate(to);
                 };
             }
         }
@@ -1177,7 +1177,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 scope.moveToNextStage = function(navType) {
                     submitOnNextClick = false;
-                    OverlayHtml.navigate(navType);
+                    Overlay.navigate(navType);
                 }
             }
         }
