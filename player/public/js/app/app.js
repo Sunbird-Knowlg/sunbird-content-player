@@ -596,6 +596,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.userRating = 0;
         $scope.popUserRating = 0;
         $scope.stringLeft = 130;
+        $scope.selectedRating = 0;
 
         $rootScope.pageId = "endpage";
         $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-baloo credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
@@ -661,6 +662,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.submitFeedback = function() {
             $scope.userRating = $scope.popUserRating;
+            $scope.selectedRating = $scope.userRating;
             $scope.hideFeedback();
             var eks = {
                 type: "RATING",
@@ -678,6 +680,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.hideFeedback = function() {
             $scope.showFeedbackPopup = false;
             $scope.stringLeft = 130;
+            $scope.userRating = $scope.selectedRating;
         }
 
         $scope.playNextContent = function() {
