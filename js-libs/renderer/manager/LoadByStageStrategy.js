@@ -15,41 +15,47 @@ LoadByStageStrategy = Class.extend({
         createjs.Sound.alternateExtensions = ["mp3"];
         this.destroy();
         this.loadAppAssets();
-        if (themeData.manifest.media) {
+        if (!_.isUndefined(themeData.manifest.media)) {
             if (!_.isArray(themeData.manifest.media)) themeData.manifest.media = [themeData.manifest.media];
-        }
 
-        themeData.manifest.media.forEach(function(media) {
-            if ((media) && (media.src)) {
-                media.src = (media.src.substring(0,4) == "http") ? media.src : basePath + media.src;
-                if(createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
-                    if(media.type !== 'sound' && media.type !== 'audiosprite') {
-                        media.src = 'file:///' + media.src;
-                    }
-                }
-
-                if (media.type == 'json') {
-                    instance.commonAssets.push(_.clone(media));
-                } else if(media.type == 'spritesheet') {
-                    var imgId = media.id+"_image";
-                    instance.commonAssets.push({"id": imgId, "src": media.src, "type": "image"});
-                    media.images = [];
-                    var animations = {};
-                    if (media.animations) {
-                        for (k in media.animations) {
-                            animations[k] = JSON.parse(media.animations[k]);
+            themeData.manifest.media.forEach(function(media) {
+                if ((media) && (media.src)) {
+                    media.src = (media.src.substring(0, 4) == "http") ? media.src : basePath + media.src;
+                    if (createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
+                        if (media.type !== 'sound' && media.type !== 'audiosprite') {
+                            media.src = 'file:///' + media.src;
                         }
                     }
-                    media.animations = animations;
-                    instance.spriteSheetMap[media.id] = media;
-                } else {
-                    if(media.type == 'audiosprite') {
-                        if(!_.isArray(media.data.audioSprite)) media.data.audioSprite = [media.data.audioSprite];
+
+                    if (media.type == 'json') {
+                        instance.commonAssets.push(_.clone(media));
+                    } else if (media.type == 'spritesheet') {
+                        var imgId = media.id + "_image";
+                        instance.commonAssets.push({
+                            "id": imgId,
+                            "src": media.src,
+                            "type": "image"
+                        });
+                        media.images = [];
+                        var animations = {};
+                        if (media.animations) {
+                            for (k in media.animations) {
+                                animations[k] = JSON.parse(media.animations[k]);
+                            }
+                        }
+                        media.animations = animations;
+                        instance.spriteSheetMap[media.id] = media;
+                    } else {
+                        if (media.type == 'audiosprite') {
+                            if (!_.isArray(media.data.audioSprite)) media.data.audioSprite = [media.data.audioSprite];
+                        }
+                        instance.assetMap[media.id] = media;
                     }
-                    instance.assetMap[media.id] = media;
                 }
-            }
-        });
+            });
+        }else {
+          console.log("==== manifest media not defined ====");
+        }
         var stages = themeData.stage;
         if (!_.isArray(stages)) stages = [stages];
         stages.forEach(function(stage) {
@@ -67,9 +73,15 @@ LoadByStageStrategy = Class.extend({
         instance.loadTemplateAssets();
     },
     loadAppAssets: function() {
-        var localPath = "undefined" == typeof cordova ? "": "file:///android_asset/www/";
-        this.commonAssets.push({id: "goodjob_sound",src:  localPath+ "assets/sounds/goodjob.mp3"});
-        this.commonAssets.push({id: "tryagain_sound",src:  localPath+ "assets/sounds/letstryagain.mp3"});
+        var localPath = "undefined" == typeof cordova ? "" : "file:///android_asset/www/";
+        this.commonAssets.push({
+            id: "goodjob_sound",
+            src: localPath + "assets/sounds/goodjob.mp3"
+        });
+        this.commonAssets.push({
+            id: "tryagain_sound",
+            src: localPath + "assets/sounds/letstryagain.mp3"
+        });
     },
     populateAssets: function(data, stageId, preload, startStageId) {
         var instance = this;
@@ -120,11 +132,11 @@ LoadByStageStrategy = Class.extend({
         if (!asset) asset = this.templateLoader.getResult(assetId);
         if (!asset) asset = this.spriteSheetMap[assetId];
         if (!asset) {
-            if(this.assetMap[assetId]) {
+            if (this.assetMap[assetId]) {
                 console.error('Asset not found. Returning - ' + (this.assetMap[assetId].src));
                 return this.assetMap[assetId].src;
             } else
-                console.error('"' + assetId +'" Asset not found. Please check index.ecml.');
+                console.error('"' + assetId + '" Asset not found. Please check index.ecml.');
         };
         return asset;
     },
@@ -140,12 +152,12 @@ LoadByStageStrategy = Class.extend({
         if (nextStageId) {
             instance.loadStage(nextStageId, function() {
                 var plugin = PluginManager.getPluginObject('next');
-                if(plugin){
+                if (plugin) {
                     plugin.hide();
                     var nextContainer = PluginManager.getPluginObject('nextContainer');
                     if (nextContainer) {
                         nextContainer.hide();
-                    }                    
+                    }
                 }
                 //Overlay.showNext();
             });
@@ -155,7 +167,7 @@ LoadByStageStrategy = Class.extend({
         if (prevStageId) {
             instance.loadStage(prevStageId, function() {
                 var plugin = PluginManager.getPluginObject('previous');
-                if(plugin){
+                if (plugin) {
                     plugin.hide();
                     var previousContainer = PluginManager.getPluginObject('previousContainer');
                     if (previousContainer) {
@@ -203,7 +215,7 @@ LoadByStageStrategy = Class.extend({
                     cb();
                 }
             }
-        }                
+        }
     },
     loadCommonAssets: function() {
         var loader = this._createLoader();
@@ -230,32 +242,38 @@ LoadByStageStrategy = Class.extend({
         if (loader) {
             var itemLoaded = loader.getItem(assetId);
             /*if(itemLoaded){
-                loader.remove(assetId);                
+                loader.remove(assetId);
             }*/
             loader.installPlugin(createjs.Sound);
             loader.on("complete", function() {
-                if(cb){
+                if (cb) {
                     cb();
                 }
             }, this);
-            loader.loadFile({id:assetId, src: path});
-        }else{
+            loader.loadFile({
+                id: assetId,
+                src: path
+            });
+        } else {
             //Image is not intianlised to load, So loading image & adding to the loaders
             loader = this._createLoader();
             var instance = this;
             loader.on("complete", function(instance, loader) {
-                if(_.isUndefined(instance.loaders)){
+                if (_.isUndefined(instance.loaders)) {
                     instance.loaders = {};
                 }
                 instance.loaders[stageId] = loader;
-                if(cb){
+                if (cb) {
                     cb();
                 }
             }, this);
             loader.on("error", function(evt) {
                 console.error("AssetLoader - asset preload error", evt);
             });
-            loader.loadFile({id:assetId, src: path});
+            loader.loadFile({
+                id: assetId,
+                src: path
+            });
         }
     },
     destroy: function() {
@@ -268,7 +286,7 @@ LoadByStageStrategy = Class.extend({
         instance.stageManifests = {};
         try {
             createjs.Sound.removeAllSounds();
-        } catch(err) {}
+        } catch (err) {}
     },
     destroyStage: function(stageId) {
         if (this.loaders[stageId]) {

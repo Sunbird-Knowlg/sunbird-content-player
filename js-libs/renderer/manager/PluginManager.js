@@ -26,11 +26,13 @@ PluginManager = {
     },
     registerCustomPlugins: function(manifest, relativePath) { //TODO: Use async.js to load custom plugins
         // relativePath += "/";
+        if (!_.isEmpty(manifest)){
+          
         PluginManager.customPluginMap = {};
         var media = manifest.media;
         var plugins = _.filter(!_.isArray(media) ? [media] : media, function(media) {
             return media.type == 'plugin'});
-        
+
         media = _.filter(!_.isArray(media) ? [media] : media, function(media) {
             return media.type == 'js' || media.type == 'css'; });
         relativePath = ("undefined" !== typeof cordova && relativePath) ? "file:///" + relativePath : relativePath;
@@ -62,6 +64,7 @@ PluginManager = {
                 }
             });
         }
+      }
     },
     isPlugin: function(id) {
         if (PluginManager.pluginMap[id] || PluginManager.customPluginMap[id]) {
