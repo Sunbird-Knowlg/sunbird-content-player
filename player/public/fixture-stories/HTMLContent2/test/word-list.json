@@ -1,0 +1,29 @@
+{
+  "words ":[
+     {
+       "identifier ":"en_2 ",
+       "lemma ":"cat ",
+       "pos ":[
+         "noun "
+        ],
+       "pictures ":[
+          "https://s3.amazon.com/ekstep-public/language_assets/cat.jpg "
+       ],
+      "pronunciations ":[
+         "https://s3.amazon.com/ekstep-public/language_assets/cat.mp3 "
+       ]
+    }
+  ],
+  "relations ":[
+     {
+        "score ":"6.4 ",
+        "title ":" ",
+        "list ":[
+            "en_2  ",
+            "en_5 ",
+           "en_1 "
+        ],
+      "relation ":"akshara_boundary "
+   }
+  ]
+}

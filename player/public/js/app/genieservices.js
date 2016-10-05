@@ -82,9 +82,25 @@ genieservice_web = {
 };
 genieservice_portal = {
     api: {
-        basePath: '/v2/content/',
+        _baseUrl: undefined,
+        contentBasePath: '/learning/v2/content/',
+        languageBasePath: '/language/v2/language/',
         getFullAPI: function() {
-            return AppConfig[AppConfig.flavor] + this.basePath;
+            return this.getBaseUrl() + this.contentBasePath;
+        },
+        getLanguageFullAPI: function() {
+            //return AppConfig[AppConfig.flavor] + this.languageBasePath;
+            return this.getBaseUrl() + this.languageBasePath;
+        },
+        setBaseUrl: function(baseUrl){
+           this._baseUrl = baseUrl;
+        },
+        getBaseUrl: function(){
+            if(_.isUndefined(this._baseUrl)) {
+                alert("Base path is undefined.");
+                return;
+            }
+           return this._baseUrl;
         }
     },
     getCurrentUser: function() {
@@ -157,6 +173,26 @@ genieservice_portal = {
             }
         });
         });
+    },
+    languageSearch: function(filter){
+        return new Promise(function(resolve, reject) {    
+            jQuery.ajax({
+                type: 'POST',
+                url: genieservice_portal.api.getLanguageFullAPI() + "search",
+                headers: {"Content-Type": "application/json"},
+                data: filter
+            })
+            .done(function(resp){
+            //jQuery.post(genieservice_portal.api.getLanguageFullAPI(), filter, function(resp) {
+                var result = {};
+                if (!resp.error) {
+                    result.list = resp;
+                    resolve(resp.result);
+                } else {
+                    console.info("err : ", resp.error)
+                }
+            });
+        });
     }
 };
 
@@ -166,8 +202,8 @@ genieservice_html = {
     _callback: undefined,
     _jsFileIndex: 0,
     getCurrentUser: function() {
-        return new Promise(function(resolve, reject) {
-            /*var result = {};
+        /*return new Promise(function(resolve, reject) {
+            var result = {};
             result.status = "success";
             result.data = {
                 "avatar": "resource1",
@@ -177,18 +213,19 @@ genieservice_html = {
                 "age": 6,
                 "standard": -1
             };
-            resolve(result);*/
-            if(genieservice_html.localData.user) {
-                var user = {};
-                _.isArray(genieservice_html.localData.user) ? resolve(genieservice_html.localData.user[0]) : resolve(genieservice_html.localData.user);
+            resolve(result);      
+        });*/
+        return new Promise(function(resolve, reject) {
+            if(genieservice_html.localData.user){
+                var result = genieservice_html.localData.user;
+                resolve(result);                
             } else {
-                reject("no user found.")
+                reject("User data is not present in localData.")
             }
-            
         });
     },
     getContent: function(id) {
-         return new Promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
             var result = _.findWhere(genieservice_html.localData.content, {"identifier": id});
             resolve(result);
         });
@@ -198,16 +235,23 @@ genieservice_html = {
         genieservice_html._jsFileIndex = 0;
         genieservice_html._jsFilesToLoad = [];
         
-        genieservice_html._jsFilesToLoad.push("test/fixture-content-list.json");
-        genieservice_html._jsFilesToLoad.push("test/fixture-user-list.json");
-        genieservice_html._jsFilesToLoad.push("test/fixture-word-list.json");
+        genieservice_html._jsFilesToLoad.push({"file":"test/content-list.json"});
+        genieservice_html._jsFilesToLoad.push({"file":"test/word-list.json", "id":"wordList"});
+        genieservice_html._jsFilesToLoad.push({"file":"test/user.json", "id":"user"});
         genieservice_html.loadJsFilesSequentially();
     },
     loadJsFilesSequentially: function(){
          if (genieservice_html._jsFilesToLoad[genieservice_html._jsFileIndex]) {
-            var fileLoaded = genieservice_html._jsFilesToLoad[genieservice_html._jsFileIndex];
-            jQuery.getJSON(fileLoaded, function(json) {
-                _.extend(genieservice_html.localData, json);
+            var fileObj = genieservice_html._jsFilesToLoad[genieservice_html._jsFileIndex];
+            var fileToLoaded = fileObj.file;
+            jQuery.getJSON(fileToLoaded, function(jsonResp) {
+                if(fileObj.id){
+                    var respObj = {};
+                    respObj[fileObj.id] = jsonResp;
+                    _.extend(genieservice_html.localData, respObj);
+                } else {
+                    _.extend(genieservice_html.localData, jsonResp);                    
+                }
                 console.log("LocalData json loaded", genieservice_html.localData);
                 genieservice_html._jsFileIndex = genieservice_html._jsFileIndex + 1;
                 genieservice_html.loadJsFilesSequentially();
@@ -221,6 +265,16 @@ genieservice_html = {
                 console.log("local Files loaded successfully. But no callback function");
             }
         }
+    },
+    languageSearch: function(filter){
+        return new Promise(function(resolve, reject) {
+            //var result = _.findWhere(genieservice_html.localData.languageSearch, {"filter": filter});
+            if(genieservice_html.localData.wordList) {              
+                resolve(genieservice_html.localData.wordList);
+            } else {
+                reject("wordList data is not present in localData.")
+            }
+        });
     }
 };
 if ("undefined" == typeof cordova) {
