@@ -39,7 +39,7 @@ genieservice_web = {
             return new Promise(function(resolve, reject) {
                 if(content) {
                     resolve(content.metadata);
-                } 
+                }
             });
         } else {
             return new Promise(function(resolve, reject) {
@@ -50,7 +50,7 @@ genieservice_web = {
                             var item = _.findWhere(resp.content, { "identifier": id });
                             resolve(item);
                         } else {
-                            
+
                             reject(resp);
                         }
                     })
@@ -58,7 +58,7 @@ genieservice_web = {
                         reject(err);
                     });
                 });
-            }     
+            }
     },
     getContentList: function(filter) {
         return new Promise(function(resolve, reject) {
@@ -113,7 +113,7 @@ genieservice_portal = {
         });
     },
     getContentBody: function(id) {
-        return new Promise(function(resolve, reject) {    
+        return new Promise(function(resolve, reject) {
         jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", {"Content-Type" : "application/json"}, function(resp) {
             var result = {};
             if (!resp.error) {
@@ -130,8 +130,8 @@ genieservice_portal = {
             if(!(typeof content == 'undefined')) {
                 if("application/vnd.ekstep.content-collection" == content.metadata.mimeType) {
                     resolve(genieservice.getContentMetadata(id));
-                } else {                
-                    resolve(content.metadata);                
+                } else {
+                    resolve(content.metadata);
                 }
             } else{
                 resolve(genieservice.getContentMetadata(id));
@@ -139,7 +139,7 @@ genieservice_portal = {
         });
     },
     getContentMetadata: function(id) {
-        return new Promise(function(resolve, reject) {    
+        return new Promise(function(resolve, reject) {
         jQuery.get(genieservice_portal.api.getFullAPI() + id, {"Content-Type" : "application/json"}, function(resp) {
             var result = {};
             if (!resp.error) {
@@ -184,7 +184,7 @@ genieservice_html = {
             } else {
                 reject("no user found.")
             }
-            
+
         });
     },
     getContent: function(id) {
@@ -197,7 +197,7 @@ genieservice_html = {
         genieservice_html._callback = callback;
         genieservice_html._jsFileIndex = 0;
         genieservice_html._jsFilesToLoad = [];
-        
+
         genieservice_html._jsFilesToLoad.push("test/fixture-content-list.json");
         genieservice_html._jsFilesToLoad.push("test/fixture-user-list.json");
         genieservice_html._jsFilesToLoad.push("test/fixture-word-list.json");
@@ -216,7 +216,7 @@ genieservice_html = {
             console.log("js files load complete.");
             if(genieservice_html._callback){
                 console.log("local Files loaded successfully.");
-                genieservice_html._callback();                
+                genieservice_html._callback();
             }else{
                 console.log("local Files loaded successfully. But no callback function");
             }
