@@ -15,7 +15,7 @@ LoadByStageStrategy = Class.extend({
         createjs.Sound.alternateExtensions = ["mp3"];
         this.destroy();
         this.loadAppAssets();
-        if (!_.isUndefined(themeData.manifest.media)) {
+        if (!_.isUndefined(themeData.manifest && themeData.manifest.media)) {
             if (!_.isArray(themeData.manifest.media)) themeData.manifest.media = [themeData.manifest.media];
 
             themeData.manifest.media.forEach(function(media) {
@@ -53,8 +53,8 @@ LoadByStageStrategy = Class.extend({
                     }
                 }
             });
-        }else {
-          console.log("==== manifest media not defined ====");
+        } else {
+            console.log("==== manifest media not defined ====");
         }
         var stages = themeData.stage;
         if (!_.isArray(stages)) stages = [stages];
