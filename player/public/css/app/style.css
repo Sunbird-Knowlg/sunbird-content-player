@@ -991,7 +991,7 @@ body{
     margin: 5px 0px;
     padding: 5px 0px;
     width: 100%;
-    height: 70px;
+    height: 80px;
     border-width: 2px;
     border-color: #ccc;
     border-bottom-style: solid;
@@ -999,7 +999,7 @@ body{
 }
 .gc-fd-text{
     resize: none;
-    height: 100%;
+    height: 70%;
     width: 99%;
     border: solid 1px #cccccc;
     border-radius: 5px;
@@ -1146,4 +1146,8 @@ body{
     vertical-align: middle;
     display: table-cell;
     font-family: NotoSans;
+}
+
+.gc-fd-title > p {
+    color: #726d6a;
 }
