@@ -44,18 +44,8 @@ ControllerManager = {
 	},
 	getErrors: function() {
 		return ControllerManager.errors;
-	},
-	resetController: function(controller) {
-    _.find(ControllerManager.instanceMap, function(controller) {
-        var c = ControllerManager.instanceMap[controller._id];
-        if ("undefined" != typeof c) {
-            c.reset();
-        } else {
-            console.warn("No controller find with id:",controller);
-        }
+	}
+	
 
-
-    });
-}
 	
 }
