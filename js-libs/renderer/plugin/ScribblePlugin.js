@@ -18,9 +18,9 @@ var ScribblePlugin = Plugin.extend({
         var bgShape = new createjs.Shape();
 
         // addEventListener for container
-        this._self.on("mousedown", this.handleMouseDown.bind(this), true);
-        
+        this._self.addEventListener("mousedown", this.handleMouseDown.bind(this), true);
 
+        this._self.addEventListener("pressup", this.handleMouseUp.bind(this), true);
         createjs.Ticker.setFPS(50);
 
         bgShape.graphics = new createjs.Graphics().beginFill(background).drawRect(0, 0, dims.w, dims.h);
@@ -50,27 +50,34 @@ var ScribblePlugin = Plugin.extend({
         this._endPoint = new createjs.Point(x, y);
     },
     handleMouseDown: function(event) {
+        if (!event.primary) {
+            return;
+        }
         this.setBounderies();
-        var mousePoint = {x: event.stageX, y: event.stageY};
+        var mousePoint = Renderer.theme.mousePoint();
         mousePoint = this._self.globalToLocal(mousePoint.x, mousePoint.y);
         this._oldPt = new createjs.Point(mousePoint.x, mousePoint.y);
-        this._self.on("pressmove", this.handleMouseMove.bind(this), true);
-        this._self.on("pressup", this.handleMouseUp.bind(this), true);
+        this._self.addEventListener("pressmove", this.handleMouseMove.bind(this), true);
     },
     handleMouseMove: function(event) {
-        var mousePoint = {x: event.stageX, y: event.stageY};
+        if (!event.primary) {
+            return;
+        }
+        var mousePoint = Renderer.theme.mousePoint();
         var thickness = this.isInt(this._data.thickness) ?  this._data.thickness : 3;
         if (((mousePoint.x > this._startPoint.x) && (mousePoint.x < this._endPoint.x)) && ((mousePoint.y > this._startPoint.y) && (mousePoint.y < this._endPoint.y))) {
             mousePoint = this._self.globalToLocal(mousePoint.x, mousePoint.y);
             this.paintBrush.graphics.setStrokeStyle(thickness, 'round').beginStroke(this._data.color || "#000");
-            this.paintBrush.graphics.mt(this._oldPt.x, this._oldPt.y).lineTo(mousePoint.x , mousePoint.y);
-            this._oldPt = new createjs.Point(mousePoint.x, mousePoint.y);
+            this.paintBrush.graphics.mt(this._oldPt.x, this._oldPt.y).lineTo(mousePoint.x + 1, mousePoint.y + 1);
+            this._oldPt = { x: mousePoint.x, y: mousePoint.y };
             Renderer.update = true;
         }
     },
     handleMouseUp: function(event) {
-        this._self.off("pressmove", this.handleMouseMove);
-        this._self.off("pressup", this.handleMouseUp);
+        if (!event.primary) {
+            return;
+        }
+        this._self.removeEventListener("pressmove", this.handleMouseMove.bind(this), true);
     },
     clear: function(action) {
         this.paintBrush.graphics.clear();
