@@ -2,11 +2,12 @@ var ResetCommand = Command.extend({
 	_name: 'RESET',
 	_isPluginAction: false,
 	invoke: function(action) {
-		var c = ControllerManager.instanceMap[action.cType+"."+action.controller];
-        if ("undefined" != typeof c) {
-            c.reset();
+        var ctrl = Renderer.theme._controllerMap[action.controller];
+        if (!_.isUndefined(ctrl)) {
+            ctrl.reset();
+            console.info("Reset is Done for:", ctrl);
         } else {
-            console.warn("No controller find with id:", action.controller);
+            console.info("Reset is Failed for:", ctrl);
         }
 	}
 });
