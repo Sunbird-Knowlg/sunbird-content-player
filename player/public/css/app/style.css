@@ -312,7 +312,6 @@ body{
 .gc-menu-collection-cont {
     position: absolute;
     text-transform: uppercase;
-
     text-align: center;
     width: 70%;
     left: -10%;
@@ -321,6 +320,10 @@ body{
 
 .gc-menu-collection-cont img{
     width: 35%;
+}
+.popup-bg-img{
+    width: 100%;
+
 }
 .gc-menu-home-cont {
     position: absolute;
@@ -505,12 +508,6 @@ body{
     z-index: 9999;
 }
 
-.popup-goodjob-next {
-    position: absolute;
-    right: 24%;
-    top: 30%;
-    width: 15%;
-}
 
 .popup-retry {
     width: 35%;
@@ -523,6 +520,12 @@ body{
     display: inline-block;
     margin:2% 3%;
 }
+.popup-goodjob-next {
+    display: inline-block;
+    width: 40%;
+    margin: 4% 4%;
+}
+
 
 .popup-overlay {
     position: relative;
@@ -538,45 +541,35 @@ body{
     right: 43%;
     top: 1.5%;
 }
-/*.goodjob_stars{
-    width:100%;
-    height: 100%;
-}*/
+
+.gc-popup-icons-div{
+    position: absolute;
+    color:#e85424;
+    text-align: center;
+    padding: 0%;
+    width: 50%;
+    height: 40%;
+}
 
 .goodjob_next_div {
-    position: absolute;
     font-size: 1.5em;
-    color:#e85424;
     top: 33%;
-    width: 100%;
     text-align: center;
-    left: 17%;
-    padding: 0%;
+    left: 41%;
 
 }
 .tryagain-retry-div{
-    position: absolute;
-    font-size: 1.5em;
+    font-size: 1.2em;
     top: 3%;
-    color:#e85424;
-    text-align: center;
-    width: 50%;
-    height: 40%;
     left: 52%;
     padding: 0;
     margin: 10px;
 }
 
 .tryagian-next-div{
-   position: absolute;
-    font-size: 1.5em;
-    color:#e85424;
+    font-size: 1.2em;
     top: 36%;
-    text-align: center;
-    width: 50%;
-    height: 40%;
     left: 55%;
-    padding: 0%;
 
 }
 .gc-cp-scroll-ionic{
@@ -597,8 +590,6 @@ body{
 
 .credit-body-icon-font {
     width: 82%;
-   /* overflow-y:scroll;
-    overflow-x: hidden; */
     word-wrap: break-word;
     height: 75%;
     left: 10%;
