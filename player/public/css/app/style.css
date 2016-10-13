@@ -479,12 +479,20 @@ body{
 
 .assess-popup{
     position: absolute;
-    width: 60%;
+    width: 43%;
     height: 80%;
     border-radius: 10px;
-    top: 10%;
-    left: 20%;
+    
 }
+.assess-goodjob-popup{
+    top: 8%;
+    left: 30%;
+}
+.assess-tryagain-popup{
+    top: 26%;
+    left: 27%;
+}
+
 .credit-popup {
     width: 60%;
     height: 60%;
@@ -532,38 +540,44 @@ body{
     right: 43%;
     top: 1.5%;
 }
-.goodjob_stars{
+/*.goodjob_stars{
     width:100%;
     height: 100%;
-}
+}*/
 
-.popup-body {
-    position: relative;
-    overflow: hidden;
-    font-size: 2vw;
-    margin: 10px;
-    left: -2%;
-    top: 5%;
+.goodjob_next_div {
+    position: absolute;
+    font-size: 1.5em;
+    color:#e85424;
+    top: 33%;
+    width: 100%;
+    text-align: center;
+    left: 17%;
+    padding: 0%;
+
 }
 .tryagain-retry-div{
     position: absolute;
-    font-size: 2vw;
-    top: 17%;
+    font-size: 1.5em;
+    top: 3%;
+    color:#e85424;
     text-align: center;
     width: 50%;
     height: 40%;
-    left: 40%;
+    left: 52%;
     padding: 0;
     margin: 10px;
 }
+
 .tryagian-next-div{
-    position: absolute;
-    font-size: 2vw;
-    top: 55%;
+   position: absolute;
+    font-size: 1.5em;
+    color:#e85424;
+    top: 36%;
     text-align: center;
     width: 50%;
     height: 40%;
-    left: 65%;
+    left: 55%;
     padding: 0%;
 
 }
@@ -612,7 +626,8 @@ body{
 .gc-cp-coll{
     position: absolute;
     width:30%;
-    left:3%;
+    right:3%;
+    text-align: right;
 }
 
 .gc-cp-coll img{
@@ -622,8 +637,7 @@ body{
 .gc-cp-genie{
     position: absolute;
     width:30%;
-    right:3%;
-    text-align: right;
+    left:3%;
 }
 
 .gc-cp-genie img{

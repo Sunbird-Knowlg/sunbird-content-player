@@ -712,8 +712,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.restartContent = function() {
             jQuery('#loading').show();
             jQuery("#progressBar").width(0);
-
-            /* window.history.back();*/
+            jQuery('#loadingText').text(content.name);
             $state.go('playContent', {
                 'itemId': content.identifier
             });
@@ -818,19 +817,19 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             },
             retry: $rootScope.imageBasePath + "speaker_icon.png",
             goodJob: {
-                background: $rootScope.imageBasePath + "good_job_popup.png"
+                background: $rootScope.imageBasePath + "img_popup_next.png"
             },
             tryAgain: {
-                background: $rootScope.imageBasePath + "try_again_popup.png",
+                background: $rootScope.imageBasePath + "img_popup.png",
                 retry: $rootScope.imageBasePath + "retry_icon.png"
             },
             end: {
-                background: $rootScope.imageBasePath + "background.png"
+                background: $rootScope.imageBasePath + "img_bg.png"
             },
             popup: {
-                next: $rootScope.imageBasePath + "next_button_good_job_popup_.png",
-                retry: $rootScope.imageBasePath + "replay_button_try_again_popup_.png",
-                skip: $rootScope.imageBasePath + "next_button_try_again_popup_.png",
+                next: $rootScope.imageBasePath + "icn_bg_next.png",
+                retry: $rootScope.imageBasePath + "icn_bg_replay.png",
+                skip: $rootScope.imageBasePath + "icn_sml_next.png",
                 star: $rootScope.imageBasePath + "star.png",
                 credit_popup: $rootScope.imageBasePath + "popup.png",
                 goodjob_stars: $rootScope.imageBasePath + "img_stars.png"
@@ -844,11 +843,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         };
         $scope.goodJob = {
-            body: '<div class="font-baloo assess-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%; position: absolute;right:4%;top:6%"/><div class="popup-body"><img class="goodjob_stars" ng-src="{{ icons.popup.goodjob_stars }}"/><a href="javascript:void(0);" ng-click="hidePopup()"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p style="padding: 0%;position: absolute;left: 64%;bottom: 35%;">{{languageSupport.next}}</p></div></div>'
+            body: '<div class="font-baloo assess-popup assess-goodjob-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%";/><div class="goodjob_next_div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div>'
         };
 
         $scope.tryAgain = {
-            body: '<div class="font-baloo assess-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="tryagain-retry-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><p style="padding:0%;">{{languageSupport.replay}}</p></div><div class="tryagian-next-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')" /></a><p style="padding: 0%;">{{languageSupport.next}}</p></div></div></div>'
+            body: '<div class="font-baloo assess-popup assess-tryagain-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="tryagain-retry-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><p>{{languageSupport.replay}}</p></div><div class="tryagian-next-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div>'
         };
 
         $scope.openMenu = function() {
@@ -991,7 +990,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'E',
             template: '<a ng-class="{\'icon-opacity\': isCollection != true}" ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection != true}" ng-src="{{imgSrc}}"/></a>',
             link: function(scope, state) {
-                scope.imgSrc = $rootScope.imageBasePath + 'collection_icon.png';
+                scope.imgSrc = $rootScope.imageBasePath + 'icn_collections.png';
                 scope.isCollection = false;
                 if ($rootScope.collection && $rootScope.collection.children) {
                     scope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
@@ -1043,7 +1042,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('genie', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}genie_icon.png"/></a>',
+            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}icn_square_home.png"/></a>',
             link: function(scope) {
                 var pageId = $rootScope.pageId;
                 scope.goToGenie = function() {
@@ -1206,12 +1205,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         $timeout(function() {
                             // This timeout is required to apply the changes(because it is calling by JS)
                             $scope.assessStyle = 'assess-enable';
-                            $scope.image = $rootScope.imageBasePath + "submit.png";
+                            $scope.image = $rootScope.imageBasePath + "icn_submit.png";
                         }, 100);
                     } else {
                         //Disable state
                         $scope.assessStyle = 'assess-disable';
-                        $scope.image = $rootScope.imageBasePath + "submit_disabled.png";
+                        $scope.image = $rootScope.imageBasePath + "icn_submit_inactive.png";
                     }
                 });
 
