@@ -3,9 +3,9 @@ AppConfig = {
 	PROCESSING_TIMEOUT: 10, // in minutes
 	APP_STATUS: "AT",
 	App_RUNTIME: "AT",
-	QA: "//qa.ekstep.in/api/learning",
-	sandbox: "//sandbox-community.ekstep.in/api/learning",
-	production: "//community.ekstep.in/api/learning",
+	QA: "//qa.ekstep.in/api",
+	sandbox: "//sandbox-community.ekstep.in/api",
+	production: "//community.ekstep.in/api",
 	recorder: "AUDIO_RECORDER",
 	flavor: "QA"
 }
