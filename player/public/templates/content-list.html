@@ -1,15 +1,17 @@
 <style>
     .swiper-background {
-        background-image: url("img/icons/background.png");
+        background-image: url("img/icons/img_bg.png");
         background-size: cover;
     }
     .swiper-slide {
-        background-image:url('img/icons/img_panel.png');
+        /*background-image:url('img/icons/img_panel.png');*/
         background-position: center;
         background-size: cover;
         width: 150px;
         height: 190px;
         padding: 15px;
+        border-radius: 10%;
+        background-color: white;
         margin-left:30px !important;
         margin-bottom:30px !important;
         margin-top:10px !important;
@@ -35,8 +37,9 @@
         <div class="product swiper-slide"
             ng-repeat="story in stories track by $index"
             ng-click="playContent(story);">
-            <img ng-src="{{story.appIcon}}"></img>
             <p class="product_name">{{story.name}}</p>
+            <img ng-src="{{story.appIcon}}"></img>
+            
         </div>
     </ion-content>
 </ion-pane>
