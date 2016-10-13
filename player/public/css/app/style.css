@@ -206,14 +206,15 @@ body{
     padding: 0 2%;
     text-overflow: ellipsis;
     line-height: 1.5em;
+    margin-bottom: 7%;
     width: 100%;
-    margin-top: 10%;
+    margin-top: 7%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    height: 24%;
+    height: 23%;
     -webkit-line-clamp: 2;
-    font-size: 10vh;
-    -webkit-text-stroke: 0.2vh #00cccc;
+    font-size: 9vh;
+    -webkit-text-stroke: 0.2vh #009e81;
     z-index: 0;
   }
 
@@ -578,6 +579,21 @@ body{
     padding: 0%;
 
 }
+.gc-cp-scroll-ionic{
+     transform: translate3d(0px, -28px, 0px) scale(1);
+     height: 100%;"
+}
+.gc-cp-header-div{
+    position: absolute; 
+    top: 15%;
+    width: 100%;
+}
+.gc-cp-header{
+    background-color:transparent;
+    border-bottom:0px;
+    background-image:none;
+    height: 20%;
+}
 
 .credit-body-icon-font {
     width: 82%;
@@ -591,6 +607,9 @@ body{
     overflow-y: auto;
     overflow-x:hidden;
 
+}
+.gc-play-icon{
+    width:17%;
 }
 .credit-body-icon-font::-webkit-scrollbar {
     width: 3%;
@@ -619,26 +638,37 @@ body{
     height: 100%;
     overflow: auto;
 }
+.gc-cp-background{
+     position: absolute;
+     width: 100%;
+     height: 100%;
+}
+.gc-play-container{
+    top: 100%;
+    position: absolute;
+    width: 100%;
+    height: 20%;
+}
 
 .gc-cp-coll{
     position: absolute;
-    width:30%;
-    right:3%;
+    width:25%;
+    right:4%;
     text-align: right;
 }
 
 .gc-cp-coll img{
-    width: 27%;
+    width: 25%;
 }
 
 .gc-cp-genie{
     position: absolute;
-    width:30%;
-    left:3%;
+    width:25%;
+    left:2%;
 }
 
 .gc-cp-genie img{
-    width: 27%;
+    width: 25%;
 }
 
 .gc-ep-cong{
@@ -1093,6 +1123,8 @@ body{
     margin-left: 46%;
     position: absolute;
     color: white;
+    padding: 1%;
+    font-weight: bold;
 }
 
 .gc-ep-loader {
