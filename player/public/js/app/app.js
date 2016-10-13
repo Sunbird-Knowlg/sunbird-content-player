@@ -121,9 +121,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "relatedContent": "Related Content",
             "showMore": "Show More",
             "noCreditsAvailable": "There are no credits available",
-            "congratulations": "Congratulations! You just completed this lesson!",
+            "congratulations": "Congratulations! You just completed",
             "credit": "Credits",
             "next": "Next",
+            "scores" : "SCORES AND RATING"
         }
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -825,7 +826,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 retry: $rootScope.imageBasePath + "retry_icon.png"
             },
             end: {
-                background: $rootScope.imageBasePath + "background.png"
+                background: $rootScope.imageBasePath + "img_bg.png"
             },
             popup: {
                 next: $rootScope.imageBasePath + "next_button_good_job_popup_.png",
@@ -1021,7 +1022,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             },
             template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imgSrc}}"/></a>',
             link: function(scope, state) {
-                scope.imgSrc = $rootScope.imageBasePath + 'home_icon.png';
+                scope.imgSrc = $rootScope.imageBasePath + 'icn_square_home.png';
                 scope.showHome = false;
                 if (scope.disableHome == true)
                     scope.showHome = true;
@@ -1236,7 +1237,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'EA',
             template: "<div style='display: inline-block; padding: 2%; cursor:pointer; width:20%; height:100%;' ng-repeat='idx in maxRatings track by $index'> \
                     <img ng-src='{{((hoverValue + _rating) <= $index) && rating_empty || rating_selected }}' \
-                    ng-Click='isolatedClick($index + 1)' style='height:100%;' \></img> \
+                    ng-Click='isolatedClick($index + 1)' style='height:72%;' \></img> \
             </div>",
             compile: function(element, attrs) {
                 if (!attrs.maxRating || (Number(attrs.maxRating) <= 0)) {
@@ -1245,7 +1246,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             },
             controller: function($scope, $element, $attrs, $rootScope) {
                 $scope.maxRatings = [];
-                $scope.rating_empty = $rootScope.imageBasePath + "star_inactive.png";
+                $scope.rating_empty = $rootScope.imageBasePath + "icn_credit_star.png";
                 $scope.rating_selected = $rootScope.imageBasePath + "star_active.png";
 
                 for (var i = 1; i <= $scope.maxRating; i++) {

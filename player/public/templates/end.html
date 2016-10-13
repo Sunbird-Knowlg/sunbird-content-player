@@ -18,45 +18,55 @@
 </style>
 
 <div class="font-baloo gc-ep-cont">
-    <image ng-src="{{icons.end.background}}" style="width:100%;height:100%;position: absolute;
-    z-index: -1;" />
+    <image ng-src="{{icons.end.background}}" style="width:100%;height:100%;position: absolute; z-index: -1;" />
 
     <home class="gc-ep-home"></home>
+
+    <div class="gc-ep-content">
+        <p class="gc-ep-cong gc-text-elipsis">{{languageSupport.congratulations}}</p>
+        <p class="icon-font gc-ep-title gc-text-elipsis" ng-if="content.name">{{content.name}}</p>
+        <p class="gc-content-owner gc-text-elipsis">{{ languageSupport.author }}: {{content.owner}}</p>
+    </div>
+
+    <center class="gc-ep-credits">
+        <input class="gc-btn-credits btn-normal" type="button" ng-click="showCredits()" />
+    </center>
+
     <div class="gc-ep-content-holder">
-
         <div class="gc-ep-assessment-cont">
-            <div>
-                <p class="gc-ep-cong gc-text-elipsis">{{languageSupport.congratulations}}</p>
-                <div class="gc-endpage-title-cont">
-                    <p class="icon-font gc-ep-title gc-text-elipsis" ng-if="content.name">{{content.name}}</p>
-                </div>
-
-                <p class="gc-content-owner gc-text-elipsis">{{ languageSupport.author }}: {{content.owner}}</p>
-                <center>
-                    <input class="gc-btn-credits btn-normal" type="button" ng-click="showCredits()" value="Credits" />
-                </center>
-            </div>
-
-            <div class="gc-ep-time-score" ng-show="showFeedbackArea">
-                <div ng-class="showScore ? 'gc-ep-time ' : 'gc-ep-time-mid '" id="timeSpentArea">
-                    <image ng-class="showScore ? 'img-float-left':'img-float-mid' " ng-src="{{imageBasePath}}time_icon.png" style="position:relative;" />
-                    <p class="gc-white-text gc-ep-white-title">{{totalTimeSpent}}</p>
-                </div>
-
-                <div class="gc-ep-score" ng-show="showScore">
-                    <image ng-src="{{imageBasePath}}result_icon.png" style="position:relative;width:20%" />
-                    <p class="gc-white-text gc-ep-white-title">{{totalScore}}</p>
-                </div>
-            </div>
-
+            
             <div class="gc-ep-rating-cont">
                 <div class="gc-ep-rating" ng-if="!showFeedbackPopup">
+                    <p>{{languageSupport.scores}}</p>
                     <star-rating rating="userRating" read-only="false" max-rating="5" click="showFeedback(param)" style="height: 100%;"></star-rating>
                 </div>
                 <div class="gc-ep-comments" style="display:none">
                     <img src="img/icons/feedback_icon.png" />
                 </div>
             </div>
+
+            <div class="gc-ep-time-score" ng-show="showFeedbackArea">
+                <div ng-class="showScore ? 'gc-ep-time ' : 'gc-ep-time-mid '" id="timeSpentArea">
+                    <image ng-class="showScore ? 'img-float-left':'img-float-mid' " ng-src="{{imageBasePath}}icn_watch.png" style="position:relative;" />
+                    <p class="gc-white-text gc-ep-white-title">{{totalTimeSpent}}</p>
+                </div>
+                <div class="gc-ep-score" ng-show="showScore">
+                    <image ng-src="{{imageBasePath}}icn_trophy.png" />
+                    <p class="gc-white-text gc-ep-white-title">{{totalScore}} 6/10</p>
+                </div>
+            </div>
+
+            <div class="gc-ep-footer">
+                <div class="gc-ep-footer-icons gc-ep-replay">
+                    <restart></restart>
+                    <p>{{languageSupport.replay}}</p>
+                </div>
+                <div class="gc-ep-footer-icons gc-ep-genie">
+                    <genie></genie>
+                    <p>{{languageSupport.genie}}</p>
+                </div>
+            </div>
+
         </div>
         <div class="gc-ep-related-cont" ng-controller="RelatedContentCtrl">
             <p class="gc-ep-cong gc-text-elipsis">{{ languageSupport.whatWeDoNext }}</p>
@@ -83,14 +93,6 @@
                 </div>
             </div>
             <div class="gc-ep-footer">
-                <div class="gc-ep-footer-icons gc-ep-replay">
-                    <restart></restart>
-                    <p>{{languageSupport.replay}}</p>
-                </div>
-                <div class="gc-ep-footer-icons gc-ep-genie">
-                    <genie></genie>
-                    <p>{{languageSupport.genie}}</p>
-                </div>
                 <div class="gc-ep-footer-icons gc-ep-collection">
                     <collection></collection>
                     <p>{{languageSupport.collection}}</p>
