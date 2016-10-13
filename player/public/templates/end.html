@@ -57,23 +57,27 @@
             </div>
 
             <div class="gc-ep-footer">
+                <div class="gc-ep-footer-icons gc-ep-lastPage">
+                    <last-page></last-page>
+                    <p>{{languageSupport.lastPage}}</p>
+                </div>
                 <div class="gc-ep-footer-icons gc-ep-replay">
                     <restart></restart>
                     <p>{{languageSupport.replay}}</p>
                 </div>
-                <div class="gc-ep-footer-icons gc-ep-genie">
+                <!-- <div class="gc-ep-footer-icons gc-ep-genie">
                     <genie></genie>
                     <p>{{languageSupport.genie}}</p>
-                </div>
+                </div> -->
             </div>
 
         </div>
         <div class="gc-ep-related-cont" ng-controller="RelatedContentCtrl">
-            <p class="gc-ep-cong gc-text-elipsis">{{ languageSupport.whatWeDoNext }}</p>
-            <div class="gc-ep-rel-title" ng-show="showRelatedContentHeader">
+            <p class="gc-ep-cong gc-text-elipsis">{{ languageSupport.nextContent }}</p>
+            <!-- <div class="gc-ep-rel-title" ng-show="showRelatedContentHeader">
                 <p>{{languageSupport.relatedContent}}</p>
                 <a class="gc-ep-show-all-rel" href="javscript:void(0)" ng-show="contentShowMore" ng-click="showAllRelatedContent()">{{languageSupport.showMore}}</a>
-            </div>
+            </div> -->
             <div id="endPageLoader" class="gc-ep-loader">
                 <div style="margin-top: 20%;">
                     <ion-spinner icon="bubbles"></ion-spinner>

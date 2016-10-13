@@ -117,14 +117,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "time": "TIME",
             "result": "RESULT",
             "feedback": "Feedback",
-            "collection": "Collection",
+            "collection": "COLLECTION",
             "relatedContent": "Related Content",
             "showMore": "Show More",
             "noCreditsAvailable": "There are no credits available",
             "congratulations": "Congratulations! You just completed",
             "credit": "Credits",
             "next": "Next",
-            "scores" : "SCORES AND RATING"
+            "scores" : "SCORES AND RATING",
+            "lastPage" : "GOT O LAST PAGE",
+            "nextContent" : "NEXT CONTENT"
         }
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -1234,7 +1236,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 mouseLeave: "&"
             },
             restrict: 'EA',
-            template: "<div style='display: inline-block; padding: 2%; cursor:pointer; width:20%; height:100%;' ng-repeat='idx in maxRatings track by $index'> \
+            template: "<div style='display: inline-block; padding: 2%; cursor:pointer; width:12%; height:100%;' ng-repeat='idx in maxRatings track by $index'> \
                     <img ng-src='{{((hoverValue + _rating) <= $index) && rating_empty || rating_selected }}' \
                     ng-Click='isolatedClick($index + 1)' style='height:72%;' \></img> \
             </div>",
@@ -1269,4 +1271,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 };*/
             }
         };
+    }).directive('lastPage', function($rootScope) {
+        return {
+            restrict: 'E',
+            template: '<a href="javascript:void(0)" ng-click="goToLastPage()"><img ng-src="{{imageBasePath}}icn_back_page.png"/></a>',
+            link: function(scope) {
+                
+            }
+        }
     });
