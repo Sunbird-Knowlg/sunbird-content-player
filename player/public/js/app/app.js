@@ -112,7 +112,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "voice": "Voice",
             "audio": "Audio",
             "author": "Author",
-            "instructions": "NOTES FOR TEACHER",
+            "instructions": "NOTES TO TEACHER",
             "replay": "Replay",
             "time": "TIME",
             "result": "RESULT",
@@ -713,23 +713,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         }
 
-        $scope.restartContent = function() {
-            jQuery('#loading').show();
-            jQuery("#progressBar").width(0);
-            jQuery('#loadingText').text(content.name);
-            $state.go('playContent', {
-                'itemId': content.identifier
-            });
-            var gameId = TelemetryService.getGameId();
-            var version = TelemetryService.getGameVer();
-            var instance = this;
-            setTimeout(function() {
-                if (gameId && version) {
-                    TelemetryService.start(gameId, version);
-                }
-            }, 500);
-        }
-
         $scope.setTotalTimeSpent = function() {
             var startTime = (TelemetryService && TelemetryService.instance && TelemetryService.instance._end[TelemetryService.instance._end.length - 1]) ? TelemetryService.instance._end[TelemetryService.instance._end.length - 1].startTime : 0;
             if (startTime) {
@@ -1020,7 +1003,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             },
             template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imgSrc}}"/></a>',
             link: function(scope, state) {
-                scope.imgSrc = $rootScope.imageBasePath + 'icn_square_home.png';
+                scope.imgSrc = $rootScope.imageBasePath + 'icn_round_play.png';
                 scope.showHome = false;
                 if (scope.disableHome == true)
                     scope.showHome = true;
@@ -1042,7 +1025,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('genie', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}icn_square_home.png"/></a>',
+            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}icn_round_play.png"/></a>',
             link: function(scope) {
                 var pageId = $rootScope.pageId;
                 scope.goToGenie = function() {
@@ -1106,10 +1089,33 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 }
             }
         }
-    }).directive('restart', function($rootScope) {
+    }).directive('restart', function($rootScope, $state, $stateParams) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}retry_icon.png"/></a>'
+            template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/></a>',
+            link: function(scope) {
+                scope.restartContent = function() {
+                    var content = $rootScope.content;
+                    jQuery('#loading').show();
+                    jQuery("#progressBar").width(0);
+                    jQuery('#loadingText').text(content.name);
+                    if ($stateParams.itemId != content.identifier) {
+                        $state.go('playContent', {
+                            'itemId': content.identifier
+                        });
+                    } else {
+                        $state.reload();
+                    }
+                    var gameId = TelemetryService.getGameId();
+                    var version = TelemetryService.getGameVer();
+                    var instance = this;
+                    setTimeout(function() {
+                        if (gameId && version) {
+                            TelemetryService.start(gameId, version);
+                        }
+                    }, 500);
+                }
+            }
         }
     }).directive('reloadStage', function($rootScope) {
         return {

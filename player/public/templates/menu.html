@@ -8,14 +8,26 @@
         <div class="gc-menu-title-cont">
             <p class="icon-font">{{item.name}}</p>
         </div>
-        <div class="gc-menu-home-cont">
-            <home class="gc-home" info="true"></home>
-            <!-- <a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="img/icons/home_icon.png" style="width:26%;"/></a> -->
-            <p class="icon-font" style="padding-top:2%; font-size:2.6vh;">{{languageSupport.home}}</p>
+        <div>
+            <div class="gc-menu-genie-cont">
+                <genie></genie>
+                <p class="icon-font" style="padding-top:2%; font-size:0.8em; font-weight: normal;">{{languageSupport.home}}</p>
+            </div>
+            <div class="gc-menu-collection-cont">
+                <collection></collection>
+                <p class="icon-font" style="padding-top:2%; font-size:0.8em; font-weight: normal;">{{languageSupport.collection}}</p>
+            </div>
         </div>
-        <div class="gc-menu-collection-cont">
-            <collection></collection>
-            <p class="icon-font" style="padding-top:2%; font-size:2.6vh;">{{languageSupport.collection}}</p>
+        <div style="bottom: 44%; position: absolute; width: 100%;">
+            <div class="gc-menu-replay-cont">
+                <restart></restart>
+                <!-- <a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="img/icons/home_icon.png" style="width:26%;"/></a> -->
+                <p class="icon-font" style="padding-top:2%; font-size:0.8em; font-weight: normal;">{{languageSupport.replay}}</p>
+            </div>
+            <div class="gc-menu-inst-cont">
+                <stage-instructions></stage-instructions>
+                <p class="icon-font" style="padding-top:2%; font-size:0.8em; font-weight: normal; padding: 0% 15%;">{{languageSupport.instructions}}</p>
+            </div>
         </div>
         <div class="gc-menu-mute-cont">
             <mute></mute>
@@ -23,14 +35,6 @@
             <!--  <img class="gc-mute-bg" ng-src="{{imageBasePath}}unmute.png" style="position:absolute; bottom:10%; width:60%; height:10%;  left:27%;" />
  -->    <img class="gc-mute-bg" ng-src="{{imageBasePath}}base.png" style="    position:absolute;width:70%;left:13%;" />
             <!-- <img class="gc-mute-bg" ng-src="{{imageBasePath}}autoplay_icon.png" style=" position: absolute; bottom: 12%; width: 12%; height: 6%; left: 56%;" /> -->
-        </div>
-        <div class="gc-menu-genie-cont">
-            <genie></genie>
-            <p class="icon-font" style="padding-top:2%; font-size:2.6vh; ">{{languageSupport.genie}}</p>
-        </div>
-        <div class="gc-menu-inst-cont">
-            <stage-instructions></stage-instructions>
-            <p class="icon-font" style="padding-top:2%; font-size:2.6vh; ">{{languageSupport.instructions}}</p>
         </div>
         <div class="inst-message-cont" ng-show="showInst">
             <img class="inst-icon" ng-src="{{imageBasePath}}expand_teacher_instruction.png" ng-click="expeandInstruction()" />
