@@ -80,7 +80,7 @@
 
 .products_box { height:20px; margin-left:20px; }
 .product { float:left; margin-right:30px; margin-top:36px; height:107px; position:relative; display:block; }
-.product img { display:block; border:none; cursor:pointer; }
+.product img { display:block; cursor:pointer; }
 
 .product_title { 
 	position:absolute; z-index:999; padding:3px 3px 5px 3px; text-align:center; color:#ffffff; background:#c33b4e; overflow:hidden; max-height:11px; line-height:14px; min-width:5px; max-width:80%;
