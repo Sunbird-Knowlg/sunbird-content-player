@@ -25,7 +25,7 @@
     <home class="gc-ep-home"></home>
 
     <div class="gc-ep-content">
-        <p class="gc-ep-cong gc-text-elipsis">{{languageSupport.congratulations}}</p>
+        <p class="gc-ep-cong gc-text-elipsis" style="margin: 1% 0%;">{{languageSupport.congratulations}}</p>
         <p class="icon-font gc-ep-title gc-text-elipsis" ng-if="content.name">{{content.name}}</p>
         <p class="gc-content-owner gc-text-elipsis">{{ languageSupport.author }}: {{content.owner}}</p>
     </div>
@@ -59,7 +59,7 @@
             </div>
 
             <div class="gc-ep-footer">
-                <div class="gc-ep-footer-icons gc-ep-lastPage">
+                <div class="gc-ep-footer-icons gc-ep-lastPage" style="display: none;">
                     <last-page></last-page>
                     <p>{{languageSupport.lastPage}}</p>
                 </div>
@@ -67,15 +67,13 @@
                     <restart></restart>
                     <p>{{languageSupport.replay}}</p>
                 </div>
-                <!-- <div class="gc-ep-footer-icons gc-ep-genie">
-                    <genie></genie>
-                    <p>{{languageSupport.genie}}</p>
-                </div> -->
             </div>
 
         </div>
         <div class="gc-ep-related-cont" ng-controller="RelatedContentCtrl">
-            <p class="gc-ep-cong gc-text-elipsis">{{ languageSupport.nextContent }}</p>
+            <div class="gc-ep-next">
+                <p class="gc-ep-cong gc-text-elipsis" style="padding: 2%">{{ languageSupport.nextContent }}</p>
+            </div>
             <!-- <div class="gc-ep-rel-title" ng-show="showRelatedContentHeader">
                 <p>{{languageSupport.relatedContent}}</p>
                 <a class="gc-ep-show-all-rel" href="javscript:void(0)" ng-show="contentShowMore" ng-click="showAllRelatedContent()">{{languageSupport.showMore}}</a>
@@ -117,8 +115,8 @@
                 <div class="gc-feedback-popup">
                     <div star-rating rating="popUserRating" read-only="false" max-rating="5" click="updatePopUserRating(param)"></div>
                     <div class="gc-fd-comments">
-                    <div class="gc-fd-title"><p>Write your comments</p></div>
-                        <textarea class="gc-fd-text" ng-keyup="commentLength()" id="commentText"></textarea>
+                    <!-- <div class="gc-fd-title"><p>Write your comments</p></div> -->
+                        <textarea class="gc-fd-text" ng-keyup="commentLength()" id="commentText" placeholder="{{languageSupport.comment}}"></textarea>
                         <div class="gc-fd-commentInfo">
                             <p>{{stringLeft}}</p>
                         </div>

@@ -125,8 +125,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "credit": "Credits",
             "next": "Next",
             "scores" : "SCORES AND RATING",
-            "lastPage" : "GOT O LAST PAGE",
-            "nextContent" : "NEXT CONTENT"
+            "lastPage" : "GO TO LAST PAGE",
+            "nextContent" : "NEXT CONTENT",
+            "comment" : "write your comment..."
         }
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -1232,7 +1233,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 mouseLeave: "&"
             },
             restrict: 'EA',
-            template: "<div style='display: inline-block; padding: 2%; cursor:pointer; width:12%; height:100%;' ng-repeat='idx in maxRatings track by $index'> \
+            template: "<div style='display: inline-block; padding: 1%; cursor:pointer; width:12%; height:45%;' ng-repeat='idx in maxRatings track by $index'> \
                     <img ng-src='{{((hoverValue + _rating) <= $index) && rating_empty || rating_selected }}' \
                     ng-Click='isolatedClick($index + 1)' style='height:72%;' \></img> \
             </div>",
