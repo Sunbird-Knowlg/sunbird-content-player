@@ -122,7 +122,7 @@
 .product img {
     width: 120px;
     height: 130px;
-    border: 2px solid #B98549;
+    border: 2px solid #dfa784;
     border-radius: 10px;
     padding: 2px;
     background: white;
@@ -174,9 +174,11 @@
 .product_name {
 	font-size: 15px;
     font-family: flavours !important;
-    color: rgb(90, 60, 34) !important;
-    margin-top: 10px;
-    text-align: center;
+    font-style:bold;
+    color: #454545;
+   /* margin-top: 10px;*/
+    /*text-align: center;*/
+    text-transform: uppercase;
     width: 120px;
     height: 20px;
     overflow: hidden;

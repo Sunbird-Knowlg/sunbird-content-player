@@ -838,20 +838,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 credit_popup: $rootScope.imageBasePath + "popup.png",
                 goodjob_stars: $rootScope.imageBasePath + "img_stars.png"
             },
-            /* popup_kid: {
-                 good_job: $rootScope.imageBasePath + "LEFT.png",
-                 retry: $rootScope.imageBasePath + "Genie_ RETRY.png"
-             },*/
             popup_close: {
                 close_icon: $rootScope.imageBasePath + "close_popup.png",
             }
         };
         $scope.goodJob = {
-            body: '<div class="font-baloo assess-popup assess-goodjob-popup"><img ng-src="{{icons.goodJob.background}}" style="width:100%";/><div class="goodjob_next_div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div>'
+            body: '<div class="font-baloo assess-popup assess-goodjob-popup"><img class="popup-bg-img" ng-src="{{icons.goodJob.background}}"/><div class="goodjob_next_div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next " ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div>'
         };
 
         $scope.tryAgain = {
-            body: '<div class="font-baloo assess-popup assess-tryagain-popup"><img ng-src="{{icons.tryAgain.background}}" style="width:100%;" /><div class="tryagain-retry-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><p>{{languageSupport.replay}}</p></div><div class="tryagian-next-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div>'
+            body: '<div class="font-baloo assess-popup assess-tryagain-popup"><img class="popup-bg-img" ng-src="{{icons.tryAgain.background}}"/><div class="tryagain-retry-div gc-popup-icons-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><p>{{languageSupport.replay}}</p></div><div class="tryagian-next-div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div>'
         };
 
         $scope.openMenu = function() {

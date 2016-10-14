@@ -6,46 +6,37 @@
     } */
 
 .swiper-slide {
-    background-image: url('img/icons/img_panel.png');
+    /*background-image: url('img/icons/img_panel.png');*/
     background-position: center;
     background-size: cover;
     width: 150px;
     height: 190px;
     padding: 15px;
+    border-radius: 10%;
+    background-color: white;
     margin-left: 30px !important;
     margin-bottom: 30px !important;
     margin-top: 10px !important;
 }
 </style>
 <ion-pane class="swiper-background pane" ng-show="showPage">
-    <!--  <img ng-src="{{imageBasePath}}cover_page_background.png" style="position: absolute; width: 100%; height: 100%;"> -->
-    <img ng-src="{{imageBasePath}}background.png" style="position: absolute; width: 100%; height: 100%;">
-    <!-- <img ng-src="{{imageBasePath}}cover_backdrop.png" style="position: absolute; width: 100%; height: 100%;"> -->
-   <!--  <div id="cover">
-        <p class="icon-font cover-page-title">{{item.name}}</p>
-    </div> -->
-    <ion-header-bar class="bar-header bar disable-user-behavior" style="background-color:transparent;border-bottom:0px;background-image:none;height: 20%;">
-        <div preview="false" style="position: absolute; top: 15%; width: 100%;">
+    <img class="gc-cp-background" ng-src="{{imageBasePath}}img_bg.png">
+    <ion-header-bar class="bar-header bar disable-user-behavior gc-cp-header">
+        <div preview="false" class="gc-cp-header-div">
             <collection class="gc-cp-coll"></collection>
             <genie class="gc-cp-genie"></genie>
         </div>
     </ion-header-bar>
     <ion-content class="scroll-content ionic-scroll  has-header">
-        <div class="scroll" style="transform: translate3d(0px, -28px, 0px) scale(1); height: 100%;">
-            <!-- <div class="item-body noBorder" style="margin:-3px;">
-            </div> -->
-           
-                <center>
-                    <div id="cover">
-                        <p class="font-baloo cover-page-title">{{item.name}}</p>
-                    </div>
-                    <div ng-show="item.status == 'ready'" style="top: 100%;position: absolute;width: 100%;height: 20%;" class="">
-                        <img class="play_image" ng-click="playContent(item)" src="img/icons/btn_play_selected.png" style="width: 18%;">
-                    </div>
-                </center>
-            
-
-            
-        </div>
+    <div class="scroll gc-cp-scroll-ionic">
+        <center>
+            <div id="cover">
+                <p class="font-baloo cover-page-title">{{item.name}}</p>
+            </div>
+            <div class="gc-play-container" ng-show="item.status == 'ready'">
+                <img class="gc-play-icon" ng-click="playContent(item)" src="{{imageBasePath}}icn_bg_play.png">
+            </div>
+        </center>
+    </div>
     </ion-content>
 </ion-pane>
