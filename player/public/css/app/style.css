@@ -227,7 +227,7 @@ body{
     width: 100%;
     text-transform: uppercase;
     padding: 0 10%;
-    font-size: 2em;
+    font-size: 1.8em;
 }
 
 .cover-page-title1 {
@@ -646,7 +646,6 @@ body{
     text-align: center;
     font-size: 1.1em;
     font-weight: bold;
-    margin: 3% 0% 1% 0%;
     padding: 0 5%;
     color: #494949;
 }
@@ -717,10 +716,9 @@ body{
 .gc-ep-time-score{
     position: absolute;
     border: 2px solid #2fcce7;
-    top: 26%;
-    margin: 5% 0% 0% 8%;
-    width: 78%;
-    height: 28%;
+    top: 23%;
+    margin: 7% 9%;
+    width: 86%;
 }
 
 .gc-ep-score{
@@ -746,7 +744,7 @@ body{
 
 .gc-ep-time-mid{
     width: 100%;
-    padding: 3%;
+    padding: 4%;
     text-align: center;
 }
 
@@ -785,12 +783,13 @@ body{
 
 .gc-ep-footer-icons{
     display: inline-block;
-    width: 27%;
+    width: 35%;
     height: 100%;
+    margin: 0 -5%;
 }
 
 .gc-ep-footer p{
-    white-space: nowrap;
+    white-space: normal;
 }
 .gc-ep-footer-icons img{
     height: 80%
@@ -800,7 +799,7 @@ body{
     position: absolute;
     top: 6%;
     width: 100%;
-    height: 11%;
+    height: 20%;
     padding: 0 5%;
 }
 .gc-ep-feedback{
@@ -811,11 +810,11 @@ body{
 }
 
 .gc-ep-rating{
-    width: 60%;
+    width: 70%;
     height: 100%;
     position: absolute;
     background: rgba(255, 255, 255, 0.6);
-    left: 20%;
+    left: 17%;
     text-align: center;
 }
 
@@ -895,7 +894,7 @@ body{
     text-align: center;
     width: 100%;
     height: 20%;
-    bottom: 15%;
+    bottom: 13%;
 }
 
 .gc-ep-footer-mid{
@@ -910,6 +909,10 @@ body{
     margin-top: -5px;
     font-size: 1em;
     color: #808080;
+    width: 100%;
+    height: 80%;
+    overflow: auto;
+    line-height: 1.2em;
 }
 
 .gc-related-item p {
@@ -1003,9 +1006,8 @@ body{
 }
 .gc-fd-text{
     resize: none;
-    height: 70%;
+    height: 100%;
     width: 99%;
-    border: solid 1px #cccccc;
     border-radius: 5px;
     padding: 5px;
 }
@@ -1152,11 +1154,6 @@ body{
     font-family: NotoSans;
 }
 
-.gc-fd-title > p {
-    color: #726d6a;
-}
-
-
 /*New End page css*/
 .gc-ep-credits {
     width: 30%;
@@ -1183,7 +1180,7 @@ body{
 .gc-ep-content {
     width: 54%;
     left: 23%;
-    top: 5%;
+    top: 3%;
     position: absolute;
 }
 
@@ -1208,4 +1205,20 @@ body{
 .gc-ep-rating > p {
     font-size: 1.1em;
     color: #494949;
+    padding-bottom: 3%;
+}
+
+.gc-ep-next {
+    position: absolute;
+    top: 4%;
+    width: 100%;
+    height: 20%;
+    padding: 0 5%;
+}
+
+.gc-fd-text::-webkit-input-placeholder {
+    padding-left: 3%;
+    color: #000000;
+    font-size: 1em;
+    font-weight: bold;
 }
