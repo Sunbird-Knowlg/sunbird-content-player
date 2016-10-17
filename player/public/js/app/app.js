@@ -1003,7 +1003,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             },
             template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imgSrc}}"/></a>',
             link: function(scope, state) {
-                scope.imgSrc = $rootScope.imageBasePath + 'icn_round_play.png';
+                scope.imgSrc = $rootScope.imageBasePath + 'icn_square_home.png';
                 scope.showHome = false;
                 if (scope.disableHome == true)
                     scope.showHome = true;
@@ -1024,9 +1024,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
     }).directive('genie', function($rootScope) {
         return {
+            scope: {
+                icon: '@'
+            },
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imageBasePath}}icn_round_play.png"/></a>',
+            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/></a>',
             link: function(scope) {
+                scope.imgSrc  = $rootScope.imageBasePath + scope.icon
                 var pageId = $rootScope.pageId;
                 scope.goToGenie = function() {
                     exitApp(pageId);
@@ -1228,6 +1232,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         }
     }).directive('starRating', function($rootScope) {
+
         return {
             //reference: http://jsfiddle.net/manishpatil/2fahpk7s/
             scope: {
@@ -1236,7 +1241,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 readOnly: '@',
                 click: "&",
                 mouseHover: "&",
-                mouseLeave: "&"
+                mouseLeave: "&",
+                emptyRating: '@',
+                selectedRating: '@'
             },
             restrict: 'EA',
             template: "<div style='display: inline-block; padding: 1%; cursor:pointer; width:12%; height:45%;' ng-repeat='idx in maxRatings track by $index'> \
@@ -1250,8 +1257,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             },
             controller: function($scope, $element, $attrs, $rootScope) {
                 $scope.maxRatings = [];
-                $scope.rating_empty = $rootScope.imageBasePath + "icn_credit_star.png";
-                $scope.rating_selected = $rootScope.imageBasePath + "star_active.png";
+                $scope.rating_empty = $rootScope.imageBasePath + $scope.emptyRating;
+                $scope.rating_selected = $rootScope.imageBasePath + $scope.selectedRating;
 
                 for (var i = 1; i <= $scope.maxRating; i++) {
                     $scope.maxRatings.push({});
