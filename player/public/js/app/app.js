@@ -1103,6 +1103,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     jQuery('#loading').show();
                     jQuery("#progressBar").width(0);
                     jQuery('#loadingText').text(content.name);
+                    startProgressBar(40, 0.6);
                     if ($stateParams.itemId != content.identifier) {
                         $state.go('playContent', {
                             'itemId': content.identifier

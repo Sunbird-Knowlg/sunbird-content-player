@@ -25,22 +25,22 @@
 
 <ion-pane class="swiper-background">
 
-    <a href="javascript:void(0)" class="button button-clear" style="margin: 3% 2%; width: 8%; position: absolute;">
+  <!--   <a href="javascript:void(0)" class="button button-clear" style="margin: 3% 2%; width: 8%; position: absolute;">
         <img src="{{imageBasePath}}icn_square_home.png" style="width: 100%;"/>
-    </a>
+    </a> -->
+    <genie class="gc-cp-genie gc-contentlist-genie-icon"></genie>
 
-    <h1 class="title" style="color:#5A3C22;font-size:3vw; font-family: BalooBhai; margin: 5% 12%;text-align: left;">{{title || "EkStep Content App"}}</h1>
+    <h1 class="gc-contentlist-title font-baloo">{{title || "EkStep Content App"}}</h1>
 
-    <ion-content style="left: 9%; top: 18%;">
+    <ion-content class="gc-ionic-contentlist-body">
         <div class="product swiper-slide"
             ng-repeat="story in stories track by $index"
             ng-click="playContent(story);">
             <p class="product_name">{{story.name}}</p>
-            <div style="width: 100%; height: 60%;">
+            <div class="gc-contentlist-innerdiv">
                 <img class="content-app-icon" ng-src="{{story.appIcon}}"></img>
-                <img ng-src="{{imageBasePath}}icn_play_grey.png" style="position: absolute;top: 40%;left: 30%;"></img>
+                <img class="gc-contentlist-play-icon" ng-src="{{imageBasePath}}icn_play_grey.png" ></img>
             <div>
-            
         </div>
     </ion-content>
 </ion-pane>
@@ -74,16 +74,16 @@
   </ion-modal-view>
 </script>
 
-<div id="loadingDiv" style="margin:auto; position:absolute;width:100%;height:100%; background-color: #fff; z-index: 1000; display: none;">
-    <div style="margin: auto; width: 100%; position: fixed; text-align: center; top: 50%; font-weight: bold;">
+<div id="loadingDiv" class="gc-contentlist-loading-div">
+    <div class="gc-contentlist-inner-loadingdiv">
         <ion-spinner icon="bubbles"></ion-spinner>
-        <div style="margin: auto; width: 100%; position: fixed; text-align: center; font-weight: bold;">
+        <div class="gc-contentlist-loading-text">
             Loading...
         </div>
     </div>
 </div>
 
-<div id="errorDiv" style="z-index: 9000;" ng-show="showMessage" ng-click="showMessage = !showMessage">
+<div id="errorDiv" class="gc-contentlist-error-div" ng-show="showMessage" ng-click="showMessage = !showMessage">
     <div ng-bind-html="message" class="bar bar-energized bookshelf_message">
     </div>
 </div>

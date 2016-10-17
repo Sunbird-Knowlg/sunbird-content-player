@@ -1244,3 +1244,53 @@ body{
     font-size: 1em;
     font-weight: bold;
 }
+.gc-contentlist-title{
+    color:#413a36;
+    font-size:3vw;
+    margin: 5% 12%;
+    text-align: left;
+     -webkit-text-stroke: 0.2vh white;
+}
+.gc-ionic-contentlist-body{
+    left: 9%;
+    top: 18%;
+}
+.gc-contentlist-play-icon{
+    position: absolute;
+    top: 40%;
+    left: 30%
+}
+.gc-contentlist-innerdiv{
+    width: 100%;
+    height: 60%;
+}
+.gc-contentlist-genie-icon{
+    margin: 3% 2%;
+}
+.gc-contentlist-loading-div{
+    margin:auto;
+    position:absolute;
+    width:100%;
+    height:100%; 
+    background-color: #fff;
+    z-index: 1000;
+    display: none
+}
+.gc-contentlist-error-div{
+    z-index: 9000;
+}
+.gc-contentlist-inner-loadingdiv{
+    margin: auto;
+    width: 100%;
+    position: fixed;
+    text-align: center;
+    top: 50%;
+    font-weight: bold;
+}
+.gc-contentlist-loading-text{
+    margin: auto;
+    width: 100%;
+    position: fixed;
+    text-align: center;
+    font-weight: bold;
+}
