@@ -115,8 +115,8 @@
                 <div class="gc-feedback-popup">
                     <div star-rating rating="popUserRating" read-only="false" max-rating="5" click="updatePopUserRating(param)"></div>
                     <div class="gc-fd-comments">
-                    <!-- <div class="gc-fd-title"><p>Write your comments</p></div> -->
-                        <textarea class="gc-fd-text" ng-keyup="commentLength()" id="commentText" placeholder="{{languageSupport.comment}}"></textarea>
+                    <div class="gc-fd-title"><p>{{languageSupport.comment}}</p></div>
+                        <textarea class="gc-fd-text" ng-keyup="commentLength()" id="commentText"></textarea>
                         <div class="gc-fd-commentInfo">
                             <p>{{stringLeft}}</p>
                         </div>

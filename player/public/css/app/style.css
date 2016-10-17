@@ -1026,10 +1026,10 @@ body{
 }
 .gc-fd-text{
     resize: none;
-    height: 100%;
-    width: 99%;
-    border-radius: 5px;
+    height: 79%;
+    width: 100%;
     padding: 5px;
+    border-bottom: 2px solid #cccccc;
 }
 .gc-fd-footer{
     width: 100%;
@@ -1157,7 +1157,7 @@ body{
 
 .gc-fd-commentInfo {
     position: absolute;
-    right: 6%;
+    right: 5%;
     bottom: 23%;
     width: 26px;
     height: 26px;
