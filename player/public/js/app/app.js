@@ -1249,7 +1249,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'EA',
             template: "<div style='display: inline-block; padding: 1%; cursor:pointer; width:12%; height:45%;' ng-repeat='idx in maxRatings track by $index'> \
                     <img ng-src='{{((hoverValue + _rating) <= $index) && rating_empty || rating_selected }}' \
-                    ng-Click='isolatedClick($index + 1)' style='height:72%;' \></img> \
+                    ng-Click='isolatedClick($index + 1)' style='height:100%;' \></img> \
             </div>",
             compile: function(element, attrs) {
                 if (!attrs.maxRating || (Number(attrs.maxRating) <= 0)) {
