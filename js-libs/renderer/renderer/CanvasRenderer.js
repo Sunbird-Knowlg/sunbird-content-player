@@ -81,7 +81,7 @@ Renderer = {
         // Handle content if startstage is not defined or not available
         if (!_.isUndefined(data.theme.stage)) {
             for (var i=0;i<data.theme.stage.length;i++) {
-                if (!_.isUndefined(data.theme.startStage) != data.theme.stage[i].id) {
+                if ((!_.isUndefined(data.theme.startStage)) && (data.theme.startStage != data.theme.stage[i].id)) {
                     counter = counter + 1;
                 }
                 if (!_.isUndefined(data.theme.stage[i].param) && _.isUndefined(firstStage)) {
