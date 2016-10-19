@@ -76,6 +76,27 @@ Renderer = {
         }
         Renderer.gdata = data;
         data.theme.canvasId = canvasId;
+        var counter = 0;
+        var firstStage;
+        // Handle content if startstage is not defined or not available
+        if (!_.isUndefined(data.theme.stage)) {
+            for (var i=0;i<data.theme.stage.length;i++) {
+                if (!_.isUndefined(data.theme.startStage) != data.theme.stage[i].id) {
+                    counter = counter + 1;
+                }
+                if (!_.isUndefined(data.theme.stage[i].param) && _.isUndefined(firstStage)) {
+                    firstStage = data.theme.stage[i].id
+                }
+            }
+            if (counter == data.theme.stage.length) {
+                if (_.isUndefined(data.theme.startStage)) {
+                    console.warn("no start stage is defined, loading first stage");
+                } else {
+                    console.warn("startstage is not available, loading first stage")
+                }
+                data.theme.startStage = firstStage;
+            }
+        }
         Renderer.theme = new ThemePlugin(data.theme);
         Renderer.resizeGame(true);
         Renderer.theme.baseDir = gameRelPath;
