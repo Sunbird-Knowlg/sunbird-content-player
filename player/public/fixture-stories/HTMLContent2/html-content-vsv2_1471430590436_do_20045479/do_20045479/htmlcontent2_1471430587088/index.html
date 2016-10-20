@@ -14,7 +14,7 @@
   <!--  -->
   <!-- <script src="assets/js/genieservices.js"></script>
   <script src="assets/js/telemetry.min.js"></script> -->
-  <script src="assets/js/genieservice-bridge.min.js"></script>
+  <script src="assets/js/genieServiceMediator.js"></script>
 
   <h1>New Game - HTML Content</h1>
   <p>This is actual game</p>
@@ -36,7 +36,7 @@
      * This is to GenieService and Telemetry
      * callback function will be called after initalization
      */
-    genieServiceBridge.init(function(){
+    genieServiceMediator.init(function(){
       // GenieService initalisation success
       onGenieServiceInit();
     });
@@ -68,9 +68,9 @@
     function getCurrentUser(){
        genieservice.getCurrentUser()
        .then(function(result) {
-          if (result.status == "success") {
+          if (result && result.status == 'success') {
               if (result.data.uid) {
-                currentUser = result;                 
+                currentUser = result.data;                 
                 console.log("currentUser", currentUser);
               } else {
                 console.log('INVALID_USER');
@@ -136,7 +136,7 @@
      * Do dictionary search
      */
     function getDictionaryWords(){
-      genieservice.languageSearch('{"request":{"traversals":"rhyming_boundary_rule","fuzzy":true,"filters":{"language_id":["en"],"status":"Live","objectType":"Word"},"sort_by":{"lemma":"asc"},"limit":100}}')
+      genieservice.languageSearch('{ "traversals": ["akshara_boundary"], "filter": {} }')
       .then(function(resp){
         console.log("languageSearch resp", resp);
       })

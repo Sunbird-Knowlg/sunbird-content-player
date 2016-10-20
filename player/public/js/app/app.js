@@ -170,6 +170,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     return;
                 var id = getUrlParameter("id");
                 if(isbrowserpreview) {
+                    genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
+                    
                     if ("undefined" != typeof $location && id) {
                         ContentService.getContentMetadata(id)
                             .then(function(data) {

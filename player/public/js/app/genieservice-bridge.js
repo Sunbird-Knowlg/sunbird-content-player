@@ -8,19 +8,11 @@ var genieServiceBridge = (function(){
     if(!isMobile){
       if(("undefined" == typeof AppConfig) && ("undefined" == typeof isbrowserpreview)){
         var flavor = getUrlParameter('flavor');
-        var launchData = getUrlParameter('launchData');
+        var launchData = JSON.parse(getUrlParameter('launchData'));
         if(flavor){
-          var flavors = ['dev', 'qa', 'production'];
-          if(_.contains(flavors, flavor.toLowerCase())){
-              
-            AppConfig = {"flavor": flavor};
-            if(launchData){
-              launchData = JSON.parse(launchData);
-              AppConfig[flavor] = launchData.envpath;
-            }
             genieservice = genieservice_portal;
+            genieservice.api.setBaseUrl(launchData.envpath);
             _callbackFunc();
-          }
         }else{
           genieservice.getLocalData(function(){
             _callbackFunc();
