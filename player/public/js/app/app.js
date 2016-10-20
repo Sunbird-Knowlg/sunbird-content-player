@@ -1074,22 +1074,26 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position: absolute;margin: 3%;width: 10%;z-index: 1;margin-left: 40%;" /><img id="unmute_id"  style="position: absolute;margin: 3% 3% 3% 40%;display: list-item;width: 12%;z-index: 1;visibility: visible;"/> </a>',
+            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position: absolute;margin: 3%;width: 10%;z-index: 1;margin-left: 40%;" /><img id="unmute_id" ng-src="{{unmuteIcon}}"  style="position: absolute;margin: 3% 3% 3% 40%;display: list-item;width: 12%;z-index: 1;"/> </a>',
             link: function(scope, url) {
                 scope.mutestatus = "mute.png";
-
+                // If audiomanager is muted change the default sound icon
+                if (AudioManager.muted) {
+                    scope.unmuteIcon = $rootScope.imageBasePath + "unmute.png";
+                    document.getElementById("unmute_id").style.visibility = "visible"
+                }
                 scope.mute = function() {
                     //mute function goes here
                     if (AudioManager.muted) {
                         AudioManager.unmute();
+                        delete scope.unmuteIcon;
+                        document.getElementById("unmute_id").removeAttribute("src");
                         document.getElementById("unmute_id").style.visibility = "hidden"
                     } else {
                         AudioManager.mute();
-                        document.getElementById("unmute_id").src = $rootScope.imageBasePath + "unmute.png";
+                        scope.unmuteIcon = $rootScope.imageBasePath + "unmute.png";
                         document.getElementById("unmute_id").style.visibility = "visible"
                     }
-
-
                 }
             }
         }
