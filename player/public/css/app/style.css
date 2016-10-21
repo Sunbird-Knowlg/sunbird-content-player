@@ -106,7 +106,6 @@ ion-popover-view.fit ion-content {
 
 body{
     font-family: NotoSansOriya, NotoSansGujarati, NotoSansMalayalam;
-    /* 'NotoSansRegular', 'NotoSansDevanagari', 'NotoSansGujarati', 'NotoSansOriya', 'NotoSansBengali', 'NotoSansTelugu', 'NotoSansKannada', 'NotoSansTamil'; */
 } 
 
 .platform-android ion-popover-view.fit {
@@ -281,11 +280,10 @@ body{
 }
 
 .gc-menu-title-cont p {
-  position: absolute;
-  color: #FFFFFF;
-  line-height: 1.2em;
-  text-align: center;
-
+    position: absolute;
+    color: #FFFFFF;
+    line-height: 1.2em;
+    text-align: center;
     font-size: 2.8vw;
     width: 100%;
     text-overflow: ellipsis;
@@ -296,10 +294,8 @@ body{
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     display: -webkit-box;
-
     height: 20%;
     line-height: 1.3em;
-
 }
 
 .gc-menu-btn {
@@ -507,7 +503,6 @@ body{
     z-index: 9999;
 }
 
-
 .popup-retry {
     width: 35%;
      display: inline-block;
@@ -524,7 +519,6 @@ body{
     width: 40%;
     margin: 4% 4%;
 }
-
 
 .popup-overlay {
     position: relative;
@@ -571,15 +565,18 @@ body{
     left: 55%;
 
 }
+
 .gc-cp-scroll-ionic{
      transform: translate3d(0px, -28px, 0px) scale(1);
      height: 100%;"
 }
+
 .gc-cp-header-div{
     position: absolute; 
     top: 15%;
     width: 100%;
 }
+
 .gc-cp-header{
     background-color:transparent;
     border-bottom:0px;
@@ -601,18 +598,22 @@ body{
 .gc-play-icon{
     width:17%;
 }
+
 .credit-body-icon-font::-webkit-scrollbar {
     width: 3%;
     border-radius: 30%;
 }
+
 .credit-body-icon-font::-webkit-scrollbar-track {
     background-color: #ffd18f;
     border-radius: 10%;
 }
+
 .credit-body-icon-font::-webkit-scrollbar-thumb {
     background-color: #f6661f;
     border-radius: 35%;
 }
+
 .credit-body-icon-font::-webkit-scrollbar-thumb:hover {
   background-color: #f6661f;
   border-radius: 10%;
@@ -709,9 +710,9 @@ body{
     background: #413a36;
     padding: 1% 8%;
     text-decoration: none;
-   border-style: solid;
-
+    border-style: solid;
 }
+
 .btn-normal{
     -webkit-border-radius: 4;
     -moz-border-radius: 4;
@@ -722,9 +723,8 @@ body{
     background: #413a36;
     padding: 1% 8%;
     text-decoration: none;
-   border-style: solid;
-   background-color: transparent;
-
+    border-style: solid;
+    background-color: transparent;
 }
 
 .btn-black:hover {
@@ -755,9 +755,11 @@ body{
     text-align: center;
     float: left;
 }
+
 .img-float-left{
     width:33%;
 }
+
 .img-float-mid{
     width:11%;
 }
@@ -776,18 +778,22 @@ body{
     padding: 0px 25px;
     text-transform: capitalize;
 }
+
 .gc-white-text{
     color: #2fcce7;
 }
+
 .gc-ep-white-title{
     font-size: 1.5em;
     margin: 0;
 }
+
 .gc-ep-white-subtitle{
     margin-top: -4px;
     margin-bottom: 4px;
     font-size: 0.9em;
 }
+
 .gc-ep-white-btn{
     text-transform: uppercase;
 }
@@ -811,8 +817,9 @@ body{
 .gc-ep-footer p{
     white-space: normal;
 }
+
 .gc-ep-footer-icons img{
-    height: 80%
+    height: 80%;
 }
 
 .gc-ep-rating-cont{
@@ -822,6 +829,7 @@ body{
     height: 20%;
     padding: 0 5%;
 }
+
 .gc-ep-feedback{
     vertical-align: middle;
     top: 20%;
@@ -999,11 +1007,13 @@ body{
     background: #fff;
     position: absolute;
 }
+
 .gc-fc-popup{
     width:50%;
     top: 25%;
     right: 25%;
 }
+
 .gc-popup-title-new{
     padding: 3% 5%;
     border-bottom: solid #4FD3F6;
@@ -1011,9 +1021,11 @@ body{
     color:#0097D2;
     text-transform: uppercase;
 }
+
 .gc-popup-body-new{
     padding: 2% 5%;
 }
+
 .gc-fd-comments{
     margin: 5px 0px;
     padding: 5px 0px;
@@ -1024,6 +1036,7 @@ body{
     border-bottom-style: solid;
     border-top-style: solid;
 }
+
 .gc-fd-text{
     resize: none;
     height: 79%;
@@ -1031,10 +1044,12 @@ body{
     padding: 5px;
     border-bottom: 2px solid #cccccc;
 }
+
 .gc-fd-footer{
     width: 100%;
     text-align: center;
 }
+
 .round-button {
     border-radius: 50%;
     border: 2px solid #f5f5f5;
@@ -1244,29 +1259,35 @@ body{
     font-size: 1em;
     font-weight: bold;
 }
+
 .gc-contentlist-title{
     color:#413a36;
     font-size:3vw;
     margin: 5% 12%;
     text-align: left;
-     -webkit-text-stroke: 0.2vh white;
+    -webkit-text-stroke: 0.2vh white;
 }
+
 .gc-ionic-contentlist-body{
     left: 9%;
     top: 18%;
 }
+
 .gc-contentlist-play-icon{
     position: absolute;
     top: 40%;
     left: 30%
 }
+
 .gc-contentlist-innerdiv{
     width: 100%;
     height: 60%;
 }
+
 .gc-contentlist-genie-icon{
     margin: 3% 2%;
 }
+
 .gc-contentlist-loading-div{
     margin:auto;
     position:absolute;
@@ -1276,9 +1297,11 @@ body{
     z-index: 1000;
     display: none
 }
+
 .gc-contentlist-error-div{
     z-index: 9000;
 }
+
 .gc-contentlist-inner-loadingdiv{
     margin: auto;
     width: 100%;
@@ -1287,6 +1310,7 @@ body{
     top: 50%;
     font-weight: bold;
 }
+
 .gc-contentlist-loading-text{
     margin: auto;
     width: 100%;
