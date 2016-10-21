@@ -18,6 +18,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
     _time: 0,
     initPlugin: function(data) {
         this._cleanupHighlight();
+        var font;
         var dims = this.relativeDims();
         if (!data.id) data.id = this._data.id = _.uniqueId('plugin');
         if (!data.highlight) data.highlight = this._data.highlight = "#DDDDDD";
@@ -46,20 +47,28 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         var h_offset = data.offsetX ? data.offsetX : 0;
         var v_offset = data.offsetY ? data.offsetY : 0;
         var Blur = data.blur ? data.blur : 1;
-        var shadow_color = data.shadow ? data.shadow : "#ccc";
-        /*handling shadow with px */
-        var shadow = h_offset + "px" + " " + v_offset + "px" + " " + Blur + "px" + " " + shadow_color;
-        div.style["font-size"] = fontsize;
         var fontFace = (data.font || this.getDefaultFont());
-        div.style["font-family"] = fontFace;
-        div.style["line-height"] = data.lineHeight ? data.lineHeight : "1.2em";
-        div.style["color"] = data.color ? data.color : "black";
-        div.style["font-weight"] = data.weight ? data.weight : "normal";
-        div.style["fontFamily"] = data.font ? data.font.toLowerCase() : "Arial";
+        var shadow_color = data.shadow ? data.shadow : "#ccc"; 
+        var shadow = h_offset + "px" + " " + v_offset + "px" + " " + Blur + "px" + " " + shadow_color;      
+        if (/\d/.test(data.font) == true) {
+            // fontsize and font-family are required for the font attribute.
+            font=fontFace;
+            div.style["font"] = data.font;
+        }else {
+            font=fontsize + " " + fontFace
+            div.style["font-family"] = fontFace;
+            div.style["font-size"] = fontsize;
+        }
+        if (data.weight) { // weight can handle both font-weight and font-style.
+            div.style["font"] = data.weight + " " + font;
+        }
         div.style["outline"] = data.outline ? data.outline : 0;
+        /*handling shadow with px */
+        div.style["line-height"] = data.lineHeight ? data.lineHeight : "1.2em";
         div.style["text-align"] = data.align ? data.align : "left";
         div.style["vertical-align"] = data.valign ? data.valign : "top";
-        div.style["textShadow"] = shadow;
+        div.style["color"] = data.color ? data.color : "black";
+        div.style["textShadow"] = shadow;       
 
         var parentDiv = document.getElementById(Renderer.divIds.gameArea);
 
@@ -281,4 +290,3 @@ var HighlightTextPlugin = HTMLPlugin.extend({
     }
 });
 PluginManager.registerPlugin('htext', HighlightTextPlugin);
-

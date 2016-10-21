@@ -102,24 +102,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.languageSupport = {
             "languageCode": "en",
             "home": "Home",
-            "genie": "Genie",
             "title": "TITLE",
             "submit": "SUBMIT",
-            "goodJob": "Good Job!",
-            "tryAgain": "Aww,  Seems you goofed it!",
-            "whatWeDoNext": "What should we do next?",
             "image": "Image",
             "voice": "Voice",
             "audio": "Audio",
             "author": "Author",
             "instructions": "NOTES TO TEACHER",
             "replay": "Replay",
-            "time": "TIME",
-            "result": "RESULT",
             "feedback": "Feedback",
             "collection": "COLLECTION",
-            "relatedContent": "Related Content",
-            "showMore": "Show More",
             "noCreditsAvailable": "There are no credits available",
             "congratulations": "Congratulations! You just completed",
             "credit": "Credits",
@@ -170,6 +162,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     return;
                 var id = getUrlParameter("id");
                 if(isbrowserpreview) {
+                    genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
+                    
                     if ("undefined" != typeof $location && id) {
                         ContentService.getContentMetadata(id)
                             .then(function(data) {

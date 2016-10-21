@@ -44,7 +44,5 @@ ControllerManager = {
 	},
 	getErrors: function() {
 		return ControllerManager.errors;
-	}
-	
-	
+	}	
 }
