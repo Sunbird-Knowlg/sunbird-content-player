@@ -195,3 +195,19 @@ function evalAndSubmit(){
     action.failure = "wrong_answer";
     CommandManager.handle(action);
 }
+
+function checkStage(showalert) {
+    if (GlobalContext.config.appInfo.mimeType == 'application/vnd.ekstep.content-collection') {
+        if (showalert == "showAlert") {
+            alert("No stage found, redirecting to collection list page")
+        }
+        window.location.hash = "#/content/list/"+ GlobalContext.previousContentId;
+    } else {
+        if (showalert == "showAlert") {
+            alert("No Stage found, existing canvas")
+        }
+        exitApp();
+    }
+    Renderer.running = false;
+    return
+}

@@ -66,6 +66,7 @@ Renderer = {
         },null, 'xml')
         .fail(function(err) {
             alert("Invalid ECML please correct the Ecml : ", err);
+            checkStage();
         });
     },
     init: function(data, canvasId, gameRelPath) {
@@ -76,16 +77,6 @@ Renderer = {
         }
         Renderer.gdata = data;
         data.theme.canvasId = canvasId;
-        var startStage = _.find(data.theme.stage,function(stage) {return stage.id == data.theme.startStage});
-        if (_.isUndefined(startStage)) {
-            var firstStage = _.find(data.theme.stage, function(stage) {if (stage.param && _.isUndefined(firstStage)) return stage})
-            if (_.isUndefined(data.theme.startStage)) {
-                console.warn("No start stage is defined, loading first stage");
-            } else {
-                console.warn("Startstage is not available, loading first stage")
-            }
-            data.theme.startStage = firstStage.id
-        }
         Renderer.theme = new ThemePlugin(data.theme);
         Renderer.resizeGame(true);
         Renderer.theme.baseDir = gameRelPath;
