@@ -226,7 +226,7 @@ body{
 .gc-ep-title{
     width: 100%;
     text-transform: uppercase;
-    padding: 0 10%;
+    padding: 2% 10%;
     font-size: 1.8em;
 }
 
@@ -676,7 +676,6 @@ body{
     width: 100%;
     text-align: center;
     color: #ffffff;
-    margin-top: 1%;
 }
 
 .gc-ep-cont{

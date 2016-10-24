@@ -27,7 +27,7 @@
     <div class="gc-ep-content">
         <p class="gc-ep-cong gc-text-elipsis" style="margin: 1% 0%;">{{languageSupport.congratulations}}</p>
         <p class="icon-font gc-ep-title gc-text-elipsis" ng-if="content.name">{{content.name}}</p>
-        <p class="gc-content-owner gc-text-elipsis">{{ languageSupport.author }}: {{content.owner}}</p>
+        <p class="gc-content-owner gc-text-elipsis" ng-if="content.owner">{{ languageSupport.author }}: {{content.owner}}</p>
     </div>
 
     <center class="gc-ep-credits">
