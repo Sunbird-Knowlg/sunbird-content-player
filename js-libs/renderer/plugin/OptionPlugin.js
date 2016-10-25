@@ -9,6 +9,7 @@ var OptionPlugin = Plugin.extend({
     _multiple: false,
     _mapedTo: undefined,
     _uniqueId: undefined,
+    _modelValue: undefined,
     initPlugin: function(data) {
         this._model = undefined;
         this._value = undefined;
@@ -29,7 +30,7 @@ var OptionPlugin = Plugin.extend({
             this._index = parseInt(model.substring(model.indexOf('[') + 1, model.length - 1));
             var varName = (this._data['var'] ? this._data['var'] : 'option');
             this._stage._templateVars[varName] = this._parent._data.model + "." + model;
-            var modelValue = this._stage.getModelValue(this._parent._data.model + '.' + model);
+            this._modelValue = this._stage.getModelValue(this._parent._data.model + '.' + model);
         }
         if (value && _.isFinite(this._index) && this._index > -1) {
             this._self = new createjs.Container();
@@ -70,6 +71,10 @@ var OptionPlugin = Plugin.extend({
         this._parent._options.push(this);
         this._self.cursor = 'pointer';
         var instance = this;
+        if(this._modelValue.selected === true) {
+          var val = instance._parent.selectOption(instance);
+          Overlay.isReadyToEvaluate(true);
+        }
         this._self.on('click', function(event) {
             Overlay.isReadyToEvaluate(true);
             var eventData = {};

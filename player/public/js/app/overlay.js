@@ -43,7 +43,7 @@ Overlay = {
         return navigateTo;
     },
     sceneEnter: function() {
-        this.resetStage();
+        this.resetStage(); // if the stage has set state then no need to reset it.
         this.enablePrevious();
         this.enableReload();
         var isItemStage = this.isItemScene();
