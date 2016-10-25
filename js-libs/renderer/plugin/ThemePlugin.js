@@ -49,6 +49,21 @@ var ThemePlugin = Plugin.extend({
     start: function(basePath) {
         var instance = this;
         RecorderManager.init();
+        // handle content if startstage io not defined or unavailable
+        var startStage = _.find(this._data.stage,function(stage) {return stage.id == instance._data.startStage});
+        if (_.isUndefined(startStage)) {
+            var firstStage = _.find(this._data.stage, function(stage) {if (stage.param && _.isUndefined(firstStage)) return stage})
+            if (_.isUndefined(firstStage)) {
+                checkStage('showAlert');
+            } else {
+                if (_.isUndefined(this._data.startStage)) {
+                    console.warn("No start stage is defined, loading first stage");
+                } else {
+                    console.warn("Startstage is not available, loading first stage")
+                }
+                this._data.startStage = firstStage.id
+            }
+        }
         AssetManager.init(this._data, basePath);
         AssetManager.initStage(this._data.startStage, null, null, function() {
             instance.render();

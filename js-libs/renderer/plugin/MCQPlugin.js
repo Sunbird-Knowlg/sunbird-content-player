@@ -11,7 +11,6 @@ var MCQPlugin = Plugin.extend({
     _offsetY: 0,
     _highlight: '#E89241',
     initPlugin: function(data) {
-        
         this._multi_select = false;
         this._options = [];
         this._shadow = '#0470D8';
