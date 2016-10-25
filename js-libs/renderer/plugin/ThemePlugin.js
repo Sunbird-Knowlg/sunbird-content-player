@@ -50,7 +50,13 @@ var ThemePlugin = Plugin.extend({
         var instance = this;
         RecorderManager.init();
         // handle content if startstage io not defined or unavailable
-        var startStage = _.find(this._data.stage,function(stage) {return stage.id == instance._data.startStage});
+        if (_.isArray(this._data.stage)) {
+            var startStage = _.find(this._data.stage,function(stage) {return stage.id == instance._data.startStage});
+        } else {
+            if (this._data.stage.id == instance._data.startStage) {
+                var startStage = this._data.stage.id
+            }
+        }
         if (_.isUndefined(startStage)) {
             var firstStage = _.find(this._data.stage, function(stage) {if (stage.param && _.isUndefined(firstStage)) return stage})
             if (_.isUndefined(firstStage)) {
@@ -231,6 +237,7 @@ var ThemePlugin = Plugin.extend({
         if(this._isSceneChanging){ return; }
         var stage = this._currentScene;
         RecorderManager.stopRecording();
+        AudioManager.stopAll();
        // RecorderManager._deleteRecordedaudio();
         TimerManager.stopAll(this._currentStage);
         if (action.transitionType === 'previous') {
