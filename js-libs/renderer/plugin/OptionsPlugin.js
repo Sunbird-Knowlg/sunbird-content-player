@@ -92,22 +92,7 @@ var OptionsPlugin = Plugin.extend({
                     if (!_.isEmpty(innerECML)) {
                         // Handle case if device doesnot support ECMAScript 6
                         if (typeof Object.assign != 'function') {
-                            Object.assign = function (target) {
-                                if (target === undefined || target === null) {
-                                    throw new TypeError('Cannot convert undefined or null to object');
-                                }
-                                var output = Object(target);
-                                _.each(arguments, function(argument){
-                                    if (argument !== undefined && argument !== null) {
-                                        for (var nextKey in argument) {
-                                            if (argument.hasOwnProperty(nextKey)) {
-                                                output[nextKey] = argument[nextKey];
-                                            }
-                                        }
-                                    }
-                                })
-                                return output;
-                            };
+                            objectAssign()
                         }
                         Object.assign(data, innerECML);
                     }
