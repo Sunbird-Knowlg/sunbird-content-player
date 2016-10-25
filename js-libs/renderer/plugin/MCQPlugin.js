@@ -11,6 +11,7 @@ var MCQPlugin = Plugin.extend({
     _offsetY: 0,
     _highlight: '#E89241',
     initPlugin: function(data) {
+
         this._multi_select = false;
         this._options = [];
         this._shadow = '#0470D8';
@@ -20,23 +21,23 @@ var MCQPlugin = Plugin.extend({
 
         var model = data.model;
         if (model) {
-        	var controller = this._stage.getController(model);
-        	if (controller) {
-        		this._controller = controller;
-        		this._multi_select = data.multi_select;
-        		if ((typeof this._multi_select) == 'undefined' || this._multi_select == null) {
-        			this._multi_select = false;
-        		}
+            var controller = this._stage.getController(model);
+            if (controller) {
+                this._controller = controller;
+                this._multi_select = data.multi_select;
+                if ((typeof this._multi_select) == 'undefined' || this._multi_select == null) {
+                    this._multi_select = false;
+                }
 
-        		this._data.x = this._parent._data.x;
-        		this._data.y = this._parent._data.y;
-        		this._data.w = this._parent._data.w;
-        		this._data.h = this._parent._data.h;
+                this._data.x = this._parent._data.x;
+                this._data.y = this._parent._data.y;
+                this._data.w = this._parent._data.w;
+                this._data.h = this._parent._data.h;
 
-        		this._self = new createjs.Container();
-				var dims = this.relativeDims();
-        		this._self.x = dims.x;
-        		this._self.y = dims.y;
+                this._self = new createjs.Container();
+                var dims = this.relativeDims();
+                this._self.x = dims.x;
+                this._self.y = dims.y;
                 if (data.shadow) {
                     this._shadow = data.shadow;
 
@@ -56,8 +57,8 @@ var MCQPlugin = Plugin.extend({
                     this._offsetY = data.offsetY;
                 }
                 this._multi_select = this.isMultiSelect();
-                this.invokeChildren(data, this, this._stage, this._theme);
-        	}
+             this.invokeChildren(data, this, this._stage, this._theme);
+            }
         }
     },
     isMultiSelect: function() {
@@ -73,30 +74,49 @@ var MCQPlugin = Plugin.extend({
     },
     selectOption: function(option) {
 
-    	var controller = this._controller;
+        var controller = this._controller;
 
         // If it is not a multi-select, then unset all other selected shadows
         if (!this._multi_select) {
-    		this._options.forEach(function(o) {
-    			if (o._index != option._index && o.hasShadow()) {
-    				o.removeShadow();
-    				controller.setModelValue(o._model, false, 'selected');
-    			}
+            this._options.forEach(function(o) {
+                if (o._index != option._index && o.hasShadow()) {
+                    o.removeShadow();
+                    controller.setModelValue(o._model, false, 'selected');
+                }
             });
-    	}
+        }
 
         // If the shadow is visible, toggle it (unselect)
         console.log("option : ", option);
         var val = undefined;
-        if(option) {
+        if (option) {
             val = option.toggleShadow();
             controller.setModelValue(option._model, val, 'selected');
         }
-
-
+        this.saveState(controller);
         // Shadow state has changed, re-render
         Renderer.update = true;
         return val;
+    },
+    saveState:function(controller){
+       console.info("Retain MCQ state: ", controller);
+        // Retain the MCQ and MMCQ status
+        var rStage_modelKey = Renderer.theme._currentStage+"_"+ controller._index;
+        var rModel_data=controller._model[controller._index].options;
+        this._stage.setParam(rStage_modelKey, rModel_data);
+        /*for (var i = 0, len = rModel_data.length; i < len; ++i) {
+            var option_model = rModel_data[i];
+            if (!_.isUndefined(option_model.selected) && option_model.selected == true) {
+                var index = option_model.value.resindex;
+                var selected = option_model.selected;                
+            }
+        }*/
+        /*var model_obj = {
+            selected: selected,
+            resindex: index
+        }*/
+        
+
     }
 });
 PluginManager.registerPlugin('mcq', MCQPlugin);

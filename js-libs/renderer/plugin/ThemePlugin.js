@@ -11,20 +11,21 @@ var ThemePlugin = Plugin.extend({
     _canvasId: undefined,
     inputs: [],
     htmlElements: [],
-    _animationEffect: {effect:'moveOut'},
+    _animationEffect: { effect: 'moveOut' },
     _themeData: undefined,
     _controllerMap: {},
     _isContainer: false,
     _templateMap: {},
     _contentParams: {},
     _isSceneChanging: false,
+    
     initPlugin: function(data) {
         this._controllerMap = {};
         this._canvasId = data.canvasId;
         this._self = new createjs.Stage(data.canvasId);
         this._director = new creatine.Director(this._self);
         this._dimensions = {
-            x:0,
+            x: 0,
             y: 0,
             w: this._self.canvas.width,
             h: this._self.canvas.height
@@ -34,13 +35,13 @@ var ThemePlugin = Plugin.extend({
         this._self.mouseMoveOutside = true;
     },
     mousePoint: function() {
-        return {x: this._self.mouseX,  y: this._self.mouseY};
+        return { x: this._self.mouseX, y: this._self.mouseY };
     },
     updateCanvas: function(w, h) {
         this._self.canvas.width = w;
         this._self.canvas.height = h;
         this._dimensions = {
-            x:0,
+            x: 0,
             y: 0,
             w: this._self.canvas.width,
             h: this._self.canvas.height
@@ -49,21 +50,6 @@ var ThemePlugin = Plugin.extend({
     start: function(basePath) {
         var instance = this;
         RecorderManager.init();
-        // handle content if startstage io not defined or unavailable
-        var startStage = _.find(this._data.stage,function(stage) {return stage.id == instance._data.startStage});
-        if (_.isUndefined(startStage)) {
-            var firstStage = _.find(this._data.stage, function(stage) {if (stage.param && _.isUndefined(firstStage)) return stage})
-            if (_.isUndefined(firstStage)) {
-                checkStage('showAlert');
-            } else {
-                if (_.isUndefined(this._data.startStage)) {
-                    console.warn("No start stage is defined, loading first stage");
-                } else {
-                    console.warn("Startstage is not available, loading first stage")
-                }
-                this._data.startStage = firstStage.id
-            }
-        }
         AssetManager.init(this._data, basePath);
         AssetManager.initStage(this._data.startStage, null, null, function() {
             instance.render();
@@ -91,7 +77,7 @@ var ThemePlugin = Plugin.extend({
             }
         }
         if (!_.isArray(this._data.stage)) this._data.stage = [this._data.stage];
-        if(this._data.stage) {
+        if (this._data.stage) {
             this._data.stage.forEach(function(s) {
                 instance.initStageControllers(s);
             });
@@ -157,9 +143,10 @@ var ThemePlugin = Plugin.extend({
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
             Overlay.sceneEnter();
+
         });
         var nextIdx = this._currIndex++;
-        if(this._currentScene) {
+        if (this._currentScene) {
             this._currentScene.dispatchEvent('exit');
             this._currentScene = childPlugin;
             this._director.replace(child, this.getTransitionEffect(this._animationEffect));
@@ -179,9 +166,9 @@ var ThemePlugin = Plugin.extend({
         this.invokeStage(stageId);
     },
     invokeStage: function(stageId) {
-        var stage = _.clone(_.findWhere(this._data.stage, {id: stageId}));
-        if(stage && stage.extends) {
-            baseStage = _.findWhere(this._data.stage, {id: stage.extends});
+        var stage = _.clone(_.findWhere(this._data.stage, { id: stageId }));
+        if (stage && stage.extends) {
+            baseStage = _.findWhere(this._data.stage, { id: stage.extends });
             stage = this.mergeStages(stage, baseStage);
         }
         this._previousStage = this._currentStage;
@@ -189,8 +176,8 @@ var ThemePlugin = Plugin.extend({
         PluginManager.invoke('stage', stage, this, null, this);
 
         // Trigger onstagechange event, which is bind by parent window
-        if(isbrowserpreview && window &&  window.parent && window.parent.jQuery('body')){
-            var retObj = {"stageId" : stageId};
+        if (isbrowserpreview && window && window.parent && window.parent.jQuery('body')) {
+            var retObj = { "stageId": stageId };
             window.parent.jQuery('body').trigger('onstagechange', retObj);
         }
     },
@@ -199,19 +186,19 @@ var ThemePlugin = Plugin.extend({
         var instance = this;
         // removed "enter" event dispatch function from addchild "sceneenter" event & adding as a callback here
         // (waiting for asset to load completely then "enter event is trigurred")
-        AssetManager.initStage(stagesToLoad.stage, stagesToLoad.next, stagesToLoad.prev, function(){
+        AssetManager.initStage(stagesToLoad.stage, stagesToLoad.next, stagesToLoad.prev, function() {
             instance._currentScene.dispatchEvent('enter');
         });
     },
     mergeStages: function(stage1, stage2) {
-        for(k in stage2) {
-            if(k === 'id') continue;
+        for (k in stage2) {
+            if (k === 'id') continue;
             var attr = stage2[k];
-            if(stage1[k]) {
-                if(!_.isArray(stage1[k])) {
+            if (stage1[k]) {
+                if (!_.isArray(stage1[k])) {
                     stage1[k] = [stage1[k]];
                 }
-                if(_.isArray(attr)) {
+                if (_.isArray(attr)) {
                     stage1[k].push.apply(stage1[k], attr);
                 } else {
                     stage1[k].push(attr);
@@ -222,16 +209,33 @@ var ThemePlugin = Plugin.extend({
         }
         return stage1;
     },
-    isStageChanging: function(){
-       return this._isSceneChanging;
+    isStageChanging: function() {
+        return this._isSceneChanging;
     },
     transitionTo: function(action) {
         // not next and previoud are clicked at the same time,
         // handle only one actions(next/previous)
-        if(this._isSceneChanging){ return; }
+        if (this._isSceneChanging) {
+            return; }
         var stage = this._currentScene;
+
+        // set the stageData to themelevel
+        var stageKey = Renderer.theme._currentStage;
+        var stagePlugin_data = Renderer.theme._currentScene.params;
+
+        if (!_.isUndefined(stagePlugin_data)) {
+            this.setParam(stageKey, stagePlugin_data);
+            console.info("Theme: StagePlugin data is saved")
+        } else {
+            console.info("stageData is undefined")
+        }
+
+
         RecorderManager.stopRecording();
-       // RecorderManager._deleteRecordedaudio();
+
+
+
+        // RecorderManager._deleteRecordedaudio();
         TimerManager.stopAll(this._currentStage);
         if (action.transitionType === 'previous') {
             this._isSceneChanging = true;
@@ -254,12 +258,12 @@ var ThemePlugin = Plugin.extend({
             this.replaceStage(action.value, action);
         } else {
             this._isSceneChanging = true;
-            if(stage._stageController && stage._stageController.hasNext()){
-                    if(action.transitionType!== 'next'){
-                        this.replaceStage(action.value, action);
-                    }else{
-                        this.replaceStage(stage._data.id, action);
-                    }
+            if (stage._stageController && stage._stageController.hasNext()) {
+                if (action.transitionType !== 'next') {
+                    this.replaceStage(action.value, action);
+                } else {
+                    this.replaceStage(stage._data.id, action);
+                }
 
             } else {
                 if (stage._stageController && action.reset == true) {
@@ -268,12 +272,14 @@ var ThemePlugin = Plugin.extend({
                 this.replaceStage(action.value, action);
             }
         }
+        // set the Plugin data to theme level from the stagePlugin.
+
     },
     removeHtmlElements: function() {
-        var gameAreaEle =  jQuery('#'+Renderer.divIds.gameArea);
+        var gameAreaEle = jQuery('#' + Renderer.divIds.gameArea);
         var chilElemtns = gameAreaEle.children();
-        jQuery(chilElemtns).each(function(){
-            if((this.id !== "overlay") && (this.id !== "gameCanvas")){
+        jQuery(chilElemtns).each(function() {
+            if ((this.id !== "overlay") && (this.id !== "gameCanvas")) {
                 jQuery(this).remove();
             }
         });
@@ -326,33 +332,34 @@ var ThemePlugin = Plugin.extend({
         return effect;
     },
     getDirection: function(d) {
-        if(d === undefined) {
+        if (d === undefined) {
             return d;
         }
         return eval('creatine.' + d.toUpperCase())
     },
     getEase: function(e) {
-        if(e === undefined) {
+        if (e === undefined) {
             return e;
         }
         return eval('createjs.Ease.' + e);
     },
     getStagesToPreLoad: function(stageData) {
         var params = stageData.param;
-        if(!params) params = [];
-        if(!_.isArray(params)) params = [params];
-        var next = _.findWhere(params, {name: 'next'}),
-            prev = _.findWhere(params, {name: 'previous'});
-        var nextStageId = undefined, prevStageId = undefined;
-        if(next) nextStageId = next.value;
-        if(prev) prevStageId = prev.value;
-        return {stage: stageData.id, next: nextStageId, prev: prevStageId};
+        if (!params) params = [];
+        if (!_.isArray(params)) params = [params];
+        var next = _.findWhere(params, { name: 'next' }),
+            prev = _.findWhere(params, { name: 'previous' });
+        var nextStageId = undefined,
+            prevStageId = undefined;
+        if (next) nextStageId = next.value;
+        if (prev) prevStageId = prev.value;
+        return { stage: stageData.id, next: nextStageId, prev: prevStageId };
     },
     cleanUp: function() {
         createjs.Touch.disable(this._self);
     },
     pause: function() {
-        if(this._currentStage) {
+        if (this._currentStage) {
             AssetManager.stopStageAudio(this._currentStage);
         }
         TelemetryService.interrupt("BACKGROUND", this._currentStage);
@@ -371,7 +378,13 @@ var ThemePlugin = Plugin.extend({
         }
         if (0 > fval) fval = 0;
         if ("undefined" != typeof max && fval >= max) fval = 0;
-        instance._contentParams[param] = fval;
+        /*instance._contentParams[param] = fval;*/
+        if (!_.isEmpty(instance._contentParams[param])) {
+            Object.assign(instance._contentParams[param], fval)
+        } else {
+            instance._contentParams[param] = fval;
+        }
+
     },
     getParam: function(param) {
         var instance = this;
