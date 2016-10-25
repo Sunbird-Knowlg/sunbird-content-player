@@ -384,7 +384,7 @@ var ThemePlugin = Plugin.extend({
     saveStagestate:function(stage){
         var stageId = Renderer.theme._currentStage;
         if(!_.isUndefined(stage._stageController)){
-        var ctrlName=stage._stageController._id;
+        var ctrlName=stage._stageControllerName;
         var ctrlIndex=stage._stageController._index;
         var stageKey=stageId+"_"+ctrlName+"_"+ctrlIndex;
         }else{
