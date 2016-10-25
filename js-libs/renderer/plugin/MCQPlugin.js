@@ -73,9 +73,7 @@ var MCQPlugin = Plugin.extend({
         return (ansLength > 1) ? true : false;
     },
     selectOption: function(option) {
-
         var controller = this._controller;
-
         // If it is not a multi-select, then unset all other selected shadows
         if (!this._multi_select) {
             this._options.forEach(function(o) {

@@ -18,7 +18,7 @@ var ThemePlugin = Plugin.extend({
     _templateMap: {},
     _contentParams: {},
     _isSceneChanging: false,
-    
+
     initPlugin: function(data) {
         this._controllerMap = {};
         this._canvasId = data.canvasId;
@@ -356,31 +356,6 @@ var ThemePlugin = Plugin.extend({
     resume: function() {
         TelemetryService.interrupt("RESUME", this._currentStage);
     },
-    setParam: function(param, value, incr, max) {
-        var instance = this;
-        var fval = instance._contentParams[param];
-        if (incr) {
-            if ("undefined" == typeof fval) fval = 0;
-            fval = (fval + incr);
-        } else {
-            fval = value
-        }
-        if (0 > fval) fval = 0;
-        if ("undefined" != typeof max && fval >= max) fval = 0;
-        if (!_.isEmpty(instance._contentParams[param])) {
-            Object.assign(instance._contentParams[param], fval)
-        } else {
-            instance._contentParams[param] = fval;
-        }
-
-
-    }, 
-    getParam: function(param) {
-        var instance = this;
-        var params = instance._contentParams;
-        var expr = 'params.' + param;
-        return eval(expr);
-    },
     saveStagestate:function(stage){
         var stageId = Renderer.theme._currentStage;
         if(!_.isUndefined(stage._stageController)){
@@ -397,8 +372,33 @@ var ThemePlugin = Plugin.extend({
         } else {
             console.warn("stageData is undefined")
         }
-
+    },
+    setParam: function(param, value, incr, max) {
+        var instance = this;
+        var fval = instance._contentParams[param];
+        if (incr) {
+            if ("undefined" == typeof fval) fval = 0;
+            fval = (fval + incr);
+        } else {
+            fval = value
+        }
+        if (0 > fval) fval = 0;
+        if ("undefined" != typeof max && fval >= max) fval = 0;
+        if (!_.isEmpty(instance._contentParams[param])) {
+            Object.assign(instance._contentParams[param], fval)
+        } else {
+            instance._contentParams[param] = fval;
+        }
+    },
+    getStageState: function(state) {
+      var myState = this.getParam(state);
+      return myState;
+    },
+    getParam: function(param) {
+        var instance = this;
+        var params = instance._contentParams;
+        var expr = 'params.' + param;
+        return eval(expr);
     }
-
 });
 PluginManager.registerPlugin('theme', ThemePlugin);

@@ -52,7 +52,7 @@ var ItemController = Controller.extend({
             if (item.type.toLowerCase() == 'ftb') {
                 FTBEvaluator.reset(item);
             } else if ((item.type.toLowerCase() == 'mcq' || item.type.toLowerCase() == 'mmcq') && !hasStageSet) { // need to modify and re look at hasStageSet
-                MCQEvaluator.reset(item);
+                //MCQEvaluator.reset(item);
             } else if (item.type.toLowerCase() == 'mtf') {
                 MTFEvaluator.reset(item);
             }

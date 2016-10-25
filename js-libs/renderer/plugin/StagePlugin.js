@@ -63,13 +63,17 @@ var StagePlugin = Plugin.extend({
         this._doDrag =  this.doDrag.bind(this);
         window.addEventListener('native.keyboardshow', this.keyboardShowHandler.bind(this), true);
         window.addEventListener('native.keyboardhide', this.keyboardHideHandler.bind(this), true);
+var state_keyName = this._stageController ? (Renderer.theme._currentStage+"_"+this._stageControllerName+"_"+this._stageController._index) : (Renderer.theme._currentStage);
 
-        // Render the data from the themedata
-        console.info("Theme Data:",Renderer.theme._contentParams);
-        /*if(this._retainStagestateFlag){
-            this._stage._currentStage
-
-        }*/
+  console.log("==========================");
+  console.log("state id: ",state_keyName);
+  if(this._stageController){
+    var savedState = Renderer.theme.getStageState(state_keyName);
+    console.log(savedState);
+    console.log(this._stageController._model[this._stageController._index].options);
+    this._stageController._model[this._stageController._index].options = _.isEmpty(savedState)? this._stageController._model[this._stageController._index].options : savedState.mcq;
+  }
+  console.log("==========================");
         this.invokeChildren(data, this, this, this._theme);
     },
     keyboardShowHandler: function (e) {
