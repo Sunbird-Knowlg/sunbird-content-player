@@ -218,19 +218,8 @@ var ThemePlugin = Plugin.extend({
         if (this._isSceneChanging) {
             return; }
         var stage = this._currentScene;
-
+        this.saveStagestate(stage);
         // set the stageData to themelevel
-        var stageKey = Renderer.theme._currentStage;
-        var stagePlugin_data = Renderer.theme._currentScene.params;
-
-        if (!_.isUndefined(stagePlugin_data)) {
-            this.setParam(stageKey, stagePlugin_data);
-            console.info("Theme: StagePlugin data is saved")
-        } else {
-            console.info("stageData is undefined")
-        }
-
-
         RecorderManager.stopRecording();
 
 
@@ -378,19 +367,38 @@ var ThemePlugin = Plugin.extend({
         }
         if (0 > fval) fval = 0;
         if ("undefined" != typeof max && fval >= max) fval = 0;
-        /*instance._contentParams[param] = fval;*/
         if (!_.isEmpty(instance._contentParams[param])) {
             Object.assign(instance._contentParams[param], fval)
         } else {
             instance._contentParams[param] = fval;
         }
 
-    },
+
+    }, 
     getParam: function(param) {
         var instance = this;
         var params = instance._contentParams;
         var expr = 'params.' + param;
         return eval(expr);
+    },
+    saveStagestate:function(stage){
+        var stageId = Renderer.theme._currentStage;
+        if(!_.isUndefined(stage._stageController)){
+        var ctrlName=stage._stageController._id;
+        var ctrlIndex=stage._stageController._index;
+        var stageKey=stageId+"_"+ctrlName+"_"+ctrlIndex;
+        }else{
+            stageKey=stageId;
+        }
+        var stagePlugin_data = Renderer.theme._currentScene._cloneObj;
+        if (!_.isEmpty(stagePlugin_data)) {
+            this.setParam(stageKey, stagePlugin_data);
+            console.info("Data Saved to Theme")
+        } else {
+            console.warn("stageData is undefined")
+        }
+
     }
+
 });
 PluginManager.registerPlugin('theme', ThemePlugin);

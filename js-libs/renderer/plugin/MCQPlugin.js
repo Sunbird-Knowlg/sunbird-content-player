@@ -85,38 +85,21 @@ var MCQPlugin = Plugin.extend({
                 }
             });
         }
-
         // If the shadow is visible, toggle it (unselect)
-        console.log("option : ", option);
+        console.log("option**** : ", option);
         var val = undefined;
         if (option) {
             val = option.toggleShadow();
             controller.setModelValue(option._model, val, 'selected');
         }
-        this.saveState(controller);
+        var model=controller._model[controller._index];
+        var pModel=model.options;
+        var pType=model.type;
+        this.saveState(pType,pModel);//save the state of the MCQ plugin
+
         // Shadow state has changed, re-render
         Renderer.update = true;
         return val;
-    },
-    saveState:function(controller){
-       console.info("Retain MCQ state: ", controller);
-        // Retain the MCQ and MMCQ status
-        var rStage_modelKey = Renderer.theme._currentStage+"_"+ controller._index;
-        var rModel_data=controller._model[controller._index].options;
-        this._stage.setParam(rStage_modelKey, rModel_data);
-        /*for (var i = 0, len = rModel_data.length; i < len; ++i) {
-            var option_model = rModel_data[i];
-            if (!_.isUndefined(option_model.selected) && option_model.selected == true) {
-                var index = option_model.value.resindex;
-                var selected = option_model.selected;                
-            }
-        }*/
-        /*var model_obj = {
-            selected: selected,
-            resindex: index
-        }*/
-        
-
     }
 });
 PluginManager.registerPlugin('mcq', MCQPlugin);

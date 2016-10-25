@@ -12,7 +12,10 @@ var StagePlugin = Plugin.extend({
     _startDrag: undefined,
     _doDrag: undefined,
     _stageInstanceId: undefined,
+    _retainStagestateFlag:true,
+    _cloneObj:{},
     initPlugin: function(data) {
+        console.log("theme param obj  : ", Renderer.theme._contentParams)
         this._inputs = [];
         var instance = this;
         this.params = {};
@@ -61,6 +64,12 @@ var StagePlugin = Plugin.extend({
         window.addEventListener('native.keyboardshow', this.keyboardShowHandler.bind(this), true);
         window.addEventListener('native.keyboardhide', this.keyboardHideHandler.bind(this), true);
 
+        // Render the data from the themedata
+        console.info("Theme Data:",Renderer.theme._contentParams);
+        /*if(this._retainStagestateFlag){
+            this._stage._currentStage
+
+        }*/
         this.invokeChildren(data, this, this, this._theme);
     },
     keyboardShowHandler: function (e) {
@@ -236,6 +245,7 @@ var StagePlugin = Plugin.extend({
         if (0 > fval) fval = 0;
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance.params[param] = fval;
+        instance._cloneObj = JSON.parse(JSON.stringify(instance.params));
     },
     getParam: function(param) {
         var instance = this;
