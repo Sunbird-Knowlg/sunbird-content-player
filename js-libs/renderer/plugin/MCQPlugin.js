@@ -72,9 +72,9 @@ var MCQPlugin = Plugin.extend({
         return (ansLength > 1) ? true : false;
     },
     selectOption: function(option) {
-        
+
     	var controller = this._controller;
-    	
+
         // If it is not a multi-select, then unset all other selected shadows
         if (!this._multi_select) {
     		this._options.forEach(function(o) {
@@ -84,16 +84,16 @@ var MCQPlugin = Plugin.extend({
     			}
             });
     	}
-    	
+
         // If the shadow is visible, toggle it (unselect)
         console.log("option : ", option);
         var val = undefined;
         if(option) {
             val = option.toggleShadow();
-            controller.setModelValue(option._model, val, 'selected');  
+            controller.setModelValue(option._model, val, 'selected');
         }
-        
-        
+
+
         // Shadow state has changed, re-render
         Renderer.update = true;
         return val;
