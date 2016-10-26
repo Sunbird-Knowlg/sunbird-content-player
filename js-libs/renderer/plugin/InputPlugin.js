@@ -55,10 +55,26 @@ var InputPlugin = HTMLPlugin.extend({
         this._stage._inputs.push(this);
 	},
     setModelValue: function() {
-        if (this._data.model) {
-            var model = this._data.model;
-            this._stage.setModelValue(model, this._input.value);
+    if (this._data.model) {
+        var model = this._data.model;
+        this._stage.setModelValue(model, this._input.value);
+        this.setMyplugindata();
+    }
+},
+    setMyplugindata:function(){
+        var controller = this._stage._stageController;
+        if(!_.isUndefined(controller)){
+            var cModel=controller._model[controller._index];       
+            var pModel=cModel.model;
+            var pType=cModel.type;
+            this.saveState(pType,pModel);
+        }else{
+            console.info("There is no ctrl in this stage");
+            pModel=this._input.value;
+            pType=this._data.pluginType;
+            this.saveState(pType,pModel);
         }
+        
     }
 
 });
