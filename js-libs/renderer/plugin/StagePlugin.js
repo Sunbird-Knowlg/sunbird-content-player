@@ -83,18 +83,17 @@ var StagePlugin = Plugin.extend({
               console.log("question type: ",this._stageController._model[this._stageController._index].type);
               this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.mmcq;
             }
-            /*
+
             if (this._stageController._model[this._stageController._index].type === "mtf")
             {
               console.log("question type: ",this._stageController._model[this._stageController._index].type);
-              this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.mtf;
+              this._stageController._model[this._stageController._index].rhs_options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].rhs_options : savedState.mtf;
             }
             if (this._stageController._model[this._stageController._index].type === "ftb")
             {
               console.log("question type: ",this._stageController._model[this._stageController._index].type);
               this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.ftb;
             }
-            */
           }
           this.invokeChildren(data, this, this, this._theme);
     },
