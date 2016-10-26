@@ -90,6 +90,10 @@ var OptionsPlugin = Plugin.extend({
     				data.option = instance._data.options + '[' + index + ']';
                     var innerECML = this.getInnerECML();
                     if (!_.isEmpty(innerECML)) {
+                        // Handle case if device doesnot support ECMAScript 6
+                        if (typeof Object.assign != 'function') {
+                            objectAssign()
+                        }
                         Object.assign(data, innerECML);
                     }
     				index = index + 1;
