@@ -10,6 +10,8 @@ var MCQPlugin = Plugin.extend({
     _offsetX: 0,
     _offsetY: 0,
     _highlight: '#E89241',
+    _checkOptionchanges:false,
+    stageStateFlag:"stageStateFlag",
     initPlugin: function(data) {
 
         this._multi_select = false;
@@ -23,12 +25,15 @@ var MCQPlugin = Plugin.extend({
         if (model) {
             var controller = this._stage.getController(model);
             if (controller) {
+                if(!this._checkOptionchanges){
+                   this.saveMcqState(controller);
+                  // Save the MCQ state when user land to the MCQ Page                
+                }
                 this._controller = controller;
                 this._multi_select = data.multi_select;
                 if ((typeof this._multi_select) == 'undefined' || this._multi_select == null) {
                     this._multi_select = false;
                 }
-
                 this._data.x = this._parent._data.x;
                 this._data.y = this._parent._data.y;
                 this._data.w = this._parent._data.w;
@@ -56,8 +61,9 @@ var MCQPlugin = Plugin.extend({
                 if (_.isFinite(data.offsetY)) {
                     this._offsetY = data.offsetY;
                 }
-                this._multi_select = this.isMultiSelect();
-             this.invokeChildren(data, this, this._stage, this._theme);
+                this._multi_select = this.isMultiSelect();            
+                this.invokeChildren(data, this, this._stage, this._theme);
+
             }
         }
     },
@@ -84,15 +90,24 @@ var MCQPlugin = Plugin.extend({
             });
         }
         // If the shadow is visible, toggle it (unselect)
-        console.log("option**** : ", option);
+
         var val = undefined;
         if (option) {
             val = option.toggleShadow();
             controller.setModelValue(option._model, val, 'selected');
         }
-        // Shadow state has changed, re-render
+        this._checkOptionchanges = true;
+        this.saveMcqState(controller);        
         Renderer.update = true;
         return val;
+    },
+    saveMcqState:function(controller){        
+        var model=controller._model[controller._index],       
+        pModel=model.options,
+        pType=model.type,
+        instance = this;
+        instance.saveState(pType,pModel);
+        instance.saveState(instance.stageStateFlag,instance._checkOptionchanges);
     }
 });
 PluginManager.registerPlugin('mcq', MCQPlugin);

@@ -6,6 +6,7 @@ var MTFPlugin = Plugin.extend({
     _rhs_options: [],
     _force: false,
     _controller: undefined,
+    _checkOptionchanges:false,
     initPlugin: function(data) {
         this._lhs_options = [];
         this._rhs_options = [];
@@ -14,6 +15,10 @@ var MTFPlugin = Plugin.extend({
         var model = data.model;
         if (model) {
         	var controller = this._stage.getController(model);
+            if(!this._checkOptionchanges){
+                // Save the MTF state when user land to MTF page.
+                this.saveMtfstate(controller);
+            }
         	if (controller) {
         		this._controller = controller;
                 this._force = data.force;
@@ -54,9 +59,21 @@ var MTFPlugin = Plugin.extend({
             delete rhsOption._value.mapped;
             this._controller.setModelValue(rhsOption._model, undefined, 'selected');
         }
+        // Save the MTF state when user mapped the RHS to LHS option 
+        this._checkOptionchanges=true; // Feature purpose
+        this.saveMtfstate(this._controller);
     },
     removeAnswer: function(rhsOption, lhsIndex) {
         this._controller.setModelValue(rhsOption._model, lhsIndex, '');
+    },
+    saveMtfstate:function(controller){        
+        var model=controller._model[controller._index],      
+        pModel=model.rhs_options,
+        pType=model.type,
+        stageStateFlag="stageStateFlag";
+        this.saveState(pType,pModel);
+        this.saveState(stageStateFlag,this._checkOptionchanges);
+
     }
 });
 PluginManager.registerPlugin('mtf', MTFPlugin);

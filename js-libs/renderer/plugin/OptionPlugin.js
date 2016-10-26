@@ -10,7 +10,6 @@ var OptionPlugin = Plugin.extend({
     _mapedTo: undefined,
     _uniqueId: undefined,
     _modelValue: undefined,
-    _checkOptionchanges:false,
     initPlugin: function(data) {
         this._model = undefined;
         this._value = undefined;
@@ -67,14 +66,10 @@ var OptionPlugin = Plugin.extend({
         }
     },
     renderMCQOption: function() {
-        var stageStateFlag="stageStateFlag";
         var controller = this._parent._controller;
         var itemId = controller.getModelValue("identifier");
         this._parent._options.push(this);
         this._self.cursor = 'pointer';
-        var model=controller._model[controller._index];       
-        var pModel=model.options;
-        var pType=model.type;
         var instance = this;
         if(this._modelValue.selected === true) {
           var val = instance._parent.selectOption(instance);
@@ -84,9 +79,6 @@ var OptionPlugin = Plugin.extend({
             Overlay.isReadyToEvaluate(true);
             var eventData = {};
             var val = instance._parent.selectOption(instance);
-            this._checkOptionchanges=true;            
-            instance.saveState(pType,pModel);
-            instance.saveState(stageStateFlag,this._checkOptionchanges);
             var data = {
                 type: event.type,
                 x: event.stageX,
@@ -100,22 +92,13 @@ var OptionPlugin = Plugin.extend({
                 optionTag: "MCQ"
             }
             EventManager.processAppTelemetry({}, 'CHOOSE', instance, data);
-            
-        });
-        if(this._checkOptionchanges==false){
-            instance.saveState(pType,pModel);
-            instance.saveState(stageStateFlag,this._checkOptionchanges);
-        }
+        });        
     },
     renderMTFOption: function(value) {
         var enableDrag = false;
         var dragPos = {};
         var dragItem = {};
         var controller = this._parent._controller;
-        var model=controller._model[controller._index];       
-        var pModel=model.rhs_options;
-        var pType=model.type;
-        var stageStateFlag="stageStateFlag";
         var itemId = controller.getModelValue("identifier");
         if (_.isFinite(value.index)) {
             this._index = value.index;
@@ -277,11 +260,6 @@ var OptionPlugin = Plugin.extend({
                  }
 
                 instance.removeShadow();
-                // save the MTF state onclick of pressup
-                instance.saveState(pType,pModel)
-                this._checkOptionchanges=true;
-                instance.saveState(stageStateFlag,this._checkOptionchanges);
-
                 var data = {
                     type: evt.type,
                     x: evt.stageX,
@@ -305,10 +283,7 @@ var OptionPlugin = Plugin.extend({
             });
             
         }
-        if(!this._checkOptionchanges){
-                this.saveState(pType,pModel);
-                this.saveState(stageStateFlag,this._checkOptionchanges);
-            }
+       
     },
     renderImage: function(value) {
         var data = {};
