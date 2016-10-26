@@ -72,8 +72,13 @@ var OptionPlugin = Plugin.extend({
         this._parent._options.push(this);
         this._self.cursor = 'pointer';
         var model=controller._model[controller._index];
-        var pModel=model.options;
+       /*var pType=model.type;
+        var instance = this;*/
+        var pModel=model.options;        
+        // pModel.option = model.options;
+        // pModel.mcqStatuschange = mcqStatuschange;
         var pType=model.type;
+        var stageStateFlag="stageStateFlag";
         var instance = this;
         if(this._modelValue.selected === true) {
           var val = instance._parent.selectOption(instance);
@@ -98,9 +103,12 @@ var OptionPlugin = Plugin.extend({
                 optionTag: "MCQ"
             }
             EventManager.processAppTelemetry({}, 'CHOOSE', instance, data);
+            
+            instance.saveState(stageStateFlag,mcqStatuschange);
         });
         if(mcqStatuschange==false){
             instance.saveState(pType,pModel);
+            instance.saveState(stageStateFlag,mcqStatuschange);
         }
     },
     renderMTFOption: function(value) {
