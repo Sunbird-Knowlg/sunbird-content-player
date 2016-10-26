@@ -18,9 +18,12 @@ var ThemePlugin = Plugin.extend({
     _templateMap: {},
     _contentParams: {},
     _isSceneChanging: false,
+    _saveState:true,
+    _themeStateobj:{},
 
     initPlugin: function(data) {
         this._controllerMap = {};
+        this._saveState=data.saveState;
         this._canvasId = data.canvasId;
         this._self = new createjs.Stage(data.canvasId);
         this._director = new creatine.Director(this._self);
@@ -32,7 +35,7 @@ var ThemePlugin = Plugin.extend({
         }
         createjs.Touch.enable(this._self);
         this._self.enableMouseOver(10);
-        this._self.mouseMoveOutside = true;
+        this._self.mouseMoveOutside = true;        
     },
     mousePoint: function() {
         return { x: this._self.mouseX, y: this._self.mouseY };
@@ -218,12 +221,11 @@ var ThemePlugin = Plugin.extend({
         if (this._isSceneChanging) {
             return; }
         var stage = this._currentScene;
-        this.saveStagestate(stage);
+        if(this._saveState==true){ // chek Theme saveState has true or false 
+            this.saveStagestate(stage);
+        }
         // set the stageData to themelevel
         RecorderManager.stopRecording();
-
-
-
         // RecorderManager._deleteRecordedaudio();
         TimerManager.stopAll(this._currentStage);
         if (action.transitionType === 'previous') {
@@ -357,7 +359,7 @@ var ThemePlugin = Plugin.extend({
         TelemetryService.interrupt("RESUME", this._currentStage);
     },
     saveStagestate:function(stage){
-        var stageId = Renderer.theme._currentStage;
+        var stageId = stage._id;
         if(!_.isUndefined(stage._stageController)){
         var ctrlName=stage._stageControllerName;
         var ctrlIndex=stage._stageController._index;
@@ -365,12 +367,12 @@ var ThemePlugin = Plugin.extend({
         }else{
             stageKey=stageId;
         }
-        var stagePlugin_data = Renderer.theme._currentScene._cloneObj;
+        var stagePlugin_data = stage._stageStateobj;
         if (!_.isEmpty(stagePlugin_data)) {
             this.setParam(stageKey, stagePlugin_data);
             console.info("Data Saved to Theme")
         } else {
-            console.warn("stageData is undefined")
+            console.warn(" Data not Saved to Theme")
         }
     },
     setParam: function(param, value, incr, max) {
@@ -384,19 +386,21 @@ var ThemePlugin = Plugin.extend({
         }
         if (0 > fval) fval = 0;
         if ("undefined" != typeof max && fval >= max) fval = 0;
-        if (!_.isEmpty(instance._contentParams[param])) {
-            Object.assign(instance._contentParams[param], fval)
-        } else {
-            instance._contentParams[param] = fval;
-        }
+        instance._contentParams[param]=fval;
+        instance._themeStateobj = JSON.parse(JSON.stringify(instance._contentParams));
     },
     getStageState: function(state) {
-      var myState = this.getParam(state);
-      return myState;
+        var instance=this;
+        return  instance.getParam(state);
     },
     getParam: function(param) {
         var instance = this;
-        var params = instance._contentParams;
+        var params;
+        if(instance._saveState){
+            params=instance._themeStateobj;
+        }else{
+            var params = instance._contentParams;
+        }
         var expr = 'params.' + param;
         return eval(expr);
     }

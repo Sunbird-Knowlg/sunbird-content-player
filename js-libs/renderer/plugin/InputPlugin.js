@@ -1,6 +1,7 @@
 var InputPlugin = HTMLPlugin.extend({
 	_type: 'input',
     _input: undefined,
+    _checkOptionchanges:false,
 	initPlugin: function(data) {
         this._input = undefined;
 
@@ -56,20 +57,27 @@ var InputPlugin = HTMLPlugin.extend({
 	},
     setModelValue: function() {
     if (this._data.model) {
+        var instance=this;
         var model = this._data.model;
         this._stage.setModelValue(model, this._input.value);
-        this.setMyplugindata();
+        this._checkOptionchanges=true;
+        instance.saveInputPlugindata();
+
     }
 },
-    setMyplugindata:function(){
+    saveInputPlugindata:function(){
         var controller = this._stage._stageController;
         if(!_.isUndefined(controller)){
+            // if the Stage is FTB 
             var cModel=controller._model[controller._index];       
             var pModel=cModel.model;
             var pType=cModel.type;
+            var stageStateFlag="stageStateFlag";
             this.saveState(pType,pModel);
+            this.saveState(stageStateFlag,this._checkOptionchanges);
         }else{
-            console.info("There is no ctrl in this stage");
+            // If the stage is Input plugin
+            console.warn("There is no ctrl in this stage");
             pModel=this._input.value;
             pType=this._data.pluginType;
             this.saveState(pType,pModel);
