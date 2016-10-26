@@ -92,7 +92,7 @@ var StagePlugin = Plugin.extend({
             if (this._stageController._model[this._stageController._index].type === "ftb")
             {
               console.log("question type: ",this._stageController._model[this._stageController._index].type);
-              this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.ftb;
+              this._stageController._model[this._stageController._index].model = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].model : savedState.ftb;
             }
           }
           this.invokeChildren(data, this, this, this._theme);
