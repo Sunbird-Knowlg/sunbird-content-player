@@ -90,11 +90,6 @@ var MCQPlugin = Plugin.extend({
             val = option.toggleShadow();
             controller.setModelValue(option._model, val, 'selected');
         }
-        var model=controller._model[controller._index];
-        var pModel=model.options;
-        var pType=model.type;
-        this.saveState(pType,pModel);//save the state of the MCQ plugin
-
         // Shadow state has changed, re-render
         Renderer.update = true;
         return val;

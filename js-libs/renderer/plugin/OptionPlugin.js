@@ -66,10 +66,14 @@ var OptionPlugin = Plugin.extend({
         }
     },
     renderMCQOption: function() {
+        var mcqStatuschange=false;
         var controller = this._parent._controller;
         var itemId = controller.getModelValue("identifier");
         this._parent._options.push(this);
         this._self.cursor = 'pointer';
+        var model=controller._model[controller._index];
+        var pModel=model.options;
+        var pType=model.type;
         var instance = this;
         if(this._modelValue.selected === true) {
           var val = instance._parent.selectOption(instance);
@@ -79,6 +83,8 @@ var OptionPlugin = Plugin.extend({
             Overlay.isReadyToEvaluate(true);
             var eventData = {};
             var val = instance._parent.selectOption(instance);
+            mcqStatuschange=true;            
+            instance.saveState(pType,pModel);
             var data = {
                 type: event.type,
                 x: event.stageX,
@@ -93,6 +99,9 @@ var OptionPlugin = Plugin.extend({
             }
             EventManager.processAppTelemetry({}, 'CHOOSE', instance, data);
         });
+        if(mcqStatuschange==false){
+            instance.saveState(pType,pModel);
+        }
     },
     renderMTFOption: function(value) {
         var enableDrag = false;
