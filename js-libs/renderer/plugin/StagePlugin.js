@@ -14,6 +14,7 @@ var StagePlugin = Plugin.extend({
     _stageInstanceId: undefined,
     _retainStagestateFlag:true,
     _cloneObj:{},
+    stageStateFlag: false,
     initPlugin: function(data) {
         console.log("theme param obj  : ", Renderer.theme._contentParams)
         this._inputs = [];
@@ -63,18 +64,39 @@ var StagePlugin = Plugin.extend({
         this._doDrag =  this.doDrag.bind(this);
         window.addEventListener('native.keyboardshow', this.keyboardShowHandler.bind(this), true);
         window.addEventListener('native.keyboardhide', this.keyboardHideHandler.bind(this), true);
-var state_keyName = this._stageController ? (Renderer.theme._currentStage+"_"+this._stageControllerName+"_"+this._stageController._index) : (Renderer.theme._currentStage);
 
-  console.log("==========================");
-  console.log("state id: ",state_keyName);
-  if(this._stageController){
-    var savedState = Renderer.theme.getStageState(state_keyName);
-    console.log(savedState);
-    console.log(this._stageController._model[this._stageController._index].options);
-    this._stageController._model[this._stageController._index].options = _.isEmpty(savedState)? this._stageController._model[this._stageController._index].options : savedState.mcq;
-  }
-  console.log("==========================");
-        this.invokeChildren(data, this, this, this._theme);
+        // setting the parameters as per the state
+          var state_keyName = this._stageController ? (Renderer.theme._currentStage+"_"+this._stageControllerName+"_"+this._stageController._index) : (Renderer.theme._currentStage);
+
+          if(this._stageController){
+
+            var savedState = Renderer.theme.getStageState(state_keyName);
+
+            this.stageStateFlag =savedState ? savedState.stageStateFlag : this.stageStateFlag;
+            if (this._stageController._model[this._stageController._index].type === "mcq")
+            {
+              console.log("question type: ",this._stageController._model[this._stageController._index].type);
+              this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.mcq;
+            }
+            if (this._stageController._model[this._stageController._index].type === "mmcq")
+            {
+              console.log("question type: ",this._stageController._model[this._stageController._index].type);
+              this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.mmcq;
+            }
+            /*
+            if (this._stageController._model[this._stageController._index].type === "mtf")
+            {
+              console.log("question type: ",this._stageController._model[this._stageController._index].type);
+              this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.mtf;
+            }
+            if (this._stageController._model[this._stageController._index].type === "ftb")
+            {
+              console.log("question type: ",this._stageController._model[this._stageController._index].type);
+              this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.ftb;
+            }
+            */
+          }
+          this.invokeChildren(data, this, this, this._theme);
     },
     keyboardShowHandler: function (e) {
         this._self.y =  -(e.keyboardHeight);

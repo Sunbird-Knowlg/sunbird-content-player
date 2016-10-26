@@ -5,10 +5,10 @@ var packageName = "org.ekstep.quiz.app",
 
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
-    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive",
+    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive"
 
 // Need to modify the scope level hasStageSet
-    hasStageSet = true
+    // hasStageSet = true
 
 function startProgressBar(w, setInter) {
     var elem = document.getElementById("progressBar");
