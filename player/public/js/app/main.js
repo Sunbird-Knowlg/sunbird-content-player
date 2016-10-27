@@ -214,3 +214,22 @@ function checkStage(showalert) {
     Renderer.running = false;
     return
 }
+
+function objectAssign() {
+    Object.assign = function (target) {
+        if (target === undefined || target === null) {
+            throw new TypeError('Cannot convert undefined or null to object');
+        }
+        var output = Object(target);
+        _.each(arguments, function(argument){
+            if (argument !== undefined && argument !== null) {
+                for (var nextKey in argument) {
+                    if (argument.hasOwnProperty(nextKey)) {
+                        output[nextKey] = argument[nextKey];
+                    }
+                }
+            }
+        })
+        return output;
+    }
+}

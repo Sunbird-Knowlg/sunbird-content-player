@@ -33,7 +33,7 @@ var ThemePlugin = Plugin.extend({
         }
         createjs.Touch.enable(this._self);
         this._self.enableMouseOver(10);
-        this._self.mouseMoveOutside = true;        
+        this._self.mouseMoveOutside = true;
     },
     mousePoint: function() {
         return { x: this._self.mouseX, y: this._self.mouseY };
@@ -51,6 +51,27 @@ var ThemePlugin = Plugin.extend({
     start: function(basePath) {
         var instance = this;
         RecorderManager.init();
+        // handle content if startstage io not defined or unavailable
+        if (_.isArray(this._data.stage)) {
+            var startStage = _.find(this._data.stage,function(stage) {return stage.id == instance._data.startStage});
+        } else {
+            if (this._data.stage.id == instance._data.startStage) {
+                var startStage = this._data.stage.id
+            }
+        }
+        if (_.isUndefined(startStage)) {
+            var firstStage = _.find(this._data.stage, function(stage) {if (stage.param && _.isUndefined(firstStage)) return stage})
+            if (_.isUndefined(firstStage)) {
+                checkStage('showAlert');
+            } else {
+                if (_.isUndefined(this._data.startStage)) {
+                    console.warn("No start stage is defined, loading first stage");
+                } else {
+                    console.warn("Startstage is not available, loading first stage")
+                }
+                this._data.startStage = firstStage.id
+            }
+        }
         AssetManager.init(this._data, basePath);
         AssetManager.initStage(this._data.startStage, null, null, function() {
             instance.render();
@@ -219,12 +240,13 @@ var ThemePlugin = Plugin.extend({
         if (this._isSceneChanging) {
             return; }
         var stage = this._currentScene;
-        if(this._saveState==true){ // chek Theme saveState has true or false 
+        if(this._saveState==true){ // chek Theme saveState has true or false
             this.saveStagestate(stage);
         }
         // set the stageData to themelevel
         RecorderManager.stopRecording();
-        // RecorderManager._deleteRecordedaudio();
+        AudioManager.stopAll();
+       // RecorderManager._deleteRecordedaudio();
         TimerManager.stopAll(this._currentStage);
         if (action.transitionType === 'previous') {
             this._isSceneChanging = true;
@@ -401,7 +423,7 @@ var ThemePlugin = Plugin.extend({
             var expr = 'params.' + param;
             return eval(expr);
         }
-       
+
     }
 });
 PluginManager.registerPlugin('theme', ThemePlugin);

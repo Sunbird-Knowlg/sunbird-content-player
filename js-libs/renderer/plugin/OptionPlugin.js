@@ -10,7 +10,6 @@ var OptionPlugin = Plugin.extend({
     _mapedTo: undefined,
     _uniqueId: undefined,
     _modelValue: undefined,
-  
     initPlugin: function(data) {
         this._model = undefined;
         this._value = undefined;
@@ -80,7 +79,7 @@ var OptionPlugin = Plugin.extend({
         this._self.on('click', function(event) {
             Overlay.isReadyToEvaluate(true);
             var eventData = {};
-            var val = instance._parent.selectOption(instance);            
+            var val = instance._parent.selectOption(instance);
             var data = {
                 type: event.type,
                 x: event.stageX,
@@ -301,6 +300,7 @@ var OptionPlugin = Plugin.extend({
                 EventManager.processAppTelemetry({}, 'DROP', instance, data);
                 Renderer.update = true;
             });
+
         }
     },
     renderImage: function(value) {

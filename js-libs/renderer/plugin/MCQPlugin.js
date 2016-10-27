@@ -13,7 +13,6 @@ var MCQPlugin = Plugin.extend({
     _checkOptionchanges:false,
     stageStateFlag:"stageStateFlag",
     initPlugin: function(data) {
-
         this._multi_select = false;
         this._options = [];
         this._shadow = '#0470D8';
@@ -27,7 +26,7 @@ var MCQPlugin = Plugin.extend({
             if (controller) {
                 if(!this._checkOptionchanges){
                    this.saveMcqState(controller);
-                  // Save the MCQ state when user land to the MCQ Page                
+                  // Save the MCQ state when user land to the MCQ Page
                 }
                 this._controller = controller;
                 this._multi_select = data.multi_select;
@@ -61,7 +60,7 @@ var MCQPlugin = Plugin.extend({
                 if (_.isFinite(data.offsetY)) {
                     this._offsetY = data.offsetY;
                 }
-                this._multi_select = this.isMultiSelect();            
+                this._multi_select = this.isMultiSelect();
                 this.invokeChildren(data, this, this._stage, this._theme);
 
             }
@@ -97,12 +96,12 @@ var MCQPlugin = Plugin.extend({
             controller.setModelValue(option._model, val, 'selected');
         }
         this._checkOptionchanges = true;
-        this.saveMcqState(controller);        
+        this.saveMcqState(controller);
         Renderer.update = true;
         return val;
     },
-    saveMcqState:function(controller){        
-        var model=controller._model[controller._index],       
+    saveMcqState:function(controller){
+        var model=controller._model[controller._index],
         pModel=model.options,
         pType=model.type,
         instance = this;

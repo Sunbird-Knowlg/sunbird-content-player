@@ -20,14 +20,14 @@
 </style>
 
 <div class="font-baloo gc-ep-cont">
-    <image ng-src="{{icons.end.background}}" style="width:100%;height:100%;position: absolute; z-index: -1;" />
+    <image class="gc-ep-cont-background" ng-src="{{icons.end.background}}" />
 
     <genie icon="icn_round_play.png" class="gc-ep-home"></genie>
 
     <div class="gc-ep-content">
-        <p class="gc-ep-cong gc-text-elipsis" style="margin: 1% 0%;">{{languageSupport.congratulations}}</p>
+        <p class="gc-ep-cong gc-text-elipsis">{{languageSupport.congratulations}}</p>
         <p class="icon-font gc-ep-title gc-text-elipsis" ng-if="content.name">{{content.name}}</p>
-        <p class="gc-content-owner gc-text-elipsis">{{ languageSupport.author }}: {{content.owner}}</p>
+        <p class="gc-content-owner gc-text-elipsis" ng-if="content.owner">{{ languageSupport.author }}: {{content.owner}}</p>
     </div>
 
     <center class="gc-ep-credits">
@@ -40,7 +40,7 @@
             <div class="gc-ep-rating-cont">
                 <div class="gc-ep-rating" ng-if="!showFeedbackPopup">
                     <p>{{languageSupport.scores}}</p>
-                    <star-rating empty-rating="icn_credit_star.png" selected-rating="filled_star.png" rating="userRating" read-only="false" max-rating="5" click="showFeedback(param)" style="height: 100%;"></star-rating>
+                    <star-rating empty-rating="icn_credit_star.png" selected-rating="filled_star.png" rating="userRating" read-only="false" max-rating="5" click="showFeedback(param)"></star-rating>
                 </div>
                 <div class="gc-ep-comments" style="display:none">
                     <img src="img/icons/feedback_icon.png" />
@@ -72,7 +72,7 @@
         </div>
         <div class="gc-ep-related-cont" ng-controller="RelatedContentCtrl">
             <div class="gc-ep-next">
-                <p class="gc-ep-cong gc-text-elipsis" style="padding: 2%">{{ languageSupport.nextContent }}</p>
+                <p class="gc-ep-related-cont-next gc-text-elipsis">{{ languageSupport.nextContent }}</p>
             </div>
             <!-- <div class="gc-ep-rel-title" ng-show="showRelatedContentHeader">
                 <p>{{languageSupport.relatedContent}}</p>
@@ -86,7 +86,7 @@
             <div class="gc-related-cont" ng-show="showRelatedContent">
                 <div class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
                     <div class="gc-related-item">
-                        <p class="gc-text-elipsis" style="padding-left: 10%;font-size: 1em">Title{{story.name}}</p>
+                        <p class="gc-text-elipsis gc-related-cont-title">Title{{story.name}}</p>
                         <div class="gc-rel-content-img">
                             <img class="img-center" ng-src="{{story.appIcon}}" />
                             <div class="gc-repeat-content">
