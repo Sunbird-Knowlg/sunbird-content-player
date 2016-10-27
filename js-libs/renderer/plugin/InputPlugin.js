@@ -54,24 +54,28 @@ var InputPlugin = HTMLPlugin.extend({
         this._self.y = dims.y + 1000; // negate the initial off-screen positioning
         this._theme.inputs.push(data.id);
         this._stage._inputs.push(this);
+        var instance=this;
+         jQuery('input').keyup(function(){
+            instance.saveInputPlugindata();
+        });
 	},
     setModelValue: function() {
     if (this._data.model) {
         var instance=this;
         var model = this._data.model;
         this._stage.setModelValue(model, this._input.value);
-        this._checkOptionchanges=true;
-        instance.saveInputPlugindata();
-
     }
 },
     saveInputPlugindata:function(){
-        var controller = this._stage._stageController;
+        var instance=this;
+        instance._stage.setModelValue(instance._data.model, instance._input.value);
+        var controller = instance._stage._stageController;
         if(!_.isUndefined(controller)){
             // if the Stage is FTB 
             var cModel=controller._model[controller._index];       
             var pModel=cModel.model;
             var pType=cModel.type;
+            this._checkOptionchanges=true;
             var stageStateFlag="stageStateFlag";
             this.saveState(pType,pModel);
             this.saveState(stageStateFlag,this._checkOptionchanges);
