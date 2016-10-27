@@ -55,9 +55,13 @@ var InputPlugin = HTMLPlugin.extend({
         this._theme.inputs.push(data.id);
         this._stage._inputs.push(this);
         var instance=this;
-         jQuery('input').keyup(function(){
+         jQuery('input').keyup(function(e){
+            instance._checkOptionchanges=true;
             instance.saveInputPlugindata();
         });
+         if(!instance._checkOptionchanges){
+            instance.saveInputPlugindata();
+         }
 	},
     setModelValue: function() {
     if (this._data.model) {
@@ -75,10 +79,9 @@ var InputPlugin = HTMLPlugin.extend({
             var cModel=controller._model[controller._index];       
             var pModel=cModel.model;
             var pType=cModel.type;
-            this._checkOptionchanges=true;
             var stageStateFlag="stageStateFlag";
-            this.saveState(pType,pModel);
-            this.saveState(stageStateFlag,this._checkOptionchanges);
+            instance.saveState(pType,pModel);
+            instance.saveState(stageStateFlag,this._checkOptionchanges);
         }else{
             // If the stage is Input plugin
             console.warn("There is no ctrl in this stage");
