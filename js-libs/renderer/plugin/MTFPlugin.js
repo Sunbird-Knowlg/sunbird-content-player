@@ -71,10 +71,8 @@ var MTFPlugin = Plugin.extend({
         pModel=model.rhs_options,
         pType=model.type,
         stageStateFlag="stageStateFlag";
-        if(controller._data.saveCtrlstate==true){
-            this.saveState(pType,pModel);
-            this.saveState(stageStateFlag,this._checkOptionchanges);
-        }
+        this.saveState(pType,pModel)
+        this.saveState(stageStateFlag,this._checkOptionchanges);
 
     }
 });

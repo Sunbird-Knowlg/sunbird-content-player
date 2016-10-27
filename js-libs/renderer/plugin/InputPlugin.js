@@ -80,11 +80,8 @@ var InputPlugin = HTMLPlugin.extend({
             var pModel=cModel.model;
             var pType=cModel.type;
             var stageStateFlag="stageStateFlag";
-            if(controller._data.saveCtrlstate==true){
-                instance.saveState(pType,pModel);
-                instance.saveState(stageStateFlag,this._checkOptionchanges);
-            }
-            
+            instance.saveState(pType,pModel);
+            instance.saveState(stageStateFlag,this._checkOptionchanges);
         }else{
             // If the stage is Input plugin
             console.warn("There is no ctrl in this stage");
