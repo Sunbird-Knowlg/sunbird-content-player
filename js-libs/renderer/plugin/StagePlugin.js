@@ -72,25 +72,20 @@ var StagePlugin = Plugin.extend({
 
             var savedState = Renderer.theme.getStageState(state_keyName);
 
-            this.stageStateFlag =savedState ? savedState.stageStateFlag : this.stageStateFlag;
-            if (this._stageController._model[this._stageController._index].type === "mcq")
-            {
+            this.stageStateFlag = savedState ? savedState.stageStateFlag : this.stageStateFlag;
+            if (this._stageController._model[this._stageController._index].type === "mcq") {
               console.log("question type: ",this._stageController._model[this._stageController._index].type);
               this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.mcq;
             }
-            if (this._stageController._model[this._stageController._index].type === "mmcq")
-            {
+            if (this._stageController._model[this._stageController._index].type === "mmcq") {
               console.log("question type: ",this._stageController._model[this._stageController._index].type);
               this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.mmcq;
             }
-
-            if (this._stageController._model[this._stageController._index].type === "mtf")
-            {
+            if (this._stageController._model[this._stageController._index].type === "mtf") {
               console.log("question type: ",this._stageController._model[this._stageController._index].type);
               this._stageController._model[this._stageController._index].rhs_options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].rhs_options : savedState.mtf;
             }
-            if (this._stageController._model[this._stageController._index].type === "ftb")
-            {
+            if (this._stageController._model[this._stageController._index].type === "ftb") {
               console.log("question type: ",this._stageController._model[this._stageController._index].type);
               this._stageController._model[this._stageController._index].model = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].model : savedState.ftb;
             }
