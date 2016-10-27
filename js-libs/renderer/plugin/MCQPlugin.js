@@ -106,8 +106,12 @@ var MCQPlugin = Plugin.extend({
         pModel=model.options,
         pType=model.type,
         instance = this;
+        if(controller._data.saveCtrlstate==true){
         instance.saveState(pType,pModel);
         instance.saveState(instance.stageStateFlag,instance._checkOptionchanges);
+
+        }
+        
     }
 });
 PluginManager.registerPlugin('mcq', MCQPlugin);
