@@ -13,8 +13,9 @@ var StagePlugin = Plugin.extend({
     _doDrag: undefined,
     _stageInstanceId: undefined,
     _retainStagestateFlag:true,
-    _cloneObj:{},
-    stageStateFlag: false,
+    _stageStateobj:{},
+     stageStateFlag: false,
+     saveCtrlstate:true,
     initPlugin: function(data) {
         console.log("theme param obj  : ", Renderer.theme._contentParams)
         this._inputs = [];
@@ -29,6 +30,10 @@ var StagePlugin = Plugin.extend({
         if (data.iterate && data.var) {
             var controllerName = data.var.trim();
             var stageController = this._theme._controllerMap[data.iterate.trim()];
+            if(!_.isUndefined(stageController._data.saveCtrlstate)){
+                this.saveCtrlstate=stageController._data.saveCtrlstate;
+
+            }
             if (stageController) {
                 /*if (this._theme._previousStage && this._theme._previousStage != data.id) {
                     stageController.reset();
@@ -68,7 +73,7 @@ var StagePlugin = Plugin.extend({
         // setting the parameters as per the state
           var state_keyName = this._stageController ? (Renderer.theme._currentStage+"_"+this._stageControllerName+"_"+this._stageController._index) : (Renderer.theme._currentStage);
 
-          if(this._stageController){
+          if(this._stageController && this.saveCtrlstate===true){
 
             var savedState = Renderer.theme.getStageState(state_keyName);
 
@@ -265,7 +270,7 @@ var StagePlugin = Plugin.extend({
         if (0 > fval) fval = 0;
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance.params[param] = fval;
-        instance._cloneObj = JSON.parse(JSON.stringify(instance.params));
+        instance._stageStateobj = JSON.parse(JSON.stringify(instance.params));
     },
     getParam: function(param) {
         var instance = this;

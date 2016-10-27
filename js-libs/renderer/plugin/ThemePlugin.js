@@ -19,11 +19,9 @@ var ThemePlugin = Plugin.extend({
     _contentParams: {},
     _isSceneChanging: false,
     _saveState:true,
-    _themeStateobj:{},
 
     initPlugin: function(data) {
         this._controllerMap = {};
-        this._saveState=data.saveState;
         this._canvasId = data.canvasId;
         this._self = new createjs.Stage(data.canvasId);
         this._director = new creatine.Director(this._self);
@@ -387,7 +385,7 @@ var ThemePlugin = Plugin.extend({
         if (0 > fval) fval = 0;
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance._contentParams[param]=fval;
-        instance._themeStateobj = JSON.parse(JSON.stringify(instance._contentParams));
+        //this._themeStateobj = JSON.parse(JSON.stringify(instance._contentParams));
     },
     getStageState: function(state) {
         var instance=this;
@@ -396,13 +394,14 @@ var ThemePlugin = Plugin.extend({
     getParam: function(param) {
         var instance = this;
         var params;
-        if(instance._saveState){
-            params=instance._themeStateobj;
+        if(instance._saveState==true){
+            return instance._contentParams[param]
         }else{
             var params = instance._contentParams;
+            var expr = 'params.' + param;
+            return eval(expr);
         }
-        var expr = 'params.' + param;
-        return eval(expr);
+       
     }
 });
 PluginManager.registerPlugin('theme', ThemePlugin);
