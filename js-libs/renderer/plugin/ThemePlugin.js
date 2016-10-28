@@ -34,6 +34,9 @@ var ThemePlugin = Plugin.extend({
         createjs.Touch.enable(this._self);
         this._self.enableMouseOver(10);
         this._self.mouseMoveOutside = true;
+        if(!_.isUndefined(data.saveState)){
+            this._saveState=data.saveState;
+        }        
     },
     mousePoint: function() {
         return { x: this._self.mouseX, y: this._self.mouseY };
@@ -240,10 +243,11 @@ var ThemePlugin = Plugin.extend({
         if (this._isSceneChanging) {
             return; }
         var stage = this._currentScene;
-        if(this._saveState==true){ // chek Theme saveState has true or false
-            this.saveStagestate(stage);
+        if(this._saveState){ 
+        // if theme has savestate=true then only save the all stage state
+             this.saveStagestate(stage);
         }
-        // set the stageData to themelevel
+        
         RecorderManager.stopRecording();
         AudioManager.stopAll();
        // RecorderManager._deleteRecordedaudio();
@@ -381,18 +385,17 @@ var ThemePlugin = Plugin.extend({
     saveStagestate:function(stage){
         var stageId = stage._id;
         if(!_.isUndefined(stage._stageController)){
-        var ctrlName=stage._stageControllerName;
-        var ctrlIndex=stage._stageController._index;
-        var stageKey=stageId+"_"+ctrlName+"_"+ctrlIndex;
+        var ctrlName=stage._stageControllerName,
+            ctrlIndex=stage._stageController._index,
+            stageKey=stageId+"_"+ctrlName+"_"+ctrlIndex;
         }else{
             stageKey=stageId;
         }
-        var stagePlugin_data = stage._stageStateobj;
+        var stagePlugin_data = stage._stageState;
         if (!_.isEmpty(stagePlugin_data)) {
             this.setParam(stageKey, stagePlugin_data);
-            console.info("Data Saved to Theme")
         } else {
-            console.warn(" Data not Saved to Theme")
+            console.warn("Stage state Obj is Empty")
         }
     },
     setParam: function(param, value, incr, max) {
@@ -407,7 +410,6 @@ var ThemePlugin = Plugin.extend({
         if (0 > fval) fval = 0;
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance._contentParams[param]=fval;
-        //this._themeStateobj = JSON.parse(JSON.stringify(instance._contentParams));
     },
     getStageState: function(state) {
         var instance=this;
@@ -416,7 +418,8 @@ var ThemePlugin = Plugin.extend({
     getParam: function(param) {
         var instance = this;
         var params;
-        if(instance._saveState==true){
+        if(instance._saveState){
+            // if stage id has a "-" keyword then eval fails
             return instance._contentParams[param]
         }else{
             var params = instance._contentParams;

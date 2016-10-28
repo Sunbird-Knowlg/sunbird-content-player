@@ -1,10 +1,8 @@
 var InputPlugin = HTMLPlugin.extend({
 	_type: 'input',
     _input: undefined,
-    _checkOptionchanges:false,
 	initPlugin: function(data) {
         this._input = undefined;
-
         var fontsize = data.fontsize || "1.6em";
         var fontweight = data.weight || "normal";
         var color = data.color || "#000000";
@@ -56,13 +54,14 @@ var InputPlugin = HTMLPlugin.extend({
         this._stage._inputs.push(this);
         var instance=this;
          jQuery('input').keyup(function(e){
-            instance._checkOptionchanges=true;
-            instance.saveInputPlugindata();
+            instance._isPluginchanged=true;
+            // On change of input triggre the savestate of input plugin           
+            instance.saveInputPlugindata(); 
         });
-         if(!instance._checkOptionchanges){
+         if(!instance._isPluginchanged){
             instance.saveInputPlugindata();
          }
-	},
+    },
     setModelValue: function() {
     if (this._data.model) {
         var instance=this;
@@ -78,16 +77,14 @@ var InputPlugin = HTMLPlugin.extend({
             // if the Stage is FTB 
             var cModel=controller._model[controller._index];       
             var pModel=cModel.model;
-            var pType=cModel.type;
-            var stageStateFlag="stageStateFlag";
+            var pType=cModel.type;            
             instance.saveState(pType,pModel);
-            instance.saveState(stageStateFlag,this._checkOptionchanges);
         }else{
             // If the stage is Input plugin
             console.warn("There is no ctrl in this stage");
-            pModel=this._input.value;
-            pType=this._data.pluginType;
-            this.saveState(pType,pModel);
+            pModel=instance._input.value;
+            pType=instance._data.pluginType;
+            instance.saveState(pType,pModel);
         }
         
     }

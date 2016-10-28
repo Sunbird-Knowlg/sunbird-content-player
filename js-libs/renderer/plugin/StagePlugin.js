@@ -12,12 +12,9 @@ var StagePlugin = Plugin.extend({
     _startDrag: undefined,
     _doDrag: undefined,
     _stageInstanceId: undefined,
-    _retainStagestateFlag:true,
-    _stageStateobj:{},
-     stageStateFlag: false,
-     saveCtrlstate:true,
+    _stageState:{},
+    _saveStagestate: true,
     initPlugin: function(data) {
-        console.log("theme param obj  : ", Renderer.theme._contentParams)
         this._inputs = [];
         var instance = this;
         this.params = {};
@@ -30,14 +27,13 @@ var StagePlugin = Plugin.extend({
         if (data.iterate && data.var) {
             var controllerName = data.var.trim();
             var stageController = this._theme._controllerMap[data.iterate.trim()];
-            if(!_.isUndefined(stageController._data.saveCtrlstate)){
-                this.saveCtrlstate=stageController._data.saveCtrlstate;
-
-            }
             if (stageController) {
                 /*if (this._theme._previousStage && this._theme._previousStage != data.id) {
                     stageController.reset();
                 }*/
+                if(!_.isUndefined(stageController._data.savedState)){
+                    this._saveStagestate=stageController._data.saveState;
+                }
                 this._stageControllerName = controllerName;
                 this._stageController = stageController;
                 this._stageController.next();
@@ -63,7 +59,6 @@ var StagePlugin = Plugin.extend({
                 }
             }
         }
-
         // handling keyboard interaction.
         this._startDrag = this.startDrag.bind(this);
         this._doDrag =  this.doDrag.bind(this);
@@ -71,29 +66,8 @@ var StagePlugin = Plugin.extend({
         window.addEventListener('native.keyboardhide', this.keyboardHideHandler.bind(this), true);
 
         // setting the parameters as per the state
-          var state_keyName = this._stageController ? (Renderer.theme._currentStage+"_"+this._stageControllerName+"_"+this._stageController._index) : (Renderer.theme._currentStage);
-
-          if(this._stageController && this.saveCtrlstate===true){
-
-            var savedState = Renderer.theme.getStageState(state_keyName);
-
-            this.stageStateFlag = savedState ? savedState.stageStateFlag : this.stageStateFlag;
-            if (this._stageController._model[this._stageController._index].type === "mcq") {
-              console.log("question type: ",this._stageController._model[this._stageController._index].type);
-              this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.mcq;
-            }
-            if (this._stageController._model[this._stageController._index].type === "mmcq") {
-              console.log("question type: ",this._stageController._model[this._stageController._index].type);
-              this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.mmcq;
-            }
-            if (this._stageController._model[this._stageController._index].type === "mtf") {
-              console.log("question type: ",this._stageController._model[this._stageController._index].type);
-              this._stageController._model[this._stageController._index].rhs_options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].rhs_options : savedState.mtf;
-            }
-            if (this._stageController._model[this._stageController._index].type === "ftb") {
-              console.log("question type: ",this._stageController._model[this._stageController._index].type);
-              this._stageController._model[this._stageController._index].model = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].model : savedState.ftb;
-            }
+          if(this._stageController){                
+                this.renderSavedState();// Render the saved sate fromt the themeObj
           }
           this.invokeChildren(data, this, this, this._theme);
     },
@@ -257,6 +231,23 @@ var StagePlugin = Plugin.extend({
         }
         this._theme.replaceStage(this._data.id, action);
     },
+    renderSavedState:function(){
+        // TODO check the Plugin Type and then render the Plugin
+        var state_keyName = this._stageController ? (Renderer.theme._currentStage+"_"+this._stageControllerName+"_"+this._stageController._index) : (Renderer.theme._currentStage);
+        var savedState = Renderer.theme.getStageState(state_keyName);
+                if (this._stageController._model[this._stageController._index].type === "mcq") {
+                    return this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.mcq;
+                }
+                if (this._stageController._model[this._stageController._index].type === "mmcq") {
+                    return this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.mmcq;
+                }
+                if (this._stageController._model[this._stageController._index].type === "mtf") {
+                    return this._stageController._model[this._stageController._index].rhs_options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].rhs_options : savedState.mtf;
+                }
+                if (this._stageController._model[this._stageController._index].type === "ftb") {
+                     return this._stageController._model[this._stageController._index].model = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].model : savedState.ftb;
+                }
+    },
     setParam: function(param, value, incr, max) {
         var instance = this;
         var fval = instance.params[param];
@@ -270,7 +261,9 @@ var StagePlugin = Plugin.extend({
         if (0 > fval) fval = 0;
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance.params[param] = fval;
-        instance._stageStateobj = JSON.parse(JSON.stringify(instance.params));
+        if(instance._saveStagestate){
+            this._stageState = JSON.parse(JSON.stringify(instance.params))
+        }        
     },
     getParam: function(param) {
         var instance = this;
