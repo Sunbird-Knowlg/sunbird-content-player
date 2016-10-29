@@ -53,14 +53,10 @@ var InputPlugin = HTMLPlugin.extend({
         this._theme.inputs.push(data.id);
         this._stage._inputs.push(this);
         var instance=this;
-         jQuery('input').keyup(function(e){
-            instance._isPluginchanged=true;
-            // On change of input triggre the savestate of input plugin           
-            instance.saveInputPlugindata(); 
+        $('input').on('keyup change', function(){ 
+            instance.updateState(); 
         });
-         if(!instance._isPluginchanged){
-            instance.saveInputPlugindata();
-         }
+        instance.updateState();
     },
     setModelValue: function() {
     if (this._data.model) {
@@ -69,25 +65,18 @@ var InputPlugin = HTMLPlugin.extend({
         this._stage.setModelValue(model, this._input.value);
     }
 },
-    saveInputPlugindata:function(){
-        var instance=this;
-        instance._stage.setModelValue(instance._data.model, instance._input.value);
-        var controller = instance._stage._stageController;
-        if(!_.isUndefined(controller)){
-            // if the Stage is FTB 
-            var cModel=controller._model[controller._index];       
-            var pModel=cModel.model;
-            var pType=cModel.type;            
-            instance.saveState(pType,pModel);
-        }else{
-            // If the stage is Input plugin
-            console.warn("There is no ctrl in this stage");
-            pModel=instance._input.value;
-            pType=instance._data.pluginType;
-            instance.saveState(pType,pModel);
-        }
-        
-    }
+    updateState: function() {
+     this.setModelValue();
+     var controller = this._stage._stageController;
+     // Check stage is FTB controller or Input text area
+     if (!_.isUndefined(controller)) {
+         var cModel = controller._model[controller._index];
+         this.saveState(cModel.type, cModel.model);
+     } else {
+         console.warn("There is no ctrl in this stage");
+         this.saveState(this._data.id, this._input.value);
+     }
 
+ }
 });
 PluginManager.registerPlugin('input', InputPlugin);

@@ -22,10 +22,8 @@ var MCQPlugin = Plugin.extend({
         if (model) {
             var controller = this._stage.getController(model);
             if (controller) {
-                if(!this._isPluginchanged){
-                   this.saveMcqState(controller);
-                  // Save the MCQ state when user land to the MCQ Page
-                }
+                   this.updateState(controller);
+                  // Save the MCQ state when user land to the MCQ Page               
                 this._controller = controller;
                 this._multi_select = data.multi_select;
                 if ((typeof this._multi_select) == 'undefined' || this._multi_select == null) {
@@ -93,17 +91,13 @@ var MCQPlugin = Plugin.extend({
             val = option.toggleShadow();
             controller.setModelValue(option._model, val, 'selected');
         }
-        this._isPluginchanged = true;
-        this.saveMcqState(controller); // Save the MCQ state on SELECTION OF OPTION
+        this.updateState(controller); // Save the MCQ state on SELECTION OF OPTION
         Renderer.update = true;
         return val;
     },
-    saveMcqState:function(controller){
-        var model=controller._model[controller._index],
-        pModel=model.options,
-        pType=model.type,
-        instance = this;
-        instance.saveState(pType,pModel);        
+    updateState: function(controller) {
+        var model = controller._model[controller._index];
+        this.saveState(model.type, model.options);
     }
 });
 PluginManager.registerPlugin('mcq', MCQPlugin);

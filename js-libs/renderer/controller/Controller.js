@@ -186,5 +186,22 @@ var Controller = Class.extend({
 			item = item.model;
 		}
     	return item;
-    }
+    },
+    ctrlState: function(value) {
+     var savedState = value;
+     if (this._model[this._index].type === "mcq") {
+         this._model[this._index].options = _.isEmpty(savedState) ? this._model[this._index].options : savedState.mcq;
+     }
+     if (this._model[this._index].type === "mmcq") {
+         this._model[this._index].options = _.isEmpty(savedState) ? this._model[this._index].options : savedState.mmcq;
+     }
+     if (this._model[this._index].type === "mtf") {
+         this._model[this._index].rhs_options = _.isEmpty(savedState) ? this._model[this._index].rhs_options : savedState.mtf;
+     }
+     if (this._model[this._index].type === "ftb") {
+         this._model[this._index].model = _.isEmpty(savedState) ? this._model[this._index].model : savedState.ftb;
+     }
+
+ },
+
 })

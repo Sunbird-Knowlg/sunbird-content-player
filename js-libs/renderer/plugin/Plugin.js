@@ -16,7 +16,6 @@ var Plugin = Class.extend({
 	events: [],
 	appEvents: [],
     _pluginParams: {},
-    _isPluginchanged:false,
 	init: function(data, parent, stage, theme) {
 		this.events = [];
 		this.appEvents = [];
@@ -537,9 +536,11 @@ var Plugin = Class.extend({
         }
         return children;
     },
-    saveState:function(rParam,rValue){
-        this._stage.setParam(rParam, rValue);
-        this._stage.setParam("isPluginchanged",this._isPluginchanged);
+    saveState: function(param, value) {
+        this._stage.setParam(param, value);
+    },
+    getState: function(param) {
+        return this._theme.getParam(param);
+    },
 
-    }
-});
+   });

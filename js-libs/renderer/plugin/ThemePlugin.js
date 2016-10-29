@@ -19,7 +19,6 @@ var ThemePlugin = Plugin.extend({
     _contentParams: {},
     _isSceneChanging: false,
     _saveState:true,
-
     initPlugin: function(data) {
         this._controllerMap = {};
         this._canvasId = data.canvasId;
@@ -243,11 +242,8 @@ var ThemePlugin = Plugin.extend({
         if (this._isSceneChanging) {
             return; }
         var stage = this._currentScene;
-        if(this._saveState){ 
-        // if theme has savestate=true then only save the all stage state
-             this.saveStagestate(stage);
-        }
-        
+        // In transistion save Currentstate to themeObj
+        this.updateStagestate(stage);
         RecorderManager.stopRecording();
         AudioManager.stopAll();
        // RecorderManager._deleteRecordedaudio();
@@ -382,22 +378,10 @@ var ThemePlugin = Plugin.extend({
     resume: function() {
         TelemetryService.interrupt("RESUME", this._currentStage);
     },
-    saveStagestate:function(stage){
-        var stageId = stage._id;
-        if(!_.isUndefined(stage._stageController)){
-        var ctrlName=stage._stageControllerName,
-            ctrlIndex=stage._stageController._index,
-            stageKey=stageId+"_"+ctrlName+"_"+ctrlIndex;
-        }else{
-            stageKey=stageId;
-        }
-        var stagePlugin_data = stage._stageState;
-        if (!_.isEmpty(stagePlugin_data)) {
-            this.setParam(stageKey, stagePlugin_data);
-        } else {
-            console.warn("Stage state Obj is Empty")
-        }
+    updateStagestate:function(stage){
+          this.setParam(stage.getStagestateKey(),stage._currentState);
     },
+   
     setParam: function(param, value, incr, max) {
         var instance = this;
         var fval = instance._contentParams[param];
@@ -411,15 +395,11 @@ var ThemePlugin = Plugin.extend({
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance._contentParams[param]=fval;
     },
-    getStageState: function(state) {
-        var instance=this;
-        return  instance.getParam(state);
-    },
     getParam: function(param) {
         var instance = this;
         var params;
         if(instance._saveState){
-            // if stage id has a "-" keyword then eval fails
+            // if param has a "-" keyword then eval fails
             return instance._contentParams[param]
         }else{
             var params = instance._contentParams;

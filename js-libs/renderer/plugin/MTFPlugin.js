@@ -13,11 +13,9 @@ var MTFPlugin = Plugin.extend({
 
         var model = data.model;
         if (model) {
-            var controller = this._stage.getController(model);
-            if(!this._isPluginchanged){
+            var controller = this._stage.getController(model);            
                 // Save the MTF state when user land to MTF page.
-                this.saveMtfstate(controller);
-            }
+                this.updateState(controller);            
         	if (controller) {
         		this._controller = controller;
                 this._force = data.force;
@@ -59,18 +57,14 @@ var MTFPlugin = Plugin.extend({
             this._controller.setModelValue(rhsOption._model, undefined, 'selected');
         }
         // Save the MTF state when user mapped the RHS to LHS option 
-        this._isPluginchanged=true; 
-        this.saveMtfstate(this._controller);
+        this.updateState(this._controller);
     },
     removeAnswer: function(rhsOption, lhsIndex) {
         this._controller.setModelValue(rhsOption._model, lhsIndex, '');
     },
-    saveMtfstate:function(controller){        
-        var model=controller._model[controller._index],      
-        pModel=model.rhs_options,
-        pType=model.type;
-        this.saveState(pType,pModel);
-
-    }
+    updateState: function(controller) {
+     var model = controller._model[controller._index];
+     this.saveState(model.type, model.rhs_options);
+ }
 });
 PluginManager.registerPlugin('mtf', MTFPlugin);

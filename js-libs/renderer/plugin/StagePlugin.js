@@ -12,8 +12,7 @@ var StagePlugin = Plugin.extend({
     _startDrag: undefined,
     _doDrag: undefined,
     _stageInstanceId: undefined,
-    _stageState:{},
-    _saveStagestate: true,
+    _currentState:{},
     initPlugin: function(data) {
         this._inputs = [];
         var instance = this;
@@ -31,9 +30,6 @@ var StagePlugin = Plugin.extend({
                 /*if (this._theme._previousStage && this._theme._previousStage != data.id) {
                     stageController.reset();
                 }*/
-                if(!_.isUndefined(stageController._data.savedState)){
-                    this._saveStagestate=stageController._data.saveState;
-                }
                 this._stageControllerName = controllerName;
                 this._stageController = stageController;
                 this._stageController.next();
@@ -64,10 +60,10 @@ var StagePlugin = Plugin.extend({
         this._doDrag =  this.doDrag.bind(this);
         window.addEventListener('native.keyboardshow', this.keyboardShowHandler.bind(this), true);
         window.addEventListener('native.keyboardhide', this.keyboardHideHandler.bind(this), true);
-
-        // setting the parameters as per the state
-          if(this._stageController){                
-                this.renderSavedState();// Render the saved sate fromt the themeObj
+          if(this._stageController){  
+             var stageKey = this.getStagestateKey();                       
+             this._stageController.ctrlState(this.getState(stageKey));
+              // Render the saved sate fromt the themeObj
           }
           this.invokeChildren(data, this, this, this._theme);
     },
@@ -231,22 +227,12 @@ var StagePlugin = Plugin.extend({
         }
         this._theme.replaceStage(this._data.id, action);
     },
-    renderSavedState:function(){
-        // TODO check the Plugin Type and then render the Plugin
-        var state_keyName = this._stageController ? (Renderer.theme._currentStage+"_"+this._stageControllerName+"_"+this._stageController._index) : (Renderer.theme._currentStage);
-        var savedState = Renderer.theme.getStageState(state_keyName);
-                if (this._stageController._model[this._stageController._index].type === "mcq") {
-                    return this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.mcq;
-                }
-                if (this._stageController._model[this._stageController._index].type === "mmcq") {
-                    return this._stageController._model[this._stageController._index].options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].options : savedState.mmcq;
-                }
-                if (this._stageController._model[this._stageController._index].type === "mtf") {
-                    return this._stageController._model[this._stageController._index].rhs_options = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].rhs_options : savedState.mtf;
-                }
-                if (this._stageController._model[this._stageController._index].type === "ftb") {
-                     return this._stageController._model[this._stageController._index].model = _.isEmpty(savedState) ? this._stageController._model[this._stageController._index].model : savedState.ftb;
-                }
+    getStagestateKey:function(){
+       if(!_.isUndefined(this._stageController)){
+            return Renderer.theme._currentStage+"_"+this._stageController._id+"_"+this._stageController._index                       ;
+        }else{
+            return Renderer.theme._currentStage;
+        }
     },
     setParam: function(param, value, incr, max) {
         var instance = this;
@@ -261,9 +247,9 @@ var StagePlugin = Plugin.extend({
         if (0 > fval) fval = 0;
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance.params[param] = fval;
-        if(instance._saveStagestate){
-            this._stageState = JSON.parse(JSON.stringify(instance.params))
-        }        
+        if(_.isUndefined(this._stageController._data.saveState) || this._stageController._data.saveState==true ){
+            this._currentState = JSON.parse(JSON.stringify(instance.params));
+        }
     },
     getParam: function(param) {
         var instance = this;
