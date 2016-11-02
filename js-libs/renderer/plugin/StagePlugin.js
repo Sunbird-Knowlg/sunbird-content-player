@@ -248,9 +248,12 @@ var StagePlugin = Plugin.extend({
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance.params[param] = fval;
         // saveState="true/false" is switch in the controller
-        if(this._stageController._data.saveState==undefined || this._stageController._data.saveState==true ){
-            this._currentState = JSON.parse(JSON.stringify(instance.params));
+        if(!_.isUndefined(this._stageController)){
+          if(this._stageController._data.saveState==undefined || this._stageController._data.saveState==true ){
+                this._currentState = JSON.parse(JSON.stringify(instance.params));
+            }  
         }
+            
     },
     getParam: function(param) {
         var instance = this;
