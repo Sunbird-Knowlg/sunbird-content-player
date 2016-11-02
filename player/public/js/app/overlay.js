@@ -43,9 +43,7 @@ Overlay = {
         return navigateTo;
     },
     sceneEnter: function() {
-      if (!Renderer.theme._currentScene.stageStateFlag) {
-        this.resetStage(); // if the stage has set state then no need to reset it.
-      }
+        this.resetStage(); 
         this.enablePrevious();
         this.enableReload();
         var isItemStage = this.isItemScene();
