@@ -12,6 +12,7 @@ var StagePlugin = Plugin.extend({
     _startDrag: undefined,
     _doDrag: undefined,
     _stageInstanceId: undefined,
+    _currentState:{},
     initPlugin: function(data) {
         this._inputs = [];
         var instance = this;
@@ -54,14 +55,17 @@ var StagePlugin = Plugin.extend({
                 }
             }
         }
-
         // handling keyboard interaction.
-        this._startDrag = this.startDrag.bind(this); 
-        this._doDrag =  this.doDrag.bind(this);    
+        this._startDrag = this.startDrag.bind(this);
+        this._doDrag =  this.doDrag.bind(this);
         window.addEventListener('native.keyboardshow', this.keyboardShowHandler.bind(this), true);
         window.addEventListener('native.keyboardhide', this.keyboardHideHandler.bind(this), true);
-
-        this.invokeChildren(data, this, this, this._theme);
+          if(this._stageController){  
+             var stageKey = this.getStagestateKey();                       
+             this._stageController.updateState(this.getState(stageKey));
+              // Render the saved sate fromt the themeObj
+          }
+          this.invokeChildren(data, this, this, this._theme);
     },
     keyboardShowHandler: function (e) {
         this._self.y =  -(e.keyboardHeight);
@@ -73,9 +77,9 @@ var StagePlugin = Plugin.extend({
         }
         Renderer.update = true;
         this.keyboardH = e.keyboardHeight;
-        this._self.addEventListener("mousedown", this._startDrag); 
+        this._self.addEventListener("mousedown", this._startDrag);
         this.offset = new createjs.Point();
-        
+
     },
     startDrag: function () {
         this.offset.x = Renderer.theme._self.mouseX - this._self.x;
@@ -92,9 +96,9 @@ var StagePlugin = Plugin.extend({
             Renderer.update = true;
         }
     },
-    keyboardHideHandler: function (e) {  
-        this._self.y = 0;          
-        this._self.removeEventListener("mousedown", this._startDrag); 
+    keyboardHideHandler: function (e) {
+        this._self.y = 0;
+        this._self.removeEventListener("mousedown", this._startDrag);
         this._self.removeEventListener("pressmove", this._doDrag);
         Renderer.update = true;
     },
@@ -139,7 +143,7 @@ var StagePlugin = Plugin.extend({
         var c = this.getController(controller);
         var t;
         if (c) {
-            t = c.getTemplate();   
+            t = c.getTemplate();
         }
         return t;
     },
@@ -171,7 +175,7 @@ var StagePlugin = Plugin.extend({
         }
         return val;
     },
-    setModelValue: function(param, val) { 
+    setModelValue: function(param, val) {
         if (param) {
             var tokens = param.split('.');
             if (tokens.length >= 2) {
@@ -201,7 +205,7 @@ var StagePlugin = Plugin.extend({
             });
             var result = this._stageController.evalItem();
             if (result) {
-                valid = result.pass;    
+                valid = result.pass;
             }
         }
         if(showFeeback){
@@ -210,7 +214,7 @@ var StagePlugin = Plugin.extend({
                 this.dispatchEvent(action.success);
             } else {
                 this.dispatchEvent(action.failure);
-            }            
+            }
         }else{
             //Directly take user to next stage, without showing feedback popup
             submitOnNextClick = false;
@@ -222,6 +226,13 @@ var StagePlugin = Plugin.extend({
             this._stageController.decrIndex(1);
         }
         this._theme.replaceStage(this._data.id, action);
+    },
+    getStagestateKey:function(){
+       if(!_.isUndefined(this._stageController)){
+            return Renderer.theme._currentStage+"_"+this._stageController._id+"_"+this._stageController._index                       ;
+        }else{
+            return Renderer.theme._currentStage;
+        }
     },
     setParam: function(param, value, incr, max) {
         var instance = this;
@@ -236,6 +247,13 @@ var StagePlugin = Plugin.extend({
         if (0 > fval) fval = 0;
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance.params[param] = fval;
+        // saveState="true/false" is switch in the controller
+        if(!_.isUndefined(this._stageController)){
+          if(this._stageController._data.saveState==undefined || this._stageController._data.saveState==true ){
+                this._currentState = JSON.parse(JSON.stringify(instance.params));
+            }  
+        }
+            
     },
     getParam: function(param) {
         var instance = this;

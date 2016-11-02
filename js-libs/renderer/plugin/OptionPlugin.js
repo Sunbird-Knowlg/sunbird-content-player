@@ -9,6 +9,7 @@ var OptionPlugin = Plugin.extend({
     _multiple: false,
     _mapedTo: undefined,
     _uniqueId: undefined,
+    _modelValue: undefined,
     initPlugin: function(data) {
         this._model = undefined;
         this._value = undefined;
@@ -29,7 +30,7 @@ var OptionPlugin = Plugin.extend({
             this._index = parseInt(model.substring(model.indexOf('[') + 1, model.length - 1));
             var varName = (this._data['var'] ? this._data['var'] : 'option');
             this._stage._templateVars[varName] = this._parent._data.model + "." + model;
-            var modelValue = this._stage.getModelValue(this._parent._data.model + '.' + model);
+            this._modelValue = this._stage.getModelValue(this._parent._data.model + '.' + model);
         }
         if (value && _.isFinite(this._index) && this._index > -1) {
             this._self = new createjs.Container();
@@ -69,7 +70,12 @@ var OptionPlugin = Plugin.extend({
         var itemId = controller.getModelValue("identifier");
         this._parent._options.push(this);
         this._self.cursor = 'pointer';
+
         var instance = this;
+        if(this._modelValue.selected === true) {
+          var val = instance._parent.selectOption(instance);
+          Overlay.isReadyToEvaluate(true);
+        }
         this._self.on('click', function(event) {
             Overlay.isReadyToEvaluate(true);
             var eventData = {};
@@ -94,6 +100,7 @@ var OptionPlugin = Plugin.extend({
         var dragPos = {};
         var dragItem = {};
         var controller = this._parent._controller;
+        var instance = this;
         var itemId = controller.getModelValue("identifier");
         if (_.isFinite(value.index)) {
             this._index = value.index;
@@ -102,6 +109,25 @@ var OptionPlugin = Plugin.extend({
             this._parent._rhs_options.push(this);
             enableDrag = true;
         }
+
+        if(value.selected != undefined ) {
+           var snapTo;
+           if (instance._parent._force === true) {
+               snapTo = instance._parent.getLhsOption(value.answer);
+           } else {
+               snapTo = instance._parent._lhs_options;
+           }
+           var plugin = snapTo[value.selected];
+           var dims = plugin._dimensions;
+           // Set the current answer as accepted
+           if (!_.isUndefined(plugin._data.snapX)) {
+               this._self.x = dims.x + (dims.w * plugin._data.snapX / 100);
+           }
+           if (!_.isUndefined(plugin._data.snapY)) {
+               this._self.y = dims.y + (dims.h * (plugin._data.snapY/100));
+           }
+       }
+
         if (enableDrag) {
             var instance = this;
             var asset = this._self;
@@ -206,7 +232,6 @@ var OptionPlugin = Plugin.extend({
                             }
                         }
                     }
-                    //instance._parent._lhs_options[instance._currIndex]._answer = undefined;
                 } else {
 
                     var flag = true;
@@ -218,7 +243,6 @@ var OptionPlugin = Plugin.extend({
                         var existing = plugin._answer;
                         // existing._parent.setAnswer(existing);
                         existing._parent.setAnswerMapping(existing, undefined);
-
                         existing._self.x = existing._self.origX;
                         existing._self.y = existing._self.origY;
                     }
@@ -255,7 +279,6 @@ var OptionPlugin = Plugin.extend({
                  }
 
                 instance.removeShadow();
-
                 var data = {
                     type: evt.type,
                     x: evt.stageX,
@@ -277,6 +300,7 @@ var OptionPlugin = Plugin.extend({
                 EventManager.processAppTelemetry({}, 'DROP', instance, data);
                 Renderer.update = true;
             });
+
         }
     },
     renderImage: function(value) {

@@ -27,7 +27,7 @@ var ItemController = Controller.extend({
             if (item) {
                 // Reset the current state of the item (in case one is going back and forth)
                 this.resetItem(item);
-    
+
                 if ("undefined" == typeof item.model || null == item.model) item.model = {};
                 // Start assessment telemetry
                 d = item.model;
@@ -51,7 +51,7 @@ var ItemController = Controller.extend({
         if (item) {
             if (item.type.toLowerCase() == 'ftb') {
                 FTBEvaluator.reset(item);
-            } else if (item.type.toLowerCase() == 'mcq' || item.type.toLowerCase() == 'mmcq') {
+            } else if ((item.type.toLowerCase() == 'mcq' || item.type.toLowerCase() == 'mmcq')) { // need to modify and re look at hasStageSet
                 MCQEvaluator.reset(item);
             } else if (item.type.toLowerCase() == 'mtf') {
                 MTFEvaluator.reset(item);

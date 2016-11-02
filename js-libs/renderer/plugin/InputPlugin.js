@@ -3,7 +3,6 @@ var InputPlugin = HTMLPlugin.extend({
     _input: undefined,
 	initPlugin: function(data) {
         this._input = undefined;
-
         var fontsize = data.fontsize || "1.6em";
         var fontweight = data.weight || "normal";
         var color = data.color || "#000000";
@@ -53,13 +52,33 @@ var InputPlugin = HTMLPlugin.extend({
         this._self.y = dims.y + 1000; // negate the initial off-screen positioning
         this._theme.inputs.push(data.id);
         this._stage._inputs.push(this);
-	},
+        var instance=this;
+        $('input').on('keyup change', function(){ 
+            instance.updateState(); 
+            // update the state of the input when user gives input to the textbox 
+        });
+        instance.updateState();
+        // update the state of input when user land to the page
+    },
     setModelValue: function() {
-        if (this._data.model) {
-            var model = this._data.model;
-            this._stage.setModelValue(model, this._input.value);
-        }
+    if (this._data.model) {
+        var instance=this;
+        var model = this._data.model;
+        this._stage.setModelValue(model, this._input.value);
     }
+},
+    updateState: function() {
+     this.setModelValue();
+     var controller = this._stage._stageController;
+     // Check stage is FTB controller or Input text area
+     if (!_.isUndefined(controller)) {
+         var cModel = controller._model[controller._index];
+         this.saveState(cModel.type, cModel.model);
+     } else {
+         console.warn("There is no ctrl in this stage");
+         this.saveState(this._data.id, this._input.value);
+     }
 
+ }
 });
 PluginManager.registerPlugin('input', InputPlugin);

@@ -535,5 +535,12 @@ var Plugin = Class.extend({
             }
         }
         return children;
-    }
-});
+    },
+    saveState: function(param, value) {
+        this._stage.setParam(param, value);
+    },
+    getState: function(param) {
+        return this._theme.getParam(param);
+    },
+
+   });
