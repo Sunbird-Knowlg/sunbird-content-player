@@ -62,7 +62,7 @@ var StagePlugin = Plugin.extend({
         window.addEventListener('native.keyboardhide', this.keyboardHideHandler.bind(this), true);
           if(this._stageController){  
              var stageKey = this.getStagestateKey();                       
-             this._stageController.ctrlState(this.getState(stageKey));
+             this._stageController.updateState(this.getState(stageKey));
               // Render the saved sate fromt the themeObj
           }
           this.invokeChildren(data, this, this, this._theme);
@@ -247,7 +247,8 @@ var StagePlugin = Plugin.extend({
         if (0 > fval) fval = 0;
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance.params[param] = fval;
-        if(_.isUndefined(this._stageController._data.saveState) || this._stageController._data.saveState==true ){
+        // saveState="true/false" is switch in the controller
+        if(this._stageController._data.saveState==undefined || this._stageController._data.saveState==true ){
             this._currentState = JSON.parse(JSON.stringify(instance.params));
         }
     },

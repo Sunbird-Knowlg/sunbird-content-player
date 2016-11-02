@@ -243,7 +243,7 @@ var ThemePlugin = Plugin.extend({
             return; }
         var stage = this._currentScene;
         // In transistion save Currentstate to themeObj
-        this.updateStagestate(stage);
+        this.setParam(stage.getStagestateKey(),stage._currentState);
         RecorderManager.stopRecording();
         AudioManager.stopAll();
        // RecorderManager._deleteRecordedaudio();
@@ -378,10 +378,6 @@ var ThemePlugin = Plugin.extend({
     resume: function() {
         TelemetryService.interrupt("RESUME", this._currentStage);
     },
-    updateStagestate:function(stage){
-          this.setParam(stage.getStagestateKey(),stage._currentState);
-    },
-   
     setParam: function(param, value, incr, max) {
         var instance = this;
         var fval = instance._contentParams[param];

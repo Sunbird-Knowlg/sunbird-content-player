@@ -13,10 +13,10 @@ var MTFPlugin = Plugin.extend({
 
         var model = data.model;
         if (model) {
-            var controller = this._stage.getController(model);            
-                // Save the MTF state when user land to MTF page.
-                this.updateState(controller);            
+            var controller = this._stage.getController(model); 
         	if (controller) {
+                this.updateState(controller);   
+                // update the MTF state when user land to the page.
         		this._controller = controller;
                 this._force = data.force;
                 if ((typeof this._force) == 'undefined' || this._force == null) {
@@ -56,7 +56,7 @@ var MTFPlugin = Plugin.extend({
             delete rhsOption._value.mapped;
             this._controller.setModelValue(rhsOption._model, undefined, 'selected');
         }
-        // Save the MTF state when user mapped the RHS to LHS option 
+        // update the MTF state when user mapped the RHS to LHS option 
         this.updateState(this._controller);
     },
     removeAnswer: function(rhsOption, lhsIndex) {
