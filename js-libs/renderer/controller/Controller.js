@@ -188,19 +188,20 @@ var Controller = Class.extend({
     	return item;
     },
     updateState: function(stateObj) {
-        var itemType = this._model[this._index].type;
-     if (itemType === "mcq" || itemType === "mmcq") {
-         this._model[this._index].options = _.isEmpty(stateObj) ? this._model[this._index].options : stateObj[itemType];
-     }
-     else if (itemType === "mtf") {
-         this._model[this._index].rhs_options = _.isEmpty(stateObj) ? this._model[this._index].rhs_options : stateObj[itemType];
-     }
-     else if(itemType === "ftb") {
-         this._model[this._index].model = _.isEmpty(stateObj) ? this._model[this._index].model : stateObj[itemType];
-     }else{
-        console.warn("There is no Itemset to update the state")
-     }
-
- },
+    var itemType = this._model[this._index].type;
+    if (!_.isUndefined(stateObj)) {
+        if (itemType === "mcq" || itemType === "mmcq") {
+            this._model[this._index].options = _.isEmpty(stateObj[itemType]) ? this._model[this._index].options : stateObj[itemType];
+        } else if (itemType === "mtf") {
+            this._model[this._index].rhs_options = _.isEmpty(stateObj[itemType]) ? this._model[this._index].rhs_options : stateObj[itemType];
+        } else if (itemType === "ftb") {
+            this._model[this._index].model = _.isEmpty(stateObj[itemType]) ? this._model[this._index].model : stateObj[itemType];
+        } else {
+            console.warn("There is no Itemset to update the state")
+        }
+    }else{
+        console.warn("stateObj is:",stateObj);
+    }
+},
 
 })
