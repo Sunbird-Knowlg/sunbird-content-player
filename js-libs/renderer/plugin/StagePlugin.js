@@ -21,7 +21,6 @@ var StagePlugin = Plugin.extend({
         var dims = this.relativeDims();
         this._self.x = dims.x;
         this._self.y = dims.y;
-        //Generating and adding unique stageInstanceId to stage.
         this._stageInstanceId = this._theme._currentStage + '__' + Math.random().toString(36).substr(2, 9);
         if (data.iterate && data.var) {
             var controllerName = data.var.trim();
@@ -57,14 +56,12 @@ var StagePlugin = Plugin.extend({
         }
         // handling keyboard interaction.
         this._startDrag = this.startDrag.bind(this);
-        this._doDrag =  this.doDrag.bind(this);
+        this._doDrag = this.doDrag.bind(this);
         window.addEventListener('native.keyboardshow', this.keyboardShowHandler.bind(this), true);
         window.addEventListener('native.keyboardhide', this.keyboardHideHandler.bind(this), true);
-          if(this._stageController){  
-             var stageKey = this.getStagestateKey();                       
-             this._stageController.updateState(this.getState(stageKey));
-              // Render the saved sate fromt the themeObj
-          }
+        // get object data from the theme object
+        var stageKey = this.getStagestateKey();
+        this._currentState = this._theme.getParam(stageKey);
           this.invokeChildren(data, this, this, this._theme);
     },
     keyboardShowHandler: function (e) {
@@ -248,12 +245,24 @@ var StagePlugin = Plugin.extend({
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance.params[param] = fval;
         // saveState="true/false" is switch in the controller
-        if(!_.isUndefined(this._stageController)){
-          if(this._stageController._data.saveState==undefined || this._stageController._data.saveState==true ){
-                this._currentState = JSON.parse(JSON.stringify(instance.params));
-            }  
+        if (this.stateConfig) {
+            // Merge the params and currentstate object data
+            // clone to the currentstate object after merging is done
+            instance._currentState = $.extend({}, instance._currentState, instance.params);
+            instance._currentState = JSON.parse(JSON.stringify(instance._currentState));
         }
-            
+    },
+    stateConfig: function() {
+        if (!_.isUndefined(this._stageController)) {
+            if (this._stageController._data.saveState == undefined || this._stageController._data.saveState == true) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+
     },
     getParam: function(param) {
         var instance = this;

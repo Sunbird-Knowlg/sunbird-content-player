@@ -21,9 +21,15 @@ var MCQPlugin = Plugin.extend({
         var model = data.model;
         if (model) {
             var controller = this._stage.getController(model);
-            if (controller) {
+            //get state data from stage._currentObject
+            //update the model with mcq state data
+            var plugindata= this.getState(this._type);
+            if(!_.isUndefined(plugindata)){
+               controller._model[controller._index].options=_.isEmpty(plugindata) ? controller._model[controller._index].options : plugindata;
+             }
+            if(controller){
+                // update the MCQ state when user land to the MCQ Page      
                 this.updateState(controller);
-                  // update the MCQ state when user land to the MCQ Page               
                 this._controller = controller;
                 this._multi_select = data.multi_select;
                 if ((typeof this._multi_select) == 'undefined' || this._multi_select == null) {

@@ -540,7 +540,9 @@ var Plugin = Class.extend({
         this._stage.setParam(param, value);
     },
     getState: function(param) {
-        return this._theme.getParam(param);
+        if(!_.isUndefined(this._stage._currentState)){
+             return this._stage._currentState[param];
+        }
+       
     },
-
    });

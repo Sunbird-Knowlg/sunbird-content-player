@@ -14,9 +14,15 @@ var MTFPlugin = Plugin.extend({
         var model = data.model;
         if (model) {
             var controller = this._stage.getController(model); 
-        	if (controller) {
-                this.updateState(controller);   
+            // get the model data from the currentstate object 
+            // and update the model with the MTF state data          
+            var plugindata= this.getState(this._type);
+            if(!_.isUndefined(plugindata)){
+               controller._model[controller._index].rhs_options=_.isEmpty(plugindata) ? controller._model[controller._index].rhs_options : plugindata;
+             }
+            if (controller) {
                 // update the MTF state when user land to the page.
+                this.updateState(controller);
         		this._controller = controller;
                 this._force = data.force;
                 if ((typeof this._force) == 'undefined' || this._force == null) {
@@ -46,7 +52,7 @@ var MTFPlugin = Plugin.extend({
     // Deprecated - Use setAnswerMapping instead
     setAnswer: function(rhsOption, lhsIndex) {
         this._controller.setModelValue(rhsOption._model, lhsIndex, 'selected');
-    },
+},
     setAnswerMapping: function(rhsOption, lhsOption) {
         if (!_.isUndefined(lhsOption)) {
             rhsOption._value.mapped = lhsOption._value.resvalue;
