@@ -9,7 +9,7 @@ var MCQPlugin = Plugin.extend({
     _blur: 30,
     _offsetX: 0,
     _offsetY: 0,
-    _highlight: '#E89241',    
+    _highlight: '#E89241',
     initPlugin: function(data) {
         this._multi_select = false;
         this._options = [];
@@ -28,8 +28,9 @@ var MCQPlugin = Plugin.extend({
                controller._model[controller._index].options=_.isEmpty(plugindata) ? controller._model[controller._index].options : plugindata;
              }
             if(controller){
-                // update the MCQ state when user land to the MCQ Page      
+                // update the MCQ state when user land to the MCQ Page
                 this.updateState(controller);
+                  // update the MCQ state when user land to the MCQ Page
                 this._controller = controller;
                 this._multi_select = data.multi_select;
                 if ((typeof this._multi_select) == 'undefined' || this._multi_select == null) {
@@ -97,13 +98,17 @@ var MCQPlugin = Plugin.extend({
             val = option.toggleShadow();
             controller.setModelValue(option._model, val, 'selected');
         }
-        this.updateState(controller); // update the MCQ state on SELECTION OF OPTION
+        this._myflag=true;
+          console.info("flag:",this._myflag);
+        this.updateState(controller,true);
+
+       // update the MCQ state on SELECTION OF OPTION
         Renderer.update = true;
         return val;
     },
-    updateState: function(controller) {
+    updateState: function(controller, isStateChanged) {
         var model = controller._model[controller._index];
-        this.saveState(model.type, model.options);
+        this.saveState(model.type, model.options, isStateChanged);
     }
 });
 PluginManager.registerPlugin('mcq', MCQPlugin);

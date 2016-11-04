@@ -14,8 +14,8 @@ var MTFPlugin = Plugin.extend({
         var model = data.model;
         if (model) {
             var controller = this._stage.getController(model); 
-            // get the model data from the currentstate object 
-            // and update the model with the MTF state data          
+            // get the model data from the currentstate object
+            // and update the model with the MTF state data
             var plugindata= this.getState(this._type);
             if(!_.isUndefined(plugindata)){
                controller._model[controller._index].rhs_options=_.isEmpty(plugindata) ? controller._model[controller._index].rhs_options : plugindata;
@@ -62,15 +62,15 @@ var MTFPlugin = Plugin.extend({
             delete rhsOption._value.mapped;
             this._controller.setModelValue(rhsOption._model, undefined, 'selected');
         }
-        // update the MTF state when user mapped the RHS to LHS option 
-        this.updateState(this._controller);
+        // update the MTF state when user mapped the RHS to LHS option
+        this.updateState(this._controller, true);
     },
     removeAnswer: function(rhsOption, lhsIndex) {
         this._controller.setModelValue(rhsOption._model, lhsIndex, '');
     },
-    updateState: function(controller) {
+    updateState: function(controller, isStateChanged) {
      var model = controller._model[controller._index];
-     this.saveState(model.type, model.rhs_options);
+     this.saveState(model.type, model.rhs_options, isStateChanged);
  }
 });
 PluginManager.registerPlugin('mtf', MTFPlugin);

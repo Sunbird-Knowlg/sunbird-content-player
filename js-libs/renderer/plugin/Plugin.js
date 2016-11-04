@@ -15,6 +15,7 @@ var Plugin = Class.extend({
     _enableEvents: true,
 	events: [],
 	appEvents: [],
+	_myflag:false,
     _pluginParams: {},
 	init: function(data, parent, stage, theme) {
 		this.events = [];
@@ -536,7 +537,8 @@ var Plugin = Class.extend({
         }
         return children;
     },
-    saveState: function(param, value) {
+    saveState: function(param, value, isStateChanged) {
+			if (isStateChanged) this._stage.isStateChanged = isStateChanged;
         this._stage.setParam(param, value);
     },
     getState: function(param) {

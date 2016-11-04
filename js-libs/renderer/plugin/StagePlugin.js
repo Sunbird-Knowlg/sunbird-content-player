@@ -13,7 +13,10 @@ var StagePlugin = Plugin.extend({
     _doDrag: undefined,
     _stageInstanceId: undefined,
     _currentState:{},
+    isStateChanged: undefined,
     initPlugin: function(data) {
+
+        // this.isStateChanged = false;
         this._inputs = [];
         var instance = this;
         this.params = {};
@@ -62,6 +65,7 @@ var StagePlugin = Plugin.extend({
         // get object data from the theme object
         var stageKey = this.getStagestateKey();
         this._currentState = this._theme.getParam(stageKey);
+
           this.invokeChildren(data, this, this, this._theme);
     },
     keyboardShowHandler: function (e) {
@@ -189,10 +193,12 @@ var StagePlugin = Plugin.extend({
     evaluate: function(action) {
         var valid = false;
         var showFeeback = true;
+
+
         if (this._stageController) {
 
             //Checking to show feedback or not
-            if(!_.isUndefined(this._stageController._data.showImmediateFeedback)){
+            if(!_.isUndefined(this._stageController._data.showImmediateFeedback)) {
                 showFeeback = this._stageController._data.showImmediateFeedback;
             }else{
 
@@ -200,9 +206,14 @@ var StagePlugin = Plugin.extend({
             this._inputs.forEach(function(input) {
                 input.setModelValue();
             });
-            var result = this._stageController.evalItem();
-            if (result) {
+            // if(this.isStateChanged || !this._currentState) {
+            if(this.isStateChanged) {
+              var result = this._stageController.evalItem();
+              if (result) {
                 valid = result.pass;
+              }
+            }else{
+              showFeeback = false;
             }
         }
         if(showFeeback){
@@ -226,7 +237,7 @@ var StagePlugin = Plugin.extend({
     },
     getStagestateKey:function(){
        if(!_.isUndefined(this._stageController)){
-            return Renderer.theme._currentStage+"_"+this._stageController._id+"_"+this._stageController._index                       ;
+            return Renderer.theme._currentStage+"_"+this._stageController._id+"_"+this._stageController._index;
         }else{
             return Renderer.theme._currentStage;
         }
@@ -262,8 +273,8 @@ var StagePlugin = Plugin.extend({
         } else {
             return true;
         }
-
     },
+
     getParam: function(param) {
         var instance = this;
         var params = instance.params;

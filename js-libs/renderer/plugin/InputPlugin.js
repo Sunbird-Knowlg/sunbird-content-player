@@ -63,9 +63,9 @@ var InputPlugin = HTMLPlugin.extend({
         this._theme.inputs.push(data.id);
         this._stage._inputs.push(this);
         var instance=this;
-        $('input').on('keyup change', function(){ 
-            instance.updateState(); 
-            // update the state of the input when user gives input to the textbox 
+        $('input').on('keyup change', function(){
+            instance.updateState(true);
+            // update the state of the input when user gives input to the textbox
         });
         instance.updateState();
         // update the state of input when user land to the page
@@ -77,7 +77,7 @@ var InputPlugin = HTMLPlugin.extend({
         this._stage.setModelValue(model, this._input.value);
     }
 },
-    updateState: function() {
+    updateState: function(isStateChanged) {
      this.setModelValue();
      var controller = this._stage._stageController;
      // Check stage is FTB controller or Input text area
@@ -86,7 +86,7 @@ var InputPlugin = HTMLPlugin.extend({
          this.saveState(cModel.type, cModel.model);
      } else {
          console.warn("There is no ctrl in this stage");
-         this.saveState(this._data.id, this._input.value);
+         this.saveState(this._data.id, this._input.value, isStateChanged);
      }
 
  }
