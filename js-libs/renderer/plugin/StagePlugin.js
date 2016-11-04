@@ -63,7 +63,10 @@ var StagePlugin = Plugin.extend({
         window.addEventListener('native.keyboardhide', this.keyboardHideHandler.bind(this), true);
         // get object data from the theme object
         var stageKey = this.getStagestateKey();
-        this._currentState = this._theme.getParam(stageKey);
+        if (typeof this._theme.getParam === "function") {
+            this._currentState = this._theme.getParam(stageKey);
+        }
+        
         this._isEvaluated = _.isUndefined(this._currentState)? false : this._currentState.isEvaluated;
         this.invokeChildren(data, this, this, this._theme);
     },
