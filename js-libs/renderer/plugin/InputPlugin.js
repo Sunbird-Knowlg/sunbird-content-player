@@ -83,10 +83,10 @@ var InputPlugin = HTMLPlugin.extend({
      // Check stage is FTB controller or Input text area
      if (!_.isUndefined(controller)) {
          var cModel = controller._model[controller._index];
-         this.saveState(cModel.type, cModel.model);
+         this.setState(cModel.type, cModel.model, isSceenChanged);
      } else {
          console.warn("There is no ctrl in this stage");
-         this.saveState(this._data.id, this._input.value, isSceenChanged);
+         this.setState(this._data.id, this._input.value, isSceenChanged);
      }
 
  }

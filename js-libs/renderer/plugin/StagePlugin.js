@@ -13,7 +13,8 @@ var StagePlugin = Plugin.extend({
     _doDrag: undefined,
     _stageInstanceId: undefined,
     _currentState:{},
-    isSceenChanged: undefined,
+    isSceenChanged: false,
+    _isEvaluated: false,
     initPlugin: function(data) {
         this._inputs = [];
         var instance = this;
@@ -63,8 +64,8 @@ var StagePlugin = Plugin.extend({
         // get object data from the theme object
         var stageKey = this.getStagestateKey();
         this._currentState = this._theme.getParam(stageKey);
-
-          this.invokeChildren(data, this, this, this._theme);
+        this._isEvaluated = _.isUndefined(this._currentState)? false : this._currentState.isEvaluated;
+        this.invokeChildren(data, this, this, this._theme);
     },
     keyboardShowHandler: function (e) {
         this._self.y =  -(e.keyboardHeight);
@@ -189,6 +190,8 @@ var StagePlugin = Plugin.extend({
         }
     },
     evaluate: function(action) {
+
+      if(!((this.isSceenChanged === false) && this._isEvaluated)) {
         var valid = false;
         var showFeeback = true;
 
@@ -201,28 +204,24 @@ var StagePlugin = Plugin.extend({
                 input.setModelValue();
             });
 
-            var stateUnavailable = _.isEmpty(_.pick(this._theme._contentParams, this.getStagestateKey()));
-            if(this.isSceenChanged || stateUnavailable) {
-              var result = this._stageController.evalItem();
-              if (result) {
-                valid = result.pass;
-              }
-            }else{
-              showFeeback = false;
+            var result = this._stageController.evalItem();
+            if (result) {
+              valid = result.pass;
+            }
+
+            //TODO: setParam should use, but not working
+            this._currentState["isEvaluated"] = true;
+
+            if (showFeeback) {
+                //Show valid feeback
+                (valid == true) ? this.dispatchEvent(action.success) : this.dispatchEvent(action.failure);
+                return;
             }
         }
-        if (showFeeback) {
-            //Show valid feeback
-            if (valid) {
-                this.dispatchEvent(action.success);
-            } else {
-                this.dispatchEvent(action.failure);
-            }
-        }else{
-            //Directly take user to next stage, without showing feedback popup
-            submitOnNextClick = false;
-            navigate("next");
-        }
+      }
+      //Directly take user to next stage, without showing feedback popup
+      submitOnNextClick = false;
+      navigate("next");
     },
     reload: function(action) {
         if (this._stageController) {

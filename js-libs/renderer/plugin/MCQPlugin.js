@@ -98,8 +98,6 @@ var MCQPlugin = Plugin.extend({
             val = option.toggleShadow();
             controller.setModelValue(option._model, val, 'selected');
         }
-        this._myflag=true;
-          console.info("flag:",this._myflag);
         this.updateState(controller,true);
 
        // update the MCQ state on SELECTION OF OPTION
@@ -108,7 +106,7 @@ var MCQPlugin = Plugin.extend({
     },
     updateState: function(controller, isSceenChanged) {
         var model = controller._model[controller._index];
-        this.saveState(model.type, model.options, isSceenChanged);
+        this.setState(model.type, model.options, isSceenChanged);
     }
 });
 PluginManager.registerPlugin('mcq', MCQPlugin);

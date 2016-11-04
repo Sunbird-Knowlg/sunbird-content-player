@@ -537,9 +537,9 @@ var Plugin = Class.extend({
         }
         return children;
     },
-    saveState: function(param, value, isSceenChanged) {
+    setState: function(param, value, isSceenChanged) {
 			if (isSceenChanged) this._stage.isSceenChanged = isSceenChanged;
-        this._stage.setParam(param, value);
+        this._stage.setParam(param.toLowerCase(), value);
     },
     getState: function(param) {
         if(!_.isUndefined(this._stage._currentState)){
