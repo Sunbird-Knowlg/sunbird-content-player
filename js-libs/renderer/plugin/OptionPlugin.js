@@ -75,7 +75,7 @@ var OptionPlugin = Plugin.extend({
         if(this._modelValue.selected === true) {
           //var val = instance._parent.selectOption(instance);
           this.addShadow();
-          Overlay.isReadyToEvaluate(true);
+          //Overlay.isReadyToEvaluate(true); 
         }
         this._self.on('click', function(event) {
             Overlay.isReadyToEvaluate(true);
