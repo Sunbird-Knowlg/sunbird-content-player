@@ -190,8 +190,13 @@ var StagePlugin = Plugin.extend({
         }
     },
     evaluate: function(action) {
-
       if(!((this.isSceenChanged === false) && this._isEvaluated)) {
+        // evaluate only if item/assessment is not evaluated & changed
+        // isEvaluated  | isSceneChanged    | Evaluate
+        //      0       |       0           |     1
+        //      0       |       1           |     1
+        //      1       |       0           |     0
+        //      1       |       1           |     1
         var valid = false;
         var showFeeback = true;
 
