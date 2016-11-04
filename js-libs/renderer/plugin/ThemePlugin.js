@@ -35,7 +35,7 @@ var ThemePlugin = Plugin.extend({
         this._self.mouseMoveOutside = true;
         if(!_.isUndefined(data.saveState)){
             this._saveState=data.saveState;
-        }        
+        }
     },
     mousePoint: function() {
         return { x: this._self.mouseX, y: this._self.mouseY };
@@ -243,6 +243,7 @@ var ThemePlugin = Plugin.extend({
             return; }
         var stage = this._currentScene;
         // In transistion save Currentstate to themeObj
+        // stage._currentState = stage.params;
         this.setParam(stage.getStagestateKey(),stage._currentState);
         RecorderManager.stopRecording();
         AudioManager.stopAll();

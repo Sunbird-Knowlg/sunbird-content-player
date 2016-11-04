@@ -106,9 +106,9 @@ var MCQPlugin = Plugin.extend({
         Renderer.update = true;
         return val;
     },
-    updateState: function(controller, isStateChanged) {
+    updateState: function(controller, isSceenChanged) {
         var model = controller._model[controller._index];
-        this.saveState(model.type, model.options, isStateChanged);
+        this.saveState(model.type, model.options, isSceenChanged);
     }
 });
 PluginManager.registerPlugin('mcq', MCQPlugin);

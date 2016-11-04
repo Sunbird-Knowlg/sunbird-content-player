@@ -13,7 +13,7 @@ var MTFPlugin = Plugin.extend({
 
         var model = data.model;
         if (model) {
-            var controller = this._stage.getController(model); 
+            var controller = this._stage.getController(model);
             // get the model data from the currentstate object
             // and update the model with the MTF state data
             var plugindata= this.getState(this._type);
@@ -68,9 +68,9 @@ var MTFPlugin = Plugin.extend({
     removeAnswer: function(rhsOption, lhsIndex) {
         this._controller.setModelValue(rhsOption._model, lhsIndex, '');
     },
-    updateState: function(controller, isStateChanged) {
+    updateState: function(controller, isSceenChanged) {
      var model = controller._model[controller._index];
-     this.saveState(model.type, model.rhs_options, isStateChanged);
+     this.saveState(model.type, model.rhs_options, isSceenChanged);
  }
 });
 PluginManager.registerPlugin('mtf', MTFPlugin);

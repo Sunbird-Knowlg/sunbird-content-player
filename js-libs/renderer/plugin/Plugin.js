@@ -537,14 +537,14 @@ var Plugin = Class.extend({
         }
         return children;
     },
-    saveState: function(param, value, isStateChanged) {
-			if (isStateChanged) this._stage.isStateChanged = isStateChanged;
+    saveState: function(param, value, isSceenChanged) {
+			if (isSceenChanged) this._stage.isSceenChanged = isSceenChanged;
         this._stage.setParam(param, value);
     },
     getState: function(param) {
         if(!_.isUndefined(this._stage._currentState)){
              return this._stage._currentState[param];
         }
-       
+
     },
    });

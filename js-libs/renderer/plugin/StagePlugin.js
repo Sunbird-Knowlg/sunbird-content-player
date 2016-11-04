@@ -13,10 +13,8 @@ var StagePlugin = Plugin.extend({
     _doDrag: undefined,
     _stageInstanceId: undefined,
     _currentState:{},
-    isStateChanged: undefined,
+    isSceenChanged: undefined,
     initPlugin: function(data) {
-
-        // this.isStateChanged = false;
         this._inputs = [];
         var instance = this;
         this.params = {};
@@ -194,20 +192,17 @@ var StagePlugin = Plugin.extend({
         var valid = false;
         var showFeeback = true;
 
-
         if (this._stageController) {
-
             //Checking to show feedback or not
             if(!_.isUndefined(this._stageController._data.showImmediateFeedback)) {
                 showFeeback = this._stageController._data.showImmediateFeedback;
-            }else{
-
             }
             this._inputs.forEach(function(input) {
                 input.setModelValue();
             });
-            // if(this.isStateChanged || !this._currentState) {
-            if(this.isStateChanged) {
+
+            var stateUnavailable = _.isEmpty(_.pick(this._theme._contentParams, this.getStagestateKey()));
+            if(this.isSceenChanged || stateUnavailable) {
               var result = this._stageController.evalItem();
               if (result) {
                 valid = result.pass;
@@ -216,7 +211,7 @@ var StagePlugin = Plugin.extend({
               showFeeback = false;
             }
         }
-        if(showFeeback){
+        if (showFeeback) {
             //Show valid feeback
             if (valid) {
                 this.dispatchEvent(action.success);

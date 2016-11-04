@@ -3,9 +3,9 @@ var InputPlugin = HTMLPlugin.extend({
     _input: undefined,
 	initPlugin: function(data) {
         this._input = undefined;
-        // get the model data from the _current state object 
+        // get the model data from the _current state object
         // and update the input/ftb model
-        var controller=this._stage._stageController;         
+        var controller=this._stage._stageController;
         if (!_.isUndefined(controller)) {
            plugindata = this.getState(controller._model[controller._index].type);
            if (!_.isUndefined(plugindata)) {
@@ -13,7 +13,7 @@ var InputPlugin = HTMLPlugin.extend({
            }
        } else {
            console.warn("there is no FTB item");
-       } 
+       }
         var fontsize = data.fontsize || "1.6em";
         var fontweight = data.weight || "normal";
         var color = data.color || "#000000";
@@ -77,7 +77,7 @@ var InputPlugin = HTMLPlugin.extend({
         this._stage.setModelValue(model, this._input.value);
     }
 },
-    updateState: function(isStateChanged) {
+    updateState: function(isSceenChanged) {
      this.setModelValue();
      var controller = this._stage._stageController;
      // Check stage is FTB controller or Input text area
@@ -86,7 +86,7 @@ var InputPlugin = HTMLPlugin.extend({
          this.saveState(cModel.type, cModel.model);
      } else {
          console.warn("There is no ctrl in this stage");
-         this.saveState(this._data.id, this._input.value, isStateChanged);
+         this.saveState(this._data.id, this._input.value, isSceenChanged);
      }
 
  }
