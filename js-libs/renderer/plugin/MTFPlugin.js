@@ -69,8 +69,10 @@ var MTFPlugin = Plugin.extend({
         this._controller.setModelValue(rhsOption._model, lhsIndex, '');
     },
     updateState: function(controller, isStateChanged) {
-     var model = controller._model[controller._index];
-     this.setState(model.type, model.rhs_options, isStateChanged);
+        if(!_.isUndefined(controller._model)){
+            var model = controller._model[controller._index];
+            this.setState(model.type, model.rhs_options, isStateChanged);       
+        }
  }
 });
 PluginManager.registerPlugin('mtf', MTFPlugin);
