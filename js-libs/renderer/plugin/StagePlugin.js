@@ -13,7 +13,7 @@ var StagePlugin = Plugin.extend({
     _doDrag: undefined,
     _stageInstanceId: undefined,
     _currentState:{},
-    isSceenChanged: false,
+    isStageStateChanged: false,
     _isEvaluated: false,
     initPlugin: function(data) {
         this._inputs = [];
@@ -190,7 +190,7 @@ var StagePlugin = Plugin.extend({
         }
     },
     evaluate: function(action) {
-      if(!((this.isSceenChanged === false) && this._isEvaluated)) {
+      if(!((this.isStageStateChanged === false) && this._isEvaluated)) {
         // evaluate only if item/assessment is not evaluated & changed
         // isEvaluated  | isSceneChanged    | Evaluate
         //      0       |       0           |     1
