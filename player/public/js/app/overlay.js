@@ -103,10 +103,18 @@ Overlay = {
         var stageCtrl = Renderer.theme._currentScene ? Renderer.theme._currentScene._stageController : undefined;
         if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type) && !_.isUndefined(stageCtrl._model)) {
             var modelItem = stageCtrl._model[stageCtrl._index];
-            // If FTB item, enable submit button directly
             if(!_.isNull(this._rootScope)){
-                var enableEval = (modelItem && modelItem.type.toLowerCase() == 'ftb') ? true : false;
-                this._setRootScope("enableEval", enableEval);
+                var enableEval = false;
+                if(modelItem && modelItem.type.toLowerCase() == 'ftb') {
+                    // If FTB item, enable submit button directly
+                    enableEval = true;
+                } else {
+                    var stage = Renderer.theme._currentScene;
+                    if(!_.isUndefined(stage._currentState) && (!_.isUndefined(stage._currentState.isEvaluated))){
+                        enableEval = !stage._currentState.isEvaluated;
+                    }                    
+                } 
+                this.isReadyToEvaluate(enableEval);
             }
             return true;
         } else {
