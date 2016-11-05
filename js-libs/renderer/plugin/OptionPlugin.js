@@ -113,11 +113,8 @@ var OptionPlugin = Plugin.extend({
 
         if(value.selected != undefined ) {
            var snapTo;
-           if (instance._parent._force === true) {
-               snapTo = instance._parent.getLhsOption(value.answer);
-           } else {
-               snapTo = instance._parent._lhs_options;
-           }
+           snapTo = instance._parent._lhs_options; 
+           // Only get the SnapTo[LHS options] to match(overlap) the images
            var plugin = snapTo[value.selected];
            var dims = plugin._dimensions;
            // Set the current answer as accepted
