@@ -67,7 +67,7 @@ var InputPlugin = HTMLPlugin.extend({
             instance.updateState(true);
             // update the state of the input when user gives input to the textbox
         });
-        instance.updateState();
+        instance.updateState(false);
         // update the state of input when user land to the page
     },
     setModelValue: function() {
@@ -77,16 +77,16 @@ var InputPlugin = HTMLPlugin.extend({
         this._stage.setModelValue(model, this._input.value);
     }
 },
-    updateState: function(isSceenChanged) {
+    updateState: function(isStateChanged) {
      this.setModelValue();
      var controller = this._stage._stageController;
      // Check stage is FTB controller or Input text area
      if (!_.isUndefined(controller)) {
          var cModel = controller._model[controller._index];
-         this.setState(cModel.type, cModel.model, isSceenChanged);
+         this.setState(cModel.type, cModel.model, isStateChanged);
      } else {
          console.warn("There is no ctrl in this stage");
-         this.setState(this._data.id, this._input.value, isSceenChanged);
+         this.setState(this._data.id, this._input.value, isStateChanged);
      }
 
  }

@@ -12,9 +12,8 @@ var StagePlugin = Plugin.extend({
     _startDrag: undefined,
     _doDrag: undefined,
     _stageInstanceId: undefined,
-    _currentState:{},
-    isStageStateChanged: false,
-    _isEvaluated: false,
+    _currentState: {},
+    isStageStateChanged: undefined,
     initPlugin: function(data) {
         this._inputs = [];
         var instance = this;
@@ -65,9 +64,10 @@ var StagePlugin = Plugin.extend({
         var stageKey = this.getStagestateKey();
         if (typeof this._theme.getParam === "function") {
             this._currentState = this._theme.getParam(stageKey);
+            if(_.isUndefined(this._currentState)) {
+                this.setParam(this._type, {id: Renderer.theme._currentStage, stateId: stageKey});
+            }
         }
-        
-        this._isEvaluated = _.isUndefined(this._currentState)? false : this._currentState.isEvaluated;
         this.invokeChildren(data, this, this, this._theme);
     },
     keyboardShowHandler: function (e) {
@@ -192,8 +192,16 @@ var StagePlugin = Plugin.extend({
             }
         }
     },
+    isStageStateChanged: function(isChanged){
+        this._isStageStateChanged = isChanged;
+        if(isChanged){
+            this._currentState["isEvaluated"] = false;
+        }
+    },
     evaluate: function(action) {
-      if(!((this.isStageStateChanged === false) && this._isEvaluated)) {
+        var isEvaluated = _.isUndefined(this._currentState)? false : this._currentState.isEvaluated;
+
+        if(!((this._isStageStateChanged === false) && isEvaluated)) {
         // evaluate only if item/assessment is not evaluated & changed
         // isEvaluated  | isSceneChanged    | Evaluate
         //      0       |       0           |     1
@@ -218,13 +226,17 @@ var StagePlugin = Plugin.extend({
             }
 
             //TODO: setParam should use, but not working
-            this._currentState["isEvaluated"] = true;
+            this._currentState["isEvaluated"] = true; 
 
             if (showFeeback) {
                 //Show valid feeback
-                (valid == true) ? this.dispatchEvent(action.success) : this.dispatchEvent(action.failure);
+                if(valid == true){ 
+                    this.dispatchEvent(action.success);
+                } else{
+                    this.dispatchEvent(action.failure);
+                }
                 return;
-            }
+            } 
         }
       }
       //Directly take user to next stage, without showing feedback popup

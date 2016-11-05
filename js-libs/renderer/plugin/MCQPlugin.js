@@ -29,7 +29,7 @@ var MCQPlugin = Plugin.extend({
              }
             if(controller){
                 // update the MCQ state when user land to the MCQ Page
-                this.updateState(controller);
+                this.updateState(controller, false);
                   // update the MCQ state when user land to the MCQ Page
                 this._controller = controller;
                 this._multi_select = data.multi_select;
@@ -104,10 +104,10 @@ var MCQPlugin = Plugin.extend({
         Renderer.update = true;
         return val;
     },
-    updateState: function(controller, isStageStateChanged) {
+    updateState: function(controller, isStateChanged) {
         if(!_.isUndefined(controller._model)){
             var model = controller._model[controller._index];
-            this.setState(model.type, model.options, isStageStateChanged);
+            this.setState(model.type, model.options, isStateChanged);
         }
     }
 });

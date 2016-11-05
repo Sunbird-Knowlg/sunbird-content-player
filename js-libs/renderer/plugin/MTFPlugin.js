@@ -22,7 +22,7 @@ var MTFPlugin = Plugin.extend({
              }
             if (controller) {
                 // update the MTF state when user land to the page.
-                this.updateState(controller);
+                this.updateState(controller, false);
         		this._controller = controller;
                 this._force = data.force;
                 if ((typeof this._force) == 'undefined' || this._force == null) {
