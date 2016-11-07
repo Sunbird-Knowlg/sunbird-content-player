@@ -226,17 +226,17 @@ var StagePlugin = Plugin.extend({
             }
 
             //TODO: setParam should use, but not working
-            this._currentState["isEvaluated"] = true; 
+            this._currentState["isEvaluated"] = true;
 
             if (showFeeback) {
                 //Show valid feeback
-                if(valid == true){ 
+                if(valid == true){
                     this.dispatchEvent(action.success);
                 } else{
                     this.dispatchEvent(action.failure);
                 }
                 return;
-            } 
+            }
         }
       }
       //Directly take user to next stage, without showing feedback popup

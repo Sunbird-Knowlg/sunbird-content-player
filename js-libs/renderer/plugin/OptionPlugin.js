@@ -73,9 +73,7 @@ var OptionPlugin = Plugin.extend({
 
         var instance = this;
         if(this._modelValue.selected === true) {
-          //var val = instance._parent.selectOption(instance);
           this.addShadow();
-          //Overlay.isReadyToEvaluate(true); 
         }
         this._self.on('click', function(event) {
             Overlay.isReadyToEvaluate(true);
@@ -113,7 +111,7 @@ var OptionPlugin = Plugin.extend({
 
         if(value.selected != undefined ) {
            var snapTo;
-           snapTo = instance._parent._lhs_options; 
+           snapTo = instance._parent._lhs_options;
            // Only get the SnapTo[LHS options] to match(overlap) the images
            var plugin = snapTo[value.selected];
            var dims = plugin._dimensions;

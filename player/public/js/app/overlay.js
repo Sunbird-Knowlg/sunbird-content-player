@@ -26,7 +26,7 @@ Overlay = {
     isReadyToEvaluate: function(enableEval) {
         this._setRootScope("enableEval", enableEval);
     },
-    resetStage: function(){
+    resetStage: function() {
         this.isReadyToEvaluate(false);
         jQuery('#assessButton').hide();
     },
@@ -43,7 +43,7 @@ Overlay = {
         return navigateTo;
     },
     sceneEnter: function() {
-        this.resetStage(); 
+        this.resetStage();
         this.enablePrevious();
         this.enableReload();
         var isItemStage = this.isItemScene();
@@ -112,8 +112,8 @@ Overlay = {
                     var stage = Renderer.theme._currentScene;
                     if(!_.isUndefined(stage._currentState) && (!_.isUndefined(stage._currentState.isEvaluated))){
                         enableEval = !stage._currentState.isEvaluated;
-                    }                    
-                } 
+                    }
+                }
                 this.isReadyToEvaluate(enableEval);
             }
             return true;
