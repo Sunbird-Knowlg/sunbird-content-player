@@ -63,7 +63,7 @@ var InputPlugin = HTMLPlugin.extend({
         this._theme.inputs.push(data.id);
         this._stage._inputs.push(this);
         var instance=this;
-        $('input').on('keyup change', function(){
+        $('input').on('change', function(){
             instance.updateState(true);
             // update the state of the input when user gives input to the textbox
         });
