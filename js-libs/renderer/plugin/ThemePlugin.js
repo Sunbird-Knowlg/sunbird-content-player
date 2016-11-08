@@ -33,6 +33,7 @@ var ThemePlugin = Plugin.extend({
         createjs.Touch.enable(this._self);
         this._self.enableMouseOver(10);
         this._self.mouseMoveOutside = true;
+        this._contentParams = {};
         if(!_.isUndefined(data.saveState)){
             this._saveState=data.saveState;
         }
