@@ -1022,8 +1022,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 icon: '@'
             },
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/></a>',
+            template: '<a href="javascript:void(0)" ng-class="enableGenie ? \'icon-opacity\' : \'\'" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/></a>',
             link: function(scope) {
+                scope.enableGenie = ("undefined" == typeof cordova) ? true : false;
                 scope.imgSrc  = $rootScope.imageBasePath + scope.icon
                 var pageId = $rootScope.pageId;
                 scope.goToGenie = function() {
