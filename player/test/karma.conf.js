@@ -11,7 +11,6 @@ module.exports = function(config) {
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: [
-            'jasmine-jquery',
             'jasmine',
             'jasmine-matchers'
         ],
@@ -160,7 +159,6 @@ module.exports = function(config) {
         ],
 
         // web server port
-        port: 8080,
 
 
         // enable / disable colors in the output (reporters and logs)
