@@ -84,8 +84,10 @@ Renderer = {
         Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
         createjs.Ticker.addEventListener("tick", function() {
             if(Renderer.update) {
+                if(!_(Renderer.theme).isUndefined()){
                 Renderer.theme.update();
                 Renderer.update = false;
+                }
             } else {
                 if (Renderer.theme) {
                     Renderer.theme.tick();
