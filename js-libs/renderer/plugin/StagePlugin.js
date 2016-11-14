@@ -12,7 +12,8 @@ var StagePlugin = Plugin.extend({
     _startDrag: undefined,
     _doDrag: undefined,
     _stageInstanceId: undefined,
-    _currentState:{},
+    _currentState: {},
+    isStageStateChanged: undefined,
     initPlugin: function(data) {
         this._inputs = [];
         var instance = this;
@@ -21,7 +22,6 @@ var StagePlugin = Plugin.extend({
         var dims = this.relativeDims();
         this._self.x = dims.x;
         this._self.y = dims.y;
-        //Generating and adding unique stageInstanceId to stage.
         this._stageInstanceId = this._theme._currentStage + '__' + Math.random().toString(36).substr(2, 9);
         if (data.iterate && data.var) {
             var controllerName = data.var.trim();
@@ -57,15 +57,18 @@ var StagePlugin = Plugin.extend({
         }
         // handling keyboard interaction.
         this._startDrag = this.startDrag.bind(this);
-        this._doDrag =  this.doDrag.bind(this);
+        this._doDrag = this.doDrag.bind(this);
         window.addEventListener('native.keyboardshow', this.keyboardShowHandler.bind(this), true);
         window.addEventListener('native.keyboardhide', this.keyboardHideHandler.bind(this), true);
-          if(this._stageController){  
-             var stageKey = this.getStagestateKey();                       
-             this._stageController.updateState(this.getState(stageKey));
-              // Render the saved sate fromt the themeObj
-          }
-          this.invokeChildren(data, this, this, this._theme);
+        // get object data from the theme object
+        var stageKey = this.getStagestateKey();
+        if (typeof this._theme.getParam === "function") {
+            this._currentState = this._theme.getParam(stageKey);
+            if(_.isUndefined(this._currentState)) {
+                this.setParam(this._type, {id: Renderer.theme._currentStage, stateId: stageKey});
+            }
+        }
+        this.invokeChildren(data, this, this, this._theme);
     },
     keyboardShowHandler: function (e) {
         this._self.y =  -(e.keyboardHeight);
@@ -189,37 +192,56 @@ var StagePlugin = Plugin.extend({
             }
         }
     },
+    isStageStateChanged: function(isChanged){
+        this._isStageStateChanged = isChanged;
+        if(isChanged){
+            this._currentState["isEvaluated"] = false;
+        }
+    },
     evaluate: function(action) {
+        var isEvaluated = _.isUndefined(this._currentState)? false : this._currentState.isEvaluated;
+
+        if(!((this._isStageStateChanged === false) && isEvaluated)) {
+        // evaluate only if item/assessment is not evaluated & changed
+        // isEvaluated  | isSceneChanged    | Evaluate
+        //      0       |       0           |     1
+        //      0       |       1           |     1
+        //      1       |       0           |     0
+        //      1       |       1           |     1
         var valid = false;
         var showFeeback = true;
+
         if (this._stageController) {
-
             //Checking to show feedback or not
-            if(!_.isUndefined(this._stageController._data.showImmediateFeedback)){
+            if(!_.isUndefined(this._stageController._data.showImmediateFeedback)) {
                 showFeeback = this._stageController._data.showImmediateFeedback;
-            }else{
-
             }
             this._inputs.forEach(function(input) {
                 input.setModelValue();
             });
+
             var result = this._stageController.evalItem();
             if (result) {
-                valid = result.pass;
+              valid = result.pass;
+            }
+
+            //TODO: setParam should use, but not working
+            this._currentState["isEvaluated"] = true;
+
+            if (showFeeback) {
+                //Show valid feeback
+                if(valid == true){
+                    this.dispatchEvent(action.success);
+                } else{
+                    this.dispatchEvent(action.failure);
+                }
+                return;
             }
         }
-        if(showFeeback){
-            //Show valid feeback
-            if (valid) {
-                this.dispatchEvent(action.success);
-            } else {
-                this.dispatchEvent(action.failure);
-            }
-        }else{
-            //Directly take user to next stage, without showing feedback popup
-            submitOnNextClick = false;
-            navigate("next");
-        }
+      }
+      //Directly take user to next stage, without showing feedback popup
+      submitOnNextClick = false;
+      navigate("next");
     },
     reload: function(action) {
         if (this._stageController) {
@@ -229,7 +251,7 @@ var StagePlugin = Plugin.extend({
     },
     getStagestateKey:function(){
        if(!_.isUndefined(this._stageController)){
-            return Renderer.theme._currentStage+"_"+this._stageController._id+"_"+this._stageController._index                       ;
+            return Renderer.theme._currentStage+"_"+this._stageController._id+"_"+this._stageController._index;
         }else{
             return Renderer.theme._currentStage;
         }
@@ -248,13 +270,25 @@ var StagePlugin = Plugin.extend({
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance.params[param] = fval;
         // saveState="true/false" is switch in the controller
-        if(!_.isUndefined(this._stageController)){
-          if(this._stageController._data.saveState==undefined || this._stageController._data.saveState==true ){
-                this._currentState = JSON.parse(JSON.stringify(instance.params));
-            }  
+        if (this.stateConfig) {
+            // Merge the params and currentstate object data
+            // clone to the currentstate object after merging is done
+            instance._currentState = $.extend({}, instance._currentState, instance.params);
+            instance._currentState = JSON.parse(JSON.stringify(instance._currentState));
         }
-            
     },
+    stateConfig: function() {
+        if (!_.isUndefined(this._stageController)) {
+            if (this._stageController._data.saveState == undefined || this._stageController._data.saveState == true) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    },
+
     getParam: function(param) {
         var instance = this;
         var params = instance.params;

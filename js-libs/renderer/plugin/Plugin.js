@@ -15,6 +15,7 @@ var Plugin = Class.extend({
     _enableEvents: true,
 	events: [],
 	appEvents: [],
+	_myflag:false,
     _pluginParams: {},
 	init: function(data, parent, stage, theme) {
 		this.events = [];
@@ -536,11 +537,16 @@ var Plugin = Class.extend({
         }
         return children;
     },
-    saveState: function(param, value) {
-        this._stage.setParam(param, value);
+    setState: function(param, value, isStateChanged) {
+			if (!_.isUndefined(isStateChanged)) {
+                this._stage.isStageStateChanged(isStateChanged);
+            }
+        this._stage.setParam(param.toLowerCase(), value);
     },
     getState: function(param) {
-        return this._theme.getParam(param);
-    },
+        if(!_.isUndefined(this._stage._currentState)){
+             return this._stage._currentState[param];
+        }
 
+    },
    });
