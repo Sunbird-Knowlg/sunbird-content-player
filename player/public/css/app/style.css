@@ -1174,3 +1174,8 @@ body{
     padding-left: 10%; 
     font-size: 1em
 }
+
+.gc-popup-retry-replay {
+    margin: -5% 15% 0 14%;
+    line-height: 100%;
+}
