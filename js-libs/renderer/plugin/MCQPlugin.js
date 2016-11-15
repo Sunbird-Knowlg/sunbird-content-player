@@ -9,7 +9,7 @@ var MCQPlugin = Plugin.extend({
     _blur: 30,
     _offsetX: 0,
     _offsetY: 0,
-    _highlight: '#E89241',    
+    _highlight: '#E89241',
     initPlugin: function(data) {
         this._multi_select = false;
         this._options = [];
@@ -21,9 +21,16 @@ var MCQPlugin = Plugin.extend({
         var model = data.model;
         if (model) {
             var controller = this._stage.getController(model);
-            if (controller) {
-                this.updateState(controller);
-                  // update the MCQ state when user land to the MCQ Page               
+            //get state data from stage._currentObject
+            //update the model with mcq state data
+            var plugindata= this.getState(this._type);
+            if(!_.isUndefined(plugindata)){
+               controller._model[controller._index].options=_.isEmpty(plugindata) ? controller._model[controller._index].options : plugindata;
+             }
+            if(controller){
+                // update the MCQ state when user land to the MCQ Page
+                this.updateState(controller, false);
+                  // update the MCQ state when user land to the MCQ Page
                 this._controller = controller;
                 this._multi_select = data.multi_select;
                 if ((typeof this._multi_select) == 'undefined' || this._multi_select == null) {
@@ -91,13 +98,17 @@ var MCQPlugin = Plugin.extend({
             val = option.toggleShadow();
             controller.setModelValue(option._model, val, 'selected');
         }
-        this.updateState(controller); // update the MCQ state on SELECTION OF OPTION
+        this.updateState(controller,true);
+
+       // update the MCQ state on SELECTION OF OPTION
         Renderer.update = true;
         return val;
     },
-    updateState: function(controller) {
-        var model = controller._model[controller._index];
-        this.saveState(model.type, model.options);
+    updateState: function(controller, isStateChanged) {
+        if(!_.isUndefined(controller._model)){
+            var model = controller._model[controller._index];
+            this.setState(model.type, model.options, isStateChanged);
+        }
     }
 });
 PluginManager.registerPlugin('mcq', MCQPlugin);

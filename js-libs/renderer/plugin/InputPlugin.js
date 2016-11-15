@@ -3,6 +3,17 @@ var InputPlugin = HTMLPlugin.extend({
     _input: undefined,
 	initPlugin: function(data) {
         this._input = undefined;
+        // get the model data from the _current state object
+        // and update the input/ftb model
+        var controller=this._stage._stageController;
+        if (!_.isUndefined(controller)) {
+           plugindata = this.getState(controller._model[controller._index].type);
+           if (!_.isUndefined(plugindata)) {
+               controller._model[controller._index].model = _.isEmpty(plugindata) ? controller._model[controller._index].model : plugindata;
+           }
+       } else {
+           console.warn("there is no FTB item");
+       }
         var fontsize = data.fontsize || "1.6em";
         var fontweight = data.weight || "normal";
         var color = data.color || "#000000";
@@ -10,7 +21,6 @@ var InputPlugin = HTMLPlugin.extend({
         var font = data.font || "Arial";
         var border = data.stroke || "#000000";
         data.stroke = ""; // unset so that parent plugin doesn't draw the border
-
 		var dims = this.relativeDims();
 		var input = document.getElementById(data.id);
 		if(input) {
@@ -53,11 +63,11 @@ var InputPlugin = HTMLPlugin.extend({
         this._theme.inputs.push(data.id);
         this._stage._inputs.push(this);
         var instance=this;
-        $('input').on('keyup change', function(){ 
-            instance.updateState(); 
-            // update the state of the input when user gives input to the textbox 
+        $('input').on('change', function(){
+            instance.updateState(true);
+            // update the state of the input when user gives input to the textbox
         });
-        instance.updateState();
+        instance.updateState(false);
         // update the state of input when user land to the page
     },
     setModelValue: function() {
@@ -67,16 +77,16 @@ var InputPlugin = HTMLPlugin.extend({
         this._stage.setModelValue(model, this._input.value);
     }
 },
-    updateState: function() {
+    updateState: function(isStateChanged) {
      this.setModelValue();
      var controller = this._stage._stageController;
      // Check stage is FTB controller or Input text area
      if (!_.isUndefined(controller)) {
          var cModel = controller._model[controller._index];
-         this.saveState(cModel.type, cModel.model);
+         this.setState(cModel.type, cModel.model, isStateChanged);
      } else {
          console.warn("There is no ctrl in this stage");
-         this.saveState(this._data.id, this._input.value);
+         this.setState(this._data.id, this._input.value, isStateChanged);
      }
 
  }

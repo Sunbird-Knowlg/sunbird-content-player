@@ -1108,11 +1108,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             'itemId': content.identifier
                         });
                     } else {
-                        $state.reload();
+                        setTimeout(function() {
+                            // call the timeout to show the progressbar
+                            // Remove the childrens and restart the content
+                            // if we do not remove the childrens then flickring of stage will hpn
+                            Renderer.theme._self.removeAllChildren();
+                            Renderer.theme.restart();
+                        }, 100);                    
                     }
                     var gameId = TelemetryService.getGameId();
                     var version = TelemetryService.getGameVer();
-                    var instance = this;
                     setTimeout(function() {
                         if (gameId && version) {
                             TelemetryService.start(gameId, version);
