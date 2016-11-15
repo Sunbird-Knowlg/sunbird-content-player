@@ -234,7 +234,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 controller: 'ContentCtrl'
             });
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
-        $rootScope.pageId = 'ContnetApp-ContentList';
+        $rootScope.pageId = 'ContentApp-Collection';
         var id = $stateParams.id;
 
         // $ionicModal.fromTemplateUrl('about.html', {
