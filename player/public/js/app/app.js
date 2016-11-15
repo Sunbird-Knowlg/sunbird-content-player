@@ -234,7 +234,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 controller: 'ContentCtrl'
             });
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
-
+        $rootScope.pageId = 'ContnetApp-ContentList';
         var id = $stateParams.id;
 
         // $ionicModal.fromTemplateUrl('about.html', {
@@ -1026,8 +1026,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             link: function(scope) {
                 scope.enableGenie = ("undefined" == typeof cordova) ? true : false;
                 scope.imgSrc  = $rootScope.imageBasePath + scope.icon
-                var pageId = $rootScope.pageId;
                 scope.goToGenie = function() {
+                    var pageId = $rootScope.pageId;
                     exitApp(pageId);
                 }
             }
