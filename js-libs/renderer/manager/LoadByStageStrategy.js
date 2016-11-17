@@ -153,10 +153,10 @@ LoadByStageStrategy = Class.extend({
             instance.loadStage(nextStageId, function() {
                 var plugin = PluginManager.getPluginObject('next');
                 if (plugin) {
-                    plugin.hide();
+                    plugin.show();
                     var nextContainer = PluginManager.getPluginObject('nextContainer');
                     if (nextContainer) {
-                        nextContainer.hide();
+                        nextContainer.show();
                     }
                 }
                 //Overlay.showNext();
@@ -168,10 +168,10 @@ LoadByStageStrategy = Class.extend({
             instance.loadStage(prevStageId, function() {
                 var plugin = PluginManager.getPluginObject('previous');
                 if (plugin) {
-                    plugin.hide();
+                    plugin.show();
                     var previousContainer = PluginManager.getPluginObject('previousContainer');
                     if (previousContainer) {
-                        previousContainer.hide();
+                        previousContainer.show();
                     }
                 }
                 //Overlay.showPrevious();

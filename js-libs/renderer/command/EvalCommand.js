@@ -7,6 +7,7 @@ var EvalCommand = Command.extend({
 		if (action.htmlEval) {
             plugin.evaluate(action);
 		} else {
+			plugin.evaluate(action);
 			console.warn("eval action from ECML content is deprecated.");
 		}
 	}
