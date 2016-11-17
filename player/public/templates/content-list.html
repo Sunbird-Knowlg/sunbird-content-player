@@ -21,6 +21,13 @@
         overflow-x: scroll;
         overflow: hidden;
     }
+    /*Scrollbar Css*/
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(91, 119, 121, 0.78);
+    }
 </style>
 
 <ion-pane class="swiper-background">
@@ -32,7 +39,7 @@
 
     <h1 class="gc-contentlist-title font-baloo">{{title || "EkStep Content App"}}</h1>
 
-    <ion-content class="gc-ionic-contentlist-body">
+    <ion-content class="gc-ionic-contentlist-body" overflow-scroll="true">
         <div class="product swiper-slide"
             ng-repeat="story in stories track by $index"
             ng-click="playContent(story);">
