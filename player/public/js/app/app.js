@@ -1108,15 +1108,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             'itemId': content.identifier
                         });
                     } else {
-                        setTimeout(function() {
-                            // call the timeout to show the progressbar
-                            // remove the all dom elements 
+                        // TODO telemetry issue is pending
+                            setTimeout(function() { 
                             Renderer.theme.removeHtmlElements();
                             scope.hideMenu();
-                            scope.item = $rootScope.content;
-                            Renderer.start(scope.item.baseDir, 'gameCanvas', scope.item);
-                            
-                        }, 100);                    
+                            Renderer.theme.reRender();
+                            TelemetryService.end()
+                        },400)          
                     }
                     var gameId = TelemetryService.getGameId();
                     var version = TelemetryService.getGameVer();
