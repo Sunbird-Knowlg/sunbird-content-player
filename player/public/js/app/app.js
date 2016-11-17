@@ -1108,13 +1108,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             'itemId': content.identifier
                         });
                     } else {
-                        // TODO telemetry issue is pending
                             setTimeout(function() { 
                             Renderer.theme.removeHtmlElements();
                             scope.hideMenu();
-                            Renderer.theme.reRender();
-                            TelemetryService.end()
-                        },400)          
+                            Renderer.theme.restart();
+                        },100)          
                     }
                     var gameId = TelemetryService.getGameId();
                     var version = TelemetryService.getGameVer();
