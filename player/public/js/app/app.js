@@ -598,8 +598,25 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $rootScope.pageId = "endpage";
         $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-baloo credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
-
-        $scope.arrayToString = function(array) {
+        
+    $scope.ContentmetaData = function() {
+        if (!_(GlobalContext.currentContentId).isUndefined()) {
+            this.id = GlobalContext.currentContentId;
+        } else {
+            // get the id from the stored obj 
+        }
+        ContentService.getContent(this.id)
+            .then(function(data) {
+                if (_($rootScope).isUndefined()) {
+                    $rootScope.content = data;
+                }
+            })
+            .catch(function(err) {
+                console.info("contentNotAvailable : ", err);
+                contentNotAvailable();
+            });
+    }
+    $scope.arrayToString = function(array) {
             return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";
         };
 
@@ -750,6 +767,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
             $scope.setTotalTimeSpent();
             $scope.getTotalScore($stateParams.contentId);
+            $scope.ContentmetaData();
             $scope.showFeedback(0);
         }
 
