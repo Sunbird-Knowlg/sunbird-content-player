@@ -254,6 +254,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             });
         });
     }).config(function($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise(function() {
+            var id = GlobalContext.config.appInfo.code
+            return '/content/list/'+ id
+        })
         $stateProvider
             .state('contentList', {
                 cache: false,
@@ -763,26 +767,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.setTotalTimeSpent = function() {
             var startTime = (TelemetryService && TelemetryService.instance && TelemetryService.instance._end[TelemetryService.instance._end.length - 1]) ? TelemetryService.instance._end[TelemetryService.instance._end.length - 1].startTime : 0;
-            var time = $scope.getStoredValue('time');
             if (startTime) {
                 var totalTime = Math.round((new Date().getTime() - startTime) / 1000);
                 var mm = Math.floor(totalTime / 60);
                 var ss = Math.floor(totalTime % 60);
                 $scope.totalTimeSpent = (mm > 9 ? mm : ("0" + mm)) + ":" + (ss > 9 ? ss : ("0" + ss));
-                $scope.saveLocal('time', $scope.totalTimeSpent)
-            } else
-            if (time) {
-                $scope.totalTimeSpent = time;
             } else {
                 $scope.showFeedbackArea = false;
-            }
-        }
-
-        $scope.saveLocal = function(key, value) {
-            if (localStorage) {
-                localStorage.setItem(key, value);
-            } else {
-                $.cookies.set(key, value);
             }
         }
 
@@ -796,7 +787,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.getTotalScore = function(id) {
             if ("undefined" != typeof cordova) {
-                var score = $scope.getStoredValue('score')
                 ContentService.getLearnerAssessment(GlobalContext.user.uid, id)
                     .then(function(score) {
                         if (score && score.total_questions) {
@@ -804,10 +794,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             $scope.$apply(function() {
                                 $scope.totalScore = (score.total_correct + "/" + score.total_questions);
                             });
-                            $scope.saveLocal('time', $scope.totalTimeSpent);
-                        } else
-                        if (score) {
-                            $scope.totalScore = score;
                         } else {
                             $scope.showScore = false
                         }
