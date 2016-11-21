@@ -65,7 +65,8 @@ function launchInitialPage(appInfo, $state) {
 
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
         if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-            $state.go('showContent', { "contentId": GlobalContext.game.id });
+            var key = _.keys($state.params)[0];
+            $state.go($state.current.name, {key: $state.params.contentId ? $state.params.contentId : $state.params.itemId });
         } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
             (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
             $state.go('contentList', { "id": GlobalContext.game.id });
@@ -156,6 +157,43 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 GlobalContext.config.flavor = flavor;
             });
 
+            $rootScope.icons = {
+            previous: {
+                disable: $rootScope.imageBasePath + "back_icon_disabled.png",
+                enable: $rootScope.imageBasePath + "back_icon.png",
+            },
+            next: {
+                disable: $rootScope.imageBasePath + "next_icon_disabled.png",
+                enable: $rootScope.imageBasePath + "next_icon.png",
+            },
+            assess: {
+                enable: $rootScope.imageBasePath + "submit.png",
+                disable: $rootScope.imageBasePath + "submit_disabled.png"
+            },
+            retry: $rootScope.imageBasePath + "speaker_icon.png",
+            goodJob: {
+                background: $rootScope.imageBasePath + "img_popup_next.png"
+            },
+            tryAgain: {
+                background: $rootScope.imageBasePath + "img_popup.png",
+                retry: $rootScope.imageBasePath + "retry_icon.png"
+            },
+            end: {
+                background: $rootScope.imageBasePath + "img_bg.png"
+            },
+            popup: {
+                next: $rootScope.imageBasePath + "icn_bg_next.png",
+                retry: $rootScope.imageBasePath + "icn_bg_replay.png",
+                skip: $rootScope.imageBasePath + "icn_sml_next.png",
+                star: $rootScope.imageBasePath + "star.png",
+                credit_popup: $rootScope.imageBasePath + "popup.png",
+                goodjob_stars: $rootScope.imageBasePath + "img_stars.png"
+            },
+            popup_close: {
+                close_icon: $rootScope.imageBasePath + "close_popup.png",
+            }
+        };
+
             GlobalContext.init(packageName, version).then(function(appInfo) {
                 // localPreview is a global variable defined in index.html file inside a story,
                 if ("undefined" != typeof localPreview && "local" == localPreview)
@@ -198,7 +236,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             });
                     }
                 } else {
-                    launchInitialPage(GlobalContext.config.appInfo, $state);
+                    var urlParam = window.location.hash.split("/");
+                    urlParam = urlParam[urlParam.length - 1]
+                    if (!_.isEmpty(urlParam) && urlParam != GlobalContext.config.appInfo.code) {
+                        ContentService.getContent(urlParam).then(function(data) {
+                            launchInitialPage(data, $state);
+                            $rootScope.content = $rootScope.content ? $rootScope.content : data;
+                        })
+                    } else {
+                        launchInitialPage(GlobalContext.config.appInfo, $state);
+                    }
                 }
             }).catch(function(res) {
                 console.log("Error Globalcontext.init:", res);
@@ -627,17 +674,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 content[key] = null;
             }
         };
-        var content = $rootScope.content;
-
-        $scope.setCredits('imageCredits');
-        $scope.setCredits('soundCredits');
-        $scope.setCredits('voiceCredits');
-
-        var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
-        creditsPopup.trigger("popupUpdate", { "content": content });
-        setTimeout(function() {
-            $rootScope.$apply();
-        }, 1000);
 
         TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContnetApp-EndScreen", subtype: "ContentID" });
 
@@ -762,9 +798,18 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.init = function() {
+            var content = $rootScope.content;
+            var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
+            creditsPopup.trigger("popupUpdate", { "content": content });
+            setTimeout(function() {
+                $rootScope.$apply();
+            }, 1000);
+            $scope.setCredits('imageCredits');
+            $scope.setCredits('soundCredits');
+            $scope.setCredits('voiceCredits');
             window.addEventListener('native.keyboardshow', epKeyboardShowHandler, true);
             window.addEventListener('native.keyboardhide', epKeyboardHideHandler, true);
-
+            jQuery('#loading').hide();
             $scope.setTotalTimeSpent();
             $scope.getTotalScore($stateParams.contentId);
             $scope.ContentmetaData();
@@ -779,17 +824,23 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             jQuery('#gcFbPopup').removeClass('gc-fc-popup-keyboard');
         }
 
-        $scope.init();
+        setTimeout(function() {
+            $scope.init();
+        }, 0);
+
+        // $scope.init();
     }).controller('OverlayCtrl', function($scope, $rootScope) {
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
 
         $rootScope.evalAndSubmit = function () {
-          Overlay.evalAndSubmit();
+            Overlay.evalAndSubmit();
         }
 
         $scope.navigate = function (navType) {
-          Overlay.navigate(navType);
+            GlobalContext.currentContentId = $rootScope.content.identifier;
+            GlobalContext.currentContentMimeType = $rootScope.content.mimeType;
+            Overlay.navigate(navType);
         }
 
         $scope.init = function() {
@@ -801,42 +852,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 }
             }
         }
-        $rootScope.icons = {
-            previous: {
-                disable: $rootScope.imageBasePath + "back_icon_disabled.png",
-                enable: $rootScope.imageBasePath + "back_icon.png",
-            },
-            next: {
-                disable: $rootScope.imageBasePath + "next_icon_disabled.png",
-                enable: $rootScope.imageBasePath + "next_icon.png",
-            },
-            assess: {
-                enable: $rootScope.imageBasePath + "submit.png",
-                disable: $rootScope.imageBasePath + "submit_disabled.png"
-            },
-            retry: $rootScope.imageBasePath + "speaker_icon.png",
-            goodJob: {
-                background: $rootScope.imageBasePath + "img_popup_next.png"
-            },
-            tryAgain: {
-                background: $rootScope.imageBasePath + "img_popup.png",
-                retry: $rootScope.imageBasePath + "retry_icon.png"
-            },
-            end: {
-                background: $rootScope.imageBasePath + "img_bg.png"
-            },
-            popup: {
-                next: $rootScope.imageBasePath + "icn_bg_next.png",
-                retry: $rootScope.imageBasePath + "icn_bg_replay.png",
-                skip: $rootScope.imageBasePath + "icn_sml_next.png",
-                star: $rootScope.imageBasePath + "star.png",
-                credit_popup: $rootScope.imageBasePath + "popup.png",
-                goodjob_stars: $rootScope.imageBasePath + "img_stars.png"
-            },
-            popup_close: {
-                close_icon: $rootScope.imageBasePath + "close_popup.png",
-            }
-        };
         $scope.goodJob = {
             body: '<div class="font-baloo assess-popup assess-goodjob-popup"><img class="popup-bg-img" ng-src="{{icons.goodJob.background}}"/><div class="goodjob_next_div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next " ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div>'
         };
