@@ -650,7 +650,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.pageId = "endpage";
         $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-baloo credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
         
-    $scope.ContentmetaData = function() {
+    $scope.initMetadata = function() {
         ContentService.getContent($stateParams.contentId)
             .then(function(data) {
                 if (_($rootScope).isUndefined()) {
@@ -771,14 +771,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         }
 
-        $scope.getStoredValue = function(key) {
-            if (localStorage) {
-                return localStorage.getItem(key);
-            } else {
-                return $.cookies.get(key);
-            }
-        }
-
         $scope.getTotalScore = function(id) {
             if ("undefined" != typeof cordova) {
                 ContentService.getLearnerAssessment(GlobalContext.user.uid, id)
@@ -819,7 +811,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             jQuery('#loading').hide();
             $scope.setTotalTimeSpent();
             $scope.getTotalScore($stateParams.contentId);
-            $scope.ContentmetaData();
+            $scope.initMetadata();
             $scope.showFeedback(0);
         }
 
