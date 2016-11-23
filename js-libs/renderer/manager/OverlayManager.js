@@ -78,4 +78,19 @@ OverlayManager = {
     //   getEvents: function() {
     //       //return EventBus.getEvents();
     //   }
+
+    function getNavigateTo(navType) {
+        var navigation = [];
+        var navigateTo = undefined;
+        if (!_.isUndefined(Renderer.theme._currentScene) && !_.isEmpty(Renderer.theme._currentScene._data.param)) {
+            navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
+            var direction = _.findWhere(navigation, {
+                name: navType
+            });
+            if (direction) navigateTo = direction.value;
+        }
+        return navigateTo;
+    }
+
+    
 }
