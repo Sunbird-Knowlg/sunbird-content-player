@@ -168,7 +168,7 @@ var ThemePlugin = Plugin.extend({
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
             Overlay.sceneEnter();
-
+            OverlayManager.init();
         });
         var nextIdx = this._currIndex++;
         if (this._currentScene) {

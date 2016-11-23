@@ -766,6 +766,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
 
+        $scope.showOverlayNext = true;
+        $scope.showOverlayPrevious = true;
+        $scope.showOverlaySubmit = true;
+        $scope.overlayEvents = ["overlayNext", "overlayPrevious", "overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAGain"];
+
         $rootScope.evalAndSubmit = function () {
           Overlay.evalAndSubmit();
         }
@@ -782,7 +787,45 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     $rootScope.languageSupport[key] = languageInfo[key];
                 }
             }
+
+            var evtLenth = $scope.overlayEvents.length;
+        		for (i = 0; i < evtLenth; i++) {
+        			var eventName = $scope.overlayEvents[i];
+              EventBus.addEventListener(eventName, $scope.overlayEventHandler, $scope);
+        		}
         }
+
+        $scope.overlayEventHandler = function(event){
+          // console.log("Event", event);
+          //Switch case to handle HTML elements(Next, Previous, Submit, etc..)
+          switch ( event.type ) {
+            case "overlayNext":
+                (event.target === "off" ) ? $scope.showOverlayNext = false : $scope.showOverlayNext = true;
+                $scope.$apply();
+                break;
+            case "overlayPrevious":
+                (event.target === "off" ) ? $scope.showOverlayPrevious = false : $scope.showOverlayPrevious = true;
+                $scope.$apply();
+                break;
+            case "overlaySubmit":
+                (event.target === "off" ) ? $scope.showOverlaySubmit = false : $scope.showOverlaySubmit = true;
+                $scope.$apply();
+                break;
+            case "overlayMenu":
+                break;
+            case "overlayReload":
+                break;
+            case "overlayGoodJob":
+                break;
+            case "overlayTryAGain":
+                break;
+            default:
+              console.log("Default case got called..");
+              break;
+          }
+
+        }
+
         $rootScope.icons = {
             previous: {
                 disable: $rootScope.imageBasePath + "back_icon_disabled.png",

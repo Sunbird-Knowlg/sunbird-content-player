@@ -1,17 +1,17 @@
 <div id="gameArea">
 	<!-- Navigation and Menu  -->
 	<div class="overlay-html" id="overlay" ng-controller="OverlayCtrl" ng-init="initMenu()" ng-cloak>
-        <div>
+        <div ng-show="showOverlayPrevious">
             <a class="nav-icon nav-previous" href="javascript:void(0);"><img style="opacity:0.4;" ng-src="{{imageBasePath}}back_icon.png"></a>
             <a class="nav-icon nav-previous nav-previous-enable" id="navPrev" href="javascript:void(0);"><img ng-src="{{imageBasePath}}back_icon.png" ng-click="navigate('previous')"></a>
         </div>
 
-        <div>
+        <div ng-show="showOverlayNext">
             <a class="nav-icon nav-next" href="javascript:void(0);"><img style="opacity:0.4;"  ng-src="{{imageBasePath}}next_icon.png"></a>
             <a class="nav-icon nav-next"  id="navNext" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next_icon.png" ng-click="navigate('next')"></a>
         </div>
 
-        <assess image="icons.assess.enable"></assess>
+        <assess ng-show="showOverlaySubmit" image="icons.assess.enable"></assess>
 
 		<reload-stage style="position: absolute;width: 7%;bottom: 1%;left: 1%;"></reload-stage>
 

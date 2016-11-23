@@ -70,10 +70,6 @@ var StagePlugin = Plugin.extend({
             }
         }
         this.invokeChildren(data, this, this, this._theme);
-
-
-        var test = this.getParam("overlaynext");
-        console.log("test: ", test);
     },
     keyboardShowHandler: function (e) {
         this._self.y =  -(e.keyboardHeight);
