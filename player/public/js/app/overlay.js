@@ -87,13 +87,13 @@ Overlay = {
       reloadStage();
     },
 
-    navigate: function(navType) {
-      navigate(navType);
-    },
-
-    evalAndSubmit: function () {
-      evalAndSubmit();
-    },
+    // navigate: function(navType) {
+    //   navigate(navType);
+    // },
+    //
+    // evalAndSubmit: function () {
+    //   evalAndSubmit();
+    // },
 
     enableReload: function () {
         _reloadInProgress = false;

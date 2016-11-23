@@ -772,11 +772,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.overlayEvents = ["overlayNext", "overlayPrevious", "overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAGain"];
 
         $rootScope.evalAndSubmit = function () {
-          Overlay.evalAndSubmit();
+          // Overlay.evalAndSubmit();
+          EventBus.dispatch("evalAndSubmit");
         }
 
         $scope.navigate = function (navType) {
-          Overlay.navigate(navType);
+          // Overlay.navigate(navType);
+          EventBus.dispatch("navigate", navType);
         }
 
         $scope.init = function() {
@@ -1226,7 +1228,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 element.find("div.popup-full-body").append(body);
                 element.hide();
                 scope.retryAssessment = function(id,e) {
-                    submitOnNextClick = true;
+                    OverlayManager.submitOnNextClick = true;
                     scope.hidePopup(id);
                 }
 
@@ -1238,8 +1240,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 };
 
                 scope.moveToNextStage = function(navType) {
-                    submitOnNextClick = false;
-                    Overlay.navigate(navType);
+                    OverlayManager.submitOnNextClick = false;
+                    // Overlay.navigate(navType);
+                    EventBus.dispatch("navigate", navType);
                 }
             }
         }

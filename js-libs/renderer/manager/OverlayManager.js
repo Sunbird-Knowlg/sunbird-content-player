@@ -1,16 +1,7 @@
 OverlayManager = {
     overlayEvents: ["overlayNext", "overlayPrevious", "overlaySubmit", "overlayMenu", "overlayReload"],
+    submitOnNextClick: true,
     init: function() {
-
-        // for (i = 0; i < this._events.length; i++) {
-        // 	var value = Renderer.theme._currentScene.getParam(this._events[i]);
-        // 		EventBus.dispatch(this._events[i], value);
-        // 		if (value === "off") defaultValue = true;
-        // }
-        // if (defaultValue === true) {
-        // 	EventBus.dispatch("show_elements", defaultValue);
-        // }
-
         var evtLenth = this.overlayEvents.length;
         for (i = 0; i < evtLenth; i++) {
             var eventName = this.overlayEvents[i];
@@ -22,8 +13,18 @@ OverlayManager = {
             this.handleEcmlElements(eventName, val);
         }
 
+        EventBus.addEventListener("navigate", this.navigateFunc, this);
+        EventBus.addEventListener("evalAndSubmit", this.evalAndSubmitFunc, this);
+
     },
-		showOrHideElement: function(id, showEle){
+    navigateFunc: function (data) {
+      navType = data.target;
+      this.navigate(navType);
+    },
+    evalAndSubmitFunc: function () {
+      this.evalAndSubmit();
+    },
+		showOrHideElement: function(id, showEle) {
 			var plugin = PluginManager.getPluginObject(id);
 			if (plugin) {
 					showEle == "off"? plugin.show():  plugin.hide();
@@ -61,6 +62,83 @@ OverlayManager = {
 								console.log("Default case got called..");
 								break;
 							}
+    },
+
+
+    getNavigateTo: function (navType) {
+        var navigation = [];
+        var navigateTo = undefined;
+        if (!_.isUndefined(Renderer.theme._currentScene) && !_.isEmpty(Renderer.theme._currentScene._data.param)) {
+            navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
+            var direction = _.findWhere(navigation, {
+                name: navType
+            });
+            if (direction) navigateTo = direction.value;
+        }
+        return navigateTo;
+    },
+    navigate: function (navType) {
+        TelemetryService.interact("TOUCH", navType, null, {stageId : Renderer.theme._currentStage});
+        var navigateTo = this.getNavigateTo(navType);
+
+        if(_.isUndefined( Renderer.theme._currentScene)){
+            return;
+        }
+
+        if(this.submitOnNextClick && Overlay.isItemScene() && ("next" == navType)){
+            this.evalAndSubmit();
+            return;
+        }
+
+        this.submitOnNextClick = true;
+        var changeScene = function() {
+            var action = {
+                "asset": Renderer.theme._id,
+                "command": "transitionTo",
+                "duration": "100",
+                "ease": "linear",
+                "effect": "fadeIn",
+                "type": "command",
+                "pluginId": Renderer.theme._id,
+                "value": navigateTo
+            };
+            action.transitionType = navType;
+            // Renderer.theme.transitionTo(action);
+            CommandManager.handle(action);
+        };
+        if ("undefined" == typeof navigateTo && "next" == navType) {
+            if (Overlay.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
+                changeScene();
+            } else {
+                if(config.showEndPage) {
+                    console.info("redirecting to endpage.");
+                     // while redirecting to end page
+                     // set the last stage data to _contentParams[themeObj]
+                    var stage = Renderer.theme._currentScene;
+                    Renderer.theme.setParam(stage.getStagestateKey(),stage._currentState);
+
+                    window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+                    AudioManager.stopAll();
+                } else {
+                    console.warn("Cannot move to end page of the content. please check the configurations..");
+                }
+            }
+        } else {
+            changeScene();
+        }
+    },
+    evalAndSubmit: function () {
+        //If any one option is selected, then only allow user to submit
+        var action = {
+            "type": "command",
+            "command": "eval",
+            "asset": Renderer.theme._currentStage,
+            "pluginId": Renderer.theme._currentStage
+        };
+        action.htmlEval = "true";
+        action.success = "correct_answer";
+        action.failure = "wrong_answer";
+        CommandManager.handle(action);
     }
 
     // addEventListener: function(evtName, callback, scope) {
@@ -79,18 +157,4 @@ OverlayManager = {
     //       //return EventBus.getEvents();
     //   }
 
-    function getNavigateTo(navType) {
-        var navigation = [];
-        var navigateTo = undefined;
-        if (!_.isUndefined(Renderer.theme._currentScene) && !_.isEmpty(Renderer.theme._currentScene._data.param)) {
-            navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
-            var direction = _.findWhere(navigation, {
-                name: navType
-            });
-            if (direction) navigateTo = direction.value;
-        }
-        return navigateTo;
-    }
-
-    
 }
