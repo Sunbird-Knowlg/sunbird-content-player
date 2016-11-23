@@ -255,8 +255,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         });
     }).config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise(function() {
-            var id = GlobalContext.config.appInfo.code
-            return '/content/list/'+ id
+            //packageName defined in main.js
+            return '/content/list/'+ packageName
         })
         $stateProvider
             .state('contentList', {
