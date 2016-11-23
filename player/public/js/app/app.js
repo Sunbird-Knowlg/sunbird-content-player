@@ -87,8 +87,8 @@ function telemetryError(e) {
     var $rootScope = $body.scope().$root;
     document.body.removeEventListener("logError");
     //Message to display events on the Screen device
-    /*$rootScope.$broadcast('show-message', { 
-        "message": 'Telemetry :' + JSON.stringify(data.message) 
+    /*$rootScope.$broadcast('show-message', {
+        "message": 'Telemetry :' + JSON.stringify(data.message)
     });*/
 }
 
@@ -163,7 +163,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 var id = getUrlParameter("id");
                 if(isbrowserpreview) {
                     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-                    
+
                     if ("undefined" != typeof $location && id) {
                         ContentService.getContentMetadata(id)
                             .then(function(data) {
@@ -487,7 +487,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.init = function() {
             if ($stateParams.itemId) {
                 $scope.item = $rootScope.content;
-               
+
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                     //Checking is mobile or not
                     var isMobile = window.cordova ? true : false;
@@ -505,7 +505,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         path += "&config=" + JSON.stringify($scope.item.config);
                     }
 
-                    //Adding Flavor(environment) as query parameter to identify HTML content showing in dev/qa/prdocution 
+                    //Adding Flavor(environment) as query parameter to identify HTML content showing in dev/qa/prdocution
                     path += "&flavor=" + AppConfig.flavor;
 
                     if (isMobile){
@@ -652,7 +652,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.enableFeedbackSubmit =function() {
-            if($scope.popUserRating > 0 || $scope.stringLeft < 130) 
+            if($scope.popUserRating > 0 || $scope.stringLeft < 130)
                 jQuery('#feedbackSubmitBtn').removeClass('icon-opacity');
             else
                 jQuery('#feedbackSubmitBtn').addClass('icon-opacity');
@@ -769,6 +769,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showOverlayNext = true;
         $scope.showOverlayPrevious = true;
         $scope.showOverlaySubmit = true;
+        $scope.showOverlayGoodJob = true;
+        $scope.showOverlayTryAGain = true;
         $scope.overlayEvents = ["overlayNext", "overlayPrevious", "overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAGain"];
 
         $rootScope.evalAndSubmit = function () {
@@ -818,8 +820,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             case "overlayReload":
                 break;
             case "overlayGoodJob":
+                (event.target === "off" ) ? $scope.showOverlayGoodJob = false : $scope.showOverlayGoodJob = true;
+                $scope.$apply();
                 break;
             case "overlayTryAGain":
+                (event.target === "off" ) ? $scope.showOverlayTryAGain = false : $scope.showOverlayTryAGain = true;
+                $scope.$apply();
                 break;
             default:
               console.log("Default case got called..");
@@ -1155,13 +1161,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     } else {
                         setTimeout(function() {
                             // call the timeout to show the progressbar
-                            // remove the all dom elements 
+                            // remove the all dom elements
                             Renderer.theme.removeHtmlElements();
                             scope.hideMenu();
                             scope.item = $rootScope.content;
                             Renderer.start(scope.item.baseDir, 'gameCanvas', scope.item);
-                            
-                        }, 100);                    
+
+                        }, 100);
                     }
                     var gameId = TelemetryService.getGameId();
                     var version = TelemetryService.getGameVer();
@@ -1339,7 +1345,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'E',
             template: '<a href="javascript:void(0)" ng-click="goToLastPage()"><img ng-src="{{imageBasePath}}icn_back_page.png"/></a>',
             link: function(scope) {
-                
+
             }
         }
     });

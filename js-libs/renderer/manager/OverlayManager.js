@@ -1,5 +1,5 @@
 OverlayManager = {
-    overlayEvents: ["overlayNext", "overlayPrevious", "overlaySubmit", "overlayMenu", "overlayReload"],
+    overlayEvents: ["overlayNext", "overlayPrevious", "overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAGain"],
     submitOnNextClick: true,
     init: function() {
         var evtLenth = this.overlayEvents.length;
