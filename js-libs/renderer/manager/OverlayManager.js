@@ -66,22 +66,22 @@ OverlayManager = {
 
 
     getNavigateTo: function (navType) {
-        var navigation = [];
-        var navigateTo = undefined;
+        var stageParams = [];
+        var stageId = undefined;
         if (!_.isUndefined(Renderer.theme._currentScene) && !_.isEmpty(Renderer.theme._currentScene._data.param)) {
-            navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
-            var direction = _.findWhere(navigation, {
+            stageParams = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
+            var navParam = _.findWhere(stageParams, {
                 name: navType
             });
-            if (direction) navigateTo = direction.value;
+            if (navParam) stageId = navParam.value;
         }
-        return navigateTo;
+        return stageId;
     },
     navigate: function (navType) {
         TelemetryService.interact("TOUCH", navType, null, {stageId : Renderer.theme._currentStage});
         var navigateTo = this.getNavigateTo(navType);
 
-        if(_.isUndefined( Renderer.theme._currentScene)){
+        if(_.isUndefined( Renderer.theme._currentScene)) {
             return;
         }
 
@@ -135,7 +135,7 @@ OverlayManager = {
             "asset": Renderer.theme._currentStage,
             "pluginId": Renderer.theme._currentStage
         };
-        action.htmlEval = "true";
+        //action.htmlEval = "true";
         action.success = "correct_answer";
         action.failure = "wrong_answer";
         CommandManager.handle(action);

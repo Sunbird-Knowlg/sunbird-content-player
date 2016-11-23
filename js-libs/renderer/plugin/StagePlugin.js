@@ -241,8 +241,8 @@ var StagePlugin = Plugin.extend({
         }
       }
       //Directly take user to next stage, without showing feedback popup
-      submitOnNextClick = false;
-      navigate("next");
+      OverlayManager.submitOnNextClick = false;
+      OverlayManager.navigate("next");
     },
     reload: function(action) {
         if (this._stageController) {
