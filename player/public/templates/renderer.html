@@ -11,7 +11,7 @@
             <a class="nav-icon nav-next"  id="navNext" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next_icon.png" ng-click="navigate('next')"></a>
         </div>
 
-        <assess ng-show="showOverlaySubmit" image="icons.assess.enable"></assess>
+        <assess image="icons.assess.enable" show="showOverlaySubmit"></assess>
 
 		<reload-stage style="position: absolute;width: 7%;bottom: 1%;left: 1%;"></reload-stage>
 
@@ -22,7 +22,7 @@
         <menu></menu>
         <!-- All the popup's should add here -->
         <popup ng-show="showOverlayGoodJob" id="goodJobPopup" popup-body="goodJob.body" ></popup>
-        <popup ng-show="showOverlayTryAGain" id="tryAgainPopup" popup-body="tryAgain.body"></popup>
+        <popup ng-show="showOverlayTryAgain" id="tryAgainPopup" popup-body="tryAgain.body"></popup>
     </div>
     <!-- HTML plugin elements(dynamically adding here) -->
     <!-- Canvas elment(used by CreateJS) -->

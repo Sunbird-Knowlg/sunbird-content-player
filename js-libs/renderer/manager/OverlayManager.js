@@ -11,30 +11,31 @@ OverlayManager = {
     _eventsArray: [],
     _contentConfig: {},
     _stageConfig: {},
-    submitOnNextClick: true,
     init: function() {
-        this._eventsArray = [this._constants.overlayNext, 
-                    this._constants.overlayPrevious, 
-                    this._constants.overlaySubmit, 
-                    this._constants.overlayMenu, 
-                    this._constants.overlayReload, 
-                    this._constants.overlayGoodJob, 
+        this._eventsArray = [this._constants.overlayNext,
+                    this._constants.overlayPrevious,
+                    this._constants.overlaySubmit,
+                    this._constants.overlayMenu,
+                    this._constants.overlayReload,
+                    this._constants.overlayGoodJob,
                     this._constants.overlayTryAgain
-                    ]
+                  ];
+
         this.setContentConfig();
-        EventBus.addEventListener("navigate", this.navigateFunc, this);
-        EventBus.addEventListener("evalAndSubmit", this.evalAndSubmitFunc, this);
+        EventBus.addEventListener("actionNavigateSkip", this.skipAndNavigateNext, this);
+        EventBus.addEventListener("actionNavigateNext", this.navigateNext, this);
+        EventBus.addEventListener("actionNavigatePrevious", this.navigatePrevious, this);
+        EventBus.addEventListener("actionDefaultSubmit", this.defaultSubmit, this);
     },
-    setContentConfig: function(){
+    setContentConfig: function() {
         var evtLenth = this._eventsArray.length;
         for (i = 0; i < evtLenth; i++) {
             var eventName = this._eventsArray[i];
             var val = Renderer.theme.getParam(eventName);
             if (!_.isUndefined(val)) {
-               this._contentConfig[eventName] = val; 
+               this._contentConfig[eventName] = val;
             }
         }
-
         // Get stage config data and override contetn config
         this.setStageConfig();
     },
@@ -45,25 +46,123 @@ OverlayManager = {
         for (i = 0; i < evtLenth; i++) {
             var eventName = this._eventsArray[i];
             var val = Renderer.theme._currentScene.getParam(eventName);
+
             if (_.isUndefined(val)) {
-                if((eventName == this._constants.overlayGoodJob) ||
-                    (eventName == this._constants.overlayTryAgain)) {
-                        val = "off";
-                    } else {
-                        var contentConfigVal = this._contentConfig[eventName];
-                        val = _.isUndefined(contentConfigVal) ? "on" : contentConfigVal;
-                    }                
+                var contentConfigVal = this._contentConfig[eventName];
+                val = _.isUndefined(contentConfigVal) ? "on" : contentConfigVal;
             }
-            EventBus.dispatch(eventName, val);
-            this.handleEcmlElements(eventName, val);
+            this._stageConfig[eventName] = val;
+
+            // if((eventName != this._constants.overlayGoodJob) &&
+            //     (eventName != this._constants.overlayTryAgain)) {
+            //       EventBus.dispatch(eventName, val);
+            //       this.handleEcmlElements(eventName, val);
+            // }
         }
+
+        this.showNext();
+        this.showPrevious();
+        this.showSubmit();
     },
-    navigateFunc: function (data) {
-      navType = data.target;
-      this.navigate(navType);
+    showNext: function(){
+      var eventName = this._constants.overlayNext;
+      var val = this._stageConfig[eventName];
+      EventBus.dispatch(eventName, val);
+      this.handleEcmlElements(eventName, val);
     },
-    evalAndSubmitFunc: function () {
-      this.evalAndSubmit();
+    showPrevious:function(){
+      var eventName = this._constants.overlayPrevious;
+      var val = this._stageConfig[eventName];
+      EventBus.dispatch(eventName, val);
+      this.handleEcmlElements(eventName, val);
+    },
+    showSubmit: function(){
+      var eventName = this._constants.overlaySubmit;
+      var val = this._stageConfig[eventName];
+      if(Renderer.theme._currentScene.isItemScene()){
+        EventBus.dispatch(eventName, val);
+        this.handleEcmlElements(eventName, val);
+      }else{
+        //This is for normal stage
+        EventBus.dispatch(eventName, 'off');
+      }
+    },
+    showFeeback: function(showOverlayGoodJob){
+      var returnVal = true;
+      if(showOverlayGoodJob){
+        returnVal = this._stageConfig.overlayGoodJob == 'on' ? true : false;
+        this.showGoodJobFb(returnVal);
+      } else {
+        returnVal = this._stageConfig.overlayTryAgain == 'on' ? true : false;
+        this.showTryAgainFb(returnVal);
+      }
+
+      return returnVal;
+    },
+    showGoodJobFb: function(value){
+      if(value == true ){
+        AudioManager.play({asset: "goodjob_sound"});
+        EventBus.dispatch(this._constants.overlayGoodJob, 'on');
+      } else {
+        EventBus.dispatch(this._constants.overlayGoodJob, 'off');
+      }
+    },
+    showTryAgainFb: function(value){
+      if(value == true){
+        AudioManager.play({asset: "tryagain_sound"});
+        EventBus.dispatch(this._constants.overlayTryAgain, 'on')
+      } else {
+        EventBus.dispatch(this._constants.overlayTryAgain, 'off');
+      }
+    },
+    navigateNext: function () {
+      var navigateTo = this.getNavigateTo("next");
+      if(_.isUndefined( Renderer.theme._currentScene)) return;
+
+      var isItemScene = Renderer.theme._currentScene.isItemScene();
+      if(isItemScene) {
+          TelemetryService.interact("TOUCH", "next", null, {stageId : Renderer.theme._currentStage});
+          this.defaultSubmit();
+          return;
+      }
+      this.skipAndNavigateNext();
+    },
+    skipAndNavigateNext: function(){
+      this.clean();
+      TelemetryService.interact("TOUCH", "next", null, {stageId : Renderer.theme._currentStage});
+      var navigateTo = this.getNavigateTo("next");
+      if ("undefined" == typeof navigateTo) {
+          var isItemScene = Renderer.theme._currentScene.isItemScene();
+          if (isItemScene && Renderer.theme._currentScene._stageController.hasNext()) {
+              this.defaultNavigation("next", navigateTo);
+          } else {
+              if(config.showEndPage) {
+                  console.info("redirecting to endpage.");
+                   // while redirecting to end page
+                   // set the last stage data to _contentParams[themeObj]
+                  var stage = Renderer.theme._currentScene;
+                  Renderer.theme.setParam(stage.getStagestateKey(),stage._currentState);
+                  window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+                  AudioManager.stopAll();
+              } else {
+                  console.warn("Cannot move to end page of the content. please check the configurations..");
+              }
+          }
+      } else {
+          this.defaultNavigation("next", navigateTo);
+      }
+    },
+    clean: function(){
+      EventBus.removeEventListener("actionNavigateSkip", this.skipAndNavigateNext, this);
+      EventBus.removeEventListener("actionNavigateNext", this.navigateNext, this);
+      EventBus.removeEventListener("actionNavigatePrevious", this.navigatePrevious, this);
+      EventBus.removeEventListener("actionDefaultSubmit", this.defaultSubmit, this);
+    },
+    navigatePrevious: function () {
+      TelemetryService.interact("TOUCH", "previous", null, {stageId : Renderer.theme._currentStage});
+      var navigateTo = this.getNavigateTo("previous");
+      if(_.isUndefined( Renderer.theme._currentScene)) return;
+      this.defaultNavigation("previous", navigateTo);
     },
 		showOrHideElement: function(id, showEle) {
 			var plugin = PluginManager.getPluginObject(id);
@@ -76,36 +175,33 @@ OverlayManager = {
         var stage_data = Renderer.theme.getStagesToPreLoad(Renderer.theme._currentScene._data);
 				var nextStageId = stage_data.next;
 				var prevStageId = stage_data.prev;
-            // instance.loadStage(nextStageId, function() {
-							switch ( eventName ) {
-								case "overlayNext":
-								this.showOrHideElement('next', val);
-								this.showOrHideElement('nextContainer', val);
-								break;
-								case "overlayPrevious":
-								this.showOrHideElement('previous', val);
-								this.showOrHideElement('previousContainer', val);
-								break;
-								case "overlaySubmit":
-								this.showOrHideElement('validate', val);
-								break;
-								case "overlayMenu":
-								break;
-								case "overlayReload":
-								break;
-								case "overlayGoodJob":
-								this.showOrHideElement('goodjobBg', val);
-								break;
-								case "overlayTryAgain":
-								this.showOrHideElement('retryBg', val);
-								break;
-								default:
-								console.log("Default case got called..");
-								break;
-							}
+  				switch ( eventName ) {
+  					case "overlayNext":
+  					this.showOrHideElement('next', val);
+  					this.showOrHideElement('nextContainer', val);
+  					break;
+  					case "overlayPrevious":
+  					this.showOrHideElement('previous', val);
+  					this.showOrHideElement('previousContainer', val);
+  					break;
+  					case "overlaySubmit":
+  					this.showOrHideElement('validate', val);
+  					break;
+  					case "overlayMenu":
+  					break;
+  					case "overlayReload":
+  					break;
+  					case "overlayGoodJob":
+  					// this.showOrHideElement('goodjobBg', val);
+  					break;
+  					case "overlayTryAGain":
+  					// this.showOrHideElement('retryBg', val);
+  					break;
+  					default:
+  					console.log("Default case got called..");
+  					break;
+  				}
     },
-
-
     getNavigateTo: function (navType) {
         var stageParams = [];
         var stageId = undefined;
@@ -118,57 +214,7 @@ OverlayManager = {
         }
         return stageId;
     },
-    navigate: function (navType) {
-        TelemetryService.interact("TOUCH", navType, null, {stageId : Renderer.theme._currentStage});
-        var navigateTo = this.getNavigateTo(navType);
-
-        if(_.isUndefined( Renderer.theme._currentScene)) {
-            return;
-        }
-
-        if(this.submitOnNextClick && Overlay.isItemScene() && ("next" == navType)){
-            this.evalAndSubmit();
-            return;
-        }
-
-        this.submitOnNextClick = true;
-        var changeScene = function() {
-            var action = {
-                "asset": Renderer.theme._id,
-                "command": "transitionTo",
-                "duration": "100",
-                "ease": "linear",
-                "effect": "fadeIn",
-                "type": "command",
-                "pluginId": Renderer.theme._id,
-                "value": navigateTo
-            };
-            action.transitionType = navType;
-            // Renderer.theme.transitionTo(action);
-            CommandManager.handle(action);
-        };
-        if ("undefined" == typeof navigateTo && "next" == navType) {
-            if (Overlay.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
-                changeScene();
-            } else {
-                if(config.showEndPage) {
-                    console.info("redirecting to endpage.");
-                     // while redirecting to end page
-                     // set the last stage data to _contentParams[themeObj]
-                    var stage = Renderer.theme._currentScene;
-                    Renderer.theme.setParam(stage.getStagestateKey(),stage._currentState);
-
-                    window.location.hash = "/content/end/" + GlobalContext.currentContentId;
-                    AudioManager.stopAll();
-                } else {
-                    console.warn("Cannot move to end page of the content. please check the configurations..");
-                }
-            }
-        } else {
-            changeScene();
-        }
-    },
-    evalAndSubmit: function () {
+    defaultSubmit: function () {
         //If any one option is selected, then only allow user to submit
         var action = {
             "type": "command",
@@ -180,6 +226,21 @@ OverlayManager = {
         action.success = "correct_answer";
         action.failure = "wrong_answer";
         CommandManager.handle(action);
+    },
+    defaultNavigation: function (navType, navigateTo) {
+      var action = {
+          "asset": Renderer.theme._id,
+          "command": "transitionTo",
+          "duration": "100",
+          "ease": "linear",
+          "effect": "fadeIn",
+          "type": "command",
+          "pluginId": Renderer.theme._id,
+          "value": navigateTo
+      };
+      action.transitionType = navType;
+      // Renderer.theme.transitionTo(action);
+      CommandManager.handle(action);
     }
 
     // addEventListener: function(evtName, callback, scope) {

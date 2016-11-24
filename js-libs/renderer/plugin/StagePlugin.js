@@ -210,12 +210,12 @@ var StagePlugin = Plugin.extend({
         //      1       |       0           |     0
         //      1       |       1           |     1
         var valid = false;
-        var showFeeback = true;
+        var showImmediateFeedback = true;
 
         if (this._stageController) {
             //Checking to show feedback or not
             if(!_.isUndefined(this._stageController._data.showImmediateFeedback)) {
-                showFeeback = this._stageController._data.showImmediateFeedback;
+                showImmediateFeedback = this._stageController._data.showImmediateFeedback;
             }
             this._inputs.forEach(function(input) {
                 input.setModelValue();
@@ -229,20 +229,26 @@ var StagePlugin = Plugin.extend({
             //TODO: setParam should use, but not working
             this._currentState["isEvaluated"] = true;
 
-            if (showFeeback) {
+            if (showImmediateFeedback) {
                 //Show valid feeback
+
                 if(valid == true){
-                    this.dispatchEvent(action.success);
+                    var showOverlayGoodJobFd = OverlayManager.showFeeback(valid);
+                    if(!showOverlayGoodJobFd){
+                      this.dispatchEvent(action.success);
+                    }
                 } else{
-                    this.dispatchEvent(action.failure);
+                    var showOverlayTryAgainFd = OverlayManager.showFeeback(valid);
+                    if(!showOverlayTryAgainFd){
+                      this.dispatchEvent(action.failure);
+                    }
                 }
                 return;
             }
         }
       }
       //Directly take user to next stage, without showing feedback popup
-      OverlayManager.submitOnNextClick = false;
-      OverlayManager.navigate("next");
+      OverlayManager.skipAndNavigateNext();
     },
     reload: function(action) {
         if (this._stageController) {
@@ -289,12 +295,35 @@ var StagePlugin = Plugin.extend({
             return true;
         }
     },
-
     getParam: function(param) {
         var instance = this;
         var params = instance.params;
         var expr = 'params.' + param;
         return eval(expr);
-    }
+    },
+    isItemScene: function() {
+        var stageCtrl = this._stageController;
+        if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type) && !_.isUndefined(stageCtrl._model)) {
+            var modelItem = stageCtrl._model[stageCtrl._index];
+            var enableEval = false;
+            if(modelItem && modelItem.type.toLowerCase() == 'ftb') {
+                // If FTB item, enable submit button directly
+                enableEval = true;
+            } else {
+                if(!_.isUndefined(this._currentState) && (!_.isUndefined(this._currentState.isEvaluated))){
+                    enableEval = !this._currentState.isEvaluated;
+                }
+            }
+            this.isReadyToEvaluate(enableEval);
+
+            return true;
+        } else {
+            return false;
+        }
+        //return ("undefined" != typeof Renderer.theme._currentScene._stageController && "items" == Renderer.theme._currentScene._stageController._type)? true : false;
+    },
+    isReadyToEvaluate: function(enableEval) {
+        EventBus.dispatch("overlaySubmitEnable", enableEval);
+    },
 });
 PluginManager.registerPlugin('stage', StagePlugin);

@@ -48,25 +48,25 @@ Overlay = {
         this.enableReload();
         var isItemStage = this.isItemScene();
         if (isItemStage) {
-            jQuery('#assessButton').show();
-            this._setRootScope("isItemScene", true);
+            //jQuery('#assessButton').show();
+            //this._setRootScope("isItemScene", true);
 
-            var currentScene = Renderer.theme._currentScene;
-            currentScene.on("correct_answer", function(event) {
-                console.log("listener for ", event);
-
-                if (event.type === "correct_answer") {
-                    AudioManager.play({asset: "goodjob_sound"});
-                }
-                jQuery("#goodJobPopup").show();
-            });
-            currentScene.on("wrong_answer", function(event) {
-                console.info("listener for ", event);
-                if (event.type === "wrong_answer") {
-                    AudioManager.play({asset: "tryagain_sound"});
-                }
-                jQuery("#tryAgainPopup").show();
-            });
+            //var currentScene = Renderer.theme._currentScene;
+            // currentScene.on("correct_answer", function(event) {
+            //     console.log("listener for ", event);
+            //
+            //     if (event.type === "correct_answer") {
+            //         AudioManager.play({asset: "goodjob_sound"});
+            //     }
+            //     jQuery("#goodJobPopup").show();
+            // });
+            // currentScene.on("wrong_answer", function(event) {
+            //     console.info("listener for ", event);
+            //     if (event.type === "wrong_answer") {
+            //         AudioManager.play({asset: "tryagain_sound"});
+            //     }
+            //     jQuery("#tryAgainPopup").show();
+            // });
         }
     },
 
@@ -100,26 +100,26 @@ Overlay = {
     },
 
     isItemScene: function() {
-        var stageCtrl = Renderer.theme._currentScene ? Renderer.theme._currentScene._stageController : undefined;
-        if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type) && !_.isUndefined(stageCtrl._model)) {
-            var modelItem = stageCtrl._model[stageCtrl._index];
-            if(!_.isNull(this._rootScope)){
-                var enableEval = false;
-                if(modelItem && modelItem.type.toLowerCase() == 'ftb') {
-                    // If FTB item, enable submit button directly
-                    enableEval = true;
-                } else {
-                    var stage = Renderer.theme._currentScene;
-                    if(!_.isUndefined(stage._currentState) && (!_.isUndefined(stage._currentState.isEvaluated))){
-                        enableEval = !stage._currentState.isEvaluated;
-                    }
-                }
-                this.isReadyToEvaluate(enableEval);
-            }
-            return true;
-        } else {
-            return false;
-        }
+        // var stageCtrl = Renderer.theme._currentScene ? Renderer.theme._currentScene._stageController : undefined;
+        // if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type) && !_.isUndefined(stageCtrl._model)) {
+        //     var modelItem = stageCtrl._model[stageCtrl._index];
+        //     if(!_.isNull(this._rootScope)){
+        //         var enableEval = false;
+        //         if(modelItem && modelItem.type.toLowerCase() == 'ftb') {
+        //             // If FTB item, enable submit button directly
+        //             enableEval = true;
+        //         } else {
+        //             var stage = Renderer.theme._currentScene;
+        //             if(!_.isUndefined(stage._currentState) && (!_.isUndefined(stage._currentState.isEvaluated))){
+        //                 enableEval = !stage._currentState.isEvaluated;
+        //             }
+        //         }
+        //         this.isReadyToEvaluate(enableEval);
+        //     }
+        //     return true;
+        // } else {
+        //     return false;
+        // }
         //return ("undefined" != typeof Renderer.theme._currentScene._stageController && "items" == Renderer.theme._currentScene._stageController._type)? true : false;
     }
 };

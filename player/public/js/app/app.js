@@ -768,19 +768,33 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.showOverlayNext = true;
         $scope.showOverlayPrevious = true;
-        $scope.showOverlaySubmit = true;
-        $scope.showOverlayGoodJob = true;
-        $scope.showOverlayTryAGain = true;
-        $scope.overlayEvents = ["overlayNext", "overlayPrevious", "overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAGain"];
+        $scope.showOverlaySubmit = false;
+        $scope.showOverlayGoodJob = false;
+        $scope.showOverlayTryAgain = false;
+        $scope.overlayEvents = ["overlayNext", "overlayPrevious", "overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
 
-        $rootScope.evalAndSubmit = function () {
-          // Overlay.evalAndSubmit();
-          EventBus.dispatch("evalAndSubmit");
+        $rootScope.defaultSubmit = function () {
+          EventBus.dispatch("actionDefaultSubmit");
         }
 
+        $rootScope.safeApply = function(fn) {
+          var phase = this.$root.$$phase;
+          if(phase == '$apply' || phase == '$digest') {
+            if(fn && (typeof(fn) === 'function')) {
+              fn();
+            }
+          } else {
+            this.$apply(fn);
+          }
+        };
+
         $scope.navigate = function (navType) {
-          // Overlay.navigate(navType);
-          EventBus.dispatch("navigate", navType);
+          if (navType === "next") {
+            EventBus.dispatch("actionNavigateNext", navType);
+          } else if (navType === "previous")  {
+            EventBus.dispatch("actionNavigatePrevious", navType);
+          }
+
         }
 
         $scope.init = function() {
@@ -799,39 +813,40 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         		}
         }
 
-        $scope.overlayEventHandler = function(event){
+        $scope.overlayEventHandler = function(event) {
           // console.log("Event", event);
           //Switch case to handle HTML elements(Next, Previous, Submit, etc..)
           switch ( event.type ) {
             case "overlayNext":
                 (event.target === "off" ) ? $scope.showOverlayNext = false : $scope.showOverlayNext = true;
-                $scope.$apply();
                 break;
             case "overlayPrevious":
                 (event.target === "off" ) ? $scope.showOverlayPrevious = false : $scope.showOverlayPrevious = true;
-                $scope.$apply();
                 break;
             case "overlaySubmit":
                 (event.target === "off" ) ? $scope.showOverlaySubmit = false : $scope.showOverlaySubmit = true;
-                $scope.$apply();
                 break;
             case "overlayMenu":
                 break;
             case "overlayReload":
                 break;
             case "overlayGoodJob":
-                (event.target === "off" ) ? $scope.showOverlayGoodJob = false : $scope.showOverlayGoodJob = true;
-                $scope.$apply();
+                (event.target === "off" ) ? $scope.showOverlayGoodJob = false : $scope.showOverlayGoodJob = true; jQuery("#goodJobPopup").show();
                 break;
-            case "overlayTryAGain":
-                (event.target === "off" ) ? $scope.showOverlayTryAGain = false : $scope.showOverlayTryAGain = true;
-                $scope.$apply();
+            case "overlayTryAgain":
+                (event.target === "off" ) ? $scope.showOverlayTryAgain = false : $scope.showOverlayTryAgain = true; jQuery("#tryAgainPopup").show();
+                break;
+            case "overlaySubmitEnable":
+                (event.target === true ) ? $rootScope.enableEval = true : $rootScope.enableEval = false;
                 break;
             default:
               console.log("Default case got called..");
               break;
           }
 
+          $rootScope.safeApply(function(){
+            console.log("Safe apply.");
+          })
         }
 
         $rootScope.icons = {
@@ -1234,7 +1249,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 element.find("div.popup-full-body").append(body);
                 element.hide();
                 scope.retryAssessment = function(id,e) {
-                    OverlayManager.submitOnNextClick = true;
                     scope.hidePopup(id);
                 }
 
@@ -1246,9 +1260,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 };
 
                 scope.moveToNextStage = function(navType) {
-                    OverlayManager.submitOnNextClick = false;
-                    // Overlay.navigate(navType);
-                    EventBus.dispatch("navigate", navType);
+                    EventBus.dispatch("actionNavigateSkip", navType);
                 }
             }
         }
@@ -1256,9 +1268,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         return {
             restrict: 'E',
             scope: {
-                image: '='
+                image: '=',
+                show: '='
             },
-            template: '<a class="assess" id="assessButton" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/></a>',
+            template: '<a class="assess" ng-show="show" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/></a>',
             link: function(scope, element) {
                 scope.labelSubmit = $rootScope.languageSupport.submit;
             },
@@ -1285,7 +1298,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 $scope.onSubmit = function() {
                     if ($scope.isEnabled) {
-                        $rootScope.evalAndSubmit();
+                        $rootScope.defaultSubmit();
                     }
                 }
             }
