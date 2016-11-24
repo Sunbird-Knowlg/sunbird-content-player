@@ -19,7 +19,6 @@ var stack = new Array(),
     isbrowserpreview = getUrlParameter("webview"),
     appState = undefined;
 
-
 window.setContentData = function(metadata, data, configuration) {
     if (metadata) {
         content.metadata = metadata;
@@ -61,12 +60,19 @@ function getContentObj(data) {
     return data;
 }
 
-function launchInitialPage(appInfo, $state) {
+function saveContentid(id){
+    localStorage.setItem('contentID',id);
+}
 
+function launchInitialPage(appInfo, $state) {
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
         if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-            var key = _.keys($state.params)[0];
-            $state.go($state.current.name, {key: $state.params.contentId ? $state.params.contentId : $state.params.itemId });
+            if ("undefined" == typeof cordova) {
+               var key = $state.params.itemId ? _.keys($state.params.itemId) : _.keys($state.params.contentId);
+               $state.go($state.current.name, {key: $state.params.contentId ? $state.params.contentId : $state.params.itemId });
+           } else {
+               $state.go('showContent', { "contentId": GlobalContext.game.id });
+           }
         } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
             (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
             $state.go('contentList', { "id": GlobalContext.game.id });
@@ -97,6 +103,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     .run(function($rootScope, $ionicPlatform, $location, $state, $stateParams, ContentService) {
         $rootScope.imageBasePath = "img/icons/";
         $rootScope.enableEval = false;
+        jQuery('#loading').hide();    
         // serverPath and localPreview is a global variable defined in index.html file inside a story
         if ("undefined" != typeof localPreview && "local" == localPreview)
             $rootScope.imageBasePath = serverPath + $rootScope.imageBasePath;
@@ -195,10 +202,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         };
 
             GlobalContext.init(packageName, version).then(function(appInfo) {
+               /* window.location.href +"do_20045479"*/
                 // localPreview is a global variable defined in index.html file inside a story,
                 if ("undefined" != typeof localPreview && "local" == localPreview)
                     return;
-                var id = getUrlParameter("id");
+                var id = getUrlParameter("id");                
                 if(isbrowserpreview) {
                     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
                     
@@ -236,16 +244,26 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             });
                     }
                 } else {
+                    if(window.location.hash=="#/content/end/"){
+                         var id = localStorage.getItem('contentID');
+                         window.location.href = window.location.href + id ;
+                    }
                     var urlParam = window.location.hash.split("/");
                     urlParam = urlParam[urlParam.length - 1]
-                    if (!_.isEmpty(urlParam) && urlParam != GlobalContext.config.appInfo.code) {
-                        ContentService.getContent(urlParam).then(function(data) {
-                            launchInitialPage(data, $state);
-                            $rootScope.content = $rootScope.content ? $rootScope.content : data;
-                        })
-                    } else {
-                        launchInitialPage(GlobalContext.config.appInfo, $state);
-                    }
+                    if ("undefined" == typeof cordova) {
+                       var urlParam = window.location.hash.split("/");
+                       urlParam = urlParam[urlParam.length - 1]
+                       if (!_.isEmpty(urlParam) && urlParam != GlobalContext.config.appInfo.code) {
+                           ContentService.getContent(urlParam).then(function(data) {
+                               launchInitialPage(data, $state);
+                               $rootScope.content = $rootScope.content ? $rootScope.content : data;
+                           })
+                       } else {
+                           launchInitialPage(GlobalContext.config.appInfo, $state);
+                       }
+                   } else {
+                       launchInitialPage(GlobalContext.config.appInfo, $state);
+                   }
                 }
             }).catch(function(res) {
                 console.log("Error Globalcontext.init:", res);
@@ -254,10 +272,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             });
         });
     }).config(function($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise(function() {
-            //packageName defined in main.js
-            return '/content/list/'+ packageName
-        })
+        // $urlRouterProvider.otherwise(function() {
+        //     var id = GlobalContext.config.appInfo.code
+        //     return '/content/list/'+ id
+        // })
         $stateProvider
             .state('contentList', {
                 cache: false,
@@ -441,10 +459,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.content;
         $scope.showPage = true;
         $scope.playContent = function(content) {
+            saveContentid(content.identifier);
             $scope.showPage = false;
             $state.go('playContent', {
                 'itemId': content.identifier
             });
+
             jQuery('#loadingText').text(content.name);
             jQuery("#progressBar").width(0);
             jQuery('#loading').show();
@@ -651,6 +671,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-baloo credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
         
     $scope.initMetadata = function() {
+        console.info($rootScope,"rootscope")
         ContentService.getContent($stateParams.contentId)
             .then(function(data) {
                 if (_($rootScope).isUndefined()) {
