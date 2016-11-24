@@ -1,21 +1,62 @@
 OverlayManager = {
-    overlayEvents: ["overlayNext", "overlayPrevious", "overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAGain"],
+    _constants: {
+        overlayNext: "overlayNext",
+        overlayPrevious: "overlayPrevious",
+        overlaySubmit: "overlaySubmit",
+        overlayMenu: "overlayMenu",
+        overlayReload: "overlayReload",
+        overlayGoodJob: "overlayGoodJob",
+        overlayTryAgain: "overlayTryAgain"
+    },
+    _eventsArray: [],
+    _contentConfig: {},
+    _stageConfig: {},
     submitOnNextClick: true,
     init: function() {
-        var evtLenth = this.overlayEvents.length;
+        this._eventsArray = [this._constants.overlayNext, 
+                    this._constants.overlayPrevious, 
+                    this._constants.overlaySubmit, 
+                    this._constants.overlayMenu, 
+                    this._constants.overlayReload, 
+                    this._constants.overlayGoodJob, 
+                    this._constants.overlayTryAgain
+                    ]
+        this.setContentConfig();
+        EventBus.addEventListener("navigate", this.navigateFunc, this);
+        EventBus.addEventListener("evalAndSubmit", this.evalAndSubmitFunc, this);
+    },
+    setContentConfig: function(){
+        var evtLenth = this._eventsArray.length;
         for (i = 0; i < evtLenth; i++) {
-            var eventName = this.overlayEvents[i];
+            var eventName = this._eventsArray[i];
+            var val = Renderer.theme.getParam(eventName);
+            if (!_.isUndefined(val)) {
+               this._contentConfig[eventName] = val; 
+            }
+        }
+
+        // Get stage config data and override contetn config
+        this.setStageConfig();
+    },
+    setStageConfig: function(){
+        //Clone content config to stage and then override with stage config
+        this._stageConfig = _.clone(this._contentConfig);
+        var evtLenth = this._eventsArray.length;
+        for (i = 0; i < evtLenth; i++) {
+            var eventName = this._eventsArray[i];
             var val = Renderer.theme._currentScene.getParam(eventName);
             if (_.isUndefined(val)) {
-                val = "on";
+                if((eventName == this._constants.overlayGoodJob) ||
+                    (eventName == this._constants.overlayTryAgain)) {
+                        val = "off";
+                    } else {
+                        var contentConfigVal = this._contentConfig[eventName];
+                        val = _.isUndefined(contentConfigVal) ? "on" : contentConfigVal;
+                    }                
             }
             EventBus.dispatch(eventName, val);
             this.handleEcmlElements(eventName, val);
         }
-
-        EventBus.addEventListener("navigate", this.navigateFunc, this);
-        EventBus.addEventListener("evalAndSubmit", this.evalAndSubmitFunc, this);
-
     },
     navigateFunc: function (data) {
       navType = data.target;
@@ -55,7 +96,7 @@ OverlayManager = {
 								case "overlayGoodJob":
 								this.showOrHideElement('goodjobBg', val);
 								break;
-								case "overlayTryAGain":
+								case "overlayTryAgain":
 								this.showOrHideElement('retryBg', val);
 								break;
 								default:
