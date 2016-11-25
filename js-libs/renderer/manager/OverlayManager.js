@@ -116,7 +116,7 @@ OverlayManager = {
       }
     },
     navigateNext: function () {
-      var navigateTo = this.getNavigateTo("next");
+      // var navigateTo = this.getNavigateTo("next");
       if(_.isUndefined( Renderer.theme._currentScene)) return;
 
       var isItemScene = Renderer.theme._currentScene.isItemScene();
@@ -127,7 +127,7 @@ OverlayManager = {
       }
       this.skipAndNavigateNext();
     },
-    skipAndNavigateNext: function(){
+    skipAndNavigateNext: function () {
       this.clean();
       TelemetryService.interact("TOUCH", "next", null, {stageId : Renderer.theme._currentStage});
       var navigateTo = this.getNavigateTo("next");
@@ -136,20 +136,23 @@ OverlayManager = {
           if (isItemScene && Renderer.theme._currentScene._stageController.hasNext()) {
               this.defaultNavigation("next", navigateTo);
           } else {
-              if(config.showEndPage) {
-                  console.info("redirecting to endpage.");
-                   // while redirecting to end page
-                   // set the last stage data to _contentParams[themeObj]
-                  var stage = Renderer.theme._currentScene;
-                  Renderer.theme.setParam(stage.getStagestateKey(),stage._currentState);
-                  window.location.hash = "/content/end/" + GlobalContext.currentContentId;
-                  AudioManager.stopAll();
-              } else {
-                  console.warn("Cannot move to end page of the content. please check the configurations..");
-              }
+              this.moveToEndPage();
           }
       } else {
           this.defaultNavigation("next", navigateTo);
+      }
+    },
+    moveToEndPage: function () {
+      if (config.showEndPage) {
+          console.info("redirecting to endpage.");
+           // while redirecting to end page
+           // set the last stage data to _contentParams[themeObj]
+          var stage = Renderer.theme._currentScene;
+          Renderer.theme.setParam(stage.getStagestateKey(),stage._currentState);
+          window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+          AudioManager.stopAll();
+      } else {
+          console.warn("Cannot move to end page of the content. please check the configurations..");
       }
     },
     clean: function(){
@@ -222,7 +225,6 @@ OverlayManager = {
             "asset": Renderer.theme._currentStage,
             "pluginId": Renderer.theme._currentStage
         };
-        //action.htmlEval = "true";
         action.success = "correct_answer";
         action.failure = "wrong_answer";
         CommandManager.handle(action);
@@ -239,24 +241,6 @@ OverlayManager = {
           "value": navigateTo
       };
       action.transitionType = navType;
-      // Renderer.theme.transitionTo(action);
       CommandManager.handle(action);
     }
-
-    // addEventListener: function(evtName, callback, scope) {
-    //       EventBus.addEventListener(evtName, callback, scope);
-    //   },
-    //   dispatch: function(evtName, target, data) {
-    //       EventBus.dispatch(evtName, target, data);
-    //   },
-    //   removeEventListener: function(evtName, callback, scope) {
-    //       EventBus.removeEventListener(evtName, callback, scope)
-    //   },
-    //   hasEventListener: function(evtName, callback, scope) {
-    //       EventBus.hasEventListener(type, callback, scope)
-    //   },
-    //   getEvents: function() {
-    //       //return EventBus.getEvents();
-    //   }
-
 }
