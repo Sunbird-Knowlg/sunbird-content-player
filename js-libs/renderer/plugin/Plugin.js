@@ -549,4 +549,8 @@ var Plugin = Class.extend({
         }
 
     },
+    defaultAction: function(action){
+       console.log("Theme : action", action);
+       EventBus.dispatch(action.event, action);
+   }
    });
