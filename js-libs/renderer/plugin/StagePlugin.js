@@ -15,7 +15,6 @@ var StagePlugin = Plugin.extend({
     _currentState: {},
     isStageStateChanged: undefined,
     initPlugin: function(data) {
-
         this._inputs = [];
         var instance = this;
         this.params = {};
@@ -225,21 +224,19 @@ var StagePlugin = Plugin.extend({
             if (result) {
               valid = result.pass;
             }
-
             //TODO: setParam should use, but not working
             this._currentState["isEvaluated"] = true;
 
             if (showImmediateFeedback) {
                 //Show valid feeback
-
                 if(valid == true){
                     var showOverlayGoodJobFd = OverlayManager.showFeeback(valid);
                     if(!showOverlayGoodJobFd){
                       this.dispatchEvent(action.success);
                     }
-                } else{
+                } else {
                     var showOverlayTryAgainFd = OverlayManager.showFeeback(valid);
-                    if(!showOverlayTryAgainFd){
+                    if (!showOverlayTryAgainFd) {
                       this.dispatchEvent(action.failure);
                     }
                 }
