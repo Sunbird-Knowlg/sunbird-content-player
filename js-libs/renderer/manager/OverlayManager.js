@@ -80,6 +80,10 @@ OverlayManager = {
       var eventName = this._constants.overlaySubmit;
       var val = this._stageConfig[eventName];
       if(Renderer.theme._currentScene.isItemScene()){
+        if(val == "on"){
+          var enableEval = Renderer.theme._currentScene.isReadyToEvaluate();
+          val = (enableEval === true) ? "enable" : "disable";
+        }
         EventBus.dispatch(eventName, val);
         this.handleEcmlElements(eventName, val);
       }else{

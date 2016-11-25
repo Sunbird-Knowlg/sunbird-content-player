@@ -299,28 +299,30 @@ var StagePlugin = Plugin.extend({
         return eval(expr);
     },
     isItemScene: function() {
-        var stageCtrl = this._stageController;
-        if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type) && !_.isUndefined(stageCtrl._model)) {
-            var modelItem = stageCtrl._model[stageCtrl._index];
-            var enableEval = false;
-            if(modelItem && modelItem.type.toLowerCase() == 'ftb') {
-                // If FTB item, enable submit button directly
-                enableEval = true;
-            } else {
-                if(!_.isUndefined(this._currentState) && (!_.isUndefined(this._currentState.isEvaluated))){
-                    enableEval = !this._currentState.isEvaluated;
-                }
-            }
-            this.isReadyToEvaluate(enableEval);
+       var stageCtrl = this._stageController;
+       if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type) && !_.isUndefined(stageCtrl._model)) {
+           return true;
+       } else {
+           return false;
+       }
+       //return ("undefined" != typeof Renderer.theme._currentScene._stageController && "items" == Renderer.theme._currentScene._stageController._type)? true : false;
+   },
+   isReadyToEvaluate: function() {
+     var enableEval = false;
+     var stageCtrl = this._stageController;
+     if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type) && !_.isUndefined(stageCtrl._model)) {
 
-            return true;
-        } else {
-            return false;
-        }
-        //return ("undefined" != typeof Renderer.theme._currentScene._stageController && "items" == Renderer.theme._currentScene._stageController._type)? true : false;
-    },
-    isReadyToEvaluate: function(enableEval) {
-        EventBus.dispatch("overlaySubmitEnable", enableEval);
-    },
+       var modelItem = stageCtrl._model[stageCtrl._index];
+       if(modelItem && modelItem.type.toLowerCase() == 'ftb') {
+           // If FTB item, enable submit button directly
+           enableEval = true;
+       } else {
+           if(!_.isUndefined(this._currentState) && (!_.isUndefined(this._currentState.isEvaluated))){
+               enableEval = !this._currentState.isEvaluated;
+           }
+       }
+     }
+     return enableEval;
+   }
 });
 PluginManager.registerPlugin('stage', StagePlugin);

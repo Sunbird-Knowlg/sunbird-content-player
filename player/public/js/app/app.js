@@ -824,7 +824,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 (event.target === "off" ) ? $scope.showOverlayPrevious = false : $scope.showOverlayPrevious = true;
                 break;
             case "overlaySubmit":
-                (event.target === "off" ) ? $scope.showOverlaySubmit = false : $scope.showOverlaySubmit = true;
+                if (event.target === "off" ) {
+                    $scope.showOverlaySubmit = false;
+                } else {
+                   $scope.showOverlaySubmit = true;
+                   (event.target === "disable" ) ? $rootScope.enableEval = false : $rootScope.enableEval = true;
+                }
                 break;
             case "overlayMenu":
                 break;
@@ -835,9 +840,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 break;
             case "overlayTryAgain":
                 (event.target === "off" ) ? $scope.showOverlayTryAgain = false : $scope.showOverlayTryAgain = true; //jQuery("#tryAgainPopup").show();
-                break;
-            case "overlaySubmitEnable":
-                (event.target === true ) ? $rootScope.enableEval = true : $rootScope.enableEval = false;
                 break;
             default:
               console.log("Default case got called..");
