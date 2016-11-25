@@ -49,6 +49,9 @@ LoadByStageStrategy = Class.extend({
                         if (media.type == 'audiosprite') {
                             if (!_.isArray(media.data.audioSprite)) media.data.audioSprite = [media.data.audioSprite];
                         }
+                        if (media.preload === 'true') {
+                            instance.commonAssets.push(_.clone(media));
+                        }
                         instance.assetMap[media.id] = media;
                     }
                 }

@@ -10,7 +10,10 @@ Overlay = {
         var rootScope = this._getRootScope();
         if (rootScope) {
             rootScope[key] = value;
-            rootScope.$apply();
+            //rootScope:inprogAction Already In Progress
+            if (!rootScope.$$phase) {
+                rootScope.$apply();
+            }
         }
     },
     _getRootScope: function() {

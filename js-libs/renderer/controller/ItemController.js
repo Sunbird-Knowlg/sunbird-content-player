@@ -84,7 +84,9 @@ var ItemController = Controller.extend({
               res: result.res,
               mmc: item.mmc,
               qindex: item.qindex,
-              mc: _.pluck(item.concepts, 'identifier')
+              mc: _.pluck(item.concepts, 'identifier'),
+              qtitle: item.title,
+              qdesc : item.description ? item.description : ""
           };
           TelemetryService.assessEnd(this.assessStartEvent, data);
 
