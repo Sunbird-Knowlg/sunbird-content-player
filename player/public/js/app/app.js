@@ -831,10 +831,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             case "overlayReload":
                 break;
             case "overlayGoodJob":
-                (event.target === "off" ) ? $scope.showOverlayGoodJob = false : $scope.showOverlayGoodJob = true; jQuery("#goodJobPopup").show();
+                (event.target === "off" ) ? $scope.showOverlayGoodJob = false : $scope.showOverlayGoodJob = true; //jQuery("#goodJobPopup").show();
                 break;
             case "overlayTryAgain":
-                (event.target === "off" ) ? $scope.showOverlayTryAgain = false : $scope.showOverlayTryAgain = true; jQuery("#tryAgainPopup").show();
+                (event.target === "off" ) ? $scope.showOverlayTryAgain = false : $scope.showOverlayTryAgain = true; //jQuery("#tryAgainPopup").show();
                 break;
             case "overlaySubmitEnable":
                 (event.target === true ) ? $rootScope.enableEval = true : $rootScope.enableEval = false;
@@ -1263,6 +1263,37 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     EventBus.dispatch("actionNavigateSkip", navType);
                 }
             }
+        }
+    }).directive('goodJob', function($rootScope) {
+        return {
+            restrict: 'E',
+            template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-baloo assess-popup assess-goodjob-popup"><img class="popup-bg-img" ng-src="{{icons.goodJob.background}}"/><div class="goodjob_next_div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next " ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div></div>',
+            controller: function($scope, $rootScope, $timeout) {
+                $scope.retryAssessment = function(id,e) {
+                    $scope.hidePopup(id);
+                }
+
+                $scope.hidePopup = function(id) {
+                    TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
+                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : Renderer.theme._currentStage)
+                    });
+                    $scope.showOverlayGoodJob = false;
+                    $scope.showOverlayTryAgain = false;
+                }
+
+                $scope.moveToNextStage = function(navType) {
+                    EventBus.dispatch("actionNavigateSkip", navType);
+                }
+            }
+        }
+    }).directive('tryAgain', function($rootScope) {
+        return {
+            restrict: 'E',
+            template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-baloo assess-popup assess-tryagain-popup"><img class="popup-bg-img" ng-src="{{icons.tryAgain.background}}"/><div class="tryagain-retry-div gc-popup-icons-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><p class="gc-popup-retry-replay">{{languageSupport.replay}}</p></div><div class="tryagian-next-div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div></div></div></div>',
+            controller: function($scope, $rootScope, $timeout) {
+                
+            }
+
         }
     }).directive('assess', function($rootScope) {
         return {

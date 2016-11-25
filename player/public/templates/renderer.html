@@ -21,8 +21,10 @@
         <!-- Menu overlay to hide canvas -->
         <menu></menu>
         <!-- All the popup's should add here -->
-        <popup ng-show="showOverlayGoodJob" id="goodJobPopup" popup-body="goodJob.body" ></popup>
-        <popup ng-show="showOverlayTryAgain" id="tryAgainPopup" popup-body="tryAgain.body"></popup>
+        <!-- <popup id="goodJobPopup" popup-body="goodJob.body" ></popup>
+        <popup id="tryAgainPopup" popup-body="tryAgain.body"></popup> -->
+        <try-again ng-show="showOverlayTryAgain"></try-again>
+        <good-job ng-show="showOverlayGoodJob"></good-job>
     </div>
     <!-- HTML plugin elements(dynamically adding here) -->
     <!-- Canvas elment(used by CreateJS) -->
