@@ -68,23 +68,36 @@ function localstorageFunction(key,value,type) {
         localStorage.setItem(key,value);
     } else {
         var data = JSON.parse(localStorage.getItem(key));
-        return (data)
+        console.log(data, key, "Key")
+        if (!_.isNull(data)) {
+            return data
+        } else {
+            return
+        }
     }
 }
 function telemetryConfig() {
-    var telemetryData = localstorageFunction("TelemetryService", 'getItem');
-    var start = localstorageFunction("_start", 'getItem');
-    var end = localstorageFunction("_end", 'getItem');
-    for (var prop in telemetryData) {
-        if (TelemetryService.hasOwnProperty(prop)) {
-            TelemetryService[prop] = telemetryData[prop];
+    if (_.isUndefined(TelemetryService.instance)) {
+        var telemetryData = localstorageFunction("TelemetryService", undefined, 'getItem');
+        var start = localstorageFunction("_start", undefined, 'getItem');
+        var end = localstorageFunction("_end", undefined, 'getItem');
+        if (!_.isUndefined(telemetryData)) {
+            for (var prop in telemetryData) {
+                if (TelemetryService.hasOwnProperty(prop)) {
+                    TelemetryService[prop] = telemetryData[prop];
+                }
+            }
+        }
+        TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
+        if (!_.isUndefined(start)) {
+            TelemetryService.instance._start.push(start);
+            var teEndevent = TelemetryService.instance.createEvent("OE_END", {}).start();
+        }
+        if (!_.isUndefined(end)) {
+            teEndevent.startTime = end[end.length - 1].startTime;
+            TelemetryService.instance._end.push(teEndevent);
         }
     }
-    TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
-    TelemetryService.instance._start.push(start);
-    var teEndevent = TelemetryService.instance.createEvent("OE_END", {}).start();
-    teEndevent.startTime = end[end.length - 1].startTime;
-    TelemetryService.instance._end.push(teEndevent);
 
 }
 
@@ -264,33 +277,15 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             });
                     }
                 } else {
-                    var urlParam = window.location.hash.split("/");
-                    urlParam = urlParam[urlParam.length - 1]
-                    if (urlParam == GlobalContext.config.appInfo.code || _.isEmpty(urlParam)) {
-                        launchInitialPage(GlobalContext.config.appInfo, $state);
-                    } else {
-                        // set the localStorage telemetry to  Telemetryservice;
-                        telemetryConfig();                    
-                    if (!$rootScope.content) {
-                        if (window.plugins) {
-                            var metaData = localstorageFunction('GlobalContext', 'getItem')
-                            $rootScope.content = metaData.config.appInfo
-                        } else {
-                            ContentService.getContent(urlParam).then(function(data) {
-                                $rootScope.content = data;
-                            }).catch(function(err) {
-                                console.info("contentNotAvailable : ", err);
-                                contentNotAvailable();
-                            });
-                        }
-                    }
+                    var metaData = localstorageFunction('content',undefined, 'getItem')
+                    $rootScope.content = $rootScope.content ? $rootScope.content : metaData;
+                    launchInitialPage(GlobalContext.config.appInfo, $state);
                 }
-            }
-        }).catch(function(res) {
-        console.log("Error Globalcontext.init:", res);
-        alert(res.errors);
-        exitApp();
-    });
+            }).catch(function(res) {
+                console.log("Error Globalcontext.init:", res);
+                alert(res.errors);
+                exitApp();
+            });
         });
     }).config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise(function() {
@@ -480,7 +475,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.content;
         $scope.showPage = true;     
         $scope.playContent = function(content) {
-            localstorageFunction('GlobalContext',GlobalContext, 'setItem');
             localstorageFunction("TelemetryService",TelemetryService, 'setItem');
             if (!_.isUndefined(TelemetryService.instance)){
                 localstorageFunction("_end",TelemetryService.instance._end, 'setItem');
@@ -501,6 +495,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             jQuery('#loading').hide();
             ContentService.getContent(content)
                 .then(function(data) {
+                    localstorageFunction('content', data, 'setItem');
                     $scope.setContentMetadata(data);
                 })
                 .catch(function(err) {
@@ -686,6 +681,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.init();
         }, 0);
     }).controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
+        telemetryConfig();
         $scope.showFeedbackArea = true;
         $scope.commentModel = '';
         $scope.showFeedbackPopup = false;
@@ -693,11 +689,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.popUserRating = 0;
         $scope.stringLeft = 130;
         $scope.selectedRating = 0;
-        $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction('GlobalContext', 'getItem')
-       /* console.info("telmentry",TelemetryService);*/
-
-       
-
         $rootScope.pageId = "endpage";
         $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-baloo credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
         
@@ -837,6 +828,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.init = function() {
+            var metaData = localstorageFunction('content',undefined, 'getItem')
+            $rootScope.content = $rootScope.content ? $rootScope.content : metaData;
+            telemetryConfig();
             var content = $rootScope.content;
             var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
             creditsPopup.trigger("popupUpdate", { "content": content });
@@ -1075,7 +1069,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 var pageId = $rootScope.pageId;
 
                 scope.goToHome = function() {
-                    localStorage.clear();
                     TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId)) });
                     if (Renderer.running)
                         Renderer.cleanUp();
