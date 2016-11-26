@@ -61,6 +61,7 @@ function getContentObj(data) {
 }
 
 function localstorageFunction(key,value,type) {
+  // Store and fetch the key and value pair data  
     if (type == 'setItem') {
         if (_.isObject(value)) {
             value = JSON.stringify(value)
@@ -68,7 +69,6 @@ function localstorageFunction(key,value,type) {
         localStorage.setItem(key,value);
     } else {
         var data = JSON.parse(localStorage.getItem(key));
-        console.log(data, key, "Key")
         if (!_.isNull(data)) {
             return data
         } else {
@@ -77,6 +77,7 @@ function localstorageFunction(key,value,type) {
     }
 }
 function telemetryConfig() {
+    // Configure the TelemetryService data form the localstorage
     if (_.isUndefined(TelemetryService.instance)) {
         var telemetryData = localstorageFunction("TelemetryService", undefined, 'getItem');
         var start = localstorageFunction("_start", undefined, 'getItem');
@@ -396,7 +397,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     if (childrenIds)
                         collectionChildrenIds = childrenIds;
                     collectionChildren = true;
-                    console.info("collectionChildrenIds : ", collectionChildrenIds);
                     var filter = (content.filter) ? JSON.parse(content.filter) : content.filter;
                     return ContentService.getContentList(filter, childrenIds);
                 })
@@ -945,7 +945,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
             jQuery('#endPageLoader').show();
             TelemetryService.end();
-            if (GlobalContext.config.appInfo.mimeType == COLLECTION_MIMETYPE) {
+            if ($rootScope.content.mimeType == COLLECTION_MIMETYPE) {
                 collectionPath = $scope.relatedContentPath;
                 ContentService.getContent(content.identifier)
                     .then(function(content) {
@@ -969,7 +969,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.getRelatedContent = function(list) {
-            ContentService.getRelatedContent(GlobalContext.user.uid, list)
+            ContentService.getRelatedContent(TelemetryService._user.uid, list)
                 .then(function(item) {
                     if (!_.isEmpty(item)) {
                         var list = [];
@@ -999,7 +999,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.renderRelatedContent = function(id) {
             var list = [];
-            if (GlobalContext.config.appInfo.mimeType != COLLECTION_MIMETYPE) {
+            if ($rootScope.content.mimeType != COLLECTION_MIMETYPE) {
                 // For Content
                 if (("undefined" != typeof cordova)) {
                     list = [{
@@ -1011,7 +1011,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             } else {
                 // For Collection
                 list = collectionPath;
-                collectionPathMap[GlobalContext.previousContentId] = collectionPath;
+                collectionPathMap[$rootScope.content.identifier] = collectionPath;
                 $scope.getRelatedContent(list);
             }
         }
@@ -1041,14 +1041,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 var pageId = $rootScope.pageId;
                 scope.goToCollection = function () {
                     collectionPath.pop();
-                    console.log(" id : ", GlobalContext.previousContentId);
                     TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
                     if (Renderer.running)
                         Renderer.cleanUp();
                     else
                         TelemetryService.end();
                     $state.go('contentList', {
-                        "id": GlobalContext.previousContentId
+                        "id": $rootScope.content.identifier
                     });
                 }
             }
@@ -1074,7 +1073,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         Renderer.cleanUp();
                     else
                         TelemetryService.end();
-                    $state.go('showContent', { "contentId": GlobalContext.currentContentId });
+                    $state.go('showContent', { "contentId": $rootScope.content.identifier });
                     //window.location.hash = "/show/content/" + GlobalContext.currentContentId;
 
                 }
