@@ -60,19 +60,22 @@ function getContentObj(data) {
     return data;
 }
 
-function saveInlocalstorage(key,value){
-    localStorage.setItem(key,value);
+function localstorageFunction(key,value,type) {
+    if (type == 'setItem') {
+        if (_.isObject(value)) {
+            value = JSON.stringify(value)
+        }
+        localStorage.setItem(key,value);
+    } else {
+        var data = JSON.parse(localStorage.getItem(key));
+        return (data)
+    }
 }
 
 function launchInitialPage(appInfo, $state) {
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
         if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-            if ("undefined" == typeof cordova) {
-               var key = $state.params.itemId ? _.keys($state.params.itemId) : _.keys($state.params.contentId);
-               $state.go($state.current.name, {key: $state.params.contentId ? $state.params.contentId : $state.params.itemId });
-           } else {
-               $state.go('showContent', { "contentId": GlobalContext.game.id });
-           }
+            $state.go('showContent', { "contentId": GlobalContext.game.id });
         } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
             (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
             $state.go('contentList', { "id": GlobalContext.game.id });
@@ -101,6 +104,7 @@ function telemetryError(e) {
 
 angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     .run(function($rootScope, $ionicPlatform, $location, $state, $stateParams, ContentService) {
+
         $rootScope.imageBasePath = "img/icons/";
         $rootScope.enableEval = false;
         jQuery('#loading').hide();
@@ -245,20 +249,41 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 } else {
                     var urlParam = window.location.hash.split("/");
                     urlParam = urlParam[urlParam.length - 1]
-                    if ("undefined" == typeof cordova) {
-                       var urlParam = window.location.hash.split("/");
-                       urlParam = urlParam[urlParam.length - 1]
-                       if (!_.isEmpty(urlParam) && urlParam != GlobalContext.config.appInfo.code) {
-                           ContentService.getContent(urlParam).then(function(data) {
-                              /* launchInitialPage(data, $state);*/
-                               $rootScope.content = $rootScope.content ? $rootScope.content : data;
-                           })
-                       } else {
-                           launchInitialPage(GlobalContext.config.appInfo, $state);
-                       }
-                   } else {
-                       launchInitialPage(GlobalContext.config.appInfo, $state);
-                   }
+                    if (urlParam == GlobalContext.config.appInfo.code || _.isEmpty(urlParam)) {
+                        launchInitialPage(GlobalContext.config.appInfo, $state);
+                    } else {
+                        var tel = localstorageFunction("TelemetryService", 'getItem');
+            var start = localstorageFunction("_start", 'getItem');
+            var end = localstorageFunction("_end", 'getItem');
+
+            TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
+
+            TelemetryService._config = tel._config;
+            TelemetryService._data = tel._data;
+            TelemetryService.gameOutputFile = tel.gameOutputFile;
+            TelemetryService._gameData = tel._gameData;
+            TelemetryService._gameErrorFile = tel._gameErrorFile;
+            TelemetryService._gameIds = tel._gameIds;
+            TelemetryService._user = tel._user;
+            TelemetryService.isActive = tel.isActive;
+            TelemetryService.instance._start.push(start);
+            var teEndEvent = TelemetryService.instance.createEvent("OE_END", {}).start();
+            teEndEvent.startTime = end[end.length-1].startTime;
+            TelemetryService.instance._end.push(teEndEvent);
+                        if (!$rootScope.content) {
+                            if (window.plugins) {
+                                var metaData = localstorageFunction('GlobalContext', 'getItem')
+                                $rootScope.content = metaData.config.appInfo
+                            } else {
+                                ContentService.getContent(urlParam).then(function(data) {
+                                    $rootScope.content = data;
+                                }).catch(function(err) {
+                                    console.info("contentNotAvailable : ", err);
+                                    contentNotAvailable();
+                                });
+                            }
+                        }
+                    }
                 }
             }).catch(function(res) {
                 console.log("Error Globalcontext.init:", res);
@@ -267,10 +292,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             });
         });
     }).config(function($stateProvider, $urlRouterProvider) {
-        // $urlRouterProvider.otherwise(function() {
-        //     var id = GlobalContext.config.appInfo.code
-        //     return '/content/list/'+ id
-        // })
+        $urlRouterProvider.otherwise(function() {
+            var id = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.code : packageName
+            return '/content/list/'+ id
+        })
         $stateProvider
             .state('contentList', {
                 cache: false,
@@ -454,10 +479,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.content;
         $scope.showPage = true;     
         $scope.playContent = function(content) {
-            saveInlocalstorage("TelemetryService",JSON.stringify(TelemetryService));
-            saveInlocalstorage("_end",JSON.stringify(TelemetryService.instance._end));
-            saveInlocalstorage("_start",JSON.stringify(TelemetryService.instance._start));
-            saveInlocalstorage("ContentID",content.identifier);
+            localstorageFunction('GlobalContext',GlobalContext, 'setItem');
+            localstorageFunction("TelemetryService",TelemetryService, 'setItem');
+            if (!_.isUndefined(TelemetryService.instance)){
+                localstorageFunction("_end",TelemetryService.instance._end, 'setItem');
+                localstorageFunction("_start",TelemetryService.instance._start, 'setItem');
+            }
+            localstorageFunction("ContentID",content.identifier, 'setItem');
             $scope.showPage = false;
             $state.go('playContent', {
                 'itemId': content.identifier
@@ -664,28 +692,29 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.popUserRating = 0;
         $scope.stringLeft = 130;
         $scope.selectedRating = 0;
+        $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction('GlobalContext', 'getItem')
        /* console.info("telmentry",TelemetryService);*/
 
         $scope.telemetryConfig = function() {
             // Configaration of the telemetry
-            var tel = JSON.parse(localStorage.getItem("TelemetryService"));
-            var start = JSON.parse(localStorage.getItem("_start"));
-            var end = JSON.parse(localStorage.getItem("_end"));
+            // var tel = localstorageFunction("TelemetryService", 'getItem');
+            // var start = localstorageFunction("_start", 'getItem');
+            // var end = localstorageFunction("_end", 'getItem');
 
-            TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
+            // TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
 
-            TelemetryService._config = tel._config;
-            TelemetryService._data = tel._data;
-            TelemetryService.gameOutputFile = tel.gameOutputFile;
-            TelemetryService._gameData = tel._gameData;
-            TelemetryService._gameErrorFile = tel._gameErrorFile;
-            TelemetryService._gameIds = tel._gameIds;
-            TelemetryService._user = tel._user;
-            TelemetryService.isActive = tel.isActive;
-            TelemetryService.instance._start.push(start);
-            var teEndEvent = TelemetryService.instance.createEvent("OE_END", {}).start();
-            teEndEvent.startTime = end[end.length-1].startTime;
-            TelemetryService.instance._end.push(teEndEvent);
+            // TelemetryService._config = tel._config;
+            // TelemetryService._data = tel._data;
+            // TelemetryService.gameOutputFile = tel.gameOutputFile;
+            // TelemetryService._gameData = tel._gameData;
+            // TelemetryService._gameErrorFile = tel._gameErrorFile;
+            // TelemetryService._gameIds = tel._gameIds;
+            // TelemetryService._user = tel._user;
+            // TelemetryService.isActive = tel.isActive;
+            // TelemetryService.instance._start.push(start);
+            // var teEndEvent = TelemetryService.instance.createEvent("OE_END", {}).start();
+            // teEndEvent.startTime = end[end.length-1].startTime;
+            // TelemetryService.instance._end.push(teEndEvent);
         }
 
         $rootScope.pageId = "endpage";
@@ -1161,7 +1190,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/></a>',
             link: function(scope) {
                 scope.restartContent = function() {
-                    TelemetryService.instance._start = [];
+                    if (!_.isUndefined(TelemetryService.instance)) {
+                        TelemetryService.instance._start = [];
+                    }
                     var content = $rootScope.content;
                     jQuery('#loading').show();
                     jQuery("#progressBar").width(0);
