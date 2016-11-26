@@ -56,26 +56,6 @@ function getUrlParameter(sParam) {
    }
 }
 
-var _reloadInProgress = false;
-function reloadStage() {
-    if (_reloadInProgress) {
-        return;
-    }
-    _reloadInProgress = true;
-    setTimeout(function() {
-        var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
-        if (plugin) plugin.reload({
-            type: "command",
-            command: "reload",
-            duration: "100",
-            ease: "linear",
-            effect: "fadeIn",
-            asset: Renderer.theme._currentStage
-        });
-    }, 500);
-    TelemetryService.interact("TOUCH", "gc_reload", "TOUCH", {stageId : Renderer.theme._currentStage});
-}
-
 function backbuttonPressed(pageId) {
     var data = (Renderer.running || HTMLRenderer.running) ? {
         type: 'EXIT_CONTENT',

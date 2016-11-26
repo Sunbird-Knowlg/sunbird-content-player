@@ -9,9 +9,11 @@ OverlayManager = {
         overlayTryAgain: "overlayTryAgain"
     },
     _eventsArray: [],
+    _reloadInProgress : false,
     _contentConfig: {},
     _stageConfig: {},
     init: function() {
+        this._reloadInProgress = false;
         this._eventsArray = [this._constants.overlayNext,
                     this._constants.overlayPrevious,
                     this._constants.overlaySubmit,
@@ -26,6 +28,7 @@ OverlayManager = {
         EventBus.addEventListener("actionNavigateNext", this.navigateNext, this);
         EventBus.addEventListener("actionNavigatePrevious", this.navigatePrevious, this);
         EventBus.addEventListener("actionDefaultSubmit", this.defaultSubmit, this);
+        EventBus.addEventListener("actionReload", this.actionReload, this);
     },
     setContentConfig: function() {
         var evtLenth = this._eventsArray.length;
@@ -165,7 +168,7 @@ OverlayManager = {
     navigatePrevious: function () {
       var navigateToStage = this.getNavigateTo('previous');
       if(_.isUndefined(navigateToStage)) return;
-      
+
       TelemetryService.interact("TOUCH", "previous", null, {stageId : Renderer.theme._currentStage});
       var navigateTo = this.getNavigateTo("previous");
       if(_.isUndefined( Renderer.theme._currentScene)) return;
@@ -246,5 +249,26 @@ OverlayManager = {
       };
       action.transitionType = navType;
       CommandManager.handle(action);
+    },
+    actionReload: function(){
+      if (this._reloadInProgress) {
+        // continuous reload clicks was handling the stage
+        // this is to avoid stage crash
+        return;
+      }
+      this._reloadInProgress = true;
+      setTimeout(function() {
+        var currentStage = Renderer.theme._currentStage;
+        var plugin = PluginManager.getPluginObject(currentStage);
+        if (plugin) plugin.reload({
+            type: "command",
+            command: "reload",
+            duration: "100",
+            ease: "linear",
+            effect: "fadeIn",
+            asset: currentStage
+        });
+      }, 500);
+      TelemetryService.interact("TOUCH", "gc_reload", "TOUCH", {stageId : currentStage});
     }
 }
