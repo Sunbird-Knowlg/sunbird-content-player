@@ -52,31 +52,29 @@ OverlayManager = {
                 val = _.isUndefined(contentConfigVal) ? "on" : contentConfigVal;
             }
             this._stageConfig[eventName] = val;
-
-            // if((eventName != this._constants.overlayGoodJob) &&
-            //     (eventName != this._constants.overlayTryAgain)) {
-            //       EventBus.dispatch(eventName, val);
-            //       this.handleEcmlElements(eventName, val);
-            // }
         }
 
-        this.showNext();
-        this.showPrevious();
-        this.showSubmit();
+        this.handleNext();
+        this.handlePrevious();
+        this.handleSubmit();
     },
-    showNext: function(){
+    handleNext: function(){
       var eventName = this._constants.overlayNext;
       var val = this._stageConfig[eventName];
       EventBus.dispatch(eventName, val);
       this.handleEcmlElements(eventName, val);
     },
-    showPrevious:function(){
+    handlePrevious:function(){
       var eventName = this._constants.overlayPrevious;
       var val = this._stageConfig[eventName];
+      var navigateToStage = this.getNavigateTo('previous');
+      if(val == "on"){
+          val = _.isUndefined(navigateToStage) ? "disable" : "enable" ;
+      }
       EventBus.dispatch(eventName, val);
       this.handleEcmlElements(eventName, val);
     },
-    showSubmit: function(){
+    handleSubmit: function(){
       var eventName = this._constants.overlaySubmit;
       var val = this._stageConfig[eventName];
       if(Renderer.theme._currentScene.isItemScene()){
@@ -120,7 +118,6 @@ OverlayManager = {
       }
     },
     navigateNext: function () {
-      // var navigateTo = this.getNavigateTo("next");
       if(_.isUndefined( Renderer.theme._currentScene)) return;
 
       var isItemScene = Renderer.theme._currentScene.isItemScene();
@@ -166,12 +163,15 @@ OverlayManager = {
       EventBus.removeEventListener("actionDefaultSubmit", this.defaultSubmit, this);
     },
     navigatePrevious: function () {
+      var navigateToStage = this.getNavigateTo('previous');
+      if(_.isUndefined(navigateToStage)) return;
+      
       TelemetryService.interact("TOUCH", "previous", null, {stageId : Renderer.theme._currentStage});
       var navigateTo = this.getNavigateTo("previous");
       if(_.isUndefined( Renderer.theme._currentScene)) return;
       this.defaultNavigation("previous", navigateTo);
     },
-		showOrHideElement: function(id, showEle) {
+		showOrHideEcmlElement: function(id, showEle) {
 			var plugin = PluginManager.getPluginObject(id);
 			if (plugin) {
 					showEle == "off"? plugin.show():  plugin.hide();
@@ -184,25 +184,25 @@ OverlayManager = {
 				var prevStageId = stage_data.prev;
   				switch ( eventName ) {
   					case "overlayNext":
-  					this.showOrHideElement('next', val);
-  					this.showOrHideElement('nextContainer', val);
+  					this.showOrHideEcmlElement('next', val);
+  					this.showOrHideEcmlElement('nextContainer', val);
   					break;
   					case "overlayPrevious":
-  					this.showOrHideElement('previous', val);
-  					this.showOrHideElement('previousContainer', val);
+  					this.showOrHideEcmlElement('previous', val);
+  					this.showOrHideEcmlElement('previousContainer', val);
   					break;
   					case "overlaySubmit":
-  					this.showOrHideElement('validate', val);
+  					this.showOrHideEcmlElement('validate', val);
   					break;
   					case "overlayMenu":
   					break;
   					case "overlayReload":
   					break;
   					case "overlayGoodJob":
-  					// this.showOrHideElement('goodjobBg', val);
+  					// this.showOrHideEcmlElement('goodjobBg', val);
   					break;
   					case "overlayTryAGain":
-  					// this.showOrHideElement('retryBg', val);
+  					// this.showOrHideEcmlElement('retryBg', val);
   					break;
   					default:
   					console.log("Default case got called..");

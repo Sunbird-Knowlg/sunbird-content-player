@@ -354,6 +354,14 @@ body{
     display: none;
 }
 
+.nav-enable {
+    opacity: 1;
+}
+
+.nav-disable {
+    opacity: 0.4;
+}
+
 .overlay-html>assess{
     position: absolute;
     bottom: 1%;

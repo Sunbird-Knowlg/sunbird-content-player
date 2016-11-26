@@ -766,6 +766,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
 
+        $scope.state_off = "off";
+        $scope.state_on = "on";
+        $scope.state_disable = "disable";
+
         $scope.showOverlayNext = true;
         $scope.showOverlayPrevious = true;
         $scope.showOverlaySubmit = false;
@@ -818,10 +822,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
           //Switch case to handle HTML elements(Next, Previous, Submit, etc..)
           switch ( event.type ) {
             case "overlayNext":
-                (event.target === "off" ) ? $scope.showOverlayNext = false : $scope.showOverlayNext = true;
+                $scope.showOverlayNext = event.target;
                 break;
             case "overlayPrevious":
-                (event.target === "off" ) ? $scope.showOverlayPrevious = false : $scope.showOverlayPrevious = true;
+                $scope.showOverlayPrevious = event.target;
                 break;
             case "overlaySubmit":
                 if (event.target === "off" ) {
@@ -836,10 +840,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             case "overlayReload":
                 break;
             case "overlayGoodJob":
-                (event.target === "off" ) ? $scope.showOverlayGoodJob = false : $scope.showOverlayGoodJob = true; //jQuery("#goodJobPopup").show();
+                $scope.showOverlayGoodJob = event.target; 
                 break;
             case "overlayTryAgain":
-                (event.target === "off" ) ? $scope.showOverlayTryAgain = false : $scope.showOverlayTryAgain = true; //jQuery("#tryAgainPopup").show();
+                $scope.showOverlayTryAgain = event.target;
                 break;
             default:
               console.log("Default case got called..");
@@ -1196,33 +1200,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         return {
             restrict: 'E',
             template: '<a href="javascript:void(0)" onclick="Overlay.reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
-        }
-    }).directive('navigate', function($rootScope) {
-        return {
-            restrict: 'E',
-            scope: {
-                disableImage: '=',
-                enableImage: '=',
-                type: '=type'
-            },
-            template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:90%;" /></a><a ng-show="show" ng-click="onNavigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:90%;" /></a>',
-            link: function(scope, element) {
-                var to = scope.type;
-                element.bind("navigateUpdate", function(event, data) {
-                    if (data) {
-                        for (key in data) {
-                            scope[key] = data[key];
-                        };
-                    }
-                });
-                scope.onNavigate = function() {
-                    TelemetryService.interact("TOUCH", to, null, {
-                        stageId: Renderer.theme._currentStage
-                    });
-                    $rootScope.isItemScene = false;
-                    Overlay.navigate(to);
-                };
-            }
         }
     }).directive('popup', function($rootScope, $compile) {
         return {
