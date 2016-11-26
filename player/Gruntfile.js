@@ -34,6 +34,7 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
                         'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
                         'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
+                        'public/js/thirdparty/exclude/eventbus.min.js',
                         'public/js/thirdparty/exclude/Class.js',
                         'public/js/app/genieservices.js',
                         'public/js/app/renderer.js'
@@ -70,6 +71,7 @@ module.exports = function(grunt) {
                     'public/js/app/plugin-lib.js': [
                         'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
                         'public/js/thirdparty/exclude/Class.js',
+                        'public/js/thirdparty/exclude/eventbus.min.js',
                         '../js-libs/renderer/plugin/Plugin.js',
                         '../js-libs/renderer/plugin/HTMLPlugin.js',
                         '../js-libs/renderer/manager/PluginManager.js',
