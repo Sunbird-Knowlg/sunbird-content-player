@@ -71,6 +71,22 @@ function localstorageFunction(key,value,type) {
         return (data)
     }
 }
+function telemetryConfig() {
+    var telemetryData = localstorageFunction("TelemetryService", 'getItem');
+    var start = localstorageFunction("_start", 'getItem');
+    var end = localstorageFunction("_end", 'getItem');
+    for (var prop in telemetryData) {
+        if (TelemetryService.hasOwnProperty(prop)) {
+            TelemetryService[prop] = telemetryData[prop];
+        }
+    }
+    TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
+    TelemetryService.instance._start.push(start);
+    var teEndevent = TelemetryService.instance.createEvent("OE_END", {}).start();
+    teEndevent.startTime = end[end.length - 1].startTime;
+    TelemetryService.instance._end.push(teEndevent);
+
+}
 
 function launchInitialPage(appInfo, $state) {
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
@@ -206,10 +222,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         };
 
             GlobalContext.init(packageName, version).then(function(appInfo) {
+
                // localPreview is a global variable defined in index.html file inside a story,
                 if ("undefined" != typeof localPreview && "local" == localPreview)
                     return;
-                var id = getUrlParameter("id");                
+                var id = getUrlParameter("id");
                 if(isbrowserpreview) {
                     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
                     
@@ -252,44 +269,28 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     if (urlParam == GlobalContext.config.appInfo.code || _.isEmpty(urlParam)) {
                         launchInitialPage(GlobalContext.config.appInfo, $state);
                     } else {
-                        var tel = localstorageFunction("TelemetryService", 'getItem');
-            var start = localstorageFunction("_start", 'getItem');
-            var end = localstorageFunction("_end", 'getItem');
-
-            TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
-
-            TelemetryService._config = tel._config;
-            TelemetryService._data = tel._data;
-            TelemetryService.gameOutputFile = tel.gameOutputFile;
-            TelemetryService._gameData = tel._gameData;
-            TelemetryService._gameErrorFile = tel._gameErrorFile;
-            TelemetryService._gameIds = tel._gameIds;
-            TelemetryService._user = tel._user;
-            TelemetryService.isActive = tel.isActive;
-            TelemetryService.instance._start.push(start);
-            var teEndEvent = TelemetryService.instance.createEvent("OE_END", {}).start();
-            teEndEvent.startTime = end[end.length-1].startTime;
-            TelemetryService.instance._end.push(teEndEvent);
-                        if (!$rootScope.content) {
-                            if (window.plugins) {
-                                var metaData = localstorageFunction('GlobalContext', 'getItem')
-                                $rootScope.content = metaData.config.appInfo
-                            } else {
-                                ContentService.getContent(urlParam).then(function(data) {
-                                    $rootScope.content = data;
-                                }).catch(function(err) {
-                                    console.info("contentNotAvailable : ", err);
-                                    contentNotAvailable();
-                                });
-                            }
+                        // set the localStorage telemetry to  Telemetryservice;
+                        telemetryConfig();                    
+                    if (!$rootScope.content) {
+                        if (window.plugins) {
+                            var metaData = localstorageFunction('GlobalContext', 'getItem')
+                            $rootScope.content = metaData.config.appInfo
+                        } else {
+                            ContentService.getContent(urlParam).then(function(data) {
+                                $rootScope.content = data;
+                            }).catch(function(err) {
+                                console.info("contentNotAvailable : ", err);
+                                contentNotAvailable();
+                            });
                         }
                     }
                 }
-            }).catch(function(res) {
-                console.log("Error Globalcontext.init:", res);
-                alert(res.errors);
-                exitApp();
-            });
+            }
+        }).catch(function(res) {
+        console.log("Error Globalcontext.init:", res);
+        alert(res.errors);
+        exitApp();
+    });
         });
     }).config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise(function() {
@@ -695,27 +696,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction('GlobalContext', 'getItem')
        /* console.info("telmentry",TelemetryService);*/
 
-        $scope.telemetryConfig = function() {
-            // Configaration of the telemetry
-            // var tel = localstorageFunction("TelemetryService", 'getItem');
-            // var start = localstorageFunction("_start", 'getItem');
-            // var end = localstorageFunction("_end", 'getItem');
-
-            // TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
-
-            // TelemetryService._config = tel._config;
-            // TelemetryService._data = tel._data;
-            // TelemetryService.gameOutputFile = tel.gameOutputFile;
-            // TelemetryService._gameData = tel._gameData;
-            // TelemetryService._gameErrorFile = tel._gameErrorFile;
-            // TelemetryService._gameIds = tel._gameIds;
-            // TelemetryService._user = tel._user;
-            // TelemetryService.isActive = tel.isActive;
-            // TelemetryService.instance._start.push(start);
-            // var teEndEvent = TelemetryService.instance.createEvent("OE_END", {}).start();
-            // teEndEvent.startTime = end[end.length-1].startTime;
-            // TelemetryService.instance._end.push(teEndEvent);
-        }
+       
 
         $rootScope.pageId = "endpage";
         $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-baloo credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
@@ -868,7 +849,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             window.addEventListener('native.keyboardshow', epKeyboardShowHandler, true);
             window.addEventListener('native.keyboardhide', epKeyboardHideHandler, true);
             jQuery('#loading').hide();
-            $scope.telemetryConfig();
             $scope.setTotalTimeSpent();
             $scope.getTotalScore($stateParams.contentId);           
             $scope.showFeedback(0);
