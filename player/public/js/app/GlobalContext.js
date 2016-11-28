@@ -35,7 +35,6 @@ GlobalContext = {
                         GlobalContext.game.ver = GlobalContext.config.appInfo.pkgVersion || "1";
                         // Assuming filter is always an array of strings.
                         GlobalContext.filter = (GlobalContext.config.appInfo.filter)? JSON.parse(GlobalContext.config.appInfo.filter): GlobalContext.config.appInfo.filter;
-                       
                     }
                 })
                 .then(function() {
