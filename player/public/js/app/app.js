@@ -133,7 +133,14 @@ function telemetryError(e) {
 }
 
 angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
-    .run(function($rootScope, $ionicPlatform, $location, $state, $stateParams, ContentService) {
+    .constant("appConstants", {
+        "contentId": "contentId",
+        "stateContentList": "contentList",
+        "stateShowContent": "showContent",
+        "statePlayContent": "playContent",
+        "stateShowContentEnd": "showContentEnd"
+    })
+    .run(function($rootScope, $ionicPlatform, $location, $timeout, $state, $stateParams, appConstants, ContentService) {
 
         $rootScope.imageBasePath = "img/icons/";
         $rootScope.enableEval = false;
@@ -162,7 +169,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "nextContent" : "NEXT CONTENT",
             "comment" : "write your comment..."
         }
-        $ionicPlatform.ready(function() {
+        $timeout(function() {
+            $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             appState = $state;
@@ -277,12 +285,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             });
                     }
                 } else {
-                    var metaData = localstorageFunction('content',undefined, 'getItem')
-                    $rootScope.content = $rootScope.content ? $rootScope.content : metaData;
-                    var url = location.hash;
-                    url = url.substring(0, url.lastIndexOf("/") + 1)
-                    if (url != '#/content/end/') {
-                        launchInitialPage(GlobalContext.config.appInfo, $state);
+                    if($state.current.name == appConstants.stateShowContentEnd){
+                        $state.go(appConstants.stateShowContentEnd, { "contentId": $state.params.contentId });
+                    } else {
+                        launchInitialPage(GlobalContext.config.appInfo, $state);                        
                     }
                 }
             }).catch(function(res) {
@@ -291,11 +297,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 exitApp();
             });
         });
+               
+        });
+        
     }).config(function($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise(function() {
-            var id = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.code : packageName
-            return '/content/list/'+ id
-        })
         $stateProvider
             .state('contentList', {
                 cache: false,
