@@ -43,7 +43,7 @@ module.exports = function(config) {
 
             // Plugin Test Cases
             'public/js/test/TextPluginSpec.js',
-            'public/js/test/ImagePluginSpec.js',
+            // 'public/js/test/ImagePluginSpec.js',
             'public/js/test/HotspotPluginSpec.js',
             'public/js/test/ContainerPluginSpec.js',
             'public/js/test/StageSpec.js',

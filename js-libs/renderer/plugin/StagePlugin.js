@@ -300,7 +300,7 @@ var StagePlugin = Plugin.extend({
     },
     isItemScene: function() {
        var stageCtrl = this._stageController;
-       if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type) && !_.isUndefined(stageCtrl._model)) {
+       if (!_.isUndefined(stageCtrl) && !_.isUndefined(stageCtrl._model)  && ("items" == stageCtrl._type)) {
            return true;
        } else {
            return false;

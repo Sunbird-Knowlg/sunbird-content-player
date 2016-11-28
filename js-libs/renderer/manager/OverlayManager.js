@@ -135,15 +135,19 @@ OverlayManager = {
       this.clean();
       TelemetryService.interact("TOUCH", "next", null, {stageId : Renderer.theme._currentStage});
       var navigateTo = this.getNavigateTo("next");
-      if ("undefined" == typeof navigateTo) {
+      if ("undefined" == typeof navigateTo){
+
+          if(_.isUndefined(Renderer.theme._currentScene)) return;          
           var isItemScene = Renderer.theme._currentScene.isItemScene();
-          if (isItemScene && Renderer.theme._currentScene._stageController.hasNext()) {
-              this.defaultNavigation("next", navigateTo);
+          
+          if (isItemScene && !_.isUndefined(Renderer.theme._currentScene._stageController) && Renderer.theme._currentScene._stageController.hasNext()) {
+            
+            this.defaultNavigation("next", navigateTo);
           } else {
-              this.moveToEndPage();
+            this.moveToEndPage();
           }
       } else {
-          this.defaultNavigation("next", navigateTo);
+        this.defaultNavigation("next", navigateTo);
       }
     },
     moveToEndPage: function () {
@@ -215,7 +219,7 @@ OverlayManager = {
     getNavigateTo: function (navType) {
         var stageParams = [];
         var stageId = undefined;
-        if (!_.isUndefined(Renderer.theme._currentScene) && !_.isEmpty(Renderer.theme._currentScene._data.param)) {
+        if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene) && !_.isEmpty(Renderer.theme._currentScene._data.param)) {
             stageParams = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
             var navParam = _.findWhere(stageParams, {
                 name: navType
