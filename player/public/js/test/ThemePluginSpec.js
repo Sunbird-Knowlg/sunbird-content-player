@@ -194,7 +194,7 @@ describe('Theme Plugin test cases', function() {
         expect(this.plugin.getEase.calls.count()).toEqual(1);
     });
 
-    it('Theme plugin getAsset()', function() {
+    xit('Theme plugin getAsset()', function() {
         this.plugin.getAsset("sringeri");
         expect(this.plugin.getAsset).toHaveBeenCalled();
         expect(this.plugin.getAsset.calls.count()).toEqual(1);
