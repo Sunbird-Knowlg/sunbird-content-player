@@ -48,12 +48,15 @@ OverlayManager = {
         var evtLenth = this._eventsArray.length;
         for (i = 0; i < evtLenth; i++) {
             var eventName = this._eventsArray[i];
-            var val = Renderer.theme._currentScene.getParam(eventName);
-
+            var val;
+            if (!_.isUndefined(Renderer.theme._currentScene)){
+              val = Renderer.theme._currentScene.getParam(eventName);
+            }
             if (_.isUndefined(val)) {
                 var contentConfigVal = this._contentConfig[eventName];
                 val = _.isUndefined(contentConfigVal) ? "on" : contentConfigVal;
-            }
+            }            
+
             this._stageConfig[eventName] = val;
         }
 
