@@ -59,7 +59,8 @@
             },
             "isAvailable": true,
             "path": "fixture-stories/desertflip"
-        },{
+        }
+        ,{
             "identifier": "org.ekstep.debug",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {

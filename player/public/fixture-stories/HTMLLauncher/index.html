@@ -39,6 +39,8 @@
           document.addEventListener("deviceready", onDeviceReady, false);
         }
         document.getElementsByTagName("head")[0].appendChild(fileref);
+      }else{
+        onDeviceReady();
       }
     };
 
@@ -98,8 +100,6 @@
           var basePath = (launchContent.metadata.path.charAt(launchContent.metadata.path.length-1) == '/')? launchContent.metadata.path.substring(0, launchContent.metadata.path.length-1): launchContent.metadata.path;
           var path = ("undefined" != typeof cordova)? "file://" + basePath : "http://"+ location.host + "/" + basePath;
           launchContent.metadata.baseDir =  path;
-          
-
           var launchData = getUrlParameter('launchData');
           var launchConfig = getUrlParameter('config');
           var appInfo = getUrlParameter('appInfo');

@@ -14,10 +14,12 @@
   <!--  -->
   <!-- <script src="assets/js/genieservices.js"></script>
   <script src="assets/js/telemetry.min.js"></script> -->
-  <script src="assets/js/genieservice-bridge.min.js"></script>
+  <script src="assets/js/genieServiceMediator.js"></script>
 
   <h1>New Game - HTML Content</h1>
   <p>This is actual game</p>
+  <button onclick="genieservice_HTMLdev.closeContent()">Click me</button>
+  <a href="/#/content/end/do_20045479">CLICK me</a>
  
   <script type="text/javascript">
     // Storing current logged in user 
@@ -26,7 +28,7 @@
     // Storing query parameter "config" 
     var config = {};
 
-    // Storing query parameter "contentId"
+    // Storing query parameter "cid"
     var contentId = {};
 
     // Storing GenieService response content metadata(for contentID passed in query string)
@@ -36,7 +38,7 @@
      * This is to GenieService and Telemetry
      * callback function will be called after initalization
      */
-    genieServiceBridge.init(function(){
+    genieServiceMediator.init(function(){
       // GenieService initalisation success
       onGenieServiceInit();
     });
@@ -50,9 +52,9 @@
       config = getUrlParameter('config');
       console.log("config", config);
 
-      // Get contentId(contentId) from URL parameter
+      // Get contentId(cid) from URL parameter
       // Required to get more information of this content from GenieService 
-      contentId = getUrlParameter('contentId'); 
+      contentId = getUrlParameter('cid'); 
 
       // Get current user data is required to log telemetry
       getCurrentUser();
@@ -68,9 +70,9 @@
     function getCurrentUser(){
        genieservice.getCurrentUser()
        .then(function(result) {
-          if (result.status == "success") {
+          if (result && result.status == 'success') {
               if (result.data.uid) {
-                currentUser = result;                 
+                currentUser = result.data;                 
                 console.log("currentUser", currentUser);
               } else {
                 console.log('INVALID_USER');
@@ -104,9 +106,7 @@
         getDictionaryWords();
 
         // Adding content information to the body
-        document.body.innerHTML += "<p><b>Content id:</b> "+currentContent.metadata.identifier+ "</p><p><b>Name:</b> "+currentContent.metadata.localData.name+"</p></br>";
-		
-		    document.body.innerHTML += "<p><b>Launch Data:</b> " + getUrlParameter('launchData') + "</p><p><b>Config:</b> "+ getUrlParameter('config') + "</p><p><b>AppInfo:</b> "+ getUrlParameter('appInfo');
+        document.body.innerHTML += "<p><b>Content id:</b> "+currentContent.metadata.identifier+ "</p><p><b>Name:</b> "+currentContent.metadata.localData.name+"</p>";
       })
       .catch(function(err){
         console.log("Failed", err);
@@ -136,7 +136,7 @@
      * Do dictionary search
      */
     function getDictionaryWords(){
-      genieservice.languageSearch('{"request":{"traversals":"rhyming_boundary_rule","fuzzy":true,"filters":{"language_id":["en"],"status":"Live","objectType":"Word"},"sort_by":{"lemma":"asc"},"limit":100}}')
+      genieservice.languageSearch('{ "traversals": ["akshara_boundary"], "filter": {} }')
       .then(function(resp){
         console.log("languageSearch resp", resp);
       })

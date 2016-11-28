@@ -19,9 +19,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }, this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b, c) {
-        this.type = a, this.target = null, this.currentTarget = null, this.eventPhase = 0,
-        this.bubbles = !!b, this.cancelable = !!c, this.timeStamp = new Date().getTime(),
-        this.defaultPrevented = !1, this.propagationStopped = !1, this.immediatePropagationStopped = !1,
+        this.type = a, this.target = null, this.currentTarget = null, this.eventPhase = 0, 
+        this.bubbles = !!b, this.cancelable = !!c, this.timeStamp = new Date().getTime(), 
+        this.defaultPrevented = !1, this.propagationStopped = !1, this.immediatePropagationStopped = !1, 
         this.removed = !1;
     }
     var b = a.prototype;
@@ -48,14 +48,14 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }
     var b = a.prototype;
     a.initialize = function(a) {
-        a.addEventListener = b.addEventListener, a.on = b.on, a.removeEventListener = a.off = b.removeEventListener,
-        a.removeAllEventListeners = b.removeAllEventListeners, a.hasEventListener = b.hasEventListener,
+        a.addEventListener = b.addEventListener, a.on = b.on, a.removeEventListener = a.off = b.removeEventListener, 
+        a.removeAllEventListeners = b.removeAllEventListeners, a.hasEventListener = b.hasEventListener, 
         a.dispatchEvent = b.dispatchEvent, a._dispatchEvent = b._dispatchEvent, a.willTrigger = b.willTrigger;
     }, b.addEventListener = function(a, b, c) {
         var d;
         d = c ? this._captureListeners = this._captureListeners || {} : this._listeners = this._listeners || {};
         var e = d[a];
-        return e && this.removeEventListener(a, b, c), e = d[a], e ? e.push(b) : d[a] = [ b ],
+        return e && this.removeEventListener(a, b, c), e = d[a], e ? e.push(b) : d[a] = [ b ], 
         b;
     }, b.on = function(a, b, c, d, e, f) {
         return b.handleEvent && (c = c || b, b = b.handleEvent), c = c || this, this.addEventListener(a, function(a) {
@@ -113,7 +113,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             a.removed = !1, e = e.slice();
             for (var g = 0; c > g && !a.immediatePropagationStopped; g++) {
                 var h = e[g];
-                h.handleEvent ? h.handleEvent(a) : h(a), a.removed && (this.off(a.type, h, 1 == b),
+                h.handleEvent ? h.handleEvent(a) : h(a), a.removed && (this.off(a.type, h, 1 == b), 
                 a.removed = !1);
             }
         }
@@ -123,14 +123,14 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     function a() {
         throw "Ticker cannot be instantiated.";
     }
-    a.RAF_SYNCHED = "synched", a.RAF = "raf", a.TIMEOUT = "timeout", a.useRAF = !1,
-    a.timingMode = null, a.maxDelta = 0, a.paused = !1, a.removeEventListener = null,
-    a.removeAllEventListeners = null, a.dispatchEvent = null, a.hasEventListener = null,
-    a._listeners = null, createjs.EventDispatcher.initialize(a), a._addEventListener = a.addEventListener,
+    a.RAF_SYNCHED = "synched", a.RAF = "raf", a.TIMEOUT = "timeout", a.useRAF = !1, 
+    a.timingMode = null, a.maxDelta = 0, a.paused = !1, a.removeEventListener = null, 
+    a.removeAllEventListeners = null, a.dispatchEvent = null, a.hasEventListener = null, 
+    a._listeners = null, createjs.EventDispatcher.initialize(a), a._addEventListener = a.addEventListener, 
     a.addEventListener = function() {
         return !a._inited && a.init(), a._addEventListener.apply(a, arguments);
-    }, a._inited = !1, a._startTime = 0, a._pausedTime = 0, a._ticks = 0, a._pausedTicks = 0,
-    a._interval = 50, a._lastTime = 0, a._times = null, a._tickTimes = null, a._timerId = null,
+    }, a._inited = !1, a._startTime = 0, a._pausedTime = 0, a._ticks = 0, a._pausedTicks = 0, 
+    a._interval = 50, a._lastTime = 0, a._times = null, a._tickTimes = null, a._timerId = null, 
     a._raf = !0, a.setInterval = function(b) {
         a._interval = b, a._inited && a._setupTick();
     }, a.getInterval = function() {
@@ -155,14 +155,14 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         console.log(b);
     }
     a.init = function() {
-        a._inited || (a._inited = !0, a._times = [], a._tickTimes = [], a._startTime = a._getTime(),
+        a._inited || (a._inited = !0, a._times = [], a._tickTimes = [], a._startTime = a._getTime(), 
         a._times.push(a._lastTime = 0), a.interval = a._interval);
     }, a.reset = function() {
         if (a._raf) {
             var b = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.oCancelAnimationFrame || window.msCancelAnimationFrame;
             b && b(a._timerId);
         } else clearTimeout(a._timerId);
-        a.removeAllEventListeners("tick"), a._timerId = a._times = a._tickTimes = null,
+        a.removeAllEventListeners("tick"), a._timerId = a._times = a._tickTimes = null, 
         a._startTime = a._lastTime = a._ticks = 0, a._inited = !1;
     }, a.getMeasuredTickTime = function(b) {
         var c = 0, d = a._tickTimes;
@@ -172,7 +172,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         return c / b;
     }, a.getMeasuredFPS = function(b) {
         var c = a._times;
-        return !c || c.length < 2 ? -1 : (b = Math.min(c.length - 1, b || 0 | a.getFPS()),
+        return !c || c.length < 2 ? -1 : (b = Math.min(c.length - 1, b || 0 | a.getFPS()), 
         1e3 / ((c[0] - c[b]) / b));
     }, a.setPaused = function(b) {
         a.paused = b;
@@ -203,7 +203,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var b = a.paused, c = a._getTime(), d = c - a._lastTime;
         if (a._lastTime = c, a._ticks++, b && (a._pausedTicks++, a._pausedTime += d), a.hasEventListener("tick")) {
             var e = new createjs.Event("tick"), f = a.maxDelta;
-            e.delta = f && d > f ? f : d, e.paused = b, e.time = c, e.runTime = c - a._pausedTime,
+            e.delta = f && d > f ? f : d, e.paused = b, e.time = c, e.runTime = c - a._pausedTime, 
             a.dispatchEvent(e);
         }
         for (a._tickTimes.unshift(a._getTime() - c); a._tickTimes.length > 100; ) a._tickTimes.pop();
@@ -224,8 +224,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b, c, d, e, f, g, h, i, j, k) {
-        this.Event_constructor(a, b, c), this.stageX = d, this.stageY = e, this.rawX = null == i ? d : i,
-        this.rawY = null == j ? e : j, this.nativeEvent = f, this.pointerID = g, this.primary = !!h,
+        this.Event_constructor(a, b, c), this.stageX = d, this.stageY = e, this.rawX = null == i ? d : i, 
+        this.rawY = null == j ? e : j, this.nativeEvent = f, this.pointerID = g, this.primary = !!h, 
         this.relatedTarget = k;
     }
     var b = createjs.extend(a, createjs.Event);
@@ -261,42 +261,42 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }
     var b = a.prototype;
     a.DEG_TO_RAD = Math.PI / 180, a.identity = null, b.setValues = function(a, b, c, d, e, f) {
-        return this.a = null == a ? 1 : a, this.b = b || 0, this.c = c || 0, this.d = null == d ? 1 : d,
+        return this.a = null == a ? 1 : a, this.b = b || 0, this.c = c || 0, this.d = null == d ? 1 : d, 
         this.tx = e || 0, this.ty = f || 0, this;
     }, b.append = function(a, b, c, d, e, f) {
         var g = this.a, h = this.b, i = this.c, j = this.d;
-        return (1 != a || 0 != b || 0 != c || 1 != d) && (this.a = g * a + i * b, this.b = h * a + j * b,
-        this.c = g * c + i * d, this.d = h * c + j * d), this.tx = g * e + i * f + this.tx,
+        return (1 != a || 0 != b || 0 != c || 1 != d) && (this.a = g * a + i * b, this.b = h * a + j * b, 
+        this.c = g * c + i * d, this.d = h * c + j * d), this.tx = g * e + i * f + this.tx, 
         this.ty = h * e + j * f + this.ty, this;
     }, b.prepend = function(a, b, c, d, e, f) {
         var g = this.a, h = this.c, i = this.tx;
-        return this.a = a * g + c * this.b, this.b = b * g + d * this.b, this.c = a * h + c * this.d,
-        this.d = b * h + d * this.d, this.tx = a * i + c * this.ty + e, this.ty = b * i + d * this.ty + f,
+        return this.a = a * g + c * this.b, this.b = b * g + d * this.b, this.c = a * h + c * this.d, 
+        this.d = b * h + d * this.d, this.tx = a * i + c * this.ty + e, this.ty = b * i + d * this.ty + f, 
         this;
     }, b.appendMatrix = function(a) {
         return this.append(a.a, a.b, a.c, a.d, a.tx, a.ty);
     }, b.prependMatrix = function(a) {
         return this.prepend(a.a, a.b, a.c, a.d, a.tx, a.ty);
     }, b.appendTransform = function(b, c, d, e, f, g, h, i, j) {
-        if (f % 360) var k = f * a.DEG_TO_RAD, l = Math.cos(k), m = Math.sin(k); else l = 1,
+        if (f % 360) var k = f * a.DEG_TO_RAD, l = Math.cos(k), m = Math.sin(k); else l = 1, 
         m = 0;
-        return g || h ? (g *= a.DEG_TO_RAD, h *= a.DEG_TO_RAD, this.append(Math.cos(h), Math.sin(h), -Math.sin(g), Math.cos(g), b, c),
-        this.append(l * d, m * d, -m * e, l * e, 0, 0)) : this.append(l * d, m * d, -m * e, l * e, b, c),
-        (i || j) && (this.tx -= i * this.a + j * this.c, this.ty -= i * this.b + j * this.d),
+        return g || h ? (g *= a.DEG_TO_RAD, h *= a.DEG_TO_RAD, this.append(Math.cos(h), Math.sin(h), -Math.sin(g), Math.cos(g), b, c), 
+        this.append(l * d, m * d, -m * e, l * e, 0, 0)) : this.append(l * d, m * d, -m * e, l * e, b, c), 
+        (i || j) && (this.tx -= i * this.a + j * this.c, this.ty -= i * this.b + j * this.d), 
         this;
     }, b.prependTransform = function(b, c, d, e, f, g, h, i, j) {
-        if (f % 360) var k = f * a.DEG_TO_RAD, l = Math.cos(k), m = Math.sin(k); else l = 1,
+        if (f % 360) var k = f * a.DEG_TO_RAD, l = Math.cos(k), m = Math.sin(k); else l = 1, 
         m = 0;
-        return (i || j) && (this.tx -= i, this.ty -= j), g || h ? (g *= a.DEG_TO_RAD, h *= a.DEG_TO_RAD,
-        this.prepend(l * d, m * d, -m * e, l * e, 0, 0), this.prepend(Math.cos(h), Math.sin(h), -Math.sin(g), Math.cos(g), b, c)) : this.prepend(l * d, m * d, -m * e, l * e, b, c),
+        return (i || j) && (this.tx -= i, this.ty -= j), g || h ? (g *= a.DEG_TO_RAD, h *= a.DEG_TO_RAD, 
+        this.prepend(l * d, m * d, -m * e, l * e, 0, 0), this.prepend(Math.cos(h), Math.sin(h), -Math.sin(g), Math.cos(g), b, c)) : this.prepend(l * d, m * d, -m * e, l * e, b, c), 
         this;
     }, b.rotate = function(b) {
         b *= a.DEG_TO_RAD;
         var c = Math.cos(b), d = Math.sin(b), e = this.a, f = this.b;
-        return this.a = e * c + this.c * d, this.b = f * c + this.d * d, this.c = -e * d + this.c * c,
+        return this.a = e * c + this.c * d, this.b = f * c + this.d * d, this.c = -e * d + this.c * c, 
         this.d = -f * d + this.d * c, this;
     }, b.skew = function(b, c) {
-        return b *= a.DEG_TO_RAD, c *= a.DEG_TO_RAD, this.append(Math.cos(c), Math.sin(c), -Math.sin(b), Math.cos(b), 0, 0),
+        return b *= a.DEG_TO_RAD, c *= a.DEG_TO_RAD, this.append(Math.cos(c), Math.sin(c), -Math.sin(b), Math.cos(b), 0, 0), 
         this;
     }, b.scale = function(a, b) {
         return this.a *= a, this.b *= a, this.c *= b, this.d *= b, this;
@@ -306,21 +306,21 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         return this.a = this.d = 1, this.b = this.c = this.tx = this.ty = 0, this;
     }, b.invert = function() {
         var a = this.a, b = this.b, c = this.c, d = this.d, e = this.tx, f = a * d - b * c;
-        return this.a = d / f, this.b = -b / f, this.c = -c / f, this.d = a / f, this.tx = (c * this.ty - d * e) / f,
+        return this.a = d / f, this.b = -b / f, this.c = -c / f, this.d = a / f, this.tx = (c * this.ty - d * e) / f, 
         this.ty = -(a * this.ty - b * e) / f, this;
     }, b.isIdentity = function() {
         return 0 === this.tx && 0 === this.ty && 1 === this.a && 0 === this.b && 0 === this.c && 1 === this.d;
     }, b.equals = function(a) {
         return this.tx === a.tx && this.ty === a.ty && this.a === a.a && this.b === a.b && this.c === a.c && this.d === a.d;
     }, b.transformPoint = function(a, b, c) {
-        return c = c || {}, c.x = a * this.a + b * this.c + this.tx, c.y = a * this.b + b * this.d + this.ty,
+        return c = c || {}, c.x = a * this.a + b * this.c + this.tx, c.y = a * this.b + b * this.d + this.ty, 
         c;
     }, b.decompose = function(b) {
-        null == b && (b = {}), b.x = this.tx, b.y = this.ty, b.scaleX = Math.sqrt(this.a * this.a + this.b * this.b),
+        null == b && (b = {}), b.x = this.tx, b.y = this.ty, b.scaleX = Math.sqrt(this.a * this.a + this.b * this.b), 
         b.scaleY = Math.sqrt(this.c * this.c + this.d * this.d);
         var c = Math.atan2(-this.c, this.d), d = Math.atan2(this.b, this.a), e = Math.abs(1 - c / d);
-        return 1e-5 > e ? (b.rotation = d / a.DEG_TO_RAD, this.a < 0 && this.d >= 0 && (b.rotation += b.rotation <= 0 ? 180 : -180),
-        b.skewX = b.skewY = 0) : (b.skewX = c / a.DEG_TO_RAD, b.skewY = d / a.DEG_TO_RAD),
+        return 1e-5 > e ? (b.rotation = d / a.DEG_TO_RAD, this.a < 0 && this.d >= 0 && (b.rotation += b.rotation <= 0 ? 180 : -180), 
+        b.skewX = b.skewY = 0) : (b.skewX = c / a.DEG_TO_RAD, b.skewY = d / a.DEG_TO_RAD), 
         b;
     }, b.copy = function(a) {
         return this.setValues(a.a, a.b, a.c, a.d, a.tx, a.ty);
@@ -336,17 +336,17 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }
     var b = a.prototype;
     b.setValues = function(a, b, c, d, e) {
-        return this.visible = null == a ? !0 : !!a, this.alpha = null == b ? 1 : b, this.shadow = c,
-        this.compositeOperation = d, this.matrix = e || this.matrix && this.matrix.identity() || new createjs.Matrix2D(),
+        return this.visible = null == a || !!a, this.alpha = null == b ? 1 : b, this.shadow = c, 
+        this.compositeOperation = d, this.matrix = e || this.matrix && this.matrix.identity() || new createjs.Matrix2D(), 
         this;
     }, b.append = function(a, b, c, d, e) {
-        return this.alpha *= b, this.shadow = c || this.shadow, this.compositeOperation = d || this.compositeOperation,
+        return this.alpha *= b, this.shadow = c || this.shadow, this.compositeOperation = d || this.compositeOperation, 
         this.visible = this.visible && a, e && this.matrix.appendMatrix(e), this;
     }, b.prepend = function(a, b, c, d, e) {
-        return this.alpha *= b, this.shadow = this.shadow || c, this.compositeOperation = this.compositeOperation || d,
+        return this.alpha *= b, this.shadow = this.shadow || c, this.compositeOperation = this.compositeOperation || d, 
         this.visible = this.visible && a, e && this.matrix.prependMatrix(e), this;
     }, b.identity = function() {
-        return this.visible = !0, this.alpha = 1, this.shadow = this.compositeOperation = null,
+        return this.visible = !0, this.alpha = 1, this.shadow = this.compositeOperation = null, 
         this.matrix.identity(), this;
     }, b.clone = function() {
         return new a(this.alpha, this.shadow, this.compositeOperation, this.visible, this.matrix.clone());
@@ -373,11 +373,11 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }
     var b = a.prototype;
     b.setValues = function(a, b, c, d) {
-        return this.x = a || 0, this.y = b || 0, this.width = c || 0, this.height = d || 0,
+        return this.x = a || 0, this.y = b || 0, this.width = c || 0, this.height = d || 0, 
         this;
     }, b.extend = function(a, b, c, d) {
-        return c = c || 0, d = d || 0, a + c > this.x + this.width && (this.width = a + c - this.x),
-        b + d > this.y + this.height && (this.height = b + d - this.y), a < this.x && (this.width += this.x - a,
+        return c = c || 0, d = d || 0, a + c > this.x + this.width && (this.width = a + c - this.x), 
+        b + d > this.y + this.height && (this.height = b + d - this.y), a < this.x && (this.width += this.x - a, 
         this.x = a), b < this.y && (this.height += this.y - b, this.y = b), this;
     }, b.pad = function(a, b, c, d) {
         return this.x -= b, this.y -= a, this.width += b + d, this.height += a + c, this;
@@ -389,7 +389,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         return this.clone().extend(a.x, a.y, a.width, a.height);
     }, b.intersection = function(b) {
         var c = b.x, d = b.y, e = c + b.width, f = d + b.height;
-        return this.x > c && (c = this.x), this.y > d && (d = this.y), this.x + this.width < e && (e = this.x + this.width),
+        return this.x > c && (c = this.x), this.y > d && (d = this.y), this.x + this.width < e && (e = this.x + this.width), 
         this.y + this.height < f && (f = this.y + this.height), c >= e || d >= f ? null : new a(c, d, e - c, f - d);
     }, b.intersects = function(a) {
         return a.x <= this.x + this.width && this.x <= a.x + a.width && a.y <= this.y + this.height && this.y <= a.y + a.height;
@@ -403,21 +403,21 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b, c, d, e, f, g) {
-        a.addEventListener && (this.target = a, this.overLabel = null == c ? "over" : c,
-        this.outLabel = null == b ? "out" : b, this.downLabel = null == d ? "down" : d,
-        this.play = e, this._isPressed = !1, this._isOver = !1, this._enabled = !1, a.mouseChildren = !1,
-        this.enabled = !0, this.handleEvent({}), f && (g && (f.actionsEnabled = !1, f.gotoAndStop && f.gotoAndStop(g)),
+        a.addEventListener && (this.target = a, this.overLabel = null == c ? "over" : c, 
+        this.outLabel = null == b ? "out" : b, this.downLabel = null == d ? "down" : d, 
+        this.play = e, this._isPressed = !1, this._isOver = !1, this._enabled = !1, a.mouseChildren = !1, 
+        this.enabled = !0, this.handleEvent({}), f && (g && (f.actionsEnabled = !1, f.gotoAndStop && f.gotoAndStop(g)), 
         a.hitArea = f));
     }
     var b = a.prototype;
     b.setEnabled = function(a) {
         if (a != this._enabled) {
             var b = this.target;
-            this._enabled = a, a ? (b.cursor = "pointer", b.addEventListener("rollover", this),
-            b.addEventListener("rollout", this), b.addEventListener("mousedown", this), b.addEventListener("pressup", this),
-            b._reset && (b.__reset = b._reset, b._reset = this._reset)) : (b.cursor = null,
-            b.removeEventListener("rollover", this), b.removeEventListener("rollout", this),
-            b.removeEventListener("mousedown", this), b.removeEventListener("pressup", this),
+            this._enabled = a, a ? (b.cursor = "pointer", b.addEventListener("rollover", this), 
+            b.addEventListener("rollout", this), b.addEventListener("mousedown", this), b.addEventListener("pressup", this), 
+            b._reset && (b.__reset = b._reset, b._reset = this._reset)) : (b.cursor = null, 
+            b.removeEventListener("rollover", this), b.removeEventListener("rollout", this), 
+            b.removeEventListener("mousedown", this), b.removeEventListener("pressup", this), 
             b.__reset && (b._reset = b.__reset, delete b.__reset));
         }
     }, b.getEnabled = function() {
@@ -435,9 +435,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         return "[ButtonHelper]";
     }, b.handleEvent = function(a) {
         var b, c = this.target, d = a.type;
-        "mousedown" == d ? (this._isPressed = !0, b = this.downLabel) : "pressup" == d ? (this._isPressed = !1,
-        b = this._isOver ? this.overLabel : this.outLabel) : "rollover" == d ? (this._isOver = !0,
-        b = this._isPressed ? this.downLabel : this.overLabel) : (this._isOver = !1, b = this._isPressed ? this.overLabel : this.outLabel),
+        "mousedown" == d ? (this._isPressed = !0, b = this.downLabel) : "pressup" == d ? (this._isPressed = !1, 
+        b = this._isOver ? this.overLabel : this.outLabel) : "rollover" == d ? (this._isOver = !0, 
+        b = this._isPressed ? this.downLabel : this.overLabel) : (this._isOver = !1, b = this._isPressed ? this.overLabel : this.outLabel), 
         this.play ? c.gotoAndPlay && c.gotoAndPlay(b) : c.gotoAndStop && c.gotoAndStop(b);
     }, b._reset = function() {
         var a = this.paused;
@@ -457,9 +457,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a) {
-        this.EventDispatcher_constructor(), this.complete = !0, this.framerate = 0, this._animations = null,
-        this._frames = null, this._images = null, this._data = null, this._loadCount = 0,
-        this._frameHeight = 0, this._frameWidth = 0, this._numFrames = 0, this._regX = 0,
+        this.EventDispatcher_constructor(), this.complete = !0, this.framerate = 0, this._animations = null, 
+        this._frames = null, this._images = null, this._data = null, this._loadCount = 0, 
+        this._frameHeight = 0, this._frameWidth = 0, this._numFrames = 0, this._regX = 0, 
         this._regY = 0, this._spacing = 0, this._margin = 0, this._parseData(a);
     }
     var b = createjs.extend(a, createjs.EventDispatcher);
@@ -492,14 +492,14 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._parseData = function(a) {
         var b, c, d, e;
         if (null != a) {
-            if (this.framerate = a.framerate || 0, a.images && (c = a.images.length) > 0) for (e = this._images = [],
+            if (this.framerate = a.framerate || 0, a.images && (c = a.images.length) > 0) for (e = this._images = [], 
             b = 0; c > b; b++) {
                 var f = a.images[b];
                 if ("string" == typeof f) {
                     var g = f;
                     f = document.createElement("img"), f.src = g;
                 }
-                e.push(f), f.getContext || f.naturalWidth || (this._loadCount++, this.complete = !1,
+                e.push(f), f.getContext || f.naturalWidth || (this._loadCount++, this.complete = !1, 
                 function(a, b) {
                     f.onload = function() {
                         a._handleImageLoad(b);
@@ -510,7 +510,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                     };
                 }(this, g));
             }
-            if (null == a.frames) ; else if (Array.isArray(a.frames)) for (this._frames = [],
+            if (null == a.frames) ; else if (Array.isArray(a.frames)) for (this._frames = [], 
             e = a.frames, b = 0, c = e.length; c > b; b++) {
                 var h = e[b];
                 this._frames.push({
@@ -519,8 +519,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                     regX: h[5] || 0,
                     regY: h[6] || 0
                 });
-            } else d = a.frames, this._frameWidth = d.width, this._frameHeight = d.height, this._regX = d.regX || 0,
-            this._regY = d.regY || 0, this._spacing = d.spacing || 0, this._margin = d.margin || 0,
+            } else d = a.frames, this._frameWidth = d.width, this._frameHeight = d.height, this._regX = d.regX || 0, 
+            this._regY = d.regY || 0, this._spacing = d.spacing || 0, this._margin = d.margin || 0, 
             this._numFrames = d.count, 0 == this._loadCount && this._calculateFrames();
             if (this._animations = [], null != (d = a.animations)) {
                 this._data = {};
@@ -529,13 +529,13 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                     var j = {
                         name: i
                     }, k = d[i];
-                    if ("number" == typeof k) e = j.frames = [ k ]; else if (Array.isArray(k)) if (1 == k.length) j.frames = [ k[0] ]; else for (j.speed = k[3],
+                    if ("number" == typeof k) e = j.frames = [ k ]; else if (Array.isArray(k)) if (1 == k.length) j.frames = [ k[0] ]; else for (j.speed = k[3], 
                     j.next = k[2], e = j.frames = [], b = k[0]; b <= k[1]; b++) e.push(b); else {
                         j.speed = k.speed, j.next = k.next;
                         var l = k.frames;
                         e = j.frames = "number" == typeof l ? [ l ] : l.slice(0);
                     }
-                    (j.next === !0 || void 0 === j.next) && (j.next = i), (j.next === !1 || e.length < 2 && j.next == i) && (j.next = null),
+                    (j.next === !0 || void 0 === j.next) && (j.next = i), (j.next === !1 || e.length < 2 && j.next == i) && (j.next = null), 
                     j.speed || (j.speed = 1), this._animations.push(i), this._data[i] = j;
                 }
             }
@@ -567,14 +567,14 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a() {
-        this.command = null, this._stroke = null, this._strokeStyle = null, this._oldStrokeStyle = null,
-        this._strokeDash = null, this._oldStrokeDash = null, this._strokeIgnoreScale = !1,
-        this._fill = null, this._instructions = [], this._commitIndex = 0, this._activeInstructions = [],
+        this.command = null, this._stroke = null, this._strokeStyle = null, this._oldStrokeStyle = null, 
+        this._strokeDash = null, this._oldStrokeDash = null, this._strokeIgnoreScale = !1, 
+        this._fill = null, this._instructions = [], this._commitIndex = 0, this._activeInstructions = [], 
         this._dirty = !1, this._storeIndex = 0, this.clear();
     }
     var b = a.prototype, c = a;
     a.getRGB = function(a, b, c, d) {
-        return null != a && null == c && (d = b, c = 255 & a, b = a >> 8 & 255, a = a >> 16 & 255),
+        return null != a && null == c && (d = b, c = 255 & a, b = a >> 8 & 255, a = a >> 16 & 255), 
         null == d ? "rgb(" + a + "," + b + "," + c + ")" : "rgba(" + a + "," + b + "," + c + "," + d + ")";
     }, a.getHSL = function(a, b, c, d) {
         return null == d ? "hsl(" + a % 360 + "," + b + "%," + c + "%)" : "hsla(" + a % 360 + "," + b + "%," + c + "%," + d + ")";
@@ -680,8 +680,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.closePath = function() {
         return this._activeInstructions.length ? this.append(new c.ClosePath()) : this;
     }, b.clear = function() {
-        return this._instructions.length = this._activeInstructions.length = this._commitIndex = 0,
-        this._strokeStyle = this._oldStrokeStyle = this._stroke = this._fill = this._strokeDash = this._oldStrokeDash = null,
+        return this._instructions.length = this._activeInstructions.length = this._commitIndex = 0, 
+        this._strokeStyle = this._oldStrokeStyle = this._stroke = this._fill = this._strokeDash = this._oldStrokeDash = null, 
         this._dirty = this._strokeIgnoreScale = !1, this;
     }, b.beginFill = function(a) {
         return this._setFill(a ? new c.Fill(a) : null);
@@ -694,10 +694,10 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.endFill = function() {
         return this.beginFill();
     }, b.setStrokeStyle = function(a, b, d, e, f) {
-        return this._updateInstructions(!0), this._strokeStyle = this.command = new c.StrokeStyle(a, b, d, e, f),
+        return this._updateInstructions(!0), this._strokeStyle = this.command = new c.StrokeStyle(a, b, d, e, f), 
         this._stroke && (this._stroke.ignoreScale = f), this._strokeIgnoreScale = f, this;
     }, b.setStrokeDash = function(a, b) {
-        return this._updateInstructions(!0), this._strokeDash = this.command = new c.StrokeDash(a, b),
+        return this._updateInstructions(!0), this._strokeDash = this.command = new c.StrokeDash(a, b), 
         this;
     }, b.beginStroke = function(a) {
         return this._setStroke(a ? new c.Stroke(a) : null);
@@ -720,7 +720,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.drawPolyStar = function(a, b, d, e, f, g) {
         return this.append(new c.PolyStar(a, b, d, e, f, g));
     }, b.append = function(a, b) {
-        return this._activeInstructions.push(a), this.command = a, b || (this._dirty = !0),
+        return this._activeInstructions.push(a), this.command = a, b || (this._dirty = !0), 
         this;
     }, b.decodePath = function(b) {
         for (var c = [ this.moveTo, this.lineTo, this.quadraticCurveTo, this.bezierCurveTo, this.closePath ], d = [ 2, 2, 4, 6, 0 ], e = 0, f = b.length, g = [], h = 0, i = 0, j = a.BASE_64; f > e; ) {
@@ -730,33 +730,33 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             m || (h = i = 0), g.length = 0, e++;
             for (var p = (l >> 2 & 1) + 2, q = 0; o > q; q++) {
                 var r = j[b.charAt(e)], s = r >> 5 ? -1 : 1;
-                r = (31 & r) << 6 | j[b.charAt(e + 1)], 3 == p && (r = r << 6 | j[b.charAt(e + 2)]),
+                r = (31 & r) << 6 | j[b.charAt(e + 1)], 3 == p && (r = r << 6 | j[b.charAt(e + 2)]), 
                 r = s * r / 10, q % 2 ? h = r += h : i = r += i, g[q] = r, e += p;
             }
             n.apply(this, g);
         }
         return this;
     }, b.store = function() {
-        return this._updateInstructions(!0), this._storeIndex = this._instructions.length,
+        return this._updateInstructions(!0), this._storeIndex = this._instructions.length, 
         this;
     }, b.unstore = function() {
         return this._storeIndex = 0, this;
     }, b.clone = function() {
         var b = new a();
-        return b.command = this.command, b._stroke = this._stroke, b._strokeStyle = this._strokeStyle,
-        b._strokeDash = this._strokeDash, b._strokeIgnoreScale = this._strokeIgnoreScale,
-        b._fill = this._fill, b._instructions = this._instructions.slice(), b._commitIndex = this._commitIndex,
-        b._activeInstructions = this._activeInstructions.slice(), b._dirty = this._dirty,
+        return b.command = this.command, b._stroke = this._stroke, b._strokeStyle = this._strokeStyle, 
+        b._strokeDash = this._strokeDash, b._strokeIgnoreScale = this._strokeIgnoreScale, 
+        b._fill = this._fill, b._instructions = this._instructions.slice(), b._commitIndex = this._commitIndex, 
+        b._activeInstructions = this._activeInstructions.slice(), b._dirty = this._dirty, 
         b._storeIndex = this._storeIndex, b;
     }, b.toString = function() {
         return "[Graphics]";
-    }, b.mt = b.moveTo, b.lt = b.lineTo, b.at = b.arcTo, b.bt = b.bezierCurveTo, b.qt = b.quadraticCurveTo,
-    b.a = b.arc, b.r = b.rect, b.cp = b.closePath, b.c = b.clear, b.f = b.beginFill,
-    b.lf = b.beginLinearGradientFill, b.rf = b.beginRadialGradientFill, b.bf = b.beginBitmapFill,
-    b.ef = b.endFill, b.ss = b.setStrokeStyle, b.sd = b.setStrokeDash, b.s = b.beginStroke,
-    b.ls = b.beginLinearGradientStroke, b.rs = b.beginRadialGradientStroke, b.bs = b.beginBitmapStroke,
-    b.es = b.endStroke, b.dr = b.drawRect, b.rr = b.drawRoundRect, b.rc = b.drawRoundRectComplex,
-    b.dc = b.drawCircle, b.de = b.drawEllipse, b.dp = b.drawPolyStar, b.p = b.decodePath,
+    }, b.mt = b.moveTo, b.lt = b.lineTo, b.at = b.arcTo, b.bt = b.bezierCurveTo, b.qt = b.quadraticCurveTo, 
+    b.a = b.arc, b.r = b.rect, b.cp = b.closePath, b.c = b.clear, b.f = b.beginFill, 
+    b.lf = b.beginLinearGradientFill, b.rf = b.beginRadialGradientFill, b.bf = b.beginBitmapFill, 
+    b.ef = b.endFill, b.ss = b.setStrokeStyle, b.sd = b.setStrokeDash, b.s = b.beginStroke, 
+    b.ls = b.beginLinearGradientStroke, b.rs = b.beginRadialGradientStroke, b.bs = b.beginBitmapStroke, 
+    b.es = b.endStroke, b.dr = b.drawRect, b.rr = b.drawRoundRect, b.rc = b.drawRoundRectComplex, 
+    b.dc = b.drawCircle, b.de = b.drawEllipse, b.dp = b.drawPolyStar, b.p = b.decodePath, 
     b._updateInstructions = function(b) {
         var c = this._instructions, d = this._activeInstructions, e = this._commitIndex;
         if (this._dirty && d.length) {
@@ -764,15 +764,15 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             var f = d.length, g = c.length;
             c.length = g + f;
             for (var h = 0; f > h; h++) c[h + g] = d[h];
-            this._fill && c.push(this._fill), this._stroke && (this._strokeDash !== this._oldStrokeDash && (this._oldStrokeDash = this._strokeDash,
-            c.push(this._strokeDash)), this._strokeStyle !== this._oldStrokeStyle && (this._oldStrokeStyle = this._strokeStyle,
+            this._fill && c.push(this._fill), this._stroke && (this._strokeDash !== this._oldStrokeDash && (this._oldStrokeDash = this._strokeDash, 
+            c.push(this._strokeDash)), this._strokeStyle !== this._oldStrokeStyle && (this._oldStrokeStyle = this._strokeStyle, 
             c.push(this._strokeStyle)), c.push(this._stroke)), this._dirty = !1;
         }
         b && (d.length = 0, this._commitIndex = c.length);
     }, b._setFill = function(a) {
         return this._updateInstructions(!0), this.command = this._fill = a, this;
     }, b._setStroke = function(a) {
-        return this._updateInstructions(!0), (this.command = this._stroke = a) && (a.ignoreScale = this._strokeIgnoreScale),
+        return this._updateInstructions(!0), (this.command = this._stroke = a) && (a.ignoreScale = this._strokeIgnoreScale), 
         this;
     }, (c.LineTo = function(a, b) {
         this.x = a, this.y = b;
@@ -787,7 +787,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }).prototype.exec = function(a) {
         a.arcTo(this.x1, this.y1, this.x2, this.y2, this.radius);
     }, (c.Arc = function(a, b, c, d, e, f) {
-        this.x = a, this.y = b, this.radius = c, this.startAngle = d, this.endAngle = e,
+        this.x = a, this.y = b, this.radius = c, this.startAngle = d, this.endAngle = e, 
         this.anticlockwise = !!f;
     }).prototype.exec = function(a) {
         a.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle, this.anticlockwise);
@@ -852,29 +852,29 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.path = !1, b = (c.Stroke = function(a, b) {
         this.style = a, this.ignoreScale = b;
     }).prototype, b.exec = function(a) {
-        this.style && (a.strokeStyle = this.style, this.ignoreScale && (a.save(), a.setTransform(1, 0, 0, 1, 0, 0)),
+        this.style && (a.strokeStyle = this.style, this.ignoreScale && (a.save(), a.setTransform(1, 0, 0, 1, 0, 0)), 
         a.stroke(), this.ignoreScale && a.restore());
-    }, b.linearGradient = c.Fill.prototype.linearGradient, b.radialGradient = c.Fill.prototype.radialGradient,
+    }, b.linearGradient = c.Fill.prototype.linearGradient, b.radialGradient = c.Fill.prototype.radialGradient, 
     b.bitmap = c.Fill.prototype.bitmap, b.path = !1, b = (c.StrokeStyle = function(a, b, c, d, e) {
         this.width = a, this.caps = b, this.joints = c, this.miterLimit = d, this.ignoreScale = e;
     }).prototype, b.exec = function(b) {
-        b.lineWidth = null == this.width ? "1" : this.width, b.lineCap = null == this.caps ? "butt" : isNaN(this.caps) ? this.caps : a.STROKE_CAPS_MAP[this.caps],
-        b.lineJoin = null == this.joints ? "miter" : isNaN(this.joints) ? this.joints : a.STROKE_JOINTS_MAP[this.joints],
-        b.miterLimit = null == this.miterLimit ? "10" : this.miterLimit, b.ignoreScale = null == this.ignoreScale ? !1 : this.ignoreScale;
+        b.lineWidth = null == this.width ? "1" : this.width, b.lineCap = null == this.caps ? "butt" : isNaN(this.caps) ? this.caps : a.STROKE_CAPS_MAP[this.caps], 
+        b.lineJoin = null == this.joints ? "miter" : isNaN(this.joints) ? this.joints : a.STROKE_JOINTS_MAP[this.joints], 
+        b.miterLimit = null == this.miterLimit ? "10" : this.miterLimit, b.ignoreScale = null != this.ignoreScale && this.ignoreScale;
     }, b.path = !1, (c.StrokeDash = function(a, b) {
         this.segments = a, this.offset = b || 0;
     }).prototype.exec = function(a) {
         a.setLineDash && (a.setLineDash(this.segments || c.StrokeDash.EMPTY_SEGMENTS), a.lineDashOffset = this.offset || 0);
     }, c.StrokeDash.EMPTY_SEGMENTS = [], (c.RoundRect = function(a, b, c, d, e, f, g, h) {
-        this.x = a, this.y = b, this.w = c, this.h = d, this.radiusTL = e, this.radiusTR = f,
+        this.x = a, this.y = b, this.w = c, this.h = d, this.radiusTL = e, this.radiusTR = f, 
         this.radiusBR = g, this.radiusBL = h;
     }).prototype.exec = function(a) {
         var b = (j > i ? i : j) / 2, c = 0, d = 0, e = 0, f = 0, g = this.x, h = this.y, i = this.w, j = this.h, k = this.radiusTL, l = this.radiusTR, m = this.radiusBR, n = this.radiusBL;
-        0 > k && (k *= c = -1), k > b && (k = b), 0 > l && (l *= d = -1), l > b && (l = b),
-        0 > m && (m *= e = -1), m > b && (m = b), 0 > n && (n *= f = -1), n > b && (n = b),
-        a.moveTo(g + i - l, h), a.arcTo(g + i + l * d, h - l * d, g + i, h + l, l), a.lineTo(g + i, h + j - m),
-        a.arcTo(g + i + m * e, h + j + m * e, g + i - m, h + j, m), a.lineTo(g + n, h + j),
-        a.arcTo(g - n * f, h + j + n * f, g, h + j - n, n), a.lineTo(g, h + k), a.arcTo(g - k * c, h - k * c, g + k, h, k),
+        0 > k && (k *= c = -1), k > b && (k = b), 0 > l && (l *= d = -1), l > b && (l = b), 
+        0 > m && (m *= e = -1), m > b && (m = b), 0 > n && (n *= f = -1), n > b && (n = b), 
+        a.moveTo(g + i - l, h), a.arcTo(g + i + l * d, h - l * d, g + i, h + l, l), a.lineTo(g + i, h + j - m), 
+        a.arcTo(g + i + m * e, h + j + m * e, g + i - m, h + j, m), a.lineTo(g + n, h + j), 
+        a.arcTo(g - n * f, h + j + n * f, g, h + j - n, n), a.lineTo(g, h + k), a.arcTo(g - k * c, h - k * c, g + k, h, k), 
         a.closePath();
     }, (c.Circle = function(a, b, c) {
         this.x = a, this.y = b, this.radius = c;
@@ -884,36 +884,36 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         this.x = a, this.y = b, this.w = c, this.h = d;
     }).prototype.exec = function(a) {
         var b = this.x, c = this.y, d = this.w, e = this.h, f = .5522848, g = d / 2 * f, h = e / 2 * f, i = b + d, j = c + e, k = b + d / 2, l = c + e / 2;
-        a.moveTo(b, l), a.bezierCurveTo(b, l - h, k - g, c, k, c), a.bezierCurveTo(k + g, c, i, l - h, i, l),
+        a.moveTo(b, l), a.bezierCurveTo(b, l - h, k - g, c, k, c), a.bezierCurveTo(k + g, c, i, l - h, i, l), 
         a.bezierCurveTo(i, l + h, k + g, j, k, j), a.bezierCurveTo(k - g, j, b, l + h, b, l);
     }, (c.PolyStar = function(a, b, c, d, e, f) {
         this.x = a, this.y = b, this.radius = c, this.sides = d, this.pointSize = e, this.angle = f;
     }).prototype.exec = function(a) {
         var b = this.x, c = this.y, d = this.radius, e = (this.angle || 0) / 180 * Math.PI, f = this.sides, g = 1 - (this.pointSize || 0), h = Math.PI / f;
         a.moveTo(b + Math.cos(e) * d, c + Math.sin(e) * d);
-        for (var i = 0; f > i; i++) e += h, 1 != g && a.lineTo(b + Math.cos(e) * d * g, c + Math.sin(e) * d * g),
+        for (var i = 0; f > i; i++) e += h, 1 != g && a.lineTo(b + Math.cos(e) * d * g, c + Math.sin(e) * d * g), 
         e += h, a.lineTo(b + Math.cos(e) * d, c + Math.sin(e) * d);
         a.closePath();
     }, a.beginCmd = new c.BeginPath(), createjs.Graphics = a;
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a() {
-        this.EventDispatcher_constructor(), this.alpha = 1, this.cacheCanvas = null, this.cacheID = 0,
-        this.id = createjs.UID.get(), this.mouseEnabled = !0, this.tickEnabled = !0, this.name = null,
-        this.parent = null, this.regX = 0, this.regY = 0, this.rotation = 0, this.scaleX = 1,
-        this.scaleY = 1, this.skewX = 0, this.skewY = 0, this.shadow = null, this.visible = !0,
-        this.x = 0, this.y = 0, this.transformMatrix = null, this.compositeOperation = null,
-        this.snapToPixel = !0, this.filters = null, this.mask = null, this.hitArea = null,
-        this.cursor = null, this._cacheOffsetX = 0, this._cacheOffsetY = 0, this._filterOffsetX = 0,
-        this._filterOffsetY = 0, this._cacheScale = 1, this._cacheDataURLID = 0, this._cacheDataURL = null,
-        this._props = new createjs.DisplayProps(), this._rectangle = new createjs.Rectangle(),
+        this.EventDispatcher_constructor(), this.alpha = 1, this.cacheCanvas = null, this.cacheID = 0, 
+        this.id = createjs.UID.get(), this.mouseEnabled = !0, this.tickEnabled = !0, this.name = null, 
+        this.parent = null, this.regX = 0, this.regY = 0, this.rotation = 0, this.scaleX = 1, 
+        this.scaleY = 1, this.skewX = 0, this.skewY = 0, this.shadow = null, this.visible = !0, 
+        this.x = 0, this.y = 0, this.transformMatrix = null, this.compositeOperation = null, 
+        this.snapToPixel = !0, this.filters = null, this.mask = null, this.hitArea = null, 
+        this.cursor = null, this._cacheOffsetX = 0, this._cacheOffsetY = 0, this._filterOffsetX = 0, 
+        this._filterOffsetY = 0, this._cacheScale = 1, this._cacheDataURLID = 0, this._cacheDataURL = null, 
+        this._props = new createjs.DisplayProps(), this._rectangle = new createjs.Rectangle(), 
         this._bounds = null;
     }
     var b = createjs.extend(a, createjs.EventDispatcher);
-    a._MOUSE_EVENTS = [ "click", "dblclick", "mousedown", "mouseout", "mouseover", "pressmove", "pressup", "rollout", "rollover" ],
+    a._MOUSE_EVENTS = [ "click", "dblclick", "mousedown", "mouseout", "mouseover", "pressmove", "pressup", "rollout", "rollover" ], 
     a.suppressCrossDomainErrors = !1, a._snapToPixelEnabled = !1;
     var c = createjs.createCanvas ? createjs.createCanvas() : document.createElement("canvas");
-    c.getContext && (a._hitTestCanvas = c, a._hitTestContext = c.getContext("2d"), c.width = c.height = 1),
+    c.getContext && (a._hitTestCanvas = c, a._hitTestContext = c.getContext("2d"), c.width = c.height = 1), 
     a._nextCacheID = 1, b.getStage = function() {
         for (var a = this, b = createjs.Stage; a.parent; ) a = a.parent;
         return a instanceof b ? a : null;
@@ -931,34 +931,34 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var c = this.cacheCanvas;
         if (b || !c) return !1;
         var d = this._cacheScale;
-        return a.drawImage(c, this._cacheOffsetX + this._filterOffsetX, this._cacheOffsetY + this._filterOffsetY, c.width / d, c.height / d),
+        return a.drawImage(c, this._cacheOffsetX + this._filterOffsetX, this._cacheOffsetY + this._filterOffsetY, c.width / d, c.height / d), 
         !0;
     }, b.updateContext = function(b) {
         var c = this, d = c.mask, e = c._props.matrix;
-        d && d.graphics && !d.graphics.isEmpty() && (d.getMatrix(e), b.transform(e.a, e.b, e.c, e.d, e.tx, e.ty),
-        d.graphics.drawAsPath(b), b.clip(), e.invert(), b.transform(e.a, e.b, e.c, e.d, e.tx, e.ty)),
+        d && d.graphics && !d.graphics.isEmpty() && (d.getMatrix(e), b.transform(e.a, e.b, e.c, e.d, e.tx, e.ty), 
+        d.graphics.drawAsPath(b), b.clip(), e.invert(), b.transform(e.a, e.b, e.c, e.d, e.tx, e.ty)), 
         this.getMatrix(e);
         var f = e.tx, g = e.ty;
-        a._snapToPixelEnabled && c.snapToPixel && (f = f + (0 > f ? -.5 : .5) | 0, g = g + (0 > g ? -.5 : .5) | 0),
-        b.transform(e.a, e.b, e.c, e.d, f, g), b.globalAlpha *= c.alpha, c.compositeOperation && (b.globalCompositeOperation = c.compositeOperation),
+        a._snapToPixelEnabled && c.snapToPixel && (f = f + (0 > f ? -.5 : .5) | 0, g = g + (0 > g ? -.5 : .5) | 0), 
+        b.transform(e.a, e.b, e.c, e.d, f, g), b.globalAlpha *= c.alpha, c.compositeOperation && (b.globalCompositeOperation = c.compositeOperation), 
         c.shadow && this._applyShadow(b, c.shadow);
     }, b.cache = function(a, b, c, d, e) {
-        e = e || 1, this.cacheCanvas || (this.cacheCanvas = createjs.createCanvas ? createjs.createCanvas() : document.createElement("canvas")),
-        this._cacheWidth = c, this._cacheHeight = d, this._cacheOffsetX = a, this._cacheOffsetY = b,
+        e = e || 1, this.cacheCanvas || (this.cacheCanvas = createjs.createCanvas ? createjs.createCanvas() : document.createElement("canvas")), 
+        this._cacheWidth = c, this._cacheHeight = d, this._cacheOffsetX = a, this._cacheOffsetY = b, 
         this._cacheScale = e, this.updateCache();
     }, b.updateCache = function(b) {
         var c = this.cacheCanvas;
         if (!c) throw "cache() must be called before updateCache()";
         var d = this._cacheScale, e = this._cacheOffsetX * d, f = this._cacheOffsetY * d, g = this._cacheWidth, h = this._cacheHeight, i = c.getContext("2d"), j = this._getFilterBounds();
-        e += this._filterOffsetX = j.x, f += this._filterOffsetY = j.y, g = Math.ceil(g * d) + j.width,
-        h = Math.ceil(h * d) + j.height, g != c.width || h != c.height ? (c.width = g, c.height = h) : b || i.clearRect(0, 0, g + 1, h + 1),
-        i.save(), i.globalCompositeOperation = b, i.setTransform(d, 0, 0, d, -e, -f), this.draw(i, !0),
+        e += this._filterOffsetX = j.x, f += this._filterOffsetY = j.y, g = Math.ceil(g * d) + j.width, 
+        h = Math.ceil(h * d) + j.height, g != c.width || h != c.height ? (c.width = g, c.height = h) : b || i.clearRect(0, 0, g + 1, h + 1), 
+        i.save(), i.globalCompositeOperation = b, i.setTransform(d, 0, 0, d, -e, -f), this.draw(i, !0), 
         this._applyFilters(), i.restore(), this.cacheID = a._nextCacheID++;
     }, b.uncache = function() {
-        this._cacheDataURL = this.cacheCanvas = null, this.cacheID = this._cacheOffsetX = this._cacheOffsetY = this._filterOffsetX = this._filterOffsetY = 0,
+        this._cacheDataURL = this.cacheCanvas = null, this.cacheID = this._cacheOffsetX = this._cacheOffsetY = this._filterOffsetX = this._filterOffsetY = 0, 
         this._cacheScale = 1;
     }, b.getCacheDataURL = function() {
-        return this.cacheCanvas ? (this.cacheID != this._cacheDataURLID && (this._cacheDataURL = this.cacheCanvas.toDataURL()),
+        return this.cacheCanvas ? (this.cacheID != this._cacheDataURLID && (this._cacheDataURL = this.cacheCanvas.toDataURL()), 
         this._cacheDataURL) : null;
     }, b.localToGlobal = function(a, b, c) {
         return this.getConcatenatedMatrix(this._props.matrix).transformPoint(a, b, c || new createjs.Point());
@@ -967,8 +967,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.localToLocal = function(a, b, c, d) {
         return d = this.localToGlobal(a, b, d), c.globalToLocal(d.x, d.y, d);
     }, b.setTransform = function(a, b, c, d, e, f, g, h, i) {
-        return this.x = a || 0, this.y = b || 0, this.scaleX = null == c ? 1 : c, this.scaleY = null == d ? 1 : d,
-        this.rotation = e || 0, this.skewX = f || 0, this.skewY = g || 0, this.regX = h || 0,
+        return this.x = a || 0, this.y = b || 0, this.scaleX = null == c ? 1 : c, this.scaleY = null == d ? 1 : d, 
+        this.rotation = e || 0, this.skewX = f || 0, this.skewY = g || 0, this.regX = h || 0, 
         this.regY = i || 0, this;
     }, b.getMatrix = function(a) {
         var b = this, c = a && a.identity() || new createjs.Matrix2D();
@@ -1006,19 +1006,19 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.toString = function() {
         return "[DisplayObject (name=" + this.name + ")]";
     }, b._cloneProps = function(a) {
-        return a.alpha = this.alpha, a.mouseEnabled = this.mouseEnabled, a.tickEnabled = this.tickEnabled,
-        a.name = this.name, a.regX = this.regX, a.regY = this.regY, a.rotation = this.rotation,
-        a.scaleX = this.scaleX, a.scaleY = this.scaleY, a.shadow = this.shadow, a.skewX = this.skewX,
-        a.skewY = this.skewY, a.visible = this.visible, a.x = this.x, a.y = this.y, a.compositeOperation = this.compositeOperation,
-        a.snapToPixel = this.snapToPixel, a.filters = null == this.filters ? null : this.filters.slice(0),
-        a.mask = this.mask, a.hitArea = this.hitArea, a.cursor = this.cursor, a._bounds = this._bounds,
+        return a.alpha = this.alpha, a.mouseEnabled = this.mouseEnabled, a.tickEnabled = this.tickEnabled, 
+        a.name = this.name, a.regX = this.regX, a.regY = this.regY, a.rotation = this.rotation, 
+        a.scaleX = this.scaleX, a.scaleY = this.scaleY, a.shadow = this.shadow, a.skewX = this.skewX, 
+        a.skewY = this.skewY, a.visible = this.visible, a.x = this.x, a.y = this.y, a.compositeOperation = this.compositeOperation, 
+        a.snapToPixel = this.snapToPixel, a.filters = null == this.filters ? null : this.filters.slice(0), 
+        a.mask = this.mask, a.hitArea = this.hitArea, a.cursor = this.cursor, a._bounds = this._bounds, 
         a;
     }, b._applyShadow = function(a, b) {
-        b = b || Shadow.identity, a.shadowColor = b.color, a.shadowOffsetX = b.offsetX,
+        b = b || Shadow.identity, a.shadowColor = b.color, a.shadowOffsetX = b.offsetX, 
         a.shadowOffsetY = b.offsetY, a.shadowBlur = b.blur;
     }, b._tick = function(a) {
         var b = this._listeners;
-        b && b.tick && (a.target = null, a.propagationStopped = a.immediatePropagationStopped = !1,
+        b && b.tick && (a.target = null, a.propagationStopped = a.immediatePropagationStopped = !1, 
         this.dispatchEvent(a));
     }, b._testHit = function(b) {
         try {
@@ -1042,12 +1042,12 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._transformBounds = function(a, b, c) {
         if (!a) return a;
         var d = a.x, e = a.y, f = a.width, g = a.height, h = this._props.matrix;
-        h = c ? h.identity() : this.getMatrix(h), (d || e) && h.appendTransform(0, 0, 1, 1, 0, 0, 0, -d, -e),
+        h = c ? h.identity() : this.getMatrix(h), (d || e) && h.appendTransform(0, 0, 1, 1, 0, 0, 0, -d, -e), 
         b && h.prependMatrix(b);
         var i = f * h.a, j = f * h.b, k = g * h.c, l = g * h.d, m = h.tx, n = h.ty, o = m, p = m, q = n, r = n;
-        return (d = i + m) < o ? o = d : d > p && (p = d), (d = i + k + m) < o ? o = d : d > p && (p = d),
-        (d = k + m) < o ? o = d : d > p && (p = d), (e = j + n) < q ? q = e : e > r && (r = e),
-        (e = j + l + n) < q ? q = e : e > r && (r = e), (e = l + n) < q ? q = e : e > r && (r = e),
+        return (d = i + m) < o ? o = d : d > p && (p = d), (d = i + k + m) < o ? o = d : d > p && (p = d), 
+        (d = k + m) < o ? o = d : d > p && (p = d), (e = j + n) < q ? q = e : e > r && (r = e), 
+        (e = j + l + n) < q ? q = e : e > r && (r = e), (e = l + n) < q ? q = e : e > r && (r = e), 
         a.setValues(o, q, p - o, r - q);
     }, b._hasMouseEventListener = function() {
         for (var b = a._MOUSE_EVENTS, c = 0, d = b.length; d > c; c++) if (this.hasEventListener(b[c])) return !0;
@@ -1086,7 +1086,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             for (var c = 0; b > c; c++) this.addChild(arguments[c]);
             return arguments[b - 1];
         }
-        return a.parent && a.parent.removeChild(a), a.parent = this, this.children.push(a),
+        return a.parent && a.parent.removeChild(a), a.parent = this, this.children.push(a), 
         a.dispatchEvent("added"), a;
     }, b.addChildAt = function(a, b) {
         var c = arguments.length, d = arguments[c - 1];
@@ -1095,7 +1095,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             for (var e = 0; c - 1 > e; e++) this.addChildAt(arguments[e], d + e);
             return arguments[c - 2];
         }
-        return a.parent && a.parent.removeChild(a), a.parent = this, this.children.splice(b, 0, a),
+        return a.parent && a.parent.removeChild(a), a.parent = this, this.children.splice(b, 0, a), 
         a.dispatchEvent("added"), a;
     }, b.removeChild = function(a) {
         var b = arguments.length;
@@ -1116,7 +1116,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         }
         if (0 > a || a > this.children.length - 1) return !1;
         var f = this.children[a];
-        return f && (f.parent = null), this.children.splice(a, 1), f.dispatchEvent("removed"),
+        return f && (f.parent = null), this.children.splice(a, 1), f.dispatchEvent("removed"), 
         !0;
     }, b.removeAllChildren = function() {
         for (var a = this.children; a.length; ) this.removeChildAt(0);
@@ -1133,7 +1133,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var c = this.children, d = c[a], e = c[b];
         d && e && (c[a] = e, c[b] = d);
     }, b.swapChildren = function(a, b) {
-        for (var c, d, e = this.children, f = 0, g = e.length; g > f && (e[f] == a && (c = f),
+        for (var c, d, e = this.children, f = 0, g = e.length; g > f && (e[f] == a && (c = f), 
         e[f] == b && (d = f), null == c || null == d); f++) ;
         f != g && (e[c] = b, e[d] = a);
     }, b.setChildIndex = function(a, b) {
@@ -1189,8 +1189,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             } else {
                 if (e && !f && !m._hasMouseEventListener()) continue;
                 var p = m.getConcatenatedDisplayProps(m._props);
-                if (h = p.matrix, n && (h.appendMatrix(n.getMatrix(n._props.matrix)), p.alpha = n.alpha),
-                i.globalAlpha = p.alpha, i.setTransform(h.a, h.b, h.c, h.d, h.tx - b, h.ty - c),
+                if (h = p.matrix, n && (h.appendMatrix(n.getMatrix(n._props.matrix)), p.alpha = n.alpha), 
+                i.globalAlpha = p.alpha, i.setTransform(h.a, h.b, h.c, h.d, h.tx - b, h.ty - c), 
                 (n || m).draw(i), !this._testHit(i)) continue;
                 if (i.setTransform(1, 0, 0, 1, 0, 0), i.clearRect(0, 0, 2, 2), !d) return e && !this.mouseChildren ? this : m;
                 d.push(m);
@@ -1203,9 +1203,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var e = this._props.matrix, f = a.parent;
         e = f ? f.getConcatenatedMatrix(e) : e.identity(), e = d.getMatrix(d._props.matrix).prependMatrix(e);
         var g = createjs.DisplayObject._hitTestContext;
-        return g.setTransform(e.a, e.b, e.c, e.d, e.tx - b, e.ty - c), d.graphics.drawAsPath(g),
-        g.fillStyle = "#000", g.fill(), this._testHit(g) ? (g.setTransform(1, 0, 0, 1, 0, 0),
-        g.clearRect(0, 0, 2, 2), !0) : !1;
+        return g.setTransform(e.a, e.b, e.c, e.d, e.tx - b, e.ty - c), d.graphics.drawAsPath(g), 
+        g.fillStyle = "#000", g.fill(), !!this._testHit(g) && (g.setTransform(1, 0, 0, 1, 0, 0), 
+        g.clearRect(0, 0, 2, 2), !0);
     }, b._getBounds = function(a, b) {
         var c = this.DisplayObject_getBounds();
         if (c) return this._transformBounds(c, a, b);
@@ -1220,17 +1220,17 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a) {
-        this.Container_constructor(), this.autoClear = !0, this.canvas = "string" == typeof a ? document.getElementById(a) : a,
-        this.mouseX = 0, this.mouseY = 0, this.drawRect = null, this.snapToPixelEnabled = !1,
-        this.mouseInBounds = !1, this.tickOnUpdate = !0, this.mouseMoveOutside = !1, this.preventSelection = !0,
-        this._pointerData = {}, this._pointerCount = 0, this._primaryPointerID = null, this._mouseOverIntervalID = null,
+        this.Container_constructor(), this.autoClear = !0, this.canvas = "string" == typeof a ? document.getElementById(a) : a, 
+        this.mouseX = 0, this.mouseY = 0, this.drawRect = null, this.snapToPixelEnabled = !1, 
+        this.mouseInBounds = !1, this.tickOnUpdate = !0, this.mouseMoveOutside = !1, this.preventSelection = !0, 
+        this._pointerData = {}, this._pointerCount = 0, this._primaryPointerID = null, this._mouseOverIntervalID = null, 
         this._nextStage = null, this._prevStage = null, this.enableDOMEvents(!0);
     }
     var b = createjs.extend(a, createjs.Container);
     b._get_nextStage = function() {
         return this._nextStage;
     }, b._set_nextStage = function(a) {
-        this._nextStage && (this._nextStage._prevStage = null), a && (a._prevStage = this),
+        this._nextStage && (this._nextStage._prevStage = null), a && (a._prevStage = this), 
         this._nextStage = a;
     };
     try {
@@ -1245,8 +1245,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         if (this.canvas && (this.tickOnUpdate && this.tick(a), this.dispatchEvent("drawstart", !1, !0) !== !1)) {
             createjs.DisplayObject._snapToPixelEnabled = this.snapToPixelEnabled;
             var b = this.drawRect, c = this.canvas.getContext("2d");
-            c.setTransform(1, 0, 0, 1, 0, 0), this.autoClear && (b ? c.clearRect(b.x, b.y, b.width, b.height) : c.clearRect(0, 0, this.canvas.width + 1, this.canvas.height + 1)),
-            c.save(), this.drawRect && (c.beginPath(), c.rect(b.x, b.y, b.width, b.height),
+            c.setTransform(1, 0, 0, 1, 0, 0), this.autoClear && (b ? c.clearRect(b.x, b.y, b.width, b.height) : c.clearRect(0, 0, this.canvas.width + 1, this.canvas.height + 1)), 
+            c.save(), this.drawRect && (c.beginPath(), c.rect(b.x, b.y, b.width, b.height), 
             c.clip()), this.updateContext(c), this.draw(c, !1), c.restore(), this.dispatchEvent("drawend");
         }
     }, b.tick = function(a) {
@@ -1272,7 +1272,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var h = this.canvas.toDataURL(b || "image/png");
         return a && (d.putImageData(c, 0, 0), d.globalCompositeOperation = g), h;
     }, b.enableMouseOver = function(a) {
-        if (this._mouseOverIntervalID && (clearInterval(this._mouseOverIntervalID), this._mouseOverIntervalID = null,
+        if (this._mouseOverIntervalID && (clearInterval(this._mouseOverIntervalID), this._mouseOverIntervalID = null, 
         0 == a && this._testMouseOver(!0)), null == a) a = 20; else if (0 >= a) return;
         var b = this;
         this._mouseOverIntervalID = setInterval(function() {
@@ -1343,8 +1343,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._handlePointerMove = function(a, b, c, d, e) {
         if ((!this._prevStage || void 0 !== e) && this.canvas) {
             var f = this._nextStage, g = this._getPointerData(a), h = g.inBounds;
-            this._updatePointerPosition(a, b, c, d), (h || g.inBounds || this.mouseMoveOutside) && (-1 === a && g.inBounds == !h && this._dispatchMouseEvent(this, h ? "mouseleave" : "mouseenter", !1, a, g, b),
-            this._dispatchMouseEvent(this, "stagemousemove", !1, a, g, b), this._dispatchMouseEvent(g.target, "pressmove", !0, a, g, b)),
+            this._updatePointerPosition(a, b, c, d), (h || g.inBounds || this.mouseMoveOutside) && (-1 === a && g.inBounds == !h && this._dispatchMouseEvent(this, h ? "mouseleave" : "mouseenter", !1, a, g, b), 
+            this._dispatchMouseEvent(this, "stagemousemove", !1, a, g, b), this._dispatchMouseEvent(g.target, "pressmove", !0, a, g, b)), 
             f && f._handlePointerMove(a, b, c, d, null);
         }
     }, b._updatePointerPosition = function(a, b, c, d) {
@@ -1353,9 +1353,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var f = this.canvas.width, g = this.canvas.height;
         c /= (e.right - e.left) / f, d /= (e.bottom - e.top) / g;
         var h = this._getPointerData(a);
-        (h.inBounds = c >= 0 && d >= 0 && f - 1 >= c && g - 1 >= d) ? (h.x = c, h.y = d) : this.mouseMoveOutside && (h.x = 0 > c ? 0 : c > f - 1 ? f - 1 : c,
-        h.y = 0 > d ? 0 : d > g - 1 ? g - 1 : d), h.posEvtObj = b, h.rawX = c, h.rawY = d,
-        (a === this._primaryPointerID || -1 === a) && (this.mouseX = h.x, this.mouseY = h.y,
+        (h.inBounds = c >= 0 && d >= 0 && f - 1 >= c && g - 1 >= d) ? (h.x = c, h.y = d) : this.mouseMoveOutside && (h.x = 0 > c ? 0 : c > f - 1 ? f - 1 : c, 
+        h.y = 0 > d ? 0 : d > g - 1 ? g - 1 : d), h.posEvtObj = b, h.rawX = c, h.rawY = d, 
+        (a === this._primaryPointerID || -1 === a) && (this.mouseX = h.x, this.mouseY = h.y, 
         this.mouseInBounds = h.inBounds);
     }, b._handleMouseUp = function(a) {
         this._handlePointerUp(-1, a, !1);
@@ -1363,18 +1363,18 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var e = this._nextStage, f = this._getPointerData(a);
         if (!this._prevStage || void 0 !== d) {
             var g = null, h = f.target;
-            d || !h && !e || (g = this._getObjectsUnderPoint(f.x, f.y, null, !0)), f.down && (this._dispatchMouseEvent(this, "stagemouseup", !1, a, f, b, g),
-            f.down = !1), g == h && this._dispatchMouseEvent(h, "click", !0, a, f, b), this._dispatchMouseEvent(h, "pressup", !0, a, f, b),
-            c ? (a == this._primaryPointerID && (this._primaryPointerID = null), delete this._pointerData[a]) : f.target = null,
+            d || !h && !e || (g = this._getObjectsUnderPoint(f.x, f.y, null, !0)), f.down && (this._dispatchMouseEvent(this, "stagemouseup", !1, a, f, b, g), 
+            f.down = !1), g == h && this._dispatchMouseEvent(h, "click", !0, a, f, b), this._dispatchMouseEvent(h, "pressup", !0, a, f, b), 
+            c ? (a == this._primaryPointerID && (this._primaryPointerID = null), delete this._pointerData[a]) : f.target = null, 
             e && e._handlePointerUp(a, b, c, d || g && this);
         }
     }, b._handleMouseDown = function(a) {
         this._handlePointerDown(-1, a, a.pageX, a.pageY);
     }, b._handlePointerDown = function(a, b, c, d, e) {
-        this.preventSelection && b.preventDefault(), (null == this._primaryPointerID || -1 === a) && (this._primaryPointerID = a),
+        this.preventSelection && b.preventDefault(), (null == this._primaryPointerID || -1 === a) && (this._primaryPointerID = a), 
         null != d && this._updatePointerPosition(a, b, c, d);
         var f = null, g = this._nextStage, h = this._getPointerData(a);
-        e || (f = h.target = this._getObjectsUnderPoint(h.x, h.y, null, !0)), h.inBounds && (this._dispatchMouseEvent(this, "stagemousedown", !1, a, h, b, f),
+        e || (f = h.target = this._getObjectsUnderPoint(h.x, h.y, null, !0)), h.inBounds && (this._dispatchMouseEvent(this, "stagemousedown", !1, a, h, b, f), 
         h.down = !0), this._dispatchMouseEvent(f, "mousedown", !0, a, h, b), g && g._handlePointerDown(a, b, c, d, e || f && this);
     }, b._testMouseOver = function(a, b, c) {
         if (!this._prevStage || void 0 !== b) {
@@ -1383,11 +1383,11 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             var e = this._getPointerData(-1);
             if (e && (a || this.mouseX != this._mouseOverX || this.mouseY != this._mouseOverY || !this.mouseInBounds)) {
                 var f, g, h, i = e.posEvtObj, j = c || i && i.target == this.canvas, k = null, l = -1, m = "";
-                !b && (a || this.mouseInBounds && j) && (k = this._getObjectsUnderPoint(this.mouseX, this.mouseY, null, !0),
+                !b && (a || this.mouseInBounds && j) && (k = this._getObjectsUnderPoint(this.mouseX, this.mouseY, null, !0), 
                 this._mouseOverX = this.mouseX, this._mouseOverY = this.mouseY);
                 var n = this._mouseOverTarget || [], o = n[n.length - 1], p = this._mouseOverTarget = [];
                 for (f = k; f; ) p.unshift(f), m || (m = f.cursor), f = f.parent;
-                for (this.canvas.style.cursor = m, !b && c && (c.canvas.style.cursor = m), g = 0,
+                for (this.canvas.style.cursor = m, !b && c && (c.canvas.style.cursor = m), g = 0, 
                 h = p.length; h > g && p[g] == n[g]; g++) l = g;
                 for (o != k && this._dispatchMouseEvent(o, "mouseout", !0, -1, e, i, k), g = n.length - 1; g > l; g--) this._dispatchMouseEvent(n[g], "rollout", !1, -1, e, i, k);
                 for (g = p.length - 1; g > l; g--) this._dispatchMouseEvent(p[g], "rollover", !1, -1, e, i, o);
@@ -1396,7 +1396,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         }
     }, b._handleDoubleClick = function(a, b) {
         var c = null, d = this._nextStage, e = this._getPointerData(-1);
-        b || (c = this._getObjectsUnderPoint(e.x, e.y, null, !0), this._dispatchMouseEvent(c, "dblclick", !0, -1, e, a)),
+        b || (c = this._getObjectsUnderPoint(e.x, e.y, null, !0), this._dispatchMouseEvent(c, "dblclick", !0, -1, e, a)), 
         d && d._handleDoubleClick(a, b || c && this);
     }, b._dispatchMouseEvent = function(a, b, c, d, e, f, g) {
         if (a && (c || a.hasEventListener(b))) {
@@ -1406,7 +1406,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, createjs.Stage = createjs.promote(a, "Container");
 }(), this.createjs = this.createjs || {}, function() {
     function a(a) {
-        this.DisplayObject_constructor(), "string" == typeof a ? (this.image = document.createElement("img"),
+        this.DisplayObject_constructor(), "string" == typeof a ? (this.image = document.createElement("img"), 
         this.image.src = a) : this.image = a, this.sourceRect = null;
     }
     var b = createjs.extend(a, createjs.DisplayObject);
@@ -1418,7 +1418,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var c = this.image, d = this.sourceRect;
         if (d) {
             var e = d.x, f = d.y, g = e + d.width, h = f + d.height, i = 0, j = 0, k = c.width, l = c.height;
-            0 > e && (i -= e, e = 0), g > k && (g = k), 0 > f && (j -= f, f = 0), h > l && (h = l),
+            0 > e && (i -= e, e = 0), g > k && (g = k), 0 > f && (j -= f, f = 0), h > l && (h = l), 
             a.drawImage(c, e, f, g - e, h - f, i, j, g - e, h - f);
         } else a.drawImage(c, 0, 0);
         return !0;
@@ -1429,7 +1429,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         return d ? this._rectangle.setValues(0, 0, c.width, c.height) : null;
     }, b.clone = function() {
         var b = new a(this.image);
-        return this.sourceRect && (b.sourceRect = this.sourceRect.clone()), this._cloneProps(b),
+        return this.sourceRect && (b.sourceRect = this.sourceRect.clone()), this._cloneProps(b), 
         b;
     }, b.toString = function() {
         return "[Bitmap (name=" + this.name + ")]";
@@ -1437,8 +1437,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b) {
-        this.DisplayObject_constructor(), this.currentFrame = 0, this.currentAnimation = null,
-        this.paused = !0, this.spriteSheet = a, this.currentAnimationFrame = 0, this.framerate = 0,
+        this.DisplayObject_constructor(), this.currentFrame = 0, this.currentAnimation = null, 
+        this.paused = !0, this.spriteSheet = a, this.currentAnimationFrame = 0, this.framerate = 0, 
         this._animation = null, this._currentFrame = null, this._skipAdvance = !1, null != b && this.gotoAndPlay(b);
     }
     var b = createjs.extend(a, createjs.DisplayObject);
@@ -1451,7 +1451,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var c = this.spriteSheet.getFrame(0 | this._currentFrame);
         if (!c) return !1;
         var d = c.rect;
-        return d.width && d.height && a.drawImage(c.image, d.x, d.y, d.width, d.height, -c.regX, -c.regY, d.width, d.height),
+        return d.width && d.height && a.drawImage(c.image, d.x, d.y, d.width, d.height, -c.regX, -c.regY, d.width, d.height), 
         !0;
     }, b.play = function() {
         this.paused = !1;
@@ -1471,12 +1471,12 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.toString = function() {
         return "[Sprite (name=" + this.name + ")]";
     }, b._cloneProps = function(a) {
-        return this.DisplayObject__cloneProps(a), a.currentFrame = this.currentFrame, a.currentAnimation = this.currentAnimation,
-        a.paused = this.paused, a.currentAnimationFrame = this.currentAnimationFrame, a.framerate = this.framerate,
-        a._animation = this._animation, a._currentFrame = this._currentFrame, a._skipAdvance = this._skipAdvance,
+        return this.DisplayObject__cloneProps(a), a.currentFrame = this.currentFrame, a.currentAnimation = this.currentAnimation, 
+        a.paused = this.paused, a.currentAnimationFrame = this.currentAnimationFrame, a.framerate = this.framerate, 
+        a._animation = this._animation, a._currentFrame = this._currentFrame, a._skipAdvance = this._skipAdvance, 
         a;
     }, b._tick = function(a) {
-        this.paused || (this._skipAdvance || this.advance(a && a.delta), this._skipAdvance = !1),
+        this.paused || (this._skipAdvance || this.advance(a && a.delta), this._skipAdvance = !1), 
         this.DisplayObject__tick(a);
     }, b._normalizeFrame = function(a) {
         a = a || 0;
@@ -1516,7 +1516,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var a = this.cacheCanvas || this.graphics && !this.graphics.isEmpty();
         return !!(this.visible && this.alpha > 0 && 0 != this.scaleX && 0 != this.scaleY && a);
     }, b.draw = function(a, b) {
-        return this.DisplayObject_draw(a, b) ? !0 : (this.graphics.draw(a, this), !0);
+        return !!this.DisplayObject_draw(a, b) || (this.graphics.draw(a, this), !0);
     }, b.clone = function(b) {
         var c = b && this.graphics ? this.graphics.clone() : this.graphics;
         return this._cloneProps(new a(c));
@@ -1526,12 +1526,12 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b, c) {
-        this.DisplayObject_constructor(), this.text = a, this.font = b, this.color = c,
-        this.textAlign = "left", this.textBaseline = "top", this.maxWidth = null, this.outline = 0,
+        this.DisplayObject_constructor(), this.text = a, this.font = b, this.color = c, 
+        this.textAlign = "left", this.textBaseline = "top", this.maxWidth = null, this.outline = 0, 
         this.lineHeight = 0, this.lineWidth = null;
     }
     var b = createjs.extend(a, createjs.DisplayObject), c = createjs.createCanvas ? createjs.createCanvas() : document.createElement("canvas");
-    c.getContext && (a._workingContext = c.getContext("2d"), c.width = c.height = 1),
+    c.getContext && (a._workingContext = c.getContext("2d"), c.width = c.height = 1), 
     a.H_OFFSETS = {
         start: 0,
         left: 0,
@@ -1551,7 +1551,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.draw = function(a, b) {
         if (this.DisplayObject_draw(a, b)) return !0;
         var c = this.color || "#000";
-        return this.outline ? (a.strokeStyle = c, a.lineWidth = 1 * this.outline) : a.fillStyle = c,
+        return this.outline ? (a.strokeStyle = c, a.lineWidth = 1 * this.outline) : a.fillStyle = c, 
         this._drawText(this._prepContext(a)), !0;
     }, b.getMeasuredWidth = function() {
         return this._getMeasuredWidth(this.text);
@@ -1569,18 +1569,18 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var b = {
             lines: []
         };
-        return b.lineHeight = this.lineHeight || this.getMeasuredLineHeight(), b.vOffset = b.lineHeight * a.V_OFFSETS[this.textBaseline || "top"],
+        return b.lineHeight = this.lineHeight || this.getMeasuredLineHeight(), b.vOffset = b.lineHeight * a.V_OFFSETS[this.textBaseline || "top"], 
         this._drawText(null, b, b.lines);
     }, b.clone = function() {
         return this._cloneProps(new a(this.text, this.font, this.color));
     }, b.toString = function() {
         return "[Text (text=" + (this.text.length > 20 ? this.text.substr(0, 17) + "..." : this.text) + ")]";
     }, b._cloneProps = function(a) {
-        return this.DisplayObject__cloneProps(a), a.textAlign = this.textAlign, a.textBaseline = this.textBaseline,
-        a.maxWidth = this.maxWidth, a.outline = this.outline, a.lineHeight = this.lineHeight,
+        return this.DisplayObject__cloneProps(a), a.textAlign = this.textAlign, a.textBaseline = this.textBaseline, 
+        a.maxWidth = this.maxWidth, a.outline = this.outline, a.lineHeight = this.lineHeight, 
         a.lineWidth = this.lineWidth, a;
     }, b._prepContext = function(a) {
-        return a.font = this.font || "10px sans-serif", a.textAlign = this.textAlign || "left",
+        return a.font = this.font || "10px sans-serif", a.textAlign = this.textAlign || "left", 
         a.textBaseline = this.textBaseline || "top", a;
     }, b._drawText = function(b, c, d) {
         var e = !!b;
@@ -1592,12 +1592,12 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                 l = n[0], m = b.measureText(l).width;
                 for (var o = 1, p = n.length; p > o; o += 2) {
                     var q = b.measureText(n[o] + n[o + 1]).width;
-                    m + q > this.lineWidth ? (e && this._drawTextLine(b, l, h * f), d && d.push(l),
-                    m > g && (g = m), l = n[o + 1], m = b.measureText(l).width, h++) : (l += n[o] + n[o + 1],
+                    m + q > this.lineWidth ? (e && this._drawTextLine(b, l, h * f), d && d.push(l), 
+                    m > g && (g = m), l = n[o + 1], m = b.measureText(l).width, h++) : (l += n[o] + n[o + 1], 
                     m += q);
                 }
             }
-            e && this._drawTextLine(b, l, h * f), d && d.push(l), c && null == m && (m = b.measureText(l).width),
+            e && this._drawTextLine(b, l, h * f), d && d.push(l), c && null == m && (m = b.measureText(l).width), 
             m > g && (g = m), h++;
         }
         return c && (c.width = g, c.height = h * f), e || b.restore(), c;
@@ -1612,7 +1612,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b) {
-        this.Container_constructor(), this.text = a || "", this.spriteSheet = b, this.lineHeight = 0,
+        this.Container_constructor(), this.text = a || "", this.spriteSheet = b, this.lineHeight = 0, 
         this.letterSpacing = 0, this.spaceWidth = 0, this._oldProps = {
             text: 0,
             spriteSheet: 0,
@@ -1631,13 +1631,13 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         return !!(this.visible && this.alpha > 0 && 0 !== this.scaleX && 0 !== this.scaleY && a);
     }, b.clone = function() {
         return this._cloneProps(new a(this.text, this.spriteSheet));
-    }, b.addChild = b.addChildAt = b.removeChild = b.removeChildAt = b.removeAllChildren = function() {},
+    }, b.addChild = b.addChildAt = b.removeChild = b.removeChildAt = b.removeAllChildren = function() {}, 
     b._cloneProps = function(a) {
-        return this.Container__cloneProps(a), a.lineHeight = this.lineHeight, a.letterSpacing = this.letterSpacing,
+        return this.Container__cloneProps(a), a.lineHeight = this.lineHeight, a.letterSpacing = this.letterSpacing, 
         a.spaceWidth = this.spaceWidth, a;
     }, b._getFrameIndex = function(a, b) {
         var c, d = b.getAnimation(a);
-        return d || (a != (c = a.toUpperCase()) || a != (c = a.toLowerCase()) || (c = null),
+        return d || (a != (c = a.toUpperCase()) || a != (c = a.toLowerCase()) || (c = null), 
         c && (d = b.getAnimation(c))), d && d.frames[0];
     }, b._getFrame = function(a, b) {
         var c = this._getFrameIndex(a, b);
@@ -1658,8 +1658,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                 var r = this.text.charAt(p);
                 if (" " != r || o) if ("\n" != r && "\r" != r) {
                     var s = this._getFrameIndex(r, i);
-                    null != s && (m > l ? b = k[l] : (k.push(b = j.length ? j.pop() : new createjs.Sprite()),
-                    b.parent = this, m++), b.spriteSheet = i, b.gotoAndStop(s), b.x = c, b.y = d, l++,
+                    null != s && (m > l ? b = k[l] : (k.push(b = j.length ? j.pop() : new createjs.Sprite()), 
+                    b.parent = this, m++), b.spriteSheet = i, b.gotoAndStop(s), b.x = c, b.y = d, l++, 
                     c += b.getBounds().width + this.letterSpacing);
                 } else "\r" == r && "\n" == this.text.charAt(p + 1) && p++, c = 0, d += h; else c += g;
             }
@@ -1670,20 +1670,20 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(b, c, d, e) {
-        this.Container_constructor(), !a.inited && a.init(), this.mode = b || a.INDEPENDENT,
+        this.Container_constructor(), !a.inited && a.init(), this.mode = b || a.INDEPENDENT, 
         this.startPosition = c || 0, this.loop = d, this.currentFrame = 0, this.timeline = new createjs.Timeline(null, e, {
             paused: !0,
             position: c,
             useTicks: !0
-        }), this.paused = !1, this.actionsEnabled = !0, this.autoReset = !0, this.frameBounds = this.frameBounds || null,
-        this.framerate = null, this._synchOffset = 0, this._prevPos = -1, this._prevPosition = 0,
+        }), this.paused = !1, this.actionsEnabled = !0, this.autoReset = !0, this.frameBounds = this.frameBounds || null, 
+        this.framerate = null, this._synchOffset = 0, this._prevPos = -1, this._prevPosition = 0, 
         this._t = 0, this._managed = {};
     }
     function b() {
         throw "MovieClipPlugin cannot be instantiated.";
     }
     var c = createjs.extend(a, createjs.Container);
-    a.INDEPENDENT = "independent", a.SINGLE_FRAME = "single", a.SYNCHED = "synched",
+    a.INDEPENDENT = "independent", a.SINGLE_FRAME = "single", a.SYNCHED = "synched", 
     a.inited = !1, a.init = function() {
         a.inited || (b.install(), a.inited = !0);
     }, c.getLabels = function() {
@@ -1712,7 +1712,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     c.initialize = a, c.isVisible = function() {
         return !!(this.visible && this.alpha > 0 && 0 != this.scaleX && 0 != this.scaleY);
     }, c.draw = function(a, b) {
-        return this.DisplayObject_draw(a, b) ? !0 : (this._updateTimeline(), this.Container_draw(a, b),
+        return !!this.DisplayObject_draw(a, b) || (this._updateTimeline(), this.Container_draw(a, b), 
         !0);
     }, c.play = function() {
         this.paused = !1;
@@ -1728,7 +1728,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             for (var d = this, e = d.framerate; (d = d.parent) && null == e; ) d.mode == c && (e = d._framerate);
             this._framerate = e;
             var f = null != e && -1 != e && null != b ? b / (1e3 / e) + this._t : 1, g = 0 | f;
-            for (this._t = f - g; !this.paused && g--; ) this._prevPosition = this._prevPos < 0 ? 0 : this._prevPosition + 1,
+            for (this._t = f - g; !this.paused && g--; ) this._prevPosition = this._prevPos < 0 ? 0 : this._prevPosition + 1, 
             this._updateTimeline();
         }
     }, c.clone = function() {
@@ -1739,15 +1739,15 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         this.advance(a && a.delta), this.Container__tick(a);
     }, c._goto = function(a) {
         var b = this.timeline.resolve(a);
-        null != b && (-1 == this._prevPos && (this._prevPos = NaN), this._prevPosition = b,
+        null != b && (-1 == this._prevPos && (this._prevPos = NaN), this._prevPosition = b, 
         this._t = 0, this._updateTimeline());
     }, c._reset = function() {
         this._prevPos = -1, this._t = this.currentFrame = 0, this.paused = !1;
     }, c._updateTimeline = function() {
         var b = this.timeline, c = this.mode != a.INDEPENDENT;
-        b.loop = null == this.loop ? !0 : this.loop;
+        b.loop = null == this.loop || this.loop;
         var d = c ? this.startPosition + (this.mode == a.SINGLE_FRAME ? 0 : this._synchOffset) : this._prevPos < 0 ? 0 : this._prevPosition, e = c || !this.actionsEnabled ? createjs.Tween.NONE : null;
-        if (this.currentFrame = b._calcPosition(d), b.setPosition(d, e), this._prevPosition = b._prevPosition,
+        if (this.currentFrame = b._calcPosition(d), b.setPosition(d, e), this._prevPosition = b._prevPosition, 
         this._prevPos != b._prevPos) {
             this.currentFrame = this._prevPos = b._prevPos;
             for (var f in this._managed) this._managed[f] = 1;
@@ -1771,11 +1771,11 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             this._addManagedChild(e, b);
         }
     }, c._addManagedChild = function(b, c) {
-        b._off || (this.addChildAt(b, 0), b instanceof a && (b._synchOffset = c, b.mode == a.INDEPENDENT && b.autoReset && !this._managed[b.id] && b._reset()),
+        b._off || (this.addChildAt(b, 0), b instanceof a && (b._synchOffset = c, b.mode == a.INDEPENDENT && b.autoReset && !this._managed[b.id] && b._reset()), 
         this._managed[b.id] = 2);
     }, c._getBounds = function(a, b) {
         var c = this.DisplayObject_getBounds();
-        return c || (this._updateTimeline(), this.frameBounds && (c = this._rectangle.copy(this.frameBounds[this.currentFrame]))),
+        return c || (this._updateTimeline(), this.frameBounds && (c = this._rectangle.copy(this.frameBounds[this.currentFrame]))), 
         c ? this._transformBounds(c, a, b) : this.Container__getBounds(a, b);
     }, createjs.MovieClip = createjs.promote(a, "Container"), b.priority = 100, b.install = function() {
         createjs.Tween.installPlugin(b, [ "startPosition" ]);
@@ -1790,7 +1790,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         throw "SpriteSheetUtils cannot be instantiated";
     }
     var b = createjs.createCanvas ? createjs.createCanvas() : document.createElement("canvas");
-    b.getContext && (a._workingCanvas = b, a._workingContext = b.getContext("2d"), b.width = b.height = 1),
+    b.getContext && (a._workingCanvas = b, a._workingContext = b.getContext("2d"), b.width = b.height = 1), 
     a.addFlippedFrames = function(b, c, d, e) {
         if (c || d || e) {
             var f = 0;
@@ -1805,16 +1805,16 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var g = document.createElement("img");
         return g.src = f.toDataURL("image/png"), g;
     }, a.mergeAlpha = function(a, b, c) {
-        c || (c = createjs.createCanvas ? createjs.createCanvas() : document.createElement("canvas")),
+        c || (c = createjs.createCanvas ? createjs.createCanvas() : document.createElement("canvas")), 
         c.width = Math.max(b.width, a.width), c.height = Math.max(b.height, a.height);
         var d = c.getContext("2d");
-        return d.save(), d.drawImage(a, 0, 0), d.globalCompositeOperation = "destination-in",
+        return d.save(), d.drawImage(a, 0, 0), d.globalCompositeOperation = "destination-in", 
         d.drawImage(b, 0, 0), d.restore(), c;
     }, a._flip = function(b, c, d, e) {
         for (var f = b._images, g = a._workingCanvas, h = a._workingContext, i = f.length / c, j = 0; i > j; j++) {
             var k = f[j];
-            k.__tmp = j, h.setTransform(1, 0, 0, 1, 0, 0), h.clearRect(0, 0, g.width + 1, g.height + 1),
-            g.width = k.width, g.height = k.height, h.setTransform(d ? -1 : 1, 0, 0, e ? -1 : 1, d ? k.width : 0, e ? k.height : 0),
+            k.__tmp = j, h.setTransform(1, 0, 0, 1, 0, 0), h.clearRect(0, 0, g.width + 1, g.height + 1), 
+            g.width = k.width, g.height = k.height, h.setTransform(d ? -1 : 1, 0, 0, e ? -1 : 1, d ? k.width : 0, e ? k.height : 0), 
             h.drawImage(k, 0, 0);
             var l = document.createElement("img");
             l.src = g.toDataURL("image/png"), l.width = k.width, l.height = k.height, f.push(l);
@@ -1830,7 +1830,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                 regX: k.regX,
                 regY: k.regY
             };
-            d && (o.x = l.width - o.x - o.width, p.regX = o.width - k.regX), e && (o.y = l.height - o.y - o.height,
+            d && (o.x = l.width - o.x - o.width, p.regX = o.width - k.regX), e && (o.y = l.height - o.y - o.height, 
             p.regY = o.height - k.regY), m.push(p);
         }
         var q = "_" + (d ? "h" : "") + (e ? "v" : ""), r = b._animations, s = b._data, t = r.length / c;
@@ -1851,14 +1851,14 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a) {
-        this.EventDispatcher_constructor(), this.maxWidth = 2048, this.maxHeight = 2048,
-        this.spriteSheet = null, this.scale = 1, this.padding = 1, this.timeSlice = .3,
-        this.progress = -1, this.framerate = a || 0, this._frames = [], this._animations = {},
-        this._data = null, this._nextFrameIndex = 0, this._index = 0, this._timerID = null,
+        this.EventDispatcher_constructor(), this.maxWidth = 2048, this.maxHeight = 2048, 
+        this.spriteSheet = null, this.scale = 1, this.padding = 1, this.timeSlice = .3, 
+        this.progress = -1, this.framerate = a || 0, this._frames = [], this._animations = {}, 
+        this._data = null, this._nextFrameIndex = 0, this._index = 0, this._timerID = null, 
         this._scale = 1;
     }
     var b = createjs.extend(a, createjs.EventDispatcher);
-    a.ERR_DIMENSIONS = "frame dimensions exceed max spritesheet dimensions", a.ERR_RUNNING = "a build is already running",
+    a.ERR_DIMENSIONS = "frame dimensions exceed max spritesheet dimensions", a.ERR_RUNNING = "a build is already running", 
     b.addFrame = function(b, c, d, e, f) {
         if (this._data) throw a.ERR_RUNNING;
         var g = c || b.bounds || b.nominalBounds;
@@ -1938,7 +1938,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             var h = this._fillRow(d, e, g, c, b);
             if (h.w > f && (f = h.w), e += h.h, !h.h || !d.length) {
                 var i = createjs.createCanvas ? createjs.createCanvas() : document.createElement("canvas");
-                i.width = this._getSize(f, this.maxWidth), i.height = this._getSize(e, this.maxHeight),
+                i.width = this._getSize(f, this.maxWidth), i.height = this._getSize(e, this.maxHeight), 
                 this._data.images[g] = i, h.h || (f = e = 0, g++);
             }
         }
@@ -1954,8 +1954,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         for (var i = h - c, j = f, k = 0, l = b.length - 1; l >= 0; l--) {
             var m = b[l], n = this._scale * m.scale, o = m.sourceRect, p = m.source, q = Math.floor(n * o.x - f), r = Math.floor(n * o.y - f), s = Math.ceil(n * o.height + 2 * f), t = Math.ceil(n * o.width + 2 * f);
             if (t > g) throw a.ERR_DIMENSIONS;
-            s > i || j + t > g || (m.img = d, m.rect = new createjs.Rectangle(j, c, t, s), k = k || s,
-            b.splice(l, 1), e[m.index] = [ j, c, t, s, d, Math.round(-q + n * p.regX - f), Math.round(-r + n * p.regY - f) ],
+            s > i || j + t > g || (m.img = d, m.rect = new createjs.Rectangle(j, c, t, s), k = k || s, 
+            b.splice(l, 1), e[m.index] = [ j, c, t, s, d, Math.round(-q + n * p.regX - f), Math.round(-r + n * p.regY - f) ], 
             j += t);
         }
         return {
@@ -1963,7 +1963,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             h: k
         };
     }, b._endBuild = function() {
-        this.spriteSheet = new createjs.SpriteSheet(this._data), this._data = null, this.progress = 1,
+        this.spriteSheet = new createjs.SpriteSheet(this._data), this._data = null, this.progress = 1, 
         this.dispatchEvent("complete");
     }, b._run = function() {
         for (var a = 50 * Math.max(.01, Math.min(.99, this.timeSlice || .3)), b = new Date().getTime() + a, c = !1; b > new Date().getTime(); ) if (!this._drawNext()) {
@@ -1983,17 +1983,17 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         }
     }, b._drawNext = function() {
         var a = this._frames[this._index], b = a.scale * this._scale, c = a.rect, d = a.sourceRect, e = this._data.images[a.img], f = e.getContext("2d");
-        return a.funct && a.funct(a.source, a.data), f.save(), f.beginPath(), f.rect(c.x, c.y, c.width, c.height),
-        f.clip(), f.translate(Math.ceil(c.x - d.x * b), Math.ceil(c.y - d.y * b)), f.scale(b, b),
+        return a.funct && a.funct(a.source, a.data), f.save(), f.beginPath(), f.rect(c.x, c.y, c.width, c.height), 
+        f.clip(), f.translate(Math.ceil(c.x - d.x * b), Math.ceil(c.y - d.y * b)), f.scale(b, b), 
         a.source.draw(f), f.restore(), ++this._index < this._frames.length;
     }, createjs.SpriteSheetBuilder = createjs.promote(a, "EventDispatcher");
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a) {
-        this.DisplayObject_constructor(), "string" == typeof a && (a = document.getElementById(a)),
+        this.DisplayObject_constructor(), "string" == typeof a && (a = document.getElementById(a)), 
         this.mouseEnabled = !1;
         var b = a.style;
-        b.position = "absolute", b.transformOrigin = b.WebkitTransformOrigin = b.msTransformOrigin = b.MozTransformOrigin = b.OTransformOrigin = "0% 0%",
+        b.position = "absolute", b.transformOrigin = b.WebkitTransformOrigin = b.msTransformOrigin = b.MozTransformOrigin = b.OTransformOrigin = "0% 0%", 
         this.htmlElement = a, this._oldProps = null;
     }
     var b = createjs.extend(a, createjs.DisplayObject);
@@ -2001,8 +2001,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         return null != this.htmlElement;
     }, b.draw = function(a, b) {
         return !0;
-    }, b.cache = function() {}, b.uncache = function() {}, b.updateCache = function() {},
-    b.hitTest = function() {}, b.localToGlobal = function() {}, b.globalToLocal = function() {},
+    }, b.cache = function() {}, b.uncache = function() {}, b.updateCache = function() {}, 
+    b.hitTest = function() {}, b.localToGlobal = function() {}, b.globalToLocal = function() {}, 
     b.localToLocal = function() {}, b.clone = function() {
         throw "DOMElement cannot be cloned.";
     }, b.toString = function() {
@@ -2018,8 +2018,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                 var g = this._oldProps, h = g && g.matrix, i = 1e4;
                 if (!h || !h.equals(e)) {
                     var j = "matrix(" + (e.a * i | 0) / i + "," + (e.b * i | 0) / i + "," + (e.c * i | 0) / i + "," + (e.d * i | 0) / i + "," + (e.tx + .5 | 0);
-                    c.transform = c.WebkitTransform = c.OTransform = c.msTransform = j + "," + (e.ty + .5 | 0) + ")",
-                    c.MozTransform = j + "px," + (e.ty + .5 | 0) + "px)", g || (g = this._oldProps = new createjs.DisplayProps(!0, NaN)),
+                    c.transform = c.WebkitTransform = c.OTransform = c.msTransform = j + "," + (e.ty + .5 | 0) + ")", 
+                    c.MozTransform = j + "px," + (e.ty + .5 | 0) + "px)", g || (g = this._oldProps = new createjs.DisplayProps(!0, NaN)), 
                     g.matrix.copy(e);
                 }
                 g.alpha != d.alpha && (c.opacity = "" + (d.alpha * i | 0) / i, g.alpha = d.alpha);
@@ -2039,7 +2039,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         } catch (j) {
             return !1;
         }
-        return this._applyFilter(i) ? (f.putImageData(i, g, h), !0) : !1;
+        return !!this._applyFilter(i) && (f.putImageData(i, g, h), !0);
     }, b.toString = function() {
         return "[Filter]";
     }, b.clone = function() {
@@ -2050,12 +2050,12 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b, c) {
-        (isNaN(a) || 0 > a) && (a = 0), (isNaN(b) || 0 > b) && (b = 0), (isNaN(c) || 1 > c) && (c = 1),
+        (isNaN(a) || 0 > a) && (a = 0), (isNaN(b) || 0 > b) && (b = 0), (isNaN(c) || 1 > c) && (c = 1), 
         this.blurX = 0 | a, this.blurY = 0 | b, this.quality = 0 | c;
     }
     var b = createjs.extend(a, createjs.Filter);
-    a.MUL_TABLE = [ 1, 171, 205, 293, 57, 373, 79, 137, 241, 27, 391, 357, 41, 19, 283, 265, 497, 469, 443, 421, 25, 191, 365, 349, 335, 161, 155, 149, 9, 278, 269, 261, 505, 245, 475, 231, 449, 437, 213, 415, 405, 395, 193, 377, 369, 361, 353, 345, 169, 331, 325, 319, 313, 307, 301, 37, 145, 285, 281, 69, 271, 267, 263, 259, 509, 501, 493, 243, 479, 118, 465, 459, 113, 446, 55, 435, 429, 423, 209, 413, 51, 403, 199, 393, 97, 3, 379, 375, 371, 367, 363, 359, 355, 351, 347, 43, 85, 337, 333, 165, 327, 323, 5, 317, 157, 311, 77, 305, 303, 75, 297, 294, 73, 289, 287, 71, 141, 279, 277, 275, 68, 135, 67, 133, 33, 262, 260, 129, 511, 507, 503, 499, 495, 491, 61, 121, 481, 477, 237, 235, 467, 232, 115, 457, 227, 451, 7, 445, 221, 439, 218, 433, 215, 427, 425, 211, 419, 417, 207, 411, 409, 203, 202, 401, 399, 396, 197, 49, 389, 387, 385, 383, 95, 189, 47, 187, 93, 185, 23, 183, 91, 181, 45, 179, 89, 177, 11, 175, 87, 173, 345, 343, 341, 339, 337, 21, 167, 83, 331, 329, 327, 163, 81, 323, 321, 319, 159, 79, 315, 313, 39, 155, 309, 307, 153, 305, 303, 151, 75, 299, 149, 37, 295, 147, 73, 291, 145, 289, 287, 143, 285, 71, 141, 281, 35, 279, 139, 69, 275, 137, 273, 17, 271, 135, 269, 267, 133, 265, 33, 263, 131, 261, 130, 259, 129, 257, 1 ],
-    a.SHG_TABLE = [ 0, 9, 10, 11, 9, 12, 10, 11, 12, 9, 13, 13, 10, 9, 13, 13, 14, 14, 14, 14, 10, 13, 14, 14, 14, 13, 13, 13, 9, 14, 14, 14, 15, 14, 15, 14, 15, 15, 14, 15, 15, 15, 14, 15, 15, 15, 15, 15, 14, 15, 15, 15, 15, 15, 15, 12, 14, 15, 15, 13, 15, 15, 15, 15, 16, 16, 16, 15, 16, 14, 16, 16, 14, 16, 13, 16, 16, 16, 15, 16, 13, 16, 15, 16, 14, 9, 16, 16, 16, 16, 16, 16, 16, 16, 16, 13, 14, 16, 16, 15, 16, 16, 10, 16, 15, 16, 14, 16, 16, 14, 16, 16, 14, 16, 16, 14, 15, 16, 16, 16, 14, 15, 14, 15, 13, 16, 16, 15, 17, 17, 17, 17, 17, 17, 14, 15, 17, 17, 16, 16, 17, 16, 15, 17, 16, 17, 11, 17, 16, 17, 16, 17, 16, 17, 17, 16, 17, 17, 16, 17, 17, 16, 16, 17, 17, 17, 16, 14, 17, 17, 17, 17, 15, 16, 14, 16, 15, 16, 13, 16, 15, 16, 14, 16, 15, 16, 12, 16, 15, 16, 17, 17, 17, 17, 17, 13, 16, 15, 17, 17, 17, 16, 15, 17, 17, 17, 16, 15, 17, 17, 14, 16, 17, 17, 16, 17, 17, 16, 15, 17, 16, 14, 17, 16, 15, 17, 16, 17, 17, 16, 17, 15, 16, 17, 14, 17, 16, 15, 17, 16, 17, 13, 17, 16, 17, 17, 16, 17, 14, 17, 16, 17, 16, 17, 16, 17, 9 ],
+    a.MUL_TABLE = [ 1, 171, 205, 293, 57, 373, 79, 137, 241, 27, 391, 357, 41, 19, 283, 265, 497, 469, 443, 421, 25, 191, 365, 349, 335, 161, 155, 149, 9, 278, 269, 261, 505, 245, 475, 231, 449, 437, 213, 415, 405, 395, 193, 377, 369, 361, 353, 345, 169, 331, 325, 319, 313, 307, 301, 37, 145, 285, 281, 69, 271, 267, 263, 259, 509, 501, 493, 243, 479, 118, 465, 459, 113, 446, 55, 435, 429, 423, 209, 413, 51, 403, 199, 393, 97, 3, 379, 375, 371, 367, 363, 359, 355, 351, 347, 43, 85, 337, 333, 165, 327, 323, 5, 317, 157, 311, 77, 305, 303, 75, 297, 294, 73, 289, 287, 71, 141, 279, 277, 275, 68, 135, 67, 133, 33, 262, 260, 129, 511, 507, 503, 499, 495, 491, 61, 121, 481, 477, 237, 235, 467, 232, 115, 457, 227, 451, 7, 445, 221, 439, 218, 433, 215, 427, 425, 211, 419, 417, 207, 411, 409, 203, 202, 401, 399, 396, 197, 49, 389, 387, 385, 383, 95, 189, 47, 187, 93, 185, 23, 183, 91, 181, 45, 179, 89, 177, 11, 175, 87, 173, 345, 343, 341, 339, 337, 21, 167, 83, 331, 329, 327, 163, 81, 323, 321, 319, 159, 79, 315, 313, 39, 155, 309, 307, 153, 305, 303, 151, 75, 299, 149, 37, 295, 147, 73, 291, 145, 289, 287, 143, 285, 71, 141, 281, 35, 279, 139, 69, 275, 137, 273, 17, 271, 135, 269, 267, 133, 265, 33, 263, 131, 261, 130, 259, 129, 257, 1 ], 
+    a.SHG_TABLE = [ 0, 9, 10, 11, 9, 12, 10, 11, 12, 9, 13, 13, 10, 9, 13, 13, 14, 14, 14, 14, 10, 13, 14, 14, 14, 13, 13, 13, 9, 14, 14, 14, 15, 14, 15, 14, 15, 15, 14, 15, 15, 15, 14, 15, 15, 15, 15, 15, 14, 15, 15, 15, 15, 15, 15, 12, 14, 15, 15, 13, 15, 15, 15, 15, 16, 16, 16, 15, 16, 14, 16, 16, 14, 16, 13, 16, 16, 16, 15, 16, 13, 16, 15, 16, 14, 9, 16, 16, 16, 16, 16, 16, 16, 16, 16, 13, 14, 16, 16, 15, 16, 16, 10, 16, 15, 16, 14, 16, 16, 14, 16, 16, 14, 16, 16, 14, 15, 16, 16, 16, 14, 15, 14, 15, 13, 16, 16, 15, 17, 17, 17, 17, 17, 17, 14, 15, 17, 17, 16, 16, 17, 16, 15, 17, 16, 17, 11, 17, 16, 17, 16, 17, 16, 17, 17, 16, 17, 17, 16, 17, 17, 16, 16, 17, 17, 17, 16, 14, 17, 17, 17, 17, 15, 16, 14, 16, 15, 16, 13, 16, 15, 16, 14, 16, 15, 16, 12, 16, 15, 16, 17, 17, 17, 17, 17, 13, 16, 15, 17, 17, 17, 16, 15, 17, 17, 17, 16, 15, 17, 17, 14, 16, 17, 17, 16, 17, 17, 16, 15, 17, 16, 14, 17, 16, 15, 17, 16, 17, 17, 16, 17, 15, 16, 17, 14, 17, 16, 15, 17, 16, 17, 13, 17, 16, 17, 17, 16, 17, 14, 17, 16, 17, 16, 17, 16, 17, 9 ], 
     b.getBounds = function(a) {
         var b = 0 | this.blurX, c = 0 | this.blurY;
         if (0 >= b && 0 >= c) return a;
@@ -2103,30 +2103,30 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             m = l = 0;
             var M = I, N = J;
             for (h = y; --h > -1; ) {
-                for (n = B * (r = f[0 | l]), o = B * (s = f[l + 1 | 0]), p = B * (t = f[l + 2 | 0]),
-                q = B * (u = f[l + 3 | 0]), E = D, i = B; --i > -1; ) E.r = r, E.g = s, E.b = t,
+                for (n = B * (r = f[0 | l]), o = B * (s = f[l + 1 | 0]), p = B * (t = f[l + 2 | 0]), 
+                q = B * (u = f[l + 3 | 0]), E = D, i = B; --i > -1; ) E.r = r, E.g = s, E.b = t, 
                 E.a = u, E = E.n;
-                for (i = 1; B > i; i++) j = l + ((i > z ? z : i) << 2) | 0, n += E.r = f[j], o += E.g = f[j + 1],
+                for (i = 1; B > i; i++) j = l + ((i > z ? z : i) << 2) | 0, n += E.r = f[j], o += E.g = f[j + 1], 
                 p += E.b = f[j + 2], q += E.a = f[j + 3], E = E.n;
-                for (H = D, g = 0; x > g; g++) f[l++] = n * M >>> N, f[l++] = o * M >>> N, f[l++] = p * M >>> N,
-                f[l++] = q * M >>> N, j = m + ((j = g + c + 1) < z ? j : z) << 2, n -= H.r - (H.r = f[j]),
-                o -= H.g - (H.g = f[j + 1]), p -= H.b - (H.b = f[j + 2]), q -= H.a - (H.a = f[j + 3]),
+                for (H = D, g = 0; x > g; g++) f[l++] = n * M >>> N, f[l++] = o * M >>> N, f[l++] = p * M >>> N, 
+                f[l++] = q * M >>> N, j = m + ((j = g + c + 1) < z ? j : z) << 2, n -= H.r - (H.r = f[j]), 
+                o -= H.g - (H.g = f[j + 1]), p -= H.b - (H.b = f[j + 2]), q -= H.a - (H.a = f[j + 3]), 
                 H = H.n;
                 m += x;
             }
             for (M = K, N = L, g = 0; x > g; g++) {
-                for (l = g << 2 | 0, n = C * (r = f[l]) | 0, o = C * (s = f[l + 1 | 0]) | 0, p = C * (t = f[l + 2 | 0]) | 0,
-                q = C * (u = f[l + 3 | 0]) | 0, G = F, i = 0; C > i; i++) G.r = r, G.g = s, G.b = t,
+                for (l = g << 2 | 0, n = C * (r = f[l]) | 0, o = C * (s = f[l + 1 | 0]) | 0, p = C * (t = f[l + 2 | 0]) | 0, 
+                q = C * (u = f[l + 3 | 0]) | 0, G = F, i = 0; C > i; i++) G.r = r, G.g = s, G.b = t, 
                 G.a = u, G = G.n;
-                for (k = x, i = 1; d >= i; i++) l = k + g << 2, n += G.r = f[l], o += G.g = f[l + 1],
+                for (k = x, i = 1; d >= i; i++) l = k + g << 2, n += G.r = f[l], o += G.g = f[l + 1], 
                 p += G.b = f[l + 2], q += G.a = f[l + 3], G = G.n, A > i && (k += x);
-                if (l = g, H = F, e > 0) for (h = 0; y > h; h++) j = l << 2, f[j + 3] = u = q * M >>> N,
-                u > 0 ? (f[j] = n * M >>> N, f[j + 1] = o * M >>> N, f[j + 2] = p * M >>> N) : f[j] = f[j + 1] = f[j + 2] = 0,
-                j = g + ((j = h + C) < A ? j : A) * x << 2, n -= H.r - (H.r = f[j]), o -= H.g - (H.g = f[j + 1]),
-                p -= H.b - (H.b = f[j + 2]), q -= H.a - (H.a = f[j + 3]), H = H.n, l += x; else for (h = 0; y > h; h++) j = l << 2,
-                f[j + 3] = u = q * M >>> N, u > 0 ? (u = 255 / u, f[j] = (n * M >>> N) * u, f[j + 1] = (o * M >>> N) * u,
-                f[j + 2] = (p * M >>> N) * u) : f[j] = f[j + 1] = f[j + 2] = 0, j = g + ((j = h + C) < A ? j : A) * x << 2,
-                n -= H.r - (H.r = f[j]), o -= H.g - (H.g = f[j + 1]), p -= H.b - (H.b = f[j + 2]),
+                if (l = g, H = F, e > 0) for (h = 0; y > h; h++) j = l << 2, f[j + 3] = u = q * M >>> N, 
+                u > 0 ? (f[j] = n * M >>> N, f[j + 1] = o * M >>> N, f[j + 2] = p * M >>> N) : f[j] = f[j + 1] = f[j + 2] = 0, 
+                j = g + ((j = h + C) < A ? j : A) * x << 2, n -= H.r - (H.r = f[j]), o -= H.g - (H.g = f[j + 1]), 
+                p -= H.b - (H.b = f[j + 2]), q -= H.a - (H.a = f[j + 3]), H = H.n, l += x; else for (h = 0; y > h; h++) j = l << 2, 
+                f[j + 3] = u = q * M >>> N, u > 0 ? (u = 255 / u, f[j] = (n * M >>> N) * u, f[j + 1] = (o * M >>> N) * u, 
+                f[j + 2] = (p * M >>> N) * u) : f[j] = f[j + 1] = f[j + 2] = 0, j = g + ((j = h + C) < A ? j : A) * x << 2, 
+                n -= H.r - (H.r = f[j]), o -= H.g - (H.g = f[j + 1]), p -= H.b - (H.b = f[j + 2]), 
                 q -= H.a - (H.a = f[j + 3]), H = H.n, l += x;
             }
         }
@@ -2153,7 +2153,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         if (this.alphaMap == this._alphaMap && this._mapData) return !0;
         this._mapData = null;
         var a, b = this._alphaMap = this.alphaMap, c = b;
-        b instanceof HTMLCanvasElement ? a = c.getContext("2d") : (c = createjs.createCanvas ? createjs.createCanvas() : document.createElement("canvas"),
+        b instanceof HTMLCanvasElement ? a = c.getContext("2d") : (c = createjs.createCanvas ? createjs.createCanvas() : document.createElement("canvas"), 
         c.width = b.width, c.height = b.height, a = c.getContext("2d"), a.drawImage(b, 0, 0));
         try {
             var d = a.getImageData(0, 0, b.width, b.height);
@@ -2169,9 +2169,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }
     var b = createjs.extend(a, createjs.Filter);
     b.applyFilter = function(a, b, c, d, e, f, g, h) {
-        return this.mask ? (f = f || a, null == g && (g = b), null == h && (h = c), f.save(),
-        a != f ? !1 : (f.globalCompositeOperation = "destination-in", f.drawImage(this.mask, g, h),
-        f.restore(), !0)) : !0;
+        return !this.mask || (f = f || a, null == g && (g = b), null == h && (h = c), f.save(), 
+        a == f && (f.globalCompositeOperation = "destination-in", f.drawImage(this.mask, g, h), 
+        f.restore(), !0));
     }, b.clone = function() {
         return new a(this.mask);
     }, b.toString = function() {
@@ -2180,8 +2180,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b, c, d, e, f, g, h) {
-        this.redMultiplier = null != a ? a : 1, this.greenMultiplier = null != b ? b : 1,
-        this.blueMultiplier = null != c ? c : 1, this.alphaMultiplier = null != d ? d : 1,
+        this.redMultiplier = null != a ? a : 1, this.greenMultiplier = null != b ? b : 1, 
+        this.blueMultiplier = null != c ? c : 1, this.alphaMultiplier = null != d ? d : 1, 
         this.redOffset = e || 0, this.greenOffset = f || 0, this.blueOffset = g || 0, this.alphaOffset = h || 0;
     }
     var b = createjs.extend(a, createjs.Filter);
@@ -2190,8 +2190,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.clone = function() {
         return new a(this.redMultiplier, this.greenMultiplier, this.blueMultiplier, this.alphaMultiplier, this.redOffset, this.greenOffset, this.blueOffset, this.alphaOffset);
     }, b._applyFilter = function(a) {
-        for (var b = a.data, c = b.length, d = 0; c > d; d += 4) b[d] = b[d] * this.redMultiplier + this.redOffset,
-        b[d + 1] = b[d + 1] * this.greenMultiplier + this.greenOffset, b[d + 2] = b[d + 2] * this.blueMultiplier + this.blueOffset,
+        for (var b = a.data, c = b.length, d = 0; c > d; d += 4) b[d] = b[d] * this.redMultiplier + this.redOffset, 
+        b[d + 1] = b[d + 1] * this.greenMultiplier + this.greenOffset, b[d + 2] = b[d + 2] * this.blueMultiplier + this.blueOffset, 
         b[d + 3] = b[d + 3] * this.alphaMultiplier + this.alphaOffset;
         return !0;
     }, createjs.ColorFilter = createjs.promote(a, "Filter");
@@ -2201,8 +2201,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         this.setColor(a, b, c, d);
     }
     var b = a.prototype;
-    a.DELTA_INDEX = [ 0, .01, .02, .04, .05, .06, .07, .08, .1, .11, .12, .14, .15, .16, .17, .18, .2, .21, .22, .24, .25, .27, .28, .3, .32, .34, .36, .38, .4, .42, .44, .46, .48, .5, .53, .56, .59, .62, .65, .68, .71, .74, .77, .8, .83, .86, .89, .92, .95, .98, 1, 1.06, 1.12, 1.18, 1.24, 1.3, 1.36, 1.42, 1.48, 1.54, 1.6, 1.66, 1.72, 1.78, 1.84, 1.9, 1.96, 2, 2.12, 2.25, 2.37, 2.5, 2.62, 2.75, 2.87, 3, 3.2, 3.4, 3.6, 3.8, 4, 4.3, 4.7, 4.9, 5, 5.5, 6, 6.5, 6.8, 7, 7.3, 7.5, 7.8, 8, 8.4, 8.7, 9, 9.4, 9.6, 9.8, 10 ],
-    a.IDENTITY_MATRIX = [ 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 ],
+    a.DELTA_INDEX = [ 0, .01, .02, .04, .05, .06, .07, .08, .1, .11, .12, .14, .15, .16, .17, .18, .2, .21, .22, .24, .25, .27, .28, .3, .32, .34, .36, .38, .4, .42, .44, .46, .48, .5, .53, .56, .59, .62, .65, .68, .71, .74, .77, .8, .83, .86, .89, .92, .95, .98, 1, 1.06, 1.12, 1.18, 1.24, 1.3, 1.36, 1.42, 1.48, 1.54, 1.6, 1.66, 1.72, 1.78, 1.84, 1.9, 1.96, 2, 2.12, 2.25, 2.37, 2.5, 2.62, 2.75, 2.87, 3, 3.2, 3.4, 3.6, 3.8, 4, 4.3, 4.7, 4.9, 5, 5.5, 6, 6.5, 6.8, 7, 7.3, 7.5, 7.8, 8, 8.4, 8.7, 9, 9.4, 9.6, 9.8, 10 ], 
+    a.IDENTITY_MATRIX = [ 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 ], 
     a.LENGTH = a.IDENTITY_MATRIX.length, b.setColor = function(a, b, c, d) {
         return this.reset().adjustColor(a, b, c, d);
     }, b.reset = function() {
@@ -2210,29 +2210,29 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.adjustColor = function(a, b, c, d) {
         return this.adjustHue(d), this.adjustContrast(b), this.adjustBrightness(a), this.adjustSaturation(c);
     }, b.adjustBrightness = function(a) {
-        return 0 == a || isNaN(a) ? this : (a = this._cleanValue(a, 255), this._multiplyMatrix([ 1, 0, 0, 0, a, 0, 1, 0, 0, a, 0, 0, 1, 0, a, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 ]),
+        return 0 == a || isNaN(a) ? this : (a = this._cleanValue(a, 255), this._multiplyMatrix([ 1, 0, 0, 0, a, 0, 1, 0, 0, a, 0, 0, 1, 0, a, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 ]), 
         this);
     }, b.adjustContrast = function(b) {
         if (0 == b || isNaN(b)) return this;
         b = this._cleanValue(b, 100);
         var c;
-        return 0 > b ? c = 127 + b / 100 * 127 : (c = b % 1, c = 0 == c ? a.DELTA_INDEX[b] : a.DELTA_INDEX[b << 0] * (1 - c) + a.DELTA_INDEX[(b << 0) + 1] * c,
-        c = 127 * c + 127), this._multiplyMatrix([ c / 127, 0, 0, 0, .5 * (127 - c), 0, c / 127, 0, 0, .5 * (127 - c), 0, 0, c / 127, 0, .5 * (127 - c), 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 ]),
+        return 0 > b ? c = 127 + b / 100 * 127 : (c = b % 1, c = 0 == c ? a.DELTA_INDEX[b] : a.DELTA_INDEX[b << 0] * (1 - c) + a.DELTA_INDEX[(b << 0) + 1] * c, 
+        c = 127 * c + 127), this._multiplyMatrix([ c / 127, 0, 0, 0, .5 * (127 - c), 0, c / 127, 0, 0, .5 * (127 - c), 0, 0, c / 127, 0, .5 * (127 - c), 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 ]), 
         this;
     }, b.adjustSaturation = function(a) {
         if (0 == a || isNaN(a)) return this;
         a = this._cleanValue(a, 100);
         var b = 1 + (a > 0 ? 3 * a / 100 : a / 100), c = .3086, d = .6094, e = .082;
-        return this._multiplyMatrix([ c * (1 - b) + b, d * (1 - b), e * (1 - b), 0, 0, c * (1 - b), d * (1 - b) + b, e * (1 - b), 0, 0, c * (1 - b), d * (1 - b), e * (1 - b) + b, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 ]),
+        return this._multiplyMatrix([ c * (1 - b) + b, d * (1 - b), e * (1 - b), 0, 0, c * (1 - b), d * (1 - b) + b, e * (1 - b), 0, 0, c * (1 - b), d * (1 - b), e * (1 - b) + b, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 ]), 
         this;
     }, b.adjustHue = function(a) {
         if (0 == a || isNaN(a)) return this;
         a = this._cleanValue(a, 180) / 180 * Math.PI;
         var b = Math.cos(a), c = Math.sin(a), d = .213, e = .715, f = .072;
-        return this._multiplyMatrix([ d + b * (1 - d) + c * -d, e + b * -e + c * -e, f + b * -f + c * (1 - f), 0, 0, d + b * -d + .143 * c, e + b * (1 - e) + .14 * c, f + b * -f + c * -.283, 0, 0, d + b * -d + c * -(1 - d), e + b * -e + c * e, f + b * (1 - f) + c * f, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 ]),
+        return this._multiplyMatrix([ d + b * (1 - d) + c * -d, e + b * -e + c * -e, f + b * -f + c * (1 - f), 0, 0, d + b * -d + .143 * c, e + b * (1 - e) + .14 * c, f + b * -f + c * -.283, 0, 0, d + b * -d + c * -(1 - d), e + b * -e + c * e, f + b * (1 - f) + c * f, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1 ]), 
         this;
     }, b.concat = function(b) {
-        return b = this._fixMatrix(b), b.length != a.LENGTH ? this : (this._multiplyMatrix(b),
+        return b = this._fixMatrix(b), b.length != a.LENGTH ? this : (this._multiplyMatrix(b), 
         this);
     }, b.clone = function() {
         return new a().copy(this);
@@ -2257,7 +2257,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._cleanValue = function(a, b) {
         return Math.min(b, Math.max(-b, a));
     }, b._fixMatrix = function(b) {
-        return b instanceof a && (b = b.toArray()), b.length < a.LENGTH ? b = b.slice(0, b.length).concat(a.IDENTITY_MATRIX.slice(b.length, a.LENGTH)) : b.length > a.LENGTH && (b = b.slice(0, a.LENGTH)),
+        return b instanceof a && (b = b.toArray()), b.length < a.LENGTH ? b = b.slice(0, b.length).concat(a.IDENTITY_MATRIX.slice(b.length, a.LENGTH)) : b.length > a.LENGTH && (b = b.slice(0, a.LENGTH)), 
         b;
     }, createjs.ColorMatrix = a;
 }(), this.createjs = this.createjs || {}, function() {
@@ -2271,9 +2271,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.clone = function() {
         return new a(this.matrix);
     }, b._applyFilter = function(a) {
-        for (var b, c, d, e, f = a.data, g = f.length, h = this.matrix, i = h[0], j = h[1], k = h[2], l = h[3], m = h[4], n = h[5], o = h[6], p = h[7], q = h[8], r = h[9], s = h[10], t = h[11], u = h[12], v = h[13], w = h[14], x = h[15], y = h[16], z = h[17], A = h[18], B = h[19], C = 0; g > C; C += 4) b = f[C],
-        c = f[C + 1], d = f[C + 2], e = f[C + 3], f[C] = b * i + c * j + d * k + e * l + m,
-        f[C + 1] = b * n + c * o + d * p + e * q + r, f[C + 2] = b * s + c * t + d * u + e * v + w,
+        for (var b, c, d, e, f = a.data, g = f.length, h = this.matrix, i = h[0], j = h[1], k = h[2], l = h[3], m = h[4], n = h[5], o = h[6], p = h[7], q = h[8], r = h[9], s = h[10], t = h[11], u = h[12], v = h[13], w = h[14], x = h[15], y = h[16], z = h[17], A = h[18], B = h[19], C = 0; g > C; C += 4) b = f[C], 
+        c = f[C + 1], d = f[C + 2], e = f[C + 3], f[C] = b * i + c * j + d * k + e * l + m, 
+        f[C + 1] = b * n + c * o + d * p + e * q + r, f[C + 2] = b * s + c * t + d * u + e * v + w, 
         f[C + 3] = b * x + c * y + d * z + e * A + B;
         return !0;
     }, createjs.ColorMatrixFilter = createjs.promote(a, "Filter");
@@ -2285,27 +2285,27 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     a.isSupported = function() {
         return !!("ontouchstart" in window || window.navigator.msPointerEnabled && window.navigator.msMaxTouchPoints > 0 || window.navigator.pointerEnabled && window.navigator.maxTouchPoints > 0);
     }, a.enable = function(b, c, d) {
-        return b && b.canvas && a.isSupported() ? b.__touch ? !0 : (b.__touch = {
+        return !!(b && b.canvas && a.isSupported()) && (!!b.__touch || (b.__touch = {
             pointers: {},
             multitouch: !c,
             preventDefault: !d,
             count: 0
-        }, "ontouchstart" in window ? a._IOS_enable(b) : (window.navigator.msPointerEnabled || window.navigator.pointerEnabled) && a._IE_enable(b),
-        !0) : !1;
+        }, "ontouchstart" in window ? a._IOS_enable(b) : (window.navigator.msPointerEnabled || window.navigator.pointerEnabled) && a._IE_enable(b), 
+        !0));
     }, a.disable = function(b) {
-        b && ("ontouchstart" in window ? a._IOS_disable(b) : (window.navigator.msPointerEnabled || window.navigator.pointerEnabled) && a._IE_disable(b),
+        b && ("ontouchstart" in window ? a._IOS_disable(b) : (window.navigator.msPointerEnabled || window.navigator.pointerEnabled) && a._IE_disable(b), 
         delete b.__touch);
     }, a._IOS_enable = function(b) {
         var c = b.canvas, d = b.__touch.f = function(c) {
             a._IOS_handleEvent(b, c);
         };
-        c.addEventListener("touchstart", d, !1), c.addEventListener("touchmove", d, !1),
+        c.addEventListener("touchstart", d, !1), c.addEventListener("touchmove", d, !1), 
         c.addEventListener("touchend", d, !1), c.addEventListener("touchcancel", d, !1);
     }, a._IOS_disable = function(a) {
         var b = a.canvas;
         if (b) {
             var c = a.__touch.f;
-            b.removeEventListener("touchstart", c, !1), b.removeEventListener("touchmove", c, !1),
+            b.removeEventListener("touchstart", c, !1), b.removeEventListener("touchmove", c, !1), 
             b.removeEventListener("touchend", c, !1), b.removeEventListener("touchcancel", c, !1);
         }
     }, a._IOS_handleEvent = function(a, b) {
@@ -2320,18 +2320,18 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var c = b.canvas, d = b.__touch.f = function(c) {
             a._IE_handleEvent(b, c);
         };
-        void 0 === window.navigator.pointerEnabled ? (c.addEventListener("MSPointerDown", d, !1),
-        window.addEventListener("MSPointerMove", d, !1), window.addEventListener("MSPointerUp", d, !1),
-        window.addEventListener("MSPointerCancel", d, !1), b.__touch.preventDefault && (c.style.msTouchAction = "none")) : (c.addEventListener("pointerdown", d, !1),
-        window.addEventListener("pointermove", d, !1), window.addEventListener("pointerup", d, !1),
-        window.addEventListener("pointercancel", d, !1), b.__touch.preventDefault && (c.style.touchAction = "none")),
+        void 0 === window.navigator.pointerEnabled ? (c.addEventListener("MSPointerDown", d, !1), 
+        window.addEventListener("MSPointerMove", d, !1), window.addEventListener("MSPointerUp", d, !1), 
+        window.addEventListener("MSPointerCancel", d, !1), b.__touch.preventDefault && (c.style.msTouchAction = "none")) : (c.addEventListener("pointerdown", d, !1), 
+        window.addEventListener("pointermove", d, !1), window.addEventListener("pointerup", d, !1), 
+        window.addEventListener("pointercancel", d, !1), b.__touch.preventDefault && (c.style.touchAction = "none")), 
         b.__touch.activeIDs = {};
     }, a._IE_disable = function(a) {
         var b = a.__touch.f;
-        void 0 === window.navigator.pointerEnabled ? (window.removeEventListener("MSPointerMove", b, !1),
-        window.removeEventListener("MSPointerUp", b, !1), window.removeEventListener("MSPointerCancel", b, !1),
-        a.canvas && a.canvas.removeEventListener("MSPointerDown", b, !1)) : (window.removeEventListener("pointermove", b, !1),
-        window.removeEventListener("pointerup", b, !1), window.removeEventListener("pointercancel", b, !1),
+        void 0 === window.navigator.pointerEnabled ? (window.removeEventListener("MSPointerMove", b, !1), 
+        window.removeEventListener("MSPointerUp", b, !1), window.removeEventListener("MSPointerCancel", b, !1), 
+        a.canvas && a.canvas.removeEventListener("MSPointerDown", b, !1)) : (window.removeEventListener("pointermove", b, !1), 
+        window.removeEventListener("pointerup", b, !1), window.removeEventListener("pointercancel", b, !1), 
         a.canvas && a.canvas.removeEventListener("pointerdown", b, !1));
     }, a._IE_handleEvent = function(a, b) {
         if (a) {
@@ -2340,7 +2340,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             if ("MSPointerDown" == c || "pointerdown" == c) {
                 if (b.srcElement != a.canvas) return;
                 e[d] = !0, this._handleStart(a, d, b, b.pageX, b.pageY);
-            } else e[d] && ("MSPointerMove" == c || "pointermove" == c ? this._handleMove(a, d, b, b.pageX, b.pageY) : ("MSPointerUp" == c || "MSPointerCancel" == c || "pointerup" == c || "pointercancel" == c) && (delete e[d],
+            } else e[d] && ("MSPointerMove" == c || "pointermove" == c ? this._handleMove(a, d, b, b.pageX, b.pageY) : ("MSPointerUp" == c || "MSPointerCancel" == c || "pointerup" == c || "pointercancel" == c) && (delete e[d], 
             this._handleEnd(a, d, b)));
         }
     }, a._handleStart = function(a, b, c, d, e) {
@@ -2383,7 +2383,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function(a) {
     "use strict";
     function b(a, b) {
-        this.Event_constructor("progress"), this.loaded = a, this.total = null == b ? 1 : b,
+        this.Event_constructor("progress"), this.loaded = a, this.total = null == b ? 1 : b, 
         this.progress = 0 == b ? 0 : this.loaded / this.total;
     }
     var c = createjs.extend(b, createjs.Event);
@@ -2405,7 +2405,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                         }).toJSON = c;
                         try {
                             k = "0" === i(0) && "0" === i(new g()) && '""' == i(new h()) && i(s) === q && i(q) === q && i() === q && "1" === i(c) && "[1]" == i([ c ]) && "[null]" == i([ q ]) && "null" == i(null) && "[null,null,null]" == i([ q, s, null ]) && i({
-                                a: [ c, !0, !1, null, "\x00\b\n\f\r	" ]
+                                a: [ c, !0, !1, null, "\0\b\n\f\r\t" ]
                             }) == e && "1" === i(null, c) && "[\n 1,\n 2\n]" == i([ 1, 2 ], null, 1) && '"-271821-04-20T00:00:00.000Z"' == i(new j(-864e13)) && '"+275760-09-13T00:00:00.000Z"' == i(new j(864e13)) && '"-000001-01-01T00:00:00.000Z"' == i(new j(-621987552e5)) && '"1969-12-31T23:59:59.999Z"' == i(new j(-1));
                         } catch (l) {
                             k = !1;
@@ -2421,7 +2421,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                             var n = 5 == c.a.length && 1 === c.a[0];
                             if (n) {
                                 try {
-                                    n = !m('"	"');
+                                    n = !m('"\t"');
                                 } catch (l) {}
                                 if (n) try {
                                     n = 1 !== m("01");
@@ -2475,7 +2475,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                     var c, d, e = s.call(a) == v;
                     for (c in a) e && "prototype" == c || !o.call(a, c) || (d = "constructor" === c) || b(c);
                     (d || o.call(a, c = "constructor")) && b(c);
-                } : (e = [ "valueOf", "toString", "toLocaleString", "propertyIsEnumerable", "isPrototypeOf", "hasOwnProperty", "constructor" ],
+                } : (e = [ "valueOf", "toString", "toLocaleString", "propertyIsEnumerable", "isPrototypeOf", "hasOwnProperty", "constructor" ], 
                 p = function(a, b) {
                     var d, f, g = s.call(a) == v, h = !g && "function" != typeof a.constructor && c[typeof a.hasOwnProperty] && a.hasOwnProperty || o;
                     for (d in a) g && "prototype" == d || !h.call(a, d) || b(d);
@@ -2524,9 +2524,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                         if (E) {
                             for (m = C(h / 864e5), j = C(m / 365.2425) + 1970 - 1; E(j + 1, 0) <= m; j++) ;
                             for (k = C((m - E(j, 0)) / 30.42); E(j, k + 1) <= m; k++) ;
-                            m = 1 + m - E(j, k), n = (h % 864e5 + 864e5) % 864e5, r = C(n / 36e5) % 24, t = C(n / 6e4) % 60,
+                            m = 1 + m - E(j, k), n = (h % 864e5 + 864e5) % 864e5, r = C(n / 36e5) % 24, t = C(n / 6e4) % 60, 
                             u = C(n / 1e3) % 60, v = n % 1e3;
-                        } else j = h.getUTCFullYear(), k = h.getUTCMonth(), m = h.getUTCDate(), r = h.getUTCHours(),
+                        } else j = h.getUTCFullYear(), k = h.getUTCMonth(), m = h.getUTCDate(), r = h.getUTCHours(), 
                         t = h.getUTCMinutes(), u = h.getUTCSeconds(), v = h.getUTCMilliseconds();
                         h = (0 >= j || j >= 1e4 ? (0 > j ? "-" : "+") + H(6, 0 > j ? -j : j) : H(4, j)) + "-" + H(2, k + 1) + "-" + H(2, m) + "T" + H(2, r) + ":" + H(2, t) + ":" + H(2, u) + "." + H(3, v) + "Z";
                     } else h = null;
@@ -2564,7 +2564,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                     34: '"',
                     47: "/",
                     98: "\b",
-                    116: "	",
+                    116: "\t",
                     110: "\n",
                     102: "\f",
                     114: "\r"
@@ -2617,14 +2617,14 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 
                       default:
                         if (b = L, 45 == e && (d = !0, e = f.charCodeAt(++L)), e >= 48 && 57 >= e) {
-                            for (48 == e && (e = f.charCodeAt(L + 1), e >= 48 && 57 >= e) && P(), d = !1; g > L && (e = f.charCodeAt(L),
+                            for (48 == e && (e = f.charCodeAt(L + 1), e >= 48 && 57 >= e) && P(), d = !1; g > L && (e = f.charCodeAt(L), 
                             e >= 48 && 57 >= e); L++) ;
                             if (46 == f.charCodeAt(L)) {
                                 for (c = ++L; g > c && (e = f.charCodeAt(c), e >= 48 && 57 >= e); c++) ;
                                 c == L && P(), L = c;
                             }
                             if (e = f.charCodeAt(L), 101 == e || 69 == e) {
-                                for (e = f.charCodeAt(++L), (43 == e || 45 == e) && L++, c = L; g > c && (e = f.charCodeAt(c),
+                                for (e = f.charCodeAt(++L), (43 == e || 45 == e) && L++, c = L; g > c && (e = f.charCodeAt(c), 
                                 e >= 48 && 57 >= e); c++) ;
                                 c == L && P(), L = c;
                             }
@@ -2641,13 +2641,13 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                     if ("$" == a && P(), "string" == typeof a) {
                         if ("@" == (B ? a.charAt(0) : a[0])) return a.slice(1);
                         if ("[" == a) {
-                            for (b = []; a = Q(), "]" != a; c || (c = !0)) c && ("," == a ? (a = Q(), "]" == a && P()) : P()),
+                            for (b = []; a = Q(), "]" != a; c || (c = !0)) c && ("," == a ? (a = Q(), "]" == a && P()) : P()), 
                             "," == a && P(), b.push(R(a));
                             return b;
                         }
                         if ("{" == a) {
-                            for (b = {}; a = Q(), "}" != a; c || (c = !0)) c && ("," == a ? (a = Q(), "}" == a && P()) : P()),
-                            ("," == a || "string" != typeof a || "@" != (B ? a.charAt(0) : a[0]) || ":" != Q()) && P(),
+                            for (b = {}; a = Q(), "}" != a; c || (c = !0)) c && ("," == a ? (a = Q(), "}" == a && P()) : P()), 
+                            ("," == a || "string" != typeof a || "@" != (B ? a.charAt(0) : a[0]) || ":" != Q()) && P(), 
                             b[a.slice(1)] = R(Q());
                             return b;
                         }
@@ -2666,7 +2666,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                 };
                 d.parse = function(a, b) {
                     var c, d;
-                    return L = 0, M = "" + a, c = R(Q()), "$" != Q() && P(), L = M = null, b && s.call(b) == v ? T((d = {},
+                    return L = 0, M = "" + a, c = R(Q()), "$" != Q() && P(), L = M = null, b && s.call(b) == v ? T((d = {}, 
                     d[""] = c, d), "", b) : c;
                 };
             }
@@ -2674,7 +2674,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         return d.runInContext = a, d;
     }
     var b = "function" == typeof define && define.amd, c = {
-        "function": !0,
+        function: !0,
         object: !0
     }, d = c[typeof exports] && exports && !exports.nodeType && exports, e = c[typeof window] && window || this, f = d && c[typeof module] && module && !module.nodeType && "object" == typeof global && global;
     if (!f || f.global !== f && f.window !== f && f.self !== f || (e = f), d && !b) a(e, d); else {
@@ -2727,8 +2727,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a() {
-        this.src = null, this.type = null, this.id = null, this.maintainOrder = !1, this.callback = null,
-        this.data = null, this.method = createjs.LoadItem.GET, this.values = null, this.headers = null,
+        this.src = null, this.type = null, this.id = null, this.maintainOrder = !1, this.callback = null, 
+        this.data = null, this.method = createjs.LoadItem.GET, this.values = null, this.headers = null, 
         this.withCredentials = !1, this.mimeType = null, this.crossOrigin = null, this.loadTimeout = c.LOAD_TIMEOUT_DEFAULT;
     }
     var b = a.prototype = {}, c = a;
@@ -2738,7 +2738,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             return d.src = b, d;
         }
         if (b instanceof c) return b;
-        if (b instanceof Object && b.src) return null == b.loadTimeout && (b.loadTimeout = c.LOAD_TIMEOUT_DEFAULT),
+        if (b instanceof Object && b.src) return null == b.loadTimeout && (b.loadTimeout = c.LOAD_TIMEOUT_DEFAULT), 
         b;
         throw new Error("Type not recognized.");
     }, b.set = function(a) {
@@ -2747,7 +2747,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, createjs.LoadItem = c;
 }(), function() {
     var a = {};
-    a.ABSOLUTE_PATT = /^(?:\w+:)?\/{2}/i, a.RELATIVE_PATT = /^[.\/]*?\//i, a.EXTENSION_PATT = /\/?[^\/]+\.(\w{1,5})$/i,
+    a.ABSOLUTE_PATT = /^(?:\w+:)?\/{2}/i, a.RELATIVE_PATT = /^[.\/]*?\//i, a.EXTENSION_PATT = /\/?[^\/]+\.(\w{1,5})$/i, 
     a.parseURI = function(b) {
         var c = {
             absolute: !1,
@@ -2757,7 +2757,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var d = b.indexOf("?");
         d > -1 && (b = b.substr(0, d));
         var e;
-        return a.ABSOLUTE_PATT.test(b) ? c.absolute = !0 : a.RELATIVE_PATT.test(b) && (c.relative = !0),
+        return a.ABSOLUTE_PATT.test(b) ? c.absolute = !0 : a.RELATIVE_PATT.test(b) && (c.relative = !0), 
         (e = b.match(a.EXTENSION_PATT)) && (c.extension = e[1].toLowerCase()), c;
     }, a.formatQueryString = function(a, b) {
         if (null == a) throw new Error("You must specify data.");
@@ -2794,9 +2794,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, a.isImageTag = function(a) {
         return a instanceof HTMLImageElement;
     }, a.isAudioTag = function(a) {
-        return window.HTMLAudioElement ? a instanceof HTMLAudioElement : !1;
+        return !!window.HTMLAudioElement && a instanceof HTMLAudioElement;
     }, a.isVideoTag = function(a) {
-        return window.HTMLVideoElement ? a instanceof HTMLVideoElement : !1;
+        return !!window.HTMLVideoElement && a instanceof HTMLVideoElement;
     }, a.isText = function(a) {
         switch (a) {
           case createjs.AbstractLoader.TEXT:
@@ -2855,15 +2855,15 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b, c) {
-        this.EventDispatcher_constructor(), this.loaded = !1, this.canceled = !1, this.progress = 0,
-        this.type = c, this.resultFormatter = null, a ? this._item = createjs.LoadItem.create(a) : this._item = null,
-        this._preferXHR = b, this._result = null, this._rawResult = null, this._loadedItems = null,
+        this.EventDispatcher_constructor(), this.loaded = !1, this.canceled = !1, this.progress = 0, 
+        this.type = c, this.resultFormatter = null, a ? this._item = createjs.LoadItem.create(a) : this._item = null, 
+        this._preferXHR = b, this._result = null, this._rawResult = null, this._loadedItems = null, 
         this._tagSrcAttribute = null, this._tag = null;
     }
     var b = createjs.extend(a, createjs.EventDispatcher), c = a;
-    c.POST = "POST", c.GET = "GET", c.BINARY = "binary", c.CSS = "css", c.IMAGE = "image",
-    c.JAVASCRIPT = "javascript", c.JSON = "json", c.JSONP = "jsonp", c.MANIFEST = "manifest",
-    c.SOUND = "sound", c.VIDEO = "video", c.SPRITESHEET = "spritesheet", c.SVG = "svg",
+    c.POST = "POST", c.GET = "GET", c.BINARY = "binary", c.CSS = "css", c.IMAGE = "image", 
+    c.JAVASCRIPT = "javascript", c.JSON = "json", c.JSONP = "jsonp", c.MANIFEST = "manifest", 
+    c.SOUND = "sound", c.VIDEO = "video", c.SPRITESHEET = "spritesheet", c.SVG = "svg", 
     c.TEXT = "text", c.XML = "xml", b.getItem = function() {
         return this._item;
     }, b.getResult = function(a) {
@@ -2873,16 +2873,16 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.setTag = function(a) {
         this._tag = a;
     }, b.load = function() {
-        this._createRequest(), this._request.on("complete", this, this), this._request.on("progress", this, this),
-        this._request.on("loadStart", this, this), this._request.on("abort", this, this),
+        this._createRequest(), this._request.on("complete", this, this), this._request.on("progress", this, this), 
+        this._request.on("loadStart", this, this), this._request.on("abort", this, this), 
         this._request.on("timeout", this, this), this._request.on("error", this, this);
         var a = new createjs.Event("initialize");
         a.loader = this._request, this.dispatchEvent(a), this._request.load();
     }, b.cancel = function() {
         this.canceled = !0, this.destroy();
     }, b.destroy = function() {
-        this._request && (this._request.removeAllEventListeners(), this._request.destroy()),
-        this._request = null, this._item = null, this._rawResult = null, this._result = null,
+        this._request && (this._request.removeAllEventListeners(), this._request.destroy()), 
+        this._request = null, this._item = null, this._rawResult = null, this._result = null, 
         this._loadItems = null, this.removeAllEventListeners();
     }, b.getLoadedItems = function() {
         return this._loadedItems;
@@ -2895,19 +2895,19 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._sendProgress = function(a) {
         if (!this._isCanceled()) {
             var b = null;
-            "number" == typeof a ? (this.progress = a, b = new createjs.ProgressEvent(this.progress)) : (b = a,
-            this.progress = a.loaded / a.total, b.progress = this.progress, (isNaN(this.progress) || this.progress == 1 / 0) && (this.progress = 0)),
+            "number" == typeof a ? (this.progress = a, b = new createjs.ProgressEvent(this.progress)) : (b = a, 
+            this.progress = a.loaded / a.total, b.progress = this.progress, (isNaN(this.progress) || this.progress == 1 / 0) && (this.progress = 0)), 
             this.hasEventListener("progress") && this.dispatchEvent(b);
         }
     }, b._sendComplete = function() {
         if (!this._isCanceled()) {
             this.loaded = !0;
             var a = new createjs.Event("complete");
-            a.rawResult = this._rawResult, null != this._result && (a.result = this._result),
+            a.rawResult = this._rawResult, null != this._result && (a.result = this._result), 
             this.dispatchEvent(a);
         }
     }, b._sendError = function(a) {
-        !this._isCanceled() && this.hasEventListener("error") && (null == a && (a = new createjs.ErrorEvent("PRELOAD_ERROR_EMPTY")),
+        !this._isCanceled() && this.hasEventListener("error") && (null == a && (a = new createjs.ErrorEvent("PRELOAD_ERROR_EMPTY")), 
         this.dispatchEvent(a));
     }, b._isCanceled = function() {
         return !(null != window.createjs && !this.canceled);
@@ -2916,7 +2916,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
           case "complete":
             this._rawResult = a.target._response;
             var b = this.resultFormatter && this.resultFormatter(this);
-            b instanceof Function ? b.call(this, createjs.proxy(this._resultFormatSuccess, this), createjs.proxy(this._resultFormatFailed, this)) : (this._result = b || this._rawResult,
+            b instanceof Function ? b.call(this, createjs.proxy(this._resultFormatSuccess, this), createjs.proxy(this._resultFormatFailed, this)) : (this._result = b || this._rawResult, 
             this._sendComplete());
             break;
 
@@ -2948,19 +2948,19 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b, c) {
-        this.AbstractLoader_constructor(a, b, c), this.resultFormatter = this._formatResult,
+        this.AbstractLoader_constructor(a, b, c), this.resultFormatter = this._formatResult, 
         this._tagSrcAttribute = "src", this.on("initialize", this._updateXHR, this);
     }
     var b = createjs.extend(a, createjs.AbstractLoader);
     b.load = function() {
-        this._tag || (this._tag = this._createTag(this._item.src)), this._tag.preload = "auto",
+        this._tag || (this._tag = this._createTag(this._item.src)), this._tag.preload = "auto", 
         this._tag.load(), this.AbstractLoader_load();
     }, b._createTag = function() {}, b._createRequest = function() {
         this._preferXHR ? this._request = new createjs.XHRRequest(this._item) : this._request = new createjs.MediaTagRequest(this._item, this._tag || this._createTag(), this._tagSrcAttribute);
     }, b._updateXHR = function(a) {
         a.loader.setResponseType && a.loader.setResponseType("blob");
     }, b._formatResult = function(a) {
-        if (this._tag.removeEventListener && this._tag.removeEventListener("canplaythrough", this._loadedHandler),
+        if (this._tag.removeEventListener && this._tag.removeEventListener("canplaythrough", this._loadedHandler), 
         this._tag.onstalled = null, this._preferXHR) {
             var b = window.URL || window.webkitURL, c = a.getResult(!0);
             a.getTag().src = b.createObjectURL(c);
@@ -2976,16 +2976,16 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b, c) {
-        this.AbstractRequest_constructor(a), this._tag = b, this._tagSrcAttribute = c, this._loadedHandler = createjs.proxy(this._handleTagComplete, this),
+        this.AbstractRequest_constructor(a), this._tag = b, this._tagSrcAttribute = c, this._loadedHandler = createjs.proxy(this._handleTagComplete, this), 
         this._addedToDOM = !1, this._startTagVisibility = null;
     }
     var b = createjs.extend(a, createjs.AbstractRequest);
     b.load = function() {
-        this._tag.onload = createjs.proxy(this._handleTagComplete, this), this._tag.onreadystatechange = createjs.proxy(this._handleReadyStateChange, this),
+        this._tag.onload = createjs.proxy(this._handleTagComplete, this), this._tag.onreadystatechange = createjs.proxy(this._handleReadyStateChange, this), 
         this._tag.onerror = createjs.proxy(this._handleError, this);
         var a = new createjs.Event("initialize");
-        a.loader = this._tag, this.dispatchEvent(a), this._hideTag(), this._loadTimeout = setTimeout(createjs.proxy(this._handleTimeout, this), this._item.loadTimeout),
-        this._tag[this._tagSrcAttribute] = this._item.src, null == this._tag.parentNode && (window.document.body.appendChild(this._tag),
+        a.loader = this._tag, this.dispatchEvent(a), this._hideTag(), this._loadTimeout = setTimeout(createjs.proxy(this._handleTimeout, this), this._item.loadTimeout), 
+        this._tag[this._tagSrcAttribute] = this._item.src, null == this._tag.parentNode && (window.document.body.appendChild(this._tag), 
         this._addedToDOM = !0);
     }, b.destroy = function() {
         this._clean(), this._tag = null, this.AbstractRequest_destroy();
@@ -2996,13 +2996,13 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._handleError = function() {
         this._clean(), this.dispatchEvent("error");
     }, b._handleTagComplete = function() {
-        this._rawResult = this._tag, this._result = this.resultFormatter && this.resultFormatter(this) || this._rawResult,
+        this._rawResult = this._tag, this._result = this.resultFormatter && this.resultFormatter(this) || this._rawResult, 
         this._clean(), this._showTag(), this.dispatchEvent("complete");
     }, b._handleTimeout = function() {
         this._clean(), this.dispatchEvent(new createjs.Event("timeout"));
     }, b._clean = function() {
-        this._tag.onload = null, this._tag.onreadystatechange = null, this._tag.onerror = null,
-        this._addedToDOM && null != this._tag.parentNode && this._tag.parentNode.removeChild(this._tag),
+        this._tag.onload = null, this._tag.onreadystatechange = null, this._tag.onerror = null, 
+        this._addedToDOM && null != this._tag.parentNode && this._tag.parentNode.removeChild(this._tag), 
         clearTimeout(this._loadTimeout);
     }, b._hideTag = function() {
         this._startTagVisibility = this._tag.style.visibility, this._tag.style.visibility = "hidden";
@@ -3019,8 +3019,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var a = createjs.proxy(this._handleStalled, this);
         this._stalledCallback = a;
         var b = createjs.proxy(this._handleProgress, this);
-        this._handleProgress = b, this._tag.addEventListener("stalled", a), this._tag.addEventListener("progress", b),
-        this._tag.addEventListener && this._tag.addEventListener("canplaythrough", this._loadedHandler, !1),
+        this._handleProgress = b, this._tag.addEventListener("stalled", a), this._tag.addEventListener("progress", b), 
+        this._tag.addEventListener && this._tag.addEventListener("canplaythrough", this._loadedHandler, !1), 
         this.TagRequest_load();
     }, b._handleReadyStateChange = function() {
         clearTimeout(this._loadTimeout);
@@ -3032,36 +3032,36 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             this.dispatchEvent(b);
         }
     }, b._clean = function() {
-        this._tag.removeEventListener && this._tag.removeEventListener("canplaythrough", this._loadedHandler),
-        this._tag.removeEventListener("stalled", this._stalledCallback), this._tag.removeEventListener("progress", this._progressCallback),
+        this._tag.removeEventListener && this._tag.removeEventListener("canplaythrough", this._loadedHandler), 
+        this._tag.removeEventListener("stalled", this._stalledCallback), this._tag.removeEventListener("progress", this._progressCallback), 
         this.TagRequest__clean();
     }, createjs.MediaTagRequest = createjs.promote(a, "TagRequest");
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a) {
-        this.AbstractRequest_constructor(a), this._request = null, this._loadTimeout = null,
-        this._xhrLevel = 1, this._response = null, this._rawResponse = null, this._canceled = !1,
-        this._handleLoadStartProxy = createjs.proxy(this._handleLoadStart, this), this._handleProgressProxy = createjs.proxy(this._handleProgress, this),
-        this._handleAbortProxy = createjs.proxy(this._handleAbort, this), this._handleErrorProxy = createjs.proxy(this._handleError, this),
-        this._handleTimeoutProxy = createjs.proxy(this._handleTimeout, this), this._handleLoadProxy = createjs.proxy(this._handleLoad, this),
-        this._handleReadyStateChangeProxy = createjs.proxy(this._handleReadyStateChange, this),
+        this.AbstractRequest_constructor(a), this._request = null, this._loadTimeout = null, 
+        this._xhrLevel = 1, this._response = null, this._rawResponse = null, this._canceled = !1, 
+        this._handleLoadStartProxy = createjs.proxy(this._handleLoadStart, this), this._handleProgressProxy = createjs.proxy(this._handleProgress, this), 
+        this._handleAbortProxy = createjs.proxy(this._handleAbort, this), this._handleErrorProxy = createjs.proxy(this._handleError, this), 
+        this._handleTimeoutProxy = createjs.proxy(this._handleTimeout, this), this._handleLoadProxy = createjs.proxy(this._handleLoad, this), 
+        this._handleReadyStateChangeProxy = createjs.proxy(this._handleReadyStateChange, this), 
         !this._createXHR(a);
     }
     var b = createjs.extend(a, createjs.AbstractRequest);
-    a.ACTIVEX_VERSIONS = [ "Msxml2.XMLHTTP.6.0", "Msxml2.XMLHTTP.5.0", "Msxml2.XMLHTTP.4.0", "MSXML2.XMLHTTP.3.0", "MSXML2.XMLHTTP", "Microsoft.XMLHTTP" ],
+    a.ACTIVEX_VERSIONS = [ "Msxml2.XMLHTTP.6.0", "Msxml2.XMLHTTP.5.0", "Msxml2.XMLHTTP.4.0", "MSXML2.XMLHTTP.3.0", "MSXML2.XMLHTTP", "Microsoft.XMLHTTP" ], 
     b.getResult = function(a) {
         return a && this._rawResponse ? this._rawResponse : this._response;
     }, b.cancel = function() {
         this.canceled = !0, this._clean(), this._request.abort();
     }, b.load = function() {
         if (null == this._request) return void this._handleError();
-        null != this._request.addEventListener ? (this._request.addEventListener("loadstart", this._handleLoadStartProxy, !1),
-        this._request.addEventListener("progress", this._handleProgressProxy, !1), this._request.addEventListener("abort", this._handleAbortProxy, !1),
-        this._request.addEventListener("error", this._handleErrorProxy, !1), this._request.addEventListener("timeout", this._handleTimeoutProxy, !1),
-        this._request.addEventListener("load", this._handleLoadProxy, !1), this._request.addEventListener("readystatechange", this._handleReadyStateChangeProxy, !1)) : (this._request.onloadstart = this._handleLoadStartProxy,
-        this._request.onprogress = this._handleProgressProxy, this._request.onabort = this._handleAbortProxy,
-        this._request.onerror = this._handleErrorProxy, this._request.ontimeout = this._handleTimeoutProxy,
-        this._request.onload = this._handleLoadProxy, this._request.onreadystatechange = this._handleReadyStateChangeProxy),
+        null != this._request.addEventListener ? (this._request.addEventListener("loadstart", this._handleLoadStartProxy, !1), 
+        this._request.addEventListener("progress", this._handleProgressProxy, !1), this._request.addEventListener("abort", this._handleAbortProxy, !1), 
+        this._request.addEventListener("error", this._handleErrorProxy, !1), this._request.addEventListener("timeout", this._handleTimeoutProxy, !1), 
+        this._request.addEventListener("load", this._handleLoadProxy, !1), this._request.addEventListener("readystatechange", this._handleReadyStateChangeProxy, !1)) : (this._request.onloadstart = this._handleLoadStartProxy, 
+        this._request.onprogress = this._handleProgressProxy, this._request.onabort = this._handleAbortProxy, 
+        this._request.onerror = this._handleErrorProxy, this._request.ontimeout = this._handleTimeoutProxy, 
+        this._request.onload = this._handleLoadProxy, this._request.onreadystatechange = this._handleReadyStateChangeProxy), 
         1 == this._xhrLevel && (this._loadTimeout = setTimeout(createjs.proxy(this._handleTimeout, this), this._item.loadTimeout));
         try {
             this._item.values && this._item.method != createjs.AbstractLoader.GET ? this._item.method == createjs.AbstractLoader.POST && this._request.send(createjs.RequestUtils.formatQueryString(this._item.values)) : this._request.send();
@@ -3069,7 +3069,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             this.dispatchEvent(new createjs.ErrorEvent("XHR_SEND", null, a));
         }
     }, b.setResponseType = function(a) {
-        "blob" === a && (a = window.URL ? "blob" : "arraybuffer", this._responseType = a),
+        "blob" === a && (a = window.URL ? "blob" : "arraybuffer", this._responseType = a), 
         this._request.responseType = a;
     }, b.getAllResponseHeaders = function() {
         return this._request.getAllResponseHeaders instanceof Function ? this._request.getAllResponseHeaders() : null;
@@ -3096,7 +3096,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             if (this._response = this._getResponse(), "arraybuffer" === this._responseType) try {
                 this._response = new Blob([ this._response ]);
             } catch (c) {
-                if (window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder || window.MSBlobBuilder,
+                if (window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder || window.MSBlobBuilder, 
                 "TypeError" === c.name && window.BlobBuilder) {
                     var d = new BlobBuilder();
                     d.append(this._response), this._response = d.getBlob();
@@ -3136,22 +3136,22 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             }
             if (null == d) return !1;
         }
-        null == a.mimeType && createjs.RequestUtils.isText(a.type) && (a.mimeType = "text/plain; charset=utf-8"),
+        null == a.mimeType && createjs.RequestUtils.isText(a.type) && (a.mimeType = "text/plain; charset=utf-8"), 
         a.mimeType && d.overrideMimeType && d.overrideMimeType(a.mimeType), this._xhrLevel = "string" == typeof d.responseType ? 2 : 1;
         var i = null;
-        if (i = a.method == createjs.AbstractLoader.GET ? createjs.RequestUtils.buildPath(a.src, a.values) : a.src,
-        d.open(a.method || createjs.AbstractLoader.GET, i, !0), b && d instanceof XMLHttpRequest && 1 == this._xhrLevel && (c.Origin = location.origin),
-        a.values && a.method == createjs.AbstractLoader.POST && (c["Content-Type"] = "application/x-www-form-urlencoded"),
+        if (i = a.method == createjs.AbstractLoader.GET ? createjs.RequestUtils.buildPath(a.src, a.values) : a.src, 
+        d.open(a.method || createjs.AbstractLoader.GET, i, !0), b && d instanceof XMLHttpRequest && 1 == this._xhrLevel && (c.Origin = location.origin), 
+        a.values && a.method == createjs.AbstractLoader.POST && (c["Content-Type"] = "application/x-www-form-urlencoded"), 
         b || c["X-Requested-With"] || (c["X-Requested-With"] = "XMLHttpRequest"), a.headers) for (var j in a.headers) c[j] = a.headers[j];
         for (j in c) d.setRequestHeader(j, c[j]);
-        return d instanceof XMLHttpRequest && void 0 !== a.withCredentials && (d.withCredentials = a.withCredentials),
+        return d instanceof XMLHttpRequest && void 0 !== a.withCredentials && (d.withCredentials = a.withCredentials), 
         this._request = d, !0;
     }, b._clean = function() {
-        clearTimeout(this._loadTimeout), null != this._request.removeEventListener ? (this._request.removeEventListener("loadstart", this._handleLoadStartProxy),
-        this._request.removeEventListener("progress", this._handleProgressProxy), this._request.removeEventListener("abort", this._handleAbortProxy),
-        this._request.removeEventListener("error", this._handleErrorProxy), this._request.removeEventListener("timeout", this._handleTimeoutProxy),
-        this._request.removeEventListener("load", this._handleLoadProxy), this._request.removeEventListener("readystatechange", this._handleReadyStateChangeProxy)) : (this._request.onloadstart = null,
-        this._request.onprogress = null, this._request.onabort = null, this._request.onerror = null,
+        clearTimeout(this._loadTimeout), null != this._request.removeEventListener ? (this._request.removeEventListener("loadstart", this._handleLoadStartProxy), 
+        this._request.removeEventListener("progress", this._handleProgressProxy), this._request.removeEventListener("abort", this._handleAbortProxy), 
+        this._request.removeEventListener("error", this._handleErrorProxy), this._request.removeEventListener("timeout", this._handleTimeoutProxy), 
+        this._request.removeEventListener("load", this._handleLoadProxy), this._request.removeEventListener("readystatechange", this._handleReadyStateChangeProxy)) : (this._request.onloadstart = null, 
+        this._request.onprogress = null, this._request.onabort = null, this._request.onerror = null, 
         this._request.ontimeout = null, this._request.onload = null, this._request.onreadystatechange = null);
     }, b.toString = function() {
         return "[PreloadJS XHRRequest]";
@@ -3159,25 +3159,25 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b, c) {
-        this.AbstractLoader_constructor(), this._plugins = [], this._typeCallbacks = {},
-        this._extensionCallbacks = {}, this.next = null, this.maintainScriptOrder = !0,
-        this.stopOnError = !1, this._maxConnections = 1, this._availableLoaders = [ createjs.ImageLoader, createjs.JavaScriptLoader, createjs.CSSLoader, createjs.JSONLoader, createjs.JSONPLoader, createjs.SoundLoader, createjs.ManifestLoader, createjs.SpriteSheetLoader, createjs.XMLLoader, createjs.SVGLoader, createjs.BinaryLoader, createjs.VideoLoader, createjs.TextLoader ],
+        this.AbstractLoader_constructor(), this._plugins = [], this._typeCallbacks = {}, 
+        this._extensionCallbacks = {}, this.next = null, this.maintainScriptOrder = !0, 
+        this.stopOnError = !1, this._maxConnections = 1, this._availableLoaders = [ createjs.ImageLoader, createjs.JavaScriptLoader, createjs.CSSLoader, createjs.JSONLoader, createjs.JSONPLoader, createjs.SoundLoader, createjs.ManifestLoader, createjs.SpriteSheetLoader, createjs.XMLLoader, createjs.SVGLoader, createjs.BinaryLoader, createjs.VideoLoader, createjs.TextLoader ], 
         this._defaultLoaderLength = this._availableLoaders.length, this.init(a, b, c);
     }
     var b = createjs.extend(a, createjs.AbstractLoader), c = a;
     b.init = function(a, b, c) {
-        this.useXHR = !0, this.preferXHR = !0, this._preferXHR = !0, this.setPreferXHR(a),
-        this._paused = !1, this._basePath = b, this._crossOrigin = c, this._loadStartWasDispatched = !1,
-        this._currentlyLoadingScript = null, this._currentLoads = [], this._loadQueue = [],
-        this._loadQueueBackup = [], this._loadItemsById = {}, this._loadItemsBySrc = {},
-        this._loadedResults = {}, this._loadedRawResults = {}, this._numItems = 0, this._numItemsLoaded = 0,
+        this.useXHR = !0, this.preferXHR = !0, this._preferXHR = !0, this.setPreferXHR(a), 
+        this._paused = !1, this._basePath = b, this._crossOrigin = c, this._loadStartWasDispatched = !1, 
+        this._currentlyLoadingScript = null, this._currentLoads = [], this._loadQueue = [], 
+        this._loadQueueBackup = [], this._loadItemsById = {}, this._loadItemsBySrc = {}, 
+        this._loadedResults = {}, this._loadedRawResults = {}, this._numItems = 0, this._numItemsLoaded = 0, 
         this._scriptOrder = [], this._loadedScripts = [], this._lastProgress = NaN;
-    }, c.loadTimeout = 8e3, c.LOAD_TIMEOUT = 0, c.BINARY = createjs.AbstractLoader.BINARY,
-    c.CSS = createjs.AbstractLoader.CSS, c.IMAGE = createjs.AbstractLoader.IMAGE, c.JAVASCRIPT = createjs.AbstractLoader.JAVASCRIPT,
-    c.JSON = createjs.AbstractLoader.JSON, c.JSONP = createjs.AbstractLoader.JSONP,
-    c.MANIFEST = createjs.AbstractLoader.MANIFEST, c.SOUND = createjs.AbstractLoader.SOUND,
-    c.VIDEO = createjs.AbstractLoader.VIDEO, c.SVG = createjs.AbstractLoader.SVG, c.TEXT = createjs.AbstractLoader.TEXT,
-    c.XML = createjs.AbstractLoader.XML, c.POST = createjs.AbstractLoader.POST, c.GET = createjs.AbstractLoader.GET,
+    }, c.loadTimeout = 8e3, c.LOAD_TIMEOUT = 0, c.BINARY = createjs.AbstractLoader.BINARY, 
+    c.CSS = createjs.AbstractLoader.CSS, c.IMAGE = createjs.AbstractLoader.IMAGE, c.JAVASCRIPT = createjs.AbstractLoader.JAVASCRIPT, 
+    c.JSON = createjs.AbstractLoader.JSON, c.JSONP = createjs.AbstractLoader.JSONP, 
+    c.MANIFEST = createjs.AbstractLoader.MANIFEST, c.SOUND = createjs.AbstractLoader.SOUND, 
+    c.VIDEO = createjs.AbstractLoader.VIDEO, c.SVG = createjs.AbstractLoader.SVG, c.TEXT = createjs.AbstractLoader.TEXT, 
+    c.XML = createjs.AbstractLoader.XML, c.POST = createjs.AbstractLoader.POST, c.GET = createjs.AbstractLoader.GET, 
     b.registerLoader = function(a) {
         if (!a || !a.canLoadItem) throw new Error("loader is of an incorrect type.");
         if (-1 != this._availableLoaders.indexOf(a)) throw new Error("loader already exists.");
@@ -3198,12 +3198,12 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         if (b) {
             for (;b.length; ) {
                 var d = b.pop(), e = this.getResult(d);
-                for (f = this._loadQueue.length - 1; f >= 0; f--) if (g = this._loadQueue[f].getItem(),
+                for (f = this._loadQueue.length - 1; f >= 0; f--) if (g = this._loadQueue[f].getItem(), 
                 g.id == d || g.src == d) {
                     this._loadQueue.splice(f, 1)[0].cancel();
                     break;
                 }
-                for (f = this._loadQueueBackup.length - 1; f >= 0; f--) if (g = this._loadQueueBackup[f].getItem(),
+                for (f = this._loadQueueBackup.length - 1; f >= 0; f--) if (g = this._loadQueueBackup[f].getItem(), 
                 g.id == d || g.src == d) {
                     this._loadQueueBackup.splice(f, 1)[0].cancel();
                     break;
@@ -3292,14 +3292,14 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         this._paused = a, this._paused || this._loadNext();
     }, b.close = function() {
         for (;this._currentLoads.length; ) this._currentLoads.pop().cancel();
-        this._scriptOrder.length = 0, this._loadedScripts.length = 0, this.loadStartWasDispatched = !1,
+        this._scriptOrder.length = 0, this._loadedScripts.length = 0, this.loadStartWasDispatched = !1, 
         this._itemCount = 0, this._lastProgress = NaN;
     }, b._addItem = function(a, b, c) {
         var d = this._createLoadItem(a, b, c);
         if (null != d) {
             var e = this._createLoader(d);
-            null != e && ("plugins" in e && (e.plugins = this._plugins), d._loader = e, this._loadQueue.push(e),
-            this._loadQueueBackup.push(e), this._numItems++, this._updateProgress(), (this.maintainScriptOrder && d.type == createjs.LoadQueue.JAVASCRIPT || d.maintainOrder === !0) && (this._scriptOrder.push(d),
+            null != e && ("plugins" in e && (e.plugins = this._plugins), d._loader = e, this._loadQueue.push(e), 
+            this._loadQueueBackup.push(e), this._numItems++, this._updateProgress(), (this.maintainScriptOrder && d.type == createjs.LoadQueue.JAVASCRIPT || d.maintainOrder === !0) && (this._scriptOrder.push(d), 
             this._loadedScripts.push(null)));
         }
     }, b._createLoadItem = function(a, b, c) {
@@ -3329,10 +3329,10 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         if (j) {
             var k = j.callback.call(j.scope, d, this);
             if (k === !1) return null;
-            k === !0 || null != k && (d._loader = k), h = createjs.RequestUtils.parseURI(d.src),
+            k === !0 || null != k && (d._loader = k), h = createjs.RequestUtils.parseURI(d.src), 
             null != h.extension && (d.ext = h.extension);
         }
-        return this._loadItemsById[d.id] = d, this._loadItemsBySrc[d.src] = d, null == d.crossOrigin && (d.crossOrigin = this._crossOrigin),
+        return this._loadItemsById[d.id] = d, this._loadItemsBySrc[d.src] = d, null == d.crossOrigin && (d.crossOrigin = this._crossOrigin), 
         d;
     }, b._createLoader = function(a) {
         if (null != a._loader) return a._loader;
@@ -3343,8 +3343,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         return null;
     }, b._loadNext = function() {
         if (!this._paused) {
-            this._loadStartWasDispatched || (this._sendLoadStart(), this._loadStartWasDispatched = !0),
-            this._numItems == this._numItemsLoaded ? (this.loaded = !0, this._sendComplete(),
+            this._loadStartWasDispatched || (this._sendLoadStart(), this._loadStartWasDispatched = !0), 
+            this._numItems == this._numItemsLoaded ? (this.loaded = !0, this._sendComplete(), 
             this.next && this.next.load && this.next.load()) : this.loaded = !1;
             for (var a = 0; a < this._loadQueue.length && !(this._currentLoads.length >= this._maxConnections); a++) {
                 var b = this._loadQueue[a];
@@ -3352,9 +3352,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             }
         }
     }, b._loadItem = function(a) {
-        a.on("fileload", this._handleFileLoad, this), a.on("progress", this._handleProgress, this),
-        a.on("complete", this._handleFileComplete, this), a.on("error", this._handleError, this),
-        a.on("fileerror", this._handleFileError, this), this._currentLoads.push(a), this._sendFileStart(a.getItem()),
+        a.on("fileload", this._handleFileLoad, this), a.on("progress", this._handleProgress, this), 
+        a.on("complete", this._handleFileComplete, this), a.on("error", this._handleError, this), 
+        a.on("fileerror", this._handleFileError, this), this._currentLoads.push(a), this._sendFileStart(a.getItem()), 
         a.load();
     }, b._handleFileLoad = function(a) {
         a.target = null, this.dispatchEvent(a);
@@ -3365,20 +3365,20 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var b = a.target;
         this._numItemsLoaded++, this._finishOrderedItem(b, !0), this._updateProgress();
         var c = new createjs.ErrorEvent("FILE_LOAD_ERROR", null, b.getItem());
-        this._sendError(c), this.stopOnError ? this.setPaused(!0) : (this._removeLoadItem(b),
+        this._sendError(c), this.stopOnError ? this.setPaused(!0) : (this._removeLoadItem(b), 
         this._cleanLoadItem(b), this._loadNext());
     }, b._handleFileComplete = function(a) {
         var b = a.target, c = b.getItem(), d = b.getResult();
         this._loadedResults[c.id] = d;
         var e = b.getResult(!0);
-        null != e && e !== d && (this._loadedRawResults[c.id] = e), this._saveLoadedItems(b),
-        this._removeLoadItem(b), this._finishOrderedItem(b) || this._processFinishedLoad(c, b),
+        null != e && e !== d && (this._loadedRawResults[c.id] = e), this._saveLoadedItems(b), 
+        this._removeLoadItem(b), this._finishOrderedItem(b) || this._processFinishedLoad(c, b), 
         this._cleanLoadItem(b);
     }, b._saveLoadedItems = function(a) {
         var b = a.getLoadedItems();
         if (null !== b) for (var c = 0; c < b.length; c++) {
             var d = b[c].item;
-            this._loadItemsBySrc[d.src] = d, this._loadItemsById[d.id] = d, this._loadedResults[d.id] = b[c].result,
+            this._loadItemsBySrc[d.src] = d, this._loadItemsById[d.id] = d, this._loadedResults[d.id] = b[c].result, 
             this._loadedRawResults[d.id] = b[c].rawResult;
         }
     }, b._finishOrderedItem = function(a, b) {
@@ -3386,7 +3386,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         if (this.maintainScriptOrder && c.type == createjs.LoadQueue.JAVASCRIPT || c.maintainOrder) {
             a instanceof createjs.JavaScriptLoader && (this._currentlyLoadingScript = !1);
             var d = createjs.indexOf(this._scriptOrder, c);
-            return -1 == d ? !1 : (this._loadedScripts[d] = b === !0 ? !0 : c, this._checkScriptLoadOrder(),
+            return -1 != d && (this._loadedScripts[d] = b === !0 || c, this._checkScriptLoadOrder(), 
             !0);
         }
         return !1;
@@ -3437,7 +3437,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         }
         this._lastProgress != a && (this._sendProgress(a), this._lastProgress = a);
     }, b._disposeItem = function(a) {
-        delete this._loadedResults[a.id], delete this._loadedRawResults[a.id], delete this._loadItemsById[a.id],
+        delete this._loadedResults[a.id], delete this._loadedRawResults[a.id], delete this._loadItemsById[a.id], 
         delete this._loadItemsBySrc[a.src];
     }, b._sendFileProgress = function(a, b) {
         if (!this._isCanceled() && !this._paused && this.hasEventListener("fileprogress")) {
@@ -3447,7 +3447,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._sendFileComplete = function(a, b) {
         if (!this._isCanceled() && !this._paused) {
             var c = new createjs.Event("fileload");
-            c.loader = b, c.item = a, c.result = this._loadedResults[a.id], c.rawResult = this._loadedRawResults[a.id],
+            c.loader = b, c.item = a, c.result = this._loadedResults[a.id], c.rawResult = this._loadedRawResults[a.id], 
             a.completeHandler && a.completeHandler(c), this.hasEventListener("fileload") && this.dispatchEvent(c);
         }
     }, b._sendFileStart = function(a) {
@@ -3479,8 +3479,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b) {
-        this.AbstractLoader_constructor(a, b, createjs.AbstractLoader.CSS), this.resultFormatter = this._formatResult,
-        this._tagSrcAttribute = "href", b ? this._tag = document.createElement("style") : this._tag = document.createElement("link"),
+        this.AbstractLoader_constructor(a, b, createjs.AbstractLoader.CSS), this.resultFormatter = this._formatResult, 
+        this._tagSrcAttribute = "href", b ? this._tag = document.createElement("style") : this._tag = document.createElement("link"), 
         this._tag.rel = "stylesheet", this._tag.type = "text/css";
     }
     var b = createjs.extend(a, createjs.AbstractLoader), c = a;
@@ -3499,9 +3499,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b) {
-        this.AbstractLoader_constructor(a, b, createjs.AbstractLoader.IMAGE), this.resultFormatter = this._formatResult,
-        this._tagSrcAttribute = "src", createjs.RequestUtils.isImageTag(a) ? this._tag = a : createjs.RequestUtils.isImageTag(a.src) ? this._tag = a.src : createjs.RequestUtils.isImageTag(a.tag) && (this._tag = a.tag),
-        null != this._tag ? this._preferXHR = !1 : this._tag = document.createElement("img"),
+        this.AbstractLoader_constructor(a, b, createjs.AbstractLoader.IMAGE), this.resultFormatter = this._formatResult, 
+        this._tagSrcAttribute = "src", createjs.RequestUtils.isImageTag(a) ? this._tag = a : createjs.RequestUtils.isImageTag(a.src) ? this._tag = a.src : createjs.RequestUtils.isImageTag(a.tag) && (this._tag = a.tag), 
+        null != this._tag ? this._preferXHR = !1 : this._tag = document.createElement("img"), 
         this.on("initialize", this._updateXHR, this);
     }
     var b = createjs.extend(a, createjs.AbstractLoader), c = a;
@@ -3510,7 +3510,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.load = function() {
         if ("" != this._tag.src && this._tag.complete) return void this._sendComplete();
         var a = this._item.crossOrigin;
-        1 == a && (a = "Anonymous"), null == a || createjs.RequestUtils.isLocal(this._item.src) || (this._tag.crossOrigin = a),
+        1 == a && (a = "Anonymous"), null == a || createjs.RequestUtils.isLocal(this._item.src) || (this._tag.crossOrigin = a), 
         this.AbstractLoader_load();
     }, b._updateXHR = function(a) {
         a.loader.mimeType = "text/plain; charset=x-user-defined-binary", a.loader.setResponseType && a.loader.setResponseType("blob");
@@ -3534,7 +3534,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b) {
-        this.AbstractLoader_constructor(a, b, createjs.AbstractLoader.JAVASCRIPT), this.resultFormatter = this._formatResult,
+        this.AbstractLoader_constructor(a, b, createjs.AbstractLoader.JAVASCRIPT), this.resultFormatter = this._formatResult, 
         this._tagSrcAttribute = "src", this.setTag(document.createElement("script"));
     }
     var b = createjs.extend(a, createjs.AbstractLoader), c = a;
@@ -3565,7 +3565,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a) {
-        this.AbstractLoader_constructor(a, !1, createjs.AbstractLoader.JSONP), this.setTag(document.createElement("script")),
+        this.AbstractLoader_constructor(a, !1, createjs.AbstractLoader.JSONP), this.setTag(document.createElement("script")), 
         this.getTag().type = "text/javascript";
     }
     var b = createjs.extend(a, createjs.AbstractLoader), c = a;
@@ -3576,21 +3576,21 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.load = function() {
         if (null == this._item.callback) throw new Error("callback is required for loading JSONP requests.");
         if (null != window[this._item.callback]) throw new Error("JSONP callback '" + this._item.callback + "' already exists on window. You need to specify a different callback or re-name the current one.");
-        window[this._item.callback] = createjs.proxy(this._handleLoad, this), window.document.body.appendChild(this._tag),
-        this._loadTimeout = setTimeout(createjs.proxy(this._handleTimeout, this), this._item.loadTimeout),
+        window[this._item.callback] = createjs.proxy(this._handleLoad, this), window.document.body.appendChild(this._tag), 
+        this._loadTimeout = setTimeout(createjs.proxy(this._handleTimeout, this), this._item.loadTimeout), 
         this._tag.src = this._item.src;
     }, b._handleLoad = function(a) {
         this._result = this._rawResult = a, this._sendComplete(), this._dispose();
     }, b._handleTimeout = function() {
         this._dispose(), this.dispatchEvent(new createjs.ErrorEvent("timeout"));
     }, b._dispose = function() {
-        window.document.body.removeChild(this._tag), delete window[this._item.callback],
+        window.document.body.removeChild(this._tag), delete window[this._item.callback], 
         clearTimeout(this._loadTimeout);
     }, createjs.JSONPLoader = createjs.promote(a, "AbstractLoader");
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a) {
-        this.AbstractLoader_constructor(a, null, createjs.AbstractLoader.MANIFEST), this.plugins = null,
+        this.AbstractLoader_constructor(a, null, createjs.AbstractLoader.MANIFEST), this.plugins = null, 
         this._manifestQueue = null;
     }
     var b = createjs.extend(a, createjs.AbstractLoader), c = a;
@@ -3604,11 +3604,11 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.handleEvent = function(a) {
         switch (a.type) {
           case "complete":
-            return this._rawResult = a.target.getResult(!0), this._result = a.target.getResult(),
+            return this._rawResult = a.target.getResult(!0), this._result = a.target.getResult(), 
             this._sendProgress(c.MANIFEST_PROGRESS), void this._loadManifest(this._result);
 
           case "progress":
-            return a.loaded *= c.MANIFEST_PROGRESS, this.progress = a.loaded / a.total, (isNaN(this.progress) || this.progress == 1 / 0) && (this.progress = 0),
+            return a.loaded *= c.MANIFEST_PROGRESS, this.progress = a.loaded / a.total, (isNaN(this.progress) || this.progress == 1 / 0) && (this.progress = 0), 
             void this._sendProgress(a);
         }
         this.AbstractLoader_handleEvent(a);
@@ -3617,7 +3617,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._loadManifest = function(a) {
         if (a && a.manifest) {
             var b = this._manifestQueue = new createjs.LoadQueue();
-            b.on("fileload", this._handleManifestFileLoad, this), b.on("progress", this._handleManifestProgress, this),
+            b.on("fileload", this._handleManifestFileLoad, this), b.on("progress", this._handleManifestProgress, this), 
             b.on("complete", this._handleManifestComplete, this, !0), b.on("error", this._handleManifestError, this, !0);
             for (var c = 0, d = this.plugins.length; d > c; c++) b.installPlugin(this.plugins[c]);
             b.loadManifest(a);
@@ -3635,7 +3635,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b) {
-        this.AbstractMediaLoader_constructor(a, b, createjs.AbstractLoader.SOUND), createjs.RequestUtils.isAudioTag(a) ? this._tag = a : createjs.RequestUtils.isAudioTag(a.src) ? this._tag = a : createjs.RequestUtils.isAudioTag(a.tag) && (this._tag = createjs.RequestUtils.isAudioTag(a) ? a : a.src),
+        this.AbstractMediaLoader_constructor(a, b, createjs.AbstractLoader.SOUND), createjs.RequestUtils.isAudioTag(a) ? this._tag = a : createjs.RequestUtils.isAudioTag(a.src) ? this._tag = a : createjs.RequestUtils.isAudioTag(a.tag) && (this._tag = createjs.RequestUtils.isAudioTag(a) ? a : a.src), 
         null != this._tag && (this._preferXHR = !1);
     }
     var b = createjs.extend(a, createjs.AbstractMediaLoader), c = a;
@@ -3648,7 +3648,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b) {
-        this.AbstractMediaLoader_constructor(a, b, createjs.AbstractLoader.VIDEO), createjs.RequestUtils.isVideoTag(a) || createjs.RequestUtils.isVideoTag(a.src) ? (this.setTag(createjs.RequestUtils.isVideoTag(a) ? a : a.src),
+        this.AbstractMediaLoader_constructor(a, b, createjs.AbstractLoader.VIDEO), createjs.RequestUtils.isVideoTag(a) || createjs.RequestUtils.isVideoTag(a.src) ? (this.setTag(createjs.RequestUtils.isVideoTag(a) ? a : a.src), 
         this._preferXHR = !1) : this.setTag(this._createTag());
     }
     var b = createjs.extend(a, createjs.AbstractMediaLoader), c = a;
@@ -3673,19 +3673,19 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.handleEvent = function(a) {
         switch (a.type) {
           case "complete":
-            return this._rawResult = a.target.getResult(!0), this._result = a.target.getResult(),
+            return this._rawResult = a.target.getResult(!0), this._result = a.target.getResult(), 
             this._sendProgress(c.SPRITESHEET_PROGRESS), void this._loadManifest(this._result);
 
           case "progress":
-            return a.loaded *= c.SPRITESHEET_PROGRESS, this.progress = a.loaded / a.total, (isNaN(this.progress) || this.progress == 1 / 0) && (this.progress = 0),
+            return a.loaded *= c.SPRITESHEET_PROGRESS, this.progress = a.loaded / a.total, (isNaN(this.progress) || this.progress == 1 / 0) && (this.progress = 0), 
             void this._sendProgress(a);
         }
         this.AbstractLoader_handleEvent(a);
     }, b._loadManifest = function(a) {
         if (a && a.images) {
             var b = this._manifestQueue = new createjs.LoadQueue(this._preferXHR, this._item.path, this._item.crossOrigin);
-            b.on("complete", this._handleManifestComplete, this, !0), b.on("fileload", this._handleManifestFileLoad, this),
-            b.on("progress", this._handleManifestProgress, this), b.on("error", this._handleManifestError, this, !0),
+            b.on("complete", this._handleManifestComplete, this, !0), b.on("fileload", this._handleManifestFileLoad, this), 
+            b.on("progress", this._handleManifestProgress, this), b.on("error", this._handleManifestError, this, !0), 
             b.loadManifest(a.images);
         }
     }, b._handleManifestFileLoad = function(a) {
@@ -3695,10 +3695,10 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             c[d] = b;
         }
     }, b._handleManifestComplete = function(a) {
-        this._result = new createjs.SpriteSheet(this._result), this._loadedItems = this._manifestQueue.getItems(!0),
+        this._result = new createjs.SpriteSheet(this._result), this._loadedItems = this._manifestQueue.getItems(!0), 
         this._sendComplete();
     }, b._handleManifestProgress = function(a) {
-        this.progress = a.progress * (1 - c.SPRITESHEET_PROGRESS) + c.SPRITESHEET_PROGRESS,
+        this.progress = a.progress * (1 - c.SPRITESHEET_PROGRESS) + c.SPRITESHEET_PROGRESS, 
         this._sendProgress(this.progress);
     }, b._handleManifestError = function(a) {
         var b = new createjs.Event("fileerror");
@@ -3707,8 +3707,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b) {
-        this.AbstractLoader_constructor(a, b, createjs.AbstractLoader.SVG), this.resultFormatter = this._formatResult,
-        this._tagSrcAttribute = "data", b ? this.setTag(document.createElement("svg")) : (this.setTag(document.createElement("object")),
+        this.AbstractLoader_constructor(a, b, createjs.AbstractLoader.SVG), this.resultFormatter = this._formatResult, 
+        this._tagSrcAttribute = "data", b ? this.setTag(document.createElement("svg")) : (this.setTag(document.createElement("object")), 
         this.getTag().type = "image/svg+xml");
     }
     var b = createjs.extend(a, createjs.AbstractLoader), c = a;
@@ -3716,8 +3716,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         return a.type == createjs.AbstractLoader.SVG;
     }, b._formatResult = function(a) {
         var b = createjs.DataUtils.parseXML(a.getResult(!0), "text/xml"), c = a.getTag();
-        return !this._preferXHR && document.body.contains(c) && document.body.removeChild(c),
-        null != b.documentElement ? (c.appendChild(b.documentElement), c.style.visibility = "visible",
+        return !this._preferXHR && document.body.contains(c) && document.body.removeChild(c), 
+        null != b.documentElement ? (c.appendChild(b.documentElement), c.style.visibility = "visible", 
         c) : b;
     }, createjs.SVGLoader = createjs.promote(a, "AbstractLoader");
 }(), this.createjs = this.createjs || {}, function() {
@@ -3752,15 +3752,15 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         throw "BrowserDetect cannot be instantiated";
     }
     var b = a.agent = window.navigator.userAgent;
-    a.isWindowPhone = b.indexOf("IEMobile") > -1 || b.indexOf("Windows Phone") > -1,
-    a.isFirefox = b.indexOf("Firefox") > -1, a.isOpera = null != window.opera, a.isChrome = b.indexOf("Chrome") > -1,
-    a.isIOS = (b.indexOf("iPod") > -1 || b.indexOf("iPhone") > -1 || b.indexOf("iPad") > -1) && !a.isWindowPhone,
-    a.isAndroid = b.indexOf("Android") > -1 && !a.isWindowPhone, a.isBlackberry = b.indexOf("Blackberry") > -1,
+    a.isWindowPhone = b.indexOf("IEMobile") > -1 || b.indexOf("Windows Phone") > -1, 
+    a.isFirefox = b.indexOf("Firefox") > -1, a.isOpera = null != window.opera, a.isChrome = b.indexOf("Chrome") > -1, 
+    a.isIOS = (b.indexOf("iPod") > -1 || b.indexOf("iPhone") > -1 || b.indexOf("iPad") > -1) && !a.isWindowPhone, 
+    a.isAndroid = b.indexOf("Android") > -1 && !a.isWindowPhone, a.isBlackberry = b.indexOf("Blackberry") > -1, 
     createjs.BrowserDetect = a;
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     var a = function() {
-        this.interrupt = null, this.delay = null, this.offset = null, this.loop = null,
+        this.interrupt = null, this.delay = null, this.offset = null, this.loop = null, 
         this.volume = null, this.pan = null, this.startTime = null, this.duration = null;
     }, b = a.prototype = {}, c = a;
     c.create = function(a) {
@@ -3784,14 +3784,14 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         this.init(a, b);
     }
     var c = a;
-    c.INTERRUPT_ANY = "any", c.INTERRUPT_EARLY = "early", c.INTERRUPT_LATE = "late",
-    c.INTERRUPT_NONE = "none", c.PLAY_INITED = "playInited", c.PLAY_SUCCEEDED = "playSucceeded",
-    c.PLAY_INTERRUPTED = "playInterrupted", c.PLAY_FINISHED = "playFinished", c.PLAY_FAILED = "playFailed",
-    c.SUPPORTED_EXTENSIONS = [ "mp3", "ogg", "opus", "mpeg", "wav", "m4a", "mp4", "aiff", "wma", "mid" ],
+    c.INTERRUPT_ANY = "any", c.INTERRUPT_EARLY = "early", c.INTERRUPT_LATE = "late", 
+    c.INTERRUPT_NONE = "none", c.PLAY_INITED = "playInited", c.PLAY_SUCCEEDED = "playSucceeded", 
+    c.PLAY_INTERRUPTED = "playInterrupted", c.PLAY_FINISHED = "playFinished", c.PLAY_FAILED = "playFailed", 
+    c.SUPPORTED_EXTENSIONS = [ "mp3", "ogg", "opus", "mpeg", "wav", "m4a", "mp4", "aiff", "wma", "mid" ], 
     c.EXTENSION_MAP = {
         m4a: "mp4"
-    }, c.FILE_PATTERN = /^(?:(\w+:)\/{2}(\w+(?:\.\w+)*\/?))?([\/.]*?(?:[^?]+)?\/)?((?:[^\/?]+)\.(\w+))(?:\?(\S+)?)?$/,
-    c.defaultInterruptBehavior = c.INTERRUPT_NONE, c.alternateExtensions = [], c.activePlugin = null,
+    }, c.FILE_PATTERN = /^(?:(\w+:)\/{2}(\w+(?:\.\w+)*\/?))?([\/.]*?(?:[^?]+)?\/)?((?:[^\/?]+)\.(\w+))(?:\?(\S+)?)?$/, 
+    c.defaultInterruptBehavior = c.INTERRUPT_NONE, c.alternateExtensions = [], c.activePlugin = null, 
     c._masterVolume = 1, Object.defineProperty(c, "volume", {
         get: function() {
             return this._masterVolume;
@@ -3816,9 +3816,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         set: function(a) {
             return !1;
         }
-    }), c._pluginsRegistered = !1, c._lastID = 0, c._instances = [], c._idHash = {},
-    c._preloadHash = {}, c._defaultPlayPropsHash = {}, c.addEventListener = null, c.removeEventListener = null,
-    c.removeAllEventListeners = null, c.dispatchEvent = null, c.hasEventListener = null,
+    }), c._pluginsRegistered = !1, c._lastID = 0, c._instances = [], c._idHash = {}, 
+    c._preloadHash = {}, c._defaultPlayPropsHash = {}, c.addEventListener = null, c.removeEventListener = null, 
+    c.removeAllEventListeners = null, c.dispatchEvent = null, c.hasEventListener = null, 
     c._listeners = null, createjs.EventDispatcher.initialize(c), c.getPreloadHandlers = function() {
         return {
             callback: createjs.proxy(c.initLoad, c),
@@ -3844,13 +3844,13 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             }
         }
     }, c._registerPlugin = function(a) {
-        return a.isSupported() ? (c.activePlugin = new a(), !0) : !1;
+        return !!a.isSupported() && (c.activePlugin = new a(), !0);
     }, c.registerPlugins = function(a) {
         c._pluginsRegistered = !0;
         for (var b = 0, d = a.length; d > b; b++) if (c._registerPlugin(a[b])) return !0;
         return !1;
     }, c.initializeDefaultPlugins = function() {
-        return null != c.activePlugin ? !0 : c._pluginsRegistered ? !1 : !!c.registerPlugins([ createjs.WebAudioPlugin, createjs.HTMLAudioPlugin ]);
+        return null != c.activePlugin || !c._pluginsRegistered && !!c.registerPlugins([ createjs.WebAudioPlugin, createjs.HTMLAudioPlugin ]);
     }, c.isReady = function() {
         return null != c.activePlugin;
     }, c.getCapabilities = function() {
@@ -3862,12 +3862,12 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, c._registerSound = function(a) {
         if (!c.initializeDefaultPlugins()) return !1;
         var d;
-        if (a.src instanceof Object ? (d = c._parseSrc(a.src), d.src = a.path + d.src) : d = c._parsePath(a.src),
+        if (a.src instanceof Object ? (d = c._parseSrc(a.src), d.src = a.path + d.src) : d = c._parsePath(a.src), 
         null == d) return !1;
         a.src = d.src, a.type = "sound";
         var e = a.data, f = null;
-        if (null != e && (isNaN(e.channels) ? isNaN(e) || (f = parseInt(e)) : f = parseInt(e.channels),
-        e.audioSprite)) for (var g, h = e.audioSprite.length; h--; ) g = e.audioSprite[h],
+        if (null != e && (isNaN(e.channels) ? isNaN(e) || (f = parseInt(e)) : f = parseInt(e.channels), 
+        e.audioSprite)) for (var g, h = e.audioSprite.length; h--; ) g = e.audioSprite[h], 
         c._idHash[g.id] = {
             src: a.src,
             startTime: parseInt(g.startTime),
@@ -3877,8 +3877,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             src: a.src
         });
         var i = c.activePlugin.register(a);
-        return b.create(a.src, f), null != e && isNaN(e) ? a.data.channels = f || b.maxPerChannel() : a.data = f || b.maxPerChannel(),
-        i.type && (a.type = i.type), a.defaultPlayProps && (c._defaultPlayPropsHash[a.src] = createjs.PlayPropsConfig.create(a.defaultPlayProps)),
+        return b.create(a.src, f), null != e && isNaN(e) ? a.data.channels = f || b.maxPerChannel() : a.data = f || b.maxPerChannel(), 
+        i.type && (a.type = i.type), a.defaultPlayProps && (c._defaultPlayPropsHash[a.src] = createjs.PlayPropsConfig.create(a.defaultPlayProps)), 
         i;
     }, c.registerSound = function(a, b, d, e, f) {
         var g = {
@@ -3887,12 +3887,12 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             data: d,
             defaultPlayProps: f
         };
-        a instanceof Object && a.src && (e = b, g = a), g = createjs.LoadItem.create(g),
+        a instanceof Object && a.src && (e = b, g = a), g = createjs.LoadItem.create(g), 
         g.path = e, null == e || g.src instanceof Object || (g.src = e + a);
         var h = c._registerSound(g);
         if (!h) return !1;
-        if (c._preloadHash[g.src] || (c._preloadHash[g.src] = []), c._preloadHash[g.src].push(g),
-        1 == c._preloadHash[g.src].length) h.on("complete", createjs.proxy(this._handleLoadComplete, this)),
+        if (c._preloadHash[g.src] || (c._preloadHash[g.src] = []), c._preloadHash[g.src].push(g), 
+        1 == c._preloadHash[g.src].length) h.on("complete", createjs.proxy(this._handleLoadComplete, this)), 
         h.on("error", createjs.proxy(this._handleLoadError, this)), c.activePlugin.preload(h); else if (1 == c._preloadHash[g.src][0]) return !0;
         return g;
     }, c.registerSounds = function(a, b) {
@@ -3904,11 +3904,11 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         if (null == c.activePlugin) return !1;
         a instanceof Object && a.src && (a = a.src);
         var e;
-        if (a instanceof Object ? e = c._parseSrc(a) : (a = c._getSrcById(a).src, e = c._parsePath(a)),
+        if (a instanceof Object ? e = c._parseSrc(a) : (a = c._getSrcById(a).src, e = c._parsePath(a)), 
         null == e) return !1;
         a = e.src, null != d && (a = d + a);
         for (var f in c._idHash) c._idHash[f].src == a && delete c._idHash[f];
-        return b.removeSrc(a), delete c._preloadHash[a], c.activePlugin.removeSound(a),
+        return b.removeSrc(a), delete c._preloadHash[a], c.activePlugin.removeSound(a), 
         !0;
     }, c.removeSounds = function(a, b) {
         var c = [];
@@ -3920,12 +3920,12 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, c.loadComplete = function(a) {
         if (!c.isReady()) return !1;
         var b = c._parsePath(a);
-        return a = b ? c._getSrcById(b.src).src : c._getSrcById(a).src, void 0 == c._preloadHash[a] ? !1 : 1 == c._preloadHash[a][0];
+        return a = b ? c._getSrcById(b.src).src : c._getSrcById(a).src, void 0 != c._preloadHash[a] && 1 == c._preloadHash[a][0];
     }, c._parsePath = function(a) {
         "string" != typeof a && (a = a.toString());
         var b = a.match(c.FILE_PATTERN);
         if (null == b) return !1;
-        for (var d = b[4], e = b[5], f = c.capabilities, g = 0; !f[e]; ) if (e = c.alternateExtensions[g++],
+        for (var d = b[4], e = b[5], f = c.capabilities, g = 0; !f[e]; ) if (e = c.alternateExtensions[g++], 
         g > c.alternateExtensions.length) return null;
         a = a.replace("." + b[5], "." + e);
         var h = {
@@ -3966,9 +3966,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var f = c._defaultPlayPropsHash[a];
         a = c._getSrcById(a);
         var g = c._parsePath(a.src), h = null;
-        return null != g && null != g.src ? (b.create(g.src), null == d && (d = a.startTime),
-        h = c.activePlugin.create(g.src, d, e || a.duration), f = f || c._defaultPlayPropsHash[g.src],
-        f && h.applyPlayProps(f)) : h = new createjs.DefaultSoundInstance(a, d, e), h.uniqueId = c._lastID++,
+        return null != g && null != g.src ? (b.create(g.src), null == d && (d = a.startTime), 
+        h = c.activePlugin.create(g.src, d, e || a.duration), f = f || c._defaultPlayPropsHash[g.src], 
+        f && h.applyPlayProps(f)) : h = new createjs.DefaultSoundInstance(a, d, e), h.uniqueId = c._lastID++, 
         h;
     }, c.stop = function() {
         for (var a = this._instances, b = a.length; b--; ) a[b].stop();
@@ -3989,9 +3989,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         return a = c._getSrcById(a), c._defaultPlayPropsHash[c._parsePath(a.src).src];
     }, c._playInstance = function(a, b) {
         var d = c._defaultPlayPropsHash[a.src] || {};
-        if (null == b.interrupt && (b.interrupt = d.interrupt || c.defaultInterruptBehavior),
-        null == b.delay && (b.delay = d.delay || 0), null == b.offset && (b.offset = a.getPosition()),
-        null == b.loop && (b.loop = a.loop), null == b.volume && (b.volume = a.volume),
+        if (null == b.interrupt && (b.interrupt = d.interrupt || c.defaultInterruptBehavior), 
+        null == b.delay && (b.delay = d.delay || 0), null == b.offset && (b.offset = a.getPosition()), 
+        null == b.loop && (b.loop = a.loop), null == b.volume && (b.volume = a.volume), 
         null == b.pan && (b.pan = a.pan), 0 == b.delay) {
             var e = c._beginPlaying(a, b);
             if (!e) return !1;
@@ -4020,36 +4020,36 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         c > -1 && this._instances.splice(c, 1);
     }, createjs.Sound = a, b.channels = {}, b.create = function(a, c) {
         var d = b.get(a);
-        return null == d ? (b.channels[a] = new b(a, c), !0) : !1;
+        return null == d && (b.channels[a] = new b(a, c), !0);
     }, b.removeSrc = function(a) {
         var c = b.get(a);
-        return null == c ? !1 : (c._removeAll(), delete b.channels[a], !0);
+        return null != c && (c._removeAll(), delete b.channels[a], !0);
     }, b.removeAll = function() {
         for (var a in b.channels) b.channels[a]._removeAll();
         b.channels = {};
     }, b.add = function(a, c) {
         var d = b.get(a.src);
-        return null == d ? !1 : d._add(a, c);
+        return null != d && d._add(a, c);
     }, b.remove = function(a) {
         var c = b.get(a.src);
-        return null == c ? !1 : (c._remove(a), !0);
+        return null != c && (c._remove(a), !0);
     }, b.maxPerChannel = function() {
         return d.maxDefault;
     }, b.get = function(a) {
         return b.channels[a];
     };
     var d = b.prototype;
-    d.constructor = b, d.src = null, d.max = null, d.maxDefault = 100, d.length = 0,
+    d.constructor = b, d.src = null, d.max = null, d.maxDefault = 100, d.length = 0, 
     d.init = function(a, b) {
-        this.src = a, this.max = b || this.maxDefault, -1 == this.max && (this.max = this.maxDefault),
+        this.src = a, this.max = b || this.maxDefault, -1 == this.max && (this.max = this.maxDefault), 
         this._instances = [];
     }, d._get = function(a) {
         return this._instances[a];
     }, d._add = function(a, b) {
-        return this._getSlot(b, a) ? (this._instances.push(a), this.length++, !0) : !1;
+        return !!this._getSlot(b, a) && (this._instances.push(a), this.length++, !0);
     }, d._remove = function(a) {
         var b = createjs.indexOf(this._instances, a);
-        return -1 == b ? !1 : (this._instances.splice(b, 1), this.length--, !0);
+        return -1 != b && (this._instances.splice(b, 1), this.length--, !0);
     }, d._removeAll = function() {
         for (var a = this.length - 1; a >= 0; a--) this._instances[a].stop();
     }, d._getSlot = function(b, c) {
@@ -4063,14 +4063,14 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             }
             b != a.INTERRUPT_NONE && (b == a.INTERRUPT_EARLY && d.getPosition() < e.getPosition() || b == a.INTERRUPT_LATE && d.getPosition() > e.getPosition()) && (e = d);
         }
-        return null != e ? (e._interrupt(), this._remove(e), !0) : !1;
+        return null != e && (e._interrupt(), this._remove(e), !0);
     }, d.toString = function() {
         return "[Sound SoundChannel]";
     };
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     var a = function(a, b, c, d) {
-        this.EventDispatcher_constructor(), this.src = a, this.uniqueId = -1, this.playState = null,
+        this.EventDispatcher_constructor(), this.src = a, this.uniqueId = -1, this.playState = null, 
         this.delayTimeoutId = null, this._volume = 1, Object.defineProperty(this, "volume", {
             get: this.getVolume,
             set: this.setVolume
@@ -4109,27 +4109,27 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             loop: d,
             volume: e,
             pan: f
-        }), this.playState == createjs.Sound.PLAY_SUCCEEDED ? (this.applyPlayProps(g), void (this._paused && this.setPaused(!1))) : (this._cleanUp(),
+        }), this.playState == createjs.Sound.PLAY_SUCCEEDED ? (this.applyPlayProps(g), void (this._paused && this.setPaused(!1))) : (this._cleanUp(), 
         createjs.Sound._playInstance(this, g), this);
     }, b.stop = function() {
-        return this._position = 0, this._paused = !1, this._handleStop(), this._cleanUp(),
+        return this._position = 0, this._paused = !1, this._handleStop(), this._cleanUp(), 
         this.playState = createjs.Sound.PLAY_FINISHED, this;
     }, b.destroy = function() {
         this._cleanUp(), this.src = null, this.playbackResource = null, this.removeAllEventListeners();
     }, b.applyPlayProps = function(a) {
-        return null != a.offset && this.setPosition(a.offset), null != a.loop && this.setLoop(a.loop),
-        null != a.volume && this.setVolume(a.volume), null != a.pan && this.setPan(a.pan),
-        null != a.startTime && (this.setStartTime(a.startTime), this.setDuration(a.duration)),
+        return null != a.offset && this.setPosition(a.offset), null != a.loop && this.setLoop(a.loop), 
+        null != a.volume && this.setVolume(a.volume), null != a.pan && this.setPan(a.pan), 
+        null != a.startTime && (this.setStartTime(a.startTime), this.setDuration(a.duration)), 
         this;
     }, b.toString = function() {
         return "[AbstractSoundInstance]";
     }, b.getPaused = function() {
         return this._paused;
     }, b.setPaused = function(a) {
-        return a !== !0 && a !== !1 || this._paused == a || 1 == a && this.playState != createjs.Sound.PLAY_SUCCEEDED ? void 0 : (this._paused = a,
+        return a !== !0 && a !== !1 || this._paused == a || 1 == a && this.playState != createjs.Sound.PLAY_SUCCEEDED ? void 0 : (this._paused = a, 
         a ? this._pause() : this._resume(), clearTimeout(this.delayTimeoutId), this);
     }, b.setVolume = function(a) {
-        return a == this._volume ? this : (this._volume = Math.max(0, Math.min(1, a)), this._muted || this._updateVolume(),
+        return a == this._volume ? this : (this._volume = Math.max(0, Math.min(1, a)), this._muted || this._updateVolume(), 
         this);
     }, b.getVolume = function() {
         return this._volume;
@@ -4138,35 +4138,35 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.getMuted = function() {
         return this._muted;
     }, b.setPan = function(a) {
-        return a == this._pan ? this : (this._pan = Math.max(-1, Math.min(1, a)), this._updatePan(),
+        return a == this._pan ? this : (this._pan = Math.max(-1, Math.min(1, a)), this._updatePan(), 
         this);
     }, b.getPan = function() {
         return this._pan;
     }, b.getPosition = function() {
-        return this._paused || this.playState != createjs.Sound.PLAY_SUCCEEDED || (this._position = this._calculateCurrentPosition()),
+        return this._paused || this.playState != createjs.Sound.PLAY_SUCCEEDED || (this._position = this._calculateCurrentPosition()), 
         this._position;
     }, b.setPosition = function(a) {
-        return this._position = Math.max(0, a), this.playState == createjs.Sound.PLAY_SUCCEEDED && this._updatePosition(),
+        return this._position = Math.max(0, a), this.playState == createjs.Sound.PLAY_SUCCEEDED && this._updatePosition(), 
         this;
     }, b.getStartTime = function() {
         return this._startTime;
     }, b.setStartTime = function(a) {
-        return a == this._startTime ? this : (this._startTime = Math.max(0, a || 0), this._updateStartTime(),
+        return a == this._startTime ? this : (this._startTime = Math.max(0, a || 0), this._updateStartTime(), 
         this);
     }, b.getDuration = function() {
         return this._duration;
     }, b.setDuration = function(a) {
-        return a == this._duration ? this : (this._duration = Math.max(0, a || 0), this._updateDuration(),
+        return a == this._duration ? this : (this._duration = Math.max(0, a || 0), this._updateDuration(), 
         this);
     }, b.setPlaybackResource = function(a) {
-        return this._playbackResource = a, 0 == this._duration && this._setDurationFromSource(),
+        return this._playbackResource = a, 0 == this._duration && this._setDurationFromSource(), 
         this;
     }, b.getPlaybackResource = function() {
         return this._playbackResource;
     }, b.getLoop = function() {
         return this._loop;
     }, b.setLoop = function(a) {
-        null != this._playbackResource && (0 != this._loop && 0 == a ? this._removeLooping(a) : 0 == this._loop && 0 != a && this._addLooping(a)),
+        null != this._playbackResource && (0 != this._loop && 0 == a ? this._removeLooping(a) : 0 == this._loop && 0 != a && this._addLooping(a)), 
         this._loop = a;
     }, b._sendEvent = function(a) {
         var b = new createjs.Event(a);
@@ -4176,36 +4176,36 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._interrupt = function() {
         this._cleanUp(), this.playState = createjs.Sound.PLAY_INTERRUPTED, this._sendEvent("interrupted");
     }, b._beginPlaying = function(a) {
-        return this.setPosition(a.offset), this.setLoop(a.loop), this.setVolume(a.volume),
-        this.setPan(a.pan), null != a.startTime && (this.setStartTime(a.startTime), this.setDuration(a.duration)),
-        null != this._playbackResource && this._position < this._duration ? (this._paused = !1,
-        this._handleSoundReady(), this.playState = createjs.Sound.PLAY_SUCCEEDED, this._sendEvent("succeeded"),
+        return this.setPosition(a.offset), this.setLoop(a.loop), this.setVolume(a.volume), 
+        this.setPan(a.pan), null != a.startTime && (this.setStartTime(a.startTime), this.setDuration(a.duration)), 
+        null != this._playbackResource && this._position < this._duration ? (this._paused = !1, 
+        this._handleSoundReady(), this.playState = createjs.Sound.PLAY_SUCCEEDED, this._sendEvent("succeeded"), 
         !0) : (this._playFailed(), !1);
     }, b._playFailed = function() {
         this._cleanUp(), this.playState = createjs.Sound.PLAY_FAILED, this._sendEvent("failed");
     }, b._handleSoundComplete = function(a) {
-        return this._position = 0, 0 != this._loop ? (this._loop--, this._handleLoop(),
-        void this._sendEvent("loop")) : (this._cleanUp(), this.playState = createjs.Sound.PLAY_FINISHED,
+        return this._position = 0, 0 != this._loop ? (this._loop--, this._handleLoop(), 
+        void this._sendEvent("loop")) : (this._cleanUp(), this.playState = createjs.Sound.PLAY_FINISHED, 
         void this._sendEvent("complete"));
-    }, b._handleSoundReady = function() {}, b._updateVolume = function() {}, b._updatePan = function() {},
-    b._updateStartTime = function() {}, b._updateDuration = function() {}, b._setDurationFromSource = function() {},
-    b._calculateCurrentPosition = function() {}, b._updatePosition = function() {},
-    b._removeLooping = function(a) {}, b._addLooping = function(a) {}, b._pause = function() {},
-    b._resume = function() {}, b._handleStop = function() {}, b._handleCleanUp = function() {},
-    b._handleLoop = function() {}, createjs.AbstractSoundInstance = createjs.promote(a, "EventDispatcher"),
+    }, b._handleSoundReady = function() {}, b._updateVolume = function() {}, b._updatePan = function() {}, 
+    b._updateStartTime = function() {}, b._updateDuration = function() {}, b._setDurationFromSource = function() {}, 
+    b._calculateCurrentPosition = function() {}, b._updatePosition = function() {}, 
+    b._removeLooping = function(a) {}, b._addLooping = function(a) {}, b._pause = function() {}, 
+    b._resume = function() {}, b._handleStop = function() {}, b._handleCleanUp = function() {}, 
+    b._handleLoop = function() {}, createjs.AbstractSoundInstance = createjs.promote(a, "EventDispatcher"), 
     createjs.DefaultSoundInstance = createjs.AbstractSoundInstance;
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     var a = function() {
-        this._capabilities = null, this._loaders = {}, this._audioSources = {}, this._soundInstances = {},
+        this._capabilities = null, this._loaders = {}, this._audioSources = {}, this._soundInstances = {}, 
         this._volume = 1, this._loaderClass, this._soundInstanceClass;
     }, b = a.prototype;
     a._capabilities = null, a.isSupported = function() {
         return !0;
     }, b.register = function(a) {
         var b = this._loaders[a.src];
-        return b && !b.canceled ? this._loaders[a.src] : (this._audioSources[a.src] = !0,
-        this._soundInstances[a.src] = [], b = new this._loaderClass(a), b.on("complete", this._handlePreloadComplete, this),
+        return b && !b.canceled ? this._loaders[a.src] : (this._audioSources[a.src] = !0, 
+        this._soundInstances[a.src] = [], b = new this._loaderClass(a), b.on("complete", this._handlePreloadComplete, this), 
         this._loaders[a.src] = b, b);
     }, b.preload = function(a) {
         a.on("error", this._handlePreloadError, this), a.load();
@@ -4219,7 +4219,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                 var c = this._soundInstances[a][b];
                 c.destroy();
             }
-            delete this._soundInstances[a], delete this._audioSources[a], this._loaders[a] && this._loaders[a].destroy(),
+            delete this._soundInstances[a], delete this._audioSources[a], this._loaders[a] && this._loaders[a].destroy(), 
             delete this._loaders[a];
         }
     }, b.removeAllSounds = function() {
@@ -4262,16 +4262,16 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b, d, e) {
-        this.AbstractSoundInstance_constructor(a, b, d, e), this.gainNode = c.context.createGain(),
-        this.panNode = c.context.createPanner(), this.panNode.panningModel = c._panningModel,
-        this.panNode.connect(this.gainNode), this._updatePan(), this.sourceNode = null,
-        this._soundCompleteTimeout = null, this._sourceNodeNext = null, this._playbackStartTime = 0,
+        this.AbstractSoundInstance_constructor(a, b, d, e), this.gainNode = c.context.createGain(), 
+        this.panNode = c.context.createPanner(), this.panNode.panningModel = c._panningModel, 
+        this.panNode.connect(this.gainNode), this._updatePan(), this.sourceNode = null, 
+        this._soundCompleteTimeout = null, this._sourceNodeNext = null, this._playbackStartTime = 0, 
         this._endedHandler = createjs.proxy(this._handleSoundComplete, this);
     }
     var b = createjs.extend(a, createjs.AbstractSoundInstance), c = a;
-    c.context = null, c._scratchBuffer = null, c.destinationNode = null, c._panningModel = "equalpower",
+    c.context = null, c._scratchBuffer = null, c.destinationNode = null, c._panningModel = "equalpower", 
     b.destroy = function() {
-        this.AbstractSoundInstance_destroy(), this.panNode.disconnect(0), this.panNode = null,
+        this.AbstractSoundInstance_destroy(), this.panNode.disconnect(0), this.panNode = null, 
         this.gainNode.disconnect(0), this.gainNode = null;
     }, b.toString = function() {
         return "[WebAudioSoundInstance]";
@@ -4284,8 +4284,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._setDurationFromSource = function() {
         this._duration = 1e3 * this.playbackResource.duration;
     }, b._handleCleanUp = function() {
-        this.sourceNode && this.playState == createjs.Sound.PLAY_SUCCEEDED && (this.sourceNode = this._cleanUpAudioNode(this.sourceNode),
-        this._sourceNodeNext = this._cleanUpAudioNode(this._sourceNodeNext)), 0 != this.gainNode.numberOfOutputs && this.gainNode.disconnect(0),
+        this.sourceNode && this.playState == createjs.Sound.PLAY_SUCCEEDED && (this.sourceNode = this._cleanUpAudioNode(this.sourceNode), 
+        this._sourceNodeNext = this._cleanUpAudioNode(this._sourceNodeNext)), 0 != this.gainNode.numberOfOutputs && this.gainNode.disconnect(0), 
         clearTimeout(this._soundCompleteTimeout), this._playbackStartTime = 0;
     }, b._cleanUpAudioNode = function(a) {
         if (a) {
@@ -4299,18 +4299,18 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._handleSoundReady = function(a) {
         this.gainNode.connect(c.destinationNode);
         var b = .001 * this._duration, d = .001 * this._position;
-        d > b && (d = b), this.sourceNode = this._createAndPlayAudioNode(c.context.currentTime - b, d),
-        this._playbackStartTime = this.sourceNode.startTime - d, this._soundCompleteTimeout = setTimeout(this._endedHandler, 1e3 * (b - d)),
+        d > b && (d = b), this.sourceNode = this._createAndPlayAudioNode(c.context.currentTime - b, d), 
+        this._playbackStartTime = this.sourceNode.startTime - d, this._soundCompleteTimeout = setTimeout(this._endedHandler, 1e3 * (b - d)), 
         0 != this._loop && (this._sourceNodeNext = this._createAndPlayAudioNode(this._playbackStartTime, 0));
     }, b._createAndPlayAudioNode = function(a, b) {
         var d = c.context.createBufferSource();
         d.buffer = this.playbackResource, d.connect(this.panNode);
         var e = .001 * this._duration;
-        return d.startTime = a + e, d.start(d.startTime, b + .001 * this._startTime, e - b),
+        return d.startTime = a + e, d.start(d.startTime, b + .001 * this._startTime, e - b), 
         d;
     }, b._pause = function() {
-        this._position = 1e3 * (c.context.currentTime - this._playbackStartTime), this.sourceNode = this._cleanUpAudioNode(this.sourceNode),
-        this._sourceNodeNext = this._cleanUpAudioNode(this._sourceNodeNext), 0 != this.gainNode.numberOfOutputs && this.gainNode.disconnect(0),
+        this._position = 1e3 * (c.context.currentTime - this._playbackStartTime), this.sourceNode = this._cleanUpAudioNode(this.sourceNode), 
+        this._sourceNodeNext = this._cleanUpAudioNode(this._sourceNodeNext), 0 != this.gainNode.numberOfOutputs && this.gainNode.disconnect(0), 
         clearTimeout(this._soundCompleteTimeout);
     }, b._resume = function() {
         this._handleSoundReady();
@@ -4320,11 +4320,11 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._calculateCurrentPosition = function() {
         return 1e3 * (c.context.currentTime - this._playbackStartTime);
     }, b._updatePosition = function() {
-        this.sourceNode = this._cleanUpAudioNode(this.sourceNode), this._sourceNodeNext = this._cleanUpAudioNode(this._sourceNodeNext),
+        this.sourceNode = this._cleanUpAudioNode(this.sourceNode), this._sourceNodeNext = this._cleanUpAudioNode(this._sourceNodeNext), 
         clearTimeout(this._soundCompleteTimeout), this._paused || this._handleSoundReady();
     }, b._handleLoop = function() {
-        this._cleanUpAudioNode(this.sourceNode), this.sourceNode = this._sourceNodeNext,
-        this._playbackStartTime = this.sourceNode.startTime, this._sourceNodeNext = this._createAndPlayAudioNode(this._playbackStartTime, 0),
+        this._cleanUpAudioNode(this.sourceNode), this.sourceNode = this._sourceNodeNext, 
+        this._playbackStartTime = this.sourceNode.startTime, this._sourceNodeNext = this._createAndPlayAudioNode(this._playbackStartTime, 0), 
         this._soundCompleteTimeout = setTimeout(this._endedHandler, this._duration);
     }, b._updateDuration = function() {
         this.playState == createjs.Sound.PLAY_SUCCEEDED && (this._pause(), this._resume());
@@ -4332,19 +4332,19 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a() {
-        this.AbstractPlugin_constructor(), this._panningModel = c._panningModel, this.context = c.context,
-        this.dynamicsCompressorNode = this.context.createDynamicsCompressor(), this.dynamicsCompressorNode.connect(this.context.destination),
-        this.gainNode = this.context.createGain(), this.gainNode.connect(this.dynamicsCompressorNode),
-        createjs.WebAudioSoundInstance.destinationNode = this.gainNode, this._capabilities = c._capabilities,
-        this._loaderClass = createjs.WebAudioLoader, this._soundInstanceClass = createjs.WebAudioSoundInstance,
+        this.AbstractPlugin_constructor(), this._panningModel = c._panningModel, this.context = c.context, 
+        this.dynamicsCompressorNode = this.context.createDynamicsCompressor(), this.dynamicsCompressorNode.connect(this.context.destination), 
+        this.gainNode = this.context.createGain(), this.gainNode.connect(this.dynamicsCompressorNode), 
+        createjs.WebAudioSoundInstance.destinationNode = this.gainNode, this._capabilities = c._capabilities, 
+        this._loaderClass = createjs.WebAudioLoader, this._soundInstanceClass = createjs.WebAudioSoundInstance, 
         this._addPropsToClasses();
     }
     var b = createjs.extend(a, createjs.AbstractPlugin), c = a;
-    c._capabilities = null, c._panningModel = "equalpower", c.context = null, c._scratchBuffer = null,
+    c._capabilities = null, c._panningModel = "equalpower", c.context = null, c._scratchBuffer = null, 
     c._unlocked = !1, c.isSupported = function() {
         var a = createjs.BrowserDetect.isIOS || createjs.BrowserDetect.isAndroid || createjs.BrowserDetect.isBlackberry;
-        return "file:" != location.protocol || a || this._isFileXHRSupported() ? (c._generateCapabilities(),
-        null != c.context) : !1;
+        return !("file:" == location.protocol && !a && !this._isFileXHRSupported()) && (c._generateCapabilities(), 
+        null != c.context);
     }, c.playEmptySound = function() {
         if (null != c.context) {
             var a = c.context.createBufferSource();
@@ -4376,9 +4376,9 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                 if (!window.webkitAudioContext) return null;
                 c.context = new webkitAudioContext();
             }
-            null == c._scratchBuffer && (c._scratchBuffer = c.context.createBuffer(1, 1, 22050)),
-            c._compatibilitySetUp(), "ontouchstart" in window && "running" != c.context.state && (c._unlock(),
-            document.addEventListener("mousedown", c._unlock, !0), document.addEventListener("touchend", c._unlock, !0)),
+            null == c._scratchBuffer && (c._scratchBuffer = c.context.createBuffer(1, 1, 22050)), 
+            c._compatibilitySetUp(), "ontouchstart" in window && "running" != c.context.state && (c._unlock(), 
+            document.addEventListener("mousedown", c._unlock, !0), document.addEventListener("touchend", c._unlock, !0)), 
             c._capabilities = {
                 panning: !0,
                 volume: !0,
@@ -4394,17 +4394,17 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         if (c._panningModel = "equalpower", !c.context.createGain) {
             c.context.createGain = c.context.createGainNode;
             var a = c.context.createBufferSource();
-            a.__proto__.start = a.__proto__.noteGrainOn, a.__proto__.stop = a.__proto__.noteOff,
+            a.__proto__.start = a.__proto__.noteGrainOn, a.__proto__.stop = a.__proto__.noteOff, 
             c._panningModel = 0;
         }
     }, c._unlock = function() {
-        c._unlocked || (c.playEmptySound(), "running" == c.context.state && (document.removeEventListener("mousedown", c._unlock, !0),
+        c._unlocked || (c.playEmptySound(), "running" == c.context.state && (document.removeEventListener("mousedown", c._unlock, !0), 
         document.removeEventListener("touchend", c._unlock, !0), c._unlocked = !0));
     }, b.toString = function() {
         return "[WebAudioPlugin]";
     }, b._addPropsToClasses = function() {
         var a = this._soundInstanceClass;
-        a.context = this.context, a._scratchBuffer = c._scratchBuffer, a.destinationNode = this.gainNode,
+        a.context = this.context, a._scratchBuffer = c._scratchBuffer, a.destinationNode = this.gainNode, 
         a._panningModel = this._panningModel, this._loaderClass.context = this.context;
     }, b._updateVolume = function() {
         var a = createjs.Sound._masterMute ? 0 : this._volume;
@@ -4421,13 +4421,13 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     var c = a;
     c._tags = {}, c._tagPool = new b(), c._tagUsed = {}, c.get = function(a) {
         var b = c._tags[a];
-        return null == b ? (b = c._tags[a] = c._tagPool.get(), b.src = a) : c._tagUsed[a] ? (b = c._tagPool.get(),
+        return null == b ? (b = c._tags[a] = c._tagPool.get(), b.src = a) : c._tagUsed[a] ? (b = c._tagPool.get(), 
         b.src = a) : c._tagUsed[a] = !0, b;
     }, c.set = function(a, b) {
         b == c._tags[a] ? c._tagUsed[a] = !1 : c._tagPool.set(b);
     }, c.remove = function(a) {
         var b = c._tags[a];
-        return null == b ? !1 : (c._tagPool.set(b), delete c._tags[a], delete c._tagUsed[a],
+        return null != b && (c._tagPool.set(b), delete c._tags[a], delete c._tagUsed[a], 
         !0);
     }, c.getDuration = function(a) {
         var b = c._tags[a];
@@ -4436,7 +4436,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     var d = b.prototype;
     d.constructor = b, d.get = function() {
         var a;
-        return a = 0 == this._tags.length ? this._createTag() : this._tags.pop(), null == a.parentNode && document.body.appendChild(a),
+        return a = 0 == this._tags.length ? this._createTag() : this._tags.pop(), null == a.parentNode && document.body.appendChild(a), 
         a;
     }, d.set = function(a) {
         var b = createjs.indexOf(this._tags, a);
@@ -4450,10 +4450,10 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b, c, d) {
-        this.AbstractSoundInstance_constructor(a, b, c, d), this._audioSpriteStopTime = null,
-        this._delayTimeoutId = null, this._endedHandler = createjs.proxy(this._handleSoundComplete, this),
-        this._readyHandler = createjs.proxy(this._handleTagReady, this), this._stalledHandler = createjs.proxy(this._playFailed, this),
-        this._audioSpriteEndHandler = createjs.proxy(this._handleAudioSpriteLoop, this),
+        this.AbstractSoundInstance_constructor(a, b, c, d), this._audioSpriteStopTime = null, 
+        this._delayTimeoutId = null, this._endedHandler = createjs.proxy(this._handleSoundComplete, this), 
+        this._readyHandler = createjs.proxy(this._handleTagReady, this), this._stalledHandler = createjs.proxy(this._playFailed, this), 
+        this._audioSpriteEndHandler = createjs.proxy(this._handleAudioSpriteLoop, this), 
         this._loopHandler = createjs.proxy(this._handleSoundComplete, this), c ? this._audioSpriteStopTime = .001 * (b + c) : this._duration = createjs.HTMLAudioTagPool.getDuration(this.src);
     }
     var b = createjs.extend(a, createjs.AbstractSoundInstance);
@@ -4466,15 +4466,15 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._removeLooping = function() {
         null != this._playbackResource && (this._playbackResource.loop = !1, this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._loopHandler, !1));
     }, b._addLooping = function() {
-        null == this._playbackResource || this._audioSpriteStopTime || (this._playbackResource.addEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._loopHandler, !1),
+        null == this._playbackResource || this._audioSpriteStopTime || (this._playbackResource.addEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._loopHandler, !1), 
         this._playbackResource.loop = !0);
     }, b._handleCleanUp = function() {
         var a = this._playbackResource;
         if (null != a) {
-            a.pause(), a.loop = !1, a.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_ENDED, this._endedHandler, !1),
-            a.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_READY, this._readyHandler, !1),
-            a.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_STALLED, this._stalledHandler, !1),
-            a.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._loopHandler, !1),
+            a.pause(), a.loop = !1, a.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_ENDED, this._endedHandler, !1), 
+            a.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_READY, this._readyHandler, !1), 
+            a.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_STALLED, this._stalledHandler, !1), 
+            a.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._loopHandler, !1), 
             a.removeEventListener(createjs.HTMLAudioPlugin._TIME_UPDATE, this._audioSpriteEndHandler, !1);
             try {
                 a.currentTime = this._startTime;
@@ -4486,17 +4486,17 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._handleSoundReady = function(a) {
         if (4 !== this._playbackResource.readyState) {
             var b = this._playbackResource;
-            return b.addEventListener(createjs.HTMLAudioPlugin._AUDIO_READY, this._readyHandler, !1),
-            b.addEventListener(createjs.HTMLAudioPlugin._AUDIO_STALLED, this._stalledHandler, !1),
+            return b.addEventListener(createjs.HTMLAudioPlugin._AUDIO_READY, this._readyHandler, !1), 
+            b.addEventListener(createjs.HTMLAudioPlugin._AUDIO_STALLED, this._stalledHandler, !1), 
             b.preload = "auto", void b.load();
         }
-        this._updateVolume(), this._playbackResource.currentTime = .001 * (this._startTime + this._position),
-        this._audioSpriteStopTime ? this._playbackResource.addEventListener(createjs.HTMLAudioPlugin._TIME_UPDATE, this._audioSpriteEndHandler, !1) : (this._playbackResource.addEventListener(createjs.HTMLAudioPlugin._AUDIO_ENDED, this._endedHandler, !1),
-        0 != this._loop && (this._playbackResource.addEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._loopHandler, !1),
+        this._updateVolume(), this._playbackResource.currentTime = .001 * (this._startTime + this._position), 
+        this._audioSpriteStopTime ? this._playbackResource.addEventListener(createjs.HTMLAudioPlugin._TIME_UPDATE, this._audioSpriteEndHandler, !1) : (this._playbackResource.addEventListener(createjs.HTMLAudioPlugin._AUDIO_ENDED, this._endedHandler, !1), 
+        0 != this._loop && (this._playbackResource.addEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._loopHandler, !1), 
         this._playbackResource.loop = !0)), this._playbackResource.play();
     }, b._handleTagReady = function(a) {
-        this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_READY, this._readyHandler, !1),
-        this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_STALLED, this._stalledHandler, !1),
+        this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_READY, this._readyHandler, !1), 
+        this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_STALLED, this._stalledHandler, !1), 
         this._handleSoundReady();
     }, b._pause = function() {
         this._playbackResource.pause();
@@ -4510,7 +4510,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b._calculateCurrentPosition = function() {
         return 1e3 * this._playbackResource.currentTime - this._startTime;
     }, b._updatePosition = function() {
-        this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._loopHandler, !1),
+        this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._loopHandler, !1), 
         this._playbackResource.addEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._handleSetPositionSeek, !1);
         try {
             this._playbackResource.currentTime = .001 * (this._position + this._startTime);
@@ -4518,20 +4518,20 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             this._handleSetPositionSeek(null);
         }
     }, b._handleSetPositionSeek = function(a) {
-        null != this._playbackResource && (this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._handleSetPositionSeek, !1),
+        null != this._playbackResource && (this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._handleSetPositionSeek, !1), 
         this._playbackResource.addEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._loopHandler, !1));
     }, b._handleAudioSpriteLoop = function(a) {
-        this._playbackResource.currentTime <= this._audioSpriteStopTime || (this._playbackResource.pause(),
-        0 == this._loop ? this._handleSoundComplete(null) : (this._position = 0, this._loop--,
-        this._playbackResource.currentTime = .001 * this._startTime, this._paused || this._playbackResource.play(),
+        this._playbackResource.currentTime <= this._audioSpriteStopTime || (this._playbackResource.pause(), 
+        0 == this._loop ? this._handleSoundComplete(null) : (this._position = 0, this._loop--, 
+        this._playbackResource.currentTime = .001 * this._startTime, this._paused || this._playbackResource.play(), 
         this._sendEvent("loop")));
     }, b._handleLoop = function(a) {
         0 == this._loop && (this._playbackResource.loop = !1, this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_SEEKED, this._loopHandler, !1));
     }, b._updateStartTime = function() {
-        this._audioSpriteStopTime = .001 * (this._startTime + this._duration), this.playState == createjs.Sound.PLAY_SUCCEEDED && (this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_ENDED, this._endedHandler, !1),
+        this._audioSpriteStopTime = .001 * (this._startTime + this._duration), this.playState == createjs.Sound.PLAY_SUCCEEDED && (this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_ENDED, this._endedHandler, !1), 
         this._playbackResource.addEventListener(createjs.HTMLAudioPlugin._TIME_UPDATE, this._audioSpriteEndHandler, !1));
     }, b._updateDuration = function() {
-        this._audioSpriteStopTime = .001 * (this._startTime + this._duration), this.playState == createjs.Sound.PLAY_SUCCEEDED && (this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_ENDED, this._endedHandler, !1),
+        this._audioSpriteStopTime = .001 * (this._startTime + this._duration), this.playState == createjs.Sound.PLAY_SUCCEEDED && (this._playbackResource.removeEventListener(createjs.HTMLAudioPlugin._AUDIO_ENDED, this._endedHandler, !1), 
         this._playbackResource.addEventListener(createjs.HTMLAudioPlugin._TIME_UPDATE, this._audioSpriteEndHandler, !1));
     }, b._setDurationFromSource = function() {
         this._duration = createjs.HTMLAudioTagPool.getDuration(this.src), this._playbackResource = null;
@@ -4539,12 +4539,12 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a() {
-        this.AbstractPlugin_constructor(), this.defaultNumChannels = 2, this._capabilities = c._capabilities,
+        this.AbstractPlugin_constructor(), this.defaultNumChannels = 2, this._capabilities = c._capabilities, 
         this._loaderClass = createjs.SoundLoader, this._soundInstanceClass = createjs.HTMLAudioSoundInstance;
     }
     var b = createjs.extend(a, createjs.AbstractPlugin), c = a;
-    c.MAX_INSTANCES = 30, c._AUDIO_READY = "canplaythrough", c._AUDIO_ENDED = "ended",
-    c._AUDIO_SEEKED = "seeked", c._AUDIO_STALLED = "stalled", c._TIME_UPDATE = "timeupdate",
+    c.MAX_INSTANCES = 30, c._AUDIO_READY = "canplaythrough", c._AUDIO_ENDED = "ended", 
+    c._AUDIO_SEEKED = "seeked", c._AUDIO_STALLED = "stalled", c._TIME_UPDATE = "timeupdate", 
     c._capabilities = null, c.isSupported = function() {
         return c._generateCapabilities(), null != c._capabilities;
     }, c._generateCapabilities = function() {
@@ -4575,16 +4575,16 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(b, c, d) {
-        this.ignoreGlobalPause = !1, this.loop = !1, this.duration = 0, this.pluginData = d || {},
-        this.target = b, this.position = null, this.passive = !1, this._paused = !1, this._curQueueProps = {},
-        this._initQueueProps = {}, this._steps = [], this._actions = [], this._prevPosition = 0,
-        this._stepPosition = 0, this._prevPos = -1, this._target = b, this._useTicks = !1,
-        this._inited = !1, this._registered = !1, c && (this._useTicks = c.useTicks, this.ignoreGlobalPause = c.ignoreGlobalPause,
-        this.loop = c.loop, c.onChange && this.addEventListener("change", c.onChange), c.override && a.removeTweens(b)),
+        this.ignoreGlobalPause = !1, this.loop = !1, this.duration = 0, this.pluginData = d || {}, 
+        this.target = b, this.position = null, this.passive = !1, this._paused = !1, this._curQueueProps = {}, 
+        this._initQueueProps = {}, this._steps = [], this._actions = [], this._prevPosition = 0, 
+        this._stepPosition = 0, this._prevPos = -1, this._target = b, this._useTicks = !1, 
+        this._inited = !1, this._registered = !1, c && (this._useTicks = c.useTicks, this.ignoreGlobalPause = c.ignoreGlobalPause, 
+        this.loop = c.loop, c.onChange && this.addEventListener("change", c.onChange), c.override && a.removeTweens(b)), 
         c && c.paused ? this._paused = !0 : createjs.Tween._register(this, !0), c && null != c.position && this.setPosition(c.position, a.NONE);
     }
     var b = createjs.extend(a, createjs.EventDispatcher);
-    a.NONE = 0, a.LOOP = 1, a.REVERSE = 2, a.IGNORE = {}, a._tweens = [], a._plugins = {},
+    a.NONE = 0, a.LOOP = 1, a.REVERSE = 2, a.IGNORE = {}, a._tweens = [], a._plugins = {}, 
     a.get = function(b, c, d, e) {
         return e && a.removeTweens(b), new a(b, c, d);
     }, a.tick = function(b, c) {
@@ -4622,8 +4622,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         }
     }, a._register = function(b, c) {
         var d = b._target, e = a._tweens;
-        if (c && !b._registered) d && (d.tweenjs_count = d.tweenjs_count ? d.tweenjs_count + 1 : 1),
-        e.push(b), !a._inited && createjs.Ticker && (createjs.Ticker.addEventListener("tick", a),
+        if (c && !b._registered) d && (d.tweenjs_count = d.tweenjs_count ? d.tweenjs_count + 1 : 1), 
+        e.push(b), !a._inited && createjs.Ticker && (createjs.Ticker.addEventListener("tick", a), 
         a._inited = !0); else if (!c && b._registered) {
             d && d.tweenjs_count--;
             for (var f = e.length; f--; ) if (e[f] == b) {
@@ -4668,7 +4668,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
     }, b.setPosition = function(a, b) {
         0 > a && (a = 0), null == b && (b = 1);
         var c = a, d = !1;
-        if (c >= this.duration && (this.loop ? c %= this.duration : (c = this.duration,
+        if (c >= this.duration && (this.loop ? c %= this.duration : (c = this.duration, 
         d = !0)), c == this._prevPos) return d;
         var e = this._prevPos;
         if (this.position = this._prevPos = c, this._prevPosition = a, this._target) if (d) this._updateTargetProps(null, 1); else if (this._steps.length > 0) {
@@ -4676,13 +4676,13 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             var h = this._steps[f - 1];
             this._updateTargetProps(h, (this._stepPosition = c - h.t) / h.d);
         }
-        return 0 != b && this._actions.length > 0 && (this._useTicks ? this._runActions(c, c) : 1 == b && e > c ? (e != this.duration && this._runActions(e, this.duration),
-        this._runActions(0, c, !0)) : this._runActions(e, c)), d && this.setPaused(!0),
+        return 0 != b && this._actions.length > 0 && (this._useTicks ? this._runActions(c, c) : 1 == b && e > c ? (e != this.duration && this._runActions(e, this.duration), 
+        this._runActions(0, c, !0)) : this._runActions(e, c)), d && this.setPaused(!0), 
         this.dispatchEvent("change"), d;
     }, b.tick = function(a) {
         this._paused || this.setPosition(this._prevPosition + a);
     }, b.setPaused = function(b) {
-        return this._paused === !!b ? this : (this._paused = !!b, a._register(this, !b),
+        return this._paused === !!b ? this : (this._paused = !!b, a._register(this, !b), 
         this);
     }, b.w = b.wait, b.t = b.to, b.c = b.call, b.s = b.set, b.toString = function() {
         return "[Tween]";
@@ -4695,7 +4695,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             b.e && (c = b.e(c, 0, 1, 1)), d = b.p0, e = b.p1;
         } else this.passive = !1, d = e = this._curQueueProps;
         for (var j in this._initQueueProps) {
-            null == (g = d[j]) && (d[j] = g = this._initQueueProps[j]), null == (h = e[j]) && (e[j] = h = g),
+            null == (g = d[j]) && (d[j] = g = this._initQueueProps[j]), null == (h = e[j]) && (e[j] = h = g), 
             f = g == h || 0 == c || 1 == c || "number" != typeof g ? 1 == c ? h : g : g + (h - g) * c;
             var k = !1;
             if (i = a._plugins[j]) for (var l = 0, m = i.length; m > l; l++) {
@@ -4726,7 +4726,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         for (var c in a) b[c] = a[c];
         return b;
     }, b._addStep = function(a) {
-        return a.d > 0 && (this._steps.push(a), a.t = this.duration, this.duration += a.d),
+        return a.d > 0 && (this._steps.push(a), a.t = this.duration, this.duration += a.d), 
         this;
     }, b._addAction = function(a) {
         return a.t = this.duration, this._actions.push(a), this;
@@ -4736,12 +4736,12 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
 }(), this.createjs = this.createjs || {}, function() {
     "use strict";
     function a(a, b, c) {
-        this.EventDispatcher_constructor(), this.ignoreGlobalPause = !1, this.duration = 0,
-        this.loop = !1, this.position = null, this._paused = !1, this._tweens = [], this._labels = null,
-        this._labelList = null, this._prevPosition = 0, this._prevPos = -1, this._useTicks = !1,
-        this._registered = !1, c && (this._useTicks = c.useTicks, this.loop = c.loop, this.ignoreGlobalPause = c.ignoreGlobalPause,
-        c.onChange && this.addEventListener("change", c.onChange)), a && this.addTween.apply(this, a),
-        this.setLabels(b), c && c.paused ? this._paused = !0 : createjs.Tween._register(this, !0),
+        this.EventDispatcher_constructor(), this.ignoreGlobalPause = !1, this.duration = 0, 
+        this.loop = !1, this.position = null, this._paused = !1, this._tweens = [], this._labels = null, 
+        this._labelList = null, this._prevPosition = 0, this._prevPos = -1, this._useTicks = !1, 
+        this._registered = !1, c && (this._useTicks = c.useTicks, this.loop = c.loop, this.ignoreGlobalPause = c.ignoreGlobalPause, 
+        c.onChange && this.addEventListener("change", c.onChange)), a && this.addTween.apply(this, a), 
+        this.setLabels(b), c && c.paused ? this._paused = !0 : createjs.Tween._register(this, !0), 
         c && null != c.position && this.setPosition(c.position, createjs.Tween.NONE);
     }
     var b = createjs.extend(a, createjs.EventDispatcher);
@@ -4751,8 +4751,8 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             for (var c = 0; b > c; c++) this.addTween(arguments[c]);
             return arguments[0];
         }
-        return 0 == b ? null : (this.removeTween(a), this._tweens.push(a), a.setPaused(!0),
-        a._paused = !1, a._useTicks = this._useTicks, a.duration > this.duration && (this.duration = a.duration),
+        return 0 == b ? null : (this.removeTween(a), this._tweens.push(a), a.setPaused(!0), 
+        a._paused = !1, a._useTicks = this._useTicks, a.duration > this.duration && (this.duration = a.duration), 
         this._prevPos >= 0 && a.setPosition(this._prevPos, createjs.Tween.NONE), a);
     }, b.removeTween = function(a) {
         var b = arguments.length;
@@ -4761,7 +4761,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             return c;
         }
         if (0 == b) return !1;
-        for (var e = this._tweens, d = e.length; d--; ) if (e[d] == a) return e.splice(d, 1),
+        for (var e = this._tweens, d = e.length; d--; ) if (e[d] == a) return e.splice(d, 1), 
         a.duration >= this.duration && this.updateDuration(), !0;
         return !1;
     }, b.addLabel = function(a, b) {
@@ -4805,7 +4805,7 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         var c = this._calcPosition(a), d = !this.loop && a >= this.duration;
         if (c == this._prevPos) return d;
         this._prevPosition = a, this.position = this._prevPos = c;
-        for (var e = 0, f = this._tweens.length; f > e; e++) if (this._tweens[e].setPosition(c, b),
+        for (var e = 0, f = this._tweens.length; f > e; e++) if (this._tweens[e].setPosition(c, b), 
         c != this._prevPos) return !1;
         return d && this.setPaused(!0), this.dispatchEvent("change"), d;
     }, b.setPaused = function(a) {
@@ -4854,10 +4854,10 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         return function(b) {
             return (b *= 2) < 1 ? .5 * Math.pow(b, a) : 1 - .5 * Math.abs(Math.pow(2 - b, a));
         };
-    }, a.quadIn = a.getPowIn(2), a.quadOut = a.getPowOut(2), a.quadInOut = a.getPowInOut(2),
-    a.cubicIn = a.getPowIn(3), a.cubicOut = a.getPowOut(3), a.cubicInOut = a.getPowInOut(3),
-    a.quartIn = a.getPowIn(4), a.quartOut = a.getPowOut(4), a.quartInOut = a.getPowInOut(4),
-    a.quintIn = a.getPowIn(5), a.quintOut = a.getPowOut(5), a.quintInOut = a.getPowInOut(5),
+    }, a.quadIn = a.getPowIn(2), a.quadOut = a.getPowOut(2), a.quadInOut = a.getPowInOut(2), 
+    a.cubicIn = a.getPowIn(3), a.cubicOut = a.getPowOut(3), a.cubicInOut = a.getPowInOut(3), 
+    a.quartIn = a.getPowIn(4), a.quartOut = a.getPowOut(4), a.quartInOut = a.getPowInOut(4), 
+    a.quintIn = a.getPowIn(5), a.quintOut = a.getPowOut(5), a.quintInOut = a.getPowInOut(5), 
     a.sineIn = function(a) {
         return 1 - Math.cos(a * Math.PI / 2);
     }, a.sineOut = function(a) {
@@ -4918,15 +4918,15 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         return createjs.Tween.installPlugin(a, [ "guide", "x", "y", "rotation" ]), createjs.Tween.IGNORE;
     }, a.init = function(a, b, c) {
         var d = a.target;
-        return d.hasOwnProperty("x") || (d.x = 0), d.hasOwnProperty("y") || (d.y = 0), d.hasOwnProperty("rotation") || (d.rotation = 0),
+        return d.hasOwnProperty("x") || (d.x = 0), d.hasOwnProperty("y") || (d.y = 0), d.hasOwnProperty("rotation") || (d.rotation = 0), 
         "rotation" == b && (a.__needsRot = !0), "guide" == b ? null : c;
     }, a.step = function(b, c, d, e, f) {
-        if ("rotation" == c && (b.__rotGlobalS = d, b.__rotGlobalE = e, a.testRotData(b, f)),
+        if ("rotation" == c && (b.__rotGlobalS = d, b.__rotGlobalE = e, a.testRotData(b, f)), 
         "guide" != c) return e;
         var g, h = e;
         h.hasOwnProperty("path") || (h.path = []);
         var i = h.path;
-        if (h.hasOwnProperty("end") || (h.end = 1), h.hasOwnProperty("start") || (h.start = d && d.hasOwnProperty("end") && d.path === i ? d.end : 0),
+        if (h.hasOwnProperty("end") || (h.end = 1), h.hasOwnProperty("start") || (h.start = d && d.hasOwnProperty("end") && d.path === i ? d.end : 0), 
         h.hasOwnProperty("_segments") && h._length) return e;
         var j = i.length, k = 10;
         if (!(j >= 6 && (j - 2) % 4 == 0)) throw "invalid 'path' data, please see documentation for valid paths";
@@ -4934,15 +4934,15 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
         for (var l = 2; j > l; l += 4) {
             for (var m, n, o = i[l - 2], p = i[l - 1], q = i[l + 0], r = i[l + 1], s = i[l + 2], t = i[l + 3], u = o, v = p, w = 0, x = [], y = 1; k >= y; y++) {
                 var z = y / k, A = 1 - z;
-                m = A * A * o + 2 * A * z * q + z * z * s, n = A * A * p + 2 * A * z * r + z * z * t,
+                m = A * A * o + 2 * A * z * q + z * z * s, n = A * A * p + 2 * A * z * r + z * z * t, 
                 w += x[x.push(Math.sqrt((g = m - u) * g + (g = n - v) * g)) - 1], u = m, v = n;
             }
             h._segments.push(w), h._segments.push(x), h._length += w;
         }
         g = h.orient, h.orient = !0;
         var B = {};
-        return a.calc(h, h.start, B), b.__rotPathS = Number(B.rotation.toFixed(5)), a.calc(h, h.end, B),
-        b.__rotPathE = Number(B.rotation.toFixed(5)), h.orient = !1, a.calc(h, h.end, f),
+        return a.calc(h, h.start, B), b.__rotPathS = Number(B.rotation.toFixed(5)), a.calc(h, h.end, B), 
+        b.__rotPathE = Number(B.rotation.toFixed(5)), h.orient = !1, a.calc(h, h.end, f), 
         h.orient = g, h.orient ? (b.__guideData = h, a.testRotData(b, f), e) : e;
     }, a.testRotData = function(a, b) {
         if (void 0 === a.__rotGlobalS || void 0 === a.__rotGlobalE) {
@@ -4986,15 +4986,15 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             y: 0,
             rotation: 0
         });
-        for (var d = a._segments, e = a.path, f = a._length * b, g = d.length - 2, h = 0; f > d[h] && g > h; ) f -= d[h],
+        for (var d = a._segments, e = a.path, f = a._length * b, g = d.length - 2, h = 0; f > d[h] && g > h; ) f -= d[h], 
         h += 2;
         var i = d[h + 1], j = 0;
         for (g = i.length - 1; f > i[j] && g > j; ) f -= i[j], j++;
         var k = j / ++g + f / (g * i[j]);
         h = 2 * h + 2;
         var l = 1 - k;
-        return c.x = l * l * e[h - 2] + 2 * l * k * e[h + 0] + k * k * e[h + 2], c.y = l * l * e[h - 1] + 2 * l * k * e[h + 1] + k * k * e[h + 3],
-        a.orient && (c.rotation = 57.2957795 * Math.atan2((e[h + 1] - e[h - 1]) * l + (e[h + 3] - e[h + 1]) * k, (e[h + 0] - e[h - 2]) * l + (e[h + 2] - e[h + 0]) * k)),
+        return c.x = l * l * e[h - 2] + 2 * l * k * e[h + 0] + k * k * e[h + 2], c.y = l * l * e[h - 1] + 2 * l * k * e[h + 1] + k * k * e[h + 3], 
+        a.orient && (c.rotation = 57.2957795 * Math.atan2((e[h + 1] - e[h - 1]) * l + (e[h + 3] - e[h + 1]) * k, (e[h + 0] - e[h - 2]) * l + (e[h + 2] - e[h + 0]) * k)), 
         c;
     }, createjs.MotionGuidePlugin = a;
 }(), this.createjs = this.createjs || {}, function() {
@@ -5021,13 +5021,14 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
                 return this._super = tmp, ret;
             };
         }(name, prop[name]) : prop[name];
-        return Class.prototype = prototype, Class.prototype.constructor = Class, Class.extend = arguments.callee,
+        return Class.prototype = prototype, Class.prototype.constructor = Class, Class.extend = arguments.callee, 
         Class;
     };
 }();
 
 var Plugin = Class.extend({
     _isContainer: !1,
+    _defaultFont: void 0,
     _render: !0,
     _theme: void 0,
     _parent: void 0,
@@ -5042,25 +5043,26 @@ var Plugin = Class.extend({
     _enableEvents: !0,
     events: [],
     appEvents: [],
+    _myflag: !1,
     _pluginParams: {},
     init: function(data, parent, stage, theme) {
-        this.events = [], this.appEvents = [], this._childIds = [], this._pluginParams = {},
-        this._theme = theme, this._stage = stage, this._parent = parent, this._data = data,
+        this.events = [], this.appEvents = [], this._childIds = [], this._pluginParams = {}, 
+        this._theme = theme, this._stage = stage, this._parent = parent, this._data = data, 
         this.initPlugin(data);
         var dims = this.relativeDims();
-        dims && this._self && (this._self.origX = dims.x, this._self.origY = dims.y, this._self.width = dims.w,
+        dims && this._self && (this._self.origX = dims.x, this._self.origY = dims.y, this._self.width = dims.w, 
         this._self.height = dims.h), data.enableDrag && this.enableDrag(this._self, data.snapTo);
-        if (data.appEvents && this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/)),
-        this._enableEvents && EventManager.registerEvents(this, this._data), this._id = this._data.id || this._data.asset || _.uniqueId("plugin"),
-        PluginManager.registerPluginObject(this), this._self && data.visible === !1 && (this._self.visible = !1),
+        if (data.appEvents && this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/)), 
+        this._enableEvents && EventManager.registerEvents(this, this._data), this._id = this._data.id || this._data.asset || _.uniqueId("plugin"), 
+        PluginManager.registerPluginObject(this), this._self && data.visible === !1 && (this._self.visible = !1), 
         data["ev-if"]) {
             var expr = data["ev-if"].trim(), modelExpr = expr = this.replaceExpressions(expr);
             "${" != expr.substring(0, 2) && (expr = "${" + expr), "}" != expr.substring(expr.length - 1, expr.length) && (expr += "}");
             var exprVal = this.evaluateExpr(expr);
-            "undefined" == typeof exprVal && this._stage && (exprVal = this._stage.getModelValue(modelExpr)),
+            "undefined" == typeof exprVal && this._stage && (exprVal = this._stage.getModelValue(modelExpr)), 
             "undefined" != typeof exprVal && this._self && (this._self.visible = this._self.visible && exprVal);
         }
-        this._self && this._self.visible && (this.drawBorder(data, dims), data.shadow && this.addShadow()),
+        this._self && this._self.visible && (this.drawBorder(data, dims), data.shadow && this.addShadow()), 
         this._render && (this._isContainer && "stage" == this._type && this.cache(), this.render());
     },
     cache: function() {
@@ -5074,12 +5076,12 @@ var Plugin = Class.extend({
     },
     setDimensions: function() {
         var dims = this.relativeDims();
-        this._self.x = dims.x ? dims.x : 0, this._self.y = dims.y ? dims.y : 0, this._self.width = dims.w ? dims.w : 1,
+        this._self.x = dims.x ? dims.x : 0, this._self.y = dims.y ? dims.y : 0, this._self.width = dims.w ? dims.w : 1, 
         this._self.height = dims.h ? dims.h : 1;
     },
     addChild: function(child, childPlugin) {
         var nextIdx = this._currIndex++;
-        this._self.addChildAt(child, nextIdx), childPlugin && (childPlugin.setIndex(nextIdx),
+        this._self.addChildAt(child, nextIdx), childPlugin && (childPlugin.setIndex(nextIdx), 
         childPlugin._id && this._childIds.push(childPlugin._id));
     },
     removeChildAt: function(idx) {
@@ -5105,7 +5107,7 @@ var Plugin = Class.extend({
                 y: parseFloat(parentDims.h * (this._data.y || 0) / 100),
                 w: parseFloat(parentDims.w * (this._data.w || 0) / 100),
                 h: parseFloat(parentDims.h * (this._data.h || 0) / 100),
-                stretch: "undefined" != typeof this._data.stretch ? this._data.stretch : !0
+                stretch: "undefined" == typeof this._data.stretch || this._data.stretch
             };
         }
         return this._dimensions;
@@ -5116,21 +5118,21 @@ var Plugin = Class.extend({
             y: parseFloat(parentDims.h * (data.y || 0) / 100),
             w: parseFloat(parentDims.w * (data.w || 0) / 100),
             h: parseFloat(parentDims.h * (data.h || 0) / 100),
-            stretch: "undefined" != typeof data.stretch ? data.stretch : !0
+            stretch: "undefined" == typeof data.stretch || data.stretch
         };
         return relDimensions;
     },
     setScale: function() {
         var sb = this._self.getBounds(), dims = this.relativeDims(), parentDims = this._parent.dimensions();
-        dims.stretch || 0 != dims.h && 0 != dims.w && (sb.height > sb.width ? dims.h = 0 : dims.w = 0),
-        0 == dims.h && (dims.h = dims.w * sb.height / sb.width, parentDims.h < dims.h && (dims.h = parentDims.h,
-        dims.w = dims.h * sb.width / sb.height)), 0 == dims.w && (dims.w = dims.h * sb.width / sb.height,
-        parentDims.w < dims.w && (dims.w = parentDims.w, dims.h = dims.w * sb.height / sb.width)),
-        this._dimensions.h = dims.h, this._dimensions.w = dims.w, this._self && (this._self.scaleY = dims.h / sb.height,
+        dims.stretch || 0 != dims.h && 0 != dims.w && (sb.height > sb.width ? dims.h = 0 : dims.w = 0), 
+        0 == dims.h && (dims.h = dims.w * sb.height / sb.width, parentDims.h < dims.h && (dims.h = parentDims.h, 
+        dims.w = dims.h * sb.width / sb.height)), 0 == dims.w && (dims.w = dims.h * sb.width / sb.height, 
+        parentDims.w < dims.w && (dims.w = parentDims.w, dims.h = dims.w * sb.height / sb.width)), 
+        this._dimensions.h = dims.h, this._dimensions.w = dims.w, this._self && (this._self.scaleY = dims.h / sb.height, 
         this._self.scaleX = dims.w / sb.width);
     },
     initPlugin: function(data) {
-        throw PluginManager.addError("Subclasses of plugin should implement this function"),
+        throw PluginManager.addError("Subclasses of plugin should implement this function"), 
         "Subclasses of plugin should implement this function";
     },
     play: function() {
@@ -5149,21 +5151,21 @@ var Plugin = Class.extend({
         PluginManager.addError("Subclasses of plugin should implement refresh()");
     },
     show: function(action) {
-        _.contains(this.events, "show") ? EventManager.dispatchEvent(this._data.id, "show") : this._self.visible || (this._self.visible = !0,
+        _.contains(this.events, "show") ? EventManager.dispatchEvent(this._data.id, "show") : this._self.visible || (this._self.visible = !0, 
         EventManager.processAppTelemetry(action, "SHOW", this)), Renderer.update = !0;
     },
     hide: function(action) {
-        _.contains(this.events, "hide") ? EventManager.dispatchEvent(this._data.id, "hide") : this._self && this._self.visible && (this._self.visible = !1,
+        _.contains(this.events, "hide") ? EventManager.dispatchEvent(this._data.id, "hide") : this._self && this._self.visible && (this._self.visible = !1, 
         EventManager.processAppTelemetry(action, "HIDE", this)), Renderer.update = !0;
     },
     toggleShow: function(action) {
-        _.contains(this.events, "toggleShow") ? EventManager.dispatchEvent(this._data.id, "toggleShow") : (this._self.visible = !this._self.visible,
-        EventManager.processAppTelemetry(action, this._self.visible ? "SHOW" : "HIDE", this)),
+        _.contains(this.events, "toggleShow") ? EventManager.dispatchEvent(this._data.id, "toggleShow") : (this._self.visible = !this._self.visible, 
+        EventManager.processAppTelemetry(action, this._self.visible ? "SHOW" : "HIDE", this)), 
         Renderer.update = !0;
     },
     toggleShadow: function(action) {
         var isVisible = !1;
-        return this.hasShadow() ? (this.removeShadow(), isVisible = !1) : (this.addShadow(),
+        return this.hasShadow() ? (this.removeShadow(), isVisible = !1) : (this.addShadow(), 
         isVisible = !0), Renderer.update = !0, isVisible;
     },
     addShadow: function() {
@@ -5181,13 +5183,13 @@ var Plugin = Class.extend({
     },
     hasShadow: function() {
         var visibleShadow = !1, shadowObj = this._self.shadow;
-        return shadowObj && shadowObj._self && "visible" in shadowObj._self ? visibleShadow = shadowObj._self.visible : this._self.shadow && (visibleShadow = !0),
+        return shadowObj && shadowObj._self && "visible" in shadowObj._self ? visibleShadow = shadowObj._self.visible : this._self.shadow && (visibleShadow = !0), 
         visibleShadow;
     },
     drawBorder: function(data, dims) {
         if (data.stroke) {
             var strokeWidth = data["stroke-width"] || 1, border = new createjs.Shape(), graphics = border.graphics;
-            graphics.beginStroke(data.stroke), graphics.setStrokeStyle(strokeWidth), graphics.dr(dims.x, dims.y, dims.w, dims.h),
+            graphics.beginStroke(data.stroke), graphics.setStrokeStyle(strokeWidth), graphics.dr(dims.x, dims.y, dims.w, dims.h), 
             this._stage.addChild(border);
         }
     },
@@ -5201,9 +5203,9 @@ var Plugin = Class.extend({
             this.x = evt.stageX + this.offset.x, this.y = evt.stageY + this.offset.y, Renderer.update = !0;
         }), snapTo && asset.on("pressup", function(evt) {
             var plugin = PluginManager.getPluginObject(snapTo), dims = plugin._dimensions, xFactor = parseFloat(.5 * this.width), yFactor = parseFloat(.5 * this.height), x = dims.x - xFactor, y = dims.y - yFactor, maxX = dims.x + dims.w + xFactor, maxY = dims.y + dims.h + yFactor, snapSuccess = !1;
-            this.x >= x && this.x + this.width <= maxX && this.y >= y && this.y + this.height <= maxY && (snapSuccess = !0),
-            snapSuccess ? (plugin._data.snapX && (this.x = dims.x + dims.w * plugin._data.snapX / 100),
-            plugin._data.snapY && (this.y = dims.y + dims.h * plugin._data.snapY / 100)) : (this.x = this.origX,
+            this.x >= x && this.x + this.width <= maxX && this.y >= y && this.y + this.height <= maxY && (snapSuccess = !0), 
+            snapSuccess ? (plugin._data.snapX && (this.x = dims.x + dims.w * plugin._data.snapX / 100), 
+            plugin._data.snapY && (this.y = dims.y + dims.h * plugin._data.snapY / 100)) : (this.x = this.origX, 
             this.y = this.origY), Renderer.update = !0;
         });
     },
@@ -5215,7 +5217,7 @@ var Plugin = Class.extend({
         this._theme && (content = this._theme._contentParams);
         var value = void 0;
         try {
-            expr = expr.trim(), "${" == expr.substring(0, 2) && "}" == expr.substring(expr.length - 1, expr.length) ? (expr = expr.substring(2, expr.length),
+            expr = expr.trim(), "${" == expr.substring(0, 2) && "}" == expr.substring(expr.length - 1, expr.length) ? (expr = expr.substring(2, expr.length), 
             expr = expr.substring(0, expr.length - 1), value = eval(expr)) : value = eval(expr);
         } catch (err) {
             console.warn("expr: " + expr + " evaluation faild:", err.message);
@@ -5223,7 +5225,7 @@ var Plugin = Class.extend({
         return value;
     },
     replaceExpressions: function(model) {
-        for (var arr = [], idx = 0, nextIdx = model.indexOf("${", idx), endIdx = model.indexOf("}", idx + 1); -1 != nextIdx && -1 != endIdx; ) {
+        for (var arr = [], idx = 0, nextIdx = model.indexOf("${", idx), endIdx = model.indexOf("}", idx + 1); nextIdx != -1 && endIdx != -1; ) {
             var expr = model.substring(nextIdx, endIdx + 1);
             arr.push(expr), idx = endIdx, nextIdx = model.indexOf("${", idx), endIdx = model.indexOf("}", idx + 1);
         }
@@ -5240,6 +5242,10 @@ var Plugin = Class.extend({
             value = scope && "app" == scope.toLowerCase() ? GlobalContext.getParam(paramName) : scope && "stage" == scope.toLowerCase() ? this._stage.getParam(paramName) : this._theme.getParam(paramName);
         } else this._stage && (value = this._stage.getParam(param));
         return value;
+    },
+    getDefaultFont: function() {
+        return this._defaultFont = "NotoSansGujarati, NotoSansOriya, NotoSansMalayalam", 
+        this._defaultFont;
     },
     transitionTo: function() {
         PluginManager.addError("Subclasses of plugin should implement transitionTo()");
@@ -5280,7 +5286,7 @@ var Plugin = Class.extend({
     },
     setPluginParam: function(param, value, incr, max) {
         var instance = this, fval = instance._pluginParams[param];
-        incr ? (fval || (fval = 0), fval += incr) : fval = value, 0 > fval && (fval = 0),
+        incr ? (fval || (fval = 0), fval += incr) : fval = value, 0 > fval && (fval = 0), 
         "undefined" != typeof max && fval >= max && (fval = 0), instance._pluginParams[param] = fval;
     },
     setPluginParamValue: function(action) {
@@ -5299,6 +5305,13 @@ var Plugin = Class.extend({
         data = "undefined" == typeof data ? this._data : data;
         for (k in data) PluginManager.isPlugin(k) && _.isObject(data[k]) && !_.isEmpty(data[k]) && (children[k] = data[k]);
         return children;
+    },
+    setState: function(param, value, isStateChanged) {
+        _.isUndefined(isStateChanged) || this._stage.isStageStateChanged(isStateChanged), 
+        this._stage.setParam(param.toLowerCase(), value);
+    },
+    getState: function(param) {
+        if (!_.isUndefined(this._stage._currentState)) return this._stage._currentState[param];
     }
 }), HTMLPlugin = Plugin.extend({
     _div: void 0,
@@ -5325,25 +5338,27 @@ String.prototype.containsAny = function() {
         PluginManager.customPluginMap[id] = plugin, createjs.EventDispatcher.initialize(plugin.prototype);
     },
     registerCustomPlugins: function(manifest, relativePath) {
-        PluginManager.customPluginMap = {};
-        var media = manifest.media, plugins = _.filter(_.isArray(media) ? media : [ media ], function(media) {
-            return "plugin" == media.type;
-        });
-        media = _.filter(_.isArray(media) ? media : [ media ], function(media) {
-            return "js" == media.type || "css" == media.type;
-        }), relativePath = "undefined" != typeof cordova && relativePath ? "file:///" + relativePath : relativePath,
-        media && media.forEach(function(media) {
-            if (PluginManager.pluginMap[media.id]) PluginManager.addError("external JS/CSS cannot override system plugin - " + media.id); else switch (media.type) {
-              case "js":
-                PluginManager.loadJS(media.src, relativePath);
-                break;
+        if (!_.isEmpty(manifest)) {
+            PluginManager.customPluginMap = {};
+            var media = manifest.media, plugins = _.filter(_.isArray(media) ? media : [ media ], function(media) {
+                return "plugin" == media.type;
+            });
+            media = _.filter(_.isArray(media) ? media : [ media ], function(media) {
+                return "js" == media.type || "css" == media.type;
+            }), relativePath = "undefined" != typeof cordova && relativePath ? "file:///" + relativePath : relativePath, 
+            media && media.forEach(function(media) {
+                if (PluginManager.pluginMap[media.id]) PluginManager.addError("external JS/CSS cannot override system plugin - " + media.id); else switch (media.type) {
+                  case "js":
+                    PluginManager.loadJS(media.src, relativePath);
+                    break;
 
-              case "css":
-                PluginManager.loadCSS(media.src, relativePath);
-            }
-        }), plugins && (_.isArray(plugins) || (plugins = [ plugins ]), plugins.forEach(function(plugin) {
-            PluginManager.pluginMap[plugin.id] ? PluginManager.addError("Custom plugin cannot override system plugin - " + plugin.id) : PluginManager.loadCustomPlugin(plugin, relativePath);
-        }));
+                  case "css":
+                    PluginManager.loadCSS(media.src, relativePath);
+                }
+            }), plugins && (_.isArray(plugins) || (plugins = [ plugins ]), plugins.forEach(function(plugin) {
+                PluginManager.pluginMap[plugin.id] ? PluginManager.addError("Custom plugin cannot override system plugin - " + plugin.id) : PluginManager.loadCustomPlugin(plugin, relativePath);
+            }));
+        }
     },
     isPlugin: function(id) {
         return !(!PluginManager.pluginMap[id] && !PluginManager.customPluginMap[id]);
@@ -5352,7 +5367,7 @@ String.prototype.containsAny = function() {
         var p, plugin = PluginManager.pluginMap[id] || PluginManager.customPluginMap[id];
         return plugin ? _.isArray(data) ? data.forEach(function(d) {
             new plugin(d, parent, stage, theme);
-        }) : p = new plugin(data, parent, stage, theme) : PluginManager.addError("No plugin found for - " + id),
+        }) : p = new plugin(data, parent, stage, theme) : PluginManager.addError("No plugin found for - " + id), 
         p;
     },
     registerPluginObject: function(pluginObj) {
@@ -5371,8 +5386,8 @@ String.prototype.containsAny = function() {
         PluginManager.pluginObjMap = {}, PluginManager.customPluginMap = {}, PluginManager.errors = [];
     },
     validateCustomPlugin: function(id, data) {
-        data && (data.containsAny.apply(data, PluginManager.keywords) ? (console.info("Registering custom plugin - ", id),
-        PluginManager.registerCustomPlugin(id, eval(data))) : (console.error("Excluded keywords found in the custom plugin"),
+        data && (data.containsAny.apply(data, PluginManager.keywords) ? (console.info("Registering custom plugin - ", id), 
+        PluginManager.registerCustomPlugin(id, eval(data))) : (console.error("Excluded keywords found in the custom plugin"), 
         PluginManager.errors.push("Excluded keywords found in the custom plugin")));
     },
     registerJSLib: function(id, data) {
@@ -5413,7 +5428,7 @@ String.prototype.containsAny = function() {
             instance = PluginManager.getPluginObject(action.asset), action.parent === !0 && instance._parent && (instance = instance._parent);
             for (k in action) if (AnimationManager.isPlugin(k)) {
                 var data = action[k], pluginObj = void 0;
-                data.id && (pluginObj = AnimationManager.getPluginObject(data.id)), "undefined" == typeof pluginObj ? pluginObj = AnimationManager.invokePlugin(k, action[k], instance) : console.info("Playing from cache..."),
+                data.id && (pluginObj = AnimationManager.getPluginObject(data.id)), "undefined" == typeof pluginObj ? pluginObj = AnimationManager.invokePlugin(k, action[k], instance) : console.info("Playing from cache..."), 
                 pluginObj.animate(instance, action.cb);
             }
         }
@@ -5432,7 +5447,7 @@ String.prototype.containsAny = function() {
         var p, pluginMap = AnimationManager.pluginMap;
         return pluginMap[id] ? _.isArray(data) ? data.forEach(function(d) {
             new pluginMap[id](d, plugin);
-        }) : p = new pluginMap[id](data, plugin) : AnimationManager.addError("No plugin found for - " + id),
+        }) : p = new pluginMap[id](data, plugin) : AnimationManager.addError("No plugin found for - " + id), 
         p;
     },
     registerPluginObject: function(pluginObj) {
@@ -5473,24 +5488,24 @@ var LayoutPlugin = Plugin.extend({
         var instance = this, index = 0;
         this._cells.forEach(function(data) {
             var cellECML = instance.getInnerECML(), cellEvents = instance.getCellEvents();
-            instance._stage._templateVars[instance._data["var"]] = instance._iterateModel + "[" + index + "]",
+            instance._stage._templateVars[instance._data.var] = instance._iterateModel + "[" + index + "]", 
             instance._addCellAttributes(data), Object.assign && Object.assign(data, cellECML);
             var resolvedEvents = instance.resolveActionModelValues(cellEvents);
-            Object.assign && Object.assign(data, resolvedEvents), PluginManager.invoke("g", data, instance, instance._stage, instance._theme),
+            Object.assign && Object.assign(data, resolvedEvents), PluginManager.invoke("g", data, instance, instance._stage, instance._theme), 
             index++;
         });
     },
     _addCellAttributes: function(data) {
-        data.padX = this._data.padX || 0, data.padY = this._data.padY || 0, data.snapX = this._data.snapX,
-        data.snapY = this._data.snapY, data.stroke = this._data.stroke, data["stroke-width"] = this._data["stroke-width"],
-        data.events = this._data.events, data.event = this._data.event, this._data.shadow && (data.shadowColor = this._data.shadow),
-        this._data.highlight && (data.highlight = this._data._highlight), _.isFinite(this._data.blur) && (data.blur = this._data.blur),
-        _.isFinite(this._data.offsetX) && (data.offsetX = this._data.offsetX), _.isFinite(this._data.offsetY) && (data.offsetY = this._data.offsetY),
+        data.padX = this._data.padX || 0, data.padY = this._data.padY || 0, data.snapX = this._data.snapX, 
+        data.snapY = this._data.snapY, data.stroke = this._data.stroke, data["stroke-width"] = this._data["stroke-width"], 
+        data.events = this._data.events, data.event = this._data.event, this._data.shadow && (data.shadowColor = this._data.shadow), 
+        this._data.highlight && (data.highlight = this._data._highlight), _.isFinite(this._data.blur) && (data.blur = this._data.blur), 
+        _.isFinite(this._data.offsetX) && (data.offsetX = this._data.offsetX), _.isFinite(this._data.offsetY) && (data.offsetY = this._data.offsetY), 
         this._data.opacity && (data.opacity = this._data.opacity);
     },
     getCellEvents: function() {
         var events = void 0, instance = this;
-        return instance._data.events ? _.isArray(instance._data.events) ? (events = [],
+        return instance._data.events ? _.isArray(instance._data.events) ? (events = [], 
         instance._data.events.forEach(function(e) {
             events.push.apply(events, e.event);
         })) : events = instance._data.events.event : events = instance._data.event, events;
@@ -5531,7 +5546,7 @@ var LayoutPlugin = Plugin.extend({
     initPlugin: function(data) {
         this._self = new createjs.Shape();
         var graphics = this._self.graphics, dims = this.relativeDims();
-        data.fill && graphics.beginFill(data.fill), data.stroke && graphics.beginStroke(data.stroke),
+        data.fill && graphics.beginFill(data.fill), data.stroke && graphics.beginStroke(data.stroke), 
         data["stroke-width"] && graphics.setStrokeStyle(data["stroke-width"]);
         var radius = data.radius || 10;
         switch (data.type = data.type ? data.type : "rect", data.type.toLowerCase()) {
@@ -5562,7 +5577,7 @@ var LayoutPlugin = Plugin.extend({
                 hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h), this._self.hitArea = hit;
             }
         }
-        this._self.x = dims.x, this._self.y = dims.y, data.rotate && (this._self.regX = dims.w / 2,
+        this._self.x = dims.x, this._self.y = dims.y, data.rotate && (this._self.regX = dims.w / 2, 
         this._self.regY = dims.h / 2, this._self.rotation = data.rotate), data.opacity && (this._self.alpha = data.opacity);
     },
     drawBorder: function() {}
@@ -5571,7 +5586,7 @@ var LayoutPlugin = Plugin.extend({
 PluginManager.registerPlugin("shape", ShapePlugin), AnimationPlugin = Class.extend({
     _data: void 0,
     init: function(data, plugin) {
-        this._data = data, this._id = data.id || _.uniqueId("animation"), this.initPlugin(data, plugin),
+        this._data = data, this._id = data.id || _.uniqueId("animation"), this.initPlugin(data, plugin), 
         AnimationManager.registerPluginObject(this);
     },
     initPlugin: function(data, plugin) {
@@ -5638,12 +5653,12 @@ var DivPlugin = HTMLPlugin.extend({
     initPlugin: function(data) {
         this._input = void 0;
         var dims = this.relativeDims(), div = document.getElementById(data.id);
-        div && jQuery("#" + data.id).remove(), div = document.createElement("div"), data.style && div.setAttribute("style", data.style),
-        div.id = data.id, div.style.width = dims.w + "px", div.style.height = dims.h + "px",
+        div && jQuery("#" + data.id).remove(), div = document.createElement("div"), data.style && div.setAttribute("style", data.style), 
+        div.id = data.id, div.style.width = dims.w + "px", div.style.height = dims.h + "px", 
         div.style.position = "absolute";
         var parentDiv = document.getElementById(Renderer.divIds.gameArea);
-        parentDiv.insertBefore(div, parentDiv.childNodes[0]), jQuery("#" + data.id).append(data.__cdata),
-        this._div = div, this._self = new createjs.DOMElement(div), this._self.x = dims.x,
+        parentDiv.insertBefore(div, parentDiv.childNodes[0]), jQuery("#" + data.id).append(data.__cdata), 
+        this._div = div, this._self = new createjs.DOMElement(div), this._self.x = dims.x, 
         this._self.y = dims.y, this.registerEvents(data.id);
     },
     registerEvents: function(id) {
@@ -5688,7 +5703,7 @@ var EmbedPlugin = Plugin.extend({
         }
     },
     replaceExpressions: function(model) {
-        for (var arr = [], idx = 0, nextIdx = model.indexOf("${", idx), endIdx = model.indexOf("}", idx + 1); -1 != nextIdx && -1 != endIdx; ) {
+        for (var arr = [], idx = 0, nextIdx = model.indexOf("${", idx), endIdx = model.indexOf("}", idx + 1); nextIdx != -1 && endIdx != -1; ) {
             var expr = model.substring(nextIdx, endIdx + 1);
             arr.push(expr), idx = endIdx, nextIdx = model.indexOf("${", idx), endIdx = model.indexOf("}", idx + 1);
         }
@@ -5711,14 +5726,14 @@ var GridlayoutPlugin = LayoutPlugin.extend({
         _.isFinite(this._data.marginY) && (marginY = this._data.marginY);
         for (var cw = (100 - (tableProps.cols - 1) * marginX) / tableProps.cols, ch = (100 - (tableProps.rows - 1) * marginY) / tableProps.rows, r = 0; r < tableProps.rows; r++) for (var c = 0; c < tableProps.cols; c++) if (this._cells.length < this._cellsCount) {
             var data = {};
-            data.x = c * (cw + marginX), data.y = r * (ch + marginY), data.w = cw, data.h = ch,
+            data.x = c * (cw + marginX), data.y = r * (ch + marginY), data.w = cw, data.h = ch, 
             this._cells.push(data);
         }
     },
     getTableProperties: function() {
         var cols = void 0, rows = void 0, count = this._cellsCount;
-        return this._data.rows && this._data.cols ? (cols = this._data.cols, rows = Math.ceil(count / cols)) : (this._data.rows && (rows = this._data.rows),
-        this._data.cols && (cols = this._data.cols), this._data.rows ? cols = Math.ceil(count / rows) : rows = Math.ceil(count / cols)),
+        return this._data.rows && this._data.cols ? (cols = this._data.cols, rows = Math.ceil(count / cols)) : (this._data.rows && (rows = this._data.rows), 
+        this._data.cols && (cols = this._data.cols), this._data.rows ? cols = Math.ceil(count / rows) : rows = Math.ceil(count / cols)), 
         {
             cols: cols,
             rows: rows
@@ -5745,28 +5760,28 @@ var HighlightTextPlugin = HTMLPlugin.extend({
     _time: 0,
     initPlugin: function(data) {
         this._cleanupHighlight();
-        var dims = this.relativeDims();
+        var font, dims = this.relativeDims();
         data.id || (data.id = this._data.id = _.uniqueId("plugin")), data.highlight || (data.highlight = this._data.highlight = "#DDDDDD");
         var div = document.createElement("div");
-        div.id = data.id, div.style.width = dims.w + "px", div.style.height = dims.h + "px",
+        div.id = data.id, div.style.width = dims.w + "px", div.style.height = dims.h + "px", 
         div.style.top = "-1000px", div.style.position = "relative";
         var fontsize = "1.2em";
         if (data.fontsize && (fontsize = data.fontsize), isFinite(fontsize) && data.w) {
             var exp = parseFloat(PluginManager.defaultResWidth * data.w / 100), cw = this._parent.dimensions().w, width = parseFloat(cw * data.w / 100), scale = parseFloat(width / exp);
             fontsize = parseFloat(fontsize * scale), fontsize += "px";
         }
-        var h_offset = data.offsetX ? data.offsetX : 0, v_offset = data.offsetY ? data.offsetY : 0, Blur = data.blur ? data.blur : 1, shadow_color = data.shadow ? data.shadow : "#ccc", shadow = h_offset + "px " + v_offset + "px " + Blur + "px " + shadow_color;
-        div.style["font-size"] = fontsize, div.style["line-height"] = data.lineHeight ? data.lineHeight : "1.2em",
-        div.style.color = data.color ? data.color : "black", div.style["font-weight"] = data.weight ? data.weight : "normal",
-        div.style.fontFamily = data.font ? data.font.toLowerCase() : "Arial", div.style.outline = data.outline ? data.outline : 0,
-        div.style["text-align"] = data.align ? data.align : "left", div.style["vertical-align"] = data.valign ? data.valign : "top",
-        div.style.textShadow = shadow;
+        var h_offset = data.offsetX ? data.offsetX : 0, v_offset = data.offsetY ? data.offsetY : 0, Blur = data.blur ? data.blur : 1, fontFace = data.font || this.getDefaultFont(), shadow_color = data.shadow ? data.shadow : "#ccc", shadow = h_offset + "px " + v_offset + "px " + Blur + "px " + shadow_color;
+        1 == /\d/.test(data.font) ? (font = fontFace, div.style.font = data.font) : (font = fontsize + " " + fontFace, 
+        div.style["font-family"] = fontFace, div.style["font-size"] = fontsize), data.weight && (div.style.font = data.weight + " " + font), 
+        div.style.outline = data.outline ? data.outline : 0, div.style["line-height"] = data.lineHeight ? data.lineHeight : "1.2em", 
+        div.style["text-align"] = data.align ? data.align : "left", div.style["vertical-align"] = data.valign ? data.valign : "top", 
+        div.style.color = data.color ? data.color : "black", div.style.textShadow = shadow;
         var parentDiv = document.getElementById(Renderer.divIds.gameArea);
         parentDiv.insertBefore(div, parentDiv.childNodes[0]), data.timings && (this._timings = _.map(data.timings.split(","), function(time) {
             return Number(Number(time).toFixed(0));
         }));
         var text = this._getText(), htmlText = this._tokenize(text);
-        jQuery("#" + data.id).append(htmlText), this._div = div, this._self = new createjs.DOMElement(div),
+        jQuery("#" + data.id).append(htmlText), this._div = div, this._self = new createjs.DOMElement(div), 
         this._self.x = dims.x, this._self.y = dims.y + 1e3, this._registerEvents(data.id);
     },
     getWordId: function(index) {
@@ -5783,12 +5798,12 @@ var HighlightTextPlugin = HTMLPlugin.extend({
                         status: "success"
                     });
                 }), this._listener = function() {
-                    return (_.isUndefined(instance._audioInstance) || _.isUndefined(instance._audioInstance.object)) && instance._listener ? void createjs.Ticker.removeEventListener("tick", instance._listener) : (instance._position.current = Number(instance._audioInstance.object.position.toFixed(0)),
+                    return (_.isUndefined(instance._audioInstance) || _.isUndefined(instance._audioInstance.object)) && instance._listener ? void createjs.Ticker.removeEventListener("tick", instance._listener) : (instance._position.current = Number(instance._audioInstance.object.position.toFixed(0)), 
                     instance._highlight(), void (instance._position.previous = instance._position.current));
                 };
             } else this._time = Date.now(), this._listener = function() {
-                instance._isPaused || (instance._position.current = Date.now() - instance._time + instance._position.pause,
-                instance._highlight(), instance._position.previous > instance._timings[instance._timings.length - 1] + 500 && (instance._cleanupHighlight(),
+                instance._isPaused || (instance._position.current = Date.now() - instance._time + instance._position.pause, 
+                instance._highlight(), instance._position.previous > instance._timings[instance._timings.length - 1] + 500 && (instance._cleanupHighlight(), 
                 "undefined" != typeof action.cb && action.cb({
                     status: "success"
                 })), instance._position.previous = instance._position.current);
@@ -5843,7 +5858,7 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         }
     },
     _cleanupHighlight: function() {
-        this._isPlaying = !1, this._removeHighlight(), this._listener && createjs.Ticker.removeEventListener("tick", this._listener),
+        this._isPlaying = !1, this._removeHighlight(), this._listener && createjs.Ticker.removeEventListener("tick", this._listener), 
         this._audioInstance && (this._audioInstance = void 0), this._time = 0, this._position = {
             previous: 0,
             current: 0,
@@ -5869,14 +5884,14 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         var index = 0;
         for (i = 0; i < words.length; i++) if ("" === words[i]) htmlText += '<span class="gc-ht-word">&nbsp;</span> '; else if ("</br>" === words[i]) htmlText += '<span class="gc-ht-word"></br></span> '; else {
             var wordId = this.getWordId(index);
-            this._wordIds.push(wordId), htmlText += '<span id="' + wordId + '" class="gc-ht-word">' + words[i] + "</span> ",
+            this._wordIds.push(wordId), htmlText += '<span id="' + wordId + '" class="gc-ht-word">' + words[i] + "</span> ", 
             index++;
         }
         return htmlText;
     },
     _getText: function() {
         var textStr = "";
-        return this._data.$t || this._data.__text ? textStr = this._data.$t || this._data.__text : this._data.model ? textStr = this._stage.getModelValue(this._data.model) || "" : this._data.param && (textStr = this.getParam(this._data.param.trim()) || ""),
+        return this._data.$t || this._data.__text ? textStr = this._data.$t || this._data.__text : this._data.model ? textStr = this._stage.getModelValue(this._data.model) || "" : this._data.param && (textStr = this.getParam(this._data.param.trim()) || ""), 
         textStr;
     },
     _registerEvents: function(id) {
@@ -5939,13 +5954,13 @@ var ImagePlugin = Plugin.extend({
     },
     alignDims: function() {
         var parentDims = this._parent.dimensions(), dims = this._dimensions, align = this._data.align ? this._data.align.toLowerCase() : "", valign = this._data.valign ? this._data.valign.toLowerCase() : "";
-        return "left" == align ? dims.x = 0 : "right" == align ? dims.x = parentDims.w - dims.w : "center" == align && (dims.x = (parentDims.w - dims.w) / 2),
-        "top" == valign ? dims.y = 0 : "bottom" == valign ? dims.y = parentDims.h - dims.h : "middle" == valign && (dims.y = (parentDims.h - dims.h) / 2),
+        return "left" == align ? dims.x = 0 : "right" == align ? dims.x = parentDims.w - dims.w : "center" == align && (dims.x = (parentDims.w - dims.w) / 2), 
+        "top" == valign ? dims.y = 0 : "bottom" == valign ? dims.y = parentDims.h - dims.h : "middle" == valign && (dims.y = (parentDims.h - dims.h) / 2), 
         this._dimensions;
     },
     refresh: function() {
         var asset = "";
-        if (asset = this._data.model ? this._stage.getModelValue(this._data.model) : this._data.param ? this.getParam(this._data.param) : this._data.asset,
+        if (asset = this._data.model ? this._stage.getModelValue(this._data.model) : this._data.param ? this.getParam(this._data.param) : this._data.asset, 
         asset && this._theme && this._self) {
             var image = this._theme.getAsset(asset);
             this._self.image = image, Renderer.update = !0;
@@ -5960,31 +5975,46 @@ var InputPlugin = HTMLPlugin.extend({
     _input: void 0,
     initPlugin: function(data) {
         this._input = void 0;
+        var controller = this._stage._stageController;
+        _.isUndefined(controller) ? console.warn("there is no FTB item") : (plugindata = this.getState(controller._model[controller._index].type), 
+        _.isUndefined(plugindata) || (controller._model[controller._index].model = _.isEmpty(plugindata) ? controller._model[controller._index].model : plugindata));
         var fontsize = data.fontsize || "1.6em", fontweight = data.weight || "normal", color = data.color || "#000000", background = data.fill || "white", font = data.font || "Arial", border = data.stroke || "#000000";
         data.stroke = "";
         var dims = this.relativeDims(), input = document.getElementById(data.id);
-        input && jQuery("#" + data.id).remove(), input = document.createElement("input"),
-        input.id = data.id, input.type = data.type, input.style.top = "-1000px", input.style.width = dims.w + "px",
-        input.style.height = dims.h + "px", input.style.minWidth = dims.w + "px", input.style.minHeight = dims.h + "px",
-        input.style.setProperty("font-size", fontsize, "important"), input.style.setProperty("font-weight", fontweight, "important"),
-        input.style.setProperty("font-family", font, "important"), input.style.setProperty("color", color, "important"),
-        input.style.setProperty("background-color", background, "important"), input.style.setProperty("border-color", border, "important"),
-        input.className = data["class"], input.style.display = "none";
-        var val;
+        input && jQuery("#" + data.id).remove(), input = document.createElement("input"), 
+        input.id = data.id, input.type = data.type, input.style.top = "-1000px", input.style.width = dims.w + "px", 
+        input.style.height = dims.h + "px", input.style.minWidth = dims.w + "px", input.style.minHeight = dims.h + "px", 
+        input.style.setProperty("font-size", fontsize, "important"), input.style.setProperty("font-weight", fontweight, "important"), 
+        input.style.setProperty("font-family", font, "important"), input.style.setProperty("color", color, "important"), 
+        input.style.setProperty("background-color", background, "important"), input.style.setProperty("border-color", border, "important"), 
+        input.className = data.class, input.style.display = "none";
+        var val, instance = this;
         if (data.model) {
             var model = data.model;
             val = this._stage.getModelValue(model);
         } else data.param && (val = this._stage.params[data.param.trim()]);
         input.value = val || "";
         var div = document.getElementById("gameArea");
-        div.insertBefore(input, div.childNodes[0]), this._input = input, this._self = new createjs.DOMElement(input),
-        this._self.x = dims.x, this._self.y = dims.y + 1e3, this._theme.inputs.push(data.id),
+        div.insertBefore(input, div.childNodes[0]), this._input = input, this._self = new createjs.DOMElement(input), 
+        this._self.x = dims.x, this._self.y = dims.y + 1e3, this._theme.inputs.push(data.id), 
         this._stage._inputs.push(this);
+        var instance = this;
+        $("input").on("change", function() {
+            instance.updateState(!0);
+        }), instance.updateState(!1);
     },
     setModelValue: function() {
         if (this._data.model) {
             var model = this._data.model;
             this._stage.setModelValue(model, this._input.value);
+        }
+    },
+    updateState: function(isStateChanged) {
+        this.setModelValue();
+        var controller = this._stage._stageController;
+        if (_.isUndefined(controller)) console.warn("There is no ctrl in this stage"), this.setState(this._data.id, this._input.value, isStateChanged); else {
+            var cModel = controller._model[controller._index];
+            this.setState(cModel.type, cModel.model, isStateChanged);
         }
     }
 });
@@ -6004,19 +6034,21 @@ var MCQPlugin = Plugin.extend({
     _offsetY: 0,
     _highlight: "#E89241",
     initPlugin: function(data) {
-        this._multi_select = !1, this._options = [], this._shadow = "#0470D8", this._blur = 30,
+        this._multi_select = !1, this._options = [], this._shadow = "#0470D8", this._blur = 30, 
         this._offsetX = 0, this._offsetY = 0;
         var model = data.model;
         if (model) {
-            var controller = this._stage.getController(model);
-            if (controller) {
-                this._controller = controller, this._multi_select = data.multi_select, "undefined" != typeof this._multi_select && null != this._multi_select || (this._multi_select = !1),
-                this._data.x = this._parent._data.x, this._data.y = this._parent._data.y, this._data.w = this._parent._data.w,
+            var controller = this._stage.getController(model), plugindata = this.getState(this._type);
+            if (_.isUndefined(plugindata) || (controller._model[controller._index].options = _.isEmpty(plugindata) ? controller._model[controller._index].options : plugindata), 
+            controller) {
+                this.updateState(controller, !1), this._controller = controller, this._multi_select = data.multi_select, 
+                "undefined" != typeof this._multi_select && null != this._multi_select || (this._multi_select = !1), 
+                this._data.x = this._parent._data.x, this._data.y = this._parent._data.y, this._data.w = this._parent._data.w, 
                 this._data.h = this._parent._data.h, this._self = new createjs.Container();
                 var dims = this.relativeDims();
-                this._self.x = dims.x, this._self.y = dims.y, data.shadow && (this._shadow = data.shadow,
-                data.shadow = void 0), data.highlight && (this._highlight = data.highlight), _.isFinite(data.blur) && (this._blur = data.blur),
-                _.isFinite(data.offsetX) && (this._offsetX = data.offsetX), _.isFinite(data.offsetY) && (this._offsetY = data.offsetY),
+                this._self.x = dims.x, this._self.y = dims.y, data.shadow && (this._shadow = data.shadow, 
+                data.shadow = void 0), data.highlight && (this._highlight = data.highlight), _.isFinite(data.blur) && (this._blur = data.blur), 
+                _.isFinite(data.offsetX) && (this._offsetX = data.offsetX), _.isFinite(data.offsetY) && (this._offsetY = data.offsetY), 
                 this._multi_select = this.isMultiSelect(), this.invokeChildren(data, this, this._stage, this._theme);
             }
         }
@@ -6031,10 +6063,16 @@ var MCQPlugin = Plugin.extend({
         var controller = this._controller;
         this._multi_select || this._options.forEach(function(o) {
             o._index != option._index && o.hasShadow() && (o.removeShadow(), controller.setModelValue(o._model, !1, "selected"));
-        }), console.log("option : ", option);
+        });
         var val = void 0;
-        return option && (val = option.toggleShadow(), controller.setModelValue(option._model, val, "selected")),
-        Renderer.update = !0, val;
+        return option && (val = option.toggleShadow(), controller.setModelValue(option._model, val, "selected")), 
+        this.updateState(controller, !0), Renderer.update = !0, val;
+    },
+    updateState: function(controller, isStateChanged) {
+        if (!_.isUndefined(controller._model)) {
+            var model = controller._model[controller._index];
+            this.setState(model.type, model.options, isStateChanged);
+        }
     }
 });
 
@@ -6052,10 +6090,12 @@ var MTFPlugin = Plugin.extend({
         this._lhs_options = [], this._rhs_options = [], this._force = !1;
         var model = data.model;
         if (model) {
-            var controller = this._stage.getController(model);
-            if (controller) {
-                this._controller = controller, this._force = data.force, "undefined" != typeof this._force && null != this._force || (this._force = !1),
-                this._data.x = this._parent._data.x, this._data.y = this._parent._data.y, this._data.w = this._parent._data.w,
+            var controller = this._stage.getController(model), plugindata = this.getState(this._type);
+            if (_.isUndefined(plugindata) || (controller._model[controller._index].rhs_options = _.isEmpty(plugindata) ? controller._model[controller._index].rhs_options : plugindata), 
+            controller) {
+                this.updateState(controller, !1), this._controller = controller, this._force = data.force, 
+                "undefined" != typeof this._force && null != this._force || (this._force = !1), 
+                this._data.x = this._parent._data.x, this._data.y = this._parent._data.y, this._data.w = this._parent._data.w, 
                 this._data.h = this._parent._data.h, this._self = new createjs.Container();
                 var dims = this.relativeDims();
                 this._self.x = dims.x, this._self.y = dims.y, this.invokeChildren(data, this, this._stage, this._theme);
@@ -6072,11 +6112,18 @@ var MTFPlugin = Plugin.extend({
         this._controller.setModelValue(rhsOption._model, lhsIndex, "selected");
     },
     setAnswerMapping: function(rhsOption, lhsOption) {
-        _.isUndefined(lhsOption) ? (delete rhsOption._value.mapped, this._controller.setModelValue(rhsOption._model, void 0, "selected")) : (rhsOption._value.mapped = lhsOption._value.resvalue,
-        this._controller.setModelValue(rhsOption._model, lhsOption._index, "selected"));
+        _.isUndefined(lhsOption) ? (delete rhsOption._value.mapped, this._controller.setModelValue(rhsOption._model, void 0, "selected")) : (rhsOption._value.mapped = lhsOption._value.resvalue, 
+        this._controller.setModelValue(rhsOption._model, lhsOption._index, "selected")), 
+        this.updateState(this._controller, !0);
     },
     removeAnswer: function(rhsOption, lhsIndex) {
         this._controller.setModelValue(rhsOption._model, lhsIndex, "");
+    },
+    updateState: function(controller, isStateChanged) {
+        if (!_.isUndefined(controller._model)) {
+            var model = controller._model[controller._index];
+            this.setState(model.type, model.rhs_options, isStateChanged);
+        }
     }
 });
 
@@ -6093,29 +6140,29 @@ var OptionPlugin = Plugin.extend({
     _multiple: !1,
     _mapedTo: void 0,
     _uniqueId: void 0,
+    _modelValue: void 0,
     initPlugin: function(data) {
-        this._model = void 0, this._value = void 0, this._answer = void 0, this._index = -1,
+        this._model = void 0, this._value = void 0, this._answer = void 0, this._index = -1, 
         this._uniqueId = _.uniqueId("opt_");
         var model = data.option, value = void 0;
         if (data.multiple && (this._multiple = data.multiple), this._parent._controller && model) {
             this._model = model;
             var controller = this._parent._controller;
             value = controller.getModelValue(model), this._index = parseInt(model.substring(model.indexOf("[") + 1, model.length - 1));
-            var varName = this._data["var"] ? this._data["var"] : "option";
-            this._stage._templateVars[varName] = this._parent._data.model + "." + model;
-            this._stage.getModelValue(this._parent._data.model + "." + model);
+            var varName = this._data.var ? this._data.var : "option";
+            this._stage._templateVars[varName] = this._parent._data.model + "." + model, this._modelValue = this._stage.getModelValue(this._parent._data.model + "." + model);
         }
         if (value && _.isFinite(this._index) && this._index > -1) {
             this._self = new createjs.Container();
             var dims = this.relativeDims();
-            this._self.x = dims.x, this._self.y = dims.y, this._self.origX = dims.x, this._self.origY = dims.y,
+            this._self.x = dims.x, this._self.y = dims.y, this._self.origX = dims.x, this._self.origY = dims.y, 
             this._self.width = dims.w, this._self.height = dims.h;
             var hit = new createjs.Shape();
-            hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h), this._self.hitArea = hit,
+            hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h), this._self.hitArea = hit, 
             this._value = value.value, this.setOptionIndex(data), this.initShadow(data);
             var innerECML = this.getInnerECML();
-            _.isEmpty(innerECML) ? "image" == value.value.type ? this.renderImage(value.value) : "text" == value.value.type && this.renderText(value.value) : this.renderInnerECML(),
-            "mcq" == this._parent._type ? this.renderMCQOption() : "mtf" == this._parent._type && this.renderMTFOption(value),
+            _.isEmpty(innerECML) ? "image" == value.value.type ? this.renderImage(value.value) : "text" == value.value.type && this.renderText(value.value) : this.renderInnerECML(), 
+            "mcq" == this._parent._type ? this.renderMCQOption() : "mtf" == this._parent._type && this.renderMTFOption(value), 
             this.resolveModelValue(this._data), this._render = !0;
         }
     },
@@ -6123,8 +6170,7 @@ var OptionPlugin = Plugin.extend({
         var controller = this._parent._controller, itemId = controller.getModelValue("identifier");
         this._parent._options.push(this), this._self.cursor = "pointer";
         var instance = this;
-        instance._stage._stageController._model[instance._stage._stageController._index].options[instance._index].selected && instance._parent.selectOption(instance),
-        this._self.on("click", function(event) {
+        this._modelValue.selected === !0 && this.addShadow(), this._self.on("click", function(event) {
             Overlay.isReadyToEvaluate(!0);
             var val = instance._parent.selectOption(instance), data = {
                 type: event.type,
@@ -6143,12 +6189,12 @@ var OptionPlugin = Plugin.extend({
     },
     renderMTFOption: function(value) {
         var enableDrag = !1, dragPos = {}, dragItem = {}, controller = this._parent._controller, instance = this, itemId = controller.getModelValue("identifier");
-        if (_.isFinite(value.index) ? (this._index = value.index, this._parent._lhs_options.push(this)) : (this._parent._rhs_options.push(this),
+        if (_.isFinite(value.index) ? (this._index = value.index, this._parent._lhs_options.push(this)) : (this._parent._rhs_options.push(this), 
         enableDrag = !0), void 0 != value.selected) {
             var snapTo;
-            snapTo = instance._parent._force === !0 ? instance._parent.getLhsOption(value.answer) : instance._parent._lhs_options;
+            snapTo = instance._parent._lhs_options;
             var plugin = snapTo[value.selected], dims = plugin._dimensions;
-            _.isUndefined(plugin._data.snapX) || (this._self.x = dims.x + dims.w * plugin._data.snapX / 100),
+            _.isUndefined(plugin._data.snapX) || (this._self.x = dims.x + dims.w * plugin._data.snapX / 100), 
             _.isUndefined(plugin._data.snapY) || (this._self.y = dims.y + dims.h * (plugin._data.snapY / 100));
         }
         if (enableDrag) {
@@ -6170,7 +6216,7 @@ var OptionPlugin = Plugin.extend({
                 };
                 EventManager.processAppTelemetry({}, "DRAG", instance, data);
             }), asset.on("pressmove", function(evt) {
-                this.x = evt.stageX + this.offset.x, this.y = evt.stageY + this.offset.y, instance.addShadow(),
+                this.x = evt.stageX + this.offset.x, this.y = evt.stageY + this.offset.y, instance.addShadow(), 
                 Renderer.update = !0;
             }), asset.on("pressup", function(evt) {
                 var snapTo;
@@ -6179,12 +6225,12 @@ var OptionPlugin = Plugin.extend({
                 if (_.isArray(snapTo)) for (var i = 0; i < snapTo.length && !snapSuccess; i++) {
                     plugin = snapTo[i], dims = plugin._dimensions;
                     var xFactor = parseFloat(.5 * this.width), yFactor = parseFloat(.5 * this.height), x = dims.x - xFactor, y = dims.y - yFactor, maxX = dims.x + dims.w + xFactor, maxY = dims.y + dims.h + yFactor;
-                    this.x >= x && this.x + this.width <= maxX && this.y >= y && this.y + this.height <= maxY && (this._mapedTo = snapTo[i],
+                    this.x >= x && this.x + this.width <= maxX && this.y >= y && this.y + this.height <= maxY && (this._mapedTo = snapTo[i], 
                     snapSuccess = !0, Overlay.isReadyToEvaluate(!0));
                 } else if (snapTo) {
                     plugin = snapTo, dims = plugin._dimensions;
                     var xFactor = parseFloat(.5 * this.width), yFactor = parseFloat(.5 * this.height), x = dims.x - xFactor, y = dims.y - yFactor, maxX = dims.x + dims.w + xFactor, maxY = dims.y + dims.h + yFactor;
-                    this.x >= x && this.x + this.width <= maxX && this.y >= y && this.y + this.height <= maxY && (snapSuccess = !0,
+                    this.x >= x && this.x + this.width <= maxX && this.y >= y && this.y + this.height <= maxY && (snapSuccess = !0, 
                     Overlay.isReadyToEvaluate(!0));
                 }
                 var drop_id = snapSuccess ? plugin._id : "", drop_idx = snapSuccess ? plugin._index : "", drop_rsv = snapSuccess ? plugin._value.resvalue : "", drag_rsv = instance._value.resvalue;
@@ -6192,11 +6238,11 @@ var OptionPlugin = Plugin.extend({
                     var flag = !0;
                     if (plugin._multiple && (flag = !1), plugin._answer && flag) {
                         var existing = plugin._answer;
-                        existing._parent.setAnswerMapping(existing, void 0), existing._self.x = existing._self.origX,
+                        existing._parent.setAnswerMapping(existing, void 0), existing._self.x = existing._self.origX, 
                         existing._self.y = existing._self.origY;
                     }
-                    if (_.isUndefined(plugin._data.snapX) || (this.x = dims.x + dims.w * plugin._data.snapX / 100),
-                    _.isUndefined(plugin._data.snapY) || (this.y = dims.y + dims.h * (plugin._data.snapY / 100)),
+                    if (_.isUndefined(plugin._data.snapX) || (this.x = dims.x + dims.w * plugin._data.snapX / 100), 
+                    _.isUndefined(plugin._data.snapY) || (this.y = dims.y + dims.h * (plugin._data.snapY / 100)), 
                     instance._parent.setAnswerMapping(instance, plugin), _.isArray(snapTo)) for (var i = 0; i < snapTo.length; i++) {
                         var rhsOption = snapTo[i];
                         rhsOption._answer == instance && (rhsOption._answer = void 0);
@@ -6209,7 +6255,7 @@ var OptionPlugin = Plugin.extend({
                         break;
                     }
                 }
-                "undefined" != typeof drop_idx && "" !== drop_idx || instance._parent.setAnswerMapping(instance, void 0),
+                "undefined" != typeof drop_idx && "" !== drop_idx || instance._parent.setAnswerMapping(instance, void 0), 
                 instance.removeShadow();
                 var data = {
                     type: evt.type,
@@ -6239,17 +6285,17 @@ var OptionPlugin = Plugin.extend({
         var data = {};
         data.asset = value.asset;
         var padx = this._data.padX || 0, pady = this._data.padY || 0;
-        data.x = padx, data.y = pady, data.w = 100 - 2 * padx, data.h = 100 - 2 * pady,
-        value.count ? (data.count = value.count, data.type = "gridLayout", PluginManager.invoke("placeholder", data, this, this._stage, this._theme)) : PluginManager.invoke("image", data, this, this._stage, this._theme),
+        data.x = padx, data.y = pady, data.w = 100 - 2 * padx, data.h = 100 - 2 * pady, 
+        value.count ? (data.count = value.count, data.type = "gridLayout", PluginManager.invoke("placeholder", data, this, this._stage, this._theme)) : PluginManager.invoke("image", data, this, this._stage, this._theme), 
         this._data.asset = value.asset;
     },
     renderText: function(data) {
         data.$t = data.asset;
         var padx = this._data.padX || 0, pady = this._data.padY || 0;
-        data.x = padx, data.y = pady, data.w = 100 - 2 * padx, data.h = 100 - 2 * pady,
+        data.x = padx, data.y = pady, data.w = 100 - 2 * padx, data.h = 100 - 2 * pady, 
         data.fontsize = data.fontsize ? data.fontsize : 200;
         var align = this._data.align ? this._data.align.toLowerCase() : "center", valign = this._data.valign ? this._data.valign.toLowerCase() : "middle";
-        data.align = align, data.valign = valign, PluginManager.invoke("text", data, this, this._stage, this._theme),
+        data.align = align, data.valign = valign, PluginManager.invoke("text", data, this, this._stage, this._theme), 
         this._data.asset = data.asset;
     },
     initShadow: function(data) {
@@ -6268,33 +6314,16 @@ var OptionPlugin = Plugin.extend({
         this._self.shadow._self.shadow = new createjs.Shadow(shadowColor, offsetX, offsetY, blur);
     },
     setOptionIndex: function(data) {
-        data = JSON.stringify(data), data = data.replace(new RegExp("\\$current", "g"), this._index),
+        data = JSON.stringify(data), data = data.replace(new RegExp("\\$current", "g"), this._index), 
         data = JSON.parse(data), this._data = data;
     },
     renderInnerECML: function() {
         var innerECML = this.getInnerECML();
         if (!_.isEmpty(innerECML)) {
             var data = {}, padx = this._data.padX || 0, pady = this._data.padY || 0;
-            data.x = padx, data.y = pady, data.w = 100 - 2 * padx, data.h = 100 - 2 * pady,
+            data.x = padx, data.y = pady, data.w = 100 - 2 * padx, data.h = 100 - 2 * pady, 
             Object.assign(data, innerECML), PluginManager.invoke("g", data, this, this._stage, this._theme);
         }
-    },
-    resolveModelValue: function(data) {
-        var instance = this, updateAction = function(action) {
-            if (action.asset_model) {
-                var model = action.asset_model, val = instance._stage.getModelValue(model);
-                action.asset = val, delete action.asset_model;
-            }
-        }, updateEvent = function(evt) {
-            _.isArray(evt.action) ? evt.action.forEach(function(action) {
-                updateAction(action);
-            }) : evt.action && updateAction(evt.action);
-        }, events = void 0;
-        data.events ? _.isArray(data.events) ? (events = [], data.events.forEach(function(e) {
-            events.push.apply(events, e.event);
-        })) : events = data.events.event : events = data.event, _.isArray(events) ? events.forEach(function(e) {
-            updateEvent(e);
-        }) : events && updateEvent(events);
     },
     resolveModelValue: function(data) {
         var instance = this, updateAction = function(action) {
@@ -6329,24 +6358,25 @@ var OptionsPlugin = Plugin.extend({
     },
     renderTableLayout: function(value) {
         var cols = void 0, rows = void 0, count = value.length;
-        this._data.cols ? (cols = Math.min(count, this._data.cols), rows = Math.ceil(count / cols)) : this._data.rows ? (rows = Math.min(count, this._data.rows),
+        this._data.cols ? (cols = Math.min(count, this._data.cols), rows = Math.ceil(count / cols)) : this._data.rows ? (rows = Math.min(count, this._data.rows), 
         cols = Math.ceil(count / rows)) : (rows = 1, cols = Math.min(count, this._data.cols));
         var instance = this, marginX = 0;
         _.isFinite(this._data.marginX) && (marginX = this._data.marginX);
         var marginY = 0;
         _.isFinite(this._data.marginY) && (marginY = this._data.marginY);
-        for (var padX = this._data.padX || 0, padY = this._data.padY || 0, cw = (this._data.w - (cols - 1) * marginX) / cols, ch = (this._data.h - (rows - 1) * marginY) / rows, index = 0, r = 0; rows > r; r++) for (var c = 0; cols > c; c++) if (count > c * r) {
+        for (var padX = this._data.padX || 0, padY = this._data.padY || 0, cw = (this._data.w - (cols - 1) * marginX) / cols, ch = (this._data.h - (rows - 1) * marginY) / rows, index = 0, r = 0; r < rows; r++) for (var c = 0; c < cols; c++) if (c * r < count) {
             var data = {};
-            data.x = instance._data.x + c * (cw + marginX), data.y = instance._data.y + r * (ch + marginY),
-            data.w = cw, data.h = ch, data.padX = padX, data.padY = padY, data.snapX = instance._data.snapX,
-            data.snapY = instance._data.snapY, data.stroke = instance._data.stroke, data["stroke-width"] = instance._data["stroke-width"],
-            data.events = instance._data.events, data.event = instance._data.event, this._parent._shadow && (data.shadowColor = this._parent._shadow),
-            this._parent._highlight && (data.highlight = this._parent._highlight), _.isFinite(this._parent._blur) && (data.blur = this._parent._blur),
-            _.isFinite(this._parent._offsetX) && (data.offsetX = this._parent._offsetX), _.isFinite(this._parent.offsetY) && (data.offsetY = this._parent.offsetY),
-            this._data.multiple && (data.multiple = !0), this._data.opacity && (data.opacity = this._data.opacity),
+            data.x = instance._data.x + c * (cw + marginX), data.y = instance._data.y + r * (ch + marginY), 
+            data.w = cw, data.h = ch, data.padX = padX, data.padY = padY, data.snapX = instance._data.snapX, 
+            data.snapY = instance._data.snapY, data.stroke = instance._data.stroke, data["stroke-width"] = instance._data["stroke-width"], 
+            data.events = instance._data.events, data.event = instance._data.event, this._parent._shadow && (data.shadowColor = this._parent._shadow), 
+            this._parent._highlight && (data.highlight = this._parent._highlight), _.isFinite(this._parent._blur) && (data.blur = this._parent._blur), 
+            _.isFinite(this._parent._offsetX) && (data.offsetX = this._parent._offsetX), _.isFinite(this._parent.offsetY) && (data.offsetY = this._parent.offsetY), 
+            this._data.multiple && (data.multiple = !0), this._data.opacity && (data.opacity = this._data.opacity), 
             data.option = instance._data.options + "[" + index + "]";
             var innerECML = this.getInnerECML();
-            _.isEmpty(innerECML) || Object.assign(data, innerECML), index += 1, PluginManager.invoke("option", data, instance._parent, instance._stage, instance._theme);
+            _.isEmpty(innerECML) || ("function" != typeof Object.assign && objectAssign(), Object.assign(data, innerECML)), 
+            index += 1, PluginManager.invoke("option", data, instance._parent, instance._stage, instance._theme);
         }
     }
 });
@@ -6372,7 +6402,7 @@ var PlaceHolderPlugin = Plugin.extend({
             var count = data.count;
             void 0 === count && (count = data["param-count"] ? instance.evaluateExpr(data["param-count"].trim()) : data["model-count"] ? instance._stage.getModelValue(data["model-count"].trim()) : 1);
             var asset = data.asset;
-            void 0 === asset && (data["param-asset"] ? asset = instance.evaluateExpr(data["param-asset"].trim()) : data["model-asset"] && (asset = instance._stage.getModelValue(data["model-asset"].trim()))),
+            void 0 === asset && (data["param-asset"] ? asset = instance.evaluateExpr(data["param-asset"].trim()) : data["model-asset"] && (asset = instance._stage.getModelValue(data["model-asset"].trim()))), 
             instance.param = {
                 type: type,
                 asset: asset,
@@ -6408,25 +6438,25 @@ var PlaceHolderPlugin = Plugin.extend({
                 this.x = evt.stageX + this.offset.x, this.y = evt.stageY + this.offset.y, Renderer.update = !0;
             }), snapTo && asset.on("pressup", function(evt) {
                 var plugin = PluginManager.getPluginObject(data.snapTo), dims = plugin._dimensions, x = dims.x, y = dims.y, maxX = dims.x + dims.w, maxY = dims.y + dims.h, snapSuccess = !1;
-                this.x >= x && this.x <= maxX && this.y >= y && this.y <= maxY && (snapSuccess = !0),
+                this.x >= x && this.x <= maxX && this.y >= y && this.y <= maxY && (snapSuccess = !0), 
                 snapSuccess || (this.x = this.origX, this.y = this.origY);
             });
         }, x = 0, y = 0, area = instance.dimensions().w * instance.dimensions().h, pad = instance.dimensions().pad || 0, repeat = instance.param.count, pixelPerImg = computePixel(area, repeat || 1) - parseFloat(pad / 1.5), param = instance.param;
         param.paddedImg = paddedImageContainer(param.asset, pad);
         var assetBounds = param.paddedImg.getBounds(), assetW = assetBounds.width, assetH = assetBounds.height;
-        param.paddedImg.scaleY = parseFloat(pixelPerImg / assetH), param.paddedImg.scaleX = parseFloat(pixelPerImg / assetW),
+        param.paddedImg.scaleY = parseFloat(pixelPerImg / assetH), param.paddedImg.scaleX = parseFloat(pixelPerImg / assetW), 
         param.paddedImg.x = x + pad, param.paddedImg.y = y + pad;
         var instanceBoundary = 0 + instance.dimensions().w;
         for (i = 0; i < param.count; i++) {
             var clonedAsset = param.paddedImg.clone(!0);
-            x + pixelPerImg > instanceBoundary && (x = 0, y += pixelPerImg + pad), clonedAsset.x = x + pad,
-            clonedAsset.y = y + pad, clonedAsset.origX = x + pad, clonedAsset.origY = y + pad,
-            x += pixelPerImg, instance._data.enabledrag && enableDrag(clonedAsset, data.snapTo),
+            x + pixelPerImg > instanceBoundary && (x = 0, y += pixelPerImg + pad), clonedAsset.x = x + pad, 
+            clonedAsset.y = y + pad, clonedAsset.origX = x + pad, clonedAsset.origY = y + pad, 
+            x += pixelPerImg, instance._data.enabledrag && enableDrag(clonedAsset, data.snapTo), 
             parent.addChild(clonedAsset);
         }
     },
     refresh: function() {
-        this._self.removeAllChildren(), this._currIndex = 0, this.renderPlaceHolder(this),
+        this._self.removeAllChildren(), this._currIndex = 0, this.renderPlaceHolder(this), 
         Renderer.update = !0;
     }
 });
@@ -6447,8 +6477,8 @@ var ScribblePlugin = Plugin.extend({
         var background = (data.color || "#000", data.fill || "#fff"), dims = this.relativeDims();
         this._self = new createjs.Container(), this._self.x = dims.x, this._self.y = dims.y;
         var bgShape = new createjs.Shape();
-        this._self.addEventListener("mousedown", this.handleMouseDown.bind(this), !0), this._self.addEventListener("pressup", this.handleMouseUp.bind(this), !0),
-        createjs.Ticker.setFPS(50), bgShape.graphics = new createjs.Graphics().beginFill(background).drawRect(0, 0, dims.w, dims.h),
+        this._self.on("mousedown", this.handleMouseDown.bind(this), !0), createjs.Ticker.setFPS(50), 
+        bgShape.graphics = new createjs.Graphics().beginFill(background).drawRect(0, 0, dims.w, dims.h), 
         bgShape.alpha = data.opacity || 1, this._self.addChild(bgShape);
         var shapeData = {
             shape: {
@@ -6459,9 +6489,9 @@ var ScribblePlugin = Plugin.extend({
                 h: 100
             }
         };
-        data.fill && (shapeData.shape.fill = data.fill), data.stroke && (shapeData.shape.stroke = data.stroke),
-        data["stroke-width"] && (shapeData.shape["stroke-width"] = data["stroke-width"]),
-        this.invokeChildren(shapeData, this, this._stage, this._theme), this.paintBrush = new createjs.Shape(),
+        data.fill && (shapeData.shape.fill = data.fill), data.stroke && (shapeData.shape.stroke = data.stroke), 
+        data["stroke-width"] && (shapeData.shape["stroke-width"] = data["stroke-width"]), 
+        this.invokeChildren(shapeData, this, this._stage, this._theme), this.paintBrush = new createjs.Shape(), 
         this.paintBrush.x = 0, this.paintBrush.y = 0, this._self.addChild(this.paintBrush);
     },
     setBounderies: function() {
@@ -6473,27 +6503,26 @@ var ScribblePlugin = Plugin.extend({
         }
     },
     handleMouseDown: function(event) {
-        if (event.primary) {
-            this.setBounderies();
-            var mousePoint = Renderer.theme.mousePoint();
-            mousePoint = this._self.globalToLocal(mousePoint.x, mousePoint.y), this._oldPt = new createjs.Point(mousePoint.x, mousePoint.y),
-            this._self.addEventListener("pressmove", this.handleMouseMove.bind(this), !0);
-        }
+        this.setBounderies();
+        var mousePoint = {
+            x: event.stageX,
+            y: event.stageY
+        };
+        mousePoint = this._self.globalToLocal(mousePoint.x, mousePoint.y), this._oldPt = new createjs.Point(mousePoint.x, mousePoint.y), 
+        this._self.on("pressmove", this.handleMouseMove.bind(this), !0), this._self.on("pressup", this.handleMouseUp.bind(this), !0);
     },
     handleMouseMove: function(event) {
-        if (event.primary) {
-            var mousePoint = Renderer.theme.mousePoint(), thickness = this.isInt(this._data.thickness) ? this._data.thickness : 3;
-            mousePoint.x > this._startPoint.x && mousePoint.x < this._endPoint.x && mousePoint.y > this._startPoint.y && mousePoint.y < this._endPoint.y && (mousePoint = this._self.globalToLocal(mousePoint.x, mousePoint.y),
-            this.paintBrush.graphics.setStrokeStyle(thickness, "round").beginStroke(this._data.color || "#000"),
-            this.paintBrush.graphics.mt(this._oldPt.x, this._oldPt.y).lineTo(mousePoint.x + 1, mousePoint.y + 1),
-            this._oldPt = {
-                x: mousePoint.x,
-                y: mousePoint.y
-            }, Renderer.update = !0);
-        }
+        var mousePoint = {
+            x: event.stageX,
+            y: event.stageY
+        }, thickness = this.isInt(this._data.thickness) ? this._data.thickness : 3;
+        mousePoint.x > this._startPoint.x && mousePoint.x < this._endPoint.x && mousePoint.y > this._startPoint.y && mousePoint.y < this._endPoint.y && (mousePoint = this._self.globalToLocal(mousePoint.x, mousePoint.y), 
+        this.paintBrush.graphics.setStrokeStyle(thickness, "round").beginStroke(this._data.color || "#000"), 
+        this.paintBrush.graphics.mt(this._oldPt.x, this._oldPt.y).lineTo(mousePoint.x, mousePoint.y), 
+        this._oldPt = new createjs.Point(mousePoint.x, mousePoint.y), Renderer.update = !0);
     },
     handleMouseUp: function(event) {
-        event.primary && this._self.removeEventListener("pressmove", this.handleMouseMove.bind(this), !0);
+        this._self.off("pressmove", this.handleMouseMove), this._self.off("pressup", this.handleMouseUp);
     },
     clear: function(action) {
         this.paintBrush.graphics.clear(), Renderer.update = !0;
@@ -6517,7 +6546,7 @@ var SetPlugin = Plugin.extend({
     initPlugin: function(data) {
         this._modelName = void 0, this._model = void 0, this._index = 0;
         var value = data.value;
-        if (data["ev-value"]) this._modelName = data.param, this._model = this.evaluateExpr(data["ev-value"]),
+        if (data["ev-value"]) this._modelName = data.param, this._model = this.evaluateExpr(data["ev-value"]), 
         value = _.isArray(this._model) ? this._model[0] : this._model; else if (data.model) this._stage && (value = this._stage.getModelValue(data.model)); else if (data["ev-model"] && this._stage) {
             var model = this.replaceExpressions(data["ev-model"]);
             this._modelName = data.param, this._model = this._stage.getModelValue(model), value = _.isArray(this._model) ? this._model[0] : this._model;
@@ -6525,7 +6554,7 @@ var SetPlugin = Plugin.extend({
         this.setParam(data.param, value, void 0, data.scope);
     },
     replaceExpressions: function(model) {
-        for (var arr = [], idx = 0, nextIdx = model.indexOf("${", idx), endIdx = model.indexOf("}", idx + 1); -1 != nextIdx && -1 != endIdx; ) {
+        for (var arr = [], idx = 0, nextIdx = model.indexOf("${", idx), endIdx = model.indexOf("}", idx + 1); nextIdx != -1 && endIdx != -1; ) {
             var expr = model.substring(nextIdx, endIdx + 1);
             arr.push(expr), idx = endIdx, nextIdx = model.indexOf("${", idx), endIdx = model.indexOf("}", idx + 1);
         }
@@ -6537,9 +6566,9 @@ var SetPlugin = Plugin.extend({
     },
     setParamValue: function(action) {
         var val, scope = action.scope, param = action.param, paramIdx = action["param-index"], paramKey = action["param-key"], paramExpr = action["ev-value"], paramModel = action["ev-model"];
-        if (paramIdx) "previous" == paramIdx ? _.isArray(this._model) && this._model.length > 0 ? (this._index > 0 ? this._index = this._index - 1 : this._index = this._model.length - 1,
-        val = this._model[this._index]) : val = this._model : _.isArray(this._model) ? (this._index < this._model.length - 1 ? this._index = this._index + 1 : this._index = 0,
-        val = this._model[this._index]) : val = this._model; else if (paramKey) val = _.isObject(this._model) && this.model[paramKey] ? this.model[paramKey] : ""; else if (paramExpr) this._model = this.evaluateExpr(paramExpr),
+        if (paramIdx) "previous" == paramIdx ? _.isArray(this._model) && this._model.length > 0 ? (this._index > 0 ? this._index = this._index - 1 : this._index = this._model.length - 1, 
+        val = this._model[this._index]) : val = this._model : _.isArray(this._model) ? (this._index < this._model.length - 1 ? this._index = this._index + 1 : this._index = 0, 
+        val = this._model[this._index]) : val = this._model; else if (paramKey) val = _.isObject(this._model) && this.model[paramKey] ? this.model[paramKey] : ""; else if (paramExpr) this._model = this.evaluateExpr(paramExpr), 
         val = _.isArray(this._model) ? this._model[0] : this._model; else if (paramModel) {
             if (this._stage) {
                 var model = this.replaceExpressions(paramModel);
@@ -6547,7 +6576,7 @@ var SetPlugin = Plugin.extend({
             }
         } else val = action["param-value"];
         var max = void 0;
-        action["param-max"] && (max = this.evaluateExpr(action["param-max"]), val >= max && (val = action["param-incr"] = 0)),
+        action["param-max"] && (max = this.evaluateExpr(action["param-max"]), val >= max && (val = action["param-incr"] = 0)), 
         this.setParam(param, val, action["param-incr"], scope, max);
     },
     setParam: function(param, value, incr, scope, max) {
@@ -6555,7 +6584,7 @@ var SetPlugin = Plugin.extend({
     },
     getParam: function(param) {
         var value = GlobalContext.getParam(param);
-        return value || (value = this._theme.getParam(param)), value || (value = this._stage.getParam(param)),
+        return value || (value = this._theme.getParam(param)), value || (value = this._stage.getParam(param)), 
         value || (value = this._parent.getPluginParam(param)), value;
     }
 });
@@ -6571,8 +6600,8 @@ var SpritePlugin = Plugin.extend({
         if (spriteJSON && spriteImage) {
             spriteJSON.images.push(spriteImage);
             var spritesheet = new createjs.SpriteSheet(spriteJSON), grant = new createjs.Sprite(spritesheet);
-            data.start && grant.gotoAndPlay(data.start), grant.x = dims.x, grant.y = dims.y,
-            this._self = grant, this._self.scaleX = dims.w / spriteJSON.frames.width, this._self.scaleY = dims.h / spriteJSON.frames.height,
+            data.start && grant.gotoAndPlay(data.start), grant.x = dims.x, grant.y = dims.y, 
+            this._self = grant, this._self.scaleX = dims.w / spriteJSON.frames.width, this._self.scaleY = dims.h / spriteJSON.frames.height, 
             grant.addEventListener("change", function() {
                 Renderer.update = !0;
             });
@@ -6607,14 +6636,18 @@ var StagePlugin = Plugin.extend({
     _inputs: [],
     _startDrag: void 0,
     _doDrag: void 0,
+    _stageInstanceId: void 0,
+    _currentState: {},
+    isStageStateChanged: void 0,
     initPlugin: function(data) {
         this._inputs = [];
         var instance = this;
         this.params = {}, this._self = new creatine.Scene();
         var dims = this.relativeDims();
-        if (this._self.x = dims.x, this._self.y = dims.y, data.iterate && data["var"]) {
-            var controllerName = data["var"].trim(), stageController = this._theme._controllerMap[data.iterate.trim()];
-            stageController && (this._stageControllerName = controllerName, this._stageController = stageController,
+        if (this._self.x = dims.x, this._self.y = dims.y, this._stageInstanceId = this._theme._currentStage + "__" + Math.random().toString(36).substr(2, 9), 
+        data.iterate && data.var) {
+            var controllerName = data.var.trim(), stageController = this._theme._controllerMap[data.iterate.trim()];
+            stageController && (this._stageControllerName = controllerName, this._stageController = stageController, 
             this._stageController.next());
         }
         for (k in data) if ("param" === k) if (_.isArray(data[k])) {
@@ -6625,31 +6658,36 @@ var StagePlugin = Plugin.extend({
         } else this.setParamValue(data[k]); else "controller" === k && (_.isArray(data[k]) ? data[k].forEach(function(p) {
             this.addController(p);
         }) : this.addController(data[k]));
-        this._startDrag = this.startDrag.bind(this), this._doDrag = this.doDrag.bind(this),
-        window.addEventListener("native.keyboardshow", this.keyboardShowHandler.bind(this), !0),
-        window.addEventListener("native.keyboardhide", this.keyboardHideHandler.bind(this), !0),
-        this.invokeChildren(data, this, this, this._theme);
+        this._startDrag = this.startDrag.bind(this), this._doDrag = this.doDrag.bind(this), 
+        window.addEventListener("native.keyboardshow", this.keyboardShowHandler.bind(this), !0), 
+        window.addEventListener("native.keyboardhide", this.keyboardHideHandler.bind(this), !0);
+        var stageKey = this.getStagestateKey();
+        "function" == typeof this._theme.getParam && (this._currentState = this._theme.getParam(stageKey), 
+        _.isUndefined(this._currentState) && this.setParam(this._type, {
+            id: Renderer.theme._currentStage,
+            stateId: stageKey
+        })), this.invokeChildren(data, this, this, this._theme);
     },
     keyboardShowHandler: function(e) {
         if (this._self.y = -e.keyboardHeight, !this._self.hitArea) {
             var hit = new createjs.Shape();
-            hit.graphics.beginFill("#000").drawRect(0, 0, this._self.width, this._self.height),
+            hit.graphics.beginFill("#000").drawRect(0, 0, this._self.width, this._self.height), 
             this._self.hitArea = hit, console.info("HitArea added to the stage.");
         }
-        Renderer.update = !0, this.keyboardH = e.keyboardHeight, this._self.addEventListener("mousedown", this._startDrag),
+        Renderer.update = !0, this.keyboardH = e.keyboardHeight, this._self.addEventListener("mousedown", this._startDrag), 
         this.offset = new createjs.Point();
     },
     startDrag: function() {
-        this.offset.x = Renderer.theme._self.mouseX - this._self.x, this.offset.y = Renderer.theme._self.mouseY - this._self.y,
+        this.offset.x = Renderer.theme._self.mouseX - this._self.x, this.offset.y = Renderer.theme._self.mouseY - this._self.y, 
         this._self.addEventListener("pressmove", this._doDrag);
     },
     doDrag: function(event) {
-        (this._self.y >= this.keyboardH || this._self.y >= -this.keyboardH) && (this._self.y = event.stageY - this.offset.y,
-        this._self.y < -this.keyboardH && (this._self.y = -this.keyboardH + 1), this._self.y > 0 && (this._self.y = 0),
+        (this._self.y >= this.keyboardH || this._self.y >= -this.keyboardH) && (this._self.y = event.stageY - this.offset.y, 
+        this._self.y < -this.keyboardH && (this._self.y = -this.keyboardH + 1), this._self.y > 0 && (this._self.y = 0), 
         Renderer.update = !0);
     },
     keyboardHideHandler: function(e) {
-        this._self.y = 0, this._self.removeEventListener("mousedown", this._startDrag),
+        this._self.y = 0, this._self.removeEventListener("mousedown", this._startDrag), 
         this._self.removeEventListener("pressmove", this._doDrag), Renderer.update = !0;
     },
     setParamValue: function(p) {
@@ -6659,7 +6697,7 @@ var StagePlugin = Plugin.extend({
         var add = !0;
         if (p["ev-if"]) {
             var expr = p["ev-if"].trim();
-            "${" != expr.substring(0, 2) && (expr = "${" + expr), "}" != expr.substring(expr.length - 1, expr.length) && (expr += "}"),
+            "${" != expr.substring(0, 2) && (expr = "${" + expr), "}" != expr.substring(expr.length - 1, expr.length) && (expr += "}"), 
             add = this.evaluateExpr(expr);
         }
         if (add) {
@@ -6669,7 +6707,7 @@ var StagePlugin = Plugin.extend({
     },
     getController: function(name) {
         var c;
-        return this._templateVars[name] && (name = this._templateVars[name]), this._stageControllerName === name ? c = this._stageController : this._controllerMap[name] ? c = this._controllerMap[name] : this._theme._controllerMap[name] && (c = this._theme._controllerMap[name]),
+        return this._templateVars[name] && (name = this._templateVars[name]), this._stageControllerName === name ? c = this._stageController : this._controllerMap[name] ? c = this._controllerMap[name] : this._theme._controllerMap[name] && (c = this._theme._controllerMap[name]), 
         c;
     },
     getTemplate: function(controller) {
@@ -6682,7 +6720,7 @@ var StagePlugin = Plugin.extend({
             var tokens = param.split(".");
             if (tokens.length >= 2) {
                 var name = tokens[0].trim(), idx = param.indexOf("."), paramName = param.substring(idx + 1);
-                this._templateVars[name] && (name = this._templateVars[name], name.indexOf(".") > 0 && (paramName = name.substring(name.indexOf(".") + 1) + "." + paramName,
+                this._templateVars[name] && (name = this._templateVars[name], name.indexOf(".") > 0 && (paramName = name.substring(name.indexOf(".") + 1) + "." + paramName, 
                 name = name.substring(0, name.indexOf("."))));
                 var controller = this.getController(name);
                 controller && (val = controller.getModelValue(paramName));
@@ -6702,26 +6740,39 @@ var StagePlugin = Plugin.extend({
             }
         }
     },
+    isStageStateChanged: function(isChanged) {
+        this._isStageStateChanged = isChanged, isChanged && (this._currentState.isEvaluated = !1);
+    },
     evaluate: function(action) {
-        var valid = !1, showFeeback = !0;
-        if (this._stageController) {
-            _.isUndefined(this._stageController._data.showImmediateFeedback) || (showFeeback = this._stageController._data.showImmediateFeedback),
-            this._inputs.forEach(function(input) {
-                input.setModelValue();
-            });
-            var result = this._stageController.evalItem();
-            result && (valid = result.pass);
+        var isEvaluated = !_.isUndefined(this._currentState) && this._currentState.isEvaluated;
+        if (this._isStageStateChanged !== !1 || !isEvaluated) {
+            var valid = !1, showFeeback = !0;
+            if (this._stageController) {
+                _.isUndefined(this._stageController._data.showImmediateFeedback) || (showFeeback = this._stageController._data.showImmediateFeedback), 
+                this._inputs.forEach(function(input) {
+                    input.setModelValue();
+                });
+                var result = this._stageController.evalItem();
+                if (result && (valid = result.pass), this._currentState.isEvaluated = !0, showFeeback) return void (1 == valid ? this.dispatchEvent(action.success) : this.dispatchEvent(action.failure));
+            }
         }
-        showFeeback ? valid ? this.dispatchEvent(action.success) : this.dispatchEvent(action.failure) : (submitOnNextClick = !1,
-        navigate("next"));
+        submitOnNextClick = !1, navigate("next");
     },
     reload: function(action) {
         this._stageController && this._stageController.decrIndex(1), this._theme.replaceStage(this._data.id, action);
     },
+    getStagestateKey: function() {
+        return _.isUndefined(this._stageController) ? Renderer.theme._currentStage : Renderer.theme._currentStage + "_" + this._stageController._id + "_" + this._stageController._index;
+    },
     setParam: function(param, value, incr, max) {
         var instance = this, fval = instance.params[param];
-        incr ? (fval || (fval = 0), fval += incr) : fval = value, 0 > fval && (fval = 0),
-        "undefined" != typeof max && fval >= max && (fval = 0), instance.params[param] = fval;
+        incr ? (fval || (fval = 0), fval += incr) : fval = value, 0 > fval && (fval = 0), 
+        "undefined" != typeof max && fval >= max && (fval = 0), instance.params[param] = fval, 
+        this.stateConfig && (instance._currentState = $.extend({}, instance._currentState, instance.params), 
+        instance._currentState = JSON.parse(JSON.stringify(instance._currentState)));
+    },
+    stateConfig: function() {
+        return !!_.isUndefined(this._stageController) || (void 0 == this._stageController._data.saveState || 1 == this._stageController._data.saveState);
     },
     getParam: function(param) {
         var instance = this, params = instance.params, expr = "params." + param;
@@ -6738,7 +6789,7 @@ var SummaryPlugin = Plugin.extend({
     initPlugin: function(data) {
         if (data.controller) {
             var message, controller = data.controller;
-            this._theme._controllerMap[controller] ? message = this._theme._controllerMap[controller].feedback() : this._stage._stageControllerName === controller ? message = this._stage._stageController.feedback() : this._stage._controllerMap[controller] && (message = this._stage._controllerMap[controller].feedback()),
+            this._theme._controllerMap[controller] ? message = this._theme._controllerMap[controller].feedback() : this._stage._stageControllerName === controller ? message = this._stage._stageController.feedback() : this._stage._controllerMap[controller] && (message = this._stage._controllerMap[controller].feedback()), 
             message && "text" == message.type && this.renderTextSummary(message.asset, data);
         }
     },
@@ -6795,14 +6846,14 @@ var TestcasePlugin = Plugin.extend({
         var dims = this.relativeDims();
         this._self.x = dims.x, this._self.y = dims.y;
         var hit = new createjs.Shape();
-        hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h), this._self.hitArea = hit,
+        hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h), this._self.hitArea = hit, 
         this.createHeader(data), this.invokeChildren(data, this, this._stage, this._theme);
     },
     createHeader: function(data) {
         var uniqueId = _.uniqueId("testcase");
-        this._header.g.x = data.x, this._header.g.y = data.y, this._header.g.w = data.w,
-        this._header.g.h = this._getHeaderHeight(data.h), this._header.g.text[0].id += uniqueId,
-        this._header.g.text[1].id += uniqueId, data.stroke && (this._header.g.shape.fill = data.stroke),
+        this._header.g.x = data.x, this._header.g.y = data.y, this._header.g.w = data.w, 
+        this._header.g.h = this._getHeaderHeight(data.h), this._header.g.text[0].id += uniqueId, 
+        this._header.g.text[1].id += uniqueId, data.stroke && (this._header.g.shape.fill = data.stroke), 
         this.invokeChildren(this._header, this._stage, this._stage, this._theme);
         var pass = PluginManager.getPluginObject(this._header.g.text[0].id), fail = PluginManager.getPluginObject(this._header.g.text[1].id);
         this.registerTestActions(pass), this.registerTestActions(fail);
@@ -6829,7 +6880,9 @@ var TextPlugin = Plugin.extend({
     _isContainer: !1,
     _render: !0,
     initPlugin: function(data) {
-        var fontsize = data.fontsize || 20, dims = this.relativeDims(), fontFace = data.font || "Arial", lineHeight = data.lineHeight ? data.lineHeight : 0, outline = data.outline ? data.outline : 0;
+        var fontsize = data.fontsize || 20, dims = this.relativeDims();
+        _.isUndefined(data.font) || "verdana" != data.font.toLowerCase() || (data.font = void 0);
+        var fontFace = data.font || this.getDefaultFont(), lineHeight = data.lineHeight ? data.lineHeight : 0, outline = data.outline ? data.outline : 0;
         if (isFinite(fontsize) && data.w) {
             var exp = parseFloat(PluginManager.defaultResWidth * data.w / 100), cw = this._parent.dimensions().w, width = parseFloat(cw * data.w / 100), scale = parseFloat(width / exp);
             fontsize = parseFloat(fontsize * scale), fontsize += "px";
@@ -6839,19 +6892,19 @@ var TextPlugin = Plugin.extend({
         var textStr = "";
         data.$t || data.__text ? textStr = data.$t || data.__text : data.model ? textStr = this._stage.getModelValue(data.model) || "" : data.param && (textStr = this.getParam(data.param.trim()) || "");
         var text = new createjs.Text(textStr, font, data.color || "#000000");
-        text.lineWidth = dims.w, text.x = dims.x, text.y = dims.y, text.lineHeight = lineHeight * text.getMeasuredLineHeight(),
+        text.lineWidth = dims.w, text.x = dims.x, text.y = dims.y, text.lineHeight = lineHeight * text.getMeasuredLineHeight(), 
         text.outline = outline;
         var align = data.align ? data.align.toLowerCase() : "left", valign = data.valign ? data.valign.toLowerCase() : "top";
-        "left" == align ? text.x = dims.x : "right" == align ? text.x = dims.x + dims.w : "center" == align && (text.x = dims.x + dims.w / 2),
-        "top" == valign ? (text.y = dims.y, text.textBaseline = "hanging") : "bottom" == valign ? (text.y = dims.y + dims.h - text.getMeasuredHeight(),
-        text.textBaseline = "hanging") : "middle" == valign && (text.y = dims.y + dims.h / 2 - text.getMeasuredHeight() / 2,
-        data.textBaseline ? text.textBaseline = "top" : text.textBaseline = "hanging"),
-        data.textBaseline && (text.textBaseline = data.textBaseline), text.textAlign = align,
+        "left" == align ? text.x = dims.x : "right" == align ? text.x = dims.x + dims.w : "center" == align && (text.x = dims.x + dims.w / 2), 
+        "top" == valign ? (text.y = dims.y, text.textBaseline = "hanging") : "bottom" == valign ? (text.y = dims.y + dims.h - text.getMeasuredHeight(), 
+        text.textBaseline = "hanging") : "middle" == valign && (text.y = dims.y + dims.h / 2 - text.getMeasuredHeight() / 2, 
+        data.textBaseline ? text.textBaseline = "top" : text.textBaseline = "hanging"), 
+        data.textBaseline && (text.textBaseline = data.textBaseline), text.textAlign = align, 
         text.valign = valign, this._self = text;
     },
     refresh: function() {
         var instance = this, textStr = "";
-        instance._data.$t || instance._data.__text ? textStr = instance._data.$t || instance._data.__text : instance._data.model ? textStr = this._stage.getModelValue(instance._data.model) || "" : instance._data.param && (textStr = this.getParam(instance._data.param.trim()) || ""),
+        instance._data.$t || instance._data.__text ? textStr = instance._data.$t || instance._data.__text : instance._data.model ? textStr = this._stage.getModelValue(instance._data.model) || "" : instance._data.param && (textStr = this.getParam(instance._data.param.trim()) || ""), 
         textStr && "" != textStr && (this._self.text = textStr, Renderer.update = !0);
     }
 });
@@ -6880,14 +6933,16 @@ var ThemePlugin = Plugin.extend({
     _templateMap: {},
     _contentParams: {},
     _isSceneChanging: !1,
+    _saveState: !0,
     initPlugin: function(data) {
-        this._controllerMap = {}, this._canvasId = data.canvasId, this._self = new createjs.Stage(data.canvasId),
+        this._controllerMap = {}, this._canvasId = data.canvasId, this._self = new createjs.Stage(data.canvasId), 
         this._director = new creatine.Director(this._self), this._dimensions = {
             x: 0,
             y: 0,
             w: this._self.canvas.width,
             h: this._self.canvas.height
-        }, createjs.Touch.enable(this._self), this._self.enableMouseOver(10), this._self.mouseMoveOutside = !0;
+        }, createjs.Touch.enable(this._self), this._self.enableMouseOver(10), this._self.mouseMoveOutside = !0, 
+        this._contentParams = {}, _.isUndefined(data.saveState) || (this._saveState = data.saveState);
     },
     mousePoint: function() {
         return {
@@ -6905,7 +6960,17 @@ var ThemePlugin = Plugin.extend({
     },
     start: function(basePath) {
         var instance = this;
-        RecorderManager.init(), AssetManager.init(this._data, basePath), AssetManager.initStage(this._data.startStage, null, null, function() {
+        if (RecorderManager.init(), _.isArray(this._data.stage)) var startStage = _.find(this._data.stage, function(stage) {
+            return stage.id == instance._data.startStage;
+        }); else if (this._data.stage.id == instance._data.startStage) var startStage = this._data.stage.id;
+        if (_.isUndefined(startStage)) {
+            var firstStage = _.find(this._data.stage, function(stage) {
+                if (stage.param && _.isUndefined(firstStage)) return stage;
+            });
+            _.isUndefined(firstStage) ? checkStage("showAlert") : (_.isUndefined(this._data.startStage) ? console.warn("No start stage is defined, loading first stage") : console.warn("Startstage is not available, loading first stage"), 
+            this._data.startStage = firstStage.id);
+        }
+        AssetManager.init(this._data, basePath), AssetManager.initStage(this._data.startStage, null, null, function() {
             instance.render();
         });
     },
@@ -6915,10 +6980,10 @@ var ThemePlugin = Plugin.extend({
             instance.addController(p);
         }) : instance.addController(this._data.controller)), this._data.template && (_.isArray(this._data.template) ? this._data.template.forEach(function(t) {
             instance._templateMap[t.id] = t;
-        }) : instance._templateMap[this._data.template.id] = this._data.template), _.isArray(this._data.stage) || (this._data.stage = [ this._data.stage ]),
+        }) : instance._templateMap[this._data.template.id] = this._data.template), _.isArray(this._data.stage) || (this._data.stage = [ this._data.stage ]), 
         this._data.stage && (this._data.stage.forEach(function(s) {
             instance.initStageControllers(s);
-        }), this.invokeStage(this._data.startStage)), this.update(), jQuery("#progressBar").width(100),
+        }), this.invokeStage(this._data.startStage)), this.update(), jQuery("#progressBar").width(100), 
         jQuery("#loading").hide(), jQuery("#overlay").show();
     },
     addController: function(p) {
@@ -6951,28 +7016,28 @@ var ThemePlugin = Plugin.extend({
     addChild: function(child, childPlugin) {
         var instance = this;
         child.on("sceneenter", function() {
-            instance.enableInputs(), instance._isSceneChanging = !1, childPlugin.dispatchEvent("enter"),
-            instance.preloadStages(), Renderer.update = !0, childPlugin.uncache(), TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage),
+            instance.enableInputs(), instance._isSceneChanging = !1, instance.preloadStages(), 
+            Renderer.update = !0, childPlugin.uncache(), TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage), 
             Overlay.sceneEnter();
         });
         var nextIdx = this._currIndex++;
-        this._currentScene ? (this._currentScene.dispatchEvent("exit"), this._currentScene = childPlugin,
-        this._director.replace(child, this.getTransitionEffect(this._animationEffect))) : (this._currentScene = childPlugin,
+        this._currentScene ? (this._currentScene.dispatchEvent("exit"), this._currentScene = childPlugin, 
+        this._director.replace(child, this.getTransitionEffect(this._animationEffect))) : (this._currentScene = childPlugin, 
         this._director.replace(child)), childPlugin.setIndex(nextIdx);
     },
     replaceStage: function(stageId, effect) {
-        this.disableInputs(), this.inputs = [], this.removeHtmlElements(), this.htmlElements = [],
-        this._animationEffect = effect, this.invokeStage(stageId);
+        this.disableInputs(), this.inputs = [], this.removeHtmlElements(), this.htmlElements = [], 
+        this._animationEffect = effect, TimerManager.destroy(), this.invokeStage(stageId);
     },
     invokeStage: function(stageId) {
         var stage = _.clone(_.findWhere(this._data.stage, {
             id: stageId
         }));
-        if (stage && stage["extends"] && (baseStage = _.findWhere(this._data.stage, {
-            id: stage["extends"]
-        }), stage = this.mergeStages(stage, baseStage)), this._previousStage = this._currentStage,
-        this._currentStage = stageId, PluginManager.invoke("stage", stage, this, null, this),
-        webview && window && window.parent && window.parent.jQuery("body")) {
+        if (stage && stage.extends && (baseStage = _.findWhere(this._data.stage, {
+            id: stage.extends
+        }), stage = this.mergeStages(stage, baseStage)), this._previousStage = this._currentStage, 
+        this._currentStage = stageId, PluginManager.invoke("stage", stage, this, null, this), 
+        isbrowserpreview && window && window.parent && window.parent.jQuery("body")) {
             var retObj = {
                 stageId: stageId
             };
@@ -6980,8 +7045,10 @@ var ThemePlugin = Plugin.extend({
         }
     },
     preloadStages: function() {
-        var stagesToLoad = this.getStagesToPreLoad(this._currentScene._data);
-        AssetManager.initStage(stagesToLoad.stage, stagesToLoad.next, stagesToLoad.prev);
+        var stagesToLoad = this.getStagesToPreLoad(this._currentScene._data), instance = this;
+        AssetManager.initStage(stagesToLoad.stage, stagesToLoad.next, stagesToLoad.prev, function() {
+            instance._currentScene.dispatchEvent("enter");
+        });
     },
     mergeStages: function(stage1, stage2) {
         for (k in stage2) if ("id" !== k) {
@@ -6996,11 +7063,12 @@ var ThemePlugin = Plugin.extend({
     transitionTo: function(action) {
         if (!this._isSceneChanging) {
             var stage = this._currentScene;
-            RecorderManager.stopRecording(), TimerManager.stopAll(this._currentStage), "previous" === action.transitionType ? (this._isSceneChanging = !0,
-            stage._stageController && stage._stageController.hasPrevious() ? (stage._stageController.decrIndex(2),
-            this.replaceStage(stage._data.id, action)) : (stage._stageController && (stage._stageController.setIndex(-1),
-            1 == action.reset && stage._stageController.reset()), this.replaceStage(action.value, action))) : "skip" === action.transitionType ? (stage._stageController && 1 == action.reset && stage._stageController.reset(),
-            this.replaceStage(action.value, action)) : (this._isSceneChanging = !0, stage._stageController && stage._stageController.hasNext() ? this.replaceStage(stage._data.id, action) : (stage._stageController && 1 == action.reset && stage._stageController.reset(),
+            this.setParam(stage.getStagestateKey(), stage._currentState), RecorderManager.stopRecording(), 
+            AudioManager.stopAll(), TimerManager.stopAll(this._currentStage), "previous" === action.transitionType ? (this._isSceneChanging = !0, 
+            stage._stageController && stage._stageController.hasPrevious() ? (stage._stageController.decrIndex(2), 
+            this.replaceStage(stage._data.id, action)) : (stage._stageController && (stage._stageController.setIndex(-1), 
+            1 == action.reset && stage._stageController.reset()), this.replaceStage(action.value, action))) : "skip" === action.transitionType ? (stage._stageController && 1 == action.reset && stage._stageController.reset(), 
+            this.replaceStage(action.value, action)) : (this._isSceneChanging = !0, stage._stageController && stage._stageController.hasNext() ? "next" !== action.transitionType ? this.replaceStage(action.value, action) : this.replaceStage(stage._data.id, action) : (stage._stageController && 1 == action.reset && stage._stageController.reset(), 
             this.replaceStage(action.value, action)));
         }
     },
@@ -7093,12 +7161,14 @@ var ThemePlugin = Plugin.extend({
     },
     setParam: function(param, value, incr, max) {
         var instance = this, fval = instance._contentParams[param];
-        incr ? ("undefined" == typeof fval && (fval = 0), fval += incr) : fval = value,
-        0 > fval && (fval = 0), "undefined" != typeof max && fval >= max && (fval = 0),
+        incr ? ("undefined" == typeof fval && (fval = 0), fval += incr) : fval = value, 
+        0 > fval && (fval = 0), "undefined" != typeof max && fval >= max && (fval = 0), 
         instance._contentParams[param] = fval;
     },
     getParam: function(param) {
-        var instance = this, params = instance._contentParams, expr = "params." + param;
+        var instance = this, params;
+        if (instance._saveState) return instance._contentParams[param];
+        var params = instance._contentParams, expr = "params." + param;
         return eval(expr);
     }
 });
@@ -7115,10 +7185,10 @@ var TweenPlugin = AnimationPlugin.extend({
         var fn = "(function() {return function(plugin, cb){";
         fn += "createjs.Tween.get(plugin, {override:true " + loopStr + "})", to.forEach(function(to) {
             var data = _.isString(to.__cdata) ? JSON.parse(to.__cdata) : to.__cdata, relDims = plugin.getRelativeDims(data);
-            data.x = relDims.x, data.y = relDims.y, data.width = relDims.w, data.height = relDims.h,
+            data.x = relDims.x, data.y = relDims.y, data.width = relDims.w, data.height = relDims.h, 
             fn += ".to(" + JSON.stringify(data) + "," + to.duration + ", createjs.Ease." + to.ease + ")";
-        }), fn += '.call(function() {cb({status: "success"})})', fn += '.addEventListener("change", function(event) {Renderer.update = true;',
-        data.widthChangeEvent && (fn += "AnimationManager.widthHandler(event, plugin);"),
+        }), fn += '.call(function() {cb({status: "success"})})', fn += '.addEventListener("change", function(event) {Renderer.update = true;', 
+        data.widthChangeEvent && (fn += "AnimationManager.widthHandler(event, plugin);"), 
         fn += "})}})()", this._animateFn = fn;
     },
     animate: function(plugin, cb) {
@@ -7138,7 +7208,7 @@ var VideoPlugin = Plugin.extend({
     _videoEle: void 0,
     _instance: void 0,
     initPlugin: function(data) {
-        this._data = data, this._data && (_.isUndefined(data.autoplay) && (this._data.autoplay = !0),
+        this._data = data, this._data && (_.isUndefined(data.autoplay) && (this._data.autoplay = !0), 
         _.isUndefined(data.controls) && (this._data.controls = !1)), this.loadVideo(), _instance = this;
     },
     loadVideo: function() {
@@ -7151,14 +7221,14 @@ var VideoPlugin = Plugin.extend({
         }, this._data.delay);
     },
     play: function(action) {
-        action && (_videoEle = this.getVideo(action.asset)), this._data.delay ? this.deplayStart(_videoEle) : (_videoEle.style.display = "block",
+        action && (_videoEle = this.getVideo(action.asset)), this._data.delay ? this.deplayStart(_videoEle) : (_videoEle.style.display = "block", 
         _videoEle.play(), this.sendTelemeteryData(action, "PLAY"));
     },
     pause: function(action) {
         action && (_videoEle = this.getVideo(action.asset)), _videoEle.pause(), this.sendTelemeteryData(action, "PAUSE");
     },
     stop: function(action) {
-        action && (_videoEle = this.getVideo(action.asset)), _videoEle.currentTime = 0,
+        action && (_videoEle = this.getVideo(action.asset)), _videoEle.currentTime = 0, 
         _videoEle.pause(), this.sendTelemeteryData(action, "STOP");
     },
     end: function() {
@@ -7177,9 +7247,9 @@ var VideoPlugin = Plugin.extend({
     },
     _createDOMElementVideo: function() {
         var videoAssest;
-        if (_.isUndefined(this._data.asset)) return console.log("Video assest is not defined", this._data),
+        if (_.isUndefined(this._data.asset)) return console.log("Video assest is not defined", this._data), 
         !1;
-        if (videoAssest = this._theme.getAsset(this._data.asset), _.isUndefined(videoAssest)) return console.log("Video assest is not loaded", this._data.asset),
+        if (videoAssest = this._theme.getAsset(this._data.asset), _.isUndefined(videoAssest)) return console.log("Video assest is not loaded", this._data.asset), 
         !1;
         var jqVideoEle = jQuery(videoAssest).insertBefore("#gameArea");
         _.isUndefined(this._data.type) ? console.error("Video format type is not defiend..") : jQuery(jqVideoEle).attr("type", this._data.type);
@@ -7208,7 +7278,7 @@ var VideoPlugin = Plugin.extend({
             _instance.end();
         });
         var div = document.getElementById("gameArea");
-        return div.insertBefore(videoEle, div.childNodes[0]), videoEle.readyState >= 2 && 1 == this._data.autoplay && this.replay(),
+        return div.insertBefore(videoEle, div.childNodes[0]), videoEle.readyState >= 2 && 1 == this._data.autoplay && this.replay(), 
         _videoEle = videoEle, new createjs.Bitmap(videoEle);
     }
 });
