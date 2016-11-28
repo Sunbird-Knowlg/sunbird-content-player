@@ -302,12 +302,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
             })
-            /*.state("otherwise", {
-                url: "/content/list/:"+GlobalContext.config.appInfo ? GlobalContext.config.appInfo : packageName,
-                templateUrl: "templates/content-list.html",
-                controller: 'ContentListCtrl'
-            })*/
-
+            
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $rootScope.pageId = 'ContentApp-Collection';
         var id = $stateParams.id;
@@ -1202,7 +1197,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         if (gameId && version) {
                             TelemetryService.start(gameId, version);
                         }
-                    }, 3000);
+                    }, 500);
                 }
             }
         }
