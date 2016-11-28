@@ -55,7 +55,7 @@ describe('Theme Plugin test cases', function() {
 
         spyOn(this.plugin, 'getDirection').and.callThrough();
         spyOn(this.plugin, 'getEase').and.callThrough();
-        spyOn(this.plugin, 'getAsset').and.callThrough(); 
+        //spyOn(this.plugin, 'getAsset').and.callThrough(); 
         spyOn(this.plugin, 'mousePoint').and.callThrough();
 
         spyOn(this.plugin, 'getStagesToPreLoad').and.callThrough();        
