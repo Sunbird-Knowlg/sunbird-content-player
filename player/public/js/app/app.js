@@ -451,7 +451,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 exitApp();
         };
         $scope.init = function(){ 
-            localstorageFunction("rootscope_collection",$rootScope.collection,'setItem');
             $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction('content',undefined, 'getItem');
             $rootScope.title = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.name : "";
             $scope.resetContentListCache();
