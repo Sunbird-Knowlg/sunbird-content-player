@@ -66,19 +66,7 @@ var genieServiceBridge = (function(){
        }
    }
   }
-
-  function exitContent() {
-        // On close of the content call this function
-        if ("undefined" != typeof cordova) {            
-            window.location.href = "file:///android_asset/www/index.html#/content/end/" + this.getContentId();
-        } else {
-            window.location.href = '/#/content/end/'+this.getContentId() ;
-        }
-    }
-    function getContentId(){
-        return JSON.parse(localStorage.getItem("content")).identifier;
-    }
-
+  
   return{
     init: function(callback){
       _callbackFunc = callback;
