@@ -24,11 +24,16 @@ OverlayManager = {
                   ];
 
         this.setContentConfig();
+        this.stageInstructionModule();
         EventBus.addEventListener("actionNavigateSkip", this.skipAndNavigateNext, this);
         EventBus.addEventListener("actionNavigateNext", this.navigateNext, this);
         EventBus.addEventListener("actionNavigatePrevious", this.navigatePrevious, this);
         EventBus.addEventListener("actionDefaultSubmit", this.defaultSubmit, this);
         EventBus.addEventListener("actionReload", this.actionReload, this);
+    },
+    stageInstructionModule: function () {
+        var instructions = (Renderer.theme._currentScene.params && Renderer.theme._currentScene.params.instructions) ? Renderer.theme._currentScene.params.instructions : null;
+        EventBus.dispatch("stageInstruction", instructions);
     },
     setContentConfig: function() {
         var evtLenth = this._eventsArray.length;

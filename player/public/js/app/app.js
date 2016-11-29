@@ -1113,17 +1113,15 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $scope.showInst = false;
 
                 /*<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:30%;"/></a>*/
-                $scope.showInstructions = function() {
-                    if (Renderer.theme._currentScene.params && Renderer.theme._currentScene.params.instructions) {
-                        $scope.showInst = true;
+                EventBus.addEventListener("stageInstruction", function (data) {
+                  $scope.stageInstMessage = data.target;
+                });
 
-                        //Getting stage instructions from CurrentStage(StagePlugin)
-                        var inst = Renderer.theme._currentScene.params.instructions;
-                        $scope.stageInstMessage = inst;
-                    }
+                $scope.showInstructions = function() {
+                  $scope.showInst = ($scope.stageInstMessage != null) ? true : false;
                 }
 
-                $scope.closeInstructions = function() {
+                $scope.closeInstructions = function () {
                     $scope.showInst = false;
                 }
 
