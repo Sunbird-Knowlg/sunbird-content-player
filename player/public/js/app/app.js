@@ -1184,6 +1184,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     } else {
                             setTimeout(function() {
                             scope.hideMenu();
+                            Renderer.theme.removeHtmlElements();
                             Renderer.theme.reRender();
                         },100)          
                     }
