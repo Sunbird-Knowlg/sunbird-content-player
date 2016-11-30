@@ -60,13 +60,14 @@ function getContentObj(data) {
     return data;
 }
 
-function localstorageFunction(key,value,type) {
-  // Store and fetch the key and value pair data  
+function localstorageFunction(key, value, type) {
     if (type == 'setItem') {
         if (_.isObject(value)) {
             value = JSON.stringify(value)
         }
-        localStorage.setItem(key,value);
+        localStorage.setItem(key, value);
+    } else if (type == 'removeItem') {
+        localStorage.removeItem(key);
     } else {
         var data = JSON.parse(localStorage.getItem(key));
         if (!_.isNull(data)) {
@@ -76,7 +77,6 @@ function localstorageFunction(key,value,type) {
         }
     }
 }
-
 function launchInitialPage(appInfo, $state) {
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
         if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
@@ -464,11 +464,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.content;
         $scope.showPage = true;     
         $scope.playContent = function(content) {
-            if (!_.isUndefined(TelemetryService.instance)){
-                localstorageFunction("TelemetryService",TelemetryService, 'setItem');
-                localstorageFunction("_end",TelemetryService.instance._end, 'setItem');
-                localstorageFunction("_start",TelemetryService.instance._start, 'setItem');
-            }
             $scope.showPage = false;
             $state.go('playContent', {
                 'itemId': content.identifier
@@ -509,7 +504,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
             var identifier = (data && data.identifier) ? data.identifier : null;
             var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
-            TelemetryService.start(identifier, version);
+            startTelemetry(identifier,version);
             TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID" });
         }
 
@@ -679,13 +674,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-baloo credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
         
     
-    $scope.getLocaltelemetryConfig = function() {
+   /* $scope.getLocaltelemetryConfig = function() {
         // Localstorage telemtry data is assigned to the telemetryService
         if (_.isUndefined(TelemetryService.instance)) {
             var telemetryData = localstorageFunction("TelemetryService", undefined, 'getItem');
             var start = localstorageFunction("_start", undefined, 'getItem');
             var end = localstorageFunction("_end", undefined, 'getItem');
-            if (!_.isUndefined(telemetryData)) {
+            if (!_.isUndefined(telemetyrData)) {
                 for (var prop in telemetryData) {
                     if (TelemetryService.hasOwnProperty(prop)) {
                         TelemetryService[prop] = telemetryData[prop];
@@ -703,7 +698,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         }
 
-    };
+    };*/
     $scope.arrayToString = function(array) {
             return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";
         };
@@ -724,7 +719,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
             jQuery("#creditsPopup").show();
             TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {
-                stageId: "ContnetApp-CreditsScreen",
+                stageId: "ContentApp-CreditsScreen",
                 subtype: "ContentID"
             });
         }
@@ -840,7 +835,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.init = function() {
             $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction('content',undefined, 'getItem');
-            $scope.getLocaltelemetryConfig();
+            // Call Telemeteryservice init 
+            if(_(TelemetryService.instance).isUndefined()){
+                 TelemetryService.init({ id: $rootScope.content.identifier, ver: "1.0" });
+            }
             var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
             creditsPopup.trigger("popupUpdate", { "content": $rootScope.content });
             setTimeout(function() {
@@ -1184,19 +1182,19 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             'itemId': content.identifier
                         });
                     } else {
-                            setTimeout(function() { 
-                            Renderer.theme.removeHtmlElements();
+                            setTimeout(function() {
                             scope.hideMenu();
-                            Renderer.theme.restart();
+                            Renderer.theme.reRender();
                         },100)          
                     }
                     var gameId = TelemetryService.getGameId();
                     var version = TelemetryService.getGameVer();
-                    setTimeout(function() {
-                        if (gameId && version) {
-                            TelemetryService.start(gameId, version);
-                        }
-                    }, 500);
+                    TelemetryService.end();
+                    localstorageFunction('TelemetryService',undefined,"removeItem");
+                    if(gameId && version){
+                        startTelemetry(gameId,version);
+                    }
+                    
                 }
             }
         }
