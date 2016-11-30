@@ -24,7 +24,6 @@ OverlayManager = {
                   ];
 
         this.setContentConfig();
-        this.setStageData();
         EventBus.addEventListener("actionNavigateSkip", this.skipAndNavigateNext, this);
         EventBus.addEventListener("actionNavigateNext", this.navigateNext, this);
         EventBus.addEventListener("actionNavigatePrevious", this.navigatePrevious, this);
@@ -43,7 +42,10 @@ OverlayManager = {
         var evtLenth = this._eventsArray.length;
         for (i = 0; i < evtLenth; i++) {
             var eventName = this._eventsArray[i];
-            var val = Renderer.theme.getParam(eventName);
+            var val;
+            if (!_.isUndefined(Renderer.theme._currentScene)){
+              val = Renderer.theme._currentScene.getParam(eventName);
+            }
             if (!_.isUndefined(val)) {
                this._contentConfig[eventName] = val;
             }
@@ -68,7 +70,8 @@ OverlayManager = {
 
             this._stageConfig[eventName] = val;
         }
-
+        
+        this.setStageData();
         this.handleNext();
         this.handlePrevious();
         this.handleSubmit();
