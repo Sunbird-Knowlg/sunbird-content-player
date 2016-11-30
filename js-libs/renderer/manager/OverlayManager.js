@@ -24,16 +24,20 @@ OverlayManager = {
                   ];
 
         this.setContentConfig();
-        this.stageInstructionModule();
+        this.setStageData();
         EventBus.addEventListener("actionNavigateSkip", this.skipAndNavigateNext, this);
         EventBus.addEventListener("actionNavigateNext", this.navigateNext, this);
         EventBus.addEventListener("actionNavigatePrevious", this.navigatePrevious, this);
         EventBus.addEventListener("actionDefaultSubmit", this.defaultSubmit, this);
         EventBus.addEventListener("actionReload", this.actionReload, this);
     },
-    stageInstructionModule: function () {
-        var instructions = (Renderer.theme._currentScene.params && Renderer.theme._currentScene.params.instructions) ? Renderer.theme._currentScene.params.instructions : null;
-        EventBus.dispatch("stageInstruction", instructions);
+    setStageData: function () {
+      var instructions = (Renderer.theme._currentScene.params && Renderer.theme._currentScene.params.instructions) ? Renderer.theme._currentScene.params.instructions : null;
+      var stageData = {
+                        "currentStage": Renderer.theme._currentStage,
+                        "stageInstruction": instructions
+                      };
+      EventBus.dispatch("stageData", stageData);
     },
     setContentConfig: function() {
         var evtLenth = this._eventsArray.length;
@@ -60,7 +64,7 @@ OverlayManager = {
             if (_.isUndefined(val)) {
                 var contentConfigVal = this._contentConfig[eventName];
                 val = _.isUndefined(contentConfigVal) ? "on" : contentConfigVal;
-            }            
+            }
 
             this._stageConfig[eventName] = val;
         }
@@ -133,7 +137,6 @@ OverlayManager = {
 
       var isItemScene = Renderer.theme._currentScene.isItemScene();
       if(isItemScene) {
-          TelemetryService.interact("TOUCH", "next", null, {stageId : Renderer.theme._currentStage});
           this.defaultSubmit();
           return;
       }
@@ -145,11 +148,11 @@ OverlayManager = {
       var navigateTo = this.getNavigateTo("next");
       if ("undefined" == typeof navigateTo){
 
-          if(_.isUndefined(Renderer.theme._currentScene)) return;          
+          if(_.isUndefined(Renderer.theme._currentScene)) return;
           var isItemScene = Renderer.theme._currentScene.isItemScene();
-          
+
           if (isItemScene && !_.isUndefined(Renderer.theme._currentScene._stageController) && Renderer.theme._currentScene._stageController.hasNext()) {
-            
+
             this.defaultNavigation("next", navigateTo);
           } else {
             this.moveToEndPage();
@@ -181,7 +184,6 @@ OverlayManager = {
       var navigateToStage = this.getNavigateTo('previous');
       if(_.isUndefined(navigateToStage)) return;
 
-      TelemetryService.interact("TOUCH", "previous", null, {stageId : Renderer.theme._currentStage});
       var navigateTo = this.getNavigateTo("previous");
       if(_.isUndefined( Renderer.theme._currentScene)) return;
       this.defaultNavigation("previous", navigateTo);

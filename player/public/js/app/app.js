@@ -766,6 +766,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
 
+        EventBus.addEventListener("stageData", function (data) {
+          $rootScope.stageData = data.target;
+        });
+
         $scope.state_off = "off";
         $scope.state_on = "on";
         $scope.state_disable = "disable";
@@ -793,12 +797,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         };
 
         $scope.navigate = function (navType) {
+          TelemetryService.interact("TOUCH", navType, null, {stageId : $rootScope.stageData.currentStage});
           if (navType === "next") {
             EventBus.dispatch("actionNavigateNext", navType);
           } else if (navType === "previous")  {
             EventBus.dispatch("actionNavigatePrevious", navType);
           }
-
         }
 
         $scope.init = function() {
@@ -910,7 +914,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
             $scope.menuOpened = true;
             TelemetryService.interact("TOUCH", "gc_menuopen", "TOUCH", {
-                stageId: Renderer.theme._currentStage
+                stageId: $rootScope.stageData.currentStage
             });
             jQuery('.menu-overlay').css('display', 'block');
             jQuery(".gc-menu").show();
@@ -923,7 +927,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.hideMenu = function() {
             $scope.menuOpened = false;
             TelemetryService.interact("TOUCH", "gc_menuclose", "TOUCH", {
-                stageId: Renderer.theme._currentStage
+                stageId: $rootScope.stageData.currentStage
             });
             jQuery('.menu-overlay').css('display', 'none');
             jQuery(".gc-menu").animate({
@@ -1049,7 +1053,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 scope.goToCollection = function () {
                     collectionPath.pop();
                     console.log(" id : ", GlobalContext.previousContentId);
-                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
+                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId))});
                     if (Renderer.running)
                         Renderer.cleanUp();
                     else
@@ -1076,7 +1080,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 var pageId = $rootScope.pageId;
 
                 scope.goToHome = function() {
-                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId)) });
+                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId)) });
                     if (Renderer.running)
                         Renderer.cleanUp();
                     else
@@ -1113,11 +1117,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $scope.showInst = false;
 
                 /*<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:30%;"/></a>*/
-                EventBus.addEventListener("stageInstruction", function (data) {
-                  $scope.stageInstMessage = data.target;
-                });
+
 
                 $scope.showInstructions = function() {
+                  $scope.stageInstMessage = $rootScope.stageData.stageInstruction;
                   $scope.showInst = ($scope.stageInstMessage != null) ? true : false;
                 }
 
@@ -1228,7 +1231,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 scope.hidePopup = function(id) {
                     element.hide();
                     TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
-                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : Renderer.theme._currentStage)
+                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
                     });
                 };
 
@@ -1248,7 +1251,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 $scope.hidePopup = function(id) {
                     TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
-                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : Renderer.theme._currentStage)
+                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
                     });
                     $scope.showOverlayGoodJob = false;
                     $scope.showOverlayTryAgain = false;
