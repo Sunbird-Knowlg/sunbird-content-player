@@ -953,9 +953,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
               break;
           }
 
-          $rootScope.safeApply(function(){
-            console.log("Safe apply.");
-          })
+          $rootScope.safeApply();
         }
 
         $scope.goodJob = {

@@ -4,12 +4,7 @@ var EvalCommand = Command.extend({
 	invoke: function(action) {
 		//This is to suppress evalution action generating by ECML content
 		var plugin = this.getPluginObject();
-		if (action.htmlEval) {
-            plugin.evaluate(action);
-		} else {
-			plugin.evaluate(action);
-			console.warn("eval action from ECML content is deprecated.");
-		}
+        plugin.evaluate(action);
 	}
 });
 CommandManager.registerCommand('EVAL', EvalCommand);
