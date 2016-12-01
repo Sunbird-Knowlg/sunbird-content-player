@@ -35,10 +35,10 @@
   <!--   <a href="javascript:void(0)" class="button button-clear" style="margin: 3% 2%; width: 8%; position: absolute;">
         <img src="{{imageBasePath}}icn_square_home.png" style="width: 100%;"/>
     </a> -->
-    <genie icon="icn_back_page.png" class="gc-cp-genie gc-contentlist-genie-icon"></genie>
-
+    <!-- <genie icon="icn_back_page.png" class="gc-cp-genie gc-contentlist-genie-icon"></genie>
+    <navcol class="gc-cp-genie gc-contentlist-genie-icon"></navcol> -->
+    <a href="javascript:void(0);" ng-click="goBack();"  class="gc-cp-genie gc-contentlist-genie-icon"><img ng-src="{{imageBasePath}}icn_back_page.png"/></a>
     <h1 class="gc-contentlist-title font-baloo">{{title || "EkStep Content App"}}</h1>
-
     <ion-content class="gc-ionic-contentlist-body" overflow-scroll="true">
         <div class="product swiper-slide"
             ng-repeat="story in stories track by $index"

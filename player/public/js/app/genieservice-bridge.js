@@ -66,7 +66,7 @@ var genieServiceBridge = (function(){
        }
    }
   }
-
+  
   return{
     init: function(callback){
       _callbackFunc = callback;

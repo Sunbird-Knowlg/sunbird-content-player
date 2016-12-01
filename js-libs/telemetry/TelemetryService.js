@@ -21,8 +21,12 @@ TelemetryService = {
         pressup: 'DRAG'
     },
     init: function(gameData, user) {
-        if (!TelemetryService.instance) {
-            return new Promise(function(resolve, reject) {
+        var localStorageInstance = TelemetryService.getLocalStorageInstance();
+        if(localStorageInstance) {
+            TelemetryService.setTelemetryService(localStorageInstance, gameData);
+        }        
+        return new Promise(function(resolve, reject) {
+            if (!TelemetryService.instance) {
                 TelemetryService._user = user;
                 TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
                 if (gameData) {
@@ -39,15 +43,15 @@ TelemetryService = {
                     }).catch(function(err) {
                         reject(err);
                     });
-
                 } else {
                     reject('Game data is empty.');
                 };
                 resolve(true);
-            });
-        }else{
-            console.log("TelemetryService instance is not create")
-        }
+            }else{
+                resolve(true)
+                console.log("TelemetryService instance is not create")
+            }
+        });
     },
     webInit: function(gameData, user) {
         return new Promise(function(resolve, reject) {
@@ -96,6 +100,37 @@ TelemetryService = {
         if (event)
             event.flush(apiName);
         return event;
+    },
+    // New code
+    setTelemetryService: function(localStorageInstance, gameData){
+        if(localStorageInstance._gameData.id == gameData.id ){
+        var start = JSON.parse(localStorage.getItem("_start"));
+        var end = JSON.parse(localStorage.getItem("_end"));
+            if (!_.isUndefined(localStorageInstance)) {
+                for (var prop in localStorageInstance) {
+                    if (TelemetryService.hasOwnProperty(prop)) {
+                        TelemetryService[prop] = localStorageInstance[prop];
+                    }
+                }
+            }
+            TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
+            if (!_.isUndefined(start)) {
+                for(var i =0; i<start.length;i++){
+                    TelemetryService.instance._start.push(start[i]);
+                }
+            }
+            if (!_.isUndefined(end)) {
+                var teEndevent = TelemetryService.instance.createEvent("OE_END", {}).start();
+                teEndevent.startTime = end[end.length - 1].startTime;
+                TelemetryService.instance._end.push(teEndevent);
+            }          
+        }else{
+            console.info("Game id is not same",gameData.id);
+        }
+    },
+    getLocalStorageInstance: function() {
+        var telemetryData = JSON.parse(localStorage.getItem("TelemetryService"));     
+        return telemetryData;
     },
     start: function(id, ver) {
         if (!TelemetryService.isActive) {

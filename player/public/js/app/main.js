@@ -81,6 +81,7 @@ function exitApp(pageId) {
     } catch (err) {
         console.error('End telemetry error:', err.message);
     }
+    localStorage.clear();
     genieservice.endGenieCanvas();
 }
 
@@ -137,5 +138,20 @@ function objectAssign() {
             }
         })
         return output;
+    }
+}
+
+function startTelemetry(id,ver) {
+    TelemetryService.init(GlobalContext.game, GlobalContext.user);
+    TelemetryService.start(id,ver);
+    if (!_.isUndefined(TelemetryService.instance)) {
+        localstorageFunction("TelemetryService", TelemetryService, 'setItem');
+        /*var instance ={};
+        instance = _.clone(TelemetryService.instance);
+        instance._start= TelemetryService.instance._start;
+        instance._end = TelemetryService.instance._end;
+        TelemetryService.instance = instance;*/
+        localstorageFunction("_end", TelemetryService.instance._end, 'setItem');
+        localstorageFunction("_start", TelemetryService.instance._start, 'setItem');
     }
 }

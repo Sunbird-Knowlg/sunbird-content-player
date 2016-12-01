@@ -193,6 +193,32 @@ genieservice_portal = {
                 }
             });
         });
+    },
+    endContent: function() {
+        // On close of the content call this function
+        var content = this.getLocalStorageContent();
+        if(_.isUndefined(content)) {
+            console.log("Content is undefined", content);
+            return;
+        }
+        var endPageStateUrl = '#/content/end/' + content.identifier;
+        this.showPage(endPageStateUrl);
+    },
+    showPage: function(pageUrl){
+        if ("undefined" != typeof cordova) {
+            var url ="file:///android_asset/www/index.html"+pageUrl;
+            window.location.href = url;
+        } else {
+            window.location ="/"+ pageUrl;
+        }
+    },
+    getLocalStorageContent: function() {
+        var content = localStorage.getItem("content"); 
+        if(_.isUndefined(content)) {
+            return;
+        } else {
+            return JSON.parse(content);
+        }        
     }
 };
 
@@ -274,6 +300,32 @@ genieservice_html = {
                 reject("wordList data is not present in localData.")
             }
         });
+    },
+    endContent: function() {
+        // On close of the content call this function
+        var content = this.getLocalStorageContent();
+        if(_.isUndefined(content)) {
+            console.log("Content is undefined", content);
+            return;
+        }
+        var endPageStateUrl = '#/content/end/' + content.identifier;
+        this.showPage(endPageStateUrl);
+    },
+    showPage: function(pageUrl){
+        if ("undefined" != typeof cordova) {
+            var url ="file:///android_asset/www/index.html"+pageUrl;
+            window.location.href = url;
+        } else {
+            window.location ="/"+ pageUrl;
+        }
+    },
+    getLocalStorageContent: function() {
+        var content = localStorage.getItem("content"); 
+        if(_.isUndefined(content)) {
+            return;
+        } else {
+            return JSON.parse(content);
+        }        
     }
 };
 if ("undefined" == typeof cordova) {
