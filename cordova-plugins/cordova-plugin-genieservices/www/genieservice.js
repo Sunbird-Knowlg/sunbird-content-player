@@ -60,6 +60,19 @@ genieservice.prototype.endGenieCanvas = function() {
         "GenieServicePlugin", "endGenieCanvas", []);
 }
 
+genieservice.prototype.endContent = function(id) {
+    // On close of the content call this function
+    var content = localStorage.getItem("content");
+    if (_.isUndefined(content)) {
+        console.log("Content is undefined", content);
+        return;
+    } else {
+        content = JSON.parse(content);
+    }
+    var endPageStateUrl = '#/content/end/' + content.identifier;
+    var url = "file:///android_asset/www/index.html" + endPageStateUrl;
+    window.location.href = url;
+}
 genieservice.prototype.launchContent = function(id){
     this.handleAction("getContent", [id])
     .then(function(resp){

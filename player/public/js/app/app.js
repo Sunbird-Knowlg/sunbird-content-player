@@ -19,8 +19,7 @@ var stack = new Array(),
     isbrowserpreview = getUrlParameter("webview"),
     appState = undefined;
 
-
-window.setContentData = function(metadata, data, configuration) {
+window.setContentData = function(metadata, data, configuration) {   
     if (metadata) {
         content.metadata = metadata;
     } else {
@@ -61,8 +60,24 @@ function getContentObj(data) {
     return data;
 }
 
+function localstorageFunction(key, value, type) {
+    if (type == 'setItem') {
+        if (_.isObject(value)) {
+            value = JSON.stringify(value)
+        }
+        localStorage.setItem(key, value);
+    } else if (type == 'removeItem') {
+        localStorage.removeItem(key);
+    } else {
+        var data = JSON.parse(localStorage.getItem(key));
+        if (!_.isNull(data)) {
+            return data
+        } else {
+            return
+        }
+    }
+}
 function launchInitialPage(appInfo, $state) {
-
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
         if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
             $state.go('showContent', { "contentId": GlobalContext.game.id });
@@ -93,7 +108,15 @@ function telemetryError(e) {
 }
 
 angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
-    .run(function($rootScope, $ionicPlatform, $location, $state, $stateParams, ContentService) {
+    .constant("appConstants", {
+        "contentId": "contentId",
+        "stateContentList": "contentList",
+        "stateShowContent": "showContent",
+        "statePlayContent": "playContent",
+        "stateShowContentEnd": "showContentEnd"
+    })
+    .run(function($rootScope, $ionicPlatform, $location, $timeout, $state, $stateParams, appConstants, ContentService) {
+
         $rootScope.imageBasePath = "img/icons/";
         $rootScope.enableEval = false;
         // serverPath and localPreview is a global variable defined in index.html file inside a story
@@ -121,7 +144,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "nextContent" : "NEXT CONTENT",
             "comment" : "write your comment..."
         }
-        $ionicPlatform.ready(function() {
+        $timeout(function() {
+            $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             appState = $state;
@@ -156,8 +180,46 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 GlobalContext.config.flavor = flavor;
             });
 
+            $rootScope.icons = {
+            previous: {
+                disable: $rootScope.imageBasePath + "back_icon_disabled.png",
+                enable: $rootScope.imageBasePath + "back_icon.png",
+            },
+            next: {
+                disable: $rootScope.imageBasePath + "next_icon_disabled.png",
+                enable: $rootScope.imageBasePath + "next_icon.png",
+            },
+            assess: {
+                enable: $rootScope.imageBasePath + "submit.png",
+                disable: $rootScope.imageBasePath + "submit_disabled.png"
+            },
+            retry: $rootScope.imageBasePath + "speaker_icon.png",
+            goodJob: {
+                background: $rootScope.imageBasePath + "img_popup_next.png"
+            },
+            tryAgain: {
+                background: $rootScope.imageBasePath + "img_popup.png",
+                retry: $rootScope.imageBasePath + "retry_icon.png"
+            },
+            end: {
+                background: $rootScope.imageBasePath + "img_bg.png"
+            },
+            popup: {
+                next: $rootScope.imageBasePath + "icn_bg_next.png",
+                retry: $rootScope.imageBasePath + "icn_bg_replay.png",
+                skip: $rootScope.imageBasePath + "icn_sml_next.png",
+                star: $rootScope.imageBasePath + "star.png",
+                credit_popup: $rootScope.imageBasePath + "popup.png",
+                goodjob_stars: $rootScope.imageBasePath + "img_stars.png"
+            },
+            popup_close: {
+                close_icon: $rootScope.imageBasePath + "close_popup.png",
+            }
+        };
+
             GlobalContext.init(packageName, version).then(function(appInfo) {
-                // localPreview is a global variable defined in index.html file inside a story,
+
+               // localPreview is a global variable defined in index.html file inside a story,
                 if ("undefined" != typeof localPreview && "local" == localPreview)
                     return;
                 var id = getUrlParameter("id");
@@ -198,7 +260,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             });
                     }
                 } else {
-                    launchInitialPage(GlobalContext.config.appInfo, $state);
+                    if($state.current.name == appConstants.stateShowContentEnd){
+                        $state.go(appConstants.stateShowContentEnd, { "contentId": $state.params.contentId });
+                    } else {
+                        launchInitialPage(GlobalContext.config.appInfo, $state);                        
+                    }
                 }
             }).catch(function(res) {
                 console.log("Error Globalcontext.init:", res);
@@ -206,6 +272,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 exitApp();
             });
         });
+               
+        });
+        
     }).config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('contentList', {
@@ -232,7 +301,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 url: "/play/content/:itemId",
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
-            });
+            })
+            
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $rootScope.pageId = 'ContentApp-Collection';
         var id = $stateParams.id;
@@ -243,11 +313,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         // }).then(function(modal) {
         //     $scope.aboutModal = modal;
         // });
-
         $scope.version = GlobalContext.game.ver;
         $scope.flavor = GlobalContext.config.flavor;
         $scope.currentUser = GlobalContext.user;
-        $rootScope.title = GlobalContext.config.appInfo.name;
         $rootScope.stories = [];
         $rootScope.showMessage = false;
 
@@ -298,9 +366,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                     if (!_.contains(stack, content.identifier))
                         stack.push(content.identifier);
-                    if (COLLECTION_MIMETYPE == content.mimeType) {
+                    if (COLLECTION_MIMETYPE == content.mimeType) {                       
                         $rootScope.title = content.name;
                         $rootScope.collection = content;
+                        localstorageFunction("Collection", $rootScope.collection,"setItem");
                         TelemetryService.start(content.identifier, content.pkgVersion);
                     } else {
                         $rootScope.collection = {};
@@ -311,7 +380,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     if (childrenIds)
                         collectionChildrenIds = childrenIds;
                     collectionChildren = true;
-                    console.info("collectionChildrenIds : ", collectionChildrenIds);
                     var filter = (content.filter) ? JSON.parse(content.filter) : content.filter;
                     return ContentService.getContentList(filter, childrenIds);
                 })
@@ -370,25 +438,34 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.exitApp = function() {
             exitApp();
-        };
+        };  
 
         $scope.goBack = function() {
-            TelemetryService.end();
             stack.pop();
             collectionPath.pop();
             var id = stack.pop();
-            if (id)
+            if(!_(id).isUndefined()){
                 $state.go('contentList', { "id": id });
-            else
-                exitApp();
-        }
+            }else{
+               if ("undefined" != typeof cordova){
+                     exitApp();
+                }
+            }               
+        };
 
-        $scope.resetContentListCache();
+        $scope.init = function(){ 
+            $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction('content',undefined, 'getItem');
+            $rootScope.title = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.name : "";
+            $scope.resetContentListCache();
+        };
+       
+        $scope.init();
+
     }).controller('ContentHomeCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $rootScope.showMessage = false;
         $rootScope.pageId = "coverpage";
         $rootScope.content;
-        $scope.showPage = true;
+        $scope.showPage = true;     
         $scope.playContent = function(content) {
             $scope.showPage = false;
             $state.go('playContent', {
@@ -404,6 +481,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             jQuery('#loading').hide();
             ContentService.getContent(content)
                 .then(function(data) {
+                    // 
+                    localstorageFunction('content', data, 'setItem');
                     $scope.setContentMetadata(data);
                 })
                 .catch(function(err) {
@@ -428,7 +507,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
             var identifier = (data && data.identifier) ? data.identifier : null;
             var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
-            TelemetryService.start(identifier, version);
+            startTelemetry(identifier,version);
             TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID" });
         }
 
@@ -478,9 +557,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             });
         });
 
-        setTimeout(function() {
-            $scope.init();
-        }, 0);
+        $scope.init();
+        
     }).controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $rootScope.pageId = "renderer";
 
@@ -506,6 +584,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     }
 
                     //Adding Flavor(environment) as query parameter to identify HTML content showing in dev/qa/prdocution 
+                    // For local development of HTML flavor should not sent in URL
                     path += "&flavor=" + AppConfig.flavor;
 
                     if (isMobile){
@@ -595,32 +674,20 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.popUserRating = 0;
         $scope.stringLeft = 130;
         $scope.selectedRating = 0;
-
         $rootScope.pageId = "endpage";
         $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-baloo credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
-
-        $scope.arrayToString = function(array) {
+     
+    $scope.arrayToString = function(array) {
             return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";
         };
 
         $scope.setCredits = function(key) {
             if (content[key]) {
-                content[key] = $scope.arrayToString(content[key]);
+                content[eky] = $scope.arrayToString(content[key]);
             } else {
                 content[key] = null;
             }
         };
-        var content = $rootScope.content;
-
-        $scope.setCredits('imageCredits');
-        $scope.setCredits('soundCredits');
-        $scope.setCredits('voiceCredits');
-
-        var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
-        creditsPopup.trigger("popupUpdate", { "content": content });
-        setTimeout(function() {
-            $rootScope.$apply();
-        }, 1000);
 
         TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContnetApp-EndScreen", subtype: "ContentID" });
 
@@ -630,7 +697,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
             jQuery("#creditsPopup").show();
             TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {
-                stageId: "ContnetApp-CreditsScreen",
+                stageId: "ContentApp-CreditsScreen",
                 subtype: "ContentID"
             });
         }
@@ -721,7 +788,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.getTotalScore = function(id) {
             if ("undefined" != typeof cordova) {
-                ContentService.getLearnerAssessment(GlobalContext.user.uid, id)
+                ContentService.getLearnerAssessment(TelemetryService._user.uid, id)
                     .then(function(score) {
                         if (score && score.total_questions) {
                             $scope.showScore = true;
@@ -738,18 +805,32 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.commentLength = function() {
-            if ($('#commentText').val().length > 130)
+            if ($('#commentTextg').val().length > 130)
                 $('#commentText').val($('#commentText').val().slice(0,130));
             $scope.stringLeft = 130 - $('#commentText').val().length;
             $scope.enableFeedbackSubmit();
         }
 
         $scope.init = function() {
+            
+            $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction('content',undefined, 'getItem');
+            if(_(TelemetryService.instance).isUndefined()){
+                 var Telemetry = localstorageFunction('TelemetryService',undefined, 'getItem');
+                 TelemetryService.init(Telemetry._gameData,Telemetry._user);
+            }
+            var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
+            creditsPopup.trigger("popupUpdate", { "content": $rootScope.content });
+            setTimeout(function() {
+                $rootScope.$apply();
+            }, 1000);
+            $scope.setCredits('imageCredits');
+            $scope.setCredits('soundCredits');
+            $scope.setCredits('voiceCredits');
             window.addEventListener('native.keyboardshow', epKeyboardShowHandler, true);
             window.addEventListener('native.keyboardhide', epKeyboardHideHandler, true);
-
+            jQuery('#loading').hide();
             $scope.setTotalTimeSpent();
-            $scope.getTotalScore($stateParams.contentId);
+            $scope.getTotalScore($stateParams.contentId);           
             $scope.showFeedback(0);
         }
 
@@ -761,17 +842,23 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             jQuery('#gcFbPopup').removeClass('gc-fc-popup-keyboard');
         }
 
-        $scope.init();
+        setTimeout(function() {
+            $scope.init();
+        }, 0);
+
+        // $scope.init();
     }).controller('OverlayCtrl', function($scope, $rootScope) {
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
 
         $rootScope.evalAndSubmit = function () {
-          Overlay.evalAndSubmit();
+            Overlay.evalAndSubmit();
         }
 
         $scope.navigate = function (navType) {
-          Overlay.navigate(navType);
+            GlobalContext.currentContentId = $rootScope.content.identifier;
+            GlobalContext.currentContentMimeType = $rootScope.content.mimeType;
+            Overlay.navigate(navType);
         }
 
         $scope.init = function() {
@@ -783,42 +870,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 }
             }
         }
-        $rootScope.icons = {
-            previous: {
-                disable: $rootScope.imageBasePath + "back_icon_disabled.png",
-                enable: $rootScope.imageBasePath + "back_icon.png",
-            },
-            next: {
-                disable: $rootScope.imageBasePath + "next_icon_disabled.png",
-                enable: $rootScope.imageBasePath + "next_icon.png",
-            },
-            assess: {
-                enable: $rootScope.imageBasePath + "submit.png",
-                disable: $rootScope.imageBasePath + "submit_disabled.png"
-            },
-            retry: $rootScope.imageBasePath + "speaker_icon.png",
-            goodJob: {
-                background: $rootScope.imageBasePath + "img_popup_next.png"
-            },
-            tryAgain: {
-                background: $rootScope.imageBasePath + "img_popup.png",
-                retry: $rootScope.imageBasePath + "retry_icon.png"
-            },
-            end: {
-                background: $rootScope.imageBasePath + "img_bg.png"
-            },
-            popup: {
-                next: $rootScope.imageBasePath + "icn_bg_next.png",
-                retry: $rootScope.imageBasePath + "icn_bg_replay.png",
-                skip: $rootScope.imageBasePath + "icn_sml_next.png",
-                star: $rootScope.imageBasePath + "star.png",
-                credit_popup: $rootScope.imageBasePath + "popup.png",
-                goodjob_stars: $rootScope.imageBasePath + "img_stars.png"
-            },
-            popup_close: {
-                close_icon: $rootScope.imageBasePath + "close_popup.png",
-            }
-        };
         $scope.goodJob = {
             body: '<div class="font-baloo assess-popup assess-goodjob-popup"><img class="popup-bg-img" ng-src="{{icons.goodJob.background}}"/><div class="goodjob_next_div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next " ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div>'
         };
@@ -874,13 +925,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.playRelatedContent = function(content) {
+            // OE_INTERACT event Generation is pending
             $scope.showRelatedContent = false;
             $scope.contentShowMore = false;
             $scope.showRelatedContentHeader = false;
 
             jQuery('#endPageLoader').show();
             TelemetryService.end();
-            if (GlobalContext.config.appInfo.mimeType == COLLECTION_MIMETYPE) {
+            if ($rootScope.content.mimeType == COLLECTION_MIMETYPE) {
                 collectionPath = $scope.relatedContentPath;
                 ContentService.getContent(content.identifier)
                     .then(function(content) {
@@ -904,7 +956,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.getRelatedContent = function(list) {
-            ContentService.getRelatedContent(GlobalContext.user.uid, list)
+            ContentService.getRelatedContent(TelemetryService._user.uid, list)
                 .then(function(item) {
                     if (!_.isEmpty(item)) {
                         var list = [];
@@ -933,8 +985,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.renderRelatedContent = function(id) {
+            var metaData = localstorageFunction('content',undefined, 'getItem')
+            $rootScope.content = $rootScope.content ? $rootScope.content : metaData;
             var list = [];
-            if (GlobalContext.config.appInfo.mimeType != COLLECTION_MIMETYPE) {
+            if ($rootScope.content.mimeType != COLLECTION_MIMETYPE) {
                 // For Content
                 if (("undefined" != typeof cordova)) {
                     list = [{
@@ -946,7 +1000,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             } else {
                 // For Collection
                 list = collectionPath;
-                collectionPathMap[GlobalContext.previousContentId] = collectionPath;
+                collectionPathMap[$rootScope.content.identifier] = collectionPath;
                 $scope.getRelatedContent(list);
             }
         }
@@ -969,6 +1023,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             link: function(scope, state) {
                 scope.imgSrc = $rootScope.imageBasePath + 'icn_collections.png';
                 scope.isCollection = false;
+                $rootScope.collection = $rootScope.collection ? $rootScope.collection : localstorageFunction('Collection',undefined,'getItem');
                 if ($rootScope.collection && $rootScope.collection.children) {
                     scope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
                 }
@@ -976,14 +1031,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 var pageId = $rootScope.pageId;
                 scope.goToCollection = function () {
                     collectionPath.pop();
-                    console.log(" id : ", GlobalContext.previousContentId);
                     TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
                     if (Renderer.running)
                         Renderer.cleanUp();
                     else
                         TelemetryService.end();
                     $state.go('contentList', {
-                        "id": GlobalContext.previousContentId
+                        "id": $rootScope.collection.identifier
                     });
                 }
             }
@@ -1009,7 +1063,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         Renderer.cleanUp();
                     else
                         TelemetryService.end();
-                    $state.go('showContent', { "contentId": GlobalContext.currentContentId });
+                    $state.go('showContent', { "contentId": $rootScope.content.identifier });
                     //window.location.hash = "/show/content/" + GlobalContext.currentContentId;
 
                 }
@@ -1097,6 +1151,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'E',
             template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/></a>',
             link: function(scope) {
+                // OE_INTERACT event is Pending
                 scope.restartContent = function() {
                     var content = $rootScope.content;
                     jQuery('#loading').show();
@@ -1109,19 +1164,20 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         });
                     } else {
                             setTimeout(function() { 
-                            Renderer.theme._self.removeAllChildren();    
-                            Renderer.theme.removeHtmlElements();
+                            Renderer.theme._self.removeAllChildren(); 
                             scope.hideMenu();
-                            Renderer.theme.restart();
+                            Renderer.theme.removeHtmlElements();
+                            Renderer.theme.reRender();
                         },100)          
                     }
                     var gameId = TelemetryService.getGameId();
                     var version = TelemetryService.getGameVer();
-                    setTimeout(function() {
-                        if (gameId && version) {
-                            TelemetryService.start(gameId, version);
-                        }
-                    }, 500);
+                    TelemetryService.end();
+                    localstorageFunction('TelemetryService',undefined,"removeItem");
+                    if(gameId && version){
+                        startTelemetry(gameId,version);
+                    }
+                    
                 }
             }
         }
