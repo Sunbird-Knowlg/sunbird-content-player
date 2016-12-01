@@ -17,28 +17,37 @@ var stack = new Array(),
         showHTMLPages: true
     },
     isbrowserpreview = getUrlParameter("webview"),
+    setContentDataCb = undefined,
     appState = undefined;
 
 window.setContentData = function(metadata, data, configuration) {   
-    if (metadata) {
+    if (_.isUndefined(metadata)) {
         content.metadata = metadata;
     } else {
         content.metadata = defaultMetadata;
     }
-    content.body = data;
+    if (!_.isUndefined(data)) {
+        content.body = data;
+    }
     _.map(configuration, function(val, key) {
         config[key] = val;
     });
-    var $state = appState;
     if (!config.showHTMLPages) {
         config.showStartPage = false;
         config.showEndPage = false;
     }
-    if (!config.showStartPage) {
+    setContentDataCb =  function(){
+        updateContentData();
+    }
+}
+
+function updateContentData(){
+    var $state = appState;
+    if (!config.showStartPage && content && content.metadata) {
         $state.go('playContent', {
             'itemId': content.metadata.identifier
         });
-    } else if (content) {
+    } else if (content && content.metaData) {
         newContentId = content.metadata.identifier;
         if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
             $state.go('showContent', { "contentId": newContentId });
@@ -151,16 +160,19 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 if(fn && (typeof(fn) === 'function')) {
                    fn();
                }
-           } else {
-            this.$apply(fn);
+            } else {
+                this.$apply(fn);
             }
         }
-
+        
         $timeout(function() {
             $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             appState = $state;
+            if (!_.isUndefined(setContentDataCb)) {
+                setContentDataCb();
+            }
             console.log('ionic platform is ready...');
             if ("undefined" == typeof Promise) {
                 alert("Your device isn’t compatible with this version of Genie.");
@@ -1036,7 +1048,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 } else {
                     window.open("ekstep://c/" + content.identifier, "_system");
                 }
-            } 
+            }
         }
 
         $scope.getRelatedContent = function(list) {
@@ -1117,7 +1129,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     collectionPath.pop();
 
                     console.log(" id : ", GlobalContext.previousContentId);
-                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : paggeId))});
+                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId))});
 
                     if (Renderer.running)
                         Renderer.cleanUp();
@@ -1197,7 +1209,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         stageId: Renderer.theme._currentStage
                     });
                 }
-                
 
                 /*
                  * If meny is getting hide, then hide teacher instructions as well
