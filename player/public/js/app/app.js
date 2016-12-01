@@ -1163,7 +1163,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             'itemId': content.identifier
                         });
                     } else {
-                            setTimeout(function() {
+                            setTimeout(function() { 
+                            Renderer.theme._self.removeAllChildren(); 
                             scope.hideMenu();
                             Renderer.theme.removeHtmlElements();
                             Renderer.theme.reRender();
