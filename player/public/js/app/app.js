@@ -438,18 +438,21 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.exitApp = function() {
             exitApp();
-        };
+        };  
 
         $scope.goBack = function() {
-            TelemetryService.end();
             stack.pop();
             collectionPath.pop();
             var id = stack.pop();
-            if (id)
+            if(!_(id).isUndefined()){
                 $state.go('contentList', { "id": id });
-            else
-                exitApp();
+            }else{
+               if ("undefined" != typeof cordova){
+                     exitApp();
+                }
+            }               
         };
+
         $scope.init = function(){ 
             $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction('content',undefined, 'getItem');
             $rootScope.title = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.name : "";
@@ -581,6 +584,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     }
 
                     //Adding Flavor(environment) as query parameter to identify HTML content showing in dev/qa/prdocution 
+                    // For local development of HTML flavor should not sent in URL
                     path += "&flavor=" + AppConfig.flavor;
 
                     if (isMobile){
@@ -672,40 +676,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.selectedRating = 0;
         $rootScope.pageId = "endpage";
         $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-baloo credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
-        
-    
-   /* $scope.getLocaltelemetryConfig = function() {
-        // Localstorage telemtry data is assigned to the telemetryService
-        if (_.isUndefined(TelemetryService.instance)) {
-            var telemetryData = localstorageFunction("TelemetryService", undefined, 'getItem');
-            var start = localstorageFunction("_start", undefined, 'getItem');
-            var end = localstorageFunction("_end", undefined, 'getItem');
-            if (!_.isUndefined(telemetyrData)) {
-                for (var prop in telemetryData) {
-                    if (TelemetryService.hasOwnProperty(prop)) {
-                        TelemetryService[prop] = telemetryData[prop];
-                    }
-                }
-            }
-            TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
-            if (!_.isUndefined(start)) {
-                TelemetryService.instance._start.push(start);
-                var teEndevent = TelemetryService.instance.createEvent("OE_END", {}).start();
-            }
-            if (!_.isUndefined(end)) {
-                teEndevent.startTime = end[end.length - 1].startTime;
-                TelemetryService.instance._end.push(teEndevent);
-            }
-        }
-
-    };*/
+     
     $scope.arrayToString = function(array) {
             return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";
         };
 
         $scope.setCredits = function(key) {
             if (content[key]) {
-                content[key] = $scope.arrayToString(content[key]);
+                content[eky] = $scope.arrayToString(content[key]);
             } else {
                 content[key] = null;
             }
@@ -810,7 +788,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.getTotalScore = function(id) {
             if ("undefined" != typeof cordova) {
-                ContentService.getLearnerAssessment(GlobalContext.user.uid, id)
+                ContentService.getLearnerAssessment(TelemetryService._user.uid, id)
                     .then(function(score) {
                         if (score && score.total_questions) {
                             $scope.showScore = true;
@@ -827,17 +805,18 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.commentLength = function() {
-            if ($('#commentText').val().length > 130)
+            if ($('#commentTextg').val().length > 130)
                 $('#commentText').val($('#commentText').val().slice(0,130));
             $scope.stringLeft = 130 - $('#commentText').val().length;
             $scope.enableFeedbackSubmit();
         }
 
         $scope.init = function() {
+            
             $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction('content',undefined, 'getItem');
-            // Call Telemeteryservice init 
             if(_(TelemetryService.instance).isUndefined()){
-                 TelemetryService.init({ id: $rootScope.content.identifier, ver: "1.0" });
+                 var Telemetry = localstorageFunction('TelemetryService',undefined, 'getItem');
+                 TelemetryService.init(Telemetry._gameData,Telemetry._user);
             }
             var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
             creditsPopup.trigger("popupUpdate", { "content": $rootScope.content });
@@ -946,6 +925,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.playRelatedContent = function(content) {
+            // OE_INTERACT event Generation is pending
             $scope.showRelatedContent = false;
             $scope.contentShowMore = false;
             $scope.showRelatedContentHeader = false;
@@ -1171,6 +1151,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'E',
             template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/></a>',
             link: function(scope) {
+                // OE_INTERACT event is Pending
                 scope.restartContent = function() {
                     var content = $rootScope.content;
                     jQuery('#loading').show();

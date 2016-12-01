@@ -25,8 +25,8 @@ TelemetryService = {
         if(localStorageInstance) {
             TelemetryService.setTelemetryService(localStorageInstance, gameData);
         }        
-        if (!TelemetryService.instance) {
-            return new Promise(function(resolve, reject) {
+        return new Promise(function(resolve, reject) {
+            if (!TelemetryService.instance) {
                 TelemetryService._user = user;
                 TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
                 if (gameData) {
@@ -43,15 +43,15 @@ TelemetryService = {
                     }).catch(function(err) {
                         reject(err);
                     });
-
                 } else {
                     reject('Game data is empty.');
                 };
                 resolve(true);
-            });
-        }else{
-            console.log("TelemetryService instance is not create")
-        }
+            }else{
+                resolve(true)
+                console.log("TelemetryService instance is not create")
+            }
+        });
     },
     webInit: function(gameData, user) {
         return new Promise(function(resolve, reject) {
