@@ -31,7 +31,7 @@ OverlayManager = {
         EventBus.addEventListener("actionReload", this.actionReload, this);
     },
     setStageData: function () {
-      var instructions = (Renderer.theme._currentScene.params && Renderer.theme._currentScene.params.instructions) ? Renderer.theme._currentScene.params.instructions : null;
+      var instructions = (Renderer.theme._currentScene && Renderer.theme._currentScene.params && Renderer.theme._currentScene.params.instructions) ? Renderer.theme._currentScene.params.instructions : null;
       var stageData = {
                         "currentStage": Renderer.theme._currentStage,
                         "stageInstruction": instructions
@@ -95,7 +95,7 @@ OverlayManager = {
     handleSubmit: function(){
       var eventName = this._constants.overlaySubmit;
       var val = this._stageConfig[eventName];
-      if(Renderer.theme._currentScene.isItemScene()){
+      if(!_.isUndefined(Renderer.theme._currentScene) && Renderer.theme._currentScene.isItemScene()){
         if(val == "on"){
           var enableEval = Renderer.theme._currentScene.isReadyToEvaluate();
           val = (enableEval === true) ? "enable" : "disable";
@@ -199,35 +199,37 @@ OverlayManager = {
 		},
     handleEcmlElements: function(eventName, val) {
         //Switch case to handle ECML elements(Next, Previous, Submit, etc..)
-        var stage_data = Renderer.theme.getStagesToPreLoad(Renderer.theme._currentScene._data);
-				var nextStageId = stage_data.next;
-				var prevStageId = stage_data.prev;
-  				switch ( eventName ) {
-  					case "overlayNext":
-  					this.showOrHideEcmlElement('next', val);
-  					this.showOrHideEcmlElement('nextContainer', val);
-  					break;
-  					case "overlayPrevious":
-  					this.showOrHideEcmlElement('previous', val);
-  					this.showOrHideEcmlElement('previousContainer', val);
-  					break;
-  					case "overlaySubmit":
-  					this.showOrHideEcmlElement('validate', val);
-  					break;
-  					case "overlayMenu":
-  					break;
-  					case "overlayReload":
-  					break;
-  					case "overlayGoodJob":
-  					// this.showOrHideEcmlElement('goodjobBg', val);
-  					break;
-  					case "overlayTryAGain":
-  					// this.showOrHideEcmlElement('retryBg', val);
-  					break;
-  					default:
-  					console.log("Default case got called..");
-  					break;
-  				}
+        if (!_.isUndefined(Renderer.theme._currentScene)) {
+          var stage_data = Renderer.theme.getStagesToPreLoad(Renderer.theme._currentScene._data);
+  				var nextStageId = stage_data.next;
+  				var prevStageId = stage_data.prev;
+        }
+				switch ( eventName ) {
+					case "overlayNext":
+					this.showOrHideEcmlElement('next', val);
+					this.showOrHideEcmlElement('nextContainer', val);
+					break;
+					case "overlayPrevious":
+					this.showOrHideEcmlElement('previous', val);
+					this.showOrHideEcmlElement('previousContainer', val);
+					break;
+					case "overlaySubmit":
+					this.showOrHideEcmlElement('validate', val);
+					break;
+					case "overlayMenu":
+					break;
+					case "overlayReload":
+					break;
+					case "overlayGoodJob":
+					// this.showOrHideEcmlElement('goodjobBg', val);
+					break;
+					case "overlayTryAGain":
+					// this.showOrHideEcmlElement('retryBg', val);
+					break;
+					default:
+					console.log("Default case got called..");
+					break;
+				}
     },
     getNavigateTo: function (navType) {
         var stageParams = [];
