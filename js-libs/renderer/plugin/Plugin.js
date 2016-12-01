@@ -548,5 +548,5 @@ var Plugin = Class.extend({
              return this._stage._currentState[param];
         }
 
-    },
+    }
    });

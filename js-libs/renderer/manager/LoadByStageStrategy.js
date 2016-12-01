@@ -152,35 +152,6 @@ LoadByStageStrategy = Class.extend({
                 instance.destroyStage(stageId);
             })
         }
-        if (nextStageId) {
-            instance.loadStage(nextStageId, function() {
-                var plugin = PluginManager.getPluginObject('next');
-                if (plugin) {
-                    plugin.hide();
-                    var nextContainer = PluginManager.getPluginObject('nextContainer');
-                    if (nextContainer) {
-                        nextContainer.hide();
-                    }
-                }
-                //Overlay.showNext();
-            });
-        } else {
-            //Overlay.showNext();
-        }
-        if (prevStageId) {
-            instance.loadStage(prevStageId, function() {
-                var plugin = PluginManager.getPluginObject('previous');
-                if (plugin) {
-                    plugin.hide();
-                    var previousContainer = PluginManager.getPluginObject('previousContainer');
-                    if (previousContainer) {
-                        previousContainer.hide();
-                    }
-                }
-                //Overlay.showPrevious();
-                //enablePrevious();
-            });
-        }
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);
     },
     loadStage: function(stageId, cb) {

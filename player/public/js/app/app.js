@@ -87,8 +87,8 @@ function telemetryError(e) {
     var $rootScope = $body.scope().$root;
     document.body.removeEventListener("logError");
     //Message to display events on the Screen device
-    /*$rootScope.$broadcast('show-message', { 
-        "message": 'Telemetry :' + JSON.stringify(data.message) 
+    /*$rootScope.$broadcast('show-message', {
+        "message": 'Telemetry :' + JSON.stringify(data.message)
     });*/
 }
 
@@ -163,7 +163,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 var id = getUrlParameter("id");
                 if(isbrowserpreview) {
                     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-                    
+
                     if ("undefined" != typeof $location && id) {
                         ContentService.getContentMetadata(id)
                             .then(function(data) {
@@ -389,6 +389,18 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.pageId = "coverpage";
         $rootScope.content;
         $scope.showPage = true;
+
+        $rootScope.safeApply = function(fn) {
+         var phase = this.$root.$$phase;
+         if(phase == '$apply' || phase == '$digest') {
+           if(fn && (typeof(fn) === 'function')) {
+             fn();
+           }
+         } else {
+           this.$apply(fn);
+         }
+       };
+
         $scope.playContent = function(content) {
             $scope.showPage = false;
             $state.go('playContent', {
@@ -421,7 +433,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 data = data.localData;
             }
             data.status = "ready";
-            $scope.$apply(function() {
+            $rootScope.safeApply(function() {
                 $scope.item = data;
                 $rootScope.content = data;
             });
@@ -487,7 +499,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.init = function() {
             if ($stateParams.itemId) {
                 $scope.item = $rootScope.content;
-               
+
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                     //Checking is mobile or not
                     var isMobile = window.cordova ? true : false;
@@ -505,7 +517,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         path += "&config=" + JSON.stringify($scope.item.config);
                     }
 
-                    //Adding Flavor(environment) as query parameter to identify HTML content showing in dev/qa/prdocution 
+                    //Adding Flavor(environment) as query parameter to identify HTML content showing in dev/qa/prdocution
                     path += "&flavor=" + AppConfig.flavor;
 
                     if (isMobile){
@@ -652,7 +664,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.enableFeedbackSubmit =function() {
-            if($scope.popUserRating > 0 || $scope.stringLeft < 130) 
+            if($scope.popUserRating > 0 || $scope.stringLeft < 130)
                 jQuery('#feedbackSubmitBtn').removeClass('icon-opacity');
             else
                 jQuery('#feedbackSubmitBtn').addClass('icon-opacity');
@@ -766,12 +778,32 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
 
-        $rootScope.evalAndSubmit = function () {
-          Overlay.evalAndSubmit();
+        EventBus.addEventListener("stageData", function (data) {
+          $rootScope.stageData = data.target;
+        });
+
+        $scope.state_off = "off";
+        $scope.state_on = "on";
+        $scope.state_disable = "disable";
+
+        $scope.showOverlayNext = true;
+        $scope.showOverlayPrevious = true;
+        $scope.showOverlaySubmit = false;
+        $scope.showOverlayGoodJob = false;
+        $scope.showOverlayTryAgain = false;
+        $scope.overlayEvents = ["overlayNext", "overlayPrevious", "overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
+
+        $rootScope.defaultSubmit = function () {
+          EventBus.dispatch("actionDefaultSubmit");
         }
 
         $scope.navigate = function (navType) {
-          Overlay.navigate(navType);
+          TelemetryService.interact("TOUCH", navType, null, {stageId : $rootScope.stageData.currentStage});
+          if (navType === "next") {
+            EventBus.dispatch("actionNavigateNext", navType);
+          } else if (navType === "previous")  {
+            EventBus.dispatch("actionNavigatePrevious", navType);
+          }
         }
 
         $scope.init = function() {
@@ -782,7 +814,52 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     $rootScope.languageSupport[key] = languageInfo[key];
                 }
             }
+
+            var evtLenth = $scope.overlayEvents.length;
+        		for (i = 0; i < evtLenth; i++) {
+        			var eventName = $scope.overlayEvents[i];
+              EventBus.addEventListener(eventName, $scope.overlayEventHandler, $scope);
+        		}
         }
+
+        $scope.overlayEventHandler = function(event) {
+          // console.log("Event", event);
+          //Switch case to handle HTML elements(Next, Previous, Submit, etc..)
+          switch ( event.type ) {
+            case "overlayNext":
+                $scope.showOverlayNext = event.target;
+                break;
+            case "overlayPrevious":
+                $scope.showOverlayPrevious = event.target;
+                break;
+            case "overlaySubmit":
+                if (event.target === "off" ) {
+                    $scope.showOverlaySubmit = false;
+                } else {
+                   $scope.showOverlaySubmit = true;
+                   (event.target === "disable" ) ? $rootScope.enableEval = false : $rootScope.enableEval = true;
+                }
+                break;
+            case "overlayMenu":
+                break;
+            case "overlayReload":
+                break;
+            case "overlayGoodJob":
+                $scope.showOverlayGoodJob = event.target;
+                break;
+            case "overlayTryAgain":
+                $scope.showOverlayTryAgain = event.target;
+                break;
+            default:
+              console.log("Default case got called..");
+              break;
+          }
+
+          $rootScope.safeApply(function(){
+            console.log("Safe apply.");
+          })
+        }
+
         $rootScope.icons = {
             previous: {
                 disable: $rootScope.imageBasePath + "back_icon_disabled.png",
@@ -838,7 +915,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
             $scope.menuOpened = true;
             TelemetryService.interact("TOUCH", "gc_menuopen", "TOUCH", {
-                stageId: Renderer.theme._currentStage
+                stageId: $rootScope.stageData.currentStage
             });
             jQuery('.menu-overlay').css('display', 'block');
             jQuery(".gc-menu").show();
@@ -851,7 +928,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.hideMenu = function() {
             $scope.menuOpened = false;
             TelemetryService.interact("TOUCH", "gc_menuclose", "TOUCH", {
-                stageId: Renderer.theme._currentStage
+                stageId: $rootScope.stageData.currentStage
             });
             jQuery('.menu-overlay').css('display', 'none');
             jQuery(".gc-menu").animate({
@@ -977,7 +1054,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 scope.goToCollection = function () {
                     collectionPath.pop();
                     console.log(" id : ", GlobalContext.previousContentId);
-                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))});
+                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId))});
                     if (Renderer.running)
                         Renderer.cleanUp();
                     else
@@ -1004,7 +1081,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 var pageId = $rootScope.pageId;
 
                 scope.goToHome = function() {
-                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId)) });
+                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId)) });
                     if (Renderer.running)
                         Renderer.cleanUp();
                     else
@@ -1041,17 +1118,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $scope.showInst = false;
 
                 /*<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:30%;"/></a>*/
-                $scope.showInstructions = function() {
-                    if (Renderer.theme._currentScene.params && Renderer.theme._currentScene.params.instructions) {
-                        $scope.showInst = true;
 
-                        //Getting stage instructions from CurrentStage(StagePlugin)
-                        var inst = Renderer.theme._currentScene.params.instructions;
-                        $scope.stageInstMessage = inst;
-                    }
+
+                $scope.showInstructions = function() {
+                  $scope.stageInstMessage = $rootScope.stageData.stageInstruction;
+                  $scope.showInst = ($scope.stageInstMessage != null) ? true : false;
                 }
 
-                $scope.closeInstructions = function() {
+                $scope.closeInstructions = function () {
                     $scope.showInst = false;
                 }
 
@@ -1108,12 +1182,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             'itemId': content.identifier
                         });
                     } else {
-                            setTimeout(function() { 
-                            Renderer.theme._self.removeAllChildren();    
+                        setTimeout(function() {
+                            Renderer.theme._self.removeAllChildren();
                             Renderer.theme.removeHtmlElements();
                             scope.hideMenu();
                             Renderer.theme.restart();
-                        },100)          
+                        },100)
                     }
                     var gameId = TelemetryService.getGameId();
                     var version = TelemetryService.getGameVer();
@@ -1128,34 +1202,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('reloadStage', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" onclick="Overlay.reloadStage()"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
-        }
-    }).directive('navigate', function($rootScope) {
-        return {
-            restrict: 'E',
-            scope: {
-                disableImage: '=',
-                enableImage: '=',
-                type: '=type'
-            },
-            template: '<a ng-show="!show" href="javascript:void(0);"><img ng-src="{{disableImage}}" style="width:90%;" /></a><a ng-show="show" ng-click="onNavigate();" href="javascript:void(0);"><img ng-src="{{enableImage}}" style="width:90%;" /></a>',
-            link: function(scope, element) {
-                var to = scope.type;
-                element.bind("navigateUpdate", function(event, data) {
-                    if (data) {
-                        for (key in data) {
-                            scope[key] = data[key];
-                        };
-                    }
-                });
-                scope.onNavigate = function() {
-                    TelemetryService.interact("TOUCH", to, null, {
-                        stageId: Renderer.theme._currentStage
-                    });
-                    $rootScope.isItemScene = false;
-                    Overlay.navigate(to);
-                };
-            }
+            template: '<a href="javascript:void(0)" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
         }
     }).directive('popup', function($rootScope, $compile) {
         return {
@@ -1180,30 +1227,60 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 element.find("div.popup-full-body").append(body);
                 element.hide();
                 scope.retryAssessment = function(id,e) {
-                    submitOnNextClick = true;
                     scope.hidePopup(id);
                 }
 
                 scope.hidePopup = function(id) {
                     element.hide();
                     TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
-                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : Renderer.theme._currentStage)
+                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
                     });
                 };
 
                 scope.moveToNextStage = function(navType) {
-                    submitOnNextClick = false;
-                    Overlay.navigate(navType);
+                    EventBus.dispatch("actionNavigateSkip", navType);
                 }
             }
+        }
+    }).directive('goodJob', function($rootScope) {
+        return {
+            restrict: 'E',
+            template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-baloo assess-popup assess-goodjob-popup"><img class="popup-bg-img" ng-src="{{icons.goodJob.background}}"/><div class="goodjob_next_div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next " ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div></div>',
+            controller: function($scope, $rootScope, $timeout) {
+                $scope.retryAssessment = function(id,e) {
+                    $scope.hidePopup(id);
+                }
+
+                $scope.hidePopup = function(id) {
+                    TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
+                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
+                    });
+                    $scope.showOverlayGoodJob = false;
+                    $scope.showOverlayTryAgain = false;
+                }
+
+                $scope.moveToNextStage = function(navType) {
+                    EventBus.dispatch("actionNavigateSkip", navType);
+                }
+            }
+        }
+    }).directive('tryAgain', function($rootScope) {
+        return {
+            restrict: 'E',
+            template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-baloo assess-popup assess-tryagain-popup"><img class="popup-bg-img" ng-src="{{icons.tryAgain.background}}"/><div class="tryagain-retry-div gc-popup-icons-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><p class="gc-popup-retry-replay">{{languageSupport.replay}}</p></div><div class="tryagian-next-div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div></div></div></div>',
+            controller: function($scope, $rootScope, $timeout) {
+
+            }
+
         }
     }).directive('assess', function($rootScope) {
         return {
             restrict: 'E',
             scope: {
-                image: '='
+                image: '=',
+                show: '='
             },
-            template: '<a class="assess" id="assessButton" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/></a>',
+            template: '<a class="assess" ng-show="show" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/></a>',
             link: function(scope, element) {
                 scope.labelSubmit = $rootScope.languageSupport.submit;
             },
@@ -1230,7 +1307,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 $scope.onSubmit = function() {
                     if ($scope.isEnabled) {
-                        $rootScope.evalAndSubmit();
+                        $rootScope.defaultSubmit();
                     }
                 }
             }
@@ -1290,7 +1367,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'E',
             template: '<a href="javascript:void(0)" ng-click="goToLastPage()"><img ng-src="{{imageBasePath}}icn_back_page.png"/></a>',
             link: function(scope) {
-                
             }
         }
     });

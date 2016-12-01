@@ -56,26 +56,6 @@ function getUrlParameter(sParam) {
    }
 }
 
-var _reloadInProgress = false;
-function reloadStage() {
-    if (_reloadInProgress) {
-        return;
-    }
-    _reloadInProgress = true;
-    setTimeout(function() {
-        var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
-        if (plugin) plugin.reload({
-            type: "command",
-            command: "reload",
-            duration: "100",
-            ease: "linear",
-            effect: "fadeIn",
-            asset: Renderer.theme._currentStage
-        });
-    }, 500);
-    TelemetryService.interact("TOUCH", "gc_reload", "TOUCH", {stageId : Renderer.theme._currentStage});
-}
-
 function backbuttonPressed(pageId) {
     var data = (Renderer.running || HTMLRenderer.running) ? {
         type: 'EXIT_CONTENT',
@@ -123,85 +103,6 @@ function startApp(app) {
 function contentNotAvailable() {
     alert(AppMessages.NO_CONTENT_FOUND);
     exitApp();
-}
-
-function getNavigateTo(navType) {
-    var navigation = [];
-    var navigateTo = undefined;
-    if (!_.isUndefined(Renderer.theme._currentScene) && !_.isEmpty(Renderer.theme._currentScene._data.param)) {
-        navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
-        var direction = _.findWhere(navigation, {
-            name: navType
-        });
-        if (direction) navigateTo = direction.value;
-    }
-    return navigateTo;
-}
-
-var submitOnNextClick = true;
-function navigate(navType) {
-    TelemetryService.interact("TOUCH", navType, null, {stageId : Renderer.theme._currentStage});
-    var navigateTo = getNavigateTo(navType);
-
-    if(_.isUndefined( Renderer.theme._currentScene)){
-        return;
-    }
-
-    if(submitOnNextClick && Overlay.isItemScene() && ("next" == navType)){
-        evalAndSubmit();
-        return;
-    }
-
-    submitOnNextClick = true;
-    var changeScene = function() {
-        var action = {
-            "asset": Renderer.theme._id,
-            "command": "transitionTo",
-            "duration": "100",
-            "ease": "linear",
-            "effect": "fadeIn",
-            "type": "command",
-            "pluginId": Renderer.theme._id,
-            "value": navigateTo
-        };
-        action.transitionType = navType;
-        // Renderer.theme.transitionTo(action);
-        CommandManager.handle(action);
-    };
-    if ("undefined" == typeof navigateTo && "next" == navType) {
-        if (Overlay.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
-            changeScene();
-        } else {
-            if(config.showEndPage) {
-                console.info("redirecting to endpage.");
-                 // while redirecting to end page
-                 // set the last stage data to _contentParams[themeObj]
-                var stage = Renderer.theme._currentScene;
-                Renderer.theme.setParam(stage.getStagestateKey(),stage._currentState);
-
-                window.location.hash = "/content/end/" + GlobalContext.currentContentId;
-                AudioManager.stopAll();
-            } else {
-                console.warn("Cannot move to end page of the content. please check the configurations..");
-            }
-        }
-    } else {
-        changeScene();
-    }
-}
-
-function evalAndSubmit(){
-    //If any one option is selected, then only allow user to submit
-    var action = {
-        "type": "command",
-        "command": "eval",
-        "asset": Renderer.theme._currentStage,
-        "pluginId": Renderer.theme._currentStage
-    };
-    action.htmlEval = "true";
-    action.success = "correct_answer";
-    action.failure = "wrong_answer";
-    CommandManager.handle(action);
 }
 
 function checkStage(showalert) {

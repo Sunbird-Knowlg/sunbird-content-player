@@ -1,0 +1,61 @@
+{
+    "identifier": "haircut_story_1",
+    "title": "Haircut Story Assessment",
+    "total_items": 2,
+    "shuffle": false,
+    "max_score": 9,
+    "subject": "LIT",
+    "item_sets": [{
+        "id": "set_1",
+        "count": 2
+    }],
+    "items": {
+        "set_1": [{
+            "identifier": "ek.pratham.barahkhadi.q1",
+            "qid": "ek.pratham.barahkhadi.q1",
+            "type": "ftb",
+            "template_id": "org.ekstep.ftb.barakhadi",
+            "template": "org.ekstep.ftb.barakhadi",
+            "media": [{
+                "id": "jug_image",
+                "type": "image",
+                "src": "jug.png",
+                "asset_id": "jug_image"
+            }],
+            "title": "मैं कौन हूँ?",
+            "question_text": "मैं कौन हूँ?",
+            "question_image": "jug_image",
+            "question_audio": "jag_audio",
+            "question_count": "1",
+            "model": {
+                "keys": "ज,जा,जि,जी,जु,जू,जे,जै,जो,जौ,जं,जः,ग,गा,गि,गी,गु,गू,गे,गै,गो,गौ,गं,गः"
+            },
+            "answer": {
+                "ans1": { "value": "जग", "score": 1 }
+            }
+        }, {
+            "identifier": "ek.pratham.barahkhadi.q2",
+            "qid": "ek.pratham.barahkhadi.q2",
+            "type": "ftb",
+            "template_id": "org.ekstep.ftb.barakhadi",
+            "template": "org.ekstep.ftb.barakhadi",
+            "media": [{
+                "id": "umbrella_image",
+                "type": "image",
+                "src": "umbrella.png",
+                "asset_id": "umbrella_image"
+            }],
+            "title": "मैं कौन हूँ?",
+            "question_text": "मैं कौन हूँ?",
+            "question_image": "umbrella_image",
+            "question_audio": "chhata_audio",
+            "question_count": "2",
+            "model": {
+                "keys": "छ,छा,छि,छी,छु,छू,छे,छै,छो,छौ,छं,छः,त,ता,ति,ती,तु,तू,ते,तै,तो,तौ,तं,तः"
+            },
+            "answer": {
+                "ans1": { "value": "छाता", "score": 1 }
+            }
+        }]
+    }
+}

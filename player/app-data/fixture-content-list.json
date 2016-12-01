@@ -12,7 +12,31 @@
     "responseCode": "OK",
     "result": {
         "content": [
-            {
+          {
+
+            "identifier": "org.ekstep.story.en.override_nav",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/override_nav/logo.png",
+                "subject": "literacy_v2",
+                "description": "override nav",
+                "name": "override nav",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.story.en.override_nav",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/override_nav"
+        },{
             "identifier": "org.ekstep.font",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
@@ -103,7 +127,7 @@
                     "languageL2": "en",
                     "sid": "de305d54-75b4-431b-adb2-eb6b9e546013",
                     "uid": "123e4567-e89b-12d3-a456-426655440000",
-                    "did": "ff305d54-85b4-341b-da2f-eb6b9e5460fa", 
+                    "did": "ff305d54-85b4-341b-da2f-eb6b9e5460fa",
                     "level": "5"
                 },
                 "launchContent": "do_20045479",
@@ -134,7 +158,7 @@
                     "languageL2": "en",
                     "sid": "de305d54-75b4-431b-adb2-eb6b9e546013",
                     "uid": "123e4567-e89b-12d3-a456-426655440000",
-                    "did": "ff305d54-85b4-341b-da2f-eb6b9e5460fa", 
+                    "did": "ff305d54-85b4-341b-da2f-eb6b9e5460fa",
                     "level": "5"
                 },
                 "identifier": "do_20043647",
@@ -164,7 +188,7 @@
                     "languageL2": "en",
                     "sid": "de305d54-75b4-431b-adb2-eb6b9e546013",
                     "uid": "123e4567-e89b-12d3-a456-426655440000",
-                    "did": "ff305d54-85b4-341b-da2f-eb6b9e5460fa", 
+                    "did": "ff305d54-85b4-341b-da2f-eb6b9e5460fa",
                     "level": "5"
                 },
                 "identifier": "do_20045479",

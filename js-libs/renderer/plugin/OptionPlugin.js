@@ -75,10 +75,10 @@ var OptionPlugin = Plugin.extend({
         if(this._modelValue.selected === true) {
           this.addShadow();
         }
-        this._self.on('click', function(event) {
-            Overlay.isReadyToEvaluate(true);
+        this._self.on('click', function(event) {            
             var eventData = {};
             var val = instance._parent.selectOption(instance);
+            OverlayManager.handleSubmit();
             var data = {
                 type: event.type,
                 x: event.stageX,
@@ -185,7 +185,7 @@ var OptionPlugin = Plugin.extend({
                                 if (this.y >= y && (this.y + this.height) <= maxY) {
                                     this._mapedTo = snapTo[i];
                                     snapSuccess = true;
-                                    Overlay.isReadyToEvaluate(true);
+                                    OverlayManager.handleSubmit();
                                 }
                             }
                         }
@@ -202,7 +202,7 @@ var OptionPlugin = Plugin.extend({
                     if (this.x >= x && (this.x + this.width) <= maxX) {
                         if (this.y >= y && (this.y + this.height) <= maxY) {
                             snapSuccess = true;
-                            Overlay.isReadyToEvaluate(true);
+                            OverlayManager.handleSubmit();
                         }
                     }
                 }

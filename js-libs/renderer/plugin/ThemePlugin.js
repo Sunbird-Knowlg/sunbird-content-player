@@ -167,8 +167,8 @@ var ThemePlugin = Plugin.extend({
             Renderer.update = true;
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
-            Overlay.sceneEnter();
-
+            // remove above scene Enter method call and dispatch an scene Enter event.
+            OverlayManager.init();
         });
         var nextIdx = this._currIndex++;
         if (this._currentScene) {
@@ -273,7 +273,11 @@ var ThemePlugin = Plugin.extend({
             this._isSceneChanging = true;
             if (stage._stageController && stage._stageController.hasNext()) {
                 if (action.transitionType !== 'next') {
+                  if (action.value === "") {
+                      OverlayManager.moveToEndPage();
+                  } else {
                     this.replaceStage(action.value, action);
+                  }
                 } else {
                     this.replaceStage(stage._data.id, action);
                 }
