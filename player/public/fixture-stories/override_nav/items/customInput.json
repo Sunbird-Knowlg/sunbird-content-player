@@ -1,0 +1,52 @@
+{
+	"identifier": "counting_2",
+	"title": "Addition by grouping",
+	"total_items": 1,
+	"max_score": 1,
+	"shuffle": false,
+	"showImmediateFeedback": true,
+	"subject": "NUM",
+	"item_sets": [
+		{
+			"id": "set_1",
+        	"count": 1
+		}
+	],
+	"items": {
+		"set_1" : [
+			{
+				"type": "ftb",
+
+				"template_id": "org.ekstep.ftb.barakhadinew",
+				"template": "org.ekstep.ftb.barakhadinew", 
+
+				"media": [
+				{
+				    "id": "friday_sound",
+					"type": "audio",
+					"src": "friday.mp3",
+					"asset_id": "friday_sound"
+				},{
+				    "id": "blueBox",
+					"type": "image",
+					"src": "box.png",
+					"asset_id": "blueBox"
+				}],
+
+				"title": "7",
+				"question": "I like number 7. \nCan you put 7 on my ball?",
+				"question_image": "blueBox", 
+				"question_audio": "friday_sound", 
+				"question_count": "1", 
+
+						
+				"model" : {
+					 "keys":"0,1,2,3,4,5,6,7,8,9"
+				},
+				"answer": {
+					"ans1" : {"value" : "7", "score": 1}
+				}
+			}
+		]
+	}
+}

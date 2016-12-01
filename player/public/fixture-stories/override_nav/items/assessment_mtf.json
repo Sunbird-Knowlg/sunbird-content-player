@@ -1,0 +1,64 @@
+{
+	"identifier": "haircut_story_1",
+	"title": "Haircut Story Assessment",
+	"total_items": 2,
+	"shuffle": false,
+	"max_score": 9,
+	"subject": "LIT",
+	"item_sets": [
+		{
+			"id": "set_1",
+        	"count": 2
+		}
+	],
+	"items": {
+		"set_1" : [
+			{
+				"identifier": "hs1_set_1_3",
+				"type": "mtf",
+				"template": "mtf_template",
+				"qlevel": "MEDIUM",
+				"title": "Match the tools to the people.",
+				"lhs_options": [
+					{
+						"value": {"type": "image", "asset": "barber_img"},
+						"index": 0
+					},
+					{
+						"value": {"type": "image", "asset": "carpenter_img"},
+						"index": 1
+					},
+					{
+						"value": {"type": "image", "asset": "tailor_img"},
+						"index": 2
+					},
+					{
+						"value": {"type": "image", "asset": "wife_img"},
+						"index": 3
+					}
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "image", "asset": "knife"},
+						"answer": 3
+					},
+					{
+						"value": {"type": "image", "asset": "razor"},
+						"answer": 0
+					},
+					{
+						"value": {"type": "image", "asset": "scissors"},
+						"answer": 2
+					},
+					{
+						"value": {"type": "image", "asset": "saw"},
+						"answer": 1
+					}
+				],
+				"max_score": 4,
+				"partial_scoring": true,
+				"feedback": ""
+			}
+		]
+	}
+}
