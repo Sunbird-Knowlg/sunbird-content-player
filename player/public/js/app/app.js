@@ -144,6 +144,18 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "nextContent" : "NEXT CONTENT",
             "comment" : "write your comment..."
         }
+
+        $rootScope.safeApply = function(fn) {
+            var phase = this.$root.$$phase;
+            if(phase == '$apply' || phase == '$digest') {
+                if(fn && (typeof(fn) === 'function')) {
+                   fn();
+               }
+           } else {
+            this.$apply(fn);
+            }
+        }
+
         $timeout(function() {
             $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -467,18 +479,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.content;
         $scope.showPage = true;
 
-        $rootScope.safeApply = function(fn) {
-            var phase = this.$root.$$phase;
-            if(phase == '$apply' || phase == '$digest') {
-                if(fn && (typeof(fn) === 'function')) {
-                   fn();
-               }
-           } else {
-            this.$apply(fn);
-            }
-        };
-
         $scope.playContent = function(content) {
+            TelemetryService.interact("TOUCH", "gc_play", "TOUCH", {
+                stageId: "Content-tittle",
+                subtype: " "
+            });
             $scope.showPage = false;
             $state.go('playContent', {
                 'itemId': content.identifier
@@ -942,9 +947,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
               break;
           }
 
-          $rootScope.safeApply(function(){
-            console.log("Safe apply.");
-          })
+          $rootScope.safeApply();
         }
 
         $scope.goodJob = {
@@ -1008,6 +1011,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.showRelatedContentHeader = false;
 
             jQuery('#endPageLoader').show();
+            TelemetryService.interact("TOUCH", "gc_RelatedContent", "TOUCH", {
+                stageId: "endpage",
+                subtype: " "
+            }); 
             TelemetryService.end();
             if ($rootScope.content.mimeType == COLLECTION_MIMETYPE) {
                 collectionPath = $scope.relatedContentPath;
@@ -1029,7 +1036,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 } else {
                     window.open("ekstep://c/" + content.identifier, "_system");
                 }
-            }
+            } 
         }
 
         $scope.getRelatedContent = function(list) {
@@ -1110,7 +1117,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     collectionPath.pop();
 
                     console.log(" id : ", GlobalContext.previousContentId);
-                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId))});
+                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : paggeId))});
 
                     if (Renderer.running)
                         Renderer.cleanUp();
@@ -1174,17 +1181,23 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $scope.stageInstMessage = "";
                 $scope.showInst = false;
 
-                /*<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}genie_icon.png" style="width:30%;"/></a>*/
-
-
                 $scope.showInstructions = function() {
                   $scope.stageInstMessage = $rootScope.stageData.stageInstruction;
                   $scope.showInst = ($scope.stageInstMessage != null) ? true : false;
+                  $scope.logIntract("gc_showInst");
                 }
 
                 $scope.closeInstructions = function () {
                     $scope.showInst = false;
+                    $scope.logIntract("gc_closeInst");
                 }
+
+                $scope.logIntract = function(eleId) {
+                    TelemetryService.interact("TOUCH", eleId , "TOUCH", {
+                        stageId: Renderer.theme._currentStage
+                    });
+                }
+                
 
                 /*
                  * If meny is getting hide, then hide teacher instructions as well
@@ -1220,6 +1233,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         scope.unmuteIcon = $rootScope.imageBasePath + "unmute.png";
                         document.getElementById("unmute_id").style.visibility = "visible"
                     }
+                  TelemetryService.interact("TOUCH",{ id: ((AudioManager.muted ? "gc_mute" : "gc_unmute"))} , "TOUCH", { stageId:Renderer.theme._currentStage});   
                 }
             }
         }
@@ -1235,18 +1249,24 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     jQuery("#progressBar").width(0);
                     jQuery('#loadingText').text(content.name);
                     startProgressBar(40, 0.6);
+
+                    TelemetryService.interact("TOUCH", "gc_reply", "TOUCH", {
+                        stageId: (_.isUndefined(Renderer.theme) ? "endpage" : Renderer.theme._currentStage)
+                    });
+
                     if ($stateParams.itemId != content.identifier) {
                         $state.go('playContent', {
                             'itemId': content.identifier
                         });
                     } else {
                         setTimeout(function() {
+                            scope.hideMenu();
                             Renderer.theme._self.removeAllChildren();
                             Renderer.theme.removeHtmlElements();
-                            scope.hideMenu();
-                            Renderer.theme.restart();
+                            Renderer.theme.reRender();
                         },100)
                     }
+                                        
                     var gameId = TelemetryService.getGameId();
                     var version = TelemetryService.getGameVer();
                     TelemetryService.end();
