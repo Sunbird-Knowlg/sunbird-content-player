@@ -1183,6 +1183,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         });
                     } else {
                         setTimeout(function() {
+                            Renderer.theme._self.removeAllChildren();
                             Renderer.theme.removeHtmlElements();
                             scope.hideMenu();
                             Renderer.theme.restart();
