@@ -511,6 +511,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             ContentService.getContent(content)
                 .then(function(data) {
                     // 
+                    if (_.isUndefined($rootScope.collection)) {
+                        localstorageFunction('Collection', undefined, 'removeItem');
+                    }
                     localstorageFunction('content', data, 'setItem');
                     $scope.setContentMetadata(data);
                 })
@@ -527,6 +530,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 data.localData = data;
             } else {
                 data = data.localData;
+            }
+            if (_.isUndefined($rootScope.collection)) {
+                localstorageFunction('Collection', undefined, 'removeItem');
             }
             data.status = "ready";
             $rootScope.safeApply(function() {
