@@ -512,7 +512,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 .then(function(data) {
                     // 
                     if (_.isUndefined($rootScope.collection)) {
-                        localstorageFunction('collection', undefined, 'removeItem');
+                        localstorageFunction('Collection', undefined, 'removeItem');
                     }
                     localstorageFunction('content', data, 'setItem');
                     $scope.setContentMetadata(data);
