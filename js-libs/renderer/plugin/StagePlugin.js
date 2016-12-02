@@ -230,18 +230,14 @@ var StagePlugin = Plugin.extend({
             if (showImmediateFeedback) {
                 //Show valid feeback
                 if(valid == true){
-                  var actionSpecified = _.isUndefined(action.success) ? false : true;
-                  if(actionSpecified){
-                    this.dispatchEvent(action.success);
-                  }else{
-                    OverlayManager.showGoodJobFb(!actionSpecified);
-                  }
+                    var showOverlayGoodJobFd = OverlayManager.showFeeback(valid);
+                    if(!showOverlayGoodJobFd){
+                      this.dispatchEvent(action.success);
+                    }
                 } else {
-                    var actionSpecified = _.isUndefined(action.failure) ? false : true;
-                    if(actionSpecified){
+                    var showOverlayTryAgainFd = OverlayManager.showFeeback(valid);
+                    if (!showOverlayTryAgainFd) {
                       this.dispatchEvent(action.failure);
-                    }else{
-                      OverlayManager.showTryAgainFb(!actionSpecified);
                     }
                 }
                 return;
