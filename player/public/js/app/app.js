@@ -1017,7 +1017,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.playRelatedContent = function(content) {
-            // OE_INTERACT event Generation is pending
             $scope.showRelatedContent = false;
             $scope.contentShowMore = false;
             $scope.showRelatedContentHeader = false;
@@ -1028,7 +1027,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 subtype: " "
             }); 
             TelemetryService.end();
-            if ($rootScope.content.mimeType == COLLECTION_MIMETYPE) {
+            if (_.isUndefined($rootScope.collection)) {
                 collectionPath = $scope.relatedContentPath;
                 ContentService.getContent(content.identifier)
                     .then(function(content) {
@@ -1084,7 +1083,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             var metaData = localstorageFunction('content',undefined, 'getItem')
             $rootScope.content = $rootScope.content ? $rootScope.content : metaData;
             var list = [];
-            if ($rootScope.content.mimeType != COLLECTION_MIMETYPE) {
+            if (_.isUndefined($rootScope.collection)) {
                 // For Content
                 if (("undefined" != typeof cordova)) {
                     list = [{
@@ -1096,17 +1095,22 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             } else {
                 // For Collection
                 list = collectionPath;
-                collectionPathMap[$rootScope.content.identifier] = collectionPath;
+                collectionPathMap[$rootScope.collection.identifier] = collectionPath;
                 $scope.getRelatedContent(list);
             }
         }
 
+        $scope.init = function() {
         if ("undefined" != typeof cordova) {
             $scope.renderRelatedContent($stateParams.contentId);
         } else {
             jQuery('#endPageLoader').hide();
             $scope.showRelatedContentHeader = false;
         }
+
+        }
+        $scope.init();
+
     }).directive('menu', function($rootScope, $sce) {
         return {
             restrict: 'E',
