@@ -531,6 +531,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             } else {
                 data = data.localData;
             }
+            if (_.isUndefined($rootScope.collection)) {
+                localstorageFunction('Collection', undefined, 'removeItem');
+            }
             data.status = "ready";
             $rootScope.safeApply(function() {
                 $scope.item = data;
