@@ -121,7 +121,7 @@ OverlayManager = {
     },
     showGoodJobFb: function(value){
       if(value == true ){
-        AudioManager.play({asset: "goodjob_sound"});
+        AudioManager.play({stageId :Renderer.theme._currentStage, asset: "goodjob_sound"});
         EventBus.dispatch(this._constants.overlayGoodJob, 'on');
       } else {
         EventBus.dispatch(this._constants.overlayGoodJob, 'off');
@@ -129,7 +129,7 @@ OverlayManager = {
     },
     showTryAgainFb: function(value){
       if(value == true){
-        AudioManager.play({asset: "tryagain_sound"});
+        AudioManager.play({stageId :Renderer.theme._currentStage, asset: "tryagain_sound"});
         EventBus.dispatch(this._constants.overlayTryAgain, 'on')
       } else {
         EventBus.dispatch(this._constants.overlayTryAgain, 'off');
