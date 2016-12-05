@@ -1144,7 +1144,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 scope.isCollection = false;
                 $rootScope.collection = $rootScope.collection ? $rootScope.collection : localstorageFunction('Collection',undefined,'getItem');
                 if ($rootScope.collection && $rootScope.collection.children) {
-                    scope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
+                    if ($rootScope.content.collections.identifier == $rootScope.Collection.identifier) {
+                        scope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
+                    }
                 }
 
                 var pageId = $rootScope.pageId;
