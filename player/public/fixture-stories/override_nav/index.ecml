@@ -153,14 +153,14 @@
 	<stage id="splash" x="0" y="0" w="100" h="100" extends="baseStage">
 		<set param="overlay" value="off" scope="content"/>
 		<param name="next" value="scene1" />
-		<param name="instructions" value="Teacher Instructions"/>
+		<param name="instructions" value="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
 		<text x="0" y="5" w="100" h="5" fontsize="3vw" align="center">Overlay: Hide</text>
 		<text x="0" y="13" w="100" h="5" fontsize="2vw" align="center">No params defined of theme/stage</text>
 		<text x="10" y="95" w="10" h="5" fontsize="28">Splash</text>
 	</stage>
 	<stage id="scene1" x="0" y="0" w="100" h="100" extends="baseStage">
 		<set param="overlay" value="on" scope="content"/>
-		<param name="instructions" value="Teacher Instructions"/>
+		<!-- <param name="instructions" value="Teacher Instructions"/> -->
 		<param name="next" value="scene2" />
 		<param name="previous" value="splash" />
 		<text x="0" y="5" w="100" h="5" fontsize="3vw" align="center">Overlay: Show</text>
@@ -180,8 +180,8 @@
 		<set param="overlayNext" value="on" scope="content"/>
 		<set param="overlayPrevious" value="on" scope="content"/>
 		<set param="overlaySubmit" value="on" scope="stage"/>
-		<!-- <set param="overlayGoodJob" value="on" scope="stage"/> -->
-		<!-- <set param="overlayTryAgain" value="on" scope="stage"/> -->
+		<set param="overlayGoodJob" value="on" scope="stage"/>
+		<set param="overlayTryAgain" value="on" scope="stage"/>
 		<set param="scr" scope="stage" ev-model="item"/>
 		<param name="instructions" value="Teacher Instructions"/>
 		<param name="next" value="scene4" />
@@ -196,7 +196,7 @@
 		<image asset="validate" x="93" y="18" w="5" h="8"/>
 	    <shape id="submitShape" type="rect" x="90" y="18" w="10" h="15" hitArea="true">
 	        <event type="click">
-		        <action type="command" command="custom" asset="scene3" invoke="defaultAction" event="actionDefaultSubmit"/>
+		        <action type="command" command="eval" asset="scene5" success="correct_answer" failure="wrong_answer"/>
 	        </event>
 	    </shape>
 	</stage>
@@ -206,8 +206,8 @@
 		<set param="overlaySubmit" value="off" scope="stage"/>
 
 
-		<set param="overlayGoodJob" value="on" scope="stage"/>
-		<set param="overlayTryAgain" value="on" scope="stage"/>
+		<!-- <set param="overlayGoodJob" value="on" scope="stage"/> -->
+		<!-- <set param="overlayTryAgain" value="off" scope="stage"/> -->
 
 		<param name="instructions" value="Teacher Instructions"/>
 		<param name="next" value="scene5" />
@@ -222,7 +222,7 @@
 		<image asset="validate" x="93" y="18" w="5" h="8"/>
 	    <shape id="submitShape" type="rect" x="90" y="18" w="10" h="15" hitArea="true">
 	        <event type="click">
-	            <action type="command" command="eval" asset="scene4" failure="wrong_answer"/>
+	            <action type="command" command="eval" asset="scene4" success="correct_answer" failure="wrong_answer"/>
 	            <!-- <action type="command" command="custom" asset="scene4" invoke="defaultAction" event="actionDefaultSubmit" /> -->
 	        </event>
 	    </shape>

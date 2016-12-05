@@ -37,6 +37,221 @@
             "isAvailable": true,
             "path": "fixture-stories/override_nav"
         },{
+
+            "identifier": "org.ekstep.story.en.word.search",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "stories/word_search/logo.png",
+                "subject": "literacy_v2",
+                "description": "word search",
+                "name": "word search",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.story.en.word.search",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/word_search"
+        }, {
+            "identifier": "org.ekstep.story.en.ESL-Lesson-3-Part-2",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "stories/ESL-Lesson-3-Part-2/logo.png",
+                "subject": "literacy_v2",
+                "description": "ESL-Lesson-3-Part-2",
+                "name": "ESL-Lesson-3-Part-2",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.story.en.ESL-Lesson-3-Part-2",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/ESL-Lesson-3-Part-2"
+        }, {
+            "identifier": "org.ekstep.story.en.pratham-camal_barakhadi",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "stories/pratham-camal_barakhadi/logo.png",
+                "subject": "literacy_v2",
+                "description": "pratham camal barakhadi",
+                "name": "pratham camal barakhadi",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.story.en.pratham-camal_barakhadi",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/pratham-camal_barakhadi"
+        }, {
+            "identifier": "org.ekstep.story.en.PrathamPara",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "stories/PrathamPara/logo.png",
+                "subject": "literacy_v2",
+                "description": "PrathamPara",
+                "name": "PrathamPara",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.story.en.PrathamPara",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/PrathamPara"
+        }, {
+            "identifier": "org.ekstep.story.en.pratham-camal",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "stories/pratham-camal/logo.png",
+                "subject": "literacy_v2",
+                "description": "pratham camal",
+                "name": "pratham camal",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.story.en.pratham-camal",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/pratham-camal"
+        }, {
+            "identifier": "org.ekstep.story.en.zap-story",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "stories/zap-story/logo.png",
+                "subject": "literacy_v2",
+                "description": "Zap Story",
+                "name": "Zap Story",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.story.en.zap-story",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/zap-story"
+        },
+        {
+
+            "identifier": "org.ekstep.story.en.customSubmitButton",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "stories/customSubmitButton/logo.png",
+                "subject": "literacy_v2",
+                "description": "Custom Submit Button",
+                "name": "Custom Submit Button",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.story.en.customSubmitButton",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/customSubmitButton"
+        },{
+            "identifier": "org.ekstep.story.en.ESL_assessment",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "stories/ESL_assessment/logo.png",
+                "subject": "literacy_v2",
+                "description": "ESL assessment",
+                "name": "ESL assessment",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.story.en.ESL_assessment",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/ESL_assessment"
+        },
+
+
+	{
+            "identifier": "org.ekstep.item.templates",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/item-templates/logo.png",
+                "subject": "literacy_v2",
+                "description": "Item Templates",
+                "name": "Item Templates",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "A robust test suite is a must-have for any product...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.item.templates",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/item-templates"
+
+        },
+            {
             "identifier": "org.ekstep.font",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
@@ -430,30 +645,6 @@
             },
             "isAvailable": true,
             "path": "fixture-stories/addition_by_grouping"
-        },{
-            "identifier": "org.ekstep.item.templates",
-            "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
-                "questionnaire": null,
-                "appIcon": "fixture-stories/item-templates/logo.png",
-                "subject": "literacy_v2",
-                "description": "Item Templates",
-                "name": "Item Templates",
-                "downloadUrl": "",
-                "checksum": null,
-                "loadingMessage": "A robust test suite is a must-have for any product...",
-                "concepts": [{
-                    "identifier": "LO1",
-                    "name": "Receptive Vocabulary",
-                    "objectType": "Concept"
-                }],
-                "identifier": "org.ekstep.item.templates",
-                "grayScaleAppIcon": null,
-                "pkgVersion": 1
-            },
-            "isAvailable": true,
-            "path": "fixture-stories/item-templates"
-
         },
         {
             "identifier": "org.ekstep.quiz.app.tests.renderer",
