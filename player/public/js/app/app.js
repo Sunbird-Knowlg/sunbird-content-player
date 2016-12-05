@@ -20,6 +20,8 @@ var stack = new Array(),
     setContentDataCb = undefined,
     appState = undefined;
 
+// TODO:have to remove appState and setContentDataCb in future.
+// Used in only Authoting tools
 window.setContentData = function(metadata, data, configuration) {   
     if (_.isUndefined(metadata)) {
         content.metadata = metadata;
@@ -36,6 +38,7 @@ window.setContentData = function(metadata, data, configuration) {
         config.showStartPage = false;
         config.showEndPage = false;
     }
+    localstorageFunction('content', content.metadata, 'setItem');
 
     if(appState) {
         updateContentData(appState)
@@ -607,6 +610,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.init = function() {
             if ($stateParams.itemId) {
+                $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction('content',undefined, 'getItem');            
                 $scope.item = $rootScope.content;
 
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
@@ -643,7 +647,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         collectionChildren = false;
                     }
                     if (isbrowserpreview) {
-                        $rootScope.content = content.metadata.localData;
+                        $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction("content",undefined,'getItem')
                         var contentBody = undefined;
                         if (COLLECTION_MIMETYPE == content.metadata.mimeType) {
                             ContentService.getContentBody($stateParams.itemId)
