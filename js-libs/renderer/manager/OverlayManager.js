@@ -275,10 +275,11 @@ OverlayManager = {
         // this is to avoid stage crash
         return;
       }
+      var currentStage, plugin;
       this._reloadInProgress = true;
       setTimeout(function() {
-        var currentStage = Renderer.theme._currentStage;
-        var plugin = PluginManager.getPluginObject(currentStage);
+        currentStage = Renderer.theme._currentStage;
+        plugin = PluginManager.getPluginObject(currentStage);
         if (plugin) plugin.reload({
             type: "command",
             command: "reload",
