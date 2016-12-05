@@ -733,7 +733,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         };
 
-        TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContnetApp-EndScreen", subtype: "ContentID" });
+        TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContentApp-EndScreen", subtype: "ContentID" });
 
         $scope.showCredits = function(key) {
             if (content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null) {
@@ -1263,7 +1263,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         scope.unmuteIcon = $rootScope.imageBasePath + "unmute.png";
                         document.getElementById("unmute_id").style.visibility = "visible"
                     }
-                  TelemetryService.interact("TOUCH",{ id: ((AudioManager.muted ? "gc_mute" : "gc_unmute"))} , "TOUCH", { stageId:Renderer.theme._currentStage});   
+                  TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute" , "TOUCH", { stageId:Renderer.theme._currentStage});    
                 }
             }
         }
