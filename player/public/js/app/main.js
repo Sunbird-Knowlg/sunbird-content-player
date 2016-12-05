@@ -142,6 +142,9 @@ function objectAssign() {
 }
 
 function startTelemetry(id,ver) {
+    localStorage.removeItem('TelemetryService');
+    localStorage.removeItem('_start');
+    localStorage.removeItem('_end');
     TelemetryService.init(GlobalContext.game, GlobalContext.user);
     TelemetryService.start(id,ver);
     if (!_.isUndefined(TelemetryService.instance)) {
