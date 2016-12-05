@@ -2188,7 +2188,7 @@
 	
 	
 	<stage id="scene11" x="0" y="0" w="100" h="100" iterate="funtime" var="item">
-        <!-- <param name="next" value="scene12" /> -->
+        <param name="next" value="scene12" />
         <param name="previous" value="scene10" />
 		<audio asset="ft_1_audio" />
         <image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>

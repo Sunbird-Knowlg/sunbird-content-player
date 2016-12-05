@@ -6,6 +6,11 @@
         <media id="carpenter_img" src="carpenter.png" type="image" />
         <meida id="cheers_soft" src="cheers_soft.ogg" type="audio" />
         <meida id="chimes" src="chimes.ogg" type="audio" />
+        
+        <media id="validate" src="submit.png" type="image" />
+        <media id="retryBg" src="retryBg.png" type="image" />
+        <media id="goodjobBg" src="goodjobBg.png" type="image" />
+
 	</manifest>
 	<controller id="assessment" name="assessment" type="items"/>
 	
@@ -70,6 +75,9 @@
         <image asset="carpenter_img"/>
         <audio asset="cheers_soft" />
         <audio asset="chimes" />
+        <image asset="validate" />
+        <image asset="goodjobBg" />
+        <image asset="retryBg" />
 	</stage>
 	<stage id="baseStage" preload="true">
 		<image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
@@ -84,6 +92,47 @@
                 <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" transitionType="previous"/>
             </event>
         </shape>
+
+        <g x="35" y="-40" w="40" h="50" id="goodjobDialog" visible="false">
+            <image asset="goodjobBg" x="0" y="0" w="100" h="100" visible="true"/>
+            <shape x="52" y="35" w="25" h="30" visible="true" stoke="red" hitArea="true">
+                <event type="click">
+                    <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+                </event>
+            </shape>
+        </g>
+        <g x="30" y="-40" w="40" h="50" id="retryDialog" visible="false">
+            <image asset="retryBg" x="0" y="0" w="100" h="100" visible="true"/>
+            <shape  x="45" y="18" w="35" h="39" visible="true" stoke="red" hitArea="true">
+                <event type="click">
+                    <action type="command" command="hide" asset="retryDialog"/>
+                </event>
+            </shape>
+            <shape  x="70" y="65" w="20" h="24" visible="true" stoke="red" hitArea="true">
+                <event type="click">
+                    <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+                </event>
+            </shape>
+        </g>
+        <appEvents list="correct_answer, wrong_answer"/>
+        <events>
+            <event type="wrong_answer">
+                <action type="command" command="show" asset="retryDialog" />
+                <action type="animation" asset="retryDialog">
+                    <tween id="retryShowAnim">
+                        <to ease="bounceOut" duration="1500"><![CDATA[{"x":30,"y":30,"w":40,"h":30}]]></to>
+                    </tween>
+                </action>
+            </event>
+            <event type="correct_answer">
+                <action type="command" command="show" asset="goodjobDialog" />
+                <action type="animation" asset="goodjobDialog">
+                    <tween id="gjShowAnim">
+                        <to ease="bounceOut" duration="1500"><![CDATA[{"x":35,"y":30,"w":40,"h":30}]]></to>
+                    </tween>
+                </action>
+            </event>
+        </events>
 	</stage>
 	<stage id="scene1" x="0" y="0" w="100" h="100">
 		<param name="next" value="scene2" />
@@ -96,6 +145,9 @@
         <text x="10" y="20" w="80" h="40" font="Arial" fontsize="150" align="center">Item Templates Start Here</text>
 	</stage>
 	<stage extends="baseStage" h="100" id="scene2" iterate="assessment" var="item" w="100" x="0" y="0">
+        <set param="overlayGoodJob" value="off" scope="stage"/>
+        <set param="overlayTryAgain" value="off" scope="stage"/>
+        <set param="overlaySubmit" value="off" scope="stage"/>
 		<param name="next" value="scene1" />
 		<param name="previous" value="scene1" />
 		<image asset="next" x="93" y="3" w="5" h="8.3" id="next" visible="false"/>
@@ -110,6 +162,16 @@
                 <action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" transitionType="previous"/>
             </event>
         </shape>
+
 		<embed template="item" var-item="item"/>
+
+        <image asset="validate" x="93" y="18" w="5" h="8"/>
+        <shape id="submitShape" type="rect" x="90" y="18" w="10" h="15" hitArea="true" z-index="9389">
+            <event type="click">
+                <action type="command" command="eval" asset="scene2" success="correct_answer" failure="wrong_answer"/>
+                <!-- <action type="command" command="custom" asset="scene4" invoke="defaultAction" event="actionDefaultSubmit" /> -->
+            </event>
+        </shape>
+
 	</stage>
 </theme>
