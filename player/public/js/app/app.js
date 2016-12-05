@@ -36,18 +36,26 @@ window.setContentData = function(metadata, data, configuration) {
         config.showStartPage = false;
         config.showEndPage = false;
     }
-    setContentDataCb =  function(){
-        updateContentData();
+
+    if(appState) {
+        updateContentData(appState)
+    } else {
+        setContentDataCb =  function($state){
+            updateContentData($state);
+        }        
     }
 }
 
-function updateContentData(){
-    var $state = appState;
+function updateContentData($state){
+    if(_.isUndefined($state)){
+        console.warn("updateContentData($state) - $state is not defined.");
+        return;
+    }
     if (!config.showStartPage && content && content.metadata) {
         $state.go('playContent', {
             'itemId': content.metadata.identifier
         });
-    } else if (content && content.metaData) {
+    } else if (content && content.metadata) {
         newContentId = content.metadata.identifier;
         if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
             $state.go('showContent', { "contentId": newContentId });
@@ -170,9 +178,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             appState = $state;
-            if (!_.isUndefined(setContentDataCb)) {
-                setContentDataCb();
-            }
+            
             console.log('ionic platform is ready...');
             if ("undefined" == typeof Promise) {
                 alert("Your device isn’t compatible with this version of Genie.");
@@ -249,7 +255,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 var id = getUrlParameter("id");
                 if(isbrowserpreview) {
                     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-
+                    if (!_.isUndefined(setContentDataCb)) {
+                        setContentDataCb($state);
+                    }
                     if ("undefined" != typeof $location && id) {
                         ContentService.getContentMetadata(id)
                             .then(function(data) {
@@ -635,6 +643,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         collectionChildren = false;
                     }
                     if (isbrowserpreview) {
+                        $rootScope.content = content.metadata.localData;
                         var contentBody = undefined;
                         if (COLLECTION_MIMETYPE == content.metadata.mimeType) {
                             ContentService.getContentBody($stateParams.itemId)
