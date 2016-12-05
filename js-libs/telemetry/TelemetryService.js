@@ -114,12 +114,12 @@ TelemetryService = {
                 }
             }
             TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
-            if (!_.isUndefined(start)) {
+            if (!_.isUndefined(start) || (_.isArray(start) && start.length>0)) {
                 for(var i =0; i<start.length;i++){
                     TelemetryService.instance._start.push(start[i]);
                 }
             }
-            if (!_.isUndefined(end)) {
+            if (!_.isUndefined(end) || (_.isArray(start) && start.length>0)) {
                 var teEndevent = TelemetryService.instance.createEvent("OE_END", {}).start();
                 teEndevent.startTime = end[end.length - 1].startTime;
                 TelemetryService.instance._end.push(teEndevent);
