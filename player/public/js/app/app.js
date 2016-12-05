@@ -1272,7 +1272,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'E',
             template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/></a>',
             link: function(scope) {
-                // OE_INTERACT event is Pending
                 scope.restartContent = function() {
                     var content = $rootScope.content;
                     jQuery('#loading').show();
@@ -1281,7 +1280,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     startProgressBar(40, 0.6);
 
                     TelemetryService.interact("TOUCH", "gc_reply", "TOUCH", {
-                        stageId: (_.isUndefined(Renderer.theme) ? "endpage" : Renderer.theme._currentStage)
+                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
                     });
 
                     if ($stateParams.itemId != content.identifier) {
