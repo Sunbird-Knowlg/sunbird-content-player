@@ -152,6 +152,12 @@ LoadByStageStrategy = Class.extend({
                 instance.destroyStage(stageId);
             })
         }
+        if (nextStageId) {
+            instance.loadStage(nextStageId)
+        }
+        if (prevStageId) {
+            instance.loadStage(prevStageId)
+        }
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);
     },
     loadStage: function(stageId, cb) {
