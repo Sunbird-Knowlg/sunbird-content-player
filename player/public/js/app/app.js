@@ -1138,24 +1138,25 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('collection', function($rootScope, $state) {
         return {
             restrict: 'E',
-            template: '<a ng-class="{\'icon-opacity\': isCollection != true}" ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection != true}" ng-src="{{imgSrc}}"/></a>',
+            template: '<a ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection == false}" ng-src="{{imgSrc}}"/></a>',
             link: function(scope, state) {
                 scope.imgSrc = $rootScope.imageBasePath + 'icn_collections.png';
                 scope.isCollection = false;
-                $rootScope.collection = $rootScope.collection ? $rootScope.collection : localstorageFunction('Collection',undefined,'getItem');
+                $rootScope.collection = $rootScope.collection ? $rootScope.collection : localstorageFunction('Collection', undefined, 'getItem');
                 if ($rootScope.collection && $rootScope.collection.children) {
                     if ($rootScope.content.collections.identifier == $rootScope.Collection.identifier) {
-                        scope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
-                    }
+                    scope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
+                }
                 }
 
                 var pageId = $rootScope.pageId;
-                scope.goToCollection = function () {
-                    collectionPath.pop();
-
-                    console.log(" id : ", GlobalContext.previousContentId);
-                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId))});
-
+                // Code refactring of the Collection Directive is Required 
+                scope.goToCollection = function() {
+                    if (scope.isCollection) {
+                        collectionPath.pop();
+                        TelemetryService.interact("TOUCH", "gc_home", "TOUCH", {
+                            stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId))
+                        });
                     if (Renderer.running)
                         Renderer.cleanUp();
                     else
@@ -1163,6 +1164,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     $state.go('contentList', {
                         "id": $rootScope.collection.identifier
                     });
+
+                    }
                 }
             }
         }
@@ -1216,7 +1219,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             template: '<a href="javascript:void(0)" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}teacher_instructions.png" style="z-index:2;"/></a>',
             controller: function($scope, $rootScope) {
                 $scope.stageInstMessage = "";
-                $scope.showInst = false;
+                $scope.showInst = false;                
 
                 $scope.showInstructions = function() {
                   $scope.stageInstMessage = $rootScope.stageData.stageInstruction;
