@@ -88,8 +88,8 @@ var PlaceHolderPlugin = Plugin.extend({
             var imgH = 0;
             //TODO: this is just temporary fix for placeholder render next page issue
             if (_.isUndefined(imgBounds)) {
-                var imgW = imgBounds.width;
-                var imgH = imgBounds.height;
+                imgW = imgBounds.width;
+                imgH = imgBounds.height;
             }
             img.x = parseFloat(pad / 2);
             img.y = parseFloat(pad / 2);
