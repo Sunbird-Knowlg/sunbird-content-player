@@ -86,11 +86,11 @@ var PlaceHolderPlugin = Plugin.extend({
             var imgBounds = img.getBounds();
             var imgW = 0;
             var imgH = 0;
-            if (_.isNull(imgBounds) || _.isUndefined(imgBounds)) {
-                paddedImageContainer(assetId, pad);
+            //TODO: this is just temporary fix for placeholder render next page issue
+            if (_.isUndefined(imgBounds)) {
+                var imgW = imgBounds.width;
+                var imgH = imgBounds.height;
             }
-            var imgW = imgBounds.width;
-            var imgH = imgBounds.height;
             img.x = parseFloat(pad / 2);
             img.y = parseFloat(pad / 2);
             var imgCont = new createjs.Container();
