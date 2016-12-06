@@ -853,7 +853,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.commentLength = function() {
-            if ($('#commentTextg').val().length > 130)
+            if ($('#commentText').val().length > 130)
                 $('#commentText').val($('#commentText').val().slice(0,130));
             $scope.stringLeft = 130 - $('#commentText').val().length;
             $scope.enableFeedbackSubmit();
@@ -1041,7 +1041,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.showRelatedContentHeader = false;
 
             jQuery('#endPageLoader').show();
-            TelemetryService.interact("TOUCH", "gc_RelatedContent", "TOUCH", {
+            TelemetryService.interact("TOUCH", "gc_relatedcontent", "TOUCH", {
                 stageId: "endpage",
                 subtype: " "
             }); 
