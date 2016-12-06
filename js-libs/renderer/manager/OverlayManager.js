@@ -31,12 +31,7 @@ OverlayManager = {
         EventBus.addEventListener("actionReload", this.actionReload, this);
     },
     setStageData: function () {
-      var instructions = (Renderer.theme._currentScene && Renderer.theme._currentScene.params && Renderer.theme._currentScene.params.instructions) ? Renderer.theme._currentScene.params.instructions : null;
-      var stageData = {
-                        "currentStage": Renderer.theme._currentStage,
-                        "stageInstruction": instructions
-                      };
-      EventBus.dispatch("stageData", stageData);
+      EventBus.dispatch("sceneEnter", Renderer.theme._currentScene);
     },
     setContentConfig: function() {
         var evtLenth = this._eventsArray.length;
@@ -182,6 +177,12 @@ OverlayManager = {
       EventBus.removeEventListener("actionNavigateNext", this.navigateNext, this);
       EventBus.removeEventListener("actionNavigatePrevious", this.navigatePrevious, this);
       EventBus.removeEventListener("actionDefaultSubmit", this.defaultSubmit, this);
+    },
+    reset: function(){
+      // Remove all configuarations & Events
+      this.clean();
+      this._contentConfig = {};
+      this._stageConfig = {};
     },
     navigatePrevious: function () {
       var navigateToStage = this.getNavigateTo('previous');

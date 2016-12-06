@@ -83,6 +83,7 @@ var ThemePlugin = Plugin.extend({
     render: function() {
         var instance = this;
         ControllerManager.reset();
+        OverlayManager.reset();
         if (this._data.controller) {
             if (_.isArray(this._data.controller)) {
                 this._data.controller.forEach(function(p) {

@@ -899,8 +899,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
 
-        EventBus.addEventListener("stageData", function (data) {
+        EventBus.addEventListener("sceneEnter", function (data) {
           $rootScope.stageData = data.target;
+
+          //TODO: Remove this currentStage parameter and use directly stageData._currentStage
+          $rootScope.stageData.currentStage = $rootScope.stageData._id;
         });
 
         $scope.state_off = "off";
@@ -1220,7 +1223,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $scope.showInst = false;                
 
                 $scope.showInstructions = function() {
-                  $scope.stageInstMessage = $rootScope.stageData.stageInstruction;
+                  $scope.stageInstMessage = ($rootScope.stageData && $rootScope.stageData.params && $rootScope.stageData.params.instructions) ? $rootScope.stageData.params.instructions : null;
+
                   $scope.showInst = ($scope.stageInstMessage != null) ? true : false;
                   $scope.logIntract("gc_showInst");
                 }
