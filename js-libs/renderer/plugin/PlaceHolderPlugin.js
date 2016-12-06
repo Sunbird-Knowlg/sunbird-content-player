@@ -84,6 +84,11 @@ var PlaceHolderPlugin = Plugin.extend({
         var paddedImageContainer = function(assetId, pad) {
             var img = new createjs.Bitmap(instance._theme.getAsset(assetId));
             var imgBounds = img.getBounds();
+            var imgW = 0;
+            var imgH = 0;
+            if (_.isNull(imgBounds) || _.isUndefined(imgBounds)) {
+                paddedImageContainer(assetId, pad);
+            }
             var imgW = imgBounds.width;
             var imgH = imgBounds.height;
             img.x = parseFloat(pad / 2);
