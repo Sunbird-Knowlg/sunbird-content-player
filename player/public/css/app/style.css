@@ -306,8 +306,8 @@ body{
 .inst-message-cont p {
     font-family: NotoSansRegular;
     font-size: 1.2em;
-    padding: 25% 5%;
-    height: 100%;
+    margin: 25% 5%;
+    height: 75%;
     overflow: auto;
     text-align: center;
     font-weight: 500;
