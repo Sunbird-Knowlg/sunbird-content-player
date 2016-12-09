@@ -143,9 +143,9 @@ body{
     padding: 0 2%;
     text-overflow: ellipsis;
     line-height: 1.5em;
-    margin-bottom: 7%;
+    margin-bottom: 2%;
     width: 100%;
-    margin-top: 7%;
+    margin-top: 5%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     height: 23%;
@@ -153,6 +153,8 @@ body{
     font-size: 9vh;
     -webkit-text-stroke: 0.2vh #009e81;
     z-index: 0;
+    padding-top: 1%;
+    padding-bottom: 2%;
   }
 
 .gc-text-elipsis{
@@ -164,9 +166,10 @@ body{
 .gc-ep-title{
     width: 100%;
     text-transform: uppercase;
-    padding: 1% 10%;
+    padding: 2% 10% 1%;
     font-size: 1.8em;
     text-align: center;
+    height: 40px;
 }
 
 .menu-overlay {
