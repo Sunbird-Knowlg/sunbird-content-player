@@ -10,7 +10,10 @@ var packageName = "org.ekstep.quiz.app",
 // Need to modify the scope level hasStageSet
     // hasStageSet = true
 
-function startProgressBar(w, setInter) {
+function startProgressBar(w, setInter,tittle) {
+    jQuery('#loadingText').text(tittle);
+    jQuery("#progressBar").width(0);
+    jQuery('#loading').show();
     var elem = document.getElementById("progressBar");
     var width = w ? w : 20;
     var id = setInterval(frame, setInter ? setInter : 0.7);

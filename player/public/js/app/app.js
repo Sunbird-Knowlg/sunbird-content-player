@@ -341,13 +341,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $rootScope.pageId = 'ContentApp-Collection';
         var id = $stateParams.id;
-
-        // $ionicModal.fromTemplateUrl('about.html', {
-        //     scope: $scope,
-        //     animation: 'slide-in-up'
-        // }).then(function(modal) {
-        //     $scope.aboutModal = modal;
-        // });
         $scope.version = GlobalContext.game.ver;
         $scope.flavor = GlobalContext.config.flavor;
         $scope.currentUser = GlobalContext.user;
@@ -511,10 +504,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $state.go('playContent', {
                 'itemId': content.identifier
             });
-            jQuery('#loadingText').text(content.name);
-            jQuery("#progressBar").width(0);
-            jQuery('#loading').show();
-            startProgressBar(40, 0.6);
+            startProgressBar(40, 0.6,content.name);
         };
 
         $scope.getContentMetadata = function(content) {
@@ -1285,15 +1275,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             link: function(scope) {
                 scope.restartContent = function() {
                     var content = $rootScope.content;
-                    jQuery('#loading').show();
-                    jQuery("#progressBar").width(0);
-                    jQuery('#loadingText').text(content.name);
-                    startProgressBar(40, 0.6);
-
                     TelemetryService.interact("TOUCH", "gc_reply", "TOUCH", {
                         stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
                     });
-
+                    startProgressBar(40, 0.6,content.name);
                     if ($stateParams.itemId != content.identifier) {
                         $state.go('playContent', {
                             'itemId': content.identifier
@@ -1305,8 +1290,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             Renderer.theme.removeHtmlElements();
                             Renderer.theme.reRender();
                         },100)
-                    }
-                                        
+                    }                  
                     var gameId = TelemetryService.getGameId();
                     var version = TelemetryService.getGameVer();
                     TelemetryService.end();

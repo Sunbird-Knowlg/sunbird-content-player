@@ -81,22 +81,42 @@ var PlaceHolderPlugin = Plugin.extend({
             return Math.floor(Math.sqrt(parseFloat(area / repeat)))
         }
 
-        var paddedImageContainer = function(assetId, pad) {
-            var img = new createjs.Bitmap(instance._theme.getAsset(assetId));
-            var imgBounds = img.getBounds();
-            var imgW = 0;
-            var imgH = 0;
-            //TODO: this is just temporary fix for placeholder render next page issue
-            if (_.isUndefined(imgBounds)) {
-                imgW = imgBounds.width;
-                imgH = imgBounds.height;
+        var paddedImageContainer = function(assetId, pad,cb) {
+            /* var img = new createjs.Bitmap(instance._theme.getAsset(assetId));*/
+            var assetSrc = instance._theme.getAsset(assetId);
+            var img;
+            var imgW ;
+            var imgH ;
+             img = new createjs.Bitmap(assetSrc);
+            if (_(img.getBounds()).isNull()) {
+                AssetManager.strategy.loadAsset(instance._stage._data.id, assetId, assetSrc, function() {
+                   img = new createjs.Bitmap(assetSrc);
+                    if (_.isString(instance._self)) {
+                        console.log("ImagePlugin: Image load failed", assetSrc);
+                    }
+                    var imgBounds = img.getBounds();
+                    //TODO: this is just temporary fix for placeholder render next page issue
+                    imgW = imgBounds.width;
+                    imgH = imgBounds.height;
+                    img.x = parseFloat(pad / 2);
+                    img.y = parseFloat(pad / 2);
+                    var imgCont = new createjs.Container();
+                    imgCont.addChild(img);
+                    imgCont.cache(0, 0, imgW + pad, imgH + pad);
+                    cb(imgCont);
+                });
+            }else{
+                var imgBounds = img.getBounds();
+                    //TODO: this is just temporary fix for placeholder render next page issue
+                    imgW = imgBounds.width;
+                    imgH = imgBounds.height;
+                    img.x = parseFloat(pad / 2);
+                    img.y = parseFloat(pad / 2);
+                    var imgCont = new createjs.Container();
+                    imgCont.addChild(img);
+                    imgCont.cache(0, 0, imgW + pad, imgH + pad);
+                    cb(imgCont);
             }
-            img.x = parseFloat(pad / 2);
-            img.y = parseFloat(pad / 2);
-            var imgCont = new createjs.Container();
-            imgCont.addChild(img);
-            imgCont.cache(0, 0, imgW + pad, imgH + pad);
-            return imgCont;
         }
 
         var enableDrag = function(asset, snapTo) {
@@ -146,32 +166,34 @@ var PlaceHolderPlugin = Plugin.extend({
         var pixelPerImg = computePixel(area, repeat || 1) - parseFloat(pad / 1.5);
 
         var param = instance.param;
-        param.paddedImg = paddedImageContainer(param.asset, pad);
-        var assetBounds = param.paddedImg.getBounds();
-        var assetW = assetBounds.width,
-            assetH = assetBounds.height;
-        param.paddedImg.scaleY = parseFloat(pixelPerImg / assetH);
-        param.paddedImg.scaleX = parseFloat(pixelPerImg / assetW);
-        param.paddedImg.x = x + pad;
-        param.paddedImg.y = y + pad;
+        paddedImageContainer(param.asset, pad, function(data) {
+            param.paddedImg = data;
+            var assetBounds = param.paddedImg.getBounds();
+            var assetW = assetBounds.width,
+                assetH = assetBounds.height;
+            param.paddedImg.scaleY = parseFloat(pixelPerImg / assetH);
+            param.paddedImg.scaleX = parseFloat(pixelPerImg / assetW);
+            param.paddedImg.x = x + pad;
+            param.paddedImg.y = y + pad;
+            var instanceBoundary = 0 + instance.dimensions().w;
+            for (i = 0; i < param.count; i++) {
+                var clonedAsset = param.paddedImg.clone(true);
+                if ((x + pixelPerImg) > instanceBoundary) {
+                    x = 0;
+                    y += pixelPerImg + pad;
+                }
+                clonedAsset.x = x + pad;
+                clonedAsset.y = y + pad;
+                clonedAsset.origX = x + pad;
+                clonedAsset.origY = y + pad;
+                x += pixelPerImg;
+                if (instance._data.enabledrag) {
+                    enableDrag(clonedAsset, data.snapTo);
+                }
+                parent.addChild(clonedAsset);
+            }
+        });
 
-        var instanceBoundary = 0 + instance.dimensions().w;
-        for (i = 0; i < param.count; i++) {
-            var clonedAsset = param.paddedImg.clone(true);
-            if ((x + pixelPerImg) > instanceBoundary) {
-                x = 0;
-                y += pixelPerImg + pad;
-            }
-            clonedAsset.x = x + pad;
-            clonedAsset.y = y + pad;
-            clonedAsset.origX = x + pad;
-            clonedAsset.origY = y + pad;
-            x += pixelPerImg;
-            if (instance._data.enabledrag) {
-                enableDrag(clonedAsset, data.snapTo);
-            }
-            parent.addChild(clonedAsset);
-        }
     },
     refresh: function() {
         this._self.removeAllChildren();
@@ -179,5 +201,6 @@ var PlaceHolderPlugin = Plugin.extend({
         this.renderPlaceHolder(this);
         Renderer.update = true;
     }
+
 });
 PluginManager.registerPlugin('placeholder', PlaceHolderPlugin);
