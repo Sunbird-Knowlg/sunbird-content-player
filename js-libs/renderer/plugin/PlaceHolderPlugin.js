@@ -3,10 +3,8 @@ var PlaceHolderPlugin = Plugin.extend({
     _isContainer: true,
     _render: true,
     initPlugin: function(data) {
-        console.info("Placeholder data", data);
         this._self = new createjs.Container();
         var dims = this.relativeDims();
-        console.info("dims", dims);
         this._self.x = dims.x;
         this._self.y = dims.y;
         var instance = this;
@@ -47,8 +45,6 @@ var PlaceHolderPlugin = Plugin.extend({
                 count: count
             }
         }
-        console.info("count", count);
-
         if (instance.param) {
 
             // Asset is mandatory
@@ -76,49 +72,25 @@ var PlaceHolderPlugin = Plugin.extend({
         PluginManager.invoke('image', data, instance._parent, instance._stage, instance._theme);
     },
     renderGridLayout: function(parent, instance, data) {
-        console.info("parent", parent);
         var computePixel = function(area, repeat) {
             return Math.floor(Math.sqrt(parseFloat(area / repeat)))
         }
 
-        var paddedImageContainer = function(assetId, pad,cb) {
-            /* var img = new createjs.Bitmap(instance._theme.getAsset(assetId));*/
+        var paddedImageContainer = function(assetId, pad, cb) {
+            var img, imgW, imgH;
             var assetSrc = instance._theme.getAsset(assetId);
-            var img;
-            var imgW ;
-            var imgH ;
-             img = new createjs.Bitmap(assetSrc);
+            img = new createjs.Bitmap(assetSrc);
             if (_(img.getBounds()).isNull()) {
                 AssetManager.strategy.loadAsset(instance._stage._data.id, assetId, assetSrc, function() {
-                   img = new createjs.Bitmap(assetSrc);
                     if (_.isString(instance._self)) {
-                        console.log("ImagePlugin: Image load failed", assetSrc);
+                        console.warn("Image fails to load", assetSrc);
                     }
-                    var imgBounds = img.getBounds();
-                    //TODO: this is just temporary fix for placeholder render next page issue
-                    imgW = imgBounds.width;
-                    imgH = imgBounds.height;
-                    img.x = parseFloat(pad / 2);
-                    img.y = parseFloat(pad / 2);
-                    var imgCont = new createjs.Container();
-                    imgCont.addChild(img);
-                    imgCont.cache(0, 0, imgW + pad, imgH + pad);
-                    cb(imgCont);
+                    cb(getAssetBound(img));
                 });
-            }else{
-                var imgBounds = img.getBounds();
-                    //TODO: this is just temporary fix for placeholder render next page issue
-                    imgW = imgBounds.width;
-                    imgH = imgBounds.height;
-                    img.x = parseFloat(pad / 2);
-                    img.y = parseFloat(pad / 2);
-                    var imgCont = new createjs.Container();
-                    imgCont.addChild(img);
-                    imgCont.cache(0, 0, imgW + pad, imgH + pad);
-                    cb(imgCont);
+            } else {
+                cb(getAssetBound(img));
             }
         }
-
         var enableDrag = function(asset, snapTo) {
             asset.cursor = "pointer";
             asset.on("mousedown", function(evt) {
@@ -154,7 +126,17 @@ var PlaceHolderPlugin = Plugin.extend({
                 });
             }
         }
-
+        var getAssetBound = function(img) {
+            var imgBounds = img.getBounds();
+            imgW = imgBounds.width;
+            imgH = imgBounds.height;
+            img.x = parseFloat(pad / 2);
+            img.y = parseFloat(pad / 2);
+            var imgCont = new createjs.Container();
+            imgCont.addChild(img);
+            imgCont.cache(0, 0, imgW + pad, imgH + pad);
+            return imgCont;
+        }
         var x = 0,
             y = 0,
             area = instance.dimensions().w * instance.dimensions().h,
@@ -191,9 +173,10 @@ var PlaceHolderPlugin = Plugin.extend({
                     enableDrag(clonedAsset, data.snapTo);
                 }
                 parent.addChild(clonedAsset);
-            }
-        });
 
+            }
+            Renderer.update = true;
+        });
     },
     refresh: function() {
         this._self.removeAllChildren();
