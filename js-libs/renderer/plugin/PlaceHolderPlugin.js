@@ -85,7 +85,13 @@ var PlaceHolderPlugin = Plugin.extend({
                     if (_.isString(instance._self)) {
                         console.warn("Image fails to load", assetSrc);
                     }
-                    cb(getAssetBound(img));
+                    if(!_(img.getBounds()).isNull()){
+                        // if !=404 then call getAssetBound
+                         cb(getAssetBound(img));
+                     }else{
+                         // If the Invlid URL of asset or 404 req
+                        console.warn("Unable to find the Bounds value");
+                     }
                 });
             } else {
                 cb(getAssetBound(img));
@@ -148,7 +154,7 @@ var PlaceHolderPlugin = Plugin.extend({
         var pixelPerImg = computePixel(area, repeat || 1) - parseFloat(pad / 1.5);
 
         var param = instance.param;
-        paddedImageContainer(param.asset, pad, function(data) {
+        paddedImageContainer(param.asset, pad, function(data) { 
             param.paddedImg = data;
             var assetBounds = param.paddedImg.getBounds();
             var assetW = assetBounds.width,
@@ -172,10 +178,10 @@ var PlaceHolderPlugin = Plugin.extend({
                 if (instance._data.enabledrag) {
                     enableDrag(clonedAsset, data.snapTo);
                 }
+                Renderer.update = true;
                 parent.addChild(clonedAsset);
 
-            }
-            Renderer.update = true;
+            }           
         });
     },
     refresh: function() {
