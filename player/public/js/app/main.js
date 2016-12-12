@@ -87,11 +87,11 @@ function exitApp(pageId) {
 
 function startApp(app) {
     if (!app) app = geniePackageName;
-    navigator.startApp.start(app, function(message) {
+    if (!_.isUndefined(navigator) && !_.isUndefined(navigator.startApp)) {
+        navigator.startApp.start(app, function(message) {
             exitApp();
             TelemetryService.exit(packageName, version)
-        },
-        function(error) {
+        },function(error) {
             if (app == geniePackageName)
                 alert("Unable to start Genie App.");
             else {
@@ -99,6 +99,7 @@ function startApp(app) {
                 if (bool) cordova.plugins.market.open(app);
             }
         });
+    }
 }
 
 function contentNotAvailable() {

@@ -665,7 +665,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         }
 
                     } else
+                    if (!_.isUndefined($scope.item)) {
                         Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
+                    } else {
+                        console.warn("Content not found")
+                    }
                 }
             } else {
                 alert('Name or Launch URL not found.');
