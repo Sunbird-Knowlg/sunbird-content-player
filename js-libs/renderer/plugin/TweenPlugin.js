@@ -22,6 +22,10 @@ var TweenPlugin = AnimationPlugin.extend({
             data.y = relDims.y;
             data.width = relDims.w;
             data.height = relDims.h;
+
+            data.scaleX = plugin._self.scaleX * data.scaleX;
+            data.scaleY = plugin._self.scaleY * data.scaleY;
+
             fn += '.to(' + JSON.stringify(data) + ',' + to.duration + ', createjs.Ease.' + to.ease + ')';
         });
         fn += '.call(function() {cb({status: "success"})})';
