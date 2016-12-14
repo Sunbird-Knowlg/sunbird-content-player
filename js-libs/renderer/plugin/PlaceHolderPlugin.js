@@ -28,8 +28,8 @@ var PlaceHolderPlugin = Plugin.extend({
 
             var count = data.count;
             if (count === undefined) {
-                if (data['param-count']) count = instance.evaluateExpr(data['param-count'].trim());
-                else if (data['model-count']) count = instance._stage.getModelValue(data['model-count'].trim());
+                if (data['param-count']) count = (instance.evaluateExpr(data['param-count'].trim()) || 1);
+                else if (data['model-count']) count = (instance._stage.getModelValue(data['model-count'].trim()) || 1);
                 else count = 1;
             }
 
@@ -151,7 +151,7 @@ var PlaceHolderPlugin = Plugin.extend({
 
         // This code assumes that the img aspect ratio is 1. i.e. the image is a square
         // Hardcoding the cell size adjusting factor to 1.5. Need to invent a new algorithm
-        var pixelPerImg = computePixel(area, repeat || 1) - parseFloat(pad / 1.5);
+        var pixelPerImg = computePixel(area, repeat) - parseFloat(pad / 1.5);
 
         var param = instance.param;
         paddedImageContainer(param.asset, pad, function(data) { 
