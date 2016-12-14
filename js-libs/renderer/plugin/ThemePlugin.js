@@ -159,6 +159,11 @@ var ThemePlugin = Plugin.extend({
     getAsset: function(aid) {
         return AssetManager.getAsset(this._currentStage, aid);
     },
+    getMedia: function(aid) {
+        return _.find(this._data.manifest.media, function(item) {
+            return item.id == aid;
+        });
+    },
     addChild: function(child, childPlugin) {
         var instance = this;
         child.on('sceneenter', function() {
