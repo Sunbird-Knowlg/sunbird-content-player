@@ -23,7 +23,7 @@ var stack = new Array(),
 // TODO:have to remove appState and setContentDataCb in future.
 // Used in only Authoting tools
 window.setContentData = function(metadata, data, configuration) {   
-    if (_.isUndefined(metadata)) {
+    if (!_.isUndefined(metadata)) {
         content.metadata = metadata;
     } else {
         content.metadata = defaultMetadata;
@@ -655,7 +655,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         }
 
                     } else
+                    if (!_.isUndefined($scope.item)) {
                         Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
+                    } else {
+                        console.warn("Content not found")
+                    }
                 }
             } else {
                 alert('Name or Launch URL not found.');

@@ -75,7 +75,7 @@ var OptionPlugin = Plugin.extend({
         if(this._modelValue.selected === true) {
           this.addShadow();
         }
-        this._self.on('click', function(event) {            
+        this._self.on('click', function(event) {
             var eventData = {};
             var val = instance._parent.selectOption(instance);
             OverlayManager.handleSubmit();
@@ -185,7 +185,6 @@ var OptionPlugin = Plugin.extend({
                                 if (this.y >= y && (this.y + this.height) <= maxY) {
                                     this._mapedTo = snapTo[i];
                                     snapSuccess = true;
-                                    OverlayManager.handleSubmit();
                                 }
                             }
                         }
@@ -202,7 +201,6 @@ var OptionPlugin = Plugin.extend({
                     if (this.x >= x && (this.x + this.width) <= maxX) {
                         if (this.y >= y && (this.y + this.height) <= maxY) {
                             snapSuccess = true;
-                            OverlayManager.handleSubmit();
                         }
                     }
                 }
@@ -268,6 +266,7 @@ var OptionPlugin = Plugin.extend({
                     }
                     plugin._answer = instance;
                 }
+                OverlayManager.handleSubmit();
 
                  if(!(("undefined" != typeof drop_idx) && ("" !== drop_idx))) {
                     // instance._parent.setAnswer(instance, undefined);

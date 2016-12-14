@@ -24,7 +24,7 @@ TelemetryService = {
         var localStorageInstance = TelemetryService.getLocalStorageInstance();
         if(localStorageInstance) {
             TelemetryService.setTelemetryService(localStorageInstance, gameData);
-        }        
+        }
         return new Promise(function(resolve, reject) {
             if (!TelemetryService.instance) {
                 TelemetryService._user = user;
@@ -95,7 +95,6 @@ TelemetryService = {
         TelemetryService.instance.exitApp();
     },
     flushEvent: function(event, apiName) {
-        console.log("TelemetryService flushEvent", event);
         TelemetryService._data.push(event);
         if (event)
             event.flush(apiName);
@@ -123,13 +122,13 @@ TelemetryService = {
                 var teEndevent = TelemetryService.instance.createEvent("OE_END", {}).start();
                 teEndevent.startTime = end[end.length - 1].startTime;
                 TelemetryService.instance._end.push(teEndevent);
-            }          
+            }
         }else{
             console.info("Game id is not same",gameData.id);
         }
     },
     getLocalStorageInstance: function() {
-        var telemetryData = JSON.parse(localStorage.getItem("TelemetryService"));     
+        var telemetryData = JSON.parse(localStorage.getItem("TelemetryService"));
         return telemetryData;
     },
     start: function(id, ver) {
@@ -220,8 +219,6 @@ TelemetryService = {
                 for(var i = 0; i < len; i++)
                     TelemetryService.end();
             }
-            // if ("undefined" !=  event && event._isStarted)
-            //     TelemetryService.end(); 
             if(_.isEmpty(TelemetryService.instance._end)) {
                 TelemetryService.isActive = false;
             }
@@ -233,7 +230,7 @@ TelemetryService = {
              'message': error,
              'time': getCurrentTime()
          }
-         // change this to write to file??
+     // change this to write to file??
      console.log('TelemetryService Error:', JSON.stringify(data));
      // create the event and Dispatch the Event
      var evt = document.createEvent('Event');

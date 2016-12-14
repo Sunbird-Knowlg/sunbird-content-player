@@ -217,7 +217,6 @@
 		<text x="0" y="13" w="100" h="5" fontsize="2vw" align="center">param="overlayNext" value="off" scope="stage"</text>
 		<text x="0" y="18" w="100" h="5" fontsize="2vw" align="center">param="overlayPrevious" value="off" scope="stage"</text>
 		<text x="0" y="23" w="100" h="5" fontsize="2vw" align="center">param="overlaySubmit" value="off" scope="stage"</text>
-		<text x="10" y="95" w="10" h="5" fontsize="28">Scene 4</text>
 		<embed template="item" var-item="item" x="10" y="23" w="80" h="75"/>
 		<image asset="validate" x="93" y="18" w="5" h="8"/>
 	    <shape id="submitShape" type="rect" x="90" y="18" w="10" h="15" hitArea="true">

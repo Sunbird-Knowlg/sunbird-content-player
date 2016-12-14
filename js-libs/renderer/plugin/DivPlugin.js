@@ -19,6 +19,18 @@ var DivPlugin = HTMLPlugin.extend({
         var parentDiv = document.getElementById(Renderer.divIds.gameArea);
         parentDiv.insertBefore(div, parentDiv.childNodes[0]);
 
+        // Value of the text
+        var textStr = '';
+        if (data.$t || data.__text) {
+            textStr = (data.$t || data.__text);
+        } else if (data.model) {
+            textStr = (this._stage.getModelValue(data.model) || '');
+        } else if (data.param) {
+            textStr = (this.getParam(data.param.trim()) || '');
+        }
+
+        var innerHtml = (data.__cdata || textStr);
+
         // TODO: need to check child events working with the current div and it's children (if id is provided.)
         // TODO: get the data from model - like how we are getting the JSON data for scene title.
         jQuery("#" + data.id).append(data.__cdata);
