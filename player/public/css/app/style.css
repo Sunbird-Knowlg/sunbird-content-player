@@ -166,10 +166,9 @@ body{
 .gc-ep-title{
     width: 100%;
     text-transform: uppercase;
-    padding: 2% 10% 1%;
+    padding: 1% 0%;
     font-size: 1.8em;
     text-align: center;
-    height: 40px;
 }
 
 .menu-overlay {
@@ -184,7 +183,6 @@ body{
 .icon-font {
     font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
     color: #FFFFFF;
-    line-height: 1.2em;
     text-align: center;
 }
 
@@ -608,6 +606,7 @@ body{
     width: 100%;
     text-align: center;
     color: #ffffff;
+    margin-top: -1%;
 }
 
 .gc-ep-cont{
@@ -712,7 +711,7 @@ body{
 
 .gc-ep-content-holder{
     position: absolute;
-    top: 26.5%;
+    top: 24.5%;
     width: 84%;
     height: 62%;
     margin: 0 9.4%;
@@ -721,7 +720,7 @@ body{
 
 .gc-ep-footer-icons{
     display: inline-block;
-    width: 35%;
+    width: 60%;
     height: 100%;
     margin: 0 -5%;
 }
