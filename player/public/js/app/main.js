@@ -150,12 +150,14 @@ function startTelemetry(id,ver) {
     TelemetryService.start(id,ver);
     if (!_.isUndefined(TelemetryService.instance)) {
         localstorageFunction("TelemetryService", TelemetryService, 'setItem');
-        /*var instance ={};
-        instance = _.clone(TelemetryService.instance);
-        instance._start= TelemetryService.instance._start;
-        instance._end = TelemetryService.instance._end;
-        TelemetryService.instance = instance;*/
         localstorageFunction("_end", TelemetryService.instance._end, 'setItem');
         localstorageFunction("_start", TelemetryService.instance._start, 'setItem');
     }
+}
+function getAsseturl(content) {
+    var content_type = content.mimeType == 'application/vnd.ekstep.html-archive' ? "html/" : "ecml/";
+    var path = window.location.origin + AppConfig.S3_content_host + content_type;
+    path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
+    return path;
+
 }

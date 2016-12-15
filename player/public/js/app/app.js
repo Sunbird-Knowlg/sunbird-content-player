@@ -545,7 +545,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if (_.isUndefined($rootScope.collection)) {
                 localstorageFunction('Collection', undefined, 'removeItem');
             }
-            data.status = "ready";
+            data.isReady = "ready";
             $rootScope.safeApply(function() {
                 $scope.item = data;
                 $rootScope.content = data;
@@ -623,7 +623,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                     var launchData = {"env": envHTML, "envpath": AppConfig[AppConfig.flavor]};
                     //Adding contentId and LaunchData as query parameter
-                    var path = $scope.item.baseDir + '/index.html?contentId='+ $stateParams.itemId + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
+                    isbrowserpreview = true;
+                    var prefix_url = isbrowserpreview ? getAsseturl($rootScope.content) : $scope.item.baseDir;
+                  
+                    var path = prefix_url + '/index.html?contentId='+ $stateParams.itemId + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
 
                     //Adding config as query parameter for HTML content
                     if($scope.item.config){
@@ -634,12 +637,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     // For local development of HTML flavor should not sent in URL
                     path += "&flavor=" + AppConfig.flavor;
 
-                    if (isMobile){
+                    if (isMobile) {
                         console.log("Opening through cordova custom webview.");
                         cordova.InAppBrowser.open(path, '_self', 'location=no,hardwareback=no');
-                    }else{
+                    } else {
                         console.log("Opening through window.open");
-                        window.open(path, '_self');
+                        window.open(path, '_self'); 
                     }
                 } else {
                     if (collectionChildren) {
