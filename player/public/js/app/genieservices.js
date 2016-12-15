@@ -208,7 +208,11 @@ genieservice_portal = {
         if ("undefined" != typeof cordova) {
             var url ="file:///android_asset/www/index.html"+pageUrl;
             window.location.href = url;
-        } else {
+        } else if(isbrowserpreview) {
+            // BrowserPreview URL synatx
+          /* https://dev.ekstep.in/assets/public/preview/dev/preview.html?webview=true#/content/end/do_10097197*/
+          window.location = window.location.origin + window.location.pathname +"?webview=true"+ pageUrl;
+        }else{
             window.location ="/"+ pageUrl;
         }
     },
@@ -311,11 +315,15 @@ genieservice_html = {
         var endPageStateUrl = '#/content/end/' + content.identifier;
         this.showPage(endPageStateUrl);
     },
-    showPage: function(pageUrl){
+     showPage: function(pageUrl){
         if ("undefined" != typeof cordova) {
             var url ="file:///android_asset/www/index.html"+pageUrl;
             window.location.href = url;
-        } else {
+        } else if(isbrowserpreview) {
+            // BrowserPreview URL synatx
+          /* https://dev.ekstep.in/assets/public/preview/dev/preview.html?webview=true#/content/end/do_10097197*/
+          window.location = window.location.origin + window.location.pathname +"?webview=true"+ pageUrl;
+        }else{
             window.location ="/"+ pageUrl;
         }
     },
