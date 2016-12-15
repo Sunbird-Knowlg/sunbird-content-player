@@ -204,16 +204,18 @@ genieservice_portal = {
         var endPageStateUrl = '#/content/end/' + content.identifier;
         this.showPage(endPageStateUrl);
     },
-    showPage: function(pageUrl){
+    showPage: function(pageUrl) {
         if ("undefined" != typeof cordova) {
-            var url ="file:///android_asset/www/index.html"+pageUrl;
+            var url = "file:///android_asset/www/index.html" + pageUrl;
             window.location.href = url;
-        } else if(isbrowserpreview) {
-            // BrowserPreview URL synatx
-          /* https://dev.ekstep.in/assets/public/preview/dev/preview.html?webview=true#/content/end/do_10097197*/
-          window.location = window.location.origin + window.location.pathname +"?webview=true"+ pageUrl;
-        }else{
-            window.location ="/"+ pageUrl;
+        } else if (self != top) {
+            // if the it is Iframe then fallow the below url syntax
+            /*https://dev.ekstep.in/assets/public/preview/dev/preview.html?webview=true#/content/end/do_10097197"*/
+            var iframe_url = window.frameElement.src;
+            iframe_url = iframe_url.indexOf("&") != -1 ? iframe_url.substring(0, iframe_url.indexOf("&")) : iframe_url;
+            window.location = iframe_url + pageUrl;
+        } else {
+            window.location = "/" + pageUrl;
         }
     },
     getLocalStorageContent: function() {
@@ -314,17 +316,19 @@ genieservice_html = {
         }
         var endPageStateUrl = '#/content/end/' + content.identifier;
         this.showPage(endPageStateUrl);
-    },
-     showPage: function(pageUrl){
+    }, 
+    showPage: function(pageUrl) {
         if ("undefined" != typeof cordova) {
-            var url ="file:///android_asset/www/index.html"+pageUrl;
+            var url = "file:///android_asset/www/index.html" + pageUrl;
             window.location.href = url;
-        } else if(isbrowserpreview) {
-            // BrowserPreview URL synatx
-          /* https://dev.ekstep.in/assets/public/preview/dev/preview.html?webview=true#/content/end/do_10097197*/
-          window.location = window.location.origin + window.location.pathname +"?webview=true"+ pageUrl;
-        }else{
-            window.location ="/"+ pageUrl;
+        } else if (self != top) {
+            // if the it is Iframe then fallow the below url syntax
+            /*https://dev.ekstep.in/assets/public/preview/dev/preview.html?webview=true#/content/end/do_10097197"*/
+            var iframe_url = window.frameElement.src;
+            iframe_url = iframe_url.indexOf("&") != -1 ? iframe_url.substring(0, iframe_url.indexOf("&")) : iframe_url;
+            window.location = iframe_url + pageUrl;
+        } else {
+            window.location = "/" + pageUrl;
         }
     },
     getLocalStorageContent: function() {
