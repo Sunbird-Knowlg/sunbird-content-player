@@ -23,7 +23,7 @@ var stack = new Array(),
 // TODO:have to remove appState and setContentDataCb in future.
 // Used in only Authoting tools
 window.setContentData = function(metadata, data, configuration) {   
-    if (!_.isUndefined(metadata)) {
+    if (!_.isUndefined(metadata) && !_.isNull(metadata)) {
         content.metadata = metadata;
     } else {
         content.metadata = defaultMetadata;
