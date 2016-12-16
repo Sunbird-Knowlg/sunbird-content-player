@@ -29,6 +29,8 @@ OverlayManager = {
         EventBus.addEventListener("actionNavigatePrevious", this.navigatePrevious, this);
         EventBus.addEventListener("actionDefaultSubmit", this.defaultSubmit, this);
         EventBus.addEventListener("actionReload", this.actionReload, this);
+        if (_.isUndefined(EventBus.listeners.actionReplay) || (_.isArray(EventBus.listeners.actionReplay) && EventBus.listeners.actionReplay.length == 0))
+          EventBus.addEventListener("actionReplay", this.actionReplay, this);
     },
     setStageData: function () {
       EventBus.dispatch("sceneEnter", Renderer.theme._currentScene);
@@ -270,16 +272,15 @@ OverlayManager = {
       action.transitionType = navType;
       CommandManager.handle(action);
     },
-    actionReload: function(){
+    actionReload: function() {
       if (this._reloadInProgress) {
         // continuous reload clicks was handling the stage
         // this is to avoid stage crash
         return;
       }
-      var currentStage, plugin;
+      var currentStage = Renderer.theme._currentStage, plugin;
       this._reloadInProgress = true;
       setTimeout(function() {
-        currentStage = Renderer.theme._currentStage;
         plugin = PluginManager.getPluginObject(currentStage);
         if (plugin) plugin.reload({
             type: "command",
@@ -291,5 +292,21 @@ OverlayManager = {
         });
       }, 500);
       TelemetryService.interact("TOUCH", "gc_reload", "TOUCH", {stageId : currentStage});
+    },
+    actionReplay: function(){
+      var version = TelemetryService.getGameVer();
+      TelemetryService.end();
+      localstorageFunction('TelemetryService', undefined, "removeItem");
+      if (!_.isUndefined(appState) && appState.current.name == 'showContentEnd') {
+        appState.go('playContent', {
+          'itemId': GlobalContext.currentContentId
+        });
+      } else {
+        Renderer.theme.removeHtmlElements();
+        Renderer.theme.reRender();
+      }
+      if(GlobalContext.currentContentId && version){
+        startTelemetry(GlobalContext.currentContentId,version);
+      }
     }
 }
