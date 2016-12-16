@@ -520,7 +520,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             jQuery('#loading').hide();
             ContentService.getContent(content)
                 .then(function(data) {
-                    // 
                     if (_.isUndefined($rootScope.collection)) {
                         localstorageFunction('Collection', undefined, 'removeItem');
                     }
@@ -534,6 +533,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.setContentMetadata = function(data) {
+            localstorageFunction('content', data, 'setItem');
             GlobalContext.currentContentId = data.identifier;
             GlobalContext.currentContentMimeType = data.mimeType;
             if (_.isUndefined(data.localData)) {
