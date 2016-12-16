@@ -338,6 +338,15 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 controller: 'ContentCtrl'
             })
             
+    }).controller('BaseCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
+
+        $rootScope.replayContent = function(){
+            TelemetryService.interact("TOUCH", "gc_replay", "TOUCH", {
+                stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
+            });
+            EventBus.dispatch('actionReplay');
+        }
+
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $rootScope.pageId = 'ContentApp-Collection';
         var id = $stateParams.id;
@@ -1029,7 +1038,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             jQuery(".gc-menu").animate({
                 "marginLeft": ["-31%", 'easeOutExpo']
             }, 700, function() {});
-            jQuery('.menu-overlay').css('display', 'none');
         }
 
         $scope.init();
@@ -1248,7 +1256,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 }
 
                 /*
-                 * If meny is getting hide, then hide teacher instructions as well
+                 * If menu is getting hide, then hide teacher instructions as well
                  */
                 $scope.$watch("menuOpened", function() {
                     if (!$rootScope.menuOpened) {
@@ -1291,37 +1299,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/></a>',
             link: function(scope) {
                 scope.restartContent = function() {
-                    var content = $rootScope.content;
-                    jQuery('#loading').show();
-                    jQuery("#progressBar").width(0);
-                    jQuery('#loadingText').text(content.name);
-                    startProgressBar(40, 0.6);
-
-                    TelemetryService.interact("TOUCH", "gc_reply", "TOUCH", {
-                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
-                    });
-
-                    if ($stateParams.itemId != content.identifier) {
-                        $state.go('playContent', {
-                            'itemId': content.identifier
-                        });
-                    } else {
-                        setTimeout(function() {
-                            scope.hideMenu();
-                            Renderer.theme._self.removeAllChildren();
-                            Renderer.theme.removeHtmlElements();
-                            Renderer.theme.reRender();
-                        },100)
-                    }
-                                        
-                    var gameId = TelemetryService.getGameId();
-                    var version = TelemetryService.getGameVer();
-                    TelemetryService.end();
-                    localstorageFunction('TelemetryService',undefined,"removeItem");
-                    if(gameId && version){
-                        startTelemetry(gameId,version);
-                    }
-                    
+                    $rootScope.replayContent();
+                    AudioManager.unmute();
+                    if (!_.isUndefined(scope.hideMenu) && scope.menuOpened)
+                        scope.hideMenu();
                 }
             }
         }

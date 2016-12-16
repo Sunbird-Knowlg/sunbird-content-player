@@ -133,6 +133,7 @@ var ThemePlugin = Plugin.extend({
         }
     },
     reRender: function() {
+        this._contentParams = {};
         this._self.clear();
         this._self.removeAllChildren();
         this.render();
