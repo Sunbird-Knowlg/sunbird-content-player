@@ -74,8 +74,8 @@ var PlaceHolderPlugin = Plugin.extend({
     },
     getAssetBound: function (img, pad) {
         var imgBounds = img.getBounds();
-        imgW = imgBounds.width;
-        imgH = imgBounds.height;
+        var imgW = imgBounds.width;
+        var imgH = imgBounds.height;
         img.x = parseFloat(pad / 2);
         img.y = parseFloat(pad / 2);
         var imgCont = new createjs.Container();
@@ -87,28 +87,25 @@ var PlaceHolderPlugin = Plugin.extend({
         return Math.floor(Math.sqrt(parseFloat(area / repeat)))
     },
     renderGridLayout: function(parent, instance, data) {
-        var paddedImageContainer = function(assetId, cb) {
-            var img, imgW, imgH;
-            var assetSrc = instance._theme.getAsset(assetId);
-            img = new createjs.Bitmap(assetSrc);
-            if (_(img.getBounds()).isNull()) {
-                AssetManager.strategy.loadAsset(instance._stage._data.id, assetId, assetSrc, function() {
-                    if (_.isString(instance._self)) {
-                        console.warn("Image fails to load", assetSrc);
-                    }
-                    img = new createjs.Bitmap(assetSrc);
-                    if(!_(img.getBounds()).isNull()){
-                        // if !=404 then call getAssetBound
-                         cb(parent, img, instance);
-                     }else{
-                         // If the Invlid URL of asset or 404 req
-                        console.warn("Unable to find the Bounds value");
-                     }
-                });
-            } else {
-                cb(parent, img, instance);
-            }
-        }
+        var assetId = instance.param.asset;
+        var assetSrc = instance._theme.getAsset(assetId);
+        var img = new createjs.Bitmap(assetSrc);
+        
+        var getImage = function(cb) {          
+            AssetManager.strategy.loadAsset(instance._stage._data.id, assetId, assetSrc, function() {
+                assetSrc = instance._theme.getAsset(assetId);
+                img = new createjs.Bitmap(assetSrc);
+                if(!_.isNull(img.getBounds())){
+                    // if !=404 then call getAssetBound
+                    // Image is available, Render image inside grid
+                    cb();
+                 }else{
+                    // If the Invlid URL of asset or 404 req
+                    console.warn("Unable to find the Bounds value");
+                 }
+            });
+        };
+
         var enableDrag = function(asset, snapTo) {
             asset.cursor = "pointer";
             asset.on("mousedown", function(evt) {
@@ -143,46 +140,55 @@ var PlaceHolderPlugin = Plugin.extend({
                     }
                 });
             }
+        };
+
+        var renderGridImages = function() {
+          // Needs Improvement
+          var x = 0,
+              y = 0,
+              area = instance.dimensions().w * instance.dimensions().h,
+              pad = instance.dimensions().pad || 0,
+              repeat = instance.param.count;
+          // This code assumes that the img aspect ratio is 1. i.e. the image is a square
+          // Hardcoding the cell size adjusting factor to 1.5. Need to invent a new algorithm
+          var pixelPerImg = instance.computePixel(area, repeat) - parseFloat(pad / 1.5);
+          var param = instance.param;
+          var paddedImg = instance.getAssetBound(img, pad);
+          var assetBounds = paddedImg.getBounds();
+          var assetW = assetBounds.width,
+              assetH = assetBounds.height;
+          paddedImg.scaleY = parseFloat(pixelPerImg / assetH);
+          paddedImg.scaleX = parseFloat(pixelPerImg / assetW);
+          paddedImg.x = x + pad;
+          paddedImg.y = y + pad;
+          var instanceBoundary = 0 + instance.dimensions().w;
+          for (var i = 0; i < param.count; i++) {
+              var clonedAsset = paddedImg.clone(true);
+              if ((x + pixelPerImg) > instanceBoundary) {
+                  x = 0;
+                  y += pixelPerImg + pad;
+              }
+              clonedAsset.x = x + pad;
+              clonedAsset.y = y + pad;
+              clonedAsset.origX = x + pad;
+              clonedAsset.origY = y + pad;
+              x += pixelPerImg;
+              if (instance._data.enabledrag) {
+                  enableDrag(clonedAsset, data.snapTo);
+              }
+              Renderer.update = true;
+              parent.addChild(clonedAsset);
+          }
+        };
+
+        if (_.isNull(img.getBounds())) {
+            // image is not avialbel. Get image from loader and then start render images in grid
+            getImage(renderGridImages);
+        } else {
+            // Image is avialable, hence direclty render image inside grid
+            renderGridImages();
         }
-        paddedImageContainer(instance.param.asset, instance.paddedImageContainerCB);
-    },
-    paddedImageContainerCB: function (parent, img, instance, param) {
-      // Needs Improvement
-      var x = 0,
-          y = 0,
-          area = instance.dimensions().w * instance.dimensions().h,
-          pad = instance.dimensions().pad || 0,
-          repeat = instance.param.count;
-      // This code assumes that the img aspect ratio is 1. i.e. the image is a square
-      // Hardcoding the cell size adjusting factor to 1.5. Need to invent a new algorithm
-      var pixelPerImg = instance.computePixel(area, repeat) - parseFloat(pad / 1.5);
-      var param = instance.param;
-      var paddedImg = instance.getAssetBound(img, pad);
-      var assetBounds = paddedImg.getBounds();
-      var assetW = assetBounds.width,
-          assetH = assetBounds.height;
-      paddedImg.scaleY = parseFloat(pixelPerImg / assetH);
-      paddedImg.scaleX = parseFloat(pixelPerImg / assetW);
-      paddedImg.x = x + pad;
-      paddedImg.y = y + pad;
-      var instanceBoundary = 0 + instance.dimensions().w;
-      for (i = 0; i < param.count; i++) {
-          var clonedAsset = paddedImg.clone(true);
-          if ((x + pixelPerImg) > instanceBoundary) {
-              x = 0;
-              y += pixelPerImg + pad;
-          }
-          clonedAsset.x = x + pad;
-          clonedAsset.y = y + pad;
-          clonedAsset.origX = x + pad;
-          clonedAsset.origY = y + pad;
-          x += pixelPerImg;
-          if (instance._data.enabledrag) {
-              enableDrag(clonedAsset, data.snapTo);
-          }
-          Renderer.update = true;
-          parent.addChild(clonedAsset);
-      }
+        
     },
     refresh: function() {
         this._self.removeAllChildren();
