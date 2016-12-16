@@ -350,13 +350,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $rootScope.pageId = 'ContentApp-Collection';
         var id = $stateParams.id;
-
-        // $ionicModal.fromTemplateUrl('about.html', {
-        //     scope: $scope,
-        //     animation: 'slide-in-up'
-        // }).then(function(modal) {
-        //     $scope.aboutModal = modal;
-        // });
         $scope.version = GlobalContext.game.ver;
         $scope.flavor = GlobalContext.config.flavor;
         $scope.currentUser = GlobalContext.user;
@@ -520,10 +513,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $state.go('playContent', {
                 'itemId': content.identifier
             });
-            jQuery('#loadingText').text(content.name);
-            jQuery("#progressBar").width(0);
-            jQuery('#loading').show();
-            startProgressBar(40, 0.6);
+            startProgressBar(40, 0.6,content.name);
         };
 
         $scope.getContentMetadata = function(content) {
