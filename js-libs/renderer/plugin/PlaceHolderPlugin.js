@@ -30,7 +30,6 @@ var PlaceHolderPlugin = Plugin.extend({
             if (count === undefined) {
                 if (data['param-count']) count = instance.evaluateExpr(data['param-count'].trim());
                 else if (data['model-count']) count = instance._stage.getModelValue(data['model-count'].trim());
-                else count = 1;
             }
             if (count === undefined || count === "") count = 1;
 
@@ -90,8 +89,8 @@ var PlaceHolderPlugin = Plugin.extend({
         var assetId = instance.param.asset;
         var assetSrc = instance._theme.getAsset(assetId);
         var img = new createjs.Bitmap(assetSrc);
-        
-        var getImage = function(cb) {          
+
+        var getImage = function(cb) {
             AssetManager.strategy.loadAsset(instance._stage._data.id, assetId, assetSrc, function() {
                 assetSrc = instance._theme.getAsset(assetId);
                 img = new createjs.Bitmap(assetSrc);
@@ -188,7 +187,7 @@ var PlaceHolderPlugin = Plugin.extend({
             // Image is avialable, hence direclty render image inside grid
             renderGridImages();
         }
-        
+
     },
     refresh: function() {
         this._self.removeAllChildren();
