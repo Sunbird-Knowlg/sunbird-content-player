@@ -17,8 +17,8 @@ var stack = new Array(),
         showHTMLPages: true
     },
     isbrowserpreview = getUrlParameter("webview"),
-    setContentDataCb = undefined,
-    appState = undefined;
+    setContentDataCb = undefined;
+    //appState = undefined;
 
 // TODO:have to remove appState and setContentDataCb in future.
 // Used in only Authoting tools
@@ -38,15 +38,7 @@ window.setContentData = function(metadata, data, configuration) {
         config.showStartPage = false;
         config.showEndPage = false;
     }
-    localstorageFunction('content', content.metadata, 'setItem');
-
-    if(appState) {
-        updateContentData(appState)
-    } else {
-        setContentDataCb =  function($state){
-            updateContentData($state);
-        }        
-    }
+    //localstorageFunction('content', content.metadata, 'setItem');   
 }
 
 function updateContentData($state){
@@ -54,19 +46,26 @@ function updateContentData($state){
         console.warn("updateContentData($state) - $state is not defined.");
         return;
     }
-    if (!config.showStartPage && content && content.metadata) {
-        $state.go('playContent', {
-            'itemId': content.metadata.identifier
-        });
-    } else if (content && content.metadata) {
-        newContentId = content.metadata.identifier;
-        if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
-            $state.go('showContent', { "contentId": newContentId });
-        } else if ((COLLECTION_MIMETYPE == content.metadata.mimeType) ||
-            (ANDROID_PKG_MIMETYPE == content.metadata.mimeType && content.metadata.code == packageName)) {
-            $state.go('contentList', { "id": newContentId });
+
+    if (content && content.metadata) {
+        var contentId = content.metadata.identifier;
+        if(!config.showStartPage ){
+            $state.go('playContent', {
+                'itemId': contentId
+            });            
+        } else {
+            if ((COLLECTION_MIMETYPE == content.metadata.mimeType) ||
+                (ANDROID_PKG_MIMETYPE == content.metadata.mimeType && content.metadata.code == packageName)) {
+                $state.go('contentList', { "id": contentId });
+            } else {
+                if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
+                    $state.go('showContent', { "contentId": contentId });
+                } else {
+                    console.warn("Content mimetype doesn't supported by GenieCanvas.");
+                } 
+            }           
         }
-    }
+    } 
 }
 
 function getContentObj(data) {
@@ -180,7 +179,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
-            appState = $state;
+            //appState = $state;
             
             console.log('ionic platform is ready...');
             if ("undefined" == typeof Promise) {
@@ -255,23 +254,25 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                // localPreview is a global variable defined in index.html file inside a story,
                 if ("undefined" != typeof localPreview && "local" == localPreview)
                     return;
-                var id = getUrlParameter("id");
                 if(isbrowserpreview) {
                     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-                    if (!_.isUndefined(setContentDataCb)) {
-                        setContentDataCb($state);
-                    }
-                    if ("undefined" != typeof $location && id) {
-                        ContentService.getContentMetadata(id)
+                    // if (!_.isUndefined(setContentDataCb)) {
+                    //     setContentDataCb($state);
+                    // }
+
+                    var urlContentId = getUrlParameter("id");
+                    if(urlContentId) {
+                        // Launching content by taking IFRAME url parameter of contentID
+                        ContentService.getContentMetadata(urlContentId)
                             .then(function(data) {
                                 content["metadata"] = data;
-                                newContentId = content.metadata.identifier;
-                                TelemetryService.init({ id: content.metadata.identifier, ver: "1.0" }, {}).then(function() {
+                                var contentId = content.metadata.identifier;
+                                TelemetryService.init({ id: contentId, ver: "1.0" }, {}).then(function() {
                                     if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
-                                        $state.go('showContent', { "contentId": newContentId });
+                                        $state.go('showContent', { "contentId": contentId });
                                     } else if ((COLLECTION_MIMETYPE == content.metadata.mimeType) ||
                                         (ANDROID_PKG_MIMETYPE == content.metadata.mimeType && content.metadata.code == packageName)) {
-                                        $state.go('contentList', { "id": newContentId });
+                                        $state.go('contentList', { "id": contentId });
                                     }
                                 }).catch(function(error) {
                                     console.log('TelemetryService init failed');
@@ -293,6 +294,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                                 console.info("contentNotAvailable : ", err);
                                 contentNotAvailable();
                             });
+                    } else {
+                        updateContentData($state);
                     }
                 } else {
                     if($state.current.name == appConstants.stateShowContentEnd){

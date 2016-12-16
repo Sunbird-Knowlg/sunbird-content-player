@@ -145,6 +145,53 @@ function objectAssign() {
     }
 }
 
+// LS - LocalStorage
+var CanvasLS = {
+    isHtmlContent: false,
+    isCollection: false,
+    content: {},
+    collection: {},
+    telemetryService: {},
+    startTelemetry: function(){
+
+    },
+    cleanTelemetry: function(){
+
+    },
+    setItem: function(param, data){
+        this[param] = JSON.stringify(data)
+    },
+    getItem: function(param){
+        return JSON.parse(this[param]);
+    },
+    removeItem: function(param){
+        this[param] = {};
+        //localStorage.removeItem(canvasLS.param);
+    },
+    save: function(){
+        // Storing into localStorage
+        var thisData = {};
+        thisData.content = this.content;
+        thisData.collection = this.collection;
+        thisData.telemetryService = this.telemetryService;
+        thisData.isCollection = this.isCollection;
+        thisData.isHtmlContent = this.isHtmlContent;
+
+        localStorage.setItem("canvasLS", JSON.stringify(thisData));
+    },
+    update: function(){
+        //gettting from localstorage and updating all its values
+        var lsData = localStorage.getItem("canvasLS");
+        if(lsData){
+            lsData = JSON.parse(lsData);
+            var lsKeys = _.keys(lsData);
+            _.each(lsKeys, function(key){
+                this[key] = lsData[key];
+            })
+        }
+    }
+}
+
 function startTelemetry(id,ver) {
     localstorageFunction("TelemetryService", undefined, 'removeItem');
     localstorageFunction("_start", undefined, 'removeItem');
@@ -157,6 +204,7 @@ function startTelemetry(id,ver) {
         localstorageFunction("_start", TelemetryService.instance._start, 'setItem');
     }
 }
+
 function getAsseturl(content) {
     var content_type = content.mimeType == 'application/vnd.ekstep.html-archive' ? "html/" : "ecml/";
     var path = window.location.origin + AppConfig.S3_content_host + content_type;

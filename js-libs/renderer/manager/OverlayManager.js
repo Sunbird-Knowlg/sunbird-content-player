@@ -33,14 +33,16 @@ OverlayManager = {
           EventBus.addEventListener("actionReplay", this.actionReplay, this);
     },
     setStageData: function () {
-      EventBus.dispatch("sceneEnter", Renderer.theme._currentScene);
+      if (!_.isUndefined(Renderer.theme)) {
+        EventBus.dispatch("sceneEnter", Renderer.theme._currentScene);
+      }
     },
     setContentConfig: function() {
         var evtLenth = this._eventsArray.length;
         for (i = 0; i < evtLenth; i++) {
             var eventName = this._eventsArray[i];
             var val;
-            if (!_.isUndefined(Renderer.theme._currentScene)){
+            if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene)){
               val = Renderer.theme._currentScene.getParam(eventName);
             }
             if (!_.isUndefined(val)) {
@@ -57,7 +59,7 @@ OverlayManager = {
         for (i = 0; i < evtLenth; i++) {
             var eventName = this._eventsArray[i];
             var val;
-            if (!_.isUndefined(Renderer.theme._currentScene)){
+            if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene)){
               val = Renderer.theme._currentScene.getParam(eventName);
             }
             if (_.isUndefined(val)) {
@@ -92,7 +94,7 @@ OverlayManager = {
     handleSubmit: function(){
       var eventName = this._constants.overlaySubmit;
       var val = this._stageConfig[eventName];
-      if(!_.isUndefined(Renderer.theme._currentScene) && Renderer.theme._currentScene.isItemScene()){
+      if(!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene) && Renderer.theme._currentScene.isItemScene()){
         if(val == "on"){
           var enableEval = Renderer.theme._currentScene.isReadyToEvaluate();
           val = (enableEval === true) ? "enable" : "disable";
@@ -202,7 +204,7 @@ OverlayManager = {
 		},
     handleEcmlElements: function(eventName, val) {
         //Switch case to handle ECML elements(Next, Previous, Submit, etc..)
-        if (!_.isUndefined(Renderer.theme._currentScene)) {
+        if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene)) {
           var stage_data = Renderer.theme.getStagesToPreLoad(Renderer.theme._currentScene._data);
   				var nextStageId = stage_data.next;
   				var prevStageId = stage_data.prev;
