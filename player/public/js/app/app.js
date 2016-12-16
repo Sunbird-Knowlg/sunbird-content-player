@@ -632,7 +632,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                     var launchData = {"env": envHTML, "envpath": AppConfig[AppConfig.flavor]};
                     //Adding contentId and LaunchData as query parameter
-                    isbrowserpreview = true;
+                    
                     var prefix_url = isbrowserpreview ? getAsseturl($rootScope.content) : $scope.item.baseDir;
                   
                     var path = prefix_url + '/index.html?contentId='+ $stateParams.itemId + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);

@@ -51,6 +51,8 @@
     function loadContentWithId() {
         var iframe = document.getElementById('contentIFrame');
         var id = document.getElementById("identifier").value;
+        console.info("window.location:",window.location);
+        console.info("iframe src",iframe.src);
         iframe.src = " https://dev.ekstep.in/assets/public/preview/dev/preview.html?webview=true&id=" + id;
     }
     </script>
