@@ -302,6 +302,7 @@ body{
     height: 75%;
     margin: 35% 7%;
     z-index: 2;
+    text-transform: initial;
 }
 
 .inst-message-cont p {
