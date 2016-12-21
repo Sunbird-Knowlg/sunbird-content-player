@@ -219,6 +219,10 @@ LoadByStageStrategy = Class.extend({
     },
     loadAsset: function(stageId, assetId, path, cb) {
         var loader = this.loaders[stageId];
+        if (_.isUndefined(assetId) || _.isUndefined(path)) {
+            console.warn("AssetId - " + assetId +  ",  Path - " + path)
+            return
+        }
         if (loader) {
             var itemLoaded = loader.getItem(assetId);
             /*if(itemLoaded){

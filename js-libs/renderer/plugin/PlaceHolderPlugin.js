@@ -91,6 +91,10 @@ var PlaceHolderPlugin = Plugin.extend({
         var img = new createjs.Bitmap(assetSrc);
 
         var getImage = function(cb) {
+          if (_.isUndefined(assetSrc)) {
+            console.error('"' + assetId + '" Asset not found. Please check index.ecml.')
+            return
+          }
             AssetManager.strategy.loadAsset(instance._stage._data.id, assetId, assetSrc, function() {
                 assetSrc = instance._theme.getAsset(assetId);
                 img = new createjs.Bitmap(assetSrc);
