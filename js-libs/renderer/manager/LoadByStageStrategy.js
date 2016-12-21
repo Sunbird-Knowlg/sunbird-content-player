@@ -185,8 +185,8 @@ LoadByStageStrategy = Class.extend({
             if (cb) {
                 var currentStageLoader = instance.loaders[stageId];
                 // Check if loader for current satge is loaded completely
-                if (!currentStageLoader.loaded) {
-                    // if loader for current stage is not loaded, wait for loader to complete and call callback function
+                // if loader for current stage is not loaded, wait for loader to complete and call callback function
+                if(currentStageLoader.progress < 1) {
                     currentStageLoader.on("complete", function() {
                         cb();
                     })
