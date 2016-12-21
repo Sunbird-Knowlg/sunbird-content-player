@@ -238,11 +238,11 @@ LoadByStageStrategy = Class.extend({
             //Image is not intianlised to load, So loading image & adding to the loaders
             loader = this._createLoader();
             var instance = this;
-            loader.on("complete", function(instance, loader) {
+            loader.on("complete", function(event) {
                 if (_.isUndefined(instance.loaders)) {
                     instance.loaders = {};
                 }
-                instance.loaders[stageId] = loader;
+                instance.loaders[stageId] = event.target;
                 if (cb) {
                     cb();
                 }
