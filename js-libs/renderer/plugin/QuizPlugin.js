@@ -16,7 +16,7 @@ var QuizPlugin = Plugin.extend({
         this._self.x = dims.x;
         this._self.y = dims.y;
 
-        //
+        // parse config of the quiz json
         this._config = JSON.parse(data.config.__cdata);
 
         // Init the item controller
