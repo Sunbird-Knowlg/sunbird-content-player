@@ -634,7 +634,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                     // Adding Flavor(environment) as query parameter to identify HTML content showing in dev/qa/prdocution 
                     // For local development of HTML flavor should not sent in URL
-                    path += "&flavor=" + AppConfig.flavor;
+                    // adding time to aviod browser catch of HTML page
+                    path += "&flavor=" + AppConfig.flavor + "t=" + getTime();
 
                     if (isMobile) {
                         console.log("Opening through cordova custom webview.");
