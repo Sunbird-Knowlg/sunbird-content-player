@@ -104,7 +104,7 @@ var PlaceHolderPlugin = Plugin.extend({
                     cb();
                  }else{
                     // If the Invlid URL of asset or 404 req
-                    console.warn("Unable to find the Bounds value");
+                    console.warn("Unable to find the Bounds value for " + assetId +  ",  Source - " + assetSrc);
                  }
             });
         };
