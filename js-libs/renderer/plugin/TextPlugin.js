@@ -7,7 +7,7 @@ var TextPlugin = Plugin.extend({
         var fontsize = data.fontsize || 20;
         var dims = this.relativeDims();
         //var fontFace = (data.font || 'Arial');
-        if(!(_.isUndefined(data.font)) && (data.font.toLowerCase() == "verdana") || data.font.toLowerCase() == "notosans oriya"){
+        if(!(_.isUndefined(data.font)) && (data.font.toLowerCase() == "verdana" || data.font.toLowerCase() == "notosans oriya")) {
            // By default template creators are adding font as "Verdana" for template.
            // This is causing font rendering issue for other languages(tamil, bengali etc..)
            // This is fallback to support old published contents. Informed template creators not to specify any font for text element in templates
