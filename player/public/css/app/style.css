@@ -1192,3 +1192,7 @@ body{
     margin: -5% 15% 0 14%;
     line-height: 100%;
 }
+
+.gc-ep-credit {
+    margin-right: 10px;
+}
