@@ -2,45 +2,57 @@ var QuizPlugin = Plugin.extend({
     _type: 'quiz',
     _isContainer: true,
     _render: true,
-    _config: {},
-    _attributes: {},
+    _plginConfig: {},
+    _plginData: {},
+    _plginAttributes: {},
     initPlugin: function(data) {
         var instance = this;
         var fontsize = data.fontsize || 20;
-        var dims = this.relativeDims();
-
 
         // Init self container
         var dims = this.relativeDims();
         this._self = new createjs.Container();
         this._self.x = dims.x;
         this._self.y = dims.y;
+        this._self.w = dims.w;
+        this._self.h = dims.h;
 
         // parse config of the quiz json
-        this._config = JSON.parse(data.config.__cdata);
+        this._plginConfig = JSON.parse(data.config.__cdata);
+        this._plginData = JSON.parse(data.data.__cdata);
 
         // Init the item controller
-        this.initController(data);
+        this.initController();
+
+        // Invoke templates to templateMap
+        this.invokeTemplate();
 
         // Invoke the embed plugin to start rendering the templates
-        this.invokeTemplate(data);
-
-        //OverlayManager.showGoodJobFb(true);
+        this.invokeEmbed();
     },
 
-    invokeTemplate: function(data) {
-        var embedData = {};
-        embedData.w = 100;
-        embedData.h = 100;
-        embedData.x = 0;
-        embedData.y = 0;
-        embedData.template = this._config.var;
-        embedData["var-item"] = this._config.var;
-        PluginManager.invoke('embed', embedData, this, this._stage, this._theme);
+    invokeTemplate: function() {
+        var instance = this;
+        var templateType = this._plginConfig.var || "item";
+        var templateId = this._stage.getTemplate(templateType);
+        var template = this._theme._templateMap[templateId];
+        if (template === undefined) {
+          this._plginData.template.forEach(function (temp) {
+            if (temp.id) {
+              // push i.template into the collection arrey of the templates.
+              instance._theme._templateMap[temp.id] = temp;
+            }
+          });
+        }
     },
-
-    initController: function(data) {
-        var controllerName = this._config.var;
+    invokeEmbed: function(){
+      var embedData = {};
+      embedData.template = this._plginConfig.var || "item";
+      embedData["var-item"] = this._plginConfig.var || "item";
+      PluginManager.invoke('embed', embedData, this, this._stage, this._theme);
+    },
+    initController: function() {
+        var controllerName = this._plginConfig.var;
         var assessmentid = (Renderer.theme._currentStage + "_assessment");
         // var assessmentid = (this._stage._id + "_assessment");
         var stageController = this._theme._controllerMap[assessmentid];
@@ -49,8 +61,8 @@ var QuizPlugin = Plugin.extend({
         var initialized = (stageController != undefined);
         if (!initialized) {
             var controllerData = {};
-            controllerData.__cdata = data.data.__cdata;
-            controllerData.type = this._config.type;
+            controllerData.__cdata = this._plginData.controller;
+            controllerData.type = this._plginConfig.type;
             controllerData.name = assessmentid;
             controllerData.id = assessmentid;
 
