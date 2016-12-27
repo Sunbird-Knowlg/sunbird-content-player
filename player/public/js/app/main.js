@@ -145,24 +145,25 @@ function objectAssign() {
     }
 }
 
-// LS - LocalStorage
-var CanvasLS = {
+// GC - GenieCanvas
+var localStorageGC = {
     isHtmlContent: false,
     isCollection: false,
     content: {},
     collection: {},
     telemetryService: {},
-    startTelemetry: function(){
-
-    },
-    cleanTelemetry: function(){
-
-    },
     setItem: function(param, data){
-        this[param] = JSON.stringify(data)
+        if(data){
+            this[param] = JSON.stringify(data);            
+        }
     },
     getItem: function(param){
-        return JSON.parse(this[param]);
+        if(param){
+            var paramVal = this[param];
+            return JSON.parse(paramVal);            
+        }else{
+            return;
+        }
     },
     removeItem: function(param){
         this[param] = {};
