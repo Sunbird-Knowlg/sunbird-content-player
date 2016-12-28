@@ -544,13 +544,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 });
         }
 
-        $scope.setContentMetadata = function(data) {
+        $scope.setContentMetadata = function(contentData) {
             // localstorageFunction('content', data, 'setItem');
-            
+            var data = _.clone(contentData);
             GlobalContext.currentContentId = data.identifier;
             GlobalContext.currentContentMimeType = data.mimeType;
             if (_.isUndefined(data.localData)) {
-                data.localData = data;
+                data.localData = _.clone(contentData); 
             } else {
                 data = data.localData;
             }
@@ -563,16 +563,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
             // Storing content & collection data into localstorage
             // This is usefull when HTML content is opened for collection or directly
+            localStorageGC.setItem("content", $rootScope.content);
             if(_.isUndefined($rootScope.collection)) {
                 localStorageGC.removeItem('collection');
             } else {
                 localStorageGC.setItem("collection", $rootScope.collection);                
             }
-            localStorageGC.setItem("content", $rootScope.content);
 
             var identifier = (data && data.identifier) ? data.identifier : null;
             var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
-            startTelemetry(identifier,version);
+            startTelemetry(identifier, version);
             // Cover Page is loaded, log telmetry for coverpage
             TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID" });
         }
@@ -631,7 +631,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.init = function() {
             if ($stateParams.itemId) {
-                $rootScope.content = $rootScope.content ? $rootScope.content : localStorageGC.getItem('content');            
+                //$rootScope.content = $rootScope.content ? $rootScope.content : localStorageGC.getItem('content');            
                 $scope.item = $rootScope.content;
 
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
@@ -656,7 +656,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                     // Adding Flavor(environment) as query parameter to identify HTML content showing in dev/qa/prdocution 
                     // For local development of HTML flavor should not sent in URL
-                    path += "&flavor=" + AppConfig.flavor;
+                    if(isbrowserpreview){
+                        path += "&flavor=" + AppConfig.flavor;
+                    }                    
 
                     if (isMobile) {
                         console.log("Opening through cordova custom webview.");
@@ -671,7 +673,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         collectionChildren = false;
                     }
                     if (isbrowserpreview) {
-                        $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction("content",undefined,'getItem')
+                        //$rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction("content",undefined,'getItem')
                         var contentBody = undefined;
                         if (COLLECTION_MIMETYPE == content.metadata.mimeType) {
                             ContentService.getContentBody($stateParams.itemId)
@@ -764,8 +766,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 content[key] = null;
             }
         };
-
-        TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContentApp-EndScreen", subtype: "ContentID" });
 
         $scope.showCredits = function(key) {
             if (content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null) {
@@ -890,15 +890,22 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.init = function() {
             if(_.isUndefined($rootScope.content)){
                 localStorageGC.update();
-                $rootScope.content = localStorageGC.getItem('content')
+
+                // Updating the current content object by getting from localStage
+                content = localStorageGC.getItem('content');
+                $rootScope.content = content;
             }
             $rootScope.collection = $rootScope.collection ? $rootScope.collection : localStorageGC.getItem('collection');
             if(_(TelemetryService.instance).isUndefined()){
-                 var Telemetry = localStorageGC.getItem('TelemetryService');
-                 TelemetryService.init(Telemetry._gameData,Telemetry._user);
+                 var tsObj = localStorageGC.getItem('telemetryService');
+                 TelemetryService.init(tsObj._gameData, tsObj._user);
             }
+            
+            TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContentApp-EndScreen", subtype: "ContentID" });
 
+            // Get related contents for the current content
             $scope.$broadcast('getRelatedContentEvent');
+
             var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
             creditsPopup.trigger("popupUpdate", { "content": $rootScope.content });
             setTimeout(function() {
@@ -913,6 +920,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.setTotalTimeSpent();
             $scope.getTotalScore($stateParams.contentId);           
             $scope.showFeedback(0);
+
         }
 
         function epKeyboardShowHandler() {

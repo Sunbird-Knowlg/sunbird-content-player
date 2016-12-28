@@ -4,12 +4,18 @@ var genieServiceBridge = (function(){
   function initialize(){
 
     var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
+    var contentId = getUrlParameter('contentId');
+    if(contentId){
+      //This is to GC end-page when html content is launched in mobile or poratl preview
+      localStorage.setItem('cotentId', contentId);
+    }
 
     if(!isMobile){
       if(("undefined" == typeof AppConfig) && ("undefined" == typeof isbrowserpreview)){
         var flavor = getUrlParameter('flavor');
         var launchData = JSON.parse(getUrlParameter('launchData'));
         if(flavor){
+            // falvor will be available only for the content preview showing in portal/AT
             genieservice = genieservice_portal;
             genieservice.api.setBaseUrl(launchData.envpath);
             _callbackFunc();

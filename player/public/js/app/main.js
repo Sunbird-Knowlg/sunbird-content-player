@@ -154,13 +154,14 @@ var localStorageGC = {
     telemetryService: {},
     setItem: function(param, data){
         if(data){
-            this[param] = JSON.stringify(data);            
+            this[param] = _.isString(data) ? data : JSON.stringify(data);            
         }
     },
     getItem: function(param){
         if(param){
             var paramVal = this[param];
-            return JSON.parse(paramVal);            
+            paramVal = _.isUndefined(paramVal) ? {} : JSON.parse(paramVal);
+            return paramVal;            
         }else{
             return;
         }
@@ -186,23 +187,28 @@ var localStorageGC = {
         if(lsData){
             lsData = JSON.parse(lsData);
             var lsKeys = _.keys(lsData);
+            var instance = this;
             _.each(lsKeys, function(key){
-                this[key] = lsData[key];
+                instance.setItem(key, lsData[key]);
             })
         }
     }
 }
 
-function startTelemetry(id,ver) {
-    localstorageFunction("TelemetryService", undefined, 'removeItem');
-    localstorageFunction("_start", undefined, 'removeItem');
-    localstorageFunction("_end", undefined, 'removeItem');
+function startTelemetry(id, ver) {
+    localStorageGC.removeItem("telemetryService");
+    //localStorageGC.removeItem("_start");
+    //localStorageGC.removeItem("_end");
     TelemetryService.init(GlobalContext.game, GlobalContext.user);
     TelemetryService.start(id,ver);
     if (!_.isUndefined(TelemetryService.instance)) {
-        localstorageFunction("TelemetryService", TelemetryService, 'setItem');
-        localstorageFunction("_end", TelemetryService.instance._end, 'setItem');
-        localstorageFunction("_start", TelemetryService.instance._start, 'setItem');
+        var tsObj =  _.clone(TelemetryService);
+        //tsObj.telemetryService = _.clone(TelemetryService);
+        tsObj._start = JSON.stringify(tsObj.instance._start);
+        tsObj._end = JSON.stringify(tsObj.instance._end);
+        localStorageGC.setItem("telemetryService", tsObj);
+        //localStorageGC.setItem("_start", TelemetryService.instance._start);
+        //localStorageGC.setItem("_end", TelemetryService.instance._end);
     }
 }
 

@@ -196,12 +196,12 @@ genieservice_portal = {
     },
     endContent: function() {
         // On close of the content call this function
-        var content = this.getLocalStorageContent();
-        if(_.isUndefined(content)) {
-            console.log("Content is undefined", content);
+        var contentId = localStorage.getItem('cotentId');
+        if(_.isUndefined(contentId)) {
+            console.log("ContentId is not defined in URL.");
             return;
         }
-        var endPageStateUrl = '#/content/end/' + content.identifier;
+        var endPageStateUrl = '#/content/end/' + contentId;
         this.showPage(endPageStateUrl);
     },
     showPage: function(pageUrl) {
@@ -217,14 +217,6 @@ genieservice_portal = {
         } else {
             window.location = "/" + pageUrl;
         }
-    },
-    getLocalStorageContent: function() {
-        var content = localStorage.getItem("content"); 
-        if(_.isUndefined(content)) {
-            return;
-        } else {
-            return JSON.parse(content);
-        }        
     }
 };
 
@@ -309,12 +301,12 @@ genieservice_html = {
     },
     endContent: function() {
         // On close of the content call this function
-        var content = this.getLocalStorageContent();
-        if(_.isUndefined(content)) {
-            console.log("Content is undefined", content);
+        var contentId = localStorage.getItem('cotentId');
+        if(_.isUndefined(contentId)) {
+            console.log("ContentId is not defined in URL.");
             return;
         }
-        var endPageStateUrl = '#/content/end/' + content.identifier;
+        var endPageStateUrl = '#/content/end/' + contentId;
         this.showPage(endPageStateUrl);
     }, 
     showPage: function(pageUrl) {
@@ -330,14 +322,6 @@ genieservice_html = {
         } else {
             window.location = "/" + pageUrl;
         }
-    },
-    getLocalStorageContent: function() {
-        var content = localStorage.getItem("content"); 
-        if(_.isUndefined(content)) {
-            return;
-        } else {
-            return JSON.parse(content);
-        }        
     }
 };
 if ("undefined" == typeof cordova) {
