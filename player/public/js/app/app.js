@@ -353,6 +353,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
             });
             EventBus.dispatch('actionReplay');
+            if ($state.current.name == 'showContentEnd') {
+                $state.go('playContent', {
+                    'itemId': $rootScope.content.identifier
+                });
+            } else {
+                Renderer.theme.removeHtmlElements();
+                Renderer.theme.reRender();
+            }
         }
 
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
@@ -761,7 +769,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.setCredits = function(key) {
             if (content[key]) {
-                content[eky] = $scope.arrayToString(content[key]);
+                content[key] = $scope.arrayToString(content[key]);
             } else {
                 content[key] = null;
             }
@@ -1155,7 +1163,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             } else {
                 // For Collection
                 if(collectionPath.length == 0){
-                    collectionPath = $rootScope.collection;
+                    collectionPath = [{
+                        "identifier": $rootScope.collection.identifier,
+                        "mediaType": "Collection"
+                    },{
+                       "identifier": id,
+                        "mediaType": "Content" 
+                    }];
                 }
                 list = collectionPath;
                 collectionPathMap[$rootScope.collection.identifier] = collectionPath;

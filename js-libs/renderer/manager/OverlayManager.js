@@ -298,15 +298,6 @@ OverlayManager = {
     actionReplay: function(){
       var version = TelemetryService.getGameVer();
       TelemetryService.end();
-      localstorageFunction('TelemetryService', undefined, "removeItem");
-      if (!_.isUndefined(appState) && appState.current.name == 'showContentEnd') {
-        appState.go('playContent', {
-          'itemId': GlobalContext.currentContentId
-        });
-      } else {
-        Renderer.theme.removeHtmlElements();
-        Renderer.theme.reRender();
-      }
       if(GlobalContext.currentContentId && version){
         startTelemetry(GlobalContext.currentContentId,version);
       }
