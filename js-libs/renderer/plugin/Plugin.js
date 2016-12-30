@@ -305,14 +305,16 @@ var Plugin = Class.extend({
     },
     drawBorder: function(data, dims) {
     	if (data.stroke) {
-			var strokeWidth = (data['stroke-width'] || 1);
-			var border = new createjs.Shape();
-			var graphics = border.graphics;
-			graphics.beginStroke(data.stroke);
-			graphics.setStrokeStyle(strokeWidth);
-			graphics.dr(dims.x, dims.y, dims.w, dims.h);
-			this._stage.addChild(border);
-		}
+				var strokeWidth = (data['stroke-width'] || 1);
+				var border = new createjs.Shape();
+				var graphics = border.graphics;
+				graphics.beginStroke(data.stroke);
+				border.alpha = (data['stroke-alpha'] || 1);
+				graphics.setStrokeStyle(strokeWidth);
+				// graphics.setStrokeDash([10,10],0);
+				graphics.dr(dims.x, dims.y, dims.w, dims.h);
+				this._parent.addChild(border);
+			}
     },
     enableDrag: function(asset, snapTo) {
         asset.cursor = "pointer";
