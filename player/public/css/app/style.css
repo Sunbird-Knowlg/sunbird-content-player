@@ -532,17 +532,17 @@ body{
 }
 
 .credit-body-icon-font::-webkit-scrollbar-track {
-    background-color: #ffd18f;
+    background-color: #d0cfce;
     border-radius: 10%;
 }
 
 .credit-body-icon-font::-webkit-scrollbar-thumb {
-    background-color: #f6661f;
+    background-color: #000000;
     border-radius: 35%;
 }
 
 .credit-body-icon-font::-webkit-scrollbar-thumb:hover {
-  background-color: #f6661f;
+  background-color: #000000;
   border-radius: 10%;
 }
 
