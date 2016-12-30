@@ -11,6 +11,7 @@ AudioManager = {
         if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
             instance = instance || AudioManager.instances[AudioManager.uniqueId(action)] || {};
             if(instance.object) {
+                instance.object.volume = 1;
                 if(instance.object.paused) {
                     instance.object.paused = false;
                 } else if([createjs.Sound.PLAY_FINISHED, createjs.Sound.PLAY_INTERRUPTED, createjs.Sound.PLAY_FAILED].indexOf(instance.object.playState) !== -1) {
@@ -75,11 +76,16 @@ AudioManager = {
     stop: function(action) {
         var instance = AudioManager.instances[AudioManager.uniqueId(action)] || {};
         if(instance && instance.object && instance.object.playState !== createjs.Sound.PLAY_FINISHED) {
+            instance.object.volume = 0; // This is to handle overlapping of audio's in marshmallow
             instance.object.stop();
             EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "STOP"});
         }
     },
     stopAll: function(action) {
+        for (var data in AudioManager.instances) {
+            // This is to handle overlapping of audio's in marshmallow
+            AudioManager.instances[data].object.volume = 0
+        }
         createjs.Sound.stop();
         EventManager.processAppTelemetry({}, 'LISTEN','', {subtype : "STOP_ALL"});
     },
