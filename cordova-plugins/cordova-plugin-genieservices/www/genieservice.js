@@ -62,14 +62,12 @@ genieservice.prototype.endGenieCanvas = function() {
 
 genieservice.prototype.endContent = function(id) {
     // On close of the content call this function
-    var content = localStorage.getItem("content");
-    if (_.isUndefined(content)) {
-        console.log("Content is undefined", content);
+    var contentId = localStorage.getItem("cotentId");
+    if (_.isUndefined(contentId)) {
+        console.log("Content id is undefined", contentId);
         return;
-    } else {
-        content = JSON.parse(content);
     }
-    var endPageStateUrl = '#/content/end/' + content.identifier;
+    var endPageStateUrl = '#/content/end/' + contentId;
     var url = "file:///android_asset/www/index.html" + endPageStateUrl;
     window.location.href = url;
 }

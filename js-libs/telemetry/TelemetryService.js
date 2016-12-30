@@ -132,7 +132,7 @@ TelemetryService = {
     getLocalStorageInstance: function() {
         var canvasLocalStorageData = localStorage.getItem("canvasLS");
         var telemetryLocalStorageData;
-        if(_.isUndefined(canvasLocalStorageData)){
+        if(!_.isNull(canvasLocalStorageData)){
             canvasLocalStorageData = JSON.parse(canvasLocalStorageData);
             telemetryLocalStorageData =  _.isUndefined(canvasLocalStorageData.telemetryService) ? undefined : JSON.parse(canvasLocalStorageData.telemetryService);
             telemetryLocalStorageData._start = JSON.parse(telemetryLocalStorageData._start);
