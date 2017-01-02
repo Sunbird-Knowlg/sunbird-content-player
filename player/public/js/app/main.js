@@ -145,18 +145,73 @@ function objectAssign() {
     }
 }
 
-function startTelemetry(id,ver) {
-    localstorageFunction("TelemetryService", undefined, 'removeItem');
-    localstorageFunction("_start", undefined, 'removeItem');
-    localstorageFunction("_end", undefined, 'removeItem');
+// GC - GenieCanvas
+var localStorageGC = {
+    isHtmlContent: false,
+    isCollection: false,
+    content: {},
+    collection: {},
+    telemetryService: {},
+    setItem: function(param, data){
+        if(data){
+            this[param] = _.isString(data) ? data : JSON.stringify(data);            
+        }
+    },
+    getItem: function(param){
+        if(param){
+            var paramVal = this[param];
+            paramVal = _.isUndefined(paramVal) ? {} : JSON.parse(paramVal);
+            return paramVal;            
+        }else{
+            return;
+        }
+    },
+    removeItem: function(param){
+        this[param] = {};
+        //localStorage.removeItem(canvasLS.param);
+    },
+    save: function(){
+        // Storing into localStorage
+        var thisData = {};
+        thisData.content = this.content;
+        thisData.collection = this.collection;
+        thisData.telemetryService = this.telemetryService;
+        thisData.isCollection = this.isCollection;
+        thisData.isHtmlContent = this.isHtmlContent;
+
+        localStorage.setItem("canvasLS", JSON.stringify(thisData));
+    },
+    update: function(){
+        //gettting from localstorage and updating all its values
+        var lsData = localStorage.getItem("canvasLS");
+        if(lsData){
+            lsData = JSON.parse(lsData);
+            var lsKeys = _.keys(lsData);
+            var instance = this;
+            _.each(lsKeys, function(key){
+                instance.setItem(key, lsData[key]);
+            })
+        }
+    }
+}
+
+function startTelemetry(id, ver) {
+    localStorageGC.removeItem("telemetryService");
+    //localStorageGC.removeItem("_start");
+    //localStorageGC.removeItem("_end");
     TelemetryService.init(GlobalContext.game, GlobalContext.user);
     TelemetryService.start(id,ver);
     if (!_.isUndefined(TelemetryService.instance)) {
-        localstorageFunction("TelemetryService", TelemetryService, 'setItem');
-        localstorageFunction("_end", TelemetryService.instance._end, 'setItem');
-        localstorageFunction("_start", TelemetryService.instance._start, 'setItem');
+        var tsObj =  _.clone(TelemetryService);
+        //tsObj.telemetryService = _.clone(TelemetryService);
+        tsObj._start = JSON.stringify(tsObj.instance._start);
+        tsObj._end = JSON.stringify(tsObj.instance._end);
+        localStorageGC.setItem("telemetryService", tsObj);
+        //localStorageGC.setItem("_start", TelemetryService.instance._start);
+        //localStorageGC.setItem("_end", TelemetryService.instance._end);
     }
 }
+
 function getAsseturl(content) {
     var content_type = content.mimeType == 'application/vnd.ekstep.html-archive' ? "html/" : "ecml/";
     var path = window.location.origin + AppConfig.S3_content_host + content_type;

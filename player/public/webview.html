@@ -32,7 +32,7 @@
     function loadContent() {
         var iframe = document.getElementById('contentIFrame');
         // iframe.contentWindow.location.reload();
-        iframe.src = "https://dev.ekstep.in/assets/public/preview/dev/preview.html?webview=true";
+        iframe.src = "http://localhost:3000/preview.html?webview=true";
         document.getElementById("contentIFrame").addEventListener('load', function() {
             var meta = document.getElementById("metadata").value;
             if (meta.length)

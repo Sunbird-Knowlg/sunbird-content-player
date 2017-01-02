@@ -100,11 +100,13 @@ TelemetryService = {
             event.flush(apiName);
         return event;
     },
-    // New code
     setTelemetryService: function(localStorageInstance, gameData){
+        // This is specific to HTML games launched by GenieCanvas
+        // HTML content OE_START is already logged by GenieCanvas coverpage
+        // OE_START should not log by HTML content once again(if they are using GenieCanvasBridge.js)
         if(localStorageInstance._gameData.id == gameData.id ){
-        var start = JSON.parse(localStorage.getItem("_start"));
-        var end = JSON.parse(localStorage.getItem("_end"));
+        var start = localStorageInstance._start;//JSON.parse(localStorage.getItem("_start"));
+        var end = localStorageInstance._end;//JSON.parse(localStorage.getItem("_end"));
             if (!_.isUndefined(localStorageInstance)) {
                 for (var prop in localStorageInstance) {
                     if (TelemetryService.hasOwnProperty(prop)) {
@@ -128,8 +130,15 @@ TelemetryService = {
         }
     },
     getLocalStorageInstance: function() {
-        var telemetryData = JSON.parse(localStorage.getItem("TelemetryService"));
-        return telemetryData;
+        var canvasLocalStorageData = localStorage.getItem("canvasLS");
+        var telemetryLocalStorageData;
+        if(!_.isNull(canvasLocalStorageData)){
+            canvasLocalStorageData = JSON.parse(canvasLocalStorageData);
+            telemetryLocalStorageData =  _.isUndefined(canvasLocalStorageData.telemetryService) ? undefined : JSON.parse(canvasLocalStorageData.telemetryService);
+            telemetryLocalStorageData._start = JSON.parse(telemetryLocalStorageData._start);
+            telemetryLocalStorageData._end = JSON.parse(telemetryLocalStorageData._end);
+        }
+        return telemetryLocalStorageData;
     },
     start: function(id, ver) {
         if (!TelemetryService.isActive) {
