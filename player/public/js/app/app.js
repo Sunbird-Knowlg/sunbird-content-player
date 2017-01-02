@@ -285,7 +285,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                                 console.info("contentNotAvailable : ", err);
                                 contentNotAvailable();
                             });
-                        ContentService.getContentBody(id)
+                        ContentService.getContentBody(urlContentId)
                             .then(function(data) {
                                 content["body"] = data.body;
 
