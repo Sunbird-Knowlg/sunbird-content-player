@@ -304,7 +304,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     }
                 } else {
                     if($state.current.name == appConstants.stateShowContentEnd){
-                        $state.go(appConstants.stateShowContentEnd, { "contentId": $state.params.contentId });
+                        // $state.go(appConstants.stateShowContentEnd, { "contentId": $state.params.contentId });
+                        $rootScope.$broadcast("loadEndPage");
                     } else {
                         launchInitialPage(GlobalContext.config.appInfo, $state);                        
                     }
@@ -346,15 +347,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 controller: 'ContentCtrl'
             })
             
-    }).controller('BaseCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
+    }).controller('BaseCtrl', function($scope, $rootScope, $state, $stateParams, ContentService, appConstants) {
+        $rootScope.isCollection = false;
 
         $rootScope.replayContent = function(){
             TelemetryService.interact("TOUCH", "gc_replay", "TOUCH", {
                 stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
             });
             EventBus.dispatch('actionReplay');
-            if ($state.current.name == 'showContentEnd') {
-                $state.go('playContent', {
+            if ($state.current.name == appConstants.stateShowContentEnd) {
+                $state.go(appConstants.statePlayContent, {
                     'itemId': $rootScope.content.identifier
                 });
             } else {
@@ -575,7 +577,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if(_.isUndefined($rootScope.collection)) {
                 localStorageGC.removeItem('collection');
             } else {
-                localStorageGC.setItem("collection", $rootScope.collection);                
+                localStorageGC.setItem("collection", $rootScope.collection);
+            }
+
+            if ($rootScope.collection && $rootScope.collection.children) {
+                $rootScope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
+                localStorageGC.setItem("isCollection", $rootScope.isCollection)
             }
 
             var identifier = (data && data.identifier) ? data.identifier : null;
@@ -764,7 +771,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.pageId = "endpage";
         $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-baloo credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
      
-    $scope.arrayToString = function(array) {
+        $scope.arrayToString = function(array) {
             return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";
         };
 
@@ -899,12 +906,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.init = function() {
             if(_.isUndefined($rootScope.content)){
                 localStorageGC.update();
-
                 // Updating the current content object by getting from localStage
                 content = localStorageGC.getItem('content');
                 $rootScope.content = content;
             }
             $rootScope.collection = $rootScope.collection ? $rootScope.collection : localStorageGC.getItem('collection');
+            $rootScope.isCollection = $rootScope.isCollection ? $rootScope.isCollection : localStorageGC.getItem('isCollection');
             if(_(TelemetryService.instance).isUndefined()){
                  var tsObj = localStorageGC.getItem('telemetryService');
                  TelemetryService.init(tsObj._gameData, tsObj._user);
@@ -929,7 +936,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.setTotalTimeSpent();
             $scope.getTotalScore($stateParams.contentId);           
             $scope.showFeedback(0);
-
         }
 
         function epKeyboardShowHandler() {
@@ -941,10 +947,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         setTimeout(function() {
-            $scope.init();
+            if (!_.isUndefined($rootScope.content)) {
+                $scope.init();
+            }
         }, 0);
 
-        // $scope.init();
+        $rootScope.$on('loadEndPage', function() {
+            if (_.isUndefined($rootScope.content)) {
+                $scope.init();
+            }
+        });
     }).controller('OverlayCtrl', function($scope, $rootScope) {
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
@@ -1200,31 +1212,28 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('collection', function($rootScope, $state) {
         return {
             restrict: 'E',
-            template: '<a ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollection == false}" ng-src="{{imgSrc}}"/></a>',
+            template: '<a ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollec == false}" ng-src="{{imgSrc}}"/></a>',
+            scope: {
+                isCollec: "="
+            },
             link: function(scope, state) {
                 scope.imgSrc = $rootScope.imageBasePath + 'icn_collections.png';
-                scope.isCollection = false;
-                //$rootScope.collection = $rootScope.collection ? $rootScope.collection : localstorageFunction('Collection', undefined, 'getItem');
-                if ($rootScope.collection && $rootScope.collection.children) {
-                    scope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
-                }
-
+                // scope.isCollection = false;
                 var pageId = $rootScope.pageId;
                 // Code refactring of the Collection Directive is Required 
                 scope.goToCollection = function() {
-                    if (scope.isCollection) {
+                    if (scope.isCollec) {
                         collectionPath.pop();
                         TelemetryService.interact("TOUCH", "gc_home", "TOUCH", {
                             stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId))
                         });
-                    if (Renderer.running)
-                        Renderer.cleanUp();
-                    else
-                        TelemetryService.end();
-                    $state.go('contentList', {
-                        "id": $rootScope.collection.identifier
-                    });
-
+                        if (Renderer.running)
+                            Renderer.cleanUp();
+                        else
+                            TelemetryService.end();
+                        $state.go('contentList', {
+                            "id": $rootScope.collection.identifier
+                        });
                     }
                 }
             }

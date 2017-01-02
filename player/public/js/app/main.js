@@ -160,7 +160,7 @@ var localStorageGC = {
     getItem: function(param){
         if(param){
             var paramVal = this[param];
-            paramVal = _.isUndefined(paramVal) ? {} : JSON.parse(paramVal);
+            paramVal = _.isEmpty(paramVal) ? {} : JSON.parse(paramVal);
             return paramVal;            
         }else{
             return;
