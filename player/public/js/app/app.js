@@ -50,6 +50,7 @@ function updateContentData($state){
     }
 
     if (content && content.metadata) {
+        localStorageGC.setItem("content", content.metadata);
         var contentId = content.metadata.identifier;
         if(!config.showStartPage ){
             $state.go('playContent', {
@@ -297,12 +298,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                                 contentNotAvailable();
                             });
                     } else {
-                        if (content && content.metadata) {
-                            $rootScope.content = content.metadata;
-                            localStorageGC.setItem("content", $rootScope.content.metadata);
-
-                            updateContentData($state);
-                        }
+                        console.info ("id is not available in url")
                     }
                 } else {
                     if($state.current.name == appConstants.stateShowContentEnd){
