@@ -70,24 +70,26 @@ var Plugin = Class.extend({
 			}
 		}
 
-		// Draw border and shadow only if the object is visible
-		if ((this._self) && (this._self.visible)) {
-			// Draw border if needed
-			this.drawBorder(data, dims);
+		
 
-			// Draw shadow if needed
-			if (data.shadow) {
-	            this.addShadow();
-	        }
-	    }
+        // Render the plugin component
+        if(this._render) {
+            if(this._isContainer && this._type == 'stage') {
+                this.cache();
+            }
+            this.render();
+        }
+        // Draw border and shadow only if the object is visible
+        if ((this._self) && (this._self.visible)) {
+            // Draw border if needed
+            this.drawBorder(data, dims);
 
-		// Render the plugin component
-		if(this._render) {
-			if(this._isContainer && this._type == 'stage') {
-				this.cache();
-			}
-			this.render();
-		}
+            // Draw shadow if needed
+            if (data.shadow) {
+                this.addShadow();
+            }
+        }
+
 	},
 	cache: function() {
 		this._self.cache(this._dimensions.x, this._dimensions.y, this._dimensions.w, this._dimensions.h);
@@ -305,16 +307,23 @@ var Plugin = Class.extend({
     },
     drawBorder: function(data, dims) {
     	if (data.stroke) {
-				var strokeWidth = (data['stroke-width'] || 1);
-				var border = new createjs.Shape();
-				var graphics = border.graphics;
-				graphics.beginStroke(data.stroke);
-				border.alpha = (data['stroke-alpha'] || 1);
-				graphics.setStrokeStyle(strokeWidth);
-				// graphics.setStrokeDash([10,10],0);
-				graphics.dr(dims.x, dims.y, dims.w, dims.h);
-				this._parent.addChild(border);
-			}
+			var strokeWidth = (data['strokeWidth'] || 1);
+			var borderShape;
+			var graphics = this._self.graphics;
+            if(!this._self.graphics){
+                borderShape = new createjs.Shape();
+                graphics = borderShape.graphics;
+            }
+			graphics.beginStroke(data.stroke);
+			borderShape.alpha = (data['strokeOpacity'] || 1);
+			graphics.setStrokeStyle(strokeWidth);
+			// graphics.setStrokeDash([10,10],0);
+			graphics.dr(dims.x, dims.y, dims.w, dims.h);
+            if(!this._self.graphics){
+    		  this._parent.addChild(borderShape);     
+            }
+            Renderer.update = true;           
+		}
     },
     enableDrag: function(asset, snapTo) {
         asset.cursor = "pointer";
