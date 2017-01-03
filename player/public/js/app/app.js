@@ -347,6 +347,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.isCollection = false;
 
         $rootScope.replayContent = function(){
+            startProgressBar(40, 0.6,$rootScope.content.name);
             TelemetryService.interact("TOUCH", "gc_replay", "TOUCH", {
                 stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
             });
@@ -1354,7 +1355,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             link: function(scope) {
                 scope.restartContent = function() {
                     $rootScope.replayContent();
-                    startProgressBar();
                     AudioManager.unmute();
                     if (!_.isUndefined(scope.hideMenu) && scope.menuOpened)
                         scope.hideMenu();
