@@ -297,8 +297,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                                 console.info("contentNotAvailable : ", err);
                                 contentNotAvailable();
                             });
-                    } else {
-                        console.info ("id is not available in url")
                     }
                 } else {
                     if($state.current.name == appConstants.stateShowContentEnd){
