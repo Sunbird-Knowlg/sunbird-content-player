@@ -908,8 +908,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 content = localStorageGC.getItem('content');
                 $rootScope.content = content;
             }
-            $rootScope.collection = $rootScope.collection ? $rootScope.collection : localStorageGC.getItem('collection');
-            $rootScope.isCollection = $rootScope.isCollection ? $rootScope.isCollection : localStorageGC.getItem('isCollection');
+            var collectionObj = localStorageGC.getItem('collection');
+            if (_.find(collectionObj.children, function(children) {
+                if (children.identifier == $rootScope.content.identifier) {
+                    $rootScope.collection = $rootScope.collection ? $rootScope.collection : localStorageGC.getItem('collection');
+                    $rootScope.isCollection = $rootScope.isCollection ? $rootScope.isCollection : localStorageGC.getItem('isCollection');
+                }
+            }));
             if(_(TelemetryService.instance).isUndefined()){
                  var tsObj = localStorageGC.getItem('telemetryService');
                  TelemetryService.init(tsObj._gameData, tsObj._user);
@@ -1222,7 +1227,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 scope.goToCollection = function() {
                     if (scope.isCollec) {
                         collectionPath.pop();
-                        TelemetryService.interact("TOUCH", "gc_home", "TOUCH", {
+                        TelemetryService.interact("TOUCH", "gc_collection", "TOUCH", {
                             stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId))
                         });
                         if (Renderer.running)
@@ -1351,6 +1356,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             link: function(scope) {
                 scope.restartContent = function() {
                     $rootScope.replayContent();
+                    startProgressBar();
                     AudioManager.unmute();
                     if (!_.isUndefined(scope.hideMenu) && scope.menuOpened)
                         scope.hideMenu();

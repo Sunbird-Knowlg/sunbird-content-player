@@ -85,6 +85,7 @@ function exitApp(pageId) {
         console.error('End telemetry error:', err.message);
     }
     localStorage.clear();
+    localStorageGC = {};
     genieservice.endGenieCanvas();
 }
 
