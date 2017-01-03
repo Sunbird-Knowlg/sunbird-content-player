@@ -14,7 +14,6 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="16" />
     <preference name="android-targetSdkVersion" value="22" />
-    <preference name="android-versionCode" value="1"/>
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashScreen" value="none" />
     <preference name="Orientation" value="sensorLandscape" />
