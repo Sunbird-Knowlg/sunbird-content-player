@@ -636,8 +636,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             });
         });
 
-        $scope.init();
-        
+       setTimeout(function() {
+            $scope.init();
+        }, 0);
     }).controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $rootScope.pageId = "renderer";
 
