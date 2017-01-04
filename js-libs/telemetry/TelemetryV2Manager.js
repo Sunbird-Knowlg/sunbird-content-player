@@ -20,7 +20,7 @@ TelemetryV2Manager = Class.extend({
     },
     end: function(gameId) {
         this._start.pop();
-        return this._end.pop();
+        return this._end.pop().end();
     },
     interact: function(type, id, extype, eks) {
         if (eks.optionTag)
