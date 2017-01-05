@@ -36,7 +36,7 @@
 
     <div class="gc-ep-content-holder">
         <div class="gc-ep-assessment-cont">
-            
+
             <div class="gc-ep-rating-cont">
                 <div class="gc-ep-rating" ng-if="!showFeedbackPopup">
                     <p>{{languageSupport.scores}}</p>
@@ -86,7 +86,7 @@
             <div class="gc-related-cont" ng-show="showRelatedContent">
                 <div class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
                     <div class="gc-related-item">
-                        <p class="gc-text-elipsis gc-related-cont-title">Title{{story.name}}</p>
+                        <p class="gc-text-elipsis gc-related-cont-title">{{story.name}}</p>
                         <div class="gc-rel-content-img">
                             <img class="img-center" ng-src="{{story.appIcon}}" />
                             <div class="gc-repeat-content">
