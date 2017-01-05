@@ -34,7 +34,7 @@ genieservice.prototype.getRelatedContent = function(uid, listOfContentIds) {
 }
 
 genieservice.prototype.getLearnerAssessment = function(uid, id) {
-    return this.handleAction("getLearnerAssessment", [uid,id]);
+    return this.handleAction("getLearnerAssessment", [uid, id]);
 }
 
 genieservice.prototype.getContentList = function(filter) {
@@ -71,29 +71,29 @@ genieservice.prototype.endContent = function(id) {
     var url = "file:///android_asset/www/index.html" + endPageStateUrl;
     window.location.href = url;
 }
-genieservice.prototype.launchContent = function(id){
+genieservice.prototype.launchContent = function(id) {
     this.handleAction("getContent", [id])
-    .then(function(resp){
-        var item = {};
-        item = resp;
-        var data = item.localData || item.serverData;
-        if (item.path && data) {
-            var path = (item.path.charAt(item.path.length-1) == '/')? item.path.substring(0, item.path.length-1): item.path;
-            var contentUrl = "file://" + path + '/index.html?eksCid='+ data.identifier;
-          
-            console.log("Opening through cordova custom webview.");
-            //webview.Show(contentUrl);
-            window.cordova.InAppBrowser.open(contentUrl, '_self', 'location=no,hardwareback=no');
-          
-        } else {
-            if(!data) data = {};
-            data.status = "error";
-            console.info("Path is not available for content:", item);
-        }
-    })
-    .catch(function(err){
-        console.log("Failed to lunch new content", err);
-    })
+        .then(function(resp) {
+            var item = {};
+            item = resp;
+            var data = item.localData || item.serverData;
+            if (item.path && data) {
+                var path = (item.path.charAt(item.path.length - 1) == '/') ? item.path.substring(0, item.path.length - 1) : item.path;
+                var contentUrl = "file://" + path + '/index.html?eksCid=' + data.identifier;
+
+                console.log("Opening through cordova custom webview.");
+                //webview.Show(contentUrl);
+                window.cordova.InAppBrowser.open(contentUrl, '_self', 'location=no,hardwareback=no');
+
+            } else {
+                if (!data) data = {};
+                data.status = "error";
+                console.info("Path is not available for content:", item);
+            }
+        })
+        .catch(function(err) {
+            console.log("Failed to lunch new content", err);
+        })
 }
 
 module.exports = new genieservice();

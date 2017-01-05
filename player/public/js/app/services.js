@@ -5,98 +5,98 @@ angular.module('genie-canvas.services', ['ngResource'])
             getContentList: function(filter, childrenIds) {
                 return new Promise(function(resolve, reject) {
                     returnObject._filterContentList(filter, childrenIds)
-                    .then(function(result) {
-                        resolve(returnObject._getAvailableContentList(result));
-                    })
-                    .catch(function(err) {
-                        console.log(AppErrors.contentListFetch, err);
-                        reject(err);
-                    });
+                        .then(function(result) {
+                            resolve(returnObject._getAvailableContentList(result));
+                        })
+                        .catch(function(err) {
+                            console.log(AppErrors.contentListFetch, err);
+                            reject(err);
+                        });
                 });
             },
             getContent: function(id) {
                 return new Promise(function(resolve, reject) {
                     genieservice.getContent(id)
-                    .then(function(item) {
-                        if (item.isAvailable) {
-                            resolve(returnObject._prepareContent(item));
-                        } else {
-                            reject("Content is not available.");
-                        }
-                    })
-                    .catch(function(err) {
-                        console.error(AppErrors.contetnPathFetch, err);
-                        reject(err);
-                    });
+                        .then(function(item) {
+                            if (item.isAvailable) {
+                                resolve(returnObject._prepareContent(item));
+                            } else {
+                                reject("Content is not available.");
+                            }
+                        })
+                        .catch(function(err) {
+                            console.error(AppErrors.contetnPathFetch, err);
+                            reject(err);
+                        });
                 });
             },
             getRelatedContent: function(uid, list) {
                 return new Promise(function(resolve, reject) {
                     genieservice.getRelatedContent(uid, list)
-                    .then(function(item) {
-                        if (item) {
-                            resolve(item);
-                        } else {
-                            reject("Content is not available.");
-                        }
-                    })
-                    .catch(function(err) {
-                        console.error(AppErrors.contetnPathFetch, err);
-                        reject(err);
-                    });
+                        .then(function(item) {
+                            if (item) {
+                                resolve(item);
+                            } else {
+                                reject("Content is not available.");
+                            }
+                        })
+                        .catch(function(err) {
+                            console.error(AppErrors.contetnPathFetch, err);
+                            reject(err);
+                        });
                 });
             },
             // Get the Total Assessment score of particular user of particular content.
             getLearnerAssessment: function(uid, id) {
                 return new Promise(function(resolve, reject) {
                     genieservice.getLearnerAssessment(uid, id)
-                    .then(function(score){
-                        if(score)
-                            resolve(score);
-                        else
-                            reject("Score is not available.")
-                    });
+                        .then(function(score) {
+                            if (score)
+                                resolve(score);
+                            else
+                                reject("Score is not available.")
+                        });
                 });
             },
             getContentBody: function(id) {
                 return new Promise(function(resolve, reject) {
                     genieservice.getContentBody(id)
-                    .then(function(body) {
-                        resolve(body);
-                    })
-                    .catch(function(err) {
-                        console.error(AppErrors.contetnPathFetch, err);
-                        reject(err);
-                    });
+                        .then(function(body) {
+                            resolve(body);
+                        })
+                        .catch(function(err) {
+                            console.error(AppErrors.contetnPathFetch, err);
+                            reject(err);
+                        });
                 });
             },
             getContentMetadata: function(id) {
                 return new Promise(function(resolve, reject) {
                     genieservice.getContentMetadata(id)
-                    .then(function(metadata) {
-                        resolve(metadata);
-                    })
-                    .catch(function(err) {
-                        console.error(AppErrors.contetnPathFetch, err);
-                        reject(err);
-                    });
+                        .then(function(metadata) {
+                            resolve(metadata);
+                        })
+                        .catch(function(err) {
+                            console.error(AppErrors.contetnPathFetch, err);
+                            reject(err);
+                        });
                 });
             },
             _prepareContent: function(item) {
                 var data = item.localData || item.serverData;
                 if (item.path && data) {
-                    var path = (item.path.charAt(item.path.length-1) == '/')? item.path.substring(0, item.path.length-1): item.path;
-                    path = ($window.cordova)? "file://" + path : path; 
-                    data.baseDir =  path;
+                    var path = (item.path.charAt(item.path.length - 1) == '/') ? item.path.substring(0, item.path.length - 1) : item.path;
+                    path = ($window.cordova) ? "file://" + path : path;
+                    data.baseDir = path;
                     if ("undefined" != typeof cordova)
                         data.appIcon = (data.appIcon) ? path + "/" + data.appIcon : path + "/logo.png";
-                    else 
+                    else
                         data.appIcon = (isbrowserpreview) ? data.appIcon : path + "/logo.png";
                     data.mimeType = item.mimeType;
                     data.status = "ready";
                     data.isAvailable = true;
                 } else {
-                    if(!data) data = {};
+                    if (!data) data = {};
                     data.status = "error";
                     console.info("Path is not available for content:", item);
                 }
@@ -111,56 +111,55 @@ angular.module('genie-canvas.services', ['ngResource'])
                     };
                     if (filter || childrenIds) {
                         new Promise(function(resolve, reject) {
-                            var promises = [];
-                            if (childrenIds && childrenIds.length > 0) {
-                                _.each(childrenIds, function(childId) {
-                                    promises.push(function(callback) {
-                                        genieservice.getContent(childId)
-                                        .then(function(item) {
-                                            callback(null, item);
-                                        })
-                                        .catch(function(err) {
-                                            callback(null, err);
+                                var promises = [];
+                                if (childrenIds && childrenIds.length > 0) {
+                                    _.each(childrenIds, function(childId) {
+                                        promises.push(function(callback) {
+                                            genieservice.getContent(childId)
+                                                .then(function(item) {
+                                                    callback(null, item);
+                                                })
+                                                .catch(function(err) {
+                                                    callback(null, err);
+                                                });
                                         });
                                     });
-                                });
-                                async.parallel(promises, function(err, resList) {
-                                    list = resList;
+                                    async.parallel(promises, function(err, resList) {
+                                        list = resList;
+                                        resolve(list);
+                                    });
+                                } else {
                                     resolve(list);
-                                });
-                            } else {
-                                resolve(list);   
-                            }
-                        })
-                        .then(function() {
-                            if(filter) {
-                                genieservice.getContentList(filter)
-                                .then(function(result) {
-                                    list = _.union(list, result.list);
+                                }
+                            })
+                            .then(function() {
+                                if (filter) {
+                                    genieservice.getContentList(filter)
+                                        .then(function(result) {
+                                            list = _.union(list, result.list);
+                                            returnResult(list);
+                                        })
+                                        .catch(function(err) {
+                                            returnResult(list, "Error while fetching filtered content:" + JSON.stringify(err));
+                                        });
+                                } else {
                                     returnResult(list);
-                                })
-                                .catch(function(err) {
-                                    returnResult(list, "Error while fetching filtered content:" + JSON.stringify(err));
-                                });
-                            } else {
-                                returnResult(list);
-                            }
-                        })
-                        .catch(function(err) {
-                            returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err));
-                        })
-                    } else {
-                        if ("undefined" != typeof cordova){
-                            returnResult(list, "Error while fetching filtered content: Empty Collection");
-                        }
-                        else {
-                            genieservice.getContentList([])
-                            .then(function(result) {
-                                returnResult(result.list);
+                                }
                             })
                             .catch(function(err) {
                                 returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err));
-                            });
+                            })
+                    } else {
+                        if ("undefined" != typeof cordova) {
+                            returnResult(list, "Error while fetching filtered content: Empty Collection");
+                        } else {
+                            genieservice.getContentList([])
+                                .then(function(result) {
+                                    returnResult(result.list);
+                                })
+                                .catch(function(err) {
+                                    returnResult(list, "Error while fetching filterContentList:" + JSON.stringify(err));
+                                });
                         }
                     }
                 });
@@ -180,4 +179,3 @@ angular.module('genie-canvas.services', ['ngResource'])
         };
         return returnObject;
     }]);
-

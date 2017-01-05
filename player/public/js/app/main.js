@@ -8,27 +8,29 @@ var packageName = "org.ekstep.quiz.app",
     ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive"
 
 // Need to modify the scope level hasStageSet
-    // hasStageSet = true
+// hasStageSet = true
 
-function startProgressBar(w, setInter,name) {
+function startProgressBar(w, setInter, name) {
     jQuery('#loading').show();
     jQuery("#progressBar").width(0);
     jQuery('#loadingText').text(name);
     var elem = document.getElementById("progressBar");
     var width = w ? w : 20;
     var id = setInterval(frame, setInter ? setInter : 0.7);
+
     function frame() {
         if (width >= 100) {
-         clearInterval(id);
+            clearInterval(id);
         } else {
-        width++;
-        if(elem && elem.style)
-            elem.style.width = width + '%';
-        jQuery('#progressCount').text(width + '%');
+            width++;
+            if (elem && elem.style)
+                elem.style.width = width + '%';
+            jQuery('#progressCount').text(width + '%');
         }
     }
 }
 startProgressBar();
+
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
         $cordovaFile.removeFile(cordova.file.dataDirectory, path)
@@ -46,17 +48,17 @@ function createCustomEvent(evtName, data) {
 }
 
 function getUrlParameter(sParam) {
-   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-       sURLVariables = sPageURL.split('&'),
-       sParameterName,
-       i;
-   for (i = 0; i < sURLVariables.length; i++) {
-       sParameterName = sURLVariables[i].split('=');
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
 
-       if (sParameterName[0] === sParam) {
-           return sParameterName[1] === undefined ? true : sParameterName[1];
-       }
-   }
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
 }
 
 function backbuttonPressed(pageId) {
@@ -67,7 +69,7 @@ function backbuttonPressed(pageId) {
         type: 'EXIT_APP'
     };
     TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', data);
-    if(pageId == "coverpage") {
+    if (pageId == "coverpage") {
         TelemetryService.end();
     }
     AudioManager.stopAll();
@@ -94,7 +96,7 @@ function startApp(app) {
         navigator.startApp.start(app, function(message) {
             exitApp();
             TelemetryService.exit(packageName, version)
-        },function(error) {
+        }, function(error) {
             if (app == geniePackageName)
                 alert("Unable to start Genie App.");
             else {
@@ -115,7 +117,7 @@ function checkStage(showalert) {
         if (showalert == "showAlert") {
             alert("No stage found, redirecting to collection list page")
         }
-        window.location.hash = "#/content/list/"+ GlobalContext.previousContentId;
+        window.location.hash = "#/content/list/" + GlobalContext.previousContentId;
     } else {
         if (showalert == "showAlert") {
             alert("No Stage found, existing canvas")
@@ -127,12 +129,12 @@ function checkStage(showalert) {
 }
 
 function objectAssign() {
-    Object.assign = function (target) {
+    Object.assign = function(target) {
         if (target === undefined || target === null) {
             throw new TypeError('Cannot convert undefined or null to object');
         }
         var output = Object(target);
-        _.each(arguments, function(argument){
+        _.each(arguments, function(argument) {
             if (argument !== undefined && argument !== null) {
                 for (var nextKey in argument) {
                     if (argument.hasOwnProperty(nextKey)) {
@@ -152,25 +154,25 @@ var localStorageGC = {
     content: {},
     collection: {},
     telemetryService: {},
-    setItem: function(param, data){
-        if(data){
-            this[param] = _.isString(data) ? data : JSON.stringify(data);            
+    setItem: function(param, data) {
+        if (data) {
+            this[param] = _.isString(data) ? data : JSON.stringify(data);
         }
     },
-    getItem: function(param){
-        if(param){
+    getItem: function(param) {
+        if (param) {
             var paramVal = this[param];
             paramVal = _.isUndefined(paramVal) ? {} : JSON.parse(paramVal);
-            return paramVal;            
-        }else{
+            return paramVal;
+        } else {
             return;
         }
     },
-    removeItem: function(param){
+    removeItem: function(param) {
         this[param] = {};
         //localStorage.removeItem(canvasLS.param);
     },
-    save: function(){
+    save: function() {
         // Storing into localStorage
         var thisData = {};
         thisData.content = this.content;
@@ -181,14 +183,14 @@ var localStorageGC = {
 
         localStorage.setItem("canvasLS", JSON.stringify(thisData));
     },
-    update: function(){
+    update: function() {
         //gettting from localstorage and updating all its values
         var lsData = localStorage.getItem("canvasLS");
-        if(lsData){
+        if (lsData) {
             lsData = JSON.parse(lsData);
             var lsKeys = _.keys(lsData);
             var instance = this;
-            _.each(lsKeys, function(key){
+            _.each(lsKeys, function(key) {
                 instance.setItem(key, lsData[key]);
             })
         }
@@ -200,9 +202,9 @@ function startTelemetry(id, ver) {
     //localStorageGC.removeItem("_start");
     //localStorageGC.removeItem("_end");
     TelemetryService.init(GlobalContext.game, GlobalContext.user);
-    TelemetryService.start(id,ver);
+    TelemetryService.start(id, ver);
     if (!_.isUndefined(TelemetryService.instance)) {
-        var tsObj =  _.clone(TelemetryService);
+        var tsObj = _.clone(TelemetryService);
         //tsObj.telemetryService = _.clone(TelemetryService);
         tsObj._start = JSON.stringify(tsObj.instance._start);
         tsObj._end = JSON.stringify(tsObj.instance._end);

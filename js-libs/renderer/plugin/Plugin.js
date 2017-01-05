@@ -18,7 +18,7 @@ var Plugin = Class.extend({
     _myflag: false,
     _pluginParams: {},
     init: function(data, parent, stage, theme) {
-		this.events = [];
+        this.events = [];
         this.appEvents = [];
         this._childIds = [];
         this._pluginParams = {};
