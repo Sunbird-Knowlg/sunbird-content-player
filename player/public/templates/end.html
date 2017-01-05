@@ -5,7 +5,7 @@
     }
 
     .swiper-slide {
-       /* background-image: url('img/icons/img_panel.png');*/
+        /* background-image: url('img/icons/img_panel.png');*/
         background-position: center;
         background-size: cover;
         width: 150px;
@@ -36,7 +36,7 @@
 
     <div class="gc-ep-content-holder">
         <div class="gc-ep-assessment-cont">
-            
+
             <div class="gc-ep-rating-cont">
                 <div class="gc-ep-rating" ng-if="!showFeedbackPopup">
                     <p>{{languageSupport.scores}}</p>
@@ -86,7 +86,7 @@
             <div class="gc-related-cont" ng-show="showRelatedContent">
                 <div class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
                     <div class="gc-related-item">
-                        <p class="gc-text-elipsis gc-related-cont-title">Title{{story.name}}</p>
+                        <p class="gc-text-elipsis gc-related-cont-title">{{story.name}}</p>
                         <div class="gc-rel-content-img">
                             <img class="img-center" ng-src="{{story.appIcon}}" />
                             <div class="gc-repeat-content">
@@ -115,13 +115,15 @@
                 <div class="gc-feedback-popup">
                     <div star-rating empty-rating="star_inactive.png" selected-rating="star_active.png" rating="popUserRating" read-only="false" max-rating="5" click="updatePopUserRating(param)"></div>
                     <div class="gc-fd-comments">
-                    <div class="gc-fd-title"><p>{{languageSupport.comment}}</p></div>
+                        <div class="gc-fd-title">
+                            <p>{{languageSupport.comment}}</p>
+                        </div>
                         <textarea class="gc-fd-text" ng-keyup="commentLength()" id="commentText"></textarea>
                         <div class="gc-fd-commentInfo">
                             <p>{{stringLeft}}</p>
                         </div>
                     </div>
-                    <div ng-class="(popUserRating > 0 || stringLeft < 130)  ? 'gc-fd-footer' : 'gc-fd-footer icon-opacity'"  id="feedbackSubmitBtn">
+                    <div ng-class="(popUserRating > 0 || stringLeft < 130)  ? 'gc-fd-footer' : 'gc-fd-footer icon-opacity'" id="feedbackSubmitBtn">
                         <input class="btn-black" type="button" value="{{languageSupport.submit}}" ng-click="submitFeedback()">
                     </div>
                 </div>
