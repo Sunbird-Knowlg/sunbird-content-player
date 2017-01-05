@@ -1,46 +1,46 @@
 var Plugin = Class.extend({
-	_isContainer: false,
+    _isContainer: false,
     _defaultFont: undefined,
-	_render: true,
-	_theme: undefined,
-	_parent: undefined,
-	_stage: undefined,
-	_data: undefined,
-	_currIndex: 0,
-	_index: 0,
-	_self: undefined,
-	_dimensions: undefined,
-	_id: undefined,
+    _render: true,
+    _theme: undefined,
+    _parent: undefined,
+    _stage: undefined,
+    _data: undefined,
+    _currIndex: 0,
+    _index: 0,
+    _self: undefined,
+    _dimensions: undefined,
+    _id: undefined,
     _childIds: [],
     _enableEvents: true,
-	events: [],
-	appEvents: [],
-	_myflag:false,
+    events: [],
+    appEvents: [],
+    _myflag: false,
     _pluginParams: {},
-	init: function(data, parent, stage, theme) {
-		this.events = [];
-		this.appEvents = [];
+    init: function(data, parent, stage, theme) {
+        this.events = [];
+        this.appEvents = [];
         this._childIds = [];
         this._pluginParams = {};
-		this._theme = theme;
-		this._stage = stage;
-		this._parent = parent;
-	    this._data = data;
-		this.initPlugin(data);
-		var dims = this.relativeDims();
-		if (dims && this._self) {
-			this._self.origX = dims.x;
-        	this._self.origY = dims.y;
-        	this._self.width = dims.w;
-        	this._self.height = dims.h;
-		}
+        this._theme = theme;
+        this._stage = stage;
+        this._parent = parent;
+        this._data = data;
+        this.initPlugin(data);
+        var dims = this.relativeDims();
+        if (dims && this._self) {
+            this._self.origX = dims.x;
+            this._self.origY = dims.y;
+            this._self.width = dims.w;
+            this._self.height = dims.h;
+        }
         if (data.enableDrag) {
             this.enableDrag(this._self, data.snapTo);
         }
         var instance = this;
-		if(data.appEvents) {
-			this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/));
-		}
+        if (data.appEvents) {
+            this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/));
+        }
 
         // Allow child classes to disable event registration (e.g. when they use event as a template)
         if (this._enableEvents) {
@@ -48,33 +48,33 @@ var Plugin = Class.extend({
         }
 
         this._id = this._data.id || this._data.asset || _.uniqueId('plugin');
-		PluginManager.registerPluginObject(this);
-		if (this._self && data.visible === false) {
-	    	this._self.visible = false;
-		}
+        PluginManager.registerPluginObject(this);
+        if (this._self && data.visible === false) {
+            this._self.visible = false;
+        }
 
-		// Conditional evaluation for rendering
-		if (data['ev-if']) {
-			var expr = data['ev-if'].trim();
+        // Conditional evaluation for rendering
+        if (data['ev-if']) {
+            var expr = data['ev-if'].trim();
             var modelExpr = expr = this.replaceExpressions(expr);
-            if (!(expr.substring(0,2) == "${")) expr = "${" + expr;
-            if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}";
+            if (!(expr.substring(0, 2) == "${")) expr = "${" + expr;
+            if (!(expr.substring(expr.length - 1, expr.length) == "}")) expr = expr + "}";
             var exprVal = this.evaluateExpr(expr);
             if (typeof exprVal == "undefined" && this._stage) {
                 exprVal = this._stage.getModelValue(modelExpr);
             }
-			if (typeof exprVal != "undefined") {
-				if (this._self) {
-					this._self.visible = (this._self.visible && exprVal);
-				}
-			}
-		}
+            if (typeof exprVal != "undefined") {
+                if (this._self) {
+                    this._self.visible = (this._self.visible && exprVal);
+                }
+            }
+        }
 
-		
+
 
         // Render the plugin component
-        if(this._render) {
-            if(this._isContainer && this._type == 'stage') {
+        if (this._render) {
+            if (this._isContainer && this._type == 'stage') {
                 this.cache();
             }
             this.render();
@@ -90,78 +90,78 @@ var Plugin = Class.extend({
             }
         }
 
-	},
-	cache: function() {
-		this._self.cache(this._dimensions.x, this._dimensions.y, this._dimensions.w, this._dimensions.h);
-	},
-	uncache: function() {
-		this._self.uncache();
-	},
-	setIndex: function(idx) {
-		this._index = idx;
-	},
-	setDimensions: function(){
-		var dims = this.relativeDims();
-		this._self.x = dims.x ? dims.x : 0;
-		this._self.y = dims.y ? dims.y : 0;
-		this._self.width = dims.w ? dims.w : 1;	//default width = 1
-		this._self.height = dims.h ? dims.h : 1; //default height = 1
-	},
-	addChild: function(child, childPlugin) {
-		var nextIdx = this._currIndex++;
-		this._self.addChildAt(child, nextIdx);
-		if (childPlugin) {
-			childPlugin.setIndex(nextIdx);
+    },
+    cache: function() {
+        this._self.cache(this._dimensions.x, this._dimensions.y, this._dimensions.w, this._dimensions.h);
+    },
+    uncache: function() {
+        this._self.uncache();
+    },
+    setIndex: function(idx) {
+        this._index = idx;
+    },
+    setDimensions: function() {
+        var dims = this.relativeDims();
+        this._self.x = dims.x ? dims.x : 0;
+        this._self.y = dims.y ? dims.y : 0;
+        this._self.width = dims.w ? dims.w : 1; //default width = 1
+        this._self.height = dims.h ? dims.h : 1; //default height = 1
+    },
+    addChild: function(child, childPlugin) {
+        var nextIdx = this._currIndex++;
+        this._self.addChildAt(child, nextIdx);
+        if (childPlugin) {
+            childPlugin.setIndex(nextIdx);
             if (childPlugin._id) {
                 this._childIds.push(childPlugin._id);
             }
-		}
-	},
-	removeChildAt: function(idx) {
-		this._self.removeChildAt(idx);
-	},
-	removeChild: function(child) {
-		this._self.removeChild(child);
-	},
-	render: function() {
+        }
+    },
+    removeChildAt: function(idx) {
+        this._self.removeChildAt(idx);
+    },
+    removeChild: function(child) {
+        this._self.removeChild(child);
+    },
+    render: function() {
         if (this._self) {
             this._parent.addChild(this._self, this);
         } else {
             console.warn("Skipped rendering the plugin object: ", this._id);
         }
-	},
-	update: function() {
-		this._theme.update();
-	},
-	dimensions: function() {
-		return this._dimensions;
-	},
-	relativeDims: function() {
-		if (this._parent) {
-			var parentDims = this._parent.dimensions();
-			this._dimensions = {
-	            x: parseFloat(parentDims.w * (this._data.x || 0)/100),
-	            y: parseFloat(parentDims.h * (this._data.y || 0)/100),
-	            w: parseFloat(parentDims.w * (this._data.w || 0)/100),
-	            h: parseFloat(parentDims.h * (this._data.h || 0)/100),
-                stretch: ((typeof(this._data.stretch) != "undefined") ? this._data.stretch : true)
-	        }
-		}
+    },
+    update: function() {
+        this._theme.update();
+    },
+    dimensions: function() {
         return this._dimensions;
-	},
-	getRelativeDims: function(data) {
-		var parentDims = this._parent.dimensions();
-		var relDimensions = {
-            x: parseFloat(parentDims.w * (data.x || 0)/100),
-            y: parseFloat(parentDims.h * (data.y || 0)/100),
-            w: parseFloat(parentDims.w * (data.w || 0)/100),
-            h: parseFloat(parentDims.h * (data.h || 0)/100),
+    },
+    relativeDims: function() {
+        if (this._parent) {
+            var parentDims = this._parent.dimensions();
+            this._dimensions = {
+                x: parseFloat(parentDims.w * (this._data.x || 0) / 100),
+                y: parseFloat(parentDims.h * (this._data.y || 0) / 100),
+                w: parseFloat(parentDims.w * (this._data.w || 0) / 100),
+                h: parseFloat(parentDims.h * (this._data.h || 0) / 100),
+                stretch: ((typeof(this._data.stretch) != "undefined") ? this._data.stretch : true)
+            }
+        }
+        return this._dimensions;
+    },
+    getRelativeDims: function(data) {
+        var parentDims = this._parent.dimensions();
+        var relDimensions = {
+            x: parseFloat(parentDims.w * (data.x || 0) / 100),
+            y: parseFloat(parentDims.h * (data.y || 0) / 100),
+            w: parseFloat(parentDims.w * (data.w || 0) / 100),
+            h: parseFloat(parentDims.h * (data.h || 0) / 100),
             stretch: ((typeof(data.stretch) != "undefined") ? data.stretch : true)
         }
         return relDimensions;
-	},
-	setScale: function() {
-		var sb = this._self.getBounds();
+    },
+    setScale: function() {
+        var sb = this._self.getBounds();
         var dims = this.relativeDims();
         var parentDims = this._parent.dimensions();
 
@@ -169,20 +169,20 @@ var Plugin = Class.extend({
         if (!dims.stretch) {
             if ((dims.h != 0) && (dims.w != 0)) {
                 // If h > w, then constrain on w (equivalent to setting h = 0) and vice versa
-                if (sb.height > sb.width)  dims.h = 0;
+                if (sb.height > sb.width) dims.h = 0;
                 else dims.w = 0;
             }
         }
 
         // Compute constrained dimensions (e.g. if w is specified but not height)
-        if(dims.h == 0) {
+        if (dims.h == 0) {
             dims.h = dims.w * sb.height / sb.width;
             if (parentDims.h < dims.h) {
                 dims.h = parentDims.h;
                 dims.w = dims.h * sb.width / sb.height;
             }
         }
-        if(dims.w == 0) {
+        if (dims.w == 0) {
             dims.w = dims.h * sb.width / sb.height;
             if (parentDims.w < dims.w) {
                 dims.w = parentDims.w;
@@ -195,59 +195,59 @@ var Plugin = Class.extend({
         this._dimensions.w = dims.w;
 
         // Scale the object based on above computations
-        if (this._self ) {
+        if (this._self) {
             this._self.scaleY = dims.h / sb.height;
             this._self.scaleX = dims.w / sb.width;
         }
-	},
-	initPlugin: function(data) {
-		PluginManager.addError('Subclasses of plugin should implement this function');
-		throw "Subclasses of plugin should implement this function";
-	},
-	play: function() {
-		PluginManager.addError('Subclasses of plugin should implement play()');
-	},
-	pause: function() {
-		PluginManager.addError('Subclasses of plugin should implement pause()');
-	},
-	stop: function() {
-		PluginManager.addError('Subclasses of plugin should implement stop()');
-	},
-	togglePlay: function() {
-		PluginManager.addError('Subclasses of plugin should implement togglePlay()');
-	},
+    },
+    initPlugin: function(data) {
+        PluginManager.addError('Subclasses of plugin should implement this function');
+        throw "Subclasses of plugin should implement this function";
+    },
+    play: function() {
+        PluginManager.addError('Subclasses of plugin should implement play()');
+    },
+    pause: function() {
+        PluginManager.addError('Subclasses of plugin should implement pause()');
+    },
+    stop: function() {
+        PluginManager.addError('Subclasses of plugin should implement stop()');
+    },
+    togglePlay: function() {
+        PluginManager.addError('Subclasses of plugin should implement togglePlay()');
+    },
     refresh: function() {
         PluginManager.addError('Subclasses of plugin should implement refresh()');
     },
-	show: function(action) {
-		if(_.contains(this.events, 'show')) {
-			EventManager.dispatchEvent(this._data.id, 'show');
-		} else if(!this._self.visible) {
-			this._self.visible = true;
-			EventManager.processAppTelemetry(action, 'SHOW', this);
-		}
-		Renderer.update = true;
-	},
-	hide: function(action) {
-		if(_.contains(this.events, 'hide')) {
-			EventManager.dispatchEvent(this._data.id, 'hide');
-		} else if(this._self && this._self.visible) {
-			this._self.visible = false;
-			EventManager.processAppTelemetry(action, 'HIDE', this);
-		}
-		Renderer.update = true;
-	},
-	toggleShow: function(action) {
-		if(_.contains(this.events, 'toggleShow')) {
-			EventManager.dispatchEvent(this._data.id, 'toggleShow');
-		} else {
-			this._self.visible = !this._self.visible;
-			EventManager.processAppTelemetry(action, this._self.visible ? 'SHOW': 'HIDE', this);
-		}
-		Renderer.update = true;
-	},
-	toggleShadow: function(action) {
-		var isVisible = false;
+    show: function(action) {
+        if (_.contains(this.events, 'show')) {
+            EventManager.dispatchEvent(this._data.id, 'show');
+        } else if (!this._self.visible) {
+            this._self.visible = true;
+            EventManager.processAppTelemetry(action, 'SHOW', this);
+        }
+        Renderer.update = true;
+    },
+    hide: function(action) {
+        if (_.contains(this.events, 'hide')) {
+            EventManager.dispatchEvent(this._data.id, 'hide');
+        } else if (this._self && this._self.visible) {
+            this._self.visible = false;
+            EventManager.processAppTelemetry(action, 'HIDE', this);
+        }
+        Renderer.update = true;
+    },
+    toggleShow: function(action) {
+        if (_.contains(this.events, 'toggleShow')) {
+            EventManager.dispatchEvent(this._data.id, 'toggleShow');
+        } else {
+            this._self.visible = !this._self.visible;
+            EventManager.processAppTelemetry(action, this._self.visible ? 'SHOW' : 'HIDE', this);
+        }
+        Renderer.update = true;
+    },
+    toggleShadow: function(action) {
+        var isVisible = false;
 
         if (this.hasShadow()) {
             this.removeShadow();
@@ -260,14 +260,13 @@ var Plugin = Class.extend({
         return isVisible;
     },
     addShadow: function() {
-    	var shadowObj = this._self.shadow;
+        var shadowObj = this._self.shadow;
 
-    	// If the shadow is a plugin, set the visibility to true
+        // If the shadow is a plugin, set the visibility to true
         if ((shadowObj) && (shadowObj._self) && ('visible' in shadowObj._self)) {
             shadowObj._self.visible = true;
-        }
-        else {
-        	// Not a plugin, render a normal shadow
+        } else {
+            // Not a plugin, render a normal shadow
             var shadowColor = this._data.shadowColor || '#cccccc';
             shadowColor = this._data.shadow || shadowColor;
             var offsetX = this._data.offsetX || 0;
@@ -277,53 +276,51 @@ var Plugin = Class.extend({
         }
     },
     removeShadow: function() {
-    	var shadowObj = this._self.shadow;
+        var shadowObj = this._self.shadow;
 
-    	// If the shadow is a plugin, set the visibility to false
+        // If the shadow is a plugin, set the visibility to false
         if ((shadowObj) && (shadowObj._self) && ('visible' in shadowObj._self)) {
             shadowObj._self.visible = false;
-        }
-        else {
-        	// Not a plugin (normal shadow), unset the object
+        } else {
+            // Not a plugin (normal shadow), unset the object
             this._self.shadow = undefined;
         }
     },
     hasShadow: function() {
-    	var visibleShadow = false;
-    	var shadowObj = this._self.shadow;
+        var visibleShadow = false;
+        var shadowObj = this._self.shadow;
 
-    	// If the shadow is a plugin, then check the visible property
-    	if ((shadowObj) && (shadowObj._self) && ('visible' in shadowObj._self)) {
-    		visibleShadow = shadowObj._self.visible;
-    	}
-    	else {
-    		// It is not a plugin, check if the shadow object is created
-    		if (this._self.shadow) {
-    			visibleShadow = true;
-    		}
-    	}
+        // If the shadow is a plugin, then check the visible property
+        if ((shadowObj) && (shadowObj._self) && ('visible' in shadowObj._self)) {
+            visibleShadow = shadowObj._self.visible;
+        } else {
+            // It is not a plugin, check if the shadow object is created
+            if (this._self.shadow) {
+                visibleShadow = true;
+            }
+        }
 
-    	return visibleShadow;
+        return visibleShadow;
     },
     drawBorder: function(data, dims) {
-    	if (data.stroke) {
-			var strokeWidth = (data['strokeWidth'] || 1);
-			var borderShape;
-			var graphics = this._self.graphics;
-            if(!this._self.graphics){
+        if (data.stroke) {
+            var strokeWidth = (data['stroke-width'] || 1);
+            var borderShape;
+            var graphics = this._self.graphics;
+            if (!this._self.graphics) {
                 borderShape = new createjs.Shape();
                 graphics = borderShape.graphics;
             }
-			graphics.beginStroke(data.stroke);
-			borderShape.alpha = (data['strokeOpacity'] || 1);
-			graphics.setStrokeStyle(strokeWidth);
-			// graphics.setStrokeDash([10,10],0);
-			graphics.dr(dims.x, dims.y, dims.w, dims.h);
-            if(!this._self.graphics){
-    		  this._parent.addChild(borderShape);     
+            graphics.beginStroke(data.stroke);
+            borderShape.alpha = (data['stroke-opacity'] || 1);
+            graphics.setStrokeStyle(strokeWidth);
+            // graphics.setStrokeDash([10,10],0);
+            graphics.dr(dims.x, dims.y, dims.w, dims.h);
+            if (!this._self.graphics) {
+                this._parent.addChild(borderShape);
             }
-            Renderer.update = true;           
-		}
+            Renderer.update = true;
+        }
     },
     enableDrag: function(asset, snapTo) {
         asset.cursor = "pointer";
@@ -343,8 +340,8 @@ var Plugin = Class.extend({
             asset.on("pressup", function(evt) {
                 var plugin = PluginManager.getPluginObject(snapTo);
                 var dims = plugin._dimensions;
-                var xFactor = parseFloat(this.width * (50/100));
-                var yFactor = parseFloat(this.height * (50/100));
+                var xFactor = parseFloat(this.width * (50 / 100));
+                var yFactor = parseFloat(this.height * (50 / 100));
                 var x = dims.x - xFactor,
                     y = dims.y - yFactor,
                     maxX = dims.x + dims.w + xFactor,
@@ -386,15 +383,15 @@ var Plugin = Class.extend({
         var value = undefined;
         try {
             expr = expr.trim();
-            if((expr.substring(0,2) == "${") && (expr.substring(expr.length-1, expr.length) == "}")) {
-                expr = expr.substring(2,expr.length);
-                expr = expr.substring(0,expr.length-1);
+            if ((expr.substring(0, 2) == "${") && (expr.substring(expr.length - 1, expr.length) == "}")) {
+                expr = expr.substring(2, expr.length);
+                expr = expr.substring(0, expr.length - 1);
                 value = eval(expr);
             } else {
                 value = eval(expr);
             }
         } catch (err) {
-            console.warn('expr: '+ expr + ' evaluation faild:', err.message);
+            console.warn('expr: ' + expr + ' evaluation faild:', err.message);
         }
         return value;
     },
@@ -404,14 +401,14 @@ var Plugin = Class.extend({
         var nextIdx = model.indexOf('${', idx);
         var endIdx = model.indexOf('}', idx + 1);
         while (nextIdx != -1 && endIdx != -1) {
-            var expr = model.substring(nextIdx, endIdx+1);
+            var expr = model.substring(nextIdx, endIdx + 1);
             arr.push(expr);
             idx = endIdx;
             nextIdx = model.indexOf('${', idx);
             endIdx = model.indexOf('}', idx + 1);
         }
         if (arr.length > 0) {
-            for (var i=0; i<arr.length; i++) {
+            for (var i = 0; i < arr.length; i++) {
                 var val = this.evaluateExpr(arr[i]);
                 model = model.replace(arr[i], val);
             }
@@ -424,7 +421,7 @@ var Plugin = Class.extend({
         if (tokens.length >= 2) {
             var scope = tokens[0];
             var idx = param.indexOf('.');
-            var paramName = param.substring(idx+1);
+            var paramName = param.substring(idx + 1);
             if (scope && scope.toLowerCase() == 'app') {
                 value = GlobalContext.getParam(paramName);
             } else if (scope && scope.toLowerCase() == 'stage') {
@@ -441,25 +438,25 @@ var Plugin = Class.extend({
         this._defaultFont = 'NotoSansGujarati, NotoSansOriya, NotoSansMalayalam';
         return this._defaultFont;
     },
-	transitionTo: function() {
-		PluginManager.addError('Subclasses of plugin should implement transitionTo()');
-	},
-	evaluate: function() {
-		PluginManager.addError('Subclasses of plugin should implement evaluate()');
-	},
-	reload: function() {
-		PluginManager.addError('Subclasses of plugin should implement reload()');
-	},
-	restart: function() {
-		PluginManager.addError('Subclasses of plugin should implement reload()');
-	},
+    transitionTo: function() {
+        PluginManager.addError('Subclasses of plugin should implement transitionTo()');
+    },
+    evaluate: function() {
+        PluginManager.addError('Subclasses of plugin should implement evaluate()');
+    },
+    reload: function() {
+        PluginManager.addError('Subclasses of plugin should implement reload()');
+    },
+    restart: function() {
+        PluginManager.addError('Subclasses of plugin should implement reload()');
+    },
     blur: function(action) {
         var instance = this;
         var obj = instance._self;
         var blurFilter = new createjs.BlurFilter(25, 25, 1);
         obj.filters = [blurFilter];
         var bounds = instance.relativeDims();
-        obj.cache(bounds.x,bounds.y, bounds.w, bounds.h);
+        obj.cache(bounds.x, bounds.y, bounds.w, bounds.h);
         Renderer.update = true;
     },
     unblur: function(action) {
@@ -468,29 +465,29 @@ var Plugin = Class.extend({
         instance._self.uncache();
         Renderer.update = true;
     },
-	invokeChildren: function(data, parent, stage, theme) {
-		var children = [];
+    invokeChildren: function(data, parent, stage, theme) {
+        var children = [];
         for (k in data) {
             if (PluginManager.isPlugin(k)) {
-                if(_.isArray(data[k])) {
+                if (_.isArray(data[k])) {
                     _.each(data[k], function(item) {
                         item.pluginType = k;
-                        if(!item['z-index']) item['z-index'] = -1;
+                        if (!item['z-index']) item['z-index'] = -1;
                         children.push(item);
                     });
                 } else {
                     data[k].pluginType = k;
-                    if(!data[k]['z-index']) data[k]['z-index'] = -1;
+                    if (!data[k]['z-index']) data[k]['z-index'] = -1;
                     children.push(data[k]);
                 }
             }
         }
         children = _.sortBy(children, 'z-index');
-        for(k in children) {
+        for (k in children) {
             var item = children[k];
             PluginManager.invoke(item.pluginType, item, parent, stage, theme);
         }
-	},
+    },
     getPluginParam: function(param) {
         var instance = this;
         var params = instance._pluginParams;
@@ -549,15 +546,15 @@ var Plugin = Class.extend({
         return children;
     },
     setState: function(param, value, isStateChanged) {
-			if (!_.isUndefined(isStateChanged)) {
-                this._stage.isStageStateChanged(isStateChanged);
-            }
+        if (!_.isUndefined(isStateChanged)) {
+            this._stage.isStageStateChanged(isStateChanged);
+        }
         this._stage.setParam(param.toLowerCase(), value);
     },
     getState: function(param) {
-        if(!_.isUndefined(this._stage._currentState)){
-             return this._stage._currentState[param];
+        if (!_.isUndefined(this._stage._currentState)) {
+            return this._stage._currentState[param];
         }
 
     }
-   });
+});
