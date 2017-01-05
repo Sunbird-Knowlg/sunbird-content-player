@@ -304,7 +304,7 @@ var Plugin = Class.extend({
     },
     drawBorder: function(data, dims) {
         if (data.stroke) {
-            var strokeWidth = (data['strokeWidth'] || 1);
+            var strokeWidth = (data['stroke-width'] || 1);
             var borderShape;
             var graphics = this._self.graphics;
             if (!this._self.graphics) {
@@ -312,10 +312,19 @@ var Plugin = Class.extend({
                 graphics = borderShape.graphics;
             }
             graphics.beginStroke(data.stroke);
-            borderShape.alpha = (data['strokeOpacity'] || 1);
+            borderShape.alpha = (data['stroke-opacity'] || 1);
             graphics.setStrokeStyle(strokeWidth);
             // graphics.setStrokeDash([10,10],0);
+
+            // dims.x += strokeWidth/2;
+            // dims.y += strokeWidth/2;
+            // // dims.w += strokeWidth/2;
+            // // dims.h += strokeWidth/2;
+            // this._self.x += strokeWidth;
+            // this._self.y += strokeWidth;
+
             graphics.dr(dims.x, dims.y, dims.w, dims.h);
+            //graphics.dr(dims.x + strokeWidth/2, dims.y + strokeWidth/2, dims.w - strokeWidth, dims.h - strokeWidth);
             if (!this._self.graphics) {
                 this._parent.addChild(borderShape);
             }
