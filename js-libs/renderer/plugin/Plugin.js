@@ -316,6 +316,7 @@ var Plugin = Class.extend({
             graphics.setStrokeStyle(strokeWidth);
             // graphics.setStrokeDash([10,10],0);
 
+
             // dims.x += strokeWidth/2;
             // dims.y += strokeWidth/2;
             // // dims.w += strokeWidth/2;

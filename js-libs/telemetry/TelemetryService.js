@@ -121,7 +121,11 @@ TelemetryService = {
             }
             if (!_.isUndefined(end)) {
                 var teEndevent = TelemetryService.instance.createEvent("OE_END", {}).start();
-                teEndevent.startTime = end[end.length - 1].startTime;
+                var startTime = 0;
+                if(end.length > 0){
+                    startTime = end[end.length - 1].startTime;
+                }
+                teEndevent.startTime = startTime;
                 TelemetryService.instance._end.push(teEndevent);
             }
         } else {
