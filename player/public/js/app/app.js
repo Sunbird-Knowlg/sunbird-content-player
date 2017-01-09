@@ -290,16 +290,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                                     console.info("contentNotAvailable : ", err);
                                     contentNotAvailable();
                                 });
-                            ContentService.getContentBody(id)
-                                .then(function(data) {
-                                    content["body"] = data.body;
-
-                            })
-                            .catch(function(err) {
-                                console.info("contentNotAvailable : ", err);
-                                contentNotAvailable();
-                            });
-                        ContentService.getContentBody(urlContentId)
+                            ContentService.getContentBody(urlContentId)
                             .then(function(data) {
                                 content["body"] = data.body;
 
@@ -308,16 +299,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                                 console.info("contentNotAvailable : ", err);
                                 contentNotAvailable();
                             });
-                    } else {
+                    }
+                } else {
                         if ($state.current.name == appConstants.stateShowContentEnd) {
-                            $state.go(appConstants.stateShowContentEnd, {
-                                "contentId": $state.params.contentId
-                            });
+                            // $state.go(appConstants.stateShowContentEnd, { "contentId": $state.params.contentId });
+                            $rootScope.$broadcast("loadEndPage");
                         } else {
                             launchInitialPage(GlobalContext.config.appInfo, $state);
                         }
                     }
-                }
+
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
                     alert(res.errors);
