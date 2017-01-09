@@ -23,7 +23,7 @@ var stack = new Array(),
 
 // TODO:have to remove appState and setContentDataCb in future.
 // Used in only Authoting tools
-window.setContentData = function(metadata, data, configuration) {   
+window.setContentData = function(metadata, data, configuration) {
     if (!_.isUndefined(metadata) && !_.isNull(metadata)) {
         content.metadata = metadata;
     } else {
@@ -41,7 +41,7 @@ window.setContentData = function(metadata, data, configuration) {
     }
     var $state = angular.element(document.body).injector().get('$state')
     updateContentData($state)
-    //localstorageFunction('content', content.metadata, 'setItem');   
+    //localstorageFunction('content', content.metadata, 'setItem');
 }
 
 function updateContentData($state){
@@ -317,15 +317,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             launchInitialPage(GlobalContext.config.appInfo, $state);
                         }
                     }
+                }
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
                     alert(res.errors);
                     exitApp();
                 });
             });
-               
+
         });
-        
+
     }).config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('contentList', {
@@ -353,7 +354,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
             })
-            
+
     }).controller('BaseCtrl', function($scope, $rootScope, $state, $stateParams, ContentService, appConstants) {
         $rootScope.isCollection = false;
 
@@ -430,7 +431,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                     if (!_.contains(stack, content.identifier))
                         stack.push(content.identifier);
-                    if (COLLECTION_MIMETYPE == content.mimeType) {                       
+                    if (COLLECTION_MIMETYPE == content.mimeType) {
                         $rootScope.title = content.name;
                         $rootScope.collection = content;
                         localStorageGC.setItem("collection", $rootScope.collection);
@@ -503,7 +504,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.exitApp = function() {
             exitApp();
-        };  
+        };
 
         $scope.goBack = function() {
             stack.pop();
@@ -518,13 +519,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         };
 
-        $scope.init = function(){ 
+        $scope.init = function(){
             // $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction('content',undefined, 'getItem');
             // $rootScope.content = $rootScope.content ? $rootScope.content : localStorageGC.getItem('content');
             $rootScope.title = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.name : "";
             $scope.resetContentListCache();
         };
-       
+
         $scope.init();
 
     }).controller('ContentHomeCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
@@ -572,7 +573,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             } else {
                 data = data.localData;
             }
-            
+
             data.isReady = "ready";
             $rootScope.safeApply(function() {
                 $scope.item = data;
@@ -930,7 +931,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                  var tsObj = localStorageGC.getItem('telemetryService');
                  TelemetryService.init(tsObj._gameData, tsObj._user);
             }
-            
+
             TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContentApp-EndScreen", subtype: "ContentID" });
 
             // Get related contents for the current content
@@ -1356,7 +1357,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         scope.unmuteIcon = $rootScope.imageBasePath + "unmute.png";
                         document.getElementById("unmute_id").style.visibility = "visible"
                     }
-                  TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute" , "TOUCH", { stageId:Renderer.theme._currentStage});    
+                  TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute" , "TOUCH", { stageId:Renderer.theme._currentStage});
                 }
             }
         }
