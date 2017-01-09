@@ -19,6 +19,7 @@ var stack = new Array(),
     isbrowserpreview = getUrlParameter("webview"),
     setContentDataCb = undefined;
     //appState = undefined;
+    
 
 // TODO:have to remove appState and setContentDataCb in future.
 // Used in only Authoting tools
