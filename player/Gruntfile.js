@@ -236,7 +236,7 @@ module.exports = function(grunt) {
         },
         aws_s3: {
             options: {
-                region: 'ap-southeast-1',
+                region: 'ap-south-1',
                 uploadConcurrency: 5, // 5 simultaneous uploads
                 downloadConcurrency: 5, // 5 simultaneous downloads
                 progress: 'progressBar'
