@@ -43,7 +43,7 @@ var ImagePlugin = Plugin.extend({
             // s.y = dims.y;
 
             if(_.isString(assetSrc)){
-                AssetManager.strategy.loadAsset(this._stage._data.id, data.asset, assetSrc, function(){
+                AssetManager.strategy.loadAsset(this._stage._data.id, asset, assetSrc, function(){
                     if(_.isString(instance._self)){
                         console.log("ImagePlugin: Image load failed", assetSrc);
                     }

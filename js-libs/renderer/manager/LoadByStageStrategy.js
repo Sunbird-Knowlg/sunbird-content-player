@@ -191,6 +191,12 @@ LoadByStageStrategy = Class.extend({
                         cb();
                     })
                 } else {
+                    // TODO: Have to remove in future if createjs handle this case.
+                    // Since createjs is not handling loadmanifest when assets is defined multiple times
+                    // so if assets is defined multiple times this value is false
+                    if (currentStageLoader.loaded == false) {
+                        console.warn("assets are initialized multiple times inside stages")
+                    }
                     // if loader for current stage is loaded call callback
                     cb();
                 }

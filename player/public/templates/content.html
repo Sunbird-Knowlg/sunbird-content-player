@@ -23,20 +23,20 @@
     <img class="gc-cp-background" ng-src="{{imageBasePath}}img_bg.png">
     <ion-header-bar class="bar-header bar disable-user-behavior gc-cp-header">
         <div preview="false" class="gc-cp-header-div">
-            <collection class="gc-cp-coll"></collection>
+            <collection class="gc-cp-coll" is-collec = "isCollection"></collection>
             <genie icon="icn_square_home.png" class="gc-cp-genie"></genie>
         </div>
     </ion-header-bar>
-    <ion-content class="scroll-content ionic-scroll  has-header">
-    <div class="scroll gc-cp-scroll-ionic">
-        <center>
-            <div id="cover">
-                <p class="font-baloo cover-page-title">{{item.name}}</p>
-            </div>
-            <div class="gc-play-container" ng-show="item.isReady == 'ready'">
-                <img class="gc-play-icon" ng-click="playContent(item)" src="{{imageBasePath}}icn_bg_play.png">
-            </div>
-        </center>
-    </div>
+    <ion-content class="scroll-content ionic-scroll has-header" scroll="false">
+        <div class="scroll gc-cp-scroll-ionic">
+            <center>
+                <div id="cover">
+                    <p class="font-baloo cover-page-title">{{item.name}}</p>
+                </div>
+                <div class="gc-play-container" ng-show="item.isReady == 'ready'">
+                    <img class="gc-play-icon" ng-click="playContent(item)" src="{{imageBasePath}}icn_bg_play.png">
+                </div>
+            </center>
+        </div>
     </ion-content>
 </ion-pane>
