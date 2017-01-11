@@ -18,7 +18,7 @@ var stack = new Array(),
     },
     isbrowserpreview = getUrlParameter("webview"),
     setContentDataCb = undefined;
-    
+
     //appState = undefined;
     
 
@@ -350,7 +350,63 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).controller('BaseCtrl', function($scope, $rootScope, $state, $stateParams, ContentService, appConstants) {
         $rootScope.isCollection = false;
 
-        $rootScope.replayContent = function(){
+
+
+        $rootScope.getContentMetadata = function(content) {
+            jQuery('#loading').hide();
+            ContentService.getContent(content)
+                .then(function(data) {
+                    // localstorageFunction('content', data, 'setItem');
+                    $rootScope.setContentMetadata(data);
+                })
+                .catch(function(err) {
+                    console.info("contentNotAvailable : ", err);
+                    contentNotAvailable();
+                });
+        }
+
+        $rootScope.setContentMetadata = function(contentData) {
+            // localstorageFunction('content', data, 'setItem');
+            var data = _.clone(contentData);
+            GlobalContext.currentContentId = data.identifier;
+            GlobalContext.currentContentMimeType = data.mimeType;
+            if (_.isUndefined(data.localData)) {
+                data.localData = _.clone(contentData);
+            } else {
+                data = data.localData;
+            }
+
+            data.isReady = "ready";
+            $rootScope.safeApply(function() {
+                $scope.item = data;
+                $rootScope.content = data;
+            });
+
+            // Storing content & collection data into localstorage
+            // This is usefull when HTML content is opened for collection or directly
+            localStorageGC.setItem("content", $rootScope.content);
+            if (_.isUndefined($rootScope.collection)) {
+                localStorageGC.removeItem('collection');
+            } else {
+                localStorageGC.setItem("collection", $rootScope.collection);
+            }
+
+            if ($rootScope.collection && $rootScope.collection.children) {
+                $rootScope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
+                localStorageGC.setItem("isCollection", $rootScope.isCollection)
+            }
+
+            var identifier = (data && data.identifier) ? data.identifier : null;
+            var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
+            startTelemetry(identifier, version);
+            // Cover Page is loaded, log telmetry for coverpage
+            TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID" });
+        }
+
+        $rootScope.replayContent = function() {
+            if (!$rootScope.content) {
+                $rootScope.getContentMetadata($stateParams.itemId);
+            }
             startProgressBar(40, 0.6,$rootScope.content.name);
             TelemetryService.interact("TOUCH", "gc_replay", "TOUCH", {
                 stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
@@ -365,7 +421,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 Renderer.theme.reRender();
             }
         }
-
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $rootScope.pageId = 'ContentApp-Collection';
         // var id = $stateParams.id;
@@ -539,59 +594,59 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             startProgressBar(40, 0.6, content.name);
         };
 
-        $scope.getContentMetadata = function(content) {
-            jQuery('#loading').hide();
-            ContentService.getContent(content)
-                .then(function(data) {
-                    if (_.isUndefined($rootScope.collection)) {
-                        // localstorageFunction('Collection', undefined, 'removeItem');
-                    }
-                    // localstorageFunction('content', data, 'setItem');
-                    $scope.setContentMetadata(data);
-                })
-                .catch(function(err) {
-                    console.info("contentNotAvailable : ", err);
-                    contentNotAvailable();
-                });
-        }
-
-        $scope.setContentMetadata = function(contentData) {
-            // localstorageFunction('content', data, 'setItem');
-            var data = _.clone(contentData);
-            GlobalContext.currentContentId = data.identifier;
-            GlobalContext.currentContentMimeType = data.mimeType;
-            if (_.isUndefined(data.localData)) {
-                data.localData = _.clone(contentData);
-            } else {
-                data = data.localData;
-            }
-
-            data.isReady = "ready";
-            $rootScope.safeApply(function() {
-                $scope.item = data;
-                $rootScope.content = data;
-            });
-
-            // Storing content & collection data into localstorage
-            // This is usefull when HTML content is opened for collection or directly
-            localStorageGC.setItem("content", $rootScope.content);
-            if (_.isUndefined($rootScope.collection)) {
-                localStorageGC.removeItem('collection');
-            } else {
-                localStorageGC.setItem("collection", $rootScope.collection);
-            }
-
-            if ($rootScope.collection && $rootScope.collection.children) {
-                $rootScope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
-                localStorageGC.setItem("isCollection", $rootScope.isCollection)
-            }
-
-            var identifier = (data && data.identifier) ? data.identifier : null;
-            var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
-            startTelemetry(identifier, version);
-            // Cover Page is loaded, log telmetry for coverpage
-            TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID" });
-        }
+        // $scope.getContentMetadata = function(content) {
+        //     jQuery('#loading').hide();
+        //     ContentService.getContent(content)
+        //         .then(function(data) {
+        //             if (_.isUndefined($rootScope.collection)) {
+        //                 // localstorageFunction('Collection', undefined, 'removeItem');
+        //             }
+        //             // localstorageFunction('content', data, 'setItem');
+        //             $scope.setContentMetadata(data);
+        //         })
+        //         .catch(function(err) {
+        //             console.info("contentNotAvailable : ", err);
+        //             contentNotAvailable();
+        //         });
+        // }
+        //
+        // $scope.setContentMetadata = function(contentData) {
+        //     // localstorageFunction('content', data, 'setItem');
+        //     var data = _.clone(contentData);
+        //     GlobalContext.currentContentId = data.identifier;
+        //     GlobalContext.currentContentMimeType = data.mimeType;
+        //     if (_.isUndefined(data.localData)) {
+        //         data.localData = _.clone(contentData);
+        //     } else {
+        //         data = data.localData;
+        //     }
+        //
+        //     data.isReady = "ready";
+        //     $rootScope.safeApply(function() {
+        //         $scope.item = data;
+        //         $rootScope.content = data;
+        //     });
+        //
+        //     // Storing content & collection data into localstorage
+        //     // This is usefull when HTML content is opened for collection or directly
+        //     localStorageGC.setItem("content", $rootScope.content);
+        //     if (_.isUndefined($rootScope.collection)) {
+        //         localStorageGC.removeItem('collection');
+        //     } else {
+        //         localStorageGC.setItem("collection", $rootScope.collection);
+        //     }
+        //
+        //     if ($rootScope.collection && $rootScope.collection.children) {
+        //         $rootScope.isCollection = $rootScope.collection.children.length > 0 ? true : false;
+        //         localStorageGC.setItem("isCollection", $rootScope.isCollection)
+        //     }
+        //
+        //     var identifier = (data && data.identifier) ? data.identifier : null;
+        //     var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
+        //     startTelemetry(identifier, version);
+        //     // Cover Page is loaded, log telmetry for coverpage
+        //     TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID" });
+        // }
 
         $scope.init = function() {
             $scope.showPage = true;
@@ -964,7 +1019,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $scope.init();
             }
         });
-    }).controller('OverlayCtrl', function($scope, $rootScope) {
+    }).controller('OverlayCtrl', function($scope, $rootScope, $stateParams) {
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
 
@@ -991,6 +1046,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.navigate = function (navType) {
+            if (!$rootScope.content) {
+                // if $rootScope.content is not available get it from the base controller
+                $rootScope.getContentMetadata($stateParams.itemId);
+            }
+
             TelemetryService.interact("TOUCH", navType, null, {stageId : $rootScope.stageData.currentStage});
             GlobalContext.currentContentId = $rootScope.content.identifier;
             GlobalContext.currentContentMimeType = $rootScope.content.mimeType;
@@ -1128,6 +1188,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         }
                     })
             } else {
+                collectionPath = $scope.relatedContentPath;
                 if (content.isAvailable) {
                     if (COLLECTION_MIMETYPE == content.mimeType) {
                         $state.go('contentList', { "id": content.identifier });
