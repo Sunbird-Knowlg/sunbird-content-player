@@ -1387,6 +1387,44 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'E',
             template: '<a href="javascript:void(0)" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
         }
+    }).directive('popup', function($rootScope, $compile) {
+        return {
+            restrict: 'E',
+            scope: {
+                popupBody: '=popupBody'
+            },
+            template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"></div></div>',
+            link: function(scope, element) {
+                scope.icons = $rootScope.icons;
+                scope.languageSupport = $rootScope.languageSupport;
+                scope.content = $rootScope.content;
+                element.bind("popupUpdate", function(event, data) {
+                    if (data) {
+                        for (key in data) {
+                            scope[key] = data[key];
+                        };
+                    }
+                });
+                var body = $compile(scope.popupBody)(scope);
+                element.find("div.popup-full-body").html();
+                element.find("div.popup-full-body").append(body);
+                element.hide();
+                scope.retryAssessment = function(id, e) {
+                    scope.hidePopup(id);
+                }
+
+                scope.hidePopup = function(id) {
+                    element.hide();
+                    TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
+                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
+                    });
+                };
+
+                scope.moveToNextStage = function(navType) {
+                    EventBus.dispatch("actionNavigateSkip", navType);
+                }
+            }
+        }
     }).directive('goodJob', function($rootScope) {
         return {
             restrict: 'E',
