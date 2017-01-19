@@ -38,7 +38,7 @@ var Plugin = Class.extend({
             this.enableDrag(this._self, data.snapTo);
         }
         var instance = this;
-        if (data.appEvents) {
+        if (data.appEvents && _.isString(data.appEvents)) {
             this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/));
         }
 
