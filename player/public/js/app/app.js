@@ -20,7 +20,7 @@ var stack = new Array(),
     setContentDataCb = undefined;
 
     //appState = undefined;
-    
+
 
 // TODO:have to remove appState and setContentDataCb in future.
 // Used in only Authoting tools
@@ -217,43 +217,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         flavor = "sandbox";
                     GlobalContext.config.flavor = flavor;
                 });
-
-                $rootScope.icons = {
-                    previous: {
-                        disable: $rootScope.imageBasePath + "back_icon_disabled.png",
-                        enable: $rootScope.imageBasePath + "back_icon.png",
-                    },
-                    next: {
-                        disable: $rootScope.imageBasePath + "next_icon_disabled.png",
-                        enable: $rootScope.imageBasePath + "next_icon.png",
-                    },
-                    assess: {
-                        enable: $rootScope.imageBasePath + "submit.png",
-                        disable: $rootScope.imageBasePath + "submit_disabled.png"
-                    },
-                    retry: $rootScope.imageBasePath + "speaker_icon.png",
-                    goodJob: {
-                        background: $rootScope.imageBasePath + "img_popup_next.png"
-                    },
-                    tryAgain: {
-                        background: $rootScope.imageBasePath + "img_popup.png",
-                        retry: $rootScope.imageBasePath + "retry_icon.png"
-                    },
-                    end: {
-                        background: $rootScope.imageBasePath + "img_bg.png"
-                    },
-                    popup: {
-                        next: $rootScope.imageBasePath + "icn_bg_next.png",
-                        retry: $rootScope.imageBasePath + "icn_bg_replay.png",
-                        skip: $rootScope.imageBasePath + "icn_sml_next.png",
-                        star: $rootScope.imageBasePath + "star.png",
-                        credit_popup: $rootScope.imageBasePath + "popup.png",
-                        goodjob_stars: $rootScope.imageBasePath + "img_stars.png"
-                    },
-                    popup_close: {
-                        close_icon: $rootScope.imageBasePath + "close_popup.png",
-                    }
-                };
 
                 GlobalContext.init(packageName, version).then(function(appInfo) {
 
@@ -1113,14 +1076,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $rootScope.safeApply();
         }
 
-        $scope.goodJob = {
-            body: '<div class="font-baloo assess-popup assess-goodjob-popup"><img class="popup-bg-img" ng-src="{{icons.goodJob.background}}"/><div class="goodjob_next_div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next " ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div>'
-        };
-
-        $scope.tryAgain = {
-            body: '<div class="font-baloo assess-popup assess-tryagain-popup"><img class="popup-bg-img" ng-src="{{icons.tryAgain.background}}"/><div class="tryagain-retry-div gc-popup-icons-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><p class="gc-popup-retry-replay">{{languageSupport.replay}}</p></div><div class="tryagian-next-div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div>'
-        };
-
         $scope.openMenu = function() {
 
             //display a layer to disable clicking and scrolling on the gameArea while menu is shown
@@ -1432,48 +1387,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'E',
             template: '<a href="javascript:void(0)" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
         }
-    }).directive('popup', function($rootScope, $compile) {
-        return {
-            restrict: 'E',
-            scope: {
-                popupBody: '=popupBody'
-            },
-            template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"></div></div>',
-            link: function(scope, element) {
-                scope.icons = $rootScope.icons;
-                scope.languageSupport = $rootScope.languageSupport;
-                scope.content = $rootScope.content;
-                element.bind("popupUpdate", function(event, data) {
-                    if (data) {
-                        for (key in data) {
-                            scope[key] = data[key];
-                        };
-                    }
-                });
-                var body = $compile(scope.popupBody)(scope);
-                element.find("div.popup-full-body").html();
-                element.find("div.popup-full-body").append(body);
-                element.hide();
-                scope.retryAssessment = function(id, e) {
-                    scope.hidePopup(id);
-                }
-
-                scope.hidePopup = function(id) {
-                    element.hide();
-                    TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
-                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
-                    });
-                };
-
-                scope.moveToNextStage = function(navType) {
-                    EventBus.dispatch("actionNavigateSkip", navType);
-                }
-            }
-        }
     }).directive('goodJob', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-baloo assess-popup assess-goodjob-popup"><img class="popup-bg-img" ng-src="{{icons.goodJob.background}}"/><div class="goodjob_next_div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next " ng-src="{{ icons.popup.next }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div></div>',
+            template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-baloo assess-popup assess-goodjob-popup"><img class="popup-bg-img" ng-src="{{imageBasePath}}img_popup_next.png"/><div class="goodjob_next_div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next " ng-src="{{ imageBasePath }}icn_bg_next.png" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div></div>',
             controller: function($scope, $rootScope, $timeout) {
                 $scope.retryAssessment = function(id, e) {
                     $scope.hidePopup(id);
@@ -1495,7 +1412,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('tryAgain', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-baloo assess-popup assess-tryagain-popup"><img class="popup-bg-img" ng-src="{{icons.tryAgain.background}}"/><div class="tryagain-retry-div gc-popup-icons-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{icons.popup.retry}}" /></a><p class="gc-popup-retry-replay">{{languageSupport.replay}}</p></div><div class="tryagian-next-div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ icons.popup.skip }}" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div></div></div></div>',
+            template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-baloo assess-popup assess-tryagain-popup"><img class="popup-bg-img" ng-src="{{imageBasePath}}img_popup.png"/><div class="tryagain-retry-div gc-popup-icons-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{imageBasePath}}icn_bg_replay.png" /></a><p class="gc-popup-retry-replay">{{languageSupport.replay}}</p></div><div class="tryagian-next-div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ imageBasePath }}icn_sml_next.png" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div></div></div></div>',
             controller: function($scope, $rootScope, $timeout) {
 
             }
