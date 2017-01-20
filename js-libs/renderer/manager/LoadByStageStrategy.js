@@ -97,13 +97,15 @@ LoadByStageStrategy = Class.extend({
                 });
             } else {
                 plugins.forEach(function(plugin) {
-                    var asset = instance.assetMap[plugin.asset];
-                    if (asset) {
-                        if ((preload === true) && (stageId !== startStageId)) {
-                            instance.commonAssets.push(_.clone(asset));
-                        } else {
-                            instance.stageManifests[stageId].push(_.clone(asset));
-                        }
+                    if(plugin && plugin.asset){
+                        var asset = instance.assetMap[plugin.asset];
+                        if (asset) {
+                            if ((preload === true) && (stageId !== startStageId)) {
+                                instance.commonAssets.push(_.clone(asset));
+                            } else {
+                                instance.stageManifests[stageId].push(_.clone(asset));
+                            }
+                        }                        
                     }
                 });
             }
@@ -120,9 +122,11 @@ LoadByStageStrategy = Class.extend({
                 });
             } else {
                 plugins.forEach(function(plugin) {
-                    var asset = instance.assetMap[plugin.asset];
-                    if (asset) {
-                        instance.templateAssets.push(_.clone(asset));
+                    if(plugin && plugin.asset){
+                        var asset = instance.assetMap[plugin.asset];
+                        if (asset) {
+                            instance.templateAssets.push(_.clone(asset));
+                        }
                     }
                 });
             }

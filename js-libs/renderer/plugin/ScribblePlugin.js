@@ -15,22 +15,16 @@ var ScribblePlugin = Plugin.extend({
         this._self = new createjs.Container();
         this._self.x = dims.x;
         this._self.y = dims.y;
-        /*var bgShape = new createjs.Shape();*/
 
         // addEventListener for container
         this._self.on("mousedown", this.handleMouseDown.bind(this), true);
 
-        createjs.Ticker.setFPS(50);
-        // The Below code is commented it seems no use of this
-
-        /* bgShape.graphics = new createjs.Graphics().beginFill(background).drawRect(0, 0, dims.w, dims.h);
-        bgShape.alpha = data.opacity || 1;*/
-        /*this._self.addChild(bgShape);*/
+        createjs.Ticker.setFPS(50); // This is for smooth drawing of line while mouse move
         
         var shapeData = {"shape":{"type":"rect","x":0,"y":0,"w":100,"h":100}};
         if (data.fill) shapeData.shape.fill = data.fill;
         if (data.stroke) shapeData.shape.stroke = data.stroke;
-        if (data.opacity) shapeData.shape.opacity = data.opacity; 
+        if (data.opacity) shapeData.shape.opacity = data.opacity;
         if (data["stroke-width"]) shapeData.shape["stroke-width"] = data["stroke-width"];
         this.invokeChildren(shapeData, this, this._stage, this._theme);
 
