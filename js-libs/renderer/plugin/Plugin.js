@@ -38,10 +38,16 @@ var Plugin = Class.extend({
             this.enableDrag(this._self, data.snapTo);
         }
         var instance = this;
-        if (data.appEvents && _.isString(data.appEvents.list)) {
-            this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/));
+        if (!_.isUndefined(data.appEvents)) {
+            // In New AT the App events are comming as Array of objects
+            if (_.isArray(data.appEvents)) {
+                data.appEvents.forEach(function(element, index) {
+                    instance.appEvents.push.apply(instance.appEvents, data.appEvents[index].list.split(/[\s,]+/));
+                });
+            } else {
+                this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/));
+            }
         }
-
         // Allow child classes to disable event registration (e.g. when they use event as a template)
         if (this._enableEvents) {
             EventManager.registerEvents(this, this._data);
