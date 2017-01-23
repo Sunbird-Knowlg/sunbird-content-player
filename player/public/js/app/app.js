@@ -25,11 +25,7 @@ var stack = new Array(),
 // TODO:have to remove appState and setContentDataCb in future.
 // Used in only Authoting tools
 window.setContentData = function(metadata, data, configuration) {
-    if (!_.isUndefined(metadata) && !_.isNull(metadata)) {
-        content.metadata = metadata;
-    } else {
-        content.metadata = defaultMetadata;
-    }
+    content.metadata = (!_.isUndefined(metadata) && !_.isNull(metadata)) ? metadata : defaultMetadata;
     if (!_.isUndefined(data)) {
         content.body = data;
     }
@@ -45,7 +41,7 @@ window.setContentData = function(metadata, data, configuration) {
     //localstorageFunction('content', content.metadata, 'setItem');
 }
 
-function updateContentData($state){
+function updateContentData($state) {
     if(_.isUndefined($state)){
         console.warn("updateContentData($state) - $state is not defined.");
         return;
@@ -53,23 +49,33 @@ function updateContentData($state){
 
     if (content && content.metadata) {
         localStorageGC.setItem("content", content.metadata);
-        var contentId = content.metadata.identifier;
-        if (!config.showStartPage) {
-            $state.go('playContent', {
-                'itemId': contentId
-            });
-        } else {
-            if ((COLLECTION_MIMETYPE == content.metadata.mimeType) ||
-                (ANDROID_PKG_MIMETYPE == content.metadata.mimeType && content.metadata.code == packageName)) {
-                $state.go('contentList', { "id": contentId });
+        if (!content.metadata.identifier) {
+            console.error("Content Id is missing. Sending default Id for TelemetryService init.");
+        }
+        var contentId = content.metadata.identifier || defaultMetadata.identifier;
+        TelemetryService.init({ id: contentId, ver: "1.0" }, {}).then(function() {
+            if (!config.showStartPage) {
+                $state.go('playContent', {
+                    'itemId': contentId
+                });
             } else {
-                if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
-                    $state.go('showContent', { "contentId": contentId });
+                if ((COLLECTION_MIMETYPE == content.metadata.mimeType) ||
+                (ANDROID_PKG_MIMETYPE == content.metadata.mimeType && content.metadata.code == packageName)) {
+                    $state.go('contentList', { "id": contentId });
                 } else {
-                    console.warn("Content mimetype doesn't supported by GenieCanvas.");
+                    if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
+                        $state.go('showContent', { "contentId": contentId });
+                    } else {
+                        console.warn("Content mimetype doesn't supported by GenieCanvas.");
+                    }
                 }
             }
-        }
+
+        }).catch(function(error) {
+            console.log('TelemetryService init failed');
+            alert('TelemetryService init failed.');
+            exitApp();
+        });
     }
 }
 
