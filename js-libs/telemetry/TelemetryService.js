@@ -39,6 +39,7 @@ TelemetryService = {
                     TelemetryServiceUtil.getConfig().then(function(config) {
                         TelemetryService._config = config;
                         if (TelemetryService._config.isActive) TelemetryService.isActive = TelemetryService._config.isActive;
+                        console.log("init ================= TelemetryService.isActive: ", TelemetryService.isActive);
                         resolve(true);
                     }).catch(function(err) {
                         reject(err);
@@ -144,6 +145,7 @@ TelemetryService = {
         return telemetryLocalStorageData;
     },
     start: function(id, ver) {
+        console.log("start ============== TelemetryService.isActive: ", TelemetryService.isActive);
         if (!TelemetryService.isActive) {
             console.log("TelemetryService is not active.");
             return new InActiveEvent();
