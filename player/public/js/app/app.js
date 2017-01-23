@@ -360,7 +360,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
 
             var identifier = (data && data.identifier) ? data.identifier : null;
-            var version = (data && data.pkgVersion) ? data.pkgVersion : "1";
+            var pkgVersion = data.pkgVersion.toString();
+            var version = (data && pkgVersion) ? pkgVersion : "1";
             startTelemetry(identifier, version);
             // Cover Page is loaded, log telmetry for coverpage
             TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID" });
