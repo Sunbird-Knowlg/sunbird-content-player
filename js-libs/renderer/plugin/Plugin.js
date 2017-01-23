@@ -41,9 +41,9 @@ var Plugin = Class.extend({
         if (!_.isUndefined(data.appEvents)) {
             // In New AT the App events are comming as Array of objects
             if (_.isArray(data.appEvents)) {
-                data.appEvents.forEach(function(element, index) {
-                    instance.appEvents.push.apply(instance.appEvents, data.appEvents[index].list.split(/[\s,]+/));
-                });
+                _.each(data.appEvents, function(value, key) {
+                    instance.appEvents.push.apply(instance.appEvents, data.appEvents[key].list.split(/[\s,]+/));
+                });                
             } else {
                 this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/));
             }
