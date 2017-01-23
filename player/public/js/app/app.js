@@ -36,6 +36,7 @@ window.setContentData = function(metadata, data, configuration) {
         config.showStartPage = false;
         config.showEndPage = false;
     }
+    localStorage.clear();
     var $state = angular.element(document.body).injector().get('$state')
     updateContentData($state)
     //localstorageFunction('content', content.metadata, 'setItem');
