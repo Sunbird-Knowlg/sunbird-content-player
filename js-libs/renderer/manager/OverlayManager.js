@@ -81,12 +81,19 @@ OverlayManager = {
       EventBus.dispatch(eventName, val);
       this.handleEcmlElements(eventName, val);
     },
-    handlePrevious:function(){
+    handlePrevious: function() {
       var eventName = this._constants.overlayPrevious;
       var val = this._stageConfig[eventName];
       var navigateToStage = this.getNavigateTo('previous');
-      if(val == "on"){
-          val = _.isUndefined(navigateToStage) ? "disable" : "enable" ;
+      if (val == "on") {
+        if (_.isUndefined(navigateToStage)) {
+          val = "disable";
+          if (Renderer.theme._currentScene.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious()) {
+            val = "enable"
+          }
+        } else {
+          val = "enable"
+        }
       }
       EventBus.dispatch(eventName, val);
       this.handleEcmlElements(eventName, val);
@@ -188,13 +195,16 @@ OverlayManager = {
       this._contentConfig = {};
       this._stageConfig = {};
     },
-    navigatePrevious: function () {
-      var navigateToStage = this.getNavigateTo('previous');
-      if(_.isUndefined(navigateToStage)) return;
-
-      var navigateTo = this.getNavigateTo("previous");
-      if(_.isUndefined( Renderer.theme._currentScene)) return;
-      this.defaultNavigation("previous", navigateTo);
+    navigatePrevious: function() {
+        var navigateToStage = this.getNavigateTo('previous');
+        if (_.isUndefined(navigateToStage)) {
+            if (!(Renderer.theme._currentScene.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious())) {
+                return;
+            }
+        }
+        var navigateTo = this.getNavigateTo("previous");
+        if (_.isUndefined(Renderer.theme._currentScene)) return;
+        this.defaultNavigation("previous", navigateTo);
     },
 		showOrHideEcmlElement: function(id, showEle) {
 			var plugin = PluginManager.getPluginObject(id);
