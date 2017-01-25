@@ -61,7 +61,7 @@ module.exports = function(config) {
             'public/js/test/SetPluginSpec.js', 
             
             'public/js/test/LayoutPluginSpec.js', 
-            'public/js/test/VideoPluginSpec.js', // TODO: Not covered all cases 
+            /*'public/js/test/VideoPluginSpec.js',*/ // TODO: Not covered all cases 
             'public/js/test/ThemePluginSpec.js', // TODO: Incomplete
            
 
