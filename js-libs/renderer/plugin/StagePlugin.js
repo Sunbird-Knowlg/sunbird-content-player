@@ -36,8 +36,8 @@ var StagePlugin = Plugin.extend({
             }
         }
         for (k in data) {
-            if(k === 'param') {
-                if(_.isArray(data[k])) {
+            if (k === 'param') {
+                if (_.isArray(data[k])) {
                     var instance = this;
                     data[k].forEach(function(param) {
                         instance.setParamValue(param);
@@ -46,7 +46,7 @@ var StagePlugin = Plugin.extend({
                     this.setParamValue(data[k]);
                 }
             } else if (k === 'controller') {
-                if(_.isArray(data[k])) {
+                if (_.isArray(data[k])) {
                     data[k].forEach(function(p) {
                         this.addController(p);
                     });
@@ -64,14 +64,17 @@ var StagePlugin = Plugin.extend({
         var stageKey = this.getStagestateKey();
         if (typeof this._theme.getParam === "function") {
             this._currentState = this._theme.getParam(stageKey);
-            if(_.isUndefined(this._currentState)) {
-                this.setParam(this._type, {id: Renderer.theme._currentStage, stateId: stageKey});
+            if (_.isUndefined(this._currentState)) {
+                this.setParam(this._type, {
+                    id: Renderer.theme._currentStage,
+                    stateId: stageKey
+                });
             }
         }
         this.invokeChildren(data, this, this, this._theme);
     },
-    keyboardShowHandler: function (e) {
-        this._self.y =  -(e.keyboardHeight);
+    keyboardShowHandler: function(e) {
+        this._self.y = -(e.keyboardHeight);
         if (!this._self.hitArea) {
             var hit = new createjs.Shape();
             hit.graphics.beginFill("#000").drawRect(0, 0, this._self.width, this._self.height);
@@ -84,22 +87,22 @@ var StagePlugin = Plugin.extend({
         this.offset = new createjs.Point();
 
     },
-    startDrag: function () {
+    startDrag: function() {
         this.offset.x = Renderer.theme._self.mouseX - this._self.x;
         this.offset.y = Renderer.theme._self.mouseY - this._self.y;
         this._self.addEventListener("pressmove", this._doDrag);
     },
-    doDrag: function (event) {
-         if(this._self.y >= this.keyboardH || this._self.y >= -this.keyboardH) {
+    doDrag: function(event) {
+        if (this._self.y >= this.keyboardH || this._self.y >= -this.keyboardH) {
             this._self.y = event.stageY - this.offset.y;
-            if( this._self.y < -this.keyboardH)
+            if (this._self.y < -this.keyboardH)
                 this._self.y = -this.keyboardH + 1;
-             if( this._self.y > 0)
+            if (this._self.y > 0)
                 this._self.y = 0;
             Renderer.update = true;
         }
     },
-    keyboardHideHandler: function (e) {
+    keyboardHideHandler: function(e) {
         this._self.y = 0;
         this._self.removeEventListener("mousedown", this._startDrag);
         this._self.removeEventListener("pressmove", this._doDrag);
@@ -117,8 +120,8 @@ var StagePlugin = Plugin.extend({
         // Conditional evaluation to add controller.
         if (p['ev-if']) {
             var expr = p['ev-if'].trim();
-            if (!(expr.substring(0,2) == "${")) expr = "${" + expr;
-            if (!(expr.substring(expr.length-1, expr.length) == "}")) expr = expr + "}"
+            if (!(expr.substring(0, 2) == "${")) expr = "${" + expr;
+            if (!(expr.substring(expr.length - 1, expr.length) == "}")) expr = expr + "}"
             add = this.evaluateExpr(expr);
         }
         if (add) {
@@ -157,11 +160,11 @@ var StagePlugin = Plugin.extend({
             if (tokens.length >= 2) {
                 var name = tokens[0].trim();
                 var idx = param.indexOf('.');
-                var paramName = param.substring(idx+1);
+                var paramName = param.substring(idx + 1);
                 if (this._templateVars[name]) {
                     name = this._templateVars[name];
                     if (name.indexOf('.') > 0) {
-                        paramName = name.substring(name.indexOf('.')+1) +'.' + paramName;
+                        paramName = name.substring(name.indexOf('.') + 1) + '.' + paramName;
                         name = name.substring(0, name.indexOf('.'));
                     }
                 }
@@ -184,7 +187,7 @@ var StagePlugin = Plugin.extend({
             if (tokens.length >= 2) {
                 var name = tokens[0].trim();
                 var idx = param.indexOf('.');
-                var paramName = param.substring(idx+1);
+                var paramName = param.substring(idx + 1);
                 var controller = this.getController(name);
                 if (controller) {
                     val = controller.setModelValue(paramName, val);
@@ -192,60 +195,60 @@ var StagePlugin = Plugin.extend({
             }
         }
     },
-    isStageStateChanged: function(isChanged){
+    isStageStateChanged: function(isChanged) {
         this._isStageStateChanged = isChanged;
-        if(isChanged){
+        if (isChanged) {
             this._currentState["isEvaluated"] = false;
         }
     },
     evaluate: function(action) {
-        var isEvaluated = _.isUndefined(this._currentState)? false : this._currentState.isEvaluated;
+        var isEvaluated = _.isUndefined(this._currentState) ? false : this._currentState.isEvaluated;
 
-        if(!((this._isStageStateChanged === false) && isEvaluated)) {
-        // evaluate only if item/assessment is not evaluated & changed
-        // isEvaluated  | isSceneChanged    | Evaluate
-        //      0       |       0           |     1
-        //      0       |       1           |     1
-        //      1       |       0           |     0
-        //      1       |       1           |     1
-        var valid = false;
-        var showImmediateFeedback = true;
+        if (!((this._isStageStateChanged === false) && isEvaluated)) {
+            // evaluate only if item/assessment is not evaluated & changed
+            // isEvaluated  | isSceneChanged    | Evaluate
+            //      0       |       0           |     1
+            //      0       |       1           |     1
+            //      1       |       0           |     0
+            //      1       |       1           |     1
+            var valid = false;
+            var showImmediateFeedback = true;
 
-        if (this._stageController) {
-            //Checking to show feedback or not
-            if(!_.isUndefined(this._stageController._data.showImmediateFeedback)) {
-                showImmediateFeedback = this._stageController._data.showImmediateFeedback;
-            }
-            this._inputs.forEach(function(input) {
-                input.setModelValue();
-            });
-
-            var result = this._stageController.evalItem();
-            if (result) {
-              valid = result.pass;
-            }
-            //TODO: setParam should use, but not working
-            this._currentState["isEvaluated"] = true;
-
-            if (showImmediateFeedback) {
-                //Show valid feeback
-                if(valid == true){
-                    var showOverlayGoodJobFd = OverlayManager.showFeeback(valid);
-                    if(!showOverlayGoodJobFd){
-                      this.dispatchEvent(action.success);
-                    }
-                } else {
-                    var showOverlayTryAgainFd = OverlayManager.showFeeback(valid);
-                    if (!showOverlayTryAgainFd) {
-                      this.dispatchEvent(action.failure);
-                    }
+            if (this._stageController) {
+                //Checking to show feedback or not
+                if (!_.isUndefined(this._stageController._data.showImmediateFeedback)) {
+                    showImmediateFeedback = this._stageController._data.showImmediateFeedback;
                 }
-                return;
+                this._inputs.forEach(function(input) {
+                    input.setModelValue();
+                });
+
+                var result = this._stageController.evalItem();
+                if (result) {
+                    valid = result.pass;
+                }
+                //TODO: setParam should use, but not working
+                this._currentState["isEvaluated"] = true;
+
+                if (showImmediateFeedback) {
+                    //Show valid feeback
+                    if (valid == true) {
+                        var showOverlayGoodJobFd = OverlayManager.showFeeback(valid);
+                        if (!showOverlayGoodJobFd) {
+                            this.dispatchEvent(action.success);
+                        }
+                    } else {
+                        var showOverlayTryAgainFd = OverlayManager.showFeeback(valid);
+                        if (!showOverlayTryAgainFd) {
+                            this.dispatchEvent(action.failure);
+                        }
+                    }
+                    return;
+                }
             }
         }
-      }
-      //Directly take user to next stage, without showing feedback popup
-      OverlayManager.skipAndNavigateNext();
+        //Directly take user to next stage, without showing feedback popup
+        OverlayManager.skipAndNavigateNext();
     },
     reload: function(action) {
         if (this._stageController) {
@@ -253,10 +256,10 @@ var StagePlugin = Plugin.extend({
         }
         this._theme.replaceStage(this._data.id, action);
     },
-    getStagestateKey:function(){
-       if(!_.isUndefined(this._stageController)){
-            return Renderer.theme._currentStage+"_"+this._stageController._id+"_"+this._stageController._index;
-        }else{
+    getStagestateKey: function() {
+        if (!_.isUndefined(this._stageController)) {
+            return Renderer.theme._currentStage + "_" + this._stageController._id + "_" + this._stageController._index;
+        } else {
             return Renderer.theme._currentStage;
         }
     },
@@ -299,30 +302,30 @@ var StagePlugin = Plugin.extend({
         return eval(expr);
     },
     isItemScene: function() {
-       var stageCtrl = this._stageController;
-       if (!_.isUndefined(stageCtrl) && !_.isUndefined(stageCtrl._model)  && ("items" == stageCtrl._type)) {
-           return true;
-       } else {
-           return false;
-       }
-       //return ("undefined" != typeof Renderer.theme._currentScene._stageController && "items" == Renderer.theme._currentScene._stageController._type)? true : false;
-   },
-   isReadyToEvaluate: function() {
-     var enableEval = false;
-     var stageCtrl = this._stageController;
-     if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type) && !_.isUndefined(stageCtrl._model)) {
+        var stageCtrl = this._stageController;
+        if (!_.isUndefined(stageCtrl) && !_.isUndefined(stageCtrl._model) && ("items" == stageCtrl._type)) {
+            return true;
+        } else {
+            return false;
+        }
+        //return ("undefined" != typeof Renderer.theme._currentScene._stageController && "items" == Renderer.theme._currentScene._stageController._type)? true : false;
+    },
+    isReadyToEvaluate: function() {
+        var enableEval = false;
+        var stageCtrl = this._stageController;
+        if (!_.isUndefined(stageCtrl) && ("items" == stageCtrl._type) && !_.isUndefined(stageCtrl._model)) {
 
-       var modelItem = stageCtrl._model[stageCtrl._index];
-       if(modelItem && modelItem.type.toLowerCase() == 'ftb') {
-           // If FTB item, enable submit button directly
-           enableEval = true;
-       } else {
-           if(!_.isUndefined(this._currentState) && (!_.isUndefined(this._currentState.isEvaluated))){
-               enableEval = !this._currentState.isEvaluated;
-           }
-       }
-     }
-     return enableEval;
-   }
+            var modelItem = stageCtrl._model[stageCtrl._index];
+            if (modelItem && modelItem.type.toLowerCase() == 'ftb') {
+                // If FTB item, enable submit button directly
+                enableEval = true;
+            } else {
+                if (!_.isUndefined(this._currentState) && (!_.isUndefined(this._currentState.isEvaluated))) {
+                    enableEval = !this._currentState.isEvaluated;
+                }
+            }
+        }
+        return enableEval;
+    }
 });
 PluginManager.registerPlugin('stage', StagePlugin);
