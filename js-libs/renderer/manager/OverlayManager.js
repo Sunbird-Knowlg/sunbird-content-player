@@ -82,6 +82,7 @@ OverlayManager = {
       this.handleEcmlElements(eventName, val);
     },
     handlePrevious: function() {
+      if(_.isUndefined( Renderer.theme._currentScene)) return;
       var eventName = this._constants.overlayPrevious;
       var val = this._stageConfig[eventName];
       var navigateToStage = this.getNavigateTo('previous');
@@ -196,6 +197,7 @@ OverlayManager = {
       this._stageConfig = {};
     },
     navigatePrevious: function() {
+        if(_.isUndefined( Renderer.theme._currentScene)) return;
         var navigateToStage = this.getNavigateTo('previous');
         if (_.isUndefined(navigateToStage)) {
             if (!(Renderer.theme._currentScene.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious())) {
