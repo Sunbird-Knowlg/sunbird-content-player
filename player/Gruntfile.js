@@ -630,6 +630,14 @@ module.exports = function(grunt) {
     // grunt.registerTask('updateBildVersion', function(){
 
     // })
+    grunt.registerTask('updateVersion', function(jenBuildNumber) {
+        if(jenBuildNumber){
+            grunt.config.set('buildNumber', jenBuildNumber);
+        }
+        
+        var tasks = ['default', 'copy:main', 'copy:previewFiles', 'replace:build_version'];
+        grunt.task.run(tasks);
+    });
 
     grunt.registerTask('preview-dev', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_dev', 'aws_s3:cleanDevPreview', 'aws_s3:uploadPreviewFilesToDev']);
     grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
@@ -714,5 +722,4 @@ module.exports = function(grunt) {
     grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
 
     grunt.registerTask('local-preview-build', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js','copy:localPreviewFiles', 'copy:localPreviewMinjs', 'aws_s3:uploadLocalPreviewZip', 'clean:localPreview']);
-    grunt.registerTask('updateVersion', ['default', 'copy:main', 'copy:previewFiles', 'replace:build_version']);
 };
