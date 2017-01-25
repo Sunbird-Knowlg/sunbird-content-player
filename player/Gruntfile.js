@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        buildNumber: process.env.BUILD_NUMBER,
         mkdir: {
             all: {
               options: {
@@ -527,10 +528,21 @@ module.exports = function(grunt) {
                     to: "android"
                 }]
             },
-            preview_dev: {
-                src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html'],
+            build_version: {
+                src: ['www/js/AppConfig.js', 'www/preview.html', 'www/preview/preview.html'],
                 overwrite: true,
                 replacements: [{
+                    from: /BUILD_NUMBER/g,
+                    to: '<%= buildNumber %>'
+                }]
+            },
+            preview_dev: {
+                src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html', 'www/preview/preview.html'],
+                overwrite: true,
+                replacements: [{
+                    from: /DEPLOYMENT/g,
+                    to: "dev"
+                },{
                     from: /DEPLOYMENT/g,
                     to: "dev"
                 }]
@@ -615,6 +627,10 @@ module.exports = function(grunt) {
         }
     });
 
+    // grunt.registerTask('updateBildVersion', function(){
+
+    // })
+
     grunt.registerTask('preview-dev', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_dev', 'aws_s3:cleanDevPreview', 'aws_s3:uploadPreviewFilesToDev']);
     grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
     grunt.registerTask('preview-qa', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
@@ -698,5 +714,5 @@ module.exports = function(grunt) {
     grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
 
     grunt.registerTask('local-preview-build', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js','copy:localPreviewFiles', 'copy:localPreviewMinjs', 'aws_s3:uploadLocalPreviewZip', 'clean:localPreview']);
-
+    grunt.registerTask('updateVersion', ['default', 'copy:main', 'copy:previewFiles', 'replace:build_version']);
 };
