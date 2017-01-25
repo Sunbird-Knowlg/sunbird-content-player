@@ -615,7 +615,7 @@ module.exports = function(grunt) {
         flavor = flavor.toLowerCase().trim();
         var tasks = [];
         if ("dev" == flavor) {
-            tasks.push('preview-dev');
+            tasks.push('deploy-preview-dev');
         } else if("production" == flavor) {
             tasks.push('preview-production');
         } else if("qa" == flavor) {
@@ -627,21 +627,24 @@ module.exports = function(grunt) {
         }
     });
 
-    // grunt.registerTask('updateBildVersion', function(){
+    // After this 'build-preview' task run
+    // grunt updateVersion 
+    grunt.registerTask('build-preview', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles']);
 
-    // })
+    //This is to update the Jenkins version number
     grunt.registerTask('updateVersion', function(jenBuildNumber) {
+        //This method need to call after preview build is generated(grunt build-preview);
         if(jenBuildNumber){
             grunt.config.set('buildNumber', jenBuildNumber);
         }
-        
-        var tasks = ['default', 'copy:main', 'copy:previewFiles', 'replace:build_version'];
+
+        var tasks = ['replace:build_version'];
         grunt.task.run(tasks);
     });
 
-    grunt.registerTask('preview-dev', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_dev', 'aws_s3:cleanDevPreview', 'aws_s3:uploadPreviewFilesToDev']);
-    grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
-    grunt.registerTask('preview-qa', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
+    grunt.registerTask('deploy-preview-dev', ['replace:preview_dev', 'aws_s3:cleanDevPreview', 'aws_s3:uploadPreviewFilesToDev']);
+    grunt.registerTask('preview-production', ['replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
+    grunt.registerTask('preview-qa', ['replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
 
     grunt.registerTask('rm-cordova-plugin-sensibol', function() {
         if (grunt.file.exists('plugins/cordova-plugin-sensibol')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
