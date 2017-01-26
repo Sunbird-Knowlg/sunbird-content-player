@@ -6,6 +6,11 @@
         <media assetId="do_20093891_play" id="play" src="1467696062772icon_play.png" type="image"/>
         <media assetId="do_20093891_ekstep" id="ekstep" src="1467696062599eksteplogo.png" type="image"/>
         <media assetId="do_20093891_add_video" id="add_video" src="1467696061698addition.webm" type="video"/>
+       <media  id="play_green" src="1457672077311play_green.ico" type="image"/>
+        <media  id="pause_green" src="1457672078563pause_green.ico" type="image"/>
+        <media  id="watch_video" src="1457680556448WatchVideoNow3.jpg" type="image"/>
+        <media id="video_1" src="1457672077860Rain_rain_go_away.webm" type="video"/>
+        <media  id="video_2" src="1457672078741Wheels_On_The_Bus.webm" type="video"/>
     </manifest>
 
     <stage id="preloadStage" preload="true">
@@ -16,34 +21,72 @@
     </stage>
 
     <stage h="100" id="intro" w="100" x="0" y="0">
-        <param name="next" value="play_video"/>
-
+        <param name="next" value="stage1"/>
         <image asset="background" h="100" w="100" x="0" y="0" z-index="-1"/>
-        <image asset="icon" h="65" w="35" x="35" y="35" z-index="100"/>
-
-        <shape fill="white" h="65" opacity="0.8" stroke="white" stroke-width="5" type="rect" w="120" x="-10" y="75"/>
-
-        <image asset="ekstep" h="18" w="7" x="10" y="80" z-index="100"/>
-        <text font="Georgia" fontsize="50" h="10" shadow="white" w="15" x="18" y="82">Showcase Series</text>
-        <text color="" font="Georgia" fontsize="30" h="10" shadow="white" w="80" x="18" y="94">Numeracy Platform</text>
-
-        <text align="center" color="black" font="Arial" fontsize="35" h="5" w="12" x="85" y="82" z-index="100">Level 1</text>
-        <text align="center" color="black" font="Arial" fontsize="35" h="5" w="12" x="85" y="92" z-index="100">Videos</text>
-
-        <shape fill="#FF9500" h="7" stroke="white" stroke-width="5" type="rect" w="12" x="85" y="80"/>
-        <shape fill="#FF9500" h="7" stroke="white" stroke-width="5" type="rect" w="12" x="85" y="90"/>
+        <text font="Georgia" fontsize="50" h="10" shadow="white" w="100" x="40" y="50">Video Test book</text>
+         <text font="Georgia" fontsize="30" h="10" color="white" shadow="white" w="100" x="80" y="80">StageID = intro</text>        
     </stage>
-
-    <stage h="100" id="play_video" w="100" x="0" y="0">
+    <stage h="100" id="stage1" w="100" x="0" y="0">
         <param name="previous" value="intro"/>
-        <param name="next" value="endstage"/>
-        <image asset="background" h="100" w="100" x="0" y="0" z-index="-1"/>
-        <video asset="add_video" autoplay="true" controls="true" h="78" type="video/webm" w="80" x="10" y="10"/>
+        <param name="next" value="stage2"/> 
+        <text font="Georgia" fontsize="50" h="10" shadow="white" w="100" x="20" y="20">Video action=true ,controls = false , autoPlay = true</text>       
+        <image asset="play_green" h="10" w="7" x="40" y="88">
+             <event type="click">
+                <action asset="video_1" command="play" type="command"/>
+            </event>
+        </image>
+        <image asset="pause_green" h="10" w="7" x="50" y="88">
+             <event type="click">
+                <action asset="video_1" command="pause" type="command"/>
+            </event>
+        </image>
+        <video asset="video_1" autoplay="true" controls="false" h="50" type="video/webm" w="40" x="30" y="30"/>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="80" y="80">StageID = stage1</text>
     </stage>
 
-    <stage h="100" id="endstage" w="100" x="0" y="0">
-        <image asset="background" h="100" w="100" x="0" y="0" z-index="-1"/>
-        <text align="center" color="#283919" font="Georgia" fontsize="2.5em" h="10" shadow="white" w="80" weight="bold" x="10" y="50">Wasn't that fun?</text>
+    <stage h="100" id="stage2" w="100" x="0" y="0">
+        <param name="previous" value="stage1"/>
+        <param name="next" value="stage3"/>
+       <text font="Georgia" fontsize="50" h="10" shadow="white" w="100" x="20" y="20">action= true, controls = true , autoPlay = true</text> 
+        <image asset="play_green" h="10" w="7" x="40" y="88">
+             <event type="click">
+                <action asset="video_1" command="play" type="command"/>
+            </event>
+        </image>
+
+        <image asset="pause_green" h="10" w="7" x="50" y="88">
+             <event type="click">
+                <action asset="video_1" command="pause" type="command"/>
+            </event>
+        </image>
+        <video asset="video_1" autoplay="true" controls="true" h="50" type="video/webm" w="40" x="30" y="30"/>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="80" y="80">StageID = stage2</text>
     </stage>
+    <stage h="100" id="stage3" w="100" x="0" y="0">
+        <param name="previous" value="stage2"/>
+        <param name="next" value="stage4"/>
+        <text font="Georgia" fontsize="50" h="10" shadow="white" w="100" x="20" y="20">Video action = false, controls = true , autoPlay = true</text> 
+        <video asset="video_1" autoplay="true" controls="true" h="50" type="video/webm" w="40" x="30" y="30"/>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="80" y="80">StageID = stage3</text>
+    </stage>
+    <stage h="100" id="stage4" w="100" x="0" y="0">
+        <param name="previous" value="stage3"/>        
+        <image asset="play_green" h="10" w="7" x="10" y="88">
+             <event type="click">
+                <action asset="video_1" command="play" type="command"/>
+            </event>
+        </image>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="10" y="20">action= true,controls = false , autoPlay = true</text>
+        <image asset="pause_green" h="10" w="7" x="20" y="88">
+             <event type="click">
+                <action asset="video_1" command="pause" type="command"/>
+            </event>
+        </image>
+        <video asset="video_1" autoplay="true" controls="false" h="50" delay ="123" type="video/webm" w="40" x="0" y="30"/>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="50" y="20">action = false,controls = true , autoPlay = true</text>
+        <video asset="video_2" autoplay="true" controls="true" h="50" delay ="123" type="video/webm" w="40" x="50" y="30"/>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="80" y="80">StageID = stage4</text>
+    </stage> 
+
 
 </theme>
