@@ -35,12 +35,10 @@ var VideoPlugin = Plugin.extend({
              instance.sendTelemeteryData(action,"PLAY");
         });        
         jQuery(videoEle).bind('pause', function(e) {
-            if (videoEle.currentTime > 0) {
-            // If video currentTime == 0 then it is stop else this video is just paused 
-                instance.sendTelemeteryData(action, "PAUSE");
-            } else {
-                instance.sendTelemeteryData(action, "STOP");
-            }
+             /*If user click on pause button
+             then it looks for the video currentTime
+            if it is == 0 then it is stop else this video is just paused */
+            videoEle.currentTime > 0 ? instance.sendTelemeteryData(action, "PAUSE") : instance.sendTelemeteryData(action, "STOP");
         });
         videoEle.addEventListener("error", function (evt) {
         var lErrMesg = "Error loading video element, event.type [" + evt.type + "]  Media Details: [" + evt.target.src + "]";
@@ -92,10 +90,10 @@ var VideoPlugin = Plugin.extend({
     },
     start: function(videoEle) {
         videoEle.style.display = "block";
-        if (videoEle.delay) {
+        if (this._data.delay) {
             setTimeout(function() {
                 videoEle.play();
-            }, videoEle.delay);
+            },this._data.delay);
         } else {
             videoEle.play();
         }
@@ -119,7 +117,13 @@ var VideoPlugin = Plugin.extend({
         // This function will create the video Dom element and adding into theme object
         var videoAsset;
         videoAsset = !_.isUndefined(this._data.asset) ? this._theme.getAsset(this._data.asset) : console.warn("Video asset is not present");
-        if(_.isUndefined(videoAsset)) return false;        
+        if(_.isUndefined(videoAsset)) return false;
+        if (videoAsset instanceof HTMLElement == false) {
+            var src = videoAsset
+            videoAsset = document.createElement("video");
+            videoAsset.src = src;
+            console.info("Asset load failed Please refresh the stage");            
+        }
         var jqVideoEle = jQuery(videoAsset).insertBefore("#gameArea");       
         !_.isUndefined(this._data.type) ? jQuery(jqVideoEle).attr("type",this._data.type) : console.warn("Video type is not defined");
         var dims = this.relativeDims();
