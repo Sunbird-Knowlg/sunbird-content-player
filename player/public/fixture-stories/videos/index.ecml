@@ -9,6 +9,7 @@
        <media  id="play_green" src="1457672077311play_green.ico" type="image"/>
         <media  id="pause_green" src="1457672078563pause_green.ico" type="image"/>
         <media  id="watch_video" src="1457680556448WatchVideoNow3.jpg" type="image"/>
+        <media  id="stopAsset" src="stop.png" type="image"/>
         <media id="video_1" src="1457672077860Rain_rain_go_away.webm" type="video"/>
         <media  id="video_2" src="1457672078741Wheels_On_The_Bus.webm" type="video"/>
     </manifest>
@@ -19,7 +20,6 @@
         <image asset="icon"/>
         <image asset="background"/>
     </stage>
-
     <stage h="100" id="intro" w="100" x="0" y="0">
         <param name="next" value="stage1"/>
         <image asset="background" h="100" w="100" x="0" y="0" z-index="-1"/>
@@ -70,7 +70,8 @@
         <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="80" y="80">StageID = stage3</text>
     </stage>
     <stage h="100" id="stage4" w="100" x="0" y="0">
-        <param name="previous" value="stage3"/>        
+        <param name="previous" value="stage3"/>
+        <param name="next" value="stage5"/>        
         <image asset="play_green" h="10" w="7" x="10" y="88">
              <event type="click">
                 <action asset="video_1" command="play" type="command"/>
@@ -82,10 +83,86 @@
                 <action asset="video_1" command="pause" type="command"/>
             </event>
         </image>
-        <video asset="video_1" autoplay="true" controls="false" h="50" delay ="123" type="video/webm" w="40" x="0" y="30"/>
+        <video asset="video_1" autoplay="true" controls="false" h="50"  type="video/webm" w="40" x="0" y="30"/>
         <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="50" y="20">action = false,controls = true , autoPlay = true</text>
-        <video asset="video_2" autoplay="true" controls="true" h="50" delay ="123" type="video/webm" w="40" x="50" y="30"/>
+        <video asset="video_2" autoplay="true" controls="true" h="50" type="video/webm" w="40" x="50" y="30"/>
         <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="80" y="80">StageID = stage4</text>
+    </stage>
+
+    <stage h="100" id="stage5" w="100" x="0" y="0">
+        <param name="previous" value="stage4"/> 
+        <param name="next" value="stage6"/>
+        <text font="Georgia" fontsize="35" h="10" shadow="white" w="100" x="10" y="2">Stop action stage</text> 
+        <image asset="play_green" h="10" w="7" x="10" y="88">
+             <event type="click">
+                <action asset="video_1" command="play" type="command"/>
+            </event>
+        </image>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="10" y="20">action= true,controls = false , autoplay=false</text>
+        <image asset="pause_green" h="10" w="7" x="20" y="88">
+             <event type="click">
+                <action asset="video_1" command="pause" type="command"/>
+            </event>
+        </image>
+        <image asset="stopAsset"  h="10" w="7" x="30" y="88">
+            <event type="click">
+                <action asset="video_1" command="stop" type="command"/>
+            </event>
+        </image>
+        <video asset="video_1" autoplay="true" controls="false" h="50" type="video/webm" w="40" x="0" y="30"/>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="50" y="20">action = false,controls = true , autoPlay = true stop=true</text>
+        <video asset="video_2" autoplay="true" controls="true" h="50" type="video/webm" w="40" x="50" y="30"/>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="80" y="80">StageID = stage5</text>
+    </stage>
+    <stage h="100" id="stage6" w="100" x="0" y="0">
+        <param name="previous" value="stage5"/>
+        <param name="next" value="stage7"/> 
+        <text font="Georgia" fontsize="35" h="10" shadow="white" w="100" x="10" y="2">Auto play test</text> 
+        <image asset="play_green" h="10" w="7" x="10" y="88">
+             <event type="click">
+                <action asset="video_1" command="play" type="command"/>
+            </event>
+        </image>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="10" y="20">action= true,controls = false , autoplay=false</text>
+        <image asset="pause_green" h="10" w="7" x="20" y="88">
+             <event type="click">
+                <action asset="video_1" command="pause" type="command"/>
+            </event>
+        </image>
+        <image asset="stopAsset"  h="10" w="7" x="30" y="88">
+            <event type="click">
+                <action asset="video_1" command="stop" type="command"/>
+            </event>
+        </image>
+        <video asset="video_1" autoplay="false" controls="false" h="50"  type="video/webm" w="40" x="0" y="30"/>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="50" y="20">action = false,controls = true , autoPlay = false stop=true</text>
+        <video asset="video_2" autoplay="false" controls="true" h="50" type="video/webm" w="40" x="50" y="30"/>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="80" y="80">StageID = stage6</text>
+    </stage> 
+    <stage h="100" id="stage7" w="100" x="0" y="0">
+        <param name="previous" value="stage6"/> 
+
+        <text font="Georgia" fontsize="35" h="10" shadow="white" w="100" x="10" y="2">Delat of video test</text> 
+        <image asset="play_green" h="10" w="7" x="10" y="88">
+             <event type="click">
+                <action asset="video_1" command="play" type="command"/>
+            </event>
+        </image>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="10" y="20">action= true,controls = false , autoplay=false delay=20000</text>
+        <image asset="pause_green" h="10" w="7" x="20" y="88">
+             <event type="click">
+                <action asset="video_1" command="pause" type="command"/>
+            </event>
+        </image>
+        <image asset="stopAsset"  h="10" w="7" x="30" y="88">
+            <event type="click">
+                <action asset="video_1" command="stop" type="command"/>
+            </event>
+        </image>
+        <video asset="video_1" autoplay="true" controls="false" h="50" delay="20000"  type="video/webm" w="40" x="0" y="30"/>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="50" y="20">action = false,controls = true , autoPlay = false stop=true delay=10000</text>
+        <video asset="video_2" autoplay="false" controls="true" h="50" delay="10000" type="video/webm" w="40" x="50" y="30"/>
+        <text font="Georgia" fontsize="30" h="10" shadow="white" w="100" x="80" y="80">StageID = stage6</text>
     </stage> 
 
 
