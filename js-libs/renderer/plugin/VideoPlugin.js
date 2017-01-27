@@ -26,6 +26,7 @@ var VideoPlugin = Plugin.extend({
         }        
     },
     registerEvents : function(){
+        // This function will only takecare of registering of the events relted to video
         var action = {},instance = this;
         action.asset = this._data.asset;
         action.stageId = this._theme._currentStage;
@@ -33,8 +34,13 @@ var VideoPlugin = Plugin.extend({
         jQuery(videoEle).bind('play', function (e) {
              instance.sendTelemeteryData(action,"PLAY");
         });        
-        jQuery(videoEle).bind('pause', function (e) {  
-            instance.sendTelemeteryData(action,"PAUSE");        
+        jQuery(videoEle).bind('pause', function(e) {
+            if (videoEle.currentTime > 0) {
+            // If video currentTime == 0 then it is stop else this video is just paused 
+                instance.sendTelemeteryData(action, "PAUSE");
+            } else {
+                instance.sendTelemeteryData(action, "STOP");
+            }
         });
         videoEle.addEventListener("error", function (evt) {
         var lErrMesg = "Error loading video element, event.type [" + evt.type + "]  Media Details: [" + evt.target.src + "]";
@@ -58,24 +64,23 @@ var VideoPlugin = Plugin.extend({
         });
     },
     play: function(action) {
-        var videoEle = this.isActiondefined(action);
+        var videoEle = this.handleAsset(action);
         if (videoEle) {
             if (videoEle.paused) {
-                videoEle.readyState > 2 ? this.start(videoEle) : console.info("Video is not ready retry once again");
+                videoEle.readyState > 2 ? this.start(videoEle) : console.info("Video is not ready to play");
             }else {
                 console.info("Video is already playing");
             }
         };
     },
     pause:function(action){
-       var videoEle = this.isActiondefined(action);
+       var videoEle = this.handleAsset(action);
        !_.isUndefined(videoEle) ? videoEle.pause() : console.info("video pause failed");
     },
     stop: function(action) {
-        var _videoEle = this.isActiondefined(action);
-        _videoEle.currentTime = 0;
-        _videoEle.pause();
-        this.sendTelemeteryData(action, "STOP");
+        var _videoEle = this.handleAsset(action);
+        _videoEle.currentTime = 0;       
+        _videoEle.pause();        
     },   
     end: function(){
         this.stop();        
@@ -95,7 +100,7 @@ var VideoPlugin = Plugin.extend({
             videoEle.play();
         }
     },
-    isActiondefined: function(action) {
+    handleAsset: function(action) {
         if(!_.isUndefined(action)){
             return this.getVideo(action.asset);
         }else{
@@ -105,7 +110,7 @@ var VideoPlugin = Plugin.extend({
     },    
     sendTelemeteryData: function(action, subType){
         if(action)
-            EventManager.processAppTelemetry(action, 'LISTEN', this._instance, {subtype : subType});
+            EventManager.processAppTelemetry(action, 'OTHER', this._instance, {subtype : subType});
     },
     getVideo: function(videoId){
         return document.getElementById(videoId);
@@ -130,10 +135,6 @@ var VideoPlugin = Plugin.extend({
         _videoEle = videoEle;       
         return new createjs.Bitmap(videoEle);
     },
-    clear:function(){
-        
-    }
-
  });
  PluginManager.registerPlugin('video', VideoPlugin);
        
