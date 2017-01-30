@@ -7,7 +7,9 @@ AppConfig = {
 	dev: "//dev1.ekstep.in/api",
 	production: "//community.ekstep.in/api",
 	recorder: "AUDIO_RECORDER",
-	flavor: "DEPLOYMENT"
+	flavor: "DEPLOYMENT",
+	S3_content_host: "/assets/public/content/"
+
 }
 
 

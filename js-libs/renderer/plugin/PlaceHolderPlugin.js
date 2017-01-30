@@ -3,10 +3,8 @@ var PlaceHolderPlugin = Plugin.extend({
     _isContainer: true,
     _render: true,
     initPlugin: function(data) {
-        console.info("Placeholder data", data);
         this._self = new createjs.Container();
         var dims = this.relativeDims();
-        console.info("dims", dims);
         this._self.x = dims.x;
         this._self.y = dims.y;
         var instance = this;
@@ -32,8 +30,8 @@ var PlaceHolderPlugin = Plugin.extend({
             if (count === undefined) {
                 if (data['param-count']) count = instance.evaluateExpr(data['param-count'].trim());
                 else if (data['model-count']) count = instance._stage.getModelValue(data['model-count'].trim());
-                else count = 1;
             }
+            if (count === undefined || count === "") count = 1;
 
             var asset = data.asset;
             if (asset === undefined) {
@@ -47,8 +45,6 @@ var PlaceHolderPlugin = Plugin.extend({
                 count: count
             }
         }
-        console.info("count", count);
-
         if (instance.param) {
 
             // Asset is mandatory
@@ -75,24 +71,43 @@ var PlaceHolderPlugin = Plugin.extend({
         data.asset = param.asset;
         PluginManager.invoke('image', data, instance._parent, instance._stage, instance._theme);
     },
+    getAssetBound: function (img, pad) {
+        var imgBounds = img.getBounds();
+        var imgW = imgBounds.width;
+        var imgH = imgBounds.height;
+        img.x = parseFloat(pad / 2);
+        img.y = parseFloat(pad / 2);
+        var imgCont = new createjs.Container();
+        imgCont.addChild(img);
+        imgCont.cache(0, 0, imgW + pad, imgH + pad);
+        return imgCont;
+    },
+    computePixel: function(area, repeat) {
+        return Math.floor(Math.sqrt(parseFloat(area / repeat)))
+    },
     renderGridLayout: function(parent, instance, data) {
-        console.info("parent", parent);
-        var computePixel = function(area, repeat) {
-            return Math.floor(Math.sqrt(parseFloat(area / repeat)))
-        }
+        var assetId = instance.param.asset;
+        var assetSrc = instance._theme.getAsset(assetId);
+        var img = new createjs.Bitmap(assetSrc);
 
-        var paddedImageContainer = function(assetId, pad) {
-            var img = new createjs.Bitmap(instance._theme.getAsset(assetId));
-            var imgBounds = img.getBounds();
-            var imgW = imgBounds.width;
-            var imgH = imgBounds.height;
-            img.x = parseFloat(pad / 2);
-            img.y = parseFloat(pad / 2);
-            var imgCont = new createjs.Container();
-            imgCont.addChild(img);
-            imgCont.cache(0, 0, imgW + pad, imgH + pad);
-            return imgCont;
-        }
+        var getImage = function(cb) {
+          if (_.isUndefined(assetSrc)) {
+            console.error('"' + assetId + '" Asset not found. Please check index.ecml.')
+            return
+          }
+            AssetManager.strategy.loadAsset(instance._stage._data.id, assetId, assetSrc, function() {
+                assetSrc = instance._theme.getAsset(assetId);
+                img = new createjs.Bitmap(assetSrc);
+                if(!_.isNull(img.getBounds())){
+                    // if !=404 then call getAssetBound
+                    // Image is available, Render image inside grid
+                    cb();
+                 }else{
+                    // If the Invlid URL of asset or 404 req
+                    console.warn("Unable to find the Bounds value for " + assetId +  ",  Source - " + assetSrc);
+                 }
+            });
+        };
 
         var enableDrag = function(asset, snapTo) {
             asset.cursor = "pointer";
@@ -128,45 +143,55 @@ var PlaceHolderPlugin = Plugin.extend({
                     }
                 });
             }
+        };
+
+        var renderGridImages = function() {
+          // Needs Improvement
+          var x = 0,
+              y = 0,
+              area = instance.dimensions().w * instance.dimensions().h,
+              pad = instance.dimensions().pad || 0,
+              repeat = instance.param.count;
+          // This code assumes that the img aspect ratio is 1. i.e. the image is a square
+          // Hardcoding the cell size adjusting factor to 1.5. Need to invent a new algorithm
+          var pixelPerImg = instance.computePixel(area, repeat) - parseFloat(pad / 1.5);
+          var param = instance.param;
+          var paddedImg = instance.getAssetBound(img, pad);
+          var assetBounds = paddedImg.getBounds();
+          var assetW = assetBounds.width,
+              assetH = assetBounds.height;
+          paddedImg.scaleY = parseFloat(pixelPerImg / assetH);
+          paddedImg.scaleX = parseFloat(pixelPerImg / assetW);
+          paddedImg.x = x + pad;
+          paddedImg.y = y + pad;
+          var instanceBoundary = 0 + instance.dimensions().w;
+          for (var i = 0; i < param.count; i++) {
+              var clonedAsset = paddedImg.clone(true);
+              if ((x + pixelPerImg) > instanceBoundary) {
+                  x = 0;
+                  y += pixelPerImg + pad;
+              }
+              clonedAsset.x = x + pad;
+              clonedAsset.y = y + pad;
+              clonedAsset.origX = x + pad;
+              clonedAsset.origY = y + pad;
+              x += pixelPerImg;
+              if (instance._data.enabledrag) {
+                  enableDrag(clonedAsset, data.snapTo);
+              }
+              Renderer.update = true;
+              parent.addChild(clonedAsset);
+          }
+        };
+
+        if (_.isNull(img.getBounds())) {
+            // image is not avialbel. Get image from loader and then start render images in grid
+            getImage(renderGridImages);
+        } else {
+            // Image is avialable, hence direclty render image inside grid
+            renderGridImages();
         }
 
-        var x = 0,
-            y = 0,
-            area = instance.dimensions().w * instance.dimensions().h,
-            pad = instance.dimensions().pad || 0,
-            repeat = instance.param.count;
-
-        // This code assumes that the img aspect ratio is 1. i.e. the image is a square
-        // Hardcoding the cell size adjusting factor to 1.5. Need to invent a new algorithm
-        var pixelPerImg = computePixel(area, repeat || 1) - parseFloat(pad / 1.5);
-
-        var param = instance.param;
-        param.paddedImg = paddedImageContainer(param.asset, pad);
-        var assetBounds = param.paddedImg.getBounds();
-        var assetW = assetBounds.width,
-            assetH = assetBounds.height;
-        param.paddedImg.scaleY = parseFloat(pixelPerImg / assetH);
-        param.paddedImg.scaleX = parseFloat(pixelPerImg / assetW);
-        param.paddedImg.x = x + pad;
-        param.paddedImg.y = y + pad;
-
-        var instanceBoundary = 0 + instance.dimensions().w;
-        for (i = 0; i < param.count; i++) {
-            var clonedAsset = param.paddedImg.clone(true);
-            if ((x + pixelPerImg) > instanceBoundary) {
-                x = 0;
-                y += pixelPerImg + pad;
-            }
-            clonedAsset.x = x + pad;
-            clonedAsset.y = y + pad;
-            clonedAsset.origX = x + pad;
-            clonedAsset.origY = y + pad;
-            x += pixelPerImg;
-            if (instance._data.enabledrag) {
-                enableDrag(clonedAsset, data.snapTo);
-            }
-            parent.addChild(clonedAsset);
-        }
     },
     refresh: function() {
         this._self.removeAllChildren();
@@ -174,5 +199,6 @@ var PlaceHolderPlugin = Plugin.extend({
         this.renderPlaceHolder(this);
         Renderer.update = true;
     }
+
 });
 PluginManager.registerPlugin('placeholder', PlaceHolderPlugin);

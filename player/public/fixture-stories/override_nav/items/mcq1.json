@@ -1,0 +1,87 @@
+{
+	"identifier": "findball",
+	"title": "ASM",
+	"shuffle":false,
+	"showImmediateFeedback": true,
+	"optionShuffle" : false,
+	"total_items": 1,
+	"max_score": 1,
+	"subject": "LIT",
+	"item_sets": [
+		{
+			"id": "set_1",
+        	"count": 7
+		}
+	],
+	"items": {
+		"set_1" :
+		 [
+			{
+				"type": "mcq",
+				"qid" : "esl.l2q24",
+				"qlevel" : "EASY",
+				"template_id":"mcq_template_findball",
+				"template": "mcq_template_findball",
+
+				"media": [
+					{
+						"id":"bone",
+						"type":"image",
+						"source":"bone.jpg",
+						"asset_id":"bone"
+					},
+					
+					{
+						"id":"ball",
+						"type":"image",
+						"source":"football.jpg",
+						"asset_id" : "ball"
+					},
+					{
+						"id":"pencil",
+						"type":"image",
+						"source":"pencil.jpg",
+						"asset_id":"pencil"
+					},
+					{
+						"id":"cap",
+						"type":"image",
+						"source":"cap.jpg",
+						"asset_id":"cap"
+					}
+				],
+
+				"question":"",
+
+				"options": [
+					{
+					   "value": {"type": "mixed", "image": "bone", "audio": "", "text":"", "asset":""}
+						
+						
+					},
+					{
+						"value": {"type": "mixed", "image": "ball", "audio": "", "text":"", "asset":""},
+						"answer":true,
+						"score":1
+						
+					},
+					{
+					"value": {"type": "mixed", "image": "pencil", "audio": "", "text":"", "asset":""}
+						
+					},
+					{
+					   "value": {"type": "mixed", "image": "cap", "audio": "", "text":"", "asset":""}
+						
+					}
+
+				],
+				"model" : {
+					},
+
+					"max_score":1,
+					"partial_scoring":false
+
+			}
+		]	
+	}
+}

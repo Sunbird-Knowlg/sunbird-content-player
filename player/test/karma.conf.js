@@ -43,7 +43,7 @@ module.exports = function(config) {
 
             // Plugin Test Cases
             'public/js/test/TextPluginSpec.js',
-            'public/js/test/ImagePluginSpec.js',
+            // 'public/js/test/ImagePluginSpec.js',
             'public/js/test/HotspotPluginSpec.js',
             'public/js/test/ContainerPluginSpec.js',
             'public/js/test/StageSpec.js',
@@ -61,7 +61,7 @@ module.exports = function(config) {
             'public/js/test/SetPluginSpec.js', 
             
             'public/js/test/LayoutPluginSpec.js', 
-            'public/js/test/VideoPluginSpec.js', // TODO: Not covered all cases 
+            /*'public/js/test/VideoPluginSpec.js',*/ // TODO: Not covered all cases 
             'public/js/test/ThemePluginSpec.js', // TODO: Incomplete
            
 

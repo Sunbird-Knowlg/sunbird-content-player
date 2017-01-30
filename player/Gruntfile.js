@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        buildNumber: process.env.BUILD_NUMBER,
         mkdir: {
             all: {
               options: {
@@ -34,6 +35,7 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
                         'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
                         'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
+                        'public/js/thirdparty/exclude/eventbus.min.js',
                         'public/js/thirdparty/exclude/Class.js',
                         'public/js/app/genieservices.js',
                         'public/js/app/renderer.js'
@@ -70,6 +72,7 @@ module.exports = function(grunt) {
                     'public/js/app/plugin-lib.js': [
                         'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
                         'public/js/thirdparty/exclude/Class.js',
+                        'public/js/thirdparty/exclude/eventbus.min.js',
                         '../js-libs/renderer/plugin/Plugin.js',
                         '../js-libs/renderer/plugin/HTMLPlugin.js',
                         '../js-libs/renderer/manager/PluginManager.js',
@@ -522,10 +525,21 @@ module.exports = function(grunt) {
                     to: "android"
                 }]
             },
-            preview_dev: {
-                src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html'],
+            build_version: {
+                src: ['www/js/AppConfig.js', 'www/preview.html', 'www/preview/preview.html'],
                 overwrite: true,
                 replacements: [{
+                    from: /BUILD_NUMBER/g,
+                    to: '<%= buildNumber %>'
+                }]
+            },
+            preview_dev: {
+                src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html', 'www/preview/preview.html'],
+                overwrite: true,
+                replacements: [{
+                    from: /DEPLOYMENT/g,
+                    to: "dev"
+                },{
                     from: /DEPLOYMENT/g,
                     to: "dev"
                 }]
@@ -598,7 +612,7 @@ module.exports = function(grunt) {
         flavor = flavor.toLowerCase().trim();
         var tasks = [];
         if ("dev" == flavor) {
-            tasks.push('preview-dev');
+            tasks.push('deploy-preview-dev');
         } else if("production" == flavor) {
             tasks.push('preview-production');
         } else if("qa" == flavor) {
@@ -610,13 +624,24 @@ module.exports = function(grunt) {
         }
     });
 
-    // grunt.registerTask('preview-dev', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_dev', 'aws_s3:cleanDevPreview', 'aws_s3:uploadPreviewFilesToDev']);
-    // grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
-    // grunt.registerTask('preview-qa', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
+    // After this 'build-preview' task run
+    // grunt updateVersion 
+    grunt.registerTask('build-preview', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles']);
 
-    grunt.registerTask('preview-dev', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_dev', 'aws_s3:cleanDevPreview', 'aws_s3:uploadPreviewFilesToDev']);
-    grunt.registerTask('preview-production', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_production']);
-    grunt.registerTask('preview-qa', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles', 'replace:preview_QA']);
+    //This is to update the Jenkins version number
+    grunt.registerTask('updateVersion', function(jenBuildNumber) {
+        //This method need to call after preview build is generated(grunt build-preview);
+        if(jenBuildNumber){
+            grunt.config.set('buildNumber', jenBuildNumber);
+        }
+
+        var tasks = ['replace:build_version'];
+        grunt.task.run(tasks);
+    });
+
+    grunt.registerTask('deploy-preview-dev', ['replace:preview_dev', 'aws_s3:cleanDevPreview', 'aws_s3:uploadPreviewFilesToDev']);
+    grunt.registerTask('preview-production', ['replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
+    grunt.registerTask('preview-qa', ['replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
 
     grunt.registerTask('rm-cordova-plugin-sensibol', function() {
         if (grunt.file.exists('plugins/cordova-plugin-sensibol')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
@@ -697,5 +722,4 @@ module.exports = function(grunt) {
     grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
 
     grunt.registerTask('local-preview-build', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js','copy:localPreviewFiles', 'copy:localPreviewMinjs', 'aws_s3:uploadLocalPreviewZip', 'clean:localPreview']);
-
 };

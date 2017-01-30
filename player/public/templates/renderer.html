@@ -1,17 +1,15 @@
 <div id="gameArea">
 	<!-- Navigation and Menu  -->
 	<div class="overlay-html" id="overlay" ng-controller="OverlayCtrl" ng-init="initMenu()" ng-cloak>
-        <div>
-            <a class="nav-icon nav-previous" href="javascript:void(0);"><img style="opacity:0.4;" ng-src="{{imageBasePath}}back_icon.png"></a>
-            <a class="nav-icon nav-previous nav-previous-enable" id="navPrev" href="javascript:void(0);"><img ng-src="{{imageBasePath}}back_icon.png" ng-click="navigate('previous')"></a>
+        <div ng-hide="showOverlayPrevious === state_off">
+            <a class="nav-icon nav-previous" ng-class="{'nav-disable': showOverlayPrevious == state_disable}" href="javascript:void(0);"><img ng-src="{{imageBasePath}}back_icon.png" ng-click="navigate('previous')"></a>
         </div>
 
-        <div>
-            <a class="nav-icon nav-next" href="javascript:void(0);"><img style="opacity:0.4;"  ng-src="{{imageBasePath}}next_icon.png"></a>
-            <a class="nav-icon nav-next"  id="navNext" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next_icon.png" ng-click="navigate('next')"></a>
+        <div ng-hide="showOverlayNext === state_off">
+            <a class="nav-icon nav-next" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next_icon.png" ng-click="navigate('next')"></a>
         </div>
 
-        <assess image="icons.assess.enable"></assess>
+        <assess image="icons.assess.enable" show="showOverlaySubmit"></assess>
 
 		<reload-stage style="position: absolute;width: 7%;bottom: 1%;left: 1%;"></reload-stage>
 
@@ -21,8 +19,10 @@
         <!-- Menu overlay to hide canvas -->
         <menu></menu>
         <!-- All the popup's should add here -->
-        <popup id="goodJobPopup" popup-body="goodJob.body" ></popup>
-        <popup id="tryAgainPopup" popup-body="tryAgain.body"></popup>
+        <!-- <popup id="goodJobPopup" popup-body="goodJob.body" ></popup>
+        <popup id="tryAgainPopup" popup-body="tryAgain.body"></popup> -->
+        <try-again ng-show="showOverlayTryAgain == state_on"></try-again>
+        <good-job ng-show="showOverlayGoodJob == state_on"></good-job>
     </div>
     <!-- HTML plugin elements(dynamically adding here) -->
     <!-- Canvas elment(used by CreateJS) -->

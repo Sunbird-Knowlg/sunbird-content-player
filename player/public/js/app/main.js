@@ -8,24 +8,29 @@ var packageName = "org.ekstep.quiz.app",
     ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive"
 
 // Need to modify the scope level hasStageSet
-    // hasStageSet = true
+// hasStageSet = true
 
-function startProgressBar(w, setInter) {
+function startProgressBar(w, setInter, name) {
+    jQuery('#loading').show();
+    jQuery("#progressBar").width(0);
+    jQuery('#loadingText').text(name);
     var elem = document.getElementById("progressBar");
     var width = w ? w : 20;
     var id = setInterval(frame, setInter ? setInter : 0.7);
+
     function frame() {
         if (width >= 100) {
-         clearInterval(id);
+            clearInterval(id);
         } else {
-        width++;
-        if(elem && elem.style)
-            elem.style.width = width + '%';
-        jQuery('#progressCount').text(width + '%');
+            width++;
+            if (elem && elem.style)
+                elem.style.width = width + '%';
+            jQuery('#progressCount').text(width + '%');
         }
     }
 }
 startProgressBar();
+
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
         $cordovaFile.removeFile(cordova.file.dataDirectory, path)
@@ -43,37 +48,17 @@ function createCustomEvent(evtName, data) {
 }
 
 function getUrlParameter(sParam) {
-   var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-       sURLVariables = sPageURL.split('&'),
-       sParameterName,
-       i;
-   for (i = 0; i < sURLVariables.length; i++) {
-       sParameterName = sURLVariables[i].split('=');
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
 
-       if (sParameterName[0] === sParam) {
-           return sParameterName[1] === undefined ? true : sParameterName[1];
-       }
-   }
-}
-
-var _reloadInProgress = false;
-function reloadStage() {
-    if (_reloadInProgress) {
-        return;
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
     }
-    _reloadInProgress = true;
-    setTimeout(function() {
-        var plugin = PluginManager.getPluginObject(Renderer.theme._currentStage);
-        if (plugin) plugin.reload({
-            type: "command",
-            command: "reload",
-            duration: "100",
-            ease: "linear",
-            effect: "fadeIn",
-            asset: Renderer.theme._currentStage
-        });
-    }, 500);
-    TelemetryService.interact("TOUCH", "gc_reload", "TOUCH", {stageId : Renderer.theme._currentStage});
 }
 
 function backbuttonPressed(pageId) {
@@ -84,7 +69,7 @@ function backbuttonPressed(pageId) {
         type: 'EXIT_APP'
     };
     TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', data);
-    if(pageId == "coverpage") {
+    if (pageId == "coverpage") {
         TelemetryService.end();
     }
     AudioManager.stopAll();
@@ -94,23 +79,25 @@ function backbuttonPressed(pageId) {
 // So, change exitApp to do the same.
 function exitApp(pageId) {
     TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {
-        stageId: ((pageId == "renderer" ? Renderer.theme._currentStage : pageId))
+        stageId: ((pageId == "renderer" && GlobalContext.config.appInfo.mimeType != "application/vnd.ekstep.content-collection" ? Renderer.theme._currentStage : pageId))
     });
     try {
         TelemetryService.exit();
     } catch (err) {
         console.error('End telemetry error:', err.message);
     }
+    localStorage.clear();
+    localStorageGC = {};
     genieservice.endGenieCanvas();
 }
 
 function startApp(app) {
     if (!app) app = geniePackageName;
-    navigator.startApp.start(app, function(message) {
+    if (!_.isUndefined(navigator) && !_.isUndefined(navigator.startApp)) {
+        navigator.startApp.start(app, function(message) {
             exitApp();
             TelemetryService.exit(packageName, version)
-        },
-        function(error) {
+        }, function(error) {
             if (app == geniePackageName)
                 alert("Unable to start Genie App.");
             else {
@@ -118,6 +105,7 @@ function startApp(app) {
                 if (bool) cordova.plugins.market.open(app);
             }
         });
+    }
 }
 
 function contentNotAvailable() {
@@ -125,91 +113,12 @@ function contentNotAvailable() {
     exitApp();
 }
 
-function getNavigateTo(navType) {
-    var navigation = [];
-    var navigateTo = undefined;
-    if (!_.isUndefined(Renderer.theme._currentScene) && !_.isEmpty(Renderer.theme._currentScene._data.param)) {
-        navigation = (_.isArray(Renderer.theme._currentScene._data.param)) ? Renderer.theme._currentScene._data.param : [Renderer.theme._currentScene._data.param];
-        var direction = _.findWhere(navigation, {
-            name: navType
-        });
-        if (direction) navigateTo = direction.value;
-    }
-    return navigateTo;
-}
-
-var submitOnNextClick = true;
-function navigate(navType) {
-    TelemetryService.interact("TOUCH", navType, null, {stageId : Renderer.theme._currentStage});
-    var navigateTo = getNavigateTo(navType);
-
-    if(_.isUndefined( Renderer.theme._currentScene)){
-        return;
-    }
-
-    if(submitOnNextClick && Overlay.isItemScene() && ("next" == navType)){
-        evalAndSubmit();
-        return;
-    }
-
-    submitOnNextClick = true;
-    var changeScene = function() {
-        var action = {
-            "asset": Renderer.theme._id,
-            "command": "transitionTo",
-            "duration": "100",
-            "ease": "linear",
-            "effect": "fadeIn",
-            "type": "command",
-            "pluginId": Renderer.theme._id,
-            "value": navigateTo
-        };
-        action.transitionType = navType;
-        // Renderer.theme.transitionTo(action);
-        CommandManager.handle(action);
-    };
-    if ("undefined" == typeof navigateTo && "next" == navType) {
-        if (Overlay.isItemScene() && Renderer.theme._currentScene._stageController.hasNext()) {
-            changeScene();
-        } else {
-            if(config.showEndPage) {
-                console.info("redirecting to endpage.");
-                 // while redirecting to end page
-                 // set the last stage data to _contentParams[themeObj]
-                var stage = Renderer.theme._currentScene;
-                Renderer.theme.setParam(stage.getStagestateKey(),stage._currentState);
-
-                window.location.hash = "/content/end/" + GlobalContext.currentContentId;
-                AudioManager.stopAll();
-            } else {
-                console.warn("Cannot move to end page of the content. please check the configurations..");
-            }
-        }
-    } else {
-        changeScene();
-    }
-}
-
-function evalAndSubmit(){
-    //If any one option is selected, then only allow user to submit
-    var action = {
-        "type": "command",
-        "command": "eval",
-        "asset": Renderer.theme._currentStage,
-        "pluginId": Renderer.theme._currentStage
-    };
-    action.htmlEval = "true";
-    action.success = "correct_answer";
-    action.failure = "wrong_answer";
-    CommandManager.handle(action);
-}
-
 function checkStage(showalert) {
     if (GlobalContext.config.appInfo.mimeType == 'application/vnd.ekstep.content-collection') {
         if (showalert == "showAlert") {
             alert("No stage found, redirecting to collection list page")
         }
-        window.location.hash = "#/content/list/"+ GlobalContext.previousContentId;
+        window.location.hash = "#/content/list/" + GlobalContext.previousContentId;
     } else {
         if (showalert == "showAlert") {
             alert("No Stage found, existing canvas")
@@ -221,12 +130,12 @@ function checkStage(showalert) {
 }
 
 function objectAssign() {
-    Object.assign = function (target) {
+    Object.assign = function(target) {
         if (target === undefined || target === null) {
             throw new TypeError('Cannot convert undefined or null to object');
         }
         var output = Object(target);
-        _.each(arguments, function(argument){
+        _.each(arguments, function(argument) {
             if (argument !== undefined && argument !== null) {
                 for (var nextKey in argument) {
                     if (argument.hasOwnProperty(nextKey)) {
@@ -237,4 +146,79 @@ function objectAssign() {
         })
         return output;
     }
+}
+
+// GC - GenieCanvas
+var localStorageGC = {
+    isHtmlContent: false,
+    isCollection: false,
+    content: {},
+    collection: {},
+    telemetryService: {},
+    setItem: function(param, data) {
+        if (data) {
+            this[param] = _.isString(data) ? data : JSON.stringify(data);
+        }
+    },
+    getItem: function(param) {
+        if (param) {
+            var paramVal = this[param];
+            paramVal = _.isEmpty(paramVal) ? {} : JSON.parse(paramVal);
+            return paramVal;
+        }else{
+            return;
+        }
+    },
+    removeItem: function(param) {
+        this[param] = {};
+        //localStorage.removeItem(canvasLS.param);
+    },
+    save: function() {
+        // Storing into localStorage
+        var thisData = {};
+        thisData.content = this.content;
+        thisData.collection = this.collection;
+        thisData.telemetryService = this.telemetryService;
+        thisData.isCollection = this.isCollection;
+        thisData.isHtmlContent = this.isHtmlContent;
+
+        localStorage.setItem("canvasLS", JSON.stringify(thisData));
+    },
+    update: function() {
+        //gettting from localstorage and updating all its values
+        var lsData = localStorage.getItem("canvasLS");
+        if (lsData) {
+            lsData = JSON.parse(lsData);
+            var lsKeys = _.keys(lsData);
+            var instance = this;
+            _.each(lsKeys, function(key) {
+                instance.setItem(key, lsData[key]);
+            })
+        }
+    }
+}
+
+function startTelemetry(id, ver) {
+    localStorageGC.removeItem("telemetryService");
+    //localStorageGC.removeItem("_start");
+    //localStorageGC.removeItem("_end");
+    TelemetryService.init(GlobalContext.game, GlobalContext.user);
+    TelemetryService.start(id, ver);
+    if (!_.isUndefined(TelemetryService.instance)) {
+        var tsObj = _.clone(TelemetryService);
+        //tsObj.telemetryService = _.clone(TelemetryService);
+        tsObj._start = JSON.stringify(tsObj.instance._start);
+        tsObj._end = JSON.stringify(tsObj.instance._end);
+        localStorageGC.setItem("telemetryService", tsObj);
+        //localStorageGC.setItem("_start", TelemetryService.instance._start);
+        //localStorageGC.setItem("_end", TelemetryService.instance._end);
+    }
+}
+
+function getAsseturl(content) {
+    var content_type = content.mimeType == 'application/vnd.ekstep.html-archive' ? "html/" : "ecml/";
+    var path = window.location.origin + AppConfig.S3_content_host + content_type;
+    path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
+    return path;
+
 }

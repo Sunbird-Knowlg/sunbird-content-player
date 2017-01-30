@@ -83,6 +83,7 @@ var ThemePlugin = Plugin.extend({
     render: function() {
         var instance = this;
         ControllerManager.reset();
+        OverlayManager.reset();
         if (this._data.controller) {
             if (_.isArray(this._data.controller)) {
                 this._data.controller.forEach(function(p) {
@@ -132,6 +133,7 @@ var ThemePlugin = Plugin.extend({
         }
     },
     reRender: function() {
+        this._contentParams = {};
         this._self.clear();
         this._self.removeAllChildren();
         this.render();
@@ -158,6 +160,11 @@ var ThemePlugin = Plugin.extend({
     getAsset: function(aid) {
         return AssetManager.getAsset(this._currentStage, aid);
     },
+    getMedia: function(aid) {
+        return _.find(this._data.manifest.media, function(item) {
+            return item.id == aid;
+        });
+    },
     addChild: function(child, childPlugin) {
         var instance = this;
         child.on('sceneenter', function() {
@@ -167,8 +174,8 @@ var ThemePlugin = Plugin.extend({
             Renderer.update = true;
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
-            Overlay.sceneEnter();
-
+            // remove above scene Enter method call and dispatch an scene Enter event.
+            OverlayManager.init();
         });
         var nextIdx = this._currIndex++;
         if (this._currentScene) {
@@ -182,6 +189,7 @@ var ThemePlugin = Plugin.extend({
         childPlugin.setIndex(nextIdx);
     },
     replaceStage: function(stageId, effect) {
+        AudioManager.stopAll();
         this.disableInputs();
         this.inputs = [];
         this.removeHtmlElements();
@@ -273,7 +281,11 @@ var ThemePlugin = Plugin.extend({
             this._isSceneChanging = true;
             if (stage._stageController && stage._stageController.hasNext()) {
                 if (action.transitionType !== 'next') {
+                  if (action.value === "") {
+                      OverlayManager.moveToEndPage();
+                  } else {
                     this.replaceStage(action.value, action);
+                  }
                 } else {
                     this.replaceStage(stage._data.id, action);
                 }

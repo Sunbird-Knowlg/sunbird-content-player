@@ -1,0 +1,51 @@
+{
+	"identifier": "counting_2",
+	"title": "Addition by grouping",
+	"total_items": 1,
+	"max_score": 1,
+	"shuffle": false,
+	"optionShuffle": false,
+	"showImmediateFeedback": true,
+	"subject": "NUM",
+	"max_score":"2",
+	"item_sets": [
+		{
+			"id": "set_1",
+        	"count": 1
+		}
+	],
+	"items": {
+		"set_1" : [
+			{
+				"identifier": "hs1_set_1_3",
+				"type": "mtf",
+				"template": "mtf1",
+				"qlevel": "MEDIUM",
+				"question": "Didi wants pencil. I want my ball. \nCan you help?",
+				"lhs_options": [
+					{
+						"value": {"type": "mixed", "image": "didi", "image1":"penciltrans"},
+						"index": 0
+					},
+					{
+						"value": {"type": "mixed", "image": "dog1","image1":"balltrans"},
+						"index": 1
+					}
+				],
+				"rhs_options": [
+					{
+						"value": {"type": "mixed", "image": "ball"},
+						"answer": 1
+					},
+					{
+						"value": {"type": "mixed", "image": "pencil"},
+						"answer": 0
+					}
+				],
+				"max_score": 2,
+				"partial_scoring": true,
+				"feedback": ""
+			}
+		]
+	}
+}

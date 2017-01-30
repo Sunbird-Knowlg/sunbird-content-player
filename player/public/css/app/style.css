@@ -143,9 +143,9 @@ body{
     padding: 0 2%;
     text-overflow: ellipsis;
     line-height: 1.5em;
-    margin-bottom: 7%;
+    margin-bottom: 2%;
     width: 100%;
-    margin-top: 7%;
+    margin-top: 5%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     height: 23%;
@@ -153,6 +153,8 @@ body{
     font-size: 9vh;
     -webkit-text-stroke: 0.2vh #009e81;
     z-index: 0;
+    padding-top: 1%;
+    padding-bottom: 2%;
   }
 
 .gc-text-elipsis{
@@ -164,7 +166,7 @@ body{
 .gc-ep-title{
     width: 100%;
     text-transform: uppercase;
-    padding: 1% 10%;
+    padding: 2% 0% 1%;
     font-size: 1.8em;
     text-align: center;
 }
@@ -181,7 +183,6 @@ body{
 .icon-font {
     font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
     color: #FFFFFF;
-    line-height: 1.2em;
     text-align: center;
 }
 
@@ -301,13 +302,14 @@ body{
     height: 75%;
     margin: 35% 7%;
     z-index: 2;
+    text-transform: initial;
 }
 
 .inst-message-cont p {
     font-family: NotoSansRegular;
     font-size: 1.2em;
-    padding: 25% 5%;
-    height: 100%;
+    margin: 25% 5%;
+    height: 75%;
     overflow: auto;
     text-align: center;
     font-weight: 500;
@@ -352,6 +354,14 @@ body{
 
 .nav-previous-enable {
     display: none;
+}
+
+.nav-enable {
+    opacity: 1;
+}
+
+.nav-disable {
+    opacity: 0.4;
 }
 
 .overlay-html>assess{
@@ -514,6 +524,7 @@ body{
 }
 .gc-play-icon{
     width:17%;
+    cursor: pointer;
 }
 
 .credit-body-icon-font::-webkit-scrollbar {
@@ -522,17 +533,17 @@ body{
 }
 
 .credit-body-icon-font::-webkit-scrollbar-track {
-    background-color: #ffd18f;
+    background-color: #d0cfce;
     border-radius: 10%;
 }
 
 .credit-body-icon-font::-webkit-scrollbar-thumb {
-    background-color: #f6661f;
+    background-color: #000000;
     border-radius: 35%;
 }
 
 .credit-body-icon-font::-webkit-scrollbar-thumb:hover {
-  background-color: #f6661f;
+  background-color: #000000;
   border-radius: 10%;
 }
 
@@ -552,7 +563,7 @@ body{
      height: 100%;
 }
 .gc-play-container{
-    top: 100%;
+    /*top: 100%;*/
     position: absolute;
     width: 100%;
     height: 20%;
@@ -590,6 +601,7 @@ body{
 
 .gc-ep-cong {
     margin: 1% 0%;
+    padding-top: 1%;
 }
 
 .gc-content-owner {
@@ -701,7 +713,7 @@ body{
 
 .gc-ep-content-holder{
     position: absolute;
-    top: 26.5%;
+    top: 25%;
     width: 84%;
     height: 62%;
     margin: 0 9.4%;
@@ -710,7 +722,7 @@ body{
 
 .gc-ep-footer-icons{
     display: inline-block;
-    width: 35%;
+    width: 60%;
     height: 100%;
     margin: 0 -5%;
 }
@@ -766,8 +778,8 @@ body{
 
 .gc-related-cont{
     width: 100%;
-    height: 50%;
-    padding: 0px 4%;
+    height: 62%;
+    padding: 18% 4% 0px 4%;
     overflow: hidden;
 }
 
@@ -800,9 +812,9 @@ body{
     font-size: 1em;
     color: #808080;
     width: 100%;
-    height: 80%;
+    height: 70%;
     overflow: auto;
-    line-height: 1.2em;
+    line-height: 1.5em;
     white-space: normal;
 }
 
@@ -815,7 +827,7 @@ body{
     text-align: center;
     width: 70%;
     left: 15%;
-    height: 70%;
+    height: 68%;
 }
 
 .img-center{
@@ -1026,7 +1038,7 @@ body{
 .gc-ep-content {
     width: 54%;
     left: 23%;
-    top: 3%;
+    top: 1%;
     position: absolute;
 }
 
@@ -1070,6 +1082,7 @@ body{
 .gc-ionic-contentlist-body{
     left: 9%;
     top: 18%;
+    height: 82%;
 }
 
 .gc-contentlist-play-icon{
@@ -1170,12 +1183,17 @@ body{
     padding: 2%
 }
 
-.gc-related-cont-title {
-    padding-left: 10%; 
-    font-size: 1em
+.gc-related-cont-title { 
+    font-size: 1em;
+    text-align: center;
+    padding-bottom: 2%;
 }
 
 .gc-popup-retry-replay {
     margin: -5% 15% 0 14%;
     line-height: 100%;
+}
+
+.gc-ep-credit {
+    margin-right: 10px;
 }

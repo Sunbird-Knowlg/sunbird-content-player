@@ -8,11 +8,11 @@ TelemetryService = {
     _gameErrorFile: undefined,
     _gameData: undefined,
     _data: [],
-    _gameIds:[],
+    _gameIds: [],
     _user: {},
     apis: {
-        telemetry : "sendTelemetry",
-        feedback : "sendFeedback"
+        telemetry: "sendTelemetry",
+        feedback: "sendFeedback"
     },
     mouseEventMapping: {
         click: 'TOUCH',
@@ -21,8 +21,12 @@ TelemetryService = {
         pressup: 'DRAG'
     },
     init: function(gameData, user) {
-        if (!TelemetryService.instance) {
-            return new Promise(function(resolve, reject) {
+        var localStorageInstance = TelemetryService.getLocalStorageInstance();
+        if (localStorageInstance) {
+            TelemetryService.setTelemetryService(localStorageInstance, gameData);
+        }
+        return new Promise(function(resolve, reject) {
+            if (!TelemetryService.instance) {
                 TelemetryService._user = user;
                 TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
                 if (gameData) {
@@ -35,31 +39,30 @@ TelemetryService = {
                     TelemetryServiceUtil.getConfig().then(function(config) {
                         TelemetryService._config = config;
                         if (TelemetryService._config.isActive) TelemetryService.isActive = TelemetryService._config.isActive;
-                            resolve(true);
+                        resolve(true);
                     }).catch(function(err) {
                         reject(err);
                     });
-
                 } else {
                     reject('Game data is empty.');
                 };
                 resolve(true);
-            });
-        }else{
-            console.log("TelemetryService instance is not create")
-        }
+            } else {
+                resolve(true)
+                console.log("TelemetryService instance is not create")
+            }
+        });
     },
     webInit: function(gameData, user) {
         return new Promise(function(resolve, reject) {
             TelemetryService.init(gameData, user)
-            .then(function() {
-                TelemetryService.start(gameData.id, gameData.ver);
-                resolve(true);
-
-            })
-            .catch(function(err) {
-                reject(err);
-            });
+                .then(function() {
+                    TelemetryService.start(gameData.id, gameData.ver);
+                    resolve(true);
+                })
+                .catch(function(err) {
+                    reject(err);
+                });
         });
     },
     changeVersion: function(version) {
@@ -91,11 +94,54 @@ TelemetryService = {
         TelemetryService.instance.exitApp();
     },
     flushEvent: function(event, apiName) {
-        console.log("TelemetryService flushEvent", event);
         TelemetryService._data.push(event);
         if (event)
             event.flush(apiName);
         return event;
+    },
+    setTelemetryService: function(localStorageInstance, gameData) {
+        // This is specific to HTML games launched by GenieCanvas
+        // HTML content OE_START is already logged by GenieCanvas coverpage
+        // OE_START should not log by HTML content once again(if they are using GenieCanvasBridge.js)
+        if (localStorageInstance._gameData.id == gameData.id) {
+            var start = localStorageInstance._start; //JSON.parse(localStorage.getItem("_start"));
+            var end = localStorageInstance._end; //JSON.parse(localStorage.getItem("_end"));
+            if (!_.isUndefined(localStorageInstance)) {
+                for (var prop in localStorageInstance) {
+                    if (TelemetryService.hasOwnProperty(prop)) {
+                        TelemetryService[prop] = localStorageInstance[prop];
+                    }
+                }
+            }
+            TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
+            if (!_.isUndefined(start)) {
+                for (var i = 0; i < start.length; i++) {
+                    TelemetryService.instance._start.push(start[i]);
+                }
+            }
+            if (!_.isUndefined(end)) {
+                var teEndevent = TelemetryService.instance.createEvent("OE_END", {}).start();
+                var startTime = 0;
+                if(end.length > 0){
+                    startTime = end[end.length - 1].startTime;
+                }
+                teEndevent.startTime = startTime;
+                TelemetryService.instance._end.push(teEndevent);
+            }
+        } else {
+            console.info("Game id is not same", gameData.id);
+        }
+    },
+    getLocalStorageInstance: function() {
+        var canvasLocalStorageData = localStorage.getItem("canvasLS");
+        var telemetryLocalStorageData;
+        if (!_.isNull(canvasLocalStorageData)) {
+            canvasLocalStorageData = JSON.parse(canvasLocalStorageData);
+            telemetryLocalStorageData = _.isUndefined(canvasLocalStorageData.telemetryService) ? undefined : JSON.parse(canvasLocalStorageData.telemetryService);
+            telemetryLocalStorageData._start = JSON.parse(telemetryLocalStorageData._start);
+            telemetryLocalStorageData._end = JSON.parse(telemetryLocalStorageData._end);
+        }
+        return telemetryLocalStorageData;
     },
     start: function(id, ver) {
         if (!TelemetryService.isActive) {
@@ -103,7 +149,9 @@ TelemetryService = {
             return new InActiveEvent();
         } else {
             ver = (ver) ? ver + "" : "1"; // setting default ver to 1
-            if(_.findWhere(TelemetryService.instance._start, {id: id}))
+            if (_.findWhere(TelemetryService.instance._start, {
+                    id: id
+                }))
                 return new InActiveEvent();
             else
                 return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver), TelemetryService.apis.telemetry);
@@ -180,32 +228,30 @@ TelemetryService = {
     exit: function() {
         if (TelemetryService.isActive) {
             TelemetryService._data = [];
-            if(!_.isEmpty(TelemetryService.instance._end)) {
+            if (!_.isEmpty(TelemetryService.instance._end)) {
                 var len = TelemetryService.instance._end.length;
-                for(var i = 0; i < len; i++)
+                for (var i = 0; i < len; i++)
                     TelemetryService.end();
             }
-            // if ("undefined" !=  event && event._isStarted)
-            //     TelemetryService.end(); 
-            if(_.isEmpty(TelemetryService.instance._end)) {
+            if (_.isEmpty(TelemetryService.instance._end)) {
                 TelemetryService.isActive = false;
             }
         }
     },
     logError: function(eventName, error) {
-     var data = {
-             'eventName': eventName,
-             'message': error,
-             'time': getCurrentTime()
-         }
-         // change this to write to file??
-     console.log('TelemetryService Error:', JSON.stringify(data));
-     // create the event and Dispatch the Event
-     var evt = document.createEvent('Event');
-     evt.initEvent('logError', true, true);
-     document.body.dispatchEvent(evt);
-     console.info('Telemetry :' + JSON.stringify(data.message));
- },
+        var data = {
+                'eventName': eventName,
+                'message': error,
+                'time': getCurrentTime()
+            }
+            // change this to write to file??
+        console.log('TelemetryService Error:', JSON.stringify(data));
+        // create the event and Dispatch the Event
+        var evt = document.createEvent('Event');
+        evt.initEvent('logError', true, true);
+        document.body.dispatchEvent(evt);
+        console.info('Telemetry :' + JSON.stringify(data.message));
+    },
     print: function() {
         if (TelemetryService._data.length > 0) {
             var events = TelemetryService._data.cleanUndefined();
@@ -218,11 +264,11 @@ TelemetryService = {
 }
 
 Array.prototype.cleanUndefined = function() {
-  for (var i = 0; i < this.length; i++) {
-    if (this[i] == undefined) {
-      this.splice(i, 1);
-      i--;
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] == undefined) {
+            this.splice(i, 1);
+            i--;
+        }
     }
-  }
-  return this;
+    return this;
 };

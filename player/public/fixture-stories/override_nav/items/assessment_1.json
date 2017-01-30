@@ -1,0 +1,204 @@
+{
+  "identifier": "haircut_story_1",
+  "title": "Haircut Story Assessment",
+  "total_items": 2,
+  "shuffle": false,
+  "max_score": 9,
+  "showImmediateFeedback":false,
+  "subject": "LIT",
+  "item_sets": [
+    {
+      "id": "set_1",
+      "count": 2
+    }
+  ],
+  "items": {
+    "set_1" : [
+      {
+        "template": "org.ekstep.mcq.t.ta",
+        "lastUpdatedBy": "371",
+        "identifier": "do_03",
+        "code": "org.ekstep.assessmentitem.do_20046665",
+        "question": "આતંકવાદી ઠાર, સેનાએ સ્ટાન્ડર્ડ ઓપરેશન પ્રોસિજરમાં લીધા 5 મોટા નિર્ણય",
+        "subject": "domain",
+        "qlevel": "EASY",
+        "portalOwner": "371",
+        "language": [
+          "Gujarati"
+        ],
+        "type": "mcq",
+        "title": "Gujarathi_question",
+        "showImmediateFeedback": false,
+        "createdOn": "2016-09-21T07:21:12.477+0000",
+        "gradeLevel": [
+          "Kindergarten",
+          "Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Other"
+        ],
+        "concepts": [
+          {
+            "identifier": "9",
+            "name": "Comprehension Of Poems",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "10",
+            "name": "Roots And Derivations",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "11",
+            "name": "Comprehension Of Essays",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "12",
+            "name": "More Than One Meaning",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          }
+        ],
+        "max_score": 1,
+        "name": "Gujarathi_question",
+        "options": [
+          {
+            "value": {
+              "type": "mixed",
+              "text": "મોટા નિર્ણય",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "મોટા નિર્ણય",
+              "resindex": 0,
+              "fontsize": 150
+            },
+            "score": 1,
+            "answer": true
+          },
+          {
+            "value": {
+              "type": "mixed",
+              "text": "નિર્ણય",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "નિર્ણય",
+              "resindex": 1,
+              "fontsize": 150
+            }
+          }
+        ],
+        "lastUpdatedOn": "2016-09-21T07:23:06.595+0000",
+        "used_for": "worksheet",
+        "template_id": "domain_3490"
+      },
+      {
+        "template": "org.ekstep.mcq.t.ta",
+        "lastUpdatedBy": "371",
+        "identifier": "do_04",
+        "code": "org.ekstep.assessmentitem.do_20046670",
+        "question": " Gone is the exuberant American desire to be peacemaker. Washington now knows that it has been played by Islamabad, it's false ally in the war on terror.",
+        "subject": "domain",
+        "qlevel": "EASY",
+        "portalOwner": "371",
+        "language": [
+          "English"
+        ],
+        "type": "mcq",
+        "title": "English_question",
+        "createdOn": "2016-09-21T07:29:30.665+0000",
+        "gradeLevel": [
+          "Kindergarten",
+          "Grade 1",
+          "Grade 2",
+          "Grade 3",
+          "Grade 4",
+          "Grade 5",
+          "Other"
+        ],
+        "concepts": [
+          {
+            "identifier": "13",
+            "name": "Roots And Derivations",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "14",
+            "name": "Comprehension Of Poems",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "15",
+            "name": "Comprehension Of Essays",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          },
+          {
+            "identifier": "16",
+            "name": "More Than One Meaning",
+            "objectType": "Concept",
+            "relation": "associatedTo",
+            "description": null,
+            "index": null
+          }
+        ],
+        "max_score": 1,
+        "name": "English_question",
+        "options": [
+          {
+            "value": {
+              "type": "mixed",
+              "text": "slamabad",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "slamabad",
+              "resindex": 0,
+              "fontsize": 150
+            },
+            "score": 1,
+            "answer": true
+          },
+          {
+            "value": {
+              "type": "mixed",
+              "text": "peacemaker",
+              "count": "",
+              "image": null,
+              "audio": null,
+              "resvalue": "peacemaker",
+              "resindex": 1,
+              "fontsize": 150
+            }
+          }
+        ],
+        "lastUpdatedOn": "2016-09-21T08:14:57.622+0000",
+        "used_for": "worksheet",
+        "template_id": "domain_3490"
+      }
+    ]
+  }
+}

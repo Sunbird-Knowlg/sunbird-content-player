@@ -49,6 +49,9 @@ LoadByStageStrategy = Class.extend({
                         if (media.type == 'audiosprite') {
                             if (!_.isArray(media.data.audioSprite)) media.data.audioSprite = [media.data.audioSprite];
                         }
+                        if ((media.preload === 'true') || (media.preload === true)) {
+                            instance.commonAssets.push(_.clone(media));
+                        }
                         instance.assetMap[media.id] = media;
                     }
                 }
@@ -94,13 +97,15 @@ LoadByStageStrategy = Class.extend({
                 });
             } else {
                 plugins.forEach(function(plugin) {
-                    var asset = instance.assetMap[plugin.asset];
-                    if (asset) {
-                        if ((preload === true) && (stageId !== startStageId)) {
-                            instance.commonAssets.push(_.clone(asset));
-                        } else {
-                            instance.stageManifests[stageId].push(_.clone(asset));
-                        }
+                    if(plugin && plugin.asset){
+                        var asset = instance.assetMap[plugin.asset];
+                        if (asset) {
+                            if ((preload === true) && (stageId !== startStageId)) {
+                                instance.commonAssets.push(_.clone(asset));
+                            } else {
+                                instance.stageManifests[stageId].push(_.clone(asset));
+                            }
+                        }                        
                     }
                 });
             }
@@ -117,9 +122,11 @@ LoadByStageStrategy = Class.extend({
                 });
             } else {
                 plugins.forEach(function(plugin) {
-                    var asset = instance.assetMap[plugin.asset];
-                    if (asset) {
-                        instance.templateAssets.push(_.clone(asset));
+                    if(plugin && plugin.asset){
+                        var asset = instance.assetMap[plugin.asset];
+                        if (asset) {
+                            instance.templateAssets.push(_.clone(asset));
+                        }
                     }
                 });
             }
@@ -150,33 +157,10 @@ LoadByStageStrategy = Class.extend({
             })
         }
         if (nextStageId) {
-            instance.loadStage(nextStageId, function() {
-                var plugin = PluginManager.getPluginObject('next');
-                if (plugin) {
-                    plugin.hide();
-                    var nextContainer = PluginManager.getPluginObject('nextContainer');
-                    if (nextContainer) {
-                        nextContainer.hide();
-                    }
-                }
-                //Overlay.showNext();
-            });
-        } else {
-            //Overlay.showNext();
+            instance.loadStage(nextStageId)
         }
         if (prevStageId) {
-            instance.loadStage(prevStageId, function() {
-                var plugin = PluginManager.getPluginObject('previous');
-                if (plugin) {
-                    plugin.hide();
-                    var previousContainer = PluginManager.getPluginObject('previousContainer');
-                    if (previousContainer) {
-                        previousContainer.hide();
-                    }
-                }
-                //Overlay.showPrevious();
-                //enablePrevious();
-            });
+            instance.loadStage(prevStageId)
         }
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);
     },
@@ -205,12 +189,18 @@ LoadByStageStrategy = Class.extend({
             if (cb) {
                 var currentStageLoader = instance.loaders[stageId];
                 // Check if loader for current satge is loaded completely
-                if (!currentStageLoader.loaded) {
-                    // if loader for current stage is not loaded, wait for loader to complete and call callback function
+                // if loader for current stage is not loaded, wait for loader to complete and call callback function
+                if(currentStageLoader.progress < 1) {
                     currentStageLoader.on("complete", function() {
                         cb();
                     })
                 } else {
+                    // TODO: Have to remove in future if createjs handle this case.
+                    // Since createjs is not handling loadmanifest when assets is defined multiple times
+                    // so if assets is defined multiple times this value is false
+                    if (currentStageLoader.loaded == false) {
+                        console.warn("assets are initialized multiple times inside stages")
+                    }
                     // if loader for current stage is loaded call callback
                     cb();
                 }
@@ -238,6 +228,10 @@ LoadByStageStrategy = Class.extend({
         this.templateLoader = loader;
     },
     loadAsset: function(stageId, assetId, path, cb) {
+        if (_.isUndefined(assetId) || _.isUndefined(path)) {
+            console.warn("Asset can't be loaded: AssetId - " + assetId +  ",  Path - " + path);
+            return;
+        }
         var loader = this.loaders[stageId];
         if (loader) {
             var itemLoaded = loader.getItem(assetId);
@@ -258,11 +252,11 @@ LoadByStageStrategy = Class.extend({
             //Image is not intianlised to load, So loading image & adding to the loaders
             loader = this._createLoader();
             var instance = this;
-            loader.on("complete", function(instance, loader) {
+            loader.on("complete", function(event) {
                 if (_.isUndefined(instance.loaders)) {
                     instance.loaders = {};
                 }
-                instance.loaders[stageId] = loader;
+                instance.loaders[stageId] = event.target;
                 if (cb) {
                     cb();
                 }

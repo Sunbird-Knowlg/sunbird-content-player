@@ -15,9 +15,19 @@
   <!-- <script src="assets/js/genieservices.js"></script>
   <script src="assets/js/telemetry.min.js"></script> -->
   <script src="assets/js/genieservice-bridge.min.js"></script>
-
-  <h1>New Game - HTML Content</h1>
-  <p>This is actual game</p>
+</br></br>
+ <center>
+ <h1>HTML-CONTENT</h1>
+ <hr>
+ </br>
+ <h3>CLICK BELOW BUTTON TO END THE GAME</h3>
+ </br>
+ <button onclick="genieservice.endContent()"><h3>CLOSE ME</h3></button>
+ </center>   
+ </center>
+  
+  
+  
  
   <script type="text/javascript">
     // Storing current logged in user 
@@ -68,7 +78,7 @@
     function getCurrentUser(){
        genieservice.getCurrentUser()
        .then(function(result) {
-          if (result.status == "success") {
+          if (result && result.status == 'success') {
               if (result.data.uid) {
                 currentUser = result;                 
                 console.log("currentUser", currentUser);
@@ -104,9 +114,7 @@
         getDictionaryWords();
 
         // Adding content information to the body
-        document.body.innerHTML += "<p><b>Content id:</b> "+currentContent.metadata.identifier+ "</p><p><b>Name:</b> "+currentContent.metadata.localData.name+"</p></br>";
-		
-		    document.body.innerHTML += "<p><b>Launch Data:</b> " + getUrlParameter('launchData') + "</p><p><b>Config:</b> "+ getUrlParameter('config') + "</p><p><b>AppInfo:</b> "+ getUrlParameter('appInfo');
+        document.body.innerHTML += "<p><b>Content id:</b> "+currentContent.metadata.identifier+ "</p><p><b>Name:</b> "+currentContent.metadata.localData.name+"</p>";
       })
       .catch(function(err){
         console.log("Failed", err);

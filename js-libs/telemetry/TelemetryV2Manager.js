@@ -69,6 +69,8 @@ TelemetryV2Manager = Class.extend({
             eventObj.event.edata.eks.uri = data.uri || "";
             eventObj.event.edata.eks.qindex = data.qindex || 0;
             eventObj.event.edata.eks.exlength = 0;
+            eventObj.event.edata.eks.qtitle = data.qtitle;
+            eventObj.event.edata.eks.qdesc = data.qdesc.substr(0,140)
             if (_.isArray(eventObj.event.edata.eks.resvalues)) {
                 eventObj.event.edata.eks.resvalues = _.map(eventObj.event.edata.eks.resvalues, function(val) {
                     val = _.isObject(val) ? val :{"0" : val};

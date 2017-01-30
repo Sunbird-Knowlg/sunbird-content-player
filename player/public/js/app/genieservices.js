@@ -193,6 +193,30 @@ genieservice_portal = {
                 }
             });
         });
+    },
+    endContent: function() {
+        // On close of the content call this function
+        var contentId = localStorage.getItem('cotentId');
+        if(_.isUndefined(contentId)) {
+            console.log("ContentId is not defined in URL.");
+            return;
+        }
+        var endPageStateUrl = '#/content/end/' + contentId;
+        this.showPage(endPageStateUrl);
+    },
+    showPage: function(pageUrl) {
+        if ("undefined" != typeof cordova) {
+            var url = "file:///android_asset/www/index.html" + pageUrl;
+            window.location.href = url;
+        } else if (self != top) {
+            // if the it is Iframe then fallow the below url syntax
+            /*https://dev.ekstep.in/assets/public/preview/dev/preview.html?webview=true#/content/end/do_10097197"*/
+            var iframe_url = window.frameElement.src;
+            iframe_url = iframe_url.indexOf("&") != -1 ? iframe_url.substring(0, iframe_url.indexOf("&")) : iframe_url;
+            window.location = iframe_url + pageUrl;
+        } else {
+            window.location = "/" + pageUrl;
+        }
     }
 };
 
@@ -274,6 +298,30 @@ genieservice_html = {
                 reject("wordList data is not present in localData.")
             }
         });
+    },
+    endContent: function() {
+        // On close of the content call this function
+        var contentId = localStorage.getItem('cotentId');
+        if(_.isUndefined(contentId)) {
+            console.log("ContentId is not defined in URL.");
+            return;
+        }
+        var endPageStateUrl = '#/content/end/' + contentId;
+        this.showPage(endPageStateUrl);
+    }, 
+    showPage: function(pageUrl) {
+        if ("undefined" != typeof cordova) {
+            var url = "file:///android_asset/www/index.html" + pageUrl;
+            window.location.href = url;
+        } else if (self != top) {
+            // if the it is Iframe then fallow the below url syntax
+            /*https://dev.ekstep.in/assets/public/preview/dev/preview.html?webview=true#/content/end/do_10097197"*/
+            var iframe_url = window.frameElement.src;
+            iframe_url = iframe_url.indexOf("&") != -1 ? iframe_url.substring(0, iframe_url.indexOf("&")) : iframe_url;
+            window.location = iframe_url + pageUrl;
+        } else {
+            window.location = "/" + pageUrl;
+        }
     }
 };
 if ("undefined" == typeof cordova) {

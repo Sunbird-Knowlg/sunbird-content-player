@@ -1,0 +1,414 @@
+<theme startStage="splash" id="theme" ver="0.2">
+	<manifest>
+		<media id="previous" src="icon_previous.png" type="image" />
+		<media id="next" src="icon_next.png" type="image" />
+		<media id="retryBg" src="retryBg.png" type="image" />
+		<media id="goodjobBg" src="goodjobBg.png" type="image" />
+		<media id="validate" src="submit.png" type="image" />
+		<media id="keyboard" src="js/CustomKeyboard.js" type="plugin"/>
+		<media id="keyboard_css" src="css/keyboard.css" type="css"/>
+		<media id="jug_image" src="images/jug.png" type="image"/>
+		<media id="umbrella_image" src="images/umbrella.png" type="image"/>
+		<media id="chhata_audio" src="audios/object_audio/chhata.mp3" type="audio"/>
+		<media id="jag_audio" src="audios/object_audio/jag.mp3" type="audio"/>
+		<media id="barber_img" src="images/barber.png" type="image" />
+		<media id="wife_img" src="images/wife.png" type="image" />
+		<media id="carpenter_img" src="images/carpenter.png" type="image" />
+		<media id="tailor_img" src="images/tailor.png" type="image" />
+		<media id="razor" src="images/razor.png" type="image" />
+        <media id="scissors" src="images/scissors.gif" type="image" />
+        <media id="saw" src="images/saw.png" type="image" />
+        <media id="knife" src="images/knife.gif" type="image" />
+	</manifest>
+	<controller name="assessment" type="items" id="assessment"/>
+	<controller name="assessment1" type="items" id="assessment_1"/>
+	<controller name="assessment2" type="items" id="assessment_2"/>
+	<controller name="assessment3" type="items" id="assessment_3"/>
+	<controller name="assessment4" type="items" id="assessment_4"/>
+	<controller name="assessment5" type="items" id="assessment_5"/>
+	<controller name="assessment6" type="items" id="assessment_6"/>
+	<controller name="assessment7" type="items" id="assessment_7"/>
+	<controller name="assessment_mtf" type="items" id="assessment_mtf"/>
+
+	<template id="ftb_template_default">
+		<text font="Georgia" fontsize="40" model="item.title" marginY="10" padX="30" padY="10" w="70" h="12" x="15" y="5" lineHeight="1.2" align="left" />
+		<text font="Georgia" fontsize="60" model="item.question" marginY="10" padX="30" padY="10" w="70" h="12" x="15" y="12" lineHeight="1.2" />
+			<input type="text" class="inputText" x="15" y="30" w="30" h="10" id="text1" model="item.ans1"/>
+	</template>
+
+	<template id="org.ekstep.mcq.t.ta">
+		<text color="black" w="100" h="20" x="0" y="5" fontsize="2.5vw" model="item.title" lineHeight="1.4" valign="top" align="center" font="Verdana">
+			<event type="click"></event>
+		</text>
+		<text color="black" w="100" h="20" x="0" y="26" fontsize="3vw" model="item.question" lineHeight="1.4" valign="top" align="center" font="Verdana"></text>
+		<mcq multi_select="false" shadow="#56B1F7" model="item">
+			<options layout="table" highlight="yellow" w="97" h="50" x="1.5" options="options" y="50" cols="4" marginX="5" marginY="5">
+				<shape w="100" h="100" x="0" y="0" fill="#ccc" type="roundrect"></shape>
+				<text w="100" h="100" x="0" y="0" fontsize="2.5vw" model="option.value.text" lineHeight="1.4" valign="middle" align="center" font="Verdana"></text>
+			</options>
+		</mcq>
+	</template>
+	<template id="org.ekstep.ftb.barakhadi">
+		<text model="item.title" x="10" y="6" w="80" font="Verdana" fontsize="70" color="black" align="center" z-index="101"/>
+		<keyboard id="bKeyboard" target="newText" limit="10" type="custom" keys="item.keys" x="5" y="15"/>
+		<text x="53" y="68" w="35" h="15" color="black" font="Verdana" fontsize="100" id="newText" z-index="100" align="center" valign="middle" model="item.ans1"/>
+		<shape x="53" y="67" w="35" h="15" z-index="99" stroke-width="5" stroke="black" hitArea="true">
+			<event type="click">
+				<action type="command" command="custom" asset="bKeyboard" invoke="switchTarget" id="newText"/>
+			</event>
+		</shape>
+		<shape x="10" y="58" w="20" h="40" z-index="99" stroke-width="5" hitArea="true">
+			<event type="click">
+				<action type="command" command="stop" asset="mkh_audio"/>
+				<action type="command" command="play" asset_model="item.question_audio"/>
+			</event>
+		</shape>
+		<g x="10" y="58" w="20" h="40">
+			<image model="item.question_image" x="0" y="0" w="100" h="75" z-index="102"/>
+			<text x="0" y="75" w="100" h="25" color="black" font="Verdana" fontsize="300" model="item.question" z-index="103" align="center" valign="middle"/>
+		</g>
+	</template>
+	<template id="mtf_template">
+        <text model="item.title" x="9" y="7" w="86" h="4" font="Georgia" fontsize="42"/>
+        <mtf model="item">
+            <options layout="table" x="15" y="15" w="75" h="85" cols="2" marginX="15" marginY="5" snapX="45" snapY="35" options="lhs_options"/>
+            <option x="45" y="20" w="15" h="20" padX="20" padY="10" option="rhs_options[0]"/>
+            <option x="45" y="37" w="15" h="20" padX="20" padY="10" option="rhs_options[1]"/>
+            <option x="45" y="59" w="15" h="20" padX="20" padY="10" option="rhs_options[2]"/>
+            <option x="45" y="80" w="15" h="20" padX="20" padY="10" option="rhs_options[3]"/>
+        </mtf>
+    </template>
+	<stage id="preloadStage" preload="true">
+		<image asset="next"/>
+	    <image asset="previous"/>
+	    <image asset="retryBg"/>
+	    <image asset="goodjobBg"/>
+	    <image asset="validate"/>
+			<image asset="barber_img"/>
+			<image asset="wife_img"/>
+			<image asset="carpenter_img"/>
+			<image asset="tailor_img"/>
+			<image asset="razor"/>
+			<image asset="scissors"/>
+			<image asset="saw"/>
+			<image asset="knife"/>
+	</stage>
+	<stage id="baseStage">
+		<image asset="next" x="93" y="3" w="5" h="8" id="next" visible="false" z-index="2000"/>
+		<shape id="nextContainer" type="rect" x="90" y="1" w="10" h="15" visible="false" hitArea="true"  z-index="2001">
+			<event type="click">
+				<!-- <action type="command" command="custom" asset="theme" invoke="defaultAction" event="actionNavigateNext"/> -->
+				<action type="command" command="defaultNext" asset="theme"/>
+				<!-- <action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" /> -->
+			</event>
+		</shape>
+		<image asset="previous" x="2" y="3" w="5" h="8" id="previous" visible="false"  z-index="200"/>
+		<shape id="previousContainer" type="rect" x="1" y="1" w="10" h="15" visible="false" hitArea="true"  z-index="2001">
+			<event type="click">
+				<action type="command" command="transitionTo" asset="theme" param="previous" effect="scroll" direction="right" ease="linear" duration="500" />
+				<!-- <action type="command" command="custom" asset="theme" invoke="defaultAction" event="actionNavigatePrevious"/> -->
+			</event>
+		</shape>
+		<g x="35" y="-40" w="40" h="50" id="goodjobDialog" visible="false">
+			<image asset="goodjobBg" x="0" y="0" w="100" h="100" visible="true"/>
+			<shape x="52" y="35" w="25" h="30" visible="true" stoke="red" hitArea="true">
+				<event type="click">
+					<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+				</event>
+			</shape>
+		</g>
+		<g x="30" y="-40" w="40" h="50" id="retryDialog" visible="false">
+			<image asset="retryBg" x="0" y="0" w="100" h="100" visible="true"/>
+			<shape  x="45" y="18" w="35" h="39" visible="true" stoke="red" hitArea="true">
+				<event type="click">
+					<action type="command" command="hide" asset="retryDialog"/>
+				</event>
+			</shape>
+			<shape  x="70" y="65" w="20" h="24" visible="true" stoke="red" hitArea="true">
+				<event type="click">
+					<action type="command" command="transitionTo" asset="theme" param="next" effect="scroll" direction="left" ease="linear" duration="500" />
+				</event>
+			</shape>
+		</g>
+		<appEvents list="correct_answer, wrong_answer"/>
+		<events>
+			<event type="wrong_answer">
+				<action type="command" command="show" asset="retryDialog" />
+				<action type="animation" asset="retryDialog">
+					<tween id="retryShowAnim">
+						<to ease="bounceOut" duration="1500"><![CDATA[{"x":30,"y":30,"w":40,"h":30}]]></to>
+					</tween>
+				</action>
+			</event>
+			<event type="correct_answer">
+				<action type="command" command="show" asset="goodjobDialog" />
+				<action type="animation" asset="goodjobDialog">
+					<tween id="gjShowAnim">
+						<to ease="bounceOut" duration="1500"><![CDATA[{"x":35,"y":30,"w":40,"h":30}]]></to>
+					</tween>
+				</action>
+			</event>
+		</events>
+	</stage>
+	<stage id="splash" x="0" y="0" w="100" h="100" extends="baseStage">
+		<set param="overlay" value="off" scope="content"/>
+		<param name="next" value="scene1" />
+		<param name="instructions" value="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
+		<text x="0" y="5" w="100" h="5" fontsize="3vw" align="center">Overlay: Hide</text>
+		<text x="0" y="13" w="100" h="5" fontsize="2vw" align="center">No params defined of theme/stage</text>
+		<text x="10" y="95" w="10" h="5" fontsize="28">Splash</text>
+	</stage>
+	<stage id="scene1" x="0" y="0" w="100" h="100" extends="baseStage">
+		<set param="overlay" value="on" scope="content"/>
+		<!-- <param name="instructions" value="Teacher Instructions"/> -->
+		<param name="next" value="scene2" />
+		<param name="previous" value="splash" />
+		<text x="0" y="5" w="100" h="5" fontsize="3vw" align="center">Overlay: Show</text>
+		<text x="0" y="13" w="100" h="5" fontsize="2vw" align="center">set param="overlay" value="off" scope="content"</text>
+		<text x="10" y="95" w="10" h="5" fontsize="28">Scene 1</text>
+	</stage>
+	<stage id="scene2" x="0" y="0" w="100" h="100" extends="baseStage">
+		<set param="overlayPrevious" value="off" scope="stage"/>
+		<param name="instructions" value="Teacher Instructions"/>
+		<param name="next" value="scene3" />
+		<param name="previous" value="scene1" />
+		<text x="0" y="5" w="100" h="5" fontsize="3vw" align="center">Overlay: Hide(prev - scope)</text>
+		<text x="0" y="13" w="100" h="5" fontsize="2vw" align="center">param="overlayPrevious" value="off" scope="stage"</text>
+		<text x="10" y="95" w="10" h="5" fontsize="28">Scene 2</text>
+	</stage>
+	<stage id="scene3" iterate="assessment1" var="item" x="0" y="0" w="100" h="100" extends="baseStage">
+		<set param="overlayNext" value="on" scope="content"/>
+		<set param="overlayPrevious" value="on" scope="content"/>
+		<set param="overlaySubmit" value="on" scope="stage"/>
+		<set param="overlayGoodJob" value="on" scope="stage"/>
+		<set param="overlayTryAgain" value="on" scope="stage"/>
+		<set param="scr" scope="stage" ev-model="item"/>
+		<param name="instructions" value="Teacher Instructions"/>
+		<param name="next" value="scene4" />
+		<param name="previous" value="scene2" />
+		<shape type="rect" x="0" y="" w="100" h="100" fill="#cccccc"></shape>
+		<text x="0" y="5" w="100" h="5" fontsize="3vw" align="center">Overlay: Show(submit - scope)</text>
+		<text x="0" y="13" w="100" h="5" fontsize="2vw" align="center">param="overlayNext" value="off" scope="stage"</text>
+		<text x="0" y="18" w="100" h="5" fontsize="2vw" align="center">param="overlayPrevious" value="on" scope="stage"</text>
+		<text x="0" y="23" w="100" h="5" fontsize="2vw" align="center">param="overlaySubmit" value="on" scope="stage"</text>
+		<text x="10" y="95" w="10" h="5" fontsize="28">Scene 3</text>
+		<embed template="item" var-item="item" x="10" y="23" w="80" h="75"/>
+		<image asset="validate" x="93" y="18" w="5" h="8"/>
+	    <shape id="submitShape" type="rect" x="90" y="18" w="10" h="15" hitArea="true">
+	        <event type="click">
+		        <action type="command" command="eval" asset="scene5" success="correct_answer" failure="wrong_answer"/>
+	        </event>
+	    </shape>
+	</stage>
+	<stage id="scene4" iterate="assessment2" var="item" x="0" y="0" w="100" h="100" extends="baseStage">
+		<set param="overlayNext" value="off" scope="stage"/>
+		<set param="overlayPrevious" value="off" scope="stage"/>
+		<set param="overlaySubmit" value="off" scope="stage"/>
+
+
+		<!-- <set param="overlayGoodJob" value="on" scope="stage"/> -->
+		<!-- <set param="overlayTryAgain" value="off" scope="stage"/> -->
+
+		<param name="instructions" value="Teacher Instructions"/>
+		<param name="next" value="scene5" />
+		<param name="previous" value="scene3" />
+		<shape type="rect" x="0" y="" w="100" h="100" fill="#ffcccc"></shape>
+		<text x="0" y="5" w="100" h="5" fontsize="3vw" align="center">Overlay: Hide(submit and Navigations - scope)</text>
+		<text x="0" y="13" w="100" h="5" fontsize="2vw" align="center">param="overlayNext" value="off" scope="stage"</text>
+		<text x="0" y="18" w="100" h="5" fontsize="2vw" align="center">param="overlayPrevious" value="off" scope="stage"</text>
+		<text x="0" y="23" w="100" h="5" fontsize="2vw" align="center">param="overlaySubmit" value="off" scope="stage"</text>
+		<embed template="item" var-item="item" x="10" y="23" w="80" h="75"/>
+		<image asset="validate" x="93" y="18" w="5" h="8"/>
+	    <shape id="submitShape" type="rect" x="90" y="18" w="10" h="15" hitArea="true">
+	        <event type="click">
+	            <action type="command" command="eval" asset="scene4" success="correct_answer" failure="wrong_answer"/>
+	            <!-- <action type="command" command="custom" asset="scene4" invoke="defaultAction" event="actionDefaultSubmit" /> -->
+	        </event>
+	    </shape>
+		<text x="10" y="95" w="10" h="5" fontsize="28">Scene 4</text>
+	</stage>
+	<stage id="scene5" iterate="assessment3" var="item" x="0" y="0" w="100" h="100" extends="baseStage">
+		<set param="overlayNext" value="off" scope="stage"/>
+		<set param="overlayPrevious" value="off" scope="stage"/>
+		<set param="overlaySubmit" value="on" scope="stage"/>
+		<!-- <set param="overlayGoodJob" value="off" scope="stage"/>
+		<set param="overlayTryAgain" value="off" scope="stage"/> -->
+		<param name="instructions" value="Teacher Instructions"/>
+		<param name="next" value="scene6" />
+		<param name="previous" value="scene4" />
+		<shape type="rect" x="0" y="" w="100" h="100" fill="#ccffcc"></shape>
+		<text x="0" y="5" w="100" h="5" fontsize="3vw" align="center">Overlay: Hide(feedback and Navigations - scope), Show(submit - scope)</text>
+		<text x="0" y="13" w="100" h="5" fontsize="2vw" align="center">param="overlayNext" value="off" scope="stage"</text>
+		<text x="0" y="18" w="100" h="5" fontsize="2vw" align="center">param="overlaySubmit" value="on" scope="stage"</text>
+		<text x="0" y="23" w="100" h="5" fontsize="2vw" align="center">aram="overlayGoodJob" value="off" scope="stage"</text>
+		<embed template="item" var-item="item" x="10" y="23" w="80" h="75"/>
+		<image asset="validate" x="93" y="18" w="5" h="8"/>
+	    <shape id="submitShape" type="rect" x="90" y="18" w="10" h="15" hitArea="true">
+	        <event type="click">
+	            <action type="command" command="eval" asset="scene5" success="correct_answer" failure="wrong_answer"/>
+	        </event>
+	    </shape>
+    	<text x="10" y="95" w="10" h="5" fontsize="28">Scene 5</text>
+	</stage>
+	<stage id="scene6" iterate="assessment4" var="item" x="0" y="0" w="100" h="100" extends="baseStage">
+		<set param="overlayNext" value="off" scope="stage"/>
+		<set param="overlayPrevious" value="off" scope="stage"/>
+		<set param="overlaySubmit" value="off" scope="stage"/>
+		<set param="overlayGoodJob" value="on" scope="stage"/>
+		<param name="instructions" value="Teacher Instructions"/>
+		<param name="next" value="scene7" />
+		<param name="previous" value="scene5" />
+		<shape type="rect" x="0" y="" w="100" h="100" fill="#ccccff"></shape>
+		<text x="0" y="5" w="100" h="5" fontsize="3vw" align="center">Overlay: Hide(submit and Navigations - scope), Show(Feeback - scope)</text>
+		<text x="0" y="13" w="100" h="5" fontsize="2vw" align="center">param="overlayNext" value="off" scope="stage"</text>
+		<text x="0" y="18" w="100" h="5" fontsize="2vw" align="center">param="overlaySubmit" value="off" scope="stage"</text>
+		<text x="0" y="23" w="100" h="5" fontsize="2vw" align="center">param="overlayGoodJob" value="on" scope="stage"</text>
+		<embed template="item" var-item="item" x="10" y="23" w="80" h="75"/>
+		<image asset="validate" x="93" y="18" w="5" h="8"/>
+	    <shape id="submitShape" type="rect" x="90" y="18" w="10" h="15" hitArea="true">
+	        <event type="click">
+	            <action type="command" command="eval" asset="scene6" success="correct_answer" failure="wrong_answer"/>
+	        </event>
+	    </shape>
+    	<text x="10" y="95" w="10" h="5" fontsize="28">Scene 6</text>
+	</stage>
+	<stage id="scene7" iterate="assessment5" var="item" x="0" y="0" w="100" h="100" extends="baseStage">
+		<set param="overlayNext" value="on" scope="content"/>
+		<set param="overlayPrevious" value="on" scope="content"/>
+		<set param="overlaySubmit" value="on" scope="stage"/>
+		<set param="overlayGoodJob" value="on" scope="stage"/>
+		<param name="instructions" value="Teacher Instructions"/>
+		<param name="next" value="scene8" />
+		<param name="previous" value="scene6" />
+		<shape type="rect" x="0" y="" w="100" h="100" fill="#ccccff" visible="param.showSubmit"></shape>
+		<text x="0" y="5" w="100" h="5" fontsize="3vw" align="center">Overlay: show(Navigations - content)(submit, feedback - scope)</text>
+		<text x="0" y="13" w="100" h="5" fontsize="2vw" align="center">param="overlayNext" value="on" scope="content"</text>
+		<text x="0" y="18" w="100" h="5" fontsize="2vw" align="center">param="overlayPrevious" value="on" scope="content"</text>
+		<text x="0" y="23" w="100" h="5" fontsize="2vw" align="center">param="overlaySubmit" value="on" scope="stage"</text>
+		<embed template="item" var-item="item" x="10" y="23" w="80" h="75"/>
+		<image asset="validate" x="93" y="18" w="5" h="8"/>
+	    <shape id="submitShape" type="rect" x="90" y="18" w="10" h="15" hitArea="true">
+	        <event type="click">
+	            <action type="command" command="eval" asset="scene7" success="correct_answer" failure="wrong_answer"/>
+	        </event>
+	    </shape>
+    	<text x="10" y="95" w="10" h="5" fontsize="28">Scene 7</text>
+	</stage>
+ 	<stage id="scene8" x="0" y="0" w="100" h="100" extends="baseStage">
+		<param name="next" value="scene9" />
+		<param name="previous" value="scene7" />
+		<param name="instructions" value="Teacher Instructions"/>
+		<text x="0" y="5" w="100" h="5" fontsize="3vw" align="center">Overlay: no config, Show(Navigations - content)</text>
+		<text x="10" y="95" w="10" h="5" fontsize="28">Scene 8</text>
+	</stage>
+	<stage id="scene9" iterate="assessment" var="item" x="0" y="0" w="100" h="100" extends="baseStage">
+		<set param="overlayNext" value="off" scope="content"/>
+		<set param="overlayPrevious" value="off" scope="content"/>
+		<set param="overlaySubmit" value="off" scope="stage"/>
+		<set param="overlayGoodJob" value="on" scope="stage"/>
+		<set param="overlayTryAgain" value="on" scope="stage"/>
+		<param name="instructions" value="Teacher Instructions"/>
+		<param name="next" value="scene10" />
+		<param name="previous" value="scene8" />
+		<shape type="rect" x="0" y="" w="100" h="100" fill="#ccccff" visible="param.showSubmit" stroke="red"></shape>
+		<text x="0" y="5" w="100" h="5" fontsize="3vw" align="center">Overlay: show(Navigations - content)(submit, feedback - scope)</text>
+		<text x="0" y="13" w="100" h="5" fontsize="2vw" align="center">param="overlayNext" value="on" scope="content"</text>
+		<text x="0" y="18" w="100" h="5" fontsize="2vw" align="center">param="overlayPrevious" value="on" scope="content"</text>
+		<text x="0" y="23" w="100" h="5" fontsize="2vw" align="center">param="overlaySubmit" value="on" scope="stage"</text>
+		<embed template="item" var-item="item" x="10" y="23" w="80" h="75"/>
+		<image asset="validate" x="93" y="18" w="5" h="8"/>
+		    <shape id="submitShape" type="rect" x="90" y="18" w="10" h="15" hitArea="true">
+		        <event type="click">
+			        <!--<action type="command" command="custom" asset="scene9" invoke="defaultAction" event="actionDefaultSubmit"/> -->
+							  <action type="command" command="eval" asset="scene9" success="correct_answer" failure="wrong_answer"/>
+		        </event>
+		    </shape>
+    	<text x="10" y="95" w="10" h="5" fontsize="28">Scene 9</text>
+	</stage>
+	<stage id="scene10" x="0" y="0" w="100" h="100" extends="baseStage">
+		<param name="next" value="scene11"/>
+		<param name="previous" value="scene9" />
+		<param name="instructions" value="Teacher Instructions"/>
+		<text x="0" y="5" w="100" h="5" fontsize="3vw" align="center">Overlay: no config, Show(Navigations - content)</text>
+		<text x="10" y="95" w="10" h="5" fontsize="28">Scene 10</text>
+	</stage>
+	<stage id="scene11" x="0" y="0" w="100" h="100" iterate="assessment_mtf" var="item" extends="baseStage">
+			<set param="overlayNext" value="off" scope="stage"/>
+			<set param="overlayPrevious" value="off" scope="stage"/>
+			<set param="overlaySubmit" value="off" scope="stage"/>
+			<set param="overlayGoodJob" value="off" scope="stage"/>
+			<set param="overlayTryAgain" value="off" scope="stage"/>
+			<param name="instructions" value="Teacher Instructions"/>
+			<param name="next" value="scene12" />
+			<param name="previous" value="scene10" />
+
+					<shape x="2" y="2" w="96" h="10.5" type="rect" fill="#FFF16E" />
+					<shape x="2" y="12" w="96" h="89.5" type="rect" fill="#FFF16E" />
+
+					<embed template="item" var-item="item"  x="10" y="10" w="80" h="80"/>
+					<image asset="validate" x="93" y="18" w="5" h="8"/>
+					<shape id="submitShape" type="rect" x="90" y="18" w="10" h="15" hitArea="true">
+						<event type="click">
+							<action type="command" command="custom" asset="scene9" invoke="defaultAction" 		event="actionDefaultSubmit"/>
+						</event>
+					</shape>
+					<text x="10" y="95" w="10" h="5" fontsize="28">Scene 11</text>
+    </stage>
+		<stage id="scene12" x="0" y="0" w="100" h="100" iterate="assessment6" var="item" extends="baseStage">
+			<set param="overlayNext" value="off" scope="stage"/>
+			<set param="overlayPrevious" value="off" scope="stage"/>
+			<set param="overlaySubmit" value="off" scope="stage"/>
+			<set param="overlayGoodJob" value="off" scope="stage"/>
+			<set param="overlayTryAgain" value="off" scope="stage"/>
+			<set param="scr" scope="stage" ev-model="item"/>
+			<param name="instructions" value="Teacher Instructions"/>
+			<param name="previous" value="scene11"/>
+			<param name="next" value="scene13"/>
+			<shape fill="#d1fff4" type="rect" x="0" y="0" w="100" h="100" z-index="-5"/>
+			<embed template="item" var-item="item"/>
+			<image asset="validate" x="93" y="18" w="5" h="8"/>
+			    <shape id="submitShape" type="rect" x="90" y="18" w="10" h="15" hitArea="true">
+			        <event type="click">
+								<action type="command" command="custom" asset="scene12" invoke="defaultAction" event="actionDefaultSubmit"/>
+			        </event>
+			    </shape>
+			<events>
+				<event type="enter">
+					<action type="command" command="play" asset="mkh_audio"/>
+				</event>
+				<event type="exit">
+					<action type="command" command="stop" asset="mkh_audio"/>
+				</event>
+			</events>
+			<text x="10" y="95" w="10" h="5" fontsize="28">Scene 12</text>
+		</stage>
+
+		<stage id="scene13" x="0" y="0" w="100" h="100" iterate="assessment7" var="item" extends="baseStage">
+			<set param="overlayNext" value="off" scope="stage"/>
+			<set param="overlayPrevious" value="off" scope="stage"/>
+			<set param="overlaySubmit" value="off" scope="stage"/>
+			<set param="overlayGoodJob" value="off" scope="stage"/>
+			<set param="overlayTryAgain" value="off" scope="stage"/>
+			<set param="scr" scope="stage" ev-model="item"/>
+			<param name="instructions" value="Teacher Instructions"/>
+			<param name="previous" value="scene12"/>
+			<embed template="item" var-item="item"/>
+
+			<image asset="validate" x="93" y="18" w="5" h="8"/>
+			    <shape id="submitShape" type="rect" x="90" y="18" w="10" h="15" hitArea="true">
+			        <event type="click">
+								<action type="command" command="custom" asset="scene12" invoke="defaultAction" event="actionDefaultSubmit"/>
+			        </event>
+			    </shape>
+			<events>
+				<event type="enter">
+					<action type="command" command="play" asset="mkh_audio"/>
+				</event>
+				<event type="exit">
+					<action type="command" command="stop" asset="mkh_audio"/>
+				</event>
+			</events>
+			<text x="10" y="95" w="10" h="5" fontsize="28">Scene 13</text>
+
+		</stage>
+</theme>

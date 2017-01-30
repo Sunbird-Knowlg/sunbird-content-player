@@ -6,7 +6,8 @@ AppConfig = {
 	sandbox: "//sandbox-community.ekstep.in/api",
 	production: "//community.ekstep.in/api",
 	recorder: "AUDIO_RECORDER",
-	flavor: "production"
+	flavor: "production",
+	S3_content_host: "/assets/public/content/"
 }
 
 

@@ -734,7 +734,7 @@
     function loadContent() {
         var iframe = document.getElementById('contentIFrame');
         // iframe.contentWindow.location.reload();
-        iframe.src = "//ekstep-public.s3.amazonaws.com/preview/production/preview.html?webview=true";
+        iframe.src = "https://community.ekstep.in/assets/public/preview/production/preview.html?webview=true";
         document.getElementById("contentIFrame").addEventListener('load', function() {
            var meta = document.getElementById("metadata").value;
             if(meta.length)
@@ -745,17 +745,15 @@
             var config = document.getElementById("config").value;
             config = JSON.parse(!config.length ? "{}" : config);
             iframe.contentWindow.setContentData(meta, data, config);
-
         });
     }
-
-
     // Case 2: When passing contentId as url parameter  
     function loadContentWithId() {
         var iframe = document.getElementById('contentIFrame');
         // iframe.contentWindow.location.reload(); 
         var id = document.getElementById("identifier").value;
-        iframe.src = "//ekstep-public.s3.amazonaws.com/preview/production/preview.html?webview=true&id=" + id;
+        iframe.src = "https://community.ekstep.in/assets/public/preview/production/preview.html?webview=true&id=" + id;
+
     }
     </script>
    

@@ -1,0 +1,42 @@
+{
+    "identifier": "haircut_story_1",
+    "title": "Haircut Story Assessment",
+    "total_items": 5,
+    "shuffle": false,
+    "showImmediateFeedback": true,
+    "max_score": 4,
+    "subject": "LIT",
+    "item_sets": [{
+        "id": "set_1",
+        "count": 1
+    }],
+    "items": {
+        "set_1": [ {
+				"answer": {"ans1": {"value": "east","score": 1}},
+				"model": {},
+				"hint": "",
+				"template": "ftb_template_default",
+				"code": "en.qa.fib.1",
+				"lastUpdatedOn": "2016-03-28T16:02:26.138+0000",
+				"type": "ftb",
+				"feedback": "",
+				"createdOn": "2016-03-28T16:02:26.138+0000",
+				"title": "sun rising",
+				"qlevel": "EASY",
+				"name": "sun rising",
+				"domain": "literacy",
+				"owner": "210",
+				"used_for": "worksheet",
+				"max_score": 1,
+        "identifier": "ftb.q1",
+				"gradeLevel": [
+				"Grade 1"
+				],
+				"question": "Sun rises in the ___________",
+				"language": [
+				"English"
+				],
+				"identifier": "domain_14390"
+		    }]
+    }
+}

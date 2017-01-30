@@ -8,11 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title></title>
 
-    <link href="libs/ionic/css/ionic.css" rel="stylesheet">
-    <link href="css/app/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="libs/ionic/css/ionic.css?ver=BUILD_NUMBER">
+    <link rel="stylesheet" href="css/app/style.css?ver=BUILD_NUMBER">
 
-    <link rel="stylesheet" type="text/css" href="css/thirdparty/bookshelf_slider.css" />
-    <link rel="stylesheet" type="text/css" href="css/thirdparty/skin02.css" />
+    <link rel="stylesheet" type="text/css" href="css/thirdparty/bookshelf_slider.css?ver=BUILD_NUMBER" />
+    <link rel="stylesheet" type="text/css" href="css/thirdparty/skin02.css?ver=BUILD_NUMBER" />
     <!-- <link rel="stylesheet" type="text/css" href="css/thirdparty/hamburger.css" /> -->
 
     <style>
@@ -27,7 +27,8 @@
         }
         #loadingText{ 
           position: absolute;
-          top: 15%; 
+          top: 12%;
+          height: 29%; 
         }
         #progressBar {
           position: absolute;
@@ -58,7 +59,7 @@
         }
     </style>
   </head>
-  <body>
+  <body ng-controller="BaseCtrl">
     <ion-nav-view></ion-nav-view>
     <div id="loading" class="gc-loader-area">
         <img src="img/icons/background.png" class="gc-loader-img">
@@ -68,30 +69,31 @@
         </div>
         <p class="icon-font cover-page-title" id="loadingText"></p>
     </div> 
-    <script type="text/javascript" src="js/thirdparty/jquery.min.js"></script>
-    <script type="text/javascript" src="js/thirdparty/jquery.easing.1.3.js"></script>
-    <script type="text/javascript" src="js/thirdparty/jquery.bookshelfslider.min.js"></script>
-    <script type="text/javascript" src="js/thirdparty/exclude/xml2json.min.js"></script>
-    <script type="text/javascript" src="js/thirdparty/exclude/Class.js"></script>
-    <script type="text/javascript" src="js/thirdparty/async.min.js"></script>
+    <script type="text/javascript" src="js/thirdparty/jquery.min.js?ver=BUILD_NUMBER"></script>
+    <script type="text/javascript" src="js/thirdparty/jquery.easing.1.3.js?ver=BUILD_NUMBER"></script>
+    <script type="text/javascript" src="js/thirdparty/jquery.bookshelfslider.min.js?ver=BUILD_NUMBER"></script>
+    <script type="text/javascript" src="js/thirdparty/exclude/xml2json.min.js?ver=BUILD_NUMBER"></script>
+    <script type="text/javascript" src="js/thirdparty/exclude/Class.js?ver=BUILD_NUMBER"></script>
+    <script type="text/javascript" src="js/thirdparty/exclude/eventbus.min.js?ver=BUILD_NUMBER"></script>
+    <script type="text/javascript" src="js/thirdparty/async.min.js?ver=BUILD_NUMBER"></script>
     
     <!-- ionic/angularjs js -->
-    <script src="libs/ionic/js/ionic.bundle.min.js"></script>
+    <script src="libs/ionic/js/ionic.bundle.min.js?ver=BUILD_NUMBER"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+    <!-- <script src="cordova.js?ver=BUILD_NUMBER"></script> -->
 
     
-    <script src="libs/ngCordova/ng-cordova.min.js"></script>
-    <script src="libs/angular-resource/angular-resource.min.js"></script>
-    <script src="js/thirdparty/underscore.js"></script>
+    <script src="libs/ngCordova/ng-cordova.min.js?ver=BUILD_NUMBER"></script>
+    <script src="libs/angular-resource/angular-resource.min.js?ver=BUILD_NUMBER"></script>
+    <script src="js/thirdparty/underscore.js?ver=BUILD_NUMBER"></script>
 
     
     <!-- your app's js -->
-    <script src="js/AppConfig.js"></script>
-    <script src="js/script.min.js"></script>
-    <script src="js/renderer.min.js"></script>
+    <script src="js/AppConfig.js?ver=BUILD_NUMBER"></script>
+    <script src="js/script.min.js?ver=BUILD_NUMBER"></script>
+    <script src="js/renderer.min.js?ver=BUILD_NUMBER"></script>
     <!-- // <script src="/js/app/renderer.min.js"></script> -->
-    <script src="js/telemetry.min.js"></script>
+    <script src="js/telemetry.min.js?ver=BUILD_NUMBER"></script>
   </body>
 </html>
