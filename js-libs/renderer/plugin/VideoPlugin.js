@@ -19,9 +19,8 @@ var VideoPlugin = Plugin.extend({
     loadVideo: function() {
         var instance = this;
         var assetId = !_.isUndefined(this._data.asset) ? this._data.asset : console.warn("Video is not present.");
-        var lItem = this.loadVideoAsset(assetId,function() {
+        instance.loadVideoAsset(assetId,function() {
             instance.registerEvents();
-            instance._self = new createjs.Bitmap(lItem);
             //If autoplay set to true, then play video
             if (instance._data.autoplay == true) {
                 instance.play();
@@ -138,7 +137,7 @@ var VideoPlugin = Plugin.extend({
                 }
             });
         } else {
-            instance.createVideoElement(videoAsset);
+              instance.createVideoElement(videoAsset);
             if (cb) cb();
         }
     },
@@ -166,7 +165,9 @@ var VideoPlugin = Plugin.extend({
         div.insertBefore(videoEle, div.childNodes[0]);
         Renderer.update = true;
         _videoEle = videoEle;
-        return new createjs.Bitmap(videoEle);
+        var item = new createjs.Bitmap(videoEle);
+        this._self =  new createjs.Bitmap(item); 
+               
     }
  });
  PluginManager.registerPlugin('video', VideoPlugin);
