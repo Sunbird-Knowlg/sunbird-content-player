@@ -16,14 +16,17 @@ var VideoPlugin = Plugin.extend({
         this.loadVideo();
         _instance = this;
     },
-    loadVideo: function (){
-        var lItem =  this._createDOMElementVideo();
-        this.registerEvents();    
-        this._self = new createjs.Bitmap(lItem);
-        //If autoplay set to true, then play video
-        if(this._data.autoplay == true){ 
-            this.play();           
-        }        
+    loadVideo: function() {
+        var instance = this;
+        var assetId = !_.isUndefined(this._data.asset) ? this._data.asset : console.warn("Video is not present.");
+        var lItem = this.loadVideoAsset(assetId,function() {
+            instance.registerEvents();
+            instance._self = new createjs.Bitmap(lItem);
+            //If autoplay set to true, then play video
+            if (instance._data.autoplay == true) {
+                instance.play();
+            }
+        });
     },
     registerEvents : function(){
         // This function will only takecare of registering of the events relted to video
@@ -113,32 +116,58 @@ var VideoPlugin = Plugin.extend({
     getVideo: function(videoId){
         return document.getElementById(videoId);
     },
-    _createDOMElementVideo: function () {
+    loadVideoAsset: function(assetId, cb) {
         // This function will create the video Dom element and adding into theme object
-        var videoAsset;
-        videoAsset = !_.isUndefined(this._data.asset) ? this._theme.getAsset(this._data.asset) : console.warn("Video asset is not present");
-        if(_.isUndefined(videoAsset)) return false;
-        if (videoAsset instanceof HTMLElement == false) {
-            var src = videoAsset
-            videoAsset = document.createElement("video");
-            videoAsset.src = src;
-            console.info("Asset load failed Please refresh the stage");            
+        var videoAsset, instance = this;
+        videoAsset = instance._theme.getAsset(assetId);
+        if (_.isString(videoAsset)) {
+            // making a single call to load the asset 
+            AssetManager.strategy.loadAsset(instance._stage._data.id, assetId, videoAsset, function() {
+                videoAsset = instance._theme.getAsset(assetId);
+                if (_.isString(videoAsset)) {
+                    console.info("video asset is fails to load please refresh the stage ..", videoAsset);
+                    // if asset is failed  then insted of showing the blank screen on the stage
+                    //we are just showing  unloaded video element. 
+                    videoAsset = document.createElement("video");
+                    videoAsset.src = videoAsset;
+                    instance.createVideoElement(videoAsset);
+                    if (cb) cb();
+                } else {
+                    instance.createVideoElement(videoAsset);
+                    if (cb) cb();
+                }
+            });
+        } else {
+            instance.createVideoElement(videoAsset);
+            if (cb) cb();
         }
-        var jqVideoEle = jQuery(videoAsset).insertBefore("#gameArea");       
-        !_.isUndefined(this._data.type) ? jQuery(jqVideoEle).attr("type",this._data.type) : console.warn("Video type is not defined");
+    },
+    createVideoElement: function(videoAsset) {
+        var jqVideoEle = jQuery(videoAsset).insertBefore("#gameArea");
+        !_.isUndefined(this._data.type) ? jQuery(jqVideoEle).attr("type", this._data.type) : console.warn("Video type is not defined");
         var dims = this.relativeDims();
         jQuery(jqVideoEle).attr("id", this._data.asset)
-        .prop({autoplay: this._data.autoplay, controls: this._data.controls, width: dims.w, height: dims.h})
-        .css({position: 'absolute', left: dims.x + "px", top: dims.y + "px"});
+            .prop({
+                autoplay: this._data.autoplay,
+                controls: this._data.controls,
+                width: dims.w,
+                height: dims.h
+            })
+            .css({
+                position: 'absolute',
+                left: dims.x + "px",
+                top: dims.y + "px"
+            });
         //Pushing video element to the stage HTML elements list
         // So when stage is chagned, remove all HTML elements of previous stage
-        this._theme.htmlElements.push(jQuery(jqVideoEle).attr('id'));        
+        this._theme.htmlElements.push(jQuery(jqVideoEle).attr('id'));
         var videoEle = this.getVideo(this._data.asset);
         var div = document.getElementById('gameArea');
         div.insertBefore(videoEle, div.childNodes[0]);
-        _videoEle = videoEle;       
+        Renderer.update = true;
+        _videoEle = videoEle;
         return new createjs.Bitmap(videoEle);
-    },
+    }
  });
  PluginManager.registerPlugin('video', VideoPlugin);
        
