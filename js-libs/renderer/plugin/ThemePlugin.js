@@ -171,11 +171,11 @@ var ThemePlugin = Plugin.extend({
             instance.enableInputs();
             instance._isSceneChanging = false;
             instance.preloadStages();
-            Renderer.update = true;
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
             // remove above scene Enter method call and dispatch an scene Enter event.
             OverlayManager.init();
+            Renderer.update = true;
         });
         var nextIdx = this._currIndex++;
         if (this._currentScene) {
@@ -258,6 +258,7 @@ var ThemePlugin = Plugin.extend({
         AudioManager.stopAll();
        // RecorderManager._deleteRecordedaudio();
         TimerManager.stopAll(this._currentStage);
+        if (!action.transitionType) action.transitionType = action.param;
         if (action.transitionType === 'previous') {
             this._isSceneChanging = true;
             if (stage._stageController && stage._stageController.hasPrevious()) {
