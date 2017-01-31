@@ -43,7 +43,7 @@ OverlayManager = {
             var eventName = this._eventsArray[i];
             var val;
             if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene)) {
-                val = Renderer.theme._currentScene.getParam(eventName);
+                val = Renderer.theme.getParam(eventName);
             }
             if (!_.isUndefined(val)) {
                 this._contentConfig[eventName] = val;
