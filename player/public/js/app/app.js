@@ -1133,34 +1133,24 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.showRelatedContent = false;
             $scope.contentShowMore = false;
             $scope.showRelatedContentHeader = false;
+            collectionPath = $scope.relatedContentPath;
 
-            jQuery('#endPageLoader').show();
+            
             TelemetryService.interact("TOUCH", "gc_relatedcontent", "TOUCH", {
                 stageId: "endpage",
                 subtype: " "
             });
             TelemetryService.end();
-            if (_.isUndefined($rootScope.collection)) {
-                collectionPath = $scope.relatedContentPath;
-                ContentService.getContent(content.identifier)
-                    .then(function(content) {
-                        if (COLLECTION_MIMETYPE == content.mimeType) {
-                            $state.go('contentList', { "id": content.identifier });
-                        } else {
-                            $state.go('showContent', { "contentId": content.identifier });
-                        }
-                    })
-            } else {
-                collectionPath = $scope.relatedContentPath;
-                if (content.isAvailable) {
-                    if (COLLECTION_MIMETYPE == content.mimeType) {
-                        $state.go('contentList', { "id": content.identifier });
-                    } else {
-                        $state.go('showContent', { "contentId": content.identifier });
-                    }
+            jQuery('#endPageLoader').show();
+
+            if (content.isAvailable) {
+                if (COLLECTION_MIMETYPE == content.mimeType) {
+                    $state.go('contentList', { "id": content.identifier });
                 } else {
-                    window.open("ekstep://c/" + content.identifier, "_system");
+                    $state.go('showContent', { "contentId": content.identifier });
                 }
+            } else {
+                window.open("ekstep://c/" + content.identifier, "_system");
             }
         }
 
