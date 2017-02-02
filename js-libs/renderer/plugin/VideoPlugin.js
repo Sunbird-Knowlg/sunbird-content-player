@@ -1,4 +1,4 @@
-// Reference: 
+// Reference:
 // http://jsfiddle.net/CaoimhinMac/6BUgL/
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 // http://www.w3schools.com/tags/ref_av_dom.asp
@@ -9,46 +9,44 @@ var VideoPlugin = Plugin.extend({
     _instance: undefined,
     initPlugin: function(data) {
         this._data = data;
-        if(this._data){
-            if(_.isUndefined(data.autoplay)) this._data.autoplay = true;
-            if(_.isUndefined(data.controls)) this._data.controls = false;
+        if (this._data) {
+            if (_.isUndefined(data.autoplay)) this._data.autoplay = true;
+            if (_.isUndefined(data.controls)) this._data.controls = false;
         }
-
         this.loadVideo();
         _instance = this;
     },
-    loadVideo: function (){
-        var lItem =  this._createDOMElementVideo();    
+    loadVideo: function() {
+        var lItem = this._createDOMElementVideo();
         this._self = new createjs.Bitmap(lItem);
 
         //If autoplay set to true, then play video
-        if(this._data.autoplay == true){          
-            this.play();           
-        }        
-    }, 
-    deplayStart: function(video){
+        if (this._data.autoplay == true) {
+            this.play();
+        }
+    },
+    deplayStart: function(video) {
         setTimeout(function() {
             video.style.display = "block";
-            video.play();    
+            video.play();
         }, this._data.delay);
     },
-    play: function(action){
-        if(action){
+    play: function(action) {
+        if (action) {
             _videoEle = this.getVideo(action.asset);
         }
 
         //this._self.paused = false;
-        if(this._data.delay){
+        if (this._data.delay) {
             this.deplayStart(_videoEle);
-        }else{
+        } else {
             _videoEle.style.display = "block";
-            _videoEle.play(); 
-            this.sendTelemeteryData(action, "PLAY");           
+            _videoEle.play();
+            this.sendTelemeteryData(action, "PLAY");
         }
-        
     },
     pause: function(action) {
-        if(action){
+        if (action) {
             _videoEle = this.getVideo(action.asset);
         }
         //this._self.paused = true;
@@ -56,55 +54,66 @@ var VideoPlugin = Plugin.extend({
         this.sendTelemeteryData(action, "PAUSE");
     },
     stop: function(action) {
-        if(action){
+        if (action) {
             _videoEle = this.getVideo(action.asset);
         }
         _videoEle.currentTime = 0;
         _videoEle.pause();
         this.sendTelemeteryData(action, "STOP");
-    },   
-    end: function(){
+    },
+    end: function() {
         this.stop();
         console.log("video end..");
     },
-    replay: function(){
+    replay: function() {
         _videoEle = this.getVideo(this._data.asset);
         _videoEle.currentTime = 0;
         this.play();
     },
-    sendTelemeteryData: function(action, subType){
-        if(action)
-            EventManager.processAppTelemetry(action, 'LISTEN', this._instance, {subtype : subType});
+    sendTelemeteryData: function(action, subType) {
+        if (action)
+            EventManager.processAppTelemetry(action, 'LISTEN', this._instance, {
+                subtype: subType
+            });
     },
-    getVideo: function(videoId){
+    getVideo: function(videoId) {
         return document.getElementById(videoId);
     },
-    _createDOMElementVideo: function () {
+    _createDOMElementVideo: function() {
 
         var videoAssest;
-        if(_.isUndefined(this._data.asset)){
+        if (_.isUndefined(this._data.asset)) {
             console.log("Video assest is not defined", this._data);
             return false;
         }
 
         videoAssest = this._theme.getAsset(this._data.asset);
 
-        if(_.isUndefined(videoAssest)){
+        if (_.isUndefined(videoAssest)) {
             console.log("Video assest is not loaded", this._data.asset);
             return false;
         }
 
         var jqVideoEle = jQuery(videoAssest).insertBefore("#gameArea");
-        if(!_.isUndefined(this._data.type)){
+        if (!_.isUndefined(this._data.type)) {
             jQuery(jqVideoEle).attr("type", this._data.type);
-        }else{
+        } else {
             console.error("Video format type is not defiend..")
         }
 
         var dims = this.relativeDims();
         jQuery(jqVideoEle).attr("id", this._data.asset)
-        .prop({autoplay: this._data.autoplay, controls: this._data.controls, width: dims.w, height: dims.h})
-        .css({position: 'absolute', left: dims.x + "px", top: dims.y + "px"});
+            .prop({
+                autoplay: this._data.autoplay,
+                controls: this._data.controls,
+                width: dims.w,
+                height: dims.h
+            })
+            .css({
+                position: 'absolute',
+                left: dims.x + "px",
+                top: dims.y + "px"
+            });
 
         //Pushing video element to the stage HTML elements list
         // So when stage is chagned, remove all HTML elements of previous stage
@@ -112,43 +121,42 @@ var VideoPlugin = Plugin.extend({
 
         var videoEle = document.getElementById(this._data.asset);
 
-        videoEle.addEventListener("error", function (evt) {
-        var lErrMesg = "Error loading video element, event.type [" + evt.type + "]  Media Details: [" + evt.target.src + "]";
+        videoEle.addEventListener("error", function(evt) {
+            var lErrMesg = "Error loading video element, event.type [" + evt.type + "]  Media Details: [" + evt.target.src + "]";
             console.log(lErrMesg);
 
         });
 
-        videoEle.addEventListener("abort", function (evt) {
+        videoEle.addEventListener("abort", function(evt) {
             var lErrMesg = "Abort/Error loading video element, event.type [" + evt.type + "] Media Details: [" + evt.target.src + "]";
             console.log(lErrMesg);
         });
 
-        videoEle.addEventListener("loadeddata", function (evt) {
+        videoEle.addEventListener("loadeddata", function(evt) {
             var lMesg = "Media element can be played, event.type [" + evt.type + "] Media Details: [" + evt.target.src + "]";
-            if(_instance.autoplay == true){
+            if (_instance.autoplay == true) {
                 _instance.play();
             }
-           
+
             console.log(lMesg);
         });
 
-        videoEle.addEventListener('ended', function (evt){
+        videoEle.addEventListener('ended', function(evt) {
             _instance.end();
         });
 
         var div = document.getElementById('gameArea');
         div.insertBefore(videoEle, div.childNodes[0]);
-        
-        if(videoEle.readyState >= 2){ 
-            if(this._data.autoplay == true)  {
+
+        if (videoEle.readyState >= 2) {
+            if (this._data.autoplay == true) {
                 this.replay();
             }
         }
 
         _videoEle = videoEle;
-       
+
         return new createjs.Bitmap(videoEle);
     } // end_function createDOMElementVideo
- });
- PluginManager.registerPlugin('video', VideoPlugin);
-       
+});
+PluginManager.registerPlugin('video', VideoPlugin);
