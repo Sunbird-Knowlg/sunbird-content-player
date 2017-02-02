@@ -258,6 +258,7 @@ var ThemePlugin = Plugin.extend({
         AudioManager.stopAll();
        // RecorderManager._deleteRecordedaudio();
         TimerManager.stopAll(this._currentStage);
+        if (!action.transitionType) action.transitionType = action.param;
         if (action.transitionType === 'previous') {
             this._isSceneChanging = true;
             if (stage._stageController && stage._stageController.hasPrevious()) {
