@@ -196,7 +196,7 @@ var ThemePlugin = Plugin.extend({
         this.htmlElements = [];
         this._animationEffect = effect;
         TimerManager.destroy();
-        this.invokeStage(stageId);
+        (stageId) ? this.invokeStage(stageId) : OverlayManager.moveToEndPage();
     },
     invokeStage: function(stageId) {
         var stage = _.clone(_.findWhere(this._data.stage, { id: stageId }));
