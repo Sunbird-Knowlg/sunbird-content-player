@@ -6,18 +6,23 @@ var VideoPlugin = Plugin.extend({
     _render: true,
     _data: undefined,
     _videoEle: undefined,
-    _instance: undefined,    
+    _instance: undefined, 
+    _type:'video',   
     initPlugin: function(data) {
         this._data = data;
         if(this._data){
             if(_.isUndefined(data.autoplay)) this._data.autoplay = true;
             if(_.isUndefined(data.controls)) this._data.controls = false;
+            if(_.isUndefined(data.muted)) this._data.muted = false;   
         }
         this.loadVideo();
         _instance = this;
+       
     },
     loadVideo: function (){
         var lItem =  this._createDOMElementVideo();
+        var videoEle = this.getVideo(this._data.asset);
+        videoEle.load();
         this.registerEvents();    
         this._self = new createjs.Bitmap(lItem);
         //If autoplay set to true, then play video
@@ -76,27 +81,23 @@ var VideoPlugin = Plugin.extend({
        !_.isUndefined(videoEle) ? videoEle.pause() : console.info("video pause failed");
     },
     stop: function(action) {
-        var _videoEle = this.handleAsset(action);
-        _videoEle.currentTime = 0;       
-        _videoEle.pause();        
+        var videoEle = this.handleAsset(action);
+        videoEle.currentTime = 0;       
+        videoEle.pause();        
     },   
     end: function(){
         this.stop();        
     },
     replay: function(){
-        _videoEle = this.getVideo(this._data.asset);
-        _videoEle.currentTime = 0;
-        this.play();
+       var videoEle = this.getVideo(this._data.asset);
+       videoEle.currentTime = 0;
+       this.play();
     },
     start: function(videoEle) {
-        videoEle.style.display = "block";
-        if (this._data.delay) {
-            setTimeout(function() {
+        var delay =  _.isUndefined(this._data.delay) ? 36 : this._data.delay;
+            setTimeout(function(){
                 videoEle.play();
-            },this._data.delay);
-        } else {
-            videoEle.play();
-        }
+            },delay);
     },
     handleAsset: function(action) {
         if(!_.isUndefined(action)){
@@ -128,8 +129,8 @@ var VideoPlugin = Plugin.extend({
         !_.isUndefined(this._data.type) ? jQuery(jqVideoEle).attr("type",this._data.type) : console.warn("Video type is not defined");
         var dims = this.relativeDims();
         jQuery(jqVideoEle).attr("id", this._data.asset)
-        .prop({autoplay: this._data.autoplay, controls: this._data.controls, width: dims.w, height: dims.h})
-        .css({position: 'absolute', left: dims.x + "px", top: dims.y + "px"});
+        .prop({autoplay: this._data.autoplay, muted:this._data.muted, controls: this._data.controls, width: dims.w, height: dims.h})
+        .css({position: 'absolute', left: dims.x + "px", top: dims.y + "px","display":'block'});
         //Pushing video element to the stage HTML elements list
         // So when stage is chagned, remove all HTML elements of previous stage
         this._theme.htmlElements.push(jQuery(jqVideoEle).attr('id'));        
