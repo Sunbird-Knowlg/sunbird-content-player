@@ -367,7 +367,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
 
             var identifier = (data && data.identifier) ? data.identifier : null;
-            var pkgVersion = (data.pkgVersion) ? data.pkgVersion.toString() : null;
+            var pkgVersion = !_.isUndefined(data.pkgVersion) ? data.pkgVersion.toString() : null;
             var version = (data && pkgVersion) ? pkgVersion : "1";
             startTelemetry(identifier, version);
             // Cover Page is loaded, log telmetry for coverpage
