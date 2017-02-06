@@ -980,9 +980,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         setTimeout(function() {
-            if (!_.isUndefined($rootScope.content)) {
+            $scope.init();
+            /*if (!_.isUndefined($rootScope.content)) {
                 $scope.init();
-            }
+            }*/
         }, 0);
 
         $rootScope.$on('loadEndPage', function() {
