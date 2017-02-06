@@ -286,16 +286,7 @@ var ThemePlugin = Plugin.extend({
         } else {
             this._isSceneChanging = true;
             if (stage._stageController && stage._stageController.hasNext()) {
-                if (action.transitionType !== 'next') {
-                  if (action.value === "") {
-                      OverlayManager.moveToEndPage();
-                  } else {
-                    this.replaceStage(action.value, action);
-                  }
-                } else {
-                    this.replaceStage(stage._data.id, action);
-                }
-
+                this.replaceStage(stage._data.id, action);
             } else {
                 if (stage._stageController && action.reset == true) {
                     stage._stageController.reset();
