@@ -134,7 +134,7 @@ var ThemePlugin = Plugin.extend({
     },
     reRender: function() {
         //Resetting controller index to show first assesment on replay
-        var controller = this._controllerMap[this._currentStage + '_assessment'];
+        var controller = this._controllerMap[this._data.startStage + '_assessment'];
         if (!_.isUndefined(controller)) {
             controller.reset();
         }
@@ -318,12 +318,18 @@ var ThemePlugin = Plugin.extend({
     disableInputs: function() {
         //This is to remove all div's added inside 'GameArea' div which are positioned at absolute position
         this.inputs.forEach(function(inputId) {
-            document.getElementById(inputId).style.display = 'none';
+            var element = document.getElementById(inputId);
+            if (!_.isNull) {
+                element.style.display = 'none';
+            }
         })
     },
     enableInputs: function() {
         this.inputs.forEach(function(inputId) {
-            document.getElementById(inputId).style.display = 'block';
+            var element = document.getElementById(inputId);
+            if (!_.isNull) {
+                element.style.display = 'block';
+            }
         })
     },
     getTransitionEffect: function(animation) {
