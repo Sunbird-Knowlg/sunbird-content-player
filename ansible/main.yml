@@ -3,11 +3,11 @@
 - hosts: localhost
   tasks: 
         - name: copy QA
-          shell: aws s3 cp qa/AppConfig.js s3://ekstep-public/preview/qa/js/
+          shell: aws s3 cp qa/AppConfig.js s3://ekstep-public-qa/preview/js/
           tags: 
                - qa
         - name: copy QA
-          shell: aws s3 cp qa/webview.html s3://ekstep-public/preview/qa/
+          shell: aws s3 cp qa/webview.html s3://ekstep-public-qa/preview/
           tags: 
                - qa
 
