@@ -13,6 +13,7 @@ OverlayManager = {
     _contentConfig: {},
     _stageConfig: {},
     init: function() {
+        this.clean();
         this._reloadInProgress = false;
         this._eventsArray = [this._constants.overlayNext,
             this._constants.overlayPrevious,
