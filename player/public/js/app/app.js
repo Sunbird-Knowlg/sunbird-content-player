@@ -825,10 +825,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showFeedback = function(param) {
             $scope.userRating = param;
             $scope.popUserRating = param;
-            TelemetryService.interact("TOUCH", "gc_feedback", "TOUCH", {
+            // Commented the feeback popup screen telemetry 
+            // it is generating telemety without any interact
+            /*TelemetryService.interact("TOUCH", "gc_feedback", "TOUCH", {
                 stageId: "ContnetApp-FeedbackScreen",
                 subtype: "ContentID"
-            });
+            });*/
             $scope.showFeedbackPopup = true;
             $scope.enableFeedbackSubmit();
         }
