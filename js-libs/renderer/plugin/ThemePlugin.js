@@ -133,6 +133,11 @@ var ThemePlugin = Plugin.extend({
         }
     },
     reRender: function() {
+        //Resetting controller index to show first assesment on replay
+        var controller = this._controllerMap[this._data.startStage + '_assessment'];
+        if (!_.isUndefined(controller)) {
+            controller.reset();
+        }
         this._contentParams = {};
         this._self.clear();
         this._self.removeAllChildren();
@@ -171,11 +176,11 @@ var ThemePlugin = Plugin.extend({
             instance.enableInputs();
             instance._isSceneChanging = false;
             instance.preloadStages();
-            Renderer.update = true;
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
             // remove above scene Enter method call and dispatch an scene Enter event.
             OverlayManager.init();
+            Renderer.update = true;
         });
         var nextIdx = this._currIndex++;
         if (this._currentScene) {
@@ -196,7 +201,7 @@ var ThemePlugin = Plugin.extend({
         this.htmlElements = [];
         this._animationEffect = effect;
         TimerManager.destroy();
-        this.invokeStage(stageId);
+        (stageId) ? this.invokeStage(stageId) : OverlayManager.moveToEndPage();
     },
     invokeStage: function(stageId) {
         var stage = _.clone(_.findWhere(this._data.stage, { id: stageId }));
@@ -258,6 +263,7 @@ var ThemePlugin = Plugin.extend({
         AudioManager.stopAll();
        // RecorderManager._deleteRecordedaudio();
         TimerManager.stopAll(this._currentStage);
+        if (!action.transitionType) action.transitionType = action.param;
         if (action.transitionType === 'previous') {
             this._isSceneChanging = true;
             if (stage._stageController && stage._stageController.hasPrevious()) {
@@ -312,12 +318,18 @@ var ThemePlugin = Plugin.extend({
     disableInputs: function() {
         //This is to remove all div's added inside 'GameArea' div which are positioned at absolute position
         this.inputs.forEach(function(inputId) {
-            document.getElementById(inputId).style.display = 'none';
+            var element = document.getElementById(inputId);
+            if (!_.isNull) {
+                element.style.display = 'none';
+            }
         })
     },
     enableInputs: function() {
         this.inputs.forEach(function(inputId) {
-            document.getElementById(inputId).style.display = 'block';
+            var element = document.getElementById(inputId);
+            if (!_.isNull) {
+                element.style.display = 'block';
+            }
         })
     },
     getTransitionEffect: function(animation) {

@@ -76,17 +76,18 @@ Renderer = {
             data = x2js.xml2json(data);
         }
         Renderer.gdata = data;
-        data.theme.canvasId = canvasId;
-        Renderer.theme = new ThemePlugin(data.theme);
+        var content = data.theme || data.ecml;
+        content.canvasId = canvasId;
+        Renderer.theme = new ThemePlugin(content);
         Renderer.resizeGame(true);
         Renderer.theme.baseDir = gameRelPath;
-        PluginManager.registerCustomPlugins(data.theme.manifest, gameRelPath.replace('file:///', '') + "/widgets/");
+        PluginManager.registerCustomPlugins(content.manifest, gameRelPath.replace('file:///', '') + "/widgets/");
         Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
         createjs.Ticker.addEventListener("tick", function() {
             if(Renderer.update) {
                 if(!_(Renderer.theme).isUndefined()){
-                Renderer.theme.update();
-                Renderer.update = false;
+                    Renderer.theme.update();
+                    Renderer.update = false;
                 }
             } else {
                 if (Renderer.theme) {

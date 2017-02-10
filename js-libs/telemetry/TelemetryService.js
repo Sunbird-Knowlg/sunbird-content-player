@@ -22,7 +22,7 @@ TelemetryService = {
     },
     init: function(gameData, user) {
         var localStorageInstance = TelemetryService.getLocalStorageInstance();
-        if (localStorageInstance) {
+        if (!_.isEmpty(localStorageInstance)) {
             TelemetryService.setTelemetryService(localStorageInstance, gameData);
         }
         return new Promise(function(resolve, reject) {
@@ -133,13 +133,10 @@ TelemetryService = {
         }
     },
     getLocalStorageInstance: function() {
-        var canvasLocalStorageData = localStorage.getItem("canvasLS");
-        var telemetryLocalStorageData;
-        if (!_.isNull(canvasLocalStorageData)) {
-            canvasLocalStorageData = JSON.parse(canvasLocalStorageData);
-            telemetryLocalStorageData = _.isUndefined(canvasLocalStorageData.telemetryService) ? undefined : JSON.parse(canvasLocalStorageData.telemetryService);
-            telemetryLocalStorageData._start = JSON.parse(telemetryLocalStorageData._start);
-            telemetryLocalStorageData._end = JSON.parse(telemetryLocalStorageData._end);
+        var telemetryLocalStorageData = localStorageGC.getItem("telemetryService");
+            if(!_.isEmpty(telemetryLocalStorageData)){
+                 telemetryLocalStorageData._start = JSON.parse(telemetryLocalStorageData._start);
+                 telemetryLocalStorageData._end = JSON.parse(telemetryLocalStorageData._end);
         }
         return telemetryLocalStorageData;
     },
