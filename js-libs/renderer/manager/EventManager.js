@@ -66,13 +66,17 @@ EventManager = {
 		}
 	},
 	handleActions: function(evt, plugin) {
+	// if the event type is click then only generate a OE_INTREACT event
+	// else just disable the telemetry Data for that
         if (evt.type !== 'click') {
-            if (_.isArray(evt.action)) {
+            if (!_.isUndefined(evt.action)) {
+                if (_.isArray(evt.action)) {
                     evt.action.forEach(function(element, index) {
                         element.disableTelemetry = true;
                     });
-            } else {
-                evt.action.disableTelemetry = true;
+                } else {
+                    evt.action.disableTelemetry = true;
+                }
             }
         }
 		EventManager._setPluginId(evt.action, plugin._id);
