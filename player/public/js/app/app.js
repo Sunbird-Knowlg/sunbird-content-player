@@ -1024,8 +1024,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // if $rootScope.content is not available get it from the base controller
                 $rootScope.getContentMetadata($stateParams.itemId);
             }
-
-            TelemetryService.interact("TOUCH", navType, null, {stageId : $rootScope.stageData.currentStage});
+            // Commented the Telemetry interact coz it was generating twice interact events on click of the next button
+            //TelemetryService.interact("TOUCH", navType, null, {stageId : $rootScope.stageData.currentStage});
             GlobalContext.currentContentId = $rootScope.content.identifier;
             GlobalContext.currentContentMimeType = $rootScope.content.mimeType;
             if (navType === "next") {
