@@ -37,7 +37,9 @@ var VideoPlugin = Plugin.extend({
         action.stageId = this._theme._currentStage;
         var videoEle = instance.getVideo(this._data.asset);
         jQuery(videoEle).bind('play', function (e) {
-             instance.sendTelemeteryData(action,"PLAY");
+        // Blocking OE_INTREACT Telemetry if the case of autoPlay prop is defined to Video Eleme
+            if(!instance._data.autoplay)instance.sendTelemeteryData(action,"PLAY");
+                instance._data.autoplay = undefined;
         });        
         jQuery(videoEle).bind('pause', function(e) {
              /*If user click on pause button
