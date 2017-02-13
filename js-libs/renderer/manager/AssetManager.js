@@ -1,8 +1,8 @@
 AssetManager = {
     strategy: undefined,
     stageAudios: {},
-    init: function(themeData, basePath) {
-        AssetManager.strategy = new LoadByStageStrategy(themeData, basePath);
+    init: function(themeData, basePath, cb) {
+        AssetManager.strategy = new LoadByStageStrategy(themeData, basePath, cb);
     },
     getAsset: function(stageId, assetId) {
         return AssetManager.strategy.getAsset(stageId, assetId);
@@ -17,8 +17,10 @@ AssetManager = {
         AssetManager.strategy.initStage(stageId, nextStageId, prevStageId, cb);
     },
     destroy: function() {
-        AssetManager.strategy.destroy();
-        AssetManager.strategy = undefined;
+        if (!_.isUndefined(AssetManager.strategy)) {
+            AssetManager.strategy.destroy();
+            AssetManager.strategy = undefined;
+        }
         AssetManager.stageAudios = {};
     },
     stopStageAudio: function(stageId) {
@@ -38,5 +40,13 @@ AssetManager = {
             AssetManager.strategy.loadAsset(stageId, assetId, path);
         else
             console.info("asset not loaded because AssetManager not initialised or failed to initialize.")
+    },
+    getManifest: function(content) {
+        if (AssetManager.strategy) {
+            var manifest = AssetManager.strategy.getManifest(content);
+            return manifest
+        } else {
+            console.info("asset not loaded because AssetManager not initialised or failed to initialize.")
+        }
     }
 }

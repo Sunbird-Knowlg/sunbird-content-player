@@ -75,9 +75,10 @@ var ThemePlugin = Plugin.extend({
                 this._data.startStage = firstStage.id
             }
         }
-        AssetManager.init(this._data, basePath);
-        AssetManager.initStage(this._data.startStage, null, null, function() {
-            instance.render();
+        AssetManager.init(this._data, basePath, function() {
+            AssetManager.initStage(instance._data.startStage, null, null, function() {
+                instance.render();
+            });
         });
     },
     render: function() {
@@ -170,11 +171,10 @@ var ThemePlugin = Plugin.extend({
         child.on('sceneenter', function() {
             instance.enableInputs();
             instance._isSceneChanging = false;
-            instance.preloadStages();
+            OverlayManager.init();
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
             // remove above scene Enter method call and dispatch an scene Enter event.
-            OverlayManager.init();
             Renderer.update = true;
         });
         var nextIdx = this._currIndex++;
@@ -187,6 +187,7 @@ var ThemePlugin = Plugin.extend({
             this._director.replace(child);
         }
         childPlugin.setIndex(nextIdx);
+        instance.preloadStages();
     },
     replaceStage: function(stageId, effect) {
         AudioManager.stopAll();
@@ -215,12 +216,16 @@ var ThemePlugin = Plugin.extend({
         }
     },
     preloadStages: function() {
+        AssetManager.strategy.showHideLoader('block');
         var stagesToLoad = this.getStagesToPreLoad(this._currentScene._data);
         var instance = this;
         // removed "enter" event dispatch function from addchild "sceneenter" event & adding as a callback here
         // (waiting for asset to load completely then "enter event is trigurred")
         AssetManager.initStage(stagesToLoad.stage, stagesToLoad.next, stagesToLoad.prev, function() {
-            instance._currentScene.dispatchEvent('enter');
+            // window.setTimeout(function() {
+                AssetManager.strategy.showHideLoader('none');
+                instance._currentScene.dispatchEvent('enter');
+            // }, 100)
         });
     },
     mergeStages: function(stage1, stage2) {

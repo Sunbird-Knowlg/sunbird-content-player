@@ -70,6 +70,7 @@ Renderer = {
         });
     },
     init: function(data, canvasId, gameRelPath) {
+        var manifest;
         tempData = data;
         if(!jQuery.isPlainObject(data)) {
             var x2js = new X2JS({attributePrefix: 'none'});
@@ -81,8 +82,9 @@ Renderer = {
         Renderer.theme = new ThemePlugin(content);
         Renderer.resizeGame(true);
         Renderer.theme.baseDir = gameRelPath;
-        PluginManager.registerCustomPlugins(content.manifest, gameRelPath.replace('file:///', '') + "/widgets/");
         Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
+        content.manifest ? manifest = content.manifest : manifest = AssetManager.getManifest(content);
+        PluginManager.registerCustomPlugins(manifest, gameRelPath.replace('file:///', '') + "/widgets/");
         createjs.Ticker.addEventListener("tick", function() {
             if(Renderer.update) {
                 if(!_(Renderer.theme).isUndefined()){
