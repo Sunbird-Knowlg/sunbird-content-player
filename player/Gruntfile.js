@@ -239,9 +239,7 @@ module.exports = function(grunt) {
         },
         aws_s3: {
             options: {
-                accessKeyId: process.env.AWSAccessKeyId, // Use the variables
-                secretAccessKey: process.env.AWSSecretKey, // You can also use env variables
-                region: 'ap-southeast-1',
+                region: 'ap-south-1',
                 uploadConcurrency: 5, // 5 simultaneous uploads
                 downloadConcurrency: 5, // 5 simultaneous downloads
                 progress: 'progressBar'
@@ -263,8 +261,7 @@ module.exports = function(grunt) {
             },
             uploadPreviewFilesToDev : {
                 options: {
-                    bucket: 'ekstep-public',
-                    access: 'public-read',
+                    bucket: 'ekstep-public-dev',
                     uploadConcurrency : 4,
                     progress: 'progressBar'
                 },
@@ -272,12 +269,12 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'www/preview',
                     src: ['**'],
-                    dest: '/preview/dev/'
+                    dest: '/preview/'
                 }]
             },
             uploadPreviewFilesToQA : {
                 options: {
-                    bucket: 'ekstep-public',
+                    bucket: 'ekstep-public-qa',
                     access: 'public-read',
                     uploadConcurrency : 4,
                     progress: 'progressBar'
@@ -286,12 +283,12 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'www/preview',
                     src: ['**'],
-                    dest: '/preview/qa/'
+                    dest: '/preview/'
                 }]
             },
             uploadPreviewFilesToProduction : {
                 options: {
-                    bucket: 'ekstep-public',
+                    bucket: 'ekstep-public-production',
                     access: 'public-read',
                     uploadConcurrency : 4,
                     progress: 'progressBar'
@@ -300,12 +297,12 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'www/preview',
                     src: ['**'],
-                    dest: '/preview/production'
+                    dest: '/preview/'
                 }]
             },
             cleanJS: {
                 options: {
-                    bucket: 'ekstep-public'
+                    bucket: 'ekstep-public-dev/preview'
                 },
                 files: [{
                     dest: 'js/renderer.min.js',
@@ -320,28 +317,28 @@ module.exports = function(grunt) {
             },
             cleanQAPreview: {
                 options: {
-                    bucket: 'ekstep-public'
+                    bucket: 'ekstep-public-qa'
                 },
                 files: [{
-                    dest: 'preview/qa',
+                    dest: 'preview/',
                     action: 'delete'
                 }]
             },
             cleanDevPreview: {
                 options: {
-                    bucket: 'ekstep-public'
+                    bucket: 'ekstep-public-dev'
                 },
                 files: [{
-                    dest: 'preview/dev',
+                    dest: 'preview/',
                     action: 'delete'
                 }]
             },
             cleanProductionPreview: {
                 options: {
-                    bucket: 'ekstep-public'
+                    bucket: 'ekstep-public-production'
                 },
                 files: [{
-                    dest: 'preview/production',
+                    dest: 'preview/',
                     action: 'delete'
                 }]
             }

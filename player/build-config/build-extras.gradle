@@ -1,7 +1,7 @@
 ext {
     apply from: 'CordovaLib/cordova.gradle'
     cdvMinSdkVersion = 16
-    cdvBuildMultipleApks=false 
+    cdvBuildMultipleApks = false
 }
 
 buildscript {
