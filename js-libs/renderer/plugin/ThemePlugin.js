@@ -225,7 +225,7 @@ var ThemePlugin = Plugin.extend({
             // window.setTimeout(function() {
                 AssetManager.strategy.showHideLoader('none');
                 instance._currentScene.dispatchEvent('enter');
-            // }, 100)
+            // }, 200)
         });
     },
     mergeStages: function(stage1, stage2) {

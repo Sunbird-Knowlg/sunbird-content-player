@@ -34,7 +34,7 @@ LoadByStageStrategy = Class.extend({
     },
     assignBasePath: function(manifest, basePath, stageId) {
         var instance = this;
-        if (!_.isUndefined(manifest && manifest.media)) {
+        if (!_.isUndefined(manifest) && !_.isUndefined(manifest.media)) {
             if (!_.isArray(manifest.media)) manifest.media = [manifest.media];
             manifest.media.forEach(function(media) {
                 if ((media) && (media.src)) {
@@ -70,7 +70,7 @@ LoadByStageStrategy = Class.extend({
             });
         } else {
             if (!_.isUndefined(stageId))
-                console.log("==== stage - " + stage.id + " manifest media not defined ====");
+                console.log("==== stage - " + stageId + " manifest media not defined ====");
             else
                 console.log("==== manifest media not defined ====");
         }
@@ -154,6 +154,7 @@ LoadByStageStrategy = Class.extend({
     //     }
     // },
     getAsset: function(stageId, assetId) {
+        var instance = this;
         var asset = undefined;
         if (this.loaders) asset = this.loaders.getResult(assetId, false);
         // if (!asset) asset = this.commonLoader.getResult(assetId);
@@ -161,14 +162,15 @@ LoadByStageStrategy = Class.extend({
         // if (!asset) asset = this.spriteSheetMap[assetId];
         if (!asset) {
             if (this.assetMap[assetId]) {
-                // this.loadAsset(stageId, assetId, this.assetMap[assetId].src)
-                // asset = this.loaders.getResult(assetId);
-                // if (!asset) {
-                    console.error('Asset not found. Returning - ' + (this.assetMap[assetId].src) + "----------" + stageId);
-                    return this.assetMap[assetId].src;
-                // } else {
-                    // return asset;
-                // }
+                // this.loadAsset(stageId, assetId, this.assetMap[assetId].src, function() {
+                    // asset = instance.loaders.getResult(assetId);
+                    if (!asset) {
+                        console.error('Asset not found. Returning - ' + (instance.assetMap[assetId].src) + "----------" + stageId);
+                        return instance.assetMap[assetId].src;
+                    // } else {
+                        // return asset;
+                    }
+                // })
             } else
                 console.error('"' + assetId + '" Asset not found. Please check index.ecml.');
         } else 
@@ -213,9 +215,12 @@ LoadByStageStrategy = Class.extend({
     loadStage: function(stageId, cb) {
         var instance = this;
         var manifest = instance.stageManifests[stageId];
-        if ((_.isUndefined(manifest.progress) && manifest.progress != "loaded") && _.isArray(manifest) && manifest.length > 0) {
+        if ((_.isUndefined(manifest.progress) || (manifest.progress != "loaded" && manifest.progress != "loading")) && _.isArray(manifest) && manifest.length > 0) {
             // var manifest = JSON.parse(JSON.stringify(instance.stageManifests[stageId]));
             instance.initializeLoader();
+            if (instance.loaders.loaded != true) {
+                instance.loaders.close();
+            }
             instance.loaders.loadManifest(manifest, true);
             instance.loaders.on("complete", function() {
                 instance.stageManifests[stageId].progress = "loaded"
@@ -273,8 +278,9 @@ LoadByStageStrategy = Class.extend({
             console.warn("Asset can't be loaded: AssetId - " + assetId +  ",  Path - " + path);
             return;
         }
-        var loader = this.loaders;
-        if (loader) {
+        var loader;
+        if (!_.isUndefined(this.loaders)) {
+            loader = this.loaders;
             // var itemLoaded = loader.getItem(assetId);
             /*if(itemLoaded){
                 loader.remove(assetId);
@@ -291,7 +297,7 @@ LoadByStageStrategy = Class.extend({
             });
         } else {
             //Image is not intianlised to load, So loading image & adding to the loaders
-            loader = this._createLoader();
+            loader = this.initializeLoader();
             var instance = this;
             loader.on("complete", function(event) {
                 if (_.isUndefined(instance.loaders)) {
@@ -328,7 +334,7 @@ LoadByStageStrategy = Class.extend({
         if (instance.loaders && (instance.stageManifests[stageId] && instance.stageManifests[stageId].progress)) {
             delete instance.stageManifests[stageId].progress;
             _.each(instance.stageManifests[stageId], function(media) {
-                instance.loaders.remove(media.assetId);
+                instance.loaders.remove(media.assetId || media.id);
             })
             // this.loaders[stageId].destroy();
             if (!_.isUndefined(AssetManager.stageAudios[stageId])) {
@@ -350,8 +356,6 @@ LoadByStageStrategy = Class.extend({
                 _.each(stage.manifest.media, function(media) {
                     manifest.media.push(media)
                 })
-            } else {
-                console.log("==== stage - " + stage.id + " manifest media not defined ====");
             }
         })
         return manifest;
