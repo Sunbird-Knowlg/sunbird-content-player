@@ -66,19 +66,6 @@ EventManager = {
 		}
 	},
 	handleActions: function(evt, plugin) {
-	// if the event type is click then only generate a OE_INTREACT event
-	// else just disable the telemetry Data for that
-        if (evt.type !== 'click') {
-            if (!_.isUndefined(evt.action)) {
-                if (_.isArray(evt.action)) {
-                    evt.action.forEach(function(element, index) {
-                        element.disableTelemetry = true;
-                    });
-                } else {
-                    evt.action.disableTelemetry = true;
-                }
-            }
-        }
 		EventManager._setPluginId(evt.action, plugin._id);
 		var unmuteActions = _.clone(evt.action);
 		evt.action = EventManager._chainActions(evt.action, unmuteActions);
@@ -87,11 +74,14 @@ EventManager = {
 			delete evt.action;
 			evt.action = data;
 			evt.action.forEach(function(a) {
+			// Disabling the OE_INTREACT Telemetry if event type is other than click
+                if (evt.type !== 'click') a.disableTelemetry = true;
 				var action = _.clone(a);
 				action.pluginId = plugin._id;
 				CommandManager.handle(action);
 			});
 		} else if(evt.action) {
+            if (evt.type !== 'click') evt.action.disableTelemetry = true;
 			var action = _.clone(evt.action)
 			action.pluginId = plugin._id;
 			CommandManager.handle(action);
