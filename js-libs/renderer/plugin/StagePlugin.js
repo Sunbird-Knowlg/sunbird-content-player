@@ -15,8 +15,17 @@ var StagePlugin = Plugin.extend({
     _currentState: {},
     isStageStateChanged: undefined,
     initPlugin: function(data) {
-        this._inputs = [];
+        this.cleanEventBus(data);
+        EventBus.addEventListener(data.id + '_assetsLoaded', this.showHideLoader, this);
+        var isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
+        if (!isStageLoaded) {
+            this.showHideLoader('block')
+        }
         var instance = this;
+        setTimeout(function() {
+            instance.showHideLoader('none')
+        },500)
+        this._inputs = [];
         this.params = {};
         this._self = new creatine.Scene();
         var dims = this.relativeDims();
@@ -326,6 +335,20 @@ var StagePlugin = Plugin.extend({
             }
         }
         return enableEval;
+    },
+    showHideLoader: function(val, cb) {
+        var elem = document.getElementById('loaderArea');
+        if (!_.isUndefined(elem)) {
+            elem.style.display = val.target || val;
+            if (Renderer.theme._currentScene && cb) {
+                cb();
+            }
+        }
+    },
+    cleanEventBus: function(stage) {
+        var stages = Renderer.theme.getStagesToPreLoad(stage);
+        EventBus.removeEventListener(stages.prev + '_assetsLoaded', this.showHideLoader, this);
+        EventBus.removeEventListener(stages.next + '_assetsLoaded', this.showHideLoader, this);
     }
 });
 PluginManager.registerPlugin('stage', StagePlugin);

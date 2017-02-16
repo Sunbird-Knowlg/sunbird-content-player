@@ -1,8 +1,8 @@
 AssetManager = {
     strategy: undefined,
     stageAudios: {},
-    init: function(themeData, basePath, cb) {
-        AssetManager.strategy = new LoadByStageStrategy(themeData, basePath, cb);
+    init: function(themeData, basePath) {
+        AssetManager.strategy = new LoadByStageStrategy(themeData, basePath);
     },
     getAsset: function(stageId, assetId) {
         return AssetManager.strategy.getAsset(stageId, assetId);
