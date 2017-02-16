@@ -202,8 +202,16 @@ function startTelemetry(id, ver) {
     localStorageGC.removeItem("telemetryService");
     //localStorageGC.removeItem("_start");
     //localStorageGC.removeItem("_end");
-    TelemetryService.init(GlobalContext.game, GlobalContext.user);
-    TelemetryService.start(id, ver);
+    // TelemetryService.init(GlobalContext.game, GlobalContext.user);
+
+    TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
+        TelemetryService.start(id, ver);
+    }).catch(function(error) {
+        console.log('TelemetryService init failed');
+        alert('TelemetryService init failed.');
+        exitApp();
+    });
+
     if (!_.isUndefined(TelemetryService.instance)) {
         var tsObj = _.clone(TelemetryService);
         //tsObj.telemetryService = _.clone(TelemetryService);
