@@ -66,22 +66,24 @@ EventManager = {
 		}
 	},
 	handleActions: function(evt, plugin) {
+		var disableTelemetry = false;
 		EventManager._setPluginId(evt.action, plugin._id);
 		var unmuteActions = _.clone(evt.action);
 		evt.action = EventManager._chainActions(evt.action, unmuteActions);
+        if (evt.type !== 'click') disableTelemetry = true;
 		if(_.isArray(evt.action)) {
 			var data = JSON.parse(JSON.stringify(evt.action));
 			delete evt.action;
 			evt.action = data;
 			evt.action.forEach(function(a) {
-			// Disabling the OE_INTREACT Telemetry if event type is other than click
-                if (evt.type !== 'click') a.disableTelemetry = true;
+			   // Disabling the OE_INTREACT Telemetry if event type is other than click
+                a.disableTelemetry = disableTelemetry;
 				var action = _.clone(a);
 				action.pluginId = plugin._id;
 				CommandManager.handle(action);
 			});
 		} else if(evt.action) {
-            if (evt.type !== 'click') evt.action.disableTelemetry = true;
+            evt.action.disableTelemetry = disableTelemetry;
 			var action = _.clone(evt.action)
 			action.pluginId = plugin._id;
 			CommandManager.handle(action);
