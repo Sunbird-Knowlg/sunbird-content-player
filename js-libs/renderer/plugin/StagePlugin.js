@@ -16,15 +16,15 @@ var StagePlugin = Plugin.extend({
     isStageStateChanged: undefined,
     initPlugin: function(data) {
         this.cleanEventBus(data);
-        EventBus.addEventListener(data.id + '_assetsLoaded', this.showHideLoader, this);
-        var isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
-        if (!isStageLoaded) {
-            this.showHideLoader('block')
-        }
         var instance = this;
-        setTimeout(function() {
-            instance.showHideLoader('none')
-        },500)
+        EventBus.addEventListener(data.id + '_assetsLoaded', function() {
+            this.showHideLoader('none');
+            Renderer.theme.invokeStage(Renderer.theme._currentStage || Renderer.theme._currentScene._id)
+        }, this);
+        var isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
+        // setTimeout(function() {
+        //     instance.showHideLoader('none')
+        // },500)
         this._inputs = [];
         this.params = {};
         this._self = new creatine.Scene();
@@ -80,7 +80,12 @@ var StagePlugin = Plugin.extend({
                 });
             }
         }
-        this.invokeChildren(data, this, this, this._theme);
+        if (!isStageLoaded) {
+            this.showHideLoader('block')
+            return
+        } else {
+            this.invokeChildren(data, this, this, this._theme);
+        }
     },
     keyboardShowHandler: function(e) {
         this._self.y = -(e.keyboardHeight);
@@ -336,13 +341,10 @@ var StagePlugin = Plugin.extend({
         }
         return enableEval;
     },
-    showHideLoader: function(val, cb) {
+    showHideLoader: function(val) {
         var elem = document.getElementById('loaderArea');
         if (!_.isUndefined(elem)) {
             elem.style.display = val.target || val;
-            if (Renderer.theme._currentScene && cb) {
-                cb();
-            }
         }
     },
     cleanEventBus: function(stage) {

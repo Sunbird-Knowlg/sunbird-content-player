@@ -184,6 +184,9 @@ LoadByStageStrategy = Class.extend({
         var instance = this;
         if (!instance.loaders[stageId]) {
             var manifest = JSON.parse(JSON.stringify(instance.stageManifests[stageId]));
+            manifest = _.uniq(manifest, function(media) {
+                return media.assetId || media.id;
+            })
             if (_.isArray(manifest) && manifest.length > 0) {
                 var loader = this._createLoader();
                 loader.setMaxConnections(instance.MAX_CONNECTIONS);
@@ -196,7 +199,7 @@ LoadByStageStrategy = Class.extend({
                 if (cb) {
                     instance.loaders[stageId].on("complete", function() {
                         var data = Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
-                        EventBus.dispatch(data + '_assetsLoaded', 'none');
+                        EventBus.dispatch(data + '_assetsLoaded');
                         if (_.isUndefined(instance.loaders[data])) {
                             console.log(instance.loaders);
                             console.log(data);
@@ -220,7 +223,7 @@ LoadByStageStrategy = Class.extend({
                 if(currentStageLoader.progress < 1) {
                     currentStageLoader.on("complete", function() {
                         var data = Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
-                        EventBus.dispatch(data + '_assetsLoaded', 'none', cb);
+                        EventBus.dispatch(data + '_assetsLoaded');
                         cb();
                     })
                 } else {
