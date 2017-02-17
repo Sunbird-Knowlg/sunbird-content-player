@@ -32,7 +32,7 @@
     function loadContent() {
         var iframe = document.getElementById('contentIFrame');
         // iframe.contentWindow.location.reload();
-        iframe.src = "//s3.ap-south-1.amazonaws.com/ekstep-public-dev/preview/preview.html?webview=true";
+        iframe.src = "//s3.ap-south-1.amazonaws.com/ekstep-public-qa/preview/preview.html?webview=true";
         document.getElementById("contentIFrame").addEventListener('load', function() {
             var meta = document.getElementById("metadata").value;
             if (meta.length)
@@ -51,9 +51,7 @@
     function loadContentWithId() {
         var iframe = document.getElementById('contentIFrame');
         var id = document.getElementById("identifier").value;
-        console.info("window.location:",window.location);
-        console.info("iframe src",iframe.src);
-        iframe.src = "//s3.ap-south-1.amazonaws.com/ekstep-public-dev/preview/preview.html?webview=true&id=" + id;
+        iframe.src = "//s3.ap-south-1.amazonaws.com/ekstep-public-qa/preview/preview.html?webview=true&id=" + id;
     }
     </script>
 </body>

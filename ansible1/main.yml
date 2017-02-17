@@ -12,12 +12,11 @@
                - qa
 
         - name: copy Prod
-          shell: aws s3 cp prod/AppConfig.js s3://ekstep-public-prod/preview/js/ --region ap-south-1
+          shell: aws s3 cp prod/AppConfig.js s3://ekstep-public-production/preview/js/ --region ap-south-1
           tags: 
                - prod
 
         - name: copy Prod
-          shell: aws s3 cp prod/webview.html s3://ekstep-public-prod/preview/ --region ap-south-1
+          shell: aws s3 cp prod/webview.html s3://ekstep-public-production/preview/ --region ap-south-1
           tags: 
                - prod
-

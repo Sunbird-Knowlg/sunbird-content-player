@@ -133,6 +133,11 @@ var ThemePlugin = Plugin.extend({
         }
     },
     reRender: function() {
+        //Resetting controller index to show first assesment on replay
+        var controller = this._controllerMap[this._data.startStage + '_assessment'];
+        if (!_.isUndefined(controller)) {
+            controller.reset();
+        }
         this._contentParams = {};
         this._self.clear();
         this._self.removeAllChildren();
@@ -281,16 +286,7 @@ var ThemePlugin = Plugin.extend({
         } else {
             this._isSceneChanging = true;
             if (stage._stageController && stage._stageController.hasNext()) {
-                if (action.transitionType !== 'next') {
-                  if (action.value === "") {
-                      OverlayManager.moveToEndPage();
-                  } else {
-                    this.replaceStage(action.value, action);
-                  }
-                } else {
-                    this.replaceStage(stage._data.id, action);
-                }
-
+                this.replaceStage(stage._data.id, action);
             } else {
                 if (stage._stageController && action.reset == true) {
                     stage._stageController.reset();
@@ -313,12 +309,18 @@ var ThemePlugin = Plugin.extend({
     disableInputs: function() {
         //This is to remove all div's added inside 'GameArea' div which are positioned at absolute position
         this.inputs.forEach(function(inputId) {
-            document.getElementById(inputId).style.display = 'none';
+            var element = document.getElementById(inputId);
+            if (!_.isNull) {
+                element.style.display = 'none';
+            }
         })
     },
     enableInputs: function() {
         this.inputs.forEach(function(inputId) {
-            document.getElementById(inputId).style.display = 'block';
+            var element = document.getElementById(inputId);
+            if (!_.isNull) {
+                element.style.display = 'block';
+            }
         })
     },
     getTransitionEffect: function(animation) {
