@@ -65,7 +65,8 @@ function updateContentData($state) {
                     $state.go('contentList', { "id": contentId });
                 } else {
                     if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
-                        $state.go('showContent', { "contentId": contentId });
+                        $state.go('playContent', {
+                            'itemId': contentId });
                     } else {
                         console.warn("Content mimetype doesn't supported by GenieCanvas.");
                     }
@@ -94,7 +95,8 @@ function getContentObj(data) {
 function launchInitialPage(appInfo, $state) {
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
         if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-            $state.go('showContent', { "contentId": GlobalContext.game.id });
+            $state.go('playContent', {
+                'itemId': GlobalContext.game.id });
         } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
             (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
             $state.go('contentList', { "id": GlobalContext.game.id });
@@ -228,7 +230,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                                     var contentId = content.metadata.identifier;
                                     TelemetryService.init({ id: contentId, ver: "1.0" }, {}).then(function() {
                                     if (CONTENT_MIMETYPES.indexOf(content.metadata.mimeType) > -1) {
-                                            $state.go('showContent', { "contentId": contentId });
+                                        $state.go('playContent', {
+                                            'itemId': contentId });
                                         } else if ((COLLECTION_MIMETYPE == content.metadata.mimeType) ||
                                             (ANDROID_PKG_MIMETYPE == content.metadata.mimeType && content.metadata.code == packageName)) {
                                             $state.go('contentList', { "id": contentId });
@@ -549,18 +552,18 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             exitApp();
         };
 
-        $scope.goBack = function() {
-            stack.pop();
-            collectionPath.pop();
-            var id = stack.pop();
-            if(!_(id).isUndefined()){
-                $state.go('contentList', { "id": id });
-            }else{
-               if ("undefined" != typeof cordova){
-                     exitApp();
-                }
-            }
-        };
+        // $scope.goBack = function() {
+        //     stack.pop();
+        //     collectionPath.pop();
+        //     var id = stack.pop();
+        //     if(!_(id).isUndefined()){
+        //         $state.go('contentList', { "id": id });
+        //     }else{
+        //        if ("undefined" != typeof cordova){
+        //              exitApp();
+        //         }
+        //     }
+        // };
 
         $scope.init = function(){
             // $rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction('content',undefined, 'getItem');
@@ -622,8 +625,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.pageId = "renderer";
 
         $scope.init = function() {
-            // startProgressBar(40, 0.6, $rootScope.content.name);
-            if ($stateParams.itemId) {
+            startProgressBar(40, 0.6, $rootScope.content.name);
+            if ($stateParams.itemId && $rootScope.content) {
                 //$rootScope.content = $rootScope.content ? $rootScope.content : localStorageGC.getItem('content');
                 $scope.item = $rootScope.content;
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
@@ -692,6 +695,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 }
             } else {
                 alert('Name or Launch URL not found.');
+                // it should go to Genie
+                // exitApp(); // review pending
                 $state.go('contentList', { "id": GlobalContext.game.id });
             }
         }
@@ -828,7 +833,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         if (COLLECTION_MIMETYPE == content.mimeType) {
                             $state.go('contentList', { "id": id });
                         } else {
-                            $state.go('showContent', { "contentId": id });
+                            $state.go('playContent', {
+                                'itemId': id });
                         }
                     })
                     .catch(function(err) {
@@ -1098,7 +1104,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 if (COLLECTION_MIMETYPE == content.mimeType) {
                     $state.go('contentList', { "id": content.identifier });
                 } else {
-                    $state.go('showContent', { "contentId": content.identifier });
+                    $state.go('playContent', {
+                        'itemId': content.identifier });
                 }
             } else {
                 window.open("ekstep://c/" + content.identifier, "_system");
@@ -1231,7 +1238,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         Renderer.cleanUp();
                     else
                         TelemetryService.end();
-                    $state.go('showContent', { "contentId": $rootScope.content.identifier });
+                        $state.go('playContent', {
+                            'itemId': $rootScope.content.identifier });
                     //window.location.hash = "/show/content/" + GlobalContext.currentContentId;
 
                 }
