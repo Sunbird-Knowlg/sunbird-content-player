@@ -200,6 +200,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     if (isbrowserpreview) {
                         genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
                         var urlContentId = getUrlParameter("id");
+                        if(_.isUndefined(urlContentId)){
+                            urlContentId = GlobalContext.config.contentId;
+                        }
                         if (urlContentId) {
                             // Launching content by taking IFRAME url parameter of contentID
                             ContentService.getContentMetadata(urlContentId)
@@ -224,9 +227,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     } else {
                         if ($state.current.name == appConstants.stateShowContentEnd) {
                             $rootScope.$broadcast("loadEndPage");
-                        } else if ($state.current.name == appConstants.statePlayContent) {
-                            $rootScope.getContentMetadata($stateParams.itemId);
-                        } else {
+                        }else {
                             launchInitialPage(GlobalContext.config.appInfo, $state);
                         }
                     }
@@ -292,6 +293,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $rootScope.getContentMetadata = function(content) {
             jQuery('#loading').hide();
+            console.info("Error triggering here1");
             ContentService.getContent(content)
                 .then(function(data) {
                     // localstorageFunction('content', data, 'setItem');
@@ -325,7 +327,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             var version = (data && pkgVersion) ? pkgVersion : "1";
             startTelemetry(identifier, version);
             $scope.$broadcast('loadRenderer');
-            TelemetryService.interact("TOUCH", data.identifier, "TOUCH", { stageId: "ContentApp-Title", subtype: "ContentID" });
         }
 
         $rootScope.replayContent = function() {
@@ -491,9 +492,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
            if(_.isUndefined($rootScope.content)){
               $rootScope.content = content.metadata;
            } 
-            $scope.getContentData($rootScope.content);
+            $scope.setContentMetadata($rootScope.content);
             if ($stateParams.itemId && $rootScope.content) {
                 $scope.item = $rootScope.content;
+                 localStorageGC.save();
                 startProgressBar(40, 0.6, $rootScope.content.name);
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                     var isMobile = window.cordova ? true : false;
@@ -550,7 +552,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         } else {
                             Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
                         }
-
                     } else
                     if (!_.isUndefined($scope.item)) {
                         Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
@@ -573,7 +574,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.reloadStage = function() {
             reloadStage();
         }
-
 
         $scope.$on('$destroy', function() {
         })
