@@ -76,24 +76,21 @@ var StagePlugin = Plugin.extend({
         }
         if (!isStageLoaded) {
             this.showHideLoader('block')
-            EventBus.addEventListener(data.id + '_assetsLoaded', function() {
-                this.showHideLoader('none');
-                if (!_.isUndefined(Renderer.theme._currentStage) || !_.isUndefined(Renderer.theme._currentScene)) {
-                    Renderer.theme.invokeStage(Renderer.theme._currentStage || Renderer.theme._currentScene._id)
-                }
-            }, this);
-
+            EventBus.addEventListener(data.id + '_assetsLoaded', this.invokeStageLoader, this);
             setTimeout(function() {
-                if (jQuery('#loaderArea').css('display') == 'block') {
-                    instance.showHideLoader('none')
-                    if (!_.isUndefined(Renderer.theme._currentStage) || !_.isUndefined(Renderer.theme._currentScene)) {
-                        Renderer.theme.invokeStage(Renderer.theme._currentStage || Renderer.theme._currentScene._id)
-                    }
+                if (jQuery('#loaderArea').css('display') == 'block' && Renderer.theme._currentScene._stageInstanceId == instance._stageInstanceId) {
+                    instance.invokeStageLoader();
                 }
             },this.maxTimeToLoad)
             return
         }
         this.invokeChildren(data, this, this, this._theme);
+    },
+    invokeStageLoader: function() {
+        this.invokeChildren(this._data, this, this, this._theme);
+        Renderer.update = true;
+        this.showHideLoader('none');
+        Renderer.theme._currentScene.dispatchEvent('enter');
     },
     keyboardShowHandler: function(e) {
         this._self.y = -(e.keyboardHeight);
@@ -357,8 +354,8 @@ var StagePlugin = Plugin.extend({
     },
     cleanEventBus: function(stage) {
         var stages = Renderer.theme.getStagesToPreLoad(stage);
-        EventBus.removeEventListener(stages.prev + '_assetsLoaded', this.showHideLoader, this);
-        EventBus.removeEventListener(stages.next + '_assetsLoaded', this.showHideLoader, this);
+        EventBus.removeEventListener(stages.prev + '_assetsLoaded', this.invokeStageLoader, this);
+        EventBus.removeEventListener(stages.next + '_assetsLoaded', this.invokeStageLoader, this);
     }
 });
 PluginManager.registerPlugin('stage', StagePlugin);

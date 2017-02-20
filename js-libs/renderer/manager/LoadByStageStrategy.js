@@ -213,7 +213,7 @@ LoadByStageStrategy = Class.extend({
                 var currentStageLoader = instance.loaders[stageId];
                 // Check if loader for current satge is loaded completely
                 // if loader for current stage is not loaded, wait for loader to complete and call callback function
-                if(currentStageLoader.progress < 1 || !currentStageLoader.loaded) {
+                if(currentStageLoader.progress < 1) {
                     currentStageLoader.on("complete", function() {
                         var data = Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
                         EventBus.dispatch(stageId + '_assetsLoaded');
