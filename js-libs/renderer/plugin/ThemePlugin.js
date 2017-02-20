@@ -76,7 +76,7 @@ var ThemePlugin = Plugin.extend({
             }
         }
         AssetManager.init(this._data, basePath);
-        AssetManager.initStage(instance._data.startStage, null, null, function() {
+        AssetManager.initStage(this._data.startStage, null, null, function() {
             instance.render();
         });
     },

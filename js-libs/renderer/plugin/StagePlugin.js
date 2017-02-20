@@ -75,8 +75,18 @@ var StagePlugin = Plugin.extend({
             }
         }
         if (!isStageLoaded) {
-            this.showHideLoader('block')
+            // if manifest loading time is less
+            // Its very irritating to show loader even less time on each stage, so
+            // Waiting 0.5 sec before showing loader.
+            setTimeout(function() {
+                if (isStageLoaded) {
+                    this.showHideLoader('block')
+                }
+            },500)
             EventBus.addEventListener(data.id + '_assetsLoaded', this.invokeStageLoader, this);
+            // If some how loader didn't go off, after 5 sec we are removing it 
+            // Even if stage is not loaded we are removing loader
+            // This is very rare condition
             setTimeout(function() {
                 if (jQuery('#loaderArea').css('display') == 'block' && Renderer.theme._currentScene._stageInstanceId == instance._stageInstanceId) {
                     instance.invokeStageLoader();
@@ -90,7 +100,9 @@ var StagePlugin = Plugin.extend({
         this.invokeChildren(this._data, this, this, this._theme);
         Renderer.update = true;
         this.showHideLoader('none');
-        Renderer.theme._currentScene.dispatchEvent('enter');
+        if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene)) {
+            Renderer.theme._currentScene.dispatchEvent('enter');
+        }
     },
     keyboardShowHandler: function(e) {
         this._self.y = -(e.keyboardHeight);

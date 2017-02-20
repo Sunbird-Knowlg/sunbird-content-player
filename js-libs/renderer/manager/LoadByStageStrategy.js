@@ -15,7 +15,7 @@ LoadByStageStrategy = Class.extend({
         createjs.Sound.alternateExtensions = ["mp3"];
         this.destroy();
         this.loadAppAssets();
-            
+        // TODO Handling only stage and content manifest, not plugin manifest
         var themeData = JSON.parse(JSON.stringify(data));
         if (!_.isArray(themeData.stage)) themeData.stage = [themeData.stage];
         if (_.isUndefined(themeData.manifest) || _.isUndefined(themeData.manifest.media)) {
@@ -173,10 +173,10 @@ LoadByStageStrategy = Class.extend({
             })
         }
         if (nextStageId) {
-            instance.loadStage(nextStageId)
+            // instance.loadStage(nextStageId)
         }
         if (prevStageId) {
-            instance.loadStage(prevStageId)
+            // instance.loadStage(prevStageId)
         }
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);
     },
@@ -205,6 +205,8 @@ LoadByStageStrategy = Class.extend({
                 }
             } else {
                 if (cb) {
+                    var data = Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
+                    EventBus.dispatch(stageId + '_assetsLoaded');
                     cb();
                 }
             }
@@ -312,6 +314,8 @@ LoadByStageStrategy = Class.extend({
     _createLoader: function() {
         return "undefined" == typeof cordova ? new createjs.LoadQueue(true, null, true) : new createjs.LoadQueue(false);
     },
+    // Get all manifest defined inside content, only give stage manifest.
+    // TODO : Once plugin manifest is implemented function should have to be improved.
     getManifest : function(content) {
         var manifest = {};
         manifest.media = [];
@@ -325,6 +329,7 @@ LoadByStageStrategy = Class.extend({
         })
         return manifest;
     },
+    // Show weather stage manifest are loaded or not.
     isStageAssetsLoaded : function(stageId) {
         if (!_.isUndefined(this.loaders[stageId])) {
             if (this.loaders[stageId].progress >= 1) {
