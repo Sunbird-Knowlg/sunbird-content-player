@@ -1,0 +1,33 @@
+<theme startStage="splash" id="theme" ver="1.0">
+    <manifest>
+        <media id="sky" src="sky.jpg" type="image" />
+    </manifest>
+
+
+    <stage id="splash" x="0" y="0" w="100" h="100">
+        <param name="next" value="endstage" />
+
+        
+        <shape type="rect" x="15" y="15" w="10" h="10" fill="#FF9500" stroke="white" stroke-width="5"/>
+        <shape type="roundrect" x="30" y="15" w="20" h="10" fill="#FF0000" stroke="white" stroke-width="5"/>
+
+        <shape type="circle" x="65" y="15" w="5" h="5" radius="5" fill="blue" stroke="black" stroke-width="2"/>
+        <shape type="ellipse" x="65" y="35" w="15" h="15" fill="green"/>
+
+        <shape type="star" x="15" y="35" w="12" h="15" fill="DeepSkyBlue" corners="5" stroke="black" stroke-width="5"/>
+        <shape type="star" x="35" y="35" w="12" h="15" fill="DeepSkyBlue" corners="10" stroke="black" stroke-width="5"/>
+
+
+        <shape type="star" x="15" y="65" w="12" h="15" fill="purple" sides="5"  stroke="Orchid" stroke-width="10"/>
+        <shape type="star" x="35" y="65" w="15" h="15" fill="purple" sides="8"  stroke="Orchid" stroke-width="10"/>
+		
+		<shape type="trapezium" x="65" y="65" w="15" h="15" fill="purple" stroke="Orchid" stroke-width="10"/>
+        
+    </stage>
+
+    <stage id="endstage" x="0" y="0" w="100" h="100">
+		 <param name="previous" value="splash" />
+        <text x="10" y="42" w="80" h="10" align="center" font="Georgia" fontsize="50" color="Navy" shadow="gray">Thank You !</text>
+    </stage>
+
+</theme>
