@@ -200,7 +200,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                                 .then(function(data) {
                                     content["metadata"] = data;
                                     var contentId = content.metadata.identifier;
-                                    launchInitialPage(GlobalContext.config.appInfo, $state);
+                                    launchInitialPage(content.metadata, $state);
                                 })
                                 .catch(function(err) {
                                     console.info("contentNotAvailable : ", err);
