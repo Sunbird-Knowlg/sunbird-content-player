@@ -14,17 +14,11 @@ var StagePlugin = Plugin.extend({
     _stageInstanceId: undefined,
     _currentState: {},
     isStageStateChanged: undefined,
+    maxTimeToLoad : 5000,
     initPlugin: function(data) {
         this.cleanEventBus(data);
         var instance = this;
-        EventBus.addEventListener(data.id + '_assetsLoaded', function() {
-            this.showHideLoader('none');
-            Renderer.theme.invokeStage(Renderer.theme._currentStage || Renderer.theme._currentScene._id)
-        }, this);
         var isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
-        // setTimeout(function() {
-        //     instance.showHideLoader('none')
-        // },500)
         this._inputs = [];
         this.params = {};
         this._self = new creatine.Scene();
@@ -82,10 +76,24 @@ var StagePlugin = Plugin.extend({
         }
         if (!isStageLoaded) {
             this.showHideLoader('block')
+            EventBus.addEventListener(data.id + '_assetsLoaded', function() {
+                this.showHideLoader('none');
+                if (!_.isUndefined(Renderer.theme._currentStage) || !_.isUndefined(Renderer.theme._currentScene)) {
+                    Renderer.theme.invokeStage(Renderer.theme._currentStage || Renderer.theme._currentScene._id)
+                }
+            }, this);
+
+            setTimeout(function() {
+                if (jQuery('#loaderArea').css('display') == 'block') {
+                    instance.showHideLoader('none')
+                    if (!_.isUndefined(Renderer.theme._currentStage) || !_.isUndefined(Renderer.theme._currentScene)) {
+                        Renderer.theme.invokeStage(Renderer.theme._currentStage || Renderer.theme._currentScene._id)
+                    }
+                }
+            },this.maxTimeToLoad)
             return
-        } else {
-            this.invokeChildren(data, this, this, this._theme);
         }
+        this.invokeChildren(data, this, this, this._theme);
     },
     keyboardShowHandler: function(e) {
         this._self.y = -(e.keyboardHeight);

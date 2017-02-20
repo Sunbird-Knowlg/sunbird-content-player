@@ -173,10 +173,10 @@ LoadByStageStrategy = Class.extend({
             })
         }
         if (nextStageId) {
-            // instance.loadStage(nextStageId)
+            instance.loadStage(nextStageId)
         }
         if (prevStageId) {
-            // instance.loadStage(prevStageId)
+            instance.loadStage(prevStageId)
         }
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);
     },
@@ -199,15 +199,8 @@ LoadByStageStrategy = Class.extend({
                 if (cb) {
                     instance.loaders[stageId].on("complete", function() {
                         var data = Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
-                        EventBus.dispatch(data + '_assetsLoaded');
-                        if (_.isUndefined(instance.loaders[data])) {
-                            console.log(instance.loaders);
-                            console.log(data);
-                            console.log(stageId);
-                        }
-                        if (!instance.loaders[data].progress<1) {
-                            cb();
-                        }
+                        EventBus.dispatch(stageId + '_assetsLoaded');
+                        cb();
                     }, null, true);
                 }
             } else {
@@ -220,10 +213,10 @@ LoadByStageStrategy = Class.extend({
                 var currentStageLoader = instance.loaders[stageId];
                 // Check if loader for current satge is loaded completely
                 // if loader for current stage is not loaded, wait for loader to complete and call callback function
-                if(currentStageLoader.progress < 1) {
+                if(currentStageLoader.progress < 1 || !currentStageLoader.loaded) {
                     currentStageLoader.on("complete", function() {
                         var data = Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
-                        EventBus.dispatch(data + '_assetsLoaded');
+                        EventBus.dispatch(stageId + '_assetsLoaded');
                         cb();
                     })
                 } else {
@@ -232,16 +225,6 @@ LoadByStageStrategy = Class.extend({
                 }
             }
         }
-        // setTimeout(function() {
-        //     var data;
-        //     if (Renderer.theme._currentStage) {
-        //         data = Renderer.theme._currentStage;
-        //     } else {
-        //         data = stageId;
-        //     }
-        //     console.log('setTimeout  ++++++++' + data)
-        //     EventBus.dispatch(data + '_assetsLoaded', 'none');
-        // },2000)
     },
     loadCommonAssets: function() {
         var loader = this._createLoader();
