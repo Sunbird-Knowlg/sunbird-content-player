@@ -76,22 +76,16 @@ function getContentObj(data) {
 }
 
 function launchInitialPage(appInfo, $state) {
-    TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
-        if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-            $state.go('playContent', {
-                'itemId': GlobalContext.game.id });
-        } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
-            (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
-            $state.go('contentList', { "id": GlobalContext.game.id });
-        } else {
-            alert("App launched with invalid context.");
-            exitApp();
-        }
-    }).catch(function(error) {
-        console.log('TelemetryService init failed');
-        alert('TelemetryService init failed.');
-        exitApp();
-    });
+    if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
+        $state.go('playContent', {
+            'itemId': GlobalContext.game.id
+        });
+    } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
+        (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
+        $state.go('contentList', {
+            "id": GlobalContext.game.id
+        });
+    }
 }
 
 //Handling the logerror event from the Telemetry.js
@@ -200,9 +194,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     if (isbrowserpreview) {
                         genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
                         var urlContentId = getUrlParameter("id");
-                        if(_.isUndefined(urlContentId)){
-                            urlContentId = GlobalContext.config.contentId;
-                        }
                         if (urlContentId) {
                             // Launching content by taking IFRAME url parameter of contentID
                             ContentService.getContentMetadata(urlContentId)
@@ -489,10 +480,15 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $rootScope.pageId = "renderer";
         $scope.init = function() {
-           if(_.isUndefined($rootScope.content)){
-              $rootScope.content = content.metadata;
-           } 
-            $scope.setContentMetadata($rootScope.content);
+            if (_.isUndefined($rootScope.content)) {
+                if (_.isEmpty(content)) {
+                    $scope.getContentMetadata(GlobalContext.game.id);
+                } else {
+                    $rootScope.content = content.metadata;
+                    $scope.setContentMetadata($rootScope.content);
+                }
+            }
+            
             if ($stateParams.itemId && $rootScope.content) {
                 $scope.item = $rootScope.content;
                  localStorageGC.save();
