@@ -200,7 +200,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                                 .then(function(data) {
                                     content["metadata"] = data;
                                     var contentId = content.metadata.identifier;
-                                    launchInitialPage({id:contentId,ver:'1.0'},{});
+                                    launchInitialPage(GlobalContext.config.appInfo, $state);
                                 })
                                 .catch(function(err) {
                                     console.info("contentNotAvailable : ", err);
@@ -282,21 +282,25 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         };
 
-        $rootScope.getContentMetadata = function(content) {
+        $rootScope.getContentMetadata = function(content,cb) {
             jQuery('#loading').hide();
             console.info("Error triggering here1");
             ContentService.getContent(content)
                 .then(function(data) {
                     // localstorageFunction('content', data, 'setItem');
                     $rootScope.setContentMetadata(data);
+                    if(!_.isUndefined(cb)){
+                        cb();
+                    }
                 })
                 .catch(function(err) {
                     console.info("contentNotAvailable : ", err);
                     contentNotAvailable();
                 });
+             
         }
 
-        $rootScope.setContentMetadata = function(contentData) {
+        $rootScope.setContentMetadata = function(contentData,cb) {
             var data = _.clone(contentData);
             GlobalContext.currentContentId = data.identifier;
             GlobalContext.currentContentMimeType = data.mimeType;
@@ -313,10 +317,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             });
 
             localStorageGC.setItem("content", $rootScope.content);
-            var identifier = (data && data.identifier) ? data.identifier : null;
+           /* var identifier = (data && data.identifier) ? data.identifier : null;
             var pkgVersion = !_.isUndefined(data.pkgVersion) ? data.pkgVersion.toString() : null;
             var version = (data && pkgVersion) ? pkgVersion : "1";
-            startTelemetry(identifier, version);
+            startTelemetry(identifier, version);*/
+            if(!_.isUndefined(cb)){
+                 cb();
+            }
             $scope.$broadcast('loadRenderer');
         }
 
@@ -482,14 +489,27 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.init = function() {
             if (_.isUndefined($rootScope.content)) {
                 if (_.isEmpty(content)) {
-                    $scope.getContentMetadata(GlobalContext.game.id);
+                    $scope.getContentMetadata(GlobalContext.game.id, function() {
+                        $scope.renderContent();
+                    });
+                    $rootScope.content = content.metadata;
                 } else {
                     $rootScope.content = content.metadata;
-                    $scope.setContentMetadata($rootScope.content);
+                    $rootScope.setContentMetadata($rootScope.content, function() {
+                        $scope.renderContent();
+                    });
                 }
+            } else {
+                $scope.renderContent();
             }
-            
+        }
+
+        $scope.renderContent = function(){
             if ($stateParams.itemId && $rootScope.content) {
+                var identifier = ($rootScope.content && $rootScope.content.identifier) ? $rootScope.content.identifier : null;
+                var pkgVersion = !_.isUndefined($rootScope.content.pkgVersion) ? $rootScope.content.pkgVersion.toString() : null;
+                var version = ($rootScope.content && pkgVersion) ? pkgVersion : "1";
+                startTelemetry(identifier, version);
                 $scope.item = $rootScope.content;
                  localStorageGC.save();
                 startProgressBar(40, 0.6, $rootScope.content.name);
@@ -560,9 +580,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // it should go to Genie
                 // exitApp(); // review pending
                 $state.go('contentList', { "id": GlobalContext.game.id });
-            }
-        }
+            } 
 
+        }
         $scope.gotToEndPage = function() {
             $state.go('showEndPage', {});
         }
