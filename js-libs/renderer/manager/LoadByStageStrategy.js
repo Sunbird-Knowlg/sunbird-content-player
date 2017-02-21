@@ -173,10 +173,10 @@ LoadByStageStrategy = Class.extend({
             })
         }
         if (nextStageId) {
-            // instance.loadStage(nextStageId)
+            instance.loadStage(nextStageId)
         }
         if (prevStageId) {
-            // instance.loadStage(prevStageId)
+            instance.loadStage(prevStageId)
         }
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);
     },
@@ -215,7 +215,7 @@ LoadByStageStrategy = Class.extend({
                 var currentStageLoader = instance.loaders[stageId];
                 // Check if loader for current satge is loaded completely
                 // if loader for current stage is not loaded, wait for loader to complete and call callback function
-                if(currentStageLoader.progress < 1) {
+                if(currentStageLoader.progress < 1 || currentStageLoader.loaded == false) {
                     currentStageLoader.on("complete", function() {
                         var data = Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
                         EventBus.dispatch(stageId + '_assetsLoaded');
@@ -331,12 +331,16 @@ LoadByStageStrategy = Class.extend({
     },
     // Show weather stage manifest are loaded or not.
     isStageAssetsLoaded : function(stageId) {
+        var manifest = JSON.parse(JSON.stringify(this.stageManifests[stageId]));
         if (!_.isUndefined(this.loaders[stageId])) {
             if (this.loaders[stageId].progress >= 1) {
                 return true
             } else {
                 return false
             }
+        } else
+        if (_.isArray(manifest) && manifest.length == 0) {
+            return true
         } else {
             return false
         }

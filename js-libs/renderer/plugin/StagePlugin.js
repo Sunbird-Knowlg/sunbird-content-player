@@ -18,7 +18,6 @@ var StagePlugin = Plugin.extend({
     initPlugin: function(data) {
         this.cleanEventBus(data);
         var instance = this;
-        var isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
         this._inputs = [];
         this.params = {};
         this._self = new creatine.Scene();
@@ -74,13 +73,14 @@ var StagePlugin = Plugin.extend({
                 });
             }
         }
+        var isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
         if (!isStageLoaded) {
             // if manifest loading time is less
             // Its very irritating to show loader even less time on each stage, so
             // Waiting 0.5 sec before showing loader.
             setTimeout(function() {
-                if (isStageLoaded) {
-                    this.showHideLoader('block')
+                if (!AssetManager.strategy.isStageAssetsLoaded(data.id) && Renderer.theme._currentScene._stageInstanceId == instance._stageInstanceId) {
+                    instance.showHideLoader('block')
                 }
             },500)
             EventBus.addEventListener(data.id + '_assetsLoaded', this.invokeStageLoader, this);
@@ -360,7 +360,7 @@ var StagePlugin = Plugin.extend({
     },
     showHideLoader: function(val) {
         var elem = document.getElementById('loaderArea');
-        if (!_.isUndefined(elem)) {
+        if (!_.isNull(elem)) {
             elem.style.display = val.target || val;
         }
     },

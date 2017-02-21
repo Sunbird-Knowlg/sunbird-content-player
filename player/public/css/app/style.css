@@ -1201,6 +1201,7 @@ body{
     margin-right: 10px;
 }
 
+/*Loader css*/
 #loader {
    position: relative;
    top: 50%;
@@ -1249,3 +1250,4 @@ body{
    z-index: 999999;
    position: absolute;
 }
+/*Loader Css*/
