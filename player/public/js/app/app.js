@@ -47,7 +47,6 @@ function updateContentData($state) {
         return;
     }
     if (content && content.metadata) {
-        localStorageGC.setItem("content", content.metadata);
         if (!content.metadata.identifier) {
             console.error("Content Id is missing. Sending default Id for TelemetryService init.");
         }
@@ -76,6 +75,7 @@ function getContentObj(data) {
 }
 
 function launchInitialPage(appInfo, $state) {
+    // Collection MIMETYPE is for the launching the localdev 
     if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
         $state.go('playContent', {
             'itemId': GlobalContext.game.id
@@ -287,7 +287,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             console.info("Error triggering here1");
             ContentService.getContent(content)
                 .then(function(data) {
-                    // localstorageFunction('content', data, 'setItem');
                     $rootScope.setContentMetadata(data);
                     if(!_.isUndefined(cb)){
                         cb();
@@ -315,16 +314,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $scope.item = data;
                 $rootScope.content = data;
             });
-
-            localStorageGC.setItem("content", $rootScope.content);
-           /* var identifier = (data && data.identifier) ? data.identifier : null;
-            var pkgVersion = !_.isUndefined(data.pkgVersion) ? data.pkgVersion.toString() : null;
-            var version = (data && pkgVersion) ? pkgVersion : "1";
-            startTelemetry(identifier, version);*/
             if(!_.isUndefined(cb)){
                  cb();
             }
-            $scope.$broadcast('loadRenderer');
         }
 
         $rootScope.replayContent = function() {
@@ -346,6 +338,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         }
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
+        // This will be appear only for the localdevlopment 
         $rootScope.pageId = 'ContentApp-Collection';
         $scope.version = GlobalContext.game.ver;
         $scope.flavor = GlobalContext.config.flavor;
@@ -405,7 +398,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         $rootScope.title = content.name;
                         $rootScope.collection = content;
                         localStorageGC.setItem("collection", $rootScope.collection);
-                        // localstorageFunction("Collection", $rootScope.collection,"setItem");
                         TelemetryService.start(content.identifier, content.pkgVersion);
                     } else {
                         $rootScope.collection = {};
@@ -449,14 +441,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                  $state.go('playContent', {
                         'itemId': content.identifier });
             }
-        };
-
-        $scope.showAboutUsPage = function() {
-            $scope.aboutModal.show();
-        };
-
-        $scope.hideAboutUsPage = function() {
-            $scope.aboutModal.hide();
         };
 
         $scope.simulateCrash = function(fatal) {
@@ -503,16 +487,18 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $scope.renderContent();
             }
         }
-
+        $scope.callStartTelemetry = function(content) {
+            var identifier = (content && content.identifier) ? content.identifier : null;
+            var pkgVersion = !_.isUndefined(content.pkgVersion) ? content.pkgVersion.toString() : null;
+            var version = (content && pkgVersion) ? pkgVersion : "1";
+            startTelemetry(identifier, version);
+        }
         $scope.renderContent = function(){
             if ($stateParams.itemId && $rootScope.content) {
-                var identifier = ($rootScope.content && $rootScope.content.identifier) ? $rootScope.content.identifier : null;
-                var pkgVersion = !_.isUndefined($rootScope.content.pkgVersion) ? $rootScope.content.pkgVersion.toString() : null;
-                var version = ($rootScope.content && pkgVersion) ? pkgVersion : "1";
-                startTelemetry(identifier, version);
-                $scope.item = $rootScope.content;
-                 localStorageGC.save();
+                localStorageGC.setItem("content", $rootScope.content);
                 startProgressBar(40, 0.6, $rootScope.content.name);
+                $scope.callStartTelemetry($rootScope.content);
+                $scope.item = $rootScope.content;
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
                     var isMobile = window.cordova ? true : false;
 
@@ -547,27 +533,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         window.open(path, '_self');
                     }
                 } else {
-                    if (collectionChildren) {
-                        collectionChildrenIds.splice(collectionChildrenIds.indexOf($stateParams.itemId), 1);
-                        collectionChildren = false;
-                    }
-                    if (isbrowserpreview) {
-                        //$rootScope.content = $rootScope.content ? $rootScope.content : localstorageFunction("content",undefined,'getItem')
+                     if (isbrowserpreview) {
                         var contentBody = undefined;
-                        if (COLLECTION_MIMETYPE == content.metadata.mimeType) {
-                            ContentService.getContentBody($stateParams.itemId)
-                                .then(function(data) {
-
-                                    Renderer.start("", 'gameCanvas', $scope.item, getContentObj(data), true);
-
-                                })
-                                .catch(function(err) {
-                                    console.info("contentNotAvailable : ", err);
-                                    contentNotAvailable();
-                                });
-                        } else {
-                            Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
-                        }
+                        Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
                     } else
                     if (!_.isUndefined($scope.item)) {
                         Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
@@ -613,12 +581,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         // This is to fix FTB preview issue of causing by Ionic and Angular combination
         // childnodes error causing by ionic framework whiel rendering FTB item
         // reference: http://stackoverflow.com/questions/27776174/type-error-cannot-read-property-childnodes-of-undefined
-        /*$scope.$on('loadRenderer', function(event) {
-            $scope.init();
-        });*/
         setTimeout(function() {
             $scope.init();
-        }, 0);
+        }, 100);
+        
 
     }).controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
         $scope.showFeedbackArea = true;

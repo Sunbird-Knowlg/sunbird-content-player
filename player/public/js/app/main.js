@@ -29,7 +29,7 @@ function startProgressBar(w, setInter, name) {
         }
     }
 }
-startProgressBar();
+/*startProgressBar();*/
 
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
@@ -200,27 +200,20 @@ var localStorageGC = {
 
 function startTelemetry(id, ver) {
     localStorageGC.removeItem("telemetryService");
-    //localStorageGC.removeItem("_start");
-    //localStorageGC.removeItem("_end");
-    // TelemetryService.init(GlobalContext.game, GlobalContext.user);
-
     TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
         TelemetryService.start(id, ver);
+        if (!_.isUndefined(TelemetryService.instance)) {
+            var tsObj = _.clone(TelemetryService);
+            tsObj._start = JSON.stringify(tsObj.instance._start);
+            tsObj._end = JSON.stringify(tsObj.instance._end);
+            localStorageGC.setItem("telemetryService", tsObj);
+            localStorageGC.save(); 
+        }
     }).catch(function(error) {
         console.log('TelemetryService init failed');
         alert('TelemetryService init failed.');
         exitApp();
     });
-
-    if (!_.isUndefined(TelemetryService.instance)) {
-        var tsObj = _.clone(TelemetryService);
-        //tsObj.telemetryService = _.clone(TelemetryService);
-        tsObj._start = JSON.stringify(tsObj.instance._start);
-        tsObj._end = JSON.stringify(tsObj.instance._end);
-        localStorageGC.setItem("telemetryService", tsObj);
-        //localStorageGC.setItem("_start", TelemetryService.instance._start);
-        //localStorageGC.setItem("_end", TelemetryService.instance._end);
-    }
 }
 
 function getAsseturl(content) {
