@@ -17,15 +17,17 @@ var stack = new Array(),
         showHTMLPages: true
     },
     isbrowserpreview = getUrlParameter("webview"),
+    isMobile = window.cordova ? true : false,
     setContentDataCb = undefined;
-
-    //appState = undefined;
-
 
 // TODO:have to remove appState and setContentDataCb in future.
 // Used in only Authoting tools
 window.setContentData = function(metadata, data, configuration) {
-    content.metadata = (!_.isUndefined(metadata) && !_.isNull(metadata)) ? metadata : defaultMetadata;
+    if(_.isUndefined(metadata) || _.isNull(metadata)){
+        content.metadata = defaultMetadata
+    }else{
+        content.metadata = metadata;
+    }
     if (!_.isUndefined(data)) {
         content.body = data;
     }
@@ -33,7 +35,6 @@ window.setContentData = function(metadata, data, configuration) {
         config[key] = val;
     });
     if (!config.showHTMLPages) {
-        config.showStartPage = false;
         config.showEndPage = false;
     }
     localStorage.clear();
@@ -42,18 +43,18 @@ window.setContentData = function(metadata, data, configuration) {
 }
 
 function updateContentData($state) {
-    if(_.isUndefined($state)){
+    if (_.isUndefined($state)) {
         console.warn("updateContentData($state) - $state is not defined.");
         return;
     }
     if (content && content.metadata) {
         if (!content.metadata.identifier) {
-            console.error("Content Id is missing. Sending default Id for TelemetryService init.");
+            console.warn("Content Id is missing. Sending default Id for TelemetryService init.");
+            content.metadata.identifier = defaultMetadata.identifier;
+        } else {
+            content.metadata.identifier = content.metadata.identifier;
         }
-        var contentId = content.metadata.identifier || defaultMetadata.identifier;
-        $state.go('playContent',{
-                    'itemId':contentId
-             });
+
     }
 }
 
@@ -69,7 +70,7 @@ function getContentObj(data) {
 }
 
 function launchInitialPage(appInfo, $state) {
-    // Collection MIMETYPE is for the launching the localdev 
+    // Collection Mimetype check for the launching of the localdevlopment
     if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
         $state.go('playContent', {
             'itemId': GlobalContext.game.id
@@ -84,15 +85,10 @@ function launchInitialPage(appInfo, $state) {
 
 //Handling the logerror event from the Telemetry.js
 document.body.addEventListener("logError", telemetryError, false);
-
 function telemetryError(e) {
-    var $body = angular.element(document.body); // 1
+    var $body = angular.element(document.body); 
     var $rootScope = $body.scope().$root;
     document.body.removeEventListener("logError");
-    //Message to display events on the Screen device
-    /*$rootScope.$broadcast('show-message', {
-        "message": 'Telemetry :' + JSON.stringify(data.message)
-    });*/
 }
 
 angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
@@ -173,50 +169,89 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $ionicPlatform.on("resume", function() {
                     Renderer.resume();
                 });
+                $rootScope.getContentMetadata = function(id, cb) {
+                    ContentService.getContent(id)
+                        .then(function(data) {
+                            $rootScope.setContentMetadata(data);
+                            if (!_.isUndefined(cb)) {
+                                cb();
+                            }
+                        })
+                        .catch(function(err) {
+                            console.info("contentNotAvailable : ", err);
+                            contentNotAvailable();
+                        });
+                };
+                $rootScope.setContentMetadata = function(contentData) {
+                    var data = _.clone(contentData);
+                    content["metadata"] = data;
+                    GlobalContext.currentContentId = data.identifier;
+                    GlobalContext.currentContentMimeType = data.mimeType;
+                    if (_.isUndefined(data.localData)) {
+                        data.localData = _.clone(contentData);
+                    } else {
+                        data = data.localData;
+                    }
+                    $rootScope.safeApply(function() {
+                        $rootScope.content = data;
+                    });
+                    
+                };
+                $rootScope.getContentBody = function(id) {
+                    ContentService.getContentBody(id)
+                        .then(function(data) {
+                            content["body"] = data.body;
+                            launchInitialPage(content.metadata, $state);
 
+                        })
+                        .catch(function(err) {
+                            console.info("contentNotAvailable : ", err);
+                            contentNotAvailable();
+                        });
+                };
+                $rootScope.deviceRendrer = function() {
+                    if ($state.current.name == appConstants.stateShowContentEnd) {
+                        $rootScope.$broadcast("loadEndPage");
+                    } else {
+                        if (isMobile) {
+                            $rootScope.getContentMetadata(GlobalContext.game.id, function() {
+                                $state.go('playContent', {
+                                    'itemId': content.metadata.identifier
+                                });
+                            });
+                        } else {
+                            launchInitialPage(GlobalContext.config.appInfo, $state);
+                        }
+                    }
+                };
+                $rootScope.browserRenderer = function(){
+                     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
+                        var urlContentId = getUrlParameter("id");
+                        if (urlContentId) {
+                            $rootScope.getContentMetadata(urlContentId,function(){
+                            $rootScope.getContentBody(urlContentId);
+                            });
+                        } else {
+                            $rootScope.setContentMetadata(content.metadata);
+                            $state.go('playContent', {
+                                'itemId': content.metadata.identifier
+                            });
+                        }
+                };
                 genieservice.getMetaData().then(function(data) {
                     var flavor = data.flavor;
                     if (AppConfig[flavor] == undefined)
                         flavor = "sandbox";
                     GlobalContext.config.flavor = flavor;
                 });
-
                 GlobalContext.init(packageName, version).then(function(appInfo) {
-                    // localPreview is a global variable defined in index.html file inside a story,
                     if ("undefined" != typeof localPreview && "local" == localPreview)
                         return;
                     if (isbrowserpreview) {
-                        genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-                        var urlContentId = getUrlParameter("id");
-                        if (urlContentId) {
-                            // Launching content by taking IFRAME url parameter of contentID
-                            ContentService.getContentMetadata(urlContentId)
-                                .then(function(data) {
-                                    content["metadata"] = data;
-                                    var contentId = content.metadata.identifier;
-                                    launchInitialPage(content.metadata, $state);
-                                })
-                                .catch(function(err) {
-                                    console.info("contentNotAvailable : ", err);
-                                    contentNotAvailable();
-                                });
-                            ContentService.getContentBody(urlContentId)
-                            .then(function(data) {
-                                content["body"] = data.body;
-                            })
-                            .catch(function(err) {
-                                console.info("contentNotAvailable : ", err);
-                                contentNotAvailable();
-                            });
-                        }
+                        $rootScope.browserRenderer();
                     } else {
-                        if ($state.current.name == appConstants.stateShowContentEnd) {
-                            $rootScope.$broadcast("loadEndPage");
-                        }else {
-                            launchInitialPage(GlobalContext.config.appInfo, $state);
-                        }
+                        $rootScope.deviceRendrer();
                     }
-
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
                     alert(res.errors);
@@ -224,7 +259,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 });
             });
 
-        });
+        },0);
 
     }).config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -248,67 +283,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             })
 
     }).controller('BaseCtrl', function($scope, $rootScope, $state, $stateParams, ContentService, appConstants) {
-        $rootScope.isCollection = false;
-        $rootScope.showMessage = false;
-        $rootScope.pageId = "coverpage";
-        $rootScope.content;
-        $rootScope.showPage = true;
-
-        $scope.getContentData = function(content) {
-            $rootScope.showPage = true;
-            if (GlobalContext.config.appInfo && GlobalContext.config.appInfo.identifier) {
-                if ((isbrowserpreview == "true")) {
-                    if (content.metadata && (content.metadata.mimeType != COLLECTION_MIMETYPE)) {
-                        jQuery('#loading').hide();
-                        $scope.setContentMetadata(content.metadata);
-                    } else {
-                        $scope.getContentMetadata(content.identifier);
-                    }
-                } else {
-                    $scope.getContentMetadata(content.identifier);
-                }
-            } else {
-                alert('Sorry. Could not find the content.');
-                startApp();
-            }
-        };
-
-        $rootScope.getContentMetadata = function(content,cb) {
-            jQuery('#loading').hide();
-            console.info("Error triggering here1");
-            ContentService.getContent(content)
-                .then(function(data) {
-                    $rootScope.setContentMetadata(data);
-                    if(!_.isUndefined(cb)){
-                        cb();
-                    }
-                })
-                .catch(function(err) {
-                    console.info("contentNotAvailable : ", err);
-                    contentNotAvailable();
-                });
-             
-        }
-
-        $rootScope.setContentMetadata = function(contentData,cb) {
-            var data = _.clone(contentData);
-            GlobalContext.currentContentId = data.identifier;
-            GlobalContext.currentContentMimeType = data.mimeType;
-            if (_.isUndefined(data.localData)) {
-                data.localData = _.clone(contentData);
-            } else {
-                data = data.localData;
-            }
-
-            $rootScope.safeApply(function() {
-                $scope.item = data;
-                $rootScope.content = data;
-            });
-            if(!_.isUndefined(cb)){
-                 cb();
-            }
-        }
-
         $rootScope.replayContent = function() {
             if (!$rootScope.content) {
                 $rootScope.getContentMetadata($stateParams.itemId);
@@ -452,7 +426,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             exitApp();
         };
         $scope.init = function(){
-              $rootScope.title = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.name : "";
+            $rootScope.title = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.name : "";
             $scope.resetContentListCache();
         };
 
@@ -461,23 +435,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $rootScope.pageId = "renderer";
         $scope.init = function() {
-            if (_.isUndefined($rootScope.content)) {
-                if (_.isEmpty(content)) {
-                    $scope.getContentMetadata(GlobalContext.game.id, function() {
-                        $scope.renderContent();
-                    });
-                    $rootScope.content = content.metadata;
-                } else {
-                    $rootScope.content = content.metadata;
-                    $rootScope.setContentMetadata($rootScope.content, function() {
-                        $scope.renderContent();
-                    });
-                }
-            } else {
-                $scope.renderContent();
-            }
+             $scope.renderContent();
         }
-        $scope.callStartTelemetry = function(content) {
+       $scope.callStartTelemetry = function(content) {
             var identifier = (content && content.identifier) ? content.identifier : null;
             var pkgVersion = !_.isUndefined(content.pkgVersion) ? content.pkgVersion.toString() : null;
             var version = (content && pkgVersion) ? pkgVersion : "1";
@@ -535,8 +495,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 }
             } else {
                 alert('Name or Launch URL not found.');
-                // it should go to Genie
-                 exitApp(); // review pending
+                 exitApp();
             } 
 
         }
@@ -572,7 +531,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         // reference: http://stackoverflow.com/questions/27776174/type-error-cannot-read-property-childnodes-of-undefined
         setTimeout(function() {
             $scope.init();
-        }, 100);
+        },0);
         
 
     }).controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
@@ -654,34 +613,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.stringLeft = 130;
             $scope.userRating = $scope.selectedRating;
         }
-
-        /*$scope.playNextContent = function() {
-            var id = collectionChildrenIds.pop();
-            if (Renderer.running)
-                Renderer.cleanUp();
-            if (id) {
-                ContentService.getContent(id)
-                    .then(function(content) {
-                        if (COLLECTION_MIMETYPE == content.mimeType) {
-                            $state.go('contentList', { "id": id });
-                        } else {
-                            $state.go('playContent', {
-                                'itemId': id });
-                        }
-                    })
-                    .catch(function(err) {
-                        if (!_.isEmpty(collectionChildrenIds))
-                            $scope.playNextContent();
-                        else {
-                            console.info("contentNotAvailable : ", err);
-                            contentNotAvailable();
-                        }
-                    });
-            } else {
-                $state.go('contentList', { "id": GlobalContext.previousContentId });
-            }
-        }
-*/
         $scope.setTotalTimeSpent = function() {
             var startTime = (TelemetryService && TelemetryService.instance && TelemetryService.instance._end[TelemetryService.instance._end.length - 1]) ? TelemetryService.instance._end[TelemetryService.instance._end.length - 1].startTime : 0;
             if (startTime) {
@@ -1291,10 +1222,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         param: param
                     });
                 };
-
-                /*$scope.updateRating = function(param){
-                   $scope.isolatedClick(param)
-                };*/
             }
         };
     }).directive('lastPage', function($rootScope) {
