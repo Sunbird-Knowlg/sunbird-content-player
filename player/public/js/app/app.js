@@ -51,15 +51,9 @@ function updateContentData($state) {
             console.error("Content Id is missing. Sending default Id for TelemetryService init.");
         }
         var contentId = content.metadata.identifier || defaultMetadata.identifier;
-        TelemetryService.init({ id: contentId, ver: "1.0" }, {}).then(function() {
-             $state.go('playContent',{
+        $state.go('playContent',{
                     'itemId':contentId
              });
-        }).catch(function(error) {
-            console.log('TelemetryService init failed');
-            alert('TelemetryService init failed.');
-            exitApp();
-        });
     }
 }
 
@@ -266,14 +260,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 if ((isbrowserpreview == "true")) {
                     if (content.metadata && (content.metadata.mimeType != COLLECTION_MIMETYPE)) {
                         jQuery('#loading').hide();
-                        //For JSON and Direct contentID
                         $scope.setContentMetadata(content.metadata);
                     } else {
-                        //For collections
                         $scope.getContentMetadata(content.identifier);
                     }
                 } else {
-                    //For mobile
                     $scope.getContentMetadata(content.identifier);
                 }
             } else {
@@ -309,7 +300,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 data = data.localData;
             }
 
-            data.isReady = "ready";
             $rootScope.safeApply(function() {
                 $scope.item = data;
                 $rootScope.content = data;
@@ -546,8 +536,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             } else {
                 alert('Name or Launch URL not found.');
                 // it should go to Genie
-                // exitApp(); // review pending
-                $state.go('contentList', { "id": GlobalContext.game.id });
+                 exitApp(); // review pending
             } 
 
         }
@@ -666,7 +655,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.userRating = $scope.selectedRating;
         }
 
-        $scope.playNextContent = function() {
+        /*$scope.playNextContent = function() {
             var id = collectionChildrenIds.pop();
             if (Renderer.running)
                 Renderer.cleanUp();
@@ -692,7 +681,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $state.go('contentList', { "id": GlobalContext.previousContentId });
             }
         }
-
+*/
         $scope.setTotalTimeSpent = function() {
             var startTime = (TelemetryService && TelemetryService.instance && TelemetryService.instance._end[TelemetryService.instance._end.length - 1]) ? TelemetryService.instance._end[TelemetryService.instance._end.length - 1].startTime : 0;
             if (startTime) {
@@ -737,13 +726,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 content = localStorageGC.getItem('content');
                 $rootScope.content = content;
             }
-            var collectionObj = localStorageGC.getItem('collection');
-            if (_.find(collectionObj.children, function(children) {
-                if (children.identifier == $rootScope.content.identifier) {
-                    $rootScope.collection = $rootScope.collection ? $rootScope.collection : localStorageGC.getItem('collection');
-                    $rootScope.isCollection = $rootScope.isCollection ? $rootScope.isCollection : localStorageGC.getItem('isCollection');
-                }
-            }));
             if(_(TelemetryService.instance).isUndefined()){
                  var tsObj = localStorageGC.getItem('telemetryService');
                  TelemetryService.init(tsObj._gameData, tsObj._user);
@@ -780,9 +762,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         setTimeout(function() {
             $scope.init();
-            /*if (!_.isUndefined($rootScope.content)) {
-                $scope.init();
-            }*/
         }, 0);
 
         $rootScope.$on('loadEndPage', function() {
@@ -923,33 +902,19 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showRelatedContentHeader = true;
         $scope.relatedContents = [];
         $scope.relatedContentPath = [];
-
-        // $scope.showAllRelatedContent = function() {
-        //     window.open("ekstep://l/related/" + $stateParams.contentId, "_system");
-        //     exitApp();
-        // }
-
         $scope.playRelatedContent = function(content) {
             $scope.showRelatedContent = false;
             $scope.contentShowMore = false;
             $scope.showRelatedContentHeader = false;
             collectionPath = $scope.relatedContentPath;
-
-
-            TelemetryService.interact("TOUCH", "gc_relatedcontent", "TOUCH", {
-                stageId: "endpage",
-                subtype: " "
-            });
+            TelemetryService.interact("TOUCH", "gc_relatedcontent", "TOUCH", {stageId: "endpage",subtype: " "});
             TelemetryService.end();
             jQuery('#endPageLoader').show();
-
+            GlobalContext.game.id = content.identifier
+            GlobalContext.game.pkgVersion = content.pkgVersion;
+            $rootScope.content = undefined;
             if (content.isAvailable) {
-                if (COLLECTION_MIMETYPE == content.mimeType) {
-                    $state.go('contentList', { "id": content.identifier });
-                } else {
-                    $state.go('playContent', {
-                        'itemId': content.identifier });
-                }
+                $state.go('playContent', {'itemId': content.identifier});
             } else {
                 window.open("ekstep://c/" + content.identifier, "_system");
             }
@@ -987,7 +952,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.renderRelatedContent = function(id) {
             var list = [];
             if (_.isUndefined($rootScope.collection)) {
-                // For Content
                 if (("undefined" != typeof cordova)) {
                     list = [{
                         "identifier": id,
@@ -995,20 +959,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     }]
                     $scope.getRelatedContent(list);
                 }
-            } else {
-                // For Collection
-                if(collectionPath.length == 0) {
-                    collectionPath = [{
-                        "identifier": $rootScope.collection.identifier,
-                        "mediaType": "Collection"
-                    }, {
-                        "identifier": id,
-                        "mediaType": "Content"
-                    }];
-                }
-                list = collectionPath;
-                collectionPathMap[$rootScope.collection.identifier] = collectionPath;
-                $scope.getRelatedContent(list);
+            }else{
+                console.info("COOLECTION RELATED CONTENT LOGIC IS NOT IMPLEMENTED..");
             }
         }
 
