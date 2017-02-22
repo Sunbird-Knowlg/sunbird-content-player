@@ -182,6 +182,19 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             contentNotAvailable();
                         });
                 };
+                $rootScope.getDataforPortal = function(id,cb) {
+                    ContentService.getContentMetadata(id,cb)
+                        .then(function(data) {
+                           $rootScope.setContentMetadata(data);
+                           if(!_.isUndefined(cb)){
+                                cb();
+                           }                         
+                        })
+                        .catch(function(err) {
+                            console.info("contentNotAvailable : ", err);
+                            contentNotAvailable();
+                        });
+                };
                 $rootScope.setContentMetadata = function(contentData) {
                     var data = _.clone(contentData);
                     content["metadata"] = data;
@@ -228,7 +241,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                      genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
                         var urlContentId = getUrlParameter("id");
                         if (urlContentId) {
-                            $rootScope.getContentMetadata(urlContentId,function(){
+                            $rootScope.getDataforPortal(urlContentId,function(){
                             $rootScope.getContentBody(urlContentId);
                             });
                         } else {
