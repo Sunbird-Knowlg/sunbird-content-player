@@ -15,20 +15,17 @@ LoadByStageStrategy = Class.extend({
         createjs.Sound.alternateExtensions = ["mp3"];
         this.destroy();
         this.loadAppAssets();
-        // TODO Handling only stage and content manifest, not plugin manifest
         var themeData = JSON.parse(JSON.stringify(data));
         if (!_.isArray(themeData.stage)) themeData.stage = [themeData.stage];
-        if (_.isUndefined(themeData.manifest) || _.isUndefined(themeData.manifest.media)) {
-            _.each(themeData.stage, function(stage) {
+        _.each(themeData.stage, function(stage) {
+            if (!_.isUndefined(stage.manifest)) {
                 instance.assignBasePath(stage.manifest, basePath, stage.id)
-            })
-        } else {
+            }
+        })
+        if (!_.isUndefined(themeData.manifest)) {
             instance.assignBasePath(themeData.manifest, basePath)
         }
-
-        var stages = themeData.stage;
-        if (!_.isArray(stages)) stages = [stages];
-        stages.forEach(function(stage) {
+        themeData.stage.forEach(function(stage) {
             instance.stageManifests[stage.id] = [];
             AssetManager.stageAudios[stage.id] = [];
             instance.populateAssets(stage, stage.id, stage.preload, themeData.startStage);
@@ -43,7 +40,7 @@ LoadByStageStrategy = Class.extend({
         instance.loadTemplateAssets();
     },
     assignBasePath: function(manifest, basePath, stageId) {
-        if (!_.isUndefined(manifest) && !_.isUndefined(manifest.media)) {
+        if (!_.isUndefined(manifest.media)) {
             if (!_.isArray(manifest.media)) manifest.media = [manifest.media];
             var instance = this;
             manifest.media.forEach(function(media) {
@@ -55,15 +52,17 @@ LoadByStageStrategy = Class.extend({
                         }
                     }
 
-                    if (media.type == 'json') {
+                    if (media.type == 'json' && _.isUndefined(stageId)) {
                         instance.commonAssets.push(_.clone(media));
                     } else if (media.type == 'spritesheet') {
-                        var imgId = media.id + "_image";
-                        instance.commonAssets.push({
-                            "id": imgId,
-                            "src": media.src,
-                            "type": "image"
-                        });
+                        if (_.isUndefined(stageId)) {
+                            var imgId = media.id + "_image";
+                            instance.commonAssets.push({
+                                "id": imgId,
+                                "src": media.src,
+                                "type": "image"
+                            });
+                        }
                         media.images = [];
                         var animations = {};
                         if (media.animations) {
@@ -180,53 +179,43 @@ LoadByStageStrategy = Class.extend({
         }
         instance.loaders = _.pick(instance.loaders, stageId, nextStageId, prevStageId);
     },
-    loadStage: function(stageId, cb) {
+    loadStage: function(stageId, callback) {
         var instance = this;
         if (!instance.loaders[stageId]) {
-            var manifest = JSON.parse(JSON.stringify(instance.stageManifests[stageId]));
-            manifest = _.uniq(manifest, function(media) {
+            var mediaList = JSON.parse(JSON.stringify(instance.stageManifests[stageId]));
+            mediaList = _.uniq(mediaList, function(media) {
                 return media.assetId || media.id;
             })
-            if (_.isArray(manifest) && manifest.length > 0) {
+            if (_.isArray(mediaList) && mediaList.length > 0) {
                 var loader = this._createLoader();
                 loader.setMaxConnections(instance.MAX_CONNECTIONS);
                 loader.on('error', function(evt) {
                     console.error('StageLoader Asset preload error', evt);
                 });
                 loader.installPlugin(createjs.Sound);
-                loader.loadManifest(manifest, true);
+                loader.loadManifest(mediaList, true);
                 instance.loaders[stageId] = loader;
-                if (cb) {
-                    instance.loaders[stageId].on("complete", function() {
-                        var data = Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
-                        EventBus.dispatch(stageId + '_assetsLoaded');
-                        cb();
-                    }, null, true);
-                }
-            } else {
-                if (cb) {
-                    var data = Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
-                    EventBus.dispatch(stageId + '_assetsLoaded');
-                    cb();
-                }
-            }
-        } else {
-            if (cb) {
-                var currentStageLoader = instance.loaders[stageId];
-                // Check if loader for current satge is loaded completely
-                // if loader for current stage is not loaded, wait for loader to complete and call callback function
-                if(currentStageLoader.progress < 1 || currentStageLoader.loaded == false) {
-                    currentStageLoader.on("complete", function() {
-                        var data = Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
-                        EventBus.dispatch(stageId + '_assetsLoaded');
-                        cb();
-                    })
-                } else {
-                    // if loader for current stage is loaded call callback
-                    cb();
-                }
             }
         }
+        var handleStageCallback = function(cb, stageId) {
+            if (cb) {
+                var data = Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
+                if (!_.isUndefined(instance.loaders[stageId]) && (instance.loaders[stageId].progress < 1 || instance.loaders[stageId].loaded == false)) {
+                    instance.loaders[stageId].on("complete", function() {
+                        if (stageId == data) {
+                            EventBus.dispatch(data + '_assetsLoaded');
+                            cb();
+                        }
+                    }, null, true);
+                } else {
+                    if (stageId == data) {
+                        EventBus.dispatch(data + '_assetsLoaded');
+                        cb();
+                    }
+                }
+            }
+        };
+        handleStageCallback(callback, stageId);
     },
     loadCommonAssets: function() {
         var loader = this._createLoader();
@@ -255,7 +244,7 @@ LoadByStageStrategy = Class.extend({
         }
         var loader = this.loaders[stageId];
         if (loader) {
-            var itemLoaded = loader.getItem(assetId);
+            // var itemLoaded = loader.getItem(assetId);
             /*if(itemLoaded){
                 loader.remove(assetId);
             }*/
@@ -314,9 +303,9 @@ LoadByStageStrategy = Class.extend({
     _createLoader: function() {
         return "undefined" == typeof cordova ? new createjs.LoadQueue(true, null, true) : new createjs.LoadQueue(false);
     },
-    // Get all manifest defined inside content, only give stage manifest.
-    // TODO : Once plugin manifest is implemented function should have to be improved.
     getManifest : function(content) {
+        // Get all manifest defined inside content, only give stage manifest.
+        // TODO : Once plugin manifest is implemented function should have to be improved.
         var manifest = {};
         manifest.media = [];
         _.each(content.stage, function(stage) {
@@ -329,20 +318,15 @@ LoadByStageStrategy = Class.extend({
         })
         return manifest;
     },
-    // Show weather stage manifest are loaded or not.
     isStageAssetsLoaded : function(stageId) {
+        // Show weather stage manifest are loaded or not.
         var manifest = JSON.parse(JSON.stringify(this.stageManifests[stageId]));
-        if (!_.isUndefined(this.loaders[stageId])) {
-            if (this.loaders[stageId].progress >= 1) {
-                return true
-            } else {
-                return false
-            }
+        if (!_.isUndefined(this.loaders[stageId]) && this.loaders[stageId].progress >= 1) {
+            return true
         } else
         if (_.isArray(manifest) && manifest.length == 0) {
             return true
-        } else {
-            return false
         }
+        return false
     }
 });

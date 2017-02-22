@@ -20,6 +20,7 @@ var ThemePlugin = Plugin.extend({
     _isSceneChanging: false,
     _saveState:true,
     initPlugin: function(data) {
+        this.addLoaderElement();
         this._controllerMap = {};
         this._canvasId = data.canvasId;
         this._self = new createjs.Stage(data.canvasId);
@@ -176,10 +177,10 @@ var ThemePlugin = Plugin.extend({
             instance.enableInputs();
             instance._isSceneChanging = false;
             instance.preloadStages();
-            OverlayManager.init();
             childPlugin.uncache();
             TelemetryService.navigate(Renderer.theme._previousStage, Renderer.theme._currentStage);
             // remove above scene Enter method call and dispatch an scene Enter event.
+            OverlayManager.init();
             Renderer.update = true;
         });
         var nextIdx = this._currIndex++;
@@ -201,6 +202,7 @@ var ThemePlugin = Plugin.extend({
         this.htmlElements = [];
         this._animationEffect = effect;
         TimerManager.destroy();
+        EventBus.removeEventListener(this._currentScene._id + '_assetsLoaded', this._currentScene.invokeRenderElements, this);
         (stageId) ? this.invokeStage(stageId) : OverlayManager.moveToEndPage();
     },
     invokeStage: function(stageId) {
@@ -420,6 +422,15 @@ var ThemePlugin = Plugin.extend({
             return eval(expr);
         }
 
+    },
+    addLoaderElement: function() {
+        var gameArea = document.getElementById(Renderer.divIds.gameArea);
+        var loaderArea = document.createElement('div');
+        loaderArea.id = 'loaderArea';
+        var loader = document.createElement('div');
+        loader.id = 'loader';
+        loaderArea.appendChild(loader);
+        gameArea.parentElement.appendChild(loaderArea);
     }
 });
 PluginManager.registerPlugin('theme', ThemePlugin);

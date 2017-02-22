@@ -16,7 +16,6 @@ var StagePlugin = Plugin.extend({
     isStageStateChanged: undefined,
     maxTimeToLoad : 5000,
     initPlugin: function(data) {
-        this.cleanEventBus(data);
         var instance = this;
         this._inputs = [];
         this.params = {};
@@ -73,30 +72,31 @@ var StagePlugin = Plugin.extend({
                 });
             }
         }
+            
         var isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
         if (!isStageLoaded) {
+            //If assets is not loaded, add a event bus which will be trigurred as soon as assets are loaded completely
+            EventBus.addEventListener(data.id + '_assetsLoaded', instance.invokeRenderElements, this);
+            setTimeout(function() {
             // if manifest loading time is less
             // Its very irritating to show loader even less time on each stage, so
-            // Waiting 0.5 sec before showing loader.
-            setTimeout(function() {
-                if (!AssetManager.strategy.isStageAssetsLoaded(data.id) && Renderer.theme._currentScene._stageInstanceId == instance._stageInstanceId) {
+            // Waiting 0.5 sec before showing loader
+                // isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
+                if (!isStageLoaded && instance._theme._currentStage == data.id) {
                     instance.showHideLoader('block')
+                    setTimeout(function() {
+                        // If some how loader didn't go off, after 5 sec we are removing
+                        if (jQuery('#loaderArea').css('display') == 'block' && instance._theme._currentStage == instance._data.id) {
+                            instance.invokeRenderElements();
+                        }
+                    },this.maxTimeToLoad)
                 }
             },500)
-            EventBus.addEventListener(data.id + '_assetsLoaded', this.invokeStageLoader, this);
-            // If some how loader didn't go off, after 5 sec we are removing it 
-            // Even if stage is not loaded we are removing loader
-            // This is very rare condition
-            setTimeout(function() {
-                if (jQuery('#loaderArea').css('display') == 'block' && Renderer.theme._currentScene._stageInstanceId == instance._stageInstanceId) {
-                    instance.invokeStageLoader();
-                }
-            },this.maxTimeToLoad)
             return
         }
         this.invokeChildren(data, this, this, this._theme);
     },
-    invokeStageLoader: function() {
+    invokeRenderElements: function() {
         this.invokeChildren(this._data, this, this, this._theme);
         Renderer.update = true;
         this.showHideLoader('none');
@@ -363,11 +363,6 @@ var StagePlugin = Plugin.extend({
         if (!_.isNull(elem)) {
             elem.style.display = val.target || val;
         }
-    },
-    cleanEventBus: function(stage) {
-        var stages = Renderer.theme.getStagesToPreLoad(stage);
-        EventBus.removeEventListener(stages.prev + '_assetsLoaded', this.invokeStageLoader, this);
-        EventBus.removeEventListener(stages.next + '_assetsLoaded', this.invokeStageLoader, this);
     }
 });
 PluginManager.registerPlugin('stage', StagePlugin);
