@@ -825,10 +825,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showFeedback = function(param) {
             $scope.userRating = param;
             $scope.popUserRating = param;
-            TelemetryService.interact("TOUCH", "gc_feedback", "TOUCH", {
+            // Commented the feeback popup screen telemetry 
+            // it is generating telemety without any interact
+            /*TelemetryService.interact("TOUCH", "gc_feedback", "TOUCH", {
                 stageId: "ContnetApp-FeedbackScreen",
                 subtype: "ContentID"
-            });
+            });*/
             $scope.showFeedbackPopup = true;
             $scope.enableFeedbackSubmit();
         }
@@ -1022,8 +1024,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // if $rootScope.content is not available get it from the base controller
                 $rootScope.getContentMetadata($stateParams.itemId);
             }
-
-            TelemetryService.interact("TOUCH", navType, null, {stageId : $rootScope.stageData.currentStage});
+            // Commented the Telemetry interact coz it was generating twice interact events on click of the next button
+            //TelemetryService.interact("TOUCH", navType, null, {stageId : $rootScope.stageData.currentStage});
             GlobalContext.currentContentId = $rootScope.content.identifier;
             GlobalContext.currentContentMimeType = $rootScope.content.mimeType;
             if (navType === "next") {

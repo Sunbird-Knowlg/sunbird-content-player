@@ -3,11 +3,11 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 // http://www.w3schools.com/tags/ref_av_dom.asp
 var VideoPlugin = Plugin.extend({
+    _type: 'video',
     _render: true,
     _data: undefined,
     _videoEle: undefined,
-    _instance: undefined, 
-    _type:'video',   
+    _instance: undefined,
     initPlugin: function(data) {
         this._data = data;
         if(this._data){

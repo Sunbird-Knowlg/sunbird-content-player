@@ -24,7 +24,7 @@ AssetManager = {
     stopStageAudio: function(stageId) {
         if(AssetManager.stageAudios[stageId] && AssetManager.stageAudios[stageId].length > 0) {
             AssetManager.stageAudios[stageId].forEach(function(audioAsset) {
-                AudioManager.stop({stageId: stageId, asset:audioAsset});
+                AudioManager.stop({stageId: stageId, asset:audioAsset,disableTelemetry:true});
             });
         }
     },
