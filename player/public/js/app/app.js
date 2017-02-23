@@ -49,14 +49,15 @@ function updateContentData($state) {
     }
     if (content && content.metadata) {
         if (!content.metadata.identifier) {
-            console.warn("Content Id is missing. Sending default Id for TelemetryService init.");
-            content.metadata.identifier = defaultMetadata.identifier;
-        } else {
-            content.metadata.identifier = content.metadata.identifier;
+            console.error("Content Id is missing. Sending default Id for TelemetryService init.");
         }
-
+        var contentId = content.metadata.identifier || defaultMetadata.identifier;
+        $state.go('playContent', {
+            'itemId': contentId
+        });
     }
 }
+
 
 function getContentObj(data) {
     if (_.isObject(data.body))
@@ -182,13 +183,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             contentNotAvailable();
                         });
                 };
-                $rootScope.getDataforPortal = function(id,cb) {
-                    ContentService.getContentMetadata(id,cb)
+                $rootScope.getDataforPortal = function(id) {
+                    ContentService.getContentMetadata(id)
                         .then(function(data) {
                            $rootScope.setContentMetadata(data);
-                           if(!_.isUndefined(cb)){
-                                cb();
-                           }                         
                         })
                         .catch(function(err) {
                             console.info("contentNotAvailable : ", err);
@@ -228,28 +226,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     } else {
                         if (isMobile) {
                             $rootScope.getContentMetadata(GlobalContext.game.id, function() {
-                                $state.go('playContent', {
-                                    'itemId': content.metadata.identifier
-                                });
+                                $state.go('playContent', {'itemId': $rootScope.content.identifier});
                             });
                         } else {
                             launchInitialPage(GlobalContext.config.appInfo, $state);
                         }
                     }
-                };
-                $rootScope.browserRenderer = function(){
-                     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-                        var urlContentId = getUrlParameter("id");
-                        if (urlContentId) {
-                            $rootScope.getDataforPortal(urlContentId,function(){
-                            $rootScope.getContentBody(urlContentId);
-                            });
-                        } else {
-                            $rootScope.setContentMetadata(content.metadata);
-                            $state.go('playContent', {
-                                'itemId': content.metadata.identifier
-                            });
-                        }
                 };
                 genieservice.getMetaData().then(function(data) {
                     var flavor = data.flavor;
@@ -261,7 +243,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     if ("undefined" != typeof localPreview && "local" == localPreview)
                         return;
                     if (isbrowserpreview) {
-                        $rootScope.browserRenderer();
+                        var urlContentId = getUrlParameter("id");
+                        genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
+                        if (urlContentId) {
+                            $rootScope.getDataforPortal(urlContentId);
+                            $rootScope.getContentBody(urlContentId);
+                        }
                     } else {
                         $rootScope.deviceRendrer();
                     }
@@ -272,7 +259,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 });
             });
 
-        },0);
+        });
 
     }).config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -448,9 +435,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $rootScope.pageId = "renderer";
         $scope.init = function() {
-             $scope.renderContent();
+            if (_.isUndefined($rootScope.content)) {
+                if (!_.isEmpty(content)) {
+                    $rootScope.content = content.metadata;
+                    $scope.renderContent();
+                }
+            } else {
+                $scope.renderContent();
+            }
         }
-       $scope.callStartTelemetry = function(content) {
+        $scope.callStartTelemetry = function(content) {
             var identifier = (content && content.identifier) ? content.identifier : null;
             var pkgVersion = !_.isUndefined(content.pkgVersion) ? content.pkgVersion.toString() : null;
             var version = (content && pkgVersion) ? pkgVersion : "1";
@@ -846,23 +840,29 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showRelatedContentHeader = true;
         $scope.relatedContents = [];
         $scope.relatedContentPath = [];
-        $scope.playRelatedContent = function(content) {
-            $scope.showRelatedContent = false;
-            $scope.contentShowMore = false;
-            $scope.showRelatedContentHeader = false;
-            collectionPath = $scope.relatedContentPath;
-            TelemetryService.interact("TOUCH", "gc_relatedcontent", "TOUCH", {stageId: "endpage",subtype: " "});
-            TelemetryService.end();
-            jQuery('#endPageLoader').show();
-            GlobalContext.game.id = content.identifier
-            GlobalContext.game.pkgVersion = content.pkgVersion;
-            $rootScope.content = undefined;
-            if (content.isAvailable) {
-                $state.go('playContent', {'itemId': content.identifier});
-            } else {
-                window.open("ekstep://c/" + content.identifier, "_system");
-            }
+   $scope.playRelatedContent = function(content) {
+        $scope.showRelatedContent = false;
+        $scope.contentShowMore = false;
+        $scope.showRelatedContentHeader = false;
+        collectionPath = $scope.relatedContentPath;
+        TelemetryService.interact("TOUCH", "gc_relatedcontent", "TOUCH", {
+            stageId: "endpage",
+            subtype: " "
+        });
+        TelemetryService.end();
+        jQuery('#endPageLoader').show();
+        GlobalContext.game.id = content.identifier
+        GlobalContext.game.pkgVersion = content.pkgVersion;
+        if (content.isAvailable) {
+            $rootScope.getContentMetadata(GlobalContext.game.id, function() {
+                $state.go('playContent', {
+                    'itemId': $rootScope.content.identifier
+                });
+            });
+        } else {
+            window.open("ekstep://c/" + content.identifier, "_system");
         }
+    }
 
         $scope.getRelatedContent = function(list) {
             ContentService.getRelatedContent(TelemetryService._user.uid, list)
@@ -920,7 +920,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.$on('getRelatedContentEvent', function(event) {
             $scope.init();
         });
-        // $scope.init();
 
     }).directive('menu', function($rootScope, $sce) {
         return {
