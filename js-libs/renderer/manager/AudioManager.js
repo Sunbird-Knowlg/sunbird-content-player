@@ -62,7 +62,6 @@ AudioManager = {
         }
     },
     pause: function(action, instance) {
-        console.info("yes pause")
         if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
             instance = instance || AudioManager.instances[AudioManager.uniqueId(action)];
             if(instance && instance.object && instance.object.playState === createjs.Sound.PLAY_SUCCEEDED) {
@@ -87,7 +86,11 @@ AudioManager = {
             AudioManager.instances[data].object.volume = 0
         }
         createjs.Sound.stop();
-        EventManager.processAppTelemetry({}, 'LISTEN','', {subtype : "STOP_ALL"});
+        if (action) {
+            EventManager.processAppTelemetry(action, 'LISTEN', '', {
+                subtype: "STOP_ALL"
+            });
+        }
     },
     reclaim: function() {
         // On devices, audio stops playing after resource limit is reached
