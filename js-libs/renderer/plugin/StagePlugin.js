@@ -15,8 +15,10 @@ var StagePlugin = Plugin.extend({
     _currentState: {},
     isStageStateChanged: undefined,
     maxTimeToLoad : 5000,
+    timeInstance : {},
     initPlugin: function(data) {
         var instance = this;
+        this.destroyTimeInstance(data);
         this._inputs = [];
         this.params = {};
         this._self = new creatine.Scene();
@@ -75,26 +77,44 @@ var StagePlugin = Plugin.extend({
             
         var isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
         if (!isStageLoaded) {
+            var timeInst;
             //If assets is not loaded, add a event bus which will be trigurred as soon as assets are loaded completely
             EventBus.addEventListener(data.id + '_assetsLoaded', instance.invokeRenderElements, this);
-            setTimeout(function() {
+            timeInst = setTimeout(function() {
             // if manifest loading time is less
             // Its very irritating to show loader even less time on each stage, so
             // Waiting 0.5 sec before showing loader
-                // isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
+                isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
                 if (!isStageLoaded && instance._theme._currentStage == data.id) {
                     instance.showHideLoader('block')
-                    setTimeout(function() {
+                    timeInst = setTimeout(function() {
                         // If some how loader didn't go off, after 5 sec we are removing
                         if (jQuery('#loaderArea').css('display') == 'block' && instance._theme._currentStage == instance._data.id) {
                             instance.invokeRenderElements();
                         }
                     },this.maxTimeToLoad)
+                    this.timeInstance[data.id].push(timeInst)
                 }
             },500)
+            this.timeInstance[data.id] = [];
+            this.timeInstance[data.id].push(timeInst)
             return
         }
         this.invokeChildren(data, this, this, this._theme);
+    },
+    destroyTimeInstance: function(data) {
+        var instance = this;
+        var stages = Renderer.theme.getStagesToPreLoad(data);
+        var clearTimeOut = function(stageId) {
+            if (instance.timeInstance[stageId] && _.isArray(instance.timeInstance[stageId])) {
+                instance.timeInstance[stageId].forEach(function(inst) {
+                    clearTimeout(inst);
+                });
+                delete instance.timeInstance[stageId];
+            }
+        };
+        clearTimeOut(stages.next);
+        clearTimeOut(stages.prev);
     },
     invokeRenderElements: function() {
         this.invokeChildren(this._data, this, this, this._theme);
