@@ -29,6 +29,7 @@ function startProgressBar(w, setInter, name) {
         }
     }
 }
+/*startProgressBar();*/
 
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {

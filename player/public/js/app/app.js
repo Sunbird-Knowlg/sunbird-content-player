@@ -170,7 +170,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     Renderer.resume();
                 });
                 $rootScope.getContentMetadata = function(id, cb) {
-                    console.info("i came here")
                     ContentService.getContent(id)
                         .then(function(data) {
                             $rootScope.setContentMetadata(data);
@@ -201,7 +200,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     content["metadata"] = data;
                     GlobalContext.currentContentId = data.identifier;
                     GlobalContext.currentContentMimeType = data.mimeType;
-
                     if (_.isUndefined(data.localData)) {
                         data.localData = _.clone(contentData);
                     } else {
@@ -230,7 +228,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     } else {
                         if (isMobile) {
                             $rootScope.getContentMetadata(GlobalContext.game.id, function() {
-                                $state.go('playContent', {'itemId': $rootScope.content.identifier});
+                                $state.go('playContent', {
+                                    'itemId': content.metadata.identifier
+                                });
                             });
                         } else {
                             launchInitialPage(GlobalContext.config.appInfo, $state);
@@ -846,29 +846,23 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showRelatedContentHeader = true;
         $scope.relatedContents = [];
         $scope.relatedContentPath = [];
-    $scope.playRelatedContent = function(content) {
-        $scope.showRelatedContent = false;
-        $scope.contentShowMore = false;
-        $scope.showRelatedContentHeader = false;
-        collectionPath = $scope.relatedContentPath;
-        TelemetryService.interact("TOUCH", "gc_relatedcontent", "TOUCH", {
-            stageId: "endpage",
-            subtype: " "
-        });
-        TelemetryService.end();
-        jQuery('#endPageLoader').show();
-        GlobalContext.game.id = content.identifier
-        GlobalContext.game.pkgVersion = content.pkgVersion;
-        if (content.isAvailable) {
-            $rootScope.getContentMetadata(GlobalContext.game.id, function() {
-                $state.go('playContent', {
-                    'itemId': $rootScope.content.identifier
-                });
-            });
-        } else {
-            window.open("ekstep://c/" + content.identifier, "_system");
+        $scope.playRelatedContent = function(content) {
+            $scope.showRelatedContent = false;
+            $scope.contentShowMore = false;
+            $scope.showRelatedContentHeader = false;
+            collectionPath = $scope.relatedContentPath;
+            TelemetryService.interact("TOUCH", "gc_relatedcontent", "TOUCH", {stageId: "endpage",subtype: " "});
+            TelemetryService.end();
+            jQuery('#endPageLoader').show();
+            GlobalContext.game.id = content.identifier
+            GlobalContext.game.pkgVersion = content.pkgVersion;
+            $rootScope.content = undefined;
+            if (content.isAvailable) {
+                $state.go('playContent', {'itemId': content.identifier});
+            } else {
+                window.open("ekstep://c/" + content.identifier, "_system");
+            }
         }
-    }
 
         $scope.getRelatedContent = function(list) {
             ContentService.getRelatedContent(TelemetryService._user.uid, list)
@@ -901,7 +895,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.renderRelatedContent = function(id) {
             var list = [];
-            $rootScope.collection = true;
             if (_.isUndefined($rootScope.collection)) {
                 if (("undefined" != typeof cordova)) {
                     list = [{
@@ -910,16 +903,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     }]
                     $scope.getRelatedContent(list);
                 }
-            } else {
+            }else{
                 console.info("COOLECTION RELATED CONTENT LOGIC IS NOT IMPLEMENTED..");
-                list = [{
-                    'identifier': "do_10095878",
-                    'mediaType': 'collection'
-                }, {
-                    'identifier': "do_11218758816983449619",
-                    'mediaType': 'content'
-                }]
-                $scope.getRelatedContent(list);
             }
         }
 

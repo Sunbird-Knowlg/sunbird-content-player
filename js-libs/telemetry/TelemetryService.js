@@ -199,7 +199,6 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        console.log("")
         return TelemetryService._version == "1.0" ? "" : this.flushEvent(TelemetryService.instance.navigate(stageid, stageto), TelemetryService.apis.telemetry);
     },
     sendFeedback: function(eks) {

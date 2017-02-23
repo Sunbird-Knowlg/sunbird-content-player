@@ -14,7 +14,6 @@ var DivPlugin = HTMLPlugin.extend({
         div.style.width = dims.w + 'px';
         div.style.height = dims.h + 'px';
         div.style.position = 'absolute';
-        
 
         var instance = this;
         var parentDiv = document.getElementById(Renderer.divIds.gameArea);
