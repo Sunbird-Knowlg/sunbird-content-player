@@ -59,6 +59,10 @@ var ShapePlugin = Plugin.extend({
     		default:
                 this.drawPolygon(data, dims, graphics);
     	}
+        // This is required to have border stroke(thick) to have proper close at the end
+        // reference: http://stackoverflow.com/questions/26191634/easeljs-triangle-stroke
+        graphics.cp(); 
+
         this._self.x = dims.x;
         this._self.y = dims.y;
         if(data.rotate) {
