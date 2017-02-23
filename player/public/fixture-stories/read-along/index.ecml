@@ -1,205 +1,44 @@
-<theme startStage="splash" id="theme" ver="0.2">
-	<manifest>
-		<media src="page2.ogg" id="hs_p1_audio" type="audiosprite">
-            <data>
-                <audioSprite id="hs_s1_ramu_sound" startTime="386" duration="804.0"></audioSprite>
-                <audioSprite id="hs_s1_fair_sound" startTime="7775" duration="772.0"></audioSprite>
-                <audioSprite id="hs_s1_dial_sound" startTime="1836" duration="4553.0"></audioSprite>
-            </data>
-        </media>
-        <media src="dialogues.ogg" id="scene_audio" type="audiosprite">
-            <data>
-                <audioSprite id="splash_sound" startTime="880" duration="1972.0"></audioSprite>
-                <audioSprite id="scene1_sound" startTime="4197" duration="3034.0"></audioSprite>
-                <audioSprite id="scene2_sound" startTime="8064" duration="9328.0"></audioSprite>
-                <audioSprite id="scene3_sound" startTime="18177" duration="7151.0"></audioSprite>
-                <audioSprite id="scene4_sound" startTime="26393" duration="5435.0"></audioSprite>
-                <audioSprite id="scene5_sound" startTime="33016" duration="4222.0"  ></audioSprite>
-                <audioSprite id="scene6_sound" startTime="38274" duration="7382.0"></audioSprite>
-                <audioSprite id="scene7_sound" startTime="46642" duration="7382.0"></audioSprite>
-                <audioSprite id="scene8_sound" startTime="54808" duration="8570.0"></audioSprite>
-                <audioSprite id="scene9_sound" startTime="64515" duration="7635.0"></audioSprite>
-                <audioSprite id="scene10_sound" startTime="73490" duration="2654.0"></audioSprite>
-            </data>
-        </media>
-	</manifest>
-	<stage id="preloadStage" preload="true">
-        <audio asset="scene_audio" />
-		<audio asset="hs_p1_audio" />
-	</stage>
-	<stage id="splash" x="0" y="0" w="100" h="100">
-		<param name="next" value="scene1"/>
-		<text x="10" y="30" w="80" h="40" font="Arial" fontsize="150" align="center">Highlight Text Sample Story</text>
-	</stage>
-	<stage id="scene1" x="0" y="0" w="100" h="100">
-		<param name="previous" value="splash"/>
-		<param name="next" value="scene2"/>
-		<text x="10" y="5" w="80" h="8" fontsize="1.5em" align="center">One audio (AudioSprite) - 2 Text</text>
-		<htext id="ht1" x="15" y="20" w="85" h="4" highlight="rgba(255,0,0,0.5)" fontsize="1.2em" timings="250,400,650,1000,1300,1500,1900,2300,2500,3000,3500,4200" audio="scene4_sound">My cap got stuck on a branch of the old Pipal tree.
-			<event type="click">
-				<action type="command" command="play" asset="ht1"/>
-			</event>
-		</htext>
-		<g id="g2" x="35" y="30" w="20" h="20" visible="false">
-			<shape x="0" y="0" w="100" h="100" fill="#AAA" type="roundrect"/>
-			<g x="10" y="15" w="30" h="60">
-				<shape x="0" y="0" w="100" h="100" stroke="yellow" type="roundrect" hitArea="true">
-		            <event type="click">
-		                <action type="command" command="pause" asset="ht1"/>
-		            </event>
-		        </shape>
-		        <text x="0" y="0" w="100" h="100" valign="middle" fontsize="8px" align="center" color="white">PAUSE</text>
-	    	</g>
-	        <g x="55" y="15" w="30" h="60">
-	        	<shape x="0" y="0" w="100" h="100" stroke="red" type="roundrect" hitArea="true">
-		            <event type="click">
-		                <action type="command" command="togglePlay" asset="ht1"/>
-		            </event>
-		        </shape>
-		        <text x="0" y="0" w="100" h="100" valign="middle" fontsize="8px" align="center" color="white">PLAY</text>
-	        </g>
-		</g>
-
-        <htext id="ht2" x="15" y="60" w="85" h="4" highlight="rgba(255,0,0,0.5)" fontsize="1.2em" timings="150,250,550,800,1000,1400,2200,2600,3000,3800,4500,5000,5300,5800" audio="scene3_sound">On the way home, a very strong wind came. It blew my cap away.</htext>
-        <g x="35" y="70" w="20" h="20" id="g3" visible="false">
-            <shape x="0" y="0" w="100" h="100" fill="#AAA" type="roundrect"/>
-            <g x="10" y="15" w="30" h="60">
-                <shape x="0" y="0" w="100" h="100" stroke="yellow" type="roundrect" hitArea="true">
-                    <event type="click">
-                        <action type="command" command="pause" asset="ht2"/>
-                    </event>
-                </shape>
-                <text x="0" y="0" w="100" h="100" valign="middle" fontsize="8px" align="center" color="white">PAUSE</text>
-            </g>
-            <g x="55" y="15" w="30" h="60">
-                <shape x="0" y="0" w="100" h="100" stroke="red" type="roundrect" hitArea="true">
-                    <event type="click">
-                        <action type="command" command="togglePlay" asset="ht2"/>
-                    </event>
-                </shape>
-                <text x="0" y="0" w="100" h="100" valign="middle" fontsize="8px" align="center" color="white">PLAY</text>
-            </g>
-        </g>
-
-		<events>
-			<event type="enter">
-				<action id="action_ht1" type="command" command="play" asset="ht1" audio="scene4_sound" delay="3000" />
-				<action id="action_ht2" type="command" command="play" asset="ht2" after="action_ht1" />
-				<action id="action6" asset="g2" command="show" type="command" after="action_ht1" />
-				<action id="action5" asset="g3" command="show" type="command" after="action_ht2" />
-			</event>
-			<event type="exit">
-				<action type="command" command="stop" asset="ht1" audio="scene4_sound" />
-			</event>
-		</events>
-	</stage>
-	<stage id="scene2" x="0" y="0" w="100" h="100">
-		<param name="previous" value="scene1"/>
-		<param name="next" value="scene3"/>
-		<text x="10" y="5" w="80" h="8" fontsize="1.5em" align="center">Highligh-text with and without audio</text>
-		<htext id="ht1" x="15" y="20" w="85" h="4" highlight="rgba(255,0,0,0.5)" fontsize="1.2em" timings="250,400,650,1000,1300,1500,1900,2300,2500,3000,3500,4200" audio="scene4_sound">My cap got stuck on a branch of the old Pipal tree.
-			<event type="click">
-				<action type="command" command="play" asset="ht1"/>
-			</event>
-		</htext>
-		<g x="35" y="30" w="20" h="20">
-			<shape x="0" y="0" w="100" h="100" fill="#AAA" type="roundrect"/>
-			<g x="10" y="15" w="30" h="60">
-				<shape x="0" y="0" w="100" h="100" stroke="yellow" type="roundrect" hitArea="true">
-		            <event type="click">
-		                <action type="command" command="pause" asset="ht1"/>
-		            </event>
-		        </shape>
-		        <text x="0" y="0" w="100" h="100" valign="middle" fontsize="8px" align="center" color="white">PAUSE</text>
-	    	</g>
-	        <g x="55" y="15" w="30" h="60">
-	        	<shape x="0" y="0" w="100" h="100" stroke="red" type="roundrect" hitArea="true">
-		            <event type="click">
-		                <action type="command" command="togglePlay" asset="ht1"/>
-		            </event>
-		        </shape>
-		        <text x="0" y="0" w="100" h="100" valign="middle" fontsize="8px" align="center" color="white">PLAY</text>
-	        </g>
-		</g>
-
-        <htext id="ht2" x="15" y="60" w="85" h="4" highlight="rgba(255,0,0,0.5)" fontsize="1.2em" timings="150,250,550,800,1000,1400,2200,2600,3000,3800,4500,5000,5300,5800">On the way home, a very strong wind came. It blew my cap away.</htext>
-        <g x="35" y="70" w="20" h="20">
-            <shape x="0" y="0" w="100" h="100" fill="#AAA" type="roundrect"/>
-            <g x="10" y="15" w="30" h="60">
-                <shape x="0" y="0" w="100" h="100" stroke="yellow" type="roundrect" hitArea="true">
-                    <event type="click">
-                        <action type="command" command="pause" asset="ht2"/>
-                    </event>
-                </shape>
-                <text x="0" y="0" w="100" h="100" valign="middle" fontsize="8px" align="center" color="white">PAUSE</text>
-            </g>
-            <g x="55" y="15" w="30" h="60">
-                <shape x="0" y="0" w="100" h="100" stroke="red" type="roundrect" hitArea="true">
-                    <event type="click">
-                        <action type="command" command="togglePlay" asset="ht2"/>
-                    </event>
-                </shape>
-                <text x="0" y="0" w="100" h="100" valign="middle" fontsize="8px" align="center" color="white">PLAY</text>
-            </g>
-        </g>
-
-		<events>
-			<event type="enter">
-				<action type="command" command="play" asset="ht1" audio="scene4_sound" />
-			</event>
-			<event type="exit">
-				<action type="command" command="stop" asset="ht1" audio="scene4_sound" />
-			</event>
-		</events>
-	</stage>
-	<stage id="scene3" x="0" y="0" w="100" h="100">
-		<param name="previous" value="scene2"/>
-		<param name="next" value="endScene"/>
-		<set id="audio1StatusParam" param="audio1Status" scope="stage" value="Not started."/>
-		<set id="audio2StatusParam" param="audio2Status" scope="stage" value="Not started."/>
-		<set id="audio3StatusParam" param="audio3Status" scope="stage" value="Not started."/>
-		<text x="10" y="5" w="80" h="8" fontsize="2em" align="center" weight="bold" color="#0089C9">Chaining Actions</text>
-		<g x="28" y="15" w="45" h="70">
-			<shape x="0" y="0" w="100" h="55" type="rect" stroke="red"/>
-			<text x="5" y="10" w="30" h="10" fontsize="1.5em">Audio 1</text>
-			<text id="audio1_state" x="55" y="10" w="50" h="10" fontsize="1.5em" param="audio1Status"></text>
-
-			<text x="5" y="25" w="30" h="10" fontsize="1.5em">Audio 2</text>
-			<text id="audio2_state" x="55" y="25" w="50" h="10" fontsize="1.5em" param="audio2Status"></text>
-
-			<text x="5" y="40" w="30" h="10" fontsize="1.5em">Audio 3</text>
-			<text id="audio3_state" x="55" y="40" w="50" h="10" fontsize="1.5em" param="audio3Status"></text>
-		</g>
-
-		<events>
-			<event type="enter">
-				<action id="audio1Action1" asset="scene1_sound" command="play" type="command" delay="5000" />
-				<action type="command" command="set" param="audio1Status" param-value="Playing." asset="audio1StatusParam" scope="stage" with="audio1Action1"/>
-				<action asset="audio1_state" type="command" command="refresh" with="audio1Action1"/>
-				<action type="command" command="set" param="audio1Status" param-value="Completed." asset="audio1StatusParam" scope="stage" after="audio1Action1"/>
-				<action asset="audio1_state" type="command" command="refresh" after="audio1Action1"/>
-
-				<action id="audio2Action1" asset="scene2_sound" command="play" type="command" delay="3000" after="audio1Action1" />
-				<action type="command" command="set" param="audio2Status" param-value="Playing." asset="audio1StatusParam" scope="stage" with="audio2Action1"/>
-				<action asset="audio2_state" type="command" command="refresh" with="audio2Action1"/>
-
-				<action type="command" command="set" param="audio2Status" param-value="Completed." asset="audio2StatusParam" scope="stage" after="audio2Action1"/>
-				<action asset="audio2_state" type="command" command="refresh" after="audio2Action1"/>
-
-				<action id="audio3Action1" asset="scene3_sound" command="play" type="command" delay="3000" after="audio2Action1" />
-				<action type="command" command="set" param="audio3Status" param-value="Playing." asset="audio1StatusParam" scope="stage" with="audio3Action1"/>
-				<action asset="audio3_state" type="command" command="refresh" with="audio3Action1"/>
-
-				<action type="command" command="set" param="audio3Status" param-value="Completed." asset="audio3StatusParam" scope="stage" after="audio3Action1"/>
-				<action asset="audio3_state" type="command" command="refresh" after="audio3Action1"/>
-			</event>
-			<event type="exit">
-				<action type="command" command="stop" asset="ht1" audio="scene4_sound" />
-			</event>
-		</events>
-	</stage>
-	<stage id="endScene" x="0" y="0" w="100" h="100">
-		<param name="previous" value="scene1"/>
-		<text x="10" y="40" w="80" h="40" font="Arial" fontsize="150" align="center">END</text>
-	</stage>
+<?xml version="1.0"?>
+<theme id="theme" version="1.0" startStage="672da205-80a6-41b8-9e72-93862a1c4de1">
+  <stage x="0" y="0" w="100" h="100" id="672da205-80a6-41b8-9e72-93862a1c4de1" r="">
+    <config>
+      <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true}]]>
+    </config>
+    <event type="everyday_click">
+      <action type="command" command="show" asset="everyday_info" pluginId="672da205-80a6-41b8-9e72-93862a1c4de1"/>
+      <action type="command" command="HIDEHTMLELEMENTS" asset="everyday_info" pluginId="672da205-80a6-41b8-9e72-93862a1c4de1"/>
+    </event>
+    <event type="library_click">
+      <action type="command" command="show" asset="library_info"/>
+      <action type="command" command="HIDEHTMLELEMENTS" asset="library_info"/>
+    </event>
+    <param name="instructions" value=""/>
+    <param name="next" value="56184c7d-ba08-428a-911c-a833db222b41"/>
+    <text x="14.86" y="55.56" minWidth="20" w="45.95" maxWidth="500" fill="#000000" fontStyle="normal" fontWeight="normal" stroke="rgba(255, 255, 255, 0)" strokeWidth="1" opacity="1" editable="" h="5.27" r="0" z-index="0" font="Sans-serif" fontsize="48" weight="" id="59d1b35d-ded7-48d4-8d18-2d231db1b6b3">
+      Then pen is mightier then the sward
+      <config>
+        <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"color":"#000000","fontfamily":"Sans-serif","fontsize":18,"fontweight":false,"fontstyle":false}]]>
+      </config>
+    </text>
+    <wordduniyatext x="37.92" y="8.15" minWidth="20" w="45.12" maxWidth="500" fill="#000000" fontStyle="normal" fontWeight="normal" stroke="rgba(255, 255, 255, 0)" strokeWidth="1" opacity="1" editable="" h="5.27" r="0" z-index="1" font="Sans-serif" fontsize="48" weight="" id="ac94855d-94ea-4306-8ee0-8b3801b54b13" words="everyday,library">
+      Alice everyday goes to library to study
+      <data>
+        <![CDATA[{"controller":{"library":{"lemma":"library","gloss":"(computing) a collection of standard programs and subroutines that are stored and available for immediate use"},"everyday":{"lemma":"everyday","gloss":""}},"template":{"id":"infoTemplate","g":{"x":"0","y":"0","w":"100","h":"100","image":{"asset":"popupTint","x":"0","y":"0","w":"100","h":"100","visible":"true","id":"popup-Tint"},"text":[{"x":"25","y":"25","w":"50","h":"9","visible":"true","editable":"true","model":"word.lemma","weight":"normal","font":"helvetica","color":"rgb(0,0,0)","fontsize":"75","align":"left","z-index":"1","id":"lemma"},{"x":"25","y":"35","w":"50","h":"40","visible":"true","editable":"true","model":"word.gloss","weight":"normal","font":"helvetica","color":"rgb(0,0,0)","fontsize":"43","align":"left","z-index":"2","id":"gloss"}],"shape":{"x":"20","y":"20","w":"60","h":"60","visible":"true","editable":"true","type":"roundrect","radius":"10","opacity":"1","fill":"#45b3a5","stroke-width":"1","z-index":"0","id":"textBg"},"event":{"type":"click","action":[{"type":"command","command":"SHOWHTMLELEMENTS","asset":"textBg"},{"type":"command","command":"hide","parent":"true"}]}}}}]]>
+      </data>
+      <config>
+        <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"color":"#000000","fontfamily":"Sans-serif","fontsize":18,"fontweight":false,"fontstyle":false}]]>
+      </config>
+    </wordduniyatext>
+  </stage>
+  <stage x="0" y="0" w="100" h="100" id="56184c7d-ba08-428a-911c-a833db222b41" r="">
+    <config>
+      <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true}]]>
+    </config>
+    <param name="instructions" value=""/>
+    <param name="previous" value="672da205-80a6-41b8-9e72-93862a1c4de1"/>
+  </stage>
+  <manifest>
+    <media id="wordduniyatext" src="karaoke.js" type="plugin"/>
+    <media id="popupTint" src="https://dev.ekstep.in/assets/public/content/PopupTint_1460636175572.png" type="image" assetId="domain_38606" preload="true"/>
+  </manifest>
 </theme>
