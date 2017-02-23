@@ -78,9 +78,14 @@ function launchInitialPage(appInfo, $state) {
         });
     } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
         (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
-        $state.go('contentList', {
-            "id": GlobalContext.game.id
-        });
+        if (!isbrowserpreview) {
+            // only for the LocalDevelopment we are showing the collection list 
+            $state.go('contentList', {
+                "id": GlobalContext.game.id
+            });
+        }else{
+            console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
+        }
     }
 }
 
@@ -250,6 +255,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             $rootScope.getContentBody(urlContentId);
                         }
                     } else {
+                        localStorageGC.setItem("collection", GlobalContext.game.collection);
                         $rootScope.deviceRendrer();
                     }
                 }).catch(function(res) {
@@ -395,18 +401,19 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.playContent = function(content) {
             $rootScope.content = content;
             if (content.mimeType == COLLECTION_MIMETYPE) {
-                $state.go('contentList', { "id": content.identifier });
-                GlobalContext.previousContentMimeType = content.mimeType;
-                GlobalContext.previousContentId = content.identifier;
+                console.info("collection nat handled")
             } else {
                 GlobalContext.currentContentId = content.identifier;
                 GlobalContext.currentContentMimeType = content.mimeType;
-                collectionPath.push({ identifier: content.identifier, mediaType: "Content" });
-                 $state.go('playContent', {
-                        'itemId': content.identifier });
+                collectionPath.push({
+                    identifier: content.identifier,
+                    mediaType: "Content"
+                });
+                $state.go('playContent', {
+                    'itemId': content.identifier
+                });
             }
         };
-
         $scope.simulateCrash = function(fatal) {
             if (navigator.crashlytics) {
                 if (fatal === true) {
@@ -840,6 +847,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showRelatedContentHeader = true;
         $scope.relatedContents = [];
         $scope.relatedContentPath = [];
+        $scope.collectionTree = localStorageGC.getItem('collection');
    $scope.playRelatedContent = function(content) {
         $scope.showRelatedContent = false;
         $scope.contentShowMore = false;
@@ -895,7 +903,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.renderRelatedContent = function(id) {
             var list = [];
-            if (_.isUndefined($rootScope.collection)) {
+            if (_.isUndefined($scope.collectionTree) || $scope.collectionTree.length == 0) {
                 if (("undefined" != typeof cordova)) {
                     list = [{
                         "identifier": id,
@@ -904,6 +912,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     $scope.getRelatedContent(list);
                 }
             }else{
+                list = $scope.collectionTree;
+                $scope.getRelatedContent(list);
                 console.info("COOLECTION RELATED CONTENT LOGIC IS NOT IMPLEMENTED..");
             }
         }

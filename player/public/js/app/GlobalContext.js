@@ -27,12 +27,14 @@ GlobalContext = {
                 promises.push(GlobalContext._getIntentExtra('contentId', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('appInfo', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('language_info', GlobalContext.config));
+                promises.push(GlobalContext._getIntentExtra('collection', GlobalContext.config));
                 Promise.all(promises)
                 .then(function(result) {
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
                         GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
                         GlobalContext.game.id = GlobalContext.config.appInfo.identifier;
                         GlobalContext.game.ver = GlobalContext.config.appInfo.pkgVersion || "1";
+                        GlobalContext.game.collection = GlobalContext.config.appInfo.collection;
                         // Assuming filter is always an array of strings.
                         GlobalContext.filter = (GlobalContext.config.appInfo.filter)? JSON.parse(GlobalContext.config.appInfo.filter): GlobalContext.config.appInfo.filter;
                     }

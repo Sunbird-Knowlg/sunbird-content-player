@@ -29,7 +29,6 @@ function startProgressBar(w, setInter, name) {
         }
     }
 }
-/*startProgressBar();*/
 
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
@@ -118,7 +117,7 @@ function checkStage(showalert) {
         if (showalert == "showAlert") {
             alert("No stage found, redirecting to collection list page")
         }
-        window.location.hash = "#/content/list/" + GlobalContext.previousContentId;
+        exitApp();
     } else {
         if (showalert == "showAlert") {
             alert("No Stage found, existing canvas")
