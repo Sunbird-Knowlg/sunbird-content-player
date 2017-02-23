@@ -78,6 +78,7 @@ var StagePlugin = Plugin.extend({
         var isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
         if (!isStageLoaded) {
             var timeInst;
+            this.timeInstance[data.id] = [];
             //If assets is not loaded, add a event bus which will be trigurred as soon as assets are loaded completely
             EventBus.addEventListener(data.id + '_assetsLoaded', instance.invokeRenderElements, this);
             timeInst = setTimeout(function() {
@@ -92,11 +93,10 @@ var StagePlugin = Plugin.extend({
                         if (jQuery('#loaderArea').css('display') == 'block' && instance._theme._currentStage == instance._data.id) {
                             instance.invokeRenderElements();
                         }
-                    },this.maxTimeToLoad)
-                    this.timeInstance[data.id].push(timeInst)
+                    },instance.maxTimeToLoad)
+                    instance.timeInstance[data.id].push(timeInst)
                 }
             },500)
-            this.timeInstance[data.id] = [];
             this.timeInstance[data.id].push(timeInst)
             return
         }
