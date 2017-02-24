@@ -201,14 +201,14 @@ LoadByStageStrategy = Class.extend({
             if (cb) {
                 if (!_.isUndefined(instance.loaders[stageId]) && (instance.loaders[stageId].progress < 1 || instance.loaders[stageId].loaded == false)) {
                     instance.loaders[stageId].on("complete", function() {
-                        var data = Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
+                        var data = Renderer.theme && Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
                         if (stageId == data) {
                             EventBus.dispatch(data + '_assetsLoaded');
                             cb();
                         }
                     }, null, true);
                 } else {
-                    var data = Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
+                    var data = Renderer.theme && Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
                     if (stageId == data) {
                         EventBus.dispatch(data + '_assetsLoaded');
                         cb();

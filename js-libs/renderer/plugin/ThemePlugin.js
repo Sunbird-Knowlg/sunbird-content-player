@@ -202,7 +202,9 @@ var ThemePlugin = Plugin.extend({
         this.htmlElements = [];
         this._animationEffect = effect;
         TimerManager.destroy();
-        EventBus.removeEventListener(this._currentScene._id + '_assetsLoaded', this._currentScene.invokeRenderElements, this);
+        if (!_.isUndefined(this._currentScene)) {
+            EventBus.removeEventListener(this._currentScene._id + '_assetsLoaded', this._currentScene.invokeRenderElements, this);
+        }
         (stageId) ? this.invokeStage(stageId) : OverlayManager.moveToEndPage();
     },
     invokeStage: function(stageId) {

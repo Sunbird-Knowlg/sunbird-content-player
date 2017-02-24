@@ -74,9 +74,11 @@ var StagePlugin = Plugin.extend({
                 });
             }
         }
-            
-        var isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
-        if (!isStageLoaded) {
+        var isStageLoaded;
+        if (!_.isUndefined(AssetManager.strategy)) {
+            isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
+        }
+        if (isStageLoaded == false) {
             var timeInst;
             this.timeInstance[data.id] = [];
             //If assets is not loaded, add a event bus which will be trigurred as soon as assets are loaded completely
@@ -104,7 +106,6 @@ var StagePlugin = Plugin.extend({
     },
     destroyTimeInstance: function(data) {
         var instance = this;
-        var stages = Renderer.theme.getStagesToPreLoad(data);
         var clearTimeOut = function(stageId) {
             if (instance.timeInstance[stageId] && _.isArray(instance.timeInstance[stageId])) {
                 instance.timeInstance[stageId].forEach(function(inst) {
@@ -113,8 +114,11 @@ var StagePlugin = Plugin.extend({
                 delete instance.timeInstance[stageId];
             }
         };
-        clearTimeOut(stages.next);
-        clearTimeOut(stages.prev);
+        if (Renderer.theme && Renderer.theme.getStagesToPreLoad) {
+            var stages = Renderer.theme.getStagesToPreLoad(data);
+            clearTimeOut(stages.next);
+            clearTimeOut(stages.prev);
+        }
     },
     invokeRenderElements: function() {
         this.invokeChildren(this._data, this, this, this._theme);
