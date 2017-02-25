@@ -847,7 +847,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showRelatedContentHeader = true;
         $scope.relatedContents = [];
         $scope.relatedContentPath = [];
-        $scope.collectionTree = localStorageGC.getItem('collection');
    $scope.playRelatedContent = function(content) {
         $scope.showRelatedContent = false;
         $scope.contentShowMore = false;
@@ -919,6 +918,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.init = function() {
+         $scope.collectionTree = localStorageGC.getItem('collection');
             if ("undefined" != typeof cordova) {
                 $scope.renderRelatedContent($stateParams.contentId);
             } else {
