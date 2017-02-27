@@ -204,7 +204,7 @@ body{
 
 .gc-menu-cont {
     height: 100%;
-    background-color: #00cccc;
+    background-color: #2691D0;
 }
 
 .gc-menu .gc-menu-bg {
@@ -261,6 +261,7 @@ body{
     text-transform: uppercase;
     text-align: center;
     width: 50%;
+    top: 31%;
     right: 7%;
 }
 
@@ -291,7 +292,7 @@ body{
     position: absolute;
     text-align: center;
     width: 50%;
-    left: 2%;
+    left: 25%;
 }
 
 .gc-menu-inst-cont img{
