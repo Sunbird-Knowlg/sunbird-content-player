@@ -1052,11 +1052,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-<<<<<<< HEAD
             template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}icn_audio.png" style="position: absolute;margin: 3%;width: 10%;z-index: 1;margin-left: 40%;" /><img id="unmute_id" ng-src="{{unmuteIcon}}"  style="position: absolute;margin: 2% 2% 2% 39%;display: list-item; width: 14%; z-index: 1;"/> </a>',
-=======
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}icn_audio.png" style="position: absolute;margin: 5%;width: 10%;z-index: 1;margin-left: 40%;" /><img id="unmute_id" ng-src="{{unmuteIcon}}"  style="position: absolute;margin: 5% 2% 2% 40%;display: list-item;width: 12%;z-index: 1;"/> </a>',
->>>>>>> df0e11a7d605e77a873804c154464b401372de66
             link: function(scope, url) {
                 scope.mutestatus = "mute.png";
                 // If audiomanager is muted change the default sound icon
