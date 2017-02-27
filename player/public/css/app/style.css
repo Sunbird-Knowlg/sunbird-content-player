@@ -512,7 +512,7 @@ body{
     height: 20%;
 }
 
-.credit-body-icon-font {
+.credit-body-icon-font .stage-Teacherinst {
     width: 82%;
     word-wrap: break-word;
     height: 75%;
@@ -528,22 +528,22 @@ body{
     cursor: pointer;
 }
 
-.credit-body-icon-font::-webkit-scrollbar {
+.credit-body-icon-font::-webkit-scrollbar, .stage-Teacherinst::-webkit-scrollbar {
     width: 3%;
     border-radius: 30%;
 }
 
-.credit-body-icon-font::-webkit-scrollbar-track {
+.credit-body-icon-font::-webkit-scrollbar-track, .stage-Teacherinst::-webkit-scrollbar-track {
     background-color: #d0cfce;
     border-radius: 10%;
 }
 
-.credit-body-icon-font::-webkit-scrollbar-thumb {
+.credit-body-icon-font::-webkit-scrollbar-thumb, .stage-Teacherinst::-webkit-scrollbar-thumb {
     background-color: #000000;
     border-radius: 35%;
 }
 
-.credit-body-icon-font::-webkit-scrollbar-thumb:hover {
+.credit-body-icon-font::-webkit-scrollbar-thumb:hover, .stage-Teacherinst::-webkit-scrollbar-thumb:hover {
   background-color: #000000;
   border-radius: 10%;
 }
