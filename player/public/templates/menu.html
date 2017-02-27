@@ -36,9 +36,9 @@
  -->    <img class="gc-mute-bg" ng-src="{{imageBasePath}}audio_bg.png" />
             <!-- <img class="gc-mute-bg" ng-src="{{imageBasePath}}autoplay_icon.png" style=" position: absolute; bottom: 12%; width: 12%; height: 6%; left: 56%;" /> -->
         </div>
-        <div class="inst-message-cont" ng-show="showInst">
+        <div class="inst-message-cont " ng-show="showInst">
             <img class="inst-icon" ng-src="{{imageBasePath}}icn_teacherinfo.png" ng-click="expeandInstruction()" />
-            <p>{{ stageInstMessage }}</p>
+            <p class="stage-Teacherinst">{{ stageInstMessage }}</p>
             <img class="inst-done" ng-src="{{imageBasePath}}icn_done.png" ng-click="closeInstructions()" />
         </div>
     </div>
