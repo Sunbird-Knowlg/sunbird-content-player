@@ -44,12 +44,12 @@ var VideoPlugin = Plugin.extend({
         if (event.type === 'pause') {
             event.type = videoEle.currentTime > 0 ? 'pause' : 'stop';
             if(!videoEle.ended){
-                EventManager.processAppTelemetry(action, 'OTHER', _instance, {subtype: event.type.toUpperCase()});
+                 _instance.sendTelemeteryData(action,event.type)
             }
         }
         if (event.type === 'play') {
             if (!videoEle.autoplay) {
-                    EventManager.processAppTelemetry(action, 'OTHER', _instance, {subtype: event.type.toUpperCase()});
+                    _instance.sendTelemeteryData(action,event.type);
             }
             videoEle.autoplay = undefined;
         }
@@ -64,7 +64,7 @@ var VideoPlugin = Plugin.extend({
     },
     sendTelemeteryData: function(action, subType){
         if(action)
-            EventManager.processAppTelemetry(action, 'OTHER', this._instance, {subtype : subType});
+            EventManager.processAppTelemetry(action, 'OTHER', this._instance, {subtype: subType.toUpperCase()});
     },
     play: function(action) {
         var videoEle = this.handleAsset(action);
