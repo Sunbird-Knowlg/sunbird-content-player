@@ -31,13 +31,13 @@ var VideoPlugin = Plugin.extend({
     },
     registerEvents : function(){
         var videoEle = this.getVideo(this._data.asset);
-        jQuery(videoEle).bind('play', this.logTelemetry);        
-        jQuery(videoEle).bind('pause', this.logTelemetry);
+        jQuery(videoEle).bind('play', this.logVideoTelemetry);        
+        jQuery(videoEle).bind('pause', this.logVideoTelemetry);
         jQuery(videoEle).bind("error", this.logConsole);
         jQuery(videoEle).bind("abort", this.logConsole);        
         jQuery(videoEle).bind("loadeddata", this.onLoadData);
     },
-    logTelemetry: function(event) {
+    logVideoTelemetry: function(event) {
         var action = {}, videoEle = event.target;
         action.asset = videoEle.id;
         action.stageId = Renderer.theme._currentStage;
@@ -102,13 +102,13 @@ var VideoPlugin = Plugin.extend({
     getVideo: function(videoId){
         return document.getElementById(videoId);
     },
-    setPropsandCss: function(jqVideoEle) {
+    setVideoStyle: function(jqVideoEle) {
         var dims = this.relativeDims();
         jQuery(jqVideoEle).attr("id", this._data.asset)
         .prop({autoplay: this._data.autoplay, muted:this._data.muted, controls: this._data.controls, width: dims.w, height: dims.h})
         .css({position: 'absolute', left: dims.x + "px", top: dims.y + "px","display":'block'});
     },
-    addVideotoTheme: function(jqVideoEle) {
+    addVideoElement: function(jqVideoEle) {
         this._theme.htmlElements.push(jQuery(jqVideoEle).attr('id'));
         var videoEle = this.getVideo(this._data.asset);
         var div = document.getElementById('gameArea');
@@ -124,8 +124,8 @@ var VideoPlugin = Plugin.extend({
         }
         var jqVideoEle = jQuery(videoAsset).insertBefore("#gameArea");
         !_.isUndefined(this._data.type) ? jQuery(jqVideoEle).attr("type", this._data.type) : console.warn("Video type is not defined");
-        this.setPropsandCss(jqVideoEle);
-        this.addVideotoTheme(jqVideoEle);
+        this.setVideoStyle(jqVideoEle);
+        this.addVideoElement(jqVideoEle);
          var videoEle = this.getVideo(this._data.asset);
         return new createjs.Bitmap(videoEle);
     }
