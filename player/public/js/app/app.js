@@ -17,7 +17,6 @@ var stack = new Array(),
         showHTMLPages: true
     },
     isbrowserpreview = getUrlParameter("webview"),
-    isMobile = window.cordova ? true : false,
     setContentDataCb = undefined;
 
 // TODO:have to remove appState and setContentDataCb in future.
@@ -144,14 +143,78 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             } else {
                 this.$apply(fn);
             }
-        }
+        };
+        $rootScope.getContentMetadata = function(id, cb) {
+            ContentService.getContent(id)
+                .then(function(data) {
+                    $rootScope.setContentMetadata(data);
+                    if (!_.isUndefined(cb)) {
+                        cb();
+                    }
+                })
+                .catch(function(err) {
+                    console.info("contentNotAvailable : ", err);
+                    contentNotAvailable();
+                });
+        };
+        $rootScope.getDataforPortal = function(id) {
+            ContentService.getContentMetadata(id)
+                .then(function(data) {
+                    $rootScope.setContentMetadata(data);
+                })
+                .catch(function(err) {
+                    console.info("contentNotAvailable : ", err);
+                    contentNotAvailable();
+                });
+        };
+        $rootScope.setContentMetadata = function(contentData) {
+            var data = _.clone(contentData);
+            content["metadata"] = data;
+            GlobalContext.currentContentId = data.identifier;
+            GlobalContext.currentContentMimeType = data.mimeType;
+            if (_.isUndefined(data.localData)) {
+                data.localData = _.clone(contentData);
+            } else {
+                data = data.localData;
+            }
+            $rootScope.safeApply(function() {
+                $rootScope.content = data;
+            });
+        };
+        $rootScope.getContentBody = function(id) {
+            ContentService.getContentBody(id)
+                .then(function(data) {
+                    content["body"] = data.body;
+                    launchInitialPage(content.metadata, $state);
+
+                })
+                .catch(function(err) {
+                    console.info("contentNotAvailable : ", err);
+                    contentNotAvailable();
+                });
+        };
+        $rootScope.deviceRendrer = function() {
+            if ($state.current.name == appConstants.stateShowContentEnd) {
+                $rootScope.$broadcast("loadEndPage");
+            } else {
+                if (isMobile) {
+                    $rootScope.getContentMetadata(GlobalContext.game.id, function() {
+                        $state.go('playContent', {
+                            'itemId': $rootScope.content.identifier
+                        });
+                    });
+                } else {
+                    launchInitialPage(GlobalContext.config.appInfo, $state);
+                }
+            }
+        };
 
         $timeout(function() {
             $ionicPlatform.ready(function() {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
                 //appState = $state;
-
+                isMobile = window.cordova ? true : false,
                 console.log('ionic platform is ready...');
                 if ("undefined" == typeof Promise) {
                     alert("Your device isn’t compatible with this version of Genie.");
@@ -175,69 +238,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $ionicPlatform.on("resume", function() {
                     Renderer.resume();
                 });
-                $rootScope.getContentMetadata = function(id, cb) {
-                    ContentService.getContent(id)
-                        .then(function(data) {
-                            $rootScope.setContentMetadata(data);
-                            if (!_.isUndefined(cb)) {
-                                cb();
-                            }
-                        })
-                        .catch(function(err) {
-                            console.info("contentNotAvailable : ", err);
-                            contentNotAvailable();
-                        });
-                };
-                $rootScope.getDataforPortal = function(id) {
-                    ContentService.getContentMetadata(id)
-                        .then(function(data) {
-                           $rootScope.setContentMetadata(data);
-                        })
-                        .catch(function(err) {
-                            console.info("contentNotAvailable : ", err);
-                            contentNotAvailable();
-                        });
-                };
-                $rootScope.setContentMetadata = function(contentData) {
-                    var data = _.clone(contentData);
-                    content["metadata"] = data;
-                    GlobalContext.currentContentId = data.identifier;
-                    GlobalContext.currentContentMimeType = data.mimeType;
-                    if (_.isUndefined(data.localData)) {
-                        data.localData = _.clone(contentData);
-                    } else {
-                        data = data.localData;
-                    }
-                    $rootScope.safeApply(function() {
-                        $rootScope.content = data;
-                    });
-                    
-                };
-                $rootScope.getContentBody = function(id) {
-                    ContentService.getContentBody(id)
-                        .then(function(data) {
-                            content["body"] = data.body;
-                            launchInitialPage(content.metadata, $state);
-
-                        })
-                        .catch(function(err) {
-                            console.info("contentNotAvailable : ", err);
-                            contentNotAvailable();
-                        });
-                };
-                $rootScope.deviceRendrer = function() {
-                    if ($state.current.name == appConstants.stateShowContentEnd) {
-                        $rootScope.$broadcast("loadEndPage");
-                    } else {
-                        if (isMobile) {
-                            $rootScope.getContentMetadata(GlobalContext.game.id, function() {
-                                $state.go('playContent', {'itemId': $rootScope.content.identifier});
-                            });
-                        } else {
-                            launchInitialPage(GlobalContext.config.appInfo, $state);
-                        }
-                    }
-                };
                 genieservice.getMetaData().then(function(data) {
                     var flavor = data.flavor;
                     if (AppConfig[flavor] == undefined)
@@ -461,6 +461,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if ($stateParams.itemId && $rootScope.content) {
                 localStorageGC.setItem("content", $rootScope.content);
                 startProgressBar(40, 0.6, $rootScope.content.name);
+                 // In the case of AT preview Just we are setting up the currentContentId 
+                GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
                 $scope.callStartTelemetry($rootScope.content);
                 $scope.item = $rootScope.content;
                 if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
@@ -851,6 +853,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showRelatedContent = false;
         $scope.contentShowMore = false;
         $scope.showRelatedContentHeader = false;
+        $scope.collectionTree = undefined;
         collectionPath = $scope.relatedContentPath;
         TelemetryService.interact("TOUCH", "gc_relatedcontent", "TOUCH", {
             stageId: "endpage",
@@ -902,7 +905,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.renderRelatedContent = function(id) {
             var list = [];
-            if (_.isUndefined($scope.collectionTree) || $scope.collectionTree.length == 0) {
+            if (_.isUndefined($scope.collectionTree) || _.isEmpty($scope.collectionTree)) {
                 if (("undefined" != typeof cordova)) {
                     list = [{
                         "identifier": id,
@@ -913,12 +916,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }else{
                 list = $scope.collectionTree;
                 $scope.getRelatedContent(list);
-                console.info("COOLECTION RELATED CONTENT LOGIC IS NOT IMPLEMENTED..");
             }
         }
 
         $scope.init = function() {
-         $scope.collectionTree = localStorageGC.getItem('collection');
+            $scope.collectionTree = localStorageGC.getItem('collection');
             if ("undefined" != typeof cordova) {
                 $scope.renderRelatedContent($stateParams.contentId);
             } else {
