@@ -20,8 +20,8 @@ var VideoPlugin = Plugin.extend({
     },
     loadVideo: function (data){
         if(!data.asset) return false;
-        var lItem =  this.createDOMElementVideo();
-        var videoEle = this.getVideo(data.asset);
+        var lItem =  this.createVideoElement();
+        var videoEle = this.getVideo(data);
         videoEle.load();
         this.registerEvents();    
         this._self = new createjs.Bitmap(lItem);
@@ -30,14 +30,14 @@ var VideoPlugin = Plugin.extend({
         }        
     },
     registerEvents : function(){
-        var videoEle = this.getVideo(this._data.asset);
-        jQuery(videoEle).bind('play', this.logVideoTelemetry);        
-        jQuery(videoEle).bind('pause', this.logVideoTelemetry);
+        var videoEle = this.getVideo(this._data);
+        jQuery(videoEle).bind('play', this.handleTelemetryLog);        
+        jQuery(videoEle).bind('pause', this.handleTelemetryLog);
         jQuery(videoEle).bind("error", this.logConsole);
         jQuery(videoEle).bind("abort", this.logConsole);        
         jQuery(videoEle).bind("loadeddata", this.onLoadData);
     },
-    logVideoTelemetry: function(event) {
+    handleTelemetryLog: function(event) {
         var action = {}, videoEle = event.target;
         action.asset = videoEle.id;
         action.stageId = Renderer.theme._currentStage;
@@ -67,20 +67,20 @@ var VideoPlugin = Plugin.extend({
             EventManager.processAppTelemetry(action, 'OTHER', this._instance, {subtype: subType.toUpperCase()});
     },
     play: function(action) {
-        var videoEle = this.handleAsset(action);
+        var videoEle = this.getVideo(action);
         videoEle.paused && videoEle.readyState > 2 ? this.start(videoEle) : console.warn('Video is not ready to play',videoEle.readyState);
     },
     pause:function(action){
-       var videoEle = this.handleAsset(action);
+       var videoEle = this.getVideo(action);
        !_.isUndefined(videoEle) ? videoEle.pause() : console.info("video pause failed");
     },
     stop: function(action) {
-        var videoEle = this.handleAsset(action);
+        var videoEle = this.getVideo(action);
         videoEle.pause();
         videoEle.currentTime = 0;          
     },   
     replay: function(){
-       var videoEle = this.getVideo(this._data.asset);
+       var videoEle = this.getVideo(this._data);
        videoEle.currentTime = 0;
        this.play();
     },
@@ -91,16 +91,13 @@ var VideoPlugin = Plugin.extend({
                 videoEle.play();
             },delay);
     },
-    handleAsset: function(action) {
+    getVideo: function(action) {
         if (!_.isUndefined(action)) {
-            return this.getVideo(action.asset);
+            return document.getElementById(action.asset);
         } else {
             console.info("Video started without any ECML action");
-            return this.getVideo(this._data.asset);
+            return document.getElementById(this._data.asset);
         }
-    },
-    getVideo: function(videoId){
-        return document.getElementById(videoId);
     },
     setVideoStyle: function(jqVideoEle) {
         var dims = this.relativeDims();
@@ -110,11 +107,11 @@ var VideoPlugin = Plugin.extend({
     },
     addVideoElement: function(jqVideoEle) {
         this._theme.htmlElements.push(jQuery(jqVideoEle).attr('id'));
-        var videoEle = this.getVideo(this._data.asset);
+        var videoEle = this.getVideo(this._data);
         var div = document.getElementById('gameArea');
         div.insertBefore(videoEle, div.childNodes[0]);
     },
-    createDOMElementVideo: function() {
+    createVideoElement: function() {
         var videoAsset;
         videoAsset = this._theme.getAsset(this._data.asset);
         if (videoAsset instanceof HTMLElement == false) {
@@ -126,7 +123,7 @@ var VideoPlugin = Plugin.extend({
         !_.isUndefined(this._data.type) ? jQuery(jqVideoEle).attr("type", this._data.type) : console.warn("Video type is not defined");
         this.setVideoStyle(jqVideoEle);
         this.addVideoElement(jqVideoEle);
-         var videoEle = this.getVideo(this._data.asset);
+         var videoEle = this.getVideo(this._data);
         return new createjs.Bitmap(videoEle);
     }
  });
