@@ -81,9 +81,9 @@ Renderer = {
         Renderer.theme = new ThemePlugin(content);
         Renderer.resizeGame(true);
         Renderer.theme.baseDir = gameRelPath;
-        Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
         var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);
         PluginManager.registerCustomPlugins(manifest, gameRelPath.replace('file:///', '') + "/widgets/");
+        Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
         createjs.Ticker.addEventListener("tick", function() {
             if(Renderer.update) {
                 if(!_(Renderer.theme).isUndefined()){

@@ -304,21 +304,6 @@ LoadByStageStrategy = Class.extend({
     _createLoader: function() {
         return "undefined" == typeof cordova ? new createjs.LoadQueue(true, null, true) : new createjs.LoadQueue(false);
     },
-    getManifest : function(content) {
-        // Get all manifest defined inside content, only give stage manifest.
-        // TODO : Once plugin manifest is implemented function should have to be improved.
-        var manifest = {};
-        manifest.media = [];
-        _.each(content.stage, function(stage) {
-            if (!_.isUndefined(stage.manifest) && !_.isUndefined(stage.manifest.media)) {
-                if (!_.isArray(stage.manifest.media)) stage.manifest.media = [stage.manifest.media];
-                _.each(stage.manifest.media, function(media) {
-                    manifest.media.push(media)
-                })
-            }
-        })
-        return manifest;
-    },
     isStageAssetsLoaded : function(stageId) {
         // Show weather stage manifest are loaded or not.
         var manifest = JSON.parse(JSON.stringify(this.stageManifests[stageId]));
