@@ -1052,25 +1052,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}icn_audio.png" style="position: absolute;margin: 3%;width: 10%;z-index: 1;margin-left: 40%;" /><img id="unmute_id" ng-src="{{unmuteIcon}}"  style="position: absolute;margin: 2% 2% 2% 39%;display: list-item; width: 14%; z-index: 1;"/> </a>',
+            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}icn_audio.png" style="position: absolute;margin: 3%;width: 10%;z-index: 1;margin-left: 40%; display: block;" /><img id="unmute_id" ng-src="{{imageBasePath}}unmute.png" style="position: absolute;margin: 2% 2% 2% 39%;display: none; width: 14%; z-index: 1;"/> </a>',
             link: function(scope, url) {
-                scope.mutestatus = "mute.png";
-                // If audiomanager is muted change the default sound icon
-                if (AudioManager.muted) {
-                    scope.unmuteIcon = $rootScope.imageBasePath + "unmute.png";
-                    document.getElementById("unmute_id").style.visibility = "visible"
-                }
                 scope.mute = function() {
                     //mute function goes here
                     if (AudioManager.muted) {
                         AudioManager.unmute();
-                        delete scope.unmuteIcon;
-                        document.getElementById("unmute_id").removeAttribute("src");
-                        document.getElementById("unmute_id").style.visibility = "hidden"
+                        document.getElementById("unmute_id").style.display = "none";
                     } else {
                         AudioManager.mute();
-                        scope.unmuteIcon = $rootScope.imageBasePath + "unmute.png";
-                        document.getElementById("unmute_id").style.visibility = "visible"
+                        document.getElementById("unmute_id").style.display = "block";
                     }
                   TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute" , "TOUCH", { stageId:Renderer.theme._currentStage});
                 }
@@ -1083,6 +1074,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             link: function(scope) {
                 scope.restartContent = function() {
                     $rootScope.replayContent();
+                    //Resetting mute state
+                    document.getElementById("unmute_id").style.display = "none";
                     AudioManager.unmute();
                     if (!_.isUndefined(scope.hideMenu) && scope.menuOpened)
                         scope.hideMenu();
