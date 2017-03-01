@@ -42,11 +42,18 @@ AssetManager = {
             console.info("asset not loaded because AssetManager not initialised or failed to initialize.")
     },
     getManifest: function(content) {
-        if (AssetManager.strategy) {
-            var manifest = AssetManager.strategy.getManifest(content);
-            return manifest
-        } else {
-            console.info("asset not loaded because AssetManager not initialised or failed to initialize.")
-        }
+        // Get all manifest defined inside content, only give stage manifest.
+        // TODO : Once plugin manifest is implemented function should have to be improved.
+        var manifest = {};
+        manifest.media = [];
+        _.each(content.stage, function(stage) {
+            if (!_.isUndefined(stage.manifest) && !_.isUndefined(stage.manifest.media)) {
+                if (!_.isArray(stage.manifest.media)) stage.manifest.media = [stage.manifest.media];
+                _.each(stage.manifest.media, function(media) {
+                    manifest.media.push(media)
+                })
+            }
+        })
+        return manifest;
     }
 }
