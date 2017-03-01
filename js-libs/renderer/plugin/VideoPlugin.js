@@ -3,143 +3,127 @@
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 // http://www.w3schools.com/tags/ref_av_dom.asp
 var VideoPlugin = Plugin.extend({
-    _type: 'video',
     _render: true,
     _data: undefined,
-    _videoEle: undefined,
     _instance: undefined,
+    _defaultStart: 50, //Start video to play after loading all video frames; 
+    _type: 'video',
     initPlugin: function(data) {
         this._data = data;
         if(this._data){
-            if(_.isUndefined(data.autoplay)) this._data.autoplay = true;
-            if(_.isUndefined(data.controls)) this._data.controls = false;
-            if(_.isUndefined(data.muted)) this._data.muted = false;   
+            if(_.isUndefined(this._data.autoplay)) this._data.autoplay = true;
+            if(_.isUndefined(this._data.controls)) this._data.controls = false;
+            if(_.isUndefined(this._data.muted)) this._data.muted = false;   
         }
-        this.loadVideo();
+        this.loadVideo(data);
         _instance = this;
-       
     },
-    loadVideo: function (){
-        var lItem =  this._createDOMElementVideo();
-        var videoEle = this.getVideo(this._data.asset);
+    loadVideo: function (data){
+        if(!data.asset) return false;
+        var lItem =  this.createVideoElement();
+        var videoEle = this.getVideo(data);
         videoEle.load();
         this.registerEvents();    
         this._self = new createjs.Bitmap(lItem);
-        //If autoplay set to true, then play video
-        if(this._data.autoplay == true){ 
+        if(data.autoplay == true){ 
             this.play();           
         }        
     },
     registerEvents : function(){
-        // This function will only takecare of registering of the events relted to video
-        var action = {},instance = this;
-        action.asset = this._data.asset;
-        action.stageId = this._theme._currentStage;
-        var videoEle = instance.getVideo(this._data.asset);
-        jQuery(videoEle).bind('play', function (e) {
-        // Blocking OE_INTREACT Telemetry if the case of autoPlay prop is defined to Video Eleme
-            if(!instance._data.autoplay)instance.sendTelemeteryData(action,"PLAY");
-                instance._data.autoplay = undefined;
-        });        
-        jQuery(videoEle).bind('pause', function(e) {
-             /*If user click on pause button
-             then it looks for the video currentTime
-            if it is == 0 then it is stop else this video is just paused */
-            videoEle.currentTime > 0 ? instance.sendTelemeteryData(action, "PAUSE") : instance.sendTelemeteryData(action, "STOP");
-        });
-        videoEle.addEventListener("error", function (evt) {
-        var lErrMesg = "Error loading video element, event.type [" + evt.type + "]  Media Details: [" + evt.target.src + "]";
-            console.log(lErrMesg);
-
-        });
-        videoEle.addEventListener("abort", function (evt) {
-            var lErrMesg = "Abort/Error loading video element, event.type [" + evt.type + "] Media Details: [" + evt.target.src + "]";
-            console.log(lErrMesg);
-        });        
-        
-        videoEle.addEventListener("loadeddata", function (evt) {
-            var lMesg = "Media element can be played, event.type [" + evt.type + "] Media Details: [" + evt.target.src + "]";
-            if(_instance.autoplay == true){
-                _instance.play();
+        var videoEle = this.getVideo(this._data);
+        jQuery(videoEle).bind('play', this.handleTelemetryLog);        
+        jQuery(videoEle).bind('pause', this.handleTelemetryLog);
+        jQuery(videoEle).bind("error", this.logConsole);
+        jQuery(videoEle).bind("abort", this.logConsole);        
+        jQuery(videoEle).bind("loadeddata", this.onLoadData);
+    },
+    handleTelemetryLog: function(event) {
+        var action = {}, videoEle = event.target;
+        action.asset = videoEle.id;
+        action.stageId = Renderer.theme._currentStage;
+        if (event.type === 'pause') {
+            event.type = videoEle.currentTime > 0 ? 'pause' : 'stop';
+            if(!videoEle.ended){
+                 _instance.sendTelemeteryData(action,event.type)
             }
-            console.log(lMesg);
-        });
-        videoEle.addEventListener('ended', function (evt){
-            _instance.end();
-        });
+        }
+        if (event.type === 'play') {
+            if (!videoEle.autoplay) {
+                    _instance.sendTelemeteryData(action,event.type);
+            }
+            videoEle.autoplay = undefined;
+        }
+    },
+    onLoadData: function() {
+        if (_instance.autoplay == true) {
+            _instance.play();
+        }
+    },
+    logConsole:function(e){
+        console.warn("This video has",e.type);
+    },
+    sendTelemeteryData: function(action, subType){
+        if(action)
+            EventManager.processAppTelemetry(action, 'OTHER', this._instance, {subtype: subType.toUpperCase()});
     },
     play: function(action) {
-        var videoEle = this.handleAsset(action);
-        if (videoEle) {
-            if (videoEle.paused) {
-                videoEle.readyState > 2 ? this.start(videoEle) : console.warn("Video is not ready to play,READY STATE:",videoEle.readyState);
-            }else {
-                console.info("Video is already playing");
-            }
-        };
+        var videoEle = this.getVideo(action);
+        videoEle.paused && videoEle.readyState > 2 ? this.start(videoEle) : console.warn('Video is not ready to play',videoEle.readyState);
     },
     pause:function(action){
-       var videoEle = this.handleAsset(action);
+       var videoEle = this.getVideo(action);
        !_.isUndefined(videoEle) ? videoEle.pause() : console.info("video pause failed");
     },
     stop: function(action) {
-        var videoEle = this.handleAsset(action);
-        videoEle.currentTime = 0;       
-        videoEle.pause();        
+        var videoEle = this.getVideo(action);
+        videoEle.pause();
+        videoEle.currentTime = 0;          
     },   
-    end: function(){
-        this.stop();        
-    },
     replay: function(){
-       var videoEle = this.getVideo(this._data.asset);
+       var videoEle = this.getVideo(this._data);
        videoEle.currentTime = 0;
        this.play();
     },
     start: function(videoEle) {
-        var delay =  _.isUndefined(this._data.delay) ? 36 : this._data.delay;
+        var delay =  _.isUndefined(this._data.delay) ? this._defaultStart : this._data.delay;
+        this._data.delay = this._defaultStart;
             setTimeout(function(){
                 videoEle.play();
             },delay);
     },
-    handleAsset: function(action) {
-        if(!_.isUndefined(action)){
-            return this.getVideo(action.asset);
-        }else{
+    getVideo: function(action) {
+        if (!_.isUndefined(action)) {
+            return document.getElementById(action.asset);
+        } else {
             console.info("Video started without any ECML action");
-            return this.getVideo(this._data.asset);
+            return document.getElementById(this._data.asset);
         }
-    },    
-    sendTelemeteryData: function(action, subType){
-        if(action)
-            EventManager.processAppTelemetry(action, 'OTHER', this._instance, {subtype : subType});
     },
-    getVideo: function(videoId){
-        return document.getElementById(videoId);
-    },
-    _createDOMElementVideo: function () {
-        // This function will create the video Dom element and adding into theme object
-        var videoAsset;
-        videoAsset = !_.isUndefined(this._data.asset) ? this._theme.getAsset(this._data.asset) : console.warn("Video asset is not present");
-        if(_.isUndefined(videoAsset)) return false;
-        if (videoAsset instanceof HTMLElement == false) {
-            var src = videoAsset
-            videoAsset = document.createElement("video");
-            videoAsset.src = src;
-            console.info("Asset load failed Please refresh the stage");            
-        }
-        var jqVideoEle = jQuery(videoAsset).insertBefore("#gameArea");       
-        !_.isUndefined(this._data.type) ? jQuery(jqVideoEle).attr("type",this._data.type) : console.warn("Video type is not defined");
+    setVideoStyle: function(jqVideoEle) {
         var dims = this.relativeDims();
         jQuery(jqVideoEle).attr("id", this._data.asset)
         .prop({autoplay: this._data.autoplay, muted:this._data.muted, controls: this._data.controls, width: dims.w, height: dims.h})
         .css({position: 'absolute', left: dims.x + "px", top: dims.y + "px","display":'block'});
-        //Pushing video element to the stage HTML elements list
-        // So when stage is chagned, remove all HTML elements of previous stage
-        this._theme.htmlElements.push(jQuery(jqVideoEle).attr('id'));        
-        var videoEle = this.getVideo(this._data.asset);
+    },
+    addVideoElement: function(jqVideoEle) {
+        this._theme.htmlElements.push(jQuery(jqVideoEle).attr('id'));
+        var videoEle = this.getVideo(this._data);
         var div = document.getElementById('gameArea');
         div.insertBefore(videoEle, div.childNodes[0]);
-        _videoEle = videoEle;       
+    },
+    createVideoElement: function() {
+        var videoAsset;
+        videoAsset = this._theme.getAsset(this._data.asset);
+        if (videoAsset instanceof HTMLElement == false) {
+            var src = videoAsset;
+            videoAsset = document.createElement("video");
+            videoAsset.src = src;
+        }
+        var jqVideoEle = jQuery(videoAsset).insertBefore("#gameArea");
+        !_.isUndefined(this._data.type) ? jQuery(jqVideoEle).attr("type", this._data.type) : console.warn("Video type is not defined");
+        this.setVideoStyle(jqVideoEle);
+        this.addVideoElement(jqVideoEle);
+         var videoEle = this.getVideo(this._data);
         return new createjs.Bitmap(videoEle);
     }
  });

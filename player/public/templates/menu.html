@@ -13,13 +13,8 @@
                 <genie icon="icn_home.png"></genie>
                 <p class="icon-font gc-menu-genie-cont-icon">{{languageSupport.home}}</p>
             </div>
-            <!-- <div class="gc-menu-collection-cont">
-                <collection is-collec = "isCollection"></collection>
-                <p class="icon-font gc-menu-collection-icon">{{languageSupport.collection}}</p>
-            </div> -->
             <div class="gc-menu-replay-cont">
                 <restart></restart>
-                <!-- <a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="img/icons/home_icon.png" style="width:26%;"/></a> -->
                 <p class="icon-font gc-menu-replay-icon">{{languageSupport.replay}}</p>
             </div>
         </div>
@@ -31,15 +26,12 @@
         </div>
         <div class="gc-menu-mute-cont">
             <mute></mute>
-            <!-- <p class="icon-font label-white-stoke" style="padding-top:2%; font-size:4vh; ">{{ stextstatus}}</p> -->
-            <!--  <img class="gc-mute-bg" ng-src="{{imageBasePath}}unmute.png" style="position:absolute; bottom:10%; width:60%; height:10%;  left:27%;" />
- -->    <img class="gc-mute-bg" ng-src="{{imageBasePath}}base.png" />
-            <!-- <img class="gc-mute-bg" ng-src="{{imageBasePath}}autoplay_icon.png" style=" position: absolute; bottom: 12%; width: 12%; height: 6%; left: 56%;" /> -->
+         <img class="gc-mute-bg" ng-src="{{imageBasePath}}audio_bg.png" />
         </div>
-        <div class="inst-message-cont" ng-show="showInst">
-            <img class="inst-icon" ng-src="{{imageBasePath}}expand_teacher_instruction.png" ng-click="expeandInstruction()" />
-            <p>{{ stageInstMessage }}</p>
-            <img class="inst-done" ng-src="{{imageBasePath}}done_button.png" ng-click="closeInstructions()" />
+        <div class="inst-message-cont " ng-show="showInst">
+            <img class="inst-icon" ng-src="{{imageBasePath}}icn_teacherinfo.png" ng-click="expeandInstruction()" />
+            <p class="stage-Teacherinst">{{ stageInstMessage }}</p>
+            <img class="inst-done" ng-src="{{imageBasePath}}icn_done.png" ng-click="closeInstructions()" />
         </div>
     </div>
 </div>
