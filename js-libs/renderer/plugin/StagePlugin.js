@@ -80,7 +80,6 @@ var StagePlugin = Plugin.extend({
         }
         if (isStageLoaded == false) {
             var timeInst;
-            this.timeInstance[data.id] = [];
             //If assets is not loaded, add a event bus which will be trigurred as soon as assets are loaded completely
             EventBus.addEventListener(data.id + '_assetsLoaded', instance.invokeRenderElements, this);
             timeInst = setTimeout(function() {
@@ -96,28 +95,25 @@ var StagePlugin = Plugin.extend({
                             instance.invokeRenderElements();
                         }
                     },instance.maxTimeToLoad)
-                    instance.timeInstance[data.id].push(timeInst)
+                    instance.timeInstance[data.id] = timeInst;
                 }
             },500)
-            this.timeInstance[data.id].push(timeInst)
+            this.timeInstance[data.id] = timeInst;
             return
         }
         this.invokeChildren(data, this, this, this._theme);
     },
     destroyTimeInstance: function(data) {
-        var instance = this;
-        var clearTimeOut = function(stageId) {
-            if (instance.timeInstance[stageId] && _.isArray(instance.timeInstance[stageId])) {
-                instance.timeInstance[stageId].forEach(function(inst) {
-                    clearTimeout(inst);
-                });
-                delete instance.timeInstance[stageId];
-            }
-        };
         if (Renderer.theme && Renderer.theme.getStagesToPreLoad) {
             var stages = Renderer.theme.getStagesToPreLoad(data);
-            clearTimeOut(stages.next);
-            clearTimeOut(stages.prev);
+            if (!_.isUndefined(stages.next) && this.timeInstance[stages.next]) {
+                clearTimeout(this.timeInstance[stages.next]);
+                delete this.timeInstance[stages.next];
+            }
+            if (!_.isUndefined(stages.prev) && this.timeInstance[stages.prev]) {
+                clearTimeout(this.timeInstance[stages.prev]);
+                delete this.timeInstance[stages.prev];
+            }
         }
     },
     invokeRenderElements: function() {
