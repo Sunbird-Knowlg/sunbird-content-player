@@ -15,6 +15,9 @@ LoadByStageStrategy = Class.extend({
         createjs.Sound.alternateExtensions = ["mp3"];
         this.destroy();
         this.loadAppAssets();
+        if (!_.isUndefined(themeData.manifest)) {
+            instance.assignBasePath(themeData.manifest, basePath)
+        }
         var themeData = JSON.parse(JSON.stringify(data));
         if (!_.isArray(themeData.stage)) themeData.stage = [themeData.stage];
         _.each(themeData.stage, function(stage) {
@@ -22,9 +25,6 @@ LoadByStageStrategy = Class.extend({
                 instance.assignBasePath(stage.manifest, basePath, stage.id)
             }
         })
-        if (!_.isUndefined(themeData.manifest)) {
-            instance.assignBasePath(themeData.manifest, basePath)
-        }
         themeData.stage.forEach(function(stage) {
             instance.stageManifests[stage.id] = [];
             AssetManager.stageAudios[stage.id] = [];
