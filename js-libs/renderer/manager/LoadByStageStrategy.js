@@ -15,10 +15,10 @@ LoadByStageStrategy = Class.extend({
         createjs.Sound.alternateExtensions = ["mp3"];
         this.destroy();
         this.loadAppAssets();
+        var themeData = JSON.parse(JSON.stringify(data));
         if (!_.isUndefined(themeData.manifest)) {
             instance.assignBasePath(themeData.manifest, basePath)
         }
-        var themeData = JSON.parse(JSON.stringify(data));
         if (!_.isArray(themeData.stage)) themeData.stage = [themeData.stage];
         _.each(themeData.stage, function(stage) {
             if (!_.isUndefined(stage.manifest)) {
@@ -197,26 +197,26 @@ LoadByStageStrategy = Class.extend({
                 instance.loaders[stageId] = loader;
             }
         }
-        var handleStageCallback = function(cb, stageId) {
-            if (cb) {
-                if (!_.isUndefined(instance.loaders[stageId]) && (instance.loaders[stageId].progress < 1 || instance.loaders[stageId].loaded == false)) {
-                    instance.loaders[stageId].on("complete", function() {
-                        var data = Renderer.theme && Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
-                        if (stageId == data) {
-                            EventBus.dispatch(data + '_assetsLoaded');
-                            cb();
-                        }
-                    }, null, true);
-                } else {
+        this.handleStageCallback(stageId, callback);
+    },
+    handleStageCallback: function(stageId, cb) {
+        if (cb) {
+            if (!_.isUndefined(this.loaders[stageId]) && (this.loaders[stageId].progress < 1 || this.loaders[stageId].loaded == false)) {
+                this.loaders[stageId].on("complete", function() {
                     var data = Renderer.theme && Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
                     if (stageId == data) {
                         EventBus.dispatch(data + '_assetsLoaded');
                         cb();
                     }
+                }, null, true);
+            } else {
+                var data = Renderer.theme && Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
+                if (stageId == data) {
+                    EventBus.dispatch(data + '_assetsLoaded');
+                    cb();
                 }
             }
-        };
-        handleStageCallback(callback, stageId);
+        }
     },
     loadCommonAssets: function() {
         var loader = this._createLoader();
