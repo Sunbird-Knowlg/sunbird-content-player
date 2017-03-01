@@ -429,9 +429,9 @@ var ThemePlugin = Plugin.extend({
         var gameArea = document.getElementById(Renderer.divIds.gameArea);
         var loaderArea = document.createElement('div');
         loaderArea.id = 'loaderArea';
-        var loader = document.createElement('div');
-        loader.id = 'loader';
-        loaderArea.appendChild(loader);
+        var element = '<div class="preloader-wrapper"><div class="spinner-layer"><div class="circle-clipper left"><div class="circle"></div></div>'+
+            '<div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>'
+        loaderArea.innerHTML = element;
         gameArea.parentElement.appendChild(loaderArea);
     }
 });
