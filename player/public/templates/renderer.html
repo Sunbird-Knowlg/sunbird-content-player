@@ -2,11 +2,11 @@
 	<!-- Navigation and Menu  -->
 	<div class="overlay-html" id="overlay" ng-controller="OverlayCtrl" ng-init="init()" ng-cloak>
         <div ng-hide="showOverlayPrevious === state_off">
-            <a class="nav-icon nav-previous" ng-class="{'nav-disable': showOverlayPrevious == state_disable}" href="javascript:void(0);"><img ng-src="{{imageBasePath}}back_icon.png" ng-click="navigate('previous')"></a>
+            <a class="nav-icon nav-previous" ng-class="{'nav-disable': showOverlayPrevious == state_disable}" href="javascript:void(0);"><img ng-src="{{imageBasePath}}back.png" ng-click="navigate('previous')"></a>
         </div>
 
         <div ng-hide="showOverlayNext === state_off">
-            <a class="nav-icon nav-next" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next_icon.png" ng-click="navigate('next')"></a>
+            <a class="nav-icon nav-next" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next.png" ng-click="navigate('next')"></a>
         </div>
 
         <assess image="icons.assess.enable" show="showOverlaySubmit"></assess>
@@ -19,8 +19,6 @@
         <!-- Menu overlay to hide canvas -->
         <menu></menu>
         <!-- All the popup's should add here -->
-        <!-- <popup id="goodJobPopup" popup-body="goodJob.body" ></popup>
-        <popup id="tryAgainPopup" popup-body="tryAgain.body"></popup> -->
         <try-again ng-show="showOverlayTryAgain == state_on"></try-again>
         <good-job ng-show="showOverlayGoodJob == state_on"></good-job>
     </div>

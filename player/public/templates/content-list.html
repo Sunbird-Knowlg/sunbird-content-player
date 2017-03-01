@@ -1,10 +1,9 @@
 <style>
     .swiper-background {
-        background-image: url("img/icons/img_bg.png");
+        background-image: url("img/icons/background_1.png");
         background-size: cover;
     }
     .swiper-slide {
-        /*background-image:url('img/icons/img_panel.png');*/
         background-position: center;
         background-size: cover;
         width: 120px;
@@ -21,7 +20,6 @@
         overflow-x: scroll;
         overflow: hidden;
     }
-    /*Scrollbar Css*/
     ::-webkit-scrollbar {
         width: 4px;
     }
@@ -31,14 +29,7 @@
 </style>
 
 <ion-pane class="swiper-background">
-
-  <!--   <a href="javascript:void(0)" class="button button-clear" style="margin: 3% 2%; width: 8%; position: absolute;">
-        <img src="{{imageBasePath}}icn_square_home.png" style="width: 100%;"/>
-    </a> -->
-    <!-- <genie icon="icn_back_page.png" class="gc-cp-genie gc-contentlist-genie-icon"></genie>
-    <navcol class="gc-cp-genie gc-contentlist-genie-icon"></navcol> -->
-    <a href="javascript:void(0);" ng-click="goBack();"  class="gc-cp-genie gc-contentlist-genie-icon"><img ng-src="{{imageBasePath}}icn_back_page.png"/></a>
-    <h1 class="gc-contentlist-title font-baloo">{{title || "EkStep Content App"}}</h1>
+    <h1 class="gc-contentlist-title font-baloo">{{"Canvas local Development"}}</h1>
     <ion-content class="gc-ionic-contentlist-body" overflow-scroll="true">
         <div class="product swiper-slide"
             ng-repeat="story in stories track by $index"
@@ -51,47 +42,3 @@
         </div>
     </ion-content>
 </ion-pane>
-
-<script id="about.html" type="text/ng-template">
-  <ion-modal-view>
-    <ion-header-bar class="bar-energized">
-        <h1 class="title" style="color:#5A3C22;font-size:20px; font-family:flavours;">About EkStep Content App</h1>
-        <button class="button button-clear icon" style="background:url(css/assets/skin02/btn_home.png) no-repeat right bottom;height:31px;width:31px;background-size: 30px 30px;" ng-click="hideAboutUsPage()"></button>
-    </ion-header-bar>
-    <ion-content padding="true">
-        <div class="item item-text-wrap" style="padding:0px;border:0px">
-            <div>
-                <center>
-                    <img src="assets/ekstep_logo.png" style="width: 100px;padding-top:10px;"/>
-                </center>
-            </div>
-            <div style="color:#5A3C22;font-size:15px; font-family:flavours;text-align:center;padding-left:20px;padding-right:20px">EkStep is a not for profit learner centric, technology enabled platform to improve applied literacy and numeracy. Visit www.ekstep.org to know more about EkStep and view the data protection and privacy policy.
-            </div>
-
-            <div style="color:#blue;font-size:12px; font-family:flavours;;text-align:center;margin-top:10px">
-                Version {{version}}, {{flavor}}
-            </div>
-        </div>
-    </ion-content>
-    <ion-footer-bar style="padding:0px;background-color:#fff;height:65px;border:0px;background-image:none">
-        <div style="background:url(css/assets/skin02/bookshelf_skin02_bottom_bg.png) repeat-x left bottom;height:100%;width:100%">
-                &nbsp;
-            </div>
-    </ion-footer-bar>
-  </ion-modal-view>
-</script>
-
-<div id="loadingDiv" class="gc-contentlist-loading-div">
-    <div class="gc-contentlist-inner-loadingdiv">
-        <ion-spinner icon="bubbles"></ion-spinner>
-        <div class="gc-contentlist-loading-text">
-            Loading...
-        </div>
-    </div>
-</div>
-
-<div id="errorDiv" class="gc-contentlist-error-div" ng-show="showMessage" ng-click="showMessage = !showMessage">
-    <div ng-bind-html="message" class="bar bar-energized bookshelf_message">
-    </div>
-</div>
-<!-- showMessage -->

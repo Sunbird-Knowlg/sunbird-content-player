@@ -1,4 +1,0 @@
----
-- hosts: all
-  tasks:
-    - shell: aws s3 cp s3://ekstep-public-qa/preview/* s3://ekstep-public-production/preview/ --recursive

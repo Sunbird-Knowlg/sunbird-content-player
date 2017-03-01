@@ -587,10 +587,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showFeedback = function(param) {
             $scope.userRating = param;
             $scope.popUserRating = param;
-            TelemetryService.interact("TOUCH", "gc_feedback", "TOUCH", {
+            // Commented the feeback popup screen telemetry 
+            // it is generating telemety without any interact
+            /*TelemetryService.interact("TOUCH", "gc_feedback", "TOUCH", {
                 stageId: "ContnetApp-FeedbackScreen",
                 subtype: "ContentID"
-            });
+            });*/
             $scope.showFeedbackPopup = true;
             $scope.enableFeedbackSubmit();
         }
@@ -747,8 +749,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // if $rootScope.content is not available get it from the base controller
                 $rootScope.getContentMetadata($stateParams.itemId);
             }
-
-            TelemetryService.interact("TOUCH", navType, null, {stageId : $rootScope.stageData.currentStage});
+            // Commented the Telemetry interact coz it was generating twice interact events on click of the next button
+            //TelemetryService.interact("TOUCH", navType, null, {stageId : $rootScope.stageData.currentStage});
             GlobalContext.currentContentId = $rootScope.content.identifier;
             GlobalContext.currentContentMimeType = $rootScope.content.mimeType;
             if (navType === "next") {
@@ -1015,7 +1017,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('stageInstructions', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)"  ng-class="{\'icon-opacity\' : !stageData.params.instructions}" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}teacher_instructions.png" style="z-index:2;"/></a>',
+            template: '<a href="javascript:void(0)"  ng-class="{\'icon-opacity\' : !stageData.params.instructions}" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;"/></a>',
             controller: function($scope, $rootScope) {
                 $scope.stageInstMessage = "";
                 $scope.showInst = false;
@@ -1052,25 +1054,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}mute.png" style="position: absolute;margin: 3%;width: 10%;z-index: 1;margin-left: 40%;" /><img id="unmute_id" ng-src="{{unmuteIcon}}"  style="position: absolute;margin: 3% 3% 3% 40%;display: list-item;width: 12%;z-index: 1;"/> </a>',
+            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}icn_audio.png" style="position: absolute;margin: 3%;width: 10%;z-index: 1;margin-left: 40%; display: block;" /><img id="unmute_id" ng-src="{{imageBasePath}}unmute.png" style="position: absolute;margin: 2% 2% 2% 39%;display: none; width: 14%; z-index: 1;"/> </a>',
             link: function(scope, url) {
-                scope.mutestatus = "mute.png";
-                // If audiomanager is muted change the default sound icon
-                if (AudioManager.muted) {
-                    scope.unmuteIcon = $rootScope.imageBasePath + "unmute.png";
-                    document.getElementById("unmute_id").style.visibility = "visible"
-                }
                 scope.mute = function() {
                     //mute function goes here
                     if (AudioManager.muted) {
                         AudioManager.unmute();
-                        delete scope.unmuteIcon;
-                        document.getElementById("unmute_id").removeAttribute("src");
-                        document.getElementById("unmute_id").style.visibility = "hidden"
+                        document.getElementById("unmute_id").style.display = "none";
                     } else {
                         AudioManager.mute();
-                        scope.unmuteIcon = $rootScope.imageBasePath + "unmute.png";
-                        document.getElementById("unmute_id").style.visibility = "visible"
+                        document.getElementById("unmute_id").style.display = "block";
                     }
                   TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute" , "TOUCH", { stageId:Renderer.theme._currentStage});
                 }
@@ -1083,6 +1076,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             link: function(scope) {
                 scope.restartContent = function() {
                     $rootScope.replayContent();
+                    //Resetting mute state
+                    document.getElementById("unmute_id").style.display = "none";
                     AudioManager.unmute();
                     if (!_.isUndefined(scope.hideMenu) && scope.menuOpened)
                         scope.hideMenu();
@@ -1092,7 +1087,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('reloadStage', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" src="{{imageBasePath}}speaker_icon.png" style="width:100%;"/></a>'
+            template: '<a href="javascript:void(0)" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></a>'
         }
     }).directive('popup', function($rootScope, $compile) {
         return {
