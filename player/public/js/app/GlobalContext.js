@@ -1,23 +1,5 @@
 GlobalContext = {
     user: {},
-    testList: [
-        {
-            identifier: "C",
-            mediaType: "collection"
-        },
-        {
-            identifier: "C2",
-            mediaType: "collection"
-        },
-        {
-            identifier: "C21",
-            mediaType: "collection"
-        },
-        {
-            identifier: "M",
-            mediaType: "content"
-        }
-    ],
     game: {
         id: "",
         ver: ""
@@ -34,7 +16,6 @@ GlobalContext = {
         return new Promise(function(resolve, reject) {
             GlobalContext.game.id = gid;
             GlobalContext.game.ver = ver;
-            GlobalContext.game.collection = GlobalContext.testList;
             GlobalContext._setGlobalContext(resolve, reject);
         });
     },
