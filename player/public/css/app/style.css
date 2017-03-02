@@ -55,7 +55,7 @@
 }
 
 @font-face {
-    font-family: 'NotoSansRegular';
+    font-family: 'NotoSans';
     src: url('fonts/NotoSans-Regular.ttf') format('truetype')
 }
 
@@ -105,7 +105,7 @@ ion-popover-view.fit ion-content {
 }
 
 body{
-    font-family: NotoSansOriya, NotoSansGujarati, NotoSansMalayalam;
+    font-family: NotoSans, NotoSansOriya, NotoSansGujarati, NotoSansMalayalam;
 } 
 
 .platform-android ion-popover-view.fit {

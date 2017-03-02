@@ -17,6 +17,7 @@ var Plugin = Class.extend({
     appEvents: [],
     _myflag: false,
     _pluginParams: {},
+    _unSupportedFonts: ["notosans", "verdana", "notosans oriya"],
     init: function(data, parent, stage, theme) {
         this.events = [];
         this.appEvents = [];
@@ -26,6 +27,7 @@ var Plugin = Class.extend({
         this._stage = stage;
         this._parent = parent;
         this._data = data;
+        this.handleFont(data);
         this.initPlugin(data);
         var dims = this.relativeDims();
         if (dims && this._self) {
@@ -96,6 +98,15 @@ var Plugin = Class.extend({
             }
         }
 
+    },
+    handleFont: function(data) {
+        if(data.font){
+            data.font = data.font.trim();
+        }
+        if (_.isEmpty(data.font) || (!_.isUndefined(data.font) && this._unSupportedFonts.indexOf(data.font.toLowerCase()) > -1)) {
+            // This is fallback support for fonts & we are ignoring NotoSans, NotoSans Oriya, Verdana 
+            data.font = this.getDefaultFont();
+        }
     },
     cache: function() {
         this._self.cache(this._dimensions.x, this._dimensions.y, this._dimensions.w, this._dimensions.h);
@@ -451,7 +462,7 @@ var Plugin = Class.extend({
         return value;
     },
     getDefaultFont: function() {
-        this._defaultFont = 'NotoSansGujarati, NotoSansOriya, NotoSansMalayalam';
+        this._defaultFont = 'NotoSans, NotoSansGujarati, NotoSansOriya, NotoSansMalayalam';
         return this._defaultFont;
     },
     transitionTo: function() {

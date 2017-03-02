@@ -47,16 +47,15 @@ var HighlightTextPlugin = HTMLPlugin.extend({
         var h_offset = data.offsetX ? data.offsetX : 0;
         var v_offset = data.offsetY ? data.offsetY : 0;
         var Blur = data.blur ? data.blur : 1;
-        var fontFace = (data.font || this.getDefaultFont());
         var shadow_color = data.shadow ? data.shadow : "#ccc"; 
         var shadow = h_offset + "px" + " " + v_offset + "px" + " " + Blur + "px" + " " + shadow_color;      
         if (/\d/.test(data.font) == true) {
             // fontsize and font-family are required for the font attribute.
-            font=fontFace;
+            font=data.font;
             div.style["font"] = data.font;
         }else {
-            font=fontsize + " " + fontFace
-            div.style["font-family"] = fontFace;
+            font=fontsize + " " + data.font
+            div.style["font-family"] = data.font;
             div.style["font-size"] = fontsize;
         }
         if (data.weight) { // weight can handle both font-weight and font-style.
