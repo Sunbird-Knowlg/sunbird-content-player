@@ -200,16 +200,14 @@ var localStorageGC = {
 function startTelemetry(id, ver) {
     localStorageGC.removeItem("telemetryService");
     var correlationData = {};
-    if (GlobalContext.game.contentExtras && GlobalContext.game.contentExtras[0].mediaType == "collection") {
-        var idStr = GlobalContext.game.contentExtras[0].identifier;
-        // var cdataLength = GlobalContext.game.contentExtras.length;
-        _.each(GlobalContext.game.contentExtras, function(eachItem) {
-            if (eachItem.mediaType == "collection")
-            idStr = idStr + "/" + eachItem.identifier;
-        });
+    if (GlobalContext.game.contentExtras) {
+        var idStr = GlobalContext.game.contentExtras[0].identifier, contentExtrasLength = GlobalContext.game.contentExtras.length-1;
+        for (var i=0; i<contentExtrasLength; i+=1) {
+            idStr = idStr + "/" + GlobalContext.game.contentExtras[i].identifier;
+        }
         correlationData = {
             "id": idStr,
-            "type": "collection"
+            "type": GlobalContext.game.contentExtras[0].mediaType
         };
     }
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData).then(function() {
