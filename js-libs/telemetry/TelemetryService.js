@@ -47,10 +47,8 @@ TelemetryService = {
                 } else {
                     reject('Game data is empty.');
                 };
-                if(correlationData){
+                if(correlationData && !_.isEmpty(correlationData)){
                     TelemetryService._correlationData = correlationData;
-                }else{
-                    reject('Correlation data is empty.');
                 };
                 resolve(true);
             } else {
