@@ -17,8 +17,10 @@ AssetManager = {
         AssetManager.strategy.initStage(stageId, nextStageId, prevStageId, cb);
     },
     destroy: function() {
-        AssetManager.strategy.destroy();
-        AssetManager.strategy = undefined;
+        if (!_.isUndefined(AssetManager.strategy)) {
+            AssetManager.strategy.destroy();
+            AssetManager.strategy = undefined;
+        }
         AssetManager.stageAudios = {};
     },
     stopStageAudio: function(stageId) {
@@ -38,5 +40,20 @@ AssetManager = {
             AssetManager.strategy.loadAsset(stageId, assetId, path);
         else
             console.info("asset not loaded because AssetManager not initialised or failed to initialize.")
+    },
+    getManifest: function(content) {
+        // Get all manifest defined inside content, only give stage manifest.
+        // TODO : Once plugin manifest is implemented function should have to be improved.
+        var manifest = {};
+        manifest.media = [];
+        _.each(content.stage, function(stage) {
+            if (!_.isUndefined(stage.manifest) && !_.isUndefined(stage.manifest.media)) {
+                if (!_.isArray(stage.manifest.media)) stage.manifest.media = [stage.manifest.media];
+                _.each(stage.manifest.media, function(media) {
+                    manifest.media.push(media)
+                })
+            }
+        })
+        return manifest;
     }
 }

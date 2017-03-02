@@ -7,13 +7,6 @@ var TextPlugin = Plugin.extend({
         var fontsize = data.fontsize || 20;
         var dims = this.relativeDims();
         //var fontFace = (data.font || 'Arial');
-        if(!(_.isUndefined(data.font)) && (data.font.toLowerCase() == "verdana" || data.font.toLowerCase() == "notosans oriya")) {
-           // By default template creators are adding font as "Verdana" for template.
-           // This is causing font rendering issue for other languages(tamil, bengali etc..)
-           // This is fallback to support old published contents. Informed template creators not to specify any font for text element in templates
-           data.font = undefined;
-        }
-        var fontFace = (data.font || this.getDefaultFont());
         var lineHeight = (data.lineHeight ? data.lineHeight : 0);
         var outline = (data.outline ? data.outline : 0);
 
@@ -30,7 +23,7 @@ var TextPlugin = Plugin.extend({
         }
 
         // If font size is in "em", "%" or "px", no resizing will be done
-        var font = fontsize + " " + fontFace;
+        var font = fontsize + " " + data.font;
 
         if (data.weight) {
             font = data.weight + ' ' + font;
@@ -88,6 +81,9 @@ var TextPlugin = Plugin.extend({
         text.textAlign = align;
         text.valign = valign;
         this._self = text;
+        if (data.rotate || data.r) {
+            this.rotation(data, dims);
+        }
     },
     refresh: function() {
         var instance = this;

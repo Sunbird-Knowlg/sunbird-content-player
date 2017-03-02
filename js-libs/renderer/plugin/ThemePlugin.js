@@ -20,6 +20,7 @@ var ThemePlugin = Plugin.extend({
     _isSceneChanging: false,
     _saveState:true,
     initPlugin: function(data) {
+        this.addLoaderElement();
         this._controllerMap = {};
         this._canvasId = data.canvasId;
         this._self = new createjs.Stage(data.canvasId);
@@ -201,6 +202,9 @@ var ThemePlugin = Plugin.extend({
         this.htmlElements = [];
         this._animationEffect = effect;
         TimerManager.destroy();
+        if (!_.isUndefined(this._currentScene)) {
+            EventBus.removeEventListener(this._currentScene._id + '_assetsLoaded', this._currentScene.invokeRenderElements, this);
+        }
         (stageId) ? this.invokeStage(stageId) : OverlayManager.moveToEndPage();
     },
     invokeStage: function(stageId) {
@@ -420,6 +424,15 @@ var ThemePlugin = Plugin.extend({
             return eval(expr);
         }
 
+    },
+    addLoaderElement: function() {
+        var gameArea = document.getElementById(Renderer.divIds.gameArea);
+        var loaderArea = document.createElement('div');
+        loaderArea.id = 'loaderArea';
+        var element = '<div class="preloader-wrapper"><div class="spinner-layer"><div class="circle-clipper left"><div class="circle"></div></div>'+
+            '<div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>'
+        loaderArea.innerHTML = element;
+        gameArea.parentElement.appendChild(loaderArea);
     }
 });
 PluginManager.registerPlugin('theme', ThemePlugin);

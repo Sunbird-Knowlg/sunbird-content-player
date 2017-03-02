@@ -35,6 +35,9 @@ var ImagePlugin = Plugin.extend({
             this._self = s;
 
             var dims = this.relativeDims();
+            if (data.rotate) {
+                this.rotation(data, dims);
+            }
 
             // // Align the image in its container
             // var xd = dims.x;
@@ -43,21 +46,20 @@ var ImagePlugin = Plugin.extend({
             // s.y = dims.y;
 
             if(_.isString(assetSrc)){
+                this._self.visible = false;
                 AssetManager.strategy.loadAsset(this._stage._data.id, asset, assetSrc, function(){
-                    if(_.isString(instance._self)){
-                        console.log("ImagePlugin: Image load failed", assetSrc);
-                    }
-                    var s = instance._self;
-                    var dims = instance.relativeDims();
-                    var sb = s.getBounds();
-                    s.x = dims.x;
-                    s.y = dims.y;
-                    var sb = s.getBounds();
-                    if(sb) {
-                        instance.setScale();
-                    }
-                    //instance._theme.update();
-                    Renderer.update = true;
+                        Renderer.update = true;
+                        setTimeout(function(){
+                            var sb = s.getBounds();
+                            if(sb) {
+                                instance.setScale();
+                            }
+                            dims = instance.alignDims();
+                            s.x = dims.x;
+                            s.y = dims.y;
+                            instance._self.visible = true;
+                            Renderer.update = true;
+                        }, 100)
                 });
             }else{
                 var sb = s.getBounds();
@@ -67,10 +69,10 @@ var ImagePlugin = Plugin.extend({
             }
 
             // Align the image in its container
-            var xd = dims.x;
             dims = this.alignDims();
             s.x = dims.x;
             s.y = dims.y;
+            Renderer.update = true;
         }
     },
     alignDims: function() {

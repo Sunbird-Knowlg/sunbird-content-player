@@ -105,7 +105,7 @@ AudioManager = {
                 var key = keys[index];
                 var instance = AudioManager.instances[key];
                 // Reclaim only if the audio is not playing
-                if (instance.object.playState != createjs.Sound.PLAY_INITED && instance.object.playState != createjs.Sound.PLAY_SUCCEEDED) {
+                if (instance && instance.object.playState != createjs.Sound.PLAY_INITED && instance.object.playState != createjs.Sound.PLAY_SUCCEEDED) {
                     AudioManager.destroyObject(instance, key);
                     break;
                 }
