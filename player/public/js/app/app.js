@@ -1077,7 +1077,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 scope.restartContent = function() {
                     $rootScope.replayContent();
                     //Resetting mute state
-                    document.getElementById("unmute_id").style.display = "none";
+                    var muteElement = document.getElementById("unmute_id");
+                    if (!_.isNull(muteElement)) {
+                        muteElement.style.display = "none";
+                    }
                     AudioManager.unmute();
                     if (!_.isUndefined(scope.hideMenu) && scope.menuOpened)
                         scope.hideMenu();
