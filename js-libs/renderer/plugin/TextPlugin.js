@@ -88,6 +88,9 @@ var TextPlugin = Plugin.extend({
         text.textAlign = align;
         text.valign = valign;
         this._self = text;
+        if (data.rotate) {
+            this.rotation(data, dims);
+        }
     },
     refresh: function() {
         var instance = this;

@@ -34,7 +34,11 @@ var ImagePlugin = Plugin.extend({
             var s = new createjs.Bitmap(img);
             this._self = s;
 
+
             var dims = this.relativeDims();
+            if (data.rotate) {
+                this.rotation(data, dims);
+            }
 
             // // Align the image in its container
             // var xd = dims.x;
