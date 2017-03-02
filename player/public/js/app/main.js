@@ -200,10 +200,10 @@ var localStorageGC = {
 function startTelemetry(id, ver) {
     localStorageGC.removeItem("telemetryService");
     var correlationData = {};
-    if (GlobalContext.game.collection && GlobalContext.game.collection[0].mediaType == "collection") {
-        var idStr = GlobalContext.game.collection[0].identifier;
-        // var cdataLength = GlobalContext.game.collection.length;
-        _.each(GlobalContext.game.collection, function (eachItem){
+    if (GlobalContext.game.contentExtras && GlobalContext.game.contentExtras[0].mediaType == "collection") {
+        var idStr = GlobalContext.game.contentExtras[0].identifier;
+        // var cdataLength = GlobalContext.game.contentExtras.length;
+        _.each(GlobalContext.game.contentExtras, function(eachItem) {
             if (eachItem.mediaType == "collection")
             idStr = idStr + "/" + eachItem.identifier;
         });

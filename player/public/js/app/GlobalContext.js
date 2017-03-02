@@ -34,7 +34,7 @@ GlobalContext = {
                         GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
                         GlobalContext.game.id = GlobalContext.config.appInfo.identifier;
                         GlobalContext.game.ver = GlobalContext.config.appInfo.pkgVersion || "1";
-                        GlobalContext.game.collection = GlobalContext.config.appInfo.content_info;
+                        GlobalContext.game.collection = GlobalContext.config.content_info;
                         // Assuming filter is always an array of strings.
                         GlobalContext.filter = (GlobalContext.config.appInfo.filter)? JSON.parse(GlobalContext.config.appInfo.filter): GlobalContext.config.appInfo.filter;
                     }
