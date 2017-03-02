@@ -26,7 +26,7 @@ var ScribblePlugin = Plugin.extend({
         if (data.stroke) shapeData.shape.stroke = data.stroke;
         if (data.opacity) shapeData.shape.opacity = data.opacity;
         if (data["stroke-width"]) shapeData.shape["stroke-width"] = data["stroke-width"];
-        if(data.rotate) shapeData.shape.rotate = data.rotate;
+        if(data.rotate || data.r) shapeData.shape.rotate = data.rotate || data.r;
         this.invokeChildren(shapeData, this, this._stage, this._theme);
 
         // create paint brush

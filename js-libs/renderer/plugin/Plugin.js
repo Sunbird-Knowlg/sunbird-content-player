@@ -341,7 +341,7 @@ var Plugin = Class.extend({
     rotation: function(data, dims) {
         this._self.regX = dims.w / 2;
         this._self.regY = dims.h / 2;
-        this._self.rotation = data.rotate;
+        this._self.rotation = data.rotate || data.r;
     },
     enableDrag: function(asset, snapTo) {
         asset.cursor = "pointer";
