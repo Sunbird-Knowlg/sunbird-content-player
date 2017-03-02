@@ -199,14 +199,27 @@ var localStorageGC = {
 
 function startTelemetry(id, ver) {
     localStorageGC.removeItem("telemetryService");
-    TelemetryService.init(GlobalContext.game, GlobalContext.user).then(function() {
+    var correlationData = {};
+    if (GlobalContext.game.collection && GlobalContext.game.collection[0].mediaType == "collection") {
+        var idStr = GlobalContext.game.collection[0].identifier;
+        // var cdataLength = GlobalContext.game.collection.length;
+        _.each(GlobalContext.game.collection, function (eachItem){
+            if (eachItem.mediaType == "collection")
+            idStr = idStr + "/" + eachItem.identifier;
+        });
+        correlationData = {
+            "id": idStr,
+            "type": "collection"
+        };
+    }
+    TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData).then(function() {
         TelemetryService.start(id, ver);
         if (!_.isUndefined(TelemetryService.instance)) {
             var tsObj = _.clone(TelemetryService);
             tsObj._start = JSON.stringify(tsObj.instance._start);
             tsObj._end = JSON.stringify(tsObj.instance._end);
             localStorageGC.setItem("telemetryService", tsObj);
-            localStorageGC.save(); 
+            localStorageGC.save();
         }
     }).catch(function(error) {
         console.log('TelemetryService init failed');

@@ -7,6 +7,7 @@ TelemetryService = {
     gameOutputFile: undefined,
     _gameErrorFile: undefined,
     _gameData: undefined,
+    _correlationData: undefined,
     _data: [],
     _gameIds: [],
     _user: {},
@@ -20,7 +21,7 @@ TelemetryService = {
         mousedown: 'DROP',
         pressup: 'DRAG'
     },
-    init: function(gameData, user) {
+    init: function(gameData, user, correlationData) {
         var localStorageInstance = TelemetryService.getLocalStorageInstance();
         if (!_.isEmpty(localStorageInstance)) {
             TelemetryService.setTelemetryService(localStorageInstance, gameData);
@@ -45,6 +46,11 @@ TelemetryService = {
                     });
                 } else {
                     reject('Game data is empty.');
+                };
+                if(correlationData){
+                    TelemetryService._correlationData = correlationData;
+                }else{
+                    reject('Correlation data is empty.');
                 };
                 resolve(true);
             } else {

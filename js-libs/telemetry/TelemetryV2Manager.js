@@ -10,7 +10,7 @@ TelemetryV2Manager = Class.extend({
         TelemetryServiceV2.exitApp();
     },
     createEvent: function(eventName, body) {
-        return new TelemetryEvent(eventName, TelemetryService._version, body, TelemetryService._user, TelemetryService._gameData);
+        return new TelemetryEvent(eventName, TelemetryService._version, body, TelemetryService._user, TelemetryService._gameData, TelemetryService._correlationData);
     },
     start: function(id, ver) {
         TelemetryService._gameData = {id: id , ver : ver};

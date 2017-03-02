@@ -4,7 +4,7 @@ TelemetryEvent = Class.extend({
     startTime: 0,
     name: undefined,
     event: undefined,
-    init: function(eid, version, body, user, gdata) {
+    init: function(eid, version, body, user, gdata, cdata) {
         if("undefined" != gdata && "undefined" == gdata.ver)
             gdata.ver = "1";
         this.createdTime = getCurrentTime();
@@ -18,7 +18,8 @@ TelemetryEvent = Class.extend({
                 eks: body || {}
             },
             eid: eid,
-            gdata: gdata
+            gdata: gdata,
+            cdata: cdata
         };
         TelemetryService._version == "1.0" ? this.event.ts = getTime(this.createdTime) : this.event.ets = getTime(this.createdTime);
     },
