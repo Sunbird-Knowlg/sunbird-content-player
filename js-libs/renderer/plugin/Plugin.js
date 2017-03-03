@@ -349,9 +349,7 @@ var Plugin = Class.extend({
             Renderer.update = true;
         }
     },
-    rotation: function(data, dims) {
-        this._self.regX = dims.w / 2;
-        this._self.regY = dims.h / 2;
+    rotation: function(data) {
         this._self.rotation = data.rotate || data.r;
     },
     enableDrag: function(asset, snapTo) {

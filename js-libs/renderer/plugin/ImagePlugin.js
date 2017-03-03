@@ -35,8 +35,8 @@ var ImagePlugin = Plugin.extend({
             this._self = s;
 
             var dims = this.relativeDims();
-            if (data.rotate) {
-                this.rotation(data, dims);
+            if (data.rotate || data.r) {
+                this.rotation(data);
             }
 
             // // Align the image in its container
