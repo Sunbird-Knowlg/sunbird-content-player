@@ -164,7 +164,7 @@ var localStorageGC = {
             var paramVal = this[param];
             paramVal = _.isEmpty(paramVal) ? {} : JSON.parse(paramVal);
             return paramVal;
-        }else{
+        } else {
             return;
         }
     },
@@ -201,12 +201,9 @@ function startTelemetry(id, ver) {
     localStorageGC.removeItem("telemetryService");
     var correlationData = {};
     if (GlobalContext.game.contentExtras) {
-        var idStr = GlobalContext.game.contentExtras[0].identifier, contentExtrasLength = GlobalContext.game.contentExtras.length-1;
-        for (var i=0; i<contentExtrasLength; i+=1) {
-            idStr = idStr + "/" + GlobalContext.game.contentExtras[i].identifier;
-        }
+        for (var parentTree = '', contentExtrasLength = GlobalContext.game.contentExtras.length - 1, i = 0; i < contentExtrasLength && (parentTree += GlobalContext.game.contentExtras[i].identifier, i != contentExtrasLength - 1); i += 1) parentTree += "/";
         correlationData = {
-            "id": idStr,
+            "id": parentTree,
             "type": GlobalContext.game.contentExtras[0].mediaType
         };
     }
