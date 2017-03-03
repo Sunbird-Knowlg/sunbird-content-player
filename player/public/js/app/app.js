@@ -78,7 +78,7 @@ function launchInitialPage(appInfo, $state) {
     } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
         (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
         if (!isbrowserpreview) {
-            // only for the LocalDevelopment we are showing the collection list 
+            // only for the LocalDevelopment we are showing the collection list
             $state.go('contentList', {
                 "id": GlobalContext.game.id
             });
@@ -91,7 +91,7 @@ function launchInitialPage(appInfo, $state) {
 //Handling the logerror event from the Telemetry.js
 document.body.addEventListener("logError", telemetryError, false);
 function telemetryError(e) {
-    var $body = angular.element(document.body); 
+    var $body = angular.element(document.body);
     var $rootScope = $body.scope().$root;
     document.body.removeEventListener("logError");
 }
@@ -255,7 +255,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             $rootScope.getContentBody(urlContentId);
                         }
                     } else {
-                        localStorageGC.setItem("collection", GlobalContext.game.collection);
+                        localStorageGC.setItem("content_info", GlobalContext.game.contentExtras);
                         $rootScope.deviceRendrer();
                     }
                 }).catch(function(res) {
@@ -308,7 +308,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         }
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
-        // This will be appear only for the localdevlopment 
+        // This will be appear only for the localdevlopment
         $rootScope.pageId = 'ContentApp-Collection';
         $scope.version = GlobalContext.game.ver;
         $scope.flavor = GlobalContext.config.flavor;
@@ -461,7 +461,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if ($stateParams.itemId && $rootScope.content) {
                 localStorageGC.setItem("content", $rootScope.content);
                 startProgressBar(40, 0.6, $rootScope.content.name);
-                 // In the case of AT preview Just we are setting up the currentContentId 
+                 // In the case of AT preview Just we are setting up the currentContentId
                 GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
                 $scope.callStartTelemetry($rootScope.content);
                 $scope.item = $rootScope.content;
@@ -512,7 +512,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             } else {
                 alert('Name or Launch URL not found.');
                  exitApp();
-            } 
+            }
 
         }
         $scope.gotToEndPage = function() {
@@ -548,7 +548,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         setTimeout(function() {
             $scope.init();
         },0);
-        
+
 
     }).controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
         $scope.showFeedbackArea = true;
@@ -587,7 +587,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showFeedback = function(param) {
             $scope.userRating = param;
             $scope.popUserRating = param;
-            // Commented the feeback popup screen telemetry 
+            // Commented the feeback popup screen telemetry
             // it is generating telemety without any interact
             /*TelemetryService.interact("TOUCH", "gc_feedback", "TOUCH", {
                 stageId: "ContnetApp-FeedbackScreen",
@@ -922,7 +922,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.init = function() {
-            $scope.collectionTree = localStorageGC.getItem('collection');
+            $scope.collectionTree = localStorageGC.getItem('content_info');
+            // GlobalContext.game.contentExtras = ("string" == typeof(GlobalContext.game.contentExtras)) ? JSON.parse(GlobalContext.game.contentExtras) : GlobalContext.game.contentExtras;
+
             if ("undefined" != typeof cordova) {
                 $scope.renderRelatedContent($stateParams.contentId);
             } else {
