@@ -12,6 +12,9 @@ var ContainerPlugin = Plugin.extend({
             hit.graphics.beginFill("#000").r(0, 0, dims.w, dims.h);
             this._self.hitArea = hit;
         }
+        if(data.rotate){
+            this.rotation(data);
+        }
         this.invokeChildren(data, this, this._stage, this._theme);
 	},
     refresh: function() {

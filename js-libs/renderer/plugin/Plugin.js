@@ -350,7 +350,7 @@ var Plugin = Class.extend({
         }
     },
     rotation: function(data) {
-        this._self.rotation = data.rotate || data.r;
+        this._self.rotation = data.rotate;
     },
     enableDrag: function(asset, snapTo) {
         asset.cursor = "pointer";
