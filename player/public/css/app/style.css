@@ -1075,13 +1075,14 @@ body{
 .gc-contentlist-title{
     color:#413a36;
     font-size:3vw;
-    margin: 4.5% 12%;
+    margin: 4.5% 9%;
     text-align: left;
     -webkit-text-stroke: 0.2vh white;
 }
 
 .gc-ionic-contentlist-body{
-    left: 9%;
+    left: 5%;
+    right: 3%;
     top: 18%;
     height: 82%;
 }

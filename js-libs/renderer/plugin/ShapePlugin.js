@@ -18,7 +18,7 @@ var ShapePlugin = Plugin.extend({
         if(data['stroke-width']) {
             graphics.setStrokeStyle(data['stroke-width']);
         }
-        if (data.rotate || data.r) {
+        if (data.rotate) {
             this.rotation(data);
         }
 

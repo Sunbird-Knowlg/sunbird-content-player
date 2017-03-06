@@ -81,7 +81,7 @@ var TextPlugin = Plugin.extend({
         text.textAlign = align;
         text.valign = valign;
         this._self = text;
-        if (data.rotate || data.r) {
+        if (data.rotate) {
             this.rotation(data);
         }
     },
