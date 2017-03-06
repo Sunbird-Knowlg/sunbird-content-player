@@ -255,7 +255,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             $rootScope.getContentBody(urlContentId);
                         }
                     } else {
-                        localStorageGC.setItem("content_info", GlobalContext.game.contentExtras);
+                        localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                         $rootScope.deviceRendrer();
                     }
                 }).catch(function(res) {
@@ -457,7 +457,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             var version = (content && pkgVersion) ? pkgVersion : "1";
             startTelemetry(identifier, version);
         }
-        $scope.renderContent = function(){
+        $scope.renderContent = function() {
             if ($stateParams.itemId && $rootScope.content) {
                 localStorageGC.setItem("content", $rootScope.content);
                 startProgressBar(40, 0.6, $rootScope.content.name);
@@ -851,30 +851,31 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showRelatedContentHeader = true;
         $scope.relatedContents = [];
         $scope.relatedContentPath = [];
-   $scope.playRelatedContent = function(content) {
-        $scope.showRelatedContent = false;
-        $scope.contentShowMore = false;
-        $scope.showRelatedContentHeader = false;
-        $scope.collectionTree = undefined;
-        collectionPath = $scope.relatedContentPath;
-        TelemetryService.interact("TOUCH", "gc_relatedcontent", "TOUCH", {
-            stageId: "endpage",
-            subtype: " "
-        });
-        TelemetryService.end();
-        jQuery('#endPageLoader').show();
-        GlobalContext.game.id = content.identifier
-        GlobalContext.game.pkgVersion = content.pkgVersion;
-        if (content.isAvailable) {
-            $rootScope.getContentMetadata(GlobalContext.game.id, function() {
-                $state.go('playContent', {
-                    'itemId': $rootScope.content.identifier
-                });
+
+        $scope.playRelatedContent = function(content) {
+            $scope.showRelatedContent = false;
+            $scope.contentShowMore = false;
+            $scope.showRelatedContentHeader = false;
+            $scope.collectionTree = undefined;
+            collectionPath = $scope.relatedContentPath;
+            TelemetryService.interact("TOUCH", "gc_relatedcontent", "TOUCH", {
+                stageId: "endpage",
+                subtype: " "
             });
-        } else {
-            window.open("ekstep://c/" + content.identifier, "_system");
+            TelemetryService.end();
+            jQuery('#endPageLoader').show();
+            GlobalContext.game.id = content.identifier
+            GlobalContext.game.pkgVersion = content.pkgVersion;
+            if (content.isAvailable) {
+                $rootScope.getContentMetadata(GlobalContext.game.id, function() {
+                    $state.go('playContent', {
+                        'itemId': $rootScope.content.identifier
+                    });
+                });
+            } else {
+                window.open("ekstep://c/" + content.identifier + "&contentExtras=" + , "_system");
+            }
         }
-    }
 
         $scope.getRelatedContent = function(list) {
             ContentService.getRelatedContent(TelemetryService._user.uid, list)
@@ -922,7 +923,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.init = function() {
-            $scope.collectionTree = localStorageGC.getItem('content_info');
+            $scope.collectionTree = localStorageGC.getItem('contentExtras');
             // GlobalContext.game.contentExtras = ("string" == typeof(GlobalContext.game.contentExtras)) ? JSON.parse(GlobalContext.game.contentExtras) : GlobalContext.game.contentExtras;
 
             if ("undefined" != typeof cordova) {

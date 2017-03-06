@@ -199,14 +199,14 @@ var localStorageGC = {
 
 function startTelemetry(id, ver) {
     localStorageGC.removeItem("telemetryService");
-    var correlationData = {};
+    var correlationData = [];
     if (GlobalContext.game.contentExtras) {
         GlobalContext.game.contentExtras = ("string" == typeof(GlobalContext.game.contentExtras)) ? JSON.parse(GlobalContext.game.contentExtras) : GlobalContext.game.contentExtras;
         for (var parentTree = '', contentExtrasLength = GlobalContext.game.contentExtras.length - 1, i = 0; i < contentExtrasLength && (parentTree += GlobalContext.game.contentExtras[i].identifier, i != contentExtrasLength - 1); i += 1) parentTree += "/";
-        correlationData = {
+        correlationData = [{
             "id": parentTree,
             "type": GlobalContext.game.contentExtras[0].mediaType
-        };
+        }];
     }
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData).then(function() {
         TelemetryService.start(id, ver);
