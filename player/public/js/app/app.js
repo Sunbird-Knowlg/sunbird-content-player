@@ -866,6 +866,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             jQuery('#endPageLoader').show();
             GlobalContext.game.id = content.identifier
             GlobalContext.game.pkgVersion = content.pkgVersion;
+            var contentExtras = [];
+            if (!(_.isUndefined($scope.collectionTree) || _.isEmpty($scope.collectionTree))) {
+                // is a collection
+                _.each($scope.relatedContents, function(eachObj) {
+                    contentExtras.push(_.pick(eachObj, 'identifier', 'contentType'));
+                });
+            }
             if (content.isAvailable) {
                 $rootScope.getContentMetadata(GlobalContext.game.id, function() {
                     $state.go('playContent', {
@@ -873,14 +880,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     });
                 });
             } else {
-                // new code goes here
-                var contentExtras = [];
-                if (!(_.isUndefined($scope.collectionTree) || _.isEmpty($scope.collectionTree))) {
-                    // is a collection
-                    _.each($scope.relatedContents, function(eachObj) {
-                        contentExtras.push(_.pick(eachObj, 'identifier', 'contentType'));
-                    });
-                }
                 // stringify contentExtras array to string
                 contentExtras = JSON.stringify(contentExtras);
                 window.open("ekstep://c/" + content.identifier + "&contentExtras=" + contentExtras + "_system");
