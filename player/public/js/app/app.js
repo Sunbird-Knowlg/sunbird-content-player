@@ -905,8 +905,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 });
             } else {
                 // stringify contentExtras array to string
-                contentExtras = JSON.stringify(contentExtras);
-                window.open("ekstep://c/" + content.identifier + "&contentExtras=" + contentExtras, "_system");
+                var deepLinkURL = "ekstep://c/" + content.identifier;
+                if (!_.isEmpty(contentExtras)){
+                    contentExtras = JSON.stringify(contentExtras);
+                    deepLinkURL += "&contentExtras=" + contentExtras;
+                }
+                console.log("deepLinkURL: ", deepLinkURL);
+                window.open(deepLinkURL, "_system");
             }
         }
 
