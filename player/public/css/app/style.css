@@ -473,15 +473,15 @@ body{
 }
 
 .goodjob_next_div {
-    font-size: 2em;
+    font-size: 1.8em;
     top: 33%;
     text-align: center;
-    left: 41%;
+    left: 46%;
 
 }
 .tryagain-retry-div{
     font-size: 1.1em;
-    top: 3%;
+    top: 2%;
     left: 52%;
     padding: 0;
     margin: 10px;
@@ -489,7 +489,7 @@ body{
 
 .tryagian-next-div{
     font-size: 1.1em;
-    top: 36%;
+    top: 35%;
     left: 55%;
 
 }
@@ -1192,7 +1192,7 @@ body{
 }
 
 .gc-popup-retry-replay {
-    margin: -5% 15% 0 14%;
+    margin: -4% 15% 0 14%;
     line-height: 100%;
 }
 
