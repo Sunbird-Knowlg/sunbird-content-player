@@ -875,6 +875,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
             if (content.isAvailable) {
                 $rootScope.getContentMetadata(GlobalContext.game.id, function() {
+                    if($rootScope.collectionTree){
+                        GlobalContext.game.contentExtras = contentExtras;
+                        localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);    
+                    }
                     $state.go('playContent', {
                         'itemId': $rootScope.content.identifier
                     });
