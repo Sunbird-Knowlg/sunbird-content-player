@@ -205,7 +205,7 @@ function startTelemetry(id, ver) {
         for (var parentTree = '', contentExtrasLength = GlobalContext.game.contentExtras.length - 1, i = 0; i < contentExtrasLength && (parentTree += GlobalContext.game.contentExtras[i].identifier, i != contentExtrasLength - 1); i += 1) parentTree += "/";
         correlationData = [{
             "id": parentTree,
-            "type": GlobalContext.game.contentExtras[0].mediaType
+            "type": GlobalContext.game.contentExtras[0].contentType
         }];
     }
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData).then(function() {
