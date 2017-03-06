@@ -883,6 +883,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 values: values
             });
             TelemetryService.end();
+            $scope.showRelatedContent = false;
             jQuery('#endPageLoader').show();
             GlobalContext.game.id = content.identifier
             GlobalContext.game.pkgVersion = content.pkgVersion;
