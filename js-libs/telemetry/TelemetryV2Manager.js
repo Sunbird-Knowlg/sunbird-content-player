@@ -35,7 +35,7 @@ TelemetryV2Manager = Class.extend({
                 "tid": eks.tid ? eks.tid : "",
                 "uri": eks.uri ? eks.uri : "",
                 "extype": "",
-                "values": []
+                "values": eks.values ? eks.values : []
             };
             return this.createEvent("OE_INTERACT", eks);
         }

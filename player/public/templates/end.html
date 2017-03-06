@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div class="gc-related-cont" ng-show="showRelatedContent">
-                <div class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story);">
+                <div class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story, $index);">
                     <div class="gc-related-item">
                         <p class="gc-text-elipsis gc-related-cont-title">{{story.name}}</p>
                         <div class="gc-rel-content-img">

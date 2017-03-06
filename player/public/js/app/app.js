@@ -851,35 +851,55 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showRelatedContentHeader = true;
         $scope.relatedContents = [];
         $scope.relatedContentPath = [];
-   $scope.playRelatedContent = function(content) {
-        $scope.showRelatedContent = false;
-        $scope.contentShowMore = false;
-        $scope.showRelatedContentHeader = false;
         $scope.collectionTree = undefined;
-        collectionPath = $scope.relatedContentPath;
-        TelemetryService.interact("TOUCH", "gc_relatedcontent", "TOUCH", {
-            stageId: "endpage",
-            subtype: " "
-        });
-        TelemetryService.end();
-        jQuery('#endPageLoader').show();
-        GlobalContext.game.id = content.identifier
-        GlobalContext.game.pkgVersion = content.pkgVersion;
-        if (content.isAvailable) {
-            $rootScope.getContentMetadata(GlobalContext.game.id, function() {
-                $state.go('playContent', {
-                    'itemId': $rootScope.content.identifier
-                });
+        $scope.playRelatedContent = function(content, index) {
+            // $scope.showRelatedContent = false;
+            // $scope.contentShowMore = false;
+            // $scope.showRelatedContentHeader = false;
+            var contentId = [];
+            collectionPath = $scope.relatedContentPath;
+            var eleId = "gc_nextcontent";
+            var values = [];
+            var contentIds = [];
+            // Send only for normal contet/ content played directly from Genie
+            if (_.isUndefined($scope.collectionTree) || _.isEmpty($scope.collectionTree)) {
+                if ($scope.relatedContents.length>0) {
+                    contentIds = _.pluck($scope.relatedContents, 'identifier');
+                }
+                eleId = "gc_relatedcontent";
+                values = [{
+                    PositionClicked: index + 1
+                },{
+                    ContentIDsDisplayed: contentIds,
+                },{
+                    id: $scope.relatedContentItem ? $scope.relatedContentItem.params.resmsgid : "",
+                    type: $scope.relatedContentItem ? $scope.relatedContentItem.id : ''
+                }]
+            } 
+            TelemetryService.interact("TOUCH", eleId, "TOUCH", {
+                stageId: "endpage",
+                subtype: "",
+                values: values
             });
-        } else {
-            window.open("ekstep://c/" + content.identifier, "_system");
+            TelemetryService.end();
+            jQuery('#endPageLoader').show();
+            GlobalContext.game.id = content.identifier
+            GlobalContext.game.pkgVersion = content.pkgVersion;
+            if (content.isAvailable) {
+                $rootScope.getContentMetadata(GlobalContext.game.id, function() {
+                    $state.go('playContent', {
+                        'itemId':content.getContentMetadata                   });;
+                });
+            } else {
+                window.open("ekstep://c/" + content.identifier, "_system");
+            }
         }
-    }
 
         $scope.getRelatedContent = function(list) {
             ContentService.getRelatedContent(TelemetryService._user.uid, list)
                 .then(function(item) {
                     if (!_.isEmpty(item)) {
+                        $scope.relatedContentItem = item;
                         var list = [];
                         if (!_.isEmpty(item.collection)) {
                             $scope.showRelatedContent = true;
