@@ -883,8 +883,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 values: values
             });
             TelemetryService.end();
-            $scope.showRelatedContent = false;
-            jQuery('#endPageLoader').show();
             GlobalContext.game.id = content.identifier
             GlobalContext.game.pkgVersion = content.pkgVersion;
             var contentExtras = [];
@@ -896,7 +894,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
             if (content.isAvailable) {
                 $rootScope.getContentMetadata(GlobalContext.game.id, function() {
-                    if($rootScope.collectionTree){
+                    if($scope.collectionTree){
                         GlobalContext.game.contentExtras = contentExtras;
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                     }
@@ -908,6 +906,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // stringify contentExtras array to string
                 var deepLinkURL = "ekstep://c/" + content.identifier;
                 if (!_.isEmpty(contentExtras)){
+                    contentExtras.pop();
                     contentExtras = JSON.stringify(contentExtras);
                     deepLinkURL += "&contentExtras=" + contentExtras;
                 }
