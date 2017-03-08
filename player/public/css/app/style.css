@@ -476,13 +476,13 @@ body{
     font-size: 1.8em;
     top: 33%;
     text-align: center;
-    left: 46%;
+    left: 45%;
 
 }
 .tryagain-retry-div{
     font-size: 1.1em;
     top: 2%;
-    left: 52%;
+    left: 45%;
     padding: 0;
     margin: 10px;
 }
@@ -490,7 +490,7 @@ body{
 .tryagian-next-div{
     font-size: 1.1em;
     top: 35%;
-    left: 55%;
+    left: 46%;
 
 }
 
