@@ -149,7 +149,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 .then(function(data) {
                     $rootScope.setContentMetadata(data);
                     if (!_.isUndefined(cb)) {
-                        cb();
+                        cb(data);
                     }
                 })
                 .catch(function(err) {
@@ -892,8 +892,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     contentExtras.push(_.pick(eachObj, 'identifier', 'contentType'));
                 });
             }
-            $rootScope.getContentMetadata(GlobalContext.game.id, function() {
-                content.isAvailable = $rootScope.content.isAvailable;
+            $rootScope.getContentMetadata(GlobalContext.game.id, function(fullContentMetadata) {
+                content = fullContentMetadata;
                 if (content.isAvailable) {
                         if($scope.collectionTree){
                             GlobalContext.game.contentExtras = contentExtras;
