@@ -479,7 +479,7 @@ body{
 }
 .tryagain-retry-div{
     font-size: 1.1em;
-    top: 2%;
+    bottom: 53%;
     left: 45%;
     padding: 0;
     margin: 10px;
@@ -487,7 +487,7 @@ body{
 
 .tryagian-next-div{
     font-size: 1.1em;
-    top: 35%;
+    bottom: 26%;
     left: 47%;
 
 }
