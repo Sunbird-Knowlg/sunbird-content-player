@@ -140,21 +140,19 @@ body{
     color: #FFFFFF;
     text-align: center;
     overflow: hidden;
-    padding: 0 2%;
+    padding: 1% 2%;
     text-overflow: ellipsis;
-    line-height: 1.5em;
+    line-height: 1.8em;
     margin-bottom: 2%;
     width: 100%;
-    margin-top: 5%;
+    margin-top: 2%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    height: 23%;
+    height: auto;
     -webkit-line-clamp: 2;
     font-size: 9vh;
     -webkit-text-stroke: 0.2vh #009e81;
     z-index: 0;
-    padding-top: 1%;
-    padding-bottom: 2%;
   }
 
 .gc-text-elipsis{
@@ -957,7 +955,7 @@ body{
 }
 
 .gc-loader-prog {
-    margin-left: 46%;
+    margin-left: 44%;
     position: absolute;
     color: white;
     padding: 1%;
