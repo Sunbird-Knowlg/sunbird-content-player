@@ -149,7 +149,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 .then(function(data) {
                     $rootScope.setContentMetadata(data);
                     if (!_.isUndefined(cb)) {
-                        cb();
+                        cb(data.isAvailable);
                     }
                 })
                 .catch(function(err) {
@@ -892,27 +892,28 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     contentExtras.push(_.pick(eachObj, 'identifier', 'contentType'));
                 });
             }
-            if (content.isAvailable) {
-                $rootScope.getContentMetadata(GlobalContext.game.id, function() {
-                    if($scope.collectionTree){
-                        GlobalContext.game.contentExtras = contentExtras;
-                        localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
+            $rootScope.getContentMetadata(GlobalContext.game.id, function(isAvailable) {
+                content.isAvailable = isAvailable;
+                if (content.isAvailable) {
+                        if($scope.collectionTree){
+                            GlobalContext.game.contentExtras = contentExtras;
+                            localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
+                        }
+                        $state.go('playContent', {
+                            'itemId': $rootScope.content.identifier
+                        });
+                } else {
+                    // stringify contentExtras array to string
+                    var deepLinkURL = "ekstep://c/" + content.identifier;
+                    if (!_.isEmpty(contentExtras)){
+                        contentExtras.pop();
+                        contentExtras = JSON.stringify(contentExtras);
+                        deepLinkURL += "&contentExtras=" + contentExtras;
                     }
-                    $state.go('playContent', {
-                        'itemId': $rootScope.content.identifier
-                    });
-                });
-            } else {
-                // stringify contentExtras array to string
-                var deepLinkURL = "ekstep://c/" + content.identifier;
-                if (!_.isEmpty(contentExtras)){
-                    contentExtras.pop();
-                    contentExtras = JSON.stringify(contentExtras);
-                    deepLinkURL += "&contentExtras=" + contentExtras;
+                    console.log("deepLinkURL: ", deepLinkURL);
+                    window.open(deepLinkURL, "_system");
                 }
-                console.log("deepLinkURL: ", deepLinkURL);
-                window.open(deepLinkURL, "_system");
-            }
+            });
         }
 
         $scope.getRelatedContent = function(list) {
