@@ -18,7 +18,8 @@ var StagePlugin = Plugin.extend({
     timeInstance : {},
     initPlugin: function(data) {
         var instance = this;
-        this.destroyTimeInstance(data);
+        //TODO: Should be released in April Release
+        // this.destroyTimeInstance(data);
         this._inputs = [];
         this.params = {};
         this._self = new creatine.Scene();
@@ -74,56 +75,58 @@ var StagePlugin = Plugin.extend({
                 });
             }
         }
-        var isStageLoaded;
-        if (!_.isUndefined(AssetManager.strategy)) {
-            isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
-        }
-        if (isStageLoaded == false) {
-            var timeInst;
-            //If assets is not loaded, add a event bus which will be trigurred as soon as assets are loaded completely
-            EventBus.addEventListener(data.id + '_assetsLoaded', instance.invokeRenderElements, this);
-            timeInst = setTimeout(function() {
-            // if manifest loading time is less
-            // Its very irritating to show loader even less time on each stage, so
-            // Waiting 0.5 sec before showing loader
-                isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
-                if (!isStageLoaded && instance._theme._currentStage == data.id) {
-                    instance.showHideLoader('block')
-                    timeInst = setTimeout(function() {
-                        // If some how loader didn't go off, after 5 sec we are removing
-                        if (jQuery('#loaderArea').css('display') == 'block' && instance._theme._currentStage == instance._data.id) {
-                            instance.invokeRenderElements();
-                        }
-                    },instance.maxTimeToLoad)
-                    instance.timeInstance[data.id] = timeInst;
-                }
-            },500)
-            this.timeInstance[data.id] = timeInst;
-            return
-        }
+        //TODO: Should be released in April Release
+        // var isStageLoaded;
+        // if (!_.isUndefined(AssetManager.strategy)) {
+        //     isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
+        // }
+        // if (isStageLoaded == false) {
+        //     var timeInst;
+        //     //If assets is not loaded, add a event bus which will be trigurred as soon as assets are loaded completely
+        //     EventBus.addEventListener(data.id + '_assetsLoaded', instance.invokeRenderElements, this);
+        //     timeInst = setTimeout(function() {
+        //     // if manifest loading time is less
+        //     // Its very irritating to show loader even less time on each stage, so
+        //     // Waiting 0.5 sec before showing loader
+        //         isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
+        //         if (!isStageLoaded && instance._theme._currentStage == data.id) {
+        //             instance.showHideLoader('block')
+        //             timeInst = setTimeout(function() {
+        //                 // If some how loader didn't go off, after 5 sec we are removing
+        //                 if (jQuery('#loaderArea').css('display') == 'block' && instance._theme._currentStage == instance._data.id) {
+        //                     instance.invokeRenderElements();
+        //                 }
+        //             },instance.maxTimeToLoad)
+        //             instance.timeInstance[data.id] = timeInst;
+        //         }
+        //     },500)
+        //     this.timeInstance[data.id] = timeInst;
+        //     return
+        // }
         this.invokeChildren(data, this, this, this._theme);
     },
-    destroyTimeInstance: function(data) {
-        if (Renderer.theme && Renderer.theme.getStagesToPreLoad) {
-            var stages = Renderer.theme.getStagesToPreLoad(data);
-            if (!_.isUndefined(stages.next) && this.timeInstance[stages.next]) {
-                clearTimeout(this.timeInstance[stages.next]);
-                delete this.timeInstance[stages.next];
-            }
-            if (!_.isUndefined(stages.prev) && this.timeInstance[stages.prev]) {
-                clearTimeout(this.timeInstance[stages.prev]);
-                delete this.timeInstance[stages.prev];
-            }
-        }
-    },
-    invokeRenderElements: function() {
-        this.invokeChildren(this._data, this, this, this._theme);
-        Renderer.update = true;
-        this.showHideLoader('none');
-        if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene)) {
-            Renderer.theme._currentScene.dispatchEvent('enter');
-        }
-    },
+    //TODO: Should be released in April Release
+    // destroyTimeInstance: function(data) {
+    //     if (Renderer.theme && Renderer.theme.getStagesToPreLoad) {
+    //         var stages = Renderer.theme.getStagesToPreLoad(data);
+    //         if (!_.isUndefined(stages.next) && this.timeInstance[stages.next]) {
+    //             clearTimeout(this.timeInstance[stages.next]);
+    //             delete this.timeInstance[stages.next];
+    //         }
+    //         if (!_.isUndefined(stages.prev) && this.timeInstance[stages.prev]) {
+    //             clearTimeout(this.timeInstance[stages.prev]);
+    //             delete this.timeInstance[stages.prev];
+    //         }
+    //     }
+    // },
+    // invokeRenderElements: function() {
+    //     this.invokeChildren(this._data, this, this, this._theme);
+    //     Renderer.update = true;
+    //     this.showHideLoader('none');
+    //     if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene)) {
+    //         Renderer.theme._currentScene.dispatchEvent('enter');
+    //     }
+    // },
     keyboardShowHandler: function(e) {
         this._self.y = -(e.keyboardHeight);
         if (!this._self.hitArea) {
