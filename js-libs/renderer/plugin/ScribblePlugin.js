@@ -24,7 +24,7 @@ var ScribblePlugin = Plugin.extend({
         var shapeData = {"shape":{"type":"rect","x":0,"y":0,"w":100,"h":100}};
         if (data.fill) shapeData.shape.fill = data.fill;
         if (data.stroke) shapeData.shape.stroke = data.stroke;
-        if (data.opacity) shapeData.shape.opacity = data.opacity;
+        if (!_.isUndefined(data.opacity)) shapeData.shape.opacity = data.opacity;
         if (data["stroke-width"]) shapeData.shape["stroke-width"] = data["stroke-width"];
         if(data.rotate) shapeData.shape.rotate = data.rotate;
         this.invokeChildren(shapeData, this, this._stage, this._theme);
