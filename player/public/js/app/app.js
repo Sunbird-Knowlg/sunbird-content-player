@@ -892,18 +892,20 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     contentExtras.push(_.pick(eachObj, 'identifier', 'contentType'));
                 });
             }
-
-            ContentService.getContentAvailability(GlobalContext.game.id)
-                .then(function(isAvailable) {
-                    content.isAvailable = isAvailable;
-                    if (content.isAvailable) {
+            // Check is content is downloaded or not in Genie.
+            ContentService.getContentAvailability(content.identifier)
+                .then(function(contetnIsAvailable) {
+                    if (contetnIsAvailable) {
+                        // This is required to setup current content details which is going to play
+                        $rootScope.getContentMetadata(content.identifier, function(){
                             if($scope.collectionTree){
                                 GlobalContext.game.contentExtras = contentExtras;
                                 localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                             }
                             $state.go('playContent', {
-                                'itemId': $rootScope.content.identifier
-                            });
+                                'itemId': content.identifier
+                            });                                
+                        });
                     } else {
                         // stringify contentExtras array to string
                         var deepLinkURL = "ekstep://c/" + content.identifier;
@@ -916,10 +918,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         window.open(deepLinkURL, "_system");
                     }
                 })
-                .catch(function(err) {
-                    console.info("contentNotAvailable : ", err);
-                    contentNotAvailable();
-                });
+            .catch(function(err) {
+               console.info("contentNotAvailable : ", err);
+               contentNotAvailable();
+            });                
         }
 
         $scope.getRelatedContent = function(list) {
@@ -988,6 +990,15 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         return {
             restrict: 'E',
             templateUrl: ("undefined" != typeof localPreview && "local" == localPreview) ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
+        }
+    }).directive('fallbackSrc', function () {
+        return {
+            restrict: 'AE',
+            link: function postLink(scope, iElement, iAttrs) {
+                iElement.bind('error', function() {
+                    angular.element(this).attr("src", iAttrs.fallbackSrc);
+                });
+            }
         }
     }).directive('collection', function($rootScope, $state) {
         return {

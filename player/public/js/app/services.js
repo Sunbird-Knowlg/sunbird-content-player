@@ -33,18 +33,19 @@ angular.module('genie-canvas.services', ['ngResource'])
             getContentAvailability: function(id) {
                 return new Promise(function(resolve, reject) {
                     genieservice.getContent(id)
-                        .then(function(item) {
-                            if (item) {
-                                resolve(item.isAvailable);
-                            } else {
-                                reject("Content is not available.");
-                            }
-                        })
-                        .catch(function(err) {
-                            console.error(AppErrors.contetnPathFetch, err);
-                            reject(err);
-                        });
-                });
+                       .then(function(contentData) {
+                           if(!_.isUndefined(contentData)){
+                               resolve(contentData.isAvailable);                                
+                           } else {
+                               console.error("Content is not available.");
+                               reject("Content is not available.");
+                           }
+                       })
+                       .catch(function(err) {
+                           console.error(AppErrors.contetnPathFetch, err);
+                           reject(err);
+                       });
+               });
             },
             getRelatedContent: function(uid, list) {
                 return new Promise(function(resolve, reject) {
