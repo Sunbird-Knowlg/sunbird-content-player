@@ -19,8 +19,12 @@ TelemetryV2Manager = Class.extend({
         return this.createEvent("OE_START", {});
     },
     end: function(gameId) {
-        this._start.pop();
-        return this._end.pop().end();
+        if (!_.isEmpty(this._start)) {
+            this._start.pop();
+            return this._end.pop().end();
+        } else {
+            console.warn("Telemetry service end is already logged Please log start telemetry again");
+        }
     },
     interact: function(type, id, extype, eks) {
         if (eks.optionTag)

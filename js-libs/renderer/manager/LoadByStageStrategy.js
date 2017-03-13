@@ -205,14 +205,14 @@ LoadByStageStrategy = Class.extend({
                 this.loaders[stageId].on("complete", function() {
                     var data = Renderer.theme && Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
                     if (stageId == data) {
-                        EventBus.dispatch(data + '_assetsLoaded');
+                        // EventBus.dispatch(data + '_assetsLoaded');
                         cb();
                     }
                 }, null, true);
             } else {
                 var data = Renderer.theme && Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
                 if (stageId == data) {
-                    EventBus.dispatch(data + '_assetsLoaded');
+                    // EventBus.dispatch(data + '_assetsLoaded');
                     cb();
                 }
             }

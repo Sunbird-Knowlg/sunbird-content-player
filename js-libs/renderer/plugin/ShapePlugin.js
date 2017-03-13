@@ -18,9 +18,9 @@ var ShapePlugin = Plugin.extend({
         if(data['stroke-width']) {
             graphics.setStrokeStyle(data['stroke-width']);
         }
-        if (data.rotate) {
+        /*if (data.rotate) {
             this.rotation(data);
-        }
+        }*/
 
         // Radius for rounded rectangle
         var radius = data.radius || 10;
