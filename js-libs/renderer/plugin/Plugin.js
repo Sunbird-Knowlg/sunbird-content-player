@@ -15,7 +15,6 @@ var Plugin = Class.extend({
     _enableEvents: true,
     events: [],
     appEvents: [],
-    _myflag: false,
     borderShape: undefined,
     _pluginParams: {},
     _unSupportedFonts: ["notosans", "verdana", "notosans oriya"],
@@ -97,10 +96,11 @@ var Plugin = Class.extend({
             if (data.shadow) {
                 this.addShadow();
             }
-            this.rotation(data);
-             
+
             //this is to ratate the plugin with border
-            
+        }
+        if (this._self) {
+            this.rotation(data);
         }
 
     },
