@@ -196,6 +196,7 @@ var ThemePlugin = Plugin.extend({
     },
     replaceStage: function(stageId, effect) {
         AudioManager.stopAll();
+        RecorderManager.stopRecording();
         this.disableInputs();
         this.inputs = [];
         this.removeHtmlElements();
