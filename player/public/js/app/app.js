@@ -149,7 +149,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 .then(function(data) {
                     $rootScope.setContentMetadata(data);
                     if (!_.isUndefined(cb)) {
-                        cb();
+                        cb(data);
                     }
                 })
                 .catch(function(err) {
@@ -883,8 +883,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 values: values
             });
             TelemetryService.end();
-            $scope.showRelatedContent = false;
-            jQuery('#endPageLoader').show();
             GlobalContext.game.id = content.identifier
             GlobalContext.game.pkgVersion = content.pkgVersion;
             var contentExtras = [];
@@ -894,26 +892,36 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     contentExtras.push(_.pick(eachObj, 'identifier', 'contentType'));
                 });
             }
-            if (content.isAvailable) {
-                $rootScope.getContentMetadata(GlobalContext.game.id, function() {
-                    if($rootScope.collectionTree){
-                        GlobalContext.game.contentExtras = contentExtras;
-                        localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
+            // Check is content is downloaded or not in Genie.
+            ContentService.getContentAvailability(content.identifier)
+                .then(function(contetnIsAvailable) {
+                    if (contetnIsAvailable) {
+                        // This is required to setup current content details which is going to play
+                        $rootScope.getContentMetadata(content.identifier, function(){
+                            if($scope.collectionTree){
+                                GlobalContext.game.contentExtras = contentExtras;
+                                localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
+                            }
+                            $state.go('playContent', {
+                                'itemId': content.identifier
+                            });                                
+                        });
+                    } else {
+                        // stringify contentExtras array to string
+                        var deepLinkURL = "ekstep://c/" + content.identifier;
+                        if (!_.isEmpty(contentExtras)){
+                            contentExtras.pop();
+                            contentExtras = JSON.stringify(contentExtras);
+                            deepLinkURL += "&contentExtras=" + contentExtras;
+                        }
+                        console.log("deepLinkURL: ", deepLinkURL);
+                        window.open(deepLinkURL, "_system");
                     }
-                    $state.go('playContent', {
-                        'itemId': $rootScope.content.identifier
-                    });
-                });
-            } else {
-                // stringify contentExtras array to string
-                var deepLinkURL = "ekstep://c/" + content.identifier;
-                if (!_.isEmpty(contentExtras)){
-                    contentExtras = JSON.stringify(contentExtras);
-                    deepLinkURL += "&contentExtras=" + contentExtras;
-                }
-                console.log("deepLinkURL: ", deepLinkURL);
-                window.open(deepLinkURL, "_system");
-            }
+                })
+            .catch(function(err) {
+               console.info("contentNotAvailable : ", err);
+               contentNotAvailable();
+            });                
         }
 
         $scope.getRelatedContent = function(list) {
@@ -982,6 +990,15 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         return {
             restrict: 'E',
             templateUrl: ("undefined" != typeof localPreview && "local" == localPreview) ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
+        }
+    }).directive('fallbackSrc', function () {
+        return {
+            restrict: 'AE',
+            link: function postLink(scope, iElement, iAttrs) {
+                iElement.bind('error', function() {
+                    angular.element(this).attr("src", iAttrs.fallbackSrc);
+                });
+            }
         }
     }).directive('collection', function($rootScope, $state) {
         return {
