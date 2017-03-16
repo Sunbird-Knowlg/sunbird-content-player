@@ -296,7 +296,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             TelemetryService.interact("TOUCH", "gc_replay", "TOUCH", {
                 stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
             });
-            EventBus.dispatch('actionReplay');
+            // 1) For HTML content onclick of replay EventListeners will be not available hence calling Telemetryservice end .
+            // 2) OE_START for the HTML/ECML content will be takne care by the contentctrl rendere method always.
+            EventBus.hasEventListener('actionReplay') ? EventBus.dispatch('actionReplay') : TelemetryService.end();
             if ($state.current.name == appConstants.stateShowContentEnd) {
                 $state.go(appConstants.statePlayContent, {
                     'itemId': $rootScope.content.identifier
@@ -586,12 +588,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showFeedback = function(param) {
             $scope.userRating = param;
             $scope.popUserRating = param;
-            // Commented the feeback popup screen telemetry
-            // it is generating telemety without any interact
-            /*TelemetryService.interact("TOUCH", "gc_feedback", "TOUCH", {
-                stageId: "ContnetApp-FeedbackScreen",
-                subtype: "ContentID"
-            });*/
             $scope.showFeedbackPopup = true;
             $scope.enableFeedbackSubmit();
         }
