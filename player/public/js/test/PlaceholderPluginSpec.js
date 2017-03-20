@@ -1,7 +1,7 @@
 describe('Placeholder Plugin test cases', function() {
 
     beforeEach(function(done) {
-        
+
         var parent = {
             dimensions: function() {
                 return {
@@ -57,7 +57,7 @@ describe('Placeholder Plugin test cases', function() {
         expect(this.plugin.renderImage.calls.count()).toEqual(1);
     });
 
-    xit('Placeholder plugin renderGridLayout function call', function() {
+    it('Placeholder plugin renderGridLayout function call', function() {
         this.plugin.renderGridLayout(parent, this.plugin, data);
         expect(this.plugin.renderGridLayout).toHaveBeenCalled();
         expect(this.plugin.renderGridLayout.calls.count()).toEqual(1);
@@ -81,7 +81,7 @@ describe('Placeholder Plugin test cases', function() {
         expect(false).toEqual(this.plugin._isContainer == false);
     });
 
-    it('Plugin renderText function ', function() {    
+    it('Plugin renderText function ', function() {
         expect(this.plugin.renderText).not.toEqual(null);
     });
 
