@@ -137,7 +137,7 @@ body{
 
 .cover-page-title {
     text-transform: uppercase;
-    color: #FFFFFF;
+    color: #494949;
     text-align: center;
     overflow: hidden;
     padding: 1% 2%;
@@ -161,12 +161,13 @@ body{
     overflow: hidden;
 }
 
-.gc-ep-title{
+.icon-font.gc-ep-title{
     width: 100%;
     text-transform: uppercase;
     padding: 2% 0% 1%;
     font-size: 1.8em;
     text-align: center;
+    color: #494949;
 }
 
 .menu-overlay {
