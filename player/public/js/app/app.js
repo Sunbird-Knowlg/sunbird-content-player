@@ -892,33 +892,35 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 .then(function(contetnIsAvailable) {
                     if (contetnIsAvailable) {
                         // This is required to setup current content details which is going to play
-                        $rootScope.getContentMetadata(content.identifier, function(){
-                            if($scope.collectionTree){
+                        $rootScope.getContentMetadata(content.identifier, function() {
+                            if ($scope.collectionTree) {
                                 GlobalContext.game.contentExtras = contentExtras;
                                 localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                             }
                             $state.go('playContent', {
                                 'itemId': content.identifier
-                            });                                
+                            });
                         });
                     } else {
-                        // stringify contentExtras array to string
-                        var deepLinkURL = "ekstep://c/" + content.identifier;
-                        if (!_.isEmpty(contentExtras)){
-                            contentExtras.pop();
-                            contentExtras = JSON.stringify(contentExtras);
-                            deepLinkURL += "&contentExtras=" + contentExtras;
-                        }
-                        console.log("deepLinkURL: ", deepLinkURL);
-                        window.open(deepLinkURL, "_system");
+                        $scope.navigateToDownloadPage(contentExtras, content.identifier);
                     }
                 })
-            .catch(function(err) {
-               console.info("contentNotAvailable : ", err);
-               contentNotAvailable();
-            });                
+                .catch(function(err) {
+                    console.info("contentNotAvailable : ", err);
+                    $scope.navigateToDownloadPage(contentExtras, content.identifier);
+                });
         }
-
+        $scope.navigateToDownloadPage = function(contentExtras, contentId) {
+            // stringify contentExtras array to string
+            var deepLinkURL = "ekstep://c/" + contentId;
+            if (!_.isEmpty(contentExtras)) {
+                contentExtras.pop();
+                contentExtras = JSON.stringify(contentExtras);
+                deepLinkURL += "&contentExtras=" + contentExtras;
+            }
+            console.log("deepLinkURL: ", deepLinkURL);
+            window.open(deepLinkURL, "_system");
+        }
         $scope.getRelatedContent = function(list) {
             ContentService.getRelatedContent(TelemetryService._user.uid, list)
                 .then(function(item) {
