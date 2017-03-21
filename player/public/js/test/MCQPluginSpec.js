@@ -63,10 +63,10 @@ describe('MCQ Plugin test cases', function() {
     }); */
 
     it('MCQ plugin initPlugin field validation', function() {
-       /* console.log(this.plugin);*/
         expect(true).toEqual(this.plugin._blur == 30);
         expect(true).toEqual(this.plugin._shadow == "#0470D8");
     });
+
     /* it('Mcq plugin offsetX and ofsetY field validation', function() {
 
         expect(true).toEqual(this.plugin._offsetX == 2);
