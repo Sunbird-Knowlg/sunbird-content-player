@@ -30,6 +30,23 @@ angular.module('genie-canvas.services', ['ngResource'])
                         });
                 });
             },
+            getContentAvailability: function(id) {
+                return new Promise(function(resolve, reject) {
+                    genieservice.getContent(id)
+                       .then(function(contentData) {
+                           if(!_.isUndefined(contentData)){
+                               resolve(contentData.isAvailable);                                
+                           } else {
+                               console.error("Content is not available.");
+                               reject("Content is not available.");
+                           }
+                       })
+                       .catch(function(err) {
+                           console.error(AppErrors.contetnPathFetch, err);
+                           reject(err);
+                       });
+               });
+            },
             getRelatedContent: function(uid, list) {
                 return new Promise(function(resolve, reject) {
                     genieservice.getRelatedContent(uid, list)
@@ -94,7 +111,7 @@ angular.module('genie-canvas.services', ['ngResource'])
                         data.appIcon = (isbrowserpreview) ? data.appIcon : path + "/logo.png";
                     data.mimeType = item.mimeType;
                     data.status = "ready";
-                    data.isAvailable = true;
+                    data.isAvailable = item.isAvailable;
                 } else {
                     if (!data) data = {};
                     data.status = "error";

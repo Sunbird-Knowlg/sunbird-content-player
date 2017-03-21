@@ -123,7 +123,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "instructions": "NOTES TO TEACHER",
             "replay": "Replay",
             "feedback": "Feedback",
-            "collection": "COLLECTION",
             "noCreditsAvailable": "There are no credits available",
             "congratulations": "Congratulations! You just completed",
             "credit": "Credits",
@@ -149,7 +148,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 .then(function(data) {
                     $rootScope.setContentMetadata(data);
                     if (!_.isUndefined(cb)) {
-                        cb();
+                        cb(data);
                     }
                 })
                 .catch(function(err) {
@@ -297,7 +296,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             TelemetryService.interact("TOUCH", "gc_replay", "TOUCH", {
                 stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
             });
-            EventBus.dispatch('actionReplay');
+            // 1) For HTML content onclick of replay EventListeners will be not available hence calling Telemetryservice end .
+            // 2) OE_START for the HTML/ECML content will be takne care by the contentctrl rendere method always.
+            EventBus.hasEventListener('actionReplay') ? EventBus.dispatch('actionReplay') : TelemetryService.end();
             if ($state.current.name == appConstants.stateShowContentEnd) {
                 $state.go(appConstants.statePlayContent, {
                     'itemId': $rootScope.content.identifier
@@ -587,12 +588,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showFeedback = function(param) {
             $scope.userRating = param;
             $scope.popUserRating = param;
-            // Commented the feeback popup screen telemetry
-            // it is generating telemety without any interact
-            /*TelemetryService.interact("TOUCH", "gc_feedback", "TOUCH", {
-                stageId: "ContnetApp-FeedbackScreen",
-                subtype: "ContentID"
-            });*/
             $scope.showFeedbackPopup = true;
             $scope.enableFeedbackSubmit();
         }
@@ -883,8 +878,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 values: values
             });
             TelemetryService.end();
-            $scope.showRelatedContent = false;
-            jQuery('#endPageLoader').show();
             GlobalContext.game.id = content.identifier
             GlobalContext.game.pkgVersion = content.pkgVersion;
             var contentExtras = [];
@@ -894,28 +887,40 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     contentExtras.push(_.pick(eachObj, 'identifier', 'contentType'));
                 });
             }
-            if (content.isAvailable) {
-                $rootScope.getContentMetadata(GlobalContext.game.id, function() {
-                    if($rootScope.collectionTree){
-                        GlobalContext.game.contentExtras = contentExtras;
-                        localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
+            // Check is content is downloaded or not in Genie.
+            ContentService.getContentAvailability(content.identifier)
+                .then(function(contetnIsAvailable) {
+                    if (contetnIsAvailable) {
+                        // This is required to setup current content details which is going to play
+                        $rootScope.getContentMetadata(content.identifier, function() {
+                            if ($scope.collectionTree) {
+                                GlobalContext.game.contentExtras = contentExtras;
+                                localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
+                            }
+                            $state.go('playContent', {
+                                'itemId': content.identifier
+                            });
+                        });
+                    } else {
+                        $scope.navigateToDownloadPage(contentExtras, content.identifier);
                     }
-                    $state.go('playContent', {
-                        'itemId': $rootScope.content.identifier
-                    });
+                })
+                .catch(function(err) {
+                    console.info("contentNotAvailable : ", err);
+                    $scope.navigateToDownloadPage(contentExtras, content.identifier);
                 });
-            } else {
-                // stringify contentExtras array to string
-                var deepLinkURL = "ekstep://c/" + content.identifier;
-                if (!_.isEmpty(contentExtras)){
-                    contentExtras = JSON.stringify(contentExtras);
-                    deepLinkURL += "&contentExtras=" + contentExtras;
-                }
-                console.log("deepLinkURL: ", deepLinkURL);
-                window.open(deepLinkURL, "_system");
-            }
         }
-
+        $scope.navigateToDownloadPage = function(contentExtras, contentId) {
+            // stringify contentExtras array to string
+            var deepLinkURL = "ekstep://c/" + contentId;
+            if (!_.isEmpty(contentExtras)) {
+                contentExtras.pop();
+                contentExtras = JSON.stringify(contentExtras);
+                deepLinkURL += "&contentExtras=" + contentExtras;
+            }
+            console.log("deepLinkURL: ", deepLinkURL);
+            window.open(deepLinkURL, "_system");
+        }
         $scope.getRelatedContent = function(list) {
             ContentService.getRelatedContent(TelemetryService._user.uid, list)
                 .then(function(item) {
@@ -983,62 +988,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'E',
             templateUrl: ("undefined" != typeof localPreview && "local" == localPreview) ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
         }
-    }).directive('collection', function($rootScope, $state) {
+    }).directive('fallbackSrc', function () {
         return {
-            restrict: 'E',
-            template: '<a ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollec == false}" ng-src="{{imgSrc}}"/></a>',
-            scope: {
-                isCollec: "="
-            },
-            link: function(scope, state) {
-                scope.imgSrc = $rootScope.imageBasePath + 'icn_collections.png';
-                // scope.isCollection = false;
-                var pageId = $rootScope.pageId;
-                // Code refactring of the Collection Directive is Required
-                scope.goToCollection = function() {
-                    if (scope.isCollec) {
-                        collectionPath.pop();
-                        TelemetryService.interact("TOUCH", "gc_collection", "TOUCH", {
-                            stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId))
-                        });
-                        if (Renderer.running)
-                            Renderer.cleanUp();
-                        else
-                            TelemetryService.end();
-                        $state.go('contentList', {
-                            "id": $rootScope.collection.identifier
-                        });
-                    }
-                }
-            }
-        }
-    }).directive('home', function($rootScope, $state) {
-        return {
-            restrict: 'E',
-            scope: {
-                disableHome: '=info'
-
-            },
-            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imgSrc}}"/></a>',
-            link: function(scope, state) {
-                scope.imgSrc = $rootScope.imageBasePath + 'icn_square_home.png';
-                scope.showHome = false;
-                if (scope.disableHome == true)
-                    scope.showHome = true;
-                var pageId = $rootScope.pageId;
-
-                scope.goToHome = function() {
-                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId)) });
-                    if (Renderer.running)
-                        Renderer.cleanUp();
-                    else
-                        TelemetryService.end();
-                        $state.go('playContent', {
-                            'itemId': $rootScope.content.identifier });
-                    //window.location.hash = "/show/content/" + GlobalContext.currentContentId;
-
-                }
-
+            restrict: 'AE',
+            link: function postLink(scope, iElement, iAttrs) {
+                iElement.bind('error', function() {
+                    angular.element(this).attr("src", iAttrs.fallbackSrc);
+                });
             }
         }
     }).directive('genie', function($rootScope) {

@@ -193,16 +193,22 @@ LoadByStageStrategy = Class.extend({
                     console.error('StageLoader Asset preload error', evt);
                 });
                 loader.installPlugin(createjs.Sound);
+                loader.on("complete", function() {
+                    instance.loaders[stageId].stageLoaded = true;
+                }, null, true);
                 loader.loadManifest(mediaList, true);
+                loader.stageLoaded = false;
                 instance.loaders[stageId] = loader;
             }
         }
         this.handleStageCallback(stageId, callback);
     },
     handleStageCallback: function(stageId, cb) {
+        var instance = this;
         if (cb) {
-            if (!_.isUndefined(this.loaders[stageId]) && (this.loaders[stageId].progress < 1 || this.loaders[stageId].loaded == false)) {
+            if (!_.isUndefined(this.loaders[stageId]) && !this.loaders[stageId].stageLoaded) {
                 this.loaders[stageId].on("complete", function() {
+                    instance.loaders[stageId].stageLoaded = true;
                     var data = Renderer.theme && Renderer.theme._currentStage ? Renderer.theme._currentStage : stageId;
                     if (stageId == data) {
                         EventBus.dispatch(data + '_assetsLoaded');
@@ -251,6 +257,7 @@ LoadByStageStrategy = Class.extend({
             }*/
             loader.installPlugin(createjs.Sound);
             loader.on("complete", function() {
+                loader.stageLoaded = true;
                 if (cb) {
                     cb();
                 }
@@ -259,6 +266,7 @@ LoadByStageStrategy = Class.extend({
                 id: assetId,
                 src: path
             });
+            loader.stageLoaded = false;
         } else {
             //Image is not intianlised to load, So loading image & adding to the loaders
             loader = this._createLoader();
@@ -268,6 +276,7 @@ LoadByStageStrategy = Class.extend({
                     instance.loaders = {};
                 }
                 instance.loaders[stageId] = event.target;
+                instance.loaders[stageId].stageLoaded = true;
                 if (cb) {
                     cb();
                 }
@@ -279,6 +288,7 @@ LoadByStageStrategy = Class.extend({
                 id: assetId,
                 src: path
             });
+            loader.stageLoaded = false;
         }
     },
     destroy: function() {
@@ -307,7 +317,7 @@ LoadByStageStrategy = Class.extend({
     isStageAssetsLoaded : function(stageId) {
         // Show weather stage manifest are loaded or not.
         var manifest = JSON.parse(JSON.stringify(this.stageManifests[stageId]));
-        if (!_.isUndefined(this.loaders[stageId]) && this.loaders[stageId].progress >= 1) {
+        if (!_.isUndefined(this.loaders[stageId]) && this.loaders[stageId].stageLoaded) {
             return true
         } else
         if (_.isArray(manifest) && manifest.length == 0) {

@@ -3,8 +3,8 @@ repositories {
 }
 
 dependencies {
-    compile "org.ekstep.genieservices:sdks:1.0.+@aar"
-    compile "org.ekstep.genieservices:aidls:1.0.+@aar"
+    compile "org.ekstep.genieservices:sdks:1.5.+@aar"
+    compile "org.ekstep.genieservices:aidls:1.5.+@aar"
 }
 
 android {

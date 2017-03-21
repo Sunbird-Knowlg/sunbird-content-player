@@ -15,7 +15,7 @@ var Plugin = Class.extend({
     _enableEvents: true,
     events: [],
     appEvents: [],
-    _myflag: false,
+    borderShape: undefined,
     _pluginParams: {},
     _unSupportedFonts: ["notosans", "verdana", "notosans oriya"],
     init: function(data, parent, stage, theme) {
@@ -98,6 +98,11 @@ var Plugin = Class.extend({
             if (data.shadow) {
                 this.addShadow();
             }
+
+            //this is to ratate the plugin with border
+        }
+        if (this._self) {
+            this.rotation(data);
         }
 
     },
@@ -324,14 +329,16 @@ var Plugin = Class.extend({
     drawBorder: function(data, dims) {
         if (data.stroke) {
             var strokeWidth = (data['stroke-width'] || 1);
-            var borderShape;
+            //var borderShape;
             var graphics = this._self.graphics;
             if (!this._self.graphics) {
-                borderShape = new createjs.Shape();
-                graphics = borderShape.graphics;
+                this.borderShape = new createjs.Shape();
+                this.borderShape.x = this._self.x;
+                this.borderShape.y = this._self.y;
+                graphics = this.borderShape.graphics;
             }
             graphics.beginStroke(data.stroke);
-            borderShape.alpha = (data['stroke-opacity'] || 1);
+            this.borderShape.alpha = (data['stroke-opacity'] || 1);
             graphics.setStrokeStyle(strokeWidth);
             // graphics.setStrokeDash([10,10],0);
 
@@ -343,16 +350,27 @@ var Plugin = Class.extend({
             // this._self.x += strokeWidth;
             // this._self.y += strokeWidth;
 
-            graphics.dr(dims.x, dims.y, dims.w, dims.h);
+            graphics.dr(0, 0, dims.w, dims.h);
             //graphics.dr(dims.x + strokeWidth/2, dims.y + strokeWidth/2, dims.w - strokeWidth, dims.h - strokeWidth);
             if (!this._self.graphics) {
-                this._parent.addChild(borderShape);
+                this._parent.addChild(this.borderShape);
             }
             Renderer.update = true;
         }
     },
     rotation: function(data) {
-        this._self.rotation = data.rotate;
+        var degreeRotation = 0;
+        if (data.rotate) {
+            degreeRotation = data.rotate;
+        } else if (_.isNumber(data)) {
+            degreeRotation = data;
+        }
+        if (!_.isUndefined(this.borderShape)) {
+            this.borderShape.rotation = degreeRotation;
+        }
+        this._self.rotation = degreeRotation;
+
+
     },
     enableDrag: function(asset, snapTo) {
         asset.cursor = "pointer";
