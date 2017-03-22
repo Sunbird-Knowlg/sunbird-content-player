@@ -35,11 +35,11 @@ module.exports = function(config) {
             'public/js/test/specHelper.js',
 
             // Manager Test Cases
+            'public/js/test/AnimationManagerSpec.js',
             'public/js/test/AssetManagerSpec.js',
             'public/js/test/RecordManagerSpec.js',
             'public/js/test/PluginManagerSpec.js',
             'public/js/test/CommandManagerSpec.js',
-            'public/js/test/AnimationManagerSpec.js',
 
             // 'public/js/test/EventManagerSpec.js',
 
@@ -108,11 +108,21 @@ module.exports = function(config) {
         // list of files to exclude
         exclude: [
             // 'public/js/app/app.js',
-            // 'public/js/app/genieservices.js',
-            // 'public/js/app/services.js',
-            // 'public/js/app/renderer.theme.js',
-            // 'public/js/app/genie-canvas.template.js',
-            // 'public/js/thirdparty/jquery.bookshelfslider.min.js'
+            'public/js/app/genieservices.js',
+            'public/js/app/services.js',
+            'public/js/app/renderer.theme.js',
+            'public/js/app/genie-canvas.template.js',
+            'public/js/thirdparty/jquery.bookshelfslider.min.js',
+
+
+            'public/js/app/speech.js',
+            'public/js/thirdparty/exclude/xml2json.js',
+            'public/js/thirdparty/exclude/eventbus.min.js',
+            'public/js/thirdparty/exclude/Class.js',
+            // 'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
+            // 'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
+            // 'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
+
         ],
 
 
