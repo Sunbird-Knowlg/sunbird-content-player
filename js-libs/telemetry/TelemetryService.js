@@ -176,6 +176,12 @@ TelemetryService = {
         }
         return TelemetryService.instance.assess(qid, subj, qlevel, data);
     },
+    error: function(errorMessage) {
+        if (!TelemetryService.isActive) {
+            return new InActiveEvent();
+        }
+        return TelemetryService.flushEvent(TelemetryService.instance.error(errorMessage), TelemetryService.apis.telemetry);
+    },
     assessEnd: function(event, data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();

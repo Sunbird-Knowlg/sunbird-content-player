@@ -60,6 +60,11 @@ TelemetryV2Manager = Class.extend({
         }
 
     },
+    error: function(errorMessage) {
+        var eks = {};
+        eks.errorMessage = errorMessage;
+        return this.createEvent("OE_ERROR", eks);
+    },
     assessEnd: function(eventObj, data) {
         if (eventObj) {
 
