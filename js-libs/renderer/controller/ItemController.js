@@ -21,6 +21,7 @@ var ItemController = Controller.extend({
     },
     next: function() {
         var d;
+      try {
         if (this.hasNext()) {
             this._index += 1;
             var item = this._model[this._index];
@@ -46,6 +47,10 @@ var ItemController = Controller.extend({
             this.resetItem(this._model[this._index]);
         }
         return d;
+      }catch(e) {
+          TelemetryService.error(e.stack);
+          console.warn("Item controller having some issue due to",e);
+        }  
     },
     resetItem: function(item) {
         if (item) {

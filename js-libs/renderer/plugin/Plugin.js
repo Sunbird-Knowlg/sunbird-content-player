@@ -27,6 +27,7 @@ var Plugin = Class.extend({
         this._stage = stage;
         this._parent = parent;
         this._data = data;
+    try {
         this.handleFont(data);
         this.initPlugin(data);
         var dims = this.relativeDims();
@@ -103,6 +104,10 @@ var Plugin = Class.extend({
         }
         if (this._self) {
             this.rotation(data);
+        }
+       }catch(e) {
+            TelemetryService.error(e.stack);
+            console.warn('Plugin init is failed due to',e);
         }
 
     },
@@ -614,6 +619,6 @@ var Plugin = Class.extend({
         if (!_.isUndefined(this._stage._currentState)) {
             return this._stage._currentState[param];
         }
-
-    }
+    },
+    
 });

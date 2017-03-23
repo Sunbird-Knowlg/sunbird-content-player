@@ -25,7 +25,7 @@ PluginManager = {
         createjs.EventDispatcher.initialize(plugin.prototype);
     },
     registerCustomPlugins: function(manifest, relativePath) { //TODO: Use async.js to load custom plugins
-        // relativePath += "/";
+      try {
         if (!_.isEmpty(manifest)){
           
         PluginManager.customPluginMap = {};
@@ -64,7 +64,11 @@ PluginManager = {
                 }
             });
         }
-      }
+      }       
+    }catch(e) {
+            TelemetryService.error(e.stack);
+            console.warn(relativePath+"Plugin having some error",e);
+        } 
     },
     isPlugin: function(id) {
         if (PluginManager.pluginMap[id] || PluginManager.customPluginMap[id]) {
