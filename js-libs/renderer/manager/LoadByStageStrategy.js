@@ -45,13 +45,18 @@ LoadByStageStrategy = Class.extend({
             var instance = this;
             manifest.media.forEach(function(media) {
                 if ((media) && (media.src)) {
-                    media.src = (media.src.substring(0, 4) == "http") ? media.src : basePath + media.src;
+                    if (media.src.substring(0, 4) != 'http') {
+                        if (isbrowserpreview) {
+                            media.src = media.src;
+                        } else {
+                            media.src = basePath + media.src;
+                        }
+                    }
                     if (createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
                         if (media.type !== 'sound' && media.type !== 'audiosprite') {
                             media.src = 'file:///' + media.src;
                         }
                     }
-
                     if (media.type == 'json' && _.isUndefined(stageId)) {
                         instance.commonAssets.push(_.clone(media));
                     } else if (media.type == 'spritesheet') {
