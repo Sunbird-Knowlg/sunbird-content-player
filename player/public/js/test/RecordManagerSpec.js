@@ -22,7 +22,7 @@ describe('Record manager test cases', function() {
         }
 
         RecorderManager.init(themeData, '/js/test/assets/');
-      
+
         done();
     });
 
@@ -32,14 +32,14 @@ describe('Record manager test cases', function() {
         expect(RecorderManager.init.calls.count()).toEqual(1);
     });
 
-    it("Test Record manager _getFilePath ",function(){
+    it("Test Record manager _getFilePath ",function() {
         RecorderManager._getFilePath({_stageId:"splash"});
         expect(RecorderManager._getFilePath).toHaveBeenCalled();
         expect(RecorderManager._getFilePath.calls.count()).toEqual(1);
     });
 
     /* it("Test Record manager processRecording",function(){
-       
+
         RecorderManager.processRecording({action:"sucess"});
         expect(RecorderManager.processRecording).toHaveBeenCalled();
         expect(RecorderManager.processRecording.calls.count()).toEqual(1);

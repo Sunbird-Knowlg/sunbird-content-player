@@ -80,7 +80,7 @@ var OptionsPlugin = Plugin.extend({
                     if (_.isFinite(this._parent._offsetX)) {
                         data.offsetX = this._parent._offsetX;
                     }
-                    if (_.isFinite(this._parent.offsetY)) {
+                    if (_.isFinite(this._parent._offsetY)) {
                         data.offsetY = this._parent.offsetY;
                     }
                     if(this._data.multiple)
