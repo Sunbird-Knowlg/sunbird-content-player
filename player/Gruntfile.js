@@ -38,7 +38,9 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/eventbus.min.js',
                         'public/js/thirdparty/exclude/Class.js',
                         'public/js/app/genieservices.js',
-                        'public/js/app/renderer.js'
+                        'public/js/app/renderer.js',
+                        '../js-libs/renderer/plugin/VideoPlugin.js',
+                        '../js-libs/renderer/plugin/HighlightTextPlugin.js'
                     ],
                     'public/js/genieservice-bridge.min.js' : [
                         'public/js/app/genieservices.js',
@@ -101,7 +103,10 @@ module.exports = function(grunt) {
                         '../js-libs/renderer/plugin/LayoutPlugin.js',
                         '../js-libs/renderer/plugin/ShapePlugin.js',
                         '../js-libs/renderer/plugin/*Plugin.js',
-                        '../js-libs/renderer/renderer/*.js'
+                        '../js-libs/renderer/renderer/*.js',
+
+                        '!../js-libs/renderer/plugin/VideoPlugin.js',
+                        '!../js-libs/renderer/plugin/HighlightTextPlugin.js'
                     ]
                 }
             },
