@@ -8,42 +8,18 @@ LoadByStageStrategy = Class.extend({
     commonLoader: undefined,
     templateLoader: undefined,
     stageManifests: {},
-    init: function(data, basePath) {
+    init: function(themeData, basePath) {
         //console.info('createjs.CordovaAudioPlugin.isSupported()', createjs.CordovaAudioPlugin.isSupported());
         var instance = this;
         createjs.Sound.registerPlugins([createjs.CordovaAudioPlugin, createjs.WebAudioPlugin, createjs.HTMLAudioPlugin]);
         createjs.Sound.alternateExtensions = ["mp3"];
         this.destroy();
         this.loadAppAssets();
-        var themeData = JSON.parse(JSON.stringify(data));
-        if (!_.isUndefined(themeData.manifest)) {
-            instance.assignBasePath(themeData.manifest, basePath)
-        }
-        if (!_.isArray(themeData.stage)) themeData.stage = [themeData.stage];
-        _.each(themeData.stage, function(stage) {
-            if (!_.isUndefined(stage.manifest)) {
-                instance.assignBasePath(stage.manifest, basePath, stage.id)
-            }
-        })
-        themeData.stage.forEach(function(stage) {
-            instance.stageManifests[stage.id] = [];
-            AssetManager.stageAudios[stage.id] = [];
-            instance.populateAssets(stage, stage.id, stage.preload, themeData.startStage);
-        });
-        instance.loadCommonAssets();
+        
+        if (!_.isUndefined(themeData.manifest) && !_.isUndefined(themeData.manifest.media)) {
+            if (!_.isArray(themeData.manifest.media)) themeData.manifest.media = [themeData.manifest.media];
 
-        var templates = themeData.template;
-        if (!_.isArray(templates)) templates = [templates];
-        templates.forEach(function(template) {
-            instance.populateTemplateAssets(template);
-        });
-        instance.loadTemplateAssets();
-    },
-    assignBasePath: function(manifest, basePath, stageId) {
-        if (!_.isUndefined(manifest.media)) {
-            if (!_.isArray(manifest.media)) manifest.media = [manifest.media];
-            var instance = this;
-            manifest.media.forEach(function(media) {
+            themeData.manifest.media.forEach(function(media) {
                 if ((media) && (media.src)) {
                     media.src = (media.src.substring(0, 4) == "http") ? media.src : basePath + media.src;
                     if (createjs.CordovaAudioPlugin.isSupported()) { // Only supported in mobile
@@ -52,17 +28,15 @@ LoadByStageStrategy = Class.extend({
                         }
                     }
 
-                    if (media.type == 'json' && _.isUndefined(stageId)) {
+                    if (media.type == 'json') {
                         instance.commonAssets.push(_.clone(media));
                     } else if (media.type == 'spritesheet') {
-                        if (_.isUndefined(stageId)) {
-                            var imgId = media.id + "_image";
-                            instance.commonAssets.push({
-                                "id": imgId,
-                                "src": media.src,
-                                "type": "image"
-                            });
-                        }
+                        var imgId = media.id + "_image";
+                        instance.commonAssets.push({
+                            "id": imgId,
+                            "src": media.src,
+                            "type": "image"
+                        });
                         media.images = [];
                         var animations = {};
                         if (media.animations) {
@@ -76,7 +50,7 @@ LoadByStageStrategy = Class.extend({
                         if (media.type == 'audiosprite') {
                             if (!_.isArray(media.data.audioSprite)) media.data.audioSprite = [media.data.audioSprite];
                         }
-                        if (_.isUndefined(stageId) && ((media.preload === 'true') || (media.preload === true))) {
+                        if ((media.preload === 'true') || (media.preload === true)) {
                             instance.commonAssets.push(_.clone(media));
                         }
                         instance.assetMap[media.id] = media;
@@ -84,11 +58,24 @@ LoadByStageStrategy = Class.extend({
                 }
             });
         } else {
-            if (!_.isUndefined(stageId))
-                console.log("==== stage - " + stageId + " manifest media not defined ====");
-            else
-                console.log("==== manifest media not defined ====");
+            console.log("==== manifest media not defined ====");
         }
+
+        var stages = themeData.stage;
+        if (!_.isArray(stages)) stages = [stages];
+        stages.forEach(function(stage) {
+            instance.stageManifests[stage.id] = [];
+            AssetManager.stageAudios[stage.id] = [];
+            instance.populateAssets(stage, stage.id, stage.preload, themeData.startStage);
+        });
+        instance.loadCommonAssets();
+
+        var templates = themeData.template;
+        if (!_.isArray(templates)) templates = [templates];
+        templates.forEach(function(template) {
+            instance.populateTemplateAssets(template);
+        });
+        instance.loadTemplateAssets();
     },
     loadAppAssets: function() {
         var localPath = "undefined" == typeof cordova ? "" : "file:///android_asset/www/";
@@ -106,20 +93,20 @@ LoadByStageStrategy = Class.extend({
         for (k in data) {
             var plugins = data[k];
             if (!_.isArray(plugins)) plugins = [plugins];
-            if (PluginManager.isPlugin(k) && k == 'g') {
+            if ((PluginManager.isPlugin(k) && k == 'g') || k == "manifest") {
                 plugins.forEach(function(plugin) {
                     instance.populateAssets(plugin, stageId, preload, startStageId);
                 });
             } else {
                 plugins.forEach(function(plugin) {
-                    if(plugin && (plugin.asset || plugin.audio)){
-                        var asset = instance.assetMap[plugin.asset || plugin.audio];
+                    var assetId = plugin.asset || plugin.audio || plugin.assetId
+                    if(plugin && assetId){
+                        var asset = instance.assetMap[assetId];
                         if (asset) {
                             if ((preload === true) && (stageId !== startStageId)) {
                                 instance.commonAssets.push(_.clone(asset));
-                            } else {
-                                instance.stageManifests[stageId].push(_.clone(asset));
                             }
+                            instance.stageManifests[stageId].push(_.clone(asset));
                         }                        
                     }
                 });
