@@ -48,6 +48,10 @@ module.exports = function(config) {
             // 'public/js/test/StagePluginSpec.js',
 
             // Plugin Test Cases
+
+            // 'public/js/test/ThemePluginSpec.js', // TODO: Incomplete
+
+
             'public/js/test/TextPluginSpec.js',
             'public/js/test/HotspotPluginSpec.js',
             'public/js/test/ContainerPluginSpec.js',
@@ -119,6 +123,7 @@ module.exports = function(config) {
             'public/js/thirdparty/exclude/xml2json.js',
             'public/js/thirdparty/exclude/eventbus.min.js',
             'public/js/thirdparty/exclude/Class.js',
+
             // 'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
             // 'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
             // 'public/js/thirdparty/exclude/creatine-1.0.0.min.js',

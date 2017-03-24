@@ -99,7 +99,10 @@ module.exports = function(grunt) {
 
                         '../js-libs/renderer/evaluator/*.js',
                         '../js-libs/renderer/plugin/*Plugin.js',
-                        '../js-libs/renderer/renderer/CanvasRenderer.js'
+                        '../js-libs/renderer/renderer/CanvasRenderer.js',
+
+                        '!../js-libs/renderer/plugin/VideoPlugin.js',
+                        '!../js-libs/renderer/plugin/HighlightTextPlugin.js',
                     ]
                 }
             },
