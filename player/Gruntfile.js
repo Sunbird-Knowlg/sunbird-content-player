@@ -92,12 +92,15 @@ module.exports = function(grunt) {
                     'public/js/app/renderer.js': [
                         '../js-libs/renderer/controller/Controller.js',
                         '../js-libs/renderer/plugin/Plugin.js',
+                        '../js-libs/render/plugin/HTMLPlugin.js',
                         '../js-libs/renderer/manager/*.js',
                         '../js-libs/renderer/command/Command.js',
                         '../js-libs/renderer/command/*.js',
                         '../js-libs/renderer/controller/*Controller.js',
 
                         '../js-libs/renderer/evaluator/*.js',
+                        '../js-libs/render/plugin/LayoutPlugin.js',
+                        '../js-libs/render/plugin/ShapePlugin.js',
                         '../js-libs/renderer/plugin/*Plugin.js',
                         '../js-libs/renderer/renderer/CanvasRenderer.js',
 
