@@ -123,7 +123,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "instructions": "NOTES TO TEACHER",
             "replay": "Replay",
             "feedback": "Feedback",
-            "collection": "COLLECTION",
             "noCreditsAvailable": "There are no credits available",
             "congratulations": "Congratulations! You just completed",
             "credit": "Credits",
@@ -297,7 +296,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             TelemetryService.interact("TOUCH", "gc_replay", "TOUCH", {
                 stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
             });
-            EventBus.dispatch('actionReplay');
+            // 1) For HTML content onclick of replay EventListeners will be not available hence calling Telemetryservice end .
+            // 2) OE_START for the HTML/ECML content will be takne care by the contentctrl rendere method always.
+            EventBus.hasEventListener('actionReplay') ? EventBus.dispatch('actionReplay') : TelemetryService.end();
             if ($state.current.name == appConstants.stateShowContentEnd) {
                 $state.go(appConstants.statePlayContent, {
                     'itemId': $rootScope.content.identifier
@@ -587,12 +588,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.showFeedback = function(param) {
             $scope.userRating = param;
             $scope.popUserRating = param;
-            // Commented the feeback popup screen telemetry
-            // it is generating telemety without any interact
-            /*TelemetryService.interact("TOUCH", "gc_feedback", "TOUCH", {
-                stageId: "ContnetApp-FeedbackScreen",
-                subtype: "ContentID"
-            });*/
             $scope.showFeedbackPopup = true;
             $scope.enableFeedbackSubmit();
         }
@@ -1000,64 +995,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 iElement.bind('error', function() {
                     angular.element(this).attr("src", iAttrs.fallbackSrc);
                 });
-            }
-        }
-    }).directive('collection', function($rootScope, $state) {
-        return {
-            restrict: 'E',
-            template: '<a ng-click="goToCollection();" href="javascript:void(0);"><img  ng-class="{\'icon-opacity\': isCollec == false}" ng-src="{{imgSrc}}"/></a>',
-            scope: {
-                isCollec: "="
-            },
-            link: function(scope, state) {
-                scope.imgSrc = $rootScope.imageBasePath + 'icn_collections.png';
-                // scope.isCollection = false;
-                var pageId = $rootScope.pageId;
-                // Code refactring of the Collection Directive is Required
-                scope.goToCollection = function() {
-                    if (scope.isCollec) {
-                        collectionPath.pop();
-                        TelemetryService.interact("TOUCH", "gc_collection", "TOUCH", {
-                            stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId))
-                        });
-                        if (Renderer.running)
-                            Renderer.cleanUp();
-                        else
-                            TelemetryService.end();
-                        $state.go('contentList', {
-                            "id": $rootScope.collection.identifier
-                        });
-                    }
-                }
-            }
-        }
-    }).directive('home', function($rootScope, $state) {
-        return {
-            restrict: 'E',
-            scope: {
-                disableHome: '=info'
-
-            },
-            template: '<a ng-click="goToHome();" href="javascript:void(0);"><img ng-src="{{imgSrc}}"/></a>',
-            link: function(scope, state) {
-                scope.imgSrc = $rootScope.imageBasePath + 'icn_square_home.png';
-                scope.showHome = false;
-                if (scope.disableHome == true)
-                    scope.showHome = true;
-                var pageId = $rootScope.pageId;
-
-                scope.goToHome = function() {
-                    TelemetryService.interact("TOUCH", "gc_home", "TOUCH", { stageId: ((pageId == "renderer" ? $rootScope.stageData.currentStage : pageId)) });
-                    if (Renderer.running)
-                        Renderer.cleanUp();
-                    else
-                        TelemetryService.end();
-                        $state.go('playContent', {
-                            'itemId': $rootScope.content.identifier });
-                    //window.location.hash = "/show/content/" + GlobalContext.currentContentId;
-
-                }
-
             }
         }
     }).directive('genie', function($rootScope) {

@@ -15,7 +15,9 @@ describe('Embed Plugin test cases', function() {
 
         var data = data || {
             "embed": {
-               template : "item",  "var-item":"item"
+               "pluginType" : "embed",
+               "template" : "item",
+               "var-item": "item"
             }
         };
         Renderer.theme = {
@@ -25,12 +27,18 @@ describe('Embed Plugin test cases', function() {
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'refresh').and.callThrough();
         spyOn(this.plugin, 'replaceExpressions').and.callThrough();
-        
+
         done();
     });
 
     it('Embed init function validation', function() {
         this.plugin.initPlugin({primary:true});
+        var data = {
+           "pluginType" : "embed",
+           "template" : "item",
+           "var-item": "item"
+       };
+        // this.plugin.initPlugin(data);
         expect(this.plugin.initPlugin).toHaveBeenCalled();
         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
 

@@ -4,6 +4,7 @@ var container_data = {
     "w": 50,
     "h": 50,
     "hitArea":true,
+    "rotate": true,
     "shape" : [
         {
             "x": 20,
@@ -21,7 +22,7 @@ var container_data = {
             "id": "textBg"
         }
     ]
-        
+
 };
 var parent = {
     dimensions: function() {
@@ -36,7 +37,7 @@ var parent = {
 }
 describe('Container Plugin test cases', function() {
 
-    beforeEach(function(done) {            
+    beforeEach(function(done) {
         Renderer.theme = { _currentStage: '' };
         this.plugin = PluginManager.invoke('g', container_data, parent);
         spyOn(this.plugin, 'initPlugin').and.callThrough();

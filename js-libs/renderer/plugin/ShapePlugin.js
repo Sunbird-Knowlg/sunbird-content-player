@@ -73,7 +73,7 @@ var ShapePlugin = Plugin.extend({
             this._self.regY = dims.h/2;
             this._self.rotation = data.rotate;
         }*/
-        if(data.opacity)
+        if(!_.isUndefined(data.opacity))
             this._self.alpha = data.opacity;
     },
     drawBorder : function(){

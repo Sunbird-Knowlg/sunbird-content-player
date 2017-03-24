@@ -92,17 +92,17 @@ module.exports = function(grunt) {
                     'public/js/app/renderer.js': [
                         '../js-libs/renderer/controller/Controller.js',
                         '../js-libs/renderer/plugin/Plugin.js',
-                        '../js-libs/renderer/plugin/HTMLPlugin.js',
                         '../js-libs/renderer/manager/*.js',
                         '../js-libs/renderer/command/Command.js',
                         '../js-libs/renderer/command/*.js',
                         '../js-libs/renderer/controller/*Controller.js',
-                        '../js-libs/renderer/generator/*.js',
+
                         '../js-libs/renderer/evaluator/*.js',
-                        '../js-libs/renderer/plugin/LayoutPlugin.js',
-                        '../js-libs/renderer/plugin/ShapePlugin.js',
                         '../js-libs/renderer/plugin/*Plugin.js',
-                        '../js-libs/renderer/renderer/*.js'
+                        '../js-libs/renderer/renderer/CanvasRenderer.js',
+
+                        '!../js-libs/renderer/plugin/VideoPlugin.js',
+                        '!../js-libs/renderer/plugin/HighlightTextPlugin.js',
                     ]
                 }
             },
@@ -625,7 +625,7 @@ module.exports = function(grunt) {
     });
 
     // After this 'build-preview' task run
-    // grunt updateVersion 
+    // grunt updateVersion
     grunt.registerTask('build-preview', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles']);
 
     //This is to update the Jenkins version number
@@ -677,7 +677,7 @@ module.exports = function(grunt) {
     });
     grunt.registerTask('add-cordova-plugin-kunder-webview', function() {
         grunt.task.run(['rm-cordova-plugin-kunder-webview', 'cordovacli:add_kunder_webview']);
-    });    
+    });
 
     grunt.registerTask('rm_custom_plugins', function() {
         if (grunt.file.exists('plugins/org.ekstep.genie.service.plugin')) grunt.task.run(['cordovacli:rm_genie_service']);

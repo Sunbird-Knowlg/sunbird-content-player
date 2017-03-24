@@ -15,7 +15,6 @@ var Plugin = Class.extend({
     _enableEvents: true,
     events: [],
     appEvents: [],
-    _myflag: false,
     borderShape: undefined,
     _pluginParams: {},
     _unSupportedFonts: ["notosans", "verdana", "notosans oriya"],
@@ -79,7 +78,9 @@ var Plugin = Class.extend({
             }
         }
 
-
+        if (this._self) {
+            this._self['z-index'] = data['z-index'];
+        }
 
         // Render the plugin component
         if (this._render) {
@@ -97,10 +98,11 @@ var Plugin = Class.extend({
             if (data.shadow) {
                 this.addShadow();
             }
-            this.rotation(data);
-             
+
             //this is to ratate the plugin with border
-            
+        }
+        if (this._self) {
+            this.rotation(data);
         }
 
     },
@@ -530,10 +532,19 @@ var Plugin = Class.extend({
                 }
             }
         }
-        children = _.sortBy(children, 'z-index');
+        //children = _.sortBy(children, 'z-index'); // Now this is no longer required as the elements are sorted by z-index at the end
         for (k in children) {
             var item = children[k];
             PluginManager.invoke(item.pluginType, item, parent, stage, theme);
+        }
+        if (parent._self) {
+            parent._self.sortChildren(function(obj1, obj2, options) {
+                if (_.isUndefined(obj2['z-index'])) obj2['z-index'] = -1;
+                if (_.isUndefined(obj1['z-index'])) obj1['z-index'] = -1;
+                if (obj1['z-index'] > obj2['z-index']) { return 1; }
+                if (obj1['z-index'] < obj2['z-index']) { return -1; }
+                return 0;
+            });
         }
     },
     getPluginParam: function(param) {
