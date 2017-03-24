@@ -135,7 +135,7 @@ module.exports = function(config) {
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             // 'public/js/app/GlobalContext.js': ['coverage'],
-            'public/js/app/renderer.js': ['coverage'],
+            'public/js/app/testRenderer.js': ['coverage'],
             // 'public/js/app/telemetry.js': ['coverage'],
             // 'public/js/app/speech.js': ['coverage']
         },

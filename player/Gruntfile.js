@@ -38,9 +38,7 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/eventbus.min.js',
                         'public/js/thirdparty/exclude/Class.js',
                         'public/js/app/genieservices.js',
-                        'public/js/app/renderer.js',
-                        '../js-libs/renderer/plugin/VideoPlugin.js',
-                        '../js-libs/renderer/plugin/HighlightTextPlugin.js'
+                        'public/js/app/renderer.js'
                     ],
                     'public/js/genieservice-bridge.min.js' : [
                         'public/js/app/genieservices.js',
@@ -103,10 +101,34 @@ module.exports = function(grunt) {
                         '../js-libs/renderer/plugin/LayoutPlugin.js',
                         '../js-libs/renderer/plugin/ShapePlugin.js',
                         '../js-libs/renderer/plugin/*Plugin.js',
-                        '../js-libs/renderer/renderer/*.js',
+                        '../js-libs/renderer/renderer/*.js'
+                    ]
+                }
+            },
+            testRenderer: {
+                options: {
+                    beautify: true,
+                    mangle: false
+                },
+                files: {
+                    'public/js/app/testRenderer.js': [
+                        '../js-libs/renderer/controller/Controller.js',
+                        '../js-libs/renderer/plugin/Plugin.js',
+                        '../js-libs/render/plugin/HTMLPlugin.js',
+                        '../js-libs/renderer/manager/*.js',
+                        '../js-libs/renderer/command/Command.js',
+                        '../js-libs/renderer/command/*.js',
+                        '../js-libs/renderer/controller/*Controller.js',
+
+                        '../js-libs/renderer/evaluator/*.js',
+                        '../js-libs/render/plugin/LayoutPlugin.js',
+                        '../js-libs/render/plugin/ShapePlugin.js',
+                        '../js-libs/renderer/plugin/*Plugin.js',
+                        '../js-libs/renderer/renderer/CanvasRenderer.js',
 
                         '!../js-libs/renderer/plugin/VideoPlugin.js',
-                        '!../js-libs/renderer/plugin/HighlightTextPlugin.js'
+                        '!../js-libs/renderer/plugin/HighlightTextPlugin.js',
+
                     ]
                 }
             },
@@ -688,12 +710,12 @@ module.exports = function(grunt) {
         if (grunt.file.exists('plugins/org.ekstep.recorder.service.plugin')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
     });
 
-    grunt.registerTask('default', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js']);
-    grunt.registerTask('build-all', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
+    grunt.registerTask('default', ['uglify:renderer', 'uglify:testRenderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js']);
+    grunt.registerTask('build-all', ['uglify:renderer', 'uglify:testRenderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
 
     grunt.registerTask('karma-test', ['default','karma:unit', 'clean:minjs']);
 
-    grunt.registerTask('build-js', ['uglify:renderer', 'uglify:pluginLib',  'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS', 'clean:minjs']);
+    grunt.registerTask('build-js', ['uglify:renderer', 'uglify:testRenderer', 'uglify:pluginLib',  'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS', 'clean:minjs']);
     grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'add-cordova-plugin-genieservices']);
     grunt.registerTask('build-unsigned-apk-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
     grunt.registerTask('build-apk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
