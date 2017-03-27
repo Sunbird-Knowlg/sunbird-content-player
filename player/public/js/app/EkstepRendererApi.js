@@ -18,6 +18,7 @@ window.EkstepRendererAPI = {
 	addEventListener: function(type, callback, scope) {
 	    EventBus.addEventListener(type, callback, scope);
 	},
+
 	/**
 	 * Fires an event to the framework, allowing other plugins who may have registered to receive the callback notification. All
 	 * communication between the framework and other plugins is via the events.
@@ -27,16 +28,36 @@ window.EkstepRendererAPI = {
 	 * @memberof EkstepRendererAPI
 	 */
 	dispatchEvent: function(type, data, target) {
-	    EventBus.dispatchEvent(type, data, target);
+	    EventBus.dispatch(type, data, target);
 	},
 
+    /**
+     * Returns all event which are being registed on element.
+     * empty if the none of the events are being registed.
+     * @memberof EkstepRendererAPI
+     */
+    getEvents:function(){
+    	return EventBus.getEvents();
+    },
+
+    /**
+     * Remove an event listener to an event. Plugins should cleanup when they are removed.
+     * @param type {string} name of the event registered with (e.g. org.ekstep.quickstart:configure)
+     * @param callback {function} remove the callback function
+     * @param scope {object} the scope of the event (use this)
+     * @memberof EkstepRendererAPI
+     */
+	/*removeEventListener: function(type, callback, scope) {
+        EventBus.removeEventListener(type, callback, scope)
+    },*/
+    
     /**
      * Notifies the framework to render the canvas once again. This can be done by the plugin when
      * plugin wants to rendre the content again
      * @memberof EkstepRendererAPI
     */
     render: function() {
-        Renderer.theme.render();
+        Renderer.theme.update = true;
     },
 
     /**
@@ -106,7 +127,7 @@ window.EkstepRendererAPI = {
 
     /**
      * Returns current content data. This could be useful when plugins can get access to
-     * current content data object object
+     * current content data object 
      * @memberof EkstepRendererAPI
      */
     getContentData: function() {
@@ -114,13 +135,41 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns a plugin instance for the given plugin ID. Plugins can use this work with dependencies
+     * Returns a plugin instance for the given plugin ID once the plugin registarion/invoke is done. Plugins can use this work with dependencies
      * or build plugins that enhance the behavior of other plugins.
      * @memberof EkstepRendererAPI
      */
-    /*getPluginInstance: function(pluginId) {
+    getPluginInstance: function(pluginId) {
         return PluginManager.getPluginObject(pluginId);
-    },*/
+    },
+
+    /**
+     * Clear the current stage rendered objects, Plugins can get access to 
+     * current stage canvas object and plugin can clean all current stage rendrered object
+     * @memberof EkstepRendererAPI
+     */
+    cleanRenderer:function(){
+    	Renderer.cleanUp();
+    },
+
+    /**
+     * Returns the controller instance based on controller id 
+     * @param id {string} Controller id to return. Undefined if the Controller has not been registed.
+     * @memberof EkstepRendererAPI
+     */
+    getController: function(id) {
+        return ControllerManager.getControllerInstance(id);
+    },
+
+    /**
+     * Returns the controller instance based on controller id 
+     * Undefined if the currentstage controller has not been registed.
+     * @memberof EkstepRendererAPI
+     */
+    getCurrentController: function() {
+        return Renderer.theme._currentScene._stageController;
+    },
+
     /*getParam: function(scope, paramName) {
         var paramData = '';
         if (scope === 'theme') {
@@ -150,39 +199,11 @@ window.EkstepRendererAPI = {
     getState: function(paramName) {
         return Renderer.theme._currentScene.getState(paramName);
     },
-    setState: function(paramName, value) {
-        return Renderer.theme._currentScene.setState(paramName, value);
-    },
-    cleanRenderer:function(){
-    	Renderer.cleanUp();
-    },
-	getCurrentController: function() {
-        return Renderer.theme._currentScene._stageController;
-    },
-    getController: function(id) {
-        return ControllerManager.getControllerInstance
-    },
-    registerPlugin: function(id, pluginName) {
-        PluginManager.registerPlugin(id, pluginName)
-    },
-
-    removeEventListener: function(type, callback, scope) {
-        EventBus.removeEventListener(type, callback, scope)
-    },
-    hasEventListener: function(type, callback, scope) {
-        EventBus.hasEventListener(type, callback, scope)
-    },
-    getEvents:function(){
-    	return EventBus.getEvents();
-    },
     getTransitionEffect:function(animation){
     	return Renderer.theme.getTransitionEffect(animation);
     },
 
-
-
-    */
-
+   */
 
     /*--------------------------*/
 
