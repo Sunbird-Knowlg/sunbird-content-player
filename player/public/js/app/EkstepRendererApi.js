@@ -265,13 +265,30 @@ window.EkstepRendererAPI = {
     },
 
 	/**
-	* Returns the instance of the canvas
-	* @param id {string} id is a string defining the name of the plugin
-	* @param data {object} data to instantiate plugin
-	* @param parent {object} state parent instance
+	* Returns the complete Game area
 	* @memberof EkstepRendererAPI
 	**/
-	getCanvas: function() {
-		// return Renderer.theme;
+	getGameArea: function() {
+		return document.getElementById('gameArea');;
+	},
+
+	/**
+	* Returns the complete asset object from the manifest of the given assetId
+	* @param assetId {string} assetId of the desired asset
+	* @memberof EkstepRendererAPI
+	**/
+	getAsset: function(assetId) {
+		return  AssetManager.strategy.assetMap[assetId];
+	},
+
+	/**
+	* Loads the asset of teh given assetId
+	* @param assetId {string} assetId of the desired asset
+	* @memberof EkstepRendererAPI
+	**/
+	loadAsset: function(assetId) {
+		var asset = AssetManager.strategy.assetMap[assetId];
+		return AssetManager.loadAsset(Renderer.theme._currentStage, asset.id, asset.src);
 	}
+
 }
