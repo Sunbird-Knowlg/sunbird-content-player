@@ -46,7 +46,7 @@ window.EkstepRendererAPI = {
      * @param scope {object} the scope of the event (use this)
      * @memberof EkstepRendererAPI
      */
-    /*removeEventListener: function(type, callback, scope) {
+   /* removeEventListener: function(type, callback, scope) {
         EventBus.removeEventListener(type, callback, scope)
     },*/
 
@@ -107,7 +107,7 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns current stage ID in the content. This could be useful when plugins can get access to
+     * Returns current stage Id of the content. This could be useful when plugins can get access to
      * current stage ID.undefined if the currentstageId is not present.
      * @memberof EkstepRendererAPI
      */
@@ -135,7 +135,7 @@ window.EkstepRendererAPI = {
 
 
     /**
-     * Returns a plugin instance for the given plugin ID once the plugin registarion/invoke is done. Plugins can use this work with dependencies
+     * Returns a plugin instance for the given plugin Id once the plugin registarion/invoke is done. Plugins can use this work with dependencies
      * or build plugins that enhance the behavior of other plugins.
      * @memberof EkstepRendererAPI
      */
@@ -153,8 +153,19 @@ window.EkstepRendererAPI = {
     },
 
     /**
+     * It will map controller objct, Plugins can get access to add the controller to controllerMap object.
+     * @param controller {object} controller is object it should have id, name, type and __cdata;
+     * type defines controller type e.g(item,data), name defines controller name, id defines controller id 
+     * @memberof EkstepRendererAPI
+     */
+    addController: function(controller) {
+        Renderer.theme.addController(controller)
+    },
+
+    /**
      * Returns the controller instance based on controller id
-     * @param id {string} Controller id to return. Undefined if the Controller has not been registed.
+     * @param id {string} It will accetp the controller id as input suppose 
+     * if it returns undefined then Controller has not been registed.
      * @memberof EkstepRendererAPI
      */
     getController: function(id) {
@@ -162,8 +173,8 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the controller instance.
-     * Undefined if the currentstage controller has not been registred.
+     * Returns the currentStage controller instance.
+     * undefined if the currentstage controller has not been registred.
      * @memberof EkstepRendererAPI
      */
     getCurrentController: function() {
