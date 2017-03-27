@@ -484,7 +484,7 @@ window.EkstepRendererAPI = {
      **/
     previous: function() {
         EventBus.dispatch("actionNavigatePrevious", "previous");
-    }
+    },
 
     /**
      * skips current stage.
