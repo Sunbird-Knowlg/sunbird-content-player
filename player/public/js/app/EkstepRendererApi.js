@@ -7,66 +7,45 @@
  * @author Vinu Kumar <vinu.kumat@tarento.com>
  */
 window.EkstepRendererAPI = {
-	baseURL: "",
-	/**
-	 * Register an event listener callback function for the events raised by the framework.
-	 * @param type {string} name of the event (e.g. org.ekstep.quickstart:configure)
-	 * @param callback {function} callback function
-	 * @param scope {object} the scope of the callback (use this)
-	 * @memberof EkstepRendererAPI
-	 */
-	addEventListener: function(type, callback, scope) {
-	    EventBus.addEventListener(type, callback, scope);
-	},
-
-	/**
-	 * Fires an event to the framework, allowing other plugins who may have registered to receive the callback notification. All
-	 * communication between the framework and other plugins is via the events.
-	 * @param type {string} name of the event to fire (e.g. org.ekstep.quickstart:configure)
-	 * @param data {object} event data to carry along with the notification
-	 * @param target {object} the scope of the event (use this)
-	 * @memberof EkstepRendererAPI
-	 */
-	dispatchEvent: function(type, data, target) {
-	    EventBus.dispatch(type, data, target);
-	},
-
+    baseURL: "",
     /**
-     * Returns all event which are being registed on element.
-     * empty if the none of the events are being registed.
+     * Register an event listener callback function for the events raised by the framework.
+     * @param type {string} name of the event (e.g. org.ekstep.quickstart:configure)
+     * @param callback {function} callback function
+     * @param scope {object} the scope of the callback (use this)
      * @memberof EkstepRendererAPI
      */
-    getEvents:function(){
-    	return EventBus.getEvents();
+    addEventListener: function(type, callback, scope) {
+        EventBus.addEventListener(type, callback, scope);
+    },
+    /**
+     * Fires an event to the framework, allowing other plugins who may have registered to receive the callback notification. All
+     * communication between the framework and other plugins is via the events.
+     * @param type {string} name of the event to fire (e.g. org.ekstep.quickstart:configure)
+     * @param data {object} event data to carry along with the notification
+     * @param target {object} the scope of the event (use this)
+     * @memberof EkstepRendererAPI
+     */
+    dispatchEvent: function(type, data, target) {
+        EventBus.dispatchEvent(type, data, target);
     },
 
-    /**
-     * Remove an event listener to an event. Plugins should cleanup when they are removed.
-     * @param type {string} name of the event registered with (e.g. org.ekstep.quickstart:configure)
-     * @param callback {function} remove the callback function
-     * @param scope {object} the scope of the event (use this)
-     * @memberof EkstepRendererAPI
-     */
-	/*removeEventListener: function(type, callback, scope) {
-        EventBus.removeEventListener(type, callback, scope)
-    },*/
-    
     /**
      * Notifies the framework to render the canvas once again. This can be done by the plugin when
      * plugin wants to rendre the content again
      * @memberof EkstepRendererAPI
-    */
+     */
     render: function() {
-        Renderer.theme.update = true;
+        Renderer.theme.render();
     },
 
     /**
      * Returns the content manifest(media). This can be done by the plugin when
      * plugin wants to get the content manifest(media)
      * @memberof EkstepRendererAPI
-    */
-    getContext:function(){
-    	return Renderer.theme._data.manifest;
+     */
+    getContext: function() {
+        return Renderer.theme._data.manifest;
     },
 
     /**
@@ -74,8 +53,8 @@ window.EkstepRendererAPI = {
      * Using this, a plugin can get access to remove the current stage HTML element such vidoe html element etc.,
      * @memberof EkstepRendererAPI
      */
-    removeHtmlElements:function(){
-    	Renderer.theme.removeHtmlElements();
+    removeHtmlElements: function() {
+        Renderer.theme.removeHtmlElements();
     },
 
     /**
@@ -83,8 +62,8 @@ window.EkstepRendererAPI = {
      * has been made.
      * @memberof EkstepRendererAPI
      */
-    reloadStage:function(){
-    	EventBus.dispatch('actionReload');
+    reloadStage: function() {
+        EventBus.dispatch('actionReload');
     },
 
     /**
@@ -127,7 +106,7 @@ window.EkstepRendererAPI = {
 
     /**
      * Returns current content data. This could be useful when plugins can get access to
-     * current content data object 
+     * current content data object object
      * @memberof EkstepRendererAPI
      */
     getContentData: function() {
@@ -135,12 +114,13 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns a plugin instance for the given plugin ID once the plugin registarion/invoke is done. Plugins can use this work with dependencies
+     * Returns a plugin instance for the given plugin ID. Plugins can use this work with dependencies
      * or build plugins that enhance the behavior of other plugins.
      * @memberof EkstepRendererAPI
      */
-    getPluginInstance: function(pluginId) {
+    /*getPluginInstance: function(pluginId) {
         return PluginManager.getPluginObject(pluginId);
+<<<<<<< Updated upstream
     },
 
     /**
@@ -197,6 +177,10 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getParam: function(scope, paramName) {
+=======
+    },*/
+    /*getParam: function(scope, paramName) {
+>>>>>>> Stashed changes
         var paramData = '';
         if (scope === 'theme') {
             paramData = Renderer.theme.getParam(paramName);
@@ -238,91 +222,205 @@ window.EkstepRendererAPI = {
     getState: function(paramName) {
         return Renderer.theme._currentScene.getState(paramName);
     },
+<<<<<<< Updated upstream
+=======
+    setState: function(paramName, value) {
+        return Renderer.theme._currentScene.setState(paramName, value);
+    },
+    cleanRenderer:function(){
+    	Renderer.cleanUp();
+    },
+	getCurrentController: function() {
+        return Renderer.theme._currentScene._stageController;
+    },
+    getController: function(id) {
+        return ControllerManager.getControllerInstance
+    },
+    registerPlugin: function(id, pluginName) {
+        PluginManager.registerPlugin(id, pluginName)
+    },
+
+    removeEventListener: function(type, callback, scope) {
+        EventBus.removeEventListener(type, callback, scope)
+    },
+    hasEventListener: function(type, callback, scope) {
+        EventBus.hasEventListener(type, callback, scope)
+    },
+    getEvents:function(){
+    	return EventBus.getEvents();
+    },
+    getTransitionEffect:function(animation){
+    	return Renderer.theme.getTransitionEffect(animation);
+    },
+
+
+
+    */
+
+>>>>>>> Stashed changes
 
     /*--------------------------*/
 
-	/**
-	* It takes the value and the param to set its state
-	* @param param {string} Param is a string defining the type of question (mcq/mtf/ftb)
-	* @param value {object/array} value for mcq and mtf type is an array and for ftb type is an object
-	* @param isStateChanged {boolean} state true or false if state is changed
-	* @memberof EkstepRendererAPI
-	**/
-	setState: function(param, value, isStateChanged) {
-	    Renderer.theme._currentScene.setState(param, value, isStateChanged);
-	},
+    /**
+     * It takes the value and the param to set its state
+     * @param param {string} Param is a string defining the type of question (mcq/mtf/ftb)
+     * @param value {object/array} value for mcq and mtf type is an array and for ftb type is an object
+     * @param isStateChanged {boolean} state true or false if state is changed
+     * @memberof EkstepRendererAPI
+     **/
+    setState: function(param, value, isStateChanged) {
+        Renderer.theme._currentScene.setState(param, value, isStateChanged);
+    },
 
-	/**
-	* It takes the action as an object and invokes to the renderer
-	* @param action {object} pass the complete object required format to execute the actoin
-	* @memberof EkstepRendererAPI
-	**/
-	invokeAction: function(action) {
-		CommandManager.handle(action);
-	},
+    /**
+     * It takes the action as an object and invokes to the renderer
+     * @param action {object} pass the complete object required format to execute the actoin
+     * @memberof EkstepRendererAPI
+     **/
+    invokeAction: function(action) {
+        CommandManager.handle(action);
+    },
 
-	/**
-	* Returns the complete telemetry instance
-	* @memberof EkstepRendererAPI
-	**/
-	getTelemetry: function() {
-		return TelemetryService;
-	},
+    /**
+     * Returns the complete telemetry instance
+     * @memberof EkstepRendererAPI
+     **/
+    getTelemetry: function() {
+        return TelemetryService;
+    },
 
-	/**
-	* Returns the complete Telemetry data obj
-	* @memberof EkstepRendererAPI
-	**/
-	getTelemetryData: function() {
-		return TelemetryService._data;
-	},
+    /**
+     * Returns the complete Telemetry data obj
+     * @memberof EkstepRendererAPI
+     **/
+    getTelemetryData: function() {
+        return TelemetryService._data;
+    },
 
-	/**
-	* Returns the instance of the plugin
-	* @param id {string} id is a string defining the name of the plugin
-	* @param data {object} data to instantiate plugin
-	* @param parent {object} state parent instance
-	* @memberof EkstepRendererAPI
-	**/
-	instantiatePlugin: function(id, data, parent) {
-		return PluginManager.invoke(id, data, parent, Renderer.theme._currentScene, Renderer.theme);
-	},
+    /**
+     * Returns the instance of the plugin
+     * @param id {string} id is a string defining the name of the plugin
+     * @param data {object} data to instantiate plugin
+     * @param parent {object} state parent instance
+     * @memberof EkstepRendererAPI
+     **/
+    instantiatePlugin: function(id, data, parent) {
+        return PluginManager.invoke(id, data, parent, Renderer.theme._currentScene, Renderer.theme);
+    },
 
-	/**
-	* Transition command executes with given stage id
-	* @param stageId {string} Moves to given stage id
-	* @memberof EkstepRendererAPI
-	**/
-	tansitionTo: function(stageId) {
-		var action = {"asset":"theme","command":"transitionTo","duration":"100","ease":"linear","effect":"fadeIn","type":"command","pluginId":"theme","value": stageId,"transitionType":"next"};
-		CommandManager.handle(action);
+    /**
+     * Transition command executes with given stage id
+     * @param stageId {string} Moves to given stage id
+     * @memberof EkstepRendererAPI
+     **/
+    tansitionTo: function(stageId) {
+        var action = {
+            "asset": "theme",
+            "command": "transitionTo",
+            "duration": "100",
+            "ease": "linear",
+            "effect": "fadeIn",
+            "type": "command",
+            "pluginId": "theme",
+            "value": stageId,
+            "transitionType": "next"
+        };
+        CommandManager.handle(action);
+    },
+
+    /**
+     * Returns the complete Game area
+     * @memberof EkstepRendererAPI
+     **/
+    getGameArea: function() {
+        return document.getElementById('gameArea');;
+    },
+
+    /**
+     * Returns the complete asset object from the manifest of the given assetId
+     * @param assetId {string} assetId of the desired asset
+     * @memberof EkstepRendererAPI
+     **/
+    getAsset: function(assetId) {
+        return AssetManager.strategy.assetMap[assetId];
+    },
+
+    /**
+     * Loads the asset of teh given assetId
+     * @param assetId {string} assetId of the desired asset
+     * @memberof EkstepRendererAPI
+     **/
+    loadAsset: function(assetId) {
+        var asset = AssetManager.strategy.assetMap[assetId];
+        return AssetManager.loadAsset(Renderer.theme._currentStage, asset.id, asset.src);
+    },
+
+    /**
+     * It takes the assetID of the given audio and plays it
+     * @param action {string} assetId is received as a string
+     * @memberof EkstepRendererAPI
+     **/
+    playAudio: function(assetId) {
+        var action = {
+            "type": "command",
+            "command": "play",
+            "asset": assetId,
+            "disableTelemetry": false,
+            "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
+            "stageId": Renderer.theme._currentStage
+        };
+        AudioManager.play(action);
     },
 
 	/**
-	* Returns the complete Game area
-	* @memberof EkstepRendererAPI
-	**/
-	getGameArea: function() {
-		return document.getElementById('gameArea');;
-	},
+	 * It takes the assetID of the given audio and pauses it
+	 * @param action {string} assetId is received as a string
+     * @memberof EkstepRendererAPI
+     **/
+    pauseAudio: function(assetId) {
+        var action = {
+            "type": "command",
+            "command": "pause",
+            "asset": assetId,
+            "disableTelemetry": false,
+            "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
+            "stageId": Renderer.theme._currentStage
+        };
+        AudioManager.togglePlay(action);
+    },
 
-	/**
-	* Returns the complete asset object from the manifest of the given assetId
-	* @param assetId {string} assetId of the desired asset
-	* @memberof EkstepRendererAPI
-	**/
-	getAsset: function(assetId) {
-		return  AssetManager.strategy.assetMap[assetId];
-	},
+    /**
+	 * It takes the assetID of the given audio and stops it
+	 * @param action {string} assetId is received as a string
+     * @memberof EkstepRendererAPI
+     **/
+    stopAudio: function(assetId) {
+        var action = {
+            "type": "command",
+            "command": "stop",
+            "asset": assetId,
+            "disableTelemetry": false,
+            "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
+            "stageId": Renderer.theme._currentStage
+        };
+        AudioManager.stop(action);
+    },
 
-	/**
-	* Loads the asset of teh given assetId
-	* @param assetId {string} assetId of the desired asset
-	* @memberof EkstepRendererAPI
-	**/
-	loadAsset: function(assetId) {
-		var asset = AssetManager.strategy.assetMap[assetId];
-		return AssetManager.loadAsset(Renderer.theme._currentStage, asset.id, asset.src);
-	}
+    /**
+	 * It takes the assetID of the given audio and toggelPlays it
+	 * @param action {string} assetId is received as a string
+     * @memberof EkstepRendererAPI
+     **/
+    toggelPlayAudio: function(assetId) {
+        var action = {
+            "type": "command",
+            "command": "togglePlay",
+            "asset": assetId,
+            "disableTelemetry": false,
+            "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
+            "stageId": Renderer.theme._currentStage
+        };
+        AudioManager.togglePlay(action);
+    }
 
 }
