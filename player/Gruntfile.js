@@ -14,6 +14,14 @@ module.exports = function(grunt) {
                 configFile: 'test/karma.conf.js'
               }
         },
+        jsdoc : {
+            dist : {
+                src: ['public/*.js'],
+                options: {
+                    destination: 'doc'
+                }
+            }
+        },
         uglify: {
             js: {
                 options: {
@@ -402,7 +410,7 @@ module.exports = function(grunt) {
                         'ionic-plugin-keyboard@2.2.0',
                         'cordova-plugin-console@1.0.2',
                         'cordova-plugin-whitelist@1.2.1',
-                        'cordova-plugin-crosswalk-webview@1.5.0',
+                        'cordova-plugin-crosswalk-webview@2.3.0',
                         'cordova-plugin-file-transfer@1.5.0',
                         'https://github.com/Initsogar/cordova-webintent.git', // no registry in npm and cordova plugins
                         'com.lampa.startapp@0.1.4',
@@ -416,16 +424,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        '../cordova-plugins/cordova-plugin-genieservices/'
-                    ]
-                }
-            },
-            add_kunder_webview: {
-                options: {
-                    command: 'plugin',
-                    action: 'add',
-                    plugins: [
-                        '../cordova-plugins/cordova-plugin-webview/'
+                        'D:/New backup/projects/EkStep/Genie-Canvas/cordova-plugins/cordova-plugin-genieservices/'
                     ]
                 }
             },
@@ -444,7 +443,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        'cordova-plugin-crosswalk-webview@1.5.0'
+                        'cordova-plugin-crosswalk-webview@2.3.0'
                     ],
                     args:['--variable','XWALK_MODE=embedded']
                 }
@@ -454,7 +453,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        'cordova-plugin-crosswalk-webview@1.5.0'
+                        'cordova-plugin-crosswalk-webview@2.3.0'
                     ],
                     args:['--variable','XWALK_MODE=shared']
 
@@ -475,7 +474,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        '../cordova-plugins/cordova-plugin-sensibol/'
+                        'D:/New backup/projects/EkStep/Genie-Canvas/cordova-plugins/cordova-plugin-sensibol/'
                     ]
                 }
             },
@@ -492,7 +491,7 @@ module.exports = function(grunt) {
                 options: {
                     command: 'plugin',
                     action: 'add',
-                    plugins: ['cordova-plugin-media@1.0.1']
+                    plugins: ['cordova-plugin-media@2.1.0']
                 }
             },
             rm_android_media: {
@@ -509,16 +508,10 @@ module.exports = function(grunt) {
                     plugins: ['cordova-plugin-genieservices']
                 }
             },
-            rm_kunder_webview: {
-                options: {
-                    command: 'plugin',
-                    action: 'rm',
-                    plugins: ['cordova-plugin-webview']
-                }
-            },
             build_android: {
                 options: {
                     command: 'build',
+					force: true,
                     platforms: ['android']
                 }
             },
@@ -589,12 +582,15 @@ module.exports = function(grunt) {
                 }]
             },
             androidLib: {
-                src: ['platforms/android/build.gradle'],
-                overwrite: true,
-                replacements: [{
-                    from: "apply plugin: 'android'",
-                    to: "apply plugin: 'android-library'"
-                }]
+               src: ['platforms/android/build.gradle'],
+               overwrite: true,
+               replacements: [{
+                   from: "apply plugin: 'com.android.application'",
+                   to: "apply plugin: 'com.android.library'"
+               }, {
+                    from: 'applicationId privateHelpers.extractStringFromManifest("package")',
+                    to: ' '
+               }]
             },
             xwalk_library: {
                 src: ['platforms/android/cordova-plugin-crosswalk-webview/geniecanvas-xwalk.gradle'],
@@ -708,14 +704,6 @@ module.exports = function(grunt) {
         grunt.task.run(['rm-cordova-plugin-genieservices', 'cordovacli:add_genie_services']);
     });
 
-
-    grunt.registerTask('rm-cordova-plugin-kunder-webview', function() {
-        if (grunt.file.exists('plugins/cordova-plugin-webview')) grunt.task.run(['cordovacli:rm_kunder_webview']);
-    });
-    grunt.registerTask('add-cordova-plugin-kunder-webview', function() {
-        grunt.task.run(['rm-cordova-plugin-kunder-webview', 'cordovacli:add_kunder_webview']);
-    });
-
     grunt.registerTask('rm_custom_plugins', function() {
         if (grunt.file.exists('plugins/org.ekstep.genie.service.plugin')) grunt.task.run(['cordovacli:rm_genie_service']);
         if (grunt.file.exists('plugins/org.ekstep.recorder.service.plugin')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
@@ -755,8 +743,8 @@ module.exports = function(grunt) {
     grunt.registerTask('build-signed-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
 
 
-    grunt.registerTask('build-aar-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalk-library', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-aar-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalk-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
 
     grunt.registerTask('local-preview-build', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js','copy:localPreviewFiles', 'copy:localPreviewMinjs', 'aws_s3:uploadLocalPreviewZip', 'clean:localPreview']);
 };

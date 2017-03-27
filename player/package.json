@@ -16,7 +16,7 @@
   "devDependencies": {
     "bower": "^1.3.3",
     "cca": "^0.7.4",
-    "cordova": "^5.2.0",
+    "cordova": "^6.0.0",
     "grunt": "~0.4.5",
     "grunt-aws-s3": "*",
     "grunt-cli": "*",
