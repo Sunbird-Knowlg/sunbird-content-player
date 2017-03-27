@@ -51,8 +51,8 @@ window.EkstepRendererAPI = {
     },*/
 
     /**
-     * Notifies the framework to render the canvas once again. This can be done by the plugin when
-     * plugin wants to rendre the content again
+     * Notifies the framework to update the canvas objects. This can be done by the plugin when
+     * plugin wants to update the object on canvas.
      * @memberof EkstepRendererAPI
      */
     render: function() {
@@ -78,11 +78,11 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Reload the rendering of current stage - plugins can request the stages to be reload if any change
+     * Refresh the rendering of current stage - plugins can request the stages to be refresh if any change
      * has been made.
      * @memberof EkstepRendererAPI
      */
-    reloadStage: function() {
+    refreshStage: function() {
         EventBus.dispatch('actionReload');
     },
 
@@ -133,6 +133,7 @@ window.EkstepRendererAPI = {
         return Renderer.theme._data;
     },
 
+
     /**
      * Returns a plugin instance for the given plugin ID once the plugin registarion/invoke is done. Plugins can use this work with dependencies
      * or build plugins that enhance the behavior of other plugins.
@@ -168,6 +169,7 @@ window.EkstepRendererAPI = {
     getCurrentController: function() {
         return Renderer.theme._currentScene._stageController;
     },
+
 
     /**
      * set the param to scope level.
@@ -368,6 +370,55 @@ window.EkstepRendererAPI = {
         AudioManager.togglePlay(action);
     },
 
+    /**
+     * It will play any type of asset by passing respective assetId (e.g. video, audio).
+     * @assetId {string} identifier of the asset.
+     * @memberof EkstepRendererAPI
+     **/
+    play: function(assetId) {
+        var plugin = Renderer.theme._currentScene;
+        var action = {
+            'type': 'command',
+            'command': 'play',
+            'asset': assetId,
+            'pluginId': plugin._id
+        }
+        CommandManager.handle(action);
+    },
+
+    /**
+     * It will pause any asset by passing respective assetId (e.g. video, audio).
+     * @assetId {string} identifier of the asset.
+     * @memberof EkstepRendererAPI
+     **/
+    pause: function(assetId) {
+        var plugin = Renderer.theme._currentScene;
+        var action = {
+            'type': 'command',
+            'command': 'pause',
+            'asset': assetId,
+            'pluginId': plugin._id
+        }
+        CommandManager.handle(action);
+    },
+
+    /**
+     * It will stop any asset by passing respective assetId (e.g. video, audio).
+     * @assetId {string} identifier of the asset.
+     * @memberof EkstepRendererAPI
+     **/
+    stop: function(assetId) {
+        var plugin = Renderer.theme._currentScene;
+        var action = {
+            'type': 'command',
+            'command': 'stop',
+            'asset': assetId,
+            'pluginId': plugin._id
+        }
+        CommandManager.handle(action);
+    },
+
+    
     /**
      * It takes the assetID of the given audio and stops it
      * @param action {string} assetId is received as a string
