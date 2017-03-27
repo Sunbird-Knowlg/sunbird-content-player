@@ -29,7 +29,7 @@ window.EkstepRendererAPI = {
 	dispatchEvent: function(type, data, target) {
 	    EventBus.dispatchEvent(type, data, target);
 	},
-    
+
     /**
      * Notifies the framework to render the canvas once again. This can be done by the plugin when
      * plugin wants to rendre the content again
@@ -110,7 +110,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getContentData: function() {
-        return Renderer.theme._data; 
+        return Renderer.theme._data;
     },
 
     /**
@@ -186,9 +186,8 @@ window.EkstepRendererAPI = {
 
     /*--------------------------*/
 
-}
-
 	/**
+	* It takes the value and the param to set its state
 	* @param param {string} Param is a string defining the type of question (mcq/mtf/ftb)
 	* @param value {object/array} value for mcq and mtf type is an array and for ftb type is an object
 	* @param isStateChanged {boolean} state true or false if state is changed
@@ -199,6 +198,7 @@ window.EkstepRendererAPI = {
 	},
 
 	/**
+	* It takes the action as an object and invokes to the renderer
 	* @param action {object} pass the complete object required format to execute the actoin
 	* @memberof EkstepRendererAPI
 	**/
@@ -207,47 +207,50 @@ window.EkstepRendererAPI = {
 	},
 
 	/**
+	* Returns the complete telemetry instance
 	* @memberof EkstepRendererAPI
 	**/
 	getTelemetry: function() {
+		return TelemetryService;
+	},
+
+	/**
+	* Returns the complete Telemetry data obj
+	* @memberof EkstepRendererAPI
+	**/
+	getTelemetryData: function() {
 		return TelemetryService._data;
 	},
 
 	/**
-	* @param data {object} value for mcq and mtf type is an array and for ftb type is an object
+	* Returns the instance of the plugin
+	* @param id {string} id is a string defining the name of the plugin
+	* @param data {object} data to instantiate plugin
+	* @param parent {object} state parent instance
 	* @memberof EkstepRendererAPI
 	**/
-	instantiatePlugin: function(data) {
-	    // Renderer.theme._currentScene.setState(param, value, isStateChanged);
+	instantiatePlugin: function(id, data, parent) {
+		return PluginManager.invoke(id, data, parent, Renderer.theme._currentScene, Renderer.theme);
 	},
 
 	/**
-	* @param param {string} Param is a string defining the type of question (mcq/mtf/ftb)
-	* @param value {object/array} value for mcq and mtf type is an array and for ftb type is an object
-	* @param isStateChanged {boolean} state true or false if state is changed
-	* @memberof EkstepRendererAPI
-	**/
-	play: function(data) {
-	    // Renderer.theme._currentScene.setState(param, value, isStateChanged);
-	},
-
-	/**
-	* @param param {string} Param is a string defining the type of question (mcq/mtf/ftb)
-	* @param value {object/array} value for mcq and mtf type is an array and for ftb type is an object
-	* @param isStateChanged {boolean} state true or false if state is changed
-	* @memberof EkstepRendererAPI
-	**/
-	pause: function(data) {
-	    // Renderer.theme._currentScene.setState(param, value, isStateChanged);
-	},
-
-	/**
-	* @param param {string} Param is a string defining the type of question (mcq/mtf/ftb)
-	* @param value {object/array} value for mcq and mtf type is an array and for ftb type is an object
-	* @param isStateChanged {boolean} state true or false if state is changed
+	* Transition command executes with given stage id
+	* @param stageId {string} Moves to given stage id
 	* @memberof EkstepRendererAPI
 	**/
 	tansitionTo: function(stageId) {
-	    // Renderer.theme._currentScene.setState(param, value, isStateChanged);
+		var action = {"asset":"theme","command":"transitionTo","duration":"100","ease":"linear","effect":"fadeIn","type":"command","pluginId":"theme","value": stageId,"transitionType":"next"};
+		CommandManager.handle(action);
+    },
+
+	/**
+	* Returns the instance of the canvas
+	* @param id {string} id is a string defining the name of the plugin
+	* @param data {object} data to instantiate plugin
+	* @param parent {object} state parent instance
+	* @memberof EkstepRendererAPI
+	**/
+	getCanvas: function() {
+		// return Renderer.theme;
 	}
 }
