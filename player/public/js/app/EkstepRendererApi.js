@@ -99,8 +99,8 @@ window.EkstepRendererAPI = {
 
     /**
      * Returns current stage data in the content. This could be useful when plugins work across stages
-     * such as timers that work across stages or page number plugins. Using this, a plugin can get access to
-     * current stage
+     * such as timers that work across stages or page number plugins. Using this a plugin can get access to
+     * current stage. undefined if the currentStage is not loaded or present.
      * @memberof EkstepRendererAPI
      */
     getCurrentStage: function() {
@@ -109,7 +109,7 @@ window.EkstepRendererAPI = {
 
     /**
      * Returns current stage ID in the content. This could be useful when plugins can get access to
-     * current stage ID
+     * current stage ID.undefined if the currentstageId is not present.
      * @memberof EkstepRendererAPI
      */
     getCurrentStageId: function() {
@@ -162,48 +162,63 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the controller instance based on controller id 
-     * Undefined if the currentstage controller has not been registed.
+     * Returns the controller instance. 
+     * Undefined if the currentstage controller has not been registred.
      * @memberof EkstepRendererAPI
      */
     getCurrentController: function() {
         return Renderer.theme._currentScene._stageController;
     },
 
-    /*getParam: function(scope, paramName) {
+    /**
+     * set the param to scope level. 
+     * @param scope {string} name of the scope (e.g. stage,theme,app)
+	 * @paramName {string} name to param to set.
+	 * @paramName {object} value of the param. 
+     * @memberof EkstepRendererAPI
+     */
+    setParam: function(scope, paramName, value) {
+        if (scope === 'theme') {
+			Renderer.theme.setParam(paramName, value);
+        }
+        if (scope === 'stage') {
+            Renderer.theme._currentScene.setParam(paramName, value);
+        }
+        if (scope === 'app') {
+		    GlobalContext.setParam(paramName, value);
+        }
+    },
+
+    /**
+     * Returns the param value based on scope and paramName.  
+     * Undefined if the paramValue is not present in the scope.
+     * @param scope {string} name of the scope (e.g. stage,theme,app)
+     * @paramName {string} name to get from the particular scope. 
+     * @memberof EkstepRendererAPI
+     */
+    getParam: function(scope, paramName) {
         var paramData = '';
         if (scope === 'theme') {
             paramData = Renderer.theme.getParam(paramName);
         }
         if (scope === 'stage') {
-            paramData = Renderer.theme.getParam(paramName);
+            paramData = Renderer.theme._currentScene.getParam(paramName);
         }
         if (scope === 'app') {
             paramData = GlobalContext.getParam(paramName);
         }
         return paramData;
     },
-    setParam: function(scope, paramName) {
-        var paramData = '';
-        if (scope === 'theme') {
-            paramData = Renderer.theme.setParam(paramName);
-        }
-        if (scope === 'stage') {
-            paramData = Renderer.theme.setParam(paramName);
-        }
-        if (scope === 'app') {
-            paramData = GlobalContext.setParam(paramName);
-        }
-        return paramData;
-    },
+
+    /**
+     * Returns state of the param.  
+     * Undefined if the param is not present is the currentState.
+     * @param paramName {string} name of the param.
+     * @memberof EkstepRendererAPI
+     */
     getState: function(paramName) {
         return Renderer.theme._currentScene.getState(paramName);
     },
-    getTransitionEffect:function(animation){
-    	return Renderer.theme.getTransitionEffect(animation);
-    },
-
-   */
 
     /*--------------------------*/
 
