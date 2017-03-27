@@ -602,7 +602,15 @@ module.exports = function(grunt) {
                     to: "libraryVariants"
                 }]
             }
-        }
+        },
+        jsdoc : {
+            dist : {
+                src: ['../js-libs/renderer/**/*.js', 'public/js/app/EkstepRendererApi.js', '../README.md'],
+                options: {
+                    destination: 'docs'
+                }
+            }
+        }        
     });
 
     grunt.loadNpmTasks('grunt-cordovacli');
@@ -615,6 +623,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-mkdir');
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-jsdoc');
 
     var recorder = grunt.option('recorder') || "android";
     recorder = recorder.toLowerCase().trim();
