@@ -58,7 +58,7 @@ window.EkstepRendererAPI = {
     render: function() {
         Renderer.theme.update = true;
     },
-
+    	
     /**
      * Returns the content manifest(media). This can be done by the plugin when
      * plugin wants to get the content manifest(media)
@@ -237,102 +237,6 @@ window.EkstepRendererAPI = {
     getState: function(paramName) {
         return Renderer.theme._currentScene.getState(paramName);
     },
-
-    /*--------------------------*/
-
-    /**
-     * It takes the value and the param to set its state
-     * @param param {string} Param is a string defining the type of question (mcq/mtf/ftb)
-     * @param value {object/array} value for mcq and mtf type is an array and for ftb type is an object
-     * @param isStateChanged {boolean} state true or false if state is changed
-     * @memberof EkstepRendererAPI
-     **/
-    setState: function(param, value, isStateChanged) {
-        Renderer.theme._currentScene.setState(param, value, isStateChanged);
-    },
-
-    /**
-     * It takes the action as an object and invokes to the renderer
-     * @param action {object} pass the complete object required format to execute the actoin
-     * @memberof EkstepRendererAPI
-     **/
-    invokeAction: function(action) {
-        CommandManager.handle(action);
-    },
-
-    /**
-     * Returns the complete telemetry instance
-     * @memberof EkstepRendererAPI
-     **/
-    getTelemetry: function() {
-        return TelemetryService;
-    },
-
-    /**
-     * Returns the complete Telemetry data obj
-     * @memberof EkstepRendererAPI
-     **/
-    getTelemetryData: function() {
-        return TelemetryService._data;
-    },
-
-    /**
-     * Returns the instance of the plugin
-     * @param id {string} id is a string defining the name of the plugin
-     * @param data {object} data to instantiate plugin
-     * @param parent {object} state parent instance
-     * @memberof EkstepRendererAPI
-     **/
-    instantiatePlugin: function(id, data, parent) {
-        return PluginManager.invoke(id, data, parent, Renderer.theme._currentScene, Renderer.theme);
-    },
-
-    /**
-     * Transition command executes with given stage id
-     * @param stageId {string} Moves to given stage id
-     * @memberof EkstepRendererAPI
-     **/
-    tansitionTo: function(stageId) {
-        var action = {
-            "asset": "theme",
-            "command": "transitionTo",
-            "duration": "100",
-            "ease": "linear",
-            "effect": "fadeIn",
-            "type": "command",
-            "pluginId": "theme",
-            "value": stageId,
-            "transitionType": "next"
-        };
-        CommandManager.handle(action);
-    },
-
-    /**
-     * Returns the complete Game area
-     * @memberof EkstepRendererAPI
-     **/
-    getGameArea: function() {
-        return document.getElementById('gameArea');;
-    },
-
-    /**
-     * Returns the complete asset object from the manifest of the given assetId
-     * @param assetId {string} assetId of the desired asset
-     * @memberof EkstepRendererAPI
-     **/
-    getAsset: function(assetId) {
-        return AssetManager.strategy.assetMap[assetId];
-    },
-
-    /**
-     * Loads the asset of teh given assetId
-     * @param assetId {string} assetId of the desired asset
-     * @memberof EkstepRendererAPI
-     **/
-    loadAsset: function(assetId) {
-        var asset = AssetManager.strategy.assetMap[assetId];
-        return AssetManager.loadAsset(Renderer.theme._currentStage, asset.id, asset.src);
-    }
 
     /*--------------------------*/
 
