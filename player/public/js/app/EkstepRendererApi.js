@@ -58,7 +58,7 @@ window.EkstepRendererAPI = {
     render: function() {
         Renderer.theme.update = true;
     },
-    	
+
     /**
      * Returns the content manifest(media). This can be done by the plugin when
      * plugin wants to get the content manifest(media)
@@ -400,6 +400,38 @@ window.EkstepRendererAPI = {
             "stageId": Renderer.theme._currentStage
         };
         AudioManager.togglePlay(action);
+    },
+
+    /**
+     * It is going to stop all the audios
+     * @memberof EkstepRendererAPI
+     **/
+    stopAllAudio: function() {
+        var action = {
+            "type": "command",
+            "command": "stopAll",
+            "asset": "allAssets",
+            "disableTelemetry": false,
+            "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
+            "stageId": Renderer.theme._currentStage
+        };
+        AudioManager.stopAll(action);
+    },
+
+    /**
+     * It is going to mute all the audios
+     * @memberof EkstepRendererAPI
+     **/
+    muteAudio: function() {
+        AudioManager.mute();
+    },
+
+    /**
+     * It is going to unmute all the audios
+     * @memberof EkstepRendererAPI
+     **/
+    muteAudio: function() {
+        AudioManager.unmute();
     }
 
 }
