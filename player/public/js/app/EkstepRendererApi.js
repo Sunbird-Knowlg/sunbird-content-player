@@ -432,6 +432,66 @@ window.EkstepRendererAPI = {
      **/
     muteAudio: function() {
         AudioManager.unmute();
+    },
+
+    /**
+     * It starts recording with intake proper assetId
+     * @param action {string} assetId is received as a string
+     * @memberof EkstepRendererAPI
+     **/
+    startRecording: function(assetId) {
+        var action = {
+            "type": "command",
+            "command": "startRecord",
+            "asset": assetId,
+            "disableTelemetry": false,
+            "success": "recordingInfo",
+            "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
+            "stageId": Renderer.theme._currentStage
+        };
+        RecorderManager.startRecording(action);
+    },
+
+    /**
+     * It stops recording with intake of proper assetId
+     * @param action {string} assetId is received as a string
+     * @memberof EkstepRendererAPI
+     **/
+    stopRecording: function(assetId) {
+        var action = {
+            "type": "command",
+            "command": "stopRecord",
+            "asset": assetId,
+            "disableTelemetry": false,
+            "success": "recordingInfo",
+            "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
+            "stageId": Renderer.theme._currentStage
+        };
+        RecorderManager.stopRecording(action);
+    },
+
+    /**
+     * Navigate to next stage. Incase of item stage navigates to next question
+     * @memberof EkstepRendererAPI
+     **/
+    next: function() {
+        EventBus.dispatch("actionNavigateNext", "next");
+    },
+
+    /**
+     * Navigate to previous stage.
+     * @memberof EkstepRendererAPI
+     **/
+    previous: function() {
+        EventBus.dispatch("actionNavigatePrevious", "previous");
+    }
+
+    /**
+     * skips current stage.
+     * @memberof EkstepRendererAPI
+     **/
+    skip: function() {
+        EventBus.dispatch("actionNavigateSkip", "skip");
     }
 
 }
