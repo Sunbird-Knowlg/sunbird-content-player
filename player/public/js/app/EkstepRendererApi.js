@@ -191,7 +191,7 @@ window.EkstepRendererAPI = {
 
     /**
      * Returns the param value based on scope and paramName.  
-     * Undefined if the paramValue is not present in the scope.
+     * empty if the paramValue is not present in the scope.
      * @param scope {string} name of the scope (e.g. stage,theme,app)
      * @paramName {string} name to get from the particular scope. 
      * @memberof EkstepRendererAPI
@@ -206,6 +206,25 @@ window.EkstepRendererAPI = {
         }
         if (scope === 'app') {
             paramData = GlobalContext.getParam(paramName);
+        }
+        return paramData;
+    },
+    
+    /**
+     * Returns the param value based on the scope (e.g. stage,theme,app). 
+     * empty if the scope is not having param.
+     * @memberof EkstepRendererAPI
+     */
+    getParams: function(scope) {
+        var paramData = '';
+        if (scope === 'theme') {
+            paramData = Renderer.theme._contentParams;
+        }
+        if (scope === 'stage') {
+            paramData = Renderer.theme._currentScene.params;
+        }
+        if (scope === 'app') {
+            paramData = GlobalContext._params;
         }
         return paramData;
     },
