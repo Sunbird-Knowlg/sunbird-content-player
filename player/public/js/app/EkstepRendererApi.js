@@ -2,7 +2,7 @@
  * The EkStep Renderer API is the core interface of the plugins with the rest of the render framework. It allows the plugins
  * to access the framework resources, launch popups, and handle events raised by the framework. Plugins should not call any
  * other framework classes directly.
- * 
+ *
  * @class EkstepRendererAPI
  * @author Vinu Kumar <vinu.kumat@tarento.com>
  */
@@ -186,4 +186,68 @@ window.EkstepRendererAPI = {
 
     /*--------------------------*/
 
+}
+
+	/**
+	* @param param {string} Param is a string defining the type of question (mcq/mtf/ftb)
+	* @param value {object/array} value for mcq and mtf type is an array and for ftb type is an object
+	* @param isStateChanged {boolean} state true or false if state is changed
+	* @memberof EkstepRendererAPI
+	**/
+	setState: function(param, value, isStateChanged) {
+	    Renderer.theme._currentScene.setState(param, value, isStateChanged);
+	},
+
+	/**
+	* @param action {object} pass the complete object required format to execute the actoin
+	* @memberof EkstepRendererAPI
+	**/
+	invokeAction: function(action) {
+		CommandManager.handle(action);
+	},
+
+	/**
+	* @memberof EkstepRendererAPI
+	**/
+	getTelemetry: function() {
+		return TelemetryService._data;
+	},
+
+	/**
+	* @param data {object} value for mcq and mtf type is an array and for ftb type is an object
+	* @memberof EkstepRendererAPI
+	**/
+	instantiatePlugin: function(data) {
+	    // Renderer.theme._currentScene.setState(param, value, isStateChanged);
+	},
+
+	/**
+	* @param param {string} Param is a string defining the type of question (mcq/mtf/ftb)
+	* @param value {object/array} value for mcq and mtf type is an array and for ftb type is an object
+	* @param isStateChanged {boolean} state true or false if state is changed
+	* @memberof EkstepRendererAPI
+	**/
+	play: function(data) {
+	    // Renderer.theme._currentScene.setState(param, value, isStateChanged);
+	},
+
+	/**
+	* @param param {string} Param is a string defining the type of question (mcq/mtf/ftb)
+	* @param value {object/array} value for mcq and mtf type is an array and for ftb type is an object
+	* @param isStateChanged {boolean} state true or false if state is changed
+	* @memberof EkstepRendererAPI
+	**/
+	pause: function(data) {
+	    // Renderer.theme._currentScene.setState(param, value, isStateChanged);
+	},
+
+	/**
+	* @param param {string} Param is a string defining the type of question (mcq/mtf/ftb)
+	* @param value {object/array} value for mcq and mtf type is an array and for ftb type is an object
+	* @param isStateChanged {boolean} state true or false if state is changed
+	* @memberof EkstepRendererAPI
+	**/
+	tansitionTo: function(stageId) {
+	    // Renderer.theme._currentScene.setState(param, value, isStateChanged);
+	}
 }
