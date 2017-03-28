@@ -99,15 +99,17 @@ LoadByStageStrategy = Class.extend({
                 });
             } else {
                 plugins.forEach(function(plugin) {
-                    var assetId = plugin.asset || plugin.audio || plugin.assetId
-                    if(plugin && assetId){
-                        var asset = instance.assetMap[assetId];
-                        if (asset) {
-                            if ((preload === true) && (stageId !== startStageId)) {
-                                instance.commonAssets.push(_.clone(asset));
+                    if (!_.isNull(plugin)) {
+                        var assetId = plugin.asset || plugin.audio || plugin.assetId
+                        if(assetId){
+                            var asset = instance.assetMap[assetId];
+                            if (asset) {
+                                if ((preload === true) && (stageId !== startStageId)) {
+                                    instance.commonAssets.push(_.clone(asset));
+                                }
+                                instance.stageManifests[stageId].push(_.clone(asset));
                             }
-                            instance.stageManifests[stageId].push(_.clone(asset));
-                        }                        
+                        }
                     }
                 });
             }
