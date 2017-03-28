@@ -66,7 +66,7 @@ PluginManager = {
         }
       }       
     }catch(e) {
-            TelemetryService.error(e.stack);
+            //TelemetryService.error(e.stack);
             console.warn(relativePath+"Plugin having some error",e);
         } 
     },

@@ -25,8 +25,8 @@ CommandManager = {
             }
         }
        }catch(e) {
-            TelemetryService.error(e.stack);
-            console.warn(action+"Failed due to",e);
+            //TelemetryService.error(e.stack);
+            console.warn(action + "Failed due to", e);
         }
     },
     // We can deprecate this in future. Once all the animation actions used as command we can remove this.

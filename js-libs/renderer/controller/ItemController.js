@@ -48,7 +48,7 @@ var ItemController = Controller.extend({
         }
         return d;
       }catch(e) {
-          TelemetryService.error(e.stack);
+          //TelemetryService.error(e.stack);
           console.warn("Item controller having some issue due to",e);
         }  
     },

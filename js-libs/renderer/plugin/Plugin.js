@@ -106,7 +106,7 @@ var Plugin = Class.extend({
             this.rotation(data);
         }
        }catch(e) {
-            TelemetryService.error(e.stack);
+            //TelemetryService.error(e.stack);
             console.warn('Plugin init is failed due to',e);
         }
 
