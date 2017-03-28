@@ -267,6 +267,17 @@ window.EkstepRendererAPI = {
         return paramData;
     },
 
+     /**
+     * Returns stageData for particular stage identifier.
+     * undefined if the stage data is not present for the particular stage identfier.
+     * this could be usefull when plugin wants to fetch some paticular stage data.
+     * @param stageId {string} name of the identifier.
+     * @memberof EkstepRendererAPI
+     */
+    getStage: function(stageId) {
+        return Renderer.theme.getStageDataById(stageId);
+    },
+
     /**
      * Returns state of the param.
      * Undefined if the param is not present is the currentState.
