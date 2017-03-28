@@ -608,7 +608,18 @@ module.exports = function(grunt) {
                     destination: 'docs'
                 }
             }
-        }        
+        },
+        // this is only used for deployment
+        compress: {
+            main: {
+                options: {
+                    archive: 'renderer-docs.zip'
+                },
+                files: [{
+                    src: ['docs/**']
+                }]
+            }
+        },        
     });
 
     grunt.loadNpmTasks('grunt-cordovacli');
@@ -713,6 +724,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build-all', ['uglify:renderer', 'uglify:testRenderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
 
     grunt.registerTask('karma-test', ['default','karma:unit', 'clean:minjs']);
+    grunt.registerTask('build-jsdoc', ['jsdoc', 'compress', ]);
 
     grunt.registerTask('build-js', ['uglify:renderer', 'uglify:testRenderer', 'uglify:pluginLib',  'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS', 'clean:minjs']);
     grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'add-cordova-plugin-genieservices']);
