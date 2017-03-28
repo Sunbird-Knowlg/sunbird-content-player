@@ -307,18 +307,15 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      **/
     tansitionTo: function(stageId) {
-        var action = {
-            "asset": "theme",
-            "command": "transitionTo",
+        var props = {
             "duration": "100",
             "ease": "linear",
             "effect": "fadeIn",
-            "type": "command",
-            "pluginId": "theme",
             "value": stageId,
+            "pluginId": Renderer.theme._id,
             "transitionType": "next"
         };
-        CommandManager.handle(action);
+        this.invokeCommand("transitionTo", Renderer.theme._id, props);
     },
 
     /**
@@ -349,53 +346,12 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * It takes the assetID of the given audio and plays it
-     * @param action {string} assetId is received as a string
-     * @memberof EkstepRendererAPI
-     **/
-    playAudio: function(assetId) {
-        var action = {
-            "type": "command",
-            "command": "play",
-            "asset": assetId,
-            "disableTelemetry": false,
-            "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
-            "stageId": Renderer.theme._currentStage
-        };
-        AudioManager.play(action);
-    },
-
-    /**
-     * It takes the assetID of the given audio and pauses it
-     * @param action {string} assetId is received as a string
-     * @memberof EkstepRendererAPI
-     **/
-    pauseAudio: function(assetId) {
-        var action = {
-            "type": "command",
-            "command": "pause",
-            "asset": assetId,
-            "disableTelemetry": false,
-            "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
-            "stageId": Renderer.theme._currentStage
-        };
-        AudioManager.togglePlay(action);
-    },
-
-    /**
      * It will play any type of asset by passing respective assetId (e.g. video, audio).
      * @assetId {string} identifier of the asset.
      * @memberof EkstepRendererAPI
      **/
     play: function(assetId) {
-        var plugin = Renderer.theme._currentScene;
-        var action = {
-            'type': 'command',
-            'command': 'play',
-            'asset': assetId,
-            'pluginId': plugin._id
-        }
-        CommandManager.handle(action);
+        this.invokeCommand("play", assetId);
     },
 
     /**
@@ -404,14 +360,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      **/
     pause: function(assetId) {
-        var plugin = Renderer.theme._currentScene;
-        var action = {
-            'type': 'command',
-            'command': 'pause',
-            'asset': assetId,
-            'pluginId': plugin._id
-        }
-        CommandManager.handle(action);
+        this.invokeCommand("pause", assetId);
     },
 
     /**
@@ -420,32 +369,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      **/
     stop: function(assetId) {
-        var plugin = Renderer.theme._currentScene;
-        var action = {
-            'type': 'command',
-            'command': 'stop',
-            'asset': assetId,
-            'pluginId': plugin._id
-        }
-        CommandManager.handle(action);
-    },
-
-    
-    /**
-     * It takes the assetID of the given audio and stops it
-     * @param action {string} assetId is received as a string
-     * @memberof EkstepRendererAPI
-     **/
-    stopAudio: function(assetId) {
-        var action = {
-            "type": "command",
-            "command": "stop",
-            "asset": assetId,
-            "disableTelemetry": false,
-            "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
-            "stageId": Renderer.theme._currentStage
-        };
-        AudioManager.stop(action);
+        this.invokeCommand("stop", assetId);
     },
 
     /**
@@ -453,32 +377,16 @@ window.EkstepRendererAPI = {
      * @param action {string} assetId is received as a string
      * @memberof EkstepRendererAPI
      **/
-    toggelPlayAudio: function(assetId) {
-        var action = {
-            "type": "command",
-            "command": "togglePlay",
-            "asset": assetId,
-            "disableTelemetry": false,
-            "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
-            "stageId": Renderer.theme._currentStage
-        };
-        AudioManager.togglePlay(action);
+    toggelPlay: function(assetId) {
+        this.invokeCommand("togglePlay", assetId);
     },
 
     /**
      * This could be usefull when pluign wants to stop all currently playing audio on the stage.
      * @memberof EkstepRendererAPI
      **/
-    stopAllAudio: function() {
-        var action = {
-            "type": "command",
-            "command": "stopAll",
-            "asset": "allAssets",
-            "disableTelemetry": false,
-            "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
-            "stageId": Renderer.theme._currentStage
-        };
-        AudioManager.stopAll(action);
+    stopAll: function() {
+        this.invokeCommand("stop", "", {"sound": true});
     },
 
     /**
@@ -532,6 +440,30 @@ window.EkstepRendererAPI = {
         };
         RecorderManager.stopRecording(action);
     },
+
+	/**
+	 * To execute a sepecific command on the given input assetId. For list of commands refer https://community.ekstep.in/specifications-guides/55-ecml-how-to-guide#defining-events-and-actions
+	 * @param name {string} command name which has to execute, ex: "play", "show", "blur", 
+	 * @param assetId {string} media/asset on which this command has to execute
+	 * @param props {object} To pass additional properties of command(key-value pair object). Ex: {"duration": 200, "effect": linear}
+	 * @memberof EkstepRendererAPI
+	 **/
+	invokeCommand: function(name, assetId, props) {
+		var stageId = this.getCurrentStage()._id;
+		if(_.isUndefined(assetId) || _.isEmpty(assetId)) 
+			assetId = stageId;
+
+        var action = {
+            'type': 'command',
+            'command': name,
+            'asset': assetId,
+            'pluginId': stageId
+        }
+        if(props){
+        	_.extend(action, props);
+        }
+        this.invokeAction(action);
+	},
 
     /**
      * Navigate to next stage. Incase of item stage navigates to next question
