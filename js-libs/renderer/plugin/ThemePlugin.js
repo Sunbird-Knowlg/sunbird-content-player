@@ -436,6 +436,15 @@ var ThemePlugin = Plugin.extend({
             '<div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>'
         loaderArea.innerHTML = element;
         gameArea.parentElement.appendChild(loaderArea);
+    },
+    getStageDataById: function(stageId) {
+        var stageData = undefined;
+        this._data.stage.forEach(function(element, index) {
+            if (element.id === stageId) {
+                stageData = element;
+            }
+        });
+        return stageData;
     }
 });
 PluginManager.registerPlugin('theme', ThemePlugin);
