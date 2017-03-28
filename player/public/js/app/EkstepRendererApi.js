@@ -27,7 +27,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     dispatchEvent: function(type, data, target) {
-        EventBus.dispatchEvent(type, data, target);
+        EventBus.dispatch(type, data, target);
     },
 
     /**
@@ -91,7 +91,7 @@ window.EkstepRendererAPI = {
      * stages, and instantiate plugins on each stage.
      * @memberof EkstepRendererAPI
      */
-    getAllStagesData: function() {
+    getAllStages: function() {
         return Renderer.theme._data.stage;
     },
 
@@ -120,6 +120,16 @@ window.EkstepRendererAPI = {
      */
     getCanvas: function() {
         return document.getElementById('gameCanvas');
+    },
+
+    /**
+     * Returns the baseURL of asset. 
+     * Object to hold Base URL
+     * @member {String} baseURL
+     * @memberof EkstepRendererAPI
+     */
+    getBaseURL:function(){
+        return Renderer.theme._basePath;
     },
 
     /**
@@ -178,9 +188,11 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getCurrentController: function() {
-        return Renderer.theme._currentScene._stageController;
+        var currentStage = EkstepRendererAPI.getCurrentStage();
+        if (currentStage) {
+            return currentStage._stageController;
+        }
     },
-
 
     /**
      * set the param to scope level.
@@ -194,11 +206,25 @@ window.EkstepRendererAPI = {
             Renderer.theme.setParam(paramName, value);
         }
         if (scope === 'stage') {
-            Renderer.theme._currentScene.setParam(paramName, value);
+            var currentStage = EkstepRendererAPI.getCurrentStage();
+            if (currentStage) {
+                currentStage.setParam(paramName, value);
+            }
         }
         if (scope === 'app') {
             GlobalContext.setParam(paramName, value);
         }
+    },
+
+    getStageParam: function(paramName) {
+        var currentStage = EkstepRendererAPI.getCurrentStage();
+        var paramData;
+        if (paramName && currentStage) {
+            paramData = currentStage.getParam(paramName);
+        } else if (currentStage) {
+            paramData = currentStage.params
+        }
+        return paramData;
     },
 
     /**
@@ -214,7 +240,7 @@ window.EkstepRendererAPI = {
             paramData = Renderer.theme.getParam(paramName);
         }
         if (scope === 'stage') {
-            paramData = Renderer.theme._currentScene.getParam(paramName);
+            paramData = EkstepRendererAPI.getStageParam(paramName);
         }
         if (scope === 'app') {
             paramData = GlobalContext.getParam(paramName);
@@ -233,7 +259,7 @@ window.EkstepRendererAPI = {
             paramData = Renderer.theme._contentParams;
         }
         if (scope === 'stage') {
-            paramData = Renderer.theme._currentScene.params;
+            paramData = EkstepRendererAPI.getStageParam();
         }
         if (scope === 'app') {
             paramData = GlobalContext._params;
@@ -248,7 +274,10 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getState: function(paramName) {
-        return Renderer.theme._currentScene.getState(paramName);
+        var currentStage = EkstepRendererAPI.getCurrentStage();
+        if (currentStage) {
+            return currentStage.getState(paramName);
+        }
     },
 
     /*--------------------------*/
@@ -257,11 +286,14 @@ window.EkstepRendererAPI = {
      * It takes the value and the param to set its state
      * @param param {string} Param is a string defining the type of question (mcq/mtf/ftb)
      * @param value {object/array} value for mcq and mtf type is an array and for ftb type is an object
-     * @param isStateChanged {boolean} state true or false if state is changed
+     * @param isStateChanged {boolean} state true or false if pluginState is changed
      * @memberof EkstepRendererAPI
      **/
     setState: function(param, value, isStateChanged) {
-        Renderer.theme._currentScene.setState(param, value, isStateChanged);
+        var currentStage = EkstepRendererAPI.getCurrentStage();
+        if (currentStage) {
+            currentStage.setState(param, value, isStateChanged);
+        }
     },
 
     /**
