@@ -1,7 +1,20 @@
+/**
+ * Plugin to create different shapes on renderer using createJS graphics object
+ * @class ShapePlugin
+ * @extends EkstepRenderer.Plugin
+ *
+ * @author Vinu Kumar V S <vinu.kumar@tarento.com>
+ */
 var ShapePlugin = Plugin.extend({
     _type: 'shape',
     _isContainer: false,
     _render: true,
+    /**
+    *   Invoked by framework when plugin instance created/renderered on stage.
+    *   Use this plugin to create different shapes like Square, Circle, Rectangle, Polygon, Star etc..
+    *   @memberof ShapePlugin
+    *   @override
+    */
     initPlugin: function(data) {
     	this._self = new createjs.Shape();
     	var graphics = this._self.graphics;
