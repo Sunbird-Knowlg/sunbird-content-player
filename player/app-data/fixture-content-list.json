@@ -92,6 +92,7 @@
                 "name": "ଦୂର મોટા ರಾಜ್ தேவ ঔদা గాణ সকGon",
                 "downloadUrl": "",
                 "checksum": null,
+                "author": "Ekstep",
                 "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
                 "concepts": [{
                     "identifier": "LO1",
@@ -105,7 +106,34 @@
             "isAvailable": true,
             "language": ["english"],
             "path": "fixture-stories/font"
-        },{
+        },
+
+        {
+            "identifier": "org.ekstep.pratham-camal",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "stories/pratham-camal/logo.png",
+                "subject": "literacy_v2",
+                "description": "pratham-camal",
+                "name": "Pratham Camal",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.pratham-camal",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/pratham-camal"
+        },
+
+        {
             "identifier": "org.ekstep.desertflip",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {

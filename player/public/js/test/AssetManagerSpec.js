@@ -68,7 +68,7 @@ describe('Asset manager test cases', function() {
         expect(AssetManager.stopStageAudio.calls.count()).toEqual(1);
     });
 
-    xit('Test AsssetManager loadAsset function',function(){
+    it('Test AsssetManager loadAsset function',function(){
         AssetManager.loadAsset({stageId:"splash", assetId:"splash_audio", path:"/js/test/assets"});
         expect(AssetManager.loadAsset).toHaveBeenCalled();
 

@@ -13,7 +13,7 @@ describe('set Plugin test cases', function() {
                     { id: 'splash_audio', src: 'splash.ogg', type: 'audio' }
                 ]
             },
-            stage: [
+            _stage: [
                 { id: "splash", extends: "splash1", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } },
                 { id: "splash1", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } },
                 { id: "splash2", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } }
