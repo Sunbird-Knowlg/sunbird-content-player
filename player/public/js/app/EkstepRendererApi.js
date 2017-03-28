@@ -10,7 +10,7 @@ window.EkstepRendererAPI = {
     baseURL: "",
     /**
      * Register an event listener callback function for the events raised by the framework.
-     * @param type {string} name of the event (e.g. org.ekstep.quickstart:configure)
+     * @param type {string} name of the event (e.g. actionNavigateSkip).
      * @param callback {function} callback function
      * @param scope {object} the scope of the callback (use this)
      * @memberof EkstepRendererAPI
@@ -21,7 +21,7 @@ window.EkstepRendererAPI = {
     /**
      * Fires an event to the framework, allowing other plugins who may have registered to receive the callback notification. All
      * communication between the framework and other plugins is via the events.
-     * @param type {string} name of the event to fire (e.g. org.ekstep.quickstart:configure)
+     * @param type {string} name of the event to fire (e.g. actionNavigateSkip)
      * @param data {object} event data to carry along with the notification
      * @param target {object} the scope of the event (use this)
      * @memberof EkstepRendererAPI
@@ -41,18 +41,18 @@ window.EkstepRendererAPI = {
 
     /**
      * Remove an event listener to an event. Plugins should cleanup when they are removed.
-     * @param type {string} name of the event registered with (e.g. org.ekstep.quickstart:configure)
+     * @param type {string} name of the event registered with (e.g. actionNavigateSkip)
      * @param callback {function} remove the callback function
      * @param scope {object} the scope of the event (use this)
      * @memberof EkstepRendererAPI
      */
-   /* removeEventListener: function(type, callback, scope) {
+    removeEventListener: function(type, callback, scope) {
         EventBus.removeEventListener(type, callback, scope)
-    },*/
+    },
 
     /**
-     * Notifies the framework to update the canvas objects. This can be done by the plugin when
-     * plugin wants to update the object on canvas.
+     * Notifies to framework to update the canvas objects. This can be done by the plugin when
+     * plugin wants to update OR render the object to canvas.
      * @memberof EkstepRendererAPI
      */
     render: function() {
@@ -61,7 +61,7 @@ window.EkstepRendererAPI = {
 
     /**
      * Returns the content manifest(media). This can be done by the plugin when
-     * plugin wants to get the content manifest(media)
+     * plugin wants to get the content manifest(media).
      * @memberof EkstepRendererAPI
      */
     getContext: function() {
@@ -108,7 +108,7 @@ window.EkstepRendererAPI = {
 
     /**
      * Returns current stage Id of the content. This could be useful when plugins can get access to
-     * current stage ID.undefined if the currentstageId is not present.
+     * current stage identifier.undefined if the currentstage identifier is not present.
      * @memberof EkstepRendererAPI
      */
     getCurrentStageId: function() {
@@ -153,9 +153,10 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * It will map controller objct, Plugins can get access to add the controller to controllerMap object.
-     * @param controller {object} controller is object it should have id, name, type and __cdata;
-     * type defines controller type e.g(item,data), name defines controller name, id defines controller id 
+     * It will map controller object, This could be useful when plugins can get access to
+     * map the controller.
+     * @param controller {object} controller is object. It should have id, name, type and __cdata.
+     * type defines controller type e.g(item, data), name defines controller name, id defines controller identifier 
      * @memberof EkstepRendererAPI
      */
     addController: function(controller) {
@@ -163,9 +164,10 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the controller instance based on controller id
-     * @param id {string} It will accetp the controller id as input suppose 
-     * if it returns undefined then Controller has not been registed.
+     * Returns the controller instance based on identifier.
+     * @param id {string} It will accetp the controller identifier as input. this could be usefull when plugin
+     * get access to get the controller from canvas. 
+     * suppose if it returns undefined then Controller has not been registed.
      * @memberof EkstepRendererAPI
      */
     getController: function(id) {
@@ -184,7 +186,7 @@ window.EkstepRendererAPI = {
 
     /**
      * set the param to scope level.
-     * @param scope {string} name of the scope (e.g. stage,theme,app)
+     * @param scope {string} name of the scope (e.g. stage, theme, app)
      * @paramName {string} name to param to set.
      * @paramName {object} value of the param.
      * @memberof EkstepRendererAPI
@@ -282,7 +284,8 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the complete Telemetry data obj
+     * Returns the complete Telemetry data obj.
+     * This could be usefull when plugin get access to know the telemetry data for the current content.
      * @memberof EkstepRendererAPI
      **/
     getTelemetryData: function() {
@@ -448,7 +451,7 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * It takes the assetID of the given audio and toggelPlays it
+     * It takes the assetId of the given audio and toggelPlays it.
      * @param action {string} assetId is received as a string
      * @memberof EkstepRendererAPI
      **/
@@ -465,7 +468,7 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * It is going to stop all the audios
+     * This could be usefull when pluign wants to stop all currently playing audio on the stage.
      * @memberof EkstepRendererAPI
      **/
     stopAllAudio: function() {
@@ -481,7 +484,7 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * It is going to mute all the audios
+     * This could be usefull when pluign wants to Mute all currently playing audio on the stage.
      * @memberof EkstepRendererAPI
      **/
     muteAudio: function() {
@@ -489,10 +492,10 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * It is going to unmute all the audios
+     * This could be usefull when pluign wants to UnMute all currently playing audio on the stage.
      * @memberof EkstepRendererAPI
      **/
-    muteAudio: function() {
+    unMuteAudio: function() {
         AudioManager.unmute();
     },
 
