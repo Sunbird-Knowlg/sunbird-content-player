@@ -60,8 +60,7 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the content manifest(media). This can be done by the plugin when
-     * plugin wants to get the content manifest(media)
+     * Returns the current content manifest data(JSON data) which is defined by backend. This gives content specific metadata/manifest information specified by content creator or author while creating the content. 
      * @memberof EkstepRendererAPI
      */
     getContext: function() {
@@ -92,7 +91,7 @@ window.EkstepRendererAPI = {
      * stages, and instantiate plugins on each stage.
      * @memberof EkstepRendererAPI
      */
-    getAllStages: function() {
+    getAllStagesData: function() {
         return Renderer.theme._data.stage;
     },
 
@@ -116,8 +115,7 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns current canvas object. This could be useful when plugins can get access to
-     * current canvas object properties
+     * Returns the HTML5 canvas for rendering plugins. By default, the rederer uses create.js and recommends the plugins to also use CreateJS. This helps in getting WYSIWYG on renderer canvas(CreateJS) & editor canvas(FabricJS).  However, this method provides access to the underlying native HTML5 canvas if needed. For example, if your plugin uses some other third-party graphics library for rendering.
      * @memberof EkstepRendererAPI
      */
     getCanvas: function() {
@@ -125,7 +123,7 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns current content data. This could be useful when plugins can get access to
+     * Returns the complete current content data object(JSON object of Theme/ECML/Content). This is usefull for the plugins developer to know about no. of stages, stage elements, stage assets/media etc..
      * current content data object
      * @memberof EkstepRendererAPI
      */
@@ -316,8 +314,8 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the complete asset object from the manifest of the given assetId
-     * @param assetId {string} assetId of the desired asset
+     * Returns the asset/media instance of Image, Audio, video etc.. which is defined in the manifest of the given assetId
+     * @param assetId {string} assetId of the desired asset/media defined in manifest
      * @memberof EkstepRendererAPI
      **/
     getAsset: function(assetId) {
@@ -487,7 +485,7 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * skips current stage.
+     * Navigate to next stage without submitting the assessment answer. Skip the current question submission.
      * @memberof EkstepRendererAPI
      **/
     skip: function() {
