@@ -122,7 +122,7 @@ PluginManager = {
         PluginManager.registerCustomPlugin(id, data);
     },
     loadCustomPlugin: function(plugin, relativePath) {
-        var pluginUrl = (plugin.src.substring(0,4) == "http") ? plugin.src : relativePath + plugin.src;
+        var pluginUrl = this.handleRelativePath(plugin.src, relativePath);
         jQuery.ajax({
             async: false,
             url: pluginUrl,
@@ -135,17 +135,26 @@ PluginManager = {
         });
     },
     loadCSS: function(href, gameRelPath) {
-        var cssUrl = (href.substring(0,4) == "http") ? href : gameRelPath + href;
+        var cssUrl = this.handleRelativePath(href, gameRelPath);
         console.info("loading external CSS: ", cssUrl);
         jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + cssUrl + "'>");
     },
     loadJS: function(src, gameRelPath) {
-        var jsUrl = (src.substring(0,4) == "http") ? src : gameRelPath + src;
+        var jsUrl = this.handleRelativePath(src,gameRelPath);
         console.info("loading external JS: ", jsUrl);
         var jsLink = $("<script type='text/javascript' src=" + jsUrl + ">");
         jQuery("head").append(jsLink);
     },
     getPlugins: function() {
         return Object.keys(PluginManager.pluginMap);
-    }
+    },
+    handleRelativePath: function(src, gameRelPath) {
+        if (src.substring(0, 4) != 'http') {
+            if (!isbrowserpreview) {
+                src = gameRelPath + src;
+            }
+        }
+        return src;
+    },
+
 }
