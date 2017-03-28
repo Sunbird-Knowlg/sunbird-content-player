@@ -19,6 +19,7 @@ var ThemePlugin = Plugin.extend({
     _contentParams: {},
     _isSceneChanging: false,
     _saveState:true,
+    _basePath:undefined,
     initPlugin: function(data) {
         this.addLoaderElement();
         this._controllerMap = {};
@@ -54,6 +55,7 @@ var ThemePlugin = Plugin.extend({
     },
     start: function(basePath) {
         var instance = this;
+        instance._basePath = basePath;
         RecorderManager.init();
         // handle content if startstage io not defined or unavailable
         if (_.isArray(this._data.stage)) {
@@ -434,6 +436,15 @@ var ThemePlugin = Plugin.extend({
             '<div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>'
         loaderArea.innerHTML = element;
         gameArea.parentElement.appendChild(loaderArea);
+    },
+    getStageDataById: function(stageId) {
+        var stageData = undefined;
+        this._data.stage.forEach(function(element, index) {
+            if (element.id === stageId) {
+                stageData = element;
+            }
+        });
+        return stageData;
     }
 });
 PluginManager.registerPlugin('theme', ThemePlugin);
