@@ -60,10 +60,10 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the current content manifest data(JSON data) which is defined by backend. This gives content specific metadata/manifest information specified by content creator or author while creating the content. 
+     * Returns the current content manifest data which. 
      * @memberof EkstepRendererAPI
      */
-    getContext: function() {
+    getManifest: function() {
         return Renderer.theme._data.manifest;
     },
 
