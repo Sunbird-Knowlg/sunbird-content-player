@@ -19,6 +19,7 @@ var ThemePlugin = Plugin.extend({
     _contentParams: {},
     _isSceneChanging: false,
     _saveState:true,
+    _basePath:undefined,
     initPlugin: function(data) {
         this.addLoaderElement();
         this._controllerMap = {};
@@ -54,6 +55,7 @@ var ThemePlugin = Plugin.extend({
     },
     start: function(basePath) {
         var instance = this;
+        instance._basePath = basePath;
         RecorderManager.init();
         // handle content if startstage io not defined or unavailable
         if (_.isArray(this._data.stage)) {
