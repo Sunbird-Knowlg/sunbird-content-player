@@ -1,5 +1,6 @@
 EventManager = {
 	registerEvents: function(plugin, data) {
+	 try{
 		var events = undefined;
 		if(data.events) {
 			if (_.isArray(data.events)) {
@@ -20,6 +21,9 @@ EventManager = {
 		} else if(events) {
 			EventManager.registerEvent(events, plugin);
 		}
+	 }catch(e){
+	 	console.warn("Event fails to register due to",e);
+	 }	
 	},
 	registerEvent: function(evt, plugin) {
 		var register = true;
@@ -66,6 +70,7 @@ EventManager = {
 		}
 	},
 	handleActions: function(evt, plugin) {
+	  try{	
 		var disableTelemetry = false;
 		EventManager._setPluginId(evt.action, plugin._id);
 		var unmuteActions = _.clone(evt.action);
@@ -88,6 +93,9 @@ EventManager = {
 			action.pluginId = plugin._id;
 			CommandManager.handle(action);
 		}
+	}catch(e){
+		console.warn("Event manager handle failed due to",e);
+	 }	
 	},
 	_setPluginId: function(actions, pluginId) {
 		if(_.isArray(actions)) {

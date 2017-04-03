@@ -36,6 +36,7 @@ var Plugin = Class.extend({
      * @instance
      */
     init: function(data, parent, stage, theme) {
+     try {
         this.events = [];
         this.appEvents = [];
         this._childIds = [];
@@ -44,7 +45,6 @@ var Plugin = Class.extend({
         this._stage = stage;
         this._parent = parent;
         this._data = data;
-    try {
         this.handleFont(data);
         this.initPlugin(data);
         var dims = this.relativeDims();

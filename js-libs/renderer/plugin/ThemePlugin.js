@@ -54,6 +54,7 @@ var ThemePlugin = Plugin.extend({
         }
     },
     start: function(basePath) {
+      try{  
         var instance = this;
         instance._basePath = basePath;
         RecorderManager.init();
@@ -82,6 +83,9 @@ var ThemePlugin = Plugin.extend({
         AssetManager.initStage(this._data.startStage, null, null, function() {
             instance.render();
         });
+       }catch(e){
+        console.warn("Theme start is failed due to",e);
+       } 
     },
     render: function() {
         var instance = this;
@@ -174,6 +178,7 @@ var ThemePlugin = Plugin.extend({
         });
     },
     addChild: function(child, childPlugin) {
+       try{
         var instance = this;
         child.on('sceneenter', function() {
             instance.enableInputs();
@@ -195,6 +200,9 @@ var ThemePlugin = Plugin.extend({
             this._director.replace(child);
         }
         childPlugin.setIndex(nextIdx);
+       }catch(e){
+        console.warn("Fails to add the child plugin due to ",e);
+       } 
     },
     replaceStage: function(stageId, effect) {
         AudioManager.stopAll();
