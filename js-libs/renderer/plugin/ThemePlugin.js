@@ -178,7 +178,6 @@ var ThemePlugin = Plugin.extend({
         });
     },
     addChild: function(child, childPlugin) {
-       try{
         var instance = this;
         child.on('sceneenter', function() {
             instance.enableInputs();
@@ -200,9 +199,6 @@ var ThemePlugin = Plugin.extend({
             this._director.replace(child);
         }
         childPlugin.setIndex(nextIdx);
-       }catch(e){
-        console.warn("Fails to add the child plugin due to ",e);
-       } 
     },
     replaceStage: function(stageId, effect) {
         AudioManager.stopAll();
