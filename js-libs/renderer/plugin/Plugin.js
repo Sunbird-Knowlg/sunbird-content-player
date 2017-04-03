@@ -10,14 +10,34 @@ var Plugin = Class.extend({
     _isContainer: false,
     _defaultFont: undefined,
     _render: true,
+    /**
+     * @description A variable which holds _theme instance where this plugin is added.
+     * @memberOf EkstepRenderer.Plugin
+     */
     _theme: undefined,
     _parent: undefined,
+    /**
+     * A variable which holds _stage instance where this plugin is added. This is an instance of creatine scene object.
+     * @memberOf EkstepRenderer.Plugin
+     */
     _stage: undefined,
+    /**
+     * A variable which holds the data of plugin defined in ECML/JSON.
+     * @memberOf EkstepRenderer.Plugin
+     */
     _data: undefined,
     _currIndex: 0,
     _index: 0,
+    /**
+     * A variable _self is a createJS element. Actual instance of createJS element which will render on the stage.
+     * @memberOf EkstepRenderer.Plugin
+     */
     _self: undefined,
     _dimensions: undefined,
+    /**
+     * A variable _id is a unique+ idenfier of the plugin
+     * @memberOf EkstepRenderer.Plugin
+     */
     _id: undefined,
     _childIds: [],
     _enableEvents: true,
