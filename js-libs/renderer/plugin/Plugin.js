@@ -1,3 +1,11 @@
+/**
+ * The base plugin class that all renderer plugins inherit from. It provides the common support contract for all plugins.
+ * Plugins can override specific methods to change the behavior. The most common scenario would be to override the
+ * implementation of createJS callback methods to detect interactivity on the canvas.
+ *
+ * @class EkstepRenderer.Plugin
+ * @author Vinu Kumar V.S <vinu.kumar@tarento.com>
+ */
 var Plugin = Class.extend({
     _isContainer: false,
     _defaultFont: undefined,
@@ -18,6 +26,15 @@ var Plugin = Class.extend({
     borderShape: undefined,
     _pluginParams: {},
     _unSupportedFonts: ["notosans", "verdana", "notosans oriya"],
+     /**
+     * Initializes the plugin with the given data and parent object
+     * @param data {object} Init parameters for the plugin
+     * @param parent {object} Parent plugin instance where this plugin renders
+     * @param stage {object} stage intance where this plugin has to renderer
+     * @param theme {object} theme/canvas instance of the content
+     * @memberof EkstepRenderer.Plugin
+     * @instance
+     */
     init: function(data, parent, stage, theme) {
         this.events = [];
         this.appEvents = [];
@@ -136,6 +153,11 @@ var Plugin = Class.extend({
         this._self.width = dims.w ? dims.w : 1; //default width = 1
         this._self.height = dims.h ? dims.h : 1; //default height = 1
     },
+
+    /**
+     * Adds a child to this plugin intance. This can be useful for composite scenarios.
+     * @memberof EkstepRenderer.Plugin
+     */
     addChild: function(child, childPlugin) {
         var nextIdx = this._currIndex++;
         this._self.addChildAt(child, nextIdx);
@@ -146,12 +168,27 @@ var Plugin = Class.extend({
             }
         }
     },
+
+    /**
+     * Removes a child from this plugin by child index. Use this to dynamically manage composite children.
+     * @memberof EkstepRenderer.Plugin
+     */
     removeChildAt: function(idx) {
         this._self.removeChildAt(idx);
     },
+
+    /**
+     * Removes a child from this plugin by child instance. Use this to dynamically manage composite children.
+     * @memberof EkstepRenderer.Plugin
+     */
     removeChild: function(child) {
         this._self.removeChild(child);
     },
+
+    /**
+     * To add the createJS element by plugin on stage
+     * @memberof EkstepRenderer.Plugin
+     */
     render: function() {
         if (this._self) {
             this._parent.addChild(this._self, this);
@@ -159,12 +196,27 @@ var Plugin = Class.extend({
             console.warn("Skipped rendering the plugin object: ", this._id);
         }
     },
+
+    /**
+     * To update/reflect createJS element change on stage after updating it's properties
+     * @memberof EkstepRenderer.Plugin
+     */
     update: function() {
         this._theme.update();
     },
+
+    /**
+     * To get plugin dimensions specified in ECML/JSON
+     * @memberof EkstepRenderer.Plugin
+     */
     dimensions: function() {
         return this._dimensions;
     },
+
+    /**
+     * To get plugin dimensions relative to Canvas/device width & height also with respect to it's parents
+     * @memberof EkstepRenderer.Plugin
+     */
     relativeDims: function() {
         if (this._parent) {
             var parentDims = this._parent.dimensions();
@@ -228,7 +280,12 @@ var Plugin = Class.extend({
             this._self.scaleY = dims.h / sb.height;
             this._self.scaleX = dims.w / sb.width;
         }
-    },
+    },    
+    /**
+     * Initializes the plugin by reading from ECML.
+     * @private
+     * @memberof EkstepRenderer.Plugin
+     */
     initPlugin: function(data) {
         PluginManager.addError('Subclasses of plugin should implement this function');
         throw "Subclasses of plugin should implement this function";
@@ -248,6 +305,12 @@ var Plugin = Class.extend({
     refresh: function() {
         PluginManager.addError('Subclasses of plugin should implement refresh()');
     },
+
+    /**
+     * property of the plugin to show it's visiblity on stage
+     * @memberof EkstepRenderer.Plugin
+     * @property show
+     */
     show: function(action) {
         if (_.contains(this.events, 'show')) {
             EventManager.dispatchEvent(this._data.id, 'show');
@@ -257,6 +320,12 @@ var Plugin = Class.extend({
         }
         Renderer.update = true;
     },
+
+    /**
+     * Property of the plugin to hide it's visiblity on stage
+     * @memberof EkstepRenderer.Plugin
+     * @property hide
+     */
     hide: function(action) {
         if (_.contains(this.events, 'hide')) {
             EventManager.dispatchEvent(this._data.id, 'hide');
@@ -266,6 +335,12 @@ var Plugin = Class.extend({
         }
         Renderer.update = true;
     },
+
+    /**
+     * property of the plugin to toggle it's visiblity on stage
+     * @memberof EkstepRenderer.Plugin
+     * @property toggleShow
+     */
     toggleShow: function(action) {
         if (_.contains(this.events, 'toggleShow')) {
             EventManager.dispatchEvent(this._data.id, 'toggleShow');
@@ -275,6 +350,12 @@ var Plugin = Class.extend({
         }
         Renderer.update = true;
     },
+
+    /**
+     * property of the plugin to toggle it's shadow
+     * @memberof EkstepRenderer.Plugin
+     * @property toggleShadow
+     */
     toggleShadow: function(action) {
         var isVisible = false;
 
@@ -288,6 +369,12 @@ var Plugin = Class.extend({
         Renderer.update = true;
         return isVisible;
     },
+
+    /**
+     * property of the plugin to add shadow using createJS shadow property
+     * @memberof EkstepRenderer.Plugin
+     * @property addShadow
+     */
     addShadow: function() {
         var shadowObj = this._self.shadow;
 
@@ -304,6 +391,12 @@ var Plugin = Class.extend({
             this._self.shadow = new createjs.Shadow(shadowColor, offsetX, offsetY, blur);
         }
     },
+
+    /**
+     * property of the plugin to remove it's shadow
+     * @memberof EkstepRenderer.Plugin
+     * @property removeShadow
+     */
     removeShadow: function() {
         var shadowObj = this._self.shadow;
 

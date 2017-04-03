@@ -2,13 +2,20 @@ var text_data = {
             "align": "center",
             "color": "black",
             "font": "Verdana",
-            "fontsize": "2em",
+            "fontsize": "10",
             "weight": "bold",
-            "lineHeight": 1.4,
+            "lineHeight": "1.41",
             "w": 80,
+            "h": 10,
             "x": 10,
             "y": 6,
+            "z-index": -1,
+            "pluginType": "text",
+            "shadow": "gray",
             "__text": "This a text plugin"
+    };
+    var data = {
+        "stage1": "this is model data."
     };
 describe('Text plugin data test cases', function() {
     //startRenderer(data);
@@ -45,8 +52,8 @@ describe('Text plugin data test cases', function() {
         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
     });
 
-    xit('initPlugin with model', function() {
-        text_data.model = "data.stage1";
+    it('initPlugin with model', function() {
+        text_data.model = data.stage1;
         delete text_data.__text;
         this.plugin.initPlugin(text_data);
         expect(this.plugin.initPlugin).toHaveBeenCalled();
@@ -81,8 +88,10 @@ describe('Text plugin data test cases', function() {
         expect(this.plugin._self.valign).not.toBe(null);
     });
 
-    xit("lineHeight test", function() {
-        expect(this.plugin._self.lineHeight).toBe(0);
+    it("lineHeight test", function() {
+        if (this.plugin._self.lineHeight == undefined || this.plugin._self.lineHeight == "") {
+            expect(this.plugin._self.lineHeight).toBe(0);
+        }
         expect(this.plugin._self.lineHeight).not.toBe(null);
     });
 

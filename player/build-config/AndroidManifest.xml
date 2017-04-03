@@ -4,7 +4,7 @@
         <activity android:launchMode="singleTop" android:alwaysRetainTaskState="true" android:name="MainActivity" android:screenOrientation="sensorLandscape" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="22" />
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="24" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />

@@ -13,7 +13,7 @@
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="16" />
-    <preference name="android-targetSdkVersion" value="22" />
+    <preference name="android-targetSdkVersion" value="24" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashScreen" value="none" />
     <preference name="Orientation" value="sensorLandscape" />
@@ -27,8 +27,4 @@
         <icon src="public/img/icons/blank.png" />
         <splash src="public/img/icons/blank.png" />
     </platform>
-    <preference name="xwalkVersion" value="16+" />
-    <preference name="xwalkCommandLine" value="--disable-pull-to-refresh-effect" />
-    <preference name="xwalkMode" value="shared" />
-    <preference name="xwalkMultipleApk" value="true" />
 </widget>

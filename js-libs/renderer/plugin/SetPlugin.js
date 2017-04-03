@@ -137,9 +137,9 @@ var SetPlugin = Plugin.extend({
     },
     getParam: function(param) {
         var value = GlobalContext.getParam(param);
-        if (!value) value = this._theme.getParam(param);
+        if (!value && !_.isUndefined(this._theme)) value = this._theme.getParam(param);
         if (!value) value = this._stage.getParam(param);
-        if (!value) value = this._parent.getPluginParam(param);
+        if (!value && !_.isUndefined(this._theme)) value = this._parent.getPluginParam(param);
         return value;
     }
 });

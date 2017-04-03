@@ -36,7 +36,7 @@ describe('Plugin manager test cases', function() {
         expect(PluginManager.registerPluginObject.calls.count()).toEqual(1);
     });
 
-    xit('Plugin object fetched successfully', function() {
+    it('Plugin object fetched successfully', function() {
         expect(Object.keys(PluginManager.pluginObjMap).length).toEqual(1);
         expect(PluginManager.getPluginObject.calls.count()).toEqual(0);
         var pluginObj = PluginManager.getPluginObject('testShape');

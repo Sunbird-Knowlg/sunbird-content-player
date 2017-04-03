@@ -11,7 +11,7 @@ var TextPlugin = Plugin.extend({
         var outline = (data.outline ? data.outline : 0);
 
         // Resize if the font size is a number
-        if (isFinite(fontsize)) {
+        if (_.isFinite(fontsize)) {
             if (data.w) {
                 var exp = parseFloat(PluginManager.defaultResWidth * data.w / 100);
                 var cw = this._parent.dimensions().w;
@@ -68,14 +68,14 @@ var TextPlugin = Plugin.extend({
         } else if (valign == 'middle') {
             text.y = dims.y + dims.h/2 - text.getMeasuredHeight()/2;
             if (data.textBaseline) {
-                text.textBaseline = 'top'; 
+                text.textBaseline = 'top';
             } else {
-                text.textBaseline = 'hanging';                
+                text.textBaseline = 'hanging';
             }
         }
- 
+
         if (data.textBaseline) {
-             text.textBaseline = data.textBaseline; 
+             text.textBaseline = data.textBaseline;
         }
 
         text.textAlign = align;

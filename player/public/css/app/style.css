@@ -106,7 +106,7 @@ ion-popover-view.fit ion-content {
 
 body{
     font-family: NotoSans, NotoSansOriya, NotoSansGujarati, NotoSansMalayalam;
-} 
+}
 
 .platform-android ion-popover-view.fit {
     margin-top: 10px !important;
@@ -135,9 +135,9 @@ body{
     font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
 }
 
-.cover-page-title {
+.cover-page-title.icon-font {
     text-transform: uppercase;
-    color: #FFFFFF;
+    color: #494949;
     text-align: center;
     overflow: hidden;
     padding: 1% 2%;
@@ -161,12 +161,13 @@ body{
     overflow: hidden;
 }
 
-.gc-ep-title{
+.icon-font.gc-ep-title{
     width: 100%;
     text-transform: uppercase;
-    padding: 2% 0% 1%;
+    padding: 0.3em 0em 0.48em;
     font-size: 1.8em;
     text-align: center;
+    color: #494949;
 }
 
 .menu-overlay {
@@ -404,7 +405,7 @@ body{
     width: 43%;
     height: 80%;
     border-radius: 10px;
-    
+
 }
 .assess-goodjob-popup{
     top: 8%;
@@ -498,7 +499,7 @@ body{
 }
 
 .gc-cp-header-div{
-    position: absolute; 
+    position: absolute;
     top: 15%;
     width: 100%;
 }
@@ -599,15 +600,15 @@ body{
 }
 
 .gc-ep-cong {
-    margin: 1% 0%;
-    padding-top: 1%;
+    margin: 1% 0% 0%;
 }
 
 .gc-content-owner {
     font-size: 1em;
     width: 100%;
     text-align: center;
-    color: #ffffff;
+    color: #494949;
+    padding: 0.05em 0em 0.5em;
 }
 
 .gc-ep-cont{
@@ -1104,7 +1105,7 @@ body{
     margin:auto;
     position:absolute;
     width:100%;
-    height:100%; 
+    height:100%;
     background-color: #fff;
     z-index: 1000;
     display: none
@@ -1132,46 +1133,46 @@ body{
 }
 
 .gc-menu-genie-cont-icon {
-    padding-top:2%; 
-    font-size:0.8em; 
+    padding-top:2%;
+    font-size:0.8em;
     font-weight: normal;
 }
 
 .gc-menu-collection-icon {
-    padding-top:2%; 
-    font-size:0.8em; 
+    padding-top:2%;
+    font-size:0.8em;
     font-weight: normal;
 }
 
 .gc-menu-bottom {
-    bottom: 44%; 
-    position: absolute; 
+    bottom: 44%;
+    position: absolute;
     width: 100%;
 }
 
 .gc-menu-replay-icon {
-    padding-top:2%; 
-    font-size:0.8em; 
+    padding-top:2%;
+    font-size:0.8em;
     font-weight: normal;
 }
 
 .gc-menu-inst-icon {
-    padding-top:2%; 
-    font-size:0.8em; 
-    font-weight: normal; 
-    padding: 0% 10%;
+    padding-top:2%;
+    font-size:0.8em;
+    font-weight: normal;
+    padding: 0% 12%;
 }
 
 .gc-mute-bg {
-    position:absolute; 
-    width:60%; 
-    left:17%; 
+    position:absolute;
+    width:60%;
+    left:17%;
 }
 
 .gc-ep-cont-background {
-    width:100%; 
-    height:100%; 
-    position: absolute; 
+    width:100%;
+    height:100%;
+    position: absolute;
     z-index: -1;
 }
 
@@ -1183,7 +1184,7 @@ body{
     padding: 2%
 }
 
-.gc-related-cont-title { 
+.gc-related-cont-title {
     font-size: 1em;
     text-align: center;
     padding-bottom: 2%;
