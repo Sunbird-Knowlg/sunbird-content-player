@@ -183,16 +183,16 @@ LoadByStageStrategy = Class.extend({
             if (_.isArray(mediaList) && mediaList.length > 0) {
                 var loader = this._createLoader();
                 loader.setMaxConnections(instance.MAX_CONNECTIONS);
-                loader.on('error', function(evt) {
-                    console.error('StageLoader Asset preload error', evt);
-                });
                 loader.installPlugin(createjs.Sound);
-                loader.on("complete", function() {
-                    instance.loaders[stageId].stageLoaded = true;
-                }, null, true);
                 loader.loadManifest(mediaList, true);
                 loader.stageLoaded = false;
                 instance.loaders[stageId] = loader;
+                loader.on('error', function(evt) {
+                    console.error('StageLoader Asset preload error', evt);
+                });
+                loader.on("complete", function() {
+                    instance.loaders[stageId].stageLoaded = true;
+                }, null, true);
             }
         }
         this.handleStageCallback(stageId, callback);
