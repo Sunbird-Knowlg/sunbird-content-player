@@ -48,18 +48,19 @@ var ImagePlugin = Plugin.extend({
             if(_.isString(assetSrc)){
                 this._self.visible = false;
                 AssetManager.strategy.loadAsset(this._stage._data.id, asset, assetSrc, function(){
+                    Renderer.update = true;
+                    setTimeout(function(){
+                        var sb = s.getBounds();
+                        if(sb) {
+                            instance.setScale();
+                        }
+                        dims = instance.alignDims();
+                        s.x = dims.x;
+                        s.y = dims.y;
+
+                        instance._self.visible = !_.isUndefined(instance._data.visible) ? instance._data.visible : true;
                         Renderer.update = true;
-                        setTimeout(function(){
-                            var sb = s.getBounds();
-                            if(sb) {
-                                instance.setScale();
-                            }
-                            dims = instance.alignDims();
-                            s.x = dims.x;
-                            s.y = dims.y;
-                            instance._self.visible = true;
-                            Renderer.update = true;
-                        }, 100)
+                    }, 100)
                 });
             }else{
                 var sb = s.getBounds();
