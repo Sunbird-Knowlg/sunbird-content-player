@@ -389,7 +389,7 @@ module.exports = function(grunt) {
                 options: {
                     command: 'platform',
                     action: 'add',
-                    platforms: ['android']
+                    platforms: ['android@6.1.2']
                 }
             },
             rm_platforms: {
