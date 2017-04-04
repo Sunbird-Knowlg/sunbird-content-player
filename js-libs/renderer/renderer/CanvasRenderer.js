@@ -31,6 +31,7 @@ Renderer = {
         if(!disableDraw) Renderer.theme.reRender();
     },
     start: function(gameRelPath, canvasId, game, data, preview) {
+     try{ 
         if(Renderer.running) {
             Renderer.cleanUp();
             TelemetryService.start(game.identifier, game.pkgVersion);
@@ -51,6 +52,9 @@ Renderer = {
                 });
             }
         }
+       }catch(e){
+        console.warn("Canvas Renderer init is failed",e);
+       }  
     },
     initByJSON: function(gameRelPath, canvasId) {
         jQuery.getJSON(gameRelPath + '/index.json', function(data) {

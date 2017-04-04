@@ -4,7 +4,7 @@ CommandManager = {
         CommandManager.commandMap[id] = command;
     },
     handle: function(action) {
-      // alert(action);
+    try {
         action.stageInstanceId =  _.clone(Renderer.theme._currentScene._stageInstanceId);
         if(action.delay) {
             TimerManager.start(action);
@@ -23,6 +23,10 @@ CommandManager = {
             } else {
                 console.info("action ev-if failed. So, it is not called.");
             }
+        }
+       }catch(e) {
+            //TelemetryService.error(e.stack);
+            console.warn(action + "Failed due to", e);
         }
     },
     // We can deprecate this in future. Once all the animation actions used as command we can remove this.

@@ -150,6 +150,7 @@ OverlayManager = {
         }
     },
     navigateNext: function() {
+     try{   
         if (_.isUndefined(Renderer.theme._currentScene)) return;
 
         var isItemScene = Renderer.theme._currentScene.isItemScene();
@@ -158,8 +159,12 @@ OverlayManager = {
             return;
         }
         this.skipAndNavigateNext();
+      }catch(e){
+        console.warn("Fails to navigate to next due to",e);
+      }  
     },
     skipAndNavigateNext: function() {
+      try{  
         this.clean();
         TelemetryService.interact("TOUCH", "next", null, {
             stageId: Renderer.theme._currentStage
@@ -179,6 +184,9 @@ OverlayManager = {
         } else {
             this.defaultNavigation("next", navigateTo);
         }
+      }catch(e){
+        console.warn("Fails to skip and navigate due to",e);
+      }  
     },
     moveToEndPage: function() {
         if (config.showEndPage) {
@@ -206,6 +214,7 @@ OverlayManager = {
         this._stageConfig = {};
     },
     navigatePrevious: function() {
+      try{  
         if (_.isUndefined(Renderer.theme._currentScene)) return;
         var navigateToStage = this.getNavigateTo('previous');
         if (_.isUndefined(navigateToStage)) {
@@ -216,6 +225,9 @@ OverlayManager = {
         var navigateTo = this.getNavigateTo("previous");
         if (_.isUndefined(Renderer.theme._currentScene)) return;
         this.defaultNavigation("previous", navigateTo);
+      }catch(e){
+        console.warn("Fails to navigate to previous due to",e);
+      }  
     },
     showOrHideEcmlElement: function(id, showEle) {
         var plugin = PluginManager.getPluginObject(id);
