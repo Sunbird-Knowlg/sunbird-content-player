@@ -412,7 +412,6 @@ module.exports = function(grunt) {
                         'cordova-plugin-whitelist@1.2.1',
                         'cordova-plugin-crosswalk-webview@2.3.0',
                         'cordova-plugin-file-transfer@1.6.1',
-                        'https://github.com/Initsogar/cordova-webintent.git', // no registry in npm and cordova plugins
                         'com.lampa.startapp@0.1.4',
                         'cordova-plugin-inappbrowser@1.6.1',
                         'cordova-plugin-market@1.1'
@@ -491,7 +490,7 @@ module.exports = function(grunt) {
                 options: {
                     command: 'plugin',
                     action: 'add',
-                    plugins: ['cordova-plugin-media@2.4.1']
+                    plugins: ['cordova-plugin-media@3.0.0']
                 }
             },
             rm_android_media: {
@@ -701,7 +700,7 @@ module.exports = function(grunt) {
     });
     grunt.registerTask('add-speech', function() {
         var tasks = ['add-cordova-plugin-media'];
-        if (recorder == "sensibol")
+        //if (recorder == "sensibol")
             tasks.push('add-cordova-plugin-sensibol');
         tasks.push('uglify:speech');
         tasks.push('replace:'+recorder);
