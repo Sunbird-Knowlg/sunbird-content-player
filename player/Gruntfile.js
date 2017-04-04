@@ -396,7 +396,7 @@ module.exports = function(grunt) {
                 options: {
                     command: 'platform',
                     action: 'rm',
-                    platforms: ['android']
+                    platforms: ['android@6.1.2']
                 }
             },
             add_plugins: {
@@ -404,17 +404,17 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        'cordova-plugin-device@1.1.1',
-                        'cordova-plugin-file@4.1.0',
-                        'cordova-plugin-splashscreen@3.1.0',
+                        'cordova-plugin-device@1.1.4',
+                        'cordova-plugin-file@4.3.1',
+                        'cordova-plugin-splashscreen@4.0.1',
                         'ionic-plugin-keyboard@2.2.0',
                         'cordova-plugin-console@1.0.2',
                         'cordova-plugin-whitelist@1.2.1',
                         'cordova-plugin-crosswalk-webview@2.3.0',
-                        'cordova-plugin-file-transfer@1.5.0',
+                        'cordova-plugin-file-transfer@1.6.1',
                         'https://github.com/Initsogar/cordova-webintent.git', // no registry in npm and cordova plugins
                         'com.lampa.startapp@0.1.4',
-                        'cordova-plugin-inappbrowser@1.2.0',
+                        'cordova-plugin-inappbrowser@1.6.1',
                         'cordova-plugin-market@1.1'
                     ]
                 }
@@ -424,7 +424,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        '../cordova-plugins/cordova-plugin-genieservices/'
+                        'D:/New backup/projects/EkStep/Genie-Canvas/cordova-plugins/cordova-plugin-genieservices/'
                     ]
                 }
             },
@@ -474,7 +474,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        '../cordova-plugins/cordova-plugin-sensibol/'
+                        'D:/New backup/projects/EkStep/Genie-Canvas/cordova-plugins/cordova-plugin-sensibol/'
                     ]
                 }
             },
@@ -491,14 +491,14 @@ module.exports = function(grunt) {
                 options: {
                     command: 'plugin',
                     action: 'add',
-                    plugins: ['cordova-plugin-media@2.1.0']
+                    plugins: ['cordova-plugin-media@2.4.1']
                 }
             },
             rm_android_media: {
                 options: {
                     command: 'plugin',
                     action: 'rm',
-                    plugins: ['cordova-plugin-media']
+                    plugins: ['cordova-plugin-media@2.4.1']
                 }
             },
             rm_genie_service: {
