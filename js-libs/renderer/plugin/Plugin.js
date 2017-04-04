@@ -56,6 +56,7 @@ var Plugin = Class.extend({
      * @instance
      */
     init: function(data, parent, stage, theme) {
+     try {
         this.events = [];
         this.appEvents = [];
         this._childIds = [];
@@ -140,6 +141,10 @@ var Plugin = Class.extend({
         }
         if (this._self) {
             this.rotation(data);
+        }
+       }catch(e) {
+            //TelemetryService.error(e.stack);
+            console.warn('Plugin init is failed due to',e);
         }
 
     },
@@ -727,6 +732,6 @@ var Plugin = Class.extend({
         if (!_.isUndefined(this._stage._currentState)) {
             return this._stage._currentState[param];
         }
-
-    }
+    },
+    
 });

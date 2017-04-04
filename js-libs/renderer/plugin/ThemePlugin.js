@@ -54,6 +54,7 @@ var ThemePlugin = Plugin.extend({
         }
     },
     start: function(basePath) {
+      try{  
         var instance = this;
         instance._basePath = basePath;
         RecorderManager.init();
@@ -82,6 +83,9 @@ var ThemePlugin = Plugin.extend({
         AssetManager.initStage(this._data.startStage, null, null, function() {
             instance.render();
         });
+       }catch(e){
+        console.warn("Theme start is failed due to",e);
+       } 
     },
     render: function() {
         var instance = this;

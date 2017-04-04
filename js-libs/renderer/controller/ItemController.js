@@ -21,6 +21,7 @@ var ItemController = Controller.extend({
     },
     next: function() {
         var d;
+      try {
         if (this.hasNext()) {
             this._index += 1;
             var item = this._model[this._index];
@@ -46,6 +47,10 @@ var ItemController = Controller.extend({
             this.resetItem(this._model[this._index]);
         }
         return d;
+      }catch(e) {
+          //TelemetryService.error(e.stack);
+          console.warn("Item controller have some issue due to",e);
+        }  
     },
     resetItem: function(item) {
         if (item) {
@@ -59,6 +64,7 @@ var ItemController = Controller.extend({
         }
     },
     evalItem: function() {
+    try {  
       var item = this.getModel();
       var result;
       var pass = false;
@@ -77,7 +83,6 @@ var ItemController = Controller.extend({
           pass = result.pass;
           item.score = result.score;
       }
-      try {
           var data = {
               pass: result.pass,
               score: item.score,
@@ -91,7 +96,7 @@ var ItemController = Controller.extend({
           TelemetryService.assessEnd(this.assessStartEvent, data);
 
       } catch (e) {
-          console.log(e);
+          console.warn("Item controller failed due to",e);
           ControllerManager.addError('ItemController.evalItem() - OE_ASSESS_END error: ' + e);
       }
 
