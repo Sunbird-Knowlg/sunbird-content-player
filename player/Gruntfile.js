@@ -396,7 +396,7 @@ module.exports = function(grunt) {
                 options: {
                     command: 'platform',
                     action: 'rm',
-                    platforms: ['android@6.1.2']
+                    platforms: ['android']
                 }
             },
             add_plugins: {
@@ -498,7 +498,7 @@ module.exports = function(grunt) {
                 options: {
                     command: 'plugin',
                     action: 'rm',
-                    plugins: ['cordova-plugin-media@2.4.1']
+                    plugins: ['cordova-plugin-media']
                 }
             },
             rm_genie_service: {
@@ -640,11 +640,11 @@ module.exports = function(grunt) {
         grunt.fail.fatal("recorder argument value should be any one of: ['android', 'sensibol'].");
 
     grunt.registerTask('set-platforms', function() {
-        if (grunt.file.exists('platforms/android')) {
+        /*if (grunt.file.exists('platforms/android')) {
             grunt.task.run(['cordovacli:rm_platforms', 'cordovacli:add_platforms']);
         } else {
-            grunt.task.run(['cordovacli:add_platforms']);
-        }
+        }*/
+            grunt.task.run(['cordovacli:rm_platforms', 'cordovacli:add_platforms']);
     });
 
     grunt.registerTask('deploy-preview', function(flavor) {
