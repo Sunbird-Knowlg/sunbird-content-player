@@ -409,6 +409,7 @@ module.exports = function(grunt) {
                         'cordova-plugin-splashscreen@4.0.1',
                         'ionic-plugin-keyboard@2.2.0',
                         'cordova-plugin-console@1.0.2',
+                        'https://github.com/akashgupta9990/cordova-webIntent.git',
                         'cordova-plugin-whitelist@1.2.1',
                         'cordova-plugin-crosswalk-webview@2.3.0',
                         'cordova-plugin-file-transfer@1.6.1',
