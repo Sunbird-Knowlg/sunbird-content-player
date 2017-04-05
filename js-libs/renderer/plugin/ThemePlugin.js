@@ -84,6 +84,7 @@ var ThemePlugin = Plugin.extend({
             instance.render();
         });
        }catch(e){
+        showToaster('error','Content fails to start');
         console.warn("Theme start is failed due to",e);
        } 
     },

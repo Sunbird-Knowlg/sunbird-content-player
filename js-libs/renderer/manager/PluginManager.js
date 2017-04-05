@@ -67,6 +67,7 @@ PluginManager = {
       }       
     }catch(e) {
             //TelemetryService.error(e.stack);
+            showToaster('error','Plugin faild to register');
             console.warn(relativePath+"Plugin having some error",e);
         } 
     },
