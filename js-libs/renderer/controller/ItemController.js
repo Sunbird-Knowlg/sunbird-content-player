@@ -49,6 +49,7 @@ var ItemController = Controller.extend({
         return d;
       }catch(e) {
           //TelemetryService.error(e.stack);
+          showToaster('error','Invalid questions');
           console.warn("Item controller have some issue due to",e);
         }  
     },
@@ -97,6 +98,7 @@ var ItemController = Controller.extend({
 
       } catch (e) {
           console.warn("Item controller failed due to",e);
+          showToaster('error','Evaluation fails');
           ControllerManager.addError('ItemController.evalItem() - OE_ASSESS_END error: ' + e);
       }
 

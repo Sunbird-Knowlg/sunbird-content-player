@@ -53,6 +53,7 @@ Renderer = {
             }
         }
        }catch(e){
+        showToaster('error','Lesson fails to play');
         console.warn("Canvas Renderer init is failed",e);
        }  
     },

@@ -144,6 +144,7 @@ var Plugin = Class.extend({
         }
        }catch(e) {
             //TelemetryService.error(e.stack);
+            showToaster('error','Plugin failed');
             console.warn('Plugin init is failed due to',e);
         }
 
