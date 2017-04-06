@@ -491,7 +491,7 @@ module.exports = function(grunt) {
                 options: {
                     command: 'plugin',
                     action: 'add',
-                    plugins: ['cordova-plugin-media@3.0.0']
+                    plugins: ['cordova-plugin-media@2.3.0']
                 }
             },
             rm_android_media: {
