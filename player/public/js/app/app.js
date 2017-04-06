@@ -294,7 +294,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
             startProgressBar(40, 0.6,$rootScope.content.name);
             TelemetryService.interact("TOUCH", "gc_replay", "TOUCH", {
-                stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
+                stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
             });
             // 1) For HTML content onclick of replay EventListeners will be not available hence calling Telemetryservice end .
             // 2) OE_START for the HTML/ECML content will be takne care by the contentctrl rendere method always.
@@ -716,12 +716,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).controller('OverlayCtrl', function($scope, $rootScope, $stateParams) {
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
-
+        $rootScope.stageId = undefined;
         EventBus.addEventListener("sceneEnter", function(data) {
             $rootScope.stageData = data.target;
-
             //TODO: Remove this currentStage parameter and use directly stageData._currentStage
-            $rootScope.stageData.currentStage = $rootScope.stageData._id;
+          $rootScope.stageId = !_.isUndefined($rootScope.stageData) ? $rootScope.stageData._id : undefined;
         });
 
         $scope.state_off = "off";
@@ -744,8 +743,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // if $rootScope.content is not available get it from the base controller
                 $rootScope.getContentMetadata($stateParams.itemId);
             }
-            // Commented the Telemetry interact coz it was generating twice interact events on click of the next button
-            //TelemetryService.interact("TOUCH", navType, null, {stageId : $rootScope.stageData.currentStage});
             GlobalContext.currentContentId = $rootScope.content.identifier;
             GlobalContext.currentContentMimeType = $rootScope.content.mimeType;
             if (navType === "next") {
@@ -815,10 +812,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $scope.hideMenu();
                 return;
             }
-
             $scope.menuOpened = true;
             TelemetryService.interact("TOUCH", "gc_menuopen", "TOUCH", {
-                stageId: $rootScope.stageData.currentStage
+                stageId: $rootScope.stageId
             });
             jQuery('.menu-overlay').css('display', 'block');
             jQuery(".gc-menu").show();
@@ -831,7 +827,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.hideMenu = function() {
             $scope.menuOpened = false;
             TelemetryService.interact("TOUCH", "gc_menuclose", "TOUCH", {
-                stageId: $rootScope.stageData.currentStage
+                stageId: $rootScope.stageId
             });
             jQuery('.menu-overlay').css('display', 'none');
             jQuery(".gc-menu").animate({
@@ -1120,7 +1116,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 scope.hidePopup = function(id) {
                     element.hide();
                     TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
-                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
+                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
                     });
                 };
 
@@ -1140,7 +1136,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 $scope.hidePopup = function(id) {
                     TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
-                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageData.currentStage)
+                        stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
                     });
                     $scope.showOverlayGoodJob = false;
                     $scope.showOverlayTryAgain = false;
