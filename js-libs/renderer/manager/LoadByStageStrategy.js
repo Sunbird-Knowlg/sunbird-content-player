@@ -182,17 +182,17 @@ LoadByStageStrategy = Class.extend({
             })
             if (_.isArray(mediaList) && mediaList.length > 0) {
                 var loader = this._createLoader();
-                loader.setMaxConnections(instance.MAX_CONNECTIONS);
-                loader.installPlugin(createjs.Sound);
-                loader.loadManifest(mediaList, true);
                 loader.stageLoaded = false;
-                instance.loaders[stageId] = loader;
+                loader.on("complete", function() {
+                    loader.stageLoaded = true;
+                }, null, true);
                 loader.on('error', function(evt) {
                     console.error('StageLoader Asset preload error', evt);
                 });
-                loader.on("complete", function() {
-                    instance.loaders[stageId].stageLoaded = true;
-                }, null, true);
+                loader.setMaxConnections(instance.MAX_CONNECTIONS);
+                loader.installPlugin(createjs.Sound);
+                loader.loadManifest(mediaList, true);
+                instance.loaders[stageId] = loader;
             }
         }
         this.handleStageCallback(stageId, callback);

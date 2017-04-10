@@ -22,6 +22,7 @@ EventManager = {
 			EventManager.registerEvent(events, plugin);
 		}
 	 }catch(e){
+	 	showToaster('error','Event fails to register');
 	 	console.warn("Event fails to register due to",e);
 	 }	
 	},
@@ -94,6 +95,7 @@ EventManager = {
 			CommandManager.handle(action);
 		}
 	}catch(e){
+		_.isUndefined(evt) ? showToaster('error', 'Event failed') : showToaster('error', evt.type + ': Event failed');
 		console.warn("Event manager handle failed due to",e);
 	 }	
 	},

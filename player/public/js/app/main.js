@@ -231,3 +231,18 @@ function getAsseturl(content) {
     return path;
 
 }
+function showToaster(toastType, message, customObj) {
+    toastr.options = {
+        "positionClass": "toast-top-right",
+        "preventDuplicates": true,
+        "tapToDismiss": true,
+        "hideDuration": "1000",
+        "timeOut": "4000",
+    }
+    if (toastType === 'warning') {
+        toastr.warning(message, customObj);
+    }
+    if (toastType === 'error') {
+        toastr.error(message, customObj);
+    }
+}
