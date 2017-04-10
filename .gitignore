@@ -1,4 +1,5 @@
 player/www/
+player/docs/
 web-player/node_modules
 *.todo
 dist/
