@@ -60,7 +60,7 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the current content manifest data which. 
+     * Returns the current content manifest data which.
      * @memberof EkstepRendererAPI
      */
     getManifest: function() {
@@ -123,7 +123,7 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the baseURL of asset. 
+     * Returns the baseURL of asset.
      * Object to hold Base URL
      * @member {String} baseURL
      * @memberof EkstepRendererAPI
@@ -164,7 +164,7 @@ window.EkstepRendererAPI = {
      * It will map controller object, This could be useful when plugins can get access to
      * map the controller.
      * @param controller {object} controller is object. It should have id, name, type and __cdata.
-     * type defines controller type e.g(item, data), name defines controller name, id defines controller identifier 
+     * type defines controller type e.g(item, data), name defines controller name, id defines controller identifier
      * @memberof EkstepRendererAPI
      */
     addController: function(controller) {
@@ -174,7 +174,7 @@ window.EkstepRendererAPI = {
     /**
      * Returns the controller instance based on identifier.
      * @param id {string} It will accetp the controller identifier as input. this could be usefull when plugin
-     * get access to get the controller from canvas. 
+     * get access to get the controller from canvas.
      * suppose if it returns undefined then Controller has not been registed.
      * @memberof EkstepRendererAPI
      */
@@ -486,14 +486,14 @@ window.EkstepRendererAPI = {
 
 	/**
 	 * To execute a sepecific command on the given input assetId. For list of commands refer https://community.ekstep.in/specifications-guides/55-ecml-how-to-guide#defining-events-and-actions
-	 * @param name {string} command name which has to execute, ex: "play", "show", "blur", 
+	 * @param name {string} command name which has to execute, ex: "play", "show", "blur",
 	 * @param assetId {string} media/asset on which this command has to execute
 	 * @param props {object} To pass additional properties of command(key-value pair object). Ex: {"duration": 200, "effect": linear}
 	 * @memberof EkstepRendererAPI
 	 **/
 	invokeCommand: function(name, assetId, props) {
 		var stageId = this.getCurrentStage()._id;
-		if(_.isUndefined(assetId) || _.isEmpty(assetId)) 
+		if(_.isUndefined(assetId) || _.isEmpty(assetId))
 			assetId = stageId;
 
         var action = {

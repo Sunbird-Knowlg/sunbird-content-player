@@ -28,56 +28,58 @@ Renderer = {
         gameArea.style.marginTop = (-newHeight / 2) + 'px';
         gameArea.style.marginLeft = (-newWidth / 2) + 'px';
         Renderer.theme.updateCanvas(newWidth, newHeight);
-        if(!disableDraw) Renderer.theme.reRender();
+        if (!disableDraw) Renderer.theme.reRender();
     },
     start: function(gameRelPath, canvasId, game, data, preview) {
-     try{ 
-        if(Renderer.running) {
-            Renderer.cleanUp();
-            TelemetryService.start(game.identifier, game.pkgVersion);
-        }
-        Renderer.running = true;
-        Renderer.preview = preview || false;
-        if (data) {
-            Renderer.init(data, canvasId, gameRelPath);
-        } else {
-            Renderer.initByJSON(gameRelPath, canvasId);
-            if (typeof sensibol != "undefined") {
-                sensibol.recorder.init(gameRelPath + "/lesson.metadata")
-                .then(function(res) {
-                    console.info("Init lesson successful.", res);
-                })
-                .catch(function(err) {
-                    console.error("Error while init lesson:", err);
-                });
+        try {
+            if (Renderer.running) {
+                Renderer.cleanUp();
+                TelemetryService.start(game.identifier, game.pkgVersion);
             }
+            Renderer.running = true;
+            Renderer.preview = preview || false;
+            if (data) {
+                Renderer.init(data, canvasId, gameRelPath);
+            } else {
+                Renderer.initByJSON(gameRelPath, canvasId);
+                if (typeof sensibol != "undefined") {
+                    sensibol.recorder.init(gameRelPath + "/lesson.metadata")
+                        .then(function(res) {
+                            console.info("Init lesson successful.", res);
+                        })
+                        .catch(function(err) {
+                            console.error("Error while init lesson:", err);
+                        });
+                }
+            }
+        } catch (e) {
+            showToaster('error', 'Lesson fails to play');
+            console.warn("Canvas Renderer init is failed", e);
         }
-       }catch(e){
-        showToaster('error','Lesson fails to play');
-        console.warn("Canvas Renderer init is failed",e);
-       }  
     },
     initByJSON: function(gameRelPath, canvasId) {
         jQuery.getJSON(gameRelPath + '/index.json', function(data) {
-            Renderer.init(data, canvasId, gameRelPath);
-        })
-        .fail(function() {
-            Renderer.initByXML(gameRelPath, canvasId)
-        });
+                Renderer.init(data, canvasId, gameRelPath);
+            })
+            .fail(function() {
+                Renderer.initByXML(gameRelPath, canvasId)
+            });
     },
     initByXML: function(gameRelPath, canvasId) {
         jQuery.get(gameRelPath + '/index.ecml', function(data) {
-            Renderer.init(data, canvasId, gameRelPath);
-        },null, 'xml')
-        .fail(function(err) {
-            alert("Invalid ECML please correct the Ecml : ", err);
-            checkStage();
-        });
+                Renderer.init(data, canvasId, gameRelPath);
+            }, null, 'xml')
+            .fail(function(err) {
+                alert("Invalid ECML please correct the Ecml : ", err);
+                checkStage();
+            });
     },
     init: function(data, canvasId, gameRelPath) {
         tempData = data;
-        if(!jQuery.isPlainObject(data)) {
-            var x2js = new X2JS({attributePrefix: 'none'});
+        if (!jQuery.isPlainObject(data)) {
+            var x2js = new X2JS({
+                attributePrefix: 'none'
+            });
             data = x2js.xml2json(data);
         }
         Renderer.gdata = data;
@@ -90,8 +92,8 @@ Renderer = {
         PluginManager.registerCustomPlugins(manifest, gameRelPath.replace('file:///', '') + "/widgets/");
         Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
         createjs.Ticker.addEventListener("tick", function() {
-            if(Renderer.update) {
-                if(!_(Renderer.theme).isUndefined()){
+            if (Renderer.update) {
+                if (!_(Renderer.theme).isUndefined()) {
                     Renderer.theme.update();
                     Renderer.update = false;
                 }
@@ -113,11 +115,11 @@ Renderer = {
         Renderer.theme = undefined;
     },
     pause: function() {
-        if(Renderer.theme)
+        if (Renderer.theme)
             Renderer.theme.pause();
     },
     resume: function() {
-        if(Renderer.theme)
+        if (Renderer.theme)
             Renderer.theme.resume();
     }
 }

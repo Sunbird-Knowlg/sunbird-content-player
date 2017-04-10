@@ -43,13 +43,13 @@ RecorderManager = {
             speech.startRecording(path, function(response) {
                 if ("success" == response.status && action.success) {
                     stagePlugin.dispatchEvent(action.success);
-                   /* if (action.deleteRecordedaudio == true) {
-                        speech._deleteMyrecFile = true;
-                    } else if (action.deleteRecordedaudio === undefined) {
-                        speech._deleteMyrecFile = true;
-                    } else {
-                        speech._deleteMyrecFile = false;
-                    }*/
+                    /* if (action.deleteRecordedaudio == true) {
+                         speech._deleteMyrecFile = true;
+                     } else if (action.deleteRecordedaudio === undefined) {
+                         speech._deleteMyrecFile = true;
+                     } else {
+                         speech._deleteMyrecFile = false;
+                     }*/
                 } else if ("error" == response.status && action.failure) {
                     stagePlugin.dispatchEvent(action.failure);
                 }
@@ -121,7 +121,7 @@ RecorderManager = {
             path = path + GlobalContext.user.uid + '_';
         if (TelemetryService && TelemetryService._gameData && TelemetryService._gameData.id)
             path = path + TelemetryService._gameData.id + '_';
-        path = path + stageId + "_" + currentDate.getTime() + ".wav";       
+        path = path + stageId + "_" + currentDate.getTime() + ".wav";
         RecorderManager.mediaFiles.push(path);
         return path;
     },
@@ -151,29 +151,29 @@ RecorderManager = {
         RecorderManager._autostop.method = undefined;
         RecorderManager._autostop.action = undefined;
     },
-/*    _deleteRecordedaudio: function() {
-        if(speech._deleteMyrecFile==true) {
-            this._resetRecorder(); 
-            var relativeFilePath = speech.mediaInstance.filePath;
-            document.addEventListener("deviceready", function() {
-                window.resolveLocalFileSystemURL(relativeFilePath,
-                    function(file) {
-                        file.remove(successCallBack, errorCallBack);
-                    },
-                    function(e) {});
-            });
-        }
+    /*    _deleteRecordedaudio: function() {
+            if(speech._deleteMyrecFile==true) {
+                this._resetRecorder();
+                var relativeFilePath = speech.mediaInstance.filePath;
+                document.addEventListener("deviceready", function() {
+                    window.resolveLocalFileSystemURL(relativeFilePath,
+                        function(file) {
+                            file.remove(successCallBack, errorCallBack);
+                        },
+                        function(e) {});
+                });
+            }
 
-        function successCallBack(entry) {
-            console.log("Removal succeeded");
-        }
+            function successCallBack(entry) {
+                console.log("Removal succeeded");
+            }
 
-        function errorCallBack(error) {
-            console.log("Error removing file: " + error.code);
-        }
-    },
-    _resetRecorder: function() {
-        speech._deleteMyrecFile = false;
-    }*/
+            function errorCallBack(error) {
+                console.log("Error removing file: " + error.code);
+            }
+        },
+        _resetRecorder: function() {
+            speech._deleteMyrecFile = false;
+        }*/
 
 }

@@ -10,7 +10,32 @@ var stack = new Array(),
     collectionPathMap = {},
     content = {},
     collectionChildren = true,
-    defaultMetadata = { "identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author": "EkStep", "localData": { "questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{ "identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept" }], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true, "path": "fixture-stories/item_sample" },
+    defaultMetadata = {
+        "identifier": "org.ekstep.item.sample",
+        "mimeType": "application/vnd.ekstep.ecml-archive",
+        "name": "Content Preview ",
+        "author": "EkStep",
+        "localData": {
+            "questionnaire": null,
+            "appIcon": "fixture-stories/item_sample/logo.png",
+            "subject": "literacy_v2",
+            "description": "Ekstep Content App",
+            "name": "Content Preview ",
+            "downloadUrl": "",
+            "checksum": null,
+            "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+            "concepts": [{
+                "identifier": "LO1",
+                "name": "Receptive Vocabulary",
+                "objectType": "Concept"
+            }],
+            "identifier": "org.ekstep.item.sample",
+            "grayScaleAppIcon": null,
+            "pkgVersion": 1
+        },
+        "isAvailable": true,
+        "path": "fixture-stories/item_sample"
+    },
     config = {
         showStartPage: true,
         showEndPage: true,
@@ -22,9 +47,9 @@ var stack = new Array(),
 // TODO:have to remove appState and setContentDataCb in future.
 // Used in only Authoting tools
 window.setContentData = function(metadata, data, configuration) {
-    if(_.isUndefined(metadata) || _.isNull(metadata)){
+    if (_.isUndefined(metadata) || _.isNull(metadata)) {
         content.metadata = defaultMetadata
-    }else{
+    } else {
         content.metadata = metadata;
     }
     if (!_.isUndefined(data)) {
@@ -62,7 +87,9 @@ function getContentObj(data) {
     if (_.isObject(data.body))
         return data.body;
     var tempData = data;
-    var x2js = new X2JS({ attributePrefix: 'none' });
+    var x2js = new X2JS({
+        attributePrefix: 'none'
+    });
     data = x2js.xml_str2json(tempData.body);
     if (!data || data.parsererror)
         data = JSON.parse(tempData.body)
@@ -82,7 +109,7 @@ function launchInitialPage(appInfo, $state) {
             $state.go('contentList', {
                 "id": GlobalContext.game.id
             });
-        }else{
+        } else {
             console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
         }
     }
@@ -90,6 +117,7 @@ function launchInitialPage(appInfo, $state) {
 
 //Handling the logerror event from the Telemetry.js
 document.body.addEventListener("logError", telemetryError, false);
+
 function telemetryError(e) {
     var $body = angular.element(document.body);
     var $rootScope = $body.scope().$root;
@@ -214,7 +242,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // for form inputs)
                 //appState = $state;
                 isMobile = window.cordova ? true : false,
-                console.log('ionic platform is ready...');
+                    console.log('ionic platform is ready...');
                 if ("undefined" == typeof Promise) {
                     alert("Your device isn’t compatible with this version of Genie.");
                     exitApp();
@@ -292,7 +320,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if (!$rootScope.content) {
                 $rootScope.getContentMetadata($stateParams.itemId);
             }
-            startProgressBar(40, 0.6,$rootScope.content.name);
+            startProgressBar(40, 0.6, $rootScope.content.name);
             TelemetryService.interact("TOUCH", "gc_replay", "TOUCH", {
                 stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
             });
@@ -350,8 +378,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             ContentService.getContent(collectionContentId)
                 .then(function(content) {
                     GlobalContext.previousContentId = content.identifier;
-                    if (!_.findWhere(collectionPath, { identifier: collectionContentId }))
-                        collectionPath.push({ identifier: content.identifier, mediaType: "Collection" });
+                    if (!_.findWhere(collectionPath, {
+                            identifier: collectionContentId
+                        }))
+                        collectionPath.push({
+                            identifier: content.identifier,
+                            mediaType: "Collection"
+                        });
 
                     if (collectionPathMap[content.identifier]) {
                         var pathArr = collectionPathMap[content.identifier];
@@ -433,7 +466,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.exitApp = function() {
             exitApp();
         };
-        $scope.init = function(){
+        $scope.init = function() {
             $rootScope.title = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.name : "";
             $scope.resetContentListCache();
         };
@@ -462,7 +495,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if ($stateParams.itemId && $rootScope.content) {
                 localStorageGC.setItem("content", $rootScope.content);
                 startProgressBar(40, 0.6, $rootScope.content.name);
-                 // In the case of AT preview Just we are setting up the currentContentId
+                // In the case of AT preview Just we are setting up the currentContentId
                 GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
                 $scope.callStartTelemetry($rootScope.content);
                 $scope.item = $rootScope.content;
@@ -473,7 +506,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     // setting launch evironment as "app"/"portal" for "mobile"/"portal(web)"
                     var envHTML = isMobile ? "app" : "portal";
 
-                    var launchData = {"env": envHTML, "envpath": AppConfig[AppConfig.flavor]};
+                    var launchData = {
+                        "env": envHTML,
+                        "envpath": AppConfig[AppConfig.flavor]
+                    };
                     //Adding contentId and LaunchData as query parameter
 
                     var prefix_url = isbrowserpreview ? getAsseturl($rootScope.content) : $scope.item.baseDir;
@@ -481,14 +517,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     var path = prefix_url + '/index.html?contentId=' + $stateParams.itemId + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
 
                     //Adding config as query parameter for HTML content
-                    if($scope.item.config){
+                    if ($scope.item.config) {
                         path += "&config=" + JSON.stringify($scope.item.config);
                     }
 
                     // Adding Flavor(environment) as query parameter to identify HTML content showing in dev/qa/prdocution
                     // For local development of HTML flavor should not sent in URL
                     // adding time to aviod browser catch of HTML page
-                    if(isbrowserpreview){
+                    if (isbrowserpreview) {
                         path += "&flavor=" + AppConfig.flavor + "t=" + getTime();
                     }
 
@@ -500,7 +536,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         window.open(path, '_self');
                     }
                 } else {
-                     if (isbrowserpreview) {
+                    if (isbrowserpreview) {
                         var contentBody = undefined;
                         Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
                     } else
@@ -512,7 +548,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 }
             } else {
                 alert('Name or Launch URL not found.');
-                 exitApp();
+                exitApp();
             }
 
         }
@@ -524,8 +560,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             reloadStage();
         }
 
-        $scope.$on('$destroy', function() {
-        })
+        $scope.$on('$destroy', function() {})
         $rootScope.showMessage = false;
         $rootScope.$on('show-message', function(event, data) {
             if (data.message && data.message != '') {
@@ -548,7 +583,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         // reference: http://stackoverflow.com/questions/27776174/type-error-cannot-read-property-childnodes-of-undefined
         setTimeout(function() {
             $scope.init();
-        },0);
+        }, 0);
 
 
     }).controller('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
@@ -670,18 +705,23 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 content = localStorageGC.getItem('content');
                 $rootScope.content = content;
             }
-            if(_(TelemetryService.instance).isUndefined()){
-                 var tsObj = localStorageGC.getItem('telemetryService');
-                 TelemetryService.init(tsObj._gameData, tsObj._user);
+            if (_(TelemetryService.instance).isUndefined()) {
+                var tsObj = localStorageGC.getItem('telemetryService');
+                TelemetryService.init(tsObj._gameData, tsObj._user);
             }
 
-            TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", { stageId: "ContentApp-EndScreen", subtype: "ContentID" });
+            TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", {
+                stageId: "ContentApp-EndScreen",
+                subtype: "ContentID"
+            });
 
             // Get related contents for the current content
             $scope.$broadcast('getRelatedContentEvent');
 
             var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
-            creditsPopup.trigger("popupUpdate", { "content": $rootScope.content });
+            creditsPopup.trigger("popupUpdate", {
+                "content": $rootScope.content
+            });
             setTimeout(function() {
                 $rootScope.$apply();
             }, 1000);
@@ -720,7 +760,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         EventBus.addEventListener("sceneEnter", function(data) {
             $rootScope.stageData = data.target;
             //TODO: Remove this currentStage parameter and use directly stageData._currentStage
-          $rootScope.stageId = !_.isUndefined($rootScope.stageData) ? $rootScope.stageData._id : undefined;
+            $rootScope.stageId = !_.isUndefined($rootScope.stageData) ? $rootScope.stageData._id : undefined;
         });
 
         $scope.state_off = "off";
@@ -738,7 +778,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             EventBus.dispatch("actionDefaultSubmit");
         }
 
-        $scope.navigate = function (navType) {
+        $scope.navigate = function(navType) {
             if (!$rootScope.content) {
                 // if $rootScope.content is not available get it from the base controller
                 $rootScope.getContentMetadata($stateParams.itemId);
@@ -855,15 +895,15 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             var contentIds = [];
             // Send only for normal contet/ content played directly from Genie
             if (_.isUndefined($scope.collectionTree) || _.isEmpty($scope.collectionTree)) {
-                if ($scope.relatedContents.length>0) {
+                if ($scope.relatedContents.length > 0) {
                     contentIds = _.pluck($scope.relatedContents, 'identifier');
                 }
                 eleId = "gc_relatedcontent";
                 values = [{
                     PositionClicked: index + 1
-                },{
+                }, {
                     ContentIDsDisplayed: contentIds,
-                },{
+                }, {
                     id: $scope.relatedContentItem ? $scope.relatedContentItem.params.resmsgid : "",
                     type: $scope.relatedContentItem ? $scope.relatedContentItem.id : ''
                 }]
@@ -957,7 +997,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     }]
                     $scope.getRelatedContent(list);
                 }
-            }else{
+            } else {
                 list = $scope.collectionTree;
                 $scope.getRelatedContent(list);
             }
@@ -984,7 +1024,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'E',
             templateUrl: ("undefined" != typeof localPreview && "local" == localPreview) ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
         }
-    }).directive('fallbackSrc', function () {
+    }).directive('fallbackSrc', function() {
         return {
             restrict: 'AE',
             link: function postLink(scope, iElement, iAttrs) {
@@ -1060,7 +1100,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         AudioManager.mute();
                         document.getElementById("unmute_id").style.display = "block";
                     }
-                  TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute" , "TOUCH", { stageId:Renderer.theme._currentStage});
+                    TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute", "TOUCH", {
+                        stageId: Renderer.theme._currentStage
+                    });
                 }
             }
         }

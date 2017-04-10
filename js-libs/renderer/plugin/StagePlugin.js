@@ -14,8 +14,8 @@ var StagePlugin = Plugin.extend({
     _stageInstanceId: undefined,
     _currentState: {},
     isStageStateChanged: undefined,
-    maxTimeToLoad : 5000,
-    timeInstance : {},
+    maxTimeToLoad: 5000,
+    timeInstance: {},
     initPlugin: function(data) {
         var instance = this;
         //TODO: Should be released in April Release
@@ -85,9 +85,9 @@ var StagePlugin = Plugin.extend({
             //If assets is not loaded, add a event bus which will be trigurred as soon as assets are loaded completely
             EventBus.addEventListener(data.id + '_assetsLoaded', instance.invokeRenderElements, this);
             timeInst = setTimeout(function() {
-            // if manifest loading time is less
-            // Its very irritating to show loader even less time on each stage, so
-            // Waiting 0.5 sec before showing loader
+                // if manifest loading time is less
+                // Its very irritating to show loader even less time on each stage, so
+                // Waiting 0.5 sec before showing loader
                 isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
                 if (!isStageLoaded && instance._theme._currentStage == data.id) {
                     instance.showHideLoader('block')
@@ -96,10 +96,10 @@ var StagePlugin = Plugin.extend({
                         if (jQuery('#loaderArea').css('display') == 'block' && instance._theme._currentStage == instance._data.id) {
                             instance.invokeRenderElements();
                         }
-                    },instance.maxTimeToLoad)
+                    }, instance.maxTimeToLoad)
                     instance.timeInstance[data.id] = timeInst;
                 }
-            },500)
+            }, 500)
             this.timeInstance[data.id] = timeInst;
             return
         }

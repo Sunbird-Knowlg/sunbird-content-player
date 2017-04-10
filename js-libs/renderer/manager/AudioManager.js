@@ -1,20 +1,20 @@
 AudioManager = {
     instances: {},
     MAX_INSTANCES: 10,
-    muted: false, 
+    muted: false,
     // creating unique id for each audio instance using stageId.
     uniqueId: function(action) {
         return action.stageId + ':' + action.asset;
     },
     play: function(action, instance) {
-        
+
         if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
             instance = instance || AudioManager.instances[AudioManager.uniqueId(action)] || {};
-            if(instance.object) {
+            if (instance.object) {
                 instance.object.volume = 1;
-                if(instance.object.paused) {
+                if (instance.object.paused) {
                     instance.object.paused = false;
-                } else if([createjs.Sound.PLAY_FINISHED, createjs.Sound.PLAY_INTERRUPTED, createjs.Sound.PLAY_FAILED].indexOf(instance.object.playState) !== -1) {
+                } else if ([createjs.Sound.PLAY_FINISHED, createjs.Sound.PLAY_INTERRUPTED, createjs.Sound.PLAY_FAILED].indexOf(instance.object.playState) !== -1) {
                     instance.object.play();
                 }
                 instance.object.muted = this.muted;
@@ -22,23 +22,31 @@ AudioManager = {
                 // Reclaim a space if necessary
                 AudioManager.reclaim();
                 // Instantiate the current audio to play
-                instance.object = createjs.Sound.play(action.asset, {interrupt:createjs.Sound.INTERRUPT_ANY});
+                instance.object = createjs.Sound.play(action.asset, {
+                    interrupt: createjs.Sound.INTERRUPT_ANY
+                });
                 instance.object.muted = this.muted;
-                instance._data = {id: AudioManager.uniqueId(action)};
+                instance._data = {
+                    id: AudioManager.uniqueId(action)
+                };
                 AudioManager.instances[AudioManager.uniqueId(action)] = instance;
                 AssetManager.addStageAudio(Renderer.theme._currentStage, action.asset);
-            }        
-            if(createjs.Sound.PLAY_FAILED != instance.object.playState) {
-                EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PLAY"});
+            }
+            if (createjs.Sound.PLAY_FAILED != instance.object.playState) {
+                EventManager.processAppTelemetry(action, 'LISTEN', instance, {
+                    subtype: "PLAY"
+                });
                 instance.object.on("complete", function() {
                     if ("undefined" != typeof action.cb)
-                        action.cb({"status":"success"});
+                        action.cb({
+                            "status": "success"
+                        });
                 }, action);
             } else {
                 delete AudioManager.instances[AudioManager.uniqueId(action)];
-                console.info( "Audio with 'id :" + action.asset  + "' is not found..")
-                  
-             }
+                console.info("Audio with 'id :" + action.asset + "' is not found..")
+
+            }
             return instance;
         } else {
             console.warn("Asset is not given to play.", action);
@@ -48,15 +56,15 @@ AudioManager = {
     togglePlay: function(action) {
         if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
             var instance = AudioManager.instances[AudioManager.uniqueId(action)] || {};
-            if(instance && instance.object) {
-                if(instance.object.playState === createjs.Sound.PLAY_FINISHED || instance.object.paused) {
-                    AudioManager.play(action, instance);    
+            if (instance && instance.object) {
+                if (instance.object.playState === createjs.Sound.PLAY_FINISHED || instance.object.paused) {
+                    AudioManager.play(action, instance);
                 } else if (!instance.object.paused) {
                     AudioManager.pause(action, instance);
                 }
             } else {
                 AudioManager.play(action, instance);
-            }    
+            }
         } else {
             console.warn("Asset is not given to toggle play.", action);
         }
@@ -64,20 +72,24 @@ AudioManager = {
     pause: function(action, instance) {
         if (("undefined" != typeof action) && ("undefined" != typeof action.asset) && (null != action.asset)) {
             instance = instance || AudioManager.instances[AudioManager.uniqueId(action)];
-            if(instance && instance.object && instance.object.playState === createjs.Sound.PLAY_SUCCEEDED) {
+            if (instance && instance.object && instance.object.playState === createjs.Sound.PLAY_SUCCEEDED) {
                 instance.object.paused = true;
-                EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "PAUSE"});
-            }    
+                EventManager.processAppTelemetry(action, 'LISTEN', instance, {
+                    subtype: "PAUSE"
+                });
+            }
         } else {
             console.warn("Asset is not given to toggle pause.", action);
         }
     },
     stop: function(action) {
         var instance = AudioManager.instances[AudioManager.uniqueId(action)] || {};
-        if(instance && instance.object && instance.object.playState !== createjs.Sound.PLAY_FINISHED) {
+        if (instance && instance.object && instance.object.playState !== createjs.Sound.PLAY_FINISHED) {
             instance.object.volume = 0; // This is to handle overlapping of audio's in marshmallow
             instance.object.stop();
-            EventManager.processAppTelemetry(action, 'LISTEN', instance, {subtype : "STOP"});
+            EventManager.processAppTelemetry(action, 'LISTEN', instance, {
+                subtype: "STOP"
+            });
         }
     },
     stopAll: function(action) {
@@ -101,7 +113,7 @@ AudioManager = {
 
         var keys = _.keys(AudioManager.instances);
         if (keys.length > AudioManager.MAX_INSTANCES) {
-            for(index in keys) {
+            for (index in keys) {
                 var key = keys[index];
                 var instance = AudioManager.instances[key];
                 // Reclaim only if the audio is not playing
@@ -115,15 +127,18 @@ AudioManager = {
         // But this is an issue anyway because you can't have 10+ audios playing concurrently.
     },
     destroy: function(stageId, assetId) {
-        var soundId = AudioManager.uniqueId({stageId: stageId, asset: assetId});
+        var soundId = AudioManager.uniqueId({
+            stageId: stageId,
+            asset: assetId
+        });
         var instance = AudioManager.instances[soundId] || {};
         AudioManager.destroyObject(instance, soundId);
     },
     destroyObject: function(instance, soundId) {
-        if(instance.object) {
+        if (instance.object) {
             try {
                 instance.object.destroy();
-            } catch(err) {
+            } catch (err) {
                 console.log('Error', err);
             }
             instance.object = undefined;
@@ -137,13 +152,19 @@ AudioManager = {
     mute: function() {
         this.muted = true;
         if (!_.isEmpty(AudioManager.instances)) {
-            _.map(_.pluck(_.values(AudioManager.instances), "object"), function(obj) {obj.muted = true; return obj})    
+            _.map(_.pluck(_.values(AudioManager.instances), "object"), function(obj) {
+                obj.muted = true;
+                return obj
+            })
         }
     },
     unmute: function() {
         this.muted = false;
         if (!_.isEmpty(AudioManager.instances)) {
-            _.map(_.pluck(_.values(AudioManager.instances), "object"), function(obj) {obj.muted = false; return obj})    
+            _.map(_.pluck(_.values(AudioManager.instances), "object"), function(obj) {
+                obj.muted = false;
+                return obj
+            })
         }
     }
 }

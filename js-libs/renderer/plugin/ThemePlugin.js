@@ -11,15 +11,17 @@ var ThemePlugin = Plugin.extend({
     _canvasId: undefined,
     inputs: [],
     htmlElements: [],
-    _animationEffect: { effect: 'moveOut' },
+    _animationEffect: {
+        effect: 'moveOut'
+    },
     _themeData: undefined,
     _controllerMap: {},
     _isContainer: false,
     _templateMap: {},
     _contentParams: {},
     _isSceneChanging: false,
-    _saveState:true,
-    _basePath:undefined,
+    _saveState: true,
+    _basePath: undefined,
     initPlugin: function(data) {
         this.addLoaderElement();
         this._controllerMap = {};
@@ -36,12 +38,15 @@ var ThemePlugin = Plugin.extend({
         this._self.enableMouseOver(10);
         this._self.mouseMoveOutside = true;
         this._contentParams = {};
-        if(!_.isUndefined(data.saveState)){
-            this._saveState=data.saveState;
+        if (!_.isUndefined(data.saveState)) {
+            this._saveState = data.saveState;
         }
     },
     mousePoint: function() {
-        return { x: this._self.mouseX, y: this._self.mouseY };
+        return {
+            x: this._self.mouseX,
+            y: this._self.mouseY
+        };
     },
     updateCanvas: function(w, h) {
         this._self.canvas.width = w;
@@ -54,39 +59,43 @@ var ThemePlugin = Plugin.extend({
         }
     },
     start: function(basePath) {
-      try{  
-        var instance = this;
-        instance._basePath = basePath;
-        RecorderManager.init();
-        // handle content if startstage io not defined or unavailable
-        if (_.isArray(this._data.stage)) {
-            var startStage = _.find(this._data.stage,function(stage) {return stage.id == instance._data.startStage});
-        } else {
-            if (this._data.stage.id == instance._data.startStage) {
-                var startStage = this._data.stage.id
-            }
-        }
-        if (_.isUndefined(startStage)) {
-            var firstStage = _.find(this._data.stage, function(stage) {if (stage.param && _.isUndefined(firstStage)) return stage})
-            if (_.isUndefined(firstStage)) {
-                checkStage('showAlert');
+        try {
+            var instance = this;
+            instance._basePath = basePath;
+            RecorderManager.init();
+            // handle content if startstage io not defined or unavailable
+            if (_.isArray(this._data.stage)) {
+                var startStage = _.find(this._data.stage, function(stage) {
+                    return stage.id == instance._data.startStage
+                });
             } else {
-                if (_.isUndefined(this._data.startStage)) {
-                    console.warn("No start stage is defined, loading first stage");
-                } else {
-                    console.warn("Startstage is not available, loading first stage")
+                if (this._data.stage.id == instance._data.startStage) {
+                    var startStage = this._data.stage.id
                 }
-                this._data.startStage = firstStage.id
             }
+            if (_.isUndefined(startStage)) {
+                var firstStage = _.find(this._data.stage, function(stage) {
+                    if (stage.param && _.isUndefined(firstStage)) return stage
+                })
+                if (_.isUndefined(firstStage)) {
+                    checkStage('showAlert');
+                } else {
+                    if (_.isUndefined(this._data.startStage)) {
+                        console.warn("No start stage is defined, loading first stage");
+                    } else {
+                        console.warn("Startstage is not available, loading first stage")
+                    }
+                    this._data.startStage = firstStage.id
+                }
+            }
+            AssetManager.init(this._data, basePath);
+            AssetManager.initStage(this._data.startStage, null, null, function() {
+                instance.render();
+            });
+        } catch (e) {
+            showToaster('error', 'Content fails to start');
+            console.warn("Theme start is failed due to", e);
         }
-        AssetManager.init(this._data, basePath);
-        AssetManager.initStage(this._data.startStage, null, null, function() {
-            instance.render();
-        });
-       }catch(e){
-        showToaster('error','Content fails to start');
-        console.warn("Theme start is failed due to",e);
-       } 
     },
     render: function() {
         var instance = this;
@@ -213,12 +222,16 @@ var ThemePlugin = Plugin.extend({
         if (!_.isUndefined(this._currentScene)) {
             EventBus.removeEventListener(this._currentScene._id + '_assetsLoaded', this._currentScene.invokeRenderElements, this);
         }
-        (stageId) ? this.invokeStage(stageId) : OverlayManager.moveToEndPage();
+        (stageId) ? this.invokeStage(stageId): OverlayManager.moveToEndPage();
     },
     invokeStage: function(stageId) {
-        var stage = _.clone(_.findWhere(this._data.stage, { id: stageId }));
+        var stage = _.clone(_.findWhere(this._data.stage, {
+            id: stageId
+        }));
         if (stage && stage.extends) {
-            baseStage = _.findWhere(this._data.stage, { id: stage.extends });
+            baseStage = _.findWhere(this._data.stage, {
+                id: stage.extends
+            });
             stage = this.mergeStages(stage, baseStage);
         }
         this._previousStage = this._currentStage;
@@ -227,7 +240,9 @@ var ThemePlugin = Plugin.extend({
 
         // Trigger onstagechange event, which is bind by parent window
         if (isbrowserpreview && window && window.parent && window.parent.jQuery('body')) {
-            var retObj = { "stageId": stageId };
+            var retObj = {
+                "stageId": stageId
+            };
             window.parent.jQuery('body').trigger('onstagechange', retObj);
         }
     },
@@ -266,14 +281,15 @@ var ThemePlugin = Plugin.extend({
         // not next and previoud are clicked at the same time,
         // handle only one actions(next/previous)
         if (this._isSceneChanging) {
-            return; }
+            return;
+        }
         var stage = this._currentScene;
         // In transistion save Currentstate to themeObj
         // stage._currentState = stage.params;
-        this.setParam(stage.getStagestateKey(),stage._currentState);
+        this.setParam(stage.getStagestateKey(), stage._currentState);
         RecorderManager.stopRecording();
         AudioManager.stopAll();
-       // RecorderManager._deleteRecordedaudio();
+        // RecorderManager._deleteRecordedaudio();
         TimerManager.stopAll(this._currentStage);
         if (!action.transitionType) action.transitionType = action.param;
         if (action.transitionType === 'previous') {
@@ -387,13 +403,21 @@ var ThemePlugin = Plugin.extend({
         var params = stageData.param;
         if (!params) params = [];
         if (!_.isArray(params)) params = [params];
-        var next = _.findWhere(params, { name: 'next' }),
-            prev = _.findWhere(params, { name: 'previous' });
+        var next = _.findWhere(params, {
+                name: 'next'
+            }),
+            prev = _.findWhere(params, {
+                name: 'previous'
+            });
         var nextStageId = undefined,
             prevStageId = undefined;
         if (next) nextStageId = next.value;
         if (prev) prevStageId = prev.value;
-        return { stage: stageData.id, next: nextStageId, prev: prevStageId };
+        return {
+            stage: stageData.id,
+            next: nextStageId,
+            prev: prevStageId
+        };
     },
     cleanUp: function() {
         createjs.Touch.disable(this._self);
@@ -418,15 +442,15 @@ var ThemePlugin = Plugin.extend({
         }
         if (0 > fval) fval = 0;
         if ("undefined" != typeof max && fval >= max) fval = 0;
-        instance._contentParams[param]=fval;
+        instance._contentParams[param] = fval;
     },
     getParam: function(param) {
         var instance = this;
         var params;
-        if(instance._saveState){
+        if (instance._saveState) {
             // if param has a "-" keyword then eval fails
             return instance._contentParams[param]
-        }else{
+        } else {
             var params = instance._contentParams;
             var expr = 'params.' + param;
             return eval(expr);
@@ -437,7 +461,7 @@ var ThemePlugin = Plugin.extend({
         var gameArea = document.getElementById(Renderer.divIds.gameArea);
         var loaderArea = document.createElement('div');
         loaderArea.id = 'loaderArea';
-        var element = '<div class="preloader-wrapper"><div class="spinner-layer"><div class="circle-clipper left"><div class="circle"></div></div>'+
+        var element = '<div class="preloader-wrapper"><div class="spinner-layer"><div class="circle-clipper left"><div class="circle"></div></div>' +
             '<div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>'
         loaderArea.innerHTML = element;
         gameArea.parentElement.appendChild(loaderArea);
