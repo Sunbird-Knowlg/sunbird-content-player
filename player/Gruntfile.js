@@ -701,7 +701,7 @@ module.exports = function(grunt) {
     });
     grunt.registerTask('add-speech', function() {
         var tasks = ['add-cordova-plugin-media'];
-        //if (recorder == "sensibol")
+        if (recorder == "sensibol")
             tasks.push('add-cordova-plugin-sensibol');
         tasks.push('uglify:speech');
         tasks.push('replace:'+recorder);
