@@ -46,7 +46,7 @@ var Plugin = Class.extend({
     borderShape: undefined,
     _pluginParams: {},
     _unSupportedFonts: ["notosans", "verdana", "notosans oriya"],
-     /**
+    /**
      * Initializes the plugin with the given data and parent object
      * @param data {object} Init parameters for the plugin
      * @param parent {object} Parent plugin instance where this plugin renders
@@ -56,101 +56,101 @@ var Plugin = Class.extend({
      * @instance
      */
     init: function(data, parent, stage, theme) {
-     try {
-        this.events = [];
-        this.appEvents = [];
-        this._childIds = [];
-        this._pluginParams = {};
-        this._theme = theme;
-        this._stage = stage;
-        this._parent = parent;
-        this._data = data;
-        this.handleFont(data);
-        this.initPlugin(data);
-        var dims = this.relativeDims();
-        if (dims && this._self) {
-            this._self.origX = dims.x;
-            this._self.origY = dims.y;
-            this._self.width = dims.w;
-            this._self.height = dims.h;
-        }
-        if (data.enableDrag) {
-            this.enableDrag(this._self, data.snapTo);
-        }
-        var instance = this;
-        if (!_.isUndefined(data.appEvents)) {
-            // In New AT the App events are comming as Array of objects
-            if (_.isArray(data.appEvents)) {
-                _.each(data.appEvents, function(value, key) {
-                    instance.appEvents.push.apply(instance.appEvents, data.appEvents[key].list.split(/[\s,]+/));
-                });                
-            } else {
-                this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/));
+        try {
+            this.events = [];
+            this.appEvents = [];
+            this._childIds = [];
+            this._pluginParams = {};
+            this._theme = theme;
+            this._stage = stage;
+            this._parent = parent;
+            this._data = data;
+            this.handleFont(data);
+            this.initPlugin(data);
+            var dims = this.relativeDims();
+            if (dims && this._self) {
+                this._self.origX = dims.x;
+                this._self.origY = dims.y;
+                this._self.width = dims.w;
+                this._self.height = dims.h;
             }
-        }
-        // Allow child classes to disable event registration (e.g. when they use event as a template)
-        if (this._enableEvents) {
-            EventManager.registerEvents(this, this._data);
-        }
-
-        this._id = this._data.id || this._data.asset || _.uniqueId('plugin');
-        PluginManager.registerPluginObject(this);
-        if (this._self && data.visible === false) {
-            this._self.visible = false;
-        }
-
-        // Conditional evaluation for rendering
-        if (data['ev-if']) {
-            var expr = data['ev-if'].trim();
-            var modelExpr = expr = this.replaceExpressions(expr);
-            if (!(expr.substring(0, 2) == "${")) expr = "${" + expr;
-            if (!(expr.substring(expr.length - 1, expr.length) == "}")) expr = expr + "}";
-            var exprVal = this.evaluateExpr(expr);
-            if (typeof exprVal == "undefined" && this._stage) {
-                exprVal = this._stage.getModelValue(modelExpr);
+            if (data.enableDrag) {
+                this.enableDrag(this._self, data.snapTo);
             }
-            if (typeof exprVal != "undefined") {
-                if (this._self) {
-                    this._self.visible = (this._self.visible && exprVal);
+            var instance = this;
+            if (!_.isUndefined(data.appEvents)) {
+                // In New AT the App events are comming as Array of objects
+                if (_.isArray(data.appEvents)) {
+                    _.each(data.appEvents, function(value, key) {
+                        instance.appEvents.push.apply(instance.appEvents, data.appEvents[key].list.split(/[\s,]+/));
+                    });
+                } else {
+                    this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/));
                 }
             }
-        }
-
-        if (this._self) {
-            this._self['z-index'] = data['z-index'];
-        }
-
-        // Render the plugin component
-        if (this._render) {
-            if (this._isContainer && this._type == 'stage') {
-                this.cache();
-            }
-            this.render();
-        }
-        // Draw border and shadow only if the object is visible
-        if ((this._self) && (this._self.visible)) {
-            // Draw border if needed
-            this.drawBorder(data, dims);
-
-            // Draw shadow if needed
-            if (data.shadow) {
-                this.addShadow();
+            // Allow child classes to disable event registration (e.g. when they use event as a template)
+            if (this._enableEvents) {
+                EventManager.registerEvents(this, this._data);
             }
 
-            //this is to ratate the plugin with border
-        }
-        if (this._self) {
-            this.rotation(data);
-        }
-       }catch(e) {
+            this._id = this._data.id || this._data.asset || _.uniqueId('plugin');
+            PluginManager.registerPluginObject(this);
+            if (this._self && data.visible === false) {
+                this._self.visible = false;
+            }
+
+            // Conditional evaluation for rendering
+            if (data['ev-if']) {
+                var expr = data['ev-if'].trim();
+                var modelExpr = expr = this.replaceExpressions(expr);
+                if (!(expr.substring(0, 2) == "${")) expr = "${" + expr;
+                if (!(expr.substring(expr.length - 1, expr.length) == "}")) expr = expr + "}";
+                var exprVal = this.evaluateExpr(expr);
+                if (typeof exprVal == "undefined" && this._stage) {
+                    exprVal = this._stage.getModelValue(modelExpr);
+                }
+                if (typeof exprVal != "undefined") {
+                    if (this._self) {
+                        this._self.visible = (this._self.visible && exprVal);
+                    }
+                }
+            }
+
+            if (this._self) {
+                this._self['z-index'] = data['z-index'];
+            }
+
+            // Render the plugin component
+            if (this._render) {
+                if (this._isContainer && this._type == 'stage') {
+                    this.cache();
+                }
+                this.render();
+            }
+            // Draw border and shadow only if the object is visible
+            if ((this._self) && (this._self.visible)) {
+                // Draw border if needed
+                this.drawBorder(data, dims);
+
+                // Draw shadow if needed
+                if (data.shadow) {
+                    this.addShadow();
+                }
+
+                //this is to ratate the plugin with border
+            }
+            if (this._self) {
+                this.rotation(data);
+            }
+        } catch (e) {
             //TelemetryService.error(e.stack);
-            showToaster('error','Plugin failed');
-            console.warn('Plugin init is failed due to',e);
+            showToaster('error', 'Plugin failed');
+            console.warn('Plugin init is failed due to', e);
         }
 
     },
     handleFont: function(data) {
-        if(data.font){
+        if (data.font) {
             data.font = data.font.trim();
         }
         if (_.isEmpty(data.font) || (!_.isUndefined(data.font) && this._unSupportedFonts.indexOf(data.font.toLowerCase()) > -1)) {
@@ -301,7 +301,7 @@ var Plugin = Class.extend({
             this._self.scaleY = dims.h / sb.height;
             this._self.scaleX = dims.w / sb.width;
         }
-    },    
+    },
     /**
      * Initializes the plugin by reading from ECML.
      * @private
@@ -660,8 +660,12 @@ var Plugin = Class.extend({
             parent._self.sortChildren(function(obj1, obj2, options) {
                 if (_.isUndefined(obj2['z-index'])) obj2['z-index'] = -1;
                 if (_.isUndefined(obj1['z-index'])) obj1['z-index'] = -1;
-                if (obj1['z-index'] > obj2['z-index']) { return 1; }
-                if (obj1['z-index'] < obj2['z-index']) { return -1; }
+                if (obj1['z-index'] > obj2['z-index']) {
+                    return 1;
+                }
+                if (obj1['z-index'] < obj2['z-index']) {
+                    return -1;
+                }
                 return 0;
             });
         }
@@ -734,5 +738,5 @@ var Plugin = Class.extend({
             return this._stage._currentState[param];
         }
     },
-    
+
 });

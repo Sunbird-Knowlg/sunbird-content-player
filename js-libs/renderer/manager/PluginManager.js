@@ -25,51 +25,53 @@ PluginManager = {
         createjs.EventDispatcher.initialize(plugin.prototype);
     },
     registerCustomPlugins: function(manifest, relativePath) { //TODO: Use async.js to load custom plugins
-      try {
-        if (!_.isEmpty(manifest)){
-          
-        PluginManager.customPluginMap = {};
-        var media = manifest.media;
-        var plugins = _.filter(!_.isArray(media) ? [media] : media, function(media) {
-            return media.type == 'plugin'});
+        try {
+            if (!_.isEmpty(manifest)) {
 
-        media = _.filter(!_.isArray(media) ? [media] : media, function(media) {
-            return media.type == 'js' || media.type == 'css'; });
-        relativePath = ("undefined" !== typeof cordova && relativePath) ? "file:///" + relativePath : relativePath;
-        if (media) {
-            media.forEach(function(media) {
-                if (PluginManager.pluginMap[media.id]) {
-                    PluginManager.addError('external JS/CSS cannot override system plugin - ' + media.id);
-                } else {
-                    switch (media.type) {
-                        case 'js':
-                            PluginManager.loadJS(media.src, relativePath);
-                            break;
-                        case 'css':
-                            PluginManager.loadCSS(media.src, relativePath);
-                            break;
+                PluginManager.customPluginMap = {};
+                var media = manifest.media;
+                var plugins = _.filter(!_.isArray(media) ? [media] : media, function(media) {
+                    return media.type == 'plugin'
+                });
+
+                media = _.filter(!_.isArray(media) ? [media] : media, function(media) {
+                    return media.type == 'js' || media.type == 'css';
+                });
+                relativePath = ("undefined" !== typeof cordova && relativePath) ? "file:///" + relativePath : relativePath;
+                if (media) {
+                    media.forEach(function(media) {
+                        if (PluginManager.pluginMap[media.id]) {
+                            PluginManager.addError('external JS/CSS cannot override system plugin - ' + media.id);
+                        } else {
+                            switch (media.type) {
+                                case 'js':
+                                    PluginManager.loadJS(media.src, relativePath);
+                                    break;
+                                case 'css':
+                                    PluginManager.loadCSS(media.src, relativePath);
+                                    break;
+                            }
+                        }
+                    });
+                }
+                if (plugins) {
+                    if (!_.isArray(plugins)) {
+                        plugins = [plugins];
                     }
+                    plugins.forEach(function(plugin) {
+                        if (PluginManager.pluginMap[plugin.id]) {
+                            PluginManager.addError('Custom plugin cannot override system plugin - ' + plugin.id);
+                        } else {
+                            PluginManager.loadCustomPlugin(plugin, relativePath);
+                        }
+                    });
                 }
-            });
-        }
-        if (plugins) {
-            if (!_.isArray(plugins)) {
-                plugins = [plugins];
             }
-            plugins.forEach(function(plugin) {
-                if (PluginManager.pluginMap[plugin.id]) {
-                    PluginManager.addError('Custom plugin cannot override system plugin - ' + plugin.id);
-                } else {
-                    PluginManager.loadCustomPlugin(plugin, relativePath);
-                }
-            });
-        }
-      }       
-    }catch(e) {
+        } catch (e) {
             //TelemetryService.error(e.stack);
-            showToaster('error','Plugin faild to register');
-            console.warn(relativePath+"Plugin having some error",e);
-        } 
+            showToaster('error', 'Plugin faild to register');
+            console.warn(relativePath + "Plugin having some error", e);
+        }
     },
     isPlugin: function(id) {
         if (PluginManager.pluginMap[id] || PluginManager.customPluginMap[id]) {
@@ -145,7 +147,7 @@ PluginManager = {
         jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + cssUrl + "'>");
     },
     loadJS: function(src, gameRelPath) {
-        var jsUrl = this.handleRelativePath(src,gameRelPath);
+        var jsUrl = this.handleRelativePath(src, gameRelPath);
         console.info("loading external JS: ", jsUrl);
         var jsLink = $("<script type='text/javascript' src=" + jsUrl + ">");
         jQuery("head").append(jsLink);
