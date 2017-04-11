@@ -1,7 +1,39 @@
+/**
+ * Plugin to render text on canvas using createjs Text.
+ * @class TextPlugin
+ * @extends EkstepRenderer.Plugin
+ * @author Vinu Kumar V S <vinu.kumar@tarento.com>
+ */
+
 var TextPlugin = Plugin.extend({
+
+    /**
+     * This explains the type of the plugin 
+     * @member {String} _type
+     * @memberof TextPlugin
+     */
     _type: 'text',
+
+    /**
+     * This explains text is container or not. 
+     * @member {boolean} _isContainer
+     * @memberof TextPlugin
+     */
     _isContainer: false,
+
+    /**
+     * This exlpains text should render on canvas or not. 
+     * @member {boolean} _render
+     * @memberof TextPlugin
+     */
     _render: true,
+
+    /**
+    *   Invoked by framework when plugin instance created/renderered on stage,
+    *   Use this plugin to create diffrent style of text on stage.
+    *   @memberof TextPlugin
+    *   @override
+    */
     initPlugin: function(data) {
         var instance = this;
         var fontsize = data.fontsize || 20;
