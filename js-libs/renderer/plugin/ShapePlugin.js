@@ -1,5 +1,5 @@
 /**
- * Plugin to create different shapes on renderer using createJS graphics object.
+ * Plugin to create different shapes on canvas using createJS graphics object.
  * @class ShapePlugin
  * @extends EkstepRenderer.Plugin
  * @author Vinu Kumar V S <vinu.kumar@tarento.com>
@@ -7,21 +7,21 @@
 var ShapePlugin = Plugin.extend({
      
      /**
-     * This expains the type of the plugin. 
-     * @member {String} type.
+     * This explains the type of the plugin. 
+     * @member {String} _type.
      * @memberof ShapePlugin
      */
     _type: 'shape',
 
     /**
-     * This expains plugin is container OR not. 
+     * This explains plugin is container OR not. 
      * @member {boolean} _isContainer
      * @memberof ShapePlugin
      */
     _isContainer: false,
 
     /**
-     * This expains plugin should render on canvas OR not. 
+     * This explains plugin should render on canvas OR not. 
      * @member {boolean} _render
      * @memberof ShapePlugin
      */
