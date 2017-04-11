@@ -42,7 +42,7 @@ var VideoPlugin = Plugin.extend({
     /**
      * This expains default start of the video plugin,
      * After loading video frames to play the video element on canvas.
-     * @member {integer} _defaultStart,default value set to 50.
+     * @member {integer} _defaultStart.
      * @memberof VideoPlugin
      */
     _defaultStart: 50,

@@ -47,7 +47,7 @@ var AudioPlugin = Plugin.extend({
     /**
     *   Invoked by framework when plugin instance created/renderered on stage,
     *   Use this plugin to play the audio on stage.
-    *   @param data {object} data a input object for the audio plugin.
+    *   @param data {object} data is input object for the audio plugin.
     *   @memberof AudioPlugin
     *   @override
     */

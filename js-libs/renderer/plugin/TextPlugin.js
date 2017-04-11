@@ -31,6 +31,7 @@ var TextPlugin = Plugin.extend({
     /**
     *   Invoked by framework when plugin instance created/renderered on stage,
     *   Use this plugin to create diffrent style of text on stage.
+    *   @param data {object} data is input object for the text plugin.
     *   @memberof TextPlugin
     *   @override
     */
