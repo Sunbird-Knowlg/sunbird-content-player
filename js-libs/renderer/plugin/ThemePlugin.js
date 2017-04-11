@@ -338,7 +338,7 @@ var ThemePlugin = Plugin.extend({
         //This is to remove all div's added inside 'GameArea' div which are positioned at absolute position
         this.inputs.forEach(function(inputId) {
             var element = document.getElementById(inputId);
-            if (!_.isNull) {
+            if (!_.isNull(element)) {
                 element.style.display = 'none';
             }
         })
@@ -346,7 +346,7 @@ var ThemePlugin = Plugin.extend({
     enableInputs: function() {
         this.inputs.forEach(function(inputId) {
             var element = document.getElementById(inputId);
-            if (!_.isNull) {
+            if (!_.isNull(element)) {
                 element.style.display = 'block';
             }
         })
