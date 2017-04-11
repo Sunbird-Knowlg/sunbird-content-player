@@ -1,15 +1,67 @@
+/**
+ * Plugin to render MCQ, MTF assesment, Text in any assesments and Images in any assesment on canvas .
+ * @class OptionPlugin
+ * @extends EkstepRenderer.Plugin
+ * @author Vinu Kumar V S <vinu.kumar@tarento.com>
+ */
+
 var OptionPlugin = Plugin.extend({
+
+    /**
+     * This explains the type of the plugin. 
+     * @member {String} _type.
+     * @memberof OptionPlugin
+     */
     _type: 'option',
+
+    /**
+     * This explains the plugin is container OR not. 
+     * @member {boolean} _isContainer.
+     * @memberof OptionPlugin
+     */
     _isContainer: false,
+
+    /**
+     * This explains plugin should render on canvas OR not. 
+     * @member {boolean} _render
+     * @memberof OptionPlugin
+     */
     _render: false,
     _index: -1,
+
+     /**
+     * This explains particular assesment options value (e.g MTF, MCQ option object). 
+     * @member {object} _model
+     * @memberof OptionPlugin
+     */
     _model: undefined,
     _value: undefined,
     _answer: undefined,
     _multiple: false,
+
+    /**
+     * This explains map the LHS options to RHS while rendering MTF assesment. 
+     * @member {object} _mapedTo
+     * @memberof OptionPlugin
+     */
     _mapedTo: undefined,
     _uniqueId: undefined,
+
+    /**
+     * This explains particular options index value 
+     * it could be MCQ options OR MTF LHS options(e.g MTF: Lhs_option[1], MCQ: option[0] option object). 
+     * @member {object} _modelValue
+     * @memberof OptionPlugin
+     */
     _modelValue: undefined,
+
+    /**
+    *   Invoked by framework when plugin instance created/rendered on stage.
+    *   Use this plugin to render a MTF, MCQ, Images || text in assesment.
+    *   @param data {object} data is input object for the OptionPlugin.
+    *   @memberof OptionPlugin
+    *   @override
+    */
     initPlugin: function(data) {
         this._model = undefined;
         this._value = undefined;
@@ -65,6 +117,13 @@ var OptionPlugin = Plugin.extend({
             this._render = true;
         }
     },
+
+    /**
+    *   To render the MCQ assesment on the canvas
+    *   By refering controller object.
+    *   @memberof OptionPlugin
+    *   @override
+    */
     renderMCQOption: function() {
         var controller = this._parent._controller;
         var itemId = controller.getModelValue("identifier");
@@ -94,6 +153,15 @@ var OptionPlugin = Plugin.extend({
             EventManager.processAppTelemetry({}, 'CHOOSE', instance, data);
         });
     },
+
+    /**
+    *   To render the MTF assesment on the canvas
+    *   By refering controller object.
+    *   @param value {object} value is input object to render MTF assesment on canvas.
+    *   value should be LHS || RHS option value
+    *   @memberof OptionPlugin
+    *   @override
+    */
     renderMTFOption: function(value) {
         var enableDrag = false;
         var dragPos = {};
@@ -298,6 +366,13 @@ var OptionPlugin = Plugin.extend({
 
         }
     },
+
+    /**
+    *   To render image on the options could be MCQ or MTF
+    *   @param value {object} value is input object to render images in MTF || MCQ assesment on canvas(e.g MCQ option || MTF options).
+    *   @memberof OptionPlugin
+    *   @override
+    */
     renderImage: function(value) {
         var data = {};
         data.asset = value.asset;
@@ -318,6 +393,13 @@ var OptionPlugin = Plugin.extend({
 
         this._data.asset = value.asset;
     },
+
+    /**
+    *   To render text on the options could be MCQ or MTF
+    *   @param data {object} data is input object to render text in MTF || MCQ assesment  on canvas(e.g MCQ option || MTF options).
+    *   @memberof OptionPlugin
+    *   @override
+    */
     renderText: function(data) {
         data.$t = data.asset;
         var padx = this._data.padX || 0;
@@ -336,6 +418,13 @@ var OptionPlugin = Plugin.extend({
         PluginManager.invoke('text', data, this, this._stage, this._theme);
         this._data.asset = data.asset;
     },
+
+    /**
+    *   To apply style properties to MCQ || MTF options
+    *   @param data {object} To which object to apply the style properties(e.g MCQ option || MTF options).
+    *   @memberof OptionPlugin
+    *   @override
+    */
     initShadow: function(data) {
 
         var highlightColor = this._data.highlight || '#E89241';
@@ -363,6 +452,13 @@ var OptionPlugin = Plugin.extend({
         data = JSON.parse(data);
         this._data = data;
     },
+
+    /**
+    *   If the option is using text OR image plugin those are childern to option plugin.
+    *   It will get the childrens data (Inner ECML) and it will render has group.
+    *   @memberof OptionPlugin
+    *   @override
+    */
     renderInnerECML: function() {
         var innerECML = this.getInnerECML();
         if (!_.isEmpty(innerECML)) {
