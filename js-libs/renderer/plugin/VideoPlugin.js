@@ -2,12 +2,57 @@
 // http://jsfiddle.net/CaoimhinMac/6BUgL/
 // https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement
 // http://www.w3schools.com/tags/ref_av_dom.asp
+
+
+/**
+ * Plugin to create video element on canvas object using html video element.
+ * @class VideoPlugin
+ * @extends EkstepRenderer.Plugin
+ * @author Vinu Kumar V S <vinu.kumar@tarento.com>
+ */
 var VideoPlugin = Plugin.extend({
-    _render: true,
-    _data: undefined,
-    _instance: undefined,
-    _defaultStart: 50, //Start video to play after loading all video frames; 
+    /**
+     * This explains the type of the plugin 
+     * @member {String} _type
+     * @memberof VideoPlugin
+     */
     _type: 'video',
+
+    /**
+     * This expains video should render or not. 
+     * @member {boolean} _render
+     * @memberof VideoPlugin
+     */
+    _render: true,
+
+    /**
+     * This expains data object to the video element . 
+     * @member {object} _data
+     * @memberof VideoPlugin
+     */
+    _data: undefined,
+
+    /**
+     * This explains instance of video plugin . 
+     * @member {object} _instance
+     * @memberof VideoPlugin
+     */
+    _instance: undefined,
+
+    /**
+     * This expains default start of the video plugin,
+     * After loading video frames to play the video element on canvas.
+     * @member {integer} _defaultStart,default value set to 50.
+     * @memberof VideoPlugin
+     */
+    _defaultStart: 50,
+    /**
+    *   Invoked by framework when plugin instance created/renderered on stage.
+    *   Use this plugin to create video element on canvas.
+    *   @param data {object} data is input object for the video plugin.
+    *   @memberof VideoPlugin
+    *   @override
+    */
     initPlugin: function(data) {
         this._data = data;
         if(this._data){
