@@ -51,12 +51,12 @@ var MTFPlugin = Plugin.extend({
 
 
     /**
-    *   Invoked by framework when plugin instance created/rendered on stage.
-    *   Use this plugin to create a MTF assesment.
-    *   @param data {object} data is input object for the MTFPlugin.
-    *   @memberof MTFPlugin
-    *   @override
-    */
+     *   Invoked by framework when plugin instance created/rendered on stage.
+     *   Use this plugin to create a MTF assesment.
+     *   @param data {object} data is input object for the MTFPlugin.
+     *   @memberof MTFPlugin
+     *   @override
+     */
     initPlugin: function(data) {
         this._lhs_options = [];
         this._rhs_options = [];
@@ -93,11 +93,11 @@ var MTFPlugin = Plugin.extend({
     },
 
     /**
-    *   It returns the LHS option object of MTF by passing index.
-    *   @param index {integer} index is input value to get the particular lhsOption object.
-    *   @memberof MTFPlugin
-    *   @override
-    */
+     *   It returns the LHS option object of MTF by passing index.
+     *   @param index {integer} index is input value to get the particular lhsOption object.
+     *   @memberof MTFPlugin
+     *   @override
+     */
     getLhsOption: function(index) {
         var option;
         this._lhs_options.forEach(function(opt) {
@@ -113,12 +113,12 @@ var MTFPlugin = Plugin.extend({
     },
 
     /**
-    *   It used to map the answer.
-    *   @param rhsOption {object} rhsOption is input object to map answer.
-    *   @param lhsOption {object} lhsOption is input object to map answer.
-    *   @memberof MTFPlugin
-    *   @override
-    */
+     *   It used to map the answer.
+     *   @param rhsOption {object} rhsOption is input object to map answer.
+     *   @param lhsOption {object} lhsOption is input object to map answer.
+     *   @memberof MTFPlugin
+     *   @override
+     */
     setAnswerMapping: function(rhsOption, lhsOption) {
         if (!_.isUndefined(lhsOption)) {
             rhsOption._value.mapped = lhsOption._value.resvalue;
@@ -132,25 +132,25 @@ var MTFPlugin = Plugin.extend({
     },
 
     /**
-    *   It used to remove the answer.
-    *   @param rhsOption {object} rhsOption is input object to map answer.
-    *   @param lhsIndex {integer} lhsOption is index value to remove the answer from the rhsOption.
-    *   @memberof MTFPlugin
-    *   @override
-    */
+     *   It used to remove the answer.
+     *   @param rhsOption {object} rhsOption is input object to map answer.
+     *   @param lhsIndex {integer} lhsOption is index value to remove the answer from the rhsOption.
+     *   @memberof MTFPlugin
+     *   @override
+     */
     removeAnswer: function(rhsOption, lhsIndex) {
         this._controller.setModelValue(rhsOption._model, lhsIndex, '');
     },
 
     /**
-    *   Use to update the retained state of plugin. 
-    *   @param controller {object} controller is input object to update the state of plugin
-    *   for the particular controller.
-    *   @param isStateChanged {boolean} isStateChanged is boolean value to update the state of MCQ plugin.
-    *   wether MTF plugin state is changed OR not.
-    *   @memberof MTFPlugin
-    *   @override
-    */
+     *   Use to update the retained state of plugin. 
+     *   @param controller {object} controller is input object to update the state of plugin
+     *   for the particular controller.
+     *   @param isStateChanged {boolean} isStateChanged is boolean value to update the state of MCQ plugin.
+     *   wether MTF plugin state is changed OR not.
+     *   @memberof MTFPlugin
+     *   @override
+     */
     updateState: function(controller, isStateChanged) {
         if (!_.isUndefined(controller._model)) {
             var model = controller._model[controller._index];

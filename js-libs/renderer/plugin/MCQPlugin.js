@@ -93,12 +93,12 @@ var MCQPlugin = Plugin.extend({
     _highlight: '#E89241',
 
     /**
-    *   Invoked by framework when plugin instance created/renderered on stage.
-    *   Use this plugin to create a MCQ assesment.
-    *   @param data {object} data is input object for the MCQPlugin.
-    *   @memberof MCQPlugin
-    *   @override
-    */
+     *   Invoked by framework when plugin instance created/renderered on stage.
+     *   Use this plugin to create a MCQ assesment.
+     *   @param data {object} data is input object for the MCQPlugin.
+     *   @memberof MCQPlugin
+     *   @override
+     */
     initPlugin: function(data) {
         this._multi_select = false;
         this._options = [];
@@ -112,14 +112,14 @@ var MCQPlugin = Plugin.extend({
             var controller = this._stage.getController(model);
             //get state data from stage._currentObject
             //update the model with mcq state data
-            var plugindata= this.getState(this._type);
-            if(!_.isUndefined(plugindata)){
-               controller._model[controller._index].options=_.isEmpty(plugindata) ? controller._model[controller._index].options : plugindata;
-             }
-            if(controller){
+            var plugindata = this.getState(this._type);
+            if (!_.isUndefined(plugindata)) {
+                controller._model[controller._index].options = _.isEmpty(plugindata) ? controller._model[controller._index].options : plugindata;
+            }
+            if (controller) {
                 // update the MCQ state when user land to the MCQ Page
                 this.updateState(controller, false);
-                  // update the MCQ state when user land to the MCQ Page
+                // update the MCQ state when user land to the MCQ Page
                 this._controller = controller;
                 this._multi_select = data.multi_select;
                 if ((typeof this._multi_select) == 'undefined' || this._multi_select == null) {
@@ -160,12 +160,12 @@ var MCQPlugin = Plugin.extend({
     },
 
     /**
-    *   To verify the MCQ options are multiselect or not,
-    *   If the count of the answer attribute is more than one inside the options
-    *   then it is multiselect(MMCQ).
-    *   @memberof MCQPlugin
-    *   @override
-    */
+     *   To verify the MCQ options are multiselect or not,
+     *   If the count of the answer attribute is more than one inside the options
+     *   then it is multiselect(MMCQ).
+     *   @memberof MCQPlugin
+     *   @override
+     */
     isMultiSelect: function() {
         var ansLength = 0;
 
@@ -179,11 +179,11 @@ var MCQPlugin = Plugin.extend({
     },
 
     /**
-    *   Used to select the particular option of MCQ. 
-    *   @param option {object} which option to be select.
-    *   @memberof MCQPlugin
-    *   @override
-    */
+     *   Used to select the particular option of MCQ. 
+     *   @param option {object} which option to be select.
+     *   @memberof MCQPlugin
+     *   @override
+     */
     selectOption: function(option) {
         var controller = this._controller;
         // If it is not a multi-select, then unset all other selected shadows
@@ -202,24 +202,24 @@ var MCQPlugin = Plugin.extend({
             val = option.toggleShadow();
             controller.setModelValue(option._model, val, 'selected');
         }
-        this.updateState(controller,true);
+        this.updateState(controller, true);
 
-       // update the MCQ state on SELECTION OF OPTION
+        // update the MCQ state on SELECTION OF OPTION
         Renderer.update = true;
         return val;
     },
 
     /**
-    *   Use to update the retained state of plugin. 
-    *   @param controller {object} controller is input object to update the state of plugin
-    *   for the particular controller.
-    *   @param isStateChanged {boolean} isStateChanged is boolean value to update the state of MCQ plugin.
-    *   wether MCQ plugin state is changed OR not.
-    *   @memberof MCQPlugin
-    *   @override
-    */
+     *   Use to update the retained state of plugin. 
+     *   @param controller {object} controller is input object to update the state of plugin
+     *   for the particular controller.
+     *   @param isStateChanged {boolean} isStateChanged is boolean value to update the state of MCQ plugin.
+     *   wether MCQ plugin state is changed OR not.
+     *   @memberof MCQPlugin
+     *   @override
+     */
     updateState: function(controller, isStateChanged) {
-        if(!_.isUndefined(controller._model)){
+        if (!_.isUndefined(controller._model)) {
             var model = controller._model[controller._index];
             this.setState(model.type, model.options, isStateChanged);
         }
