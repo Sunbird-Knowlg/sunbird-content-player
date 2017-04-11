@@ -1,7 +1,42 @@
+/**
+ * Plugin to render image on canvas using createjs Bitmap.
+ * @class ImagePlugin
+ * @extends EkstepRenderer.Plugin
+ * @author Vinu Kumar V S <vinu.kumar@tarento.com>
+ */
+
+
+
 var ImagePlugin = Plugin.extend({
+
+    /**
+     * This explains the type of the plugin 
+     * @member {String} _type
+     * @memberof ImagePlugin
+     */
     _type: 'image',
+
+    /**
+     * This explains image is container or not. 
+     * @member {boolean} _isContainer
+     * @memberof ImagePlugin
+     */
     _isContainer: false,
+
+    /**
+     * This explains image should render on canvas or not. 
+     * @member {boolean} _render
+     * @memberof ImagePlugin
+     */
     _render: true,
+
+    /**
+    *   Invoked by framework when plugin instance created/renderered on stage.
+    *   Use this plugin to add|render image on canvas.
+    *   @param data {object} data is input object for the image plugin.
+    *   @memberof ImagePlugin
+    *   @override
+    */
     initPlugin: function(data) {
         var instance = this;
         var asset = '';
@@ -76,6 +111,12 @@ var ImagePlugin = Plugin.extend({
             Renderer.update = true;
         }
     },
+
+    /**
+    *   To align image horizantly (e.g. align = left OR right OR center).
+    *   To align imae vertically (e.g. valign = top OR bottom OR middle).
+    *   @memberof ImagePlugin
+    */
     alignDims: function() {
         var parentDims = this._parent.dimensions();
         var dims = this._dimensions;
