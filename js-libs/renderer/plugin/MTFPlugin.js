@@ -53,7 +53,7 @@ var MTFPlugin = Plugin.extend({
     /**
     *   Invoked by framework when plugin instance created/rendered on stage.
     *   Use this plugin to create a MTF assesment.
-    *   @param data {object} data is input object for the MCQPlugin.
+    *   @param data {object} data is input object for the MTFPlugin.
     *   @memberof MTFPlugin
     *   @override
     */
