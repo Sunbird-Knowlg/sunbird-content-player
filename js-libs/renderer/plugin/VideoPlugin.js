@@ -74,6 +74,11 @@ var VideoPlugin = Plugin.extend({
             this.play();
         }
     },
+
+    /**
+     *   Use this method to register any event on video element.
+     *   @memberof VideoPlugin
+     */
     registerEvents: function() {
         var videoEle = this.getVideo(this._data);
         jQuery(videoEle).bind('play', this.handleTelemetryLog);
@@ -82,6 +87,11 @@ var VideoPlugin = Plugin.extend({
         jQuery(videoEle).bind("abort", this.logConsole);
         jQuery(videoEle).bind("loadeddata", this.onLoadData);
     },
+
+    /**
+     *   Use this method to Generate Telemetry  based on the events (e.g PLAY, PAUSE, STOP).
+     *   @memberof VideoPlugin
+     */
     handleTelemetryLog: function(event) {
         var action = {},
             videoEle = event.target;
@@ -114,19 +124,45 @@ var VideoPlugin = Plugin.extend({
                 subtype: subType.toUpperCase()
             });
     },
+
+    /**
+     *   Use this method to play the video element on stage.
+     *   By passing action object from from the play command.
+     *   @param action {object} action is input object for the video to play.
+     *   @memberof VideoPlugin
+     */
     play: function(action) {
         var videoEle = this.getVideo(action);
         videoEle.paused && videoEle.readyState > 2 ? this.start(videoEle) : console.warn('Video is not ready to play', videoEle.readyState);
     },
+
+    /**
+     *   Use this method to pause the video element on stage.
+     *   By passing action object from from the pause command.
+     *   @param action {object} action is input object for the video to pause.
+     *   @memberof VideoPlugin
+     */
     pause: function(action) {
         var videoEle = this.getVideo(action);
         !_.isUndefined(videoEle) ? videoEle.pause() : console.info("video pause failed");
     },
+
+    /**
+     *   Use this method to stop the video element on stage.
+     *   By passing action object from from the pause command.
+     *   @param action {object} action is input object for the video to stop.
+     *   @memberof VideoPlugin
+     */
     stop: function(action) {
         var videoEle = this.getVideo(action);
         videoEle.pause();
         videoEle.currentTime = 0;
     },
+
+    /**
+     *   Use this method to replay the video element on stage.
+     *   @memberof VideoPlugin
+     */
     replay: function() {
         var videoEle = this.getVideo(this._data);
         videoEle.currentTime = 0;
@@ -147,6 +183,11 @@ var VideoPlugin = Plugin.extend({
             return document.getElementById(this._data.asset);
         }
     },
+
+    /**
+     *   Use this method to set default style to any video element.
+     *   @memberof VideoPlugin
+     */
     setVideoStyle: function(jqVideoEle) {
         var dims = this.relativeDims();
         jQuery(jqVideoEle).attr("id", this._data.asset)
@@ -164,12 +205,23 @@ var VideoPlugin = Plugin.extend({
                 "display": 'block'
             });
     },
+
+    /**
+     *   Use this method to add video element canvas gameArea.
+     *   @memberof VideoPlugin
+     */
     addVideoElement: function(jqVideoEle) {
         this._theme.htmlElements.push(jQuery(jqVideoEle).attr('id'));
         var videoEle = this.getVideo(this._data);
         var div = document.getElementById('gameArea');
         div.insertBefore(videoEle, div.childNodes[0]);
     },
+
+    /**
+     *   Use this method to create a video element.
+     *  It will load the video asset and will create the video element if the loading of asset is failed. 
+     *   @memberof VideoPlugin
+     */
     createVideoElement: function() {
         var videoAsset;
         videoAsset = this._theme.getAsset(this._data.asset);
