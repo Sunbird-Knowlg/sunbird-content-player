@@ -1,7 +1,39 @@
+/**
+ * Plugin to render any templates
+ * @class EmbedPlugin 
+ * @extends EkstepRenderer.Plugin
+ * @author Vinu Kumar V S <vinu.kumar@tarento.com>
+ */
 var EmbedPlugin = Plugin.extend({
+
+    /**
+     * This explains the type of the plugin. 
+     * @member {String} _type.
+     * @memberof EmbedPlugin
+     */
     _type: 'embed',
+
+    /**
+     * This explains the plugin is container OR not. 
+     * @member {boolean} _isContainer.
+     * @memberof EmbedPlugin
+     */
     _isContainer: false,
+
+    /**
+     * This explains plugin should render on canvas OR not. 
+     * @member {boolean} _render
+     * @memberof EmbedPlugin
+     */
     _render: true,
+
+    /**
+    *   Invoked by framework when plugin instance created/rendered on stage.
+    *   Use this plugin to render any templates.
+    *   @param data {object} data is input object of any templates.
+    *   @memberof EmbedPlugin
+    *   @override
+    */
     initPlugin: function(data) {
         var instance = this;
         if (data.template || data['template-name']) {
