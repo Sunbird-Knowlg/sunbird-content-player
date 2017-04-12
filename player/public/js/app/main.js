@@ -231,6 +231,7 @@ function getAsseturl(content) {
     return path;
 
 }
+
 function showToaster(toastType, message, customObj) {
     toastr.options = {
         "positionClass": "toast-top-right",

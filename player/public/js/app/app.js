@@ -539,8 +539,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     if (isbrowserpreview) {
                         var contentBody = undefined;
                         Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
-                    } else
-                    if (!_.isUndefined($scope.item)) {
+                    } else if (!_.isUndefined($scope.item)) {
                         Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
                     } else {
                         console.warn("Content not found")
