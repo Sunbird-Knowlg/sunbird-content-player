@@ -29,11 +29,12 @@ var TextPlugin = Plugin.extend({
     _render: true,
 
     /**
-    *   Invoked by framework when plugin instance created/renderered on stage,
-    *   Use this plugin to create diffrent style of text on stage.
-    *   @memberof TextPlugin
-    *   @override
-    */
+     *   Invoked by framework when plugin instance created/renderered on stage,
+     *   Use this plugin to create diffrent style of text on stage.
+     *   @param data {object} data is input object for the text plugin.
+     *   @memberof TextPlugin
+     *   @override
+     */
     initPlugin: function(data) {
         var instance = this;
         var fontsize = data.fontsize || 20;
@@ -80,7 +81,7 @@ var TextPlugin = Plugin.extend({
         text.outline = outline;
 
         // H and V alignment
-        var align  = (data.align ? data.align.toLowerCase() : 'left');
+        var align = (data.align ? data.align.toLowerCase() : 'left');
         var valign = (data.valign ? data.valign.toLowerCase() : 'top');
 
         if (align == 'left') {
@@ -88,7 +89,7 @@ var TextPlugin = Plugin.extend({
         } else if (align == 'right') {
             text.x = dims.x + dims.w;
         } else if (align == 'center') {
-            text.x = dims.x + dims.w/2;
+            text.x = dims.x + dims.w / 2;
         }
 
         if (valign == 'top') {
@@ -98,7 +99,7 @@ var TextPlugin = Plugin.extend({
             text.y = dims.y + dims.h - text.getMeasuredHeight();
             text.textBaseline = 'hanging';
         } else if (valign == 'middle') {
-            text.y = dims.y + dims.h/2 - text.getMeasuredHeight()/2;
+            text.y = dims.y + dims.h / 2 - text.getMeasuredHeight() / 2;
             if (data.textBaseline) {
                 text.textBaseline = 'top';
             } else {
@@ -107,7 +108,7 @@ var TextPlugin = Plugin.extend({
         }
 
         if (data.textBaseline) {
-             text.textBaseline = data.textBaseline;
+            text.textBaseline = data.textBaseline;
         }
 
         text.textAlign = align;

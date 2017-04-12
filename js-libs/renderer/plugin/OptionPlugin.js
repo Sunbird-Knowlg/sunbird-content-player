@@ -1,15 +1,67 @@
+/**
+ * Plugin to render MCQ, MTF assesment, Text in any assesments and Images in any assesment on canvas .
+ * @class OptionPlugin
+ * @extends EkstepRenderer.Plugin
+ * @author Vinu Kumar V S <vinu.kumar@tarento.com>
+ */
+
 var OptionPlugin = Plugin.extend({
+
+    /**
+     * This explains the type of the plugin. 
+     * @member {String} _type.
+     * @memberof OptionPlugin
+     */
     _type: 'option',
+
+    /**
+     * This explains the plugin is container OR not. 
+     * @member {boolean} _isContainer.
+     * @memberof OptionPlugin
+     */
     _isContainer: false,
+
+    /**
+     * This explains plugin should render on canvas OR not. 
+     * @member {boolean} _render
+     * @memberof OptionPlugin
+     */
     _render: false,
     _index: -1,
+
+    /**
+     * This explains particular assesment options value (e.g MTF, MCQ option object). 
+     * @member {object} _model
+     * @memberof OptionPlugin
+     */
     _model: undefined,
     _value: undefined,
     _answer: undefined,
     _multiple: false,
+
+    /**
+     * This explains map the LHS options to RHS while rendering MTF assesment. 
+     * @member {object} _mapedTo
+     * @memberof OptionPlugin
+     */
     _mapedTo: undefined,
     _uniqueId: undefined,
+
+    /**
+     * This explains particular options index value 
+     * it could be MCQ options OR MTF LHS options(e.g MTF: Lhs_option[1], MCQ: option[0] option object). 
+     * @member {object} _modelValue
+     * @memberof OptionPlugin
+     */
     _modelValue: undefined,
+
+    /**
+     *   Invoked by framework when plugin instance created/rendered on stage.
+     *   Use this plugin to render a MTF, MCQ, Images || text in assesment.
+     *   @param data {object} data is input object for the OptionPlugin.
+     *   @memberof OptionPlugin
+     *   @override
+     */
     initPlugin: function(data) {
         this._model = undefined;
         this._value = undefined;
@@ -65,6 +117,13 @@ var OptionPlugin = Plugin.extend({
             this._render = true;
         }
     },
+
+    /**
+     *   To render the MCQ assesment on the canvas
+     *   By refering controller object.
+     *   @memberof OptionPlugin
+     *   @override
+     */
     renderMCQOption: function() {
         var controller = this._parent._controller;
         var itemId = controller.getModelValue("identifier");
@@ -72,8 +131,8 @@ var OptionPlugin = Plugin.extend({
         this._self.cursor = 'pointer';
 
         var instance = this;
-        if(this._modelValue.selected === true) {
-          this.addShadow();
+        if (this._modelValue.selected === true) {
+            this.addShadow();
         }
         this._self.on('click', function(event) {
             var eventData = {};
@@ -94,6 +153,15 @@ var OptionPlugin = Plugin.extend({
             EventManager.processAppTelemetry({}, 'CHOOSE', instance, data);
         });
     },
+
+    /**
+     *   To render the MTF assesment on the canvas
+     *   By refering controller object.
+     *   @param value {object} value is input object to render MTF assesment on canvas.
+     *   value should be LHS || RHS option value
+     *   @memberof OptionPlugin
+     *   @override
+     */
     renderMTFOption: function(value) {
         var enableDrag = false;
         var dragPos = {};
@@ -109,20 +177,20 @@ var OptionPlugin = Plugin.extend({
             enableDrag = true;
         }
 
-        if(value.selected != undefined ) {
-           var snapTo;
-           snapTo = instance._parent._lhs_options;
-           // Only get the SnapTo[LHS options] to match(overlap) the images
-           var plugin = snapTo[value.selected];
-           var dims = plugin._dimensions;
-           // Set the current answer as accepted
-           if (!_.isUndefined(plugin._data.snapX)) {
-               this._self.x = dims.x + (dims.w * plugin._data.snapX / 100);
-           }
-           if (!_.isUndefined(plugin._data.snapY)) {
-               this._self.y = dims.y + (dims.h * (plugin._data.snapY/100));
-           }
-       }
+        if (value.selected != undefined) {
+            var snapTo;
+            snapTo = instance._parent._lhs_options;
+            // Only get the SnapTo[LHS options] to match(overlap) the images
+            var plugin = snapTo[value.selected];
+            var dims = plugin._dimensions;
+            // Set the current answer as accepted
+            if (!_.isUndefined(plugin._data.snapX)) {
+                this._self.x = dims.x + (dims.w * plugin._data.snapX / 100);
+            }
+            if (!_.isUndefined(plugin._data.snapY)) {
+                this._self.y = dims.y + (dims.h * (plugin._data.snapY / 100));
+            }
+        }
 
         if (enableDrag) {
             var instance = this;
@@ -216,7 +284,7 @@ var OptionPlugin = Plugin.extend({
                     if (_.isArray(snapTo)) {
                         for (var i = 0; i < snapTo.length; i++) {
                             var lhsQues = snapTo[i];
-                            if(lhsQues._answer){
+                            if (lhsQues._answer) {
                                 if (lhsQues._answer._uniqueId == instance._uniqueId) {
                                     lhsQues._answer = undefined;
                                     // instance._parent.setAnswer(instance, undefined);
@@ -246,7 +314,7 @@ var OptionPlugin = Plugin.extend({
                         this.x = dims.x + (dims.w * plugin._data.snapX / 100);
                     }
                     if (!_.isUndefined(plugin._data.snapY)) {
-                        this.y = dims.y + (dims.h * (plugin._data.snapY/100));
+                        this.y = dims.y + (dims.h * (plugin._data.snapY / 100));
                     }
 
                     // instance._parent.setAnswer(instance, plugin._index);
@@ -268,10 +336,10 @@ var OptionPlugin = Plugin.extend({
                 }
                 OverlayManager.handleSubmit();
 
-                 if(!(("undefined" != typeof drop_idx) && ("" !== drop_idx))) {
+                if (!(("undefined" != typeof drop_idx) && ("" !== drop_idx))) {
                     // instance._parent.setAnswer(instance, undefined);
                     instance._parent.setAnswerMapping(instance, undefined);
-                 }
+                }
 
                 instance.removeShadow();
                 var data = {
@@ -282,11 +350,14 @@ var OptionPlugin = Plugin.extend({
                     itemId: itemId,
                     drop_id: drop_id,
                     drop_idx: drop_idx,
-                    pos: [{x: evt.stageX, y: evt.stageY}, dragPos],
+                    pos: [{
+                        x: evt.stageX,
+                        y: evt.stageY
+                    }, dragPos],
                     res: [{
-                        "rhs" : drag_rsv
-                    },{
-                        "lhs" : drop_rsv
+                        "rhs": drag_rsv
+                    }, {
+                        "lhs": drop_rsv
                     }],
                     state: (("undefined" != typeof drop_idx) && ("" !== drop_idx)) ? "SELECTED" : "UNSELECTED",
                     optionTag: "MTF"
@@ -298,6 +369,13 @@ var OptionPlugin = Plugin.extend({
 
         }
     },
+
+    /**
+     *   To render image on the options could be MCQ or MTF
+     *   @param value {object} value is input object to render images in MTF || MCQ assesment on canvas(e.g MCQ option || MTF options).
+     *   @memberof OptionPlugin
+     *   @override
+     */
     renderImage: function(value) {
         var data = {};
         data.asset = value.asset;
@@ -318,6 +396,13 @@ var OptionPlugin = Plugin.extend({
 
         this._data.asset = value.asset;
     },
+
+    /**
+     *   To render text on the options could be MCQ or MTF
+     *   @param data {object} data is input object to render text in MTF || MCQ assesment  on canvas(e.g MCQ option || MTF options).
+     *   @memberof OptionPlugin
+     *   @override
+     */
     renderText: function(data) {
         data.$t = data.asset;
         var padx = this._data.padX || 0;
@@ -326,7 +411,7 @@ var OptionPlugin = Plugin.extend({
         data.y = pady;
         data.w = 100 - (2 * padx);
         data.h = 100 - (2 * pady);
-        data.fontsize = (data.fontsize) ? data.fontsize: 200;
+        data.fontsize = (data.fontsize) ? data.fontsize : 200;
         var align = (this._data.align ? this._data.align.toLowerCase() : 'center');
         var valign = (this._data.valign ? this._data.valign.toLowerCase() : 'middle');
 
@@ -336,6 +421,13 @@ var OptionPlugin = Plugin.extend({
         PluginManager.invoke('text', data, this, this._stage, this._theme);
         this._data.asset = data.asset;
     },
+
+    /**
+     *   To apply style properties to MCQ || MTF options
+     *   @param data {object} To which object to apply the style properties(e.g MCQ option || MTF options).
+     *   @memberof OptionPlugin
+     *   @override
+     */
     initShadow: function(data) {
 
         var highlightColor = this._data.highlight || '#E89241';
@@ -363,6 +455,13 @@ var OptionPlugin = Plugin.extend({
         data = JSON.parse(data);
         this._data = data;
     },
+
+    /**
+     *   If the option is using text OR image plugin those are childern to option plugin.
+     *   It will get the childrens data (Inner ECML) and it will render has group.
+     *   @memberof OptionPlugin
+     *   @override
+     */
     renderInnerECML: function() {
         var innerECML = this.getInnerECML();
         if (!_.isEmpty(innerECML)) {
@@ -388,16 +487,16 @@ var OptionPlugin = Plugin.extend({
             }
         }
         var updateEvent = function(evt) {
-            if(_.isArray(evt.action)) {
+            if (_.isArray(evt.action)) {
                 evt.action.forEach(function(action) {
                     updateAction(action);
                 });
-            } else if(evt.action) {
+            } else if (evt.action) {
                 updateAction(evt.action);
             }
         }
         var events = undefined;
-        if(data.events) {
+        if (data.events) {
             if (_.isArray(data.events)) {
                 events = [];
                 data.events.forEach(function(e) {
@@ -409,11 +508,11 @@ var OptionPlugin = Plugin.extend({
         } else {
             events = data.event;
         }
-        if(_.isArray(events)) {
+        if (_.isArray(events)) {
             events.forEach(function(e) {
                 updateEvent(e);
             });
-        } else if(events) {
+        } else if (events) {
             updateEvent(events);
         }
     }

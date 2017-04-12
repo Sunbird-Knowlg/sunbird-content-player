@@ -30,6 +30,7 @@ var ShapePlugin = Plugin.extend({
     /**
     *   Invoked by framework when plugin instance created/renderered on stage.
     *   Use this plugin to create different shapes like Square, Circle, Rectangle, Polygon, Star etc..
+    *   @param data {object} data is input object for the shape plugin.
     *   @memberof ShapePlugin
     *   @override
     */
