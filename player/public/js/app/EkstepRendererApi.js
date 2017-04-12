@@ -216,6 +216,11 @@ window.EkstepRendererAPI = {
         }
     },
 
+    /**
+     * return the param data
+     * @paramName {string} name to param to set.
+     * @memberof EkstepRendererAPI
+     */
     getStageParam: function(paramName) {
         var currentStage = EkstepRendererAPI.getCurrentStage();
         var paramData;
@@ -771,5 +776,14 @@ window.EkstepRendererAPI = {
     getState: function(param) {
         var plugin = this.getPluginInstance(pluginId);
         plugin.getState(param);
+    },
+
+    /**
+     * Returns the asset/media object of Image, Audio, video etc from ecml.. which is defined in the manifest of the given assetId
+     * @param assetId {string} assetId of the desired asset/media defined in manifest
+     * @memberof EkstepRendererAPI
+     **/
+    getMedia: function(assetId) {
+        return Renderer.theme.getMedia(assetId);
     }
 }
