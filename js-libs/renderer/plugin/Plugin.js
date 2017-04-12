@@ -177,6 +177,8 @@ var Plugin = Class.extend({
 
     /**
      * Adds a child to this plugin intance. This can be useful for composite scenarios.
+     * @param child {object} createjs element object to be added in plugin
+     * @param childPlugin {object} plugin object
      * @memberof EkstepRenderer.Plugin
      */
     addChild: function(child, childPlugin) {
@@ -192,6 +194,7 @@ var Plugin = Class.extend({
 
     /**
      * Removes a child from this plugin by child index. Use this to dynamically manage composite children.
+     * @param id {string} index of createjs element object
      * @memberof EkstepRenderer.Plugin
      */
     removeChildAt: function(idx) {
@@ -200,6 +203,7 @@ var Plugin = Class.extend({
 
     /**
      * Removes a child from this plugin by child instance. Use this to dynamically manage composite children.
+     * @param child {object} createjs element to be removed
      * @memberof EkstepRenderer.Plugin
      */
     removeChild: function(child) {
@@ -329,6 +333,7 @@ var Plugin = Class.extend({
 
     /**
      * property of the plugin to show it's visiblity on stage
+     * @param action {object} action command to show createjs element
      * @memberof EkstepRenderer.Plugin
      * @property show
      */
@@ -344,6 +349,7 @@ var Plugin = Class.extend({
 
     /**
      * Property of the plugin to hide it's visiblity on stage
+     * @param action {object} action command to hide createjs element
      * @memberof EkstepRenderer.Plugin
      * @property hide
      */
@@ -359,6 +365,7 @@ var Plugin = Class.extend({
 
     /**
      * property of the plugin to toggle it's visiblity on stage
+     * @param action {object} action command to toggle show/hide of createjs element
      * @memberof EkstepRenderer.Plugin
      * @property toggleShow
      */
@@ -374,6 +381,7 @@ var Plugin = Class.extend({
 
     /**
      * property of the plugin to toggle it's shadow
+     * @param action {object} action command to toggle Shadow of createjs element(optional)
      * @memberof EkstepRenderer.Plugin
      * @property toggleShadow
      */
@@ -429,6 +437,11 @@ var Plugin = Class.extend({
             this._self.shadow = undefined;
         }
     },
+
+    /**
+     * Returns the boolean which show if element has shawdow or not.
+     * @memberof EkstepRenderer.Plugin
+     */
     hasShadow: function() {
         var visibleShadow = false;
         var shadowObj = this._self.shadow;
@@ -445,6 +458,13 @@ var Plugin = Class.extend({
 
         return visibleShadow;
     },
+
+    /**
+     * Draw a border on element
+     * @param data {object} element outside which border should be drawed
+     * @param dims {object} dimension of border to be drawed
+     * @memberof EkstepRenderer.Plugin
+     */
     drawBorder: function(data, dims) {
         if (data.stroke) {
             var strokeWidth = (data['stroke-width'] || 1);
@@ -477,6 +497,12 @@ var Plugin = Class.extend({
             Renderer.update = true;
         }
     },
+
+    /**
+     * Rotate a element
+     * @param data {object} plugin object
+     * @memberof EkstepRenderer.Plugin
+     */
     rotation: function(data) {
         var degreeRotation = 0;
         if (data.rotate) {
@@ -488,9 +514,8 @@ var Plugin = Class.extend({
             this.borderShape.rotation = degreeRotation;
         }
         this._self.rotation = degreeRotation;
-
-
     },
+
     enableDrag: function(asset, snapTo) {
         asset.cursor = "pointer";
         asset.on("mousedown", function(evt) {
@@ -619,6 +644,11 @@ var Plugin = Class.extend({
     restart: function() {
         PluginManager.addError('Subclasses of plugin should implement reload()');
     },
+
+    /**
+     * Blur the current element
+     * @memberof EkstepRenderer.Plugin
+     */
     blur: function(action) {
         var instance = this;
         var obj = instance._self;
@@ -628,12 +658,26 @@ var Plugin = Class.extend({
         obj.cache(bounds.x, bounds.y, bounds.w, bounds.h);
         Renderer.update = true;
     },
+
+    /**
+     * Unblur the current element
+     * @memberof EkstepRenderer.Plugin
+     */
     unblur: function(action) {
         var instance = this;
         instance._self.filters = [];
         instance._self.uncache();
         Renderer.update = true;
     },
+
+    /**
+     * Invoke childrens again to reflect changes
+     * @param data {object} Data which need to be updated
+     * @param parent {object} parent of data element
+     * @param stage {object} Stage inside which element resides
+     * @param theme {object} Theme object
+     * @memberof EkstepRenderer.Plugin
+     */
     invokeChildren: function(data, parent, stage, theme) {
         var children = [];
         for (k in data) {
@@ -717,6 +761,12 @@ var Plugin = Class.extend({
             this.setPluginParam(param, val, incr);
         }
     },
+
+    /**
+     * Return all children of data
+     * @param data {object} 
+     * @memberof EkstepRenderer.Plugin
+     */
     getInnerECML: function(data) {
         var children = {};
         data = ("undefined" == typeof data) ? this._data : data;
@@ -727,12 +777,26 @@ var Plugin = Class.extend({
         }
         return children;
     },
+
+    /**
+     * Set/Store state of assesment
+     * @param param {string} Type of assesment
+     * @param param {value} Data which has to be saved
+     * @param isStateChanged {boolean} state of assesment (default value is false)
+     * @memberof EkstepRenderer.Plugin
+     */
     setState: function(param, value, isStateChanged) {
         if (!_.isUndefined(isStateChanged)) {
             this._stage.isStageStateChanged(isStateChanged);
         }
         this._stage.setParam(param.toLowerCase(), value);
     },
+
+    /**
+     * Set/Store state of assesment
+     * @param param {string} Type of assesment
+     * @memberof EkstepRenderer.Plugin
+     */
     getState: function(param) {
         if (!_.isUndefined(this._stage._currentState)) {
             return this._stage._currentState[param];

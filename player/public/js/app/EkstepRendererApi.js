@@ -530,6 +530,246 @@ window.EkstepRendererAPI = {
      **/
     skip: function() {
         EventBus.dispatch("actionNavigateSkip", "skip");
-    }
+    },
 
+    /**
+     * Adds a child to this plugin intance. This can be useful for composite scenarios.
+     * @param child {object} createjs element object to be added in plugin
+     * @param plugin {object} plugin object
+     * @memberof EkstepRenderer.Plugin
+     **/
+    addChild: function(pluginId, child, plugin) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.addChild(child, plugin);
+    },
+
+    /**
+     * Removes a child from this plugin by child index. Use this to dynamically manage composite children.
+     * @param id {string} index of createjs element object
+     * @memberof EkstepRenderer.Plugin
+     **/
+    removeChildAt: function(pluginId, id) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.removeChildAt(id);
+    },
+
+    /**
+     * Removes a child from this plugin by child instance. Use this to dynamically manage composite children.
+     * @param child {object} createjs element to be removed
+     * @memberof EkstepRenderer.Plugin
+     **/
+    removeChild: function(pluginId, child) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.removeChild(child);
+    },
+
+    /**
+     * To update/reflect createJS element change on stage after updating it's properties
+     * @memberof EkstepRenderer.Plugin
+     **/
+    update: function(pluginId, id) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.update();
+    },
+
+    /**
+     * To get plugin dimensions specified in ECML/JSON
+     * @memberof EkstepRenderer.Plugin
+     **/
+    dimensions: function(pluginId) {
+        var plugin = this.getPluginInstance(pluginId);
+        return plugin.dimensions();
+    },
+
+    /**
+     * To get plugin dimensions relative to Canvas/device width & height also with respect to it's parents
+     * @memberof EkstepRenderer.Plugin
+     **/
+    relativeDims: function(pluginId) {
+        var plugin = this.getPluginInstance(pluginId);
+        return plugin.relativeDims();
+    },
+
+    /**
+     * property of the plugin to show it's visiblity on stage
+     * @param assetId {string} assetId of element to show
+     * @param id {string} unique id of action
+     * @param delay {number} delay before action happened (optional)
+     * @memberof EkstepRenderer.Plugin
+     **/
+    show: function(assetId, id, delay) {
+        var delayTime = delay ? delay : 0;
+        var action = {
+            'asset':assetId,
+            'command':"show",
+            'disableTelemetry':true,
+            'id':id,
+            'pluginId':Renderer.theme._currentStage,
+            'type':"command",
+            'delay':delayTime
+        }
+        CommandManager.handle(action);
+    },
+
+    /**
+     * Property of the plugin to hide it's visiblity on stage
+     * @param assetId {string} assetId of element to hide
+     * @param id {string} unique id of action
+     * @param delay {number} [0] delay before action happened (optional)
+     * @memberof EkstepRenderer.Plugin
+     **/
+    hide: function(assetId, id, delay) {
+        var delayTime = delay ? delay : 0;
+        var action = {
+            'asset':assetId,
+            'command':"hide",
+            'disableTelemetry':true,
+            'id':id,
+            'pluginId':Renderer.theme._currentStage,
+            'type':"command",
+            'delay':delayTime
+        }
+        CommandManager.handle(action);
+    },
+
+    /**
+     * property of the plugin to toggle it's visiblity on stage
+     * @param assetId {string} assetId of element to toggle
+     * @param id {string} unique id of action
+     * @param delay {number} [0] delay before action happened (optional)
+     * @memberof EkstepRenderer.Plugin
+     */
+    toggleShow: function(assetId, id, delay) {
+        var delayTime = delay ? delay : 0;
+        var action = {
+            'asset':assetId,
+            'command':"toggleShow",
+            'disableTelemetry':true,
+            'id':id,
+            'pluginId':Renderer.theme._currentStage,
+            'type':"command",
+            'delay':delayTime
+        }
+        CommandManager.handle(action);
+    },
+
+    /**
+     * property of the plugin to toggle it's shadow
+     * @memberof EkstepRenderer.Plugin
+     */
+    toggleShadow: function(pluginId) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.toggleShadow();
+    },
+
+    /**
+     * property of the plugin to add shadow using createJS shadow property
+     * @memberof EkstepRenderer.Plugin
+     */
+    addShadow: function(pluginId) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.addShadow();
+    },
+
+    /**
+     * property of the plugin to remove it's shadow
+     * @memberof EkstepRenderer.Plugin
+     */
+    removeShadow: function(pluginId) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.removeShadow();
+    },
+
+    /**
+     * Returns the boolean which show if element has shawdow or not.
+     * @memberof EkstepRenderer.Plugin
+     */
+    hasShadow: function(pluginId) {
+        var plugin = this.getPluginInstance(pluginId);
+        return plugin.hasShadow();
+    },
+
+    /**
+     * Draw a border on element
+     * @param data {object} element outside which border should be drawed
+     * @param dims {object} dimension of border to be drawed
+     * @memberof EkstepRenderer.Plugin
+     */
+    drawBorder: function(pluginId, data, dims) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.drawBorder(data, dims);
+    },
+
+    /**
+     * Rotate a element
+     * @param plugin {object} plugin object
+     * @param rotate {integer} angle through which plugin will be rotated(0 to 360)
+     * @memberof EkstepRenderer.Plugin
+     */
+    rotation: function(pluginId, plugin, rotate) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.rotate = rotate;
+        plugin.rotation(plugin);
+    },
+
+    /**
+     * Draw a border on element
+     * @param plugin {object} Plugin object
+     * @param dims {object} dimension of border to be drawed outside plugin object
+     * @memberof EkstepRenderer.Plugin
+     */
+    enableDrag: function(pluginId, plugin, dims) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.enableDrag(plugin, dims);
+    },
+
+    /**
+     * Blur the current element
+     * @memberof EkstepRenderer.Plugin
+     */
+    blur: function(pluginId) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.blur();
+    },
+
+    /**
+     * Unblur the current element
+     * @memberof EkstepRenderer.Plugin
+     */
+    unblur: function(pluginId) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.unblur();
+    },
+
+    /**
+     * Invoke childrens again to reflect changes
+     * @param data {object} Data which need to be updated
+     * @memberof EkstepRenderer.Plugin
+     */
+    invokeChildren: function(pluginId, data) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.invokeChildren(data, this._parent, this._stage, this._theme);
+    },
+
+    /**
+     * Set/Store state of assesment
+     * @param param {string} Type of assesment
+     * @param param {value} Data which has to be saved
+     * @param isStateChanged {boolean} state of assesment (default value is false)
+     * @memberof EkstepRenderer.Plugin
+     */
+    setState: function(param, value, isStateChanged) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.setState(param, value, isStateChanged);
+    },
+
+    /**
+     * Set/Store state of assesment
+     * @param param {string} Type of assesment
+     * @memberof EkstepRenderer.Plugin
+     */
+    getState: function(param) {
+        var plugin = this.getPluginInstance(pluginId);
+        plugin.getState(param);
+    }
 }
