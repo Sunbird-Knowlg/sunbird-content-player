@@ -150,6 +150,7 @@ var OptionPlugin = Plugin.extend({
                 state: val ? 'SELECTED' : 'UNSELECTED',
                 optionTag: "MCQ"
             }
+            EventBus.dispatch("optionSelected", instance._value);
             EventManager.processAppTelemetry({}, 'CHOOSE', instance, data);
         });
     },
@@ -215,6 +216,7 @@ var OptionPlugin = Plugin.extend({
                     drag_id: instance._value.resvalue,
                     itemId: itemId
                 }
+                EventBus.dispatch("optionDrag", instance._value);
                 EventManager.processAppTelemetry({}, 'DRAG', instance, data);
             });
             asset.on("pressmove", function(evt) {
@@ -363,6 +365,7 @@ var OptionPlugin = Plugin.extend({
                     optionTag: "MTF"
                 }
 
+                EventBus.dispatch("optionDrop", instance._value);
                 EventManager.processAppTelemetry({}, 'DROP', instance, data);
                 Renderer.update = true;
             });
