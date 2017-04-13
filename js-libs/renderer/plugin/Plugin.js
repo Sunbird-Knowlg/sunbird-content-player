@@ -183,7 +183,7 @@ var Plugin = Class.extend({
      */
     addChild: function(child, childPlugin) {
         var nextIdx = this._currIndex++;
-        this._self.addChildAt(child, nextIdx);
+        this._self.addChildAt(child, this._self.children.length);
         if (childPlugin) {
             childPlugin.setIndex(nextIdx);
             if (childPlugin._id) {
