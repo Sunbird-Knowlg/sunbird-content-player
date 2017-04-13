@@ -786,4 +786,23 @@ window.EkstepRendererAPI = {
     getMedia: function(assetId) {
         return Renderer.theme.getMedia(assetId);
     }
+    /**
+     *This api is going to return you the current stage question item
+     *
+     *@memberof EkstepRendererAPI
+     */
+    currentItem: function() {
+        var ctrl = this.getCurrentController();
+        return ctrl._model[ctrl._index];
+    },
+    /**
+     *This api is going to return you the previous stage question item
+     *
+     *@memberof EkstepRendererAPI
+     */
+    previousItem: function() {
+        var ctrl = this.getCurrentController();
+        if (ctrl._index > 0 && ctrl._index < ctrl._model.length) return ctrl._model[ctrl._index - 1];
+        return 'Item not available';
+    },
 }

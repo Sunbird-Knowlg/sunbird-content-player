@@ -539,8 +539,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     if (isbrowserpreview) {
                         var contentBody = undefined;
                         Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
-                    } else
-                    if (!_.isUndefined($scope.item)) {
+                    } else if (!_.isUndefined($scope.item)) {
                         Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
                     } else {
                         console.warn("Content not found")
@@ -787,8 +786,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             GlobalContext.currentContentMimeType = $rootScope.content.mimeType;
             if (navType === "next") {
                 EventBus.dispatch("actionNavigateNext", navType);
+                EventBus.dispatch("nextButtonClicked");
+
             } else if (navType === "previous") {
                 EventBus.dispatch("actionNavigatePrevious", navType);
+                EventBus.dispatch("previousButtonClicked");
             }
         }
 
@@ -1153,6 +1155,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 element.hide();
                 scope.retryAssessment = function(id, e) {
                     scope.hidePopup(id);
+                    EventBus.dispatch("retryAssessmentClicked");
                 }
 
                 scope.hidePopup = function(id) {
@@ -1164,6 +1167,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 scope.moveToNextStage = function(navType) {
                     EventBus.dispatch("actionNavigateSkip", navType);
+                    EventBus.dispatch("skipToNextClicked");
                 }
             }
         }
@@ -1233,6 +1237,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $scope.onSubmit = function() {
                     if ($scope.isEnabled) {
                         $rootScope.defaultSubmit();
+                        EventBus.dispatch("submitClicked");
                     }
                 }
             }

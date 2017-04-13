@@ -283,6 +283,7 @@ var StagePlugin = Plugin.extend({
                 }
                 //TODO: setParam should use, but not working
                 this._currentState["isEvaluated"] = true;
+                EventBus.dispatch("evaluated", result);
 
                 if (showImmediateFeedback) {
                     //Show valid feeback

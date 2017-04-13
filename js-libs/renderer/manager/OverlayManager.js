@@ -150,7 +150,7 @@ OverlayManager = {
         }
     },
     navigateNext: function() {
-     try{   
+     try{
         if (_.isUndefined(Renderer.theme._currentScene)) return;
 
         var isItemScene = Renderer.theme._currentScene.isItemScene();
@@ -162,22 +162,19 @@ OverlayManager = {
       }catch(e){
         showToaster('error','Current scene having some issue');
         console.warn("Fails to navigate to next due to",e);
-      }  
+      }
     },
     skipAndNavigateNext: function() {
-      try{  
+      try{
         this.clean();
         TelemetryService.interact("TOUCH", "next", null, {
             stageId: Renderer.theme._currentStage
         });
         var navigateTo = this.getNavigateTo("next");
         if ("undefined" == typeof navigateTo) {
-
             if (_.isUndefined(Renderer.theme._currentScene)) return;
             var isItemScene = Renderer.theme._currentScene.isItemScene();
-
             if (isItemScene && !_.isUndefined(Renderer.theme._currentScene._stageController) && Renderer.theme._currentScene._stageController.hasNext()) {
-
                 this.defaultNavigation("next", navigateTo);
             } else {
                 this.moveToEndPage();
@@ -188,7 +185,7 @@ OverlayManager = {
       }catch(e){
         showToaster('error','Current scene having some issue');
         console.warn("Fails to skip and navigate due to",e);
-      }  
+      }
     },
     moveToEndPage: function() {
         if (config.showEndPage) {
@@ -216,7 +213,7 @@ OverlayManager = {
         this._stageConfig = {};
     },
     navigatePrevious: function() {
-      try{  
+      try{
         if (_.isUndefined(Renderer.theme._currentScene)) return;
         var navigateToStage = this.getNavigateTo('previous');
         if (_.isUndefined(navigateToStage)) {
@@ -230,7 +227,7 @@ OverlayManager = {
       }catch(e){
         showToaster('error','Stage having some issue');
         console.warn("Fails to navigate to previous due to",e);
-      }  
+      }
     },
     showOrHideEcmlElement: function(id, showEle) {
         var plugin = PluginManager.getPluginObject(id);
