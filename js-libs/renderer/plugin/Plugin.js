@@ -177,8 +177,8 @@ var Plugin = Class.extend({
 
     /**
      * Adds a child to this plugin intance. This can be useful for composite scenarios.
-     * @param child {object} createjs element object to be added in plugin
-     * @param childPlugin {object} plugin object
+     * @param pluginId {string} plugin id inside which child had to be added
+     * @param child {object} child element which has to be added inside plugin
      * @memberof EkstepRenderer.Plugin
      */
     addChild: function(child, childPlugin) {
@@ -210,10 +210,6 @@ var Plugin = Class.extend({
         this._self.removeChild(child);
     },
 
-    /**
-     * To add the createJS element by plugin on stage
-     * @memberof EkstepRenderer.Plugin
-     */
     render: function() {
         if (this._self) {
             this._parent.addChild(this._self, this);
@@ -222,10 +218,6 @@ var Plugin = Class.extend({
         }
     },
 
-    /**
-     * To update/reflect createJS element change on stage after updating it's properties
-     * @memberof EkstepRenderer.Plugin
-     */
     update: function() {
         this._theme.update();
     },
@@ -499,7 +491,7 @@ var Plugin = Class.extend({
     },
 
     /**
-     * Rotate a element
+     * Rotate an element
      * @param data {object} plugin object
      * @memberof EkstepRenderer.Plugin
      */
@@ -779,10 +771,10 @@ var Plugin = Class.extend({
     },
 
     /**
-     * Set/Store state of assesment
-     * @param param {string} Type of assesment
-     * @param param {value} Data which has to be saved
-     * @param isStateChanged {boolean} state of assesment (default value is false)
+     * It takes the value and the param to set its state
+     * @param param {string} Param is a string defining the type of question (mcq/mtf/ftb)
+     * @param value {object/array} value for mcq and mtf type is an array and for ftb type is an object
+     * @param isStateChanged {boolean} state true or false if pluginState is changed
      * @memberof EkstepRenderer.Plugin
      */
     setState: function(param, value, isStateChanged) {
@@ -793,8 +785,9 @@ var Plugin = Class.extend({
     },
 
     /**
-     * Set/Store state of assesment
-     * @param param {string} Type of assesment
+     * Returns state of the param.
+     * Undefined if the param is not present is the currentState.
+     * @param paramName {string} name of the param.
      * @memberof EkstepRenderer.Plugin
      */
     getState: function(param) {
