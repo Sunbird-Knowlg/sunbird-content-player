@@ -128,7 +128,7 @@ window.EkstepRendererAPI = {
      * @member {String} baseURL
      * @memberof EkstepRendererAPI
      */
-    getBaseURL:function(){
+    getBaseURL: function() {
         return Renderer.theme._basePath;
     },
 
@@ -272,7 +272,7 @@ window.EkstepRendererAPI = {
         return paramData;
     },
 
-     /**
+    /**
      * Returns stageData for particular stage identifier.
      * undefined if the stage data is not present for the particular stage identfier.
      * this could be usefull when plugin wants to fetch some paticular stage data.
@@ -489,17 +489,17 @@ window.EkstepRendererAPI = {
         RecorderManager.stopRecording(action);
     },
 
-	/**
-	 * To execute a sepecific command on the given input assetId. For list of commands refer https://community.ekstep.in/specifications-guides/55-ecml-how-to-guide#defining-events-and-actions
-	 * @param name {string} command name which has to execute, ex: "play", "show", "blur",
-	 * @param assetId {string} media/asset on which this command has to execute
-	 * @param props {object} To pass additional properties of command(key-value pair object). Ex: {"duration": 200, "effect": linear}
-	 * @memberof EkstepRendererAPI
-	 **/
-	invokeCommand: function(name, assetId, props) {
-		var stageId = this.getCurrentStage()._id;
-		if(_.isUndefined(assetId) || _.isEmpty(assetId))
-			assetId = stageId;
+    /**
+     * To execute a sepecific command on the given input assetId. For list of commands refer https://community.ekstep.in/specifications-guides/55-ecml-how-to-guide#defining-events-and-actions
+     * @param name {string} command name which has to execute, ex: "play", "show", "blur",
+     * @param assetId {string} media/asset on which this command has to execute
+     * @param props {object} To pass additional properties of command(key-value pair object). Ex: {"duration": 200, "effect": linear}
+     * @memberof EkstepRendererAPI
+     **/
+    invokeCommand: function(name, assetId, props) {
+        var stageId = this.getCurrentStage()._id;
+        if (_.isUndefined(assetId) || _.isEmpty(assetId))
+            assetId = stageId;
 
         var action = {
             'type': 'command',
@@ -507,11 +507,11 @@ window.EkstepRendererAPI = {
             'asset': assetId,
             'pluginId': stageId
         }
-        if(props){
-        	_.extend(action, props);
+        if (props) {
+            _.extend(action, props);
         }
         this.invokeAction(action);
-	},
+    },
 
     /**
      * Navigate to next stage. Incase of item stage navigates to next question
@@ -743,7 +743,6 @@ window.EkstepRendererAPI = {
     },
     /**
      *This api is going to return you the previous stage question item
-     *
      *@memberof EkstepRendererAPI
      */
     previousItem: function() {

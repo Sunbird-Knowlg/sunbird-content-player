@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="genie-canvas">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <meta http-equiv='expires' content='0'>
@@ -17,39 +18,43 @@
 
     <style>
         #progressArea {
-          position: relative;
-          top: 55%;
-          left: 22%;
-          width: 57%;
-          height: 5%;
-          border-radius: 90px;
-          background-color: #ddd;
+            position: relative;
+            top: 55%;
+            left: 22%;
+            width: 57%;
+            height: 5%;
+            border-radius: 90px;
+            background-color: #ddd;
         }
 
         #progressBar {
-          position: absolute;
-          width: 1%;
-          height: 100%;
-          border-radius: 90px;
-          background-color: #e67300;
+            position: absolute;
+            width: 1%;
+            height: 100%;
+            border-radius: 90px;
+            background-color: #e67300;
         }
-        #loadingText{
+
+        #loadingText {
             position: absolute;
             bottom: 42%;
         }
+
         #gameArea {
             position: absolute;
-            left:     50%;
-            top:      50%;
+            left: 50%;
+            top: 50%;
         }
+
         #gameCanvas {
             width: 100%;
             height: 100%;
         }
+
         .inputText {
             -moz-border-radius: 15px;
             border-radius: 15px;
-            border:solid 2px black !important;
+            border: solid 2px black !important;
             font-size: 15px !important;
             padding-left: 10px !important;
             font-weight: bold !important;
@@ -58,14 +63,15 @@
             text-align: center;
         }
     </style>
-  </head>
-  <body ng-controller="BaseCtrl">
+</head>
+
+<body ng-controller="BaseCtrl">
     <ion-nav-view></ion-nav-view>
     <div id="loading" class="gc-loader-area">
         <img src="img/icons/background_1.png" class="gc-loader-img">
         <div id="progressArea">
-          <div id="progressBar"></div>
-          <p id="progressCount" class="font-baloo gc-loader-prog"></p>
+            <div id="progressBar"></div>
+            <p id="progressCount" class="font-baloo gc-loader-prog"></p>
         </div>
         <p class="icon-font cover-page-title" id="loadingText"></p>
     </div>
@@ -119,7 +125,7 @@
 
     <script src="renderer/manager/ControllerManager.js"></script>
 
-     <!-- Controller -->
+    <!-- Controller -->
     <script src="renderer/controller/Controller.js"></script>
     <script src="renderer/controller/DataController.js"></script>
     <script src="renderer/controller/ItemController.js"></script>
@@ -143,7 +149,7 @@
     <script src="renderer/manager/RecorderManager.js"></script>
     <script src="renderer/manager/TimerManager.js"></script>
 
-     <!-- Generator -->
+    <!-- Generator -->
     <script src="renderer/generator/DataGenerator.js"></script>
     <script src="renderer/generator/ItemDataGenerator.js"></script>
     <!-- // <script src="renderer/generator/TemplateDataGenerator.js"></script> -->
@@ -236,5 +242,6 @@
     <script src="js/test/specHelper.js"></script>
     <script src="js/app/EkstepRendererApi.js"></script>
 
-  </body>
+</body>
+
 </html>
