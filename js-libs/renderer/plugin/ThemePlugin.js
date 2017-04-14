@@ -7,7 +7,6 @@
  * @author Vinu Kumar V.S <vinu.kumar@tarento.com>
  */
 
-
 var ThemePlugin = Plugin.extend({
     _type: 'theme',
     _render: false,
@@ -148,7 +147,7 @@ var ThemePlugin = Plugin.extend({
      * map the controller.
      * @param p {object} controller is object. It should have id, name, type and __cdata.
      * type defines controller type e.g(item, data), name defines controller name, id defines controller identifier
-     * @memberof EkstepRendererAPI
+     * @memberof ThemePlugin
      */
     addController: function(p) {
         var controller = ControllerManager.get(p, this.baseDir);
@@ -204,7 +203,7 @@ var ThemePlugin = Plugin.extend({
     /**
      * Returns the asset/media object of Image, Audio, video etc from ecml.. which is defined in the manifest of the given assetId
      * @param assetId {string} assetId of the desired asset/media defined in manifest
-     * @memberof EkstepRendererAPI
+     * @memberof ThemePlugin
      **/
     getMedia: function(aid) {
         return _.find(this._data.manifest.media, function(item) {
@@ -279,6 +278,13 @@ var ThemePlugin = Plugin.extend({
             instance._currentScene.dispatchEvent('enter');
         });
     },
+
+    /**
+     * Merge two stages into single stage.
+     * @param stage1 {object} Stage1 data to be merged with another stage.
+     * @param stage2 {object} Stage2 data to be merged with another stage.
+     * @memberof ThemePlugin
+     **/
     mergeStages: function(stage1, stage2) {
         for (k in stage2) {
             if (k === 'id') continue;
@@ -353,7 +359,7 @@ var ThemePlugin = Plugin.extend({
     /**
      * Removes current stage HTML elements. This could be useful when plugins work across stages
      * Using this, a plugin can get access to remove the current stage HTML element such vidoe html element etc.,
-     * @memberof EkstepRendererAPI
+     * @memberof ThemePlugin
      */
     removeHtmlElements: function() {
         var gameAreaEle = jQuery('#' + Renderer.divIds.gameArea);
@@ -467,7 +473,7 @@ var ThemePlugin = Plugin.extend({
      * @param scope {string} name of the scope (e.g. stage, theme, app)
      * @paramName {string} name to param to set.
      * @paramName {object} value of the param.
-     * @memberof EkstepRendererAPI
+     * @memberof ThemePlugin
      */
     setParam: function(param, value, incr, max) {
         var instance = this;
@@ -486,7 +492,7 @@ var ThemePlugin = Plugin.extend({
     /**
      * return the param data
      * @paramName {string} name to param to set.
-     * @memberof EkstepRendererAPI
+     * @memberof ThemePlugin
      */
     getParam: function(param) {
         var instance = this;
@@ -516,7 +522,7 @@ var ThemePlugin = Plugin.extend({
      * undefined if the stage data is not present for the particular stage identfier.
      * this could be usefull when plugin wants to fetch some paticular stage data.
      * @param stageId {string} name of the identifier.
-     * @memberof `
+     * @memberof ThemePlugin
      */
     getStageDataById: function(stageId) {
         var stageData = undefined;

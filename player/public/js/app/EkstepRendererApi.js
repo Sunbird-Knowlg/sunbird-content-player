@@ -751,4 +751,14 @@ window.EkstepRendererAPI = {
         if (ctrl._index > 0 && ctrl._index < ctrl._model.length) return ctrl._model[ctrl._index - 1];
         return 'Item not available';
     },
+
+    /**
+     * Merge two stages into single stage and return the final stage.
+     * @param stage1 {object} Stage1 data to be merged with another stage.
+     * @param stage2 {object} Stage2 data to be merged with another stage.
+     * @memberof EkstepRendererAPI
+     **/
+    mergeStages: function(stage1, stage2) {
+        return Renderer.theme.mergeStages(stage1, stage2);
+    }
 }
