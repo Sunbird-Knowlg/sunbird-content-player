@@ -718,7 +718,7 @@ window.EkstepRendererAPI = {
     /**
      * Invoke childrens again to reflect changes
      * @param scope {object} this variable (use this variable)
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
     invokeChildren: function(pluginId, scope) {
         var plugin = this.getPluginInstance(pluginId);
