@@ -541,7 +541,7 @@ window.EkstepRendererAPI = {
      * Adds a child to this plugin intance. This can be useful for composite scenarios.
      * @param pluginId {string} plugin id inside which child had to be added
      * @param child {object} child element which has to be added inside plugin(child is not a createjs/this._self element)
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      **/
     addChild: function(pluginId, child) {
         var plugin = this.getPluginInstance(pluginId);
@@ -553,7 +553,7 @@ window.EkstepRendererAPI = {
      * Removes a child from this plugin by child index. Use this to dynamically manage composite children.
      * @param pluginId {string} plugin id from which child has to be removed
      * @param index {Number} index of createjs element object
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      **/
     removeChildAt: function(pluginId, index) {
         var plugin = this.getPluginInstance(pluginId);
@@ -565,7 +565,7 @@ window.EkstepRendererAPI = {
      * Removes a child from this plugin by child instance. Use this to dynamically manage composite children.
      * @param pluginId {string} plugin id from which child has to be removed
      * @param child {object} child element which has to be removed(child should not be createjs/this._self element)
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      **/
     removeChild: function(pluginId, child) {
         var plugin = this.getPluginInstance(pluginId);
@@ -576,7 +576,7 @@ window.EkstepRendererAPI = {
     /**
      * To get plugin dimensions specified in ECML/JSON
      * @param pluginId {string} plugin id of element whose dimension is needed
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      **/
     dimensions: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -586,7 +586,7 @@ window.EkstepRendererAPI = {
     /**
      * To get plugin dimensions relative to Canvas/device width & height also with respect to it's parents
      * @param pluginId {string} plugin id of element whose dimension is needed
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      **/
     relativeDims: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -597,7 +597,7 @@ window.EkstepRendererAPI = {
      * property of the plugin to show it's visiblity on stage
      * @param assetId {string} assetId of element to show
      * @param delay {number} [0] delay before action happened (optional)
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      **/
     show: function(assetId, delay) {
         var props = {
@@ -610,7 +610,7 @@ window.EkstepRendererAPI = {
      * Property of the plugin to hide it's visiblity on stage
      * @param assetId {string} assetId of element to hide
      * @param delay {number} [0] delay before action happened (optional)
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      **/
     hide: function(assetId, delay) {
         var props = {
@@ -623,7 +623,7 @@ window.EkstepRendererAPI = {
      * property of the plugin to toggle it's visiblity on stage
      * @param assetId {string} assetId of element to toggle
      * @param delay {number} [0] delay before action happened (optional)
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
     toggleShow: function(assetId, delay) {
         var props = {
@@ -635,7 +635,7 @@ window.EkstepRendererAPI = {
     /**
      * property of the plugin to toggle it's shadow
      * @param pluginId {string} plugin id of element whose shadow has to be toggled
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
     toggleShadow: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -645,7 +645,7 @@ window.EkstepRendererAPI = {
     /**
      * property of the plugin to add shadow using createJS shadow property
      * @param pluginId {string} plugin id of element whose shadow should be added
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
     addShadow: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -655,7 +655,7 @@ window.EkstepRendererAPI = {
     /**
      * property of the plugin to remove it's shadow
      * @param pluginId {string} plugin id of element whose shadow should be removed
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
     removeShadow: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -665,7 +665,7 @@ window.EkstepRendererAPI = {
     /**
      * Returns the boolean which show if element has shawdow enabled or not.
      * @param pluginId {string} plugin id of element whose shadow needs to be findout
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
     hasShadow: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -676,7 +676,7 @@ window.EkstepRendererAPI = {
      * Draw a border on element
      * @param pluginId {string} plugin id of element border should be drawn
      * @param dims {object} dimension of border to be drawed
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
     drawBorder: function(pluginId, dims) {
         var plugin = this.getPluginInstance(pluginId);
@@ -687,7 +687,7 @@ window.EkstepRendererAPI = {
      * Rotate an element
      * @param pluginId {string} plugin id of element to be rotated
      * @param rotate {integer} angle through which plugin will be rotated(0 to 360)
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
     rotation: function(pluginId, rotate) {
         var plugin = this.getPluginInstance(pluginId);
@@ -698,7 +698,7 @@ window.EkstepRendererAPI = {
     /**
      * Blur the element
      * @param pluginId {string} plugin id of element to be blurred
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
     blur: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -708,7 +708,7 @@ window.EkstepRendererAPI = {
     /**
      * Unblur the current element
      * @param pluginId {string} plugin id of element to be unblurred
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
     unblur: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -718,7 +718,7 @@ window.EkstepRendererAPI = {
     /**
      * Invoke childrens again to reflect changes
      * @param scope {object} this variable (use this variable)
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
     invokeChildren: function(pluginId, scope) {
         var plugin = this.getPluginInstance(pluginId);
