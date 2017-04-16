@@ -786,11 +786,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             GlobalContext.currentContentMimeType = $rootScope.content.mimeType;
             if (navType === "next") {
                 EventBus.dispatch("actionNavigateNext", navType);
-                EventBus.dispatch("nextButtonClicked");
+                EventBus.dispatch("nextClick");
 
             } else if (navType === "previous") {
                 EventBus.dispatch("actionNavigatePrevious", navType);
-                EventBus.dispatch("previousButtonClicked");
+                EventBus.dispatch("previousClick");
             }
         }
 
@@ -1155,7 +1155,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 element.hide();
                 scope.retryAssessment = function(id, e) {
                     scope.hidePopup(id);
-                    EventBus.dispatch("retryAssessmentClicked");
+                    EventBus.dispatch("retryAssessmentClicked"); // This event is not working; hide popup is getting called though
                 }
 
                 scope.hidePopup = function(id) {
@@ -1167,7 +1167,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 scope.moveToNextStage = function(navType) {
                     EventBus.dispatch("actionNavigateSkip", navType);
-                    EventBus.dispatch("skipToNextClicked");
                 }
             }
         }
@@ -1190,6 +1189,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 $scope.moveToNextStage = function(navType) {
                     EventBus.dispatch("actionNavigateSkip", navType);
+                    EventBus.dispatch("skipClick");
                 }
             }
         }
@@ -1237,7 +1237,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $scope.onSubmit = function() {
                     if ($scope.isEnabled) {
                         $rootScope.defaultSubmit();
-                        EventBus.dispatch("submitClicked");
+                        EventBus.dispatch("submitClick");
                     }
                 }
             }
