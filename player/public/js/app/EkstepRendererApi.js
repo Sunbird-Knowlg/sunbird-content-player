@@ -750,7 +750,6 @@ window.EkstepRendererAPI = {
         if (ctrl._index > 0 && ctrl._index < ctrl._model.length) return ctrl._model[ctrl._index - 1];
         return 'Item not available';
     },
-
     /**
      * Merge two stages into single stage and return the final stage.
      * @param stage1 {object} Stage1 data to be merged with another stage.
@@ -759,5 +758,14 @@ window.EkstepRendererAPI = {
      **/
     mergeStages: function(stage1, stage2) {
         return Renderer.theme.mergeStages(stage1, stage2);
+    },
+    /**
+     *This api is going to return you the complete item list in the stage
+     *@memberof EkstepRendererAPI
+     */
+    getStageItems: function() {
+        var currentController = EkstepRendererAPI.getCurrentController();
+        if (currentController && currentController._model) return currentController._model;
+        return "Item not available."
     }
 }
