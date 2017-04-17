@@ -1155,7 +1155,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 element.hide();
                 scope.retryAssessment = function(id, e) {
                     scope.hidePopup(id);
-                    EventBus.dispatch("retryClick"); // This event is not working; hide popup is getting called though; need to cleanup popup directive
                 }
 
                 scope.hidePopup = function(id) {
@@ -1177,6 +1176,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             controller: function($scope, $rootScope, $timeout) {
                 $scope.retryAssessment = function(id, e) {
                     $scope.hidePopup(id);
+                    EventBus.dispatch("retryClick");
                 }
 
                 $scope.hidePopup = function(id) {
