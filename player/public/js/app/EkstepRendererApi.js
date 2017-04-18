@@ -56,7 +56,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     render: function() {
-        Renderer.theme.update = true;
+        Renderer.update = true;
     },
 
     /**
