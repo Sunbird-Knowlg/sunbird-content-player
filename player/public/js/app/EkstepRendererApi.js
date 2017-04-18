@@ -172,14 +172,16 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the controller instance based on identifier.
-     * @param id {string} It will accetp the controller identifier as input. this could be usefull when plugin
-     * get access to get the controller from canvas.
+     * Returns the controller instance based on controller type and identifier.
+     * this could be usefull when plugin get access to get the controller from canvas.
      * suppose if it returns undefined then Controller has not been registed.
-     * @memberof EkstepRendererAPI
+     * @param cId {string} Controller identifier.
+     * @param cType {string} Controller Type (e.g cType = data OR Items)
+     @memberof EkstepRendererAPI
      */
-    getController: function(id) {
-        return ControllerManager.getControllerInstance(id);
+    getController: function(cType, cId) {
+        var c = cType + '.' + cId;
+        return ControllerManager.getControllerInstance(c);
     },
 
     /**
