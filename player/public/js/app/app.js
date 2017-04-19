@@ -320,7 +320,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if (!$rootScope.content) {
                 $rootScope.getContentMetadata($stateParams.itemId);
             }
-            startProgressBar(40, 0.6, $rootScope.content.name);
+            $rootScope.pageTitle = $rootScope.content.name;
+            startProgressBar(40, 0.6);
             TelemetryService.interact("TOUCH", "gc_replay", "TOUCH", {
                 stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
             });
@@ -494,7 +495,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.renderContent = function() {
             if ($stateParams.itemId && $rootScope.content) {
                 localStorageGC.setItem("content", $rootScope.content);
-                startProgressBar(40, 0.6, $rootScope.content.name);
+
+                $rootScope.pageTitle = $rootScope.content.name;
+                startProgressBar(40, 0.6);
                 // In the case of AT preview Just we are setting up the currentContentId
                 GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
                 $scope.callStartTelemetry($rootScope.content);
