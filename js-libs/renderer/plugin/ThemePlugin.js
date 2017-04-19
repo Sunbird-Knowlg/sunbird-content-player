@@ -268,7 +268,8 @@ var ThemePlugin = Plugin.extend({
                 "stageId": stageId
             };
             // window.parent.jQuery('body').trigger('onstagechange', retObj);
-            window.parent.document.dispatchEvent('onstagechange', retObj);
+            var custEvent = new Event('onstagechange');
+            window.parent.document.dispatchEvent(custEvent, retObj);
         }
     },
     preloadStages: function() {
