@@ -268,10 +268,13 @@ var ThemePlugin = Plugin.extend({
                 "stageId": stageId
             };
             // window.parent.jQuery('body').trigger('onstagechange', retObj);
+            var iFrameObj = document.getElementsByTagName("iframe")[0].contentWindow;
+            iFrameObj.postMessage(retObj, "*");
+
             var custEvent = new Event('onstagechange');
             //window.parent.document.dispatchEvent(custEvent, retObj);
 
-            window.document.dispatchEvent(custEvent, retObj);
+            window.dispatchEvent(custEvent, retObj);
         }
     },
     preloadStages: function() {
