@@ -1,26 +1,60 @@
 describe('Theme Plugin test cases', function() {
 
     beforeEach(function(done) {
-
         var themeData = {
            theme : {
-                canvasId: "gameCanvas",
+            canvasId: "gameCanvas",
             startStage: "splash",
             manifest: {
                 media: [
-                    { id: 'sringeri', src: 'https://ekstep-public.s3.amazonaws.com/preview/dev/img/icons/splash.png', type: 'image' },
-                    { id: 'splash_audio', src: 'https://ekstep-public.s3.amazonaws.com/preview/dev/assets/sounds/goodjob.mp3', type: 'audio' }
+                    { id: 'sringeri', src: 'http-image/sringeri.png', type: 'image' },
+                    { id: 'splash_audio', src: 'http-image/splash.ogg', type: 'audio' }
                 ]
             },
+            controller: [],
             stage: [
-                { id: "splash", extends: "splash1", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } },
-                { id: "splash1", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } },
-                { id: "splash2", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } }
+                { id: "splash", audio: [{ asset: 'splash_audio' }], img: [{ asset: 'sringeri' }], 
+                    "x" : 0,
+                    "y" : 0,
+                    "w" : 100,
+                    "h" : 100,
+                    "param" : [{
+                            "name" : "instructions",
+                            "value" : ""
+                        }, {
+                            "name" : "next",
+                            "value" : "splash1"
+                        }
+                    ],
+                    "events" : {
+                        "event" : [{
+                                "action" : {
+                                    "type" : "command",
+                                    "command" : "play",
+                                    "asset" : "splash_audio",
+                                    "loop" : 1
+                                },
+                                "type" : "enter"
+                            }
+                        ]
+                    },
+                    "image" : [{
+                        "x" : 10,
+                        "y" : 20,
+                        "w" : 70,
+                        "h" : 80,
+                        "visible" : true,
+                        "editable" : true,
+                        "asset" : "sringeri",
+                        "z-index" : 4
+                    }], 
+                },
+                { id: "splash1", audio: [{ asset: 'splash_audio' }], img: [{ asset: 'sringeri' }] },
+                { id: "splash2", audio: [{ asset: 'splash_audio' }], img: [{ asset: 'sringeri' }] }
             ]
            }
         }
         // Renderer.theme = { _currentStage: '' };
-
         startRenderer(themeData);
         this.plugin = Renderer.theme;
 
@@ -67,6 +101,10 @@ describe('Theme Plugin test cases', function() {
 
 
         done();
+    });
+    
+    afterEach(function() {
+      jasmine.clock().uninstall();
     });
 
     it('Theme plugin initPlugin() fields validation', function() {
@@ -194,13 +232,43 @@ describe('Theme Plugin test cases', function() {
         expect(this.plugin.getEase.calls.count()).toEqual(1);
     });
 
-    xit('Theme plugin getAsset()', function() {
-        this.plugin.getAsset("sringeri");
-        expect(this.plugin.getAsset).toHaveBeenCalled();
-        expect(this.plugin.getAsset.calls.count()).toEqual(1);
+    it('Theme plugin getAsset()', function() {
+        callback = jasmine.createSpy("callback");
+        jasmine.clock().install();
+        var instance = this;
+        setTimeout(function() {
+            callback();
+            //console.log("Pausing 2 seconds...");
+            var mediaAsset = instance.plugin.getAsset("sringeri");            
+            expect(mediaAsset).toBeDefined();
+        }, 2000);
+
+
+        expect(callback).not.toHaveBeenCalled();
+
+        jasmine.clock().tick(2000);
+
+        var mediaAsset = instance.plugin.getAsset("sringeri");            
+        expect(mediaAsset).toBeDefined();
+        expect(callback).toHaveBeenCalled();
+
+        //Reference: https://makandracards.com/makandra/32477-testing-settimeout-and-setinterval-with-jasmine
+        // Example : For setTimeout/callback
+        /*callback = jasmine.createSpy("callback");
+        jasmine.clock().install();
+
+        setTimeout(function() {
+            callback();
+        }, 100);
+
+        expect(callback).not.toHaveBeenCalled();
+
+        jasmine.clock().tick(100);
+
+        expect(callback).toHaveBeenCalled();*/
     });
 
-    it('Theme plugin mousePoint()', function() {
+    xit('Theme plugin mousePoint()', function() {
         this.plugin.mousePoint();
         expect(this.plugin.mousePoint).toHaveBeenCalled();
         expect(this.plugin.mousePoint.calls.count()).toEqual(1);
