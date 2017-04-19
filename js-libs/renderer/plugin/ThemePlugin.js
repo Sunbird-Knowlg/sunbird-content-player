@@ -263,13 +263,15 @@ var ThemePlugin = Plugin.extend({
 
         // Trigger onstagechange event, which is bind by parent window
         if (isbrowserpreview && window && window.parent) {
-            var parentBody = window.parent.document.getElementsByTagName('body');
+            /*var parentBody = window.parent.document.getElementsByTagName('body');*/
             var retObj = {
                 "stageId": stageId
             };
             // window.parent.jQuery('body').trigger('onstagechange', retObj);
             var custEvent = new Event('onstagechange');
-            window.parent.document.dispatchEvent(custEvent, retObj);
+            //window.parent.document.dispatchEvent(custEvent, retObj);
+
+            window.document.dispatchEvent(custEvent, retObj);
         }
     },
     preloadStages: function() {
