@@ -196,7 +196,7 @@ var localStorageGC = {
     }
 }
 
-function startTelemetry(id, ver) {
+function startTelemetry(id, ver, cb) {
     localStorageGC.removeItem("telemetryService");
     var correlationData = [];
     if (!_.isEmpty(GlobalContext.game.contentExtras) && !_.isUndefined(GlobalContext.game.contentExtras)) {
@@ -207,7 +207,7 @@ function startTelemetry(id, ver) {
             "type": GlobalContext.game.contentExtras[0].contentType
         }];
     }
-    TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData).then(function() {
+    TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData).then(function(response) {
         TelemetryService.start(id, ver);
         if (!_.isUndefined(TelemetryService.instance)) {
             var tsObj = _.clone(TelemetryService);
@@ -215,6 +215,11 @@ function startTelemetry(id, ver) {
             tsObj._end = JSON.stringify(tsObj.instance._end);
             localStorageGC.setItem("telemetryService", tsObj);
             localStorageGC.save();
+        }
+        if (!_.isUndefined(cb) && response == true) {
+            cb();
+        } else {
+            console.error("failed to initialize TelemetryService")
         }
     }).catch(function(error) {
         console.log('TelemetryService init failed');
