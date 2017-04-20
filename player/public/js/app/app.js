@@ -1097,6 +1097,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'E',
             template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}icn_audio.png" style="position: absolute;margin: 3%;width: 10%;z-index: 1;margin-left: 40%; display: block;" /><img id="unmute_id" ng-src="{{imageBasePath}}unmute.png" style="position: absolute;margin: 2% 2% 2% 39%;display: none; width: 14%; z-index: 1;"/> </a>',
             link: function(scope, url) {
+                var muteElement = document.getElementById("unmute_id");
+                if (!_.isNull(muteElement)) {
+                    muteElement.style.display = "none";
+                }
+                AudioManager.unmute();
                 scope.mute = function() {
                     //mute function goes here
                     if (AudioManager.muted) {
