@@ -11,14 +11,13 @@ PluginManager = {
     invoke: function(id, data, parent, stage, theme) {
         var plugin;
         if (this.isPlugin(id)) {
-            if (this.isCanvasCorePlugin(id)) {
-                // TODO: Will remove this check once the pluginmanifest is added to canvas coreplugins
-                plugin = org.ekstep.pluginframework.pluginManager.plugins[id];
-                return this.invokePlugins(plugin, data, parent, stage, theme);
-            } else {
+            //Note: To Support for the canvas core Plugins without manifest object.
+            //TODO: Canvas corePlugins should have manifest.json object
+            plugin = org.ekstep.pluginframework.pluginManager.plugins[id];
+            if (typeof plugin != 'function') {
                 plugin = org.ekstep.pluginframework.pluginManager.plugins[id].p;
-                return this.invokePlugins(plugin, data, parent, stage, theme);
             }
+            return this.invokePlugins(plugin, data, parent, stage, theme);
         } else {
             console.warn("Plugin not found", p);
         }
@@ -34,9 +33,49 @@ PluginManager = {
         }
         return p;
     },
-    isCanvasCorePlugin: function(id) {
-        corePlugin = ['set', 'tween', 'video', 'shape', 'sprite', 'summary', 'testcase', 'text', 'input', 'mcq', 'mtf', 'option', 'options', 'placeholder', 'scribble', 'theme', 'stage', 'audio', 'g', 'div', 'embed', 'grid', 'htext', 'hotspot', 'image', ];
-        return _.contains(corePlugin, id);
+    //Note: This method to support the olderContents
+    loadPlugins: function(media, cb) {
+        var instance = this;
+        if (media) {
+            media.forEach(function(media) {
+                if (instance.isPlugin(media.id)) {
+                    PluginManager.addError('external JS/CSS cannot override system plugin - ' + media.id);
+                } else {
+                    media.src = instance.handleRelativePath(media.src, pfConfig.backwardCompatibalityURL);
+                    switch (media.type) {
+                        case 'js':
+                            org.ekstep.pluginframework.jQuery("body").append($("<script type='text/javascript' src=" + media.src + ">"));
+                            break;
+                        case 'css':
+                            org.ekstep.pluginframework.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + media.src + "'>");
+                            break;
+                        case 'plugin':
+                            instance.loadCustomPlugin(media, media.src);
+                    }
+                }
+            });
+        }
+        if (cb) cb();
+    },
+    loadCustomPlugin: function(plugin, relativePath) {
+        jQuery.ajax({
+            async: false,
+            url: relativePath,
+            dataType: "text"
+        }).error(function(err) {
+            console.error('Unable to load custom plugin js source');
+        }).done(function(data) {
+            console.info('Registering custom plugin - ', plugin.id);
+            PluginManager.registerPlugin(plugin.id, eval(data));
+        });
+    },
+    handleRelativePath: function(src, gameRelPath) {
+        if (src.substring(0, 4) != 'http') {
+            if (!isbrowserpreview) {
+                src = gameRelPath + src;
+            }
+        }
+        return src;
     },
     registerPluginObject: function(pluginObj) {
         org.ekstep.pluginframework.pluginManager.addPluginInstance(pluginObj);
