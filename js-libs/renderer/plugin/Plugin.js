@@ -92,8 +92,8 @@ var Plugin = Class.extend({
             if (this._enableEvents) {
                 EventManager.registerEvents(this, this._data);
             }
-
-            this._id = this._data.id || this._data.asset || _.uniqueId('plugin');
+            //TODO: Need to remove the _id use only id varible  
+            this._id = this.id = this._data.id || this._data.asset || _.uniqueId('plugin');
             PluginManager.registerPluginObject(this);
             if (this._self && data.visible === false) {
                 this._self.visible = false;
@@ -690,7 +690,7 @@ var Plugin = Class.extend({
         //children = _.sortBy(children, 'z-index'); // Now this is no longer required as the elements are sorted by z-index at the end
         for (k in children) {
             var item = children[k];
-            PluginManager.invoke(item.pluginType, item, parent, stage, theme);
+            if(item.pluginType) PluginManager.invoke(item.pluginType, item, parent, stage, theme);
         }
         if (parent._self) {
             parent._self.sortChildren(function(obj1, obj2, options) {
