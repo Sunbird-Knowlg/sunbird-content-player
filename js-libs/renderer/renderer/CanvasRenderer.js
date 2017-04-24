@@ -88,9 +88,22 @@ Renderer = {
         Renderer.theme = new ThemePlugin(content);
         Renderer.resizeGame(true);
         Renderer.theme.baseDir = gameRelPath;
-        var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);
-        PluginManager.registerCustomPlugins(manifest, gameRelPath.replace('file:///', '') + "/widgets/");
-        Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
+        initializePluginFramwork(gameRelPath);
+        var media = this.getCanvasMedia();
+        var pluginManifest = content.pluginManifest;
+        try {
+            if (pluginManifest) {
+                this.loadPlugins(media, pluginManifest, function() {
+                    Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
+                });
+            }else{
+                PluginManager.loadPlugins(media,function(){
+                     Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
+                 });
+            }
+        } catch (e) {
+            console.warn("Framework fails to load plugins", e);
+        }
         createjs.Ticker.addEventListener("tick", function() {
             if (Renderer.update) {
                 if (!_(Renderer.theme).isUndefined()) {
@@ -104,9 +117,33 @@ Renderer = {
             }
         });
     },
+    loadPlugins: function(plugins, pluginManifest, cb) {
+        var pluginsObj = {};
+        if (plugins) {
+            plugins.forEach(function(p) {
+                pluginsObj[p.id] = "1.0" || p.ver; // TODO: Will remove the 1.0 value 
+            });
+        }
+        if (pluginManifest) {
+            pluginManifest.plugin.forEach(function(p) {
+                pluginsObj[p.id] = "1.0" || p.ver; // TODO: Will remove the 1.0 value 
+            });
+        }
+        org.ekstep.pluginframework.pluginManager.loadAllPlugins(pluginsObj, function() {
+            console.info("Framework Loaded the plugins", pluginsObj);
+            if (cb) cb();
+        });
+    },
+    getCanvasMedia: function() {
+        var data = Renderer.theme._data;
+        var manifest = data.manifest ? data.manifest : AssetManager.getManifest(data);
+        var plugins = _.filter(!_.isArray(manifest.media) ? [manifest.media] : manifest.media, function(media) {
+            return media.type == 'plugin' || media.type == 'js' || media.type == 'css';
+        });
+        return plugins;
+    },
     cleanUp: function() {
         Renderer.running = false;
-        PluginManager.cleanUp();
         AnimationManager.cleanUp();
         AssetManager.destroy();
         TimerManager.destroy();
@@ -121,5 +158,5 @@ Renderer = {
     resume: function() {
         if (Renderer.theme)
             Renderer.theme.resume();
-    }
+    },
 }
