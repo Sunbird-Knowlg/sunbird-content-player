@@ -1,167 +1,63 @@
-String.prototype.containsAny = function() {
-    for (var i = 0; i < arguments.length; i++) {
-        if (this.indexOf(arguments[i]) > -1) {
-            return false;
-        }
-    }
-    return true;
-}
-
 PluginManager = {
     pluginMap: {},
-    customPluginMap: {},
     customJSLibMap: {},
     pluginObjMap: {},
     errors: [],
     defaultResWidth: 1920,
     defaultResHeight: 1200,
-    keywords: ['CommandManager', 'AnimationManager', 'AssetManager', 'AudioManager', 'ControllerManager', 'EventManager'],
     registerPlugin: function(id, plugin) {
-        PluginManager.pluginMap[id] = plugin;
+        org.ekstep.pluginframework.pluginManager.plugins[id] = plugin;
         createjs.EventDispatcher.initialize(plugin.prototype);
-    },
-    registerCustomPlugin: function(id, plugin) {
-        PluginManager.customPluginMap[id] = plugin;
-        createjs.EventDispatcher.initialize(plugin.prototype);
-    },
-    registerCustomPlugins: function(manifest, relativePath) { //TODO: Use async.js to load custom plugins
-        try {
-            if (!_.isEmpty(manifest)) {
-
-                PluginManager.customPluginMap = {};
-                var media = manifest.media;
-                var plugins = _.filter(!_.isArray(media) ? [media] : media, function(media) {
-                    return media.type == 'plugin'
-                });
-
-                media = _.filter(!_.isArray(media) ? [media] : media, function(media) {
-                    return media.type == 'js' || media.type == 'css';
-                });
-                relativePath = ("undefined" !== typeof cordova && relativePath) ? "file:///" + relativePath : relativePath;
-                if (media) {
-                    media.forEach(function(media) {
-                        if (PluginManager.pluginMap[media.id]) {
-                            PluginManager.addError('external JS/CSS cannot override system plugin - ' + media.id);
-                        } else {
-                            switch (media.type) {
-                                case 'js':
-                                    PluginManager.loadJS(media.src, relativePath);
-                                    break;
-                                case 'css':
-                                    PluginManager.loadCSS(media.src, relativePath);
-                                    break;
-                            }
-                        }
-                    });
-                }
-                if (plugins) {
-                    if (!_.isArray(plugins)) {
-                        plugins = [plugins];
-                    }
-                    plugins.forEach(function(plugin) {
-                        if (PluginManager.pluginMap[plugin.id]) {
-                            PluginManager.addError('Custom plugin cannot override system plugin - ' + plugin.id);
-                        } else {
-                            PluginManager.loadCustomPlugin(plugin, relativePath);
-                        }
-                    });
-                }
-            }
-        } catch (e) {
-            //TelemetryService.error(e.stack);
-            showToaster('error', 'Plugin faild to register');
-            console.warn(relativePath + "Plugin having some error", e);
-        }
     },
     isPlugin: function(id) {
-        if (PluginManager.pluginMap[id] || PluginManager.customPluginMap[id]) {
-            return true;
-        } else {
-            return false;
-        }
+        return org.ekstep.pluginframework.pluginManager.isDefined(id);
     },
     invoke: function(id, data, parent, stage, theme) {
+        if (this.isCanvasCorePlugin(id)) {
+            return this.invokeCorePlugin(id, data, parent, stage, theme);
+        } else {
+            //return this.invokeCorePlugin(id, data, parent, stage, theme);
+            org.ekstep.pluginframework.pluginManager.invoke(id, data, parent, undefined, stage, theme);
+        }
+    },
+    // TODO : Will remove this function once the manifest added to each core plugins
+    invokeCorePlugin: function(id, data, parent, stage, theme) {
         var p;
-        var plugin = PluginManager.pluginMap[id] || PluginManager.customPluginMap[id];
+        var plugin = org.ekstep.pluginframework.pluginManager.plugins[id];
         if (!plugin) {
-            PluginManager.addError('No plugin found for - ' + id);
+            console.warn("Plugin not found");
         } else {
             if (_.isArray(data)) {
                 data.forEach(function(d) {
-                    new plugin(d, parent, stage, theme);
-                })
+                    p = new plugin(d, parent, stage, theme);
+                });
             } else {
                 p = new plugin(data, parent, stage, theme);
             }
         }
         return p;
     },
+
+    isCanvasCorePlugin: function(id) {
+        corePlugin = ['set', 'tween', 'video', 'shape', 'sprite', 'summary', 'testcase', 'text', 'input', 'mcq', 'mtf', 'option', 'options', 'placeholder', 'scribble', 'theme', 'stage', 'audio', 'g', 'div', 'embed', 'grid', 'htext', 'hotspot', 'image', ];
+        return _.contains(corePlugin, id);
+    },
     registerPluginObject: function(pluginObj) {
-        PluginManager.pluginObjMap[pluginObj._id] = pluginObj;
+        org.ekstep.pluginframework.pluginManager.addPluginInstance(pluginObj);
     },
     getPluginObject: function(id) {
-        return PluginManager.pluginObjMap[id];
+        return org.ekstep.pluginframework.pluginManager.getPluginInstance(id);
     },
     addError: function(error) {
-        PluginManager.errors.push(error);
+        org.ekstep.pluginframework.pluginManager.addError(error);
     },
     getErrors: function() {
-        return PluginManager.errors;
+        org.ekstep.pluginframework.pluginManager.getErrors(error);
     },
     cleanUp: function() {
-        PluginManager.pluginObjMap = {};
-        PluginManager.customPluginMap = {};
-        PluginManager.errors = [];
-    },
-    validateCustomPlugin: function(id, data) {
-        if (data) {
-            //TODO: Enhance the keywords
-            if (!data.containsAny.apply(data, PluginManager.keywords)) {
-                console.error('Excluded keywords found in the custom plugin');
-                PluginManager.errors.push('Excluded keywords found in the custom plugin')
-            } else {
-                console.info('Registering custom plugin - ', id);
-                PluginManager.registerCustomPlugin(id, eval(data));
-            }
-        }
-    },
-    registerJSLib: function(id, data) {
-        PluginManager.registerCustomPlugin(id, data);
-    },
-    loadCustomPlugin: function(plugin, relativePath) {
-        var pluginUrl = this.handleRelativePath(plugin.src, relativePath);
-        jQuery.ajax({
-            async: false,
-            url: pluginUrl,
-            dataType: "text"
-        }).error(function(err) {
-            console.error('Unable to load custom plugin js source');
-        }).done(function(data) {
-            console.info('Registering custom plugin - ', plugin.id);
-            PluginManager.validateCustomPlugin(plugin.id, data);
-        });
-    },
-    loadCSS: function(href, gameRelPath) {
-        var cssUrl = this.handleRelativePath(href, gameRelPath);
-        console.info("loading external CSS: ", cssUrl);
-        jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + cssUrl + "'>");
-    },
-    loadJS: function(src, gameRelPath) {
-        var jsUrl = this.handleRelativePath(src, gameRelPath);
-        console.info("loading external JS: ", jsUrl);
-        var jsLink = $("<script type='text/javascript' src=" + jsUrl + ">");
-        jQuery("head").append(jsLink);
+        org.ekstep.pluginframework.pluginManager.cleanUp();
     },
     getPlugins: function() {
-        return Object.keys(PluginManager.pluginMap);
-    },
-    handleRelativePath: function(src, gameRelPath) {
-        if (src.substring(0, 4) != 'http') {
-            if (!isbrowserpreview) {
-                src = gameRelPath + src;
-            }
-        }
-        return src;
-    },
-
-}
+        return org.ekstep.pluginframework.pluginManager.getPlugins();
+    }
+};
