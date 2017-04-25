@@ -75,6 +75,7 @@ Renderer = {
             });
     },
     init: function(data, canvasId, gameRelPath) {
+        var instance = this;
         tempData = data;
         if (!jQuery.isPlainObject(data)) {
             var x2js = new X2JS({
@@ -91,29 +92,18 @@ Renderer = {
         initializePluginFramwork(gameRelPath);
         var media = this.getCanvasMedia();
         var pluginManifest = content.pluginManifest;
+        pluginManifest = _.isUndefined(pluginManifest) ? {} : content.pluginManifest.plugin;
         try {
-            if (_.size(pluginManifest)) {
-                this.loadPlugins(media, pluginManifest, function() {
+            instance.loadPlugins(pluginManifest, function() {
+                instance.loadPlugins(media, function() {
                     PluginManager.loadPlugins(media, function() {
                         Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
                     });
                 });
-            } else {
-                PluginManager.loadPlugins(media, function() {
-                    Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
-                });
-            }
-           /* if (_.size(pluginManifest)) {
-                this.loadPlugins(media, pluginManifest, function() {
-                    Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
-                });
-            } else {
-                PluginManager.loadPlugins(media, function() {
-                    Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
-                });
-            }*/
+            });
         } catch (e) {
             console.warn("Framework fails to load plugins", e);
+            showToaster('Framework fails to load plugin');
         }
         createjs.Ticker.addEventListener("tick", function() {
             if (Renderer.update) {
@@ -128,16 +118,12 @@ Renderer = {
             }
         });
     },
-    loadPlugins: function(plugins, pluginManifest, cb) {
+    loadPlugins: function(media, cb) {
         var pluginsObj = {};
-        if (plugins) {
-            plugins.forEach(function(p) {
-                pluginsObj[p.id] = "1.0" || p.ver; // TODO: Will remove the hardcoded 1.0 value 
-            });
-        }
-        if (pluginManifest) {
-            pluginManifest.plugin.forEach(function(p) {
-                pluginsObj[p.id] = "1.0" || p.ver; // TODO: Will remove the hardcoded 1.0 value 
+        console.info("media",media);
+        if (media) {
+            _.each(media, function(p) {
+                pluginsObj[p.id] = "1.0" || p.ver;
             });
         }
         org.ekstep.pluginframework.pluginManager.loadAllPlugins(pluginsObj, function() {
