@@ -11,7 +11,7 @@ PluginManager = {
     invoke: function(id, data, parent, stage, theme) {
         var plugin;
         if (this.isPlugin(id)) {
-            //Note: To Support for the canvas core Plugins without manifest object.
+            //Note: To Support for the canvas core Plugins.
             //TODO: Canvas corePlugins should have manifest.json object
             plugin = org.ekstep.pluginframework.pluginManager.plugins[id];
             if (typeof plugin != 'function') {
@@ -39,7 +39,7 @@ PluginManager = {
         if (media) {
             media.forEach(function(media) {
                 if (instance.isPlugin(media.id)) {
-                    PluginManager.addError('external JS/CSS cannot override system plugin - ' + media.id);
+                    console.info("Plugin is alreay loaded..", media.id);
                 } else {
                     media.src = instance.handleRelativePath(media.src, pfConfig.backwardCompatibalityURL);
                     switch (media.type) {

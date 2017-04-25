@@ -92,15 +92,26 @@ Renderer = {
         var media = this.getCanvasMedia();
         var pluginManifest = content.pluginManifest;
         try {
-            if (pluginManifest) {
+            if (_.size(pluginManifest)) {
+                this.loadPlugins(media, pluginManifest, function() {
+                    PluginManager.loadPlugins(media, function() {
+                        Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
+                    });
+                });
+            } else {
+                PluginManager.loadPlugins(media, function() {
+                    Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
+                });
+            }
+           /* if (_.size(pluginManifest)) {
                 this.loadPlugins(media, pluginManifest, function() {
                     Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
                 });
-            }else{
-                PluginManager.loadPlugins(media,function(){
-                     Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
-                 });
-            }
+            } else {
+                PluginManager.loadPlugins(media, function() {
+                    Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
+                });
+            }*/
         } catch (e) {
             console.warn("Framework fails to load plugins", e);
         }
@@ -121,12 +132,12 @@ Renderer = {
         var pluginsObj = {};
         if (plugins) {
             plugins.forEach(function(p) {
-                pluginsObj[p.id] = "1.0" || p.ver; // TODO: Will remove the 1.0 value 
+                pluginsObj[p.id] = "1.0" || p.ver; // TODO: Will remove the hardcoded 1.0 value 
             });
         }
         if (pluginManifest) {
             pluginManifest.plugin.forEach(function(p) {
-                pluginsObj[p.id] = "1.0" || p.ver; // TODO: Will remove the 1.0 value 
+                pluginsObj[p.id] = "1.0" || p.ver; // TODO: Will remove the hardcoded 1.0 value 
             });
         }
         org.ekstep.pluginframework.pluginManager.loadAllPlugins(pluginsObj, function() {
