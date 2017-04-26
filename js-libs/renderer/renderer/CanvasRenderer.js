@@ -89,21 +89,18 @@ Renderer = {
         Renderer.theme = new ThemePlugin(content);
         Renderer.resizeGame(true);
         Renderer.theme.baseDir = gameRelPath;
-        initializePluginFramwork(gameRelPath);
-        var media = this.getCanvasMedia();
+        var manifestMedia = this.getMedia();
+        PluginManager.init(gameRelPath);
+        this.handleRelativePath(manifestMedia, pfConfig.backwardCompatibalityURL);
         var pluginManifest = content.pluginManifest;
         pluginManifest = _.isUndefined(pluginManifest) ? {} : content.pluginManifest.plugin;
         try {
-            instance.loadPlugins(pluginManifest, function() {
-                instance.loadPlugins(media, function() {
-                    PluginManager.loadPlugins(media, function() {
-                        Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
-                    });
-                });
+            instance.loadPlugins(pluginManifest, manifestMedia, function() {
+                Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
             console.warn("Framework fails to load plugins", e);
-            showToaster('Framework fails to load plugin');
+            showToaster('error', 'Framework fails to load plugins');
         }
         createjs.Ticker.addEventListener("tick", function() {
             if (Renderer.update) {
@@ -118,24 +115,29 @@ Renderer = {
             }
         });
     },
-    loadPlugins: function(media, cb) {
-        var pluginsObj = {};
-        console.info("media",media);
-        if (media) {
-            _.each(media, function(p) {
-                pluginsObj[p.id] = "1.0" || p.ver;
-            });
-        }
-        org.ekstep.pluginframework.pluginManager.loadAllPlugins(pluginsObj, function() {
-            console.info("Framework Loaded the plugins", pluginsObj);
+    handleRelativePath: function(manifestMedia, pluginPath) {
+        _.each(manifestMedia, function(p) {
+            if (p.src.substring(0, 4) != 'http') {
+                if (!isbrowserpreview) {
+                    p.src = pluginPath + p.src;
+                }
+            }
+        });
+        return manifestMedia;
+    },
+    loadPlugins: function(pluginManifest, manifestMedia, cb) {
+        _.each(pluginManifest, function(p) {
+            p.ver = parseFloat(p.ver).toFixed(1);
+        });
+        org.ekstep.pluginframework.pluginManager.loadAllPlugins(pluginManifest, manifestMedia, function() {
+            console.info("Framework Loaded the plugins");
             if (cb) cb();
         });
     },
-    getCanvasMedia: function() {
-        var data = Renderer.theme._data;
-        var manifest = data.manifest ? data.manifest : AssetManager.getManifest(data);
+    getMedia: function() {
+        var manifest = Renderer.theme._data.manifest;
         var plugins = _.filter(!_.isArray(manifest.media) ? [manifest.media] : manifest.media, function(media) {
-            return media.type == 'plugin' || media.type == 'js' || media.type == 'css';
+            return media.type === 'css' || media.type === 'js' || media.type === 'plugin' || media.type === ' library';
         });
         return plugins;
     },

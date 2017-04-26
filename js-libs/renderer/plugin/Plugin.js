@@ -56,7 +56,11 @@ var Plugin = Class.extend({
      * @instance
      */
     init: function(data, parent, stage, theme) {
-        try {
+        if(arguments.length == 1 && !data.manifest){
+            this.initialize();
+            return;
+        }
+       try {
             this.events = [];
             this.appEvents = [];
             this._childIds = [];
@@ -297,6 +301,9 @@ var Plugin = Class.extend({
             this._self.scaleY = dims.h / sb.height;
             this._self.scaleX = dims.w / sb.width;
         }
+    },
+    initialize: function() {
+        console.info("Base plugin intialization..");
     },
     /**
      * Initializes the plugin by reading from ECML.
