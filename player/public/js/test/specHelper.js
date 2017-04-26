@@ -65,3 +65,7 @@ function isPlayStateSucceeded(audioObjectId){
 		return False;
 }
 
+function getCurrentStage(){
+	return PluginManager.invoke('stage', themeData.theme.stage[0], Renderer.theme, null, Renderer.theme);
+}
+

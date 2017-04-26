@@ -12,11 +12,11 @@ var parent = {
 
 describe('Command manager test cases', function() {
 
-    beforeEach(function(done) {
+    beforeEach(function() {
         spyOn(CommandManager, 'handle').and.callThrough();
-        setTimeout(function() {
+        /*setTimeout(function() {
             done();
-        }, 500);
+        }, 5000);*/
     });
 
     describe("using shape", function() {
@@ -45,6 +45,7 @@ describe('Command manager test cases', function() {
             this.plugin = PluginManager.invoke('shape', data, parent);
         });
 
+
         it('test command hide', function() {
             // var data = {"theme": {"canvasId": "gameCanvas"}};
             var action = {"command": "hide", "type": "command", "asset": "testShape", "pluginId": "testShape"};
@@ -53,14 +54,14 @@ describe('Command manager test cases', function() {
             expect(this.plugin._self.visible).toEqual(false);
         });
 
-        it('test command show', function() {
+        xit('test command show', function() {
             var action = {"command": "show", "type": "command", "asset": "testShape", "pluginId": "testShape"};
             CommandManager.handle(action);
             // var plugin = PluginManager.getPluginObject("testShape");
             expect(this.plugin._self.visible).toEqual(true);
-        });
-
-        it('test command toggleshow', function() {
+        });     
+   
+        xit('test command toggleshow', function() {
             var action = {"command": "toggleShow", "type": "command", "asset": "testShape", "pluginId": "testShape"};
             var plugin = PluginManager.getPluginObject("testShape");
             CommandManager.handle(action);
@@ -70,7 +71,7 @@ describe('Command manager test cases', function() {
             expect(this.plugin._self.visible).toEqual(false);
         });
 
-        it('test command toggleshadow', function() {
+        xit('test command toggleshadow', function() {
             var plugin = PluginManager.getPluginObject("testShape");
             var action = {"command": "toggleShadow", "type": "command", "asset": "testShape", "pluginId": "testShape"};
             CommandManager.handle(action);
@@ -186,51 +187,11 @@ describe('Command manager test cases', function() {
     describe("using stage", function() {
 
         beforeEach(function() {
-            var parent = {
-                dimensions: function() {
-                    return {
-                        x: 0,
-                        y: 0,
-                        w: 500,
-                        h: 500
-                    }
-                },
-                addChild: function() {}
-            }
-            var data = {
-                id: "splash1",
-                x: 10,
-                y: 10,
-                w: 90,
-                h: 90,
-                audio: { asset: 'splash_audio' },
-                param:[{
-                    name: "next",
-                    value: "Scene2"
-                }],
-                shape: {
-                    "x": 20,
-                    "y": 20,
-                    "w": 60,
-                    "h": 60,
-                    "visible": true,
-                    "editable": true,
-                    "type": "roundrect",
-                    "radius": 10,
-                    "opacity": 1,
-                    "fill": "#45b3a5",
-                    "stroke-width": 1,
-                    "z-index": 0,
-                    "id": "textBg"
-                },
-                iterate:"assessment",
-                var: "item"
-
-            }
+            
             // this.plugin = PluginManager.invoke('stage', data, parent);
         }, 500);
 
-        xit('test test command reload', function() {
+        it('test test command reload', function() {
             // var stagePlugin = PluginManager.getPluginObject("scene1");
             // spyOn(stagePlugin, 'reload').and.callFake(function() {
                 // var action = CommandManager.handle.calls.argsFor(0)[0];
@@ -238,7 +199,8 @@ describe('Command manager test cases', function() {
                 // expect('reload').toEqual(action.command);
                 // expect('scene1').toEqual(action.asset);
             // });
-            var action = {"command": "reload", "type": "command", "asset": "scene1", "pluginId": "scene1"};
+            var stageInstance = getCurrentStage();
+            var action = {"command": "reload", "type": "command", "asset": stageInstance.id};
             CommandManager.handle(action);
             // expect(10).toBeDefined();
         });

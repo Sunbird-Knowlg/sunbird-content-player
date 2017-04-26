@@ -20,6 +20,7 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
+            {pattern: 'http-image/**/*', watched: false, included: false, served: true},
             'public/js/thirdparty/jquery.min.js',
             'public/js/thirdparty/*.js',
             'public/js/thirdparty/exclude/xml2json.js',
@@ -36,75 +37,47 @@ module.exports = function(config) {
 
             // Manager Test Cases
             // 'public/js/test/AnimationManagerSpec.js',
-            // 'public/js/test/AssetManagerSpec.js',
+            'public/js/test/AssetManagerSpec.js',
+            'public/js/test/ControllerManagerSpec.js',
             // 'public/js/test/RecordManagerSpec.js',
-            // 'public/js/test/PluginManagerSpec.js',
-            // 'public/js/test/CommandManagerSpec.js',
-
+            'public/js/test/PluginManagerSpec.js',
             // 'public/js/test/EventManagerSpec.js',
-
-
-            // 'public/js/test/ImagePluginSpec.js',
+            'public/js/test/CommandManagerSpec.js',
+            // 'public/js/test/AudioManagerSpec.js',
         
 
             // Plugin Test Cases
-
-            'public/js/test/ThemePluginSpec.js', // TODO: Incomplete
-            'public/js/test/StagePluginSpec.js',
-
             // 'public/js/test/TextPluginSpec.js',
-            // 'public/js/test/HotspotPluginSpec.js',
-            // 'public/js/test/ContainerPluginSpec.js',
-            // 'public/js/test/StageSpec.js',
-            // 'public/js/test/MCQPluginSpec.js',
-            // 'public/js/test/MTFPluginSpec.js',
-            // 'public/js/test/ShapePluginSpec.js',
+            'public/js/test/HotspotPluginSpec.js',
+            'public/js/test/ContainerPluginSpec.js',
+            'public/js/test/MCQPluginSpec.js',
+            'public/js/test/MTFPluginSpec.js',
+            'public/js/test/ShapePluginSpec.js',
             // 'public/js/test/ImagePluginSpec.js',
-            // 'public/js/test/ScribblePluginSpec.js',
-            // 'public/js/test/GridlayoutPluginSpec.js',
-            // 'public/js/test/OptionPluginSpec.js',
-            // 'public/js/test/OptionsPluginSpec.js',
-            // 'public/js/test/DivPluginSpec.js',
-            // 'public/js/test/AudioPluginSpec.js',
-            // 'public/js/test/EmbedPluginSpec.js',
-            // 'public/js/test/PlaceholderPluginSpec.js',
-            // 'public/js/test/SetPluginSpec.js',
+            'public/js/test/ScribblePluginSpec.js',
+            'public/js/test/GridlayoutPluginSpec.js',
+            'public/js/test/OptionPluginSpec.js',
+            'public/js/test/OptionsPluginSpec.js',
+            'public/js/test/DivPluginSpec.js',
+            'public/js/test/AudioPluginSpec.js',
+            'public/js/test/EmbedPluginSpec.js',
+            'public/js/test/PlaceholderPluginSpec.js',
+            'public/js/test/SetPluginSpec.js',
 
-//         'public/js/test/LayoutPluginSpec.js',
-        // 'public/js/test/VideoPluginSpec.js', // TODO: Not covered all cases
-        //'public/js/test/ThemePluginSpec.js', // TODO: Incomplete
+            // 'public/js/test/StagePluginSpec.js',
+            'public/js/test/ThemePluginSpec.js',
+            // 'public/js/test/LayoutPluginSpec.js',
+            // 'public/js/test/VideoPluginSpec.js', // TODO: Not covered all cases
 
-        // 'public/js/test/HighlightTextPluginSpec.js',
-        // 'public/js/test/PluginSpec.js', // TODO: Incomplete
+            // 'public/js/test/HighlightTextPluginSpec.js',
+            // 'public/js/test/PluginSpec.js', // TODO: Incomplete
 
-
-        // Generator Test Cases
-
-        // Evaluator Test Cases
-
-
-
+            // Generator Test Cases
+            // Evaluator Test Cases
             // 'public/js/test/AnimationPluginSpec.js',
-
             // // 'public/js/test/WorksheetSpec.js',
-
-
-
-
-
-            //
-
-
-
-
-            //  'public/js/test/AudioManagerSpec.js',
-
-
+            
             // 'public/js/test/TelemetrySpec.js'
-
-
-
-            {pattern: 'http-image/**/*', watched: false, included: false, served: true}
         ],
 
 
@@ -193,7 +166,7 @@ module.exports = function(config) {
 
         // enable / disable watching file and executing tests whenever any file changes
         // vinu: autoWatch: true,
-        autoWatch: true,
+        autoWatch: false,
 
 
         // start these browsers
@@ -206,6 +179,6 @@ module.exports = function(config) {
         // if true, Karma captures browsers, runs the tests and exits
         singleRun: true,
 
-        browserNoActivityTimeout: 600000
+        browserNoActivityTimeout: 60000
     })
 }
