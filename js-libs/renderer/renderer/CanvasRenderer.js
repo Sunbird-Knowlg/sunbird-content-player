@@ -89,13 +89,13 @@ Renderer = {
         Renderer.theme = new ThemePlugin(content);
         Renderer.resizeGame(true);
         Renderer.theme.baseDir = gameRelPath;
-        var manifestMedia = this.getMedia();
+        var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);
         PluginManager.init(gameRelPath);
-        this.handleRelativePath(manifestMedia, pfConfig.backwardCompatibalityURL);
+        var resource = instance.handleRelativePath(instance.getResource(manifest), gameRelPath + '/widgets/');
         var pluginManifest = content.pluginManifest;
         pluginManifest = _.isUndefined(pluginManifest) ? {} : content.pluginManifest.plugin;
         try {
-            instance.loadPlugins(pluginManifest, manifestMedia, function() {
+            PluginManager.loadPlugins(pluginManifest, resource, function() {
                 Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
@@ -125,17 +125,7 @@ Renderer = {
         });
         return manifestMedia;
     },
-    loadPlugins: function(pluginManifest, manifestMedia, cb) {
-        _.each(pluginManifest, function(p) {
-            p.ver = parseFloat(p.ver).toFixed(1);
-        });
-        org.ekstep.pluginframework.pluginManager.loadAllPlugins(pluginManifest, manifestMedia, function() {
-            console.info("Framework Loaded the plugins");
-            if (cb) cb();
-        });
-    },
-    getMedia: function() {
-        var manifest = Renderer.theme._data.manifest;
+    getResource: function(manifest) {
         var plugins = _.filter(!_.isArray(manifest.media) ? [manifest.media] : manifest.media, function(media) {
             return media.type === 'css' || media.type === 'js' || media.type === 'plugin' || media.type === ' library';
         });
