@@ -36,7 +36,7 @@ PluginManager = {
         org.ekstep.pluginframework.pluginManager.addError(error);
     },
     getErrors: function() {
-        return org.ekstep.pluginframework.pluginManager.getErrors(error);
+        return org.ekstep.pluginframework.pluginManager.getErrors();
     },
     cleanUp: function() {
         org.ekstep.pluginframework.pluginManager.cleanUp();
