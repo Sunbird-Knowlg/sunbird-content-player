@@ -82,6 +82,7 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
                         'public/js/thirdparty/exclude/Class.js',
                         'public/js/thirdparty/exclude/eventbus.min.js',
+                        'public/js/thirdparty/plugin-framework.min.js',
                         '../js-libs/renderer/plugin/Plugin.js',
                         '../js-libs/renderer/plugin/HTMLPlugin.js',
                         '../js-libs/renderer/manager/PluginManager.js',
@@ -99,6 +100,7 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'public/js/app/renderer.js': [
+                        'public/js/thirdparty/plugin-framework.min.js',
                         '../js-libs/renderer/plugin/Plugin.js',
                         '../js-libs/renderer/plugin/HTMLPlugin.js',
                         '../js-libs/renderer/manager/*.js',
@@ -122,6 +124,7 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'public/js/app/testRenderer.js': [
+                        'public/js/thirdparty/plugin-framework.min.js',
                         '../js-libs/renderer/controller/Controller.js',
                         '../js-libs/renderer/plugin/Plugin.js',
                         '../js-libs/render/plugin/HTMLPlugin.js',
@@ -135,7 +138,6 @@ module.exports = function(grunt) {
                         '../js-libs/render/plugin/ShapePlugin.js',
                         '../js-libs/renderer/plugin/*Plugin.js',
                         '../js-libs/renderer/renderer/CanvasRenderer.js',
-
                         '!../js-libs/renderer/plugin/VideoPlugin.js',
                         '!../js-libs/renderer/plugin/HighlightTextPlugin.js',
 
