@@ -1,24 +1,13 @@
 <theme id="theme" version="1.0" startStage="5b71564c-74a0-4ed6-ae0e-e91eace795bb">
     <manifest>
-        <media ver="1.0" plugin="org.ekstep.scribblepad" src="content-plugins/org.ekstep.scribblepad-1.0/renderer/scribblepadplugin.js" id="org.ekstep.scribblepad" type="plugin"></media>
-
-        <media id="org.ekstep.scribblepad" plugin="org.ekstep.scribblepad" ver="1.0" src="content-plugins/org.ekstep.scribblepad-1.0/manifest.json" type="json"/>
-
-        <media id="org.ekstep.quiz" plugin="org.ekstep.quiz" ver="1.0" src="content-plugins/org.ekstep.quiz-1.0/manifest.json" type="json"/>
-       
-        <media ver="1.0" plugin="org.ekstep.quiz" src="content-plugins/org.ekstep.quiz-1.0/renderer/plugin.js" id="org.ekstep.quiz" type="plugin"></media>
-
+        
         <media src="1460624453530trash.png" assetId="org.ekstep.scribblepad.eraser" id="org.ekstep.scribblepad.eraser" type="image" preload="true"></media>
 
         <media src="1455104397576flowersl.png" id="flowersLhighlight" asset_id="flowersLhighlight" type="image" preload="true"></media>
 
         <media src="1455104477773scene5.mp3" id="scene5_audio" asset_id="scene5_audio" type="audio" preload="true"></media>
 
-        <media ver="1.0" plugin="org.ekstep.sdkeyboard" src="content-plugins/org.ekstep.sdkeyboard-1.0/renderer/sdkeyboard.js" id="org.ekstep.sdkeyboard" type="plugin" preload="true"></media>
-
-        <media ver="1.0" plugin="org.ekstep.sdkeyboard" src="content-plugins/org.ekstep.sdkeyboard-1.0/renderer/numerickeyboard.css" id="keyboard_css" type="css" preload="true"></media>
-
-        <media ver="1.0" plugin="org.ekstep.rangemultiplication" src="content-plugins/org.ekstep.rangemultiplication-1.0/renderer/rangemultiplication.js" id="org.ekstep.rangemultiplication" type="plugin" preload="true"></media>
+        
     </manifest>
 
     <pluginManifest>
