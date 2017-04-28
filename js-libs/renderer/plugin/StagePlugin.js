@@ -103,7 +103,6 @@ var StagePlugin = Plugin.extend({
             this.timeInstance[data.id] = timeInst;
             return
         }
-        PluginManager.invoke('telemetry', data, instance, instance._stage, instance._theme);
         this.invokeChildren(data, this, this, this._theme);
     },
     //TODO: Should be released in April Release
