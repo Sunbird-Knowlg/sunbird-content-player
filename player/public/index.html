@@ -35,7 +35,7 @@
             background-color: #e67300;
         }
 
-        #loadingText {
+        #pageTitle {
             position: absolute;
             bottom: 42%;
         }
@@ -70,10 +70,10 @@
     <div id="loading" class="gc-loader-area">
         <img src="img/icons/background_1.png" class="gc-loader-img">
         <div id="progressArea">
-            <div id="progressBar"></div>
-            <p id="progressCount" class="font-baloo gc-loader-prog"></p>
+          <div id="progressBar"></div>
+          <p id="progressCount" class="font-baloo gc-loader-prog"></p>
         </div>
-        <p class="icon-font cover-page-title" id="loadingText"></p>
+        <p class="icon-font cover-page-title" id="pageTitle" ng-bind = "pageTitle">Content is loading ...</p>
     </div>
 
     <script type="text/javascript" src="js/thirdparty/jquery.min.js"></script>
