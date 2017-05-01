@@ -175,7 +175,7 @@ genieservice_portal = {
         });
     },
     languageSearch: function(filter){
-        return new Promise(function(resolve, reject) {    
+        return new Promise(function(resolve, reject) {
             jQuery.ajax({
                 type: 'POST',
                 url: genieservice_portal.api.getLanguageFullAPI() + "search",
@@ -237,12 +237,12 @@ genieservice_html = {
                 "age": 6,
                 "standard": -1
             };
-            resolve(result);      
+            resolve(result);
         });*/
         return new Promise(function(resolve, reject) {
             if(genieservice_html.localData.user){
                 var result = genieservice_html.localData.user;
-                resolve(result);                
+                resolve(result);
             } else {
                 reject("User data is not present in localData.")
             }
@@ -273,7 +273,7 @@ genieservice_html = {
                     respObj[fileObj.id] = jsonResp;
                     _.extend(genieservice_html.localData, respObj);
                 } else {
-                    _.extend(genieservice_html.localData, jsonResp);                    
+                    _.extend(genieservice_html.localData, jsonResp);
                 }
                 console.log("LocalData json loaded", genieservice_html.localData);
                 genieservice_html._jsFileIndex = genieservice_html._jsFileIndex + 1;
@@ -292,7 +292,7 @@ genieservice_html = {
     languageSearch: function(filter){
         return new Promise(function(resolve, reject) {
             //var result = _.findWhere(genieservice_html.localData.languageSearch, {"filter": filter});
-            if(genieservice_html.localData.wordList) {              
+            if(genieservice_html.localData.wordList) {
                 resolve(genieservice_html.localData.wordList);
             } else {
                 reject("wordList data is not present in localData.")
@@ -308,7 +308,7 @@ genieservice_html = {
         }
         var endPageStateUrl = '#/content/end/' + contentId;
         this.showPage(endPageStateUrl);
-    }, 
+    },
     showPage: function(pageUrl) {
         if ("undefined" != typeof cordova) {
             var url = "file:///android_asset/www/index.html" + pageUrl;
@@ -348,6 +348,7 @@ if ("undefined" == typeof cordova) {
 telemetry_web = {
     tList: [],
     send: function(string) {
+        EventBus.dispatch("telemetryFlush",string);
         console.log(string);
         return new Promise(function(resolve, reject) {
             telemetry_web.tList.push(string);
