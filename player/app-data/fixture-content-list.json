@@ -12,8 +12,8 @@
     "responseCode": "OK",
     "result": {
         "content": [
-          {
-            "identifier": "org.ekstep.dependencyManagment",
+        {
+            "identifier": "org.ekstep.dependency",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
                 "questionnaire": null,
@@ -29,12 +29,59 @@
                     "name": "Receptive Vocabulary",
                     "objectType": "Concept"
                 }],
-                "identifier": "org.ekstep.dependencyManagment",
+                "identifier": "org.ekstep.dependency",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/Dependency-managment"
+        },
+          {
+            "identifier": "org.ekstep.desertflip",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/shapes/logo.png",
+                "subject": "literacy_v2",
+                "description": "shapes",
+                "name": "desertflip",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.desertflip",
                 "grayScaleAppIcon": null,
                 "pkgVersion": 1
             },
             "isAvailable": true,
             "path": "fixture-stories/desertflip"
+        },{
+            "identifier": "org.ekstep.shapes",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/shapes/logo.png",
+                "subject": "literacy_v2",
+                "description": "shapes",
+                "name": "Shapes",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.dependencyManagment",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/shapes"
         },{
             "identifier": "org.ekstep.depen",
             "mimeType": "application/vnd.ekstep.ecml-archive",
