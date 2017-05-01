@@ -1,70 +1,156 @@
-<theme id="theme" version="1.0" startStage="5b71564c-74a0-4ed6-ae0e-e91eace795bb">
+<theme startStage="intro" id="theme" ver="0.2">
     <manifest>
-        
-        <media src="1460624453530trash.png" assetId="org.ekstep.scribblepad.eraser" id="org.ekstep.scribblepad.eraser" type="image" preload="true"></media>
-
-        <media src="1455104397576flowersl.png" id="flowersLhighlight" asset_id="flowersLhighlight" type="image" preload="true"></media>
-
-        <media src="1455104477773scene5.mp3" id="scene5_audio" asset_id="scene5_audio" type="audio" preload="true"></media>
-
-        
+        <media id="desert" src="desert.jpg" type="image" />
+        <media id="camel" src="camel.png" type="image" />
+        <media id="enemy" src="enemy.png" type="image" />
+        <media id="tank" src="tank.png" type="image" />
+        <media id="explosion" src="explosion.png" type="image" />
+        <media id="icon" src="tank.png" type="image" />
+        <media id="play" src="icon_play.png" type="image" />
+        <media id="ekstep" src="eksteplogo.png" type="image" />
     </manifest>
 
-    <pluginManifest>
-        <plugin id ='org.ekstep.quiz' ver ='1.0' type ="plugin"/>
-        <plugin id ='org.ekstep.scribblepad' ver ='1.0' type ="plugin"/>
-        <plugin id ='org.ekstep.sdkeyboard' ver ='1.0' type ="plugin"/>
-        <plugin id ='org.ekstep.rangemultiplication' ver ='1.0' type ="plugin" />
-    </pluginManifest>
+    <controller id="assessment" name="assessment" type="items"/>
 
-    <stage w="100" x="0" h="100" y="0" id="5b71564c-74a0-4ed6-ae0e-e91eace795bb">
-        <config>
-            <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"genieControls":true,"instructions":""}]]>
-        </config>
-        <param name="next" value="ce272308-0bdb-4d91-a594-439bc65d9048"></param>
-        <org.ekstep.scribblepad strokeWidth="1" rotate="0" z-index="0" thickness="2" h="60" type="roundrect" fill="#3399FF" stroke="rgba(255, 255, 255, 0)" w="27" x="25" y="20" stroke-width="1" id="989e006c-8d5c-4e48-b4b7-954ac59564da" opacity="0.3">
-            <config>
-                <![CDATA[{"opacity":30,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"color":"#3399FF"}]]>
-            </config>
-        </org.ekstep.scribblepad>
-        <manifest>
-            <media assetId="org.ekstep.scribblepad.eraser"></media>
-        </manifest>
+    <template id="desert_mcq">
+
+        <shape type="roundrect" x="30" y="2" w="40" h="10" fill="#813E22" stroke="white" stroke-width="2"/>
+        <text x="10" y="2" w="80" h="10" fontsize="2em" align="center" valign="middle" weight="bold" color="white" model="item.title"/>
+
+        <mcq model="item" multi_select="false" shadow="#FF0000" x="0" y="0" w="100" h="100">
+            <option id="enemy1" x="50" y="45" w="9" h="22" option="options[0]" highlight="yellow">
+                <shape type="roundrect" x="0" y="0" w="100" h="40" fill="#813E22" stroke="white" stroke-width="2"/>
+                <text x="0" y="0" w="100" h="40" fontsize="2em" align="center" valign="middle" weight="bold" color="white" model="option.value.text"/>
+                <image id="enemy1img" asset="enemy" x="0" y="25" w="100" h="70"/>
+            </option>
+
+            <option id="enemy2" x="35" y="50" w="9" h="22" option="options[1]">
+                <shape type="roundrect" x="0" y="0" w="100" h="40" fill="#813E22" stroke="white" stroke-width="2"/>
+                <text x="0" y="0" w="100" h="40" fontsize="2em" align="center" valign="middle" weight="bold" color="white" model="option.value.text"/>
+                <image id="enemy1img" asset="enemy" x="0" y="25" w="100" h="70"/>
+            </option>
+
+            <option id="enemy3" x="20" y="55" w="9" h="22" option="options[2]">
+                <shape type="roundrect" x="0" y="0" w="100" h="40" fill="#813E22" stroke="white" stroke-width="2"/>
+                <text x="0" y="0" w="100" h="40" fontsize="2em" align="center" valign="middle" weight="bold" color="white" model="option.value.text"/>
+                <image id="enemy1img" asset="enemy" x="0" y="25" w="100" h="70"/>
+            </option>
+        </mcq>
+    </template>
+
+    <stage id="preloadStage" preload="true">
+        <image asset="play"/>
+        <image asset="ekstep"/>
+        <image asset="icon"/>
+        <image asset="desert"/>
+        <image asset="camel"/>
+        <image asset="enemy"/>
+        <image asset="tank"/>
+        <image asset="explosion"/>
     </stage>
-    <stage w="100" x="0" h="100" y="0" id="ce272308-0bdb-4d91-a594-439bc65d9048">
-        <config>
-            <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"genieControls":true,"instructions":""}]]>
-        </config>
-        <param name="next" value="c04dc048-6bc0-4821-a5d0-a38783172a51"></param>
-        <param name="previous" value="5b71564c-74a0-4ed6-ae0e-e91eace795bb"></param>
-        <org.ekstep.quiz rotate="0" z-index="0" w="80" x="9" h="85" y="6" id="ee56d530-5752-4ded-b953-19be0365c297">
-            <data>
-                <![CDATA[{"questionnaire":{"items":{"do_2121883800202526721181":[{"template":"rangemulti_ftb_template","identifier":"do_2121883800202526721181","code":"org.ekstep.assessmentitem._58ae9ffb45809","question":"Multiplication","qlevel":"EASY","portalOwner":"239","description":"Test","language":["English"],"type":"ftb","title":"Multiplication FTB-01","graph_id":"domain","nodeType":"DATA_NODE","createdOn":"2017-02-23T08:42:37.941+0000","objectType":"AssessmentItem","gradeLevel":["Kindergarten","Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Other"],"answer":{"ans1":{"value":"10","score":1}},"max_score":1,"name":"Multiplication FTB-01","lastUpdatedOn":"2017-02-23T08:42:37.941+0000","template_id":"do_212181910007332864132","used_for":"worksheet","model":{"range1":"10-99","range2":"2,40"},"node_id":50458,"concepts":["LO39"],"es_metadata_id":"do_2121883800202526721181"},{"template":"5.operations_3in1","code":"org.ekstep.assessmentitem._57a067493d030","qlevel":"EASY","language":["English"],"media":[{"id":"flowersLhighlight","type":"image","src":"/assets/public/content/1455104397576flowersL.png","asset_id":"flowersLhighlight","preload":"true"},{"id":"scene5_audio","type":"audio","src":"/assets/public/content/1455104477773scene5.mp3","asset_id":"scene5_audio","preload":"true"}],"type":"ftb","title":"FTB test in content","createdOn":"2016-08-02T09:27:41.149+0000","objectType":"AssessmentItem","gradeLevel":["Kindergarten"],"lastUpdatedOn":"2016-09-02T04:24:18.964+0000","used_for":"worksheet","model":{"textfield_value_first":"4","textfield_value_second":"6 = 24","textfield_value_third":"5","textfield_value_fourth":"2 = 7","textfield_value_fifth":"7","textfield_value_sixth":"2 = 14"},"owner":"240","identifier":"do_20044286","question":"Ftb for content","portalOwner":"240","graph_id":"domain","nodeType":"DATA_NODE","answer":{"ans1":{"value":"test1","score":1}},"concepts":["LO51","LO52"],"max_score":1,"name":"FTB test in content","template_id":"domain_7352","node_id":42353,"question_audio":"scene5_audio","question_image":"flowersLhighlight","es_metadata_id":"do_20044286"}]},"item_sets":[{"count":2,"id":"do_2121883800202526721181"}],"title":"test","shuffle":false,"showImmediateFeedback":true,"myQuestions":false,"concepts":"(0) Concepts","total_items":2,"max_score":2,"range":[1,2],"optionShuffle":true},"template":[{"org.ekstep.rangemultiplication":{"range1":"item.range1","range2":"item.range2","w":100,"h":100,"x":0,"y":0,"model":"item","id":"ranNumGenerator"},"id":"rangemulti_ftb_template"},{"text":{"event":{"action":[{"asset_model":"item.question_audio","sound":true,"type":"command","command":"stop"},{"asset_model":"item.question_audio","type":"command","command":"play"}],"type":"click"},"color":"black","w":100,"h":4,"x":0,"fontsize":"2vw","y":7,"model":"item.question","align":"center"},"g":[{"text":[{"color":"red","w":12,"h":100,"x":0,"fontsize":"2vw","y":0,"model":"item.textfield_value_first","valign":"middle","align":"right"},{"color":"red","w":40,"h":100,"x":50,"fontsize":"2vw","y":0,"model":"item.textfield_value_second","valign":"middle","align":"left"}],"input":{"w":20,"h":60,"x":20,"y":20,"model":"item.ans1","valign":"middle","id":"text1","align":"center","class":"inputText"},"w":40,"h":15,"x":30,"y":30},{"text":[{"color":"red","w":12,"h":100,"x":0,"fontsize":"2vw","y":0,"model":"item.textfield_value_third","valign":"middle","align":"right"},{"color":"red","w":40,"h":100,"x":50,"fontsize":"2vw","y":0,"model":"item.textfield_value_fourth","valign":"middle","align":"left"}],"input":{"w":20,"h":60,"x":20,"y":20,"model":"item.ans2","valign":"middle","id":"text2","align":"center","class":"inputText"},"w":40,"h":15,"x":30,"y":50},{"text":[{"color":"red","w":12,"h":100,"x":0,"fontsize":"2vw","y":0,"model":"item.textfield_value_fifth","valign":"middle","align":"right"},{"color":"red","w":40,"h":100,"x":50,"fontsize":"2vw","y":0,"model":"item.textfield_value_sixth","valign":"middle","align":"left"}],"input":{"w":20,"h":60,"x":20,"y":20,"model":"item.ans3","valign":"middle","id":"text3","align":"center","class":"inputText"},"w":40,"h":15,"x":30,"y":70}],"id":"5.operations_3in1"}]}]]>
-            </data>
-            <config>
-                <![CDATA[{"type":"items","var":"item","media":{"flowersLhighlight":{"id":"flowersLhighlight","type":"image","src":"/assets/public/content/1455104397576flowersL.png","asset_id":"flowersLhighlight","preload":"true"},"scene5_audio":{"id":"scene5_audio","type":"audio","src":"/assets/public/content/1455104477773scene5.mp3","asset_id":"scene5_audio","preload":"true"},"org.ekstep.sdkeyboard":{"src":"/assets/public/content/do_212181910007332864132/assets/1488199164488/sdkeyboard.js","id":"sdkeyboard","type":"plugin","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"},"keyboard_css":{"src":"/assets/public/content/do_212181910007332864132/assets/1488199164488/numerickeyboard.css","id":"keyboard_css","type":"css","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"},"RangeMultiplication":{"src":"/assets/public/content/do_212181910007332864132/assets/1488199164489/rangemultiplication.js","id":"RangeMultiplication","type":"plugin","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"}},"shuffle":false,"total_items":2,"showImmediateFeedback":true,"max_score":2,"title":"test","optionShuffle":true}]]>
-            </config>
-        </org.ekstep.quiz>
-        <manifest>
-            <media assetId="flowersLhighlight"></media>
-            <media assetId="scene5_audio"></media>
-            <media assetId="sdkeyboard"></media>
-            <media assetId="keyboard_css"></media>
-            <media assetId="RangeMultiplication"></media>
-        </manifest>
+
+    <stage id="intro" x="0" y="0" w="100" h="100">
+        <param name="next" value="desertgame" />
+
+        <image asset="desert" x="0" y="0" w="100" h="100" z-index="-1"/>
+        <image asset="icon" x="35" y="35" w="35" h="65" z-index="100"/>
+
+        <shape type="rect" x="-10" y="75" w="120" h="65" fill="white" opacity="0.8" stroke="white" stroke-width="5"/>
+
+        <image asset="ekstep" x="10" y="80" w="7" h="18" z-index="100"/>
+        <text x="18" y="82" w="15" h="10" font="Georgia" fontsize="50" shadow="white">Showcase Series</text>
+        <text x="18" y="94" w="80" h="10" font="Georgia" fontsize="30" shadow="white" color="">Literacy Platform</text>
+
+        <text x="85" y="82" w="12" h="5" align="center" font="Arial" fontsize="35" color="black" z-index="100">Level 1</text>
+        <text x="85" y="92" w="12" h="5" align="center" font="Arial" fontsize="35" color="black" z-index="100">Vocabulary</text>
+
+        <shape type="rect" x="85" y="80" w="12" h="7" fill="#FF9500" stroke="white" stroke-width="5">
+            <event type="click">
+                <action type="command" command="show" asset="popup"/>
+            </event>
+        </shape>
+        <shape type="rect" x="85" y="90" w="12" h="7" fill="#FF9500" stroke="white" stroke-width="5"/>
+
+        <g id="popup" x="0" y="0" w="100" h="100" visible="false">
+            <shape type="rect" x="0" y="0" w="100" h="100" fill="black" opacity="0.3">
+                <event type="click">
+                    <action type="command" command="hide" asset="popup"/>
+                </event>
+            </shape>
+            <shape type="roundrect" x="30" y="30" w="40" h="40" fill="#FF9500" stroke="yellow" stroke-width="5"/>
+        </g>
     </stage>
-    <stage w="100" x="0" h="100" y="0" id="c04dc048-6bc0-4821-a5d0-a38783172a51">
-        <config>
-            <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"genieControls":true,"instructions":""}]]>
-        </config>
-        <param name="previous" value="ce272308-0bdb-4d91-a594-439bc65d9048"></param>
-        <org.ekstep.quiz rotate="0" z-index="0" w="80" x="9" h="85" y="6" id="965b4915-c621-4879-9846-9dab17879221">
-            <data>
-                <![CDATA[{"questionnaire":{"items":{"wings.en.A.4":[{"template":"org.ekstep.mcq.t.ta","code":"wings.en.A.4","keywords":["number sense","names of numbers"],"qlevel":"MEDIUM","language":["English"],"type":"mcq","title":"Write in numerals","partial_scoring":false,"createdOn":"2016-08-09T10:28:25.368+0000","objectType":"AssessmentItem","gradeLevel":["Grade 3"],"options":[{"value":{"type":"mixed","text":"222","resvalue":"222","resindex":0},"answer":false},{"value":{"type":"mixed","text":"205","resvalue":"205","resindex":1},"answer":false},{"value":{"type":"mixed","text":"155","resvalue":"155","resindex":2},"answer":false},{"value":{"type":"mixed","text":"114","resvalue":"114","resindex":3},"answer":true}],"lastUpdatedOn":"2016-08-09T10:28:25.368+0000","used_for":"worksheet","model":{},"identifier":"wings.en.A.4","question":"one hundred fourteen","portalOwner":334,"graph_id":"domain","nodeType":"DATA_NODE","max_score":1,"name":"Write in numerals","num_answers":1,"template_id":"domain_3490","node_id":43210,"es_metadata_id":"wings.en.A.4"}]},"item_sets":[{"count":1,"id":"wings.en.A.4"}],"title":"q1","shuffle":false,"showImmediateFeedback":true,"myQuestions":false,"concepts":"(0) Concepts","total_items":1,"max_score":1,"range":[1],"optionShuffle":true},"template":[{"text":[{"event":{"action":[{"sound":true,"command":"stop","type":"command"},{"command":"play","asset_model":"item.question_audio","type":"command"}],"type":"click"},"w":100,"model":"item.title","lineHeight":1.4,"color":"black","font":"Verdana","align":"center","valign":"top","y":5,"h":20,"fontsize":"2.5vw","x":0},{"w":100,"model":"item.question","lineHeight":1.4,"color":"black","font":"Verdana","align":"center","valign":"top","y":26,"h":20,"fontsize":"3vw","x":0}],"shape":{"event":{"action":[{"sound":true,"command":"stop","type":"command"},{"command":"play","asset_model":"item.question_audio","type":"command"}],"type":"click"},"w":100,"type":"rect","y":0,"hitArea":true,"h":20,"x":0},"mcq":{"options":{"shape":{"w":100,"fill":"#ccc","type":"roundrect","y":0,"h":100,"x":0},"text":{"w":100,"model":"option.value.text","lineHeight":1.4,"font":"Verdana","align":"center","valign":"middle","y":0,"h":100,"fontsize":"2.5vw","x":0},"event":{"action":[{"sound":true,"command":"stop","type":"command"},{"command":"play","asset_model":"option.value.audio","type":"command"}],"type":"click"},"w":97,"cols":4,"layout":"table","highlight":"yellow","y":50,"marginY":5,"h":50,"x":1.5,"options":"options","marginX":5},"model":"item","multi_select":false,"shadow":"#56B1F7"},"id":"org.ekstep.mcq.t.ta"}]}]]>
-            </data>
-            <config>
-                <![CDATA[{"type":"items","var":"item","shuffle":false,"total_items":1,"showImmediateFeedback":true,"max_score":1,"title":"q1","optionShuffle":true}]]>
-            </config>
-        </org.ekstep.quiz>
+
+    <stage id="desertgame" iterate="assessment" var="item" x="0" y="0" w="100" h="100">
+
+        <param name="previous" value="intro" />
+        <param name="next" value="endstage" />
+
+        <image asset="desert" x="0" y="0" w="100" h="100"/>
+
+        <image id="imgCamel" asset="camel" x="30" y="70" w="15" h="15">
+         <event type="click">
+                <action type="animation" asset="imgCamel">
+                    <tween>
+                        <to ease="linear" duration="100">
+                            <![CDATA[
+                            {
+                                "x": 45,
+                                "y": 70,
+                                "scaleX": -0.5
+                            }
+                            ]]>
+                        </to>
+                    </tween>
+                </action>
+            </event>
+        </image>
+        <g id="conCamel" x="50" y="50" w="18" h="32">
+            <image asset="camel" x="0" y="0" w="100" h="100" >
+            <event type="click">
+                <action type="animation" asset="conCamel">
+                    <tween>
+                        <to ease="linear" duration="100">
+                            <![CDATA[
+                            {
+                                "x": 50,
+                                "y": 50,
+                                "scaleX": 1
+                            }
+                            ]]>
+                        </to>
+                    </tween>
+                </action>
+                <action type="command" command="show" asset="cover" delay="100"/>
+            </event>
+            </image>
+            <shape id="cover" type="rect" x="0" y="0" w="100" h="100" fill="#FF9500" stroke="white" stroke-width="5" opacity="0.9">
+            <event type="click">
+                <action type="command" command="hide"/>
+                <action type="animation" asset="conCamel">
+                    <tween>
+                        <to ease="linear" duration="100">
+                            <![CDATA[
+                            {
+                                "x": 66,
+                                "y": 50,
+                                "scaleX": -1
+                            }
+                            ]]>
+                        </to>
+                    </tween>
+                </action>
+            </event>
+        </shape>
+        </g>
     </stage>
+
+    <stage id="endstage" x="0" y="0" w="100" h="100">
+
+        <image asset="desert" x="0" y="0" w="100" h="100" z-index="-1"/>
+        <image asset="icon" x="40" y="20" w="20" h="34" z-index="100"/>
+
+        <text x="10" y="62" w="80" h="10" align="center" font="Georgia" fontsize="50" color="white" shadow="gray">You did good !</text>
+    </stage>
+
 </theme>
