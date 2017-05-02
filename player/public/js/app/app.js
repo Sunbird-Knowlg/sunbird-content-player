@@ -36,6 +36,11 @@ var stack = new Array(),
         "isAvailable": true,
         "path": "fixture-stories/item_sample"
     },
+    dependency = {
+        'repos': ["repo1", "repo2", "repo3"],
+        'plugins': ["i1", "id2", "id3"],
+        'context': {"userID": "TI-211"},
+    },
     config = {
         showStartPage: true,
         showEndPage: true,
@@ -44,9 +49,19 @@ var stack = new Array(),
     isbrowserpreview = getUrlParameter("webview"),
     setContentDataCb = undefined;
 
+window.initialisePreview(configuration, metadata, data) {
+    var configuration;
+
+    window.setContentData(metadata, data, configuration);
+}
+
 // TODO:have to remove appState and setContentDataCb in future.
 // Used in only Authoting tools
 window.setContentData = function(metadata, data, configuration) {
+    // configuration.dependency = configuration.dependency || dependency;
+    // if (!_.isUndefined(configuration.dependency) $$ !_.isNull(configuration.dependency)) {
+    //
+    // }
     if (_.isUndefined(metadata) || _.isNull(metadata)) {
         content.metadata = defaultMetadata
     } else {
@@ -212,6 +227,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             ContentService.getContentBody(id)
                 .then(function(data) {
                     content["body"] = data.body;
+
                     launchInitialPage(content.metadata, $state);
 
                 })
