@@ -132,7 +132,7 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'public/js/app/testRenderer.js': [
-                        'public/js/thirdparty/plugin-framework.min.js'
+                        'public/js/thirdparty/plugin-framework.min.js',
                         '../js-libs/renderer/command/Command.js',
                         '../js-libs/renderer/command/*.js',
                         '../js-libs/renderer/controller/Controller.js',
