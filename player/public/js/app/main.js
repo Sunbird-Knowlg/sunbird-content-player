@@ -223,7 +223,7 @@ function startTelemetry(id, ver, cb) {
         }
     }).catch(function(error) {
         console.log('TelemetryService init failed');
-        alert('TelemetryService init failed.');
+        //alert('TelemetryService init failed.');
         exitApp();
     });
 }
