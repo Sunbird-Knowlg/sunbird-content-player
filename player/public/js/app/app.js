@@ -320,7 +320,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if (!$rootScope.content) {
                 $rootScope.getContentMetadata($stateParams.itemId);
             }
-            startProgressBar(40, 0.6, $rootScope.content.name);
+            $rootScope.pageTitle = $rootScope.content.name;
+            startProgressBar(40, 0.6);
             TelemetryService.interact("TOUCH", "gc_replay", "TOUCH", {
                 stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
             });
@@ -485,66 +486,69 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $scope.renderContent();
             }
         }
-        $scope.callStartTelemetry = function(content) {
+        $scope.callStartTelemetry = function(content, cb) {
             var identifier = (content && content.identifier) ? content.identifier : null;
             var pkgVersion = !_.isUndefined(content.pkgVersion) ? content.pkgVersion.toString() : null;
             var version = (content && pkgVersion) ? pkgVersion : "1";
-            startTelemetry(identifier, version);
+            startTelemetry(identifier, version, cb);
         }
         $scope.renderContent = function() {
             if ($stateParams.itemId && $rootScope.content) {
                 localStorageGC.setItem("content", $rootScope.content);
-                startProgressBar(40, 0.6, $rootScope.content.name);
+
+                $rootScope.pageTitle = $rootScope.content.name;
+                startProgressBar(40, 0.6);
                 // In the case of AT preview Just we are setting up the currentContentId
                 GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
-                $scope.callStartTelemetry($rootScope.content);
-                $scope.item = $rootScope.content;
-                if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
-                    var isMobile = window.cordova ? true : false;
+                $scope.callStartTelemetry($rootScope.content, function() {
+                    $scope.item = $rootScope.content;
+                    if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
+                        var isMobile = window.cordova ? true : false;
 
-                    // For HTML content, lunach eve is required
-                    // setting launch evironment as "app"/"portal" for "mobile"/"portal(web)"
-                    var envHTML = isMobile ? "app" : "portal";
+                        // For HTML content, lunach eve is required
+                        // setting launch evironment as "app"/"portal" for "mobile"/"portal(web)"
+                        var envHTML = isMobile ? "app" : "portal";
 
-                    var launchData = {
-                        "env": envHTML,
-                        "envpath": AppConfig[AppConfig.flavor]
-                    };
-                    //Adding contentId and LaunchData as query parameter
+                        var launchData = {
+                            "env": envHTML,
+                            "envpath": AppConfig[AppConfig.flavor]
+                        };
+                        //Adding contentId and LaunchData as query parameter
 
-                    var prefix_url = isbrowserpreview ? getAsseturl($rootScope.content) : $scope.item.baseDir;
+                        var prefix_url = isbrowserpreview ? getAsseturl($rootScope.content) : $scope.item.baseDir;
 
-                    var path = prefix_url + '/index.html?contentId=' + $stateParams.itemId + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
+                        var path = prefix_url + '/index.html?contentId=' + $stateParams.itemId + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
 
-                    //Adding config as query parameter for HTML content
-                    if ($scope.item.config) {
-                        path += "&config=" + JSON.stringify($scope.item.config);
-                    }
+                        //Adding config as query parameter for HTML content
+                        if ($scope.item.config) {
+                            path += "&config=" + JSON.stringify($scope.item.config);
+                        }
 
-                    // Adding Flavor(environment) as query parameter to identify HTML content showing in dev/qa/prdocution
-                    // For local development of HTML flavor should not sent in URL
-                    // adding time to aviod browser catch of HTML page
-                    if (isbrowserpreview) {
-                        path += "&flavor=" + AppConfig.flavor + "t=" + getTime();
-                    }
+                        // Adding Flavor(environment) as query parameter to identify HTML content showing in dev/qa/prdocution
+                        // For local development of HTML flavor should not sent in URL
+                        // adding time to aviod browser catch of HTML page
+                        if (isbrowserpreview) {
+                            path += "&flavor=" + AppConfig.flavor + "t=" + getTime();
+                        }
 
-                    if (isMobile) {
-                        console.log("Opening through cordova custom webview.");
-                        cordova.InAppBrowser.open(path, '_self', 'location=no,hardwareback=no');
+                        if (isMobile) {
+                            console.log("Opening through cordova custom webview.");
+                            cordova.InAppBrowser.open(path, '_self', 'location=no,hardwareback=no');
+                        } else {
+                            console.log("Opening through window.open");
+                            window.open(path, '_self');
+                        }
                     } else {
-                        console.log("Opening through window.open");
-                        window.open(path, '_self');
+                        if (isbrowserpreview) {
+                            var contentBody = undefined;
+                            Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
+                        } else if (!_.isUndefined($scope.item)) {
+                            Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
+                        } else {
+                            console.warn("Content not found")
+                        }
                     }
-                } else {
-                    if (isbrowserpreview) {
-                        var contentBody = undefined;
-                        Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
-                    } else if (!_.isUndefined($scope.item)) {
-                        Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
-                    } else {
-                        console.warn("Content not found")
-                    }
-                }
+                });
             } else {
                 alert('Name or Launch URL not found.');
                 exitApp();
@@ -786,8 +790,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             GlobalContext.currentContentMimeType = $rootScope.content.mimeType;
             if (navType === "next") {
                 EventBus.dispatch("actionNavigateNext", navType);
+                EventBus.dispatch("nextClick");
+
             } else if (navType === "previous") {
                 EventBus.dispatch("actionNavigatePrevious", navType);
+                EventBus.dispatch("previousClick");
             }
         }
 
@@ -1090,6 +1097,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'E',
             template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}icn_audio.png" style="position: absolute;margin: 3%;width: 10%;z-index: 1;margin-left: 40%; display: block;" /><img id="unmute_id" ng-src="{{imageBasePath}}unmute.png" style="position: absolute;margin: 2% 2% 2% 39%;display: none; width: 14%; z-index: 1;"/> </a>',
             link: function(scope, url) {
+                var muteElement = document.getElementById("unmute_id");
+                if (!_.isNull(muteElement)) {
+                    muteElement.style.display = "none";
+                }
+                AudioManager.unmute();
                 scope.mute = function() {
                     //mute function goes here
                     if (AudioManager.muted) {
@@ -1173,6 +1185,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             controller: function($scope, $rootScope, $timeout) {
                 $scope.retryAssessment = function(id, e) {
                     $scope.hidePopup(id);
+                    EventBus.dispatch("retryClick");
                 }
 
                 $scope.hidePopup = function(id) {
@@ -1185,6 +1198,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 $scope.moveToNextStage = function(navType) {
                     EventBus.dispatch("actionNavigateSkip", navType);
+                    EventBus.dispatch("skipClick");
                 }
             }
         }
@@ -1232,6 +1246,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $scope.onSubmit = function() {
                     if ($scope.isEnabled) {
                         $rootScope.defaultSubmit();
+                        EventBus.dispatch("submitClick");
                     }
                 }
             }

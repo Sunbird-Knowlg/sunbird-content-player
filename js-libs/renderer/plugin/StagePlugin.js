@@ -126,6 +126,7 @@ var StagePlugin = Plugin.extend({
         if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene)) {
             Renderer.theme._currentScene.dispatchEvent('enter');
         }
+        EventBus.removeEventListener(this._data.id + '_assetsLoaded', this.invokeRenderElements, this);
     },
     keyboardShowHandler: function(e) {
         this._self.y = -(e.keyboardHeight);
@@ -283,6 +284,7 @@ var StagePlugin = Plugin.extend({
                 }
                 //TODO: setParam should use, but not working
                 this._currentState["isEvaluated"] = true;
+                EventBus.dispatch("evaluated", result);
 
                 if (showImmediateFeedback) {
                     //Show valid feeback

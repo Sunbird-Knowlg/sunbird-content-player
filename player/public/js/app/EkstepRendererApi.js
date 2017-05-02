@@ -56,7 +56,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     render: function() {
-        Renderer.theme.update = true;
+        Renderer.update = true;
     },
 
     /**
@@ -128,7 +128,7 @@ window.EkstepRendererAPI = {
      * @member {String} baseURL
      * @memberof EkstepRendererAPI
      */
-    getBaseURL:function(){
+    getBaseURL: function() {
         return Renderer.theme._basePath;
     },
 
@@ -172,14 +172,16 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the controller instance based on identifier.
-     * @param id {string} It will accetp the controller identifier as input. this could be usefull when plugin
-     * get access to get the controller from canvas.
+     * Returns the controller instance based on controller type and identifier.
+     * this could be usefull when plugin get access to get the controller from canvas.
      * suppose if it returns undefined then Controller has not been registed.
-     * @memberof EkstepRendererAPI
+     * @param cId {string} Controller identifier.
+     * @param cType {string} Controller Type (e.g cType = data OR Items)
+     @memberof EkstepRendererAPI
      */
-    getController: function(id) {
-        return ControllerManager.getControllerInstance(id);
+    getController: function(cType, cId) {
+        var c = cType + '.' + cId;
+        return ControllerManager.getControllerInstance(c);
     },
 
     /**
@@ -272,7 +274,7 @@ window.EkstepRendererAPI = {
         return paramData;
     },
 
-     /**
+    /**
      * Returns stageData for particular stage identifier.
      * undefined if the stage data is not present for the particular stage identfier.
      * this could be usefull when plugin wants to fetch some paticular stage data.
@@ -489,17 +491,17 @@ window.EkstepRendererAPI = {
         RecorderManager.stopRecording(action);
     },
 
-	/**
-	 * To execute a sepecific command on the given input assetId. For list of commands refer https://community.ekstep.in/specifications-guides/55-ecml-how-to-guide#defining-events-and-actions
-	 * @param name {string} command name which has to execute, ex: "play", "show", "blur",
-	 * @param assetId {string} media/asset on which this command has to execute
-	 * @param props {object} To pass additional properties of command(key-value pair object). Ex: {"duration": 200, "effect": linear}
-	 * @memberof EkstepRendererAPI
-	 **/
-	invokeCommand: function(name, assetId, props) {
-		var stageId = this.getCurrentStage()._id;
-		if(_.isUndefined(assetId) || _.isEmpty(assetId))
-			assetId = stageId;
+    /**
+     * To execute a sepecific command on the given input assetId. For list of commands refer https://community.ekstep.in/specifications-guides/55-ecml-how-to-guide#defining-events-and-actions
+     * @param name {string} command name which has to execute, ex: "play", "show", "blur",
+     * @param assetId {string} media/asset on which this command has to execute
+     * @param props {object} To pass additional properties of command(key-value pair object). Ex: {"duration": 200, "effect": linear}
+     * @memberof EkstepRendererAPI
+     **/
+    invokeCommand: function(name, assetId, props) {
+        var stageId = this.getCurrentStage()._id;
+        if (_.isUndefined(assetId) || _.isEmpty(assetId))
+            assetId = stageId;
 
         var action = {
             'type': 'command',
@@ -507,11 +509,11 @@ window.EkstepRendererAPI = {
             'asset': assetId,
             'pluginId': stageId
         }
-        if(props){
-        	_.extend(action, props);
+        if (props) {
+            _.extend(action, props);
         }
         this.invokeAction(action);
-	},
+    },
 
     /**
      * Navigate to next stage. Incase of item stage navigates to next question
@@ -539,47 +541,44 @@ window.EkstepRendererAPI = {
 
     /**
      * Adds a child to this plugin intance. This can be useful for composite scenarios.
-     * @param child {object} createjs element object to be added in plugin
-     * @param plugin {object} plugin object
-     * @memberof EkstepRenderer
+     * @param pluginId {string} plugin id inside which child had to be added
+     * @param child {object} child element which has to be added inside plugin(child is not a createjs/this._self element)
+     * @memberof EkstepRendererAPI
      **/
-    addChild: function(pluginId, child, plugin) {
+    addChild: function(pluginId, child) {
         var plugin = this.getPluginInstance(pluginId);
-        plugin.addChild(child, plugin);
+        plugin.addChild(child._self, child);
+        this.render();
     },
 
     /**
      * Removes a child from this plugin by child index. Use this to dynamically manage composite children.
-     * @param id {string} index of createjs element object
-     * @memberof EkstepRenderer
+     * @param pluginId {string} plugin id from which child has to be removed
+     * @param index {Number} index of createjs element object
+     * @memberof EkstepRendererAPI
      **/
-    removeChildAt: function(pluginId, id) {
+    removeChildAt: function(pluginId, index) {
         var plugin = this.getPluginInstance(pluginId);
-        plugin.removeChildAt(id);
+        plugin.removeChildAt(index);
+        this.render();
     },
 
     /**
      * Removes a child from this plugin by child instance. Use this to dynamically manage composite children.
-     * @param child {object} createjs element to be removed
-     * @memberof EkstepRenderer
+     * @param pluginId {string} plugin id from which child has to be removed
+     * @param child {object} child element which has to be removed(child should not be createjs/this._self element)
+     * @memberof EkstepRendererAPI
      **/
     removeChild: function(pluginId, child) {
         var plugin = this.getPluginInstance(pluginId);
-        plugin.removeChild(child);
-    },
-
-    /**
-     * To update/reflect createJS element change on stage after updating it's properties
-     * @memberof EkstepRenderer
-     **/
-    update: function(pluginId, id) {
-        var plugin = this.getPluginInstance(pluginId);
-        plugin.update();
+        plugin.removeChild(child._self);
+        this.render();
     },
 
     /**
      * To get plugin dimensions specified in ECML/JSON
-     * @memberof EkstepRenderer
+     * @param pluginId {string} plugin id of element whose dimension is needed
+     * @memberof EkstepRendererAPI
      **/
     dimensions: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -588,7 +587,8 @@ window.EkstepRendererAPI = {
 
     /**
      * To get plugin dimensions relative to Canvas/device width & height also with respect to it's parents
-     * @memberof EkstepRenderer
+     * @param pluginId {string} plugin id of element whose dimension is needed
+     * @memberof EkstepRendererAPI
      **/
     relativeDims: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -598,69 +598,46 @@ window.EkstepRendererAPI = {
     /**
      * property of the plugin to show it's visiblity on stage
      * @param assetId {string} assetId of element to show
-     * @param id {string} unique id of action
-     * @param delay {number} delay before action happened (optional)
-     * @memberof EkstepRenderer
+     * @param delay {number} [0] delay before action happened (optional)
+     * @memberof EkstepRendererAPI
      **/
-    show: function(assetId, id, delay) {
-        var delayTime = delay ? delay : 0;
-        var action = {
-            'asset':assetId,
-            'command':"show",
-            'disableTelemetry':true,
-            'id':id,
-            'pluginId':Renderer.theme._currentStage,
-            'type':"command",
-            'delay':delayTime
+    show: function(assetId, delay) {
+        var props = {
+            'delay' : delay ? delay : 0,
         }
-        CommandManager.handle(action);
+        this.invokeCommand('show', assetId, props);
     },
 
     /**
      * Property of the plugin to hide it's visiblity on stage
      * @param assetId {string} assetId of element to hide
-     * @param id {string} unique id of action
      * @param delay {number} [0] delay before action happened (optional)
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      **/
-    hide: function(assetId, id, delay) {
-        var delayTime = delay ? delay : 0;
-        var action = {
-            'asset':assetId,
-            'command':"hide",
-            'disableTelemetry':true,
-            'id':id,
-            'pluginId':Renderer.theme._currentStage,
-            'type':"command",
-            'delay':delayTime
+    hide: function(assetId, delay) {
+        var props = {
+            'delay' : delay ? delay : 0,
         }
-        CommandManager.handle(action);
+        this.invokeCommand('hide', assetId, props);
     },
 
     /**
      * property of the plugin to toggle it's visiblity on stage
      * @param assetId {string} assetId of element to toggle
-     * @param id {string} unique id of action
      * @param delay {number} [0] delay before action happened (optional)
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
-    toggleShow: function(assetId, id, delay) {
-        var delayTime = delay ? delay : 0;
-        var action = {
-            'asset':assetId,
-            'command':"toggleShow",
-            'disableTelemetry':true,
-            'id':id,
-            'pluginId':Renderer.theme._currentStage,
-            'type':"command",
-            'delay':delayTime
+    toggleShow: function(assetId, delay) {
+        var props = {
+            'delay' : delay ? delay : 0,
         }
-        CommandManager.handle(action);
+        this.invokeCommand('toggleShow', assetId, props);
     },
 
     /**
      * property of the plugin to toggle it's shadow
-     * @memberof EkstepRenderer
+     * @param pluginId {string} plugin id of element whose shadow has to be toggled
+     * @memberof EkstepRendererAPI
      */
     toggleShadow: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -669,7 +646,8 @@ window.EkstepRendererAPI = {
 
     /**
      * property of the plugin to add shadow using createJS shadow property
-     * @memberof EkstepRenderer
+     * @param pluginId {string} plugin id of element whose shadow should be added
+     * @memberof EkstepRendererAPI
      */
     addShadow: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -678,7 +656,8 @@ window.EkstepRendererAPI = {
 
     /**
      * property of the plugin to remove it's shadow
-     * @memberof EkstepRenderer
+     * @param pluginId {string} plugin id of element whose shadow should be removed
+     * @memberof EkstepRendererAPI
      */
     removeShadow: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -686,8 +665,9 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the boolean which show if element has shawdow or not.
-     * @memberof EkstepRenderer
+     * Returns the boolean which show if element has shawdow enabled or not.
+     * @param pluginId {string} plugin id of element whose shadow needs to be findout
+     * @memberof EkstepRendererAPI
      */
     hasShadow: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -696,41 +676,31 @@ window.EkstepRendererAPI = {
 
     /**
      * Draw a border on element
-     * @param data {object} element outside which border should be drawed
+     * @param pluginId {string} plugin id of element border should be drawn
      * @param dims {object} dimension of border to be drawed
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
-    drawBorder: function(pluginId, data, dims) {
+    drawBorder: function(pluginId, dims) {
         var plugin = this.getPluginInstance(pluginId);
-        plugin.drawBorder(data, dims);
+        plugin.drawBorder(plugin, dims);
     },
 
     /**
-     * Rotate a element
-     * @param plugin {object} plugin object
+     * Rotate an element
+     * @param pluginId {string} plugin id of element to be rotated
      * @param rotate {integer} angle through which plugin will be rotated(0 to 360)
-     * @memberof EkstepRenderer
+     * @memberof EkstepRendererAPI
      */
-    rotation: function(pluginId, plugin, rotate) {
+    rotation: function(pluginId, rotate) {
         var plugin = this.getPluginInstance(pluginId);
         plugin.rotate = rotate;
         plugin.rotation(plugin);
     },
 
     /**
-     * Draw a border on element
-     * @param plugin {object} Plugin object
-     * @param dims {object} dimension of border to be drawed outside plugin object
-     * @memberof EkstepRenderer
-     */
-    enableDrag: function(pluginId, plugin, dims) {
-        var plugin = this.getPluginInstance(pluginId);
-        plugin.enableDrag(plugin, dims);
-    },
-
-    /**
-     * Blur the current element
-     * @memberof EkstepRenderer
+     * Blur the element
+     * @param pluginId {string} plugin id of element to be blurred
+     * @memberof EkstepRendererAPI
      */
     blur: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -739,7 +709,8 @@ window.EkstepRendererAPI = {
 
     /**
      * Unblur the current element
-     * @memberof EkstepRenderer
+     * @param pluginId {string} plugin id of element to be unblurred
+     * @memberof EkstepRendererAPI
      */
     unblur: function(pluginId) {
         var plugin = this.getPluginInstance(pluginId);
@@ -748,34 +719,12 @@ window.EkstepRendererAPI = {
 
     /**
      * Invoke childrens again to reflect changes
-     * @param data {object} Data which need to be updated
-     * @memberof EkstepRenderer
+     * @param scope {object} this variable (use this variable)
+     * @memberof EkstepRendererAPI
      */
-    invokeChildren: function(pluginId, data) {
+    invokeChildren: function(pluginId, scope) {
         var plugin = this.getPluginInstance(pluginId);
-        plugin.invokeChildren(data, this._parent, this._stage, this._theme);
-    },
-
-    /**
-     * Set/Store state of assesment
-     * @param param {string} Type of assesment
-     * @param param {value} Data which has to be saved
-     * @param isStateChanged {boolean} state of assesment (default value is false)
-     * @memberof EkstepRenderer
-     */
-    setState: function(param, value, isStateChanged) {
-        var plugin = this.getPluginInstance(pluginId);
-        plugin.setState(param, value, isStateChanged);
-    },
-
-    /**
-     * Set/Store state of assesment
-     * @param param {string} Type of assesment
-     * @memberof EkstepRenderer
-     */
-    getState: function(param) {
-        var plugin = this.getPluginInstance(pluginId);
-        plugin.getState(param);
+        plugin.invokeChildren(scope, scope._parent, scope._stage, scope._theme);
     },
 
     /**
@@ -785,5 +734,40 @@ window.EkstepRendererAPI = {
      **/
     getMedia: function(assetId) {
         return Renderer.theme.getMedia(assetId);
+    },
+    /**
+     *This api is going to return you the current stage question item
+     *@memberof EkstepRendererAPI
+     */
+    currentItem: function() {
+        var ctrl = this.getCurrentController();
+        return ctrl._model[ctrl._index];
+    },
+    /**
+     *This api is going to return you the previous stage question item
+     *@memberof EkstepRendererAPI
+     */
+    previousItem: function() {
+        var ctrl = this.getCurrentController();
+        if (ctrl._index > 0 && ctrl._index < ctrl._model.length) return ctrl._model[ctrl._index - 1];
+        return 'Item not available';
+    },
+    /**
+     * Merge two stages into single stage and return the final stage.
+     * @param stage1 {object} Stage1 data to be merged with another stage.
+     * @param stage2 {object} Stage2 data to be merged with another stage.
+     * @memberof EkstepRendererAPI
+     **/
+    mergeStages: function(stage1, stage2) {
+        return Renderer.theme.mergeStages(stage1, stage2);
+    },
+    /**
+     *This api is going to return you the complete item list in the stage
+     *@memberof EkstepRendererAPI
+     */
+    getStageItems: function() {
+        var currentController = EkstepRendererAPI.getCurrentController();
+        if (currentController && currentController._model) return currentController._model;
+        return "Item not available."
     }
 }
