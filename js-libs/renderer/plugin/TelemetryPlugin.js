@@ -43,15 +43,15 @@ var TelemetryPlugin = Plugin.extend({
     */
     initPlugin: function(data) {
         console.log("Telemetry plugin init done!!! : ", data);
-        this.dispatch();
+        this.registerTelemetryEvents();
     },
-    dispatch: function(){
+    registerTelemetryEvents: function() {
         var instance = this;
         // console.log("_teledata: ", TelemetryService._data);
-        EventBus.addEventListener("telemetryFlush", function(data) {
+        EventBus.addEventListener("telemetryEvent", function(data) {
             instance._teleData.push(data.terget);
+            console.log("instance._teleData: ", instance._teleData);
         });
-        console.log("instance._teleData: ", instance._teleData);
     }
 });
 PluginManager.registerPlugin('telemetry', TelemetryPlugin);

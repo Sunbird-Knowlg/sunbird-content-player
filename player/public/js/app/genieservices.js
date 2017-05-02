@@ -348,7 +348,7 @@ if ("undefined" == typeof cordova) {
 telemetry_web = {
     tList: [],
     send: function(string) {
-        EventBus.dispatch("telemetryFlush",string);
+        EventBus.dispatch("telemetryEvent",string);
         console.log(string);
         return new Promise(function(resolve, reject) {
             telemetry_web.tList.push(string);

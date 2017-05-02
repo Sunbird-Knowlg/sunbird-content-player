@@ -414,6 +414,7 @@ module.exports = function(grunt) {
                         'https://github.com/akashgupta9990/cordova-webIntent.git',
                         'cordova-plugin-whitelist@1.2.1',
                         'cordova-plugin-crosswalk-webview@2.3.0',
+                        'https://github.com/akashgupta9990/cordova-webIntent.git',
                         'cordova-plugin-file-transfer@1.6.1',
                         'com.lampa.startapp@0.1.4',
                         'cordova-plugin-inappbrowser@1.6.1',
