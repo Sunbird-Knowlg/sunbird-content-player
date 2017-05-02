@@ -8,7 +8,9 @@ AppConfig = {
 	production: "//community.ekstep.in/api",
 	recorder: "AUDIO_RECORDER",
 	flavor: "QA",
-	S3_content_host: "/assets/public/content/"
+	S3_content_host: "/assets/public/content/",
+	PREVIEW_PLUGINSPATH: "/content-plugins",
+	DEVICE_PLUGINSPATH: "/widgets/content-plugins"
 }
 
 
