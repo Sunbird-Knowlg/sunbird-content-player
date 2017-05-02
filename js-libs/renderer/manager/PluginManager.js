@@ -12,10 +12,15 @@ PluginManager = {
         org.ekstep.pluginframework.initialize(pfConfig);
     },
     loadPlugins: function(pluginManifest, manifestMedia, cb) {
+        var pluginObj = []
         _.each(pluginManifest, function(p) {
             p.ver = parseFloat(p.ver).toFixed(1);
         });
-        org.ekstep.pluginframework.pluginManager.loadAllPlugins(pluginManifest, manifestMedia, function() {
+
+        if(_.isObject(pluginManifest)){
+            pluginObj.push(pluginManifest);
+        }
+        org.ekstep.pluginframework.pluginManager.loadAllPlugins(pluginObj, manifestMedia, function() {
             console.info("Framework Loaded the plugins");
             PluginManager.pluginMap = org.ekstep.pluginframework.pluginManager.plugins;
             if (cb) cb();

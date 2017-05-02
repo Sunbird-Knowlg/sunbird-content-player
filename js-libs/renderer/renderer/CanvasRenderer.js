@@ -92,8 +92,8 @@ Renderer = {
         var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);
         PluginManager.init(gameRelPath);
         var resource = instance.handleRelativePath(instance.getResource(manifest), gameRelPath + '/widgets/');
-        var pluginManifest = content.pluginManifest;
-        pluginManifest = _.isUndefined(pluginManifest) ? {} : content.pluginManifest.plugin;
+        var pluginManifest = content["plugin-manifest"];
+        pluginManifest = _.isUndefined(pluginManifest) ? []: pluginManifest.plugin;
         try {
             PluginManager.loadPlugins(pluginManifest, resource, function() {
                 Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
