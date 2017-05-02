@@ -1,26 +1,138 @@
 describe('Theme Plugin test cases', function() {
 
     beforeEach(function(done) {
-
         var themeData = {
            theme : {
-                canvasId: "gameCanvas",
+            canvasId: "gameCanvas",
             startStage: "splash",
             manifest: {
                 media: [
-                    { id: 'sringeri', src: 'https://ekstep-public.s3.amazonaws.com/preview/dev/img/icons/splash.png', type: 'image' },
-                    { id: 'splash_audio', src: 'https://ekstep-public.s3.amazonaws.com/preview/dev/assets/sounds/goodjob.mp3', type: 'audio' }
+                    { id: 'sringeri', src: 'http-image/sringeri.png', type: 'image' },
+                    { id: 'splash_audio', src: 'http-image/splash.ogg', type: 'audio' }
                 ]
             },
+            controller: [
+                {
+                    "identifier": "haircut_story_1",
+                    "item_sets": [
+                        {
+                            "count": 4,
+                            "id": "set_1"
+                        }
+                    ],
+                    "items": {
+                        "set_1": [
+                            {
+                                "feedback": "",
+                                "hints": [
+                                    {
+                                        "asset": "learning11_sound",
+                                        "type": "audio"
+                                    },
+                                    {
+                                        "asset": "Barber has Scissors to Cut hair.",
+                                        "type": "text"
+                                    }
+                                ],
+                                "identifier": "hs1_set_1_1",
+                                "max_score": 1,
+                                "model": {
+                                    "title_audio": {
+                                        "asset": "learning10_sound",
+                                        "type": "audio"
+                                    }
+                                },
+                                "num_answers": 1,
+                                "options": [
+                                    {
+                                        "value": {
+                                            "asset": "carpenter_img",
+                                            "type": "image"
+                                        }
+                                    },
+                                    {
+                                        "answer": true,
+                                        "value": {
+                                            "asset": "barber_img",
+                                            "type": "image"
+                                        }
+                                    },
+                                    {
+                                        "value": {
+                                            "asset": "tailor_img",
+                                            "type": "image"
+                                        }
+                                    },
+                                    {
+                                        "value": {
+                                            "asset": "wife_img",
+                                            "type": "image"
+                                        }
+                                    }
+                                ],
+                                "partial_scoring": false,
+                                "qlevel": "MEDIUM",
+                                "template": "mcq_template_1",
+                                "title": "Find the Barber.",
+                                "type": "mcq"
+                            }
+                        ]
+                    },
+                    "max_score": 9,
+                    "shuffle": false,
+                    "subject": "LIT",
+                    "title": "Haircut Story Assessment",
+                    "total_items": 4
+                }],
             stage: [
-                { id: "splash", extends: "splash1", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } },
-                { id: "splash1", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } },
-                { id: "splash2", audio: { asset: 'splash_audio' }, img: { asset: 'sringeri' } }
+                { "id": "splash", 
+                "audio": [{ asset: 'splash_audio' }], 
+                "text": [{
+                    "x" : 0,
+                    "y" : 0,
+                    "w" : 100,
+                    "h" : 20,
+                    "fontsize": 12,
+                    "__text": "Testing text plugin"
+                }],
+                "image": [{ asset: 'sringeri' }], 
+                    "x" : 0,
+                    "y" : 0,
+                    "w" : 100,
+                    "h" : 100,
+                    "param" : [{
+                            "name" : "instructions",
+                            "value" : ""
+                        }, {
+                            "name" : "next",
+                            "value" : "splash1"
+                        }
+                    ],
+                    "image" : [{
+                        "x" : 10,
+                        "y" : 20,
+                        "w" : 70,
+                        "h" : 80,
+                        "visible" : true,
+                        "editable" : true,
+                        "asset" : "sringeri",
+                        "z-index" : 4,
+                    }],
+                    "event": [{
+                        "type": "enter", 
+                        "action": {
+                            "type": "command",
+                           "asset": "sringeri",
+                           "command": "toggleShow",
+                       }
+                   }]
+                },
+                { id: "splash1", audio: [{ asset: 'splash_audio' }], img: [{ asset: 'sringeri' }] },
+                { id: "splash2", audio: [{ asset: 'splash_audio' }], img: [{ asset: 'sringeri' }] }
             ]
            }
         }
         // Renderer.theme = { _currentStage: '' };
-
         startRenderer(themeData);
         this.plugin = Renderer.theme;
 
@@ -45,7 +157,7 @@ describe('Theme Plugin test cases', function() {
         spyOn(this.plugin, 'preloadStages').and.callThrough();
         //spyOn(this.plugin, 'mergeStages').and.callThrough();
         //spyOn(this.plugin, 'isStageChanging').and.callThrough();
-        //spyOn(this.plugin, 'transitionTo').and.callThrough();
+        spyOn(this.plugin, 'transitionTo').and.callThrough();
 
         spyOn(this.plugin, 'removeHtmlElements').and.callThrough();
         spyOn(this.plugin, 'disableInputs').and.callThrough();
@@ -67,6 +179,10 @@ describe('Theme Plugin test cases', function() {
 
 
         done();
+    });
+    
+    afterEach(function() {
+      jasmine.clock().uninstall();
     });
 
     it('Theme plugin initPlugin() fields validation', function() {
@@ -139,10 +255,11 @@ describe('Theme Plugin test cases', function() {
         expect(this.plugin.restart.calls.count()).toEqual(1);
     });
 
-    xit('Theme plugin addChild()', function() {
-        this.plugin.addChild("splash");
-        expect(this.plugin.addChild).toHaveBeenCalled();
-        expect(this.plugin.addChild.calls.count()).toEqual(1);
+    it('Theme plugin addChild()', function() {
+        var stageInstance = PluginManager.invoke('stage', this.plugin._data.stage[0], this.plugin, null, this.plugin);
+        this.plugin.addChild(stageInstance._self,  stageInstance);
+        expect(stageInstance).not.toBe(undefined);
+        expect(this.plugin._currentScene).not.toBe(undefined);
     });
 
     it('Theme plugin replaceStage()', function() {
@@ -151,11 +268,13 @@ describe('Theme Plugin test cases', function() {
         expect(this.plugin.replaceStage.calls.count()).toEqual(1);
     });
 
-    xit('Theme plugin preloadStages()', function() {
-        this._currentScene = {};
+    it('Theme plugin preloadStages()', function() {
+        var stageInstance = PluginManager.invoke('stage', this.plugin._data.stage[0], this.plugin, null, this.plugin);
+        this._currentScene = PluginManager.invoke('stage', stageInstance, this, null, this);
         this.plugin.preloadStages();
-        expect(this.plugin.preloadStages).toHaveBeenCalled();
-        expect(this.plugin.preloadStages.calls.count()).toEqual(1);
+        // expect(this.plugin.preloadStages).toHaveBeenCalled();
+        expect(AssetManager.strategy.loaders[this.plugin._data.stage[1].id]).not.toBe(undefined);
+        // expect(this.plugin.preloadStages.calls.count()).toEqual(1);
     });
 
     it('Theme plugin removeHtmlElements()', function() {
@@ -194,13 +313,44 @@ describe('Theme Plugin test cases', function() {
         expect(this.plugin.getEase.calls.count()).toEqual(1);
     });
 
-    xit('Theme plugin getAsset()', function() {
-        this.plugin.getAsset("sringeri");
-        expect(this.plugin.getAsset).toHaveBeenCalled();
-        expect(this.plugin.getAsset.calls.count()).toEqual(1);
+    it('Theme plugin getAsset()', function() {
+        callback = jasmine.createSpy("callback");
+        jasmine.clock().install();
+        var instance = this;
+        setTimeout(function() {
+            callback();
+            //console.log("Pausing 2 seconds...");
+            var mediaAsset = instance.plugin.getAsset("sringeri");            
+            expect(mediaAsset).toBeDefined();
+        }, 2000);
+
+
+        expect(callback).not.toHaveBeenCalled();
+
+        jasmine.clock().tick(2000);
+
+        expect(callback).toHaveBeenCalled();
+
+        // CommandManager.handle({"type": "command", "asset": "sringeri", "command": "toggleShow", "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
+        //     "stageId": Renderer.theme._currentStage});
+
+        //Reference: https://makandracards.com/makandra/32477-testing-settimeout-and-setinterval-with-jasmine
+        // Example : For setTimeout/callback
+        /*callback = jasmine.createSpy("callback");
+        jasmine.clock().install();
+
+        setTimeout(function() {
+            callback();
+        }, 100);
+
+        expect(callback).not.toHaveBeenCalled();
+
+        jasmine.clock().tick(100);
+
+        expect(callback).toHaveBeenCalled();*/
     });
 
-    it('Theme plugin mousePoint()', function() {
+    xit('Theme plugin mousePoint()', function() {
         this.plugin.mousePoint();
         expect(this.plugin.mousePoint).toHaveBeenCalled();
         expect(this.plugin.mousePoint.calls.count()).toEqual(1);

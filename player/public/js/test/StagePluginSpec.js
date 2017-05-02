@@ -53,11 +53,11 @@ describe('Stage Plugin test cases', function() {
         done();
     });
 
-    xit('Stage plugin initPlugin', function() {
+    it('Stage plugin initPlugin', function() {
         expect(true).toEqual(this.plugin._self instanceof creatine.Scene);
     });
 
-    xit('Stage attributes validation', function() {
+    it('Stage attributes validation', function() {
         expect(this.plugin._self.x).toBeDefined();
         expect(this.plugin._self.y).toBeDefined();
         expect(this.plugin._self.x).not.toBeNull();
@@ -68,27 +68,27 @@ describe('Stage Plugin test cases', function() {
         expect(this.plugin._self.h).not.toBeNull();
 
     });
-    xit("Stage extend attribute validation", function() {
+    it("Stage extend attribute validation", function() {
         expect(this.plugin._self.extend).not.toBeNull();
 
     });
-    xit('Stage plugin setParamValue', function() {
+    it('Stage plugin setParamValue', function() {
         this.plugin.setParamValue({id:"stage"});
         expect(this.plugin.setParamValue).toHaveBeenCalled();
         expect(this.plugin.setParamValue.calls.count()).toEqual(1);
     });
-    xit('Stage plugin add controller', function() {
+    it('Stage plugin add controller', function() {
         this.plugin.addController( {'ev-if':"stage.param2 "});
         expect(this.plugin.addController).toHaveBeenCalled();
         expect(this.plugin.addController.calls.count()).toEqual(1);
     });
-    xit('stage plugin getController', function() {
+    it('stage plugin getController', function() {
         this.plugin.getController({name:"assessment"});
         expect(this.plugin.getController).toHaveBeenCalled();
         expect(this.plugin.getController.calls.count()).toEqual(1);
 
     });
-    xit('stage plugin getTemplate', function() {
+    it('stage plugin getTemplate', function() {
 
         this.plugin.getTemplate("x");
         expect(this.plugin.getTemplate).toHaveBeenCalled();
@@ -96,14 +96,14 @@ describe('Stage Plugin test cases', function() {
 
     });
 
-    xit('stage plugin getModelValue', function() {
+    it('stage plugin getModelValue', function() {
 
         this.plugin.getModelValue();
         expect(this.plugin.getModelValue).toHaveBeenCalled();
         expect(this.plugin.getModelValue.calls.count()).toEqual(1);
 
     });
-    xit('stage plugin setModelValue', function() {
+    it('stage plugin setModelValue', function() {
 
         this.plugin.setModelValue();
         expect(this.plugin.setModelValue).toHaveBeenCalled();
@@ -112,7 +112,7 @@ describe('Stage Plugin test cases', function() {
     });
 
 
-    xit('stage plugin setParam', function() {
+    it('stage plugin setParam', function() {
 
         this.plugin.setParam("x", 10, 10, 20);
         expect(this.plugin.setParam).toHaveBeenCalled();
@@ -120,7 +120,7 @@ describe('Stage Plugin test cases', function() {
 
     });
 
-    xit('stage plugin getParam', function() {
+    it('stage plugin getParam', function() {
 
        this.plugin.getParam(['param-name']);
         expect(this.plugin.getParam).toHaveBeenCalled();

@@ -9,9 +9,17 @@ module.exports = function(grunt) {
                 },
             },
         },
+        watch: {
+          //run unit tests with karma (server needs to be already running) 
+          karma: {
+            tasks: ['karma:unit:run'] //NOTE the :run flag 
+          }
+        },
         karma: {
             unit: {
-                configFile: 'test/karma.conf.js'
+                configFile: 'test/karma.conf.js',
+                autoWatch: false,       //vinu : autoWatch: true
+                singleRun: true         //vinu : singleRun: false
               }
         },
         jsdoc : {
@@ -124,22 +132,24 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'public/js/app/testRenderer.js': [
-                        'public/js/thirdparty/plugin-framework.min.js',
-                        '../js-libs/renderer/controller/Controller.js',
-                        '../js-libs/renderer/plugin/Plugin.js',
-                        '../js-libs/render/plugin/HTMLPlugin.js',
-                        '../js-libs/renderer/manager/*.js',
+                        'public/js/thirdparty/plugin-framework.min.js'
                         '../js-libs/renderer/command/Command.js',
                         '../js-libs/renderer/command/*.js',
+                        '../js-libs/renderer/controller/Controller.js',
                         '../js-libs/renderer/controller/*Controller.js',
+                        '../js-libs/renderer/manager/*.js',
 
                         '../js-libs/renderer/evaluator/*.js',
-                        '../js-libs/render/plugin/LayoutPlugin.js',
-                        '../js-libs/render/plugin/ShapePlugin.js',
+                        '../js-libs/renderer/plugin/Plugin.js',
                         '../js-libs/renderer/plugin/*Plugin.js',
                         '../js-libs/renderer/renderer/CanvasRenderer.js',
+
+                        //Excluded files for test coverage
+                        '!../js-libs/renderer/manager/RecordManager.js',
                         '!../js-libs/renderer/plugin/VideoPlugin.js',
                         '!../js-libs/renderer/plugin/HighlightTextPlugin.js',
+                        '!../js-libs/renderer/plugin/TestcasePlugin.js',
+                        '!../js-libs/renderer/plugin/SummaryPlugin.js'
 
                     ]
                 }
@@ -626,6 +636,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-cordovacli');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-aws-s3');
