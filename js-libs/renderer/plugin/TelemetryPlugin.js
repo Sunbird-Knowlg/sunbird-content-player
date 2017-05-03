@@ -58,7 +58,7 @@ var TelemetryPlugin = Plugin.extend({
         var instance = this;
         // console.log("_teledata: ", TelemetryService._data);
         EventBus.addEventListener("telemetryEvent", function(data) {
-            instance._teleData.push(data.terget);
+            instance._teleData.push(data.target);
             console.log("instance._teleData: ", instance._teleData);
         });
     }
