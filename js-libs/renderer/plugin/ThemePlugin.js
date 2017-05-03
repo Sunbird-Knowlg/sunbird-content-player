@@ -133,6 +133,7 @@ var ThemePlugin = Plugin.extend({
             this._data.stage.forEach(function(s) {
                 instance.initStageControllers(s);
             });
+            PluginManager.invoke('telemetry', this._data.stage, this);
             this.invokeStage(this._data.startStage);
         }
         this.update();
@@ -259,6 +260,7 @@ var ThemePlugin = Plugin.extend({
         }
         this._previousStage = this._currentStage;
         this._currentStage = stageId;
+
         PluginManager.invoke('stage', stage, this, null, this);
 
         // Trigger onstagechange event, which is bind by parent window

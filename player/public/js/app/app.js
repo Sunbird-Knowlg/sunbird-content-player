@@ -36,9 +36,9 @@ var stack = new Array(),
         "isAvailable": true,
         "path": "fixture-stories/item_sample"
     },
-    dependency = {
-        'repos': ["repo1", "repo2", "repo3"],
-        'plugins': ["i1", "id2", "id3"],
+    customPlugins = {
+        'repos': "testrepo",
+        'plugins': ["id1", "id2", "id3"],
         'context': {"userID": "TI-211"},
     },
     config = {
@@ -49,10 +49,16 @@ var stack = new Array(),
     isbrowserpreview = getUrlParameter("webview"),
     setContentDataCb = undefined;
 
-window.initialisePreview(configuration, metadata, data) {
-    var configuration;
+window.initialisePreview = function(configuration, metadata, data) {
 
-    window.setContentData(metadata, data, configuration);
+    if (!_.isUndefined(configuration) && !_.isUndefined(configuration.customPlugins)) {
+        // update obj basePath
+        org.ekstep.pluginframework.customRepo.updateBasePath(configuration.customPlugins.repo);
+        // add repo
+        org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.customRepo);
+    }
+
+    // window.setContentData(metadata, data, configuration);
 }
 
 // TODO:have to remove appState and setContentDataCb in future.
