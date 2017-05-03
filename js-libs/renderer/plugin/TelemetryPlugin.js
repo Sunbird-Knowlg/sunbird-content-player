@@ -42,7 +42,7 @@ var TelemetryPlugin = Plugin.extend({
     *   @override
     */
     initPlugin: function(data) {
-        // this.registerTelemetryEvents();
+        this.registerTelemetryEvents();
     },
     // initialize: function() {
     //     console.log("Telemetry plugin initialize done!!!");
