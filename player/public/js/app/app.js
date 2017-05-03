@@ -58,7 +58,7 @@ window.initialisePreview = function(configuration, metadata, data) {
         org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.customRepo);
     }
 
-    // window.setContentData(metadata, data, configuration);
+    window.setContentData(metadata, data, configuration);
 }
 
 // TODO:have to remove appState and setContentDataCb in future.
