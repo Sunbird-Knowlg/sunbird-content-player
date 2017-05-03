@@ -43,9 +43,9 @@ var TelemetryPlugin = Plugin.extend({
     */
     initPlugin: function(data) {
         console.log("Telemetry plugin init done!!! : ", data);
-        this.registerTelemetryEvents();
+        // this.registerTelemetryEvents();
     },
-    registerTelemetryEvents: function() {
+    initialize: function() {
         var instance = this;
         // console.log("_teledata: ", TelemetryService._data);
         EventBus.addEventListener("telemetryEvent", function(data) {
