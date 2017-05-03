@@ -290,7 +290,9 @@ module.exports = function(grunt) {
                 region: 'ap-south-1',
                 uploadConcurrency: 5, // 5 simultaneous uploads
                 downloadConcurrency: 5, // 5 simultaneous downloads
-                progress: 'progressBar'
+                progress: 'progressBar',
+                accessKeyId: '', // Use the variables
+                secretAccessKey: '', // You can also use env variables
             },
             uploadJS: {
                 options: {
@@ -389,8 +391,18 @@ module.exports = function(grunt) {
                     dest: 'preview/',
                     action: 'delete'
                 }]
+            },
+            
+            PluginframeworkFromDev: {
+                options: {
+                    bucket: 'ekstep-public-dev',
+                },
+                files: [{
+                    dest: 'content-editor/scripts/plugin-framework.min.js',
+                    cwd: 'public/js/thirdparty/',
+                    action: 'download'
+                }]
             }
-
         },
         cordovacli: {
             options: {
@@ -680,6 +692,10 @@ module.exports = function(grunt) {
             grunt.task.run(tasks);
         }
     });
+
+    // grunt to download the pluginFramework files
+    grunt.registerTask('download-plugin-framework-dev', ['aws_s3:PluginframeworkFromDev'])
+    
 
     // After this 'build-preview' task run
     // grunt updateVersion
