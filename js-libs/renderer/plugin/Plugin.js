@@ -45,6 +45,7 @@ var Plugin = Class.extend({
     appEvents: [],
     borderShape: undefined,
     _pluginParams: {},
+    _manifest: {},
     _unSupportedFonts: ["notosans", "verdana", "notosans oriya"],
     /**
      * Initializes the plugin with the given data and parent object
@@ -57,6 +58,7 @@ var Plugin = Class.extend({
      */
     init: function(data, parent, stage, theme) {
         if(arguments.length == 1 && !data.manifest){
+            this._manifest = data;
             this.initialize();
             return;
         }
