@@ -36,11 +36,6 @@ var stack = new Array(),
         "isAvailable": true,
         "path": "fixture-stories/item_sample"
     },
-    customPlugins = {
-        'repos': "testrepo",
-        'plugins': ["id1", "id2", "id3"],
-        'context': {"userID": "TI-211"},
-    },
     config = {
         showStartPage: true,
         showEndPage: true,
@@ -49,25 +44,21 @@ var stack = new Array(),
     isbrowserpreview = getUrlParameter("webview"),
     setContentDataCb = undefined;
 
-window.initialisePreview = function(configuration, metadata, data) {
+window.initializePreview = function(configuration, metadata, data) {
 
-    if (!_.isUndefined(configuration) && !_.isUndefined(configuration.customPlugins)) {
+    if (_.isUndefined(data) && !_.isUndefined(configuration) && !_.isUndefined(configuration.customPlugins)) {
         // update obj basePath
         org.ekstep.pluginframework.customRepo.updateBasePath(configuration.customPlugins.repo);
         // add repo
         org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.customRepo);
+        // eventbus dispatch
+        EventBus.dispatch("contentDetails", configuration.customPlugins.context.contentId);
     }
-
-    window.setContentData(metadata, data, configuration);
 }
 
 // TODO:have to remove appState and setContentDataCb in future.
 // Used in only Authoting tools
 window.setContentData = function(metadata, data, configuration) {
-    // configuration.dependency = configuration.dependency || dependency;
-    // if (!_.isUndefined(configuration.dependency) $$ !_.isNull(configuration.dependency)) {
-    //
-    // }
     if (_.isUndefined(metadata) || _.isNull(metadata)) {
         content.metadata = defaultMetadata
     } else {
@@ -242,6 +233,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     contentNotAvailable();
                 });
         };
+
+        EventBus.addEventListener("contentDetails", function(data) {
+            $rootScope.getDataforPortal(data.target);
+            $rootScope.getContentBody(data.target);
+        });
+
         $rootScope.deviceRendrer = function() {
             if ($state.current.name == appConstants.stateShowContentEnd) {
                 $rootScope.$broadcast("loadEndPage");
@@ -299,10 +296,22 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     if (isbrowserpreview) {
                         var urlContentId = getUrlParameter("id");
                         genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
+                        // if (urlContentId) {
+                        // $rootScope.getDataforPortal(urlContentId);
+                        // $rootScope.getContentBody(urlContentId);
+                        // }
                         if (urlContentId) {
-                            $rootScope.getDataforPortal(urlContentId);
-                            $rootScope.getContentBody(urlContentId);
+                            var configuration = {
+                                "customPlugins": {
+                                    'context': {
+                                        "uid": "TI-211",
+                                        "contentId": urlContentId
+                                    }
+                                }
+                            };
+                            window.initializePreview(configuration);
                         }
+
                     } else {
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                         $rootScope.deviceRendrer();
