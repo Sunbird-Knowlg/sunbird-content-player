@@ -10,7 +10,8 @@ var stack = new Array(),
     collectionPathMap = {},
     content = {},
     collectionChildren = true,
-    defaultMetadata = {
+    customPluginsConfig = {};
+defaultMetadata = {
         "identifier": "org.ekstep.item.sample",
         "mimeType": "application/vnd.ekstep.ecml-archive",
         "name": "Content Preview ",
@@ -52,7 +53,7 @@ window.initializePreview = function(configuration, metadata, data) {
         // add repo
         org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.customRepo);
         // eventbus dispatch
-        EventBus.dispatch("contentDetails", configuration.customPlugins.context.contentId);
+        EventBus.dispatch("contentDetails", configuration.customPlugins);
     }
 }
 
@@ -226,7 +227,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             var i = urlParams.length;
             while (i--) {
                 if ((urlParams[i].indexOf('webview') >= 0) || (urlParams[i].indexOf('id') >= 0)) {
-                    urlParams.splice(i,1)
+                    urlParams.splice(i, 1)
                 } else {
                     urlParams[i] = urlParams[i].split("=");
                 }
@@ -235,8 +236,37 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
         $rootScope.getContentBody = function(id) {
             var urlParams = $rootScope.getUrlParameter();
-            ContentService.getContentBody(id, urlParams)
-                .then(function(data) {
+            ContentService.getContentBody(id, urlParams).then(function(data) {
+
+                    if (!_.isUndefined(customPluginsConfig.pluginId)) {
+                        /* add child to "plugin-manifest" in given format
+                         ** "plugin-manifest": {
+                         **      "plugin": [{
+                         **          "id": "org.ekstep.quiz",
+                         **          "ver": "1.0",
+                         **          "type": "plugin",
+                         **          "depends": ""
+                         **      }]
+                         ** },
+                         ** check if "plugin-manifest" is there then inject child to it
+                         ** else create a "plugin-manifest" and add child to it
+                         */
+                        var body = (data.body) ? JSON.parse(data.body) : null;
+                        if (_.isUndefined(body.theme["plugin-manifest"]) || _.isUndefined(body.theme["plugin-manifest"].plugin) || _.isNull(body.theme["plugin-manifest"].plugin)) {
+                            body.theme["plugin-manifest"] = {};
+                            body.theme["plugin-manifest"].plugin = [];
+                        }
+                        _.each(customPluginsConfig.pluginId, function(item) {
+                            body.theme["plugin-manifest"].plugin.push({
+                                "id": item.id,
+                                "ver": item.ver || "1.0",
+                                "type": item.type || "plugin",
+                                "depends": item.depends || ""
+                            });
+                        });
+                        body.theme["plugin-manifest"].plugin = plugin;
+                        data.body = JSON.stringify(body);
+                    }
                     content["body"] = data.body;
 
                     launchInitialPage(content.metadata, $state);
@@ -249,8 +279,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         };
 
         EventBus.addEventListener("contentDetails", function(data) {
-            $rootScope.getDataforPortal(data.target);
-            $rootScope.getContentBody(data.target);
+            customPluginsConfig = data.target;
+            $rootScope.getDataforPortal(customPluginsConfig.context.contentId);
+            $rootScope.getContentBody(customPluginsConfig.context.contentId);
         });
 
         $rootScope.deviceRendrer = function() {
