@@ -128,9 +128,10 @@ genieservice_portal = {
             resolve(result);
         });
     },
-    getContentBody: function(id) {
+    getContentBody: function(id, urlParams) {
         return new Promise(function(resolve, reject) {
-        jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", {"Content-Type" : "application/json"}, function(resp) {
+        urlParams["Content-Type"] = "application/json";
+        jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", urlParams, function(resp) {
             var result = {};
             if (!resp.error) {
                 result.list = resp;
@@ -154,9 +155,10 @@ genieservice_portal = {
             }
         });
     },
-    getContentMetadata: function(id) {
+    getContentMetadata: function(id, urlParams) {
         return new Promise(function(resolve, reject) {
-        jQuery.get(genieservice_portal.api.getFullAPI() + id, {"Content-Type" : "application/json"}, function(resp) {
+        urlParams["Content-Type"] = "application/json";
+        jQuery.get(genieservice_portal.api.getFullAPI() + id, urlParams, function(resp) {
             var result = {};
             if (!resp.error) {
                 result.list = resp;

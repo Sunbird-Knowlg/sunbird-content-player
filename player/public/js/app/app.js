@@ -197,7 +197,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 });
         };
         $rootScope.getDataforPortal = function(id) {
-            ContentService.getContentMetadata(id)
+            var urlParams = $rootScope.getUrlParameter();
+            ContentService.getContentMetadata(id, urlParams)
                 .then(function(data) {
                     $rootScope.setContentMetadata(data);
                 })
@@ -220,8 +221,21 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $rootScope.content = data;
             });
         };
+        $rootScope.getUrlParameter = function() {
+            var urlParams = decodeURIComponent(window.location.search.substring(1)).split('&');
+            var i = urlParams.length;
+            while (i--) {
+                if ((urlParams[i].indexOf('webview') >= 0) || (urlParams[i].indexOf('id') >= 0)) {
+                    urlParams.splice(i,1)
+                } else {
+                    urlParams[i] = urlParams[i].split("=");
+                }
+            }
+            return (_.object(urlParams))
+        }
         $rootScope.getContentBody = function(id) {
-            ContentService.getContentBody(id)
+            var urlParams = $rootScope.getUrlParameter();
+            ContentService.getContentBody(id, urlParams)
                 .then(function(data) {
                     content["body"] = data.body;
 
