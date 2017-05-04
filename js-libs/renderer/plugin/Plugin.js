@@ -57,7 +57,7 @@ var Plugin = Class.extend({
      * @instance
      */
     init: function(data, parent, stage, theme) {
-        if (arguments.length == 1 && !data.manifest) {
+        if (arguments.length == 1 && !data) {
             this._manifest = data;
             this.initialize();
             return;
