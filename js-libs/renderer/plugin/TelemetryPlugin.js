@@ -52,7 +52,6 @@ var TelemetryPlugin = Plugin.extend({
     initPlugin: function(data) {
         this.registerTelemetryEvents();
         this._teleData = TelemetryService._data;
-        var instance = this;
         this.generateTelemetryManifest();
     },
     // initialize: function() {
@@ -79,10 +78,15 @@ var TelemetryPlugin = Plugin.extend({
     },
     generateTelemetryManifest: function() {
         if (this._teleData.length >= this._maxTeleInstance) {
-                var telemetryData = _.clone(this._teleData);
+            var telemetryData = _.clone(this._teleData);
+            this.sendTelemetry(telemetryData);
+            if (this._teleData.length == this._maxTeleInstance) {
                 this._teleData.splice(0,this._maxTeleInstance);
-                this.sendTelemetry(telemetryData);
+            } else
+            if (this._teleData.length > this._maxTeleInstance) {
+                this._teleData = [];
             }
+        }
     }
 });
 PluginManager.registerPlugin('telemetry', TelemetryPlugin);
