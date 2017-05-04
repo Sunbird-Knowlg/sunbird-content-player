@@ -35,30 +35,21 @@ var TelemetryPlugin = Plugin.extend({
     _teleData: [],
 
     /**
-    *   Invoked by framework when plugin instance created/renderered on stage.
-    *   Use this plugin to create different shapes like Square, Circle, Rectangle, Polygon, Star etc..
-    *   @param data {object} data is input object for the shape plugin.
-    *   @memberof TelemetryPlugin
-    *   @override
-    */
-
-    /**
      * A Constant for max telemetry data to send in one api call
      * @member {number} _maxTeleInstance
      * @memberof TelemetryPlugin
      **/
      _maxTeleInstance : 10,
 
+     /**
+     *   Invoked by framework when plugin instance created/renderered on stage.
+     *   Use this plugin to create different shapes like Square, Circle, Rectangle, Polygon, Star etc..
+     *   @param data {object} data is input object for the shape plugin.
+     *   @memberof TelemetryPlugin
+     *   @override
+     */
     initPlugin: function(data) {
-
-        /* push all the telemetries created into "_teleData"
-        **
-        **
-        **
-        */
-
         console.log("Telemetry plugin init done !!!", TelemetryService._data);
-
         this.registerTelemetryEvents();
         this._teleData = TelemetryService._data;
         this.generateTelemetryManifest();
@@ -90,12 +81,7 @@ var TelemetryPlugin = Plugin.extend({
         if (this._teleData.length >= this._maxTeleInstance) {
             var telemetryData = _.clone(this._teleData);
             this.sendTelemetry(telemetryData);
-            if (this._teleData.length == this._maxTeleInstance) {
-                this._teleData.splice(0,this._maxTeleInstance);
-            } else
-            if (this._teleData.length > this._maxTeleInstance) {
-                this._teleData = [];
-            }
+            this._teleData = [];
         }
     }
 });
