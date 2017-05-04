@@ -50,22 +50,32 @@ var TelemetryPlugin = Plugin.extend({
      _maxTeleInstance : 10,
 
     initPlugin: function(data) {
+
+        /* push all the telemetries created into "_teleData"
+        **
+        **
+        **
+        */
+
+        console.log("Telemetry plugin init done !!!", TelemetryService._data);
+
         this.registerTelemetryEvents();
         this._teleData = TelemetryService._data;
         this.generateTelemetryManifest();
     },
-    // initialize: function() {
-    //     console.log("Telemetry plugin initialize done!!!");
-    //     var instance = this;
-    //     // console.log("_teledata: ", TelemetryService._data);
-    //     EventBus.addEventListener("telemetryEvent", function(data) {
-    //         instance._teleData.push(data.terget);
-    //         console.log("instance._teleData: ", instance._teleData);
-    //     });
-    // },
-    registerTelemetryEvents: function() {
+    initialize: function() {
         console.log("Telemetry plugin initialize done!!!");
         var instance = this;
+        // console.log("_teledata: ", TelemetryService._data);
+        EventBus.addEventListener("telemetryEvent", function(data) {
+            instance._teleData.push(data.terget);
+            console.log("instance._teleData: ", instance._teleData);
+        });
+    },
+    registerTelemetryEvents: function() {
+        var instance = this;
+
+
         // console.log("_teledata: ", TelemetryService._data);
         EventBus.addEventListener("telemetryEvent", function(data) {
             instance._teleData.push(data.target);

@@ -53,7 +53,7 @@ window.initializePreview = function(configuration, metadata, data) {
         // add repo
         org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.customRepo);
         // eventbus dispatch
-        EventBus.dispatch("contentDetails", configuration.customPlugins);
+        EventBus.dispatch("event:loadContent", configuration.customPlugins);
     }
 }
 
@@ -278,7 +278,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 });
         };
 
-        EventBus.addEventListener("contentDetails", function(data) {
+        EventBus.addEventListener("event:loadContent", function(data) {
             customPluginsConfig = data.target;
             $rootScope.getDataforPortal(customPluginsConfig.context.contentId);
             $rootScope.getContentBody(customPluginsConfig.context.contentId);
