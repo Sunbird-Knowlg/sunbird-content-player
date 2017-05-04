@@ -50,10 +50,13 @@ var TelemetryPlugin = Plugin.extend({
      */
     initPlugin: function(data) {
         console.log("Telemetry plugin init done !!!", TelemetryService._data);
-        this.registerTelemetryEvents();
         this._teleData = TelemetryService._data;
         this.generateTelemetryManifest();
     },
+    /*
+     * generating global scope of the plugin. Called by plugin-fraemwork as the plugin loads.
+     * this plugin instance will we available globally
+     */
     initialize: function() {
         console.log("Telemetry plugin initialize done!!!");
         var instance = this;
@@ -63,19 +66,11 @@ var TelemetryPlugin = Plugin.extend({
             console.log("instance._teleData: ", instance._teleData);
         });
     },
-    registerTelemetryEvents: function() {
-        var instance = this;
-
-
-        // console.log("_teledata: ", TelemetryService._data);
-        EventBus.addEventListener("telemetryEvent", function(data) {
-            instance._teleData.push(data.target);
-            console.log("instance._teleData: ", instance._teleData);
-            instance.generateTelemetryManifest();
-        });
-    },
     sendTelemetry: function(telemetryData) {
-        console.log("telemetryData to send to api", telemetryData)
+        console.log("telemetryData to send to api", telemetryData);
+        genieservice.sendTelemetry().then(function(data) {
+           console.log("Telemetry API success", data);
+        });
     },
     generateTelemetryManifest: function() {
         if (this._teleData.length >= this._maxTeleInstance) {

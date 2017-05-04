@@ -76,6 +76,9 @@ genieservice_web = {
                 });
         });
     },
+    sendTelemetry: function(data){        
+        console.log("Telemetry API data: " , data);
+    },
     setAPIEndpoint: function(endpoint) {
         return endpoint;
     }
@@ -85,12 +88,20 @@ genieservice_portal = {
         _baseUrl: undefined,
         contentBasePath: '/learning/v2/content/',
         languageBasePath: '/language/v2/language/',
+        telemetryBasePath: '/telemtry/v2/telemetry',
         getFullAPI: function() {
             return this.getBaseUrl() + this.contentBasePath;
         },
         getLanguageFullAPI: function() {
             //return AppConfig[AppConfig.flavor] + this.languageBasePath;
             return this.getBaseUrl() + this.languageBasePath;
+        },
+        getTelematyFullAPI: function(){
+            if("production" == AppConfig.flavor){
+                return "https://api.ekstep.in/telemetry/v3/telemetry";
+            }else{
+                return this.getBaseUrl() + this.telemetryBasePath;                
+            }
         },
         setBaseUrl: function(baseUrl){
            this._baseUrl = baseUrl;
@@ -189,6 +200,26 @@ genieservice_portal = {
                 var result = {};
                 if (!resp.error) {
                     result.list = resp;
+                    resolve(resp.result);
+                } else {
+                    console.info("err : ", resp.error)
+                }
+            });
+        });
+    },
+    sendTelemetry: function(data){        
+        return new Promise(function(resolve, reject) {
+            var basicAuth = 'Basic ' + btoa('ekstep:s3cr3t3');
+            jQuery.ajax({
+                type: 'POST',
+                url: genieservice_portal.api.getTelematyFullAPI(AppConfig.flavor),
+                headers: {"Authorization": basicAuth, "Content-Type": "application/json", },
+                data: JSON.stringify(data)
+            })
+            .done(function(resp){
+                var result = {};
+                if (!resp.error) {
+                    result.data = resp;
                     resolve(resp.result);
                 } else {
                     console.info("err : ", resp.error)
