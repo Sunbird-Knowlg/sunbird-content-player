@@ -41,8 +41,19 @@ var TelemetryPlugin = Plugin.extend({
     *   @memberof TelemetryPlugin
     *   @override
     */
+
+    /**
+     * A Constant for max telemetry data to send in one api call
+     * @member {number} _maxTeleInstance
+     * @memberof TelemetryPlugin
+     **/
+     _maxTeleInstance : 10,
+
     initPlugin: function(data) {
         this.registerTelemetryEvents();
+        this._teleData = TelemetryService._data;
+        var instance = this;
+        this.generateTelemetryManifest();
     },
     // initialize: function() {
     //     console.log("Telemetry plugin initialize done!!!");
@@ -60,7 +71,18 @@ var TelemetryPlugin = Plugin.extend({
         EventBus.addEventListener("telemetryEvent", function(data) {
             instance._teleData.push(data.target);
             console.log("instance._teleData: ", instance._teleData);
+            instance.generateTelemetryManifest();
         });
+    },
+    sendTelemetry: function(telemetryData) {
+        console.log("telemetryData to send to api", telemetryData)
+    },
+    generateTelemetryManifest: function() {
+        if (this._teleData.length >= this._maxTeleInstance) {
+                var telemetryData = _.clone(this._teleData);
+                this._teleData.splice(0,this._maxTeleInstance);
+                this.sendTelemetry(telemetryData);
+            }
     }
 });
 PluginManager.registerPlugin('telemetry', TelemetryPlugin);
