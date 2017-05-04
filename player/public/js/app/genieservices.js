@@ -76,8 +76,31 @@ genieservice_web = {
                 });
         });
     },
-    sendTelemetry: function(data){        
+    sendTelemetry: function(data){      
         console.log("Telemetry API data: " , data);
+        // return new Promise(function(resolve, reject) {  
+        //     resolve(data);
+        // });
+         return new Promise(function(resolve, reject) {
+            var basicAuth = 'Basic ' + btoa('ekstep:s3cr3t3');
+            jQuery.ajax({
+                type: 'POST',
+                url: "https://dev.ekstep.in/api/telemetry/v1/telemetry",
+                headers: {"Authorization": basicAuth, "Content-Type": "application/json", },
+                data: JSON.stringify(data),
+                dataType: "json",
+                contentType: "application/json"
+            })
+            .done(function(resp){
+                var result = {};
+                if (!resp.error) {
+                    result.data = resp;
+                    resolve(resp.result);
+                } else {
+                    console.info("err : ", resp.error)
+                }
+            });
+        });
     },
     setAPIEndpoint: function(endpoint) {
         return endpoint;
@@ -214,7 +237,9 @@ genieservice_portal = {
                 type: 'POST',
                 url: genieservice_portal.api.getTelematyFullAPI(AppConfig.flavor),
                 headers: {"Authorization": basicAuth, "Content-Type": "application/json", },
-                data: JSON.stringify(data)
+                data: JSON.stringify(data),
+                dataType: "json",
+                contentType: "application/json"
             })
             .done(function(resp){
                 var result = {};
