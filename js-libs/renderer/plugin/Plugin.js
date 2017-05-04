@@ -57,11 +57,13 @@ var Plugin = Class.extend({
      * @instance
      */
     init: function(data, parent, stage, theme) {
-        if (arguments.length == 1 && !data) {
-            this._manifest = data;
-            this.initialize();
-            return;
-        }
+        if(arguments.length == 1){
+           if(data && !data.manifest){
+               this._manifest = data;
+           }
+           this.initialize();
+           return;
+       }
        try {
             this.events = [];
             this.appEvents = [];
