@@ -57,12 +57,19 @@ var Plugin = Class.extend({
      * @instance
      */
     init: function(data, parent, stage, theme) {
-        if(arguments.length == 1){
-           if(data && !data.manifest){
-               this._manifest = data;
-           }
-           this.initialize();
-           return;
+        if((arguments.length == 1)){
+            if(_.isUndefined(data)){
+                // To initialize chore & custom plugin global
+                this.initialize();
+                return;
+            } else {
+                if (!data.manifest) {
+                    // Only plugin manifest is getting(calling by plugin framework)
+                    this._manifest = data;
+                    this.initialize();
+                    return;
+                }
+            }
        }
        try {
             this.events = [];
