@@ -56,12 +56,14 @@ var TelemetryPlugin = Plugin.extend({
      * this plugin instance will we available globally
      */
     initialize: function() {
-        console.log("Telemetry plugin initialized !!!");
-        this.registerTelemetryEvents();
-        // TelemetryService._data = _.without(TelemetryService._data,undefined)
-        // this._teleData = TelemetryService._data;
-        // this.generateTelemetryManifest();
-        this.callParentEvent();
+        if ("undefined" == typeof cordova) {
+            console.log("Telemetry plugin initialized !!!");
+            this.registerTelemetryEvents();
+            // TelemetryService._data = _.without(TelemetryService._data,undefined)
+            // this._teleData = TelemetryService._data;
+            // this.generateTelemetryManifest();
+            this.callParentEvent();
+        }
     },
     registerTelemetryEvents: function() {
         var instance = this;
