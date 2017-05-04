@@ -5,7 +5,7 @@ AppConfig = {
 	App_RUNTIME: "AT",
 	QA: "//qa.ekstep.in/api",
 	dev: "//dev.ekstep.in/api",
-	production: "//community.ekstep.in/api",
+	production: "//api.ekstep.in",
 	recorder: "AUDIO_RECORDER",
 	flavor: "DEPLOYMENT",
 	S3_content_host: "/assets/public/content/",
