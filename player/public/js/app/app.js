@@ -11,7 +11,7 @@ var stack = new Array(),
     content = {},
     collectionChildren = true,
     customPluginsConfig = {};
-defaultMetadata = {
+    defaultMetadata = {
         "identifier": "org.ekstep.item.sample",
         "mimeType": "application/vnd.ekstep.ecml-archive",
         "name": "Content Preview ",

@@ -68,13 +68,28 @@ var TelemetryPlugin = Plugin.extend({
     registerTelemetryEvents: function() {
         var instance = this;
         EventBus.addEventListener("telemetryEvent", function(data) {
-            instance._teleData.push(data.target);
+            data = JSON.parse(data.target);
+            data.mid = JSON.stringify(_.random(11111111, 99999999));
+            data.sid = "anonymous";
+            data.did = "anonymous";
+            data.mid = "anonymous";
+            data.uid = "anonymous";
+            instance._teleData.push(data);
+            // instance._teleData.ts = "2017-03-28T05:43:03.478+0000",
             instance.generateTelemetryManifest();
         });
     },
     sendTelemetry: function(telemetryData) {
-        console.log("telemetryData to send to api", telemetryData);
-        genieservice.sendTelemetry(telemetryData).then(function(data) {
+        var currentTimeStamp = new Date().getTime();
+        var teleObj = {
+            "id": "ekstep.telemetry",
+            "ver": "2.0",
+            "ets": currentTimeStamp,
+            "events": telemetryData
+        };
+        // "events": JSON.parse(telemetryData)
+        console.log("teleObj to send to api", teleObj);
+        genieservice.sendTelemetry(teleObj).then(function(data) {
            console.log("Telemetry API success", data);
         });
     },
