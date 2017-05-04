@@ -57,7 +57,6 @@ var TelemetryPlugin = Plugin.extend({
     initialize: function() {
         console.log("Telemetry plugin initialize done!!!");
         var instance = this;
-        // console.log("_teledata: ", TelemetryService._data);
         EventBus.addEventListener("telemetryEvent", function(data) {
             instance._teleData.push(data.terget);
             console.log("instance._teleData: ", instance._teleData);
@@ -65,9 +64,6 @@ var TelemetryPlugin = Plugin.extend({
     },
     registerTelemetryEvents: function() {
         var instance = this;
-
-
-        // console.log("_teledata: ", TelemetryService._data);
         EventBus.addEventListener("telemetryEvent", function(data) {
             instance._teleData.push(data.target);
             console.log("instance._teleData: ", instance._teleData);
@@ -75,7 +71,7 @@ var TelemetryPlugin = Plugin.extend({
         });
     },
     sendTelemetry: function(telemetryData) {
-        console.log("telemetryData to send to api", telemetryData)
+        console.log("telemetryData to send to api");
     },
     generateTelemetryManifest: function() {
         if (this._teleData.length >= this._maxTeleInstance) {
