@@ -49,18 +49,14 @@ var TelemetryPlugin = Plugin.extend({
      *   @override
      */
     initPlugin: function(data) {
-        console.log("Telemetry plugin init done !!!", TelemetryService._data);
-        this.registerTelemetryEvents();
-        this._teleData = TelemetryService._data;
-        this.generateTelemetryManifest();
+        console.log("Telemetry plugin init done !!!");
     },
     initialize: function() {
-        console.log("Telemetry plugin initialize done!!!");
-        var instance = this;
-        EventBus.addEventListener("telemetryEvent", function(data) {
-            instance._teleData.push(data.terget);
-            console.log("instance._teleData: ", instance._teleData);
-        });
+        console.log("Telemetry initialize done !!!", TelemetryService._data);
+        this.registerTelemetryEvents();
+        TelemetryService._data = _.without(TelemetryService._data,undefined)
+        this._teleData = TelemetryService._data;
+        this.generateTelemetryManifest();
     },
     registerTelemetryEvents: function() {
         var instance = this;
