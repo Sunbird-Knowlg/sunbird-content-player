@@ -61,6 +61,7 @@ var TelemetryPlugin = Plugin.extend({
         // TelemetryService._data = _.without(TelemetryService._data,undefined)
         // this._teleData = TelemetryService._data;
         // this.generateTelemetryManifest();
+        this.callParentEvent();
     },
     registerTelemetryEvents: function() {
         var instance = this;
@@ -81,6 +82,16 @@ var TelemetryPlugin = Plugin.extend({
             this.sendTelemetry(telemetryData);
             this._teleData = [];
         }
+    },
+    callParentEvent: function() {
+        var instance = this;
+        EventBus.addEventListener('sceneEnter', function() {
+            if (window.self != window.top) {
+                var retObj = {"stageId": Renderer.theme && Renderer.theme._currentStage ? Renderer.theme._currentStage : ""};
+                var custEvent = new Event('onstagechange');
+                window.top.dispatchEvent(custEvent,retObj)
+            }
+        });
     }
 });
 PluginManager.registerPlugin('telemetry', TelemetryPlugin);
