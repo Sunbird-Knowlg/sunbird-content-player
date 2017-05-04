@@ -58,12 +58,18 @@ var TelemetryPlugin = Plugin.extend({
      * this plugin instance will we available globally
      */
     initialize: function() {
-        console.log("Telemetry plugin initialize done!!!");
+        console.log("Telemetry initialize done !!!", TelemetryService._data);
+        this.registerTelemetryEvents();
+        TelemetryService._data = _.without(TelemetryService._data,undefined)
+        this._teleData = TelemetryService._data;
+        this.generateTelemetryManifest();
+    },
+    registerTelemetryEvents: function() {
         var instance = this;
-        // console.log("_teledata: ", TelemetryService._data);
         EventBus.addEventListener("telemetryEvent", function(data) {
-            instance._teleData.push(data.terget);
+            instance._teleData.push(data.target);
             console.log("instance._teleData: ", instance._teleData);
+            instance.generateTelemetryManifest();
         });
     },
     sendTelemetry: function(telemetryData) {
