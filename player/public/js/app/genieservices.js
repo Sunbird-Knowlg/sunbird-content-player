@@ -76,30 +76,10 @@ genieservice_web = {
                 });
         });
     },
-    sendTelemetry: function(data){      
+    sendTelemetry: function(data) {
         console.log("Telemetry API data: " , data);
-        // return new Promise(function(resolve, reject) {  
-        //     resolve(data);
-        // });
-         return new Promise(function(resolve, reject) {
-            var basicAuth = 'Basic ' + btoa('ekstep:s3cr3t3');
-            jQuery.ajax({
-                type: 'POST',
-                url: "https://dev.ekstep.in/api/telemetry/v1/telemetry",
-                headers: {"Authorization": basicAuth, "Content-Type": "application/json", },
-                data: JSON.stringify(data),
-                dataType: "json",
-                contentType: "application/json"
-            })
-            .done(function(resp){
-                var result = {};
-                if (!resp.error) {
-                    result.data = resp;
-                    resolve(resp.result);
-                } else {
-                    console.info("err : ", resp.error)
-                }
-            });
+        return new Promise(function(resolve, reject) {
+            resolve(data);
         });
     },
     setAPIEndpoint: function(endpoint) {
@@ -123,7 +103,7 @@ genieservice_portal = {
             if("production" == AppConfig.flavor){
                 return "https://api.ekstep.in/telemetry/v3/telemetry";
             }else{
-                return this.getBaseUrl() + this.telemetryBasePath;                
+                return this.getBaseUrl() + this.telemetryBasePath;
             }
         },
         setBaseUrl: function(baseUrl){
@@ -230,7 +210,7 @@ genieservice_portal = {
             });
         });
     },
-    sendTelemetry: function(data){        
+    sendTelemetry: function(data){
         return new Promise(function(resolve, reject) {
             var basicAuth = 'Basic ' + btoa('ekstep:s3cr3t3');
             jQuery.ajax({
