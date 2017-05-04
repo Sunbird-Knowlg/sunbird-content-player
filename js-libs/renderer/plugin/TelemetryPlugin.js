@@ -88,7 +88,7 @@ var TelemetryPlugin = Plugin.extend({
         EventBus.addEventListener('sceneEnter', function() {
             if (window.self != window.top) {
                 var retObj = {"stageId": Renderer.theme && Renderer.theme._currentStage ? Renderer.theme._currentStage : ""};
-                var custEvent = new Event('onstagechange');
+                var custEvent = new Event('sceneEnter');
                 window.top.dispatchEvent(custEvent,retObj)
             }
         });
