@@ -264,7 +264,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                                 "depends": item.depends || ""
                             });
                         });
-                        body.theme["plugin-manifest"].plugin = plugin;
+                        // body.theme["plugin-manifest"].plugin = plugin;
                         data.body = JSON.stringify(body);
                     }
                     content["body"] = data.body;
