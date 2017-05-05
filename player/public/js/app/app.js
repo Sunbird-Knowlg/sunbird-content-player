@@ -50,6 +50,8 @@ window.initializePreview = function(configuration, metadata, data) {
     // configuration: additional information passed to the preview
     // metadata: metadata of the content
     // data: JSON data of the content
+    genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
+    
     if (!_.isUndefined(configuration)) {
         // update obj basePath
         org.ekstep.pluginframework.customRepo.updateBasePath(configuration.repo);
