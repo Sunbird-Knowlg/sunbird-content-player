@@ -209,7 +209,7 @@ genieservice_portal = {
     sendTelemetry: function(data){
         return new Promise(function(resolve, reject) {
             var teleAuth = AppConfig.telemetryApiAuth;
-            var basicAuth = 'Basic ' + atob(teleAuth.username) + ":" + atob(teleAuth.password);
+            var basicAuth = 'Basic ' + btoa(atob(teleAuth.username) + ":" + atob(teleAuth.password));
             jQuery.ajax({
                 type: 'POST',
                 url: genieservice_portal.api.getTelematyFullAPI(),
