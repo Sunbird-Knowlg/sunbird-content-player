@@ -59,9 +59,13 @@ var TelemetryPlugin = Plugin.extend({
         if ("undefined" == typeof cordova) {
             console.log("Telemetry plugin initialized !!!");
             this.registerTelemetryEvents();
-            // TelemetryService._data = _.without(TelemetryService._data,undefined)
-            // this._teleData = TelemetryService._data;
-            // this.generateTelemetryManifest();
+
+            var did = detectClient();
+
+            customPluginsConfig.context.sid = customPluginsConfig.context.sid || CryptoJS.MD5(JSON.stringify(Math.random(did))).toString();
+            customPluginsConfig.context.uid = customPluginsConfig.context.uid || "anonymous";
+            customPluginsConfig.context.did = customPluginsConfig.context.did || CryptoJS.MD5(JSON.stringify(did)).toString();
+
             this.callParentEvent();
         }
     },
@@ -69,10 +73,12 @@ var TelemetryPlugin = Plugin.extend({
         var instance = this;
         EventBus.addEventListener("telemetryEvent", function(data) {
             data = JSON.parse(data.target);
-            data.sid = "anonymous";
-            data.did = "anonymous";
-            data.uid = "anonymous";
+
+            data.sid = customPluginsConfig.context.sid;
+            data.did = customPluginsConfig.context.did;
+            data.uid = customPluginsConfig.context.uid;
             data.mid = 'OE_' + CryptoJS.MD5(JSON.stringify(data)).toString();
+
             instance._teleData.push(data);
             // instance._teleData.ts = "2017-03-28T05:43:03.478+0000",
             instance.generateTelemetryManifest();

@@ -10,7 +10,6 @@ var stack = new Array(),
     collectionPathMap = {},
     content = {},
     collectionChildren = true,
-    customPluginsConfig = {};
     defaultMetadata = {
         "identifier": "org.ekstep.item.sample",
         "mimeType": "application/vnd.ekstep.ecml-archive",
@@ -44,17 +43,34 @@ var stack = new Array(),
     },
     isbrowserpreview = getUrlParameter("webview"),
     setContentDataCb = undefined;
+window.customPluginsConfig = {"context": {}};
 
 window.initializePreview = function(configuration, metadata, data) {
-
-    if (_.isUndefined(data) && !_.isUndefined(configuration) && !_.isUndefined(configuration.customPlugins)) {
+    // configuration: additional information passed to the preview
+    // metadata: metadata of the content
+    // data: JSON data of the content
+    if (!_.isUndefined(configuration) && !_.isUndefined(configuration.customPlugins)) {
         // update obj basePath
         org.ekstep.pluginframework.customRepo.updateBasePath(configuration.customPlugins.repo);
         // add repo
         org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.customRepo);
+
+        if (_.isUndefined(configuration)) {
+            var configuration = {};
+        }
+        if (_.isUndefined(configuration.customPlugins)) {
+            configuration.customPlugins = {};
+        }
+        if (_.isUndefined(configuration.customPlugins.context)) {
+            configuration.customPlugins.context = {};
+        }
+
         // eventbus dispatch
         EventBus.dispatch("event:loadContent", configuration.customPlugins);
     }
+
+    var $state = angular.element(document.body).injector().get('$state')
+    updateContentData($state);
 }
 
 // TODO:have to remove appState and setContentDataCb in future.
@@ -75,8 +91,8 @@ window.setContentData = function(metadata, data, configuration) {
         config.showEndPage = false;
     }
     localStorage.clear();
-    var $state = angular.element(document.body).injector().get('$state')
-    updateContentData($state);
+
+    window.initializePreview(configuration, metadata, data);
 }
 
 function updateContentData($state) {
@@ -94,7 +110,6 @@ function updateContentData($state) {
         });
     }
 }
-
 
 function getContentObj(data) {
     if (_.isObject(data.body))
