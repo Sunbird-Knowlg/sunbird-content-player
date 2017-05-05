@@ -1,0 +1,58 @@
+{
+    "id": "org.ekstep.textpopup",
+    "ver": "1.0",
+    "author": "Devendra Singh",
+    "title": "Text Popup Plugin",
+    "description": "",
+    "publishedDate": "",
+    "editor": {
+        "main": "editor/plugin.js",
+        "help": {
+            "src": "editor/help.md",
+            "dataType": "text"
+        },
+        "dependencies": [],
+        "menu": [{
+            "id": "tpopup",
+            "category": "main",
+            "type": "icon",
+            "toolTip": "Add Text Popup",
+            "title": "Text Popup",
+            "iconClass": "file text icon",
+            "onclick": {
+                "id": "org.ekstep.textpopup:showpopup"
+            }
+        }],
+        "configManifest": [{
+            "propertyName": "bgcolor",
+            "title": "Background Color",
+            "description": "Choose a color from the color picker for backgroung of text popup",
+            "dataType": "colorpicker",
+            "required": true,
+            "defaultValue": "#dddddd"
+        }, {
+            "propertyName": "color",
+            "title": "Font color",
+            "description": "Choose a color from the color picker",
+            "dataType": "colorpicker",
+            "required": true,
+            "defaultValue": "rgb(255,0,0)"
+        }, {
+            "propertyName": "fontsize",
+            "title": "Font Size",
+            "description": "Select font size for the text",
+            "dataType": "select",
+            "range": [18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72, 80, 88, 96],
+            "required": true,
+            "defaultValue": 18
+        }]
+    },
+    "renderer": {
+        "main": "renderer/textpopupplugin.js"
+    },
+    "dependencies": [{
+        "plugin": "org.ekstep.keyboard",
+        "ver": "1.0",
+        "scope": "renderer"
+    }]
+}

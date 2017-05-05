@@ -1,5 +1,5 @@
 {
-  "id": "org.ekstep.rangemultiplication",
+  "id": "org.ekstep.keyboard",
   "ver": "1.0",
   "author": "Manju dr",
   "title": "Question Set Plugin",
@@ -92,8 +92,18 @@
     ]
   },
   "renderer": {
-    "main": "renderer/rangemultiplication.js",
-    
+    "main": "renderer/1460550074646customkeyboard.js",
+    "dependencies": [
+      {
+        "type": "css",
+        "src": "renderer/1460550074797keyboard.css"
+      }
+    ],
     "compatibilityVersion": 3
-  }
+  },
+  "dependencies": [{
+        "plugin": "org.ekstep.progressbar",
+        "ver": "1.0",
+        "scope": "renderer"
+  }]
 }

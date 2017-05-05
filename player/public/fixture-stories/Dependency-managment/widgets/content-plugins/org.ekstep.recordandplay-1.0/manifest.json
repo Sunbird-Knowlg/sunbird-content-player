@@ -1,0 +1,60 @@
+{
+    "id": "org.ekstep.recordandplay",
+    "ver": "1.0",
+    "author": "Devendra Singh",
+    "title": "Record Play Plugin",
+    "description": "",
+    "publishedDate": "",
+    "type": "widget",
+    "editor": {
+        "main": "editor/plugin.js",
+        "dependencies": [],
+        "menu": [{
+                "id": "record_play",
+                "category": "main",
+                "type": "icon",
+                "toolTip": "Add Record Play",
+                "title": "Add Record Play",
+                "iconClass": "unmute icon",
+                "onclick": {
+                    "id": "org.ekstep.recordandplay:create",
+                    "data": {
+                        "x": 10,
+                        "y": 20,
+                        "w": 13.5,
+                        "h": 24
+
+                    }
+                }
+            }
+
+        ],
+
+        "configManifest": [],
+        "help": {
+            "src": "editor/help.md",
+            "dataType": "text"
+        },
+        "init-data": {
+            "x": 10,
+            "y": 20,
+            "w": 13.5,
+            "h": 24
+        }
+    },
+
+    "renderer": {
+        "main": "renderer/recordandplayplugin.js"
+    },
+    "dependencies": [{
+        "plugin": "org.ekstep.textpopup",
+        "ver": "1.0",
+        "scope": "renderer"
+    },
+    {
+        "plugin": "org.ekstep.text",
+        "ver": "1.0",
+        "scope": "renderer"
+    }]
+
+}
