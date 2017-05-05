@@ -49,7 +49,7 @@ window.initializePreview = function(configuration, metadata, data) {
     // configuration: additional information passed to the preview
     // metadata: metadata of the content
     // data: JSON data of the content
-    if (!_.isUndefined(data) && !_.isUndefined(configuration) && !_.isUndefined(configuration.customPlugins)) {
+    if (!_.isUndefined(configuration) && !_.isUndefined(configuration.customPlugins)) {
         // update obj basePath
         org.ekstep.pluginframework.customRepo.updateBasePath(configuration.customPlugins.repo);
         // add repo
