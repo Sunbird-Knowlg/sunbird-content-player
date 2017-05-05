@@ -364,7 +364,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             var configuration = {
                                 "customPlugins": {
                                     'context': {
-                                        "uid": "TI-211",
                                         "contentId": urlContentId
                                     }
                                 }
