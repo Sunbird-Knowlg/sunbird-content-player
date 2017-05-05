@@ -91,7 +91,7 @@ genieservice_portal = {
         _baseUrl: undefined,
         contentBasePath: '/learning/v2/content/',
         languageBasePath: '/language/v2/language/',
-        telemetryBasePath: '/telemtry/v1/telemetry',
+        telemetryBasePath: '/telemetry/v1/telemetry',
         getFullAPI: function() {
             return this.getBaseUrl() + this.contentBasePath;
         },
