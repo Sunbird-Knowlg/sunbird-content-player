@@ -104,9 +104,9 @@ var TelemetryPlugin = Plugin.extend({
         var instance = this;
         EventBus.addEventListener('sceneEnter', function() {
             if (instance.isPreviewInIframe()) {
-                var retObj = {"stageId": Renderer.theme && Renderer.theme._currentStage ? Renderer.theme._currentStage : ""};
-                var custEvent = new Event('sceneEnter');
-                window.parent.document.dispatchEvent(custEvent, retObj);
+                var retObj = {"stageId": EkstepRendererAPI.getCurrentStageId()};
+                var custEvent = new CustomEvent("sceneEnter", {"detail": retObj});
+                window.parent.dispatchEvent(custEvent);
             }
         });
     },
