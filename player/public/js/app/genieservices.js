@@ -208,7 +208,8 @@ genieservice_portal = {
     },
     sendTelemetry: function(data){
         return new Promise(function(resolve, reject) {
-            var basicAuth = 'Basic ' + btoa('ekstep:s3cr3t3');
+            var teleAuth = AppConfig.telemetryApiAuth;
+            var basicAuth = 'Basic ' + atob(teleAuth.username) + ":" + atob(teleAuth.password);
             jQuery.ajax({
                 type: 'POST',
                 url: genieservice_portal.api.getTelematyFullAPI(),

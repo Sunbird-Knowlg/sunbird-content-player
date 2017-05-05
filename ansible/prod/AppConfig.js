@@ -10,7 +10,8 @@ AppConfig = {
 	flavor: "production",
 	S3_content_host: "/assets/public/content/",
 	PREVIEW_PLUGINSPATH: "/content-plugins",
-	DEVICE_PLUGINSPATH: "/widgets/content-plugins"
+	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
+	telemetryApiAuth: {"username": "ZWtzdGVw", "password": "Z2VuaWU0Mg=="}
 }
 
 
