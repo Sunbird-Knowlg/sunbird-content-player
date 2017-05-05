@@ -103,12 +103,15 @@ var TelemetryPlugin = Plugin.extend({
     callParentEvent: function() {
         var instance = this;
         EventBus.addEventListener('sceneEnter', function() {
-            if (window.self != window.top) {
+            if (instance.isPreviewInIframe()) {
                 var retObj = {"stageId": Renderer.theme && Renderer.theme._currentStage ? Renderer.theme._currentStage : ""};
                 var custEvent = new Event('sceneEnter');
-                window.top.dispatchEvent(custEvent,retObj)
+                window.parent.document.dispatchEvent(custEvent, retObj);
             }
         });
+    },
+    isPreviewInIframe: function(){
+        return (window.self != window.top) ? true : false;
     }
 });
 PluginManager.registerPlugin('telemetry', TelemetryPlugin);
