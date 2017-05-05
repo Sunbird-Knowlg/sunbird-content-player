@@ -105,5 +105,5 @@
         "plugin": "org.ekstep.progressbar",
         "ver": "1.0",
         "scope": "renderer"
-  }]
+    }]
 }
