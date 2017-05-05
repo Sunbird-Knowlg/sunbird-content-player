@@ -69,11 +69,10 @@ var TelemetryPlugin = Plugin.extend({
         var instance = this;
         EventBus.addEventListener("telemetryEvent", function(data) {
             data = JSON.parse(data.target);
-            data.mid = JSON.stringify(_.random(11111111, 99999999));
             data.sid = "anonymous";
             data.did = "anonymous";
-            data.mid = "anonymous";
             data.uid = "anonymous";
+            data.mid = 'OE_' + CryptoJS.MD5(JSON.stringify(data)).toString();
             instance._teleData.push(data);
             // instance._teleData.ts = "2017-03-28T05:43:03.478+0000",
             instance.generateTelemetryManifest();
