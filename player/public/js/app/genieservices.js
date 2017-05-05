@@ -91,7 +91,7 @@ genieservice_portal = {
         _baseUrl: undefined,
         contentBasePath: '/learning/v2/content/',
         languageBasePath: '/language/v2/language/',
-        telemetryBasePath: '/telemtry/v2/telemetry',
+        telemetryBasePath: '/telemtry/v1/telemetry',
         getFullAPI: function() {
             return this.getBaseUrl() + this.contentBasePath;
         },
@@ -100,11 +100,7 @@ genieservice_portal = {
             return this.getBaseUrl() + this.languageBasePath;
         },
         getTelematyFullAPI: function(){
-            if("production" == AppConfig.flavor){
-                return "https://api.ekstep.in/telemetry/v3/telemetry";
-            }else{
-                return this.getBaseUrl() + this.telemetryBasePath;
-            }
+            return this.getBaseUrl() + this.telemetryBasePath;
         },
         setBaseUrl: function(baseUrl){
            this._baseUrl = baseUrl;
@@ -215,7 +211,7 @@ genieservice_portal = {
             var basicAuth = 'Basic ' + btoa('ekstep:s3cr3t3');
             jQuery.ajax({
                 type: 'POST',
-                url: genieservice_portal.api.getTelematyFullAPI(AppConfig.flavor),
+                url: genieservice_portal.api.getTelematyFullAPI(),
                 headers: {"Authorization": basicAuth, "Content-Type": "application/json", },
                 data: JSON.stringify(data),
                 dataType: "json",
