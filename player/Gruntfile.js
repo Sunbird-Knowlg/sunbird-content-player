@@ -10,9 +10,9 @@ module.exports = function(grunt) {
             },
         },
         watch: {
-          //run unit tests with karma (server needs to be already running) 
+          //run unit tests with karma (server needs to be already running)
           karma: {
-            tasks: ['karma:unit:run'] //NOTE the :run flag 
+            tasks: ['karma:unit:run'] //NOTE the :run flag
           }
         },
         karma: {
@@ -42,6 +42,7 @@ module.exports = function(grunt) {
                         'public/js/app/AppMessages.js',
                         'public/js/app/main.js',
                         'public/js/app/app.js',
+                        'public/js/app/detectClient.js',
                         'public/js/app/overlay.js',
                     ],
                     'public/js/renderer.min.js': [
@@ -393,7 +394,7 @@ module.exports = function(grunt) {
                     action: 'delete'
                 }]
             },
-            
+
             PluginframeworkFromDev: {
                 options: {
                     bucket: 'ekstep-public-dev',
@@ -645,7 +646,7 @@ module.exports = function(grunt) {
                     src: ['docs/**']
                 }]
             }
-        },        
+        },
     });
 
     grunt.loadNpmTasks('grunt-cordovacli');
@@ -697,7 +698,7 @@ module.exports = function(grunt) {
 
     // grunt to download the pluginFramework files
     grunt.registerTask('download-plugin-framework-dev', ['aws_s3:PluginframeworkFromDev'])
-    
+
 
     // After this 'build-preview' task run
     // grunt updateVersion
