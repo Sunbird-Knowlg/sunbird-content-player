@@ -43,30 +43,20 @@ var stack = new Array(),
     },
     isbrowserpreview = getUrlParameter("webview"),
     setContentDataCb = undefined;
-window.customPluginsConfig = {"context": {}};
+
+window.externalConfig = {"context": {}};
 
 window.initializePreview = function(configuration, metadata, data) {
     // configuration: additional information passed to the preview
     // metadata: metadata of the content
     // data: JSON data of the content
-    if (!_.isUndefined(configuration) && !_.isUndefined(configuration.customPlugins)) {
+    if (!_.isUndefined(configuration)) {
         // update obj basePath
-        org.ekstep.pluginframework.customRepo.updateBasePath(configuration.customPlugins.repo);
+        org.ekstep.pluginframework.customRepo.updateBasePath(configuration.repo);
         // add repo
         org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.customRepo);
-
-        if (_.isUndefined(configuration)) {
-            var configuration = {};
-        }
-        if (_.isUndefined(configuration.customPlugins)) {
-            configuration.customPlugins = {};
-        }
-        if (_.isUndefined(configuration.customPlugins.context)) {
-            configuration.customPlugins.context = {};
-        }
-
         // eventbus dispatch
-        EventBus.dispatch("event:loadContent", configuration.customPlugins);
+        EventBus.dispatch("event:loadContent", configuration);
     }
 
     var $state = angular.element(document.body).injector().get('$state')
@@ -253,7 +243,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             var urlParams = $rootScope.getUrlParameter();
             ContentService.getContentBody(id, urlParams).then(function(data) {
 
-                    if (!_.isUndefined(customPluginsConfig.pluginId)) {
+                    if (!_.isUndefined(externalConfig.pluginId)) {
                         /* add child to "plugin-manifest" in given format
                          ** "plugin-manifest": {
                          **      "plugin": [{
@@ -271,7 +261,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             body.theme["plugin-manifest"] = {};
                             body.theme["plugin-manifest"].plugin = [];
                         }
-                        _.each(customPluginsConfig.pluginId, function(item) {
+                        _.each(externalConfig.pluginId, function(item) {
                             body.theme["plugin-manifest"].plugin.push({
                                 "id": item.id,
                                 "ver": item.ver || "1.0",
@@ -294,9 +284,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         };
 
         EventBus.addEventListener("event:loadContent", function(data) {
-            customPluginsConfig = data.target;
-            $rootScope.getDataforPortal(customPluginsConfig.context.contentId);
-            $rootScope.getContentBody(customPluginsConfig.context.contentId);
+            externalConfig = data.target;
+            $rootScope.getDataforPortal(externalConfig.contentId);
+            $rootScope.getContentBody(externalConfig.contentId);
         });
 
         $rootScope.deviceRendrer = function() {
@@ -362,11 +352,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         // }
                         if (urlContentId) {
                             var configuration = {
-                                "customPlugins": {
-                                    'context': {
-                                        "contentId": urlContentId
-                                    }
-                                }
+                                "contentId": urlContentId,
+                                'context': {}
                             };
                             window.initializePreview(configuration);
                         }

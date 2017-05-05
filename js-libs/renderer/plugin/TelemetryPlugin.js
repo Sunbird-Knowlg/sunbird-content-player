@@ -40,6 +40,11 @@ var TelemetryPlugin = Plugin.extend({
      * @memberof TelemetryPlugin
      **/
      _maxTeleInstance : 10,
+     
+     /*
+      * Holds addition required fileds for telemtry event      
+      */
+     _requiredFields: {},
 
      /**
      *   Invoked by framework when plugin instance created/renderered on stage.
@@ -58,31 +63,37 @@ var TelemetryPlugin = Plugin.extend({
     initialize: function() {
         if ("undefined" == typeof cordova) {
             console.log("Telemetry plugin initialized !!!");
-            this.registerTelemetryEvents();
+            this.listenTelementryEvent();
 
             var did = detectClient();
+            this._requiredFields = {};
+            var extConfig = EkstepRendererAPI.getExternalConfig();
+            if (_.isUndefined(extConfig)){
+                extConfig = { "context": {} };
+            } 
 
-            customPluginsConfig.context.sid = customPluginsConfig.context.sid || CryptoJS.MD5(JSON.stringify(Math.random(did))).toString();
-            customPluginsConfig.context.uid = customPluginsConfig.context.uid || "anonymous";
-            customPluginsConfig.context.did = customPluginsConfig.context.did || CryptoJS.MD5(JSON.stringify(did)).toString();
+            this._requiredFields.uid = extConfig.context.uid || "anonymous";
+            this._requiredFields.sid = extConfig.context.sid || CryptoJS.MD5(Math.random().toString()).toString();
+            this._requiredFields.did = extConfig.context.did || CryptoJS.MD5(JSON.stringify(did)).toString();
 
-            this.callParentEvent();
+            //This is to dispatch StageId to portal
+            this.dispatchEventToParent();
         }
     },
-    registerTelemetryEvents: function() {
+    listenTelementryEvent: function() {
         var instance = this;
         EventBus.addEventListener("telemetryEvent", function(data) {
             data = JSON.parse(data.target);
-
-            data.sid = customPluginsConfig.context.sid;
-            data.did = customPluginsConfig.context.did;
-            data.uid = customPluginsConfig.context.uid;
-            data.mid = 'OE_' + CryptoJS.MD5(JSON.stringify(data)).toString();
-
-            instance._teleData.push(data);
-            // instance._teleData.ts = "2017-03-28T05:43:03.478+0000",
-            instance.generateTelemetryManifest();
+            data = instance.appendRequiredFields(data);            
+            
+            instance.addToQueue(data);
         });
+    },
+    appendRequiredFields: function(data){
+        //updating sid, did, uid and mid to the telemetry event object
+        _.extend(data, this._requiredFields);
+        data.mid = 'OE_' + CryptoJS.MD5(JSON.stringify(data)).toString();
+        return data;
     },
     sendTelemetry: function(telemetryData) {
         var currentTimeStamp = new Date().getTime();
@@ -93,19 +104,20 @@ var TelemetryPlugin = Plugin.extend({
             "events": telemetryData
         };
         // "events": JSON.parse(telemetryData)
-        console.log("teleObj to send to api", teleObj);
+        // console.log("teleObj to send to api", teleObj);
         genieservice.sendTelemetry(teleObj).then(function(data) {
            console.log("Telemetry API success", data);
         });
     },
-    generateTelemetryManifest: function() {
-        if (this._teleData.length >= this._maxTeleInstance) {
+    addToQueue: function(data) {
+        this._teleData.push(data);
+        if((data.eid.toUpperCase() == "OE_END") || (this._teleData.length >= this._maxTeleInstance)) {
             var telemetryData = _.clone(this._teleData);
-            this.sendTelemetry(telemetryData);
             this._teleData = [];
+            this.sendTelemetry(telemetryData);
         }
     },
-    callParentEvent: function() {
+    dispatchEventToParent: function() {
         var instance = this;
         EventBus.addEventListener('sceneEnter', function() {
             if (instance.isPreviewInIframe()) {

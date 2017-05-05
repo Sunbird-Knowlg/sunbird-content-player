@@ -77,7 +77,6 @@ genieservice_web = {
         });
     },
     sendTelemetry: function(data) {
-        console.log("Telemetry API data: " , data);
         return new Promise(function(resolve, reject) {
             resolve(data);
         });

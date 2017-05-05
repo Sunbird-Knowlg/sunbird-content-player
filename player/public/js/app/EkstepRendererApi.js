@@ -769,5 +769,13 @@ window.EkstepRendererAPI = {
         var currentController = EkstepRendererAPI.getCurrentController();
         if (currentController && currentController._model) return currentController._model;
         return "Item not available."
-    }
+    },
+
+   /**
+    *This api is going to return you the eexternal plugin obj
+    *@memberof EkstepRendererAPI
+    */
+   getExternalConfig: function() {
+       return window.externalConfig;
+   }
 }
