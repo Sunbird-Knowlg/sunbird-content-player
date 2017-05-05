@@ -92,6 +92,7 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
                         'public/js/thirdparty/exclude/Class.js',
                         'public/js/thirdparty/exclude/eventbus.min.js',
+                        'public/js/thirdparty/exclude/md5.js',
                         'public/js/thirdparty/plugin-framework.min.js',
                         '../js-libs/renderer/plugin/Plugin.js',
                         '../js-libs/renderer/plugin/HTMLPlugin.js',
