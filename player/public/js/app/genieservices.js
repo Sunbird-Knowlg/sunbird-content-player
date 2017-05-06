@@ -76,6 +76,11 @@ genieservice_web = {
                 });
         });
     },
+    sendTelemetry: function(data) {
+        return new Promise(function(resolve, reject) {
+            resolve(data);
+        });
+    },
     setAPIEndpoint: function(endpoint) {
         return endpoint;
     }
@@ -85,12 +90,16 @@ genieservice_portal = {
         _baseUrl: undefined,
         contentBasePath: '/learning/v2/content/',
         languageBasePath: '/language/v2/language/',
+        telemetryBasePath: '/telemetry/v1/telemetry',
         getFullAPI: function() {
             return this.getBaseUrl() + this.contentBasePath;
         },
         getLanguageFullAPI: function() {
             //return AppConfig[AppConfig.flavor] + this.languageBasePath;
             return this.getBaseUrl() + this.languageBasePath;
+        },
+        getTelematyFullAPI: function(){
+            return this.getBaseUrl() + this.telemetryBasePath;
         },
         setBaseUrl: function(baseUrl){
            this._baseUrl = baseUrl;
@@ -128,9 +137,10 @@ genieservice_portal = {
             resolve(result);
         });
     },
-    getContentBody: function(id) {
+    getContentBody: function(id, urlParams) {
         return new Promise(function(resolve, reject) {
-        jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", {"Content-Type" : "application/json"}, function(resp) {
+        urlParams["Content-Type"] = "application/json";
+        jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", urlParams, function(resp) {
             var result = {};
             if (!resp.error) {
                 result.list = resp;
@@ -154,9 +164,10 @@ genieservice_portal = {
             }
         });
     },
-    getContentMetadata: function(id) {
+    getContentMetadata: function(id, urlParams) {
         return new Promise(function(resolve, reject) {
-        jQuery.get(genieservice_portal.api.getFullAPI() + id, {"Content-Type" : "application/json"}, function(resp) {
+        urlParams["Content-Type"] = "application/json";
+        jQuery.get(genieservice_portal.api.getFullAPI() + id, urlParams, function(resp) {
             var result = {};
             if (!resp.error) {
                 result.list = resp;
@@ -175,7 +186,7 @@ genieservice_portal = {
         });
     },
     languageSearch: function(filter){
-        return new Promise(function(resolve, reject) {    
+        return new Promise(function(resolve, reject) {
             jQuery.ajax({
                 type: 'POST',
                 url: genieservice_portal.api.getLanguageFullAPI() + "search",
@@ -187,6 +198,29 @@ genieservice_portal = {
                 var result = {};
                 if (!resp.error) {
                     result.list = resp;
+                    resolve(resp.result);
+                } else {
+                    console.info("err : ", resp.error)
+                }
+            });
+        });
+    },
+    sendTelemetry: function(data){
+        return new Promise(function(resolve, reject) {
+            var teleAuth = AppConfig.telemetryApiAuth;
+            var basicAuth = 'Basic ' + btoa(atob(teleAuth.username) + ":" + atob(teleAuth.password));
+            jQuery.ajax({
+                type: 'POST',
+                url: genieservice_portal.api.getTelematyFullAPI(),
+                headers: {"Authorization": basicAuth, "Content-Type": "application/json", },
+                data: JSON.stringify(data),
+                dataType: "json",
+                contentType: "application/json"
+            })
+            .done(function(resp){
+                var result = {};
+                if (!resp.error) {
+                    result.data = resp;
                     resolve(resp.result);
                 } else {
                     console.info("err : ", resp.error)
@@ -237,12 +271,12 @@ genieservice_html = {
                 "age": 6,
                 "standard": -1
             };
-            resolve(result);      
+            resolve(result);
         });*/
         return new Promise(function(resolve, reject) {
             if(genieservice_html.localData.user){
                 var result = genieservice_html.localData.user;
-                resolve(result);                
+                resolve(result);
             } else {
                 reject("User data is not present in localData.")
             }
@@ -273,7 +307,7 @@ genieservice_html = {
                     respObj[fileObj.id] = jsonResp;
                     _.extend(genieservice_html.localData, respObj);
                 } else {
-                    _.extend(genieservice_html.localData, jsonResp);                    
+                    _.extend(genieservice_html.localData, jsonResp);
                 }
                 console.log("LocalData json loaded", genieservice_html.localData);
                 genieservice_html._jsFileIndex = genieservice_html._jsFileIndex + 1;
@@ -292,7 +326,7 @@ genieservice_html = {
     languageSearch: function(filter){
         return new Promise(function(resolve, reject) {
             //var result = _.findWhere(genieservice_html.localData.languageSearch, {"filter": filter});
-            if(genieservice_html.localData.wordList) {              
+            if(genieservice_html.localData.wordList) {
                 resolve(genieservice_html.localData.wordList);
             } else {
                 reject("wordList data is not present in localData.")
@@ -308,7 +342,7 @@ genieservice_html = {
         }
         var endPageStateUrl = '#/content/end/' + contentId;
         this.showPage(endPageStateUrl);
-    }, 
+    },
     showPage: function(pageUrl) {
         if ("undefined" != typeof cordova) {
             var url = "file:///android_asset/www/index.html" + pageUrl;
@@ -348,6 +382,7 @@ if ("undefined" == typeof cordova) {
 telemetry_web = {
     tList: [],
     send: function(string) {
+        EventBus.dispatch("telemetryEvent",string);
         console.log(string);
         return new Promise(function(resolve, reject) {
             telemetry_web.tList.push(string);
