@@ -45,6 +45,7 @@ var Plugin = Class.extend({
     appEvents: [],
     borderShape: undefined,
     _pluginParams: {},
+    _manifest: {},
     _unSupportedFonts: ["notosans", "verdana", "notosans oriya"],
     /**
      * Initializes the plugin with the given data and parent object
@@ -56,9 +57,19 @@ var Plugin = Class.extend({
      * @instance
      */
     init: function(data, parent, stage, theme) {
-        if(arguments.length == 1 && !data.manifest){
-            this.initialize();
-            return;
+        if(arguments.length == 1){
+           if(_.isUndefined(data)){
+               // To initialize chore & custom plugin global
+               this.initialize();
+               return;
+            } else {
+               if (!data.manifest) {
+                   // Only plugin manifest is getting(calling by plugin framework)
+                   this._manifest = data;
+                   this.initialize();
+                   return;
+               }
+           }
         }
        try {
             this.events = [];
@@ -96,7 +107,7 @@ var Plugin = Class.extend({
             if (this._enableEvents) {
                 EventManager.registerEvents(this, this._data);
             }
-            //TODO: Need to remove the _id use only id varible  
+            //TODO: Need to remove the _id use only id varible
             this._id = this.id = this._data.id || this._data.asset || _.uniqueId('plugin');
             PluginManager.registerPluginObject(this);
             if (this._self && data.visible === false) {
@@ -158,7 +169,7 @@ var Plugin = Class.extend({
             data.font = data.font.trim();
         }
         if (_.isEmpty(data.font) || (!_.isUndefined(data.font) && this._unSupportedFonts.indexOf(data.font.toLowerCase()) > -1)) {
-            // This is fallback support for fonts & we are ignoring NotoSans, NotoSans Oriya, Verdana 
+            // This is fallback support for fonts & we are ignoring NotoSans, NotoSans Oriya, Verdana
             data.font = this.getDefaultFont();
         }
     },
@@ -303,7 +314,7 @@ var Plugin = Class.extend({
         }
     },
     initialize: function() {
-        console.info("Base plugin intialization..");
+        //console.info("Base plugin intialization..");
     },
     /**
      * Initializes the plugin by reading from ECML.
@@ -763,7 +774,7 @@ var Plugin = Class.extend({
 
     /**
      * Return all children of data
-     * @param data {object} 
+     * @param data {object}
      * @memberof EkstepRenderer.Plugin
      */
     getInnerECML: function(data) {

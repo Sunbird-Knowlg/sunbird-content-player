@@ -5069,7 +5069,1124 @@ this.createjs = this.createjs || {}, createjs.extend = function(a, b) {
             return str;
         }
     }, new EventBusClass();
-});
+}), Array.prototype.find || Object.defineProperty(Array.prototype, "find", {
+    value: function(predicate) {
+        if (null == this) throw new TypeError('"this" is null or not defined');
+        var o = Object(this), len = o.length >>> 0;
+        if ("function" != typeof predicate) throw new TypeError("predicate must be a function");
+        for (var thisArg = arguments[1], k = 0; k < len; ) {
+            var kValue = o[k];
+            if (predicate.call(thisArg, kValue, k, o)) return kValue;
+            k++;
+        }
+    }
+}), Array.prototype.filter || (Array.prototype.filter = function(fun) {
+    "use strict";
+    if (void 0 === this || null === this) throw new TypeError();
+    var t = Object(this), len = t.length >>> 0;
+    if ("function" != typeof fun) throw new TypeError();
+    for (var res = [], thisArg = arguments.length >= 2 ? arguments[1] : void 0, i = 0; i < len; i++) if (i in t) {
+        var val = t[i];
+        fun.call(thisArg, val, i, t) && res.push(val);
+    }
+    return res;
+}), Array.prototype.forEach || (Array.prototype.forEach = function(callback) {
+    var T, k;
+    if (null == this) throw new TypeError("this is null or not defined");
+    var O = Object(this), len = O.length >>> 0;
+    if ("function" != typeof callback) throw new TypeError(callback + " is not a function");
+    for (arguments.length > 1 && (T = arguments[1]), k = 0; k < len; ) {
+        var kValue;
+        k in O && (kValue = O[k], callback.call(T, kValue, k, O)), k++;
+    }
+}), Array.prototype.every || (Array.prototype.every = function(callbackfn, thisArg) {
+    "use strict";
+    var T, k;
+    if (null == this) throw new TypeError("this is null or not defined");
+    var O = Object(this), len = O.length >>> 0;
+    if ("function" != typeof callbackfn) throw new TypeError();
+    for (arguments.length > 1 && (T = thisArg), k = 0; k < len; ) {
+        var kValue;
+        if (k in O) {
+            kValue = O[k];
+            if (!callbackfn.call(T, kValue, k, O)) return !1;
+        }
+        k++;
+    }
+    return !0;
+}), Array.prototype.indexOf || (Array.prototype.indexOf = function(searchElement, fromIndex) {
+    var k;
+    if (null == this) throw new TypeError('"this" is null or not defined');
+    var o = Object(this), len = o.length >>> 0;
+    if (0 === len) return -1;
+    var n = 0 | fromIndex;
+    if (n >= len) return -1;
+    for (k = Math.max(n >= 0 ? n : len - Math.abs(n), 0); k < len; ) {
+        if (k in o && o[k] === searchElement) return k;
+        k++;
+    }
+    return -1;
+}), Array.prototype.map || (Array.prototype.map = function(callback) {
+    var T, A, k;
+    if (null == this) throw new TypeError("this is null or not defined");
+    var O = Object(this), len = O.length >>> 0;
+    if ("function" != typeof callback) throw new TypeError(callback + " is not a function");
+    for (arguments.length > 1 && (T = arguments[1]), A = new Array(len), k = 0; k < len; ) {
+        var kValue, mappedValue;
+        k in O && (kValue = O[k], mappedValue = callback.call(T, kValue, k, O), A[k] = mappedValue), 
+        k++;
+    }
+    return A;
+}), Array.prototype.lastIndexOf || (Array.prototype.lastIndexOf = function(searchElement) {
+    "use strict";
+    if (void 0 === this || null === this) throw new TypeError();
+    var n, k, t = Object(this), len = t.length >>> 0;
+    if (0 === len) return -1;
+    for (n = len - 1, arguments.length > 1 && (n = Number(arguments[1]), n != n ? n = 0 : 0 != n && n != 1 / 0 && n != -(1 / 0) && (n = (n > 0 || -1) * Math.floor(Math.abs(n)))), 
+    k = n >= 0 ? Math.min(n, len - 1) : len - Math.abs(n); k >= 0; k--) if (k in t && t[k] === searchElement) return k;
+    return -1;
+}), Array.prototype.reduce || Object.defineProperty(Array.prototype, "reduce", {
+    value: function(callback) {
+        if (null === this) throw new TypeError("Array.prototype.reduce called on null or undefined");
+        if ("function" != typeof callback) throw new TypeError(callback + " is not a function");
+        var value, o = Object(this), len = o.length >>> 0, k = 0;
+        if (arguments.length >= 2) value = arguments[1]; else {
+            for (;k < len && !(k in o); ) k++;
+            if (k >= len) throw new TypeError("Reduce of empty array with no initial value");
+            value = o[k++];
+        }
+        for (;k < len; ) k in o && (value = callback(value, o[k], k, o)), k++;
+        return value;
+    }
+}), "function" != typeof Array.prototype.reduceRight && (Array.prototype.reduceRight = function(callback) {
+    "use strict";
+    if (null === this || void 0 === this) throw new TypeError("Array.prototype.reduce called on null or undefined");
+    if ("function" != typeof callback) throw new TypeError(callback + " is not a function");
+    var value, t = Object(this), len = t.length >>> 0, k = len - 1;
+    if (arguments.length >= 2) value = arguments[1]; else {
+        for (;k >= 0 && !(k in t); ) k--;
+        if (k < 0) throw new TypeError("Reduce of empty array with no initial value");
+        value = t[k--];
+    }
+    for (;k >= 0; k--) k in t && (value = callback(value, t[k], k, t));
+    return value;
+}), Array.isArray || (Array.isArray = function(arg) {
+    return "[object Array]" === Object.prototype.toString.call(arg);
+}), function() {
+    var initializing = !1, fnTest = /xyz/.test(function() {
+        xyz;
+    }) ? /\b_super\b/ : /.*/;
+    this.Class = function() {}, Class.extend = function(prop) {
+        function Class() {
+            !initializing && this.init && this.init.apply(this, arguments);
+        }
+        var _super = this.prototype;
+        initializing = !0;
+        var prototype = new this();
+        initializing = !1;
+        for (var name in prop) prototype[name] = "function" == typeof prop[name] && "function" == typeof _super[name] && fnTest.test(prop[name]) ? function(name, fn) {
+            return function() {
+                var tmp = this._super;
+                this._super = _super[name];
+                var ret = fn.apply(this, arguments);
+                return this._super = tmp, ret;
+            };
+        }(name, prop[name]) : prop[name];
+        return Class.prototype = prototype, Class.prototype.constructor = Class, Class.extend = arguments.callee, 
+        Class;
+    };
+}(), function(root, factory) {
+    "object" == typeof exports && "object" == typeof module ? module.exports = factory() : "function" == typeof define && define.amd ? define("EventBus", [], factory) : "object" == typeof exports ? exports.EventBus = factory() : root.EventBus = factory();
+}(this, function() {
+    var EventBusClass = {};
+    return EventBusClass = function() {
+        this.listeners = {};
+    }, EventBusClass.prototype = {
+        addEventListener: function(type, callback, scope) {
+            for (var args = [], numOfArgs = arguments.length, i = 0; i < numOfArgs; i++) args.push(arguments[i]);
+            args = args.length > 3 ? args.splice(3, args.length - 1) : [], void 0 !== this.listeners[type] ? this.listeners[type].push({
+                scope: scope,
+                callback: callback,
+                args: args
+            }) : this.listeners[type] = [ {
+                scope: scope,
+                callback: callback,
+                args: args
+            } ];
+        },
+        removeEventListener: function(type, callback, scope) {
+            if (void 0 !== this.listeners[type]) {
+                for (var numOfCallbacks = this.listeners[type].length, newArray = [], i = 0; i < numOfCallbacks; i++) {
+                    var listener = this.listeners[type][i];
+                    listener.scope == scope && listener.callback == callback || newArray.push(listener);
+                }
+                this.listeners[type] = newArray;
+            }
+        },
+        hasEventListener: function(type, callback, scope) {
+            if (void 0 !== this.listeners[type]) {
+                var numOfCallbacks = this.listeners[type].length;
+                if (void 0 === callback && void 0 === scope) return numOfCallbacks > 0;
+                for (var i = 0; i < numOfCallbacks; i++) {
+                    var listener = this.listeners[type][i];
+                    if ((!scope || listener.scope == scope) && listener.callback == callback) return !0;
+                }
+            }
+            return !1;
+        },
+        dispatch: function(type, target) {
+            for (var numOfListeners = 0, event = {
+                type: type,
+                target: target
+            }, args = [], numOfArgs = arguments.length, i = 0; i < numOfArgs; i++) args.push(arguments[i]);
+            if (args = args.length > 2 ? args.splice(2, args.length - 1) : [], args = [ event ].concat(args), 
+            void 0 !== this.listeners[type]) for (var numOfCallbacks = this.listeners[type].length, i = 0; i < numOfCallbacks; i++) {
+                var listener = this.listeners[type][i];
+                if (listener && listener.callback) {
+                    var concatArgs = args.concat(listener.args);
+                    listener.callback.apply(listener.scope, concatArgs), numOfListeners += 1;
+                }
+            }
+        },
+        getEvents: function() {
+            var str = "";
+            for (var type in this.listeners) for (var numOfCallbacks = this.listeners[type].length, i = 0; i < numOfCallbacks; i++) {
+                var listener = this.listeners[type][i];
+                str += listener.scope && listener.scope.className ? listener.scope.className : "anonymous", 
+                str += " listen for '" + type + "'\n";
+            }
+            return str;
+        }
+    }, new EventBusClass();
+}), function(r, t, g) {
+    function u(a, b, h) {
+        a.addEventListener ? a.addEventListener(b, h, !1) : a.attachEvent("on" + b, h);
+    }
+    function y(a) {
+        if ("keypress" == a.type) {
+            var b = String.fromCharCode(a.which);
+            return a.shiftKey || (b = b.toLowerCase()), b;
+        }
+        return k[a.which] ? k[a.which] : p[a.which] ? p[a.which] : String.fromCharCode(a.which).toLowerCase();
+    }
+    function D(a) {
+        var b = [];
+        return a.shiftKey && b.push("shift"), a.altKey && b.push("alt"), a.ctrlKey && b.push("ctrl"), 
+        a.metaKey && b.push("meta"), b;
+    }
+    function v(a) {
+        return "shift" == a || "ctrl" == a || "alt" == a || "meta" == a;
+    }
+    function z(a, b) {
+        var h, c, e, g = [];
+        for (h = a, "+" === h ? h = [ "+" ] : (h = h.replace(/\+{2}/g, "+plus"), h = h.split("+")), 
+        e = 0; e < h.length; ++e) c = h[e], A[c] && (c = A[c]), b && "keypress" != b && B[c] && (c = B[c], 
+        g.push("shift")), v(c) && g.push(c);
+        if (h = c, !(e = b)) {
+            if (!n) {
+                n = {};
+                for (var l in k) 95 < l && 112 > l || k.hasOwnProperty(l) && (n[k[l]] = l);
+            }
+            e = n[h] ? "keydown" : "keypress";
+        }
+        return "keypress" == e && g.length && (e = "keydown"), {
+            key: c,
+            modifiers: g,
+            action: e
+        };
+    }
+    function C(a, b) {
+        return null !== a && a !== t && (a === b || C(a.parentNode, b));
+    }
+    function c(a) {
+        function b(a) {
+            a = a || {};
+            var m, b = !1;
+            for (m in n) a[m] ? b = !0 : n[m] = 0;
+            b || (w = !1);
+        }
+        function h(a, b, m, f, c, h) {
+            var g, e, k = [], l = m.type;
+            if (!d._callbacks[a]) return [];
+            for ("keyup" == l && v(a) && (b = [ a ]), g = 0; g < d._callbacks[a].length; ++g) if (e = d._callbacks[a][g], 
+            (f || !e.seq || n[e.seq] == e.level) && l == e.action) {
+                var q;
+                (q = "keypress" == l && !m.metaKey && !m.ctrlKey) || (q = e.modifiers, q = b.sort().join(",") === q.sort().join(",")), 
+                q && (q = f && e.seq == f && e.level == h, (!f && e.combo == c || q) && d._callbacks[a].splice(g, 1), 
+                k.push(e));
+            }
+            return k;
+        }
+        function g(a, b, m, f) {
+            d.stopCallback(b, b.target || b.srcElement, m, f) || !1 !== a(b, m) || (b.preventDefault ? b.preventDefault() : b.returnValue = !1, 
+            b.stopPropagation ? b.stopPropagation() : b.cancelBubble = !0);
+        }
+        function e(a) {
+            "number" != typeof a.which && (a.which = a.keyCode);
+            var b = y(a);
+            b && ("keyup" == a.type && x === b ? x = !1 : d.handleKey(b, D(a), a));
+        }
+        function k(a, c, m, f) {
+            function e(c) {
+                return function() {
+                    w = c, ++n[a], clearTimeout(r), r = setTimeout(b, 1e3);
+                };
+            }
+            function h(c) {
+                g(m, c, a), "keyup" !== f && (x = y(c)), setTimeout(b, 10);
+            }
+            for (var d = n[a] = 0; d < c.length; ++d) {
+                var p = d + 1 === c.length ? h : e(f || z(c[d + 1]).action);
+                l(c[d], p, f, a, d);
+            }
+        }
+        function l(a, b, c, f, e) {
+            d._directMap[a + ":" + c] = b, a = a.replace(/\s+/g, " ");
+            var g = a.split(" ");
+            1 < g.length ? k(a, g, b, c) : (c = z(a, c), d._callbacks[c.key] = d._callbacks[c.key] || [], 
+            h(c.key, c.modifiers, {
+                type: c.action
+            }, f, a, e), d._callbacks[c.key][f ? "unshift" : "push"]({
+                callback: b,
+                modifiers: c.modifiers,
+                action: c.action,
+                seq: f,
+                level: e,
+                combo: a
+            }));
+        }
+        var d = this;
+        if (a = a || t, !(d instanceof c)) return new c(a);
+        d.target = a, d._callbacks = {}, d._directMap = {};
+        var r, n = {}, x = !1, p = !1, w = !1;
+        d._handleKey = function(a, c, e) {
+            var d, f = h(a, c, e);
+            c = {};
+            var k = 0, l = !1;
+            for (d = 0; d < f.length; ++d) f[d].seq && (k = Math.max(k, f[d].level));
+            for (d = 0; d < f.length; ++d) f[d].seq ? f[d].level == k && (l = !0, c[f[d].seq] = 1, 
+            g(f[d].callback, e, f[d].combo, f[d].seq)) : l || g(f[d].callback, e, f[d].combo);
+            f = "keypress" == e.type && p, e.type != w || v(a) || f || b(c), p = l && "keydown" == e.type;
+        }, d._bindMultiple = function(a, b, c) {
+            for (var d = 0; d < a.length; ++d) l(a[d], b, c);
+        }, u(a, "keypress", e), u(a, "keydown", e), u(a, "keyup", e);
+    }
+    if (r) {
+        var n, k = {
+            8: "backspace",
+            9: "tab",
+            13: "enter",
+            16: "shift",
+            17: "ctrl",
+            18: "alt",
+            20: "capslock",
+            27: "esc",
+            32: "space",
+            33: "pageup",
+            34: "pagedown",
+            35: "end",
+            36: "home",
+            37: "left",
+            38: "up",
+            39: "right",
+            40: "down",
+            45: "ins",
+            46: "del",
+            91: "meta",
+            93: "meta",
+            224: "meta"
+        }, p = {
+            106: "*",
+            107: "+",
+            109: "-",
+            110: ".",
+            111: "/",
+            186: ";",
+            187: "=",
+            188: ",",
+            189: "-",
+            190: ".",
+            191: "/",
+            192: "`",
+            219: "[",
+            220: "\\",
+            221: "]",
+            222: "'"
+        }, B = {
+            "~": "`",
+            "!": "1",
+            "@": "2",
+            "#": "3",
+            $: "4",
+            "%": "5",
+            "^": "6",
+            "&": "7",
+            "*": "8",
+            "(": "9",
+            ")": "0",
+            _: "-",
+            "+": "=",
+            ":": ";",
+            '"': "'",
+            "<": ",",
+            ">": ".",
+            "?": "/",
+            "|": "\\"
+        }, A = {
+            option: "alt",
+            command: "meta",
+            return: "enter",
+            escape: "esc",
+            plus: "+",
+            mod: /Mac|iPod|iPhone|iPad/.test(navigator.platform) ? "meta" : "ctrl"
+        };
+        for (g = 1; 20 > g; ++g) k[111 + g] = "f" + g;
+        for (g = 0; 9 >= g; ++g) k[g + 96] = g;
+        c.prototype.bind = function(a, b, c) {
+            return a = a instanceof Array ? a : [ a ], this._bindMultiple.call(this, a, b, c), 
+            this;
+        }, c.prototype.unbind = function(a, b) {
+            return this.bind.call(this, a, function() {}, b);
+        }, c.prototype.trigger = function(a, b) {
+            return this._directMap[a + ":" + b] && this._directMap[a + ":" + b]({}, a), this;
+        }, c.prototype.reset = function() {
+            return this._callbacks = {}, this._directMap = {}, this;
+        }, c.prototype.stopCallback = function(a, b) {
+            return !(-1 < (" " + b.className + " ").indexOf(" mousetrap ") || C(b, this.target)) && ("INPUT" == b.tagName || "SELECT" == b.tagName || "TEXTAREA" == b.tagName || b.isContentEditable);
+        }, c.prototype.handleKey = function() {
+            return this._handleKey.apply(this, arguments);
+        }, c.addKeycodes = function(a) {
+            for (var b in a) a.hasOwnProperty(b) && (k[b] = a[b]);
+            n = null;
+        }, c.init = function() {
+            var b, a = c(t);
+            for (b in a) "_" !== b.charAt(0) && (c[b] = function(b) {
+                return function() {
+                    return a[b].apply(a, arguments);
+                };
+            }(b));
+        }, c.init(), r.Mousetrap = c, "undefined" != typeof module && module.exports && (module.exports = c), 
+        "function" == typeof define && define.amd && define(function() {
+            return c;
+        });
+    }
+}("undefined" != typeof window ? window : null, "undefined" != typeof window ? document : null), 
+window.org = {
+    ekstep: {}
+};
+
+var plugin_framework = function() {};
+
+plugin_framework.prototype.initialize = function(config) {
+    if (config = config || {}, org.ekstep.pluginframework.config = org.ekstep.pluginframework.config || {}, 
+    !config.env) throw "Framework should be initialized with environment!";
+    org.ekstep.pluginframework.env = config.env, org.ekstep.pluginframework.jQuery = config.jQuery || window.$, 
+    org.ekstep.pluginframework.async = config.async || window.async, org.ekstep.pluginframework.config.build_number = config.build_number || "BUILD_NUMBER", 
+    org.ekstep.pluginframework.config.pluginRepo = config.pluginRepo || "/content-plugins";
+}, window.org.ekstep.pluginframework = new plugin_framework(), plugin_framework = void 0;
+
+var services_framework = function() {};
+
+window.org.ekstep.services = new services_framework(), services_framework = void 0, 
+org.ekstep.pluginframework.resourceManager = new (Class.extend({
+    init: function() {},
+    buildNumber: void 0,
+    registeredRepos: [],
+    initialize: function() {},
+    discoverManifest: function(pluginId, pluginVer, cb, publishedTime) {
+        var ayncTasks = [];
+        this.registeredRepos.forEach(function(repo, index) {
+            var Fns = function() {
+                return 0 == index ? function(callback) {
+                    repo.discoverManifest(pluginId, pluginVer, callback, publishedTime);
+                } : function(data, callback) {
+                    void 0 == data.manifest ? repo.discoverManifest(pluginId, pluginVer, callback, publishedTime) : callback(null, data);
+                };
+            };
+            ayncTasks.push(Fns());
+        }), org.ekstep.pluginframework.async.waterfall(ayncTasks, function(err, result) {
+            void 0 !== result.manifest ? cb(void 0, result) : cb("Plugin not found in any repo or manifest", void 0);
+        });
+    },
+    addRepo: function(repo, position) {
+        this.registeredRepos.find(function(rp) {
+            return rp.id == repo.id;
+        }) ? console.error(repo.id + ": Repo already registered!") : "number" == typeof position ? this.registeredRepos.splice(position, 0, repo) : this.registeredRepos.push(repo);
+    },
+    getResource: function(pluginId, pluginVer, src, dataType, repo, callback, publishedTime) {
+        var resource = repo.resolveResource(pluginId, pluginVer, src);
+        this.loadResource(resource, dataType, callback, publishedTime);
+    },
+    loadExternalPluginResource: function(type, pluginId, pluginVer, src, repo, publishedTime, callback) {
+        var resource = repo.resolveResource(pluginId, pluginVer, src) + "?" + (publishedTime || "");
+        this.loadExternalResource(resource, type, publishedTime, callback);
+    },
+    loadExternalResource: function(resource, type, publishedTime, callback) {
+        switch (type) {
+          case "js":
+            callback ? this.loadResource(resource, "script", callback, publishedTime) : org.ekstep.pluginframework.jQuery("body").append($("<script type='text/javascript' src=" + resource + ">"));
+            break;
+
+          case "css":
+            org.ekstep.pluginframework.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "'>"), 
+            callback && callback();
+        }
+    },
+    loadResource: function(url, dataType, callback, publishedTime) {
+        url = url + "?" + (org.ekstep.pluginframework.config ? org.ekstep.pluginframework.config.build_number : ""), 
+        publishedTime && (url = url + "&" + publishedTime), org.ekstep.pluginframework.jQuery.ajax({
+            async: !1,
+            url: url,
+            dataType: dataType,
+            crossDomain: !1
+        }).done(function(data) {
+            callback(null, data);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            "OK" === jqXHR.statusText && console.log("Unable to load resource:", url, "error:", errorThrown), 
+            callback(errorThrown);
+        });
+    }
+}))(), org.ekstep.pluginframework.eventManager = new (Class.extend({
+    enableEvents: !0,
+    addEventListener: function(type, callback, scope) {
+        EventBus.addEventListener(type, callback, scope);
+    },
+    dispatchEvent: function(type, data, target) {
+        this.enableEvents && EventBus.dispatch(type, target, data);
+    },
+    removeEventListener: function(type, callback, scope) {
+        EventBus.removeEventListener(type, callback, scope);
+    }
+}))(), org.ekstep.pluginframework.pluginManager = new (Class.extend({
+    pluginManifests: {},
+    plugins: {},
+    pluginObjs: {},
+    pluginInstances: {},
+    pluginVisited: {},
+    errors: [],
+    init: function() {
+        console.log("Plugin manager initialized");
+    },
+    _registerPlugin: function(pluginId, pluginVer, plugin, manifest, repo) {
+        this.plugins[pluginId] = {
+            p: plugin,
+            m: manifest,
+            repo: repo
+        }, this._registerNameSpace(pluginId, plugin), manifest && (this.pluginManifests[manifest.id] = manifest), 
+        org.ekstep.pluginframework.eventManager.dispatchEvent("plugin:load", {
+            plugin: pluginId,
+            version: pluginVer
+        }), org.ekstep.pluginframework.eventManager.dispatchEvent(pluginId + ":load");
+    },
+    registerPlugin: function(manifest, plugin, repo) {
+        repo = repo || org.ekstep.pluginframework.publishedRepo, this._registerPlugin(manifest.id, manifest.ver, plugin, manifest, repo);
+        var p = new plugin(manifest);
+        this.pluginObjs[manifest.id] = p;
+    },
+    loadCustomPlugin: function(dependency, callback, publishedTime) {
+        var instance = this;
+        org.ekstep.pluginframework.resourceManager.loadResource(dependency.src, "text", function(err, data) {
+            if (err) console.error("Unable to load editor plugin", "plugin:" + dependency.id + "-" + dependency.ver, "resource:", "Error:", err); else try {
+                instance.isPluginDefined(dependency.id) ? console.info("Plugin is already registered: ", dependency.id) : (data = eval(data), 
+                instance._registerPlugin(dependency.id, void 0, data, void 0, void 0));
+            } catch (e) {
+                console.error("Error while loading plugin", "plugin:" + dependency.id + "-" + dependency.ver, "Error:", e);
+            }
+        }, publishedTime), callback && callback();
+    },
+    loadPluginByManifest: function(manifest, repo, pluginType, publishedTime) {
+        var instance = this, scope = org.ekstep.pluginframework.env;
+        org.ekstep.pluginframework.resourceManager.getResource(manifest.id, manifest.ver, manifest[scope].main, "text", repo, function(err, data) {
+            if (err) console.error("Unable to load editor plugin", "plugin:" + manifest.id + "-" + manifest.ver, "resource:" + manifest[scope].main, "Error:", err); else try {
+                instance.isPluginDefined(manifest.id) ? console.info("Plugin is already registered: ", manifest.id) : "library" == pluginType ? org.ekstep.pluginframework.jQuery.globalEval(data) : data && instance.registerPlugin(manifest, eval(data), repo);
+            } catch (e) {
+                console.error("Error while loading plugin", "plugin:" + manifest.id + "-" + manifest.ver, "Error:", e);
+            }
+        }, publishedTime);
+    },
+    _registerNameSpace: function(pluginId, clazz) {
+        var names = pluginId.split("."), baseNameSpace = names[0], lastKey = names[names.length - 1];
+        names.splice(0, 1);
+        var pluginClazz = "editor" === org.ekstep.pluginframework.env ? Class.extend({
+            init: function(data, parent, override) {
+                org.ekstep.pluginframework.pluginManager.invoke(pluginId, data, parent, override);
+            }
+        }) : Class.extend({
+            init: function(data, parent, stage, theme) {
+                org.ekstep.pluginframework.pluginManager.invokeRenderer(pluginId, data, parent, stage, theme);
+            }
+        });
+        pluginClazz.extend = function(subClazz) {
+            return clazz.extend(subClazz);
+        }, names.length > 0 ? (window[baseNameSpace] || (window[baseNameSpace] = {}), names.reduce(function(o, s) {
+            var val = s === lastKey ? pluginClazz : {};
+            return void 0 === o[s] ? o[s] = val : o[s];
+        }, window[baseNameSpace])) : void 0 === window[baseNameSpace] && (window[baseNameSpace] = pluginClazz);
+    },
+    loadAndInitPlugin: function(pluginId, version, publishedTime, parent) {
+        if (this.loadPluginWithDependencies(pluginId, version, void 0, publishedTime, function() {}), 
+        this.isPluginDefined(pluginId)) {
+            var pluginManifest = this.getPluginManifest(pluginId);
+            return pluginManifest.type && "widget" === pluginManifest.type.toLowerCase() && this.invoke(pluginId, JSON.parse(JSON.stringify(pluginManifest[org.ekstep.pluginframework.env]["init-data"] || {})), parent), 
+            0;
+        }
+        return 1;
+    },
+    loadPluginWithDependencies: function(pluginId, pluginVer, pluginType, publishedTime, callback) {
+        var instance = this;
+        this.plugins[pluginId] || this.pluginVisited[pluginId] ? (console.log('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded'), 
+        callback()) : org.ekstep.pluginframework.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
+            err || void 0 == data ? (console.error("Unable to load plugin manifest", "plugin:" + pluginId + "-" + pluginVer, "Error:", err), 
+            callback()) : (instance.pluginVisited[pluginId] = !0, instance.loadManifestDependencies(data.manifest.dependencies, publishedTime, function() {
+                if ("renderer" === pluginType) callback(); else {
+                    var queue = instance.queueDependencies(data.manifest, data.repo, publishedTime);
+                    queue.length() > 0 ? queue.drain = function() {
+                        instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime), 
+                        callback();
+                    } : (instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime), 
+                    callback());
+                }
+            }));
+        }, publishedTime);
+    },
+    queueDependencies: function(manifest, repo, publishedTime) {
+        var scope = org.ekstep.pluginframework.env, queue = org.ekstep.pluginframework.async.queue(function(task, callback) {
+            org.ekstep.pluginframework.resourceManager.loadExternalPluginResource(task.type, task.id, task.ver, task.src, task.repo, task.publishedTime, callback);
+        }, 1), instance = this;
+        return Array.isArray(manifest[scope].dependencies) && manifest[scope].dependencies.forEach(function(dependency) {
+            "plugin" == dependency.type ? instance.loadPluginWithDependencies(dependency.plugin, dependency.ver, dependency.type, publishedTime, function() {}) : queue.push({
+                type: dependency.type,
+                id: manifest.id,
+                ver: manifest.ver,
+                src: dependency.src,
+                repo: repo,
+                publishedTime: publishedTime
+            }, function() {});
+        }), queue;
+    },
+    loadManifestDependencies: function(dependencies, publishedTime, callback) {
+        var instance = this;
+        if (Array.isArray(dependencies) && dependencies.length > 0) {
+            var queue = org.ekstep.pluginframework.async.queue(function(plugin, pluginCallback) {
+                instance.loadPluginWithDependencies(plugin.id, plugin.ver, plugin.type, plugin.pt, pluginCallback);
+            }, 6);
+            dependencies.forEach(function(dep) {
+                "renderer" == org.ekstep.pluginframework.env ? dep.scope != org.ekstep.pluginframework.env && "all" != dep.scope || queue.push({
+                    id: dep.plugin,
+                    ver: dep.ver,
+                    type: dep.type,
+                    pt: publishedTime
+                }, function(err) {}) : queue.push({
+                    id: dep.plugin,
+                    ver: dep.ver,
+                    type: dep.type,
+                    pt: publishedTime
+                }, function(err) {});
+            }), queue.length() > 0 ? queue.drain = function() {
+                callback();
+            } : callback();
+        } else callback();
+    },
+    isManifestDefined: function(id) {
+        return !!this.pluginManifests[id];
+    },
+    isPluginDefined: function(id) {
+        return !!this.plugins[id];
+    },
+    loadPlugin: function(pluginId, pluginVer, callback) {
+        this.loadPluginWithDependencies(pluginId, pluginVer, "plugin", void 0, function() {
+            console.log("Plugin loaded: ", pluginId), callback && callback();
+        });
+    },
+    loadAllPlugins: function(plugins, otherDependencies, callback) {
+        var instance = this;
+        if (Array.isArray(plugins) && plugins.length) {
+            var q = org.ekstep.pluginframework.async.queue(function(plugin, pluginCallback) {
+                instance.loadPluginWithDependencies(plugin.id, plugin.ver, plugin.type, plugin.pt, pluginCallback);
+            }, 6);
+            q.drain = function() {
+                instance.loadOtherDependencies(otherDependencies, callback);
+            }, plugins.forEach(function(plugin) {
+                q.push({
+                    id: plugin.id,
+                    ver: plugin.ver,
+                    type: plugin.type,
+                    pt: void 0
+                }, function(err) {});
+            });
+        } else Array.isArray(otherDependencies) && otherDependencies.length ? instance.loadOtherDependencies(otherDependencies, callback) : callback();
+    },
+    loadOtherDependencies: function(otherDependencies, callback) {
+        var instance = this;
+        if (Array.isArray(otherDependencies) && otherDependencies.length) {
+            var queue = org.ekstep.pluginframework.async.queue(function(dependency, cb) {
+                "plugin" == dependency.type ? instance.loadCustomPlugin(dependency, cb) : org.ekstep.pluginframework.resourceManager.loadExternalResource(dependency.src, dependency.type, void 0, cb);
+            }, 1);
+            otherDependencies.forEach(function(dep) {
+                dep.plugin && instance.isPluginDefined(dep.plugin) || queue.push(dep, function(err) {});
+            }), queue.length() > 0 ? queue.drain = function() {
+                callback && callback();
+            } : callback && callback();
+        } else callback && callback();
+    },
+    invoke: function(id, data, parent, override) {
+        var instance = this, p = void 0, plugin = this.plugins[id];
+        if (plugin) {
+            var pluginClass = override ? plugin.p.extend(override) : plugin.p, pluginManifest = plugin.m;
+            try {
+                Array.isArray(data) ? data.forEach(function(d) {
+                    p = new pluginClass(pluginManifest, d, parent), instance.addPluginInstance(p), p.initPlugin(), 
+                    org.ekstep.pluginframework.eventManager.dispatchEvent("plugin:add", {
+                        plugin: pluginManifest.id,
+                        version: pluginManifest.ver,
+                        instanceId: p.id
+                    }), org.ekstep.pluginframework.eventManager.dispatchEvent(pluginManifest.id + ":add");
+                }) : (p = new pluginClass(pluginManifest, data, parent), instance.addPluginInstance(p), 
+                p.initPlugin(), org.ekstep.pluginframework.eventManager.dispatchEvent("plugin:add", {
+                    plugin: pluginManifest.id,
+                    version: pluginManifest.ver,
+                    instanceId: p.id
+                }), org.ekstep.pluginframework.eventManager.dispatchEvent(pluginManifest.id + ":add"));
+            } catch (e) {
+                throw delete instance.pluginInstances[p.id], e;
+            }
+        } else this.addError("No plugin found for - " + id);
+        return p;
+    },
+    invokeRenderer: function(id, data, parent, stage, theme) {
+        var instance = this, p = void 0, plugin = this.plugins[id];
+        if (plugin) try {
+            var pluginClass = plugin.p, pluginManifest = plugin.m || {
+                id: id,
+                ver: void 0
+            };
+            Array.isArray(data) ? data.forEach(function(d) {
+                p = new pluginClass(d, parent, stage, theme), instance.addPluginInstance(p), org.ekstep.pluginframework.eventManager.dispatchEvent("plugin:add", {
+                    plugin: pluginManifest.id,
+                    version: pluginManifest.ver,
+                    instanceId: p.id
+                }), org.ekstep.pluginframework.eventManager.dispatchEvent(pluginManifest.id + ":add");
+            }) : (p = new pluginClass(data, parent, stage, theme), instance.addPluginInstance(p), 
+            org.ekstep.pluginframework.eventManager.dispatchEvent("plugin:add", {
+                plugin: pluginManifest.id,
+                version: pluginManifest.ver,
+                instanceId: p.id
+            }), org.ekstep.pluginframework.eventManager.dispatchEvent(pluginManifest.id + ":add"));
+        } catch (e) {
+            throw delete instance.pluginInstances[p.id], e;
+        } else this.addError("No plugin found for - " + id);
+        return p;
+    },
+    addPluginInstance: function(pluginObj) {
+        this.pluginInstances[pluginObj.id] = pluginObj;
+    },
+    removePluginInstance: function(pluginObj) {
+        pluginObj && pluginObj.remove();
+    },
+    getPluginInstance: function(id) {
+        return this.pluginInstances[id];
+    },
+    getPluginInstances: function() {
+        return this.pluginInstances;
+    },
+    getPluginManifest: function(id) {
+        var plugin = this.plugins[id];
+        return plugin ? plugin.m : void 0;
+    },
+    addError: function(error) {
+        this.errors.push(error);
+    },
+    getErrors: function() {
+        return this.errors;
+    },
+    cleanUp: function() {
+        this.pluginInstances = {}, this.pluginManifests = {}, this.pluginVisited = {}, this.plugins = {}, 
+        this.errors = [];
+    },
+    getPlugins: function() {
+        return Object.keys(this.plugins);
+    },
+    getPluginType: function(id) {
+        return this.pluginInstances[id] ? this.pluginInstances[id].getType() : "";
+    },
+    loadPluginResource: function(pluginId, pluginVer, src, dataType, callback) {
+        this.plugins[pluginId] ? org.ekstep.pluginframework.resourceManager.getResource(pluginId, pluginVer, src, dataType, this.plugins[pluginId].repo, callback) : callback(new Error("unable load plugin resource " + src), void 0);
+    },
+    getPluginVersion: function(id) {
+        return this.pluginInstances[id] ? this.pluginInstances[id].getVersion() : "";
+    },
+    resolvePluginResource: function(id, ver, resource) {
+        return !(!this.plugins[id] || !this.plugins[id].repo) && this.plugins[id].repo.resolveResource(id, ver, resource);
+    }
+}))(), org.ekstep.pluginframework.keyboardManager = new (Class.extend({
+    registry: {},
+    initialize: function() {},
+    registerKeyCombination: function(command, callback) {
+        if (void 0 === command || void 0 === callback) throw "The given key combination is invalid.";
+        Mousetrap.bind(command, callback);
+    },
+    resolveKeyCombination: function(event) {}
+}))(), org.ekstep.services.iService = Class.extend({
+    getBaseURL: function() {
+        return org.ekstep.services.config.baseURL;
+    },
+    getAPISlug: function() {
+        return org.ekstep.services.config.apislug;
+    },
+    init: function(config) {
+        this.initService(config);
+    },
+    initService: function(config) {},
+    _dispatchTelemetry: function(data) {
+        var status = data.res.responseCode || data.res.statusText;
+        org.ekstep.services.telemetryService.apiCall({
+            path: data.url,
+            method: data.method,
+            request: data.request,
+            response: "",
+            responseTime: data.res.responseTime,
+            status: status,
+            uip: ""
+        });
+    },
+    get: function(url, config, cb) {
+        var requestTimestamp, instance = this;
+        if (config = config || {}, config.headers = config.headers || {}, "function" != typeof cb) throw "iservice expects callback to be function";
+        org.ekstep.pluginframework.jQuery.ajax({
+            type: "GET",
+            url: url,
+            headers: config.headers,
+            beforeSend: function(xhrObject, settings) {
+                requestTimestamp = new Date().getTime();
+            },
+            success: function(res) {
+                res.responseTime = new Date().getTime() - requestTimestamp, instance._dispatchTelemetry({
+                    url: url,
+                    method: "GET",
+                    request: "",
+                    res: res
+                }), res = {
+                    data: res
+                }, cb(null, res);
+            },
+            error: function(err) {
+                err.responseTime = new Date().getTime() - requestTimestamp, cb(err, null), instance._dispatchTelemetry({
+                    url: url,
+                    method: "GET",
+                    request: "",
+                    res: err
+                });
+            }
+        });
+    },
+    post: function(url, data, config, cb) {
+        var requestTimestamp, instance = this;
+        if (data = data || {}, config = config || {}, config.headers = config.headers || {}, 
+        "function" != typeof cb) throw "iservice expects callback to be function";
+        "object" == typeof data && (data = JSON.stringify(data)), org.ekstep.pluginframework.jQuery.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            headers: config.headers,
+            beforeSend: function(xhrObject, settings) {
+                requestTimestamp = new Date().getTime();
+            },
+            success: function(res) {
+                res.responseTime = new Date().getTime() - requestTimestamp, instance._dispatchTelemetry({
+                    url: url,
+                    method: "POST",
+                    request: data,
+                    res: res
+                }), res = {
+                    data: res
+                }, cb(null, res);
+            },
+            error: function(err) {
+                err.responseTime = new Date().getTime() - requestTimestamp, cb(err, null), instance._dispatchTelemetry({
+                    url: url,
+                    method: "POST",
+                    request: data,
+                    res: err
+                });
+            }
+        });
+    },
+    patch: function(url, data, config, cb) {
+        var requestTimestamp, instance = this;
+        if (data = data || {}, config = config || {}, config.headers = config.headers || {}, 
+        "function" != typeof cb) throw "iservice expects callback to be function";
+        "object" == typeof data && (data = JSON.stringify(data)), org.ekstep.pluginframework.jQuery.ajax({
+            type: "PATCH",
+            url: url,
+            data: data,
+            headers: config.headers,
+            beforeSend: function(xhrObject, settings) {
+                requestTimestamp = new Date().getTime();
+            },
+            success: function(res) {
+                res.responseTime = new Date().getTime() - requestTimestamp, instance._dispatchTelemetry({
+                    url: url,
+                    method: "PATCH",
+                    request: data,
+                    res: res
+                }), res = {
+                    data: res
+                }, cb(null, res);
+            },
+            error: function(xhr, status, error) {
+                xhr.responseTime = new Date().getTime() - requestTimestamp, cb(xhr, null), instance._dispatchTelemetry({
+                    url: url,
+                    method: "PATCH",
+                    request: data,
+                    res: xhr
+                });
+            }
+        });
+    },
+    postFromService: function(url, data, headers, callback) {
+        this.post(url, JSON.stringify(data), headers, function(err, res) {
+            callback(err, res);
+        });
+    },
+    getFromService: function(url, headers, callback) {
+        this.get(url, headers, function(err, res) {
+            callback(err, res);
+        });
+    }
+}), org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
+    serviceURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + "/learning/";
+    },
+    content: {},
+    initService: function() {},
+    contentFields: "body,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,portalOwner,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn",
+    requestHeaders: {
+        headers: {
+            "content-type": "application/json",
+            "user-id": "content-editor"
+        }
+    },
+    _setContentMeta: function(id, contentMeta) {
+        if (id && contentMeta) {
+            var meta = {};
+            for (k in contentMeta) "body" != k && "stageIcons" != k && (meta[k] = contentMeta[k]);
+            this.content[id] = meta;
+        }
+    },
+    getContentMeta: function(id) {
+        return this.content[id] || {};
+    },
+    saveContent: function(contentId, metadata, body, callback) {
+        this._saveContent(contentId, metadata, body, callback);
+    },
+    _saveContent: function(contentId, metadata, body, callback) {
+        var instance = this, versionKey = instance.content[contentId] && instance.content[contentId].versionKey;
+        if (contentId && versionKey) {
+            var update = !1, content = {
+                versionKey: versionKey,
+                lastUpdatedBy: window.context.user.id
+            };
+            if (metadata) {
+                update = !0;
+                for (k in metadata) content[k] = metadata[k];
+            }
+            if (body && (content.compatibilityLevel = body.theme.compatibilityVersion, content.body = JSON.stringify(body), 
+            update = !0), update) {
+                var headers = {
+                    headers: {
+                        "content-type": "application/json",
+                        "user-id": "ATTool"
+                    }
+                }, requestObj = {
+                    request: {
+                        content: content
+                    }
+                };
+                instance.patch(this.serviceURL() + "v2/content/" + contentId, requestObj, headers, function(err, res) {
+                    res && "OK" == res.data.responseCode ? (instance.content[contentId].versionKey = res.data.result.versionKey, 
+                    callback(void 0, res)) : callback(!0, err);
+                });
+            } else callback("Nothing to save");
+        } else callback("Cannot find content id or version key to update content");
+    },
+    getContent: function(contentId, callback) {
+        var instance = this;
+        if (contentId) {
+            var metaDataFields = "?mode=edit&fields=" + instance.contentFields;
+            instance.get(this.serviceURL() + "v2/content/" + contentId + metaDataFields, {}, function(err, res) {
+                err && callback(err, void 0), !err && res.data && res.data.result && res.data.result.content ? (instance._setContentMeta(contentId, res.data.result.content), 
+                callback(err, res.data.result.content)) : callback(new Error("no content found!"), void 0);
+            });
+        } else callback("Content id is required to get content from platform", void 0);
+    },
+    getContentVersionKey: function(contentId, callback) {
+        var instance = this;
+        if (contentId) {
+            instance.get(this.serviceURL() + "v2/content/" + contentId + "?mode=edit&fields=versionKey", {}, function(err, res) {
+                err && callback(err, void 0), !err && res.data && res.data.result && res.data.result.content ? (instance._setContentMeta(contentId, res.data.result.content), 
+                callback(err, res.data.result.content)) : callback(new Error("no content found!"), void 0);
+            });
+        } else callback("Content id is required to get versionKey from platform", void 0);
+    },
+    getTemplateData: function(templateId, callback) {
+        this.get(this.serviceURL() + "v2/content/" + templateId + "?taxonomyId=literacy_v2&fields=body,editorState,templateId,languageCode", this.requestHeaders, function(err, res) {
+            callback(err, res);
+        });
+    },
+    downloadContent: function(contentId, fileName, callback) {
+        var data = {
+            request: {
+                content_identifiers: [ contentId ],
+                file_name: fileName
+            }
+        };
+        this.postFromService(this.serviceURL() + "v2/content/bundle", data, this.requestHeaders, callback);
+    }
+}))(), org.ekstep.services.assessmentService = new (org.ekstep.services.iService.extend({
+    learningURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + "/learning/";
+    },
+    requestHeaders: {
+        headers: {
+            "content-type": "application/json",
+            "user-id": "content-editor"
+        }
+    },
+    getQuestions: function(data, callback) {
+        org.ekstep.services.searchService.search(data, callback);
+    },
+    getItem: function(itemId, callback) {
+        this.getFromService(this.learningURL() + "v1/assessmentitem/" + itemId, this.requestHeaders, callback);
+    },
+    getTemplate: function(templateId, callback) {
+        org.ekstep.services.contentService.getTemplateData(templateId, callback);
+    }
+}))(), org.ekstep.services.assetService = new (org.ekstep.services.iService.extend({
+    learningURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + "/learning/";
+    },
+    asset: {},
+    requestHeaders: {
+        headers: {
+            "content-type": "application/json",
+            "user-id": "content-editor"
+        }
+    },
+    initService: function() {},
+    setAssetMeta: function(id, assetMeta) {
+        id && assetMeta && (void 0 == this.asset[id] && (this.asset[id] = {}), this.asset[id].assetMeta = assetMeta);
+    },
+    getAssetMeta: function(id) {
+        return this.asset[id] || {};
+    },
+    saveAsset: function(assetId, content, callback) {
+        var instance = this, requestObj = {
+            request: {
+                content: content
+            }
+        };
+        assetId ? instance.patch(this.learningURL() + "v2/content/", requestObj, this.requestHeaders, function(err, res) {
+            callback(err, res);
+        }) : instance.post(this.learningURL() + "v2/content", requestObj, this.requestHeaders, function(err, res) {
+            callback(err, res);
+        });
+    }
+}))(), org.ekstep.services.metaService = new (org.ekstep.services.iService.extend({
+    learningURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + "/learning/";
+    },
+    configURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + "/config/";
+    },
+    requestHeaders: {
+        headers: {
+            "content-type": "application/json",
+            "user-id": "content-editor"
+        }
+    },
+    getDefinitions: function(objectType, callback) {
+        this.getFromService(this.learningURL() + "taxonomy/domain/definition/" + objectType, this.requestHeaders, callback);
+    },
+    getResourceBundles: function(languageCode, callback) {
+        this.getFromService(this.configURL() + "v2/config/resourcebundles/" + languageCode, this.requestHeaders, callback);
+    }
+}))(), org.ekstep.services.languageService = new (org.ekstep.services.iService.extend({
+    learningURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + "/learning/";
+    },
+    languageURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + "/language/";
+    },
+    requestHeaders: {
+        headers: {
+            "content-type": "application/json",
+            "user-id": "content-editor"
+        }
+    },
+    wordHeaders: {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI5OGNlN2RmNmNkOTk0YWQ5YjZlYTRjNDJlNmVjYjY5MCJ9.rtr4188EwDYZywtP7S9uuv1LsivoucFxOvJFDCWvq0Y"
+        }
+    },
+    getLanguages: function(callback) {
+        this.getFromService(this.learningURL() + "v1/language", this.requestHeaders, callback);
+    },
+    getVowel: function(language, callback) {
+        this.getFromService(this.languageURL() + "v1/language/dictionary/varna/Vowel/list/" + language, this.requestHeaders, callback);
+    },
+    getConsonant: function(language, callback) {
+        this.getFromService(this.languageURL() + "v1/language/dictionary/varna/Consonant/list/" + language, this.requestHeaders, callback);
+    },
+    getWords: function(data, callback) {
+        this.postFromService(this.languageURL() + "v2/language/search", data, this.wordHeaders, callback);
+    },
+    getWordDefinition: function(callback) {
+        this.getFromService(this.learningURL() + "taxonomy/en/definition/Word", this.requestHeaders, callback);
+    },
+    getKeyWords: function(data, callback) {
+        this.postFromService(this.languageURL() + "v1/language/parser", data, this.requestHeaders, callback);
+    },
+    getTransliteration: function(data, callback) {
+        this.getFromService(this.getBaseURL() + "/api/language/v2/language/transliteration/" + data.text + "?languages=" + data.languages.toString(), this.requestHeaders, callback);
+    },
+    getTranslation: function(data, callback) {
+        this.getFromService(this.getBaseURL() + "/api/language/v2/language/translations/" + data.wordLang + "/" + data.word + "?languages=" + data.languages, this.requestHeaders, callback);
+    }
+}))(), org.ekstep.services.searchService = new (org.ekstep.services.iService.extend({
+    searchURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + "/search/";
+    },
+    requestHeaders: {
+        headers: {
+            "content-type": "application/json",
+            "user-id": "content-editor"
+        }
+    },
+    initService: function() {},
+    search: function(request, callback) {
+        this.postFromService(this.searchURL() + "v2/search", request, this.requestHeaders, callback);
+    }
+}))(), org.ekstep.pluginframework.iRepo = Class.extend({
+    discoverManifest: function(pluginId, pluginVer, callback) {
+        callback(void 0, void 0);
+    },
+    resolveResource: function(pluginId, pluginVer, resource) {}
+}), org.ekstep.pluginframework.publishedRepo = new (org.ekstep.pluginframework.iRepo.extend({
+    id: "published",
+    discoverManifest: function(pluginId, pluginVer, callback, publishedTime) {
+        var instance = this;
+        org.ekstep.pluginframework.resourceManager.loadResource(this.resolveResource(pluginId, pluginVer, "manifest.json"), "json", function(err, response) {
+            callback(void 0, {
+                manifest: response,
+                repo: instance
+            });
+        }, publishedTime);
+    },
+    resolveResource: function(id, ver, resource) {
+        return org.ekstep.pluginframework.config.pluginRepo + "/" + id + "-" + ver + "/" + resource;
+    }
+}))(), org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.publishedRepo);
 
 var Plugin = Class.extend({
     _isContainer: !1,
@@ -5092,28 +6209,33 @@ var Plugin = Class.extend({
     _pluginParams: {},
     _unSupportedFonts: [ "notosans", "verdana", "notosans oriya" ],
     init: function(data, parent, stage, theme) {
-        this.events = [], this.appEvents = [], this._childIds = [], this._pluginParams = {}, 
-        this._theme = theme, this._stage = stage, this._parent = parent, this._data = data, 
-        this.handleFont(data), this.initPlugin(data);
-        var dims = this.relativeDims();
-        dims && this._self && (this._self.origX = dims.x, this._self.origY = dims.y, this._self.width = dims.w, 
-        this._self.height = dims.h), data.enableDrag && this.enableDrag(this._self, data.snapTo);
-        var instance = this;
-        if (_.isUndefined(data.appEvents) || (_.isArray(data.appEvents) ? _.each(data.appEvents, function(value, key) {
-            instance.appEvents.push.apply(instance.appEvents, data.appEvents[key].list.split(/[\s,]+/));
-        }) : this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/))), 
-        this._enableEvents && EventManager.registerEvents(this, this._data), this._id = this._data.id || this._data.asset || _.uniqueId("plugin"), 
-        PluginManager.registerPluginObject(this), this._self && data.visible === !1 && (this._self.visible = !1), 
-        data["ev-if"]) {
-            var expr = data["ev-if"].trim(), modelExpr = expr = this.replaceExpressions(expr);
-            "${" != expr.substring(0, 2) && (expr = "${" + expr), "}" != expr.substring(expr.length - 1, expr.length) && (expr += "}");
-            var exprVal = this.evaluateExpr(expr);
-            void 0 === exprVal && this._stage && (exprVal = this._stage.getModelValue(modelExpr)), 
-            void 0 !== exprVal && this._self && (this._self.visible = this._self.visible && exprVal);
+        if (1 == arguments.length && !data.manifest) return void this.initialize();
+        try {
+            this.events = [], this.appEvents = [], this._childIds = [], this._pluginParams = {}, 
+            this._theme = theme, this._stage = stage, this._parent = parent, this._data = data, 
+            this.handleFont(data), this.initPlugin(data);
+            var dims = this.relativeDims();
+            dims && this._self && (this._self.origX = dims.x, this._self.origY = dims.y, this._self.width = dims.w, 
+            this._self.height = dims.h), data.enableDrag && this.enableDrag(this._self, data.snapTo);
+            var instance = this;
+            if (_.isUndefined(data.appEvents) || (_.isArray(data.appEvents) ? _.each(data.appEvents, function(value, key) {
+                instance.appEvents.push.apply(instance.appEvents, data.appEvents[key].list.split(/[\s,]+/));
+            }) : this.appEvents.push.apply(this.appEvents, data.appEvents.list.split(/[\s,]+/))), 
+            this._enableEvents && EventManager.registerEvents(this, this._data), this._id = this.id = this._data.id || this._data.asset || _.uniqueId("plugin"), 
+            PluginManager.registerPluginObject(this), this._self && data.visible === !1 && (this._self.visible = !1), 
+            data["ev-if"]) {
+                var expr = data["ev-if"].trim(), modelExpr = expr = this.replaceExpressions(expr);
+                "${" != expr.substring(0, 2) && (expr = "${" + expr), "}" != expr.substring(expr.length - 1, expr.length) && (expr += "}");
+                var exprVal = this.evaluateExpr(expr);
+                void 0 === exprVal && this._stage && (exprVal = this._stage.getModelValue(modelExpr)), 
+                void 0 !== exprVal && this._self && (this._self.visible = this._self.visible && exprVal);
+            }
+            this._self && (this._self["z-index"] = data["z-index"]), this._render && (this._isContainer && "stage" == this._type && this.cache(), 
+            this.render()), this._self && this._self.visible && (this.drawBorder(data, dims), 
+            data.shadow && this.addShadow()), this._self && this.rotation(data);
+        } catch (e) {
+            showToaster("error", "Plugin failed"), console.warn("Plugin init is failed due to", e);
         }
-        this._render && (this._isContainer && "stage" == this._type && this.cache(), this.render()), 
-        this._self && this._self.visible && (this.drawBorder(data, dims), data.shadow && this.addShadow()), 
-        this._self && this.rotation(data);
     },
     handleFont: function(data) {
         data.font && (data.font = data.font.trim()), (_.isEmpty(data.font) || !_.isUndefined(data.font) && this._unSupportedFonts.indexOf(data.font.toLowerCase()) > -1) && (data.font = this.getDefaultFont());
@@ -5134,7 +6256,7 @@ var Plugin = Class.extend({
     },
     addChild: function(child, childPlugin) {
         var nextIdx = this._currIndex++;
-        this._self.addChildAt(child, nextIdx), childPlugin && (childPlugin.setIndex(nextIdx), 
+        this._self.addChildAt(child, this._self.children.length), childPlugin && (childPlugin.setIndex(nextIdx), 
         childPlugin._id && this._childIds.push(childPlugin._id));
     },
     removeChildAt: function(idx) {
@@ -5183,6 +6305,9 @@ var Plugin = Class.extend({
         parentDims.w < dims.w && (dims.w = parentDims.w, dims.h = dims.w * sb.height / sb.width)), 
         this._dimensions.h = dims.h, this._dimensions.w = dims.w, this._self && (this._self.scaleY = dims.h / sb.height, 
         this._self.scaleX = dims.w / sb.width);
+    },
+    initialize: function() {
+        console.info("Base plugin intialization..");
     },
     initPlugin: function(data) {
         throw PluginManager.addError("Subclasses of plugin should implement this function"), 
@@ -5336,11 +6461,14 @@ var Plugin = Class.extend({
         for (k in data) PluginManager.isPlugin(k) && (_.isArray(data[k]) ? _.each(data[k], function(item) {
             item.pluginType = k, item["z-index"] || (item["z-index"] = -1), children.push(item);
         }) : (data[k].pluginType = k, data[k]["z-index"] || (data[k]["z-index"] = -1), children.push(data[k])));
-        children = _.sortBy(children, "z-index");
         for (k in children) {
             var item = children[k];
-            PluginManager.invoke(item.pluginType, item, parent, stage, theme);
+            item.pluginType && PluginManager.invoke(item.pluginType, item, parent, stage, theme);
         }
+        parent._self && parent._self.sortChildren(function(obj1, obj2, options) {
+            return _.isUndefined(obj2["z-index"]) && (obj2["z-index"] = -1), _.isUndefined(obj1["z-index"]) && (obj1["z-index"] = -1), 
+            obj1["z-index"] > obj2["z-index"] ? 1 : obj1["z-index"] < obj2["z-index"] ? -1 : 0;
+        });
     },
     getPluginParam: function(param) {
         var instance = this, params = instance._pluginParams, expr = "params." + param;
@@ -5381,104 +6509,56 @@ var Plugin = Class.extend({
     _render: !0
 });
 
-String.prototype.containsAny = function() {
-    for (var i = 0; i < arguments.length; i++) if (this.indexOf(arguments[i]) > -1) return !1;
-    return !0;
-}, PluginManager = {
-    pluginMap: {},
-    customPluginMap: {},
-    customJSLibMap: {},
-    pluginObjMap: {},
-    errors: [],
+PluginManager = {
     defaultResWidth: 1920,
     defaultResHeight: 1200,
-    keywords: [ "CommandManager", "AnimationManager", "AssetManager", "AudioManager", "ControllerManager", "EventManager" ],
-    registerPlugin: function(id, plugin) {
-        PluginManager.pluginMap[id] = plugin, createjs.EventDispatcher.initialize(plugin.prototype);
+    pluginMap: {},
+    pluginObjMap: {},
+    init: function(gamePath) {
+        var pluginsPath = isbrowserpreview ? AppConfig.PREVIEW_PLUGINSPATH : AppConfig.DEVICE_PLUGINSPATH, pluginRepo = gamePath + pluginsPath, pfConfig = {
+            env: "renderer",
+            async: async,
+            pluginRepo: pluginRepo,
+            repos: [ org.ekstep.pluginframework.publishedRepo ]
+        };
+        org.ekstep.pluginframework.initialize(pfConfig);
     },
-    registerCustomPlugin: function(id, plugin) {
-        PluginManager.customPluginMap[id] = plugin, createjs.EventDispatcher.initialize(plugin.prototype);
-    },
-    registerCustomPlugins: function(manifest, relativePath) {
-        if (!_.isEmpty(manifest)) {
-            PluginManager.customPluginMap = {};
-            var media = manifest.media, plugins = _.filter(_.isArray(media) ? media : [ media ], function(media) {
-                return "plugin" == media.type;
-            });
-            media = _.filter(_.isArray(media) ? media : [ media ], function(media) {
-                return "js" == media.type || "css" == media.type;
-            }), relativePath = "undefined" != typeof cordova && relativePath ? "file:///" + relativePath : relativePath, 
-            media && media.forEach(function(media) {
-                if (PluginManager.pluginMap[media.id]) PluginManager.addError("external JS/CSS cannot override system plugin - " + media.id); else switch (media.type) {
-                  case "js":
-                    PluginManager.loadJS(media.src, relativePath);
-                    break;
-
-                  case "css":
-                    PluginManager.loadCSS(media.src, relativePath);
-                }
-            }), plugins && (_.isArray(plugins) || (plugins = [ plugins ]), plugins.forEach(function(plugin) {
-                PluginManager.pluginMap[plugin.id] ? PluginManager.addError("Custom plugin cannot override system plugin - " + plugin.id) : PluginManager.loadCustomPlugin(plugin, relativePath);
-            }));
-        }
-    },
-    isPlugin: function(id) {
-        return !(!PluginManager.pluginMap[id] && !PluginManager.customPluginMap[id]);
-    },
-    invoke: function(id, data, parent, stage, theme) {
-        var p, plugin = PluginManager.pluginMap[id] || PluginManager.customPluginMap[id];
-        return plugin ? _.isArray(data) ? data.forEach(function(d) {
-            new plugin(d, parent, stage, theme);
-        }) : p = new plugin(data, parent, stage, theme) : PluginManager.addError("No plugin found for - " + id), 
-        p;
-    },
-    registerPluginObject: function(pluginObj) {
-        PluginManager.pluginObjMap[pluginObj._id] = pluginObj;
-    },
-    getPluginObject: function(id) {
-        return PluginManager.pluginObjMap[id];
-    },
-    addError: function(error) {
-        PluginManager.errors.push(error);
-    },
-    getErrors: function() {
-        return PluginManager.errors;
-    },
-    cleanUp: function() {
-        PluginManager.pluginObjMap = {}, PluginManager.customPluginMap = {}, PluginManager.errors = [];
-    },
-    validateCustomPlugin: function(id, data) {
-        data && (data.containsAny.apply(data, PluginManager.keywords) ? (console.info("Registering custom plugin - ", id), 
-        PluginManager.registerCustomPlugin(id, eval(data))) : (console.error("Excluded keywords found in the custom plugin"), 
-        PluginManager.errors.push("Excluded keywords found in the custom plugin")));
-    },
-    registerJSLib: function(id, data) {
-        PluginManager.registerCustomPlugin(id, data);
-    },
-    loadCustomPlugin: function(plugin, relativePath) {
-        var pluginUrl = "http" == plugin.src.substring(0, 4) ? plugin.src : relativePath + plugin.src;
-        jQuery.ajax({
-            async: !1,
-            url: pluginUrl,
-            dataType: "text"
-        }).error(function(err) {
-            console.error("Unable to load custom plugin js source");
-        }).done(function(data) {
-            console.info("Registering custom plugin - ", plugin.id), PluginManager.validateCustomPlugin(plugin.id, data);
+    loadPlugins: function(pluginManifest, manifestMedia, cb) {
+        var pluginObj = [];
+        Array.isArray(pluginManifest) || (pluginObj.push(pluginManifest), pluginManifest = pluginObj), 
+        _.each(pluginManifest, function(p) {
+            p.ver = parseFloat(p.ver).toFixed(1);
+        }), org.ekstep.pluginframework.pluginManager.loadAllPlugins(pluginManifest, manifestMedia, function() {
+            console.info("Framework Loaded the plugins"), PluginManager.pluginMap = org.ekstep.pluginframework.pluginManager.plugins, 
+            cb && cb();
         });
     },
-    loadCSS: function(href, gameRelPath) {
-        var cssUrl = "http" == href.substring(0, 4) ? href : gameRelPath + href;
-        console.info("loading external CSS: ", cssUrl), jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + cssUrl + "'>");
+    registerPlugin: function(id, plugin) {
+        org.ekstep.pluginframework.pluginManager._registerPlugin(id, void 0, plugin), createjs.EventDispatcher.initialize(plugin.prototype);
     },
-    loadJS: function(src, gameRelPath) {
-        var jsUrl = "http" == src.substring(0, 4) ? src : gameRelPath + src;
-        console.info("loading external JS: ", jsUrl);
-        var jsLink = $("<script type='text/javascript' src=" + jsUrl + ">");
-        jQuery("head").append(jsLink);
+    isPlugin: function(id) {
+        return org.ekstep.pluginframework.pluginManager.isPluginDefined(id);
+    },
+    invoke: function(id, data, parent, stage, theme) {
+        return org.ekstep.pluginframework.pluginManager.invokeRenderer(id, data, parent, stage, theme);
+    },
+    registerPluginObject: function(pluginObj) {
+        PluginManager.pluginObjMap[pluginObj.id] = pluginObj, org.ekstep.pluginframework.pluginManager.addPluginInstance(pluginObj);
+    },
+    getPluginObject: function(id) {
+        return org.ekstep.pluginframework.pluginManager.getPluginInstance(id);
+    },
+    addError: function(error) {
+        org.ekstep.pluginframework.pluginManager.addError(error);
+    },
+    getErrors: function() {
+        return org.ekstep.pluginframework.pluginManager.getErrors();
+    },
+    cleanUp: function() {
+        org.ekstep.pluginframework.pluginManager.cleanUp();
     },
     getPlugins: function() {
-        return Object.keys(PluginManager.pluginMap);
+        return org.ekstep.pluginframework.pluginManager.getPlugins();
     }
 }, AnimationManager = {
     animationsCache: {},
@@ -6211,7 +7291,31 @@ var ContainerPlugin = Plugin.extend({
     }
 });
 
-PluginManager.registerPlugin("g", ContainerPlugin);
+PluginManager.registerPlugin("g", ContainerPlugin), org.ekstep.pluginframework.customRepo = new (org.ekstep.pluginframework.iRepo.extend({
+    id: "customRepo",
+    basePath: "https://localhost:8081",
+    connected: !1,
+    updateBasePath: function(basePath) {
+        this.basePath = basePath;
+    },
+    discoverManifest: function(pluginId, pluginVer, callback, publishedTime) {
+        if (this.connected) {
+            var instance = this;
+            org.ekstep.pluginframework.resourceManager.loadResource(this.resolveResource(pluginId, pluginVer, "manifest.json"), "json", function(err, response) {
+                callback(void 0, {
+                    manifest: response,
+                    repo: instance
+                });
+            }, publishedTime);
+        } else callback(void 0, {
+            manifest: void 0,
+            repo: void 0
+        });
+    },
+    resolveResource: function(pluginId, pluginVer, resource) {
+        return this.basePath + "/" + pluginId + "-" + pluginVer + "/" + resource;
+    }
+}))();
 
 var DivPlugin = HTMLPlugin.extend({
     _type: "div",
@@ -6508,7 +7612,8 @@ var ImagePlugin = Plugin.extend({
             if (_.isString(assetSrc)) this._self.visible = !1, AssetManager.strategy.loadAsset(this._stage._data.id, asset, assetSrc, function() {
                 Renderer.update = !0, setTimeout(function() {
                     s.getBounds() && instance.setScale(), dims = instance.alignDims(), s.x = dims.x, 
-                    s.y = dims.y, instance._self.visible = !0, Renderer.update = !0;
+                    s.y = dims.y, instance._self.visible = !!_.isUndefined(instance._data.visible) || instance._data.visible, 
+                    Renderer.update = !0;
                 }, 100);
             }); else {
                 s.getBounds() && this.setScale();
@@ -6747,7 +7852,7 @@ var OptionPlugin = Plugin.extend({
                 state: val ? "SELECTED" : "UNSELECTED",
                 optionTag: "MCQ"
             };
-            EventManager.processAppTelemetry({}, "CHOOSE", instance, data);
+            EventBus.dispatch("optionSelected", instance._value), EventManager.processAppTelemetry({}, "CHOOSE", instance, data);
         });
     },
     renderMTFOption: function(value) {
@@ -6777,7 +7882,7 @@ var OptionPlugin = Plugin.extend({
                     drag_id: instance._value.resvalue,
                     itemId: itemId
                 };
-                EventManager.processAppTelemetry({}, "DRAG", instance, data);
+                EventBus.dispatch("optionDrag", instance._value), EventManager.processAppTelemetry({}, "DRAG", instance, data);
             }), asset.on("pressmove", function(evt) {
                 this.x = evt.stageX + this.offset.x, this.y = evt.stageY + this.offset.y, instance.addShadow(), 
                 Renderer.update = !0;
@@ -6839,7 +7944,8 @@ var OptionPlugin = Plugin.extend({
                     state: void 0 !== drop_idx && "" !== drop_idx ? "SELECTED" : "UNSELECTED",
                     optionTag: "MTF"
                 };
-                EventManager.processAppTelemetry({}, "DROP", instance, data), Renderer.update = !0;
+                EventBus.dispatch("optionDrop", instance._value), EventManager.processAppTelemetry({}, "DROP", instance, data), 
+                Renderer.update = !0;
             });
         }
     },
@@ -7212,7 +8318,7 @@ var StagePlugin = Plugin.extend({
     timeInstance: {},
     initPlugin: function(data) {
         var instance = this;
-        this._inputs = [], this.params = {}, this._self = new creatine.Scene();
+        this.destroyTimeInstance(data), this._inputs = [], this.params = {}, this._self = new creatine.Scene();
         var dims = this.relativeDims();
         if (this._self.x = dims.x, this._self.y = dims.y, this._stageInstanceId = this._theme._currentStage + "__" + Math.random().toString(36).substr(2, 9), 
         data.iterate && data.var) {
@@ -7236,7 +8342,33 @@ var StagePlugin = Plugin.extend({
         _.isUndefined(this._currentState) && this.setParam(this._type, {
             id: Renderer.theme._currentStage,
             stateId: stageKey
-        })), this.invokeChildren(data, this, this, this._theme);
+        }));
+        var isStageLoaded;
+        if (_.isUndefined(AssetManager.strategy) || (isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id)), 
+        0 == isStageLoaded) {
+            var timeInst;
+            return EventBus.addEventListener(data.id + "_assetsLoaded", instance.invokeRenderElements, this), 
+            timeInst = setTimeout(function() {
+                (isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id)) || instance._theme._currentStage != data.id || (instance.showHideLoader("block"), 
+                timeInst = setTimeout(function() {
+                    "block" == jQuery("#loaderArea").css("display") && instance._theme._currentStage == instance._data.id && instance.invokeRenderElements();
+                }, instance.maxTimeToLoad), instance.timeInstance[data.id] = timeInst);
+            }, 500), void (this.timeInstance[data.id] = timeInst);
+        }
+        this.invokeChildren(data, this, this, this._theme);
+    },
+    destroyTimeInstance: function(data) {
+        if (Renderer.theme && Renderer.theme.getStagesToPreLoad) {
+            var stages = Renderer.theme.getStagesToPreLoad(data);
+            !_.isUndefined(stages.next) && this.timeInstance[stages.next] && (clearTimeout(this.timeInstance[stages.next]), 
+            delete this.timeInstance[stages.next]), !_.isUndefined(stages.prev) && this.timeInstance[stages.prev] && (clearTimeout(this.timeInstance[stages.prev]), 
+            delete this.timeInstance[stages.prev]);
+        }
+    },
+    invokeRenderElements: function() {
+        this.invokeChildren(this._data, this, this, this._theme), Renderer.update = !0, 
+        this.showHideLoader("none"), _.isUndefined(Renderer.theme) || _.isUndefined(Renderer.theme._currentScene) || Renderer.theme._currentScene.dispatchEvent("enter"), 
+        EventBus.removeEventListener(this._data.id + "_assetsLoaded", this.invokeRenderElements, this);
     },
     keyboardShowHandler: function(e) {
         if (this._self.y = -e.keyboardHeight, !this._self.hitArea) {
@@ -7323,7 +8455,8 @@ var StagePlugin = Plugin.extend({
                     input.setModelValue();
                 });
                 var result = this._stageController.evalItem();
-                if (result && (valid = result.pass), this._currentState.isEvaluated = !0, showImmediateFeedback) {
+                if (result && (valid = result.pass), this._currentState.isEvaluated = !0, EventBus.dispatch("evaluated", result), 
+                showImmediateFeedback) {
                     if (1 == valid) {
                         OverlayManager.showFeeback(valid) || this.dispatchEvent(action.success);
                     } else {
@@ -7368,7 +8501,7 @@ var StagePlugin = Plugin.extend({
     },
     showHideLoader: function(val) {
         var elem = document.getElementById("loaderArea");
-        _.isNull(elem) || (elem.style.display = val.target || val);
+        _.isNull(elem) || (elem.style.display = val);
     }
 });
 
@@ -7391,6 +8524,24 @@ var SummaryPlugin = Plugin.extend({
 });
 
 PluginManager.registerPlugin("summary", SummaryPlugin);
+
+var TelemetryPlugin = Plugin.extend({
+    _type: "telemetry",
+    _isContainer: !1,
+    _render: !0,
+    _teleData: [],
+    initPlugin: function(data) {
+        console.log("Telemetry plugin init done!!! : ", data), this.registerTelemetryEvents();
+    },
+    registerTelemetryEvents: function() {
+        var instance = this;
+        EventBus.addEventListener("telemetryEvent", function(data) {
+            instance._teleData.push(data.terget), console.log("instance._teleData: ", instance._teleData);
+        });
+    }
+});
+
+PluginManager.registerPlugin("telemetry", TelemetryPlugin);
 
 var TestcasePlugin = Plugin.extend({
     _type: "testcase",
@@ -7524,6 +8675,7 @@ var ThemePlugin = Plugin.extend({
     _contentParams: {},
     _isSceneChanging: !1,
     _saveState: !0,
+    _basePath: void 0,
     initPlugin: function(data) {
         this.addLoaderElement(), this._controllerMap = {}, this._canvasId = data.canvasId, 
         this._self = new createjs.Stage(data.canvasId), this._director = new creatine.Director(this._self), 
@@ -7550,20 +8702,24 @@ var ThemePlugin = Plugin.extend({
         };
     },
     start: function(basePath) {
-        var instance = this;
-        if (RecorderManager.init(), _.isArray(this._data.stage)) var startStage = _.find(this._data.stage, function(stage) {
-            return stage.id == instance._data.startStage;
-        }); else if (this._data.stage.id == instance._data.startStage) var startStage = this._data.stage.id;
-        if (_.isUndefined(startStage)) {
-            var firstStage = _.find(this._data.stage, function(stage) {
-                if (stage.param && _.isUndefined(firstStage)) return stage;
+        try {
+            var instance = this;
+            if (instance._basePath = basePath, RecorderManager.init(), _.isArray(this._data.stage)) var startStage = _.find(this._data.stage, function(stage) {
+                return stage.id == instance._data.startStage;
+            }); else if (this._data.stage.id == instance._data.startStage) var startStage = this._data.stage.id;
+            if (_.isUndefined(startStage)) {
+                var firstStage = _.find(this._data.stage, function(stage) {
+                    if (stage.param && _.isUndefined(firstStage)) return stage;
+                });
+                _.isUndefined(firstStage) ? checkStage("showAlert") : (_.isUndefined(this._data.startStage) ? console.warn("No start stage is defined, loading first stage") : console.warn("Startstage is not available, loading first stage"), 
+                this._data.startStage = firstStage.id);
+            }
+            AssetManager.init(this._data, basePath), AssetManager.initStage(this._data.startStage, null, null, function() {
+                instance.render();
             });
-            _.isUndefined(firstStage) ? checkStage("showAlert") : (_.isUndefined(this._data.startStage) ? console.warn("No start stage is defined, loading first stage") : console.warn("Startstage is not available, loading first stage"), 
-            this._data.startStage = firstStage.id);
+        } catch (e) {
+            showToaster("error", "Content fails to start"), console.warn("Theme start is failed due to", e);
         }
-        AssetManager.init(this._data, basePath), AssetManager.initStage(this._data.startStage, null, null, function() {
-            instance.render();
-        });
     },
     render: function() {
         var instance = this;
@@ -7574,8 +8730,8 @@ var ThemePlugin = Plugin.extend({
         }) : instance._templateMap[this._data.template.id] = this._data.template), _.isArray(this._data.stage) || (this._data.stage = [ this._data.stage ]), 
         this._data.stage && (this._data.stage.forEach(function(s) {
             instance.initStageControllers(s);
-        }), this.invokeStage(this._data.startStage)), this.update(), jQuery("#progressBar").width(100), 
-        jQuery("#loading").hide(), jQuery("#overlay").show();
+        }), PluginManager.invoke("telemetry", this._data.stage, this), this.invokeStage(this._data.startStage)), 
+        this.update(), jQuery("#progressBar").width(100), jQuery("#loading").hide(), jQuery("#overlay").show();
     },
     addController: function(p) {
         var controller = ControllerManager.get(p, this.baseDir);
@@ -7637,11 +8793,13 @@ var ThemePlugin = Plugin.extend({
             id: stage.extends
         }), stage = this.mergeStages(stage, baseStage)), this._previousStage = this._currentStage, 
         this._currentStage = stageId, PluginManager.invoke("stage", stage, this, null, this), 
-        isbrowserpreview && window && window.parent && window.parent.jQuery("body")) {
+        isbrowserpreview && window && window.parent) {
             var retObj = {
                 stageId: stageId
             };
-            window.parent.jQuery("body").trigger("onstagechange", retObj);
+            window.parent.postMessage(retObj, "*");
+            var custEvent = new Event("onstagechange");
+            window.dispatchEvent(custEvent, retObj);
         }
     },
     preloadStages: function() {
@@ -7681,13 +8839,13 @@ var ThemePlugin = Plugin.extend({
     disableInputs: function() {
         this.inputs.forEach(function(inputId) {
             var element = document.getElementById(inputId);
-            _.isNull || (element.style.display = "none");
+            _.isNull(element) || (element.style.display = "none");
         });
     },
     enableInputs: function() {
         this.inputs.forEach(function(inputId) {
             var element = document.getElementById(inputId);
-            _.isNull || (element.style.display = "block");
+            _.isNull(element) || (element.style.display = "block");
         });
     },
     getTransitionEffect: function(animation) {
@@ -7776,6 +8934,12 @@ var ThemePlugin = Plugin.extend({
         var gameArea = document.getElementById(Renderer.divIds.gameArea), loaderArea = document.createElement("div");
         loaderArea.id = "loaderArea", loaderArea.innerHTML = '<div class="preloader-wrapper"><div class="spinner-layer"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>', 
         gameArea.parentElement.appendChild(loaderArea);
+    },
+    getStageDataById: function(stageId) {
+        var stageData = void 0;
+        return this._data.stage.forEach(function(element, index) {
+            element.id === stageId && (stageData = element);
+        }), stageData;
     }
 });
 
@@ -7810,11 +8974,11 @@ var TweenPlugin = AnimationPlugin.extend({
 AnimationManager.registerPlugin("tween", TweenPlugin);
 
 var VideoPlugin = Plugin.extend({
+    _type: "video",
     _render: !0,
     _data: void 0,
     _instance: void 0,
     _defaultStart: 50,
-    _type: "video",
     initPlugin: function(data) {
         this._data = data, this._data && (_.isUndefined(this._data.autoplay) && (this._data.autoplay = !0), 
         _.isUndefined(this._data.controls) && (this._data.controls = !1), _.isUndefined(this._data.muted) && (this._data.muted = !1)), 

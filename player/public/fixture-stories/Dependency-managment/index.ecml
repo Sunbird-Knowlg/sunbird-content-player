@@ -1,28 +1,88 @@
-<theme id="theme" version="1.0" startStage="5b71564c-74a0-4ed6-ae0e-e91eace795bb">
+<theme compatibilityVersion="2" id="theme" version="1.0" startStage="dcd9e493-0531-437a-b3d4-e7345a51dae8">
     <manifest>
-        
-        <media src="1460624453530trash.png" assetId="org.ekstep.scribblepad.eraser" id="org.ekstep.scribblepad.eraser" type="image" preload="true"></media>
+        <!-- <media ver="1.0" plugin="org.ekstep.quiz" src="content-plugins/org.ekstep.quiz-1.0/renderer/plugin.js" id="org.ekstep.quiz" type="plugin"></media> -->
 
-        <media src="1455104397576flowersl.png" id="flowersLhighlight" asset_id="flowersLhighlight" type="image" preload="true"></media>
+        <media ver="1.0" plugin="org.ekstep.quiz" src="content-plugins/org.ekstep.quiz-1.0/manifest.json" id="org.ekstep.quiz_manifest" type="json"></media>
 
-        <media src="1455104477773scene5.mp3" id="scene5_audio" asset_id="scene5_audio" type="audio" preload="true"></media>
-
+        <!-- <media ver="1.0" plugin="org.ekstep.scribblepad" src="content-plugins/org.ekstep.scribblepad-1.0/renderer/scribblepadplugin.js" id="org.ekstep.scribblepad" type="plugin"></media> -->
+        <media ver="1.0" plugin="org.ekstep.scribblepad" src="content-plugins/org.ekstep.scribblepad-1.0/manifest.json" id="org.ekstep.scribblepad_manifest" type="json"></media>
+       <!--  <media ver="1.0" plugin="org.ekstep.recordandplay" src="content-plugins/org.ekstep.recordandplay-1.0/renderer/recordandplayplugin.js" id="org.ekstep.recordandplay" type="plugin"></media> -->
+       <!--  <media ver="1.0" plugin="org.ekstep.recordandplay" src="content-plugins/org.ekstep.recordandplay-1.0/manifest.json" id="org.ekstep.recordandplay_manifest" type="json"></media> -->
+        <!-- <media ver="1.0" plugin="org.ekstep.textpopup" src="content-plugins/org.ekstep.textpopup-1.0/renderer/textpopupplugin.js" id="org.ekstep.textpopup" type="plugin"></media> -->
+        <!-- <media ver="1.0" plugin="org.ekstep.textpopup" src="content-plugins/org.ekstep.textpopup-1.0/manifest.json" id="org.ekstep.textpopup_manifest" type="json"></media> -->
+        <!-- <media ver="1.0" plugin="org.ekstep.text" src="content-plugins/org.ekstep.text-1.0/renderer/supertextplugin.js" id="org.ekstep.text" type="plugin"></media> -->
+ <!--        <media ver="1.0" plugin="org.ekstep.text" src="content-plugins/org.ekstep.text-1.0/manifest.json" id="org.ekstep.text_manifest" type="json"></media> -->
+       <!--  <media ver="1.0" plugin="org.ekstep.progressbar" src="content-plugins/org.ekstep.progressbar-1.0/renderer/progressbarplugin.js" id="org.ekstep.progressbar" type="plugin"></media> -->
+       <!--  <media ver="1.0" plugin="org.ekstep.progressbar" src="content-plugins/org.ekstep.progressbar-1.0/manifest.json" id="org.ekstep.progressbar_manifest" type="json"></media> -->
+        <media src="assets/public/content/_345_1461920347_1461920339477.jpg" id="domain_42169" asset_id="domain_42169" type="image" preload="true"></media>
+        <media src="assets/public/content/_345_1461920348_1461920339792.mp3" id="domain_42170" asset_id="domain_42170" type="audio" preload="true"></media>
+        <!-- <media ver="1.0" plugin="org.ekstep.keyboard" src="assets/public/content/1460550074646customkeyboard.js" assetId="domain_38075_keyboard" id="org.ekstep.keyboard" type="plugin" preload="true"></media> -->
+        <media src="assets/public/content/1460624453530trash.png" assetId="org.ekstep.scribblepad.eraser" id="org.ekstep.scribblepad.eraser" type="image" preload="true"></media>
+        <media src="content-plugins/org.ekstep.recordandplay-1.0/assets/mic.png" assetId="mic" id="mic" type="image" preload="true"></media>
+        <media src="content-plugins/org.ekstep.recordandplay-1.0/assets/01.png" assetId="N_stoprec" id="N_stoprec" type="image" preload="true"></media>
+        <media src="content-plugins/org.ekstep.recordandplay-1.0/assets/02.png" assetId="submit_disabled_image" id="N_stoprec2" type="N_stoprec2" preload="true"></media>
+        <media src="content-plugins/org.ekstep.recordandplay-1.0/assets/recordbtn.png" assetId="N_startrec" id="N_startrec" type="image" preload="true"></media>
+        <media src="content-plugins/org.ekstep.recordandplay-1.0/assets/soundbtn.png" assetId="N_playrec" id="N_playrec" type="image" preload="true"></media>
+        <media src="content-plugins/org.ekstep.recordandplay-1.0/assets/play01.png" assetId="N_playrec2" id="N_playrec2" type="image" preload="true"></media>
+        <media src="content-plugins/org.ekstep.textpopup-1.0/assets/poptogglebtn.png" id="toggle_image" type="image" preload="true"></media>
         
     </manifest>
-
-    <pluginManifest>
-        <plugin id ='org.ekstep.quiz' ver ='1.0' type ="plugin"/>
-        <plugin id ='org.ekstep.scribblepad' ver ='1.0' type ="plugin"/>
-        <plugin id ='org.ekstep.sdkeyboard' ver ='1.0' type ="plugin"/>
-        <plugin id ='org.ekstep.rangemultiplication' ver ='1.0' type ="plugin" />
-    </pluginManifest>
-
-    <stage w="100" x="0" h="100" y="0" id="5b71564c-74a0-4ed6-ae0e-e91eace795bb">
+    <stage w="100" x="0" h="100" y="0" id="dcd9e493-0531-437a-b3d4-e7345a51dae8">
         <config>
             <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"genieControls":true,"instructions":""}]]>
         </config>
-        <param name="next" value="ce272308-0bdb-4d91-a594-439bc65d9048"></param>
-        <org.ekstep.scribblepad strokeWidth="1" rotate="0" z-index="0" thickness="2" h="60" type="roundrect" fill="#3399FF" stroke="rgba(255, 255, 255, 0)" w="27" x="25" y="20" stroke-width="1" id="989e006c-8d5c-4e48-b4b7-954ac59564da" opacity="0.3">
+        <param name="next" value="79451ae5-2603-4813-aca2-a58d40a0820a"></param>
+        <org.ekstep.text strokeWidth="1" rotate="0" z-index="0" editable="false" h="5.02" fontsize="48" weight="" minWidth="20" textType="text" fill="#000000" fontStyle="normal" stroke="rgba(255, 255, 255, 0)" w="35" x="31.11" y="41.73" lineHeight="1.3" id="363c30bb-04e7-4062-8e54-8aa774251e65" opacity="1" fontWeight="normal" maxWidth="500" font="NotoSans">
+            <config>
+                <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"text":"Text plugin dependency","color":"#000000","fontfamily":"NotoSans","fontsize":18,"fontweight":false,"fontstyle":false,"align":"left"}]]>
+            </config>
+        </org.ekstep.text>
+    </stage>
+    <stage w="100" x="0" h="100" y="0" id="79451ae5-2603-4813-aca2-a58d40a0820a">
+        <config>
+            <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"genieControls":true,"instructions":""}]]>
+        </config>
+        <param name="previous" value="dcd9e493-0531-437a-b3d4-e7345a51dae8"></param>
+        <param name="next" value="d354352c-847a-44c6-923c-21a3e8ead336"></param>
+        <org.ekstep.progressbar progressbarSuccess="#54CA07" rotate="0" z-index="0" progressbarFailure="#FF333F" h="10" questions="1" progressbarStroke="#000" w="78" x="11" y="78" fontSize="32" id="a81ebea5-6d47-441c-904c-3a1d080ad1c2">
+            <config>
+                <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"questions":1,"fontsize":32,"progressbarStroke":"#000","progressbarSuccess":"#54CA07","progressbarFailure":"#FF333F"}]]>
+            </config>
+        </org.ekstep.progressbar>
+        <org.ekstep.text strokeWidth="1" rotate="0" z-index="1" editable="false" h="5.02" fontsize="48" weight="" minWidth="20" textType="text" fill="#000000" fontStyle="normal" stroke="rgba(255, 255, 255, 0)" w="35" x="33.75" y="26.42" lineHeight="1.3" id="15b171c4-d47c-468d-b55e-336aaec772e9" opacity="1" fontWeight="normal" maxWidth="500" font="NotoSans">
+            <config>
+                <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"text":"progress bar","color":"#000000","fontfamily":"NotoSans","fontsize":18,"fontweight":false,"fontstyle":false,"align":"left"}]]>
+            </config>
+        </org.ekstep.text>
+    </stage>
+    <stage w="100" x="0" h="100" y="0" id="d354352c-847a-44c6-923c-21a3e8ead336">
+        <config>
+            <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"genieControls":true,"instructions":""}]]>
+        </config>
+        <param name="next" value="620a4bd1-0b0b-4d1d-a953-b310a2500819"></param>
+        <param name="previous" value="79451ae5-2603-4813-aca2-a58d40a0820a"></param>
+        <org.ekstep.quiz rotate="0" z-index="0" w="80" x="9" h="85" y="6" id="22a4d56e-8dce-44b1-972e-1d0de42c8aab">
+            <data>
+                <![CDATA[{"questionnaire":{"items":{"domain_42171":[{"template":"org.ekstep.ftb.barakhadi","code":"org.ekstep.assessmentitem.literacy_5723225c5ce0e","qlevel":"EASY","language":["English"],"media":[{"id":"domain_42169","type":"image","src":"/assets/public/content/_345_1461920347_1461920339477.jpg","asset_id":"domain_42169","preload":"true"},{"id":"domain_42170","type":"audio","src":"/assets/public/content/_345_1461920348_1461920339792.mp3","asset_id":"domain_42170","preload":"true"}],"type":"ftb","title":"barakadi2","createdOn":"2016-04-29T08:58:59.941+0000","objectType":"AssessmentItem","feedback":"","gradeLevel":["Grade 1"],"lastUpdatedOn":"2016-09-01T18:49:42.807+0000","used_for":"worksheet","model":{"keys":"a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x"},"owner":"345","identifier":"domain_42171","question":"barakadi2","portalOwner":"345","graph_id":"domain","nodeType":"DATA_NODE","answer":{"ans1":{"value":"mango","score":1}},"max_score":1,"name":"barakadi2","template_id":"domain_38075","node_id":40582,"question_audio":"domain_42170","question_image":"domain_42169","es_metadata_id":"domain_42171","isSelected":true,"$$hashKey":"object:723"}]},"item_sets":[{"count":1,"id":"domain_42171"}],"title":"fsdf","shuffle":false,"showImmediateFeedback":true,"myQuestions":false,"concepts":"(0) Concepts","total_items":1,"max_score":1,"range":[1],"optionShuffle":true},"template":[{"text":[{"align":"center","color":"black","font":"Verdana","fontsize":70,"model":"item.title","w":80,"x":10,"y":6},{"align":"center","color":"black","font":"Verdana","fontsize":100,"h":15,"id":"newText","model":"item.ans1","stroke":"black","valign":"middle","w":35,"x":58,"y":67,"z-index":100},{"color":"black","font":"Verdana","fontsize":100,"h":8,"model":"item.question","w":20,"x":10,"y":90}],"shape":[{"event":{"action":{"asset":"bKeyboard","command":"custom","id":"newText","invoke":"switchTarget","type":"command"},"type":"click"},"fill":"white","h":15,"stroke-width":5,"w":35,"x":58,"y":67,"z-index":99},{"event":{"action":{"asset_model":"item.title_audio.asset","command":"play","type":"command"},"type":"click"},"fill":"white","h":15,"w":80,"x":10,"y":6,"z-index":99}],"org.ekstep.keyboard":{"id":"bKeyboard","keys":"item.keys","limit":10,"target":"newText","type":"custom","x":5,"y":15},"image":{"event":{"action":{"asset_model":"item.question_audio","command":"play","type":"command"},"type":"click"},"h":30,"model":"item.question_image","w":20,"x":10,"y":58},"id":"org.ekstep.ftb.barakhadi"}]}]]>
+            </data>
+            <config>
+                <![CDATA[{"type":"items","var":"item","media":{"domain_42169":{"id":"domain_42169","type":"image","src":"/assets/public/content/_345_1461920347_1461920339477.jpg","asset_id":"domain_42169","preload":"true"},"domain_42170":{"id":"domain_42170","type":"audio","src":"/assets/public/content/_345_1461920348_1461920339792.mp3","asset_id":"domain_42170","preload":"true"},"keyboard":{"assetId":"domain_38075_keyboard","id":"keyboard","src":"/assets/public/content/1460550074646CustomKeyboard.js","type":"plugin","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"},"keyboard_css":{"assetId":"domain_38075_keyboard_css","id":"keyboard_css","src":"/assets/public/content/1460550074797keyboard.css","type":"css","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"}},"shuffle":false,"total_items":1,"showImmediateFeedback":true,"max_score":1,"title":"fsdf","optionShuffle":true}]]>
+            </config>
+        </org.ekstep.quiz>
+        <manifest>
+            <media assetId="domain_42169"></media>
+            <media assetId="domain_42170"></media>
+            <media assetId="org.ekstep.keyboard"></media>
+            <media assetId="keyboard_css"></media>
+        </manifest>
+    </stage>
+    <stage w="100" x="0" h="100" y="0" id="620a4bd1-0b0b-4d1d-a953-b310a2500819">
+        <config>
+            <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"genieControls":true,"instructions":""}]]>
+        </config>
+        <param name="previous" value="d354352c-847a-44c6-923c-21a3e8ead336"></param>
+        <param name="next" value="490ab2e3-3c70-42dd-b8bb-1171729d8215"></param>
+        <org.ekstep.scribblepad strokeWidth="1" rotate="0" z-index="0" thickness="2" h="60" type="roundrect" fill="#3399FF" stroke="rgba(255, 255, 255, 0)" w="27" x="35.42" y="18.27" stroke-width="1" id="4246b5a6-d6eb-4555-a205-4dbe01295d85" opacity="0.3">
             <config>
                 <![CDATA[{"opacity":30,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"color":"#3399FF"}]]>
             </config>
@@ -31,40 +91,51 @@
             <media assetId="org.ekstep.scribblepad.eraser"></media>
         </manifest>
     </stage>
-    <stage w="100" x="0" h="100" y="0" id="ce272308-0bdb-4d91-a594-439bc65d9048">
+    <stage w="100" x="0" h="100" y="0" id="490ab2e3-3c70-42dd-b8bb-1171729d8215">
         <config>
             <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"genieControls":true,"instructions":""}]]>
         </config>
-        <param name="next" value="c04dc048-6bc0-4821-a5d0-a38783172a51"></param>
-        <param name="previous" value="5b71564c-74a0-4ed6-ae0e-e91eace795bb"></param>
-        <org.ekstep.quiz rotate="0" z-index="0" w="80" x="9" h="85" y="6" id="ee56d530-5752-4ded-b953-19be0365c297">
-            <data>
-                <![CDATA[{"questionnaire":{"items":{"do_2121883800202526721181":[{"template":"rangemulti_ftb_template","identifier":"do_2121883800202526721181","code":"org.ekstep.assessmentitem._58ae9ffb45809","question":"Multiplication","qlevel":"EASY","portalOwner":"239","description":"Test","language":["English"],"type":"ftb","title":"Multiplication FTB-01","graph_id":"domain","nodeType":"DATA_NODE","createdOn":"2017-02-23T08:42:37.941+0000","objectType":"AssessmentItem","gradeLevel":["Kindergarten","Grade 1","Grade 2","Grade 3","Grade 4","Grade 5","Other"],"answer":{"ans1":{"value":"10","score":1}},"max_score":1,"name":"Multiplication FTB-01","lastUpdatedOn":"2017-02-23T08:42:37.941+0000","template_id":"do_212181910007332864132","used_for":"worksheet","model":{"range1":"10-99","range2":"2,40"},"node_id":50458,"concepts":["LO39"],"es_metadata_id":"do_2121883800202526721181"},{"template":"5.operations_3in1","code":"org.ekstep.assessmentitem._57a067493d030","qlevel":"EASY","language":["English"],"media":[{"id":"flowersLhighlight","type":"image","src":"/assets/public/content/1455104397576flowersL.png","asset_id":"flowersLhighlight","preload":"true"},{"id":"scene5_audio","type":"audio","src":"/assets/public/content/1455104477773scene5.mp3","asset_id":"scene5_audio","preload":"true"}],"type":"ftb","title":"FTB test in content","createdOn":"2016-08-02T09:27:41.149+0000","objectType":"AssessmentItem","gradeLevel":["Kindergarten"],"lastUpdatedOn":"2016-09-02T04:24:18.964+0000","used_for":"worksheet","model":{"textfield_value_first":"4","textfield_value_second":"6 = 24","textfield_value_third":"5","textfield_value_fourth":"2 = 7","textfield_value_fifth":"7","textfield_value_sixth":"2 = 14"},"owner":"240","identifier":"do_20044286","question":"Ftb for content","portalOwner":"240","graph_id":"domain","nodeType":"DATA_NODE","answer":{"ans1":{"value":"test1","score":1}},"concepts":["LO51","LO52"],"max_score":1,"name":"FTB test in content","template_id":"domain_7352","node_id":42353,"question_audio":"scene5_audio","question_image":"flowersLhighlight","es_metadata_id":"do_20044286"}]},"item_sets":[{"count":2,"id":"do_2121883800202526721181"}],"title":"test","shuffle":false,"showImmediateFeedback":true,"myQuestions":false,"concepts":"(0) Concepts","total_items":2,"max_score":2,"range":[1,2],"optionShuffle":true},"template":[{"org.ekstep.rangemultiplication":{"range1":"item.range1","range2":"item.range2","w":100,"h":100,"x":0,"y":0,"model":"item","id":"ranNumGenerator"},"id":"rangemulti_ftb_template"},{"text":{"event":{"action":[{"asset_model":"item.question_audio","sound":true,"type":"command","command":"stop"},{"asset_model":"item.question_audio","type":"command","command":"play"}],"type":"click"},"color":"black","w":100,"h":4,"x":0,"fontsize":"2vw","y":7,"model":"item.question","align":"center"},"g":[{"text":[{"color":"red","w":12,"h":100,"x":0,"fontsize":"2vw","y":0,"model":"item.textfield_value_first","valign":"middle","align":"right"},{"color":"red","w":40,"h":100,"x":50,"fontsize":"2vw","y":0,"model":"item.textfield_value_second","valign":"middle","align":"left"}],"input":{"w":20,"h":60,"x":20,"y":20,"model":"item.ans1","valign":"middle","id":"text1","align":"center","class":"inputText"},"w":40,"h":15,"x":30,"y":30},{"text":[{"color":"red","w":12,"h":100,"x":0,"fontsize":"2vw","y":0,"model":"item.textfield_value_third","valign":"middle","align":"right"},{"color":"red","w":40,"h":100,"x":50,"fontsize":"2vw","y":0,"model":"item.textfield_value_fourth","valign":"middle","align":"left"}],"input":{"w":20,"h":60,"x":20,"y":20,"model":"item.ans2","valign":"middle","id":"text2","align":"center","class":"inputText"},"w":40,"h":15,"x":30,"y":50},{"text":[{"color":"red","w":12,"h":100,"x":0,"fontsize":"2vw","y":0,"model":"item.textfield_value_fifth","valign":"middle","align":"right"},{"color":"red","w":40,"h":100,"x":50,"fontsize":"2vw","y":0,"model":"item.textfield_value_sixth","valign":"middle","align":"left"}],"input":{"w":20,"h":60,"x":20,"y":20,"model":"item.ans3","valign":"middle","id":"text3","align":"center","class":"inputText"},"w":40,"h":15,"x":30,"y":70}],"id":"5.operations_3in1"}]}]]>
-            </data>
+        <param name="previous" value="620a4bd1-0b0b-4d1d-a953-b310a2500819"></param>
+        <param name="next" value="0b9ae805-e15a-48de-9758-128bd12139a7"></param>
+        <org.ekstep.recordandplay rotate="0" z-index="0" w="13.5" x="40.97" h="24" y="30.37" id="71473e73-809b-4812-85a2-d254be11da78">
             <config>
-                <![CDATA[{"type":"items","var":"item","media":{"flowersLhighlight":{"id":"flowersLhighlight","type":"image","src":"/assets/public/content/1455104397576flowersL.png","asset_id":"flowersLhighlight","preload":"true"},"scene5_audio":{"id":"scene5_audio","type":"audio","src":"/assets/public/content/1455104477773scene5.mp3","asset_id":"scene5_audio","preload":"true"},"org.ekstep.sdkeyboard":{"src":"/assets/public/content/do_212181910007332864132/assets/1488199164488/sdkeyboard.js","id":"sdkeyboard","type":"plugin","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"},"keyboard_css":{"src":"/assets/public/content/do_212181910007332864132/assets/1488199164488/numerickeyboard.css","id":"keyboard_css","type":"css","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"},"RangeMultiplication":{"src":"/assets/public/content/do_212181910007332864132/assets/1488199164489/rangemultiplication.js","id":"RangeMultiplication","type":"plugin","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"}},"shuffle":false,"total_items":2,"showImmediateFeedback":true,"max_score":2,"title":"test","optionShuffle":true}]]>
+                <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true}]]>
             </config>
-        </org.ekstep.quiz>
+        </org.ekstep.recordandplay>
         <manifest>
-            <media assetId="flowersLhighlight"></media>
-            <media assetId="scene5_audio"></media>
-            <media assetId="sdkeyboard"></media>
-            <media assetId="keyboard_css"></media>
-            <media assetId="RangeMultiplication"></media>
+            <media assetId="mic"></media>
+            <media assetId="N_stoprec"></media>
+            <media assetId="N_stoprec2"></media>
+            <media assetId="N_startrec"></media>
+            <media assetId="N_playrec"></media>
+            <media assetId="N_playrec2"></media>
         </manifest>
     </stage>
-    <stage w="100" x="0" h="100" y="0" id="c04dc048-6bc0-4821-a5d0-a38783172a51">
+    <stage w="100" x="0" h="100" y="0" id="0b9ae805-e15a-48de-9758-128bd12139a7">
         <config>
             <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"genieControls":true,"instructions":""}]]>
         </config>
-        <param name="previous" value="ce272308-0bdb-4d91-a594-439bc65d9048"></param>
-        <org.ekstep.quiz rotate="0" z-index="0" w="80" x="9" h="85" y="6" id="965b4915-c621-4879-9846-9dab17879221">
+        <param name="previous" value="490ab2e3-3c70-42dd-b8bb-1171729d8215"></param>
+        <org.ekstep.textpopup strokeWidth="1" rotate="0" z-index="0" color="#000000" editable="false" h="79.5" minWidth="20" fontStyle="normal" stroke="rgba(255, 255, 255, 0)" fontFamily="Sans-serif" bgcolor="#dddddd" w="79.72" x="11.25" y="10" fontSize="18" id="e9032617-0b34-4728-8712-07d711b7930e" opacity="1" fontWeight="normal" maxWidth="500">This is text popup testing
             <data>
-                <![CDATA[{"questionnaire":{"items":{"wings.en.A.4":[{"template":"org.ekstep.mcq.t.ta","code":"wings.en.A.4","keywords":["number sense","names of numbers"],"qlevel":"MEDIUM","language":["English"],"type":"mcq","title":"Write in numerals","partial_scoring":false,"createdOn":"2016-08-09T10:28:25.368+0000","objectType":"AssessmentItem","gradeLevel":["Grade 3"],"options":[{"value":{"type":"mixed","text":"222","resvalue":"222","resindex":0},"answer":false},{"value":{"type":"mixed","text":"205","resvalue":"205","resindex":1},"answer":false},{"value":{"type":"mixed","text":"155","resvalue":"155","resindex":2},"answer":false},{"value":{"type":"mixed","text":"114","resvalue":"114","resindex":3},"answer":true}],"lastUpdatedOn":"2016-08-09T10:28:25.368+0000","used_for":"worksheet","model":{},"identifier":"wings.en.A.4","question":"one hundred fourteen","portalOwner":334,"graph_id":"domain","nodeType":"DATA_NODE","max_score":1,"name":"Write in numerals","num_answers":1,"template_id":"domain_3490","node_id":43210,"es_metadata_id":"wings.en.A.4"}]},"item_sets":[{"count":1,"id":"wings.en.A.4"}],"title":"q1","shuffle":false,"showImmediateFeedback":true,"myQuestions":false,"concepts":"(0) Concepts","total_items":1,"max_score":1,"range":[1],"optionShuffle":true},"template":[{"text":[{"event":{"action":[{"sound":true,"command":"stop","type":"command"},{"command":"play","asset_model":"item.question_audio","type":"command"}],"type":"click"},"w":100,"model":"item.title","lineHeight":1.4,"color":"black","font":"Verdana","align":"center","valign":"top","y":5,"h":20,"fontsize":"2.5vw","x":0},{"w":100,"model":"item.question","lineHeight":1.4,"color":"black","font":"Verdana","align":"center","valign":"top","y":26,"h":20,"fontsize":"3vw","x":0}],"shape":{"event":{"action":[{"sound":true,"command":"stop","type":"command"},{"command":"play","asset_model":"item.question_audio","type":"command"}],"type":"click"},"w":100,"type":"rect","y":0,"hitArea":true,"h":20,"x":0},"mcq":{"options":{"shape":{"w":100,"fill":"#ccc","type":"roundrect","y":0,"h":100,"x":0},"text":{"w":100,"model":"option.value.text","lineHeight":1.4,"font":"Verdana","align":"center","valign":"middle","y":0,"h":100,"fontsize":"2.5vw","x":0},"event":{"action":[{"sound":true,"command":"stop","type":"command"},{"command":"play","asset_model":"option.value.audio","type":"command"}],"type":"click"},"w":97,"cols":4,"layout":"table","highlight":"yellow","y":50,"marginY":5,"h":50,"x":1.5,"options":"options","marginX":5},"model":"item","multi_select":false,"shadow":"#56B1F7"},"id":"org.ekstep.mcq.t.ta"}]}]]>
+                <![CDATA[{"x":90,"y":2,"w":4.5,"h":8,"stretch":false,"asset":"toggle_image","left":90,"top":2,"width":4.5,"height":8,"rotate":0}]]>
             </data>
             <config>
-                <![CDATA[{"type":"items","var":"item","shuffle":false,"total_items":1,"showImmediateFeedback":true,"max_score":1,"title":"q1","optionShuffle":true}]]>
+                <![CDATA[{"bgcolor":"#dddddd","color":"#000000","fontsize":18}]]>
             </config>
-        </org.ekstep.quiz>
+        </org.ekstep.textpopup>
+        <manifest>
+            <media assetId="toggle_image"></media>
+        </manifest>
     </stage>
+    <plugin-manifest>
+        <plugin ver="1.0" depends="" id="org.ekstep.quiz" type="plugin"></plugin>
+        <plugin ver="1.0" depends="" id="org.ekstep.scribblepad" type="plugin"></plugin>
+        <plugin ver="1.0" depends="" id="org.ekstep.recordandplay" type="widget"></plugin>
+        <plugin ver="1.0" depends="" id="org.ekstep.textpopup" type="plugin"></plugin>
+        <plugin ver="1.0" depends="" id="org.ekstep.text" type="plugin"></plugin>
+        <plugin ver="1.0" depends="" id="org.ekstep.progressbar" type="plugin"></plugin>
+        <plugin ver="1.0" depends="" id="org.ekstep.keyboard" type="plugin"></plugin>
+        
+    </plugin-manifest>
 </theme>

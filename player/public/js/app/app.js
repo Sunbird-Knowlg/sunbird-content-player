@@ -44,6 +44,27 @@ var stack = new Array(),
     isbrowserpreview = getUrlParameter("webview"),
     setContentDataCb = undefined;
 
+window.externalConfig = {"context": {}};
+
+window.initializePreview = function(configuration, metadata, data) {
+    // configuration: additional information passed to the preview
+    // metadata: metadata of the content
+    // data: JSON data of the content
+    genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
+    
+    if (!_.isUndefined(configuration)) {
+        // update obj basePath
+        org.ekstep.pluginframework.customRepo.updateBasePath(configuration.repo);
+        // add repo
+        org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.customRepo);
+        // eventbus dispatch
+        EventBus.dispatch("event:loadContent", configuration);
+    }
+
+    var $state = angular.element(document.body).injector().get('$state')
+    updateContentData($state);
+}
+
 // TODO:have to remove appState and setContentDataCb in future.
 // Used in only Authoting tools
 window.setContentData = function(metadata, data, configuration) {
@@ -62,8 +83,8 @@ window.setContentData = function(metadata, data, configuration) {
         config.showEndPage = false;
     }
     localStorage.clear();
-    var $state = angular.element(document.body).injector().get('$state')
-    updateContentData($state);
+
+    window.initializePreview(configuration, metadata, data);
 }
 
 function updateContentData($state) {
@@ -81,7 +102,6 @@ function updateContentData($state) {
         });
     }
 }
-
 
 function getContentObj(data) {
     if (_.isObject(data.body))
@@ -185,7 +205,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 });
         };
         $rootScope.getDataforPortal = function(id) {
-            ContentService.getContentMetadata(id)
+            var urlParams = $rootScope.getUrlParameter();
+            ContentService.getContentMetadata(id, urlParams)
                 .then(function(data) {
                     $rootScope.setContentMetadata(data);
                 })
@@ -208,10 +229,53 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $rootScope.content = data;
             });
         };
+        $rootScope.getUrlParameter = function() {
+            var urlParams = decodeURIComponent(window.location.search.substring(1)).split('&');
+            var i = urlParams.length;
+            while (i--) {
+                if ((urlParams[i].indexOf('webview') >= 0) || (urlParams[i].indexOf('id') >= 0)) {
+                    urlParams.splice(i, 1)
+                } else {
+                    urlParams[i] = urlParams[i].split("=");
+                }
+            }
+            return (_.object(urlParams))
+        }
         $rootScope.getContentBody = function(id) {
-            ContentService.getContentBody(id)
-                .then(function(data) {
+            var urlParams = $rootScope.getUrlParameter();
+            ContentService.getContentBody(id, urlParams).then(function(data) {
+
+                    if (!_.isUndefined(externalConfig.pluginId)) {
+                        /* add child to "plugin-manifest" in given format
+                         ** "plugin-manifest": {
+                         **      "plugin": [{
+                         **          "id": "org.ekstep.quiz",
+                         **          "ver": "1.0",
+                         **          "type": "plugin",
+                         **          "depends": ""
+                         **      }]
+                         ** },
+                         ** check if "plugin-manifest" is there then inject child to it
+                         ** else create a "plugin-manifest" and add child to it
+                         */
+                        var body = (data.body) ? JSON.parse(data.body) : null;
+                        if (_.isUndefined(body.theme["plugin-manifest"]) || _.isUndefined(body.theme["plugin-manifest"].plugin) || _.isNull(body.theme["plugin-manifest"].plugin)) {
+                            body.theme["plugin-manifest"] = {};
+                            body.theme["plugin-manifest"].plugin = [];
+                        }
+                        _.each(externalConfig.pluginId, function(item) {
+                            body.theme["plugin-manifest"].plugin.push({
+                                "id": item.id,
+                                "ver": item.ver || "1.0",
+                                "type": item.type || "plugin",
+                                "depends": item.depends || ""
+                            });
+                        });
+                        // body.theme["plugin-manifest"].plugin = plugin;
+                        data.body = JSON.stringify(body);
+                    }
                     content["body"] = data.body;
+
                     launchInitialPage(content.metadata, $state);
 
                 })
@@ -220,6 +284,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     contentNotAvailable();
                 });
         };
+
+        EventBus.addEventListener("event:loadContent", function(data) {
+            externalConfig = data.target;
+            $rootScope.getDataforPortal(externalConfig.contentId);
+            $rootScope.getContentBody(externalConfig.contentId);
+        });
+
         $rootScope.deviceRendrer = function() {
             if ($state.current.name == appConstants.stateShowContentEnd) {
                 $rootScope.$broadcast("loadEndPage");
@@ -277,10 +348,18 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     if (isbrowserpreview) {
                         var urlContentId = getUrlParameter("id");
                         genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
+                        // if (urlContentId) {
+                        // $rootScope.getDataforPortal(urlContentId);
+                        // $rootScope.getContentBody(urlContentId);
+                        // }
                         if (urlContentId) {
-                            $rootScope.getDataforPortal(urlContentId);
-                            $rootScope.getContentBody(urlContentId);
+                            var configuration = {
+                                "contentId": urlContentId,
+                                'context': {}
+                            };
+                            window.initializePreview(configuration);
                         }
+
                     } else {
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                         $rootScope.deviceRendrer();

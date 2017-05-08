@@ -1,0 +1,77 @@
+{
+    "id": "org.ekstep.progressbar",
+    "ver": "1.0",
+    "author": "Swati",
+    "title": "Progress bar Plugin",
+    "description": "",
+    "publishedDate": "",
+    "editor": {
+        "main": "editor/plugin.js",
+        "dependencies": [],
+        "menu": [{
+            "id": "progressbar",
+            "category": "main",
+            "type": "image",
+            "toolTip": "Add Progress bar",
+            "title": "Progress bar",
+            "iconImage": "editor/assets/progressbaricon.png",
+            "onclick": {
+                "id": "org.ekstep.progressbar:create",
+                "data": {
+                    "x": 11,
+                    "y": 78,
+                    "w": 78,
+                    "h": 10,
+                    "questions": 1,
+                    "progressbarStroke": "#000",
+                    "progressbarSuccess": "#54CA07",
+                    "progressbarFailure": "#FF333F",
+                    "fontSize": 32
+                }
+            }
+        }],
+        "configManifest": [{
+            "propertyName": "questions",
+            "title": "Total Questions",
+            "description": "Total no of quesstions",
+            "dataType": "input",
+            "valueType": "number",
+            "minimumValue": 1,
+            "maximumValue": 100,
+            "required": true
+        }, {
+            "propertyName": "progressbarStroke",
+            "title": "Progressbar border color",
+            "description": "Progressbar border color",
+            "dataType": "colorpicker",
+            "required": true
+        }, {
+            "propertyName": "progressbarSuccess",
+            "title": "Progressbar success color",
+            "description": "Progressbar success color",
+            "dataType": "colorpicker",
+            "required": true
+        }, {
+            "propertyName": "progressbarFailure",
+            "title": "Progressbar failure color",
+            "description": "Progressbar failure color",
+            "dataType": "colorpicker",
+            "required": true
+        }, {
+            "propertyName": "fontsize",
+            "title": "Font Size",
+            "description": "Select font size for the text",
+            "dataType": "select",
+            "range": [16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 44, 48, 52],
+            "required": true
+        }]
+    },
+    "renderer": {
+        "main": "renderer/progressbarplugin.js"
+    },
+    "dependencies": [{
+        "plugin": "org.ekstep.textpopup",
+        "ver": "1.0",
+        "scope": "renderer"
+    }]
+}

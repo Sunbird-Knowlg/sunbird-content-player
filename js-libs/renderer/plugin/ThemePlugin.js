@@ -259,23 +259,24 @@ var ThemePlugin = Plugin.extend({
         }
         this._previousStage = this._currentStage;
         this._currentStage = stageId;
+
         PluginManager.invoke('stage', stage, this, null, this);
 
         // Trigger onstagechange event, which is bind by parent window
-        if (isbrowserpreview && window && window.parent) {
-            /*var parentBody = window.parent.document.getElementsByTagName('body');*/
-            var retObj = {
-                "stageId": stageId
-            };
-            // window.parent.jQuery('body').trigger('onstagechange', retObj);
-            //var iFrameObj = document.getElementsByTagName("iframe")[0].contentWindow;
-            window.parent.postMessage(retObj, "*");
+        // if (isbrowserpreview && window && window.parent) {
+        //     /*var parentBody = window.parent.document.getElementsByTagName('body');*/
+        //     var retObj = {
+        //         "stageId": stageId
+        //     };
+        //     // window.parent.jQuery('body').trigger('onstagechange', retObj);
+        //     //var iFrameObj = document.getElementsByTagName("iframe")[0].contentWindow;
+        //     window.parent.postMessage(retObj, "*");
 
-            var custEvent = new Event('onstagechange');
-            //window.parent.document.dispatchEvent(custEvent, retObj);
+        //     var custEvent = new Event('onstagechange');
+        //     //window.parent.document.dispatchEvent(custEvent, retObj);
 
-            window.dispatchEvent(custEvent, retObj);
-        }
+        //     window.dispatchEvent(custEvent, retObj);
+        // }
     },
     preloadStages: function() {
         var stagesToLoad = this.getStagesToPreLoad(this._currentScene._data);

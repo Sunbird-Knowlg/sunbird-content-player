@@ -75,9 +75,9 @@ angular.module('genie-canvas.services', ['ngResource'])
                         });
                 });
             },
-            getContentBody: function(id) {
+            getContentBody: function(id, urlParams) {
                 return new Promise(function(resolve, reject) {
-                    genieservice.getContentBody(id)
+                    genieservice.getContentBody(id, urlParams)
                         .then(function(body) {
                             resolve(body);
                         })
@@ -87,9 +87,9 @@ angular.module('genie-canvas.services', ['ngResource'])
                         });
                 });
             },
-            getContentMetadata: function(id) {
+            getContentMetadata: function(id, urlParams) {
                 return new Promise(function(resolve, reject) {
-                    genieservice.getContentMetadata(id)
+                    genieservice.getContentMetadata(id, urlParams)
                         .then(function(metadata) {
                             resolve(metadata);
                         })

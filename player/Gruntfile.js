@@ -10,9 +10,9 @@ module.exports = function(grunt) {
             },
         },
         watch: {
-          //run unit tests with karma (server needs to be already running) 
+          //run unit tests with karma (server needs to be already running)
           karma: {
-            tasks: ['karma:unit:run'] //NOTE the :run flag 
+            tasks: ['karma:unit:run'] //NOTE the :run flag
           }
         },
         karma: {
@@ -42,6 +42,7 @@ module.exports = function(grunt) {
                         'public/js/app/AppMessages.js',
                         'public/js/app/main.js',
                         'public/js/app/app.js',
+                        'public/js/app/detectClient.js',
                         'public/js/app/overlay.js',
                     ],
                     'public/js/renderer.min.js': [
@@ -53,6 +54,7 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
                         'public/js/thirdparty/exclude/eventbus.min.js',
                         'public/js/thirdparty/exclude/Class.js',
+                        'public/js/thirdparty/exclude/md5.js',
                         'public/js/app/genieservices.js',
                         'public/js/app/EkstepRendererApi.js',
                         'public/js/app/renderer.js'
@@ -90,6 +92,7 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
                         'public/js/thirdparty/exclude/Class.js',
                         'public/js/thirdparty/exclude/eventbus.min.js',
+                        'public/js/thirdparty/exclude/md5.js',
                         'public/js/thirdparty/plugin-framework.min.js',
                         '../js-libs/renderer/plugin/Plugin.js',
                         '../js-libs/renderer/plugin/HTMLPlugin.js',
@@ -132,7 +135,7 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'public/js/app/testRenderer.js': [
-                        'public/js/thirdparty/plugin-framework.min.js'
+                        'public/js/thirdparty/plugin-framework.min.js',
                         '../js-libs/renderer/command/Command.js',
                         '../js-libs/renderer/command/*.js',
                         '../js-libs/renderer/controller/Controller.js',
@@ -290,7 +293,9 @@ module.exports = function(grunt) {
                 region: 'ap-south-1',
                 uploadConcurrency: 5, // 5 simultaneous uploads
                 downloadConcurrency: 5, // 5 simultaneous downloads
-                progress: 'progressBar'
+                progress: 'progressBar',
+                accessKeyId: '', // Use the variables
+                secretAccessKey: '', // You can also use env variables
             },
             uploadJS: {
                 options: {
@@ -389,8 +394,18 @@ module.exports = function(grunt) {
                     dest: 'preview/',
                     action: 'delete'
                 }]
-            }
+            },
 
+            PluginframeworkFromDev: {
+                options: {
+                    bucket: 'ekstep-public-dev',
+                },
+                files: [{
+                    dest: 'content-editor/scripts/plugin-framework.min.js',
+                    cwd: 'public/js/thirdparty/',
+                    action: 'download'
+                }]
+            }
         },
         cordovacli: {
             options: {
@@ -424,6 +439,7 @@ module.exports = function(grunt) {
                         'https://github.com/akashgupta9990/cordova-webIntent.git',
                         'cordova-plugin-whitelist@1.2.1',
                         'cordova-plugin-crosswalk-webview@2.3.0',
+                        'https://github.com/akashgupta9990/cordova-webIntent.git',
                         'cordova-plugin-file-transfer@1.6.1',
                         'com.lampa.startapp@0.1.4',
                         'cordova-plugin-inappbrowser@1.6.1',
@@ -631,7 +647,7 @@ module.exports = function(grunt) {
                     src: ['docs/**']
                 }]
             }
-        },        
+        },
     });
 
     grunt.loadNpmTasks('grunt-cordovacli');
@@ -680,6 +696,10 @@ module.exports = function(grunt) {
             grunt.task.run(tasks);
         }
     });
+
+    // grunt to download the pluginFramework files
+    grunt.registerTask('download-plugin-framework-dev', ['aws_s3:PluginframeworkFromDev'])
+
 
     // After this 'build-preview' task run
     // grunt updateVersion

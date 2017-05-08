@@ -64,10 +64,14 @@
         "main": "renderer/scribblepadplugin.js"
     },
     "dependencies": [
-      {
-        "plugin": "org.ekstep.quiz",
-        "ver":"1.0",
-        "scope":"renderer"
-      }
-  ]
+    {
+        "plugin": "org.ekstep.recordandplay",
+        "ver": "1.0",
+        "scope": "renderer"
+    },
+    {
+        "plugin": "org.ekstep.progressbar",
+        "ver": "1.0",
+        "scope": "renderer"
+    }]
 }
