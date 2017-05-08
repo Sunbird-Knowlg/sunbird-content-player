@@ -97,7 +97,7 @@ function startApp(app) {
             TelemetryService.exit(packageName, version)
         }, function(error) {
             if (app == geniePackageName)
-                alert("Unable to start Genie App.");
+                showToaster('error', "Unable to start Genie App.");
             else {
                 var bool = confirm('App not found. Do you want to search on PlayStore?');
                 if (bool) cordova.plugins.market.open(app);
@@ -107,19 +107,19 @@ function startApp(app) {
 }
 
 function contentNotAvailable() {
-    alert(AppMessages.NO_CONTENT_FOUND);
+    showToaster('error', AppMessages.NO_CONTENT_FOUND);
     exitApp();
 }
 
 function checkStage(showalert) {
     if (GlobalContext.config.appInfo.mimeType == 'application/vnd.ekstep.content-collection') {
         if (showalert == "showAlert") {
-            alert("No stage found, redirecting to collection list page")
+            showToaster("error", "No stage found, redirecting to collection list page")
         }
         exitApp();
     } else {
         if (showalert == "showAlert") {
-            alert("No Stage found, existing canvas")
+            showToaster("error", "No Stage found, existing canvas")
         }
         exitApp();
     }
@@ -223,7 +223,7 @@ function startTelemetry(id, ver, cb) {
         }
     }).catch(function(error) {
         console.log('TelemetryService init failed');
-        alert('TelemetryService init failed.');
+        showToaster('error', 'TelemetryService init failed.');
         exitApp();
     });
 }
@@ -235,19 +235,14 @@ function getAsseturl(content) {
     return path;
 
 }
-
-function showToaster(toastType, message, customObj) {
-    toastr.options = {
-        "positionClass": "toast-top-right",
-        "preventDuplicates": true,
-        "tapToDismiss": true,
-        "hideDuration": "1000",
-        "timeOut": "4000",
-    }
+//ref: http://www.jqueryscript.net/other/Highly-Customizable-jQuery-Toast-Message-Plugin-Toastr.html
+function showToaster(toastType, message, customOptions) {
+    var defaultOptions = {"positionClass": "toast-top-right", "preventDuplicates": true, "tapToDismiss": true, "hideDuration": "1000", "timeOut": "4000", }; 
+    toastr.options = _.extend(defaultOptions, customOptions);
     if (toastType === 'warning') {
-        toastr.warning(message, customObj);
+        toastr.warning(message);
     }
     if (toastType === 'error') {
-        toastr.error(message, customObj);
+        toastr.error(message);
     }
 }
