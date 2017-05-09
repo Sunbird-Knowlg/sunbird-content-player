@@ -167,9 +167,10 @@ var ThemePlugin = Plugin.extend({
         }
     },
     reRender: function() {
-        //Resetting controller index to show first assesment on replay
-        var controller = this._controllerMap[this._data.startStage + '_assessment'];
-        if (!_.isUndefined(controller)) {
+        //Resetting controller index to show all assesment on replay
+        var controller;
+        for (k in this._controllerMap) {
+        	controller = this._controllerMap[k];
             controller.reset();
         }
         this._contentParams = {};
