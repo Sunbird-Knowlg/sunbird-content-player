@@ -51,7 +51,7 @@ window.initializePreview = function(configuration, metadata, data) {
     // metadata: metadata of the content
     // data: JSON data of the content
     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-    
+
     if (!_.isUndefined(configuration)) {
         // update obj basePath
         org.ekstep.pluginframework.customRepo.updateBasePath(configuration.repo);
@@ -287,8 +287,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         EventBus.addEventListener("event:loadContent", function(data) {
             externalConfig = data.target;
-            $rootScope.getDataforPortal(externalConfig.contentId);
-            $rootScope.getContentBody(externalConfig.contentId);
+            if (!_.isUndefined(externalConfig.contentId) && _.isUndefined(content.body)) {
+                $rootScope.getDataforPortal(externalConfig.contentId);
+                $rootScope.getContentBody(externalConfig.contentId);
+            } else {
+                console.error("Content id is undefined or body is available !!");
+            }
         });
 
         $rootScope.deviceRendrer = function() {
