@@ -175,6 +175,7 @@ var localStorageGC = {
         // Storing into localStorage
         var thisData = {};
         thisData.content = this.content;
+        thisData.old_content = this.old_content;
         thisData.collection = this.collection;
         thisData.telemetryService = this.telemetryService;
         thisData.isCollection = this.isCollection;
