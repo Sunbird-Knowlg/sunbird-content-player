@@ -408,16 +408,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             TelemetryService.interact("TOUCH", "gc_replay", "TOUCH", {
                 stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
             });
+            var menuReplay = $state.current.name == appConstants.statePlayContent;
             // 1) For HTML content onclick of replay EventListeners will be not available hence calling Telemetryservice end .
             // 2) OE_START for the HTML/ECML content will be takne care by the contentctrl rendere method always.
-            EventBus.hasEventListener('actionReplay') ? EventBus.dispatch('actionReplay') : TelemetryService.end();
+            EventBus.hasEventListener('actionReplay') ? EventBus.dispatch('actionReplay',{'menuReplay':menuReplay} ) : TelemetryService.end();
             if ($state.current.name == appConstants.stateShowContentEnd) {
                 $state.go(appConstants.statePlayContent, {
                     'itemId': $rootScope.content.identifier
                 });
-            } else {
-                Renderer.theme.removeHtmlElements();
-                Renderer.theme.reRender();
             }
         }
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {

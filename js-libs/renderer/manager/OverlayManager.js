@@ -332,11 +332,15 @@ OverlayManager = {
             stageId: currentStage
         });
     },
-    actionReplay: function() {
+    actionReplay: function(data) {
         var version = TelemetryService.getGameVer();
         TelemetryService.end();
         if (GlobalContext.currentContentId && version) {
             startTelemetry(GlobalContext.currentContentId, version);
+        }
+        if (data.target && data.target.menuReplay || _.isUndefined(data.target)) {
+            EkstepRendererAPI.removeHtmlElements();
+            Renderer.theme.reRender();
         }
     }
 }
