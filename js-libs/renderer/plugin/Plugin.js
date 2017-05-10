@@ -159,7 +159,11 @@ var Plugin = Class.extend({
             }
         } catch (e) {
             //TelemetryService.error(e.stack);
-            showToaster('error', 'Plugin failed');
+             var pluginName;
+            if(!_.isUndefined(data)){
+                pluginName = data.pluginType ? data.pluginType : "CustomPlugin";
+            }
+            showToaster('error', pluginName +':Plugin failed');
             console.warn('Plugin init is failed due to', e);
         }
 
