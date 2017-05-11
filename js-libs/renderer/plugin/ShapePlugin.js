@@ -130,11 +130,13 @@ var ShapePlugin = Plugin.extend({
         var corners = data.corners;
 
         // Check which shape
-        if (sides) {
-            shape = sides + "polygon";
-        }
-        else if (corners) {
-            shape = corners + "star";
+        if (shape != 'trapezium') {
+            if (sides) {
+                shape = sides + "polygon";
+            }
+            else if (corners) {
+                shape = corners + "star";
+            }
         }
 
         var points;
