@@ -777,5 +777,15 @@ window.EkstepRendererAPI = {
     */
    getExternalConfig: function() {
        return window.externalConfig;
+   },
+
+   /**
+    *This api will replay the content from start
+    * @memberof EkstepRendererAPI
+    * @param data {object} event data to carry along with the notification
+    * @param target {object} the scope of the event (use this)
+    */
+   replayContent: function(data, target) {
+       EkstepRendererAPI.dispatchEvent('actionReplay', data, target);
    }
 }
