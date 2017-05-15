@@ -8,25 +8,30 @@
         <div class="gc-menu-title-cont">
             <p class="icon-font">{{item.name}}</p>
         </div>
-        <div class="gc-menu-top">
-            <div class="gc-menu-genie-cont">
-                <genie icon="icn_home.png"></genie>
-                <p class="icon-font gc-menu-genie-cont-icon">{{languageSupport.home}}</p>
-            </div>
-            <div class="gc-menu-replay-cont">
-                <restart></restart>
-                <p class="icon-font gc-menu-replay-icon">{{languageSupport.replay}}</p>
-            </div>
+        <div class = "gc-menu-options">
+            <img alt="replay img" src="http://placehold.it/55x55"/>
+            <span> {{languageSupport.replay}} </span>
         </div>
-        <div class="gc-menu-bottom">            
-            <div class="gc-menu-inst-cont">
-                <stage-instructions></stage-instructions>
-                <p class="icon-font gc-menu-inst-icon">{{languageSupport.instructions}}</p>
-            </div>
+        <div class = "gc-menu-options">
+            <img alt="prof img" src="http://placehold.it/55x55"/>
+            <span> Krushanu Mohapatra <small> change </small></span>
+
+
         </div>
-        <div class="gc-menu-mute-cont">
-            <mute></mute>
-         <img class="gc-mute-bg" ng-src="{{imageBasePath}}audio_bg.png" />
+        <div class = "gc-menu-options">
+            <img alt="sound img" src="http://placehold.it/55x55"/>
+            <span> Sound {{}}</span>
+
+        </div>
+        <div class = "gc-menu-options">
+            <img alt="note img" src="http://placehold.it/55x55"/>
+            <span> {{languageSupport.instructions}} </span>
+
+        </div>
+        <div class = "gc-menu-options">
+            <img alt="home img" src="http://placehold.it/55x55"/>
+            <span> {{languageSupport.home}} </span>
+
         </div>
         <div class="inst-message-cont " ng-show="showInst">
             <img class="inst-icon" ng-src="{{imageBasePath}}icn_teacherinfo.png" ng-click="expeandInstruction()" />

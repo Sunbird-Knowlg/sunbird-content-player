@@ -193,7 +193,7 @@ body {
 .gc-menu {
     position: absolute;
     text-transform: uppercase;
-    width: 27%;
+    width: 35%;
     height: 100%;
     top: 0;
     margin-left: -31%;
@@ -201,13 +201,32 @@ body {
 
 .gc-menu-cont {
     height: 100%;
-    background-color: #2691D0;
+    background-color: #ffffff;
 }
 
 .gc-menu .gc-menu-bg {
     position: absolute;
     width: 100%;
     height: 100%;
+}
+
+.gc-menu-cont .gc-menu-title-cont {
+    height: 20%;
+    background-color: orange;
+}
+
+.gc-menu-cont .gc-menu-options {
+    height: 16%;
+    border-bottom: 1px solid #aaaaaa;
+    padding-top: 1.6%;
+}
+
+.gc-menu-cont .gc-menu-options img {
+    vertical-align: middle;
+}
+
+.gc-menu-cont .icon-font {
+    color: #333;
 }
 
 .gc-menu-title-cont p {
@@ -233,7 +252,7 @@ body {
     float: right;
     width: 20%;
     margin-top: 6%;
-    margin-right: -39%;
+    margin-right: -11%;
 }
 
 .gc-menu-collection-cont {
