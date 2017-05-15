@@ -215,18 +215,38 @@ body {
     background-color: orange;
 }
 
+.gc-menu-cont .icon-font {
+    color: #333;
+}
+
 .gc-menu-cont .gc-menu-options {
     height: 16%;
     border-bottom: 1px solid #aaaaaa;
-    padding-top: 1.6%;
+    overflow: hidden;
+    padding-top: 2.5%;
+    padding: 2.6% 3%; 
 }
 
 .gc-menu-cont .gc-menu-options img {
     vertical-align: middle;
+    width: 20%;
 }
 
-.gc-menu-cont .icon-font {
-    color: #333;
+/*.gc-menu-cont .gc-menu-options .profile {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}*/
+
+.gc-menu-cont .gc-menu-options span {
+    display: inline-block;
+    width: 75%;
+    vertical-align: middle;
+    padding-left: 5%;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .gc-menu-title-cont p {
