@@ -783,12 +783,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.init = function() {
-            if (_.isUndefined($rootScope.content) || !_.isEqual($rootScope.content, localStorageGC.getItem('content_old'))) {
-                localStorageGC.removeItem('content_old');
+            if (_.isUndefined($rootScope.content)) {
                 localStorageGC.update();
                 // Updating the current content object by getting from localStage
-                var oldContent = localStorageGC.getItem('content_old');
-                content = !_.isEmpty(oldContent) ? oldContent : localStorageGC.getItem('content');
+                content = localStorageGC.getItem('content');
                 $rootScope.content = content;
             }
             localStorageGC.setItem('content_old',$rootScope.content)
