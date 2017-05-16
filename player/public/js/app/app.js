@@ -228,6 +228,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $rootScope.safeApply(function() {
                 $rootScope.content = data;
             });
+            $rootScope.getContentBody(content.metadata.identifier)
         };
         $rootScope.getUrlParameter = function() {
             var urlParams = decodeURIComponent(window.location.search.substring(1)).split('&');
@@ -289,7 +290,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             externalConfig = data.target;
             if (!_.isUndefined(externalConfig.contentId) && _.isUndefined(content.body)) {
                 $rootScope.getDataforPortal(externalConfig.contentId);
-                $rootScope.getContentBody(externalConfig.contentId);
+                // $rootScope.getContentBody(externalConfig.contentId);
             } else {
                 console.error("Content id is undefined or body is available !!");
             }
