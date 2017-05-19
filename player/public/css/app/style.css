@@ -224,7 +224,7 @@ body {
     border-bottom: 1px solid #aaaaaa;
     overflow: hidden;
     padding-top: 2.5%;
-    padding: 2.6% 3%; 
+    padding: 2.6% 3%;
 }
 
 .gc-menu-cont .gc-menu-options img {
@@ -232,17 +232,24 @@ body {
     width: 20%;
 }
 
-/*.gc-menu-cont .gc-menu-options .profile {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}*/
-
 .gc-menu-cont .gc-menu-options span {
     display: inline-block;
     width: 75%;
     vertical-align: middle;
     padding-left: 5%;
+    overflow: hidden;
+
+    /*white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;*/
+}
+
+.gc-menu-cont .gc-menu-options.profile {
+    display: inline-block;
+    /*width: 75%;*/
+    /*vertical-align: middle;*/
+    /*padding-left: 5%;*/
+    /*overflow: hidden;*/
 
     white-space: nowrap;
     overflow: hidden;
@@ -767,11 +774,26 @@ body {
     background-color: rgba(255, 255, 255, 1);
 }
 
-.gc-ep-footer-icons {
+.gc-ep-footer-icons.gc-ep-replay {
     display: inline-block;
-    width: 60%;
+    width: 48%;
     height: 100%;
-    margin: 0 -5%;
+    text-align: center;
+
+    /* margin: 0 -5%; */
+    /* margin-left: -50%; */
+
+}
+
+.gc-ep-footer-icons.gc-ep-userSwitch {
+    display: inline-block;
+    width: 48%;
+    height: 100%;
+    text-align: center;
+
+    /* margin: 0 -5%; */
+    /* margin-left: 50%; */
+
 }
 
 .gc-ep-footer-icons img {
@@ -848,7 +870,7 @@ body {
 
 .gc-ep-footer {
     position: absolute;
-    text-align: center;
+    /*text-align: center;*/
     width: 100%;
     height: 20%;
     bottom: 13%;

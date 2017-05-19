@@ -1145,7 +1145,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             template: '<a href="javascript:void(0)"  ng-class="{\'icon-opacity\' : !stageData.params.instructions}" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;" alt="note img"/><span> {{languageSupport.instructions}} </span></a>',
             controller: function($scope, $rootScope) {
                 $scope.stageInstMessage = "";
-                $scope.showInst = false;
+                $scope.showInst = true;
 
                 $scope.showInstructions = function() {
                     $scope.stageInstMessage = ($rootScope.stageData && $rootScope.stageData.params && $rootScope.stageData.params.instructions) ? $rootScope.stageData.params.instructions : null;
@@ -1386,5 +1386,17 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             restrict: 'E',
             template: '<a href="javascript:void(0)" ng-click="goToLastPage()"><img ng-src="{{imageBasePath}}icn_back_page.png"/></a>',
             link: function(scope) {}
+        }
+    }).directive('userSwitch', function($rootScope) {
+        return {
+            restrict: 'E',
+            template: '<a href="javascript:void(0)" ng-click="userSwitching()" data-dialogModalBind="#content" ><img ng-src="{{imageBasePath}}icn_back_page.png"/></a>',
+            link: function(scope) {
+
+                scope.userSwitching = function () {
+
+                }
+
+            }
         }
     });
