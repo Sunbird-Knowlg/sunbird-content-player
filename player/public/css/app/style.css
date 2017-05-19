@@ -346,6 +346,7 @@ body {
 .inst-message-cont {
     background-color: #ECECEC;
     position: absolute;
+    width: 96%;
     height: 97%;
     z-index: 2;
     text-transform: initial;
@@ -357,7 +358,7 @@ body {
     font-family: NotoSansRegular;
     font-size: 1.2em;
     margin: 25% 5%;
-    height: 75%;
+    height: 72%;
     overflow: auto;
     text-align: center;
     font-weight: 500;

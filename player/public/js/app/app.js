@@ -1129,7 +1129,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 icon: '@'
             },
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-class="enableGenie ? \'icon-opacity\' : \'\'" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/></a>',
+            template: '<div href="javascript:void(0)" ng-class="enableGenie ? \'icon-opacity\' : \'\'" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/><span> {{languageSupport.home}} </span></div>',
             link: function(scope) {
                 scope.enableGenie = ("undefined" == typeof cordova) ? true : false;
                 scope.imgSrc = $rootScope.imageBasePath + scope.icon
@@ -1142,10 +1142,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('stageInstructions', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)"  ng-class="{\'icon-opacity\' : !stageData.params.instructions}" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;" alt="note img"/><span> {{languageSupport.instructions}} </span></a>',
+            template: '<div ng-class="{\'icon-opacity\' : !stageData.params.instructions}" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;" alt="note img"/><span> {{languageSupport.instructions}} </span></div>',
             controller: function($scope, $rootScope) {
                 $scope.stageInstMessage = "";
-                $scope.showInst = true;
+                $scope.showInst = false;
 
                 $scope.showInstructions = function() {
                     $scope.stageInstMessage = ($rootScope.stageData && $rootScope.stageData.params && $rootScope.stageData.params.instructions) ? $rootScope.stageData.params.instructions : null;
@@ -1204,7 +1204,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('restart', function($rootScope, $state, $stateParams) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/></a>',
+            template: '<div ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/><span> {{languageSupport.replay}} </span></div>',
             link: function(scope) {
                 scope.restartContent = function() {
                     $rootScope.replayContent();
