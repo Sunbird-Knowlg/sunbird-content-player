@@ -178,7 +178,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "scores": "SCORES AND RATING",
             "lastPage": "GO TO LAST PAGE",
             "nextContent": "NEXT CONTENT",
-            "comment": "write your comment..."
+            "comment": "write your comment...",
+            "mute": "MUTE"
         }
 
         $rootScope.safeApply = function(fn) {
@@ -1180,21 +1181,30 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="mute()"><img id="mute_id" ng-src="{{imageBasePath}}icn_audio.png" style="position: absolute;margin: 3%;width: 10%;z-index: 1;margin-left: 40%; display: block;" /><img id="unmute_id" ng-src="{{imageBasePath}}unmute.png" style="position: absolute;margin: 2% 2% 2% 39%;display: none; width: 14%; z-index: 1;"/> </a>',
+            template: '<div ng-click="toggleMute()"><img src="{{muteImg}}"/><span> {{languageSupport.mute}} </span></div>',
             link: function(scope, url) {
                 var muteElement = document.getElementById("unmute_id");
+                scope.muteImg = "http://placehold.it/55x55";
+                // scope muteImg = $rootScope.imageBasePath + icn_replay.png;
                 if (!_.isNull(muteElement)) {
                     muteElement.style.display = "none";
                 }
                 AudioManager.unmute();
-                scope.mute = function() {
+                scope.toggleMute = function() {
                     //mute function goes here
+
                     if (AudioManager.muted) {
+                        //unmute the audio; change the muteImg to mute
                         AudioManager.unmute();
-                        document.getElementById("unmute_id").style.display = "none";
+                        // muteImg = $rootScope.imageBasePath + "mute.png";
+                        $rootScope.languageSupport.mute = "mute";
+                        // document.getElementById("unmute_id").style.display = "none";
                     } else {
+                        // mute the audio; change the muteImg to unmute
                         AudioManager.mute();
-                        document.getElementById("unmute_id").style.display = "block";
+                        muteImg = $rootScope.imageBasePath + "unmute.png";
+                        $rootScope.languageSupport.mute = "unmute";
+                        // document.getElementById("unmute_id").style.display = "block";
                     }
                     TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute", "TOUCH", {
                         stageId: Renderer.theme._currentStage
