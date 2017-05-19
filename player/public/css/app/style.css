@@ -337,13 +337,13 @@ body {
 }
 
 .inst-message-cont {
-    width: 80%;
     background-color: #ECECEC;
     position: absolute;
-    height: 75%;
-    margin: 35% 7%;
+    height: 97%;
     z-index: 2;
     text-transform: initial;
+    top: 0%;
+    margin: 2%;
 }
 
 .inst-message-cont p {
