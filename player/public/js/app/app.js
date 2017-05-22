@@ -686,6 +686,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";
         };
 
+        $scope.ep_openUserSwitchingModal = function() {
+            EventBus.dispatch("openUserSwitchingModal");
+        }
+
         $scope.setCredits = function(key) {
             if ($scope.content[key]) {
                 $scope.content[key] = $scope.arrayToString($scope.content[key]);
@@ -703,6 +707,18 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 stageId: "ContentApp-CreditsScreen",
                 subtype: "ContentID"
             });
+        }
+
+        $scope.ep_restartContent = function() {
+            $rootScope.replayContent();
+            //Resetting mute state
+            var muteElement = document.getElementById("unmute_id");
+            if (!_.isNull(muteElement)) {
+                muteElement.style.display = "none";
+            }
+            AudioManager.unmute();
+            if (!_.isUndefined(scope.hideMenu) && scope.menuOpened)
+                scope.hideMenu();
         }
 
         $scope.showFeedback = function(param) {
@@ -864,6 +880,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $rootScope.defaultSubmit = function() {
             EventBus.dispatch("actionDefaultSubmit");
+        }
+
+        $scope.openUserSwitchingModal = function() {
+            EventBus.dispatch("openUserSwitchingModal");
+            $scope.hideMenu();
         }
 
         $scope.navigate = function(navType) {
@@ -1398,16 +1419,58 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             template: '<a href="javascript:void(0)" ng-click="goToLastPage()"><img ng-src="{{imageBasePath}}icn_back_page.png"/></a>',
             link: function(scope) {}
         }
-    }).directive('userSwitch', function($rootScope) {
+    }).directive('userSwitch', function($rootScope, $compile) {
         return {
             restrict: 'E',
-            template: '<a href="javascript:void(0)" ng-click="userSwitching()" data-dialogModalBind="#content" ><img ng-src="{{imageBasePath}}icn_back_page.png"/></a>',
-            link: function(scope) {
+            scope: {
+                popupBody: '=popupBody'
+            },
+            templateUrl: 'templates/user-switch-popup.html',
+            link: function(scope, element) {
+                console.log("============userSwitch controller loaded..============");
+                // userSwitchingModal.style.display = "none";
 
-                scope.userSwitching = function () {
+                EventBus.addEventListener("openUserSwitchingModal", function() {
+                    scope.openUserSwitchingModal();
+                });
 
+                // Get the modal
+                var userSwitchingModal = document.getElementById('userSwitchingModal');
+
+                // When the user clicks the button, open the modal
+                scope.openUserSwitchingModal = function() {
+                    userSwitchingModal.style.display = "block";
                 }
 
+                // When the user clicks on <span> (x), close the modal
+                scope.closeUserSwitchingModal = function() {
+                    userSwitchingModal.style.display = "none";
+                }
+
+                // When the user clicks on Restart, Restart the content
+                scope.restartContent = function() {
+                    scope.closeUserSwitchingModal();
+                }
+
+                // When the user clicks on Coontinue, Continue the content from there
+                scope.continueContent = function() {
+                    scope.closeUserSwitchingModal();
+                }
+
+                var userSlider = $('#userSlider');
+                for (var i = 0; i < 50; i++) {
+                    var imgSrc = 'http://loremflickr.com/320/240';
+                    var name = 'Krushanu';
+                    userSlider.append("<div class='profile'><img style='width:100px;height:100px' src= '" + imgSrc + "' alt='test'/><p>" + name + "</p></div>");
+                }
+                $('#userSlider').mCustomScrollbar({
+                    axis: "x",
+                    theme: "dark-3",
+                    advanced: {
+                        autoExpandHorizontalScroll: true
+                    }
+                });
+                // $("#selector_that_matches_zero_elements").mCustomScrollbar("destroy");
             }
         }
     });
