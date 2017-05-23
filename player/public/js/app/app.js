@@ -249,7 +249,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.getContentBody = function(id, authKey) {
             var headers = $rootScope.getUrlParameter();
             // if (!_.isUndefined(authKey)) {
-                headers["headers"] = {'Authorization':'Bearer '+ authKey};
+                headers["Authorization"] = 'Bearer '+ authKey;
             // }
             ContentService.getContentBody(id, headers).then(function(data) {
 
