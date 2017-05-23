@@ -1131,6 +1131,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.init();
         });
 
+    }).controller('userSwitchCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
+        $scope.initializeCtrl = function() {
+            console.log("userSwitchCtrl initialized !!!");
+            
+        }
     }).directive('menu', function($rootScope, $sce) {
         return {
             restrict: 'E',
@@ -1425,39 +1430,44 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             scope: {
                 popupBody: '=popupBody'
             },
+            controller: 'userSwitchCtrl',
             templateUrl: 'templates/user-switch-popup.html',
-            link: function(scope, element) {
-                console.log("============userSwitch controller loaded..============");
-                // userSwitchingModal.style.display = "none";
-
-                EventBus.addEventListener("openUserSwitchingModal", function() {
-                    scope.openUserSwitchingModal();
-                });
+            link: function($scope, element, attrs, controllers) {
 
                 // Get the modal
-                var userSwitchingModal = document.getElementById('userSwitchingModal');
+                var userSwitchingModal = element.find("#userSwitchingModal")[0];
+
+                // get the user selection div
+                var userSlider = element.find("#userSlider");
+
+                $scope.init = function() {
+                    console.log("============userSwitch controller loaded..============");
+                    $scope.initializeCtrl();
+                    EventBus.addEventListener("openUserSwitchingModal", function() {
+                        $scope.openUserSwitchingModal();
+                    });
+                }();
 
                 // When the user clicks the button, open the modal
-                scope.openUserSwitchingModal = function() {
+                $scope.openUserSwitchingModal = function() {
                     userSwitchingModal.style.display = "block";
                 }
 
                 // When the user clicks on <span> (x), close the modal
-                scope.closeUserSwitchingModal = function() {
+                $scope.closeUserSwitchingModal = function() {
                     userSwitchingModal.style.display = "none";
                 }
 
                 // When the user clicks on Restart, Restart the content
-                scope.restartContent = function() {
-                    scope.closeUserSwitchingModal();
+                $scope.restartContent = function() {
+                    $scope.closeUserSwitchingModal();
                 }
 
                 // When the user clicks on Coontinue, Continue the content from there
-                scope.continueContent = function() {
-                    scope.closeUserSwitchingModal();
+                $scope.continueContent = function() {
+                    $scope.closeUserSwitchingModal();
                 }
 
-                var userSlider = $('#userSlider');
                 for (var i = 0; i < 50; i++) {
                     var imgSrc = 'http://loremflickr.com/320/240';
                     var name = 'Krushanu';
