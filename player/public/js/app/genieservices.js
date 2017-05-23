@@ -149,9 +149,10 @@ genieservice_portal = {
         });
     },
     getContentBody: function(id, headers) {
+        var instance = this;
         return new Promise(function(resolve, reject) {
         // headers["Content-Type"] = "application/json";
-        var resp = callApi(genieservice_portal.api.getFullAPI() + id + "?fields=body", 'GET', headers);
+        var resp = instance.callApi(genieservice_portal.api.getFullAPI() + id + "?fields=body", 'GET', headers);
         // jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", headers, function(resp) {
             var result = {};
             if (!resp.error) {
@@ -177,9 +178,10 @@ genieservice_portal = {
         });
     },
     getContentMetadata: function(id, headers) {
+        var instance = this;
         return new Promise(function(resolve, reject) {
         // headers["Content-Type"] = "application/json";
-        var resp = callApi(genieservice_portal.api.getFullAPI() + id, 'GET', headers);
+        var resp = instance.callApi(genieservice_portal.api.getFullAPI() + id, 'GET', headers);
         // jQuery.get(genieservice_portal.api.getFullAPI() + id, headers, function(resp) {
             var result = {};
             if (!resp.error) {
@@ -199,9 +201,10 @@ genieservice_portal = {
         });
     },
     languageSearch: function(filter){
+        var instance = this;
         return new Promise(function(resolve, reject) {
             var headers = {};
-            var resp = callApi(genieservice_portal.api.getLanguageFullAPI() + "search", 'POST', headers, filter);
+            var resp = instance.callApi(genieservice_portal.api.getLanguageFullAPI() + "search", 'POST', headers, filter);
             // jQuery.ajax({
                 // type: 'POST',
                 // url: genieservice_portal.api.getLanguageFullAPI() + "search",
