@@ -151,7 +151,7 @@ genieservice_portal = {
     getContentBody: function(id, headers) {
         return new Promise(function(resolve, reject) {
         // headers["Content-Type"] = "application/json";
-        var resp = callApi(genieservice_portal.api.getFullAPI() + id "?fields=body", 'GET', headers);
+        var resp = callApi(genieservice_portal.api.getFullAPI() + id + "?fields=body", 'GET', headers);
         // jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", headers, function(resp) {
             var result = {};
             if (!resp.error) {
