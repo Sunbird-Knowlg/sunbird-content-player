@@ -112,7 +112,7 @@ genieservice_portal = {
            return this._baseUrl;
         }
     },
-    callApi: function(url, type, headers, data) {
+    callApi: function(url, type, headers, data, cb) {
         headers["Content-Type"] = "application/json";
         jQuery.ajax({
             url:url,
@@ -120,7 +120,7 @@ genieservice_portal = {
             headers: headers,
             data: data
         }).done(function(resp){
-            return resp
+            cb(resp)
         });
     },
     getCurrentUser: function() {
@@ -152,7 +152,7 @@ genieservice_portal = {
         var instance = this;
         return new Promise(function(resolve, reject) {
         // headers["Content-Type"] = "application/json";
-        var resp = instance.callApi(genieservice_portal.api.getFullAPI() + id + "?fields=body", 'GET', headers);
+        instance.callApi(genieservice_portal.api.getFullAPI() + id + "?fields=body", 'GET', headers, function(resp) {
         // jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", headers, function(resp) {
             var result = {};
             if (!resp.error) {
@@ -161,7 +161,7 @@ genieservice_portal = {
             } else {
                 console.info("err : ", resp.error)
             }
-        // });
+        });
         });
     },
     getContent: function(id){
@@ -181,7 +181,7 @@ genieservice_portal = {
         var instance = this;
         return new Promise(function(resolve, reject) {
         // headers["Content-Type"] = "application/json";
-        var resp = instance.callApi(genieservice_portal.api.getFullAPI() + id, 'GET', headers);
+        instance.callApi(genieservice_portal.api.getFullAPI() + id, 'GET', headers, function(resp) {
         // jQuery.get(genieservice_portal.api.getFullAPI() + id, headers, function(resp) {
             var result = {};
             if (!resp.error) {
@@ -197,14 +197,14 @@ genieservice_portal = {
             } else {
                 console.info("err : ", resp.error)
             }
-        // });
+        });
         });
     },
     languageSearch: function(filter){
         var instance = this;
         return new Promise(function(resolve, reject) {
             var headers = {};
-            var resp = instance.callApi(genieservice_portal.api.getLanguageFullAPI() + "search", 'POST', headers, filter);
+            instance.callApi(genieservice_portal.api.getLanguageFullAPI() + "search", 'POST', headers, filter, function(resp) {
             // jQuery.ajax({
                 // type: 'POST',
                 // url: genieservice_portal.api.getLanguageFullAPI() + "search",
@@ -220,7 +220,7 @@ genieservice_portal = {
                 } else {
                     console.info("err : ", resp.error)
                 }
-            // });
+            });
         });
     },
     sendTelemetry: function(data){
