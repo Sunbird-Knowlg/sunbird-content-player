@@ -152,7 +152,7 @@ genieservice_portal = {
         var instance = this;
         return new Promise(function(resolve, reject) {
         // headers["Content-Type"] = "application/json";
-        instance.callApi(genieservice_portal.api.getFullAPI() + id + "?fields=body", 'GET', headers, function(resp) {
+        instance.callApi(genieservice_portal.api.getFullAPI() + id + "?fields=body", 'GET', headers, undefined, function(resp) {
         // jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", headers, function(resp) {
             var result = {};
             if (!resp.error) {
@@ -181,7 +181,7 @@ genieservice_portal = {
         var instance = this;
         return new Promise(function(resolve, reject) {
         // headers["Content-Type"] = "application/json";
-        instance.callApi(genieservice_portal.api.getFullAPI() + id, 'GET', headers, function(resp) {
+        instance.callApi(genieservice_portal.api.getFullAPI() + id, 'GET', headers, undefined,  function(resp) {
         // jQuery.get(genieservice_portal.api.getFullAPI() + id, headers, function(resp) {
             var result = {};
             if (!resp.error) {
