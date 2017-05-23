@@ -88,8 +88,8 @@ genieservice_web = {
 genieservice_portal = {
     api: {
         _baseUrl: undefined,
-        contentBasePath: '/learning/v2/content/',
-        languageBasePath: '/language/v2/language/',
+        contentBasePath: '/content/v3/read/',
+        languageBasePath: '/language/v3/',
         telemetryBasePath: '/telemetry/v1/telemetry',
         getFullAPI: function() {
             return this.getBaseUrl() + this.contentBasePath;
@@ -111,6 +111,17 @@ genieservice_portal = {
             }
            return this._baseUrl;
         }
+    },
+    callApi: function(url, type, headers, data) {
+        headers["Content-Type"] = "application/json";
+        jQuery.ajax({
+            url:url,
+            type: type,
+            headers: headers,
+            data: data
+        }).done(function(resp){
+            return resp
+        });
     },
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
@@ -137,10 +148,11 @@ genieservice_portal = {
             resolve(result);
         });
     },
-    getContentBody: function(id, urlParams) {
+    getContentBody: function(id, headers) {
         return new Promise(function(resolve, reject) {
-        urlParams["Content-Type"] = "application/json";
-        jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", urlParams, function(resp) {
+        // headers["Content-Type"] = "application/json";
+        var resp = callApi(genieservice_portal.api.getFullAPI() + id "?fields=body", 'GET', headers);
+        // jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", headers, function(resp) {
             var result = {};
             if (!resp.error) {
                 result.list = resp;
@@ -148,7 +160,7 @@ genieservice_portal = {
             } else {
                 console.info("err : ", resp.error)
             }
-        });
+        // });
         });
     },
     getContent: function(id){
@@ -164,10 +176,11 @@ genieservice_portal = {
             }
         });
     },
-    getContentMetadata: function(id, urlParams) {
+    getContentMetadata: function(id, headers) {
         return new Promise(function(resolve, reject) {
-        urlParams["Content-Type"] = "application/json";
-        jQuery.get(genieservice_portal.api.getFullAPI() + id, urlParams, function(resp) {
+        // headers["Content-Type"] = "application/json";
+        var resp = callApi(genieservice_portal.api.getFullAPI() + id, 'GET', headers);
+        // jQuery.get(genieservice_portal.api.getFullAPI() + id, headers, function(resp) {
             var result = {};
             if (!resp.error) {
                 result.list = resp;
@@ -182,18 +195,20 @@ genieservice_portal = {
             } else {
                 console.info("err : ", resp.error)
             }
-        });
+        // });
         });
     },
     languageSearch: function(filter){
         return new Promise(function(resolve, reject) {
-            jQuery.ajax({
-                type: 'POST',
-                url: genieservice_portal.api.getLanguageFullAPI() + "search",
-                headers: {"Content-Type": "application/json"},
-                data: filter
-            })
-            .done(function(resp){
+            var headers = {};
+            var resp = callApi(genieservice_portal.api.getLanguageFullAPI() + "search", 'POST', headers, filter);
+            // jQuery.ajax({
+                // type: 'POST',
+                // url: genieservice_portal.api.getLanguageFullAPI() + "search",
+                // headers: {"Content-Type": "application/json"},
+                // data: filter
+            // })
+            // .done(function(resp){
             //jQuery.post(genieservice_portal.api.getLanguageFullAPI(), filter, function(resp) {
                 var result = {};
                 if (!resp.error) {
@@ -202,7 +217,7 @@ genieservice_portal = {
                 } else {
                     console.info("err : ", resp.error)
                 }
-            });
+            // });
         });
     },
     sendTelemetry: function(data){
