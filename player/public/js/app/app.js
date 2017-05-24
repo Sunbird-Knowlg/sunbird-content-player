@@ -1133,8 +1133,40 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
     }).controller('userSwitchCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         $scope.initializeCtrl = function() {
+            $scope.users = [];
             console.log("userSwitchCtrl initialized !!!");
-            
+            $scope.getUsersList();
+        }
+
+        // get userList process goes here
+        $scope.getUsersList = function() {
+            // get users api call gone here
+            $scope.users = [{"id": "69w8r81f", "name": "Krushanu", "Img": "", "selected": false}, {"id": "6ws551fvw6s5", "name": "Akash", "Img": "", "selected": false}, {"id": "6f5fv16s", "name": "Dr. Manju", "Img": "", "selected": false}, {"id": "r968+f1w", "name": "Vinu", "Img": "", "selected": false}, {"id": "f651vbfd", "name": "Mathew", "Img": "", "selected": true}, {"id": "695fv1", "name": "Santosh", "Img": "", "selected": true}];
+            $scope.users = _.sortBy($scope.users, 'name');
+            var arrSelect = _.where($scope.users, {"selected": true});
+            $scope.users = _.union(arrSelect, $scope.users);
+            return $scope.users;
+        }
+
+        // this function changes the selected user
+        $scope.selectUser = function(selectedUser) {
+            // here the user switching happens
+            // re-render with updated user
+            // $scope.closeUserSwitchingModal();
+            _.each($scope.users, function(user) {
+                if (user.selected === true) user.selected = false;
+            });
+            selectedUser.selected = true;
+        }
+
+        // When the user clicks on Restart, Restart the content
+        $scope.restartContent = function() {
+            $scope.closeUserSwitchingModal();
+        }
+
+        // When the user clicks on Coontinue, Continue the content from there
+        $scope.continueContent = function() {
+            $scope.closeUserSwitchingModal();
         }
     }).directive('menu', function($rootScope, $sce) {
         return {
@@ -1432,55 +1464,46 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             },
             controller: 'userSwitchCtrl',
             templateUrl: 'templates/user-switch-popup.html',
-            link: function($scope, element, attrs, controllers) {
+            link: function(scope, element, attrs, controllers) {
 
                 // Get the modal
                 var userSwitchingModal = element.find("#userSwitchingModal")[0];
 
                 // get the user selection div
                 var userSlider = element.find("#userSlider");
-
-                $scope.init = function() {
-                    console.log("============userSwitch controller loaded..============");
-                    $scope.initializeCtrl();
-                    EventBus.addEventListener("openUserSwitchingModal", function() {
-                        $scope.openUserSwitchingModal();
-                    });
-                }();
+                var user = [];
 
                 // When the user clicks the button, open the modal
-                $scope.openUserSwitchingModal = function() {
+                scope.openUserSwitchingModal = function() {
                     userSwitchingModal.style.display = "block";
                 }
 
                 // When the user clicks on <span> (x), close the modal
-                $scope.closeUserSwitchingModal = function() {
+                scope.closeUserSwitchingModal = function() {
                     userSwitchingModal.style.display = "none";
                 }
 
-                // When the user clicks on Restart, Restart the content
-                $scope.restartContent = function() {
-                    $scope.closeUserSwitchingModal();
+                scope.render = function() {
+                    userSlider.mCustomScrollbar({
+                        axis: "x",
+                        theme: "dark-3",
+                        advanced: {
+                            autoExpandHorizontalScroll: true
+                        }
+                    });
                 }
 
-                // When the user clicks on Coontinue, Continue the content from there
-                $scope.continueContent = function() {
-                    $scope.closeUserSwitchingModal();
-                }
-
-                for (var i = 0; i < 50; i++) {
-                    var imgSrc = 'http://loremflickr.com/320/240';
-                    var name = 'Krushanu';
-                    userSlider.append("<div class='profile'><img style='width:100px;height:100px' src= '" + imgSrc + "' alt='test'/><p>" + name + "</p></div>");
-                }
-                $('#userSlider').mCustomScrollbar({
-                    axis: "x",
-                    theme: "dark-3",
-                    advanced: {
-                        autoExpandHorizontalScroll: true
-                    }
-                });
                 // $("#selector_that_matches_zero_elements").mCustomScrollbar("destroy");
+
+                scope.init = function() {
+                    userSlider.mCustomScrollbar('destroy');
+                    console.log("============ userSwitch Directive loaded.. ============");
+                    scope.initializeCtrl();
+                    scope.render();
+                    EventBus.addEventListener("openUserSwitchingModal", function() {
+                        scope.openUserSwitchingModal();
+                    });
+                }();
             }
         }
     });

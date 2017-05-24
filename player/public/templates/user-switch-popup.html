@@ -1,107 +1,112 @@
+<style>
+    /* The Modal (background) */
 
-    <style>
-        /* The Modal (background) */
+    #userSwitchingModal.user-modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 10vh;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+    }
+    /* Modal Content */
 
-        #userSwitchingModal.user-modal {
-            display: none;
-            /* Hidden by default */
-            position: fixed;
-            /* Stay in place */
-            z-index: 1;
-            /* Sit on top */
-            padding-top: 10vh;
-            /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%;
-            /* Full width */
-            height: 100%;
-            /* Full height */
-            overflow: auto;
-            /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0);
-            /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4);
-            /* Black w/ opacity */
-        }
-        /* Modal Content */
+    #userSwitchingModal .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        border: 1px solid #888;
+        width: 82%;
+        height: 85vh;
+        position: relative;
+    }
 
-        #userSwitchingModal .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            border: 1px solid #888;
-            width: 82%;
-            height: 85vh;
-            position: relative;
-        }
+    #userSwitchingModal .modal-content .user-header {
+        background-color: #eee;
+        text-align: center;
+    }
 
-        #userSwitchingModal .modal-content .user-header {
-            background-color: #eee;
-            text-align: center;
-        }
-        #userSwitchingModal .modal-content .user-header P {
-            margin-bottom: 0;
-            padding-top: 7px;
-        }
-        /* The Close Button */
+    #userSwitchingModal .modal-content .user-header P {
+        margin-bottom: 0;
+        padding-top: 7px;
+    }
+    /* The Close Button */
 
-        #userSwitchingModal .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            margin-top: 6px;
-            margin-right: 7px;
-        }
+    #userSwitchingModal .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        margin-top: 6px;
+        margin-right: 7px;
+    }
 
-        #userSwitchingModal .close:hover,
-        #userSwitchingModal .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
+    #userSwitchingModal .close:hover,
+    #userSwitchingModal .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
-        #userSwitchingModal #userSlider {
-            height: 35vh;
-            width: 100%;
-            padding: 5px 20px 0px 20px;
-            background-color: #eee;
-        }
+    #userSwitchingModal #userSlider {
+        height: 35vh;
+        width: 100%;
+        padding: 5px 20px 0px 20px;
+        background-color: #eee;
+    }
 
-        #userSwitchingModal #userSlider .profile {
-            display: inline-block;
-            float: left;
-            text-align: center;
-            width: 120px;
-            height: 100%;
-        }
+    #userSwitchingModal #userSlider .profile {
+        display: inline-block;
+        float: left;
+        text-align: center;
+        width: 120px;
+        height: 100%;
+    }
 
-        #userSwitchingModal .mCSB_draggerRail {
-            width: 20px;
-        }
+    #userSwitchingModal .mCSB_draggerRail {
+        width: 20px;
+    }
 
-        #userSwitchingModal .profile img {
-            border: 5px solid orange;
-            border-radius: 50%;
-        }
+    #userSwitchingModal .profile.selected img {
+        border: 3px solid orange;
+    }
 
-        #userSwitchingModal .profile p {
-            margin-top: 2px;
-        }
+    #userSwitchingModal .profile img {
+        border-radius: 50%;
+        padding: 3px;
+    }
 
-        #userSwitchingModal .modal-content .model-butttons {
-            position: absolute;
-            bottom: 10px;
-            right: 20px;
-        }
+    #userSwitchingModal .profile p {
+        margin-top: 2px;
+    }
 
-        #userSwitchingModal .model-butttons .restart, #userSwitchingModal .model-butttons .continue {
-            border: 2px solid orange;
-            border-radius: 4px;
-            background-color: #fefefe;
-            padding: 10px 25px;
-        }
-    </style>
+    #userSwitchingModal .modal-content .model-butttons {
+        position: absolute;
+        bottom: 10px;
+        right: 20px;
+    }
+
+    #userSwitchingModal .model-butttons .restart,
+    #userSwitchingModal .model-butttons .continue {
+        border: 2px solid orange;
+        border-radius: 4px;
+        background-color: #fefefe;
+        padding: 10px 25px;
+    }
+</style>
 </head>
 
 <body>
@@ -116,7 +121,12 @@
                 <span ng-click="closeUserSwitchingModal()" class="close">&times;</span>
                 <p>SELECT A CHILD</p>
             </div>
-            <div id="userSlider"></div>
+            <div id="userSlider">
+                <div ng-repeat="user in users" ng-class= "user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
+                    <img style='width:100px;height:100px' src='http://loremflickr.com/320/240' alt='test' />
+                    <p>{{user.name}}</p>
+                </div>
+            </div>
             <div class="model-butttons">
                 <button ng-click="restartContent()" class="restart"><img src="" alt=""><span>Restart</span></button>
                 <button ng-click="continueContent()" class="continue"><img src="" alt=""><span>Continue</span></button>
