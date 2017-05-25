@@ -44,7 +44,9 @@ var stack = new Array(),
     isbrowserpreview = getUrlParameter("webview"),
     setContentDataCb = undefined;
 
-window.externalConfig = {"context": {}};
+window.externalConfig = {
+    "context": {}
+};
 
 window.initializePreview = function(configuration, metadata, data) {
     // configuration: additional information passed to the preview
@@ -168,7 +170,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "voice": "Voice",
             "audio": "Audio",
             "author": "Author",
-            "instructions": "NOTES TO TEACHER",
+            "instructions": "Teacher's Note",
             "replay": "Replay",
             "feedback": "Feedback",
             "noCreditsAvailable": "There are no credits available",
@@ -179,7 +181,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "lastPage": "GO TO LAST PAGE",
             "nextContent": "NEXT CONTENT",
             "comment": "write your comment...",
-            "mute": "MUTE"
+            "mute": "on",
+            "change": "change"
         }
 
         $rootScope.safeApply = function(fn) {
@@ -412,7 +415,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             var menuReplay = $state.current.name == appConstants.statePlayContent;
             // 1) For HTML content onclick of replay EventListeners will be not available hence calling Telemetryservice end .
             // 2) OE_START for the HTML/ECML content will be takne care by the contentctrl rendere method always.
-            EventBus.hasEventListener('actionReplay') ? EventBus.dispatch('actionReplay',{'menuReplay':menuReplay} ) : TelemetryService.end();
+            EventBus.hasEventListener('actionReplay') ? EventBus.dispatch('actionReplay', {
+                'menuReplay': menuReplay
+            }) : TelemetryService.end();
             if ($state.current.name == appConstants.stateShowContentEnd) {
                 $state.go(appConstants.statePlayContent, {
                     'itemId': $rootScope.content.identifier
@@ -808,7 +813,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 content = !_.isEmpty(oldContent) ? oldContent : localStorageGC.getItem('content');
                 $rootScope.content = content;
             }
-            localStorageGC.setItem('content_old',$rootScope.content)
+            localStorageGC.setItem('content_old', $rootScope.content)
             if (_(TelemetryService.instance).isUndefined()) {
                 var tsObj = localStorageGC.getItem('telemetryService');
                 TelemetryService.init(tsObj._gameData, tsObj._user);
@@ -861,12 +866,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
         $rootScope.stageId = undefined;
+        $rootScope.currentUser = GlobalContext.user;
         EventBus.addEventListener("sceneEnter", function(data) {
             $rootScope.stageData = data.target;
             //TODO: Remove this currentStage parameter and use directly stageData._currentStage
             $rootScope.stageId = !_.isUndefined($rootScope.stageData) ? $rootScope.stageData._id : undefined;
         });
 
+        // $rootScope.currentUser.avatar = $rootScope.imageBasePath + $rootScope.currentUser.avatar;
         $scope.state_off = "off";
         $scope.state_on = "on";
         $scope.state_disable = "disable";
@@ -1131,9 +1138,18 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.init();
         });
 
-    }).controller('userSwitchCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
+    }).controller('userSwitchCtrl', function($scope, $rootScope, $state, $stateParams, UserService) {
+
+        $scope.imageBasePath = $rootScope.imageBasePath;
+        $scope.currentUser = {};
+        $scope.users = [];
+
+        $scope.controllSwitch = function() {
+            // this method is for implemantation of controlling teh user switch from Genie side
+            // Whether to turn on/off user switching
+        }
+
         $scope.initializeCtrl = function() {
-            $scope.users = [];
             console.log("userSwitchCtrl initialized !!!");
             $scope.getUsersList();
         }
@@ -1141,11 +1157,22 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         // get userList process goes here
         $scope.getUsersList = function() {
             // get users api call gone here
-            $scope.users = [{"id": "69w8r81f", "name": "Krushanu", "Img": "", "selected": false}, {"id": "6ws551fvw6s5", "name": "Akash", "Img": "", "selected": false}, {"id": "6f5fv16s", "name": "Dr. Manju", "Img": "", "selected": false}, {"id": "r968+f1w", "name": "Vinu", "Img": "", "selected": false}, {"id": "f651vbfd", "name": "Mathew", "Img": "", "selected": true}, {"id": "695fv1", "name": "Santosh", "Img": "", "selected": true}];
-            $scope.users = _.sortBy($scope.users, 'name');
-            var arrSelect = _.where($scope.users, {"selected": true});
-            $scope.users = _.union(arrSelect, $scope.users);
-            return $scope.users;
+            UserService.getUsersList().then(function(data) {
+                if (data.status === "success")
+                    $scope.users = data.data;
+                $scope.users = _.sortBy($scope.users, 'name');
+
+                UserService.getCurrentUser().then(function(data) {
+                    $scope.currentUser = data.data;
+                    $scope.currentUser.selected = true;
+                    $scope.users = _.union($scope.currentUser, $scope.users);
+                    return $scope.users;
+                }).catch(function(err) {
+                    reject(err);
+                });
+            }).catch(function(err) {
+                reject(err);
+            });
         }
 
         // this function changes the selected user
@@ -1161,6 +1188,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         // When the user clicks on Restart, Restart the content
         $scope.restartContent = function() {
+            $rootScope.replayContent();
+            // Resetting mute state
+            // var muteElement = document.getElementById("unmute_id");
+            // if (!_.isNull(muteElement)) {
+            //     muteElement.style.display = "none";
+            // }
+            AudioManager.unmute();
+
             $scope.closeUserSwitchingModal();
         }
 
@@ -1239,10 +1274,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).directive('mute', function($rootScope) {
         return {
             restrict: 'E',
-            template: '<div ng-click="toggleMute()"><img src="{{muteImg}}"/><span> {{languageSupport.mute}} </span></div>',
+            template: '<div ng-click="toggleMute()"><img src="{{muteImg}}"/><span>Sound {{languageSupport.mute}} </span></div>',
             link: function(scope, url) {
                 var muteElement = document.getElementById("unmute_id");
-                scope.muteImg = "http://placehold.it/55x55";
+                scope.muteImg = $rootScope.imageBasePath + "audio_icon.png";
                 // scope muteImg = $rootScope.imageBasePath + icn_replay.png;
                 if (!_.isNull(muteElement)) {
                     muteElement.style.display = "none";
@@ -1254,14 +1289,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     if (AudioManager.muted) {
                         //unmute the audio; change the muteImg to mute
                         AudioManager.unmute();
-                        // muteImg = $rootScope.imageBasePath + "mute.png";
-                        $rootScope.languageSupport.mute = "mute";
+                        scope.muteImg = $rootScope.imageBasePath + "audio_icon.png";
+                        $rootScope.languageSupport.mute = "on";
                         // document.getElementById("unmute_id").style.display = "none";
                     } else {
                         // mute the audio; change the muteImg to unmute
                         AudioManager.mute();
-                        muteImg = $rootScope.imageBasePath + "unmute.png";
-                        $rootScope.languageSupport.mute = "unmute";
+                        scope.muteImg = $rootScope.imageBasePath + "audio_mute_icon.png";
+                        $rootScope.languageSupport.mute = "off";
                         // document.getElementById("unmute_id").style.display = "block";
                     }
                     TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute", "TOUCH", {

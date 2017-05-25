@@ -81,12 +81,12 @@
     }
 
     #userSwitchingModal .profile.selected img {
-        border: 3px solid orange;
+        border: 3px solid #2691d0;
     }
 
     #userSwitchingModal .profile img {
         border-radius: 50%;
-        padding: 3px;
+        padding: 2px;
     }
 
     #userSwitchingModal .profile p {
@@ -101,10 +101,26 @@
 
     #userSwitchingModal .model-butttons .restart,
     #userSwitchingModal .model-butttons .continue {
-        border: 2px solid orange;
         border-radius: 4px;
-        background-color: #fefefe;
-        padding: 10px 25px;
+        background-color: #2691d0;
+        padding: 10px 15px;
+        margin-left: 5px;
+    }
+
+    #userSwitchingModal .model-butttons .restart {
+        background-color: #2691d0;
+        color: #fefefe;
+    }
+
+    #userSwitchingModal .model-butttons .continue {
+        background-color: #ccc;
+        color: #333;
+    }
+
+    #userSwitchingModal .model-butttons .restart img{
+        margin-right: 10px;
+        vertical-align: middle;
+        width: 17px;
     }
 </style>
 </head>
@@ -123,12 +139,12 @@
             </div>
             <div id="userSlider">
                 <div ng-repeat="user in users" ng-class= "user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
-                    <img style='width:100px;height:100px' src='http://loremflickr.com/320/240' alt='test' />
+                    <img style='width:100px;height:100px' ng-src="{{imageBasePath + user.avatar}}" alt='test' />
                     <p>{{user.name}}</p>
                 </div>
             </div>
             <div class="model-butttons">
-                <button ng-click="restartContent()" class="restart"><img src="" alt=""><span>Restart</span></button>
+                <button ng-click="restartContent()" class="restart"><img ng-src="{{imageBasePath}}replay_icon.png" alt=""><span>Restart</span></button>
                 <button ng-click="continueContent()" class="continue"><img src="" alt=""><span>Continue</span></button>
             </div>
         </div>
