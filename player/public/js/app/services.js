@@ -35,7 +35,7 @@ angular.module('genie-canvas.services', ['ngResource'])
                     genieservice.getContent(id)
                        .then(function(contentData) {
                            if(!_.isUndefined(contentData)){
-                               resolve(contentData.isAvailable);                                
+                               resolve(contentData.isAvailable);
                            } else {
                                console.error("Content is not available.");
                                reject("Content is not available.");
@@ -195,4 +195,44 @@ angular.module('genie-canvas.services', ['ngResource'])
             }
         };
         return returnObject;
+    }]).factory('UserService', [ '$rootScope', function($rootScope) {
+        var returnObj = {
+
+            getUsersList: function() {
+                return new Promise(function(resolve, reject) {
+                    genieservice.getUsersList()
+                        .then(function(data) {
+                            resolve(data);
+                        })
+                        .catch(function(err) {
+                            console.error(AppErrors.contetnPathFetch, err);
+                            reject(err);
+                        });
+                });
+            },
+
+            getUser: function(uid){
+
+            },
+
+            getCurrentUser: function() {
+                return new Promise(function(resolve, reject) {
+                    genieservice.getCurrentUser()
+                        .then(function(data) {
+                            resolve(data);
+                        })
+                        .catch(function(err) {
+                            console.error(AppErrors.contetnPathFetch, err);
+                            reject(err);
+                        });
+                });
+            },
+
+            setCurrentUser: function(uid) {
+
+
+            }
+
+        };
+        return returnObj
     }]);
