@@ -763,6 +763,10 @@ body {
     width: 11%;
 }
 
+.font-baloo.gc-ep-cont .genie-home span {
+    display: none;
+}
+
 .gc-ep-time-mid {
     width: 100%;
     padding: 4%;
@@ -809,8 +813,12 @@ body {
 
 }
 
-.gc-ep-footer-icons img {
+.gc-ep-footer-icons img.replay {
     height: 80%;
+}
+
+.gc-ep-footer-icons img.user {
+    height: 95%;
 }
 
 .gc-ep-rating-cont {
@@ -896,7 +904,7 @@ body {
     width: 100%;
     height: 70%;
     overflow: auto;
-    line-height: 1.5em;
+    line-height: 1.2em;
     white-space: normal;
 }
 

@@ -60,6 +60,7 @@ genieservice_web = {
             return this.getFullAPI(this.contentList);
         }
     },
+
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
@@ -168,6 +169,7 @@ genieservice_portal = {
            return this._baseUrl;
         }
     },
+    
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
