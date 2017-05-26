@@ -54,8 +54,8 @@ Renderer = {
             }
         } catch (e) {
             showToaster('error', 'Lesson fails to play');
-            console.warn("Canvas Renderer init is failed", e);
-        }
+            logErrorTelemetry(e, {'severity':'fatal','type':'content','action':'play'});
+             console.warn("Canvas Renderer init is failed", e); }
     },
     initByJSON: function(gameRelPath, canvasId) {
         jQuery.getJSON(gameRelPath + '/index.json', function(data) {
@@ -70,6 +70,7 @@ Renderer = {
                 Renderer.init(data, canvasId, gameRelPath);
             }, null, 'xml')
             .fail(function(err) {
+                logErrorTelemetry(err, {'severity':'fatal','type':'content','action':'play'}); 
                 alert("Invalid ECML please correct the Ecml : ", err);
                 checkStage();
             });

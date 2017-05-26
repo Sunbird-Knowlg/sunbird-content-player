@@ -60,19 +60,9 @@ TelemetryV2Manager = Class.extend({
         }
 
     },
-    //NOTE: Will uncomment once the OE_ERROR spec is reay
-    error: function(errorObj) {
-        var eks = {};
-        eks.env = errorObj.env;
-        eks.type = errorObj.type;
-        eks.stageid = errorObj.stageId;
-        eks.objectType = errorObj.objectType;
-        eks.objectId = errorObj.objectId;
-        eks.err = errorObj.err;
-        eks.action = errorObj.action;
-        eks.data = errorObj.data;
-        eks.severity = errorObj.severity;
-        return this.createEvent("OE_ERROR", eks);
+    error: function(data) {
+      var eks =  {'env': data.env, 'type': data.type, 'stageid': data.stageId, 'objectType': data.objectType, 'objectid': data.objectid, 'err': data.err, 'action': data.action, 'data': data.data, 'severity': data.severity, } 
+      return this.createEvent("OE_ERROR", eks);
     },
     assessEnd: function(eventObj, data) {
         if (eventObj) {

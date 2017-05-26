@@ -205,7 +205,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 })
                 .catch(function(err) {
                     console.info("contentNotAvailable : ", err);
-                    contentNotAvailable();
+                    contentNotAvailable(err);
                 });
         };
         $rootScope.getDataforPortal = function(id) {
@@ -216,7 +216,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 })
                 .catch(function(err) {
                     console.info("contentNotAvailable : ", err);
-                    contentNotAvailable();
+                    contentNotAvailable(err);
                 });
         };
         $rootScope.setContentMetadata = function(contentData) {
@@ -286,7 +286,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 })
                 .catch(function(err) {
                     console.info("contentNotAvailable : ", err);
-                    contentNotAvailable();
+                    contentNotAvailable(err);
                 });
         };
 
@@ -375,6 +375,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     }
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
+                    logErrorTelemetry(res,{'type':'system','severity':'fatal','action':'play'})
                     alert(res.errors);
                     exitApp();
                 });

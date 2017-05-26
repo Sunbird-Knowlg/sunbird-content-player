@@ -106,7 +106,8 @@ function startApp(app) {
     }
 }
 
-function contentNotAvailable() {
+function contentNotAvailable(error) {
+    logErrorTelemetry(error,{'type':'content','action':'play','severity':'fatal'});
     showToaster('error', AppMessages.NO_CONTENT_FOUND);
     exitApp();
 }
@@ -222,7 +223,8 @@ function startTelemetry(id, ver, cb) {
             console.error("failed to initialize TelemetryService")
         }
     }).catch(function(error) {
-        console.log('TelemetryService init failed');
+        EkstepRendererAPI.logErrorTelemetry(error, {'type':'system','action':'play','severity':'fatal'});
+        console.warn('TelemetryService init failed');
         showToaster('error', 'TelemetryService init failed.');
         exitApp();
     });
@@ -246,25 +248,23 @@ function showToaster(toastType, message, customOptions) {
         toastr.error(message);
     }
 }
+
 function logErrorTelemetry(errorStack, data) {
-    var errorObj = {};
-    if (!_.isUndefined(data)) {
-        errorObj.env = isMobile ? 'mobile' : 'preview';
-        errorObj.type = data.errorType || 'plugin';
-        errorObj.stageid = EkstepRendererAPI.getCurrentStageId();
-        errorObj.objectType = data.pluginType ? data.pluginType : PluginManager.pluginObjMap[data.asset]._data.pluginType;
-        errorObj.objectid = data.id;
-        errorObj.err = errorStack.message;
-        errorObj.action = data.event ? (data.event.action ? data.event.action.command : data.event.type) : (data.action ? data.action.command : 'transistion') ;
-        errorObj.data = errorStack.stack;
-        if (errorObj.objectType != 'theme' || errorObj.objectType != 'stage' || errorObj.objectType != 'renderer') {
-            errorObj.severity = 'error';
+    try {
+        if (!_.isUndefined(data)) {
+            data.env = isMobile ? 'mobile' : 'preview';
+            data.type || 'plugin';
+            data.stageId = Renderer.theme ? EkstepRendererAPI.getCurrentStageId() : undefined;
+            data.objectid = data.objectid ||data.id
+            data.objectType = data.pluginType ? data.pluginType : (data.asset ? (!_.isUndefined(PluginManager.pluginObjMap[data.asset]) ? PluginManager.pluginObjMap[data.asset]._data.pluginType : undefined) : undefined);
+            if(errorStack) data.err = errorStack.message; data.data = errorStack.stack; 
+            data.severity = data.severity === 'fatal' || data.objectType === 'theme' || data.objectType === 'stage' || data.action === "transitionTo" ? 'fatal' : 'error';
+            EkstepRendererAPI.getTelemetryService().error(data);
         } else {
-            errorObj.severity = 'fatal'
+            console.warn("OE_ERROR Event faild, Required data is  Unavailable");
         }
-        EkstepRendererAPI.getTelemetryService().error(errorObj);
-    }else{
-        console.warn("Unable to log a OE_ERROR Telemetry");
+    } catch (e) {
+        showToaster('error', 'OE_ERROR Event Faild')
+        console.error('Unable to load OE_ERROR', e);
     }
-    
 };

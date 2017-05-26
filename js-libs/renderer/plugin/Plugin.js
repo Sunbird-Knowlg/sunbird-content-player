@@ -158,12 +158,12 @@ var Plugin = Class.extend({
                 this.rotation(data);
             }
         } catch (e) {
-            //TelemetryService.error(e.stack);
             var pluginName;
             if(!_.isUndefined(data)){
                 pluginName = data.pluginType ? data.pluginType : "Custom";
             }
-            data.errorType = 'plugin';
+            data.type = 'plugin'; 
+            data.action = data.event ? (data.event.action ? data.event.action.command : data.event.type) : 'transistion';
             EkstepRendererAPI.logErrorTelemetry(e, data);
             showToaster('error', pluginName +':Plugin failed');
             console.warn('Plugin init is failed due to', e);

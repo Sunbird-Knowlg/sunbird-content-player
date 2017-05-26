@@ -22,7 +22,6 @@ EventManager = {
                 EventManager.registerEvent(events, plugin);
             }
         } catch (e) {
-            EkstepRendererAPI.logErrorTelemetry(e, action);
             showToaster('error', 'Event fails to register');
             console.warn("Event fails to register due to", e);
         }
@@ -97,11 +96,8 @@ EventManager = {
             }
         } catch (e) {
             _.isUndefined(evt) ? showToaster('error', 'Event failed') : showToaster('error', evt.type + ': Event failed');
-            evt.errorType = 'asset';
-            evt.id = evt.action.id;
-            evt.asset = evt.action.asset;
-            EkstepRendererAPI.logErrorTelemetry(e, evt);
-            console.warn("Event manager handle failed due to", e);
+            logErrorTelemetry(e, {'type': 'asset', 'objectid': evt.action.id, 'asset': evt.action.asset, "action": evt.action ? evt.action.command : ''});
+             console.warn("Event fails to handle due to", e);
         }
     },
     _setPluginId: function(actions, pluginId) {
