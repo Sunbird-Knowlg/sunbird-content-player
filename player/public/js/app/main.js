@@ -246,3 +246,25 @@ function showToaster(toastType, message, customOptions) {
         toastr.error(message);
     }
 }
+function logErrorTelemetry(errorStack, data) {
+    var errorObj = {};
+    if (!_.isUndefined(data)) {
+        errorObj.env = isMobile ? 'mobile' : 'preview';
+        errorObj.type = data.errorType || 'plugin';
+        errorObj.stageid = EkstepRendererAPI.getCurrentStageId();
+        errorObj.objectType = data.pluginType ? data.pluginType : PluginManager.pluginObjMap[data.asset]._data.pluginType;
+        errorObj.objectid = data.id;
+        errorObj.err = errorStack.message;
+        errorObj.action = data.event ? (data.event.action ? data.event.action.command : data.event.type) : (data.action ? data.action.command : 'transistion') ;
+        errorObj.data = errorStack.stack;
+        if (errorObj.objectType != 'theme' || errorObj.objectType != 'stage' || errorObj.objectType != 'renderer') {
+            errorObj.severity = 'error';
+        } else {
+            errorObj.severity = 'fatal'
+        }
+        EkstepRendererAPI.getTelemetryService().error(errorObj);
+    }else{
+        console.warn("Unable to log a OE_ERROR Telemetry");
+    }
+    
+};

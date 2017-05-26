@@ -159,10 +159,12 @@ var Plugin = Class.extend({
             }
         } catch (e) {
             //TelemetryService.error(e.stack);
-             var pluginName;
+            var pluginName;
             if(!_.isUndefined(data)){
-                pluginName = data.pluginType ? data.pluginType : "CustomPlugin";
+                pluginName = data.pluginType ? data.pluginType : "Custom";
             }
+            data.errorType = 'plugin';
+            EkstepRendererAPI.logErrorTelemetry(e, data);
             showToaster('error', pluginName +':Plugin failed');
             console.warn('Plugin init is failed due to', e);
         }

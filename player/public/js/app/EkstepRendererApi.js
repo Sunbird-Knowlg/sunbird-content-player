@@ -324,10 +324,10 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the complete telemetry instance
+     * Returns the complete telemetryService instance
      * @memberof EkstepRendererAPI
      **/
-    getTelemetry: function() {
+    getTelemetryService: function() {
         return TelemetryService;
     },
 
@@ -349,6 +349,10 @@ window.EkstepRendererAPI = {
      **/
     instantiatePlugin: function(id, data, parent) {
         return PluginManager.invoke(id, data, parent, Renderer.theme._currentScene, Renderer.theme);
+    },
+
+    logErrorTelemetry: function(error, obj){
+        logErrorTelemetry(error, obj);
     },
 
     /**

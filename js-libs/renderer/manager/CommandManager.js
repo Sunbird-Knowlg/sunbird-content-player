@@ -25,7 +25,7 @@ CommandManager = {
                 }
             }
         } catch (e) {
-            //TelemetryService.error(e.stack);
+            EkstepRendererAPI.logErrorTelemetry(e, action);
             _.isUndefined(action) ? showToaster('error', 'Command failed') : showToaster('error', action.command + ': Command failed');
             console.warn(action + "Failed due to", e);
         }

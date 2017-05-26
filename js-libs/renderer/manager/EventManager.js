@@ -22,6 +22,7 @@ EventManager = {
                 EventManager.registerEvent(events, plugin);
             }
         } catch (e) {
+            EkstepRendererAPI.logErrorTelemetry(e, action);
             showToaster('error', 'Event fails to register');
             console.warn("Event fails to register due to", e);
         }
@@ -96,6 +97,10 @@ EventManager = {
             }
         } catch (e) {
             _.isUndefined(evt) ? showToaster('error', 'Event failed') : showToaster('error', evt.type + ': Event failed');
+            evt.errorType = 'asset';
+            evt.id = evt.action.id;
+            evt.asset = evt.action.asset;
+            EkstepRendererAPI.logErrorTelemetry(e, evt);
             console.warn("Event manager handle failed due to", e);
         }
     },
