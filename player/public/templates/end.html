@@ -58,19 +58,16 @@
             </div>
 
             <div class="gc-ep-footer">
-                <!-- <div class="gc-ep-footer-icons gc-ep-lastPage" style="display: none;">
-                    <last-page></last-page>
-                    <p>{{languageSupport.lastPage}}</p>
-                </div> -->
 
-                <div class="gc-ep-footer-icons gc-ep-replay">
-                    <a href="javascript:void(0)" ng-click="ep_restartContent()"><img src="{{imageBasePath}}icn_replay.png"/></a>
+                <div ng-click="ep_restartContent()" class="gc-ep-footer-icons gc-ep-replay">
+                    <img class="replay" src="{{imageBasePath}}icn_replay.png"/>
                     <p>{{languageSupport.replay}}</p>
                 </div>
 
                 <div ng-click="ep_openUserSwitchingModal()" class="gc-ep-footer-icons gc-ep-userSwitch">
-                    <img ng-src="{{imageBasePath}}icn_back_page.png"/><br/>
-                    <span>{{"Krushanu Mohapatra"}}</span><br/><small> {{"Change"}} </small>
+                    <img class="user" ng-src="{{imageBasePath + currentUser.avatar}}"/>
+                    <p><b>{{currentUser.name}}</b><br/> <small> {{languageSupport.change}} </small></p>
+
                 </div>
 
             </div>
