@@ -1,3 +1,54 @@
+var usersList = [{
+    "avatar": "avatar_normal_1.png",
+    "gender": "male",
+    "handle": "handle1",
+    "age": 6,
+    "standard": -1,
+    "uid": "69w8r81f",
+    "name": "Krushanu",
+    "user": true
+}, {
+    "avatar": "avatar_normal_2.png",
+    "gender": "male",
+    "handle": "handle1",
+    "age": 6,
+    "standard": -1,
+    "uid": "6ws551fvw6s5",
+    "name": "Akash"
+}, {
+    "avatar": "avatar_normal_3.png",
+    "gender": "male",
+    "handle": "handle1",
+    "age": 6,
+    "standard": -1,
+    "uid": "6f5fv16s",
+    "name": "Dr. Manju"
+}, {
+    "avatar": "avatar_normal_4.png",
+    "gender": "male",
+    "handle": "handle1",
+    "age": 6,
+    "standard": -1,
+    "uid": "r968+f1w",
+    "name": "Vinu"
+}, {
+    "avatar": "avatar_normal_5.png",
+    "gender": "male",
+    "handle": "handle1",
+    "age": 6,
+    "standard": -1,
+    "uid": "f651vbfd",
+    "name": "Mathew"
+}, {
+    "avatar": "avatar_normal_6.png",
+    "gender": "male",
+    "handle": "handle1",
+    "age": 6,
+    "standard": -1,
+    "uid": "695fv1",
+    "name": "Santosh"
+}];
+// for device
 genieservice_web = {
     api: {
         basePath: '/genie-canvas/v2/',
@@ -13,17 +64,20 @@ genieservice_web = {
         return new Promise(function(resolve, reject) {
             var result = {};
             result.status = "success";
-            result.data = {
-                "avatar": "resource1",
-                "gender": "male",
-                "handle": "handle1",
-                "uid": "8hjh3c4b7b47d570df0ec286bf7adc8ihhnjy",
-                "age": 6,
-                "standard": -1
-            };
+            result.data = usersList[0];
             resolve(result);
         });
     },
+
+    getUsersList: function() {
+        return new Promise(function(resolve, reject) {
+            var result = {};
+            result.status = "success";
+            result.data = usersList;
+            resolve(result);
+        });
+    },
+
     getMetaData: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
@@ -85,6 +139,8 @@ genieservice_web = {
         return endpoint;
     }
 };
+
+//For portal
 genieservice_portal = {
     api: {
         _baseUrl: undefined,
@@ -116,17 +172,20 @@ genieservice_portal = {
         return new Promise(function(resolve, reject) {
             var result = {};
             result.status = "success";
-            result.data = {
-                "avatar": "resource1",
-                "gender": "male",
-                "handle": "handle1",
-                "uid": "8hjh3c4b7b47d570df0ec286bf7adc8ihhnjy",
-                "age": 6,
-                "standard": -1
-            };
+            result.data = usersList[0];
             resolve(result);
         });
     },
+
+    getUsersList: function() {
+        return new Promise(function(resolve, reject) {
+            var result = {};
+            result.status = "success";
+            result.data = usersList;
+            resolve(result);
+        });
+    },
+
     getMetaData: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
@@ -254,6 +313,7 @@ genieservice_portal = {
     }
 };
 
+// For HTML conten
 genieservice_html = {
     localData: {},
     _jsFilesToLoad: [],
@@ -359,15 +419,15 @@ genieservice_html = {
     }
 };
 if ("undefined" == typeof cordova) {
-    if("undefined" == typeof isbrowserpreview) {
-        if("undefined" == typeof AppConfig){
+    if ("undefined" == typeof isbrowserpreview) {
+        if ("undefined" == typeof AppConfig) {
             genieservice = genieservice_html;
             console.log("HTML Local genieservice", genieservice);
-        }else{
+        } else {
              genieservice = genieservice_web;
         }
     }
-    else{
+    else {
         genieservice = genieservice_portal;
         console.log("Portal genieservice", genieservice);
     }

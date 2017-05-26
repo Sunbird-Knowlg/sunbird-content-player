@@ -192,7 +192,7 @@ body {
 
 .gc-menu {
     position: absolute;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     width: 35%;
     height: 100%;
     top: 0;
@@ -246,7 +246,7 @@ body {
 
 .gc-menu-cont .gc-menu-options.profile {
     display: inline-block;
-    /*width: 75%;*/
+    width: 100%;
     /*vertical-align: middle;*/
     /*padding-left: 5%;*/
     /*overflow: hidden;*/
@@ -280,6 +280,10 @@ body {
     width: 20%;
     margin-top: 6%;
     margin-right: -11%;
+}
+
+.gc-menu a.gc-menu-btn {
+    position: relative;
 }
 
 .gc-menu-collection-cont {
@@ -379,7 +383,15 @@ body {
     width: 50%;
 }
 
-.gc-menu-btn img {
+.gc-menu-btn img.user {
+    position: absolute;
+    width: 107%;
+    margin-left: -4%
+}
+
+.gc-menu-btn img.icon {
+    position: absolute;
+    margin-top: 40%;
     width: 100%;
 }
 

@@ -64,12 +64,12 @@
                 </div> -->
 
                 <div class="gc-ep-footer-icons gc-ep-replay">
-                    <restart></restart>
+                    <a href="javascript:void(0)" ng-click="ep_restartContent()"><img src="{{imageBasePath}}icn_replay.png"/></a>
                     <p>{{languageSupport.replay}}</p>
                 </div>
 
-                <div class="gc-ep-footer-icons gc-ep-userSwitch">
-                    <user-switch></user-switch><br/>
+                <div ng-click="ep_openUserSwitchingModal()" class="gc-ep-footer-icons gc-ep-userSwitch">
+                    <img ng-src="{{imageBasePath}}icn_back_page.png"/><br/>
                     <span>{{"Krushanu Mohapatra"}}</span><br/><small> {{"Change"}} </small>
                 </div>
 
@@ -131,3 +131,5 @@
         <img src="img/icons/ccby.png" style="width: 100%;" />
     </div>
 </div>
+
+<user-switch> </user-switch>
