@@ -6,7 +6,7 @@ var usersList = [{
     "standard": -1,
     "uid": "69w8r81f",
     "name": "Krushanu",
-    "Img": ""
+    "user": true
 }, {
     "avatar": "avatar_normal_2.png",
     "gender": "male",
@@ -14,8 +14,7 @@ var usersList = [{
     "age": 6,
     "standard": -1,
     "uid": "6ws551fvw6s5",
-    "name": "Akash",
-    "Img": ""
+    "name": "Akash"
 }, {
     "avatar": "avatar_normal_3.png",
     "gender": "male",
@@ -23,8 +22,7 @@ var usersList = [{
     "age": 6,
     "standard": -1,
     "uid": "6f5fv16s",
-    "name": "Dr. Manju",
-    "Img": ""
+    "name": "Dr. Manju"
 }, {
     "avatar": "avatar_normal_4.png",
     "gender": "male",
@@ -32,8 +30,7 @@ var usersList = [{
     "age": 6,
     "standard": -1,
     "uid": "r968+f1w",
-    "name": "Vinu",
-    "Img": ""
+    "name": "Vinu"
 }, {
     "avatar": "avatar_normal_5.png",
     "gender": "male",
@@ -41,8 +38,7 @@ var usersList = [{
     "age": 6,
     "standard": -1,
     "uid": "f651vbfd",
-    "name": "Mathew",
-    "Img": ""
+    "name": "Mathew"
 }, {
     "avatar": "avatar_normal_6.png",
     "gender": "male",
@@ -50,8 +46,7 @@ var usersList = [{
     "age": 6,
     "standard": -1,
     "uid": "695fv1",
-    "name": "Santosh",
-    "Img": ""
+    "name": "Santosh"
 }];
 // for device
 genieservice_web = {
