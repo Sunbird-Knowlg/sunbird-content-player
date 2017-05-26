@@ -63,7 +63,7 @@ var Plugin = Class.extend({
                this.initialize();
                return;
             } else {
-               if (!data.manifest) {
+               if (!data.canvasId) {
                    // Only plugin manifest is getting(calling by plugin framework)
                    this._manifest = data;
                    this.initialize();

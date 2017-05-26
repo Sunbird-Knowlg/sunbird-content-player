@@ -29,7 +29,7 @@
         <p class="gc-content-owner gc-text-elipsis" ng-if="content.owner">{{ languageSupport.author }}: {{content.owner}}</p>
     </div>
 
-    <center class="gc-ep-credits">
+    <center class="gc-ep-credits" ng-hide ="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null ">
         <input class="gc-btn-credits btn-normal" type="button" ng-click="showCredits()" />
     </center>
 

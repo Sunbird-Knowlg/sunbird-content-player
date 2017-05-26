@@ -87,9 +87,11 @@ var TextPlugin = Plugin.extend({
         if (align == 'left') {
             text.x = dims.x;
         } else if (align == 'right') {
-            text.x = dims.x + dims.w;
+            // text.x = dims.x + dims.w;
+            text.regX = -dims.w;
         } else if (align == 'center') {
-            text.x = dims.x + dims.w / 2;
+            text.x = dims.x;
+            text.regX = -dims.w / 2;
         }
 
         if (valign == 'top') {

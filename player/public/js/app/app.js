@@ -232,6 +232,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $rootScope.safeApply(function() {
                 $rootScope.content = data;
             });
+            $rootScope.getContentBody(content.metadata.identifier)
         };
         $rootScope.getUrlParameter = function() {
             var urlParams = decodeURIComponent(window.location.search.substring(1)).split('&');
@@ -293,7 +294,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             externalConfig = data.target;
             if (!_.isUndefined(externalConfig.contentId) && _.isUndefined(content.body)) {
                 $rootScope.getDataforPortal(externalConfig.contentId);
-                $rootScope.getContentBody(externalConfig.contentId);
+                // $rootScope.getContentBody(externalConfig.contentId);
             } else {
                 console.error("Content id is undefined or body is available !!");
             }
@@ -805,12 +806,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.init = function() {
-            if (_.isUndefined($rootScope.content) || !_.isEqual($rootScope.content, localStorageGC.getItem('content_old'))) {
-                localStorageGC.removeItem('content_old');
+            if (_.isUndefined($rootScope.content)) {
                 localStorageGC.update();
                 // Updating the current content object by getting from localStage
-                var oldContent = localStorageGC.getItem('content_old');
-                content = !_.isEmpty(oldContent) ? oldContent : localStorageGC.getItem('content');
+                content = localStorageGC.getItem('content');
                 $rootScope.content = content;
             }
             localStorageGC.setItem('content_old', $rootScope.content)
