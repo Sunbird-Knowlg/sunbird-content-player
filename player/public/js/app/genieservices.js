@@ -5,48 +5,48 @@ var usersList = [{
     "age": 6,
     "standard": -1,
     "uid": "69w8r81f",
-    "name": "Krushanu",
+    "name": "Vinod",
     "user": true
+}, {
+    "avatar": "avatar_normal_3.png",
+    "gender": "Female",
+    "handle": "handle1",
+    "age": 6,
+    "standard": -1,
+    "uid": "6ws551fvw6s5",
+    "name": "Mala"
 }, {
     "avatar": "avatar_normal_2.png",
     "gender": "male",
     "handle": "handle1",
     "age": 6,
     "standard": -1,
-    "uid": "6ws551fvw6s5",
-    "name": "Akash"
-}, {
-    "avatar": "avatar_normal_3.png",
-    "gender": "male",
-    "handle": "handle1",
-    "age": 6,
-    "standard": -1,
     "uid": "6f5fv16s",
-    "name": "Dr. Manju"
-}, {
-    "avatar": "avatar_normal_4.png",
-    "gender": "male",
-    "handle": "handle1",
-    "age": 6,
-    "standard": -1,
-    "uid": "r968+f1w",
-    "name": "Vinu"
+    "name": "Shringeri"
 }, {
     "avatar": "avatar_normal_5.png",
     "gender": "male",
     "handle": "handle1",
     "age": 6,
     "standard": -1,
+    "uid": "r968+f1w",
+    "name": "Ramu"
+}, {
+    "avatar": "avatar_normal_4.png",
+    "gender": "female",
+    "handle": "handle1",
+    "age": 6,
+    "standard": -1,
     "uid": "f651vbfd",
-    "name": "Mathew"
+    "name": "Anubala"
 }, {
     "avatar": "avatar_normal_6.png",
-    "gender": "male",
+    "gender": "Female",
     "handle": "handle1",
     "age": 6,
     "standard": -1,
     "uid": "695fv1",
-    "name": "Santosh"
+    "name": "Puja"
 }];
 // for device
 genieservice_web = {
@@ -169,7 +169,7 @@ genieservice_portal = {
            return this._baseUrl;
         }
     },
-    
+
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
