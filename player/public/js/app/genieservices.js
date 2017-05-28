@@ -140,8 +140,11 @@ genieservice_portal = {
         return new Promise(function(resolve, reject) {
             var result = {};
             result.status = "success";
-            result.data = usersList[0];
-            resolve(result);
+            $.getJSON("assets/user_list/user_list.json",function(data){
+                // console.log("===== data =====", data);
+                result.data = data.userList[0];
+                resolve(result);
+            })
         });
     },
 
@@ -149,8 +152,11 @@ genieservice_portal = {
         return new Promise(function(resolve, reject) {
             var result = {};
             result.status = "success";
-            result.data = usersList;
-            resolve(result);
+            $.getJSON("assets/user_list/user_list.json",function(data){
+                // console.log("===== data =====", data);
+                result.data = data.userList;
+                resolve(result);
+            })
         });
     },
 
