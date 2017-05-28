@@ -725,8 +725,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 muteElement.style.display = "none";
             }
             AudioManager.unmute();
-            if (!_.isUndefined(scope.hideMenu) && scope.menuOpened)
-                scope.hideMenu();
         }
 
         $scope.showFeedback = function(param) {
