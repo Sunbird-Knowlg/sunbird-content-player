@@ -232,7 +232,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $rootScope.safeApply(function() {
                 $rootScope.content = data;
             });
-            undefined == typeof cordova ? $rootScope.getContentBody(content.metadata.identifier) : "";
+            if ("undefined" == typeof cordova) {
+                $rootScope.getContentBody(content.metadata.identifier);
+            }
         };
         $rootScope.getUrlParameter = function() {
             var urlParams = decodeURIComponent(window.location.search.substring(1)).split('&');
