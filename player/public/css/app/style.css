@@ -191,6 +191,7 @@ body {
 }
 
 .gc-menu {
+    font-size: 1.8vw;
     position: absolute;
     /*text-transform: uppercase;*/
     width: 35%;
@@ -735,7 +736,7 @@ body {
     position: absolute;
     border: 2px solid #2fcce7;
     top: 23%;
-    margin: 7% 9%;
+    margin: 5% 9%;
     width: 86%;
 }
 
@@ -818,7 +819,7 @@ body {
 }
 
 .gc-ep-footer-icons img.user {
-    height: 95%;
+    height: 90%;
 }
 
 .gc-ep-rating-cont {
@@ -892,9 +893,10 @@ body {
 .gc-ep-footer {
     position: absolute;
     /*text-align: center;*/
-    width: 100%;
-    height: 20%;
+    width: 86%;
+    height: 25%;
     bottom: 13%;
+    margin: 0 9%;
 }
 
 .gc-ep-footer p {

@@ -1,53 +1,3 @@
-var usersList = [{
-    "avatar": "avatar_normal_1.png",
-    "gender": "male",
-    "handle": "handle1",
-    "age": 6,
-    "standard": -1,
-    "uid": "69w8r81f",
-    "name": "Krushanu",
-    "user": true
-}, {
-    "avatar": "avatar_normal_2.png",
-    "gender": "male",
-    "handle": "handle1",
-    "age": 6,
-    "standard": -1,
-    "uid": "6ws551fvw6s5",
-    "name": "Akash"
-}, {
-    "avatar": "avatar_normal_3.png",
-    "gender": "male",
-    "handle": "handle1",
-    "age": 6,
-    "standard": -1,
-    "uid": "6f5fv16s",
-    "name": "Dr. Manju"
-}, {
-    "avatar": "avatar_normal_4.png",
-    "gender": "male",
-    "handle": "handle1",
-    "age": 6,
-    "standard": -1,
-    "uid": "r968+f1w",
-    "name": "Vinu"
-}, {
-    "avatar": "avatar_normal_5.png",
-    "gender": "male",
-    "handle": "handle1",
-    "age": 6,
-    "standard": -1,
-    "uid": "f651vbfd",
-    "name": "Mathew"
-}, {
-    "avatar": "avatar_normal_6.png",
-    "gender": "male",
-    "handle": "handle1",
-    "age": 6,
-    "standard": -1,
-    "uid": "695fv1",
-    "name": "Santosh"
-}];
 // for device
 genieservice_web = {
     api: {
@@ -65,8 +15,11 @@ genieservice_web = {
         return new Promise(function(resolve, reject) {
             var result = {};
             result.status = "success";
-            result.data = usersList[0];
-            resolve(result);
+            $.getJSON("assets/user_list/user_list.json",function(data){
+                // console.log("===== data =====", data);
+                result.data = data.userList[0];
+                resolve(result);
+            })
         });
     },
 
@@ -74,7 +27,19 @@ genieservice_web = {
         return new Promise(function(resolve, reject) {
             var result = {};
             result.status = "success";
-            result.data = usersList;
+            $.getJSON("assets/user_list/user_list.json",function(data){
+                // console.log("===== data =====", data);
+                result.data = data.userList;
+                resolve(result);
+            })
+        });
+    },
+
+    setCurrentUser: function(uid) {
+        return new Promise(function(resolve, reject) {
+            var result = {};
+            result.status = "success";
+            // result.data = usersList;
             resolve(result);
         });
     },
@@ -89,6 +54,7 @@ genieservice_web = {
             resolve(result);
         });
     },
+
     getContent: function(id, url) {
         if(isbrowserpreview) {
             return new Promise(function(resolve, reject) {
@@ -169,7 +135,7 @@ genieservice_portal = {
            return this._baseUrl;
         }
     },
-    
+
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
