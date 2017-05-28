@@ -160,6 +160,15 @@ genieservice_portal = {
         });
     },
 
+    setCurrentUser: function(uid) {
+        return new Promise(function(resolve, reject) {
+            var result = {};
+            result.status = "success";
+            // result.data = usersList;
+            resolve(result);
+        });
+    },
+
     getMetaData: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
