@@ -1556,8 +1556,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // $("#selector_that_matches_zero_elements").mCustomScrollbar("destroy");
 
                 scope.init = function() {
+                    console.log("userSwitch Directive loaded");
                     userSlider.mCustomScrollbar('destroy');
-                    console.log("============ userSwitch Directive loaded.. ============");
                     scope.initializeCtrl();
                     scope.render();
                     EventBus.addEventListener("openUserSwitchingModal", function() {
