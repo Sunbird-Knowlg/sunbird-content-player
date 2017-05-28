@@ -164,7 +164,7 @@ var Plugin = Class.extend({
             }
             data.type = 'plugin'; 
             data.action = data.event ? (data.event.action ? data.event.action.command : data.event.type) : 'transistion';
-            EkstepRendererAPI.logErrorTelemetry(e, data);
+            EkstepRendererAPI.getTelemetryService().error(e, data);
             showToaster('error', pluginName +':Plugin failed');
             console.warn('Plugin init is failed due to', e);
         }

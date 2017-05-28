@@ -375,7 +375,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     }
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
-                    logErrorTelemetry(res,{'type':'system','severity':'fatal','action':'play'})
+                    EkstepRendererAPI.getTelemetryService().error(res,{'type':'system','severity':'fatal','action':'play'})
                     alert(res.errors);
                     exitApp();
                 });

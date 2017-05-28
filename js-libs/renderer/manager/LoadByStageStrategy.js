@@ -153,6 +153,7 @@ LoadByStageStrategy = Class.extend({
                 return this.assetMap[assetId].src;
             } else
                 console.error('"' + assetId + '" Asset not found. Please check index.ecml.');
+                EkstepRendererAPI.getTelemetryService().error({'message':'Asset not found. Please check index.ecml'},{'type':'content','severity':'error','action':'play', 'asset':assetId, 'id':assetId})
         };
         return asset;
     },
