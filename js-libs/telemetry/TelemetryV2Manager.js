@@ -63,7 +63,7 @@ TelemetryV2Manager = Class.extend({
     error: function(errorStack, data) {
         try {
             if (!_.isUndefined(data)) {
-                data.env = isMobile ? 'mobile' : 'preview'; data.type || 'plugin';
+                data.env = "undefined" != typeof cordova ? 'mobile' : 'preview'; data.type || 'plugin';
                 data.stageId = Renderer.theme ? EkstepRendererAPI.getCurrentStageId() : undefined;
                 data.objectid = data.objectid || data.id;
                 data.objectType = data.pluginType ? data.pluginType : (data.asset ? (!_.isUndefined(PluginManager.pluginObjMap[data.asset]) ? PluginManager.pluginObjMap[data.asset]._data.pluginType : undefined) : undefined);
