@@ -191,6 +191,7 @@ body {
 }
 
 .gc-menu {
+    font-size: 1.8vw;
     position: absolute;
     /*text-transform: uppercase;*/
     width: 35%;

@@ -22,6 +22,7 @@
         /* Fallback color */
         background-color: rgba(0, 0, 0, 0.4);
         /* Black w/ opacity */
+        font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
     }
     /* Modal Content */
 
@@ -30,13 +31,15 @@
         margin: auto;
         border: 1px solid #888;
         width: 82%;
-        height: 85vh;
+        height: 80vh;
         position: relative;
     }
 
     #userSwitchingModal .modal-content .user-header {
         background-color: #eee;
         text-align: center;
+        font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
+        font-size: 2vw;
     }
 
     #userSwitchingModal .modal-content .user-header P {
@@ -61,19 +64,42 @@
         cursor: pointer;
     }
 
+    /*#userSwitchingModal .slider-container {
+        max-height: 70%;
+    }*/
+
+    #userSwitchingModal .slider-container #userSlider {
+        min-height: 130px;
+        height: 37vh;
+    }
+
     #userSwitchingModal #userSlider {
-        height: 35vh;
+        min-height: 145px;
         width: 100%;
         padding: 5px 20px 0px 20px;
         background-color: #eee;
+    }
+
+    /*#userSwitchingModal #groupSlider {
+        height: 25vh;
+        min-height: 145px;
+        width: 100%;
+        padding: 5px 20px 0px 20px;
+        background-color: #999;
+    }*/
+
+    .mCSB_horizontal.mCSB_inside>.mCSB_container {
+        margin-bottom: 15px;
     }
 
     #userSwitchingModal #userSlider .profile {
         display: inline-block;
         float: left;
         text-align: center;
-        width: 120px;
+        min-width: 80px;
+        width: 15vw;
         height: 100%;
+        margin-left: 15px;
     }
 
     #userSwitchingModal .mCSB_draggerRail {
@@ -87,10 +113,13 @@
     #userSwitchingModal .profile img {
         border-radius: 50%;
         padding: 2px;
+        width: 100%;
+        height: 100%;
     }
 
     #userSwitchingModal .profile p {
         margin-top: 2px;
+        font-size: 2.2vw;
     }
 
     #userSwitchingModal .modal-content .model-butttons {
@@ -104,7 +133,7 @@
         border-color: rgba(255, 255, 255, 0);
         border-radius: 4px;
         background-color: #2691d0;
-        padding: 10px 15px;
+        padding: 8px 15px;
         margin-left: 5px;
     }
 
@@ -118,11 +147,17 @@
         color: #333;
     }
 
-    #userSwitchingModal .model-butttons .restart img{
+    #userSwitchingModal .model-butttons .restart img {
         margin-right: 10px;
         vertical-align: middle;
-        width: 17px;
+        width: 3vw;
     }
+
+    #userSwitchingModal .model-butttons span {
+        font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
+        font-size: 2vw;
+    }
+
 </style>
 </head>
 
@@ -138,11 +173,19 @@
                 <span ng-click="closeUserSwitchingModal()" class="close">&times;</span>
                 <p>SELECT A CHILD</p>
             </div>
-            <div id="userSlider">
-                <div ng-repeat="user in users" ng-class= "user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
-                    <img style='width:100px;height:100px' ng-src="{{imageBasePath + user.avatar}}" alt='test' />
-                    <p>{{user.name}}</p>
+            <div class="slider-container">
+                <div id="userSlider">
+                    <div ng-repeat="user in users" ng-class= "user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
+                        <img ng-src="{{imageBasePath + user.avatar}}" alt='test' />
+                        <p>{{user.name}}</p>
+                    </div>
                 </div>
+                <!-- <div id="groupSlider">
+                    <div ng-repeat="user in users" ng-class= "user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
+                        <img style='width:100px;height:100px' ng-src="{{imageBasePath + user.avatar}}" alt='test' />
+                        <p>{{user.name}}</p>
+                    </div>
+                </div> -->
             </div>
             <div class="model-butttons">
                 <button ng-click="restartContent()" class="restart"><img ng-src="{{imageBasePath}}replay_icon.png" alt=""><span>Restart</span></button>
