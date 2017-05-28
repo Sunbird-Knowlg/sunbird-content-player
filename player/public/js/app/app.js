@@ -430,7 +430,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.pageId = 'ContentApp-Collection';
         $scope.version = GlobalContext.game.ver;
         $scope.flavor = GlobalContext.config.flavor;
-        $scope.currentUser = GlobalContext.user;
         $rootScope.stories = [];
         $rootScope.showMessage = false;
 
@@ -865,14 +864,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
         $rootScope.stageId = undefined;
-        $rootScope.currentUser = GlobalContext.user;
+        // $rootScope.currentUser = GlobalContext.user;
         EventBus.addEventListener("sceneEnter", function(data) {
             $rootScope.stageData = data.target;
             //TODO: Remove this currentStage parameter and use directly stageData._currentStage
             $rootScope.stageId = !_.isUndefined($rootScope.stageData) ? $rootScope.stageData._id : undefined;
         });
 
-        // $rootScope.currentUser.avatar = $rootScope.imageBasePath + $rootScope.currentUser.avatar;
         $scope.state_off = "off";
         $scope.state_on = "on";
         $scope.state_disable = "disable";
@@ -1140,7 +1138,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
     }).controller('userSwitchCtrl', function($scope, $rootScope, $state, $stateParams, UserService) {
 
         $scope.imageBasePath = $rootScope.imageBasePath;
-        $scope.currentUser = {};
+        $scope.selectedUser = {};
         $scope.users = [];
 
         $scope.controllSwitch = function() {
@@ -1159,12 +1157,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             UserService.getUsersList().then(function(data) {
                 if (data.status === "success")
                     $scope.users = data.data;
-                $scope.users = _.sortBy($scope.users, 'name');
 
                 UserService.getCurrentUser().then(function(data) {
-                    $scope.currentUser = data.data;
-                    $scope.currentUser.selected = true;
-                    $scope.users = _.union($scope.currentUser, $scope.users);
+
+                    if(_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data;
+                    $rootScope.currentUser.selected = true;
+                    $scope.sortUserlist();
                     return $scope.users;
                 }).catch(function(err) {
                     reject(err);
@@ -1174,34 +1172,49 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             });
         }
 
+        $scope.sortUserlist = function() {
+            $scope.users = _.sortBy($scope.users, 'name');
+            $scope.users = _.union($rootScope.currentUser, $scope.users);
+        }
+
         // this function changes the selected user
         $scope.selectUser = function(selectedUser) {
-            // here the user switching happens
-            // re-render with updated user
-            // $scope.closeUserSwitchingModal();
+            // here the user Selection happens
             _.each($scope.users, function(user) {
                 if (user.selected === true) user.selected = false;
             });
             selectedUser.selected = true;
+            $scope.selectedUser = selectedUser;
         }
 
         // When the user clicks on Restart, Restart the content
         $scope.restartContent = function() {
-            $rootScope.replayContent();
-            // Resetting mute state
-            // var muteElement = document.getElementById("unmute_id");
-            // if (!_.isNull(muteElement)) {
-            //     muteElement.style.display = "none";
-            // }
-            AudioManager.unmute();
-
-            $scope.closeUserSwitchingModal();
+            $scope.switchUser(function(){
+                $rootScope.replayContent();
+            });
         }
 
         // When the user clicks on Coontinue, Continue the content from there
         $scope.continueContent = function() {
-            $scope.closeUserSwitchingModal();
+            // here the user Selection happens
+            $scope.switchUser();
         }
+
+        $scope.switchUser = function(cb) {
+            UserService.setCurrentUser($scope.selectedUser.uid).then(function(data) {
+                if (data.status === "success") {
+                    $rootScope.$apply(function() {
+                        $rootScope.currentUser = $scope.selectedUser;
+                    });
+                    AudioManager.unmute();
+                    if (!_.isUndefined(cb)) cb();
+                    $scope.closeUserSwitchingModal();
+                }
+            }).catch(function(err) {
+                reject(err);
+            })
+        }
+
     }).directive('menu', function($rootScope, $sce) {
         return {
             restrict: 'E',
@@ -1506,10 +1519,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 // get the user selection div
                 var userSlider = element.find("#userSlider");
+                var groupSlider = element.find("#groupSlider");
                 var user = [];
 
                 // When the user clicks the button, open the modal
                 scope.openUserSwitchingModal = function() {
+                    scope.sortUserlist();
                     userSwitchingModal.style.display = "block";
                 }
 
@@ -1520,6 +1535,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 scope.render = function() {
                     userSlider.mCustomScrollbar({
+                        axis: "x",
+                        theme: "dark-3",
+                        advanced: {
+                            autoExpandHorizontalScroll: true
+                        }
+                    });
+                    groupSlider.mCustomScrollbar({
                         axis: "x",
                         theme: "dark-3",
                         advanced: {
