@@ -227,6 +227,7 @@ OverlayManager = {
         if (_.isUndefined(Renderer.theme._currentScene)) return;
         this.defaultNavigation("previous", navigateTo);
       }catch(e){
+        EkstepRendererAPI.getTelemetryService().error(e, {'severity':'fatal','type':'content','action':'transitionTo'});
         showToaster('error','Stage having some issue');
         console.warn("Fails to navigate to previous due to",e);
       }
