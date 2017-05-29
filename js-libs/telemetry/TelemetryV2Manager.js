@@ -45,11 +45,16 @@ TelemetryV2Manager = Class.extend({
         }
     },
     assess: function(qid, subj, qlevel, data) {
+        var maxscore;
         subj = subj ? subj : "";
+        if (data) {
+            maxscore = data.maxscore || 1;
+        }
         qlevel = qlevel ? qlevel : "MEDIUM";
         if (qid) {
             var eks = {
                 qid: qid,
+                maxscore: maxscore ,
                 params: []
             };
             return this.createEvent("OE_ASSESS", eks).start();
