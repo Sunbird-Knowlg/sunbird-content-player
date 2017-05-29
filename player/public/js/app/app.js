@@ -1157,8 +1157,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     $scope.users = data.data;
 
                 UserService.getCurrentUser().then(function(data) {
+                    if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
 
-                    if(_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data;
+                    _.each($scope.users, function(user) {
+                        if (user.uid === $rootScope.currentUser.uid) {
+                            $rootScope.safeApply(function() {
+                                $rootScope.currentUser = user;
+                            });
+                        }
+                    });
+
                     $rootScope.currentUser.selected = true;
                     $scope.sortUserlist();
                     return $scope.users;
@@ -1166,13 +1174,15 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     reject(err);
                 });
             }).catch(function(err) {
+                // show toast message
                 reject(err);
             });
         }
 
         $scope.sortUserlist = function() {
             $scope.users = _.sortBy($scope.users, 'name');
-            $scope.users = _.union($rootScope.currentUser, $scope.users);
+            // var us = _.where($scope.users, {"selected": true});
+            $scope.users = _.union(_.where($scope.users, {"selected": true}), $scope.users);
         }
 
         // this function changes the selected user
@@ -1206,6 +1216,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     });
                     AudioManager.unmute();
                     if (!_.isUndefined(cb)) cb();
+
                     $scope.closeUserSwitchingModal();
                 }
             }).catch(function(err) {
@@ -1518,12 +1529,19 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // get the user selection div
                 var userSlider = element.find("#userSlider");
                 var groupSlider = element.find("#groupSlider");
+                var sliderContainer = element.find("#sliderContainer");
                 var user = [];
 
                 // When the user clicks the button, open the modal
                 scope.openUserSwitchingModal = function() {
-                    scope.sortUserlist();
-                    userSwitchingModal.style.display = "block";
+                    // scope.getUsersList();
+                    if (GlobalContext.config.contentExtras.switchingUser === true) {
+                        scope.sortUserlist();
+                        userSwitchingModal.style.display = "block";
+
+                    } else {
+                        showToaster('info',"Please activate User Switching")
+                    }
                 }
 
                 // When the user clicks on <span> (x), close the modal
@@ -1546,15 +1564,26 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             autoExpandHorizontalScroll: true
                         }
                     });
+                    // sliderContainer.mCustomScrollbar({
+                    //     axis: "y",
+                    //     theme: "dark-3",
+                    //     advanced: {
+                    //         autoExpandHorizontalScroll: true
+                    //     }
+                    // });
                 }
 
                 // $("#selector_that_matches_zero_elements").mCustomScrollbar("destroy");
 
                 scope.init = function() {
-                    console.log("userSwitch Directive loaded");
-                    userSlider.mCustomScrollbar('destroy');
-                    scope.initializeCtrl();
-                    scope.render();
+                    // if (GlobalContext.config.contentExtras.switchingUser === true) {
+                        console.log("userSwitch Directive loaded");
+                        userSlider.mCustomScrollbar('destroy');
+                        groupSlider.mCustomScrollbar('destroy');
+                        sliderContainer.mCustomScrollbar('destroy');
+                        scope.initializeCtrl();
+                        scope.render();
+                    // }
                     EventBus.addEventListener("openUserSwitchingModal", function() {
                         scope.openUserSwitchingModal();
                     });

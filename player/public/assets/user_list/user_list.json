@@ -1,13 +1,21 @@
 {
     "userList": [{
+        "avatar": "avatar_anonymous.png",
+        "gender": "male",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "9g8h4ndcg56ngd",
+        "name": "Anonymous"
+    },
+        {
         "avatar": "avatar_normal_1.png",
         "gender": "male",
         "handle": "handle1",
         "age": 6,
         "standard": -1,
         "uid": "69w8r81f",
-        "name": "Vinod",
-        "user": true
+        "name": "Vinod"
     }, {
         "avatar": "avatar_normal_3.png",
         "gender": "Female",
@@ -48,6 +56,64 @@
         "standard": -1,
         "uid": "695fv1",
         "name": "Puja"
-    }]
+    },
+
+    {
+        "avatar": "avatar_normal_5.png",
+        "gender": "Female",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "6ws551fvwpeoijfw6s5",
+        "name": "Group-1",
+        "group": true
+    }, {
+        "avatar": "avatar_normal_3.png",
+        "gender": "Female",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "6ws551fwopepirjvw6s5",
+        "name": "Group-2",
+        "group": true
+    }, {
+        "avatar": "avatar_normal_2.png",
+        "gender": "male",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "6f5fvoieerj16s",
+        "name": "Group-3",
+        "group": true
+    }, {
+        "avatar": "avatar_normal_5.png",
+        "gender": "male",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "r968wpekd+f1w",
+        "name": "Group-4",
+        "group": true
+    }, {
+        "avatar": "avatar_normal_4.png",
+        "gender": "female",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "f651wroiifvbfd",
+        "name": "Group-5",
+        "group": true
+    }, {
+        "avatar": "avatar_normal_6.png",
+        "gender": "Female",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "695flokwrdv1",
+        "name": "Group-6",
+        "group": true
+    }
+
+]
 
 }

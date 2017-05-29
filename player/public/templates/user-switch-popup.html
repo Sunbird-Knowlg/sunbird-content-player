@@ -64,40 +64,37 @@
         cursor: pointer;
     }
 
-    /*#userSwitchingModal .slider-container {
+    #userSwitchingModal .slider-container {
         max-height: 70%;
-    }*/
-
-    #userSwitchingModal .slider-container #userSlider {
-        min-height: 130px;
-        height: 37vh;
+        overflow-y: scroll;
     }
 
-    #userSwitchingModal #userSlider {
+    #userSwitchingModal .slider-container #userSlider, #userSwitchingModal .slider-container #groupSlider {
+        min-height: 125px;
+        height: 30vh;
+    }
+
+    #userSwitchingModal #userSlider, #userSwitchingModal #groupSlider {
         min-height: 145px;
         width: 100%;
         padding: 5px 20px 0px 20px;
         background-color: #eee;
     }
 
-    /*#userSwitchingModal #groupSlider {
-        height: 25vh;
-        min-height: 145px;
-        width: 100%;
-        padding: 5px 20px 0px 20px;
-        background-color: #999;
-    }*/
+    #userSwitchingModal #groupSlider {
+        background-color: #fefefe;
+    }
 
     .mCSB_horizontal.mCSB_inside>.mCSB_container {
         margin-bottom: 15px;
     }
 
-    #userSwitchingModal #userSlider .profile {
+    #userSwitchingModal #userSlider .profile, #userSwitchingModal #groupSlider .profile {
         display: inline-block;
         float: left;
         text-align: center;
-        min-width: 80px;
-        width: 15vw;
+        min-width: 60px;
+        width: 10vw;
         height: 100%;
         margin-left: 15px;
     }
@@ -120,6 +117,9 @@
     #userSwitchingModal .profile p {
         margin-top: 2px;
         font-size: 2.2vw;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     #userSwitchingModal .modal-content .model-butttons {
@@ -173,19 +173,19 @@
                 <span ng-click="closeUserSwitchingModal()" class="close">&times;</span>
                 <p>SELECT A CHILD</p>
             </div>
-            <div class="slider-container">
+            <div id="sliderContainer" class="slider-container">
                 <div id="userSlider">
-                    <div ng-repeat="user in users" ng-class= "user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
-                        <img ng-src="{{imageBasePath + user.avatar}}" alt='test' />
+                    <div ng-repeat="user in users | filter: {'group': '!true'}" ng-class= "user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
+                        <img ng-src="{{imageBasePath + user.avatar}}" alt='user_img' />
                         <p>{{user.name}}</p>
                     </div>
                 </div>
-                <!-- <div id="groupSlider">
-                    <div ng-repeat="user in users" ng-class= "user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
-                        <img style='width:100px;height:100px' ng-src="{{imageBasePath + user.avatar}}" alt='test' />
+                <div id="groupSlider">
+                    <div ng-repeat="user in users | filter: {'group': 'true'}" ng-class= "user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
+                        <img ng-src="{{imageBasePath + user.avatar}}" alt='group_img' />
                         <p>{{user.name}}</p>
                     </div>
-                </div> -->
+                </div>
             </div>
             <div class="model-butttons">
                 <button ng-click="restartContent()" class="restart"><img ng-src="{{imageBasePath}}replay_icon.png" alt=""><span>Restart</span></button>

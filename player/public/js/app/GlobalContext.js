@@ -35,6 +35,7 @@ GlobalContext = {
                         GlobalContext.game.id = GlobalContext.config.appInfo.identifier;
                         GlobalContext.game.ver = GlobalContext.config.appInfo.pkgVersion || "1";
                         GlobalContext.game.contentExtras = GlobalContext.config.contentExtras;
+                        // GlobalContext.config.contentExtras.switchingUser = true;
                         // Assuming filter is always an array of strings.
                         GlobalContext.filter = (GlobalContext.config.appInfo.filter)? JSON.parse(GlobalContext.config.appInfo.filter): GlobalContext.config.appInfo.filter;
                     }
@@ -59,7 +60,7 @@ GlobalContext = {
                     }
                 });
             } else {
-                GlobalContext.config = { origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping", appInfo: {code:"org.ekstep.quiz.app", mimeType: "application/vnd.android.package-archive", identifier:"org.ekstep.quiz.app"}};
+                GlobalContext.config = {contentExtras: {switchingUser: true}, origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping", appInfo: {code:"org.ekstep.quiz.app", mimeType: "application/vnd.android.package-archive", identifier:"org.ekstep.quiz.app"}};
                 resolve(GlobalContext.config);
             }
         })
