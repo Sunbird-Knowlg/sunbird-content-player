@@ -237,12 +237,15 @@ function getAsseturl(content) {
 }
 //ref: http://www.jqueryscript.net/other/Highly-Customizable-jQuery-Toast-Message-Plugin-Toastr.html
 function showToaster(toastType, message, customOptions) {
-    var defaultOptions = {"positionClass": "toast-top-right", "preventDuplicates": true, "tapToDismiss": true, "hideDuration": "1000", "timeOut": "4000", }; 
+    var defaultOptions = {"positionClass": "toast-top-right", "preventDuplicates": true, "tapToDismiss": true, "hideDuration": "1000", "timeOut": "4000", };
     toastr.options = _.extend(defaultOptions, customOptions);
     if (toastType === 'warning') {
         toastr.warning(message);
     }
     if (toastType === 'error') {
         toastr.error(message);
+    }
+    if (toastType === 'info') {
+        toastr.info(message);
     }
 }
