@@ -248,5 +248,14 @@ function showToaster(toastType, message, customOptions) {
         toastr.error(message);
     }
 }
+(function() {
+    window.onbeforeunload = function(e) {
+        e = e || window.event;
+        var y = e.pageY || e.clientY;
+        !y &&  EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.getTelemetryService().end(); 
+        
+    }
+
+}())
 
 
