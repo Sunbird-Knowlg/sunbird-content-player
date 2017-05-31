@@ -214,7 +214,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 });
         };
         $rootScope.getDataforPortal = function() {
-            var configuration = EkstepRendererAPI.getWindowContext();
+            var configuration = EkstepRendererAPI.getPreviewData();
             var headers = $rootScope.getUrlParameter();
             headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
             ContentService.getContentMetadata(configuration.context.contentId, headers)
@@ -254,7 +254,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             return (_.object(urlParams))
         }
         $rootScope.getContentBody = function() {
-            var context = EkstepRendererAPI.getWindowContext();
+            var context = EkstepRendererAPI.getPreviewData();
             var headers = $rootScope.getUrlParameter();
             headers["Authorization"] = 'Bearer '+ configuration.context.authToken;
             ContentService.getContentBody(configuration.context.contentId, headers).then(function(data) {
@@ -304,7 +304,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $rootScope.getDataforPortal();
             } else {
                 console.info("Content id is undefined or body is available !!");
-                // var configuration = EkstepRendererAPI.getWindowContext();
+                // var configuration = EkstepRendererAPI.getPreviewData();
                 var $state = angular.element(document.body).injector().get('$state')
                 updateContentData($state)
             }
