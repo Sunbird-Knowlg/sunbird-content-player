@@ -728,7 +728,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         };
 
         $scope.ep_openUserSwitchingModal = function() {
-            EventBus.dispatch("openUserSwitchingModal");
+            EventBus.dispatch("event:openUserSwitchingModal");
         }
 
         $scope.setCredits = function(key) {
@@ -921,7 +921,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.openUserSwitchingModal = function() {
-            EventBus.dispatch("openUserSwitchingModal");
+            EventBus.dispatch("event:openUserSwitchingModal");
             $scope.hideMenu();
         }
 
@@ -1185,10 +1185,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $rootScope.showUser = GlobalContext.config.showUser;
             $rootScope.userSwitcherEnabled = GlobalContext.config.userSwitcherEnabled;
 
-            EventBus.addEventListener("event_userswitchingenable", function(value) {
+            EventBus.addEventListener("event:userSwitcherEnabled", function(value) {
                 $rootScope.userSwitcherEnabled = value.target;
             });
-            EventBus.addEventListener("event_showuserswitch", function(value) {
+            EventBus.addEventListener("event:showUser", function(value) {
                 $rootScope.showUser = value.target;
             });
             $scope.getUsersList();
@@ -1626,7 +1626,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         scope.initializeCtrl();
                         scope.render();
                     // }
-                    EventBus.addEventListener("openUserSwitchingModal", function() {
+                    EventBus.addEventListener("event:openUserSwitchingModal", function() {
                         scope.openUserSwitchingModal();
                     });
                 }();
