@@ -257,7 +257,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             headers["Authorization"] = 'Bearer '+ context.authToken;
             ContentService.getContentBody(context.contentId, headers).then(function(data) {
 
-                    if (!_.isUndefined(externalConfig.pluginId)) {
+                    if (!_.isUndefined(context.pluginId)) {
                         /* add child to "plugin-manifest" in given format
                          ** "plugin-manifest": {
                          **      "plugin": [{
@@ -275,7 +275,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             body.theme["plugin-manifest"] = {};
                             body.theme["plugin-manifest"].plugin = [];
                         }
-                        _.each(externalConfig.pluginId, function(item) {
+                        _.each(context.pluginId, function(item) {
                             body.theme["plugin-manifest"].plugin.push({
                                 "id": item.id,
                                 "ver": item.ver || "1.0",
