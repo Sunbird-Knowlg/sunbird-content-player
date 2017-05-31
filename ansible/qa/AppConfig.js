@@ -1,4 +1,4 @@
-AppConfig = {
+	AppConfig = {
 	version: "BUILD_NUMBER",
 	PROCESSING_TIMEOUT: 10, // in minutes
 	APP_STATUS: "AT",
@@ -11,9 +11,7 @@ AppConfig = {
 	S3_content_host: "/assets/public/content/",
 	PREVIEW_PLUGINSPATH: "/content-plugins",
 	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
-	telemetryApiAuth: {"username": "ZWtzdGVw", "password": "Z2VuaWUh"}
+	telemetryApiAuth: {"username": "ZWtzdGVw", "password": "Z2VuaWUh"},
+	USERSWITCHINGENABLE: true,
+	SHOWUSERSWITCHING: true
 }
-
-
-
-

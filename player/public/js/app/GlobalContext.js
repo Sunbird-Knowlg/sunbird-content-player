@@ -20,6 +20,9 @@ GlobalContext = {
         });
     },
     _setGlobalContext: function(resolve, reject) {
+        GlobalContext.config.userSwitchingEnable = AppConfig.USERSWITCHINGENABLE;
+        GlobalContext.config.showUserSwitching = AppConfig.SHOWUSERSWITCHING;
+
         new Promise(function(resolve, reject) {
             if(window.plugins && window.plugins.webintent) {
                 var promises = [];
@@ -28,6 +31,10 @@ GlobalContext = {
                 promises.push(GlobalContext._getIntentExtra('appInfo', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('language_info', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('contentExtras', GlobalContext.config));
+
+                promises.push(GlobalContext._getIntentExtra('userSwitchingEnable', GlobalContext.config));
+                promises.push(GlobalContext._getIntentExtra('showUserSwitching', GlobalContext.config));
+
                 Promise.all(promises)
                 .then(function(result) {
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
@@ -60,7 +67,7 @@ GlobalContext = {
                     }
                 });
             } else {
-                GlobalContext.config = {contentExtras: {switchingUser: true}, origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping", appInfo: {code:"org.ekstep.quiz.app", mimeType: "application/vnd.android.package-archive", identifier:"org.ekstep.quiz.app"}};
+                GlobalContext.config = {userSwitchingEnable: AppConfig.USERSWITCHINGENABLE, showUserSwitching: AppConfig.SHOWUSERSWITCHING, origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping", appInfo: {code:"org.ekstep.quiz.app", mimeType: "application/vnd.android.package-archive", identifier:"org.ekstep.quiz.app"}};
                 resolve(GlobalContext.config);
             }
         })
