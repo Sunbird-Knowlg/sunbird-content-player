@@ -60,7 +60,7 @@ window.initializePreview = function(configuration) {
 
     // if (!_.isUndefined(configuration)) {
         configuration.context.contentId = configuration.context.contentId ? configuration.context.contentId : getUrlParameter("id");
-        window.context = configuration;
+        window.previewData = configuration;
         // update obj basePath
         org.ekstep.pluginframework.customRepo.updateBasePath(configuration.repo);
         // add repo
