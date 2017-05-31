@@ -258,11 +258,13 @@ function showToaster(toastType, message, customOptions) {
 
 }());
 
-(function() {
+//Commenting this below line once mode = edit comes
+
+/*(function() {
     parent.document.getElementsByTagName('iframe')[0].contentWindow.onunload = function() {
         EkstepRendererAPI.getTelemetryService().end();
     }
-}());
+}());*/
 
 
 
