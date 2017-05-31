@@ -40,29 +40,37 @@ var stack = new Array(),
         showEndPage: true,
         showHTMLPages: true
     },
-    isbrowserpreview = getUrlParameter("webview"),
-    setContentDataCb = undefined;
+    isbrowserpreview = getUrlParameter("webview")
 
 window.context = {};
 
-window.initializePreview = function(configuration, metadata, data) {
+window.initializePreview = function(configuration) {
     // configuration: additional information passed to the preview
     // metadata: metadata of the content
     // data: JSON data of the content
     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
+    content.metadata = (_.isUndefined(metadata) || _.isNull(metadata)) ? defaultMetadata : configuration.metadata
+    if (!_.isUndefined(data)) {
+        content.body = configuration.body;
+    }
+    localStorage.clear();
+    if (!configuration.context.authToken) {
+        configuration.context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
+    }
 
     if (!_.isUndefined(configuration)) {
-        window.context = configuration;
+        configuration.context.contentId = configuration.context.contentId ? configuration.context.contentId : getUrlParameter("id");
+        window.context = {'context':configuration.context,'config':configuration.config};
         // update obj basePath
         org.ekstep.pluginframework.customRepo.updateBasePath(configuration.repo);
         // add repo
         org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.customRepo);
         // eventbus dispatch
-        EventBus.dispatch("event:loadContent", configuration);
+        EventBus.dispatch("event:loadContent");
     }
 
-    var $state = angular.element(document.body).injector().get('$state')
-    updateContentData($state);
+    // var $state = angular.element(document.body).injector().get('$state')
+    // updateContentData($state);
 }
 
 // TODO:have to remove appState and setContentDataCb in future.
@@ -206,13 +214,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 });
         };
         $rootScope.getDataforPortal = function() {
-            var context = EkstepRendererAPI.getWindowContext();
-            if (!context.authToken) {
-                context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
-            }
+            var configuration = EkstepRendererAPI.getWindowContext();
             var headers = $rootScope.getUrlParameter();
-            headers["Authorization"] = 'Bearer ' + context.authToken;
-            ContentService.getContentMetadata(context.contentId, headers)
+            headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
+            ContentService.getContentMetadata(configuration.context.contentId, headers)
                 .then(function(data) {
                     $rootScope.setContentMetadata(data);
                 })
@@ -250,14 +255,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
         $rootScope.getContentBody = function() {
             var context = EkstepRendererAPI.getWindowContext();
-            if (!context.authToken) {
-                context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
-            }
             var headers = $rootScope.getUrlParameter();
-            headers["Authorization"] = 'Bearer '+ context.authToken;
-            ContentService.getContentBody(context.contentId, headers).then(function(data) {
+            headers["Authorization"] = 'Bearer '+ configuration.context.authToken;
+            ContentService.getContentBody(configuration.context.contentId, headers).then(function(data) {
 
-                    if (!_.isUndefined(context.pluginId)) {
+                    if (!_.isUndefined(configuration.context.plugin)) {
                         /* add child to "plugin-manifest" in given format
                          ** "plugin-manifest": {
                          **      "plugin": [{
@@ -275,7 +277,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             body.theme["plugin-manifest"] = {};
                             body.theme["plugin-manifest"].plugin = [];
                         }
-                        _.each(context.pluginId, function(item) {
+                        _.each(configuration.context.plugin, function(item) {
                             body.theme["plugin-manifest"].plugin.push({
                                 "id": item.id,
                                 "ver": item.ver || "1.0",
@@ -298,11 +300,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         };
 
         EventBus.addEventListener("event:loadContent", function() {
-            var context = EkstepRendererAPI.getWindowContext();
-            if (!_.isUndefined(context.contentId) && _.isUndefined(content.body)) {
+            if (_.isUndefined(content.body)) {
                 $rootScope.getDataforPortal();
             } else {
-                console.error("Content id is undefined or body is available !!");
+                console.info("Content id is undefined or body is available !!");
+                // var configuration = EkstepRendererAPI.getWindowContext();
+                var $state = angular.element(document.body).injector().get('$state')
+                updateContentData($state)
             }
         });
 
