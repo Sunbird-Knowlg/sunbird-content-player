@@ -49,7 +49,7 @@ window.initializePreview = function(configuration) {
     // metadata: metadata of the content
     // data: JSON data of the content
     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-    content.metadata = (_.isUndefined(metadata) || _.isNull(metadata)) ? defaultMetadata : configuration.metadata
+    content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
     if (!_.isUndefined(data)) {
         content.body = configuration.body;
     }
@@ -60,7 +60,7 @@ window.initializePreview = function(configuration) {
 
     if (!_.isUndefined(configuration)) {
         configuration.context.contentId = configuration.context.contentId ? configuration.context.contentId : getUrlParameter("id");
-        window.context = {'context':configuration.context,'config':configuration.config};
+        window.context = configuration;
         // update obj basePath
         org.ekstep.pluginframework.customRepo.updateBasePath(configuration.repo);
         // add repo
