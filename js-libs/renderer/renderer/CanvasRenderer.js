@@ -93,9 +93,13 @@ Renderer = {
         PluginManager.init(gameRelPath);
         var resource = instance.handleRelativePath(instance.getResource(manifest), gameRelPath + '/widgets/');
         var pluginManifest = content["plugin-manifest"];
-        pluginManifest = _.isUndefined(pluginManifest) || _.isEmpty(pluginManifest) ? []: pluginManifest.plugin;
+        pluginManifest = _.isUndefined(pluginManifest) || _.isEmpty(pluginManifest) ? {'plugin': [] } : pluginManifest;
+        EkstepRendererAPI.getPreviewData().context.plugin && _.each(EkstepRendererAPI.getPreviewData().context.plugin, function(item) {
+            console.info("pluginManifest.plugin",pluginManifest.plugin)
+            pluginManifest.plugin.push({id: item.id, ver: item.ver || 1.0, type: item.type || "plugin", depends: item.depends || ""}); 
+        });
         try {
-            PluginManager.loadPlugins(pluginManifest, resource, function() {
+            PluginManager.loadPlugins(pluginManifest.plugin, resource, function() {
                 Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
             });
         } catch (e) {

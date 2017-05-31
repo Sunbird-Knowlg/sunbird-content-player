@@ -1,5 +1,5 @@
 /**
- * Plugin to create repo instance and register repo instance
+ * Plugin to create repo instance and to register repo instance
  * @extends EkstepRenderer.Plugin
  * @author Manjunath Davanam <manjunathd@ilimi.in>
  */
@@ -7,7 +7,6 @@
 var customRepo = Plugin.extend({
     initialize: function() {
         var instance = this;
-        console.info('repo initialize is done');
         var contextObj = EkstepRendererAPI.getPreviewData();
         if (_.size(contextObj.config.repo)) {
             if (Array.isArray(contextObj.config.repo)) {
@@ -20,42 +19,28 @@ var customRepo = Plugin.extend({
         }
     },
     initPlugin: function() {
-        console.info("Repo plugin init is done..");
+        console.info("Repo plugin init");
     },
     createRepoInstance: function(repoName, index) {
-        var repoInstance = this.create('customRepo' + index);
+        var repoInstance = this.create('ekstepPluginRepo_' + index);
         this.addRepoInstance(repoInstance, repoName);
     },
     create: function(repoName) {
-        org.ekstep.pluginframework.repoName = new(org.ekstep.pluginframework.iRepo.extend({
-            id: repoName,
-            basePath: "https://localhost:8081",
-            connected: false,
+        return new (org.ekstep.pluginframework.iRepo.extend({
+            id: repoName, basePath: " ",
             updateBasePath: function(basePath) {
-                this.basePath = basePath
+                this.basePath = basePath;
             },
             discoverManifest: function(pluginId, pluginVer, callback, publishedTime) {
-                if (this.connected) {
-                    var instance = this;
-                    org.ekstep.pluginframework.resourceManager.loadResource(this.resolveResource(pluginId, pluginVer, "manifest.json"), "json", function(err, response) {
-                        callback(undefined, {
-                            "manifest": response,
-                            "repo": instance
-                        });
-                    }, publishedTime);
-                } else {
-                    callback(undefined, {
-                        "manifest": undefined,
-                        "repo": undefined
-                    });
-                }
+                var instance = this;
+                org.ekstep.pluginframework.resourceManager.loadResource(this.resolveResource(pluginId, pluginVer, "manifest.json"), "json", function(err, response) {
+                    callback(void 0, {manifest: response, repo: instance });
+                }, publishedTime);
             },
             resolveResource: function(pluginId, pluginVer, resource) {
                 return this.basePath + "/" + pluginId + "-" + pluginVer + "/" + resource;
             }
-        }));
-        return org.ekstep.pluginframework.repoName;
-
+        }))();
     },
     addRepoInstance: function(repoInstance, repoPath) {
         repoInstance.updateBasePath(repoPath);

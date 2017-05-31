@@ -43,7 +43,6 @@ var stack = new Array(),
     isbrowserpreview = getUrlParameter("webview")
 
 window.previewData = {'context':{},'config':{}};
-
 window.initializePreview = function(configuration) {
     // configuration: additional information passed to the preview
     // metadata: metadata of the content
@@ -56,17 +55,10 @@ window.initializePreview = function(configuration) {
     localStorage.clear();
     if (!configuration.context.authToken) {
         configuration.context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
-    }
-
-    // if (!_.isUndefined(configuration)) {
-        configuration.context.contentId = configuration.context.contentId ? configuration.context.contentId : getUrlParameter("id");
-        window.previewData = configuration;
-        // eventbus dispatch
-        EventBus.dispatch("event:loadContent");
-    // }
-
-    // var $state = angular.element(document.body).injector().get('$state')
-    // updateContentData($state);
+    } 
+    configuration.context.contentId = configuration.context.contentId ? configuration.context.contentId : getUrlParameter("id");
+    window.previewData = configuration;
+    EventBus.dispatch("event:loadContent");
 }
 
 // TODO:have to remove appState and setContentDataCb in future.
@@ -252,55 +244,20 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.getContentBody = function() {
             var configuration = EkstepRendererAPI.getPreviewData();
             var headers = $rootScope.getUrlParameter();
-            headers["Authorization"] = 'Bearer '+ configuration.context.authToken;
+            headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
             ContentService.getContentBody(configuration.context.contentId, headers).then(function(data) {
-
-                    if (!_.isUndefined(configuration.context.plugin)) {
-                        /* add child to "plugin-manifest" in given format
-                         ** "plugin-manifest": {
-                         **      "plugin": [{
-                         **          "id": "org.ekstep.quiz",
-                         **          "ver": "1.0",
-                         **          "type": "plugin",
-                         **          "depends": ""
-                         **      }]
-                         ** },
-                         ** check if "plugin-manifest" is there then inject child to it
-                         ** else create a "plugin-manifest" and add child to it
-                         */
-                        var body = (data.body) ? JSON.parse(data.body) : null;
-                        if (_.isUndefined(body.theme["plugin-manifest"]) || _.isUndefined(body.theme["plugin-manifest"].plugin) || _.isNull(body.theme["plugin-manifest"].plugin)) {
-                            body.theme["plugin-manifest"] = {};
-                            body.theme["plugin-manifest"].plugin = [];
-                        }
-                        _.each(configuration.context.plugin, function(item) {
-                            body.theme["plugin-manifest"].plugin.push({
-                                "id": item.id,
-                                "ver": item.ver || "1.0",
-                                "type": item.type || "plugin",
-                                "depends": item.depends || ""
-                            });
-                        });
-                        // body.theme["plugin-manifest"].plugin = plugin;
-                        data.body = JSON.stringify(body);
-                    }
-                    content["body"] = data.body;
-
                     launchInitialPage(content.metadata, $state);
-
                 })
                 .catch(function(err) {
                     console.info("contentNotAvailable : ", err);
                     contentNotAvailable();
                 });
         };
-
         EventBus.addEventListener("event:loadContent", function() {
             if (_.isUndefined(content.body)) {
                 $rootScope.getDataforPortal();
             } else {
                 console.info("Content id is undefined or body is available !!");
-                // var configuration = EkstepRendererAPI.getPreviewData();
                 var $state = angular.element(document.body).injector().get('$state')
                 updateContentData($state)
             }
@@ -363,10 +320,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     if (isbrowserpreview) {
                         var urlContentId = getUrlParameter("id");
                         genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-                        // if (urlContentId) {
-                        // $rootScope.getDataforPortal(urlContentId);
-                        // $rootScope.getContentBody(urlContentId);
-                        // }
                         if (urlContentId) {
                             var configuration = {
                                 "contentId": urlContentId,
