@@ -67,14 +67,14 @@ var TelemetryPlugin = Plugin.extend({
 
             var did = detectClient();
             this._requiredFields = {};
-            var extConfig = EkstepRendererAPI.getExternalConfig();
-            if (_.isUndefined(extConfig)){
-                extConfig = { "context": {} };
-            } 
+            var extConfig = EkstepRendererAPI.getWindowContext();
+            // if (_.isUndefined(extConfig)){
+            //     extConfig = { "context": {} };
+            // } 
 
-            this._requiredFields.uid = extConfig.context.uid || "anonymous";
-            this._requiredFields.sid = extConfig.context.sid || CryptoJS.MD5(Math.random().toString()).toString();
-            this._requiredFields.did = extConfig.context.did || CryptoJS.MD5(JSON.stringify(did)).toString();
+            this._requiredFields.uid = extConfig.uid || "anonymous";
+            this._requiredFields.sid = extConfig.sid || CryptoJS.MD5(Math.random().toString()).toString();
+            this._requiredFields.did = extConfig.did || CryptoJS.MD5(JSON.stringify(did)).toString();
 
             //This is to dispatch StageId to portal
             this.dispatchEventToParent();
