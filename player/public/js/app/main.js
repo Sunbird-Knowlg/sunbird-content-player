@@ -252,10 +252,19 @@ function showToaster(toastType, message, customOptions) {
     window.onbeforeunload = function(e) {
         e = e || window.event;
         var y = e.pageY || e.clientY;
-        !y &&  EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.getTelemetryService().end(); 
-        
+        !y &&  EkstepRendererAPI.getTelemetryService().end(); 
     }
+  
 
-}())
+}());
+
+(function() {
+    parent.document.getElementsByTagName('iframe')[0].contentWindow.onunload = function() {
+        EkstepRendererAPI.getTelemetryService().end();
+    }
+}());
+
+
+
 
 
