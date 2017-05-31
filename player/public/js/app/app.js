@@ -205,21 +205,21 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     contentNotAvailable();
                 });
         };
-        $rootScope.getDataforPortal = function(id, authKey) {
+        $rootScope.getDataforPortal = function(id, authToken) {
             var headers = $rootScope.getUrlParameter();
-            // if (!_.isUndefined(authKey)) {
-                headers["Authorization"] = 'Bearer ' + authKey;
+            // if (!_.isUndefined(authToken)) {
+                headers["Authorization"] = 'Bearer ' + authToken;
             // }
             ContentService.getContentMetadata(id, headers)
                 .then(function(data) {
-                    $rootScope.setContentMetadata(data, authKey);
+                    $rootScope.setContentMetadata(data, authToken);
                 })
                 .catch(function(err) {
                     console.info("contentNotAvailable : ", err);
                     contentNotAvailable();
                 });
         };
-        $rootScope.setContentMetadata = function(contentData, authKey) {
+        $rootScope.setContentMetadata = function(contentData, authToken) {
             var data = _.clone(contentData);
             content["metadata"] = data;
             GlobalContext.currentContentId = data.identifier;
@@ -232,7 +232,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $rootScope.safeApply(function() {
                 $rootScope.content = data;
             });
-            $rootScope.getContentBody(content.metadata.identifier, authKey)
+            $rootScope.getContentBody(content.metadata.identifier, authToken)
         };
         $rootScope.getUrlParameter = function() {
             var urlParams = decodeURIComponent(window.location.search.substring(1)).split('&');
@@ -246,10 +246,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
             return (_.object(urlParams))
         }
-        $rootScope.getContentBody = function(id, authKey) {
+        $rootScope.getContentBody = function(id, authToken) {
             var headers = $rootScope.getUrlParameter();
-            // if (!_.isUndefined(authKey)) {
-                headers["Authorization"] = 'Bearer '+ authKey;
+            // if (!_.isUndefined(authToken)) {
+                headers["Authorization"] = 'Bearer '+ authToken;
             // }
             ContentService.getContentBody(id, headers).then(function(data) {
 
@@ -294,12 +294,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         };
 
         EventBus.addEventListener("event:loadContent", function(data) {
-            if (!data.authKey) {
-                data.authKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
+            if (!data.target.authToken) {
+                data.target.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
             }
             externalConfig = data.target;
             if (!_.isUndefined(externalConfig.contentId) && _.isUndefined(content.body)) {
-                $rootScope.getDataforPortal(externalConfig.contentId, data.authKey);
+                $rootScope.getDataforPortal(externalConfig.contentId, externalConfig.authToken);
                 // $rootScope.getContentBody(externalConfig.contentId);
             } else {
                 console.error("Content id is undefined or body is available !!");
