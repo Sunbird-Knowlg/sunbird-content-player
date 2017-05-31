@@ -1182,16 +1182,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.initializeCtrl = function() {
             console.log("userSwitchCtrl initialized !!!");
-            // $scope.imageBasePath = $rootScope.imageBasePath;
-            $rootScope.showUserSwitching = GlobalContext.config.showUserSwitching;
-            $rootScope.userSwitchingEnable = GlobalContext.config.userSwitchingEnable;
-
+            $rootScope.showUser = GlobalContext.config.showUser;
+            $rootScope.userSwitcherEnabled = GlobalContext.config.userSwitcherEnabled;
 
             EventBus.addEventListener("event_userswitchingenable", function(value) {
-                $rootScope.userSwitchingEnable = value.target;
+                $rootScope.userSwitcherEnabled = value.target;
             });
             EventBus.addEventListener("event_showuserswitch", function(value) {
-                $rootScope.showUserSwitching = value.target;
+                $rootScope.showUser = value.target;
             });
             $scope.getUsersList();
         }
@@ -1568,7 +1566,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             template: '<a href="javascript:void(0)" ng-click="goToLastPage()"><img ng-src="{{imageBasePath}}icn_back_page.png"/></a>',
             link: function(scope) {}
         }
-    }).directive('userSwitch', function($rootScope, $compile) {
+    }).directive('userSwitcher', function($rootScope, $compile) {
         return {
             restrict: 'E',
             scope: {
@@ -1576,7 +1574,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             },
             controller: 'userSwitchCtrl',
             templateUrl: 'templates/user-switch-popup.html',
-            link: function(scope, element, attrs) {
+            link: function(scope, element, attrs, controller) {
 
                 // Get the modal
                 var userSwitchingModal = element.find("#userSwitchingModal")[0];
@@ -1588,7 +1586,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 // When the user clicks the button, open the modal
                 scope.openUserSwitchingModal = function() {
-                    if ($rootScope.userSwitchingEnable) {
+                    if ($rootScope.userSwitcherEnabled) {
                         scope.sortUserlist();
                         userSwitchingModal.style.display = "block";
                     } else {

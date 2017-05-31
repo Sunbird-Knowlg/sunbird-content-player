@@ -20,8 +20,8 @@ GlobalContext = {
         });
     },
     _setGlobalContext: function(resolve, reject) {
-        GlobalContext.config.userSwitchingEnable = AppConfig.USERSWITCHINGENABLE;
-        GlobalContext.config.showUserSwitching = AppConfig.SHOWUSERSWITCHING;
+        GlobalContext.config.userSwitcherEnabled = AppConfig.USER_SWITCHER_ENABLED;
+        GlobalContext.config.showUser = AppConfig.SHOW_USER;
 
         new Promise(function(resolve, reject) {
             if(window.plugins && window.plugins.webintent) {
@@ -32,8 +32,8 @@ GlobalContext = {
                 promises.push(GlobalContext._getIntentExtra('language_info', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('contentExtras', GlobalContext.config));
 
-                promises.push(GlobalContext._getIntentExtra('userSwitchingEnable', GlobalContext.config));
-                promises.push(GlobalContext._getIntentExtra('showUserSwitching', GlobalContext.config));
+                promises.push(GlobalContext._getIntentExtra('userSwitcherEnabled', GlobalContext.config));
+                promises.push(GlobalContext._getIntentExtra('showUser', GlobalContext.config));
 
                 Promise.all(promises)
                 .then(function(result) {
@@ -67,7 +67,7 @@ GlobalContext = {
                     }
                 });
             } else {
-                GlobalContext.config = {userSwitchingEnable: AppConfig.USERSWITCHINGENABLE, showUserSwitching: AppConfig.SHOWUSERSWITCHING, origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping", appInfo: {code:"org.ekstep.quiz.app", mimeType: "application/vnd.android.package-archive", identifier:"org.ekstep.quiz.app"}};
+                GlobalContext.config = {userSwitcherEnabled: AppConfig.USER_SWITCHER_ENABLED, showUser: AppConfig.SHOW_USER, origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping", appInfo: {code:"org.ekstep.quiz.app", mimeType: "application/vnd.android.package-archive", identifier:"org.ekstep.quiz.app"}};
                 resolve(GlobalContext.config);
             }
         })

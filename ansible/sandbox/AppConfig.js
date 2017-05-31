@@ -10,6 +10,6 @@ AppConfig = {
 	recorder: "AUDIO_RECORDER",
 	flavor: "sandbox",
 	S3_content_host: "/assets/public/content/",
-	USERSWITCHINGENABLE: true,
-	SHOWUSERSWITCHING: true
+	USER_SWITCHER_ENABLED: true,
+	SHOW_USER: true
 }

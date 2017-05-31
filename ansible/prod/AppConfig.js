@@ -12,6 +12,6 @@ AppConfig = {
 	PREVIEW_PLUGINSPATH: "/content-plugins",
 	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
 	telemetryApiAuth: {"username": "ZWtzdGVw", "password": "Z2VuaWU0Mg=="},
-	USERSWITCHINGENABLE: true,
-	SHOWUSERSWITCHING: true
+	USER_SWITCHER_ENABLED: true,
+	SHOW_USER: true
 }
