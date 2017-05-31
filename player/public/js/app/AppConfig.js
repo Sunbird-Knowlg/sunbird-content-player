@@ -9,6 +9,6 @@ AppConfig = {
 	S3_content_host: "/assets/public/content/",
 	PREVIEW_PLUGINSPATH: "/content-plugins",
 	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
-	USER_SWITCHER_ENABLED: true,
+	USER_SWITCHER_ENABLED: false,
 	SHOW_USER: true
 }
