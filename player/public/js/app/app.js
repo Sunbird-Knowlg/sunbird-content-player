@@ -182,7 +182,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "nextContent": "NEXT CONTENT",
             "comment": "write your comment...",
             "mute": "on",
-            "change": "change"
+            "change": "change",
+            "group": "Group",
+            "child": "Child",
+            "groupFallbackText": "You have not created any group"
         }
 
         $rootScope.safeApply = function(fn) {
@@ -1166,21 +1169,24 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.init();
         });
 
-    }).controller('userSwitchCtrl', function($scope, $rootScope, $state, $stateParams, UserService) {
-
-        $scope.imageBasePath = $rootScope.imageBasePath;
+    }).controller('userSwitchCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'UserService', function($scope, $rootScope, $state, $stateParams, UserService) {
+        // $scope.languageSupport = $rootScope.languageSupport;
         $scope.selectedUser = {};
         $scope.users = [];
-        $rootScope.userSwitchingEnable = GlobalContext.config.userSwitchingEnable;
-        $rootScope.showUserSwitching = GlobalContext.config.showUserSwitching;
+        $scope.groupLength = undefined;
 
-        $scope.controllSwitch = function() {
+        // $scope.controllSwitch = function() {
             // this method is for implemantation of controlling teh user switch from Genie side
             // Whether to turn on/off user switching
-        }
+        // }
 
         $scope.initializeCtrl = function() {
             console.log("userSwitchCtrl initialized !!!");
+            // $scope.imageBasePath = $rootScope.imageBasePath;
+            $rootScope.showUserSwitching = GlobalContext.config.showUserSwitching;
+            $rootScope.userSwitchingEnable = GlobalContext.config.userSwitchingEnable;
+
+
             EventBus.addEventListener("event_userswitchingenable", function(value) {
                 $rootScope.userSwitchingEnable = value.target;
             });
@@ -1196,6 +1202,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             UserService.getUsersList().then(function(data) {
                 if (data.status === "success")
                     $scope.users = data.data;
+                    $scope.groupLength = (_.where($scope.users, {"group": true})).length;
 
                 UserService.getCurrentUser().then(function(data) {
                     if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
@@ -1272,7 +1279,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             })
         }
 
-    }).directive('menu', function($rootScope, $sce) {
+    }]).directive('menu', function($rootScope, $sce) {
         return {
             restrict: 'E',
             templateUrl: ("undefined" != typeof localPreview && "local" == localPreview) ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
@@ -1569,7 +1576,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             },
             controller: 'userSwitchCtrl',
             templateUrl: 'templates/user-switch-popup.html',
-            link: function(scope, element, attrs, controllers) {
+            link: function(scope, element, attrs) {
 
                 // Get the modal
                 var userSwitchingModal = element.find("#userSwitchingModal")[0];
@@ -1581,8 +1588,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 // When the user clicks the button, open the modal
                 scope.openUserSwitchingModal = function() {
-                    // scope.getUsersList();
-                    if (scope.userSwitchingEnable) {
+                    if ($rootScope.userSwitchingEnable) {
                         scope.sortUserlist();
                         userSwitchingModal.style.display = "block";
                     } else {
