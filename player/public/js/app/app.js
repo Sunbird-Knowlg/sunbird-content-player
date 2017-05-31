@@ -37,14 +37,13 @@ var stack = new Array(),
         "path": "fixture-stories/item_sample"
     },
     config = {
-        showStartPage: true,
         showEndPage: true,
         showHTMLPages: true
     },
     isbrowserpreview = getUrlParameter("webview"),
     setContentDataCb = undefined;
 
-window.externalConfig = {"context": {}};
+window.context = {};
 
 window.initializePreview = function(configuration, metadata, data) {
     // configuration: additional information passed to the preview
@@ -53,6 +52,7 @@ window.initializePreview = function(configuration, metadata, data) {
     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
 
     if (!_.isUndefined(configuration)) {
+        window.context = configuration;
         // update obj basePath
         org.ekstep.pluginframework.customRepo.updateBasePath(configuration.repo);
         // add repo
@@ -205,21 +205,23 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     contentNotAvailable();
                 });
         };
-        $rootScope.getDataforPortal = function(id, authToken) {
+        $rootScope.getDataforPortal = function() {
+            var context = EkstepRendererAPI.getWindowContext();
+            if (!context.authToken) {
+                context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
+            }
             var headers = $rootScope.getUrlParameter();
-            // if (!_.isUndefined(authToken)) {
-                headers["Authorization"] = 'Bearer ' + authToken;
-            // }
-            ContentService.getContentMetadata(id, headers)
+            headers["Authorization"] = 'Bearer ' + context.authToken;
+            ContentService.getContentMetadata(context.contentId, headers)
                 .then(function(data) {
-                    $rootScope.setContentMetadata(data, authToken);
+                    $rootScope.setContentMetadata(data);
                 })
                 .catch(function(err) {
                     console.info("contentNotAvailable : ", err);
                     contentNotAvailable();
                 });
         };
-        $rootScope.setContentMetadata = function(contentData, authToken) {
+        $rootScope.setContentMetadata = function(contentData) {
             var data = _.clone(contentData);
             content["metadata"] = data;
             GlobalContext.currentContentId = data.identifier;
@@ -232,7 +234,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $rootScope.safeApply(function() {
                 $rootScope.content = data;
             });
-            $rootScope.getContentBody(content.metadata.identifier, authToken)
+            $rootScope.getContentBody()
         };
         $rootScope.getUrlParameter = function() {
             var urlParams = decodeURIComponent(window.location.search.substring(1)).split('&');
@@ -246,12 +248,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
             return (_.object(urlParams))
         }
-        $rootScope.getContentBody = function(id, authToken) {
+        $rootScope.getContentBody = function() {
+            var context = EkstepRendererAPI.getWindowContext();
+            if (!context.authToken) {
+                context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
+            }
             var headers = $rootScope.getUrlParameter();
-            // if (!_.isUndefined(authToken)) {
-                headers["Authorization"] = 'Bearer '+ authToken;
-            // }
-            ContentService.getContentBody(id, headers).then(function(data) {
+            headers["Authorization"] = 'Bearer '+ context.authToken;
+            ContentService.getContentBody(context.contentId, headers).then(function(data) {
 
                     if (!_.isUndefined(externalConfig.pluginId)) {
                         /* add child to "plugin-manifest" in given format
@@ -293,14 +297,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 });
         };
 
-        EventBus.addEventListener("event:loadContent", function(data) {
-            if (!data.target.authToken) {
-                data.target.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
-            }
-            externalConfig = data.target;
-            if (!_.isUndefined(externalConfig.contentId) && _.isUndefined(content.body)) {
-                $rootScope.getDataforPortal(externalConfig.contentId, externalConfig.authToken);
-                // $rootScope.getContentBody(externalConfig.contentId);
+        EventBus.addEventListener("event:loadContent", function() {
+            var context = EkstepRendererAPI.getWindowContext();
+            if (!_.isUndefined(context.contentId) && _.isUndefined(content.body)) {
+                $rootScope.getDataforPortal();
             } else {
                 console.error("Content id is undefined or body is available !!");
             }

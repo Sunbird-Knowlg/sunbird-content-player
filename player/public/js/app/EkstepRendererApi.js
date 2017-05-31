@@ -772,11 +772,11 @@ window.EkstepRendererAPI = {
     },
 
    /**
-    *This api is going to return you the eexternal plugin obj
+    *This api is going to return you the external plugin obj
     *@memberof EkstepRendererAPI
     */
-   getExternalConfig: function() {
-       return window.externalConfig;
+   getWindowContext: function() {
+       return window.context;
    },
 
    /**
