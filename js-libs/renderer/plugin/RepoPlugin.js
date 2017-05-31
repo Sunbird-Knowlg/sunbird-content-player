@@ -18,12 +18,10 @@ var customRepo = Plugin.extend({
             }
         }
     },
-    initPlugin: function() {
-        console.info("Repo plugin init");
-    },
-    createRepoInstance: function(repoName, index) {
+    initPlugin: function() {console.info("Repo plugin init"); }, 
+    createRepoInstance: function(repoPath, index) {
         var repoInstance = this.create('ekstepPluginRepo_' + index);
-        this.addRepoInstance(repoInstance, repoName);
+        this.addRepoInstance(repoInstance, repoPath);
     },
     create: function(repoName) {
         return new (org.ekstep.pluginframework.iRepo.extend({
