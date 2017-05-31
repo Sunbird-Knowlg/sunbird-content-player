@@ -50,7 +50,7 @@ window.initializePreview = function(configuration) {
     // data: JSON data of the content
     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
     content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
-    if (!_.isUndefined(data)) {
+    if (!_.isUndefined(configuration.body)) {
         content.body = configuration.body;
     }
     localStorage.clear();
@@ -58,7 +58,7 @@ window.initializePreview = function(configuration) {
         configuration.context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
     }
 
-    if (!_.isUndefined(configuration)) {
+    // if (!_.isUndefined(configuration)) {
         configuration.context.contentId = configuration.context.contentId ? configuration.context.contentId : getUrlParameter("id");
         window.context = configuration;
         // update obj basePath
@@ -67,7 +67,7 @@ window.initializePreview = function(configuration) {
         org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.customRepo);
         // eventbus dispatch
         EventBus.dispatch("event:loadContent");
-    }
+    // }
 
     // var $state = angular.element(document.body).injector().get('$state')
     // updateContentData($state);
