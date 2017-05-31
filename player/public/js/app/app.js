@@ -254,7 +254,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             return (_.object(urlParams))
         }
         $rootScope.getContentBody = function() {
-            var context = EkstepRendererAPI.getPreviewData();
+            var configuration = EkstepRendererAPI.getPreviewData();
             var headers = $rootScope.getUrlParameter();
             headers["Authorization"] = 'Bearer '+ configuration.context.authToken;
             ContentService.getContentBody(configuration.context.contentId, headers).then(function(data) {
