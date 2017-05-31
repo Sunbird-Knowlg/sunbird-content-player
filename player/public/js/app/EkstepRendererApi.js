@@ -775,8 +775,8 @@ window.EkstepRendererAPI = {
     *This api is going to return you the external plugin obj
     *@memberof EkstepRendererAPI
     */
-   getWindowContext: function() {
-       return window.context;
+   getPreviewData: function() {
+       return window.previewData;
    },
 
    /**

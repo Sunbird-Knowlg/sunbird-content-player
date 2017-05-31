@@ -42,7 +42,7 @@ var stack = new Array(),
     },
     isbrowserpreview = getUrlParameter("webview")
 
-window.context = {};
+window.previewData = {'context':{},'config':{}};
 
 window.initializePreview = function(configuration) {
     // configuration: additional information passed to the preview
