@@ -32,7 +32,7 @@ var customRepo = Plugin.extend({
             discoverManifest: function(pluginId, pluginVer, callback, publishedTime) {
                 var instance = this;
                 org.ekstep.pluginframework.resourceManager.loadResource(this.resolveResource(pluginId, pluginVer, "manifest.json"), "json", function(err, response) {
-                    callback(void 0, {manifest: response, repo: instance });
+                    callback(undefined, {manifest: response, repo: instance });
                 }, publishedTime);
             },
             resolveResource: function(pluginId, pluginVer, resource) {
