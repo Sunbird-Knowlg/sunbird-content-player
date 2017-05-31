@@ -61,10 +61,6 @@ window.initializePreview = function(configuration) {
     // if (!_.isUndefined(configuration)) {
         configuration.context.contentId = configuration.context.contentId ? configuration.context.contentId : getUrlParameter("id");
         window.previewData = configuration;
-        // update obj basePath
-        org.ekstep.pluginframework.customRepo.updateBasePath(configuration.repo);
-        // add repo
-        org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.customRepo);
         // eventbus dispatch
         EventBus.dispatch("event:loadContent");
     // }
