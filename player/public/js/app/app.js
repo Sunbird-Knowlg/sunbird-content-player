@@ -425,6 +425,39 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 });
             }
         }
+
+        $rootScope.us_replayContent = function() {
+            if (!$rootScope.content) {
+                $rootScope.getContentMetadata($stateParams.itemId);
+            }
+            $rootScope.pageTitle = $rootScope.content.name;
+            startProgressBar(40, 0.6);
+            TelemetryService.interact("TOUCH", "us_replay", "TOUCH", {
+                stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
+            });
+            var menuReplay = $state.current.name == appConstants.statePlayContent;
+            // 1) For HTML content onclick of replay EventListeners will be not available hence calling Telemetryservice end .
+            // 2) OE_START for the HTML/ECML content will be takne care by the contentctrl rendere method always.
+            EventBus.hasEventListener('actionReplay') ? EventBus.dispatch('actionReplay', {
+                'menuReplay': menuReplay
+            }) : TelemetryService.end();
+            TelemetryService.setUser($rootScope.currentUser);
+            if ($state.current.name == appConstants.stateShowContentEnd) {
+                $state.go(appConstants.statePlayContent, {
+                    'itemId': $rootScope.content.identifier
+                });
+            }
+        }
+
+        $rootScope.us_continueContent = function() {
+            var gameId = TelemetryService.getGameId();
+            var version = TelemetryService.getGameVer();;
+
+            TelemetryService.end();
+            TelemetryService.setUser($rootScope.currentUser);
+            TelemetryService.start(gameId, version);
+        }
+
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         // This will be appear only for the localdevlopment
         $rootScope.pageId = 'ContentApp-Collection';
@@ -1138,6 +1171,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.imageBasePath = $rootScope.imageBasePath;
         $scope.selectedUser = {};
         $scope.users = [];
+        $rootScope.userSwitchingEnable = GlobalContext.config.userSwitchingEnable;
+        $rootScope.showUserSwitching = GlobalContext.config.showUserSwitching;
 
         $scope.controllSwitch = function() {
             // this method is for implemantation of controlling teh user switch from Genie side
@@ -1146,6 +1181,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.initializeCtrl = function() {
             console.log("userSwitchCtrl initialized !!!");
+            EventBus.addEventListener("event_userswitchingenable", function(value) {
+                $rootScope.userSwitchingEnable = value.target;
+            });
+            EventBus.addEventListener("event_showuserswitch", function(value) {
+                $rootScope.showUserSwitching = value.target;
+            });
             $scope.getUsersList();
         }
 
@@ -1198,14 +1239,15 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         // When the user clicks on Restart, Restart the content
         $scope.restartContent = function() {
             $scope.switchUser(function(){
-                $rootScope.replayContent();
+                $rootScope.us_replayContent();
             });
         }
 
         // When the user clicks on Coontinue, Continue the content from there
         $scope.continueContent = function() {
             // here the user Selection happens
-            $scope.switchUser();
+            // var switchingSuccess = $scope.switchUser();
+            $scope.switchUser()
         }
 
         $scope.switchUser = function(cb) {
@@ -1215,12 +1257,18 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         $rootScope.currentUser = $scope.selectedUser;
                     });
                     AudioManager.unmute();
-                    if (!_.isUndefined(cb)) cb();
+                    if (!_.isUndefined(cb)) {
+                        cb();
+
+                    } else {
+                        $rootScope.us_continueContent()
+
+                    }
 
                     $scope.closeUserSwitchingModal();
                 }
             }).catch(function(err) {
-                reject(err);
+                console.log(err);
             })
         }
 
@@ -1529,18 +1577,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // get the user selection div
                 var userSlider = element.find("#userSlider");
                 var groupSlider = element.find("#groupSlider");
-                var sliderContainer = element.find("#sliderContainer");
                 var user = [];
 
                 // When the user clicks the button, open the modal
                 scope.openUserSwitchingModal = function() {
                     // scope.getUsersList();
-                    if (GlobalContext.config.contentExtras.switchingUser === true) {
+                    if (scope.userSwitchingEnable) {
                         scope.sortUserlist();
                         userSwitchingModal.style.display = "block";
-
                     } else {
-                        showToaster('info',"Please activate User Switching")
+                        showToaster('info',"User Switching is disabled");
                     }
                 }
 
@@ -1564,13 +1610,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                             autoExpandHorizontalScroll: true
                         }
                     });
-                    // sliderContainer.mCustomScrollbar({
-                    //     axis: "y",
-                    //     theme: "dark-3",
-                    //     advanced: {
-                    //         autoExpandHorizontalScroll: true
-                    //     }
-                    // });
                 }
 
                 // $("#selector_that_matches_zero_elements").mCustomScrollbar("destroy");
@@ -1580,7 +1619,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         console.log("userSwitch Directive loaded");
                         userSlider.mCustomScrollbar('destroy');
                         groupSlider.mCustomScrollbar('destroy');
-                        sliderContainer.mCustomScrollbar('destroy');
                         scope.initializeCtrl();
                         scope.render();
                     // }
