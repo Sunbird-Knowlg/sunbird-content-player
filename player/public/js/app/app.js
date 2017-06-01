@@ -63,8 +63,10 @@ window.initializePreview = function(configuration) {
         content.body = configuration.body;
     }
     content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
+    if (_.isUndefined(configuration.context.contentId)) {
+        configuration.context.contentId = getUrlParameter("id")
+    }
     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-    configuration.context.contentId = configuration.context.contentId ? configuration.context.contentId : getUrlParameter("id");
     window.previewData = configuration;
     localStorage.clear();
     EventBus.dispatch("event:loadContent");
