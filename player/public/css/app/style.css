@@ -444,6 +444,7 @@ body {
     position: absolute;
     width: 107%;
     margin-left: -4%
+    top: -4px;
 }
 
 .gc-menu-btn img.icon {
