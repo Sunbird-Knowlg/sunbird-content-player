@@ -88,7 +88,7 @@ window.setContentData = function(metadata, data, configuration) {
     localStorage.clear();
     var object = {'config':configuration,'data':data,'metadata':metadata}
 
-    window.initializePreview(configuration, metadata, data);
+    window.initializePreview(object);
 }
 
 function updateContentData($state, contentId) {
@@ -207,7 +207,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.getDataforPortal = function(id) {
             var configuration = EkstepRendererAPI.getPreviewData();
             var headers = $rootScope.getUrlParameter();
-            if (_.isUndefined(configuration.context.authToken)) {
+            if (!_.isUndefined(configuration.context.authToken)) {
                 headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
             }
             ContentService.getContentMetadata(id, headers)
@@ -251,7 +251,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.getContentBody = function(id) {
             var configuration = EkstepRendererAPI.getPreviewData();
             var headers = $rootScope.getUrlParameter();
-            if (_.isUndefined(configuration.context.authToken)) {
+            if (!_.isUndefined(configuration.context.authToken)) {
                 headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
             }
             ContentService.getContentBody(id, headers).then(function(data) {
