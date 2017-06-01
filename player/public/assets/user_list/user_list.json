@@ -17,14 +17,6 @@
         "uid": "69wVinod8r81f",
         "name": "Vinod"
     }, {
-        "avatar": "avatar_normal_3.png",
-        "gender": "Female",
-        "handle": "handle1",
-        "age": 6,
-        "standard": -1,
-        "uid": "6ws55Mala1fvw6s5",
-        "name": "Mala"
-    }, {
         "avatar": "avatar_normal_2.png",
         "gender": "male",
         "handle": "handle1",
@@ -33,33 +25,16 @@
         "uid": "6f5fShringeriv16s",
         "name": "Shringeri"
     }, {
-        "avatar": "avatar_normal_5.png",
-        "gender": "male",
-        "handle": "handle1",
-        "age": 6,
-        "standard": -1,
-        "uid": "r968+Ramuf1w",
-        "name": "Ramu"
-    }, {
-        "avatar": "avatar_normal_4.png",
-        "gender": "female",
-        "handle": "handle1",
-        "age": 6,
-        "standard": -1,
-        "uid": "f651Anubalavbfd",
-        "name": "Anubala"
-    }, {
-        "avatar": "avatar_normal_6.png",
+        "avatar": "avatar_normal_3.png",
         "gender": "Female",
         "handle": "handle1",
         "age": 6,
         "standard": -1,
-        "uid": "695owdPujaivnkfv1",
-        "name": "Puja"
+        "uid": "6ws55Mala1fvw6s5",
+        "name": "Mala"
     },
-
     {
-        "avatar": "avatar_normal_5.png",
+        "avatar": "img_badge01.png",
         "gender": "Female",
         "handle": "handle1",
         "age": 6,
@@ -67,53 +42,7 @@
         "uid": "6ws551fGroup-1vwpeoijfw6s5",
         "name": "Group-1",
         "group": true
-    }, {
-        "avatar": "avatar_normal_3.png",
-        "gender": "Female",
-        "handle": "handle1",
-        "age": 6,
-        "standard": -1,
-        "uid": "6ws551fwoGroup-2pepirjvw6s5",
-        "name": "Group-2",
-        "group": true
-    }, {
-        "avatar": "avatar_normal_2.png",
-        "gender": "male",
-        "handle": "handle1",
-        "age": 6,
-        "standard": -1,
-        "uid": "6f5fvoiGroup-3eerj16s",
-        "name": "Group-3",
-        "group": true
-    }, {
-        "avatar": "avatar_normal_5.png",
-        "gender": "male",
-        "handle": "handle1",
-        "age": 6,
-        "standard": -1,
-        "uid": "r968wpGroup-4ekd+f1w",
-        "name": "Group-4",
-        "group": true
-    }, {
-        "avatar": "avatar_normal_4.png",
-        "gender": "female",
-        "handle": "handle1",
-        "age": 6,
-        "standard": -1,
-        "uid": "f651wroGroup-5iifvbfd",
-        "name": "Group-5",
-        "group": true
-    }, {
-        "avatar": "avatar_normal_6.png",
-        "gender": "Female",
-        "handle": "handle1",
-        "age": 6,
-        "standard": -1,
-        "uid": "695flGroup-6okwrdv1",
-        "name": "Group-6",
-        "group": true
     }
-
 ]
 
 }
