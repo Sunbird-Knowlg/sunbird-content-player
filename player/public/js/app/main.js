@@ -209,7 +209,8 @@ function startTelemetry(id, ver, cb) {
         }];
     }
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData).then(function(response) {
-        TelemetryService.start(id, ver);
+        var env = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode;
+        TelemetryService.start(id, ver, env);
         if (!_.isUndefined(TelemetryService.instance)) {
             var tsObj = _.clone(TelemetryService);
             tsObj._start = JSON.stringify(tsObj.instance._start);
