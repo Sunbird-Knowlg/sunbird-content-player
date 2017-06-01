@@ -1,239 +1,40 @@
-<style>
-    /* The Modal (background) */
-
-    #userSwitchingModal.user-modal {
-        display: none;
-        /* Hidden by default */
-        position: fixed;
-        /* Stay in place */
-        z-index: 1;
-        /* Sit on top */
-        padding-top: 2vh;
-        /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%;
-        /* Full width */
-        height: 100%;
-        /* Full height */
-        overflow: auto;
-        /* Enable scroll if needed */
-        background-color: rgb(0, 0, 0);
-        /* Fallback color */
-        background-color: rgba(0, 0, 0, 0.4);
-        /* Black w/ opacity */
-        font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
-    }
-    /* Modal Content */
-
-    #userSwitchingModal .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        border: 1px solid #888;
-        width: 98%;
-        height: 96vh;
-        position: relative;
-    }
-
-    #userSwitchingModal .modal-content .user-header {
-        background-color: #eee;
-        text-align: center;
-        font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
-        font-size: 2vw;
-    }
-
-    #userSwitchingModal .modal-content .user-header P {
-        margin-bottom: 0;
-        padding-top: 7px;
-    }
-    /* The Close Button */
-
-    #userSwitchingModal .close {
-        color: #aaaaaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        margin-top: 6px;
-        margin-right: 7px;
-    }
-
-    #userSwitchingModal .close:hover,
-    #userSwitchingModal .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    #userSwitchingModal .slider-container {
-        /*max-height: 80%;*/
-        overflow-y: scroll;
-        position: relative;
-    }
-
-    #userSwitchingModal .slider-container #userSlider,
-    #userSwitchingModal .slider-container #groupSlider {
-        min-height: 115px;
-        height: 35vh;
-    }
-
-    #userSwitchingModal #userSlider, #userSwitchingModal #groupSlider {
-        min-height: 145px;
-        width: 100%;
-        padding: 5px 20px 0px 20px;
-        background-color: #eee;
-    }
-
-    #userSwitchingModal #groupSlider {
-        background-color: #fefefe;
-    }
-
-    #userSwitchingModal #groupSlider .fallback-text {
-        text-align: center;
-        margin-top: 25px;
-        color: #666;
-    }
-
-    #sliderContainer .slider-tag,
-    #sliderContainer .slider-tag {
-        color: #2691d0;
-        position: absolute;
-        left: 20px;
-        margin-top: 1.5vh;
-        font-size: 1.8vw;
-    }
-
-    #userSwitchingModal #userSlider .profile,
-    #userSwitchingModal #groupSlider .profile {
-        display: inline-block;
-        float: left;
-        text-align: center;
-        min-width: 60px;
-        width: 10vw;
-        height: 100%;
-        margin-left: 15px;
-        margin-top: 5vh;
-    }
-
-    #userSwitchingModal .mCSB_draggerRail {
-        width: 20px;
-    }
-
-    #userSwitchingModal .profile.selected img {
-        border: 3px solid #2691d0;
-    }
-
-    #userSwitchingModal .profile img {
-        border-radius: 50%;
-        padding: 2px;
-        width: 100%;
-        height: 100%;
-    }
-
-    #userSwitchingModal .profile p {
-        margin-top: 2px;
-        font-size: 2.2vw;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
-
-    #userSwitchingModal .modal-content .model-butttons {
-        position: absolute;
-        bottom: 10px;
-        right: 20px;
-    }
-
-    #userSwitchingModal .model-butttons .restart,
-    #userSwitchingModal .model-butttons .continue {
-        border-color: rgba(255, 255, 255, 0);
-        border-radius: 50px;
-        background-color: #2691d0;
-        padding: 1.5vh 3vw;
-        margin-left: 5px;
-    }
-
-    #userSwitchingModal .model-butttons .restart {
-        background-color: #2691d0;
-        color: #fefefe;
-    }
-
-    #userSwitchingModal .model-butttons .continue {
-        background-color: #ccc;
-        color: #333;
-    }
-
-    #userSwitchingModal .model-butttons .restart img {
-        margin-right: 10px;
-        vertical-align: middle;
-        width: 3vw;
-    }
-
-    #userSwitchingModal .model-butttons span {
-        font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
-        font-size: 2vw;
-    }
-
-    .mCSB_horizontal.mCSB_inside>.mCSB_container {
-        margin-bottom: 15px;
-    }
-
-    .mCS-dark-3.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
-        background-color: rgba(0, 0, 0, 0);
-    }
-
-    .mCS-dark-3.mCSB_scrollTools_horizontal .mCSB_dragger .mCSB_dragger_bar {
-        height: 4px;
-        margin: 10px 0;
-    }
-
-    .mCS-dark-3.mCSB_scrollTools .mCSB_draggerRail {
-        background-color: rgba(0, 0, 0, 0);
-    }
-
-</style>
-</head>
-
-<body>
-
-    <!-- The Modal -->
-    <div id="userSwitchingModal" class="user-modal">
+<!-- The Modal -->
+<div id="userSwitchingModal" class="user-modal">
 
 
-        <!-- Modal content -->
-        <div class="modal-content">
-            <div class="user-header">
-                <span ng-click="closeUserSwitchingModal()" class="close">&times;</span>
-                <p>SELECT A CHILD</p>
-            </div>
-            <div id="sliderContainer" class="slider-container">
-                <p class="slider-tag">
-                    {{$root.languageSupport.child}}
-                </p>
-                <div id="userSlider">
-                    <div ng-repeat="user in users | filter: {'group': '!true'}" ng-class= "user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
-                        <img ng-src="{{$root.imageBasePath + user.avatar}}" alt='user_img' />
-                        <p>{{user.name}}</p>
-                    </div>
-                </div>
-                <p class="slider-tag">
-                    {{$root.languageSupport.group}}
-                </p>
-                <div id="groupSlider">
-                    <div ng-if="groupLength > 0" ng-repeat="user in users | filter: {'group': 'true'}" ng-class= "user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
-                        <img ng-src="{{$root.imageBasePath + user.avatar}}" alt='group_img' />
-                        <p>{{user.name}}</p>
-                    </div>
-                    <p class="fallback-text" ng-if="groupLength == 0">
-                        {{$root.languageSupport.groupFallbackText}}
-                    </p>
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="user-header">
+            <span ng-click="closeUserSwitchingModal()" class="close">&times;</span>
+            <p>SELECT A CHILD</p>
+        </div>
+        <div id="sliderContainer" class="slider-container">
+            <p class="slider-tag">
+                {{$root.languageSupport.child}}
+            </p>
+            <div id="userSlider">
+                <div ng-repeat="user in users | filter: {'group': '!true'}" ng-class="user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
+                    <img ng-src="{{$root.imageBasePath + user.avatar}}" alt='user_img' />
+                    <p>{{user.name}}</p>
                 </div>
             </div>
-            <div class="model-butttons">
-                <button ng-click="restartContent()" class="restart"><img ng-src="{{$root.imageBasePath}}replay_icon.png" alt=""><span>Restart</span></button>
-                <button ng-click="continueContent()" class="continue"><img src="" alt=""><span>Continue</span></button>
+            <p class="slider-tag">
+                {{$root.languageSupport.group}}
+            </p>
+            <div id="groupSlider">
+                <div ng-if="groupLength > 0" ng-repeat="user in users | filter: {'group': 'true'}" ng-class="user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
+                    <img ng-src="{{$root.imageBasePath + user.avatar}}" alt='group_img' />
+                    <p>{{user.name}}</p>
+                </div>
+                <p class="fallback-text" ng-if="groupLength == 0">
+                    {{$root.languageSupport.groupFallbackText}}
+                </p>
             </div>
         </div>
-
+        <div class="model-butttons">
+            <button ng-click="restartContent()" class="restart"><img ng-src="{{$root.imageBasePath}}replay_icon.png" alt=""><span>Restart</span></button>
+            <button ng-click="continueContent()" class="continue"><img src="" alt=""><span>Continue</span></button>
+        </div>
     </div>
 
-</body>
+</div>
