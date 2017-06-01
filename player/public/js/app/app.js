@@ -67,7 +67,9 @@ window.initializePreview = function(configuration) {
     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
     window.previewData = configuration;
     configuration.config.repo && configuration.config.plugin && EkstepRendererAPI.dispatchEvent("repo:intialize");
+    addWindowUnloadEvent();
     EkstepRendererAPI.dispatchEvent("event:loadContent");
+    
 }
 
 // TODO:have to remove appState and setContentDataCb in future.
@@ -332,7 +334,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     }
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
-                    EkstepRendererAPI.getTelemetryService().error(res,{'type':'system','severity':'fatal','action':'play'})
+                    EkstepRendererAPI.logErrorEvent(res,{'type':'system','severity':'fatal','action':'play'})
                     alert(res.errors);
                     exitApp();
                 });

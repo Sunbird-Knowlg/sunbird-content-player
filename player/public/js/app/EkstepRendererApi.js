@@ -797,5 +797,23 @@ window.EkstepRendererAPI = {
     */
    replayContent: function(data, target) {
        EkstepRendererAPI.dispatchEvent('actionReplay', data, target);
-   }
+   },
+
+    /**
+    *This api will Generate the OE_ERROR Telemetry event
+    * @memberof EkstepRendererAPI
+    * @param errorStack {object} event data to carry along with the notification
+    * @param data {object} the object which need to log in Error event
+    */
+
+    logErrorEvent: function(errorStack, data) {
+        if (data) {
+            data.env = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode;
+            data.type || 'plugin'; data.stageId = Renderer.theme ? EkstepRendererAPI.getCurrentStageId() : undefined;
+            data.objectType = data.objectType ? data.objectType : (data.asset ? (!_.isUndefined(EkstepRendererAPI.getPluginInstance(data.asset)) ? EkstepRendererAPI.getPluginInstance(data.asset)._data.pluginType : undefined) : undefined);
+            data.severity = data.severity === 'fatal' || data.objectType === 'theme' || data.objectType === 'stage' || data.action === "transitionTo" ? 'fatal' : 'error';
+            errorStack && (data.err = errorStack.message, data.data = errorStack.stack)
+            EkstepRendererAPI.getTelemetryService().error(data);
+        }
+    }
 }

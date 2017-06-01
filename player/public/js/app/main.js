@@ -107,7 +107,7 @@ function startApp(app) {
 }
 
 function contentNotAvailable(error) {
-    EkstepRendererAPI.getTelemetryService().error(error,{'type':'content','action':'play','severity':'fatal'});
+    EkstepRendererAPI.logErrorEvent(error,{'type':'content','action':'play','severity':'fatal'});
     showToaster('error', AppMessages.NO_CONTENT_FOUND);
     exitApp();
 }
@@ -223,7 +223,7 @@ function startTelemetry(id, ver, cb) {
             console.error("failed to initialize TelemetryService")
         }
     }).catch(function(error) {
-        EkstepRendererAPI.getTelemetryService().error(error, {'type':'system','action':'play','severity':'fatal'});
+        EkstepRendererAPI.logErrorEvent(error, {'type':'system','action':'play','severity':'fatal'});
         console.warn('TelemetryService init failed');
         showToaster('error', 'TelemetryService init failed.');
         exitApp();
@@ -248,25 +248,17 @@ function showToaster(toastType, message, customOptions) {
         toastr.error(message);
     }
 }
-(function() {
+
+function addWindowUnloadEvent() {
+    // TODO: Use Iframe unload event 
     window.onbeforeunload = function(e) {
         e = e || window.event;
         var y = e.pageY || e.clientY;
-        !y &&  EkstepRendererAPI.getTelemetryService().end(); 
+        !y && EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.getTelemetryService().end();
     }
-  
-
-}());
-
-//Commenting this below line once mode = edit comes
-
-/*(function() {
-    parent.document.getElementsByTagName('iframe')[0].contentWindow.onunload = function() {
-        EkstepRendererAPI.getTelemetryService().end();
+    if (EkstepRendererAPI.getPreviewData().context.mode === 'edit') {
+        parent.document.getElementsByTagName('iframe')[0].contentWindow.onunload = function() {
+            EkstepRendererAPI.getTelemetryService().end();
+        }
     }
-}());*/
-
-
-
-
-
+}
