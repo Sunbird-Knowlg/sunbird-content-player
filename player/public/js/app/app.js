@@ -69,6 +69,7 @@ window.initializePreview = function(configuration) {
     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
     window.previewData = configuration;
     localStorage.clear();
+    configuration.config.repo && configuration.config.plugin && EkstepRendererAPI.dispatchEvent("repo:intialize");
     EventBus.dispatch("event:loadContent");
 }
 
