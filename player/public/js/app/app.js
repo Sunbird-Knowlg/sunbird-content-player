@@ -208,7 +208,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 })
                 .catch(function(err) {
                     console.info("contentNotAvailable : ", err);
-                    contentNotAvailable();
+                    contentNotAvailable(err);
                 });
         };
         $rootScope.getDataforPortal = function(id) {
@@ -219,7 +219,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 })
                 .catch(function(err) {
                     console.info("contentNotAvailable : ", err);
-                    contentNotAvailable();
+                    contentNotAvailable(err);
                 });
         };
         $rootScope.setContentMetadata = function(contentData) {
@@ -235,7 +235,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $rootScope.safeApply(function() {
                 $rootScope.content = data;
             });
-            $rootScope.getContentBody(content.metadata.identifier)
+            if ("undefined" == typeof cordova) {
+                $rootScope.getContentBody(content.metadata.identifier);
+            }
         };
         $rootScope.getUrlParameter = function() {
             var urlParams = decodeURIComponent(window.location.search.substring(1)).split('&');
@@ -289,7 +291,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 })
                 .catch(function(err) {
                     console.info("contentNotAvailable : ", err);
-                    contentNotAvailable();
+                    contentNotAvailable(err);
                 });
         };
 
@@ -378,6 +380,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     }
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
+                    EkstepRendererAPI.getTelemetryService().error(res,{'type':'system','severity':'fatal','action':'play'})
                     alert(res.errors);
                     exitApp();
                 });

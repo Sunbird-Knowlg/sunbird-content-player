@@ -103,6 +103,7 @@ var ThemePlugin = Plugin.extend({
             });
         } catch (e) {
             showToaster('error', 'Content fails to start');
+            EkstepRendererAPI.getTelemetryService().error(e,{'severity':'fatal','type':'content','action':'play'});
             console.warn("Theme start is failed due to", e);
         }
     },

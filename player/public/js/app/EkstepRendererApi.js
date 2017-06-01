@@ -40,6 +40,16 @@ window.EkstepRendererAPI = {
     },
 
     /**
+     * @param type {string} name of the event which is being registred
+     * Returns paticular event which are being registed on element.
+     * empty if the event not registed.
+     * @memberof EkstepRendererAPI
+     */
+    hasEventListener: function(eventName) {
+        return EventBus.hasEventListener(eventName)
+    },
+
+    /**
      * Remove an event listener to an event. Plugins should cleanup when they are removed.
      * @param type {string} name of the event registered with (e.g. actionNavigateSkip)
      * @param callback {function} remove the callback function
@@ -324,10 +334,10 @@ window.EkstepRendererAPI = {
     },
 
     /**
-     * Returns the complete telemetry instance
+     * Returns the complete telemetryService instance
      * @memberof EkstepRendererAPI
      **/
-    getTelemetry: function() {
+    getTelemetryService: function() {
         return TelemetryService;
     },
 

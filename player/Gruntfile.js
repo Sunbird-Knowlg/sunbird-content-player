@@ -54,6 +54,7 @@ module.exports = function(grunt) {
                         'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
                         'public/js/thirdparty/exclude/eventbus.min.js',
                         'public/js/thirdparty/exclude/Class.js',
+                        'public/js/thirdparty/exclude/underscore.js',
                         'public/js/thirdparty/exclude/md5.js',
                         'public/js/app/genieservices.js',
                         'public/js/app/EkstepRendererApi.js',

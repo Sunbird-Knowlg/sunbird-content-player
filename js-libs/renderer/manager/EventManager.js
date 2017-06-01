@@ -96,7 +96,8 @@ EventManager = {
             }
         } catch (e) {
             _.isUndefined(evt) ? showToaster('error', 'Event failed') : showToaster('error', evt.type + ': Event failed');
-            console.warn("Event manager handle failed due to", e);
+            EkstepRendererAPI.getTelemetryService().error(e, {'type': 'asset', 'objectid': evt.action.id, 'asset': evt.action.asset, "action": evt.action ? evt.action.command : ''});
+             console.warn("Event fails to handle due to", e);
         }
     },
     _setPluginId: function(actions, pluginId) {

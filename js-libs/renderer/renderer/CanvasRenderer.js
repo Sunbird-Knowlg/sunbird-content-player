@@ -54,8 +54,8 @@ Renderer = {
             }
         } catch (e) {
             showToaster('error', 'Lesson fails to play');
-            console.warn("Canvas Renderer init is failed", e);
-        }
+            EkstepRendererAPI.getTelemetryService().error(e, {'severity':'fatal','type':'content','action':'play'});
+            console.warn("Canvas Renderer init is failed", e); }
     },
     initByJSON: function(gameRelPath, canvasId) {
         jQuery.getJSON(gameRelPath + '/index.json', function(data) {
@@ -70,6 +70,7 @@ Renderer = {
                 Renderer.init(data, canvasId, gameRelPath);
             }, null, 'xml')
             .fail(function(err) {
+                EkstepRendererAPI.getTelemetryService().error(err, {'severity':'fatal','type':'content','action':'play'}); 
                 alert("Invalid ECML please correct the Ecml : ", err);
                 checkStage();
             });
@@ -100,6 +101,7 @@ Renderer = {
             });
         } catch (e) {
             console.warn("Framework fails to load plugins", e);
+            EkstepRendererAPI.getTelemetryService().error(e, {'severity':'fatal','type':'system','action':'play'}); 
             showToaster('error', 'Framework fails to load plugins');
         }
         createjs.Ticker.addEventListener("tick", function() {
