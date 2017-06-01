@@ -452,6 +452,10 @@ body {
     width: 100%;
 }
 
+.gc-menu-btn.old_menu img.icon {
+    margin-top: 0;
+}
+
 .nav-icon {
     position: absolute;
     width: 7%;
