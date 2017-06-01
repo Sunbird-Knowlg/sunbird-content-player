@@ -86,6 +86,7 @@ window.setContentData = function(metadata, data, configuration) {
         config.showEndPage = false;
     }
     localStorage.clear();
+    var object = {'config':configuration,'data':data,'metadata':metadata}
 
     window.initializePreview(configuration, metadata, data);
 }
