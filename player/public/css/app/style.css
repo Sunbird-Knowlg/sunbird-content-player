@@ -191,8 +191,9 @@ body {
 }
 
 .gc-menu {
+    font-size: 1.8vw;
     position: absolute;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     width: 35%;
     height: 100%;
     top: 0;
@@ -246,7 +247,7 @@ body {
 
 .gc-menu-cont .gc-menu-options.profile {
     display: inline-block;
-    /*width: 75%;*/
+    width: 100%;
     /*vertical-align: middle;*/
     /*padding-left: 5%;*/
     /*overflow: hidden;*/
@@ -280,6 +281,10 @@ body {
     width: 20%;
     margin-top: 6%;
     margin-right: -11%;
+}
+
+.gc-menu a.gc-menu-btn {
+    position: relative;
 }
 
 .gc-menu-collection-cont {
@@ -379,7 +384,15 @@ body {
     width: 50%;
 }
 
-.gc-menu-btn img {
+.gc-menu-btn img.user {
+    position: absolute;
+    width: 107%;
+    margin-left: -4%
+}
+
+.gc-menu-btn img.icon {
+    position: absolute;
+    margin-top: 40%;
     width: 100%;
 }
 
@@ -723,7 +736,7 @@ body {
     position: absolute;
     border: 2px solid #2fcce7;
     top: 23%;
-    margin: 7% 9%;
+    margin: 5% 9%;
     width: 86%;
 }
 
@@ -749,6 +762,10 @@ body {
 
 .img-float-mid {
     width: 11%;
+}
+
+.font-baloo.gc-ep-cont .genie-home span {
+    display: none;
 }
 
 .gc-ep-time-mid {
@@ -797,8 +814,12 @@ body {
 
 }
 
-.gc-ep-footer-icons img {
+.gc-ep-footer-icons img.replay {
     height: 80%;
+}
+
+.gc-ep-footer-icons img.user {
+    height: 90%;
 }
 
 .gc-ep-rating-cont {
@@ -872,9 +893,10 @@ body {
 .gc-ep-footer {
     position: absolute;
     /*text-align: center;*/
-    width: 100%;
-    height: 20%;
+    width: 86%;
+    height: 25%;
     bottom: 13%;
+    margin: 0 9%;
 }
 
 .gc-ep-footer p {
@@ -884,7 +906,7 @@ body {
     width: 100%;
     height: 70%;
     overflow: auto;
-    line-height: 1.5em;
+    line-height: 1.2em;
     white-space: normal;
 }
 

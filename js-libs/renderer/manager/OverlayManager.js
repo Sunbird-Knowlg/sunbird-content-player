@@ -161,6 +161,7 @@ OverlayManager = {
         this.skipAndNavigateNext();
       }catch(e){
         showToaster('error','Current scene having some issue');
+        EkstepRendererAPI.getTelemetryService().error(e, {'severity':'fatal','type':'content','action':'transitionTo'}); 
         console.warn("Fails to navigate to next due to",e);
       }
     },
@@ -184,6 +185,7 @@ OverlayManager = {
         }
       }catch(e){
         showToaster('error','Current scene having some issue');
+        EkstepRendererAPI.getTelemetryService().error(e, {'severity':'fatal','type':'content','action':'transitionTo'}); 
         console.warn("Fails to skip and navigate due to",e);
       }
     },
@@ -225,6 +227,7 @@ OverlayManager = {
         if (_.isUndefined(Renderer.theme._currentScene)) return;
         this.defaultNavigation("previous", navigateTo);
       }catch(e){
+        EkstepRendererAPI.getTelemetryService().error(e, {'severity':'fatal','type':'content','action':'transitionTo'});
         showToaster('error','Stage having some issue');
         console.warn("Fails to navigate to previous due to",e);
       }

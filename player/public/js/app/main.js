@@ -106,7 +106,8 @@ function startApp(app) {
     }
 }
 
-function contentNotAvailable() {
+function contentNotAvailable(error) {
+    EkstepRendererAPI.getTelemetryService().error(error,{'type':'content','action':'play','severity':'fatal'});
     showToaster('error', AppMessages.NO_CONTENT_FOUND);
     exitApp();
 }
@@ -222,7 +223,8 @@ function startTelemetry(id, ver, cb) {
             console.error("failed to initialize TelemetryService")
         }
     }).catch(function(error) {
-        console.log('TelemetryService init failed');
+        EkstepRendererAPI.getTelemetryService().error(error, {'type':'system','action':'play','severity':'fatal'});
+        console.warn('TelemetryService init failed');
         showToaster('error', 'TelemetryService init failed.');
         exitApp();
     });
@@ -246,3 +248,25 @@ function showToaster(toastType, message, customOptions) {
         toastr.error(message);
     }
 }
+(function() {
+    window.onbeforeunload = function(e) {
+        e = e || window.event;
+        var y = e.pageY || e.clientY;
+        !y &&  EkstepRendererAPI.getTelemetryService().end(); 
+    }
+  
+
+}());
+
+//Commenting this below line once mode = edit comes
+
+/*(function() {
+    parent.document.getElementsByTagName('iframe')[0].contentWindow.onunload = function() {
+        EkstepRendererAPI.getTelemetryService().end();
+    }
+}());*/
+
+
+
+
+

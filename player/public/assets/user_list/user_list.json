@@ -1,0 +1,53 @@
+{
+    "userList": [{
+        "avatar": "avatar_normal_1.png",
+        "gender": "male",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "69w8r81f",
+        "name": "Vinod",
+        "user": true
+    }, {
+        "avatar": "avatar_normal_3.png",
+        "gender": "Female",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "6ws551fvw6s5",
+        "name": "Mala"
+    }, {
+        "avatar": "avatar_normal_2.png",
+        "gender": "male",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "6f5fv16s",
+        "name": "Shringeri"
+    }, {
+        "avatar": "avatar_normal_5.png",
+        "gender": "male",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "r968+f1w",
+        "name": "Ramu"
+    }, {
+        "avatar": "avatar_normal_4.png",
+        "gender": "female",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "f651vbfd",
+        "name": "Anubala"
+    }, {
+        "avatar": "avatar_normal_6.png",
+        "gender": "Female",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "695fv1",
+        "name": "Puja"
+    }]
+
+}

@@ -1,3 +1,4 @@
+// for device
 genieservice_web = {
     api: {
         basePath: '/genie-canvas/v2/',
@@ -9,21 +10,40 @@ genieservice_web = {
             return this.getFullAPI(this.contentList);
         }
     },
+
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
             result.status = "success";
-            result.data = {
-                "avatar": "resource1",
-                "gender": "male",
-                "handle": "handle1",
-                "uid": "8hjh3c4b7b47d570df0ec286bf7adc8ihhnjy",
-                "age": 6,
-                "standard": -1
-            };
+            $.getJSON("assets/user_list/user_list.json",function(data){
+                // console.log("===== data =====", data);
+                result.data = data.userList[0];
+                resolve(result);
+            })
+        });
+    },
+
+    getUsersList: function() {
+        return new Promise(function(resolve, reject) {
+            var result = {};
+            result.status = "success";
+            $.getJSON("assets/user_list/user_list.json",function(data){
+                // console.log("===== data =====", data);
+                result.data = data.userList;
+                resolve(result);
+            })
+        });
+    },
+
+    setCurrentUser: function(uid) {
+        return new Promise(function(resolve, reject) {
+            var result = {};
+            result.status = "success";
+            // result.data = usersList;
             resolve(result);
         });
     },
+
     getMetaData: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
@@ -34,6 +54,7 @@ genieservice_web = {
             resolve(result);
         });
     },
+
     getContent: function(id, url) {
         if(isbrowserpreview) {
             return new Promise(function(resolve, reject) {
@@ -85,6 +106,8 @@ genieservice_web = {
         return endpoint;
     }
 };
+
+//For portal
 genieservice_portal = {
     api: {
         _baseUrl: undefined,
@@ -127,17 +150,35 @@ genieservice_portal = {
         return new Promise(function(resolve, reject) {
             var result = {};
             result.status = "success";
-            result.data = {
-                "avatar": "resource1",
-                "gender": "male",
-                "handle": "handle1",
-                "uid": "8hjh3c4b7b47d570df0ec286bf7adc8ihhnjy",
-                "age": 6,
-                "standard": -1
-            };
+            $.getJSON("assets/user_list/user_list.json",function(data){
+                // console.log("===== data =====", data);
+                result.data = data.userList[0];
+                resolve(result);
+            })
+        });
+    },
+
+    getUsersList: function() {
+        return new Promise(function(resolve, reject) {
+            var result = {};
+            result.status = "success";
+            $.getJSON("assets/user_list/user_list.json",function(data){
+                // console.log("===== data =====", data);
+                result.data = data.userList;
+                resolve(result);
+            })
+        });
+    },
+
+    setCurrentUser: function(uid) {
+        return new Promise(function(resolve, reject) {
+            var result = {};
+            result.status = "success";
+            // result.data = usersList;
             resolve(result);
         });
     },
+
     getMetaData: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
@@ -272,6 +313,7 @@ genieservice_portal = {
     }
 };
 
+// For HTML conten
 genieservice_html = {
     localData: {},
     _jsFilesToLoad: [],
@@ -377,15 +419,15 @@ genieservice_html = {
     }
 };
 if ("undefined" == typeof cordova) {
-    if("undefined" == typeof isbrowserpreview) {
-        if("undefined" == typeof AppConfig){
+    if ("undefined" == typeof isbrowserpreview) {
+        if ("undefined" == typeof AppConfig) {
             genieservice = genieservice_html;
             console.log("HTML Local genieservice", genieservice);
-        }else{
+        } else {
              genieservice = genieservice_web;
         }
     }
-    else{
+    else {
         genieservice = genieservice_portal;
         console.log("Portal genieservice", genieservice);
     }

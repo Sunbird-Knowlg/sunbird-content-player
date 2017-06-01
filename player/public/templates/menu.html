@@ -1,20 +1,20 @@
 <div class="menu-overlay" ng-click="hideMenu()" ng-cloak></div>
 <!-- Menu container -->
 <div class="gc-menu">
-    <a class="gc-menu-btn" href="javascript:void(0)" ng-click="openMenu()" style="left:5%">
-        <img class="menu-icon" ng-src="{{imageBasePath}}menu_icon.png" ng-hide="menuOpened" style="width: 100%" />
+    <a class="gc-menu-btn" href="javascript:void(0)" ng-click="openMenu()">
+        <img class="menu-icon icon" ng-src="{{imageBasePath}}menu_icon.png" ng-hide="menuOpened"/>
+        <img class="menu-icon user" ng-src="{{imageBasePath + currentUser.avatar}}" ng-hide="menuOpened"/>
     </a>
-    <div class="gc-menu-cont" ng-show="menuOpened">
+    <div class="font-baloo gc-menu-cont" ng-show="menuOpened">
         <div class="gc-menu-title-cont">
             <p class="icon-font">{{item.name}}</p>
         </div>
         <div class = "gc-menu-options">
             <restart></restart>
         </div>
-        <div class = "gc-menu-options profile">
-            <img alt="prof img" src="http://placehold.it/55x55"/>
-            <span> {{"Krushanu Mohapatra"}} <br/> <small> {{"Change"}} </small></span>
-
+        <div ng-click="openUserSwitchingModal()" class = "gc-menu-options profile">
+            <img alt="prof img" ng-src="{{imageBasePath + currentUser.avatar}}"/>
+            <span class="menu-text"> {{currentUser.name}} <br/> <small> {{languageSupport.change}} </small></span>
         </div>
         <div class = "gc-menu-options">
             <mute></mute>
