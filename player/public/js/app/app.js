@@ -396,7 +396,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 content.body = configuration.data;
                 console.info("Content id is undefined or body is available !!");
                 var $state = angular.element(document.body).injector().get('$state')
-                updateContentData($state, content.metadata.contentId)
+                updateContentData($state, content.metadata.identifier)
             }
         }, this);
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
