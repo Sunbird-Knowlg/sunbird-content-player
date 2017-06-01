@@ -74,7 +74,7 @@ TelemetryV2Manager = Class.extend({
                 data.objectType =  data.objectType ?  data.objectType : (data.asset ? (!_.isUndefined(PluginManager.pluginObjMap[data.asset]) ? PluginManager.pluginObjMap[data.asset]._data.pluginType : undefined) : undefined);
                 if (errorStack) {data.err = errorStack.message; data.data = errorStack.stack; } 
                 data.severity = data.severity === 'fatal' || data.objectType === 'theme' || data.objectType === 'stage' || data.action === "transitionTo" ? 'fatal' : 'error';
-                return this.createEvent("OE_ERROR", {'env': data.env, 'type': data.type, 'stageid': data.stageId, 'objectType': data.objectType, 'objectid': data.objectid, 'err': data.err, 'action': data.action, 'data': data.data, 'severity': data.severity }); 
+                return this.createEvent("OE_ERROR", {'env': data.env, 'type': data.type, 'stageid': data.stageId, 'objecttype': data.objectType, 'objectid': data.objectid, 'err': data.err, 'action': data.action, 'data': data.data, 'severity': data.severity }); 
             } else {
                 console.error("OE_ERROR Event faild, Required data is  Unavailable");
             }
