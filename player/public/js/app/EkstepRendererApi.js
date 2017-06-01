@@ -812,7 +812,7 @@ window.EkstepRendererAPI = {
             data.type || 'plugin'; data.stageId = Renderer.theme ? EkstepRendererAPI.getCurrentStageId() : undefined;
             data.objectType = data.objectType ? data.objectType : (data.asset ? (!_.isUndefined(EkstepRendererAPI.getPluginInstance(data.asset)) ? EkstepRendererAPI.getPluginInstance(data.asset)._data.pluginType : undefined) : undefined);
             data.severity = data.severity === 'fatal' || data.objectType === 'theme' || data.objectType === 'stage' || data.action === "transitionTo" ? 'fatal' : 'error';
-            errorStack && (data.err = errorStack.message, data.data = errorStack.stack)
+            errorStack && (data.err = errorStack.message || errorStack, data.data = errorStack.stack)
             EkstepRendererAPI.getTelemetryService().error(data);
         }
     }

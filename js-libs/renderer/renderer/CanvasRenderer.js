@@ -95,7 +95,7 @@ Renderer = {
         var resource = instance.handleRelativePath(instance.getResource(manifest), gameRelPath + '/widgets/');
         var pluginManifest = content["plugin-manifest"];
         (_.isUndefined(pluginManifest) || _.isEmpty(pluginManifest)) && (pluginManifest = { plugin: [] });
-        var previewPlugins = EkstepRendererAPI.getPreviewData().context.plugin;
+        var previewPlugins = EkstepRendererAPI.getPreviewData().config.plugin;
         if (previewPlugins) {
             _.each(previewPlugins, function(item) { pluginManifest.plugin.push({id: item.id, ver: item.ver || 1.0, type: item.type || "plugin", depends: item.depends || ""}); });
         }
