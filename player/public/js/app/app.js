@@ -43,34 +43,31 @@ var stack = new Array(),
     isbrowserpreview = getUrlParameter("webview")
 
 window.previewData = {'context':{},'config':{}};
+
 window.initializePreview = function(configuration) {
-    // For testing only, Will be removed after portal side integration is done.
-    if (!configuration.context.authToken) {
-        configuration.context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
-    }
     // configuration: additional information passed to the preview
     if (_.isUndefined(configuration.context) && !_.isUndefined(configuration.body)) {
         showToaster('warning', 'AuthToken is not available, telemetry sync will fail')
         configuration.context = {};
-    } else {
+    } else if (_.isUndefined(configuration.context) && _.isUndefined(configuration.body)){
         showToaster('error', 'AuthToken is not available')
         return;
+    }
+    // For testing only, Will be removed after portal side integration is done.
+    if (!configuration.context.authToken) {
+        configuration.context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
     }
     if (_.isUndefined(configuration.config)) {
         configuration.config = {};
     }
-    if (!_.isUndefined(configuration.body)) {
-        content.body = configuration.body;
-    }
-    content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
     if (_.isUndefined(configuration.context.contentId)) {
         configuration.context.contentId = getUrlParameter("id")
     }
+    localStorage.clear();
     genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
     window.previewData = configuration;
-    localStorage.clear();
     configuration.config.repo && configuration.config.plugin && EkstepRendererAPI.dispatchEvent("repo:intialize");
-    EventBus.dispatch("event:loadContent");
+    EkstepRendererAPI.dispatchEvent("event:loadContent");
 }
 
 // TODO:have to remove appState and setContentDataCb in future.
@@ -95,20 +92,14 @@ window.setContentData = function(metadata, data, configuration) {
     window.initializePreview(configuration, metadata, data);
 }
 
-function updateContentData($state) {
+function updateContentData($state, contentId) {
     if (_.isUndefined($state)) {
-        console.warn("updateContentData($state) - $state is not defined.");
+        console.error("updateContentData($state) - $state is not defined.");
         return;
     }
-    if (content && content.metadata) {
-        if (!content.metadata.identifier) {
-            console.error("Content Id is missing. Sending default Id for TelemetryService init.");
-        }
-        var contentId = content.metadata.identifier || defaultMetadata.identifier;
-        $state.go('playContent', {
-            'itemId': contentId
-        });
-    }
+    $state.go('playContent', {
+        'itemId': contentId
+    });
 }
 
 function getContentObj(data) {
@@ -214,11 +205,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     contentNotAvailable(err);
                 });
         };
-        $rootScope.getDataforPortal = function() {
+        $rootScope.getDataforPortal = function(id) {
             var configuration = EkstepRendererAPI.getPreviewData();
             var headers = $rootScope.getUrlParameter();
             headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
-            ContentService.getContentMetadata(configuration.context.contentId, headers)
+            ContentService.getContentMetadata(id, headers)
                 .then(function(data) {
                     $rootScope.setContentMetadata(data);
                 })
@@ -256,11 +247,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
             return (_.object(urlParams))
         }
-        $rootScope.getContentBody = function() {
+        $rootScope.getContentBody = function(id) {
             var configuration = EkstepRendererAPI.getPreviewData();
             var headers = $rootScope.getUrlParameter();
             headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
-            ContentService.getContentBody(configuration.context.contentId, headers).then(function(data) {
+            ContentService.getContentBody(id, headers).then(function(data) {
                     content["body"] = data.body;
                     launchInitialPage(content.metadata, $state);
                 })
@@ -269,15 +260,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     contentNotAvailable(err);
                 });
         };
-        EventBus.addEventListener("event:loadContent", function() {
-            if (_.isUndefined(content.body)) {
-                $rootScope.getDataforPortal();
-            } else {
-                console.info("Content id is undefined or body is available !!");
-                var $state = angular.element(document.body).injector().get('$state')
-                updateContentData($state)
-            }
-        });
 
         $rootScope.deviceRendrer = function() {
             if ($state.current.name == appConstants.stateShowContentEnd) {
@@ -400,7 +382,20 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     'itemId': $rootScope.content.identifier
                 });
             }
-        }
+        };
+
+        EkstepRendererAPI.addEventListener("event:loadContent", function() {
+            var configuration = EkstepRendererAPI.getPreviewData();
+            content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
+            if (_.isUndefined(configuration.data)) {
+                $rootScope.getDataforPortal(configuration.context.contentId);
+            } else {
+                content.body = configuration.data;
+                console.info("Content id is undefined or body is available !!");
+                var $state = angular.element(document.body).injector().get('$state')
+                updateContentData($state, configuration.context.contentId)
+            }
+        }, this);
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         // This will be appear only for the localdevlopment
         $rootScope.pageId = 'ContentApp-Collection';
