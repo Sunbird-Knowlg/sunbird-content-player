@@ -144,7 +144,7 @@ TelemetryService = {
         }
         return telemetryLocalStorageData;
     },
-    start: function(id, ver) {
+    start: function(id, ver, mode) {
         if (!TelemetryService.isActive) {
             console.log("TelemetryService is not active.");
             return new InActiveEvent();
@@ -155,7 +155,7 @@ TelemetryService = {
                 }))
                 return new InActiveEvent();
             else
-                return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver), TelemetryService.apis.telemetry);
+                return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver, mode), TelemetryService.apis.telemetry);
         }
     },
     end: function() {
