@@ -46,12 +46,8 @@ window.previewData = {'context':{},'config':{}};
 
 window.initializePreview = function(configuration) {
     // configuration: additional information passed to the preview
-    if (_.isUndefined(configuration.context) && !_.isUndefined(configuration.body)) {
-        showToaster('warning', 'AuthToken is not available, telemetry sync will fail')
+    if (_.isUndefined(configuration.context)){
         configuration.context = {};
-    } else if (_.isUndefined(configuration.context) && _.isUndefined(configuration.body)){
-        showToaster('error', 'AuthToken is not available')
-        return;
     }
     // For testing only, Will be removed after portal side integration is done.
     if (!configuration.context.authToken) {
@@ -210,7 +206,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.getDataforPortal = function(id) {
             var configuration = EkstepRendererAPI.getPreviewData();
             var headers = $rootScope.getUrlParameter();
-            headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
+            if (_.isUndefined(configuration.context.authToken)) {
+                headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
+            }
             ContentService.getContentMetadata(id, headers)
                 .then(function(data) {
                     $rootScope.setContentMetadata(data);
@@ -252,7 +250,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.getContentBody = function(id) {
             var configuration = EkstepRendererAPI.getPreviewData();
             var headers = $rootScope.getUrlParameter();
-            headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
+            if (_.isUndefined(configuration.context.authToken)) {
+                headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
+            }
             ContentService.getContentBody(id, headers).then(function(data) {
                     content["body"] = data.body;
                     launchInitialPage(content.metadata, $state);
