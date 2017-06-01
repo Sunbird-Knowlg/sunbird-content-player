@@ -85,8 +85,10 @@ window.setContentData = function(metadata, data, configuration) {
         config.showEndPage = false;
     }
     localStorage.clear();
-
-    window.initializePreview(configuration, metadata, data);
+    if (data) {
+        var object = {'config':configuration,'data':data,'metadata':metadata}
+    }
+    window.initializePreview(object);
 }
 
 function updateContentData($state) {
