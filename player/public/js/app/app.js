@@ -44,20 +44,29 @@ var stack = new Array(),
 
 window.previewData = {'context':{},'config':{}};
 window.initializePreview = function(configuration) {
+    // For testing only, Will be removed after portal side integration is done.
+    if (!configuration.context.authToken) {
+        configuration.context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
+    }
     // configuration: additional information passed to the preview
-    // metadata: metadata of the content
-    // data: JSON data of the content
-    genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-    content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
+    if (_.isUndefined(configuration.context) && !_.isUndefined(configuration.body)) {
+        showToaster('warning', 'AuthToken is not available, telemetry sync will fail')
+        configuration.context = {};
+    } else {
+        showToaster('error', 'AuthToken is not available')
+        return;
+    }
+    if (_.isUndefined(configuration.config)) {
+        configuration.config = {};
+    }
     if (!_.isUndefined(configuration.body)) {
         content.body = configuration.body;
     }
-    localStorage.clear();
-    if (!configuration.context.authToken) {
-        configuration.context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
-    } 
+    content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
+    genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
     configuration.context.contentId = configuration.context.contentId ? configuration.context.contentId : getUrlParameter("id");
     window.previewData = configuration;
+    localStorage.clear();
     EventBus.dispatch("event:loadContent");
 }
 
