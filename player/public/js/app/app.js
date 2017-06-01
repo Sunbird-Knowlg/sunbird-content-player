@@ -246,6 +246,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             var headers = $rootScope.getUrlParameter();
             headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
             ContentService.getContentBody(configuration.context.contentId, headers).then(function(data) {
+                    content["body"] = data.body;
                     launchInitialPage(content.metadata, $state);
                 })
                 .catch(function(err) {
