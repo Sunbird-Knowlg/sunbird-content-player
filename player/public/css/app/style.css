@@ -66,40 +66,10 @@
     src: url('fonts/lato/Lato-Black.ttf') format('opentype')
 }
 
-@font-face {
-    font-family: 'lato-black-italic';
-    src: url('fonts/lato/Lato-BlackItalic.ttf') format('opentype')
-}
-
-@font-face {
+/*@font-face {
     font-family: 'lato-bold';
     src: url('fonts/Lato/Lato-Bold.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'lato-bold-italic';
-    src: url('fonts/lato/Lato-BoldItalic.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'lato-hairline';
-    src: url('fonts/lato/Lato-Hairline.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'lato-hairline-italic';
-    src: url('fonts/lato/Lato-HairlineItalic.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'lato-heavy';
-    src: url('fonts/lato/Lato-Heavy.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'lato-heavy-italic';
-    src: url('fonts/lato/Lato-heavy-italic.ttf') format('opentype')
-}
+}*/
 
 @font-face {
     font-family: 'lato-light';
@@ -107,43 +77,8 @@
 }
 
 @font-face {
-    font-family: 'lato-light-italic';
-    src: url('fonts/lato/Lato-LightItalic.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'lato-medium';
-    src: url('fonts/lato/Lato-Medium.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'lato-medium-italic';
-    src: url('fonts/lato/Lato-MediumItalic.ttf') format('opentype')
-}
-
-@font-face {
     font-family: 'lato-regular';
     src: url('fonts/lato/Lato-Regular.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'lato-semibold';
-    src: url('fonts/lato/Lato-Semibold.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'lato-semibold-italic';
-    src: url('fonts/lato/Lato-SemiboldItalic.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'lato-thin';
-    src: url('fonts/lato/Lato-Thin.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'lato-thin-italic';
-    src: url('fonts/lato/Lato-ThinItalic.ttf') format('opentype')
 }
 
 ion-popover-view.fit {
@@ -443,8 +378,8 @@ body {
 .gc-menu-btn img.user {
     position: absolute;
     width: 107%;
+    margin-top: -4px;
     margin-left: -4%
-    top: -4px;
 }
 
 .gc-menu-btn img.icon {
@@ -1591,7 +1526,7 @@ body {
 /* The Modal (background) */
 
 #userSwitchingModal.user-modal {
-    display: none;
+    display: block;
     /* Hidden by default */
     position: fixed;
     /* Stay in place */
