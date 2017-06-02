@@ -50,9 +50,9 @@ window.initializePreview = function(configuration) {
         configuration.context = {};
     }
     // For testing only, Will be removed after portal side integration is done.
-    if (!configuration.context.authToken) {
-        configuration.context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
-    }
+    // if (!configuration.context.authToken) {
+    //     configuration.context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
+    // }
     if (_.isUndefined(configuration.config)) {
         configuration.config = {};
     }
