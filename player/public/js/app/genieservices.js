@@ -115,7 +115,7 @@ genieservice_portal = {
         languageBasePath: '/language/v3/',
         telemetryBasePath: '/telemetry/v3/telemetry',
         isAuthTokenAvailable: function() {
-            var configuration = EkstepRendererApi.getPreviewData;
+            var configuration = EkstepRendererAPI.getPreviewData();
             return configuration.context.authToken ? true : false;
         },
         getFullAPI: function() {
