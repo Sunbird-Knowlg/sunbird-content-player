@@ -12,11 +12,11 @@ TelemetryV2Manager = Class.extend({
     createEvent: function(eventName, body) {
         return new TelemetryEvent(eventName, TelemetryService._version, body, TelemetryService._user, TelemetryService._gameData, TelemetryService._correlationData);
     },
-    start: function(id, ver, mode) {
+    start: function(id, ver, data) {
         TelemetryService._gameData = {id: id , ver : ver};
         this._end.push(this.createEvent("OE_END", {}).start());
         this._start.push({id: id , ver : ver});
-        return this.createEvent("OE_START", {'mode':mode});
+        return this.createEvent("OE_START", data);
     },
     end: function(gameId) {
         if (!_.isEmpty(this._start)) {

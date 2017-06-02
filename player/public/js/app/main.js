@@ -209,8 +209,9 @@ function startTelemetry(id, ver, cb) {
         }];
     }
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData).then(function(response) {
-        var env = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode;
-        TelemetryService.start(id, ver, env);
+        var data = {};
+        data.mode = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
+        TelemetryService.start(id, ver, data);
         if (!_.isUndefined(TelemetryService.instance)) {
             var tsObj = _.clone(TelemetryService);
             tsObj._start = JSON.stringify(tsObj.instance._start);
@@ -259,6 +260,7 @@ function addWindowUnloadEvent() {
     }
     if (EkstepRendererAPI.getPreviewData().context.mode === 'edit') {
         parent.document.getElementsByTagName('iframe')[0].contentWindow.onunload = function() {
+            EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId());
             EkstepRendererAPI.getTelemetryService().end();
         }
     }
