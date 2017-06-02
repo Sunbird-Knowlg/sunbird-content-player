@@ -319,15 +319,15 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     if ("undefined" != typeof localPreview && "local" == localPreview)
                         return;
                     if (isbrowserpreview) {
-                        var urlContentId = getUrlParameter("id");
+                        // var urlContentId = getUrlParameter("id");
                         genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-                        if (urlContentId) {
-                            var configuration = {
-                                "contentId": urlContentId,
-                                'context': {}
-                            };
-                            window.initializePreview(configuration);
-                        }
+                        // if (urlContentId) {
+                        //     var configuration = {
+                        //         "contentId": urlContentId,
+                        //         'context': {}
+                        //     };
+                        //     window.initializePreview(configuration);
+                        // }
 
                     } else {
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
