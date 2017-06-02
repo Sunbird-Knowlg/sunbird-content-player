@@ -807,13 +807,30 @@ window.EkstepRendererAPI = {
     */
 
     logErrorEvent: function(errorStack, data) {
-        if (data) {
-            data.env = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode;
-            data.type || 'plugin'; data.stageId = Renderer.theme ? EkstepRendererAPI.getCurrentStageId() : undefined;
-            data.objectType = data.objectType ? data.objectType : (data.asset ? (!_.isUndefined(EkstepRendererAPI.getPluginInstance(data.asset)) ? EkstepRendererAPI.getPluginInstance(data.asset)._data.pluginType : undefined) : undefined);
-            data.severity = data.severity === 'fatal' || data.objectType === 'theme' || data.objectType === 'stage' || data.action === "transitionTo" ? 'fatal' : 'error';
-            errorStack && (data.err = errorStack.message || errorStack, data.data = errorStack.stack)
-            EkstepRendererAPI.getTelemetryService().error(data);
+        try {
+            if (data) {
+                data.env = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
+                data.type = !_.isUndefined(data.type) ? data.type.toUpperCase() : 'PLUGIN';
+                data.stageId = Renderer.theme ? EkstepRendererAPI.getCurrentStageId() : '';
+                if (!data.objectType) {
+                    data.objectType = !_.isUndefined(this.getPluginInstance(data.asset)) ? this.getPluginInstance(data.asset)._data.pluginType : '';
+                }
+                if (data.severity !== 'fatal') {
+                    if (data.objectType === 'theme' || data.objectType === 'stage' || data.action === 'transitionTo') {
+                        data.severity = 'fatal';
+                    } else {
+                        data.severity = 'error';
+                    }
+                }
+                if (errorStack) {
+                    data.err = errorStack.message || errorStack;
+                    data.data = errorStack.stack;
+                }
+                EkstepRendererAPI.getTelemetryService().error(data);
+            }
+        } catch (e) {
+            console.warn('OE_ERROR event fails to log',e);
         }
+
     }
 }
