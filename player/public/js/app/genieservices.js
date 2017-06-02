@@ -117,7 +117,7 @@ genieservice_portal = {
         isAuthTokenAvailable: function() {
             var configuration = EkstepRendererApi.getPreviewData;
             return configuration.context.authToken ? true : false;
-        }
+        },
         getFullAPI: function() {
             var authToken = this.isAuthTokenAvailable();
             return authToken ? (this.getBaseUrl() + this.contentBasePath) : (this.getBaseUrl() + AppConfig.contentApi);
