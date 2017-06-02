@@ -591,9 +591,6 @@ module.exports = function(grunt) {
                 },{
                     from: /DEPLOYMENT/g,
                     to: "dev"
-                },{
-                    from: /api/g,
-                    to: "action"
                 }]
             },
             preview_production: {
