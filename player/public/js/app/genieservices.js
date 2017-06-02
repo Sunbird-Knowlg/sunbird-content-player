@@ -113,16 +113,26 @@ genieservice_portal = {
         _baseUrl: undefined,
         contentBasePath: '/content/v3/read/',
         languageBasePath: '/language/v3/',
-        telemetryBasePath: '/telemetry/v1/telemetry',
+        telemetryBasePath: '/telemetry/v3/telemetry',
+        isAuthTokenAvailable: function() {
+            var configuration = EkstepRendererApi.getPreviewData;
+            return configuration.context.authToken ? true : false;
+        }
         getFullAPI: function() {
-            return this.getBaseUrl() + this.contentBasePath;
+            var authToken = this.isAuthTokenAvailable();
+            return authToken ? (this.getBaseUrl() + this.contentBasePath) : (this.getBaseUrl() + AppConfig.contentApi);
+            // return this.getBaseUrl() + this.contentBasePath;
         },
         getLanguageFullAPI: function() {
+            var authToken = this.isAuthTokenAvailable();
+            return authToken ? (this.getBaseUrl() + this.languageBasePath) : (this.getBaseUrl() + AppConfig.languageApi);
             //return AppConfig[AppConfig.flavor] + this.languageBasePath;
-            return this.getBaseUrl() + this.languageBasePath;
+            // return this.getBaseUrl() + this.languageBasePath;
         },
         getTelematyFullAPI: function(){
-            return this.getBaseUrl() + this.telemetryBasePath;
+            var authToken = this.isAuthTokenAvailable();
+            return authToken ? (this.getBaseUrl() + this.telemetryBasePath) : (this.getBaseUrl() + AppConfig.telemetryApi);
+            // return this.getBaseUrl() + this.telemetryBasePath;
         },
         setBaseUrl: function(baseUrl){
            this._baseUrl = baseUrl;
@@ -192,9 +202,7 @@ genieservice_portal = {
     getContentBody: function(id, headersParam) {
         var instance = this;
         return new Promise(function(resolve, reject) {
-        // headers["Content-Type"] = "application/json";
         instance.callApi(genieservice_portal.api.getFullAPI() + id + "?fields=body", 'GET', headersParam, undefined, function(resp) {
-        // jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", headers, function(resp) {
             var result = {};
             if (!resp.error) {
                 result.list = resp;
@@ -221,9 +229,7 @@ genieservice_portal = {
     getContentMetadata: function(id, headersParam) {
         var instance = this;
         return new Promise(function(resolve, reject) {
-        // headers["Content-Type"] = "application/json";
         instance.callApi(genieservice_portal.api.getFullAPI() + id, 'GET', headersParam, undefined,  function(resp) {
-        // jQuery.get(genieservice_portal.api.getFullAPI() + id, headers, function(resp) {
             var result = {};
             if (!resp.error) {
                 result.list = resp;
@@ -246,14 +252,6 @@ genieservice_portal = {
         return new Promise(function(resolve, reject) {
             var headersParam = {};
             instance.callApi(genieservice_portal.api.getLanguageFullAPI() + "search", 'POST', headersParam, filter, function(resp) {
-            // jQuery.ajax({
-                // type: 'POST',
-                // url: genieservice_portal.api.getLanguageFullAPI() + "search",
-                // headers: {"Content-Type": "application/json"},
-                // data: filter
-            // })
-            // .done(function(resp){
-            //jQuery.post(genieservice_portal.api.getLanguageFullAPI(), filter, function(resp) {
                 var result = {};
                 if (!resp.error) {
                     result.list = resp;
@@ -264,19 +262,20 @@ genieservice_portal = {
             });
         });
     },
-    sendTelemetry: function(data){
+    sendTelemetry: function(data, headersParam){
         return new Promise(function(resolve, reject) {
-            var teleAuth = AppConfig.telemetryApiAuth;
-            var basicAuth = 'Basic ' + btoa(atob(teleAuth.username) + ":" + atob(teleAuth.password));
-            jQuery.ajax({
-                type: 'POST',
-                url: genieservice_portal.api.getTelematyFullAPI(),
-                headers: {"Authorization": basicAuth, "Content-Type": "application/json", },
-                data: JSON.stringify(data),
-                dataType: "json",
-                contentType: "application/json"
-            })
-            .done(function(resp){
+            // var teleAuth = AppConfig.telemetryApiAuth;
+            // var basicAuth = 'Basic ' + btoa(atob(teleAuth.username) + ":" + atob(teleAuth.password));
+            headersParam['dataType'] = 'json';
+            instance.callApi(genieservice_portal.api.getTelematyFullAPI(), 'POST', headersParam, JSON.stringify(data),  function(resp) {
+            // jQuery.ajax({
+            //     type: 'POST',
+            //     url: genieservice_portal.api.getTelematyFullAPI(),
+            //     headers: {"Authorization": basicAuth, "Content-Type": "application/json", },
+            //     data: JSON.stringify(data),
+            //     dataType: "json",
+            // })
+            // .done(function(resp){
                 var result = {};
                 if (!resp.error) {
                     result.data = resp;

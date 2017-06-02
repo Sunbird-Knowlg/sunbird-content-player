@@ -105,7 +105,12 @@ var TelemetryPlugin = Plugin.extend({
         };
         // "events": JSON.parse(telemetryData)
         // console.log("teleObj to send to api", teleObj);
-        genieservice.sendTelemetry(teleObj).then(function(data) {
+        var configuration = EkstepRendererAPI.getPreviewData;
+        var headers = {};
+        if (!_.isUndefined(configuration.context.authToken)) {
+            headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
+        }
+        genieservice.sendTelemetry(teleObj, headers).then(function(data) {
            console.log("Telemetry API success", data);
         });
     },
