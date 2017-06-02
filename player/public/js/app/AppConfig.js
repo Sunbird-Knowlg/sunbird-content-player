@@ -13,7 +13,7 @@ AppConfig = {
 	telemetryApiAuth: {"username": "ZWtzdGVw", "password": "czNjcjN0Mw=="},
 	contentApi: '/action/content/v3/read/',
 	languageApi: '/action/language/v3/',
-	telemetryApi: '/telemetry/v3/telemetry'
+	telemetryApi: '/action/data/v3/telemetry'
 }
 
 
