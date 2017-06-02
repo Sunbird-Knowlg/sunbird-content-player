@@ -1,11 +1,11 @@
 <!-- The Modal -->
-<div id="userSwitchingModal" class="user-modal">
+<div ng-show="showUserSwitchModal" id="userSwitchingModal" class="user-modal">
 
 
     <!-- Modal content -->
     <div class="modal-content">
         <div class="user-header">
-            <span ng-click="closeUserSwitchingModal()" class="close">&times;</span>
+            <span ng-click="hideUserSwitchingModal()" class="close">&times;</span>
             <p>SELECT A CHILD</p>
         </div>
         <div id="sliderContainer" class="slider-container">

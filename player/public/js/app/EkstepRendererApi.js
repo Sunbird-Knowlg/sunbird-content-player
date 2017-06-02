@@ -798,4 +798,14 @@ window.EkstepRendererAPI = {
    replayContent: function(data, target) {
        EkstepRendererAPI.dispatchEvent('actionReplay', data, target);
    }
+
+   // /**
+   //  *This api will return the list of users in the Device
+   //  * @memberof EkstepRendererAPI
+   //  * @param data {object} event data to carry along with the notification
+   //  * @param target {object} the scope of the event (use this)
+   //  */
+   // replayContent: function(data, target) {
+   //     EkstepRendererAPI.dispatchEvent('actionReplay', data, target);
+   // }
 }
