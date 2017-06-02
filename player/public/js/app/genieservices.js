@@ -110,40 +110,29 @@ genieservice_web = {
 //For portal
 genieservice_portal = {
     api: {
-        _baseUrl: undefined,
+        // _baseUrl: undefined,
         contentBasePath: '/content/v3/read/',
         languageBasePath: '/language/v3/',
         telemetryBasePath: '/data/v3/telemetry',
-        isAuthTokenAvailable: function() {
-            var configuration = EkstepRendererAPI.getPreviewData();
-            return configuration.context.authToken ? true : false;
-        },
         getFullAPI: function() {
-            var authToken = this.isAuthTokenAvailable();
-            return authToken ? (this.getBaseUrl() + this.contentBasePath) : (this.getBaseUrl() + AppConfig.contentApi);
-            // return this.getBaseUrl() + this.contentBasePath;
+            return AppConfig.apislug + this.contentBasePath;
         },
         getLanguageFullAPI: function() {
-            var authToken = this.isAuthTokenAvailable();
-            return authToken ? (this.getBaseUrl() + this.languageBasePath) : (this.getBaseUrl() + AppConfig.languageApi);
-            //return AppConfig[AppConfig.flavor] + this.languageBasePath;
-            // return this.getBaseUrl() + this.languageBasePath;
+            return AppConfig.apislug + this.languageBasePath;
         },
         getTelematyFullAPI: function(){
-            var authToken = this.isAuthTokenAvailable();
-            return authToken ? (this.getBaseUrl() + this.telemetryBasePath) : (this.getBaseUrl() + AppConfig.telemetryApi);
-            // return this.getBaseUrl() + this.telemetryBasePath;
+            return AppConfig.apislug + this.telemetryBasePath;
         },
-        setBaseUrl: function(baseUrl){
-           this._baseUrl = baseUrl;
-        },
-        getBaseUrl: function(){
-            if(_.isUndefined(this._baseUrl)) {
-                alert("Base path is undefined.");
-                return;
-            }
-           return this._baseUrl;
-        }
+        // setBaseUrl: function(baseUrl){
+        //    this._baseUrl = baseUrl;
+        // },
+        // getBaseUrl: function(){
+        //     if(_.isUndefined(this._baseUrl)) {
+        //         alert("Base path is undefined.");
+        //         return;
+        //     }
+        //    return this._baseUrl;
+        // }
     },
     callApi: function(url, type, headersParam, data, cb) {
         headersParam["Content-Type"] = "application/json";

@@ -60,7 +60,8 @@ window.initializePreview = function(configuration) {
         configuration.context.contentId = getUrlParameter("id")
     }
     localStorage.clear();
-    genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
+    AppConfig = _.extend(AppConfig, configuration.config)
+    // genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
     window.previewData = configuration;
     configuration.config.repo && configuration.config.plugin && EkstepRendererAPI.dispatchEvent("repo:intialize");
     EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
