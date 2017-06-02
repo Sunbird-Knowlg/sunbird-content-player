@@ -810,7 +810,7 @@ window.EkstepRendererAPI = {
         try {
             if (data) {
                 data.env = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
-                data.type = !_.isUndefined(data.type) ? data.type.toUpperCase() : 'PLUGIN';
+                data.type = !_.isUndefined(data.type) ? data.type.toUpperCase() : 'OTHER';
                 data.stageId = Renderer.theme ? EkstepRendererAPI.getCurrentStageId() : '';
                 if (!data.objectType) {
                     data.objectType = !_.isUndefined(this.getPluginInstance(data.asset)) ? this.getPluginInstance(data.asset)._data.pluginType : '';
