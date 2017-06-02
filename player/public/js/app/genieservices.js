@@ -113,7 +113,7 @@ genieservice_portal = {
         _baseUrl: undefined,
         contentBasePath: '/content/v3/read/',
         languageBasePath: '/language/v3/',
-        telemetryBasePath: '/telemetry/v3/telemetry',
+        telemetryBasePath: '/data/v3/telemetry',
         isAuthTokenAvailable: function() {
             var configuration = EkstepRendererAPI.getPreviewData();
             return configuration.context.authToken ? true : false;
@@ -263,6 +263,7 @@ genieservice_portal = {
         });
     },
     sendTelemetry: function(data, headersParam){
+        var instance = this;
         return new Promise(function(resolve, reject) {
             // var teleAuth = AppConfig.telemetryApiAuth;
             // var basicAuth = 'Basic ' + btoa(atob(teleAuth.username) + ":" + atob(teleAuth.password));

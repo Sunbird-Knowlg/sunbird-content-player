@@ -105,7 +105,7 @@ var TelemetryPlugin = Plugin.extend({
         };
         // "events": JSON.parse(telemetryData)
         // console.log("teleObj to send to api", teleObj);
-        var configuration = EkstepRendererAPI.getPreviewData;
+        var configuration = EkstepRendererAPI.getPreviewData();
         var headers = {};
         if (!_.isUndefined(configuration.context.authToken)) {
             headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
