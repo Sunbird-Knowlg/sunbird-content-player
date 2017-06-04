@@ -1204,12 +1204,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.switchUser = function(cb) {
             UserService.setCurrentUser($scope.selectedUser.uid).then(function(data) {
                 if (data.status === "success") {
+                    TelemetryService.interact("TOUCH", "gc_userswitch", "TOUCH", {
+                        stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+                    });
                     $rootScope.$apply(function() {
                         $rootScope.currentUser = $scope.selectedUser;
                     });
+                    TelemetryService.interrupt("USERSWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
                     AudioManager.unmute();
-                    if (!_.isUndefined(cb)) cb();
                     $scope.closeUserSwitchingModal();
+                    if (!_.isUndefined(cb)) cb();
                 }
             }).catch(function(err) {
                 reject(err);
@@ -1516,7 +1520,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             link: function(scope, element, attrs, controllers) {
 
                 // Get the modal
-                var userSwitchingModal = element.find("#userSwitchingModal")[0];
+                // var userSwitchingModal = element.find("#userSwitchingModal")[0];
 
                 // get the user selection div
                 var userSlider = element.find("#userSlider");
@@ -1525,13 +1529,19 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 // When the user clicks the button, open the modal
                 scope.openUserSwitchingModal = function() {
+                    TelemetryService.interact("TOUCH", "gc_userswitchopen", "TOUCH", {
+                        stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+                    });
                     scope.sortUserlist();
-                    userSwitchingModal.style.display = "block";
+                    jQuery('#userSwitchingModal').show();
                 }
 
                 // When the user clicks on <span> (x), close the modal
                 scope.closeUserSwitchingModal = function() {
-                    userSwitchingModal.style.display = "none";
+                    TelemetryService.interact("TOUCH", "gc_userswitchclose", "TOUCH", {
+                        stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+                    });
+                    jQuery('#userSwitchingModal').hide();
                 }
 
                 scope.render = function() {
@@ -1558,9 +1568,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     userSlider.mCustomScrollbar('destroy');
                     scope.initializeCtrl();
                     scope.render();
-                    EventBus.addEventListener("openUserSwitchingModal", function() {
-                        scope.openUserSwitchingModal();
-                    });
+                    if (_.isUndefined(EventBus.listeners.openUserSwitchingModal) || (_.isArray(EventBus.listeners.openUserSwitchingModal) && EventBus.listeners.openUserSwitchingModal.length == 0)) {
+                        EventBus.addEventListener("openUserSwitchingModal", function() {
+                            scope.openUserSwitchingModal();
+                        });
+                    }
                 }();
             }
         }
