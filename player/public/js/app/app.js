@@ -156,12 +156,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         "statePlayContent": "playContent",
         "stateShowContentEnd": "showContentEnd"
     })
-    .run(function($rootScope, $ionicPlatform, $location, $timeout, $state, $stateParams, appConstants, ContentService) {
+    .run(function($rootScope, $ionicPlatform, $location, $timeout, $state, $stateParams, appConstants, ContentService, UserService) {
 
         $rootScope.imageBasePath = "img/icons/";
         $rootScope.enableEval = false;
         $rootScope.userSwitcherEnabled = undefined;
         $rootScope.showUser = undefined;
+        // $rootScope.currentUser = {};
+        $rootScope.users = [];
 
         // serverPath and localPreview is a global variable defined in index.html file inside a story
         if ("undefined" != typeof localPreview && "local" == localPreview)
@@ -382,6 +384,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                         $rootScope.deviceRendrer();
                     }
+                    UserService.getUsersList().then(function(data) {
+                        $rootScope.users = data.data;
+                    }).catch(function(err) {
+                        // show toast message
+                        reject(err);
+                    });
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
                     EkstepRendererAPI.getTelemetryService().error(res,{'type':'system','severity':'fatal','action':'play'})
@@ -413,7 +421,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 controller: 'ContentCtrl'
             })
 
-    }).controller('BaseCtrl', function($scope, $rootScope, $state, $stateParams, ContentService, appConstants) {
+    }).controller('BaseCtrl', function($scope, $rootScope, $state, $stateParams, ContentService, appConstants, UserService) {
         $rootScope.replayContent = function() {
             $scope.endContent('gc_replay');
             $scope.startContent();
@@ -1175,7 +1183,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
     }).controller('userSwitchCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'UserService', function($scope, $rootScope, $state, $stateParams, UserService) {
         // $scope.languageSupport = $rootScope.languageSupport;
-        $scope.users = [];
         $scope.groupLength = undefined;
         $scope.selectedUser = {};
         $scope.showUserSwitchModal = false;
@@ -1214,9 +1221,43 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             EventBus.addEventListener("event:openUserSwitchingModal", function() {
                 $scope.showUserSwitchingModal();
             });
+
             EventBus.addEventListener("event:closeUserSwitchingModal", function() {
                 $scope.hideUserSwitchingModal();
             });
+
+            EventBus.addEventListener("event:getcurrentuser", function() {
+                if(GlobalContext.config.showUser)
+                    currentUser = $rootScope.currentUser;
+            });
+
+            EventBus.addEventListener("event:getuserlist", function() {
+                if(GlobalContext.config.showUser)
+                    userList = $rootScope.users;
+            });
+
+            EventBus.addEventListener("event:showuser", function(value) {
+                GlobalContext.config.showUser = value;
+                $rootScope.safeApply = function() {
+                    $rootScope.showUser = value;
+                }
+            });
+
+            EventBus.addEventListener("event:userswitcherenabled", function(value) {
+                GlobalContext.config.userSwitcherEnabled = value;
+                $rootScope.safeApply = function() {
+                    $rootScope.userSwitcherEnabled = value;
+                }
+            });
+
+            EventBus.addEventListener("event:openuserswitcher", function() {
+                $scope.showUserSwitchingModal();
+            });
+
+            EventBus.addEventListener("event:closeuserswitcher", function() {
+                $scope.hideUserSwitchingModal();
+            });
+
             $scope.getUsersList();
         }
 
@@ -1241,7 +1282,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                     $rootScope.currentUser.selected = true;
                     $scope.sortUserlist();
-                    // return $scope.users;
                 }).catch(function(err) {
                     reject(err);
                 });
@@ -1253,9 +1293,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.sortUserlist = function() {
             $scope.users = _.sortBy(_.sortBy($scope.users, 'name'), 'userIndex')   ;
-
-            // var us = _.where($scope.users, {"selected": true});
-            // $scope.users = _.union(_.where($scope.users, {"selected": true}), $scope.users);
         }
 
         // this function changes the selected user

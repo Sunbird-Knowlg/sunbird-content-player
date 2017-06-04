@@ -2,6 +2,8 @@ var packageName = "org.ekstep.quiz.app",
     version = AppConfig.version,
     packageNameDelhi = "org.ekstep.delhi.curriculum",
     geniePackageName = "org.ekstep.genieservices",
+    currentUser = {},
+    userList = [],
 
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
@@ -255,9 +257,9 @@ function showToaster(toastType, message, customOptions) {
     window.onbeforeunload = function(e) {
         e = e || window.event;
         var y = e.pageY || e.clientY;
-        !y &&  EkstepRendererAPI.getTelemetryService().end(); 
+        !y &&  EkstepRendererAPI.getTelemetryService().end();
     }
-  
+
 
 }());
 
@@ -268,8 +270,3 @@ function showToaster(toastType, message, customOptions) {
         EkstepRendererAPI.getTelemetryService().end();
     }
 }());*/
-
-
-
-
-
