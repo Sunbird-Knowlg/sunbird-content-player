@@ -380,8 +380,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                         $rootScope.deviceRendrer();
                     }
-                    console.log("GlobalContextReady Event triggered");
-                    EventBus.dispatch("event:GlobalContextReady");
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
                     EkstepRendererAPI.getTelemetryService().error(res,{'type':'system','severity':'fatal','action':'play'})
@@ -1177,11 +1175,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.groupLength = undefined;
         $scope.selectedUser = {};
         $scope.showUserSwitchModal = false;
-
-        // $scope.controllSwitch = function() {
-            // this method is for implemantation of controlling teh user switch from Genie side
-            // Whether to turn on/off user switching
-        // }
+        $scope.sortingIndex = 0;
 
         $scope.hideUserSwitchingModal = function() {
             $rootScope.safeApply(function() {
@@ -1254,9 +1248,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.sortUserlist = function() {
-            $scope.users = _.sortBy($scope.users, 'name');
+            $scope.users = _.sortBy(_.sortBy($scope.users, 'name'), 'userIndex')   ;
+
             // var us = _.where($scope.users, {"selected": true});
-            $scope.users = _.union(_.where($scope.users, {"selected": true}), $scope.users);
+            // $scope.users = _.union(_.where($scope.users, {"selected": true}), $scope.users);
         }
 
         // this function changes the selected user
@@ -1264,7 +1259,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             // here the user Selection happens
             _.each($scope.users, function(user) {
                 if (user.selected === true) user.selected = false;
-
             });
             selectedUser.selected = true;
             $scope.selectedUser = selectedUser;
@@ -1289,6 +1283,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 if (data.status === "success") {
                     $rootScope.$apply(function() {
                         $rootScope.currentUser = $scope.selectedUser;
+                        // $scope.sortingIndex += 1;
+                        $rootScope.currentUser.userIndex = $scope.sortingIndex -= 1;
                     });
                     replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
                     $scope.hideUserSwitchingModal();
@@ -1297,7 +1293,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 console.log(err);
             })
         }
-
     }]).directive('menu', function($rootScope, $sce) {
         return {
             restrict: 'E',
@@ -1633,10 +1628,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         scope.render();
                     }
                 }();
-                // EventBus.addEventListener("event:GlobalContextReady", function() {
-                    // console.log("GlobalContext.config.showUser: ============== ", GlobalContext.config.showUser);
-                    // if (GlobalContext.config.showUser === true) scope.init();
-                // });
             }
         }
     });
