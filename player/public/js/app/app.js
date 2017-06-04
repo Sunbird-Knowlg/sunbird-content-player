@@ -1282,7 +1282,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.switchUser = function(replayContent) {
             UserService.setCurrentUser($scope.selectedUser.uid).then(function(data) {
-                if (data.status === "success") {
+                if (data.status === "success" && !_.isEmpty($scope.selectedUser)) {
                     $rootScope.$apply(function() {
                         $rootScope.currentUser = $scope.selectedUser;
                         // $scope.sortingIndex += 1;
@@ -1290,6 +1290,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     });
                     replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
                     $scope.hideUserSwitchingModal();
+                } else {
+                    console.info("No User selected")
+                    $scope.hideUserSwitchingModal();
+                    replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
                 }
             }).catch(function(err) {
                 console.log(err);
