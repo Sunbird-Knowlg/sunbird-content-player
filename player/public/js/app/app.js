@@ -850,7 +850,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             localStorageGC.setItem('content_old', $rootScope.content)
             if (_(TelemetryService.instance).isUndefined()) {
                 var tsObj = localStorageGC.getItem('telemetryService');
-                TelemetryService.init(tsObj._gameData, tsObj._user);
+                var correlationData = [];
+                correlationData.push({"id": GlobalContext.user.uid, "type": "user"});
+                TelemetryService.init(tsObj._gameData, tsObj._user, correlationData);
             }
 
             TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", {
