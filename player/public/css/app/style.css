@@ -77,6 +77,11 @@
 }
 
 @font-face {
+    font-family: 'lato-medium';
+    src: url('fonts/lato/Lato-Medium.ttf') format('opentype')
+}
+
+@font-face {
     font-family: 'lato-regular';
     src: url('fonts/lato/Lato-Regular.ttf') format('opentype')
 }
