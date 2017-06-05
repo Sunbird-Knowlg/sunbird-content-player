@@ -159,6 +159,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.enableEval = false;
         $rootScope.userSwitcherEnabled = undefined;
         $rootScope.showUser = undefined;
+        $rootScope.sortingIndex = 0;
+
         // $rootScope.currentUser = {};
         $rootScope.users = [];
 
@@ -877,7 +879,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
         $rootScope.stageId = undefined;
-        // $rootScope.currentUser = GlobalContext.user;
         EventBus.addEventListener("sceneEnter", function(data) {
             $rootScope.stageData = data.target;
             //TODO: Remove this currentStage parameter and use directly stageData._currentStage
@@ -1156,7 +1157,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.groupLength = undefined;
         $scope.selectedUser = {};
         $scope.showUserSwitchModal = false;
-        $scope.sortingIndex = 0;
 
         $scope.hideUserSwitchingModal = function() {
             TelemetryService.interact("TOUCH", "gc_userswitch_popup_close", "TOUCH", {
@@ -1233,14 +1233,14 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.getUsersList = function() {
             // get users api call gone here
             UserService.getUsersList().then(function(data) {
-                if (data.status === "success")
-                    $scope.users = data.data;
-                    $scope.groupLength = (_.where($scope.users, {"group": true})).length;
+                if (data.status === "success" && _.isUndefined($rootScope.users))
+                    $rootScope.users = data.data;
+                $scope.groupLength = (_.where($rootScope.users, {"group": true})).length;
 
                 UserService.getCurrentUser().then(function(data) {
                     if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
 
-                    _.each($scope.users, function(user) {
+                    _.each($rootScope.users, function(user) {
                         if (user.uid === $rootScope.currentUser.uid) {
                             $rootScope.safeApply(function() {
                                 $rootScope.currentUser = user;
@@ -1260,13 +1260,13 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.sortUserlist = function() {
-            $scope.users = _.sortBy(_.sortBy($scope.users, 'name'), 'userIndex')   ;
+            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'name'), 'userIndex')   ;
         }
 
         // this function changes the selected user
         $scope.selectUser = function(selectedUser) {
             // here the user Selection happens
-            _.each($scope.users, function(user) {
+            _.each($rootScope.users, function(user) {
                 if (user.selected === true) user.selected = false;
             });
             TelemetryService.interact("TOUCH", selectedUser.uid, "TOUCH", {
@@ -1285,10 +1285,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         // When the user clicks on Continue, Continue the content from there
         $scope.continueContent = function() {
             // here the user Selection happens
-            // var switchingSuccess = $scope.switchUser();
-            TelemetryService.interact("TOUCH", "gc_userswitch_continue", "TOUCH", {
-                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-            });
             var replayContent = false;
             $scope.switchUser(replayContent);
         }
@@ -1298,8 +1294,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 if (data.status === "success" && !_.isEmpty($scope.selectedUser)) {
                     $rootScope.$apply(function() {
                         $rootScope.currentUser = $scope.selectedUser;
-                        // $scope.sortingIndex += 1;
-                        $rootScope.currentUser.userIndex = $scope.sortingIndex -= 1;
+                        $rootScope.currentUser.userIndex = $rootScope.sortingIndex -= 1;
                     });
                 }
                 $scope.hideUserSwitchingModal();
