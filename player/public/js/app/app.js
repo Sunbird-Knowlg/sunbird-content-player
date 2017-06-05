@@ -1268,7 +1268,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.initializeCtrl = function() {
-            console.log("userSwitchCtrl initialized !!!");
             $rootScope.showUser = GlobalContext.config.showUser;
             $rootScope.userSwitcherEnabled = GlobalContext.config.userSwitcherEnabled;
 
@@ -1642,7 +1641,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 scope.init = function() {
                     if (GlobalContext.config.showUser === true) {
-                        console.log("userSwitch Directive loaded");
                         userSlider.mCustomScrollbar('destroy');
                         groupSlider.mCustomScrollbar('destroy');
                         scope.initializeCtrl();
