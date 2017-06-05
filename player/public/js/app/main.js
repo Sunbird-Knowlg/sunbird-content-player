@@ -270,4 +270,3 @@ function addWindowUnloadEvent() {
         }
     }
 }
->>>>>>> origin/master
