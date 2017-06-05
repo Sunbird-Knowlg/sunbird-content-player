@@ -1,9 +1,6 @@
 AppConfig = {
 	version: "BUILD_NUMBER",
 	PROCESSING_TIMEOUT: 10, // in minutes
-	dev: "//dev.ekstep.in/api",
-	QA: "//qa.ekstep.in/api",
-	production: "//api.ekstep.in",
 	host: "",
 	recorder: "AUDIO_RECORDER",
 	flavor: "DEPLOYMENT",
