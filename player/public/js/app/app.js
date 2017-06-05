@@ -1293,6 +1293,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         // $scope.sortingIndex += 1;
                         $rootScope.currentUser.userIndex = $scope.sortingIndex -= 1;
                     });
+                    TelemetryService.interrupt("USERSWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
 
                     replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
                     $scope.hideUserSwitchingModal();
@@ -1300,7 +1301,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     console.info("No User selected")
                     $scope.hideUserSwitchingModal();
                     replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
-                    TelemetryService.interrupt("USERSWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
                 }
             }).catch(function(err) {
                 console.log(err);
