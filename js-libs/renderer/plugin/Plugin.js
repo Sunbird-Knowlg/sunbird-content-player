@@ -162,7 +162,7 @@ var Plugin = Class.extend({
             if(!_.isUndefined(data)){
                 pluginName = data.pluginType ? data.pluginType : "Custom";
             }
-            EkstepRendererAPI.getTelemetryService().error(e, {'type':'plugin','objectType':data.pluginType,'action': data.event ? (data.event.action ? data.event.action.command : data.event.type) : 'transistion','objectid':data.id});
+            EkstepRendererAPI.logErrorEvent(e, {'type':'plugin','objectType':data.pluginType,'action': data.event ? (data.event.action ? data.event.action.command : data.event.type) : 'transistion','objectId': data.id || data._id});
             showToaster('error', pluginName +':Plugin failed');
             console.warn('Plugin init is failed due to', e);
         }

@@ -38,7 +38,7 @@ var ItemController = Controller.extend({
                             maxscore: item.max_score
                         }).start();
                     } catch (e) {
-                        EkstepRendererAPI.getTelemetryService().error(e,{'type':'content','severity':'fatal','action':'transitionTo','objectid':item.identifier,'objectType':'question'})
+                        EkstepRendererAPI.logErrorEvent(e,{'type':'content','severity':'fatal','action':'transitionTo','objectId':item.identifier,'objectType':'question'})
                         ControllerManager.addError('ItemController.next() - OE_ASSESS_START error: ' + e);
                     }
                 }
@@ -48,7 +48,7 @@ var ItemController = Controller.extend({
             }
             return d;
         } catch (e) {
-            EkstepRendererAPI.getTelemetryService().error(e,{'type':'content','severity':'fatal','action':'transitionTo'})
+            EkstepRendererAPI.logErrorEvent(e,{'type':'content','severity':'fatal','action':'transitionTo'})
             showToaster('error', 'Invalid questions');
             console.warn("Item controller have some issue due to", e);
         }
@@ -98,7 +98,7 @@ var ItemController = Controller.extend({
 
         } catch (e) {
             console.warn("Item controller failed due to", e);
-            EkstepRendererAPI.getTelemetryService().error(e,{'type':'content','severity':'error','action':'eval','objectid':item.identifier,'objectType':'question'})
+            EkstepRendererAPI.logErrorEvent(e,{'type':'content','severity':'error','action':'eval','objectId':item.identifier,'objectType':'question'})
             showToaster('error', 'Evaluation Fails');
             ControllerManager.addError('ItemController.evalItem() - OE_ASSESS_END error: ' + e);
         }

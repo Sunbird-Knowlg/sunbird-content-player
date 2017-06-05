@@ -62,6 +62,6 @@ PluginManager = {
         return org.ekstep.pluginframework.pluginManager.getPlugins();
     },
     logErrorEventTelemetry: function(event, data) {
-        EkstepRendererAPI.getTelemetryService().error(data.err, {'type': 'plugin', 'action': data.action, 'objectType': data.plugin,'objectid':data.objectid});
+        EkstepRendererAPI.logErrorEvent(data.err, {'type': 'plugin', 'action': data.action, 'objectType': data.plugin,'objectId':data.objectid});
     }
 };

@@ -13,5 +13,8 @@ AppConfig = {
 	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
 	telemetryApiAuth: {"username": "ZWtzdGVw", "password": "Z2VuaWU0Mg=="},
 	USER_SWITCHER_ENABLED: true,
-	SHOW_USER: true
+	SHOW_USER: true,
+	contentApi: '/action/content/v3/read/',
+	languageApi: '/action/language/v3/',
+	telemetryApi: '/action/data/v3/telemetry'
 }

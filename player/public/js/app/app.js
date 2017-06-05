@@ -37,34 +37,37 @@ var stack = new Array(),
         "path": "fixture-stories/item_sample"
     },
     config = {
-        showStartPage: true,
         showEndPage: true,
         showHTMLPages: true
     },
-    isbrowserpreview = getUrlParameter("webview"),
-    setContentDataCb = undefined;
+    isbrowserpreview = getUrlParameter("webview")
 
-window.externalConfig = {
-    "context": {}
-};
+window.previewData = {'context':{},'config':{}};
 
-window.initializePreview = function(configuration, metadata, data) {
+window.initializePreview = function(configuration) {
     // configuration: additional information passed to the preview
-    // metadata: metadata of the content
-    // data: JSON data of the content
-    genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-
-    if (!_.isUndefined(configuration)) {
-        // update obj basePath
-        org.ekstep.pluginframework.customRepo.updateBasePath(configuration.repo);
-        // add repo
-        org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.customRepo);
-        // eventbus dispatch
-        EventBus.dispatch("event:loadContent", configuration);
+    if (_.isUndefined(configuration.context)){
+        configuration.context = {};
     }
-
-    var $state = angular.element(document.body).injector().get('$state')
-    updateContentData($state);
+    // For testing only, Will be removed after portal side integration is done.
+    // if (!configuration.context.authToken) {
+    //     configuration.context.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIxOGM5MmQ2YzIyNmQ0MDc0Yjc3MzFhMGJlMTE4YzJhMyJ9.XNXNmEM92u29Zir_VzxQ1QsWKxbHA-BNirXeaWZMBxg';
+    // }
+    if (_.isUndefined(configuration.config)) {
+        configuration.config = {};
+    }
+    if (_.isUndefined(configuration.context.contentId)) {
+        configuration.context.contentId = getUrlParameter("id")
+    }
+    localStorage.clear();
+    AppConfig = _.extend(AppConfig, configuration.config)
+    // genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
+    window.previewData = configuration;
+    configuration.config.repo && configuration.config.plugin && EkstepRendererAPI.dispatchEvent("repo:intialize");
+    EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
+    addWindowUnloadEvent();
+    EkstepRendererAPI.dispatchEvent("event:loadContent");
+    
 }
 
 // TODO:have to remove appState and setContentDataCb in future.
@@ -91,20 +94,14 @@ window.setContentData = function(metadata, data, configuration) {
     window.initializePreview(object);
 }
 
-function updateContentData($state) {
+function updateContentData($state, contentId) {
     if (_.isUndefined($state)) {
-        console.warn("updateContentData($state) - $state is not defined.");
+        console.error("updateContentData($state) - $state is not defined.");
         return;
     }
-    if (content && content.metadata) {
-        if (!content.metadata.identifier) {
-            console.error("Content Id is missing. Sending default Id for TelemetryService init.");
-        }
-        var contentId = content.metadata.identifier || defaultMetadata.identifier;
-        $state.go('playContent', {
-            'itemId': contentId
-        });
-    }
+    $state.go('playContent', {
+        'itemId': contentId
+    });
 }
 
 function getContentObj(data) {
@@ -219,8 +216,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 });
         };
         $rootScope.getDataforPortal = function(id) {
-            var urlParams = $rootScope.getUrlParameter();
-            ContentService.getContentMetadata(id, urlParams)
+            var configuration = EkstepRendererAPI.getPreviewData();
+            var headers = $rootScope.getUrlParameter();
+            if (!_.isUndefined(configuration.context.authToken)) {
+                headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
+            }
+            ContentService.getContentMetadata(id, headers)
                 .then(function(data) {
                     $rootScope.setContentMetadata(data);
                 })
@@ -259,58 +260,20 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             return (_.object(urlParams))
         }
         $rootScope.getContentBody = function(id) {
-            var urlParams = $rootScope.getUrlParameter();
-            ContentService.getContentBody(id, urlParams).then(function(data) {
-
-                    if (!_.isUndefined(externalConfig.pluginId)) {
-                        /* add child to "plugin-manifest" in given format
-                         ** "plugin-manifest": {
-                         **      "plugin": [{
-                         **          "id": "org.ekstep.quiz",
-                         **          "ver": "1.0",
-                         **          "type": "plugin",
-                         **          "depends": ""
-                         **      }]
-                         ** },
-                         ** check if "plugin-manifest" is there then inject child to it
-                         ** else create a "plugin-manifest" and add child to it
-                         */
-                        var body = (data.body) ? JSON.parse(data.body) : null;
-                        if (_.isUndefined(body.theme["plugin-manifest"]) || _.isUndefined(body.theme["plugin-manifest"].plugin) || _.isNull(body.theme["plugin-manifest"].plugin)) {
-                            body.theme["plugin-manifest"] = {};
-                            body.theme["plugin-manifest"].plugin = [];
-                        }
-                        _.each(externalConfig.pluginId, function(item) {
-                            body.theme["plugin-manifest"].plugin.push({
-                                "id": item.id,
-                                "ver": item.ver || "1.0",
-                                "type": item.type || "plugin",
-                                "depends": item.depends || ""
-                            });
-                        });
-                        // body.theme["plugin-manifest"].plugin = plugin;
-                        data.body = JSON.stringify(body);
-                    }
+            var configuration = EkstepRendererAPI.getPreviewData();
+            var headers = $rootScope.getUrlParameter();
+            if (!_.isUndefined(configuration.context.authToken)) {
+                headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
+            }
+            ContentService.getContentBody(id, headers).then(function(data) {
                     content["body"] = data.body;
-
                     launchInitialPage(content.metadata, $state);
-
                 })
                 .catch(function(err) {
                     console.info("contentNotAvailable : ", err);
                     contentNotAvailable(err);
                 });
         };
-
-        EventBus.addEventListener("event:loadContent", function(data) {
-            externalConfig = data.target;
-            if (!_.isUndefined(externalConfig.contentId) && _.isUndefined(content.body)) {
-                $rootScope.getDataforPortal(externalConfig.contentId);
-                // $rootScope.getContentBody(externalConfig.contentId);
-            } else {
-                console.error("Content id is undefined or body is available !!");
-            }
-        });
 
         $rootScope.deviceRendrer = function() {
             if ($state.current.name == appConstants.stateShowContentEnd) {
@@ -392,7 +355,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     });
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
-                    EkstepRendererAPI.getTelemetryService().error(res,{'type':'system','severity':'fatal','action':'play'})
+                    EkstepRendererAPI.logErrorEvent(res,{'type':'system','severity':'fatal','action':'play'})
                     alert(res.errors);
                     exitApp();
                 });
@@ -471,6 +434,20 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             TelemetryService.start(gameId, version);
         }
 
+        };
+
+        EkstepRendererAPI.addEventListener("event:loadContent", function() {
+            var configuration = EkstepRendererAPI.getPreviewData();
+            content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
+            if (_.isUndefined(configuration.data)) {
+                $rootScope.getDataforPortal(configuration.context.contentId);
+            } else {
+                content.body = configuration.data;
+                console.info("Content id is undefined or body is available !!");
+                var $state = angular.element(document.body).injector().get('$state')
+                updateContentData($state, content.metadata.identifier)
+            }
+        }, this);
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
         // This will be appear only for the localdevlopment
         $rootScope.pageId = 'ContentApp-Collection';
@@ -1322,17 +1299,24 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.switchUser = function(replayContent) {
             UserService.setCurrentUser($scope.selectedUser.uid).then(function(data) {
                 if (data.status === "success" && !_.isEmpty($scope.selectedUser)) {
+
+                    TelemetryService.interact("TOUCH", "gc_userswitch", "TOUCH", {
+                        stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+                    });
+
                     $rootScope.$apply(function() {
                         $rootScope.currentUser = $scope.selectedUser;
                         // $scope.sortingIndex += 1;
                         $rootScope.currentUser.userIndex = $scope.sortingIndex -= 1;
                     });
+
                     replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
                     $scope.hideUserSwitchingModal();
                 } else {
                     console.info("No User selected")
                     $scope.hideUserSwitchingModal();
                     replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
+                    TelemetryService.interrupt("USERSWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
                 }
             }).catch(function(err) {
                 console.log(err);
@@ -1644,7 +1628,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 // get the user selection div
                 var userSlider = element.find("#userSlider");
                 var groupSlider = element.find("#groupSlider");
-
                 scope.render = function() {
                     userSlider.mCustomScrollbar({
                         axis: "x",
