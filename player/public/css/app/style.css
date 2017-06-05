@@ -1700,7 +1700,7 @@ body {
 }
 
 #userSwitchingModal .model-butttons span {
-    font-family: lato-black lato-black-italic lato-bold lato-bold-italic lato-hairline lato-hairline-italic lato-heavy lato-heavy-italic lato-light lato-light-italic lato-medium lato-medium-italic lato-regular lato-semibold lato-semibold-italic lato-thin lato-thin-italic;
+    font-family: lato-regular;
     font-size: 2vw;
 }
 
