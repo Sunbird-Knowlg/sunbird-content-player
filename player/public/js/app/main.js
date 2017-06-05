@@ -224,8 +224,6 @@ function startTelemetry(id, ver, cb) {
         }
         if (!_.isUndefined(cb) && response == true) {
             cb();
-        } else {
-            console.error("failed to initialize TelemetryService")
         }
     }).catch(function(error) {
         EkstepRendererAPI.logErrorEvent(error, {'type':'system','action':'play','severity':'fatal'});
