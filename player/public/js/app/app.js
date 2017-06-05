@@ -67,7 +67,7 @@ window.initializePreview = function(configuration) {
     EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
     addWindowUnloadEvent();
     EkstepRendererAPI.dispatchEvent("event:loadContent");
-    
+
 }
 
 // TODO:have to remove appState and setContentDataCb in future.
@@ -433,8 +433,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             TelemetryService.setUser($rootScope.currentUser);
             TelemetryService.start(gameId, version);
         }
-
-        };
 
         EkstepRendererAPI.addEventListener("event:loadContent", function() {
             var configuration = EkstepRendererAPI.getPreviewData();
