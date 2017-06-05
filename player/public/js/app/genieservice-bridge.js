@@ -17,7 +17,7 @@ var genieServiceBridge = (function(){
         if(flavor){
             // falvor will be available only for the content preview showing in portal/AT
             genieservice = genieservice_portal;
-            genieservice.api.setBaseUrl(launchData.envpath);
+            // genieservice.api.setBaseUrl(launchData.envpath);
             _callbackFunc();
         }else{
           genieservice.getLocalData(function(){

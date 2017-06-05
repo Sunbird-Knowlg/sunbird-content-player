@@ -782,11 +782,11 @@ window.EkstepRendererAPI = {
     },
 
    /**
-    *This api is going to return you the eexternal plugin obj
+    *This api is going to return you the external plugin obj
     *@memberof EkstepRendererAPI
     */
-   getExternalConfig: function() {
-       return window.externalConfig;
+   getPreviewData: function() {
+       return window.previewData;
    },
 
    /**
@@ -797,5 +797,40 @@ window.EkstepRendererAPI = {
     */
    replayContent: function(data, target) {
        EkstepRendererAPI.dispatchEvent('actionReplay', data, target);
-   }
+   },
+
+    /**
+    *This api will Generate the OE_ERROR Telemetry event
+    * @memberof EkstepRendererAPI
+    * @param errorStack {object} event data to carry along with the notification
+    * @param data {object} the object which need to log in Error event
+    */
+
+    logErrorEvent: function(errorStack, data) {
+        try {
+            if (data) {
+                data.env = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
+                data.type = !_.isUndefined(data.type) ? data.type.toUpperCase() : 'OTHER';
+                data.stageId = Renderer.theme ? EkstepRendererAPI.getCurrentStageId() : '';
+                if (!data.objectType) {
+                    data.objectType = !_.isUndefined(this.getPluginInstance(data.asset)) ? this.getPluginInstance(data.asset)._data.pluginType : '';
+                }
+                if (data.severity !== 'fatal') {
+                    if (data.objectType === 'theme' || data.objectType === 'stage' || data.action === 'transitionTo') {
+                        data.severity = 'fatal';
+                    } else {
+                        data.severity = 'error';
+                    }
+                }
+                if (errorStack) {
+                    data.err = errorStack.message || errorStack;
+                    data.data = errorStack.stack;
+                }
+                EkstepRendererAPI.getTelemetryService().error(data);
+            }
+        } catch (e) {
+            console.warn('OE_ERROR event fails to log',e);
+        }
+
+    }
 }

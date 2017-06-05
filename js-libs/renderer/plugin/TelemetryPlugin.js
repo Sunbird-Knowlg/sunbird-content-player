@@ -60,24 +60,19 @@ var TelemetryPlugin = Plugin.extend({
      * generating global scope of the plugin. Called by plugin-fraemwork as the plugin loads.
      * this plugin instance will we available globally
      */
-    initialize: function() {
+    initialize: function(){
+        console.log("Telemetry plugin initialized !!!");
+        EkstepRendererAPI.addEventListener('telemetryPlugin:intialize', this.initializeTelemetryPlugin, this);
+    },
+    initializeTelemetryPlugin: function() {
         if ("undefined" == typeof cordova) {
-            console.log("Telemetry plugin initialized !!!");
             this.listenTelementryEvent();
-
             var did = detectClient();
             this._requiredFields = {};
-            var extConfig = EkstepRendererAPI.getExternalConfig();
-            if (_.isUndefined(extConfig)){
-                extConfig = { "context": {} };
-            } 
-
+            var extConfig = EkstepRendererAPI.getPreviewData();
             this._requiredFields.uid = extConfig.context.uid || "anonymous";
             this._requiredFields.sid = extConfig.context.sid || CryptoJS.MD5(Math.random().toString()).toString();
             this._requiredFields.did = extConfig.context.did || CryptoJS.MD5(JSON.stringify(did)).toString();
-
-            //This is to dispatch StageId to portal
-            this.dispatchEventToParent();
         }
     },
     listenTelementryEvent: function() {
@@ -105,7 +100,12 @@ var TelemetryPlugin = Plugin.extend({
         };
         // "events": JSON.parse(telemetryData)
         // console.log("teleObj to send to api", teleObj);
-        genieservice.sendTelemetry(teleObj).then(function(data) {
+        var configuration = EkstepRendererAPI.getPreviewData();
+        var headers = {};
+        if (!_.isUndefined(configuration.context.authToken)) {
+            headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
+        }
+        genieservice.sendTelemetry(teleObj, headers).then(function(data) {
            console.log("Telemetry API success", data);
         });
     },
@@ -116,19 +116,7 @@ var TelemetryPlugin = Plugin.extend({
             this._teleData = [];
             this.sendTelemetry(telemetryData);
         }
-    },
-    dispatchEventToParent: function() {
-        var instance = this;
-        EventBus.addEventListener('sceneEnter', function() {
-            if (instance.isPreviewInIframe()) {
-                var retObj = {"stageId": EkstepRendererAPI.getCurrentStageId()};
-                var custEvent = new CustomEvent("sceneEnter", {"detail": retObj});
-                window.parent.dispatchEvent(custEvent);
-            }
-        });
-    },
-    isPreviewInIframe: function(){
-        return (window.self != window.top) ? true : false;
     }
+    
 });
 PluginManager.registerPlugin('telemetry', TelemetryPlugin);

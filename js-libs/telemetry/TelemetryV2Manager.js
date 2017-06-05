@@ -12,11 +12,11 @@ TelemetryV2Manager = Class.extend({
     createEvent: function(eventName, body) {
         return new TelemetryEvent(eventName, TelemetryService._version, body, TelemetryService._user, TelemetryService._gameData, TelemetryService._correlationData);
     },
-    start: function(id, ver) {
+    start: function(id, ver, data) {
         TelemetryService._gameData = {id: id , ver : ver};
         this._end.push(this.createEvent("OE_END", {}).start());
         this._start.push({id: id , ver : ver});
-        return this.createEvent("OE_START", {});
+        return this.createEvent("OE_START", data);
     },
     end: function(gameId) {
         if (!_.isEmpty(this._start)) {
@@ -65,23 +65,8 @@ TelemetryV2Manager = Class.extend({
         }
 
     },
-    error: function(errorStack, data) {
-        try {
-            if (!_.isUndefined(data)) {
-                data.env = "undefined" != typeof cordova ? 'mobile' : 'preview'; data.type || 'plugin';
-                data.stageId = Renderer.theme ? EkstepRendererAPI.getCurrentStageId() : undefined;
-                data.objectid = data.objectid;
-                data.objectType =  data.objectType ?  data.objectType : (data.asset ? (!_.isUndefined(PluginManager.pluginObjMap[data.asset]) ? PluginManager.pluginObjMap[data.asset]._data.pluginType : undefined) : undefined);
-                if (errorStack) {data.err = errorStack.message; data.data = errorStack.stack; } 
-                data.severity = data.severity === 'fatal' || data.objectType === 'theme' || data.objectType === 'stage' || data.action === "transitionTo" ? 'fatal' : 'error';
-                return this.createEvent("OE_ERROR", {'env': data.env, 'type': data.type, 'stageid': data.stageId, 'objectType': data.objectType, 'objectid': data.objectid, 'err': data.err, 'action': data.action, 'data': data.data, 'severity': data.severity }); 
-            } else {
-                console.error("OE_ERROR Event faild, Required data is  Unavailable");
-            }
-        } catch (e) {
-            showToaster('error', 'OE_ERROR Event Faild')
-            console.error('Unable to log OE_ERROR', e);
-        }
+    error: function(data) {
+        return this.createEvent("OE_ERROR", {env: data.env, type: data.type, stageid: data.stageId, objectype: data.objectType, objectid: data.objectId, err: data.err, action: data.action, data: data.data, severity: data.severity });
     },
     assessEnd: function(eventObj, data) {
         if (eventObj) {

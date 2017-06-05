@@ -54,7 +54,7 @@ Renderer = {
             }
         } catch (e) {
             showToaster('error', 'Lesson fails to play');
-            EkstepRendererAPI.getTelemetryService().error(e, {'severity':'fatal','type':'content','action':'play'});
+            EkstepRendererAPI.logErrorEvent(e, {'severity':'fatal','type':'content','action':'play'});
             console.warn("Canvas Renderer init is failed", e); }
     },
     initByJSON: function(gameRelPath, canvasId) {
@@ -70,7 +70,7 @@ Renderer = {
                 Renderer.init(data, canvasId, gameRelPath);
             }, null, 'xml')
             .fail(function(err) {
-                EkstepRendererAPI.getTelemetryService().error(err, {'severity':'fatal','type':'content','action':'play'}); 
+                EkstepRendererAPI.logErrorEvent(err, {'severity':'fatal','type':'content','action':'play'}); 
                 alert("Invalid ECML please correct the Ecml : ", err);
                 checkStage();
             });
@@ -94,14 +94,18 @@ Renderer = {
         PluginManager.init(gameRelPath);
         var resource = instance.handleRelativePath(instance.getResource(manifest), gameRelPath + '/widgets/');
         var pluginManifest = content["plugin-manifest"];
-        pluginManifest = _.isUndefined(pluginManifest) || _.isEmpty(pluginManifest) ? []: pluginManifest.plugin;
+        (_.isUndefined(pluginManifest) || _.isEmpty(pluginManifest)) && (pluginManifest = { plugin: [] });
+        var previewPlugins = EkstepRendererAPI.getPreviewData().config.plugin;
+        if (previewPlugins) {
+            _.each(previewPlugins, function(item) { pluginManifest.plugin.push({id: item.id, ver: item.ver || 1.0, type: item.type || "plugin", depends: item.depends || ""}); });
+        }
         try {
-            PluginManager.loadPlugins(pluginManifest, resource, function() {
+            PluginManager.loadPlugins(pluginManifest.plugin, resource, function() {
                 Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
             console.warn("Framework fails to load plugins", e);
-            EkstepRendererAPI.getTelemetryService().error(e, {'severity':'fatal','type':'system','action':'play'}); 
+            EkstepRendererAPI.logErrorEvent(e, {'severity':'fatal','type':'system','action':'play'}); 
             showToaster('error', 'Framework fails to load plugins');
         }
         createjs.Ticker.addEventListener("tick", function() {

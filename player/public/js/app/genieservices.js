@@ -110,32 +110,41 @@ genieservice_web = {
 //For portal
 genieservice_portal = {
     api: {
-        _baseUrl: undefined,
-        contentBasePath: '/learning/v2/content/',
-        languageBasePath: '/language/v2/language/',
-        telemetryBasePath: '/telemetry/v1/telemetry',
+        // _baseUrl: undefined,
+        contentBasePath: '/content/v3/read/',
+        languageBasePath: '/language/v3/',
+        telemetryBasePath: '/data/v3/telemetry',
         getFullAPI: function() {
-            return this.getBaseUrl() + this.contentBasePath;
+            return AppConfig.apislug + this.contentBasePath;
         },
         getLanguageFullAPI: function() {
-            //return AppConfig[AppConfig.flavor] + this.languageBasePath;
-            return this.getBaseUrl() + this.languageBasePath;
+            return AppConfig.apislug + this.languageBasePath;
         },
         getTelematyFullAPI: function(){
-            return this.getBaseUrl() + this.telemetryBasePath;
+            return AppConfig.apislug + this.telemetryBasePath;
         },
-        setBaseUrl: function(baseUrl){
-           this._baseUrl = baseUrl;
-        },
-        getBaseUrl: function(){
-            if(_.isUndefined(this._baseUrl)) {
-                alert("Base path is undefined.");
-                return;
-            }
-           return this._baseUrl;
-        }
+        // setBaseUrl: function(baseUrl){
+        //    this._baseUrl = baseUrl;
+        // },
+        // getBaseUrl: function(){
+        //     if(_.isUndefined(this._baseUrl)) {
+        //         alert("Base path is undefined.");
+        //         return;
+        //     }
+        //    return this._baseUrl;
+        // }
     },
-
+    callApi: function(url, type, headersParam, data, cb) {
+        headersParam["Content-Type"] = "application/json";
+        jQuery.ajax({
+            url:url,
+            type: type,
+            headers: headersParam,
+            data: data
+        }).done(function(resp){
+            cb(resp)
+        });
+    },
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
@@ -179,10 +188,10 @@ genieservice_portal = {
             resolve(result);
         });
     },
-    getContentBody: function(id, urlParams) {
+    getContentBody: function(id, headersParam) {
+        var instance = this;
         return new Promise(function(resolve, reject) {
-        urlParams["Content-Type"] = "application/json";
-        jQuery.get(genieservice_portal.api.getFullAPI() + id + "?fields=body", urlParams, function(resp) {
+        instance.callApi(genieservice_portal.api.getFullAPI() + id + "?fields=body", 'GET', headersParam, undefined, function(resp) {
             var result = {};
             if (!resp.error) {
                 result.list = resp;
@@ -206,10 +215,10 @@ genieservice_portal = {
             }
         });
     },
-    getContentMetadata: function(id, urlParams) {
+    getContentMetadata: function(id, headersParam) {
+        var instance = this;
         return new Promise(function(resolve, reject) {
-        urlParams["Content-Type"] = "application/json";
-        jQuery.get(genieservice_portal.api.getFullAPI() + id, urlParams, function(resp) {
+        instance.callApi(genieservice_portal.api.getFullAPI() + id, 'GET', headersParam, undefined,  function(resp) {
             var result = {};
             if (!resp.error) {
                 result.list = resp;
@@ -228,15 +237,10 @@ genieservice_portal = {
         });
     },
     languageSearch: function(filter){
+        var instance = this;
         return new Promise(function(resolve, reject) {
-            jQuery.ajax({
-                type: 'POST',
-                url: genieservice_portal.api.getLanguageFullAPI() + "search",
-                headers: {"Content-Type": "application/json"},
-                data: filter
-            })
-            .done(function(resp){
-            //jQuery.post(genieservice_portal.api.getLanguageFullAPI(), filter, function(resp) {
+            var headersParam = {};
+            instance.callApi(genieservice_portal.api.getLanguageFullAPI() + "search", 'POST', headersParam, filter, function(resp) {
                 var result = {};
                 if (!resp.error) {
                     result.list = resp;
@@ -247,19 +251,21 @@ genieservice_portal = {
             });
         });
     },
-    sendTelemetry: function(data){
+    sendTelemetry: function(data, headersParam){
+        var instance = this;
         return new Promise(function(resolve, reject) {
-            var teleAuth = AppConfig.telemetryApiAuth;
-            var basicAuth = 'Basic ' + btoa(atob(teleAuth.username) + ":" + atob(teleAuth.password));
-            jQuery.ajax({
-                type: 'POST',
-                url: genieservice_portal.api.getTelematyFullAPI(),
-                headers: {"Authorization": basicAuth, "Content-Type": "application/json", },
-                data: JSON.stringify(data),
-                dataType: "json",
-                contentType: "application/json"
-            })
-            .done(function(resp){
+            // var teleAuth = AppConfig.telemetryApiAuth;
+            // var basicAuth = 'Basic ' + btoa(atob(teleAuth.username) + ":" + atob(teleAuth.password));
+            headersParam['dataType'] = 'json';
+            instance.callApi(genieservice_portal.api.getTelematyFullAPI(), 'POST', headersParam, JSON.stringify(data),  function(resp) {
+            // jQuery.ajax({
+            //     type: 'POST',
+            //     url: genieservice_portal.api.getTelematyFullAPI(),
+            //     headers: {"Authorization": basicAuth, "Content-Type": "application/json", },
+            //     data: JSON.stringify(data),
+            //     dataType: "json",
+            // })
+            // .done(function(resp){
                 var result = {};
                 if (!resp.error) {
                     result.data = resp;

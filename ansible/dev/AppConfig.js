@@ -11,7 +11,10 @@ AppConfig = {
 	S3_content_host: "/assets/public/content/",
 	PREVIEW_PLUGINSPATH: "/content-plugins",
 	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
-	telemetryApiAuth: {"username": "ZWtzdGVw", "password": "Z2VuaWU0Mg=="}
+	telemetryApiAuth: {"username": "ZWtzdGVw", "password": "Z2VuaWU0Mg=="},
+	contentApi: '/action/content/v3/read/',
+	languageApi: '/action/language/v3/',
+	telemetryApi: '/action/data/v3/telemetry'
 }
 
 

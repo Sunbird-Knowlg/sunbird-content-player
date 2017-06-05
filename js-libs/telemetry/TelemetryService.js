@@ -144,7 +144,7 @@ TelemetryService = {
         }
         return telemetryLocalStorageData;
     },
-    start: function(id, ver) {
+    start: function(id, ver, data) {
         if (!TelemetryService.isActive) {
             console.log("TelemetryService is not active.");
             return new InActiveEvent();
@@ -155,7 +155,7 @@ TelemetryService = {
                 }))
                 return new InActiveEvent();
             else
-                return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver), TelemetryService.apis.telemetry);
+                return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver, data), TelemetryService.apis.telemetry);
         }
     },
     end: function() {
@@ -176,11 +176,11 @@ TelemetryService = {
         }
         return TelemetryService.instance.assess(qid, subj, qlevel, data);
     },
-    error: function(errorStack,errorObj) {
+    error: function(errorObj) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.error(errorStack, errorObj), TelemetryService.apis.telemetry);
+        return TelemetryService.flushEvent(TelemetryService.instance.error(errorObj), TelemetryService.apis.telemetry);
     },
     assessEnd: function(event, data) {
         if (!TelemetryService.isActive) {
