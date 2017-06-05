@@ -1,53 +1,48 @@
 {
     "userList": [{
+        "avatar": "avatar_anonymous.png",
+        "gender": "male",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "9g8h4ndAnonymouscg56ngd",
+        "name": "Anonymous"
+    },
+        {
         "avatar": "avatar_normal_1.png",
         "gender": "male",
         "handle": "handle1",
         "age": 6,
         "standard": -1,
-        "uid": "69w8r81f",
-        "name": "Vinod",
-        "user": true
-    }, {
-        "avatar": "avatar_normal_3.png",
-        "gender": "Female",
-        "handle": "handle1",
-        "age": 6,
-        "standard": -1,
-        "uid": "6ws551fvw6s5",
-        "name": "Mala"
+        "uid": "69wVinod8r81f",
+        "name": "Vinod"
     }, {
         "avatar": "avatar_normal_2.png",
         "gender": "male",
         "handle": "handle1",
         "age": 6,
         "standard": -1,
-        "uid": "6f5fv16s",
+        "uid": "6f5fShringeriv16s",
         "name": "Shringeri"
     }, {
-        "avatar": "avatar_normal_5.png",
-        "gender": "male",
-        "handle": "handle1",
-        "age": 6,
-        "standard": -1,
-        "uid": "r968+f1w",
-        "name": "Ramu"
-    }, {
-        "avatar": "avatar_normal_4.png",
-        "gender": "female",
-        "handle": "handle1",
-        "age": 6,
-        "standard": -1,
-        "uid": "f651vbfd",
-        "name": "Anubala"
-    }, {
-        "avatar": "avatar_normal_6.png",
+        "avatar": "avatar_normal_3.png",
         "gender": "Female",
         "handle": "handle1",
         "age": 6,
         "standard": -1,
-        "uid": "695fv1",
-        "name": "Puja"
-    }]
+        "uid": "6ws55Mala1fvw6s5",
+        "name": "Mala"
+    },
+    {
+        "avatar": "img_badge01.png",
+        "gender": "Female",
+        "handle": "handle1",
+        "age": 6,
+        "standard": -1,
+        "uid": "6ws551fGroup-1vwpeoijfw6s5",
+        "name": "Group-1",
+        "group": true
+    }
+]
 
 }

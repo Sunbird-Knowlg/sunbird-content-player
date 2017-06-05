@@ -61,39 +61,34 @@
 }
 
 @font-face {
-    /* reference: https://github.com/EkType/Baloo */
-    font-family: 'Baloo';
-    src: url('fonts/baloo/BalooBhai-Regular.ttf') format('opentype')
+    /* reference: http://www.latofonts.com/lato-free-fonts/ */
+    font-family: 'lato-black';
+    src: url('fonts/lato/Lato-Black.ttf') format('opentype')
+}
+
+/*@font-face {
+    font-family: 'lato-bold';
+    src: url('fonts/Lato/Lato-Bold.ttf') format('opentype')
+}*/
+
+@font-face {
+    font-family: 'lato-light';
+    src: url('fonts/lato/Lato-Light.ttf') format('opentype')
 }
 
 @font-face {
-    font-family: 'BalooBhai';
-    src: url('fonts/baloo/BalooBhai-Regular.ttf') format('opentype')
+    font-family: 'lato-medium';
+    src: url('fonts/lato/Lato-Medium.ttf') format('opentype')
 }
 
 @font-face {
-    font-family: 'BalooTamma';
-    src: url('fonts/baloo/BalooTamma-Regular.ttf') format('opentype')
+    font-family: 'lato-regular';
+    src: url('fonts/lato/Lato-Regular.ttf') format('opentype')
 }
 
-@font-face {
-    font-family: 'BalooTammudu';
-    src: url('fonts/baloo/BalooTammudu-Regular.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'BalooBhaina';
-    src: url('fonts/baloo/BalooBhaina-Regular.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'BalooDa';
-    src: url('fonts/baloo/BalooDa-Regular.ttf') format('opentype')
-}
-
-@font-face {
-    font-family: 'BalooThambi';
-    src: url('fonts/baloo/BalooThambi-Regular.ttf') format('opentype')
+ion-popover-view.fit {
+    height: auto !important;
+    width: auto !important;
 }
 
 ion-popover-view.fit {
@@ -132,8 +127,8 @@ body {
     pointer-events: all;
 }
 
-.font-baloo {
-    font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
+.font-lato {
+    font-family: lato-medium;
 }
 
 .cover-page-title.icon-font {
@@ -181,7 +176,7 @@ body {
 }
 
 .icon-font {
-    font-family: Baloo, BalooBhai, BalooTamma, BalooTammudu, BalooBhaina, BalooDa, BalooThambi;
+    font-family: lato-medium;
     color: #FFFFFF;
     text-align: center;
 }
@@ -226,6 +221,7 @@ body {
     overflow: hidden;
     padding-top: 2.5%;
     padding: 2.6% 3%;
+    font-family: lato-regular;
 }
 
 .gc-menu-cont .gc-menu-options img {
@@ -387,6 +383,7 @@ body {
 .gc-menu-btn img.user {
     position: absolute;
     width: 107%;
+    margin-top: -4px;
     margin-left: -4%
 }
 
@@ -394,6 +391,10 @@ body {
     position: absolute;
     margin-top: 40%;
     width: 100%;
+}
+
+.gc-menu-btn.old_menu img.icon {
+    margin-top: 0;
 }
 
 .nav-icon {
@@ -764,7 +765,7 @@ body {
     width: 11%;
 }
 
-.font-baloo.gc-ep-cont .genie-home span {
+.font-lato.gc-ep-cont .genie-home span {
     display: none;
 }
 
@@ -1524,5 +1525,201 @@ body {
     transform: rotate(-129deg)
 }
 
+
+/* User Switcher Modal css starts */
+
+/* The Modal (background) */
+
+#userSwitchingModal.user-modal {
+    display: block;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 2vh;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    font-family: lato-black lato-black-italic lato-bold lato-bold-italic lato-hairline lato-hairline-italic lato-heavy lato-heavy-italic lato-light lato-light-italic lato-medium lato-medium-italic lato-regular lato-semibold lato-semibold-italic lato-thin lato-thin-italic;
+}
+/* Modal Content */
+
+#userSwitchingModal .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #888;
+    width: 98%;
+    height: 96vh;
+    position: relative;
+}
+
+#userSwitchingModal .modal-content .user-header {
+    background-color: #eee;
+    text-align: center;
+    font-family: lato-Regular;
+    font-size: 2vw;
+}
+
+#userSwitchingModal .modal-content .user-header P {
+    margin-bottom: 0;
+    padding-top: 7px;
+}
+/* The Close Button */
+
+#userSwitchingModal .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 6px;
+    margin-right: 7px;
+}
+
+#userSwitchingModal .close:hover,
+#userSwitchingModal .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#userSwitchingModal .slider-container {
+    /*max-height: 80%;*/
+    overflow-y: scroll;
+    position: relative;
+}
+
+#userSwitchingModal .slider-container #userSlider,
+#userSwitchingModal .slider-container #groupSlider {
+    min-height: 115px;
+    height: 35vh;
+}
+
+#userSwitchingModal #userSlider, #userSwitchingModal #groupSlider {
+    min-height: 145px;
+    width: 100%;
+    padding: 5px 20px 0px 20px;
+    background-color: #eee;
+}
+
+#userSwitchingModal #groupSlider {
+    background-color: #fefefe;
+}
+
+#userSwitchingModal #groupSlider .fallback-text {
+    text-align: center;
+    margin-top: 25px;
+    color: #666;
+}
+
+#sliderContainer .slider-tag,
+#sliderContainer .slider-tag {
+    color: #2691d0;
+    position: absolute;
+    left: 20px;
+    margin-top: 1.5vh;
+    font-size: 1.8vw;
+    font-family: lato-regular;
+}
+
+#userSwitchingModal #userSlider .profile,
+#userSwitchingModal #groupSlider .profile {
+    display: inline-block;
+    float: left;
+    text-align: center;
+    min-width: 60px;
+    width: 10vw;
+    height: 100%;
+    margin-left: 15px;
+    margin-top: 5vh;
+}
+
+#userSwitchingModal .mCSB_draggerRail {
+    width: 20px;
+}
+
+#userSwitchingModal .profile.selected img {
+    border: 3px solid #2691d0;
+}
+
+#userSwitchingModal .profile img {
+    border-radius: 50%;
+    padding: 2px;
+    width: 100%;
+    height: 100%;
+}
+
+#userSwitchingModal .profile p {
+    margin-top: 2px;
+    font-size: 2.2vw;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-family: lato-light;
+}
+
+#userSwitchingModal .modal-content .model-butttons {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}
+
+#userSwitchingModal .model-butttons .restart,
+#userSwitchingModal .model-butttons .continue {
+    border-color: rgba(255, 255, 255, 0);
+    border-radius: 50px;
+    background-color: #2691d0;
+    padding: 1.5vh 3vw;
+    margin-left: 5px;
+}
+
+#userSwitchingModal .model-butttons .restart {
+    background-color: #2691d0;
+    color: #fefefe;
+}
+
+#userSwitchingModal .model-butttons .continue {
+    background-color: #ccc;
+    color: #333;
+}
+
+#userSwitchingModal .model-butttons .restart img {
+    margin-right: 10px;
+    vertical-align: middle;
+    width: 3vw;
+}
+
+#userSwitchingModal .model-butttons span {
+    font-family: lato-black lato-black-italic lato-bold lato-bold-italic lato-hairline lato-hairline-italic lato-heavy lato-heavy-italic lato-light lato-light-italic lato-medium lato-medium-italic lato-regular lato-semibold lato-semibold-italic lato-thin lato-thin-italic;
+    font-size: 2vw;
+}
+
+.mCSB_horizontal.mCSB_inside>.mCSB_container {
+    margin-bottom: 15px;
+}
+
+.mCS-dark-3.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.mCS-dark-3.mCSB_scrollTools_horizontal .mCSB_dragger .mCSB_dragger_bar {
+    height: 4px;
+    margin: 10px 0;
+}
+
+.mCS-dark-3.mCSB_scrollTools .mCSB_draggerRail {
+    background-color: rgba(0, 0, 0, 0);
+}
+/* User Switcher Modal endes*/
 
 /*Loader Css*/

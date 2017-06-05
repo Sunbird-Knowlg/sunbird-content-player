@@ -799,6 +799,65 @@ window.EkstepRendererAPI = {
        EkstepRendererAPI.dispatchEvent('actionReplay', data, target);
    },
 
+   /**
+    * This api will return the current user on the Device
+    * @memberof EkstepRendererAPI
+    */
+   getCurrentUser: function() {
+    //    var currentUser = genieservice.getCurrentUser();
+    // console.log("globalContext: ", globalContext);
+       EkstepRendererAPI.dispatchEvent('event:getcurrentuser');
+       console.log("currentUser: ", currentUser);
+       return currentUser;
+    //    return unername;
+    //    EkstepRendererAPI.dispatchEvent('actionReplay', data, target);
+    },
+
+   /**
+    * This api will return the list of users on the Device
+    * @memberof EkstepRendererAPI
+    */
+   getUserList: function() {
+       EkstepRendererAPI.dispatchEvent('event:getuserlist');
+       console.log("userList: ", userList);
+       return userList;
+    //    EkstepRendererAPI.dispatchEvent('actionReplay', data, target);
+    },
+
+   /**
+    * This api will show or hide the user switcher module
+    * @memberof EkstepRendererAPI
+    * @param value {boolean} true/false to show/hide the user
+    */
+   showUser: function(value) {
+       EkstepRendererAPI.dispatchEvent('event:showuser', value);
+   },
+
+   /**
+    * This api will turn on/off the user switching
+    * @memberof EkstepRendererAPI
+    * @param value {boolean} true/false to show/hide the user
+    */
+   userSwitcherEnabled: function(value) {
+       EkstepRendererAPI.dispatchEvent('event:userswitcherenabled', value);
+   },
+
+   /**
+    * This api will close the user switcher modal
+    * @memberof EkstepRendererAPI
+    */
+   openUserSwitcher: function() {
+       EkstepRendererAPI.dispatchEvent('event:openuserswitcher');
+   },
+
+   /**
+    * This api close the user switcher modal
+    * @memberof EkstepRendererAPI=
+    */
+   closeUserSwitcher: function() {
+       EkstepRendererAPI.dispatchEvent('event:closeuserswitcher');
+   }
+
     /**
     *This api will Generate the OE_ERROR Telemetry event
     * @memberof EkstepRendererAPI

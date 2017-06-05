@@ -2,6 +2,8 @@ var packageName = "org.ekstep.quiz.app",
     version = AppConfig.version,
     packageNameDelhi = "org.ekstep.delhi.curriculum",
     geniePackageName = "org.ekstep.genieservices",
+    currentUser = {},
+    userList = [],
 
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
@@ -241,7 +243,7 @@ function getAsseturl(content) {
 }
 //ref: http://www.jqueryscript.net/other/Highly-Customizable-jQuery-Toast-Message-Plugin-Toastr.html
 function showToaster(toastType, message, customOptions) {
-    var defaultOptions = {"positionClass": "toast-top-right", "preventDuplicates": true, "tapToDismiss": true, "hideDuration": "1000", "timeOut": "4000", }; 
+    var defaultOptions = {"positionClass": "toast-top-right", "preventDuplicates": true, "tapToDismiss": true, "hideDuration": "1000", "timeOut": "4000", };
     toastr.options = _.extend(defaultOptions, customOptions);
     if (toastType === 'warning') {
         toastr.warning(message);
@@ -249,10 +251,13 @@ function showToaster(toastType, message, customOptions) {
     if (toastType === 'error') {
         toastr.error(message);
     }
+    if (toastType === 'info') {
+        toastr.info(message);
+    }
 }
 
 function addWindowUnloadEvent() {
-    // TODO: Use Iframe unload event 
+    // TODO: Use Iframe unload event
     window.onbeforeunload = function(e) {
         e = e || window.event;
         var y = e.pageY || e.clientY;
@@ -265,3 +270,4 @@ function addWindowUnloadEvent() {
         }
     }
 }
+>>>>>>> origin/master

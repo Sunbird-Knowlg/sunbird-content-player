@@ -170,6 +170,10 @@ TelemetryService = {
         }
         return TelemetryService.flushEvent(TelemetryService.instance.interact(type, id, extype, data), TelemetryService.apis.telemetry);
     },
+    setUser: function(data) {
+        TelemetryService._user = data;
+        TelemetryService.instance.interact("TOUCH", "gc_user_switch", "TOUCH", data);
+    },
     assess: function(qid, subj, qlevel, data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
