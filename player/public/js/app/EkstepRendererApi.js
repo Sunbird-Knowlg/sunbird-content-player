@@ -856,7 +856,7 @@ window.EkstepRendererAPI = {
     */
    closeUserSwitcher: function() {
        EkstepRendererAPI.dispatchEvent('event:closeuserswitcher');
-   }
+   },
 
     /**
     *This api will Generate the OE_ERROR Telemetry event
