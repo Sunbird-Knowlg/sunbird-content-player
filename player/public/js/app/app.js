@@ -1157,6 +1157,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.groupLength = undefined;
         $scope.selectedUser = {};
         $scope.showUserSwitchModal = false;
+        $scope.disableButtons = true;
 
         $scope.hideUserSwitchingModal = function() {
             TelemetryService.interact("TOUCH", "gc_userswitch_popup_close", "TOUCH", {
@@ -1169,8 +1170,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.showUserSwitchingModal = function() {
             if ($rootScope.userSwitcherEnabled) {
+                $scope.disableButtons = true;
                 TelemetryService.interact("TOUCH", "gc_userswitch_popup_open", "TOUCH", {
                     stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+                });
+
+                _.each($rootScope.users, function(user) {
+                    // if (user.selected === $rootScope.currentUser.uid) {
+                    if (user.selected === true) user.selected = false;
+                    if (user.uid === $rootScope.currentUser.uid) user.selected = true;
+                    // }
                 });
                 $scope.sortUserlist();
                 $rootScope.safeApply(function() {
@@ -1179,6 +1188,83 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             } else {
                 showToaster('info',"Change of users is disabled");
             }
+        }
+
+        // get userList process goes here
+        $scope.getUsersList = function() {
+            // get users api call gone here
+            UserService.getUsersList().then(function(data) {
+                if (data.status === "success" && _.isUndefined($rootScope.users))
+                    $rootScope.users = data.data;
+                $scope.groupLength = (_.where($rootScope.users, {"group": true})).length;
+
+                UserService.getCurrentUser().then(function(data) {
+                    if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
+
+                    _.each($rootScope.users, function(user) {
+                        if (user.uid === $rootScope.currentUser.uid) {
+                            $rootScope.safeApply(function() {
+                                $rootScope.currentUser = user;
+                            });
+                        }
+                    });
+
+                    $rootScope.currentUser.selected = true;
+                    $scope.sortUserlist();
+                }).catch(function(err) {
+                    reject(err);
+                });
+            }).catch(function(err) {
+                // show toast message
+                reject(err);
+            });
+        }
+
+        $scope.sortUserlist = function() {
+            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'name'), 'userIndex')   ;
+        }
+
+        // this function changes the selected user
+        $scope.selectUser = function(selectedUser) {
+            // here the user Selection happens
+
+            _.each($rootScope.users, function(user) {
+                if (user.selected === true) user.selected = false;
+            });
+            TelemetryService.interact("TOUCH", selectedUser.uid, "TOUCH", {
+                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+            });
+            if (_.isUndefined($scope.disableButtons) || $scope.disableButtons === true) $scope.disableButtons = false;
+            selectedUser.selected = true;
+            $scope.selectedUser = selectedUser;
+        }
+
+        // When the user clicks on Restart, Restart the content
+        $scope.restartContent = function() {
+            var replayContent = true;
+            $scope.switchUser(replayContent);
+        }
+
+        // When the user clicks on Continue, Continue the content from there
+        $scope.continueContent = function() {
+            // here the user Selection happens
+            var replayContent = false;
+            $scope.switchUser(replayContent);
+        }
+
+        $scope.switchUser = function(replayContent) {
+            UserService.setCurrentUser($scope.selectedUser.uid).then(function(data) {
+                if (data.status === "success" && !_.isEmpty($scope.selectedUser)) {
+                    $rootScope.$apply(function() {
+                        $rootScope.currentUser = $scope.selectedUser;
+                        $rootScope.currentUser.userIndex = $rootScope.sortingIndex -= 1;
+                    });
+                }
+                $scope.hideUserSwitchingModal();
+                replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
+            }).catch(function(err) {
+                console.log(err);
+            })
         }
 
         $scope.initializeCtrl = function() {
@@ -1229,80 +1315,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.getUsersList();
         }
 
-        // get userList process goes here
-        $scope.getUsersList = function() {
-            // get users api call gone here
-            UserService.getUsersList().then(function(data) {
-                if (data.status === "success" && _.isUndefined($rootScope.users))
-                    $rootScope.users = data.data;
-                $scope.groupLength = (_.where($rootScope.users, {"group": true})).length;
-
-                UserService.getCurrentUser().then(function(data) {
-                    if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
-
-                    _.each($rootScope.users, function(user) {
-                        if (user.uid === $rootScope.currentUser.uid) {
-                            $rootScope.safeApply(function() {
-                                $rootScope.currentUser = user;
-                            });
-                        }
-                    });
-
-                    $rootScope.currentUser.selected = true;
-                    $scope.sortUserlist();
-                }).catch(function(err) {
-                    reject(err);
-                });
-            }).catch(function(err) {
-                // show toast message
-                reject(err);
-            });
-        }
-
-        $scope.sortUserlist = function() {
-            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'name'), 'userIndex')   ;
-        }
-
-        // this function changes the selected user
-        $scope.selectUser = function(selectedUser) {
-            // here the user Selection happens
-            _.each($rootScope.users, function(user) {
-                if (user.selected === true) user.selected = false;
-            });
-            TelemetryService.interact("TOUCH", selectedUser.uid, "TOUCH", {
-                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-            });
-            selectedUser.selected = true;
-            $scope.selectedUser = selectedUser;
-        }
-
-        // When the user clicks on Restart, Restart the content
-        $scope.restartContent = function() {
-            var replayContent = true;
-            $scope.switchUser(replayContent);
-        }
-
-        // When the user clicks on Continue, Continue the content from there
-        $scope.continueContent = function() {
-            // here the user Selection happens
-            var replayContent = false;
-            $scope.switchUser(replayContent);
-        }
-
-        $scope.switchUser = function(replayContent) {
-            UserService.setCurrentUser($scope.selectedUser.uid).then(function(data) {
-                if (data.status === "success" && !_.isEmpty($scope.selectedUser)) {
-                    $rootScope.$apply(function() {
-                        $rootScope.currentUser = $scope.selectedUser;
-                        $rootScope.currentUser.userIndex = $rootScope.sortingIndex -= 1;
-                    });
-                }
-                $scope.hideUserSwitchingModal();
-                replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
-            }).catch(function(err) {
-                console.log(err);
-            })
-        }
     }]).directive('menu', function($rootScope, $sce) {
         return {
             restrict: 'E',

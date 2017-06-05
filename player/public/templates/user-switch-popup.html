@@ -32,8 +32,8 @@
             </div>
         </div>
         <div class="model-butttons">
-            <button ng-click="restartContent()" class="restart"><img ng-src="{{$root.imageBasePath}}replay_icon.png" alt=""><span>Restart</span></button>
-            <button ng-click="continueContent()" class="continue"><img src="" alt=""><span>Continue</span></button>
+            <button ng-class="disableButtons ? 'icon-opacity restart' : 'restart'" ng-disabled="disableButtons" ng-click="restartContent()"><img ng-src="{{$root.imageBasePath}}replay_icon.png" alt=""><span>Restart</span></button>
+            <button ng-class="disableButtons ? 'icon-opacity continue' : 'continue'" ng-disabled="disableButtons" ng-click="continueContent()"><img src="" alt=""><span>Continue</span></button>
         </div>
     </div>
 
