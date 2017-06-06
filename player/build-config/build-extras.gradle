@@ -44,8 +44,13 @@ android {
 dependencies {
     compile "org.apache.commons:commons-compress:1.10"
     compile "commons-io:commons-io:2.4"
-    compile "org.ekstep.genieservices:sdks:1.5.+@aar"
-    compile "org.ekstep.genieservices:aidls:1.5.+@aar"
+
+    // For Old Genie Integation
+    // compile "org.ekstep.genieservices:sdks:1.5.+@aar"
+    // compile "org.ekstep.genieservices:aidls:1.5.+@aar"
+
+    // For undubled Genie Initegration
+    compile "org.ekstep.genieservices:genie-integration:0.1.+@aar"
 }
 
 task updateBuildNumber() {

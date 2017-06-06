@@ -4,8 +4,8 @@ import android.text.TextUtils;
 
 import org.apache.cordova.CallbackContext;
 
-import org.ekstep.genieservices.sdks.response.GenieResponse;
-import org.ekstep.genieservices.sdks.response.IResponseHandler;
+import org.ekstep.genieservices.commons.GenieResponse;
+import org.ekstep.genieservices.commons.IResponseHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;

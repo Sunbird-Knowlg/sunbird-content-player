@@ -6,9 +6,9 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaInterface;
-
-import org.ekstep.genieservices.sdks.Telemetry;
-import org.ekstep.genieservices.sdks.UserProfile;
+import org.ekstep.genieresolvers;
+import org.ekstep.genieservices.sdks.TelemetryService;
+import org.ekstep.genieresolvers.user.UserService;
 import org.ekstep.genieservices.sdks.Content;
 import org.ekstep.genieservices.sdks.Summarizer;
 import org.ekstep.genieservices.sdks.Language;
@@ -27,12 +27,13 @@ public class GenieServicePlugin extends CordovaPlugin {
 
 	public static final String TAG = "Genie Service Plugin";
 
-	private Telemetry telemetry;
-    private UserProfile userProfile;
+	private TelemetryService telemetry;
+    private UserService userService;
     private GenieServices genieServices;
     private Content content;
     private Summarizer summarizer;
     private Language language;
+    private GenieSDK genieSdk;
 
 	public GenieServicePlugin() {
 		System.out.println("Genie Service Constructor..........");
@@ -44,22 +45,25 @@ public class GenieServicePlugin extends CordovaPlugin {
     }
 
     public void onDestroy() {
-        if(null != userProfile) {
-            userProfile.finish();
+        if(null != userService) {
+            userService.finish();
         }
         super.onDestroy();
     }
 
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         CordovaActivity activity = (CordovaActivity) this.cordova.getActivity();
+
+        genieSdk = GenieSDK.init(activity, "appQualifier");
+
         if (null == telemetry) {
             if (null != activity) {
-                telemetry = new Telemetry(activity);
+                telemetry = genieSdk.getUserService(); //new Telemetry(activity);
             }
         }
-        if(null == userProfile) {
+        if(null == userService) {
             if (null != activity) {
-                userProfile = new UserProfile(activity);    
+                userService = genieSdk.getUserService(); //new UserProfile(activity);    
             }
         }
         if(null == genieServices) {
@@ -97,7 +101,7 @@ public class GenieServicePlugin extends CordovaPlugin {
             String data = args.getString(0);
             sendTelemetry(data, callbackContext);
         } else if(action.equals("getCurrentUser")) {
-            userProfile.getCurrentUser(new UserProfileResponse(callbackContext));
+            userService.getCurrentUser(new UserProfileResponse(callbackContext));
         } else if(action.equals("getMetaData")) {
             genieServices.getMetaData(new GenieServicesResponse(callbackContext));
         } else if(action.equals("getContent")) {
