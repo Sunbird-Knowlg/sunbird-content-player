@@ -1595,8 +1595,8 @@ body {
 
 #userSwitchingModal .slider-container {
     /*max-height: 80%;*/
-    overflow-y: scroll;
-    position: relative;
+    /*overflow-y: scroll;*/
+    /*position: relative;*/
 }
 
 #userSwitchingModal .slider-container #userSlider,
