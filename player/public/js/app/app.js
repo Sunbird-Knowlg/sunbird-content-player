@@ -828,7 +828,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if (_(TelemetryService.instance).isUndefined()) {
                 var tsObj = localStorageGC.getItem('telemetryService');
                 var correlationData = [];
-                correlationData.push({"id": GlobalContext.user.uid, "type": "user"});
+                correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "user"});
                 TelemetryService.init(tsObj._gameData, tsObj._user, correlationData);
             }
 
