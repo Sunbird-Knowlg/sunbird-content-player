@@ -6,7 +6,7 @@
     <div class="modal-content">
         <div class="user-header">
             <span ng-click="hideUserSwitchingModal()" class="close">&times;</span>
-            <p>SELECT A CHILD</p>
+            <p>{{$root.languageSupport.userSwitcherTitle}}</p>
         </div>
         <div id="sliderContainer" class="slider-container">
             <p class="slider-tag">
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="model-butttons">
-            <button ng-class="disableButtons ? 'icon-opacity restart' : 'restart'" ng-disabled="disableButtons" ng-click="restartContent()"><img ng-src="{{$root.imageBasePath}}replay_icon.png" alt=""><span>Restart</span></button>
+            <button ng-class="disableButtons ? 'icon-opacity replay' : 'replay'" ng-disabled="disableButtons" ng-click="replayContent()"><img ng-src="{{$root.imageBasePath}}replay_icon.png" alt=""><span>Replay</span></button>
             <button ng-class="disableButtons ? 'icon-opacity continue' : 'continue'" ng-disabled="disableButtons" ng-click="continueContent()"><img src="" alt=""><span>Continue</span></button>
         </div>
     </div>

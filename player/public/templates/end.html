@@ -59,12 +59,12 @@
 
             <div class="gc-ep-footer">
 
-                <div ng-click="ep_restartContent()" class="gc-ep-footer-icons gc-ep-replay">
+                <div ng-click="ep_replayContent()" class="gc-ep-footer-icons gc-ep-replay">
                     <img class="replay" src="{{imageBasePath}}icn_replay.png"/>
                     <p>{{languageSupport.replay}}</p>
                 </div>
 
-                <div ng-click="ep_openUserSwitchingModal()" class="gc-ep-footer-icons gc-ep-userSwitch">
+                <div ng-if="showUser" ng-click="ep_openUserSwitchingModal()" class="gc-ep-footer-icons gc-ep-userSwitch">
                     <img class="user" ng-src="{{imageBasePath + currentUser.avatar}}"/>
                     <p><b>{{currentUser.name}}</b><br/> <small> {{languageSupport.change}} </small></p>
 

@@ -1578,7 +1578,7 @@ body {
 /* The Close Button */
 
 #userSwitchingModal .close {
-    color: #aaaaaa;
+    color: #333;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -1674,26 +1674,17 @@ body {
     right: 20px;
 }
 
-#userSwitchingModal .model-butttons .restart,
+#userSwitchingModal .model-butttons .replay,
 #userSwitchingModal .model-butttons .continue {
     border-color: rgba(255, 255, 255, 0);
     border-radius: 50px;
-    background-color: #2691d0;
     padding: 1.5vh 3vw;
     margin-left: 5px;
-}
-
-#userSwitchingModal .model-butttons .restart {
     background-color: #2691d0;
     color: #fefefe;
 }
 
-#userSwitchingModal .model-butttons .continue {
-    background-color: #ccc;
-    color: #333;
-}
-
-#userSwitchingModal .model-butttons .restart img {
+#userSwitchingModal .model-butttons .replay img {
     margin-right: 10px;
     vertical-align: middle;
     width: 3vw;

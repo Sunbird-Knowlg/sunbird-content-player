@@ -191,7 +191,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "change": "change",
             "group": "Group",
             "child": "Child",
-            "groupFallbackText": "You have not created any group"
+            "groupFallbackText": "You have not created any group",
+            "userSwitcherTitle": "SELECT A CHILD OR A GROUP"
         }
 
         $rootScope.safeApply = function(fn) {
@@ -387,7 +388,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             TelemetryService.interact("TOUCH", eleId, "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
             });
-            if (eleId === 'gc_userswitch_restart') {
+            if (eleId === 'gc_userswitch_replayContent') {
                 TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
             }
             var menuReplay = $state.current.name == appConstants.statePlayContent;
@@ -407,7 +408,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $rootScope.us_replayContent = function() {
-            $scope.endContent('gc_userswitch_restart');
+            $scope.endContent('gc_userswitch_replayContent');
             TelemetryService.setUser($rootScope.currentUser);
             $scope.startContent();
         }
@@ -731,7 +732,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             });
         }
 
-        $scope.ep_restartContent = function() {
+        $scope.ep_replayContent = function() {
             $rootScope.replayContent();
             //Resetting mute state
             var muteElement = document.getElementById("unmute_id");
@@ -830,7 +831,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if (_(TelemetryService.instance).isUndefined()) {
                 var tsObj = localStorageGC.getItem('telemetryService');
                 var correlationData = [];
-                correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "Content-Session"});
+                correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "user"});
                 TelemetryService.init(tsObj._gameData, tsObj._user, correlationData);
             }
 
@@ -1241,8 +1242,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.selectedUser = selectedUser;
         }
 
-        // When the user clicks on Restart, Restart the content
-        $scope.restartContent = function() {
+        // When the user clicks on replayContent, replayContent the content
+        $scope.replayContent = function() {
             var replayContent = true;
             $scope.switchUser(replayContent);
         }
