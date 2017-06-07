@@ -422,6 +422,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
             TelemetryService.end();
             TelemetryService.setUser($rootScope.currentUser);
+            var data = {};
             data.mode = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
             TelemetryService.start(gameId, version, data);
         }
