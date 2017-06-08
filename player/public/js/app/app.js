@@ -239,6 +239,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             GlobalContext.currentContentId = data.identifier;
             GlobalContext.currentContentMimeType = data.mimeType;
             if (_.isUndefined(data.localData)) {
+                data.localData = _.clone(data.contentData);
+            } 
+            if (_.isUndefined(data.contentData)) {
                 data.localData = _.clone(contentData);
             } else {
                 data = data.localData;
@@ -330,12 +333,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                         $rootScope.deviceRendrer();
                     }
-                    UserService.getUsersList().then(function(data) {
-                        $rootScope.users = data.data;
-                    }).catch(function(err) {
-                        // show toast message
-                        reject(err);
-                    });
+                    // UserService.getUsersList().then(function(data) {
+                    //     $rootScope.users = data.data;
+                    // }).catch(function(err) {
+                    //     // show toast message
+                    //     reject(err);
+                    // });
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
                     EkstepRendererAPI.logErrorEvent(res,{'type':'system','severity':'fatal','action':'play'})

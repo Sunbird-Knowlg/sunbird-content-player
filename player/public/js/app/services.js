@@ -17,7 +17,14 @@ angular.module('genie-canvas.services', ['ngResource'])
             getContent: function(id) {
                 return new Promise(function(resolve, reject) {
                     genieservice.getContent(id)
-                        .then(function(item) {
+                        .then(function(resp) {
+                            console.log("angular getContent() is success.", resp);
+                            var item = resp;
+
+                            // New genie resp object having diffrent fields. Hence we are assigning new feilds to old fields
+                            if(item.contentData) item.localData = item.contentData;
+                            if(item.isAvailableLocally) item.isAvailable = item.isAvailableLocally;
+
                             if (item.isAvailable) {
                                 resolve(returnObject._prepareContent(item));
                             } else {
@@ -100,7 +107,11 @@ angular.module('genie-canvas.services', ['ngResource'])
                 });
             },
             _prepareContent: function(item) {
-                var data = item.localData || item.serverData;
+                var data = item.localData || item.serverData || item.contentData;
+                if(_.isUndefined(item.path)){
+                 item.path = item.basePath;
+                }
+
                 if (item.path && data) {
                     var path = (item.path.charAt(item.path.length - 1) == '/') ? item.path.substring(0, item.path.length - 1) : item.path;
                     path = ($window.cordova) ? "file://" + path : path;
