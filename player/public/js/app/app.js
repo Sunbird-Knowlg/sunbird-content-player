@@ -323,12 +323,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $ionicPlatform.on("resume", function() {
                     Renderer.resume();
                 });
-                genieservice.getMetaData().then(function(data) {
-                    var flavor = data.flavor;
-                    if (AppConfig[flavor] == undefined)
-                        flavor = "sandbox";
-                    GlobalContext.config.flavor = flavor;
-                });
                 GlobalContext.init(packageName, version).then(function(appInfo) {
                     if ("undefined" != typeof localPreview && "local" == localPreview)
                         return;

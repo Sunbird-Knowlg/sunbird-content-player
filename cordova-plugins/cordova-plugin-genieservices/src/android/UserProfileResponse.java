@@ -3,16 +3,13 @@ package org.ekstep.geniecanvas;
 import android.text.TextUtils;
 
 import org.apache.cordova.CallbackContext;
-
-import org.ekstep.genieservices.commons.bean.GenieResponse;
 import org.ekstep.genieservices.commons.IResponseHandler;
-
-import org.json.JSONException;
+import org.ekstep.genieservices.commons.bean.GenieResponse;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 public class UserProfileResponse implements IResponseHandler {
     private CallbackContext callbackContext;
@@ -33,7 +30,7 @@ public class UserProfileResponse implements IResponseHandler {
     }
 
     public void onError(GenieResponse response) {
-        System.out.println("TelemetryResponse error: " + response.getStatus() + " -- " + response.getError());
+        System.out.println("UserProfileResponse error: " + response.getStatus() + " -- " + response.getError());
         String errors = "";
         List<String> errorList = response.getErrorMessages();
         if (null != errorList)

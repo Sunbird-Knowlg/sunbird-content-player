@@ -45,13 +45,9 @@ dependencies {
     compile "org.apache.commons:commons-compress:1.10"
     compile "commons-io:commons-io:2.4"
 
-    // For Old Genie Integation
-    // compile "org.ekstep.genieservices:sdks:1.5.+@aar"
-    // compile "org.ekstep.genieservices:aidls:1.5.+@aar"
-
     // For undubled Genie Initegration
-    compile "org.ekstep.genieservices:genie-integration:0.1.96@aar"
-    compile "org.ekstep.genieservices:commons:0.1.96@jar"
+    compile "org.ekstep.genieservices:genie-integration:0.1.102@aar"
+    compile "org.ekstep.genieservices:commons:0.1.102@jar"
 }
 
 task updateBuildNumber() {

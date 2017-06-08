@@ -1,24 +1,21 @@
 package org.ekstep.geniecanvas;
 
 import android.util.Log;
-import org.apache.cordova.CordovaActivity;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.CordovaInterface;
-import org.ekstep.geniecanvas.GenieServicesResponse;
-import org.ekstep.geniecanvas.TelemetryResponse;
 
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaActivity;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
 import org.ekstep.genieresolvers.GenieSDK;
+import org.ekstep.genieresolvers.content.ContentService;
 import org.ekstep.genieresolvers.user.UserService;
-import  org.ekstep.geniecanvas.UserProfileResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Map;
 import java.util.HashMap;
-import java.util.*;
+import java.util.Map;
 
 public class GenieServicePlugin extends CordovaPlugin {
 
@@ -27,7 +24,7 @@ public class GenieServicePlugin extends CordovaPlugin {
 //	private TelemetryService telemetry;
     private UserService userService;
 //    private GenieServices genieServices;
-   private Content content;
+   private ContentService contentService;
 //    private Summarizer summarizer;
 //    private Language language;
     private GenieSDK genieSdk;
@@ -45,7 +42,7 @@ public class GenieServicePlugin extends CordovaPlugin {
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         CordovaActivity activity = (CordovaActivity) this.cordova.getActivity();
 
-        genieSdk = GenieSDK.init(activity, "appQualifier");
+        genieSdk = GenieSDK.init(activity, "org.ekstep.genieservices");
 //
 //        if (null == telemetry) {
 //            if (null != activity) {
@@ -62,9 +59,9 @@ public class GenieServicePlugin extends CordovaPlugin {
 //                genieServices = new GenieServices(activity);
 //            }
 //        }
-       if(null == content) {
+       if(null == contentService) {
            if(null != activity) {
-               content = new Content(activity);
+               contentService = genieSdk.getContentService();
            }
        }
 //        if(null == summarizer) {
@@ -95,7 +92,7 @@ public class GenieServicePlugin extends CordovaPlugin {
             userService.getCurrentUser(new UserProfileResponse(callbackContext));
         } else if(action.equals("getContent")) {
             String contentId = args.getString(0);
-            content.get(contentId, new GenieServicesResponse(callbackContext));
+            contentService.getContent(contentId, new GenieServicesResponse(callbackContext));
         }/* else if(action.equals("getRelatedContent")) {
             String uid = args.getString(0);
             List<HashMap<String, Object>> filterList = new ArrayList<HashMap<String, Object>>();

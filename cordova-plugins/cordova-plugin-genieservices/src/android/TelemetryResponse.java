@@ -3,18 +3,15 @@ package org.ekstep.geniecanvas;
 import android.text.TextUtils;
 
 import org.apache.cordova.CallbackContext;
-
 import org.ekstep.genieservices.commons.IResponseHandler;
 import org.ekstep.genieservices.commons.bean.GenieResponse;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
-public class TelemetryResponse implements IResponseHandler {
+public class TelemetryResponse implements IResponseHandler<Map> {
     private CallbackContext callbackContext;
 
     public TelemetryResponse(CallbackContext callbackContext) {
