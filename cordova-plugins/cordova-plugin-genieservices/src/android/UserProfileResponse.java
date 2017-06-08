@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import org.apache.cordova.CallbackContext;
 
-import org.ekstep.genieservices.commons.GenieResponse;
+import org.ekstep.genieservices.commons.bean.GenieResponse;
 import org.ekstep.genieservices.commons.IResponseHandler;
 
 import org.json.JSONException;
@@ -32,14 +32,14 @@ public class UserProfileResponse implements IResponseHandler {
         callbackContext.success(new JSONObject(map));
     }
 
-    public void onFailure(GenieResponse response) {
+    public void onError(GenieResponse response) {
         System.out.println("TelemetryResponse error: " + response.getStatus() + " -- " + response.getError());
         String errors = "";
         List<String> errorList = response.getErrorMessages();
-        if (null != errorList) 
-        errors = TextUtils.join(",", errorList);
+        if (null != errorList)
+            errors = TextUtils.join(",", errorList);
         String error = response.getError();
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, Object> map = new HashMap<String, Object>();
         map.put("status", response.getStatus());
         map.put("error", error);
         map.put("errors", errors);

@@ -6,15 +6,12 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaInterface;
-import org.ekstep.genieresolvers;
-import org.ekstep.genieservices.sdks.TelemetryService;
+import org.ekstep.geniecanvas.GenieServicesResponse;
+import org.ekstep.geniecanvas.TelemetryResponse;
+
+import org.ekstep.genieresolvers.GenieSDK;
 import org.ekstep.genieresolvers.user.UserService;
-import org.ekstep.genieservices.sdks.Content;
-import org.ekstep.genieservices.sdks.Summarizer;
-import org.ekstep.genieservices.sdks.Language;
-// import org.ekstep.genieservices.sdks.FeedbackService;
-import org.ekstep.genieservices.sdks.GenieServices;
-import org.ekstep.genieservices.sdks.response.IResponseHandler;
+import  org.ekstep.geniecanvas.UserProfileResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,12 +24,12 @@ public class GenieServicePlugin extends CordovaPlugin {
 
 	public static final String TAG = "Genie Service Plugin";
 
-	private TelemetryService telemetry;
+//	private TelemetryService telemetry;
     private UserService userService;
-    private GenieServices genieServices;
-    private Content content;
-    private Summarizer summarizer;
-    private Language language;
+//    private GenieServices genieServices;
+   private Content content;
+//    private Summarizer summarizer;
+//    private Language language;
     private GenieSDK genieSdk;
 
 	public GenieServicePlugin() {
@@ -41,51 +38,45 @@ public class GenieServicePlugin extends CordovaPlugin {
 
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        
+
     }
 
-    public void onDestroy() {
-        if(null != userService) {
-            userService.finish();
-        }
-        super.onDestroy();
-    }
 
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         CordovaActivity activity = (CordovaActivity) this.cordova.getActivity();
 
         genieSdk = GenieSDK.init(activity, "appQualifier");
-
-        if (null == telemetry) {
-            if (null != activity) {
-                telemetry = genieSdk.getUserService(); //new Telemetry(activity);
-            }
-        }
+//
+//        if (null == telemetry) {
+//            if (null != activity) {
+//                telemetry = genieSdk.getUserService(); //new Telemetry(activity);
+//            }
+//        }
         if(null == userService) {
             if (null != activity) {
-                userService = genieSdk.getUserService(); //new UserProfile(activity);    
+                userService = genieSdk.getUserService(); //new UserProfile(activity);
             }
         }
-        if(null == genieServices) {
-            if (null != activity) {
-                genieServices = new GenieServices(activity);    
-            }
-        }
-        if(null == content) {
-            if(null != activity) {
-                content = new Content(activity);
-            }
-        }
-        if(null == summarizer) {
-            if(null != activity) {
-                summarizer = new Summarizer(activity);
-            }
-        }
-        if(null == language) {
-            if(null != activity) {
-                language = new Language(activity);
-            }
-        }
+//        if(null == genieServices) {
+//            if (null != activity) {
+//                genieServices = new GenieServices(activity);
+//            }
+//        }
+       if(null == content) {
+           if(null != activity) {
+               content = new Content(activity);
+           }
+       }
+//        if(null == summarizer) {
+//            if(null != activity) {
+//                summarizer = new Summarizer(activity);
+//            }
+//        }
+//        if(null == language) {
+//            if(null != activity) {
+//                language = new Language(activity);
+//            }
+//        }
         // if(null == summarizer) {
         //     if(null != activity) {
         //         feedbackService = new FeedbackService(activity);
@@ -102,12 +93,10 @@ public class GenieServicePlugin extends CordovaPlugin {
             sendTelemetry(data, callbackContext);
         } else if(action.equals("getCurrentUser")) {
             userService.getCurrentUser(new UserProfileResponse(callbackContext));
-        } else if(action.equals("getMetaData")) {
-            genieServices.getMetaData(new GenieServicesResponse(callbackContext));
         } else if(action.equals("getContent")) {
             String contentId = args.getString(0);
             content.get(contentId, new GenieServicesResponse(callbackContext));
-        } else if(action.equals("getRelatedContent")) {
+        }/* else if(action.equals("getRelatedContent")) {
             String uid = args.getString(0);
             List<HashMap<String, Object>> filterList = new ArrayList<HashMap<String, Object>>();
             JSONArray jsonArray = args.getJSONArray(1);
@@ -121,8 +110,8 @@ public class GenieServicePlugin extends CordovaPlugin {
                     }
                     filterList.add(map);
                 }
-                    
-            } 
+
+            }
             content.getRelatedContent(uid, filterList, new GenieServicesResponse(callbackContext));
         }
         else if(action.equals("sendFeedback")) {
@@ -151,18 +140,18 @@ public class GenieServicePlugin extends CordovaPlugin {
             }
         } else if(action.equals("languageSearch")) {
             String inputFilter = args.getString(0);
-            language.languageSearch(inputFilter, new GenieServicesResponse(callbackContext));  
+            language.languageSearch(inputFilter, new GenieServicesResponse(callbackContext));
         }else if("endGenieCanvas".equals(action)) {
             System.out.println("*** Activity:" + activity);
             activity.finish();
-        }
+        }*/
         return true;
     }
 
     private void sendTelemetry(String data, CallbackContext callbackContext) {
-    	if (null != data) {
-    		telemetry.send(data, new TelemetryResponse(callbackContext));
-    	}
+//    	if (null != data) {
+//    		telemetry.send(data, new TelemetryResponse(callbackContext));
+//    	}
     }
 
     private JSONObject getErrorJSONObject(String errorCode, String errorParam) {

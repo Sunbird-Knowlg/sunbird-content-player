@@ -50,7 +50,8 @@ dependencies {
     // compile "org.ekstep.genieservices:aidls:1.5.+@aar"
 
     // For undubled Genie Initegration
-    compile "org.ekstep.genieservices:genie-integration:0.1.+@aar"
+    compile "org.ekstep.genieservices:genie-integration:0.1.96@aar"
+    compile "org.ekstep.genieservices:commons:0.1.96@jar"
 }
 
 task updateBuildNumber() {

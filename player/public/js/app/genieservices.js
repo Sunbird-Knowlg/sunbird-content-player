@@ -15,7 +15,7 @@ genieservice_web = {
         return new Promise(function(resolve, reject) {
             var result = {};
             result.status = "success";
-            $.getJSON("assets/user_list/user_list.json",function(data){
+            $.getJSON("assets/user_list/user_list.json", function(data) {
                 // console.log("===== data =====", data);
                 result.data = data.userList[0];
                 resolve(result);
@@ -210,7 +210,7 @@ genieservice_portal = {
                 } else {
                     resolve(content.metadata);
                 }
-            } else{
+            } else {
                 resolve(genieservice.getContentMetadata(id));
             }
         });

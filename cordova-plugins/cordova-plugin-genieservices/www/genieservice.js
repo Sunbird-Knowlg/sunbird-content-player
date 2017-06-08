@@ -21,9 +21,10 @@ genieservice.prototype.getCurrentUser = function() {
     return this.handleAction("getCurrentUser", []);
 }
 
-genieservice.prototype.getMetaData = function() {
-    return this.handleAction("getMetaData", []);
-}
+// Won't work now
+// genieservice.prototype.getMetaData = function() {
+//     return this.handleAction("getMetaData", []);
+// }
 
 genieservice.prototype.getContent = function(id) {
     return this.handleAction("getContent", [id]);
