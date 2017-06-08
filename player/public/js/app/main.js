@@ -210,7 +210,7 @@ function startTelemetry(id, ver, cb) {
             "type": GlobalContext.game.contentExtras[0].contentType
         }];
     }
-    correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "Content-Session"});
+    correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData).then(function(response) {
         var data = {};
         data.mode = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
