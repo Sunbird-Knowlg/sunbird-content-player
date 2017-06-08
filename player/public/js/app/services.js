@@ -209,9 +209,9 @@ angular.module('genie-canvas.services', ['ngResource'])
     }]).factory('UserService', [ '$rootScope', function($rootScope) {
         var returnObj = {
 
-            getUsersList: function() {
+            getAllUserProfile: function() {
                 return new Promise(function(resolve, reject) {
-                    genieservice.getUsersList()
+                    genieservice.getAllUserProfile()
                         .then(function(data) {
                             resolve(data);
                         })

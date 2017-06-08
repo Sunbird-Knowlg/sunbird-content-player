@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.*;
 
 public class GenieServicePlugin extends CordovaPlugin {
 
@@ -41,8 +42,10 @@ public class GenieServicePlugin extends CordovaPlugin {
 
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         CordovaActivity activity = (CordovaActivity) this.cordova.getActivity();
-
-        genieSdk = GenieSDK.init(activity, "org.ekstep.genieservices");
+        if (action.equals("initializeSdk")) {
+            String appQualifier = args.getString(0);
+            genieSdk = GenieSDK.init(activity, appQualifier);
+        }
 //
 //        if (null == telemetry) {
 //            if (null != activity) {
@@ -93,7 +96,9 @@ public class GenieServicePlugin extends CordovaPlugin {
         } else if(action.equals("getContent")) {
             String contentId = args.getString(0);
             contentService.getContent(contentId, new GenieServicesResponse(callbackContext));
-        }/* else if(action.equals("getRelatedContent")) {
+        } else if(action.equals("getAllUserProfile")) {
+            userService.getAllUserProfile(new UserProfileResponse(callbackContext));
+        } /*else if(action.equals("getRelatedContent")) {
             String uid = args.getString(0);
             List<HashMap<String, Object>> filterList = new ArrayList<HashMap<String, Object>>();
             JSONArray jsonArray = args.getJSONArray(1);
@@ -109,12 +114,12 @@ public class GenieServicePlugin extends CordovaPlugin {
                 }
 
             }
-            content.getRelatedContent(uid, filterList, new GenieServicesResponse(callbackContext));
-        }
+            contentService.getRelatedContent(uid, filterList, new GenieServicesResponse(callbackContext));
+        }*/
         else if(action.equals("sendFeedback")) {
             String evt = args.getString(0);
-            content.sendFeedback(evt, new TelemetryResponse(callbackContext));
-        }else if(action.equals("getLearnerAssessment")) {
+            contentService.sendFeedback(evt, new TelemetryResponse(callbackContext));
+        }/*else if(action.equals("getLearnerAssessment")) {
             String uid = args.getString(0);
             String contentId = args.getString(1);
             summarizer.getLearnerAssessment(uid, contentId, new GenieServicesResponse(callbackContext));
@@ -131,17 +136,17 @@ public class GenieServicePlugin extends CordovaPlugin {
                 filter = new String[0];
             }
             if(filter.length == 0) {
-                content.getList(new GenieServicesListResponse(callbackContext));
+                contentService.getList(new GenieServicesListResponse(callbackContext));
             } else {
-                content.filter(filter, new GenieServicesListResponse(callbackContext));
+                contentService.filter(filter, new GenieServicesListResponse(callbackContext));
             }
         } else if(action.equals("languageSearch")) {
             String inputFilter = args.getString(0);
             language.languageSearch(inputFilter, new GenieServicesResponse(callbackContext));
-        }else if("endGenieCanvas".equals(action)) {
+        }*/else if("endGenieCanvas".equals(action)) {
             System.out.println("*** Activity:" + activity);
             activity.finish();
-        }*/
+        }
         return true;
     }
 

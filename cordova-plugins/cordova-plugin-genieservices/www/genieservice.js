@@ -26,6 +26,10 @@ genieservice.prototype.getCurrentUser = function() {
 //     return this.handleAction("getMetaData", []);
 // }
 
+genieservice.prototype.initializeSdk = function(appQualifier) {
+    return this.handleAction("initializeSdk", [appQualifier]);
+}
+
 genieservice.prototype.getContent = function(id) {
     return this.handleAction("getContent", [id]);
 }
@@ -48,6 +52,10 @@ genieservice.prototype.sendFeedback = function(evt) {
 
 genieservice.prototype.languageSearch = function(filter) {
     return this.handleAction("languageSearch", [filter]);
+}
+
+genieservice.prototype.getAllUserProfile = function() {
+    return this.handleAction("getAllUserProfile", []);
 }
 
 genieservice.prototype.endGenieCanvas = function() {
