@@ -66,7 +66,8 @@ TelemetryV2Manager = Class.extend({
 
     },
     error: function(data) {
-        return this.createEvent("OE_ERROR", {env: data.env, type: data.type, stageid: data.stageId, objecttype: data.objectType, objectid: data.objectId, err: data.err, action: data.action, data: data.data, severity: data.severity });
+        var data = {env: data.env || '', type: data.type || '', stageid: data.stageId || '', objecttype: data.objectType || '', objectid: data.objectId || '', err: data.err || '', action: data.action || '', data: data.data || '', severity: data.severity || ''} 
+        return this.createEvent("OE_ERROR", data);
     },
     assessEnd: function(eventObj, data) {
         if (eventObj) {
