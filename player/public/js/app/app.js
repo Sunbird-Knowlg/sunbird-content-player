@@ -335,21 +335,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         $rootScope.deviceRendrer();
                     }
                     UserService.getAllUserProfile().then(function(data) {
-                        // if (data.data.length == 0) {
-                        //     UserService.getCurrentUser().then(function(data) {
-                        //         if (_.isUndefined(data.name)) {
-                        //             data.name = "Anonymous";
-                        //             data.avatar = "img/icons/avatar_anonymous.png";
-                        //         }
-                        //         if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
-                        //
-                        //         if ($rootScope.users.length == 0) $rootScope.users.push($rootScope.currentUser);
-                        //     }).catch(function(err) {
-                        //         console.log(err)
-                        //         showToaster('error', 'CurrentUser Not found');
-                        //     });
-                        //
-                        // }
                         $rootScope.users = data.data;
                     }).catch(function(err) {
                         // show toast message
