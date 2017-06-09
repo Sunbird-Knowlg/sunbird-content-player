@@ -334,12 +334,27 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                         $rootScope.deviceRendrer();
                     }
-                    UserService.getAllUserProfile().then(function(data) {
-                        $rootScope.users = data.data;
-                    }).catch(function(err) {
-                        // show toast message
-                        console.log(err);
-                    });
+                    // UserService.getAllUserProfile().then(function(data) {
+                    //     // if (data.data.length == 0) {
+                    //     //     UserService.getCurrentUser().then(function(data) {
+                    //     //         if (_.isUndefined(data.name)) {
+                    //     //             data.name = "Anonymous";
+                    //     //             data.avatar = "img/icons/avatar_anonymous.png";
+                    //     //         }
+                    //     //         if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
+                    //     //
+                    //     //         if ($rootScope.users.length == 0) $rootScope.users.push($rootScope.currentUser);
+                    //     //     }).catch(function(err) {
+                    //     //         console.log(err)
+                    //     //         showToaster('error', 'CurrentUser Not found');
+                    //     //     });
+                    //     //
+                    //     // }
+                    //     $rootScope.users = data.data;
+                    // }).catch(function(err) {
+                    //     // show toast message
+                    //     console.log(err);
+                    // });
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
                     EkstepRendererAPI.logErrorEvent(res,{'type':'system','severity':'fatal','action':'play'})
@@ -1193,39 +1208,39 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         // get userList process goes here
         $scope.getUsersList = function() {
-            // get users api call gone here
-            UserService.getAllUserProfile().then(function(data) {
-                if (data.status === "success" && _.isUndefined($rootScope.users))
-                    $rootScope.users = data.data;
-                $scope.groupLength = (_.where($rootScope.users, {"group": true})).length;
+            // // get users api call gone here
+            // UserService.getAllUserProfile().then(function(data) {
+            //     if (data.status === "success" && _.isUndefined($rootScope.users))
+            //         $rootScope.users = data.data;
+            //     $scope.groupLength = (_.where($rootScope.users, {"group": true})).length;
 
-                UserService.getCurrentUser().then(function(data) {
-                    if (_.isUndefined(data.name)) {
-                        data.data.name = "Anonymous";
-                        data.data.avatar = "img/icons/avatar_anonymous.png";
-                    }
-                    if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
+            //     UserService.getCurrentUser().then(function(data) {
+            //         if (_.isUndefined(data.name)) {
+            //             data.data.name = "Anonymous";
+            //             data.data.avatar = "img/icons/avatar_anonymous.png";
+            //         }
+            //         if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
 
-                    if ($rootScope.users.length == 0) $rootScope.users.push($rootScope.currentUser);
+            //         if ($rootScope.users.length == 0) $rootScope.users.push($rootScope.currentUser);
 
-                    _.each($rootScope.users, function(user) {
-                        if (user.uid === $rootScope.currentUser.uid) {
-                            $rootScope.safeApply(function() {
-                                $rootScope.currentUser = user;
-                            });
-                        }
-                    });
+            //         _.each($rootScope.users, function(user) {
+            //             if (user.uid === $rootScope.currentUser.uid) {
+            //                 $rootScope.safeApply(function() {
+            //                     $rootScope.currentUser = user;
+            //                 });
+            //             }
+            //         });
 
-                    $rootScope.currentUser.selected = true;
-                    $scope.sortUserlist();
-                }).catch(function(err) {
-                    console.log(err)
-                    showToaster('error', 'CurrentUser Not found');
-                });
-            }).catch(function(err) {
-                // show toast message
-                console.error(err);
-            });
+            //         $rootScope.currentUser.selected = true;
+            //         $scope.sortUserlist();
+            //     }).catch(function(err) {
+            //         console.log(err)
+            //         showToaster('error', 'CurrentUser Not found');
+            //     });
+            // }).catch(function(err) {
+            //     // show toast message
+            //     console.error(err);
+            // });
         }
 
         $scope.sortUserlist = function() {
