@@ -34,7 +34,7 @@ GlobalContext = {
 
                 promises.push(GlobalContext._getIntentExtra('userSwitcherEnabled', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('showUser', GlobalContext.config));
-                promises.push(GlobalContext._getIntentExtra('appQualifier', GlobalContext.config.appQualifier));
+                promises.push(GlobalContext._getIntentExtra('appQualifier', GlobalContext.config));
 
                 Promise.all(promises)
                 .then(function(result) {

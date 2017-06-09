@@ -1091,33 +1091,33 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             window.open(deepLinkURL, "_system");
         }
         $scope.getRelatedContent = function(list) {
-            ContentService.getRelatedContent(TelemetryService._user.uid, list)
-                .then(function(item) {
-                    if (!_.isEmpty(item)) {
-                        $scope.relatedContentItem = item;
-                        var list = [];
-                        if (!_.isEmpty(item.collection)) {
-                            $scope.showRelatedContent = true;
-                            $scope.relatedContentPath = item.collection;
-                            list = [item.collection[item.collection.length - 1]];
-                            list[0].appIcon = list[0].path + '/' + list[0].appIcon;
-                        } else if (!_.isEmpty(item.content)) {
-                            $scope.showRelatedContent = true;
-                            $scope.contentShowMore = true;
-                            list = _.first(_.isArray(item.content) ? item.content : [item.content], 2);
-                        }
+            // ContentService.getRelatedContent(TelemetryService._user.uid, list)
+            //     .then(function(item) {
+            //         if (!_.isEmpty(item)) {
+            //             $scope.relatedContentItem = item;
+            //             var list = [];
+            //             if (!_.isEmpty(item.collection)) {
+            //                 $scope.showRelatedContent = true;
+            //                 $scope.relatedContentPath = item.collection;
+            //                 list = [item.collection[item.collection.length - 1]];
+            //                 list[0].appIcon = list[0].path + '/' + list[0].appIcon;
+            //             } else if (!_.isEmpty(item.content)) {
+            //                 $scope.showRelatedContent = true;
+            //                 $scope.contentShowMore = true;
+            //                 list = _.first(_.isArray(item.content) ? item.content : [item.content], 2);
+            //             }
 
-                        if (!_.isEmpty(list)) {
-                            $scope.$apply(function() {
-                                $scope.relatedContents = list;
-                                jQuery('#endPageLoader').hide();
-                            });
-                        } else {
-                            $scope.showRelatedContentHeader = false;
-                            jQuery('#endPageLoader').hide();
-                        }
-                    }
-                })
+            //             if (!_.isEmpty(list)) {
+            //                 $scope.$apply(function() {
+            //                     $scope.relatedContents = list;
+            //                     jQuery('#endPageLoader').hide();
+            //                 });
+            //             } else {
+            //                 $scope.showRelatedContentHeader = false;
+            //                 jQuery('#endPageLoader').hide();
+            //             }
+            //         }
+            //     })
         }
 
         $scope.renderRelatedContent = function(id) {
@@ -1212,11 +1212,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     $rootScope.currentUser.selected = true;
                     $scope.sortUserlist();
                 }).catch(function(err) {
-                    showToaster('error', err);
+                    console.log(err)
+                    showToaster('error', 'CurrentUser Not found');
                 });
             }).catch(function(err) {
                 // show toast message
-                showToaster('error', err);
+                console.error(err);
             });
         }
 

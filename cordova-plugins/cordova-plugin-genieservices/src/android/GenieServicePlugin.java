@@ -10,6 +10,7 @@ import org.apache.cordova.CordovaWebView;
 import org.ekstep.genieresolvers.GenieSDK;
 import org.ekstep.genieresolvers.content.ContentService;
 import org.ekstep.genieresolvers.language.LanguageService;
+import org.ekstep.genieresolvers.summarizer.SummarizerService;
 import org.ekstep.genieresolvers.telemetry.TelemetryService;
 import org.ekstep.genieresolvers.user.UserService;
 import org.json.JSONArray;
@@ -29,8 +30,8 @@ public class GenieServicePlugin extends CordovaPlugin {
 
 	private TelemetryService telemetryService;
     private UserService userService;
-   private ContentService contentService;
-//    private Summarizer summarizer;
+    private ContentService contentService;
+    private SummarizerService summarizerService;
     private LanguageService languageService;
     private GenieSDK genieSdk;
 
@@ -46,12 +47,6 @@ public class GenieServicePlugin extends CordovaPlugin {
 
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         CordovaActivity activity = (CordovaActivity) this.cordova.getActivity();
-
-        if (null == telemetryService) {
-            if (null != activity) {
-                telemetryService = genieSdk.getTelemetryService();
-            }
-        }
 
         if (action.equals("initializeSdk")) {
             String appQualifier = args.getString(0);
@@ -75,11 +70,17 @@ public class GenieServicePlugin extends CordovaPlugin {
                 languageService = genieSdk.getLanguageService();
             }
         }
-//         if(null == summarizer) {
-//             if(null != activity) {
-//                 feedbackService = genieSdk.get(activity);
-//             }
-//         }
+        if (null == summarizerService) {
+            if (null != activity) {
+                summarizerService = genieSdk.getSummarizerService();
+            }
+        }
+
+         if (null == telemetryService) {
+            if (null != activity) {
+                telemetryService = genieSdk.getTelemetryService();
+            }
+        }
         Log.v(TAG, "GenieServicePlugin received:" + action);
         System.out.println("Genie Service action: " + action);
         if(action.equals("sendTelemetry")) {
@@ -99,7 +100,7 @@ public class GenieServicePlugin extends CordovaPlugin {
         } else if(action.equals("getContent")) {
             String contentId = args.getString(0);
             contentService.getContent(contentId, new GenieServicesResponse(callbackContext));
-        } else if(action.equals("getRelatedContent")) {
+        } /*else if(action.equals("getRelatedContent")) {
             String uid = args.getString(0);
             ///List<HashMap<String, Object>> filterList = new ArrayList<HashMap<String, Object>>();
             List<String> identifiers = new ArrayList<String>();
@@ -112,15 +113,15 @@ public class GenieServicePlugin extends CordovaPlugin {
 
             }
             contentService.getRelatedContent(identifiers, uid, new GenieServicesResponse(callbackContext));
-        }
+        }*/
         else if(action.equals("sendFeedback")) {
             String evt = args.getString(0);
             contentService.sendFeedback(evt, new TelemetryResponse(callbackContext));
-        } /* else if(action.equals("getLearnerAssessment")) {
+        } else if(action.equals("getLearnerAssessment")) {
             String uid = args.getString(0);
             String contentId = args.getString(1);
-            summarizer.getLearnerAssessment(uid, contentId, new GenieServicesResponse(callbackContext));
-        }   else if(action.equals("getContentList")) {
+            summarizerService.getLearnerAssessment(uid, contentId, new GenieServicesResponse(callbackContext));
+        } /*else if(action.equals("getContentList")) {
             String[] filter = null;
             JSONArray jsonArray = args.getJSONArray(0);
             if(jsonArray != null && jsonArray.length() > 0) {
