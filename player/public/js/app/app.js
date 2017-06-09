@@ -333,12 +333,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                         $rootScope.deviceRendrer();
                     }
-                    // UserService.getUsersList().then(function(data) {
-                    //     $rootScope.users = data.data;
-                    // }).catch(function(err) {
-                    //     // show toast message
-                    //     reject(err);
-                    // });
+                    UserService.getAllUserProfile().then(function(data) {
+                        $rootScope.users = data.data;
+                    }).catch(function(err) {
+                        // show toast message
+                        console.log(err);
+                    });
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
                     EkstepRendererAPI.logErrorEvent(res,{'type':'system','severity':'fatal','action':'play'})
@@ -1193,7 +1193,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         // get userList process goes here
         $scope.getUsersList = function() {
             // get users api call gone here
-            UserService.getUsersList().then(function(data) {
+            UserService.getAllUserProfile().then(function(data) {
                 if (data.status === "success" && _.isUndefined($rootScope.users))
                     $rootScope.users = data.data;
                 $scope.groupLength = (_.where($rootScope.users, {"group": true})).length;
@@ -1212,11 +1212,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     $rootScope.currentUser.selected = true;
                     $scope.sortUserlist();
                 }).catch(function(err) {
-                    reject(err);
+                    showToaster('error', err);
                 });
             }).catch(function(err) {
                 // show toast message
-                reject(err);
+                showToaster('error', err);
             });
         }
 

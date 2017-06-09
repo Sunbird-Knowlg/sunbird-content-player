@@ -34,9 +34,11 @@ GlobalContext = {
 
                 promises.push(GlobalContext._getIntentExtra('userSwitcherEnabled', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('showUser', GlobalContext.config));
+                promises.push(GlobalContext._getIntentExtra('appQualifier', GlobalContext.config.appQualifier));
 
                 Promise.all(promises)
                 .then(function(result) {
+                    genieservice.initializeSdk(GlobalContext.config.appQualifier);
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
                         GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
                         GlobalContext.game.id = GlobalContext.config.appInfo.identifier;

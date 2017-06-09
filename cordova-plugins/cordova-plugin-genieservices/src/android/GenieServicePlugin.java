@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.*;
 
 public class GenieServicePlugin extends CordovaPlugin {
 
@@ -46,13 +47,17 @@ public class GenieServicePlugin extends CordovaPlugin {
     public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         CordovaActivity activity = (CordovaActivity) this.cordova.getActivity();
 
-        genieSdk = GenieSDK.init(activity, "org.ekstep.genieservices");
-
         if (null == telemetryService) {
             if (null != activity) {
                 telemetryService = genieSdk.getTelemetryService();
             }
         }
+
+        if (action.equals("initializeSdk")) {
+            String appQualifier = args.getString(0);
+            genieSdk = GenieSDK.init(activity, appQualifier);
+        }
+
         if(null == userService) {
             if (null != activity) {
                 userService = genieSdk.getUserService();
@@ -86,23 +91,21 @@ public class GenieServicePlugin extends CordovaPlugin {
             sendTelemetry(data, callbackContext);
         } else if(action.equals("getCurrentUser")) {
             userService.getCurrentUser(new UserProfileResponse(callbackContext));
+        } else if(action.equals("getAllUserProfile")) {
+            userService.getAllUserProfile(new UserProfileResponse(callbackContext));
+        } else if(action.equals("setUser")) {
+			String userId = args.getString(0);
+            userService.setUser(userId, new UserProfileResponse(callbackContext));
         } else if(action.equals("getContent")) {
             String contentId = args.getString(0);
             contentService.getContent(contentId, new GenieServicesResponse(callbackContext));
         } else if(action.equals("getRelatedContent")) {
             String uid = args.getString(0);
             ///List<HashMap<String, Object>> filterList = new ArrayList<HashMap<String, Object>>();
-            List<String> identifiers =  new ArrayList<String>();
+            List<String> identifiers = new ArrayList<String>();
             JSONArray jsonArray = args.getJSONArray(1);
             if(jsonArray != null && jsonArray.length() > 0) {
                 for (int i = 0; i < jsonArray.length(); i++) {
-//                    HashMap<String, Object> map = new HashMap<String, Object>();
-//                    Iterator keys = jsonArray.getJSONObject(i).keys();
-//                    while (keys.hasNext()) {
-//                        String key = (String) keys.next();
-//                        map.put(key, jsonArray.getJSONObject(i).get(key));
-//                    }
-//                    filterList.add(map);
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     identifiers.add(jsonObject.getString("identifier"));
                 }

@@ -79,7 +79,7 @@ function backbuttonPressed(pageId) {
 // So, change exitApp to do the same.
 function exitApp(pageId) {
     TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {
-        stageId: ((pageId == "renderer" && GlobalContext.config.appInfo.mimeType != "application/vnd.ekstep.content-collection" ? Renderer.theme._currentStage : pageId))
+        stageId: ((pageId == "ContentApp-Renderer" && GlobalContext.config.appInfo.mimeType != "application/vnd.ekstep.content-collection" ? Renderer.theme._currentStage : pageId))
     });
     try {
         TelemetryService.exit();

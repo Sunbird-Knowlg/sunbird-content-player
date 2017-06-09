@@ -21,10 +21,22 @@ genieservice.prototype.getCurrentUser = function() {
     return this.handleAction("getCurrentUser", []);
 }
 
+genieservice.prototype.getAllUserProfile = function() {
+    return this.handleAction("getAllUserProfile", []);
+}
+
+genieservice.prototype.setUser = function(userId) {
+    return this.handleAction("setUser", [userId]);
+}
+
 // Won't work now
 // genieservice.prototype.getMetaData = function() {
 //     return this.handleAction("getMetaData", []);
 // }
+
+genieservice.prototype.initializeSdk = function(appQualifier) {
+    return this.handleAction("initializeSdk", [appQualifier]);
+}
 
 genieservice.prototype.getContent = function(id) {
     return this.handleAction("getContent", [id]);
