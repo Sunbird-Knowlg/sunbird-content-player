@@ -1,5 +1,5 @@
-{
-    "userList": [{
+[
+    {
         "avatar": "img/icons/avatar_anonymous.png",
         "gender": "male",
         "handle": "handle1",
@@ -44,5 +44,3 @@
         "group": true
     }
 ]
-
-}

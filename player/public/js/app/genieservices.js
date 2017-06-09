@@ -17,7 +17,8 @@ genieservice_web = {
             result.status = "success";
             $.getJSON("assets/user_list/user_list.json", function(data) {
                 // console.log("===== data =====", data);
-                result.data = data.userList[0];
+                if (data.length == 0) data = [{"uid": "9g8h4ndAnonymouscg56ngd"}]
+                result.data = data[0];
                 resolve(result);
             })
         });
@@ -29,7 +30,7 @@ genieservice_web = {
             result.status = "success";
             $.getJSON("assets/user_list/user_list.json",function(data){
                 // console.log("===== data =====", data);
-                result.data = data.userList;
+                result.data = data;
                 resolve(result);
             })
         });
@@ -151,7 +152,9 @@ genieservice_portal = {
             result.status = "success";
             $.getJSON("assets/user_list/user_list.json",function(data){
                 // console.log("===== data =====", data);
-                result.data = data.userList[0];
+
+                result.data = data[0];
+
                 resolve(result);
             })
         });
@@ -163,7 +166,7 @@ genieservice_portal = {
             result.status = "success";
             $.getJSON("assets/user_list/user_list.json",function(data){
                 // console.log("===== data =====", data);
-                result.data = data.userList;
+                result.data = data;
                 resolve(result);
             })
         });
