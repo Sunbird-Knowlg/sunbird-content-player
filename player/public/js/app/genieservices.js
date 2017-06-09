@@ -23,7 +23,7 @@ genieservice_web = {
         });
     },
 
-    getUsersList: function() {
+    getAllUserProfile: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
             result.status = "success";
@@ -157,7 +157,7 @@ genieservice_portal = {
         });
     },
 
-    getUsersList: function() {
+    getAllUserProfile: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
             result.status = "success";
