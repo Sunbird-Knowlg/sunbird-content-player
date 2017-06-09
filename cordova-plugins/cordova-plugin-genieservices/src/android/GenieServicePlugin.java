@@ -93,11 +93,14 @@ public class GenieServicePlugin extends CordovaPlugin {
             sendTelemetry(data, callbackContext);
         } else if(action.equals("getCurrentUser")) {
             userService.getCurrentUser(new UserProfileResponse(callbackContext));
+        } else if(action.equals("getAllUserProfile")) {
+            userService.getAllUserProfile(new UserProfileResponse(callbackContext));
+        } else if(action.equals("setUser")) {
+			String userId = args.getString(0);
+            userService.setUser(userId, new UserProfileResponse(callbackContext));
         } else if(action.equals("getContent")) {
             String contentId = args.getString(0);
             contentService.getContent(contentId, new GenieServicesResponse(callbackContext));
-        } else if(action.equals("getAllUserProfile")) {
-            userService.getAllUserProfile(new UserProfileResponse(callbackContext));
         } /*else if(action.equals("getRelatedContent")) {
             String uid = args.getString(0);
             List<HashMap<String, Object>> filterList = new ArrayList<HashMap<String, Object>>();
@@ -119,7 +122,7 @@ public class GenieServicePlugin extends CordovaPlugin {
         else if(action.equals("sendFeedback")) {
             String evt = args.getString(0);
             contentService.sendFeedback(evt, new TelemetryResponse(callbackContext));
-        }/*else if(action.equals("getLearnerAssessment")) {
+        } /*else if(action.equals("getLearnerAssessment")) {
             String uid = args.getString(0);
             String contentId = args.getString(1);
             summarizer.getLearnerAssessment(uid, contentId, new GenieServicesResponse(callbackContext));
