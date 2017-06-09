@@ -1,6 +1,6 @@
 {
     "userList": [{
-        "avatar": "avatar_anonymous.png",
+        "avatar": "img/icons/avatar_anonymous.png",
         "gender": "male",
         "handle": "handle1",
         "age": 6,
@@ -9,7 +9,7 @@
         "name": "Anonymous"
     },
         {
-        "avatar": "avatar_normal_1.png",
+        "avatar": "img/icons/avatar_normal_1.png",
         "gender": "male",
         "handle": "handle1",
         "age": 6,
@@ -17,7 +17,7 @@
         "uid": "69wVinod8r81f",
         "name": "Vinod"
     }, {
-        "avatar": "avatar_normal_2.png",
+        "avatar": "img/icons/avatar_normal_2.png",
         "gender": "male",
         "handle": "handle1",
         "age": 6,
@@ -25,7 +25,7 @@
         "uid": "6f5fShringeriv16s",
         "name": "Shringeri"
     }, {
-        "avatar": "avatar_normal_3.png",
+        "avatar": "img/icons/avatar_normal_3.png",
         "gender": "Female",
         "handle": "handle1",
         "age": 6,
@@ -34,7 +34,7 @@
         "name": "Mala"
     },
     {
-        "avatar": "img_badge01.png",
+        "avatar": "img/icons/img_badge01.png",
         "gender": "Female",
         "handle": "handle1",
         "age": 6,

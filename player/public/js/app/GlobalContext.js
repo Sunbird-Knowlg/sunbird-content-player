@@ -38,7 +38,7 @@ GlobalContext = {
 
                 Promise.all(promises)
                 .then(function(result) {
-                    genieservice.initializeSdk(GlobalContext.config.appQualifier);
+                    genieservice.initializeSdk(GlobalContext.config.appQualifier || 'org.ekstep.genieservices');
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
                         GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
                         GlobalContext.game.id = GlobalContext.config.appInfo.identifier;

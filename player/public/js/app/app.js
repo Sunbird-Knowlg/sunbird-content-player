@@ -192,7 +192,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "group": "Group",
             "child": "Child",
             "groupFallbackText": "You have not created any group",
-            "userSwitcherTitle": "SELECT A CHILD OR A GROUP"
+            "userSwitcherTitle": "SELECT A CHILD OR A GROUP",
+            "anonymousUserName": "Anonymous",
         }
 
         $rootScope.safeApply = function(fn) {
@@ -240,7 +241,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             GlobalContext.currentContentMimeType = data.mimeType;
             if (_.isUndefined(data.localData)) {
                 data.localData = _.clone(data.contentData);
-            } 
+            }
             if (_.isUndefined(data.contentData)) {
                 data.localData = _.clone(contentData);
             } else {
