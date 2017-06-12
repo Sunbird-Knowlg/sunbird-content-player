@@ -12,5 +12,6 @@ AppConfig = {
 	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
 	contentApi: '/action/content/v3/read/',
 	languageApi: '/action/language/v3/',
-	telemetryApi: '/action/data/v3/telemetry'
+	telemetryApi: '/action/data/v3/telemetry',
+	OVERLAY_SUBMIT: "off"
 }

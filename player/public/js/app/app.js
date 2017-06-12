@@ -956,7 +956,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     $scope.showOverlayPrevious = event.target;
                     break;
                 case "overlaySubmit":
-                    if (event.target === "off") {
+                        if (event.target === "off") {
                         $scope.showOverlaySubmit = false;
                     } else {
                         $scope.showOverlaySubmit = true;
