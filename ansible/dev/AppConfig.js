@@ -11,9 +11,6 @@ AppConfig = {
 	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
 	USER_SWITCHER_ENABLED: true,
 	SHOW_USER: true,
-	contentApi: '/action/content/v3/read/',
-	languageApi: '/action/language/v3/',
-	telemetryApi: '/action/data/v3/telemetry',
 	OVERLAY_SUBMIT: "off",
 	apislug: '/action'
 }

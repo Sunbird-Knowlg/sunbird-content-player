@@ -10,13 +10,6 @@ AppConfig = {
 	S3_CONTENT_HOST: "/assets/public/content/",
 	PREVIEW_PLUGINSPATH: "/content-plugins",
 	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
-<<<<<<< HEAD
-	contentApi: '/action/content/v3/read/',
-	languageApi: '/action/language/v3/',
-	telemetryApi: '/action/data/v3/telemetry',
-	OVERLAY_SUBMIT: "off"
-}
-=======
+	OVERLAY_SUBMIT: "off",
 	apislug: '/action'
 }
->>>>>>> origin/release-2.2
