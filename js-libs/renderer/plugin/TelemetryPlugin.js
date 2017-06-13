@@ -40,9 +40,9 @@ var TelemetryPlugin = Plugin.extend({
      * @memberof TelemetryPlugin
      **/
      _maxTeleInstance : 10,
-     
+
      /*
-      * Holds addition required fileds for telemtry event      
+      * Holds addition required fileds for telemtry event
       */
      _requiredFields: {},
 
@@ -61,7 +61,6 @@ var TelemetryPlugin = Plugin.extend({
      * this plugin instance will we available globally
      */
     initialize: function(){
-        console.log("Telemetry plugin initialized !!!");
         EkstepRendererAPI.addEventListener('telemetryPlugin:intialize', this.initializeTelemetryPlugin, this);
     },
     initializeTelemetryPlugin: function() {
@@ -79,8 +78,8 @@ var TelemetryPlugin = Plugin.extend({
         var instance = this;
         EventBus.addEventListener("telemetryEvent", function(data) {
             data = JSON.parse(data.target);
-            data = instance.appendRequiredFields(data);            
-            
+            data = instance.appendRequiredFields(data);
+
             instance.addToQueue(data);
         });
     },
@@ -117,6 +116,6 @@ var TelemetryPlugin = Plugin.extend({
             this.sendTelemetry(telemetryData);
         }
     }
-    
+
 });
 PluginManager.registerPlugin('telemetry', TelemetryPlugin);

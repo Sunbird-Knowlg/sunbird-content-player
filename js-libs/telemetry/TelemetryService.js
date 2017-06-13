@@ -172,7 +172,7 @@ TelemetryService = {
     },
     setUser: function(data) {
         TelemetryService._user = data;
-        TelemetryService.instance.interact("TOUCH", "gc_user_switch", "TOUCH", data);
+        TelemetryService.interact("TOUCH", "gc_userswitch", "TOUCH", data);
     },
     assess: function(qid, subj, qlevel, data) {
         if (!TelemetryService.isActive) {

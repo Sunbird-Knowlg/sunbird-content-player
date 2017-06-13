@@ -11,13 +11,13 @@ var RepoPlugin = Plugin.extend({
     initializeRepo:function(){
         var instance = this;
         var contextObj = EkstepRendererAPI.getPreviewData();
-        if (contextObj.config.repo) {
-            if (_.isObject(contextObj.config.repo)) {
-                _.each(contextObj.config.repo, function(repoPath, index){
+        if (contextObj.config.repos) {
+            if (_.isObject(contextObj.config.repos)) {
+                _.each(contextObj.config.repos, function(repoPath, index){
                     instance.createRepoInstance(repoPath, index)
                 });
             } else {
-                instance.createRepoInstance(contextObj.config.repo);
+                instance.createRepoInstance(contextObj.config.repos);
             }
         }
     },

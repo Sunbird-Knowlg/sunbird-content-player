@@ -210,6 +210,7 @@ function startTelemetry(id, ver, cb) {
             "type": GlobalContext.game.contentExtras[0].contentType
         }];
     }
+    correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData).then(function(response) {
         var data = {};
         data.mode = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
@@ -223,8 +224,6 @@ function startTelemetry(id, ver, cb) {
         }
         if (!_.isUndefined(cb) && response == true) {
             cb();
-        } else {
-            console.error("failed to initialize TelemetryService")
         }
     }).catch(function(error) {
         EkstepRendererAPI.logErrorEvent(error, {'type':'system','action':'play','severity':'fatal'});

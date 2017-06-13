@@ -63,7 +63,7 @@ window.initializePreview = function(configuration) {
     AppConfig = _.extend(AppConfig, configuration.config)
     // genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
     window.previewData = configuration;
-    configuration.config.repo && configuration.config.plugin && EkstepRendererAPI.dispatchEvent("repo:intialize");
+    configuration.config.repos && configuration.config.plugins && EkstepRendererAPI.dispatchEvent("repo:intialize");
     EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
     addWindowUnloadEvent();
     EkstepRendererAPI.dispatchEvent("event:loadContent");
@@ -159,6 +159,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.enableEval = false;
         $rootScope.userSwitcherEnabled = undefined;
         $rootScope.showUser = undefined;
+        $rootScope.sortingIndex = 0;
+
         // $rootScope.currentUser = {};
         $rootScope.users = [];
 
@@ -189,7 +191,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "change": "change",
             "group": "Group",
             "child": "Child",
-            "groupFallbackText": "You have not created any group"
+            "groupFallbackText": "You have not created any group",
+            "userSwitcherTitle": "SELECT A CHILD OR A GROUP"
         }
 
         $rootScope.safeApply = function(fn) {
@@ -329,21 +332,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 GlobalContext.init(packageName, version).then(function(appInfo) {
                     if ("undefined" != typeof localPreview && "local" == localPreview)
                         return;
-                    if (isbrowserpreview) {
-                        var urlContentId = getUrlParameter("id");
-                        genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
-                        // if (urlContentId) {
-                        // $rootScope.getDataforPortal(urlContentId);
-                        // $rootScope.getContentBody(urlContentId);
-                        // }
-                        if (urlContentId) {
-                            var configuration = {
-                                "contentId": urlContentId,
-                                'context': {}
-                            };
-                            window.initializePreview(configuration);
-                        }
-                    } else {
+                    if (!isbrowserpreview) {
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                         $rootScope.deviceRendrer();
                     }
@@ -397,8 +386,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $rootScope.pageTitle = $rootScope.content.name;
             startProgressBar(40, 0.6);
             TelemetryService.interact("TOUCH", eleId, "TOUCH", {
-                stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
+                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
             });
+            if (eleId === 'gc_userswitch_replayContent') {
+                TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+            }
             var menuReplay = $state.current.name == appConstants.statePlayContent;
             // 1) For HTML content onclick of replay EventListeners will be not available hence calling Telemetryservice end .
             // 2) OE_START for the HTML/ECML content will be takne care by the contentctrl rendere method always.
@@ -416,7 +408,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $rootScope.us_replayContent = function() {
-            $scope.endContent('gc_user_replay');
+            $scope.endContent('gc_userswitch_replayContent');
             TelemetryService.setUser($rootScope.currentUser);
             $scope.startContent();
         }
@@ -424,14 +416,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.us_continueContent = function() {
             var gameId = TelemetryService.getGameId();
             var version = TelemetryService.getGameVer();;
-            // interact
-            // TelemetryService.interact("TOUCH", eleId, "TOUCH", {
-            //     stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
-            // });
+            TelemetryService.interact("TOUCH", 'gc_userswitch_continue', "TOUCH", {
+                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+            });
+            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
 
             TelemetryService.end();
             TelemetryService.setUser($rootScope.currentUser);
-            TelemetryService.start(gameId, version);
+            var data = {};
+            data.mode = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
+            TelemetryService.start(gameId, version, data);
         }
 
         EkstepRendererAPI.addEventListener("event:loadContent", function() {
@@ -583,7 +577,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.init();
 
     }).controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
-        $rootScope.pageId = "renderer";
+        $rootScope.pageId = "ContentApp-Renderer";
         $scope.init = function() {
             if (_.isUndefined($rootScope.content)) {
                 if (!_.isEmpty(content)) {
@@ -705,7 +699,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.popUserRating = 0;
         $scope.stringLeft = 130;
         $scope.selectedRating = 0;
-        $rootScope.pageId = "endpage";
+        $rootScope.pageId = "ContentApp-Endpage";
         $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-lato credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
 
         $scope.arrayToString = function(array) {
@@ -713,6 +707,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         };
 
         $scope.ep_openUserSwitchingModal = function() {
+            TelemetryService.interact("TOUCH", "gc_open_userswitch", "TOUCH", {
+                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+            });
             EventBus.dispatch("event:openUserSwitchingModal");
         }
 
@@ -735,7 +732,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             });
         }
 
-        $scope.ep_restartContent = function() {
+        $scope.ep_replayContent = function() {
             $rootScope.replayContent();
             //Resetting mute state
             var muteElement = document.getElementById("unmute_id");
@@ -834,7 +831,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if (_(TelemetryService.instance).isUndefined()) {
                 var tsObj = localStorageGC.getItem('telemetryService');
                 var correlationData = [];
-                correlationData.push({"id": GlobalContext.user.uid, "type": "user"});
+                correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
                 TelemetryService.init(tsObj._gameData, tsObj._user, correlationData);
             }
 
@@ -885,7 +882,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
         $rootScope.stageId = undefined;
-        // $rootScope.currentUser = GlobalContext.user;
         EventBus.addEventListener("sceneEnter", function(data) {
             $rootScope.stageData = data.target;
             //TODO: Remove this currentStage parameter and use directly stageData._currentStage
@@ -908,6 +904,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.openUserSwitchingModal = function() {
+            TelemetryService.interact("TOUCH", "gc_open_userswitch", "TOUCH", {
+                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+            });
             EventBus.dispatch("event:openUserSwitchingModal");
             $scope.hideMenu();
         }
@@ -1161,9 +1160,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.groupLength = undefined;
         $scope.selectedUser = {};
         $scope.showUserSwitchModal = false;
-        $scope.sortingIndex = 0;
+        $scope.disableButtons = true;
 
         $scope.hideUserSwitchingModal = function() {
+            TelemetryService.interact("TOUCH", "gc_userswitch_popup_close", "TOUCH", {
+                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+            });
             $rootScope.safeApply(function() {
                 $scope.showUserSwitchModal = false;
             });
@@ -1171,6 +1173,17 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.showUserSwitchingModal = function() {
             if ($rootScope.userSwitcherEnabled) {
+                $scope.disableButtons = true;
+                TelemetryService.interact("TOUCH", "gc_userswitch_popup_open", "TOUCH", {
+                    stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+                });
+
+                _.each($rootScope.users, function(user) {
+                    // if (user.selected === $rootScope.currentUser.uid) {
+                    if (user.selected === true) user.selected = false;
+                    if (user.uid === $rootScope.currentUser.uid) user.selected = true;
+                    // }
+                });
                 $scope.sortUserlist();
                 $rootScope.safeApply(function() {
                     $scope.showUserSwitchModal = true;
@@ -1180,8 +1193,84 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }
         }
 
+        // get userList process goes here
+        $scope.getUsersList = function() {
+            // get users api call gone here
+            UserService.getUsersList().then(function(data) {
+                if (data.status === "success" && _.isUndefined($rootScope.users))
+                    $rootScope.users = data.data;
+                $scope.groupLength = (_.where($rootScope.users, {"group": true})).length;
+
+                UserService.getCurrentUser().then(function(data) {
+                    if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
+
+                    _.each($rootScope.users, function(user) {
+                        if (user.uid === $rootScope.currentUser.uid) {
+                            $rootScope.safeApply(function() {
+                                $rootScope.currentUser = user;
+                            });
+                        }
+                    });
+
+                    $rootScope.currentUser.selected = true;
+                    $scope.sortUserlist();
+                }).catch(function(err) {
+                    reject(err);
+                });
+            }).catch(function(err) {
+                // show toast message
+                reject(err);
+            });
+        }
+
+        $scope.sortUserlist = function() {
+            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'name'), 'userIndex')   ;
+        }
+
+        // this function changes the selected user
+        $scope.selectUser = function(selectedUser) {
+            // here the user Selection happens
+
+            _.each($rootScope.users, function(user) {
+                if (user.selected === true) user.selected = false;
+            });
+            TelemetryService.interact("TOUCH", selectedUser.uid, "TOUCH", {
+                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+            });
+            if (_.isUndefined($scope.disableButtons) || $scope.disableButtons === true) $scope.disableButtons = false;
+            selectedUser.selected = true;
+            $scope.selectedUser = selectedUser;
+        }
+
+        // When the user clicks on replayContent, replayContent the content
+        $scope.replayContent = function() {
+            var replayContent = true;
+            $scope.switchUser(replayContent);
+        }
+
+        // When the user clicks on Continue, Continue the content from there
+        $scope.continueContent = function() {
+            // here the user Selection happens
+            var replayContent = false;
+            $scope.switchUser(replayContent);
+        }
+
+        $scope.switchUser = function(replayContent) {
+            UserService.setCurrentUser($scope.selectedUser.uid).then(function(data) {
+                if (data.status === "success" && !_.isEmpty($scope.selectedUser)) {
+                    $rootScope.$apply(function() {
+                        $rootScope.currentUser = $scope.selectedUser;
+                        $rootScope.currentUser.userIndex = $rootScope.sortingIndex -= 1;
+                    });
+                }
+                $scope.hideUserSwitchingModal();
+                replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
+            }).catch(function(err) {
+                console.log(err);
+            })
+        }
+
         $scope.initializeCtrl = function() {
-            console.log("userSwitchCtrl initialized !!!");
             $rootScope.showUser = GlobalContext.config.showUser;
             $rootScope.userSwitcherEnabled = GlobalContext.config.userSwitcherEnabled;
 
@@ -1225,101 +1314,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 }
             });
 
-            EventBus.addEventListener("event:openuserswitcher", function() {
-                $scope.showUserSwitchingModal();
-            });
-
-            EventBus.addEventListener("event:closeuserswitcher", function() {
-                $scope.hideUserSwitchingModal();
-            });
-
             $scope.getUsersList();
         }
 
-        // get userList process goes here
-        $scope.getUsersList = function() {
-            // get users api call gone here
-            UserService.getUsersList().then(function(data) {
-                if (data.status === "success")
-                    $scope.users = data.data;
-                    $scope.groupLength = (_.where($scope.users, {"group": true})).length;
-
-                UserService.getCurrentUser().then(function(data) {
-                    if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
-
-                    _.each($scope.users, function(user) {
-                        if (user.uid === $rootScope.currentUser.uid) {
-                            $rootScope.safeApply(function() {
-                                $rootScope.currentUser = user;
-                            });
-                        }
-                    });
-
-                    $rootScope.currentUser.selected = true;
-                    $scope.sortUserlist();
-                }).catch(function(err) {
-                    reject(err);
-                });
-            }).catch(function(err) {
-                // show toast message
-                reject(err);
-            });
-        }
-
-        $scope.sortUserlist = function() {
-            $scope.users = _.sortBy(_.sortBy($scope.users, 'name'), 'userIndex')   ;
-        }
-
-        // this function changes the selected user
-        $scope.selectUser = function(selectedUser) {
-            // here the user Selection happens
-            _.each($scope.users, function(user) {
-                if (user.selected === true) user.selected = false;
-            });
-            selectedUser.selected = true;
-            $scope.selectedUser = selectedUser;
-        }
-
-        // When the user clicks on Restart, Restart the content
-        $scope.restartContent = function() {
-            var replayContent = true;
-            $scope.switchUser(replayContent);
-        }
-
-        // When the user clicks on Coontinue, Continue the content from there
-        $scope.continueContent = function() {
-            // here the user Selection happens
-            // var switchingSuccess = $scope.switchUser();
-            var replayContent = false;
-            $scope.switchUser(replayContent);
-        }
-
-        $scope.switchUser = function(replayContent) {
-            UserService.setCurrentUser($scope.selectedUser.uid).then(function(data) {
-                if (data.status === "success" && !_.isEmpty($scope.selectedUser)) {
-
-                    TelemetryService.interact("TOUCH", "gc_userswitch", "TOUCH", {
-                        stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-                    });
-
-                    $rootScope.$apply(function() {
-                        $rootScope.currentUser = $scope.selectedUser;
-                        // $scope.sortingIndex += 1;
-                        $rootScope.currentUser.userIndex = $scope.sortingIndex -= 1;
-                    });
-
-                    replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
-                    $scope.hideUserSwitchingModal();
-                } else {
-                    console.info("No User selected")
-                    $scope.hideUserSwitchingModal();
-                    replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
-                    TelemetryService.interrupt("USERSWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                }
-            }).catch(function(err) {
-                console.log(err);
-            })
-        }
     }]).directive('menu', function($rootScope, $sce) {
         return {
             restrict: 'E',
@@ -1649,7 +1646,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
                 scope.init = function() {
                     if (GlobalContext.config.showUser === true) {
-                        console.log("userSwitch Directive loaded");
                         userSlider.mCustomScrollbar('destroy');
                         groupSlider.mCustomScrollbar('destroy');
                         scope.initializeCtrl();
