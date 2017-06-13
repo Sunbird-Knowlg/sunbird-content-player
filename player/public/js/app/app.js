@@ -59,7 +59,7 @@ window.initializePreview = function(configuration) {
     if (_.isUndefined(configuration.context.contentId)) {
         configuration.context.contentId = getUrlParameter("id")
     }
-    localStorage.clear();
+    localStorageGC.clear();
     AppConfig = _.extend(AppConfig, configuration.config)
     // genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
     window.previewData = configuration;
@@ -87,7 +87,7 @@ window.setContentData = function(metadata, data, configuration) {
     if (!config.showHTMLPages) {
         config.showEndPage = false;
     }
-    localStorage.clear();
+    localStorageGC.clear();
     if (data) {
         var object = {'config':configuration,'data':data,'metadata':metadata}
     }
