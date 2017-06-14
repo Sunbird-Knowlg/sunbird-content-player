@@ -32,7 +32,7 @@
     function loadContent() {
         var iframe = document.getElementById('contentIFrame');
         // iframe.contentWindow.location.reload();
-        iframe.src = "https://community.ekstep.in/ekstep-public-prod/v2/preview/preview.html?webview=true";
+        iframe.src = "https://community.ekstep.in/ekstep-public-prod/preview/preview.html?webview=true";
         document.getElementById("contentIFrame").addEventListener('load', function() {
             var meta = document.getElementById("metadata").value;
             if (meta.length)
@@ -51,7 +51,7 @@
     function loadContentWithId() {
         var iframe = document.getElementById('contentIFrame');
         var id = document.getElementById("identifier").value;
-        iframe.src = "https://community.ekstep.in/ekstep-public-prod/v2/preview/preview.html?webview=true&id=" + id;
+        iframe.src = "https://community.ekstep.in/ekstep-public-prod/preview/preview.html?webview=true&id=" + id;
     }
     </script>
 </body>

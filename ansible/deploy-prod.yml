@@ -1,4 +1,4 @@
 ---
 - hosts: all
   tasks:
-    - shell: aws s3 sync s3://ekstep-public-qa/v2/preview/ s3://ekstep-public-prod/v2/preview/  --region ap-south-1 
+    - shell: aws s3 sync s3://ekstep-public-qa/preview/ s3://ekstep-public-prod/preview/  --region ap-south-1 
