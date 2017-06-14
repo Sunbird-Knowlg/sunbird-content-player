@@ -4,7 +4,7 @@ AppConfig = {
 	host: "",
 	recorder: "AUDIO_RECORDER",
 	flavor: "sandbox",
-	S3_content_host: "/assets/public/content/",
+	S3_CONTENT_HOST: "/assets/public/content/",
 	USER_SWITCHER_ENABLED: true,
 	SHOW_USER: true,
 	S3_CONTENT_HOST: "/assets/public/content/",

@@ -239,7 +239,7 @@ function startTelemetry(id, ver, cb) {
 
 function getAsseturl(content) {
     var content_type = content.mimeType == 'application/vnd.ekstep.html-archive' ? "html/" : "ecml/";
-    var path = window.location.origin + AppConfig.S3_content_host + content_type;
+    var path = window.location.origin + AppConfig.S3_CONTENT_HOST + content_type;
     path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
     return path;
 
