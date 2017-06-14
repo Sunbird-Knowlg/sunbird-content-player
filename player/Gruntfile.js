@@ -189,10 +189,10 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: 'public/',
                         src: ['img/**', 'fonts/**', 'templates/**', 'libs/**', 'json/**', 'css/**', 'assets/**', 'js/**', 'webview.html', 'preview.html'],
-                        dest: 'www/preview/'
+                        dest: 'www/v2/preview/'
                     },
                     {
-                        src: ['public/js/app/AppConfig.js'], dest: 'www/preview/js/AppConfig.js'
+                        src: ['public/js/app/AppConfig.js'], dest: 'www/v2/preview/js/AppConfig.js'
                     }
                 ]
             },
@@ -320,9 +320,9 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'www/preview',
+                    cwd: 'www/v2/preview',
                     src: ['**'],
-                    dest: '/preview/'
+                    dest: '/v2/preview/'
                 }]
             },
             uploadPreviewFilesToQA : {
@@ -334,9 +334,9 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'www/preview',
+                    cwd: 'www/v2/preview',
                     src: ['**'],
-                    dest: '/preview/'
+                    dest: '/v2/preview/'
                 }]
             },
             uploadPreviewFilesToProduction : {
@@ -348,14 +348,14 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: 'www/preview',
+                    cwd: 'www/v2/preview',
                     src: ['**'],
-                    dest: '/preview/'
+                    dest: '/v2/preview/'
                 }]
             },
             cleanJS: {
                 options: {
-                    bucket: 'ekstep-public-dev/preview'
+                    bucket: 'ekstep-public-dev/v2/preview'
                 },
                 files: [{
                     dest: 'js/renderer.min.js',
@@ -373,7 +373,7 @@ module.exports = function(grunt) {
                     bucket: 'ekstep-public-qa'
                 },
                 files: [{
-                    dest: 'preview/',
+                    dest: 'v2/preview/',
                     action: 'delete'
                 }]
             },
@@ -382,7 +382,7 @@ module.exports = function(grunt) {
                     bucket: 'ekstep-public-dev'
                 },
                 files: [{
-                    dest: 'preview/',
+                    dest: 'v2/preview/',
                     action: 'delete'
                 }]
             },
@@ -391,7 +391,7 @@ module.exports = function(grunt) {
                     bucket: 'ekstep-public-production'
                 },
                 files: [{
-                    dest: 'preview/',
+                    dest: 'v2/preview/',
                     action: 'delete'
                 }]
             },
@@ -583,7 +583,7 @@ module.exports = function(grunt) {
                 }]
             },
             preview_dev: {
-                src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html', 'www/preview/preview.html'],
+                src: ['www/v2/preview/js/AppConfig.js', 'www/v2/preview/webview.html', 'www/v2/preview/preview.html'],
                 overwrite: true,
                 replacements: [{
                     from: /DEPLOYMENT/g,
@@ -594,7 +594,7 @@ module.exports = function(grunt) {
                 }]
             },
             preview_production: {
-                src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html'],
+                src: ['www/v2/preview/js/AppConfig.js', 'www/v2/preview/webview.html'],
                 overwrite: true,
                 replacements: [{
                     from: /DEPLOYMENT/g,
@@ -602,7 +602,7 @@ module.exports = function(grunt) {
                 }]
             },
             preview_QA: {
-                src: ['www/preview/js/AppConfig.js', 'www/preview/webview.html'],
+                src: ['www/v2/preview/js/AppConfig.js', 'www/v2/preview/webview.html'],
                 overwrite: true,
                 replacements: [{
                     from: /DEPLOYMENT/g,
