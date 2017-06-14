@@ -211,7 +211,7 @@ genieservice_portal = {
                     resolve(content.metadata);
                 }
             } else{
-                resolve(genieservice.getContentMetadata(id));
+                resolve(genieservice.getContentMetadata(id, {}));
             }
         });
     },
