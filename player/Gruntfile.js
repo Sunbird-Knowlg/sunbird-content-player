@@ -575,7 +575,7 @@ module.exports = function(grunt) {
                 }]
             },
             build_version: {
-                src: ['www/js/AppConfig.js', 'www/preview.html', 'www/preview/preview.html'],
+                src: ['www/v2/js/AppConfig.js', 'www/v2/preview.html', 'www/v2/preview/preview.html'],
                 overwrite: true,
                 replacements: [{
                     from: /BUILD_NUMBER/g,
