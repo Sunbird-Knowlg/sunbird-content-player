@@ -11,5 +11,7 @@ AppConfig = {
 	PREVIEW_PLUGINSPATH: "/content-plugins",
 	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
 	OVERLAY_SUBMIT: "off",
-	apislug: '/action'
+	apislug: '/action',
+	SPLASH_TEXT: "Powered by EkStep",
+	SPLASH_IMAGE: "img/icons/background_1.png"
 }

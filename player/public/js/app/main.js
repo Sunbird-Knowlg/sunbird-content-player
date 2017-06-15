@@ -13,22 +13,8 @@ var packageName = "org.ekstep.quiz.app",
 // hasStageSet = true
 
 function startProgressBar(w, setInter) {
-    jQuery("#progressBar").width(0);
-    jQuery('#loading').show();
-    var elem = document.getElementById("progressBar");
-    var width = w ? w : 20;
-    var id = setInterval(frame, setInter ? setInter : 0.7);
 
-    function frame() {
-        if (width >= 100) {
-            clearInterval(id);
-        } else {
-            width++;
-            if (elem && elem.style)
-                elem.style.width = width + '%';
-            jQuery('#progressCount').text(width + '%');
-        }
-    }
+    splashScreen.initialize();
 }
 
 function removeRecordingFiles(path) {

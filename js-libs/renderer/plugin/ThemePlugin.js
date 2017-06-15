@@ -139,7 +139,8 @@ var ThemePlugin = Plugin.extend({
         this.update();
         //document.getElementById("progressBar").style.width = 100 + '%';
         jQuery("#progressBar").width(100);
-        jQuery('#loading').hide();
+        // jQuery('#loading').hide();
+        splashScreen.hide();
         jQuery('#overlay').show();
     },
 

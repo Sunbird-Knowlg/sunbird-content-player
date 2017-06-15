@@ -12,5 +12,7 @@ AppConfig = {
 	USER_SWITCHER_ENABLED: true,
 	SHOW_USER: true,
 	OVERLAY_SUBMIT: "off",
-	apislug: '/action'
+	apislug: '/action',
+	SPLASH_TEXT: "Powered by EkStep",
+	SPLASH_IMAGE: "img/icons/background_1.png"
 }
