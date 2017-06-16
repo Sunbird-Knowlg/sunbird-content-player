@@ -39,7 +39,12 @@
 
         #pageTitle {
             position: absolute;
-            bottom: 42%;
+            bottom: 20%;
+        }
+
+        #pageTitle.download-text {
+            width: 100%;
+            text-align: center;
         }
 
         #gameArea {
@@ -64,13 +69,21 @@
             z-index: 1000;
             text-align: center;
         }
+        .splash-icon {
+            width: 70px;
+            height: 70px;
+            position: absolute;
+            top: 50vh;
+            left: 50vw;
+            transform: translate(-50%,-50%);
+            text-align: center;
+        }
     </style>
 </head>
 
 <body ng-controller="BaseCtrl">
     <ion-nav-view></ion-nav-view>
-    <div id="loading" class="gc-loader-area">
-    </div>
+    <div id="loading" class="gc-loader-area"></div>
 
     <script type="text/javascript" src="js/thirdparty/jquery.min.js"></script>
     <script type="text/javascript" src="js/thirdparty/jquery.easing.1.3.js"></script>

@@ -138,9 +138,9 @@ var ThemePlugin = Plugin.extend({
         }
         this.update();
         //document.getElementById("progressBar").style.width = 100 + '%';
-        jQuery("#progressBar").width(100);
+        // jQuery("#progressBar").width(100);
         // jQuery('#loading').hide();
-        splashScreen.hide();
+        splashScreen.hide(3000); //splash screen is going to be closed after 3sec.
         jQuery('#overlay').show();
     },
 

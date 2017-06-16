@@ -12,11 +12,6 @@ var packageName = "org.ekstep.quiz.app",
 // Need to modify the scope level hasStageSet
 // hasStageSet = true
 
-function startProgressBar(w, setInter) {
-
-    splashScreen.initialize();
-}
-
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
         $cordovaFile.removeFile(cordova.file.dataDirectory, path)
