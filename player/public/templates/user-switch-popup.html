@@ -14,8 +14,8 @@
             </p>
             <div id="userSlider">
                 <div ng-repeat="user in $root.users | filter: {'group': '!true'}" ng-class="user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
-                    <img ng-src="{{user.avatar}}" alt='user_img' />
-                    <p>{{user.name}}</p>
+                    <img ng-src="{{user.profileImage}}" alt='user_img' />
+                    <p>{{user.handle}}</p>
                 </div>
             </div>
             <p class="slider-tag">
@@ -23,8 +23,8 @@
             </p>
             <div id="groupSlider">
                 <div ng-if="groupLength > 0" ng-repeat="user in $root.users | filter: {'group': 'true'}" ng-class="user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
-                    <img ng-src="{{user.avatar}}" alt='group_img' />
-                    <p>{{user.name}}</p>
+                    <img ng-src="{{user.profileImage}}" alt='group_img' />
+                    <p>{{user.handle}}</p>
                 </div>
                 <p class="fallback-text" ng-if="groupLength == 0">
                     {{$root.languageSupport.groupFallbackText}}

@@ -1,30 +1,31 @@
 package org.ekstep.geniecanvas;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.apache.cordova.CallbackContext;
 import org.ekstep.genieservices.commons.IResponseHandler;
 import org.ekstep.genieservices.commons.bean.GenieResponse;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
-public class UserProfileResponse implements IResponseHandler {
+public class UserProfileResponse implements IResponseHandler<Map> {
     private CallbackContext callbackContext;
 
     public UserProfileResponse(CallbackContext callbackContext) {
         this.callbackContext = callbackContext;
     }
 
-    public void onSuccess(GenieResponse response) {
-        System.out.println("UserProfileResponse success: " + response.getStatus());
+    public void onSuccess(GenieResponse<Map> response) {
         System.out.println("UserProfileResponse result: " + response.getResult());
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("status", "success");
-        Map<String, Object> resultObj = (Map<String, Object>) response.getResult();
-        JSONObject result = new JSONObject(resultObj);
+        JSONObject result = new JSONObject(response.getResult());
         map.put("data", result);
         callbackContext.success(new JSONObject(map));
     }

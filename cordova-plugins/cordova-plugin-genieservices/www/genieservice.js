@@ -6,14 +6,14 @@ genieservice.prototype.handleAction = function(actionName, args) {
     console.info("genieservice Action: " + actionName + " args: ", args);
     return new Promise(function(resolve, reject) {
         exec(function(result) {
-                console.log("genieservice result of " + actionName + ": ", result);
-                resolve(result);
-            },
-            function(error) {
-                console.log("genieservice error of " + actionName + ": ", error);
-                reject(error);
-            },
-            "GenieServicePlugin", actionName, args);
+            console.log("genieservice result of " + actionName + ": ", result);
+            resolve(result);
+        },
+        function(error) {
+            console.log("genieservice error of " + actionName + ": ", error);
+            reject(error);
+        },
+        "GenieServicePlugin", actionName, args);
     });
 }
 

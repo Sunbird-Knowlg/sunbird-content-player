@@ -13,35 +13,27 @@ genieservice_web = {
 
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
-            var result = {};
-            result.status = "success";
             $.getJSON("assets/user_list/user_list.json", function(data) {
                 // console.log("===== data =====", data);
-                if (data.length == 0) data = [{"uid": "9g8h4ndAnonymouscg56ngd"}]
-                result.data = data[0];
-                resolve(result);
+                if (data.length == 0) {
+                    data = [{"uid": "9g8h4ndAnonymouscg56ngd"}];
+                }
+                resolve(data[0]);
             })
         });
     },
 
     getAllUserProfile: function() {
         return new Promise(function(resolve, reject) {
-            var result = {};
-            result.status = "success";
             $.getJSON("assets/user_list/user_list.json",function(data){
-                // console.log("===== data =====", data);
-                result.data = data;
-                resolve(result);
+                resolve(data);
             })
         });
     },
 
-    setCurrentUser: function(uid) {
+    setUser: function(uid) {
         return new Promise(function(resolve, reject) {
-            var result = {};
-            result.status = "success";
-            // result.data = usersList;
-            resolve(result);
+            resolve(true);
         });
     },
 
@@ -148,36 +140,23 @@ genieservice_portal = {
     },
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
-            var result = {};
-            result.status = "success";
             $.getJSON("assets/user_list/user_list.json",function(data){
-                // console.log("===== data =====", data);
-
-                result.data = data[0];
-
-                resolve(result);
+                resolve(data[0]);
             })
         });
     },
 
     getAllUserProfile: function() {
         return new Promise(function(resolve, reject) {
-            var result = {};
-            result.status = "success";
             $.getJSON("assets/user_list/user_list.json",function(data){
-                // console.log("===== data =====", data);
-                result.data = data;
-                resolve(result);
+                resolve(data);
             })
         });
     },
 
-    setCurrentUser: function(uid) {
+    setUser: function(uid) {
         return new Promise(function(resolve, reject) {
-            var result = {};
-            result.status = "success";
-            // result.data = usersList;
-            resolve(result);
+            resolve(true);
         });
     },
 

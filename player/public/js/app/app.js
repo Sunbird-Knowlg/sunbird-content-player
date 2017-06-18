@@ -339,7 +339,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     //     //     UserService.getCurrentUser().then(function(data) {
                     //     //         if (_.isUndefined(data.name)) {
                     //     //             data.name = "Anonymous";
-                    //     //             data.avatar = "img/icons/avatar_anonymous.png";
+                    //     //             data.profileImage = "img/icons/avatar_anonymous.png";
                     //     //         }
                     //     //         if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
                     //     //
@@ -942,9 +942,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.init = function() {
-            if (GlobalContext.config.language_info) {
-                console.log("Language updated", GlobalContext.config.language_info);
-                var languageInfo = JSON.parse(GlobalContext.config.language_info);
+            if (GlobalContext.config.languageInfo) {
+                console.log("Language updated", GlobalContext.config.languageInfo);
+                var languageInfo = JSON.parse(GlobalContext.config.languageInfo);
                 for (key in languageInfo) {
                     $rootScope.languageSupport[key] = languageInfo[key];
                 }
@@ -1209,42 +1209,31 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         // get userList process goes here
         $scope.getUsersList = function() {
             // // get users api call gone here
-            // UserService.getAllUserProfile().then(function(data) {
-            //     if (data.status === "success" && _.isUndefined($rootScope.users))
-            //         $rootScope.users = data.data;
-            //     $scope.groupLength = (_.where($rootScope.users, {"group": true})).length;
+            UserService.getAllUserProfile().then(function(usersData) {
+                console.log("getAllUserProfile()", usersData);
+                $rootScope.users = usersData;
+                $scope.groupLength = (_.where($rootScope.users, {"group": true})).length;
 
-            //     UserService.getCurrentUser().then(function(data) {
-            //         if (_.isUndefined(data.name)) {
-            //             data.data.name = "Anonymous";
-            //             data.data.avatar = "img/icons/avatar_anonymous.png";
-            //         }
-            //         if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
+           
+                if ($rootScope.users.length == 0) $rootScope.users.push($rootScope.currentUser);
 
-            //         if ($rootScope.users.length == 0) $rootScope.users.push($rootScope.currentUser);
+                // _.each($rootScope.users, function(user) {
+                //     if (user.uid === $rootScope.currentUser.uid) {
+                //         $rootScope.safeApply(function() {
+                //             $rootScope.currentUser = user;
+                //         });
+                //     }
+                // });
 
-            //         _.each($rootScope.users, function(user) {
-            //             if (user.uid === $rootScope.currentUser.uid) {
-            //                 $rootScope.safeApply(function() {
-            //                     $rootScope.currentUser = user;
-            //                 });
-            //             }
-            //         });
-
-            //         $rootScope.currentUser.selected = true;
-            //         $scope.sortUserlist();
-            //     }).catch(function(err) {
-            //         console.log(err)
-            //         showToaster('error', 'CurrentUser Not found');
-            //     });
-            // }).catch(function(err) {
-            //     // show toast message
-            //     console.error(err);
-            // });
+                $scope.sortUserlist();
+            }).catch(function(err) {
+                // show toast message
+                console.error(err);
+            });
         }
 
         $scope.sortUserlist = function() {
-            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'name'), 'userIndex')   ;
+            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'handle'), 'userIndex')   ;
         }
 
         // this function changes the selected user
@@ -1276,13 +1265,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.switchUser = function(replayContent) {
-            UserService.setCurrentUser($scope.selectedUser.uid).then(function(data) {
-                if (data.status === "success" && !_.isEmpty($scope.selectedUser)) {
-                    $rootScope.$apply(function() {
-                        $rootScope.currentUser = $scope.selectedUser;
-                        $rootScope.currentUser.userIndex = $rootScope.sortingIndex -= 1;
-                    });
-                }
+            UserService.setUser($scope.selectedUser.uid).then(function(data) {                
+                $rootScope.$apply(function() {
+                    $rootScope.currentUser = $scope.selectedUser;
+                    $rootScope.currentUser.userIndex = $rootScope.sortingIndex -= 1;
+                });
                 $scope.hideUserSwitchingModal();
                 replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
             }).catch(function(err) {
@@ -1334,7 +1321,23 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 }
             });
 
-            $scope.getUsersList();
+            if(_.isUndefined($rootScope.currentUser)){
+                UserService.getCurrentUser().then(function(data) {
+                    console.log("getCurrentUser()", data);
+
+                    if (_.isEmpty(data.handle)) {
+                        data.handle = "Anonymous";
+                        data.profileImage = "img/icons/avatar_anonymous.png";
+                    }
+                    $rootScope.currentUser = data;
+                    $rootScope.currentUser.selected = true;
+                    $scope.getUsersList();
+                }).catch(function(err) {
+                    console.log(err);
+                })
+            } else {
+                $scope.getUsersList();
+            }
         }
 
     }]).directive('menu', function($rootScope, $sce) {

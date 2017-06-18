@@ -221,11 +221,9 @@ angular.module('genie-canvas.services', ['ngResource'])
                         });
                 });
             },
-
             getUser: function(uid){
 
             },
-
             getCurrentUser: function() {
                 return new Promise(function(resolve, reject) {
                     genieservice.getCurrentUser().then(function(data) {
@@ -236,10 +234,9 @@ angular.module('genie-canvas.services', ['ngResource'])
                     });
                 });
             },
-
-            setCurrentUser: function(uid) {
+            setUser: function(uid) {
                 return new Promise(function(resolve, reject) {
-                    genieservice.setCurrentUser(uid).then(function(data) {
+                    genieservice.setUser(uid).then(function(data) {
                         resolve(data);
                     }).catch(function(err) {
                         console.error(AppErrors.contetnPathFetch, err);
