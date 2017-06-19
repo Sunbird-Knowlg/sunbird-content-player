@@ -20,11 +20,11 @@ PluginManager.registerPlugin('launcher', Plugin.extend({
         var contentTypePlugin = _.findWhere(dispatcher, {
             'mimeType': content.mimeType
         });
+         PluginManager.init('renderer');
         if (!_.isUndefined(contentTypePlugin)) {
-            PluginManager.init('/renderer');
             this.loadPlugin(contentTypePlugin, content);
         } else {
-            Renderer.start(content.baseDir, 'gameCanvas', content);
+             this.loadPlugin(contentTypePlugin, content);
         }
     },
     loadPlugin : function(plugin, content) {
