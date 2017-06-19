@@ -611,7 +611,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 localStorageGC.setItem("content", $rootScope.content);
                 $rootScope.pageTitle = $rootScope.content.name;
                 startProgressBar(40, 0.6);
-                // In the case of AT preview Just we are setting up the currentContentId
                 GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
                 $scope.callStartTelemetry($rootScope.content, function() {
                     $scope.item = $rootScope.content;

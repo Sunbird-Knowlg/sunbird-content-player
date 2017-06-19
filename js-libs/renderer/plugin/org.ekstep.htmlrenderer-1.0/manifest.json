@@ -2,11 +2,11 @@
     "id": "org.ekstep.htmlrenderer",
     "ver": "1.0",
     "shortId": "org.eskstep.htmlrenderer",
-    "author": "Santhosh Vasabhaktula",
+    "author": "Manjunath Davanam",
     "description": "",
     "publishedDate": "",
     "renderer": {
-        "main": "plugin.js"
+        "main": "renderer/plugin.js"
     }
 
 }

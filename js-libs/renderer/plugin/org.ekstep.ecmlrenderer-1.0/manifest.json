@@ -1,7 +1,7 @@
 {
-    "id": "org.ekstep.renderer",
+    "id": "org.ekstep.ecmlrenderer",
     "ver": "1.0",
-    "shortId": "org.eskstep.renderer",
+    "shortId": "org.eskstep.ecmlrenderer",
     "author": "Kartheek Palla",
     "description": "",
     "publishedDate": "",

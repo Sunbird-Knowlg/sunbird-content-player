@@ -13,7 +13,7 @@ PluginManager.registerPlugin('launcher', Plugin.extend({
         }, {
             mimeType: 'application/vnd.ekstep.ecml-archive',
             event: 'renderer:ecml:launch',
-            id: 'org.ekstep.renderer',
+            id: 'org.ekstep.ecmlrenderer',
             ver: 1.0,
             type: 'plugin'
         }];
