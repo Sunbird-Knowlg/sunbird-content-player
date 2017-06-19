@@ -1,16 +1,11 @@
 Plugin.extend({
     initialize: function() {
-        console.info('HTML Renderer intialize is called');
+        console.info('HTML Renderer intialize done');
         EkstepRendererAPI.addEventListener('renderer:html:launch', this.launch, this);
-
     },
     launch: function(evt, data) {
         console.info('HTML plugin init')
         jQuery('#loading').hide();
-        // using state
-        /*window.location.hash = "#/render/htmlcontent/do_20045479"*/
-       
-
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
         var launchData = {"env": envHTML, "envpath": 'dev'}; 
@@ -19,38 +14,21 @@ Plugin.extend({
         if (isbrowserpreview) {
             path += "&flavor=" + "t=" + getTime();
         }
-        /*using  window.open*/
-        /*if (isMobile) {
-            console.log("Opening through cordova custom webview.");
-            cordova.InAppBrowser.open(path, '_self', 'location=no,hardwareback=no');
-        }else{
-             window.open(path, '_self');
-        }*/
-
-
-      var iframe = document.createElement('iframe');
-       iframe.src = path;
-       var ifrmaeEleme = jQuery(iframe).insertBefore("#gameArea");
-        var dims = this.relativeDims();
-         jQuery(gameArea).attr("id", 'gameArea')
-            .css({
-                position: 'absolute',
-                left: '0px',
-                top: '0px',               
-            });
-        jQuery(ifrmaeEleme).attr("id", 'ifrmae')
-            .css({
-                position: 'absolute',
-                left: '20px',
-                top: '30px',
-                "display": 'block',
-                background: 'red',
-                width: '100%',
-                height: '100%'
-            });
-       
-        var div = document.getElementById('gameArea');
-        div.insertBefore(iframe, div.childNodes[0]);
+        var iframe = document.createElement('iframe');
+        iframe.src = path;
+        iframe.id = 'htmlIframe'
+        this.addIframe(iframe);
+    },
+    addIframe: function(iframe) {
+        jQuery('#htmlIframe').insertBefore("#gameArea");        
+        var gameArea = document.getElementById('gameArea');
+        gameArea.insertBefore(iframe, gameArea.childNodes[0]);
+        this.setStyle();
+    },
+    setStyle: function() {
+        jQuery('#gameArea') .css({left: '0px', top: '0px', width: "100%", height: "100%"}); 
+        jQuery('#htmlIframe') .css({position: 'absolute', display: 'block', background: 'rgba(49, 13, 45, 0.14)', width: '100%', height: '100%'}); 
+        jQuery('#overlay').css({display: 'block'}) 
     },
     getAsseturl: function(content) {
         var content_type = "html/";
@@ -59,5 +37,4 @@ Plugin.extend({
         return path;
     }
 });
-
 //# sourceURL=HTMLRendererePlugin.js
