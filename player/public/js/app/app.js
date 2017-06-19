@@ -42,11 +42,14 @@ var stack = new Array(),
     },
     isbrowserpreview = getUrlParameter("webview")
 
-window.previewData = {'context':{},'config':{}};
+window.previewData = {
+    'context': {},
+    'config': {}
+};
 
 window.initializePreview = function(configuration) {
     // configuration: additional information passed to the preview
-    if (_.isUndefined(configuration.context)){
+    if (_.isUndefined(configuration.context)) {
         configuration.context = {};
     }
     // For testing only, Will be removed after portal side integration is done.
@@ -61,7 +64,7 @@ window.initializePreview = function(configuration) {
     }
     localStorageGC.clear();
     AppConfig = _.extend(AppConfig, configuration.config)
-    // genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
+        // genieservice.api.setBaseUrl(AppConfig[AppConfig.flavor]);
     window.previewData = configuration;
     configuration.config.repos && configuration.config.plugins && EkstepRendererAPI.dispatchEvent("repo:intialize");
     EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
@@ -89,7 +92,11 @@ window.setContentData = function(metadata, data, configuration) {
     }
     localStorageGC.clear();
     if (data) {
-        var object = {'config':configuration,'data':data,'metadata':metadata}
+        var object = {
+            'config': configuration,
+            'data': data,
+            'metadata': metadata
+        }
     }
     window.initializePreview(object);
 }
@@ -344,7 +351,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     });
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
-                    EkstepRendererAPI.logErrorEvent(res,{'type':'system','severity':'fatal','action':'play'})
+                    EkstepRendererAPI.logErrorEvent(res, {
+                        'type': 'system',
+                        'severity': 'fatal',
+                        'action': 'play'
+                    })
                     alert(res.errors);
                     exitApp();
                 });
@@ -399,7 +410,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             }) : TelemetryService.end();
         }
 
-        $scope.startContent =function() {
+        $scope.startContent = function() {
             if ($state.current.name == appConstants.stateShowContentEnd) {
                 $state.go(appConstants.statePlayContent, {
                     'itemId': $rootScope.content.identifier
@@ -598,64 +609,16 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             //EkstepRendererAPI.dispatchEvent('renderer:launcher:initLauncher');
             if ($stateParams.itemId && $rootScope.content) {
                 localStorageGC.setItem("content", $rootScope.content);
-
                 $rootScope.pageTitle = $rootScope.content.name;
                 startProgressBar(40, 0.6);
                 // In the case of AT preview Just we are setting up the currentContentId
                 GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
                 $scope.callStartTelemetry($rootScope.content, function() {
                     $scope.item = $rootScope.content;
-                    $scope.callStartTelemetry($rootScope.content,function(){
-                        EkstepRendererAPI.dispatchEvent('renderer:launcher:initLauncher',undefined, $rootScope.content);
-                        /*launcher.init($rootScope.content, $state);*/
+                    $scope.callStartTelemetry($rootScope.content, function() {
+                        $rootScope.content.body =  isbrowserpreview ? getContentObj(content): undefined;
+                        EkstepRendererAPI.dispatchEvent('renderer:launcher:initLauncher', undefined, $rootScope.content);
                     });
-                    if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
-
-                        var isMobile = window.cordova ? true : false;
-
-                        // For HTML content, lunach eve is required
-                        // setting launch evironment as "app"/"portal" for "mobile"/"portal(web)"
-                        var envHTML = isMobile ? "app" : "portal";
-
-                        var launchData = {
-                            "env": envHTML,
-                            "envpath": AppConfig[AppConfig.flavor]
-                        };
-                        //Adding contentId and LaunchData as query parameter
-
-                        var prefix_url = isbrowserpreview ? getAsseturl($rootScope.content) : $scope.item.baseDir;
-
-                        var path = prefix_url + '/index.html?contentId=' + $stateParams.itemId + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
-
-                        //Adding config as query parameter for HTML content
-                        if ($scope.item.config) {
-                            path += "&config=" + JSON.stringify($scope.item.config);
-                        }
-
-                        // Adding Flavor(environment) as query parameter to identify HTML content showing in dev/qa/prdocution
-                        // For local development of HTML flavor should not sent in URL
-                        // adding time to aviod browser catch of HTML page
-                        if (isbrowserpreview) {
-                            path += "&flavor=" + AppConfig.flavor + "t=" + getTime();
-                        }
-
-                        if (isMobile) {
-                            console.log("Opening through cordova custom webview.");
-                            cordova.InAppBrowser.open(path, '_self', 'location=no,hardwareback=no');
-                        } else {
-                            console.log("Opening through window.open");
-                            window.open(path, '_self');
-                        }
-                    } else {
-                        if (isbrowserpreview) {
-                            var contentBody = undefined;
-                            Renderer.start("", 'gameCanvas', $scope.item, getContentObj(content), true);
-                        } else if (!_.isUndefined($scope.item)) {
-                            Renderer.start($scope.item.baseDir, 'gameCanvas', $scope.item);
-                        } else {
-                            console.warn("Content not found")
-                        }
-                    }
                 });
             } else {
                 alert('Name or Launch URL not found.');
@@ -837,7 +800,10 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             if (_(TelemetryService.instance).isUndefined()) {
                 var tsObj = localStorageGC.getItem('telemetryService');
                 var correlationData = [];
-                correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
+                correlationData.push({
+                    "id": CryptoJS.MD5(Math.random().toString()).toString(),
+                    "type": "ContentSession"
+                });
                 TelemetryService.init(tsObj._gameData, tsObj._user, correlationData);
             }
 
@@ -961,7 +927,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     $scope.showOverlayPrevious = event.target;
                     break;
                 case "overlaySubmit":
-                        if (event.target === "off") {
+                    if (event.target === "off") {
                         $scope.showOverlaySubmit = false;
                     } else {
                         $scope.showOverlaySubmit = true;
@@ -1195,7 +1161,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     $scope.showUserSwitchModal = true;
                 });
             } else {
-                showToaster('info',"Change of users is disabled");
+                showToaster('info', "Change of users is disabled");
             }
         }
 
@@ -1205,7 +1171,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             UserService.getUsersList().then(function(data) {
                 if (data.status === "success" && _.isUndefined($rootScope.users))
                     $rootScope.users = data.data;
-                $scope.groupLength = (_.where($rootScope.users, {"group": true})).length;
+                $scope.groupLength = (_.where($rootScope.users, {
+                    "group": true
+                })).length;
 
                 UserService.getCurrentUser().then(function(data) {
                     if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
@@ -1230,7 +1198,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.sortUserlist = function() {
-            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'name'), 'userIndex')   ;
+            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'name'), 'userIndex');
         }
 
         // this function changes the selected user
@@ -1297,12 +1265,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             });
 
             EventBus.addEventListener("event:getcurrentuser", function() {
-                if(GlobalContext.config.showUser)
+                if (GlobalContext.config.showUser)
                     currentUser = $rootScope.currentUser;
             });
 
             EventBus.addEventListener("event:getuserlist", function() {
-                if(GlobalContext.config.showUser)
+                if (GlobalContext.config.showUser)
                     userList = $rootScope.users;
             });
 

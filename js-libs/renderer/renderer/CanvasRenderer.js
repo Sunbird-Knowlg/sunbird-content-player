@@ -30,33 +30,6 @@ Renderer = {
         Renderer.theme.updateCanvas(newWidth, newHeight);
         if (!disableDraw) Renderer.theme.reRender();
     },
-    start: function(gameRelPath, canvasId, game, data, preview) {
-        try {
-            if (Renderer.running) {
-                Renderer.cleanUp();
-                TelemetryService.start(game.identifier, game.pkgVersion);
-            }
-            Renderer.running = true;
-            Renderer.preview = preview || false;
-            if (data) {
-                Renderer.init(data, canvasId, gameRelPath);
-            } else {
-                Renderer.initByJSON(gameRelPath, canvasId);
-                if (typeof sensibol != "undefined") {
-                    sensibol.recorder.init(gameRelPath + "/lesson.metadata")
-                        .then(function(res) {
-                            console.info("Init lesson successful.", res);
-                        })
-                        .catch(function(err) {
-                            console.error("Error while init lesson:", err);
-                        });
-                }
-            }
-        } catch (e) {
-            showToaster('error', 'Lesson fails to play');
-            EkstepRendererAPI.logErrorEvent(e, {'severity':'fatal','type':'content','action':'play'});
-            console.warn("Canvas Renderer init is failed", e); }
-    },
     initByJSON: function(gameRelPath, canvasId) {
         jQuery.getJSON(gameRelPath + '/index.json', function(data) {
                 Renderer.init(data, canvasId, gameRelPath);
