@@ -20,11 +20,9 @@ PluginManager.registerPlugin('launcher', Plugin.extend({
         var contentTypePlugin = _.findWhere(dispatcher, {
             'mimeType': content.mimeType
         });
-         PluginManager.init('renderer');
+        PluginManager.init('renderer');
         if (!_.isUndefined(contentTypePlugin)) {
             this.loadPlugin(contentTypePlugin, content);
-        } else {
-             this.loadPlugin(contentTypePlugin, content);
         }
     },
     loadPlugin : function(plugin, content) {
@@ -34,3 +32,4 @@ PluginManager.registerPlugin('launcher', Plugin.extend({
     }
 
 }));
+//# sourceURL=launcherPlugin.js

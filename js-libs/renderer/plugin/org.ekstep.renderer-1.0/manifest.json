@@ -6,7 +6,10 @@
     "description": "",
     "publishedDate": "",
     "renderer": {
-        "main": "plugin.js"
+        "main": "renderer/plugin.js",
+        "dependencies": [
+            {"type": "js", "src": "renderer/libs/coreplugins.js"}
+        ]
     }
 
 }
