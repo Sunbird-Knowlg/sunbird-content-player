@@ -9,7 +9,7 @@ Plugin.extend({
         try {
             if (Renderer.running) {
                 Renderer.cleanUp();
-                TelemetryService.start(game.identifier, game.pkgVersion);
+                TelemetryService.start(renderObj.identifier, renderObj.pkgVersion);
             }
             Renderer.running = true;
             Renderer.preview = renderObj.preview || false;

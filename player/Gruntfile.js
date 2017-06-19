@@ -135,13 +135,25 @@ module.exports = function(grunt) {
                     mangle: false
                 },
                 files: {
-                    'public/js/app/coreplugins.js': [
+                    '../js-libs/renderer/plugin/org.ekstep.ecmlrenderer-1.0/renderer/libs/coreplugins.js': [
                         '../js-libs/renderer/plugin/Plugin.js',
                         '../js-libs/renderer/plugin/HTMLPlugin.js',
                         '../js-libs/renderer/plugin/AnimationPlugin.js',
                         '../js-libs/renderer/plugin/LayoutPlugin.js',
                         '../js-libs/renderer/plugin/ShapePlugin.js',
                         '../js-libs/renderer/plugin/*Plugin.js'
+                    ]
+                }
+            },
+            commands:{
+                options: {
+                    beautify: true,
+                    mangle: false
+                },
+                files: {
+                    '../js-libs/renderer/plugin/org.ekstep.ecmlrenderer-1.0/renderer/libs/commands.js': [
+                        '../js-libs/renderer/command/Command.js',
+                        '../js-libs/renderer/command/*.js'
                     ]
                 }
             },

@@ -1405,14 +1405,13 @@ PluginManager.registerPlugin("input", InputPlugin), PluginManager.registerPlugin
         }, {
             mimeType: "application/vnd.ekstep.ecml-archive",
             event: "renderer:ecml:launch",
-            id: "org.ekstep.renderer",
+            id: "org.ekstep.ecmlrenderer",
             ver: 1,
             type: "plugin"
         } ], contentTypePlugin = _.findWhere(dispatcher, {
             mimeType: content.mimeType
         });
-        _.isUndefined(contentTypePlugin) ? Renderer.start(content.baseDir, "gameCanvas", content) : (PluginManager.init("/renderer"), 
-        this.loadPlugin(contentTypePlugin, content));
+        PluginManager.init("renderer"), _.isUndefined(contentTypePlugin) || this.loadPlugin(contentTypePlugin, content);
     },
     loadPlugin: function(plugin, content) {
         PluginManager.loadPlugins(plugin, [], function() {
