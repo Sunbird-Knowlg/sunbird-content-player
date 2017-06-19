@@ -12,7 +12,7 @@
 	SHOW_USER: true,
 	OVERLAY_SUBMIT: "off",
 	apislug: '/action',
-	SPLASH_TEXT: "Powered by EkStep",
+	SPLASH_TEXT: "Powered by EkStep Genie",
 	SPLASH_ICON: "img/icons/icn_genie.png",
 	SPLASH_IMAGE: "img/icons/background_1.png",
 	APP_DOWNLOAD_LINK: "http://www.ekstep.in"
