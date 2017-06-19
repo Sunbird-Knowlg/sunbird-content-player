@@ -595,6 +595,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             startTelemetry(identifier, version, cb);
         }
         $scope.renderContent = function() {
+            //EkstepRendererAPI.dispatchEvent('renderer:launcher:initLauncher');
             if ($stateParams.itemId && $rootScope.content) {
                 localStorageGC.setItem("content", $rootScope.content);
 
@@ -604,7 +605,12 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
                 $scope.callStartTelemetry($rootScope.content, function() {
                     $scope.item = $rootScope.content;
+                    $scope.callStartTelemetry($rootScope.content,function(){
+                        EkstepRendererAPI.dispatchEvent('renderer:launcher:initLauncher',undefined, $rootScope.content);
+                        /*launcher.init($rootScope.content, $state);*/
+                    });
                     if ($scope.item && $scope.item.mimeType && $scope.item.mimeType == 'application/vnd.ekstep.html-archive') {
+
                         var isMobile = window.cordova ? true : false;
 
                         // For HTML content, lunach eve is required
