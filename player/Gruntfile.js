@@ -129,6 +129,22 @@ module.exports = function(grunt) {
                     ]
                 }
             },
+            corePlugins:{
+                options: {
+                    beautify: true,
+                    mangle: false
+                },
+                files: {
+                    'public/js/app/coreplugins.js': [
+                        '../js-libs/renderer/plugin/Plugin.js',
+                        '../js-libs/renderer/plugin/HTMLPlugin.js',
+                        '../js-libs/renderer/plugin/AnimationPlugin.js',
+                        '../js-libs/renderer/plugin/LayoutPlugin.js',
+                        '../js-libs/renderer/plugin/ShapePlugin.js',
+                        '../js-libs/renderer/plugin/*Plugin.js'
+                    ]
+                }
+            },
             testRenderer: {
                 options: {
                     beautify: true,
