@@ -1,7 +1,7 @@
 Plugin.extend({
     initialize: function() {
         console.info('HTML Renderer intialize done');
-        EkstepRendererAPI.addEventListener('renderer:html:launch', this.launch, this);
+        EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.launch, this);
     },
     launch: function(evt, data) {
         console.info('HTML plugin init')

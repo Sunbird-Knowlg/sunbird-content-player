@@ -5,7 +5,7 @@ Plugin.extend({
     preview: false,
     initialize: function() {
         console.info('ECML Renderer initialize')
-        EkstepRendererAPI.addEventListener('renderer:ecml:launch', this.start, this);
+        EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
     },
     start: function(evt, renderObj) {
         var instance = this;

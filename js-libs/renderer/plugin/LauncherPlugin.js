@@ -6,13 +6,11 @@ PluginManager.registerPlugin('launcher', Plugin.extend({
         console.info('launcher init is calling..');
         var dispatcher = [{
             mimeType: 'application/vnd.ekstep.html-archive',
-            event: 'renderer:html:launch',
             id: 'org.ekstep.htmlrenderer',
             ver: 1.0,
             type: 'plugin'
         }, {
             mimeType: 'application/vnd.ekstep.ecml-archive',
-            event: 'renderer:ecml:launch',
             id: 'org.ekstep.ecmlrenderer',
             ver: 1.0,
             type: 'plugin'
@@ -29,7 +27,7 @@ PluginManager.registerPlugin('launcher', Plugin.extend({
     },
     loadPlugin : function(plugin, content) {
         PluginManager.loadPlugins(plugin, [], function() {
-            EkstepRendererAPI.dispatchEvent(plugin.event, undefined, content);
+            EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType, undefined, content);
         });
     }
 
