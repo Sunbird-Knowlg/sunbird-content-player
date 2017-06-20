@@ -35,7 +35,8 @@ PluginManager = {
     },
     registerPlugin: function(id, plugin) {
         org.ekstep.pluginframework.pluginManager._registerPlugin(id, undefined, plugin);
-        createjs.EventDispatcher.initialize(plugin.prototype);
+        if(typeof createjs !== "undefined")
+            createjs.EventDispatcher.initialize(plugin.prototype);
     },
     isPlugin: function(id) {
         return org.ekstep.pluginframework.pluginManager.isPluginDefined(id);
