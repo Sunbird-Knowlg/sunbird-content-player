@@ -12,7 +12,7 @@ Plugin.extend({
         if (_.isUndefined(renderObj)) return;
         try {
             if (this.running) {
-                this.cleanUp();
+                Renderer.cleanUp();
                 TelemetryService.start(renderObj.identifier, renderObj.pkgVersion);
             }
             this.running = true;
@@ -122,6 +122,7 @@ Plugin.extend({
         }
         try {
             PluginManager.loadPlugins(pluginManifest.plugin, resource, function() {
+                EkstepRendererAPI.dispatchEvent('renderer:init:endpage');
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
@@ -159,17 +160,6 @@ Plugin.extend({
             return media.type === 'css' || media.type === 'js' || media.type === 'plugin' || media.type === ' library';
         });
         return plugins;
-    },
-    cleanUp: function() {
-        var instance = this;
-        this.running = false;
-        AnimationManager.cleanUp();
-        AssetManager.destroy();
-        TimerManager.destroy();
-        AudioManager.cleanUp();
-        if (Renderer.theme)
-            Renderer.theme.cleanUp();
-        Renderer.theme = undefined;
     }
 });
 
