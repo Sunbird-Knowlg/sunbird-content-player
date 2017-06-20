@@ -145,7 +145,6 @@ module.exports = function(grunt) {
                         '../js-libs/renderer/evaluator/MTFEvaluator.js',
                         '../js-libs/renderer/manager/AnimationManager.js',
                         '../js-libs/renderer/manager/AssetManager.js',
-                        '../js-libs/renderer/manager/AudioManager.js',
                         '../js-libs/renderer/manager/CommandManager.js',
                         '../js-libs/renderer/manager/EventManager.js',
                         '../js-libs/renderer/manager/OverlayManager.js',
@@ -156,12 +155,12 @@ module.exports = function(grunt) {
                         '../js-libs/renderer/generator/ItemDataGenerator.js',
                         '../js-libs/renderer/command/Command.js',
                         '../js-libs/renderer/command/*.js',
-                        '!../js-libs/renderer/plugin/LauncherPlugin.js',
                         '../js-libs/renderer/plugin/Plugin.js',
                         '../js-libs/renderer/plugin/HTMLPlugin.js',
                         '../js-libs/renderer/plugin/AnimationPlugin.js',
                         '../js-libs/renderer/plugin/LayoutPlugin.js',
                         '../js-libs/renderer/plugin/ShapePlugin.js',
+                        '!../js-libs/renderer/plugin/LauncherPlugin.js',
                         '../js-libs/renderer/plugin/*Plugin.js'
                     ]
                 }
