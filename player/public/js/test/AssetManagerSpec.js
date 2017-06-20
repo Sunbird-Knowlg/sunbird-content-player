@@ -14,7 +14,7 @@ describe('Asset manager test cases', function() {
             manifest: {
                 media: [{
                     id: 'sringeri',
-                    src: 'https://ekstep-public.s3.amazonaws.com/preview/dev/img/icons/splash.png',
+                    src: 'https://ekstep-public.s3.amazonaws.com/preview/dev/assets/icons/splash.png',
                     type: 'image'
                 }, {
                     id: 'splash_audio',

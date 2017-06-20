@@ -162,7 +162,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
     })
     .run(function($rootScope, $ionicPlatform, $location, $timeout, $state, $stateParams, appConstants, ContentService, UserService) {
 
-        $rootScope.imageBasePath = "img/icons/";
+        $rootScope.imageBasePath = "assets/icons/";
         $rootScope.enableEval = false;
         $rootScope.userSwitcherEnabled = undefined;
         $rootScope.showUser = undefined;

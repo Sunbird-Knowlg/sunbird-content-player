@@ -216,7 +216,7 @@ describe('Shape Plugin test cases', function() {
 //             "manifest": {
 //                 "media": [{
 //                     "id": "validate",
-//                     "src": "https://ekstep-public.s3.amazonaws.com/preview/dev/img/icons/splash.png",
+//                     "src": "https://ekstep-public.s3.amazonaws.com/preview/dev/assets/icons/splash.png",
 //                     "type": "image",
 //                     "assetId": "domain_38852"
 //                 }]

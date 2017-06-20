@@ -1114,7 +1114,7 @@ body {
 }
 
 .gc-ep-credits>input[type=button] {
-    background-image: url(../../img/icons/btn_credits.png);
+    background-image: url(../../assets/icons/btn_credits.png);
     background-repeat: no-repeat;
     padding: 2% 19%;
     border: none;
