@@ -28,7 +28,7 @@ Plugin.extend({
     setStyle: function() {
         jQuery('#gameArea') .css({left: '0px', top: '0px', width: "100%", height: "100%"}); 
         jQuery('#htmlIframe') .css({position: 'absolute', display: 'block', background: 'rgba(49, 13, 45, 0.14)', width: '100%', height: '100%'}); 
-        jQuery('#overlay').css({display: 'block'}) 
+        AppConfig.ENABLE_OVERLAY ? jQuery('#overlay').css({display: 'block'}) : jQuery('#overlay').css({display: 'none'}) 
     },
     getAsseturl: function(content) {
         var content_type = "html/";

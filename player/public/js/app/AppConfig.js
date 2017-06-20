@@ -11,5 +11,6 @@ AppConfig = {
 	USER_SWITCHER_ENABLED: true,
 	SHOW_USER: true,
 	apislug: '/action',
-	OVERLAY_SUBMIT: "off"
+	OVERLAY_SUBMIT: "off",
+	ENABLE_OVERLAY: true,
 }
