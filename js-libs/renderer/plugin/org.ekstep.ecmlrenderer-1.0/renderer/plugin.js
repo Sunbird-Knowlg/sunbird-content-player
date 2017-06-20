@@ -122,8 +122,8 @@ Plugin.extend({
         }
         try {
             PluginManager.loadPlugins(pluginManifest.plugin, resource, function() {
-                EkstepRendererAPI.dispatchEvent('renderer:init:endpage');
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
+                EkstepRendererAPI.dispatchEvent('renderer:init:endpage');
             });
         } catch (e) {
             console.warn("Framework fails to load plugins", e);

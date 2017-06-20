@@ -5,6 +5,7 @@ Plugin.extend({
     },
     launch: function(evt, data) {
         console.info('HTML plugin init')
+        this.showEndPage();
         jQuery('#loading').hide();
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
@@ -35,6 +36,9 @@ Plugin.extend({
         var path = window.location.origin + AppConfig.S3_CONTENT_HOST + content_type;
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
-    }
+    },
+    showEndPage: function(){
+         EkstepRendererAPI.dispatchEvent('renderer:init:endpage');
+    },
 });
 //# sourceURL=HTMLRendererePlugin.js
