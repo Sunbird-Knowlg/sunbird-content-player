@@ -20,9 +20,11 @@ PluginManager.registerPlugin('launcher', Plugin.extend({
         var contentTypePlugin = _.findWhere(dispatcher, {
             'mimeType': content.mimeType
         });
+        isCoreplugin = true;
         PluginManager.init('renderer');
         if (!_.isUndefined(contentTypePlugin)) {
             this.loadPlugin(contentTypePlugin, content);
+            isCoreplugin = false;
         }
     },
     loadPlugin : function(plugin, content) {

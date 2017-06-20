@@ -6,12 +6,13 @@ PluginManager = {
     pluginObjMap: {},
 
     init: function(gamePath) {
+        var pluginsPath = undefined;
         // @ plugin:error event is dispatching from the plugin-framework 
         // If any of the plugin is failed to load OR invoke then plugin:error event will trigger
         if(!EkstepRendererAPI.hasEventListener('plugin:error')){
             EkstepRendererAPI.addEventListener('plugin:error',this.logErrorEventTelemetry,this);
         }
-        var pluginsPath = isbrowserpreview ? AppConfig.PREVIEW_PLUGINSPATH : AppConfig.DEVICE_PLUGINSPATH ;
+        pluginsPath = isCoreplugin ? AppConfig.CORE_PLUGINSPATH : (isbrowserpreview ? AppConfig.PREVIEW_PLUGINSPATH : AppConfig.DEVICE_PLUGINSPATH)
         var pluginRepo = gamePath + pluginsPath;
         var pfConfig = {env:"renderer", async: async, pluginRepo: pluginRepo,repos: [org.ekstep.pluginframework.publishedRepo] };
         org.ekstep.pluginframework.initialize(pfConfig);

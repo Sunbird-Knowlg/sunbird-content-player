@@ -41,7 +41,7 @@ var stack = new Array(),
         showHTMLPages: true
     },
     isbrowserpreview = getUrlParameter("webview")
-
+    isCoreplugin = undefined;
 window.previewData = {
     'context': {},
     'config': {}
