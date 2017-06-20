@@ -8,6 +8,10 @@
     "renderer": {
         "main": "renderer/plugin.js",
         "dependencies": [
+            {"type": "js", "src": "renderer/libs/controller.js"},
+            {"type": "js", "src": "renderer/libs/evaluator.js"},
+            {"type": "js", "src": "renderer/libs/manager.js"},
+            {"type": "js", "src": "renderer/libs/generator.js"},
             {"type": "js", "src": "renderer/libs/commands.js"},
             {"type": "js", "src": "renderer/libs/coreplugins.js"}
         ]

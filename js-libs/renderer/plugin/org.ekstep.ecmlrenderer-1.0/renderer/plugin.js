@@ -1,4 +1,8 @@
 Plugin.extend({
+    loader: undefined,
+    gdata: undefined,
+    running: false,
+    preview: false,
     initialize: function() {
         console.info('ECML Renderer initialize')
         EkstepRendererAPI.addEventListener('renderer:ecml:launch', this.start, this);
@@ -7,14 +11,19 @@ Plugin.extend({
         var instance = this;
         if (_.isUndefined(renderObj)) return;
         try {
-            if (Renderer.running) {
-                Renderer.cleanUp();
+            if (this.running) {
+                this.cleanUp();
                 TelemetryService.start(renderObj.identifier, renderObj.pkgVersion);
             }
-            Renderer.running = true;
-            Renderer.preview = renderObj.preview || false;
+            this.running = true;
+            this.preview = renderObj.preview || false;
             if (renderObj.body) {
-                instance.load(renderObj.body, 'gameCanvas', renderObj.gameRelPath);
+                var dataObj = {
+                    'body': renderObj.body,
+                    'canvasId': 'gameCanvas',
+                    'path': renderObj.gameRelPath
+                }
+                instance.load(dataObj);
             } else {
                 instance.initByJSON(renderObj.baseDir, 'gameCanvas');
                 if (typeof sensibol != "undefined") {
@@ -37,10 +46,36 @@ Plugin.extend({
             console.warn("Canvas Renderer init is failed", e);
         }
     },
+    resizeGame: function(disableDraw) {
+        var gameArea = document.getElementById(Renderer.divIds.gameArea);
+        var widthToHeight = 16 / 9;
+        var newWidth = window.innerWidth;
+        var newHeight = window.innerHeight;
+        var newWidthToHeight = newWidth / newHeight;
+        if (newWidthToHeight > widthToHeight) {
+            newWidth = newHeight * widthToHeight;
+            gameArea.style.height = newHeight + 'px';
+            gameArea.style.width = newWidth + 'px';
+        } else {
+            newHeight = newWidth / widthToHeight;
+            gameArea.style.width = newWidth + 'px';
+            gameArea.style.height = newHeight + 'px';
+        }
+
+        gameArea.style.marginTop = (-newHeight / 2) + 'px';
+        gameArea.style.marginLeft = (-newWidth / 2) + 'px';
+        Renderer.theme.updateCanvas(newWidth, newHeight);
+        if (!disableDraw) Renderer.theme.reRender();
+    },
     initByJSON: function(gameRelPath, canvasId) {
         var instance = this;
         jQuery.getJSON(gameRelPath + '/index.json', function(data) {
-                instance.load(data, canvasId, gameRelPath);
+                var dataObj = {
+                    'body': data,
+                    'canvasId': canvasId,
+                    'path': gameRelPath
+                }
+                instance.load(dataObj);
             })
             .fail(function() {
                 instance.initByXML(gameRelPath, canvasId)
@@ -49,45 +84,49 @@ Plugin.extend({
     initByXML: function(gameRelPath, canvasId) {
         var instance = this;
         jQuery.get(gameRelPath + '/index.ecml', function(data) {
-                instance.load(data, canvasId, gameRelPath);
+                var dataObj = {
+                    'body': data,
+                    'canvasId': canvasId,
+                    'path': gameRelPath
+                }
+                instance.load(dataObj);
             }, null, 'xml')
             .fail(function(err) {
-                EkstepRendererAPI.logErrorEvent(err, {'severity':'fatal','type':'content','action':'play'}); 
+                EkstepRendererAPI.logErrorEvent(err, { 'severity': 'fatal', 'type': 'content', 'action': 'play' });
                 alert("Invalid ECML please correct the Ecml : ", err);
-                checkStage();
             });
     },
-    load: function(data, canvasId, gameRelPath) {
-        var instance = this;
-        tempData = data;
+    load: function(dataObj) {
+        var instance = this,
+            data = dataObj.body;
         if (!jQuery.isPlainObject(data)) {
             var x2js = new X2JS({
                 attributePrefix: 'none'
             });
             data = x2js.xml2json(data);
         }
-        Renderer.gdata = data;
+        this.gdata = data;
         var content = data.theme || data.ecml;
-        content.canvasId = canvasId;
+        content.canvasId = dataObj.canvasId;
         Renderer.theme = new ThemePlugin(content);
-        Renderer.resizeGame(true);
-        Renderer.theme.baseDir = gameRelPath;
+        instance.resizeGame(true);
+        Renderer.theme.baseDir = dataObj.path;
         var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);
-        PluginManager.init(gameRelPath);
-        var resource = instance.handleRelativePath(instance.getResource(manifest), gameRelPath + '/widgets/');
+        PluginManager.init(dataObj.path);
+        var resource = instance.handleRelativePath(instance.getResource(manifest), dataObj.path + '/widgets/');
         var pluginManifest = content["plugin-manifest"];
         (_.isUndefined(pluginManifest) || _.isEmpty(pluginManifest)) && (pluginManifest = { plugin: [] });
         var previewPlugins = EkstepRendererAPI.getPreviewData().config.plugins;
         if (previewPlugins) {
-            _.each(previewPlugins, function(item) { pluginManifest.plugin.push({id: item.id, ver: item.ver || 1.0, type: item.type || "plugin", depends: item.depends || ""}); });
+            _.each(previewPlugins, function(item) { pluginManifest.plugin.push({ id: item.id, ver: item.ver || 1.0, type: item.type || "plugin", depends: item.depends || "" }); });
         }
         try {
             PluginManager.loadPlugins(pluginManifest.plugin, resource, function() {
-                Renderer.theme.start(gameRelPath.replace('file:///', '') + "/assets/");
+                Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
             console.warn("Framework fails to load plugins", e);
-            EkstepRendererAPI.logErrorEvent(e, {'severity':'fatal','type':'system','action':'play'}); 
+            EkstepRendererAPI.logErrorEvent(e, { 'severity': 'fatal', 'type': 'system', 'action': 'play' });
             showToaster('error', 'Framework fails to load plugins');
         }
         createjs.Ticker.addEventListener("tick", function() {
@@ -108,8 +147,8 @@ Plugin.extend({
             if (p.src.substring(0, 4) != 'http') {
                 if (!isbrowserpreview) {
                     p.src = pluginPath + p.src;
-                }else{
-                   p.src = AppConfig.host + p.src;
+                } else {
+                    p.src = AppConfig.host + p.src;
                 }
             }
         });
@@ -120,6 +159,17 @@ Plugin.extend({
             return media.type === 'css' || media.type === 'js' || media.type === 'plugin' || media.type === ' library';
         });
         return plugins;
+    },
+    cleanUp: function() {
+        var instance = this;
+        this.running = false;
+        AnimationManager.cleanUp();
+        AssetManager.destroy();
+        TimerManager.destroy();
+        AudioManager.cleanUp();
+        if (Renderer.theme)
+            Renderer.theme.cleanUp();
+        Renderer.theme = undefined;
     }
 });
 

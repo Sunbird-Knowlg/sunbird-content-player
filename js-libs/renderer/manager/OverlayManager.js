@@ -103,7 +103,7 @@ OverlayManager = {
     handleSubmit: function() {
         var eventName = this._constants.overlaySubmit;
         var val = this._stageConfig[eventName];
-        if(_.isUndefined(Renderer.theme.getParam(eventName)) && _.isUndefined(Renderer.theme._currentScene.getParam(eventName))) {
+        if(!_.isUndefined(Renderer.theme) && _.isUndefined(Renderer.theme.getParam(eventName)) && _.isUndefined(Renderer.theme._currentScene.getParam(eventName))) {
             val = AppConfig.OVERLAY_SUBMIT;
         }
         if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene) && Renderer.theme._currentScene.isItemScene()) {

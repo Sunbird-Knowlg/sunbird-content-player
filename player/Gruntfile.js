@@ -156,6 +156,64 @@ module.exports = function(grunt) {
                         '../js-libs/renderer/command/*.js'
                     ]
                 }
+            },  
+            evaluator:{
+                options: {
+                    beautify: true,
+                    mangle: false
+                },
+                files: {
+                    '../js-libs/renderer/plugin/org.ekstep.ecmlrenderer-1.0/renderer/libs/evaluator.js': [
+                        '../js-libs/renderer/evaluator/ChoiceEvaluator.js',
+                        '../js-libs/renderer/evaluator/FTBEvaluator.js',
+                        '../js-libs/renderer/evaluator/MTFEvaluator.js'
+                    ]
+                }
+            },
+            manager:{
+                options: {
+                    beautify: true,
+                    mangle: false
+                },
+                files: {
+                    '../js-libs/renderer/plugin/org.ekstep.ecmlrenderer-1.0/renderer/libs/manager.js': [
+                        '../js-libs/renderer/manager/AnimationManager.js',
+                        '../js-libs/renderer/manager/AssetManager.js',
+                        '../js-libs/renderer/manager/AudioManager.js',
+                        '../js-libs/renderer/manager/CommandManager.js',
+                        '../js-libs/renderer/manager/EventManager.js',
+                        '../js-libs/renderer/manager/OverlayManager.js',
+                        '../js-libs/renderer/manager/LoadByStageStrategy.js',
+                        '../js-libs/renderer/manager/RecorderManager.js',
+                        '../js-libs/renderer/manager/TimerManager.js'
+                    ]
+                }
+            },
+            controller:{
+                options: {
+                    beautify: true,
+                    mangle: false
+                },
+                files: {
+                    '../js-libs/renderer/plugin/org.ekstep.ecmlrenderer-1.0/renderer/libs/controller.js': [
+                        '../js-libs/renderer/manager/ControllerManager.js',
+                        '../js-libs/renderer/controller/Controller.js',
+                        '../js-libs/renderer/controller/DataController.js',
+                        '../js-libs/renderer/controller/ItemController.js'
+                    ]
+                }
+            },
+            generator:{
+                options: {
+                    beautify: true,
+                    mangle: false
+                },
+                files: {
+                    '../js-libs/renderer/plugin/org.ekstep.ecmlrenderer-1.0/renderer/libs/generator.js': [
+                        '../js-libs/renderer/generator/DataGenerator.js',
+                        '../js-libs/renderer/generator/ItemDataGenerator.js'
+                    ]
+                }
             },
             testRenderer: {
                 options: {
