@@ -129,54 +129,20 @@ module.exports = function(grunt) {
                     ]
                 }
             },
-            corePlugins:{
+            renderermin:{
                 options: {
                     beautify: true,
                     mangle: false
                 },
                 files: {
-                    '../js-libs/renderer/plugin/org.ekstep.ecmlrenderer-1.0/renderer/libs/coreplugins.js': [
-                        '../js-libs/renderer/plugin/Plugin.js',
-                        '../js-libs/renderer/plugin/HTMLPlugin.js',
-                        '../js-libs/renderer/plugin/AnimationPlugin.js',
-                        '../js-libs/renderer/plugin/LayoutPlugin.js',
-                        '../js-libs/renderer/plugin/ShapePlugin.js',
-                        '../js-libs/renderer/plugin/*Plugin.js'
-                    ]
-                }
-            },
-            commands:{
-                options: {
-                    beautify: true,
-                    mangle: false
-                },
-                files: {
-                    '../js-libs/renderer/plugin/org.ekstep.ecmlrenderer-1.0/renderer/libs/commands.js': [
-                        '../js-libs/renderer/command/Command.js',
-                        '../js-libs/renderer/command/*.js'
-                    ]
-                }
-            },  
-            evaluator:{
-                options: {
-                    beautify: true,
-                    mangle: false
-                },
-                files: {
-                    '../js-libs/renderer/plugin/org.ekstep.ecmlrenderer-1.0/renderer/libs/evaluator.js': [
+                    '../js-libs/renderer/plugin/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js': [
+                        '../js-libs/renderer/manager/ControllerManager.js',
+                        '../js-libs/renderer/controller/Controller.js',
+                        '../js-libs/renderer/controller/DataController.js',
+                        '../js-libs/renderer/controller/ItemController.js',
                         '../js-libs/renderer/evaluator/ChoiceEvaluator.js',
                         '../js-libs/renderer/evaluator/FTBEvaluator.js',
-                        '../js-libs/renderer/evaluator/MTFEvaluator.js'
-                    ]
-                }
-            },
-            manager:{
-                options: {
-                    beautify: true,
-                    mangle: false
-                },
-                files: {
-                    '../js-libs/renderer/plugin/org.ekstep.ecmlrenderer-1.0/renderer/libs/manager.js': [
+                        '../js-libs/renderer/evaluator/MTFEvaluator.js',
                         '../js-libs/renderer/manager/AnimationManager.js',
                         '../js-libs/renderer/manager/AssetManager.js',
                         '../js-libs/renderer/manager/AudioManager.js',
@@ -185,33 +151,18 @@ module.exports = function(grunt) {
                         '../js-libs/renderer/manager/OverlayManager.js',
                         '../js-libs/renderer/manager/LoadByStageStrategy.js',
                         '../js-libs/renderer/manager/RecorderManager.js',
-                        '../js-libs/renderer/manager/TimerManager.js'
-                    ]
-                }
-            },
-            controller:{
-                options: {
-                    beautify: true,
-                    mangle: false
-                },
-                files: {
-                    '../js-libs/renderer/plugin/org.ekstep.ecmlrenderer-1.0/renderer/libs/controller.js': [
-                        '../js-libs/renderer/manager/ControllerManager.js',
-                        '../js-libs/renderer/controller/Controller.js',
-                        '../js-libs/renderer/controller/DataController.js',
-                        '../js-libs/renderer/controller/ItemController.js'
-                    ]
-                }
-            },
-            generator:{
-                options: {
-                    beautify: true,
-                    mangle: false
-                },
-                files: {
-                    '../js-libs/renderer/plugin/org.ekstep.ecmlrenderer-1.0/renderer/libs/generator.js': [
+                        '../js-libs/renderer/manager/TimerManager.js',
                         '../js-libs/renderer/generator/DataGenerator.js',
-                        '../js-libs/renderer/generator/ItemDataGenerator.js'
+                        '../js-libs/renderer/generator/ItemDataGenerator.js',
+                        '../js-libs/renderer/command/Command.js',
+                        '../js-libs/renderer/command/*.js',
+                        '!../js-libs/renderer/plugin/LauncherPlugin.js',
+                        '../js-libs/renderer/plugin/Plugin.js',
+                        '../js-libs/renderer/plugin/HTMLPlugin.js',
+                        '../js-libs/renderer/plugin/AnimationPlugin.js',
+                        '../js-libs/renderer/plugin/LayoutPlugin.js',
+                        '../js-libs/renderer/plugin/ShapePlugin.js',
+                        '../js-libs/renderer/plugin/*Plugin.js'
                     ]
                 }
             },
