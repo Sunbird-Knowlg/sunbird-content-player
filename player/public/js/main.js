@@ -9,8 +9,113 @@ var packageName = "org.ekstep.quiz.app",
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
     ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive"
 
-// Need to modify the scope level hasStageSet
-// hasStageSet = true
+var stack = new Array(),
+    collectionChildrenIds = new Array(),
+    collectionPath = new Array(),
+    collectionPathMap = {},
+    content = {},
+    collectionChildren = true,
+    defaultMetadata = {"identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author": "EkStep", "localData": {"questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{"identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept"}], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true, "path": "fixture-stories/item_sample"},
+    config = {showEndPage: true, showHTMLPages: true }, 
+    isbrowserpreview = getUrlParameter("webview")
+    isCoreplugin = undefined;
+window.previewData = {'context': {}, 'config': {} };
+window.initializePreview = function(configuration) {
+    if (_.isUndefined(configuration.context)) {
+        configuration.context = {};
+    }
+    if (_.isUndefined(configuration.config)) {
+        configuration.config = {};
+    }
+    if (_.isUndefined(configuration.context.contentId)) {
+        configuration.context.contentId = getUrlParameter("id")
+    }
+    localStorageGC.clear();
+    AppConfig = _.extend(AppConfig, configuration.config)
+    window.previewData = configuration;
+    configuration.config.repos && configuration.config.plugins && EkstepRendererAPI.dispatchEvent("repo:intialize");
+    EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
+    addWindowUnloadEvent();
+    EkstepRendererAPI.dispatchEvent("event:loadContent");
+
+}
+window.setContentData = function(metadata, data, configuration) {
+    if (_.isUndefined(metadata) || _.isNull(metadata)) {
+        content.metadata = defaultMetadata
+    } else {
+        content.metadata = metadata;
+    }
+    if (!_.isUndefined(data)) {
+        content.body = data;
+    }
+    _.map(configuration, function(val, key) {
+        config[key] = val;
+    });
+    if (!config.showHTMLPages) {
+        config.showEndPage = false;
+    }
+    localStorageGC.clear();
+    if (data) {
+        var object = {
+            'config': configuration,
+            'data': data,
+            'metadata': metadata
+        }
+    }
+    window.initializePreview(object);
+}
+
+function updateContentData($state, contentId) {
+    if (_.isUndefined($state)) {
+        console.error("updateContentData($state) - $state is not defined.");
+        return;
+    }
+    $state.go('playContent', {
+        'itemId': contentId
+    });
+}
+
+function getContentObj(data) {
+    if (_.isObject(data.body))
+        return data.body;
+    var tempData = data;
+    var x2js = new X2JS({
+        attributePrefix: 'none'
+    });
+    data = x2js.xml_str2json(tempData.body);
+    if (!data || data.parsererror)
+        data = JSON.parse(tempData.body)
+    return data;
+}
+
+function launchInitialPage(appInfo, $state) {
+    // Collection Mimetype check for the launching of the localdevlopment
+    if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
+        $state.go('playContent', {
+            'itemId': GlobalContext.game.id
+        });
+    } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
+        (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
+        if (!isbrowserpreview) {
+            // only for the LocalDevelopment we are showing the collection list
+            $state.go('contentList', {
+                "id": GlobalContext.game.id
+            });
+        } else {
+            console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
+        }
+    }
+}
+
+//Handling the logerror event from the Telemetry.js
+document.body.addEventListener("logError", telemetryError, false);
+
+function telemetryError(e) {
+    var $body = angular.element(document.body);
+    var $rootScope = $body.scope().$root;
+    document.body.removeEventListener("logError");
+}
+
 
 function startProgressBar(w, setInter) {
     jQuery("#progressBar").width(0);
@@ -44,7 +149,6 @@ function removeRecordingFiles(path) {
 
 function createCustomEvent(evtName, data) {
     var evt = new CustomEvent(evtName, data);
-    // window.dispatchEvent(evt);
 }
 
 function getUrlParameter(sParam) {

@@ -25,3 +25,31 @@ var AppErrors = {
 	contetnPathFetch: 'Error while fetching content path: ',
 	sendFeedbackStatus: 'Unable to send feedback event'
 };
+
+var AppLables = {
+    "languageCode": "en",
+    "home": "Home",
+    "title": "TITLE",
+    "submit": "SUBMIT",
+    "image": "Image",
+    "voice": "Voice",
+    "audio": "Audio",
+    "author": "Author",
+    "instructions": "Teacher's Note",
+    "replay": "Replay",
+    "feedback": "Feedback",
+    "noCreditsAvailable": "There are no credits available",
+    "congratulations": "Congratulations! You just completed",
+    "credit": "Credits",
+    "next": "Next",
+    "scores": "SCORES AND RATING",
+    "lastPage": "GO TO LAST PAGE",
+    "nextContent": "NEXT CONTENT",
+    "comment": "write your comment...",
+    "mute": "on",
+    "change": "change",
+    "group": "Group",
+    "child": "Child",
+    "groupFallbackText": "You have not created any group",
+    "userSwitcherTitle": "SELECT A CHILD OR A GROUP"
+}
