@@ -1,5 +1,6 @@
 player/www/
 player/docs/
+player/app-data/fixture-content-list.json
 web-player/node_modules
 *.todo
 dist/

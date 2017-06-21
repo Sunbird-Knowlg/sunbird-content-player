@@ -103,6 +103,9 @@ OverlayManager = {
     handleSubmit: function() {
         var eventName = this._constants.overlaySubmit;
         var val = this._stageConfig[eventName];
+        if(_.isUndefined(Renderer.theme.getParam(eventName)) && _.isUndefined(Renderer.theme._currentScene.getParam(eventName))) {
+            val = AppConfig.OVERLAY_SUBMIT;
+        }
         if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene) && Renderer.theme._currentScene.isItemScene()) {
             if (val == "on") {
                 var enableEval = Renderer.theme._currentScene.isReadyToEvaluate();
@@ -161,7 +164,7 @@ OverlayManager = {
         this.skipAndNavigateNext();
       }catch(e){
         showToaster('error','Current scene having some issue');
-        EkstepRendererAPI.logErrorEvent(e, {'severity':'fatal','type':'content','action':'transitionTo'}); 
+        EkstepRendererAPI.logErrorEvent(e, {'severity':'fatal','type':'content','action':'transitionTo'});
         console.warn("Fails to navigate to next due to",e);
       }
     },
@@ -185,7 +188,7 @@ OverlayManager = {
         }
       }catch(e){
         showToaster('error','Current scene having some issue');
-        EkstepRendererAPI.logErrorEvent(e, {'severity':'fatal','type':'content','action':'transitionTo'}); 
+        EkstepRendererAPI.logErrorEvent(e, {'severity':'fatal','type':'content','action':'transitionTo'});
         console.warn("Fails to skip and navigate due to",e);
       }
     },

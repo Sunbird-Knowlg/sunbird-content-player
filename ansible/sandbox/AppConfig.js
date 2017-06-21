@@ -10,5 +10,6 @@ AppConfig = {
 	S3_CONTENT_HOST: "/assets/public/content/",
 	PREVIEW_PLUGINSPATH: "/content-plugins",
 	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
+	OVERLAY_SUBMIT: "off",
 	apislug: '/action'
 }

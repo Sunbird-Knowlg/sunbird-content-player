@@ -10,6 +10,6 @@ AppConfig = {
 	telemetryApiAuth: {"username": "ZWtzdGVw", "password": "Z2VuaWU0Mg=="},
 	USER_SWITCHER_ENABLED: true,
 	SHOW_USER: true,
+	OVERLAY_SUBMIT: "off",
 	apislug: '/action'
 }
-

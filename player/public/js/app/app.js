@@ -59,7 +59,7 @@ window.initializePreview = function(configuration) {
     if (_.isUndefined(configuration.context.contentId)) {
         configuration.context.contentId = getUrlParameter("id")
     }
-    localStorage.clear();
+    localStorageGC.clear();
     AppConfig = _.extend(AppConfig, configuration.config)
     genieservice.api.setBaseUrl(AppConfig.host + AppConfig.apislug);
     window.previewData = configuration;
@@ -87,7 +87,7 @@ window.setContentData = function(metadata, data, configuration) {
     if (!config.showHTMLPages) {
         config.showEndPage = false;
     }
-    localStorage.clear();
+    localStorageGC.clear();
     if (data) {
         var object = {'config':configuration,'data':data,'metadata':metadata}
     }
@@ -955,7 +955,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     $scope.showOverlayPrevious = event.target;
                     break;
                 case "overlaySubmit":
-                    if (event.target === "off") {
+                        if (event.target === "off") {
                         $scope.showOverlaySubmit = false;
                     } else {
                         $scope.showOverlaySubmit = true;
@@ -1337,15 +1337,17 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 icon: '@'
             },
             restrict: 'E',
-            template: '<div ng-class="enableGenie ? \'icon-opacity genie-home\' : \'genie-home\'" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/><span> {{languageSupport.home}} </span></div>',
+            template: '<div ng-class="enableGenie ? \'genie-home\' : \'icon-opacity genie-home\'" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/><span> {{languageSupport.home}} </span></div>',
             /* above span will not be visible in the end page. To be handles oin css */
             link: function(scope) {
                 scope.languageSupport = $rootScope.languageSupport;
-                scope.enableGenie = ("undefined" == typeof cordova) ? true : false;
+                scope.enableGenie = ("undefined" == typeof cordova) ? false : true;
                 scope.imgSrc = $rootScope.imageBasePath + scope.icon
-                scope.goToGenie = function() {
-                    var pageId = $rootScope.pageId;
-                    exitApp(pageId);
+                if (scope.enableGenie) {
+                    scope.goToGenie = function() {
+                        var pageId = $rootScope.pageId;
+                        exitApp(pageId);
+                    }
                 }
             }
         }

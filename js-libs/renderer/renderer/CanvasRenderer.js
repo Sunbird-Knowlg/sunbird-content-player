@@ -126,6 +126,8 @@ Renderer = {
             if (p.src.substring(0, 4) != 'http') {
                 if (!isbrowserpreview) {
                     p.src = pluginPath + p.src;
+                }else{
+                   p.src = AppConfig.host + p.src;
                 }
             }
         });

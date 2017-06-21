@@ -23,7 +23,7 @@ LoadByStageStrategy = Class.extend({
                 if ((media) && (media.src)) {
                     if (media.src.substring(0, 4) != 'http') {
                         if (isbrowserpreview) {
-                            media.src = media.src;
+                            media.src = AppConfig.host + media.src;
                         } else {
                             media.src = basePath + media.src;
                         }

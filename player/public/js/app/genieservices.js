@@ -115,13 +115,13 @@ genieservice_portal = {
         languageBasePath: '/language/v3/',
         telemetryBasePath: '/data/v3/telemetry',
         getFullAPI: function() {
-            return this._baseUrl + this.contentBasePath;
+            return AppConfig.host + AppConfig.apislug + this.contentBasePath;
         },
         getLanguageFullAPI: function() {
-            return this._baseUrl + this.languageBasePath;
+            return AppConfig.host + AppConfig.apislug + this.languageBasePath;
         },
         getTelematyFullAPI: function(){
-            return this._baseUrl + this.telemetryBasePath;
+            return AppConfig.host + AppConfig.apislug + this.telemetryBasePath;
         },
         setBaseUrl: function(baseUrl){
            this._baseUrl = baseUrl;

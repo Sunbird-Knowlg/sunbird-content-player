@@ -9,5 +9,6 @@ AppConfig = {
 	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
 	USER_SWITCHER_ENABLED: true,
 	SHOW_USER: true,
-	apislug: '/action'
+	apislug: '/action',
+	OVERLAY_SUBMIT: "off"
 }

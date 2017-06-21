@@ -86,7 +86,7 @@ function exitApp(pageId) {
     } catch (err) {
         console.error('End telemetry error:', err.message);
     }
-    localStorage.clear();
+    localStorageGC.clear();
     localStorageGC = {};
     genieservice.endGenieCanvas();
 }
@@ -151,6 +151,7 @@ function objectAssign() {
 
 // GC - GenieCanvas
 var localStorageGC = {
+    name: 'canvasLS',
     isHtmlContent: false,
     isCollection: false,
     content: {},
@@ -183,11 +184,14 @@ var localStorageGC = {
         thisData.isCollection = this.isCollection;
         thisData.isHtmlContent = this.isHtmlContent;
 
-        localStorage.setItem("canvasLS", JSON.stringify(thisData));
+        localStorage.setItem(this.name, JSON.stringify(thisData));
+    },
+    clear: function() {
+        localStorage.removeItem(this.name);
     },
     update: function() {
         //gettting from localstorage and updating all its values
-        var lsData = localStorage.getItem("canvasLS");
+        var lsData = localStorage.getItem(this.name);
         if (lsData) {
             lsData = JSON.parse(lsData);
             var lsKeys = _.keys(lsData);
