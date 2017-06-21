@@ -115,6 +115,7 @@ var ItemController = Controller.extend({
             _.each(result.res, function(each) {
                 Object.assign(obj, each);
             });
+            if (typeof(item.responses) === "string") item.responses = JSON.parse(item.responses);
             _.each(item.responses, function(each){
                 // if(each.valus === obj)
                 var truthValue = compareObject(obj, each.values);
@@ -122,7 +123,7 @@ var ItemController = Controller.extend({
                     mmc = (each.mmc);
                 };
             });
-            return mmc;            
+            return mmc;
         } catch (e) {
             console.warn("Item controller failed due to", e);
             EkstepRendererAPI.logErrorEvent(e,{'type':'content','severity':'error','action':'eval','objectId':item.identifier,'objectType':'question'})
