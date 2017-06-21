@@ -123,7 +123,7 @@ Plugin.extend({
         try {
             PluginManager.loadPlugins(pluginManifest.plugin, resource, function() {
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
-                EkstepRendererAPI.dispatchEvent('renderer:init:endpage');
+                instance.initializeEndpage();
             });
         } catch (e) {
             console.warn("Framework fails to load plugins", e);
@@ -160,7 +160,10 @@ Plugin.extend({
             return media.type === 'css' || media.type === 'js' || media.type === 'plugin' || media.type === ' library';
         });
         return plugins;
-    }
+    },
+    initializeEndpage:function(){
+        EkstepRendererAPI.dispatchEvent('renderer:init:endpage');
+    },
 });
 
 //# sourceURL=ECMLRenderer.js

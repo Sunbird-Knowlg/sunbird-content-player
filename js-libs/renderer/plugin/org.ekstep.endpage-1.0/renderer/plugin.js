@@ -5,15 +5,16 @@
  * ref: http://ify.io/lazy-loading-in-angularjs/
  */
 
-PluginManager.registerPlugin('endpage', Plugin.extend({
+Plugin.extend({
     myApp: undefined,
     initialize: function() {
+        console.info('Endpage plugin is doing initialize....');
         EkstepRendererAPI.addEventListener('renderer:init:endpage', this.loadControllers, this);
     },
     loadControllers: function() {
-        var $body = angular.element(document.body);
+        /*var $body = angular.element(document.body);
         var $rootScope = $body.scope().$root;
-        $rootScope.content.name = 'Test Content Name';
+        $rootScope.content.name = 'Test Content Name';*/
         app.controllerProvider.register('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
             $scope.showFeedbackArea = true;
             $scope.commentModel = '';
@@ -235,9 +236,8 @@ PluginManager.registerPlugin('endpage', Plugin.extend({
                 template: '<div ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/><span> {{languageSupport.replay}} </span></div>',
                 link: function(scope) {
                     scope.restartContent = function() {
-                        console.info('i am calling')
-                        jQuery('#loading').hide();
                         $rootScope.replayContent();
+                        //Resetting mute state
                         var muteElement = document.getElementById("unmute_id");
                         if (!_.isNull(muteElement)) {
                             muteElement.style.display = "none";
@@ -296,4 +296,4 @@ PluginManager.registerPlugin('endpage', Plugin.extend({
             };
         })
     }
-}));
+})

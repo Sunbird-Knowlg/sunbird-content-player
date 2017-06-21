@@ -5,7 +5,7 @@ Plugin.extend({
     },
     launch: function(evt, data) {
         console.info('HTML plugin init')
-        this.showEndPage();
+        this.initializeEndpage();
         jQuery('#loading').hide();
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
@@ -37,7 +37,7 @@ Plugin.extend({
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
     },
-    showEndPage: function(){
+    initializeEndpage: function(){
          EkstepRendererAPI.dispatchEvent('renderer:init:endpage');
     },
 });
