@@ -1,4 +1,10 @@
-org.ekstep.service.web = {
+org.ekstep.service.web = new(org.ekstep.service.mainService.extend({
+    init:function(){
+        console.info('Web service init');
+    },
+    initialize:function(){
+        console.info("Web service intialize");
+    },
     api: {
         contentBasePath: '/content/v3/read/',
         languageBasePath: '/language/v3/',
@@ -166,4 +172,4 @@ org.ekstep.service.web = {
             window.location = "/" + pageUrl;
         }
     }
-};
+}));

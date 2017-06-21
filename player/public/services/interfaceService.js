@@ -1,4 +1,7 @@
-org.ekstep.service.content =  {
+org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
+            init:function(){
+              console.info('Interface service init');
+            },
             _SUPPORTED_MIMETYPES: ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.content-collection"],
             getContentList: function(filter, childrenIds) {
                 return new Promise(function(resolve, reject) {
@@ -225,4 +228,4 @@ org.ekstep.service.content =  {
                     });
                 });
             }
-}    
+}));    

@@ -4,6 +4,18 @@
 var renderer_services = function() {};
 window.org.ekstep.service = new renderer_services();
 renderer_services = undefined;
+
+org.ekstep.service.mainService = Class.extend({
+    init: function(config) {
+        this.initService(config);
+    },
+    initService: function(config) {},
+    initialize: function(){
+        console.info('main service is intialized');
+    }, 
+});
+
+/*org.ekstep.service.init should be part of rendrer-bootstarp.js*/
 org.ekstep.service.init = function() {
     if (typeof cordova == 'undefined') {
         if (typeof isbrowserpreview == 'undefined') {
@@ -20,6 +32,7 @@ org.ekstep.service.init = function() {
     }
 };
 
+/*TODO: Telemetry_web should be part of telemetryservice*/
 telemetry_web = {
     tList: [],
     send: function(string) {

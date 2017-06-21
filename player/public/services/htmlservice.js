@@ -1,8 +1,14 @@
-org.ekstep.service.html = {
+org.ekstep.service.html = new(org.ekstep.service.mainService.extend({
     localData: {},
     _jsFilesToLoad: [],
     _callback: undefined,
     _jsFileIndex: 0,
+    init:function(){
+        console.info('HTML service init');
+    },
+    initialize:function(){
+        console.info("html service intialize");
+    },
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
             if (org.ekstep.service.html.localData.user) {
@@ -98,4 +104,4 @@ org.ekstep.service.html = {
             window.location = "/" + pageUrl;
         }
     }
-};
+}));

@@ -1,4 +1,10 @@
-org.ekstep.service.local = {
+org.ekstep.service.local = new(org.ekstep.service.mainService.extend({
+    init:function(){
+        console.info('Local service init');
+    },
+    initialize:function(){
+        console.info("html service intialize");
+    },
     api: {
         basePath: '/genie-canvas/v2/',
         contentList: 'content/list',
@@ -98,4 +104,4 @@ org.ekstep.service.local = {
     setAPIEndpoint: function(endpoint) {
         return endpoint;
     }
-};
+}));
