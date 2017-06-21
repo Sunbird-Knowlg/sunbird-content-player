@@ -58,7 +58,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
                 $ionicPlatform.on("resume", function() {
                     Renderer.resume();
                 });
-                org.ekstep.services.rendererservice.getMetaData().then(function(data) {
+                org.ekstep.service.renderer.getMetaData().then(function(data) {
                     var flavor = data.flavor;
                     if (AppConfig[flavor] == undefined)
                         flavor = "sandbox";
@@ -71,7 +71,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                         org.ekstep.contentrenderer.device();
                     }
-                    org.ekstep.services.contentservices.getUsersList().then(function(data) {
+                    org.ekstep.service.content.getUsersList().then(function(data) {
                         $rootScope.users = data.data;
                     }).catch(function(err) {
                         reject(err);
@@ -213,7 +213,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
             org.ekstep.contentrenderer.progressbar(false)
             var collectionContentId = $stateParams.id;
             $rootScope.renderMessage("", 0);
-            org.ekstep.services.contentservices.getContent(collectionContentId)
+            org.ekstep.service.content.getContent(collectionContentId)
                 .then(function(content) {
                     GlobalContext.previousContentId = content.identifier;
                     if (!_.findWhere(collectionPath, {
@@ -251,7 +251,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
                         collectionChildrenIds = childrenIds;
                     collectionChildren = true;
                     var filter = (content.filter) ? JSON.parse(content.filter) : content.filter;
-                    return org.ekstep.services.contentservices.getContentList(filter, childrenIds);
+                    return org.ekstep.service.content.getContentList(filter, childrenIds);
                 })
                 .then(function(result) {
                     $rootScope.$apply(function() {
@@ -553,7 +553,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
                 });
             }
             // Check is content is downloaded or not in Genie.
-            org.ekstep.services.contentservices.getContentAvailability(content.identifier)
+            org.ekstep.service.content.getContentAvailability(content.identifier)
                 .then(function(contetnIsAvailable) {
                     if (contetnIsAvailable) {
                         // This is required to setup current content details which is going to play
@@ -587,7 +587,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
             window.open(deepLinkURL, "_system");
         }
         $scope.getRelatedContent = function(list) {
-            org.ekstep.services.contentservices.getRelatedContent(TelemetryService._user.uid, list)
+            org.ekstep.service.content.getRelatedContent(TelemetryService._user.uid, list)
                 .then(function(item) {
                     if (!_.isEmpty(item)) {
                         $scope.relatedContentItem = item;
@@ -687,14 +687,14 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
         // get userList process goes here
         $scope.getUsersList = function() {
             // get users api call gone here
-            org.ekstep.services.contentservices.getUsersList().then(function(data) {
+            org.ekstep.service.content.getUsersList().then(function(data) {
                 if (data.status === "success" && _.isUndefined($rootScope.users))
                     $rootScope.users = data.data;
                 $scope.groupLength = (_.where($rootScope.users, {
                     "group": true
                 })).length;
 
-                org.ekstep.services.contentservices.getCurrentUser().then(function(data) {
+                org.ekstep.service.content.getCurrentUser().then(function(data) {
                     if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
 
                     _.each($rootScope.users, function(user) {
@@ -749,7 +749,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
         }
 
         $scope.switchUser = function(replayContent) {
-            org.ekstep.services.contentservices.setCurrentUser($scope.selectedUser.uid).then(function(data) {
+            org.ekstep.service.content.setCurrentUser($scope.selectedUser.uid).then(function(data) {
                 if (data.status === "success" && !_.isEmpty($scope.selectedUser)) {
                     $rootScope.$apply(function() {
                         $rootScope.currentUser = $scope.selectedUser;

@@ -1,10 +1,10 @@
-org.ekstep.services.contentservices =  {
+org.ekstep.service.content =  {
             _SUPPORTED_MIMETYPES: ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.content-collection"],
             getContentList: function(filter, childrenIds) {
                 return new Promise(function(resolve, reject) {
-                    org.ekstep.services.contentservices._filterContentList(filter, childrenIds)
+                    org.ekstep.service.content._filterContentList(filter, childrenIds)
                         .then(function(result) {
-                            resolve(org.ekstep.services.contentservices._getAvailableContentList(result));
+                            resolve(org.ekstep.service.content._getAvailableContentList(result));
                         })
                         .catch(function(err) {
                             console.log(AppErrors.contentListFetch, err);
@@ -14,10 +14,10 @@ org.ekstep.services.contentservices =  {
             },
             getContent: function(id) {
                 return new Promise(function(resolve, reject) {
-                    org.ekstep.services.rendererservice.getContent(id)
+                    org.ekstep.service.renderer.getContent(id)
                         .then(function(item) {
                             if (item.isAvailable) {
-                                resolve(org.ekstep.services.contentservices._prepareContent(item));
+                                resolve(org.ekstep.service.content._prepareContent(item));
                             } else {
                                 reject("Content is not available.");
                             }
@@ -30,7 +30,7 @@ org.ekstep.services.contentservices =  {
             },
             getContentAvailability: function(id) {
                 return new Promise(function(resolve, reject) {
-                    org.ekstep.services.rendererservice.getContent(id)
+                    org.ekstep.service.renderer.getContent(id)
                        .then(function(contentData) {
                            if(!_.isUndefined(contentData)){
                                resolve(contentData.isAvailable);
@@ -47,7 +47,7 @@ org.ekstep.services.contentservices =  {
             },
             getRelatedContent: function(uid, list) {
                 return new Promise(function(resolve, reject) {
-                    org.ekstep.services.rendererservice.getRelatedContent(uid, list)
+                    org.ekstep.service.renderer.getRelatedContent(uid, list)
                         .then(function(item) {
                             if (item) {
                                 resolve(item);
@@ -64,7 +64,7 @@ org.ekstep.services.contentservices =  {
             // Get the Total Assessment score of particular user of particular content.
             getLearnerAssessment: function(uid, id) {
                 return new Promise(function(resolve, reject) {
-                    org.ekstep.services.rendererservice.getLearnerAssessment(uid, id)
+                    org.ekstep.service.renderer.getLearnerAssessment(uid, id)
                         .then(function(score) {
                             if (score)
                                 resolve(score);
@@ -75,7 +75,7 @@ org.ekstep.services.contentservices =  {
             },
             getContentBody: function(id, urlParams) {
                 return new Promise(function(resolve, reject) {
-                    org.ekstep.services.rendererservice.getContentBody(id, urlParams)
+                    org.ekstep.service.renderer.getContentBody(id, urlParams)
                         .then(function(body) {
                             resolve(body);
                         })
@@ -87,7 +87,7 @@ org.ekstep.services.contentservices =  {
             },
             getContentMetadata: function(id, urlParams) {
                 return new Promise(function(resolve, reject) {
-                    org.ekstep.services.rendererservice.getContentMetadata(id, urlParams)
+                    org.ekstep.service.renderer.getContentMetadata(id, urlParams)
                         .then(function(metadata) {
                             resolve(metadata);
                         })
@@ -130,7 +130,7 @@ org.ekstep.services.contentservices =  {
                                 if (childrenIds && childrenIds.length > 0) {
                                     _.each(childrenIds, function(childId) {
                                         promises.push(function(callback) {
-                                            org.ekstep.services.rendererservice.getContent(childId)
+                                            org.ekstep.service.renderer.getContent(childId)
                                                 .then(function(item) {
                                                     callback(null, item);
                                                 })
@@ -149,7 +149,7 @@ org.ekstep.services.contentservices =  {
                             })
                             .then(function() {
                                 if (filter) {
-                                    org.ekstep.services.rendererservice.getContentList(filter)
+                                    org.ekstep.service.renderer.getContentList(filter)
                                         .then(function(result) {
                                             list = _.union(list, result.list);
                                             returnResult(list);
@@ -168,7 +168,7 @@ org.ekstep.services.contentservices =  {
                         if ("undefined" != typeof cordova) {
                             returnResult(list, "Error while fetching filtered content: Empty Collection");
                         } else {
-                            org.ekstep.services.rendererservice.getContentList([])
+                            org.ekstep.service.renderer.getContentList([])
                                 .then(function(result) {
                                     returnResult(result.list);
                                 })
@@ -181,10 +181,10 @@ org.ekstep.services.contentservices =  {
             },
             _getAvailableContentList: function(list) {
                 list = _.filter(list, function(item) {
-                    return item.isAvailable && _.indexOf(org.ekstep.services.contentservices._SUPPORTED_MIMETYPES, item.mimeType) > -1;
+                    return item.isAvailable && _.indexOf(org.ekstep.service.content._SUPPORTED_MIMETYPES, item.mimeType) > -1;
                 });
                 list = _.map(list, function(item) {
-                    return org.ekstep.services.contentservices._prepareContent(item);
+                    return org.ekstep.service.content._prepareContent(item);
                 });
                 list = _.filter(list, function(data) {
                     return data.status == "ready";
@@ -193,7 +193,7 @@ org.ekstep.services.contentservices =  {
             },
              getUsersList: function() {
                 return new Promise(function(resolve, reject) {
-                    org.ekstep.services.rendererservice.getUsersList()
+                    org.ekstep.service.renderer.getUsersList()
                         .then(function(data) {
                             resolve(data);
                         })
@@ -207,7 +207,7 @@ org.ekstep.services.contentservices =  {
             },
             getCurrentUser: function() {
                 return new Promise(function(resolve, reject) {
-                    org.ekstep.services.rendererservice.getCurrentUser().then(function(data) {
+                    org.ekstep.service.renderer.getCurrentUser().then(function(data) {
                         resolve(data);
                     }).catch(function(err) {
                         console.error(AppErrors.contetnPathFetch, err);
@@ -217,7 +217,7 @@ org.ekstep.services.contentservices =  {
             },
             setCurrentUser: function(uid) {
                 return new Promise(function(resolve, reject) {
-                    org.ekstep.services.rendererservice.setCurrentUser(uid).then(function(data) {
+                    org.ekstep.service.renderer.setCurrentUser(uid).then(function(data) {
                         resolve(data);
                     }).catch(function(err) {
                         console.error(AppErrors.contetnPathFetch, err);

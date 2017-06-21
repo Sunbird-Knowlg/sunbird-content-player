@@ -1,4 +1,4 @@
-org.ekstep.services.web = {
+org.ekstep.service.web = {
     api: {
         contentBasePath: '/content/v3/read/',
         languageBasePath: '/language/v3/',
@@ -67,7 +67,7 @@ org.ekstep.services.web = {
     getContentBody: function(id, headersParam) {
         var instance = this;
         return new Promise(function(resolve, reject) {
-            instance.callApi(org.ekstep.services.web.api.getAPI() + id + "?fields=body", 'GET', headersParam, undefined, function(resp) {
+            instance.callApi(org.ekstep.service.web.api.getAPI() + id + "?fields=body", 'GET', headersParam, undefined, function(resp) {
                 var result = {};
                 if (!resp.error) {
                     result.list = resp;
@@ -94,7 +94,7 @@ org.ekstep.services.web = {
     getContentMetadata: function(id, headersParam) {
         var instance = this;
         return new Promise(function(resolve, reject) {
-            instance.callApi(org.ekstep.services.web.api.getAPI() + id, 'GET', headersParam, undefined, function(resp) {
+            instance.callApi(org.ekstep.service.web.api.getAPI() + id, 'GET', headersParam, undefined, function(resp) {
                 var result = {};
                 if (!resp.error) {
                     result.list = resp;
@@ -116,7 +116,7 @@ org.ekstep.services.web = {
         var instance = this;
         return new Promise(function(resolve, reject) {
             var headersParam = {};
-            instance.callApi(org.ekstep.services.web.api.getLanguageAPI() + "search", 'POST', headersParam, filter, function(resp) {
+            instance.callApi(org.ekstep.service.web.api.getLanguageAPI() + "search", 'POST', headersParam, filter, function(resp) {
                 var result = {};
                 if (!resp.error) {
                     result.list = resp;
@@ -131,7 +131,7 @@ org.ekstep.services.web = {
         var instance = this;
         return new Promise(function(resolve, reject) {
             headersParam['dataType'] = 'json';
-            instance.callApi(org.ekstep.services.web.api.getTelemetryAPI(), 'POST', headersParam, JSON.stringify(data), function(resp) {
+            instance.callApi(org.ekstep.service.web.api.getTelemetryAPI(), 'POST', headersParam, JSON.stringify(data), function(resp) {
                 var result = {};
                 if (!resp.error) {
                     result.data = resp;

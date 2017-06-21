@@ -8,7 +8,7 @@ window.previewData = {'context': {}, 'config': {} };
 org.ekstep.contentrenderer.init = function() {
     window.initializePreview = org.ekstep.contentrenderer.initializePreview;
     window.setContentData = org.ekstep.contentrenderer.setContent;
-    org.ekstep.services.init();
+    org.ekstep.service.init();
     console.info('Content renderer start');
 };
 org.ekstep.contentrenderer.setContent = function(metadata, data, configuration){

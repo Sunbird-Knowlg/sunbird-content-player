@@ -2,23 +2,24 @@
  * @author Manjunath Davanam <manjunathd@ilimi.in>
  */
 var renderer_services = function() {};
-window.org.ekstep.services = new renderer_services();
+window.org.ekstep.service = new renderer_services();
 renderer_services = undefined;
-org.ekstep.services.init = function() {
+org.ekstep.service.init = function() {
     if (typeof cordova == 'undefined') {
         if (typeof isbrowserpreview == 'undefined') {
             if (typeof AppConfig == 'undefined') {
-                org.ekstep.services.rendererservice = org.ekstep.services.htmlservice;
+                org.ekstep.service.renderer = org.ekstep.service.html;
             } else {
-                org.ekstep.services.rendererservice = org.ekstep.services.local;
+                org.ekstep.service.renderer = org.ekstep.service.local;
             }
         } else {
-            org.ekstep.services.rendererservice = org.ekstep.services.web;
+            org.ekstep.service.renderer = org.ekstep.service.web;
         }
     } else {
-        org.ekstep.services.rendererservice = genieservice;
+        org.ekstep.service.renderer = genieservice;
     }
 };
+
 telemetry_web = {
     tList: [],
     send: function(string) {

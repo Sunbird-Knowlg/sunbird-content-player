@@ -1,4 +1,4 @@
-org.ekstep.services.local = {
+org.ekstep.service.local = {
     api: {
         basePath: '/genie-canvas/v2/',
         contentList: 'content/list',
@@ -57,7 +57,7 @@ org.ekstep.services.local = {
             });
         } else {
             return new Promise(function(resolve, reject) {
-                    jQuery.post(org.ekstep.services.local.api.getContentList(), function(resp) {
+                    jQuery.post(org.ekstep.service.local.api.getContentList(), function(resp) {
                         var result = {};
                         if (!resp.error) {
                             result.list = resp;
@@ -76,7 +76,7 @@ org.ekstep.services.local = {
     },
     getContentList: function(filter) {
         return new Promise(function(resolve, reject) {
-            jQuery.post(org.ekstep.services.local.api.getContentList(), function(resp) {
+            jQuery.post(org.ekstep.service.local.api.getContentList(), function(resp) {
                     var result = {};
                     if (!resp.error) {
                         result.list = resp.content;

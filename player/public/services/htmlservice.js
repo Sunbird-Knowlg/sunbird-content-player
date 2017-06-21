@@ -1,12 +1,12 @@
-org.ekstep.services.htmlservice = {
+org.ekstep.service.html = {
     localData: {},
     _jsFilesToLoad: [],
     _callback: undefined,
     _jsFileIndex: 0,
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
-            if (org.ekstep.services.htmlservice.localData.user) {
-                var result = org.ekstep.services.htmlservice.localData.user;
+            if (org.ekstep.service.html.localData.user) {
+                var result = org.ekstep.service.html.localData.user;
                 resolve(result);
             } else {
                 reject("User data is not present in localData.")
@@ -15,50 +15,50 @@ org.ekstep.services.htmlservice = {
     },
     getContent: function(id) {
         return new Promise(function(resolve, reject) {
-            var result = _.findWhere(org.ekstep.services.htmlservice.localData.content, {
+            var result = _.findWhere(org.ekstep.service.html.localData.content, {
                 "identifier": id
             });
             resolve(result);
         });
     },
     getLocalData: function(callback) {
-        org.ekstep.services.htmlservice._callback = callback;
-        org.ekstep.services.htmlservice._jsFileIndex = 0;
-        org.ekstep.services.htmlservice._jsFilesToLoad = [];
-        org.ekstep.services.htmlservice._jsFilesToLoad.push({
+        org.ekstep.service.html._callback = callback;
+        org.ekstep.service.html._jsFileIndex = 0;
+        org.ekstep.service.html._jsFilesToLoad = [];
+        org.ekstep.service.html._jsFilesToLoad.push({
             "file": "test/content-list.json"
         });
-        org.ekstep.services.htmlservice._jsFilesToLoad.push({
+        org.ekstep.service.html._jsFilesToLoad.push({
             "file": "test/word-list.json",
             "id": "wordList"
         });
-        org.ekstep.services.htmlservice._jsFilesToLoad.push({
+        org.ekstep.service.html._jsFilesToLoad.push({
             "file": "test/user.json",
             "id": "user"
         });
-        org.ekstep.services.htmlservice.loadJsFilesSequentially();
+        org.ekstep.service.html.loadJsFilesSequentially();
     },
     loadJsFilesSequentially: function() {
-        if (org.ekstep.services.htmlservice._jsFilesToLoad[org.ekstep.services.htmlservice._jsFileIndex]) {
-            var fileObj = org.ekstep.services.htmlservice._jsFilesToLoad[org.ekstep.services.htmlservice._jsFileIndex];
+        if (org.ekstep.service.html._jsFilesToLoad[org.ekstep.service.html._jsFileIndex]) {
+            var fileObj = org.ekstep.service.html._jsFilesToLoad[org.ekstep.service.html._jsFileIndex];
             var fileToLoaded = fileObj.file;
             jQuery.getJSON(fileToLoaded, function(jsonResp) {
                 if (fileObj.id) {
                     var respObj = {};
                     respObj[fileObj.id] = jsonResp;
-                    _.extend(org.ekstep.services.htmlservice.localData, respObj);
+                    _.extend(org.ekstep.service.html.localData, respObj);
                 } else {
-                    _.extend(org.ekstep.services.htmlservice.localData, jsonResp);
+                    _.extend(org.ekstep.service.html.localData, jsonResp);
                 }
-                console.log("LocalData json loaded", org.ekstep.services.htmlservice.localData);
-                org.ekstep.services.htmlservice._jsFileIndex = org.ekstep.services.htmlservice._jsFileIndex + 1;
-                org.ekstep.services.htmlservice.loadJsFilesSequentially();
+                console.log("LocalData json loaded", org.ekstep.service.html.localData);
+                org.ekstep.service.html._jsFileIndex = org.ekstep.service.html._jsFileIndex + 1;
+                org.ekstep.service.html.loadJsFilesSequentially();
             });
         } else {
             console.log("js files load complete.");
-            if (org.ekstep.services.htmlservice._callback) {
+            if (org.ekstep.service.html._callback) {
                 console.log("local Files loaded successfully.");
-                org.ekstep.services.htmlservice._callback();
+                org.ekstep.service.html._callback();
             } else {
                 console.log("local Files loaded successfully. But no callback function");
             }
@@ -66,9 +66,9 @@ org.ekstep.services.htmlservice = {
     },
     languageSearch: function(filter) {
         return new Promise(function(resolve, reject) {
-            //var result = _.findWhere(org.ekstep.services.htmlservice.localData.languageSearch, {"filter": filter});
-            if (org.ekstep.services.htmlservice.localData.wordList) {
-                resolve(org.ekstep.services.htmlservice.localData.wordList);
+            //var result = _.findWhere(org.ekstep.service.html.localData.languageSearch, {"filter": filter});
+            if (org.ekstep.service.html.localData.wordList) {
+                resolve(org.ekstep.service.html.localData.wordList);
             } else {
                 reject("wordList data is not present in localData.")
             }
