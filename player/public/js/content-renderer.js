@@ -1,11 +1,10 @@
 var content_renderer = function() {};
 content_renderer.prototype._ = window._;
-window.previewData = {'context': {}, 'config': {} };
-window.initializePreview = org.ekstep.contentrenderer.init();
-window.setContentData = org.ekstep.contentrenderer.setContent();
 window.org.ekstep.contentrenderer = new content_renderer();
-
-org.ekstep.contentrenderer.init = function() {
+window.initializePreview = org.ekstep.contentrenderer.init;
+window.setContentData = org.ekstep.contentrenderer.setContent;
+window.previewData = {'context': {}, 'config': {} };
+org.ekstep.contentrenderer.init = function(configuration) {
     if (_.isUndefined(configuration.context)) {
         configuration.context = {};
     }
