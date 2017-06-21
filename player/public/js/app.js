@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'quiz' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
+var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
     .constant("appConstants", {
         "contentId": "contentId",
         "stateContentList": "contentList",
@@ -11,17 +11,13 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
         "statePlayContent": "playContent",
         "stateShowContentEnd": "showContentEnd"
     })
-    .run(function($rootScope, $ionicPlatform, $location, $timeout, $state, $stateParams, appConstants, ContentService, UserService) {
-
+    .run(function($rootScope, $ionicPlatform, $location, $timeout, $state, $stateParams, appConstants) {
         $rootScope.imageBasePath = "assets/icons/";
         $rootScope.enableEval = false;
         $rootScope.userSwitcherEnabled = undefined;
         $rootScope.showUser = undefined;
         $rootScope.sortingIndex = 0;
-
-        // $rootScope.currentUser = {};
         $rootScope.users = [];
-
         // serverPath and localPreview is a global variable defined in index.html file inside a story
         if ("undefined" != typeof localPreview && "local" == localPreview)
             $rootScope.imageBasePath = serverPath + $rootScope.imageBasePath;
@@ -36,100 +32,8 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
                 this.$apply(fn);
             }
         };
-        $rootScope.getContentMetadata = function(id, cb) {
-            ContentService.getContent(id)
-                .then(function(data) {
-                    $rootScope.setContentMetadata(data);
-                    if (!_.isUndefined(cb)) {
-                        cb(data);
-                    }
-                })
-                .catch(function(err) {
-                    console.info("contentNotAvailable : ", err);
-                    contentNotAvailable(err);
-                });
-        };
-        $rootScope.getDataforPortal = function(id) {
-            var configuration = EkstepRendererAPI.getPreviewData();
-            var headers = $rootScope.getUrlParameter();
-            if (!_.isUndefined(configuration.context.authToken)) {
-                headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
-            }
-            ContentService.getContentMetadata(id, headers)
-                .then(function(data) {
-                    $rootScope.setContentMetadata(data);
-                })
-                .catch(function(err) {
-                    console.info("contentNotAvailable : ", err);
-                    contentNotAvailable(err);
-                });
-        };
-        $rootScope.setContentMetadata = function(contentData) {
-            var data = _.clone(contentData);
-            content["metadata"] = data;
-            GlobalContext.currentContentId = data.identifier;
-            GlobalContext.currentContentMimeType = data.mimeType;
-            if (_.isUndefined(data.localData)) {
-                data.localData = _.clone(contentData);
-            } else {
-                data = data.localData;
-            }
-            $rootScope.safeApply(function() {
-                $rootScope.content = data;
-            });
-            if ("undefined" == typeof cordova) {
-                $rootScope.getContentBody(content.metadata.identifier);
-            }
-        };
-        $rootScope.getUrlParameter = function() {
-            var urlParams = decodeURIComponent(window.location.search.substring(1)).split('&');
-            var i = urlParams.length;
-            while (i--) {
-                if ((urlParams[i].indexOf('webview') >= 0) || (urlParams[i].indexOf('id') >= 0)) {
-                    urlParams.splice(i, 1)
-                } else {
-                    urlParams[i] = urlParams[i].split("=");
-                }
-            }
-            return (_.object(urlParams))
-        }
-        $rootScope.getContentBody = function(id) {
-            var configuration = EkstepRendererAPI.getPreviewData();
-            var headers = $rootScope.getUrlParameter();
-            if (!_.isUndefined(configuration.context.authToken)) {
-                headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
-            }
-            ContentService.getContentBody(id, headers).then(function(data) {
-                    content["body"] = data.body;
-                    launchInitialPage(content.metadata, $state);
-                })
-                .catch(function(err) {
-                    console.info("contentNotAvailable : ", err);
-                    contentNotAvailable(err);
-                });
-        };
-
-        $rootScope.deviceRendrer = function() {
-            if ($state.current.name == appConstants.stateShowContentEnd) {
-                $rootScope.$broadcast("loadEndPage");
-            } else {
-                if (isMobile) {
-                    $rootScope.getContentMetadata(GlobalContext.game.id, function() {
-                        $state.go('playContent', {
-                            'itemId': $rootScope.content.identifier
-                        });
-                    });
-                } else {
-                    launchInitialPage(GlobalContext.config.appInfo, $state);
-                }
-            }
-        };
-
         $timeout(function() {
             $ionicPlatform.ready(function() {
-                // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-                // for form inputs)
-                //appState = $state;
                 isMobile = window.cordova ? true : false,
                     console.log('ionic platform is ready...');
                 if ("undefined" == typeof Promise) {
@@ -154,7 +58,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
                 $ionicPlatform.on("resume", function() {
                     Renderer.resume();
                 });
-                genieservice.getMetaData().then(function(data) {
+                org.ekstep.services.rendererservice.getMetaData().then(function(data) {
                     var flavor = data.flavor;
                     if (AppConfig[flavor] == undefined)
                         flavor = "sandbox";
@@ -165,12 +69,11 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
                         return;
                     if (!isbrowserpreview) {
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
-                        $rootScope.deviceRendrer();
+                        org.ekstep.contentrenderer.device();
                     }
-                    UserService.getUsersList().then(function(data) {
+                    org.ekstep.services.contentservices.getUsersList().then(function(data) {
                         $rootScope.users = data.data;
                     }).catch(function(err) {
-                        // show toast message
                         reject(err);
                     });
                 }).catch(function(res) {
@@ -186,7 +89,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
             });
 
         });
-
     }).config(function($stateProvider, $urlRouterProvider,$controllerProvider,$compileProvider) {
         app.controllerProvider = $controllerProvider;
         app.compileProvider    = $compileProvider;
@@ -209,19 +111,17 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
             })
-
-    }).controller('BaseCtrl', function($scope, $rootScope, $state, $stateParams, ContentService, appConstants, UserService) {
+    }).controller('BaseCtrl', function($scope, $rootScope, $state, $stateParams, appConstants) {
         $rootScope.replayContent = function() {
             $scope.endContent('gc_replay');
             $scope.startContent();
         }
-
         $scope.endContent = function(eleId) {
             if (!$rootScope.content) {
-                $rootScope.getContentMetadata($stateParams.itemId);
+                org.ekstep.contentrenderer.getContentMetadata($stateParams.itemId);
             }
             $rootScope.pageTitle = $rootScope.content.name;
-            startProgressBar(40, 0.6);
+            org.ekstep.contentrenderer.progressbar(true);
             if (Renderer.theme) {
                 TelemetryService.interact("TOUCH", eleId, "TOUCH", {
                     stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
@@ -237,7 +137,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
                 'menuReplay': menuReplay
             }) : TelemetryService.end();
         }
-
         $scope.startContent = function() {
             if ($state.current.name == appConstants.stateShowContentEnd) {
                 $state.go(appConstants.statePlayContent, {
@@ -245,13 +144,11 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
                 });
             }
         }
-
         $rootScope.us_replayContent = function() {
             $scope.endContent('gc_userswitch_replayContent');
             TelemetryService.setUser($rootScope.currentUser);
             $scope.startContent();
         }
-
         $rootScope.us_continueContent = function() {
             var gameId = TelemetryService.getGameId();
             var version = TelemetryService.getGameVer();;
@@ -266,12 +163,11 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
             data.mode = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
             TelemetryService.start(gameId, version, data);
         }
-
         EkstepRendererAPI.addEventListener("event:loadContent", function() {
             var configuration = EkstepRendererAPI.getPreviewData();
             content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
             if (_.isUndefined(configuration.data)) {
-                $rootScope.getDataforPortal(configuration.context.contentId);
+               org.ekstep.contentrenderer.web(configuration.context.contentId);
             } else {
                 content.body = configuration.data;
                 console.info("Content id is undefined or body is available !!");
@@ -279,8 +175,8 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
                 updateContentData($state, content.metadata.identifier)
             }
         }, this);
-    }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
-        // This will be appear only for the localdevlopment
+    }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams) {
+       /* contentListCtrl for the localDevelopment*/
         $rootScope.pageId = 'ContentApp-Collection';
         $scope.version = GlobalContext.game.ver;
         $scope.flavor = GlobalContext.config.flavor;
@@ -314,10 +210,10 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
         }
 
         $scope.resetContentListCache = function() {
-            jQuery('#loading').hide();
+            org.ekstep.contentrenderer.progressbar(false)
             var collectionContentId = $stateParams.id;
             $rootScope.renderMessage("", 0);
-            ContentService.getContent(collectionContentId)
+            org.ekstep.services.contentservices.getContent(collectionContentId)
                 .then(function(content) {
                     GlobalContext.previousContentId = content.identifier;
                     if (!_.findWhere(collectionPath, {
@@ -355,7 +251,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
                         collectionChildrenIds = childrenIds;
                     collectionChildren = true;
                     var filter = (content.filter) ? JSON.parse(content.filter) : content.filter;
-                    return ContentService.getContentList(filter, childrenIds);
+                    return org.ekstep.services.contentservices.getContentList(filter, childrenIds);
                 })
                 .then(function(result) {
                     $rootScope.$apply(function() {
@@ -412,10 +308,8 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
             $rootScope.title = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.name : "";
             $scope.resetContentListCache();
         };
-
         $scope.init();
-
-    }).controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
+    }).controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams) {
         $rootScope.pageId = "ContentApp-Renderer";
         $scope.init = function() {
             if (_.isUndefined($rootScope.content)) {
@@ -438,7 +332,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
             if ($stateParams.itemId && $rootScope.content) {
                 localStorageGC.setItem("content", $rootScope.content);
                 $rootScope.pageTitle = $rootScope.content.name;
-                startProgressBar(40, 0.6);
+                org.ekstep.contentrenderer.progressbar(true);
                 GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
                 $scope.callStartTelemetry($rootScope.content, function() {
                     $scope.item = $rootScope.content;
@@ -453,10 +347,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
             }
 
         }
-        $scope.gotToEndPage = function() {
-            $state.go('showEndPage', {});
-        }
-
         $scope.reloadStage = function() {
             reloadStage();
         }
@@ -485,8 +375,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
         setTimeout(function() {
             $scope.init();
         }, 0);
-
-
     }).controller('OverlayCtrl', function($scope, $rootScope, $stateParams) {
         $rootScope.isItemScene = false;
         $rootScope.menuOpened = false;
@@ -523,7 +411,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
         $scope.navigate = function(navType) {
             if (!$rootScope.content) {
                 // if $rootScope.content is not available get it from the base controller
-                $rootScope.getContentMetadata($stateParams.itemId);
+                org.ekstep.contentrenderer.getContentMetadata($stateParams.itemId);
             }
             GlobalContext.currentContentId = $rootScope.content.identifier;
             GlobalContext.currentContentMimeType = $rootScope.content.mimeType;
@@ -621,18 +509,14 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
         }
 
         $scope.init();
-    }).controller('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams, ContentService) {
+    }).controller('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams) {
         $scope.showRelatedContent = false;
         $scope.contentShowMore = false;
         $scope.showRelatedContentHeader = true;
         $scope.relatedContents = [];
         $scope.relatedContentPath = [];
         $scope.collectionTree = undefined;
-
         $scope.playRelatedContent = function(content, index) {
-            // $scope.showRelatedContent = false;
-            // $scope.contentShowMore = false;
-            // $scope.showRelatedContentHeader = false;
             var contentId = [];
             collectionPath = $scope.relatedContentPath;
             var eleId = "gc_nextcontent";
@@ -669,11 +553,11 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
                 });
             }
             // Check is content is downloaded or not in Genie.
-            ContentService.getContentAvailability(content.identifier)
+            org.ekstep.services.contentservices.getContentAvailability(content.identifier)
                 .then(function(contetnIsAvailable) {
                     if (contetnIsAvailable) {
                         // This is required to setup current content details which is going to play
-                        $rootScope.getContentMetadata(content.identifier, function() {
+                        org.ekstep.contentrenderer.getContentMetadata(content.identifier, function() {
                             if ($scope.collectionTree) {
                                 GlobalContext.game.contentExtras = contentExtras;
                                 localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
@@ -703,7 +587,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
             window.open(deepLinkURL, "_system");
         }
         $scope.getRelatedContent = function(list) {
-            ContentService.getRelatedContent(TelemetryService._user.uid, list)
+            org.ekstep.services.contentservices.getRelatedContent(TelemetryService._user.uid, list)
                 .then(function(item) {
                     if (!_.isEmpty(item)) {
                         $scope.relatedContentItem = item;
@@ -763,9 +647,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
         $scope.$on('getRelatedContentEvent', function(event) {
             $scope.init();
         });
-
-    }).controller('userSwitchCtrl', ['$scope', '$rootScope', '$state', '$stateParams', 'UserService', function($scope, $rootScope, $state, $stateParams, UserService) {
-        // $scope.languageSupport = $rootScope.languageSupport;
+    }).controller('userSwitchCtrl', ['$scope', '$rootScope', '$state', '$stateParams', function($scope, $rootScope, $state, $stateParams) {
         $scope.groupLength = undefined;
         $scope.selectedUser = {};
         $scope.showUserSwitchModal = false;
@@ -805,14 +687,14 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
         // get userList process goes here
         $scope.getUsersList = function() {
             // get users api call gone here
-            UserService.getUsersList().then(function(data) {
+            org.ekstep.services.contentservices.getUsersList().then(function(data) {
                 if (data.status === "success" && _.isUndefined($rootScope.users))
                     $rootScope.users = data.data;
                 $scope.groupLength = (_.where($rootScope.users, {
                     "group": true
                 })).length;
 
-                UserService.getCurrentUser().then(function(data) {
+                org.ekstep.services.contentservices.getCurrentUser().then(function(data) {
                     if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
 
                     _.each($rootScope.users, function(user) {
@@ -867,7 +749,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
         }
 
         $scope.switchUser = function(replayContent) {
-            UserService.setCurrentUser($scope.selectedUser.uid).then(function(data) {
+            org.ekstep.services.contentservices.setCurrentUser($scope.selectedUser.uid).then(function(data) {
                 if (data.status === "success" && !_.isEmpty($scope.selectedUser)) {
                     $rootScope.$apply(function() {
                         $rootScope.currentUser = $scope.selectedUser;
@@ -927,7 +809,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
 
             $scope.getUsersList();
         }
-
     }]).directive('menu', function($rootScope, $sce) {
         return {
             restrict: 'E',
@@ -992,7 +873,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
                 }
                 EkstepRendererAPI.muteAudio();
                 scope.toggleMute = function() {
-                    if (AudioManager.muted) {
+                    if (EkstepRendererAPI.isMuted) {
                         EkstepRendererAPI.unMuteAudio();
                         scope.muteImg = $rootScope.imageBasePath + "audio_icon.png";
                         $rootScope.languageSupport.mute = "on";
@@ -1001,7 +882,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.se
                         scope.muteImg = $rootScope.imageBasePath + "audio_mute_icon.png";
                         $rootScope.languageSupport.mute = "off";
                     }
-                    TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute", "TOUCH", {
+                    TelemetryService.interact("TOUCH", EkstepRendererAPI.muted ? "gc_mute" : "gc_unmute", "TOUCH", {
                         stageId: Renderer.theme._currentStage
                     });
                 }

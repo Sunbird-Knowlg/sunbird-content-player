@@ -15,7 +15,7 @@ Plugin.extend({
         /*var $body = angular.element(document.body);
         var $rootScope = $body.scope().$root;
         $rootScope.content.name = 'Test Content Name';*/
-        app.controllerProvider.register('EndPageCtrl', function($scope, $rootScope, $state, ContentService, $stateParams) {
+        app.controllerProvider.register('EndPageCtrl', function($scope, $rootScope, $state, $stateParams) {
             $scope.showFeedbackArea = true;
             $scope.commentModel = '';
             $scope.showFeedbackPopup = false;

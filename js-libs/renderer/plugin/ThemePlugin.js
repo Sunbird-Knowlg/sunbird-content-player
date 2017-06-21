@@ -137,9 +137,7 @@ var ThemePlugin = Plugin.extend({
             this.invokeStage(this._data.startStage);
         }
         this.update();
-        //document.getElementById("progressBar").style.width = 100 + '%';
-        jQuery("#progressBar").width(100);
-        jQuery('#loading').hide();
+        org.ekstep.contentrenderer.progressbar(false)
         jQuery('#overlay').show();
     },
 

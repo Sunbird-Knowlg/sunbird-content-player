@@ -4,12 +4,10 @@ var packageName = "org.ekstep.quiz.app",
     geniePackageName = "org.ekstep.genieservices",
     currentUser = {},
     userList = [],
-
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
-    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive"
-
-var stack = new Array(),
+    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive",
+    stack = new Array(),
     collectionChildrenIds = new Array(),
     collectionPath = new Array(),
     collectionPathMap = {},
@@ -19,52 +17,6 @@ var stack = new Array(),
     config = {showEndPage: true, showHTMLPages: true }, 
     isbrowserpreview = getUrlParameter("webview")
     isCoreplugin = undefined;
-window.previewData = {'context': {}, 'config': {} };
-window.initializePreview = function(configuration) {
-    if (_.isUndefined(configuration.context)) {
-        configuration.context = {};
-    }
-    if (_.isUndefined(configuration.config)) {
-        configuration.config = {};
-    }
-    if (_.isUndefined(configuration.context.contentId)) {
-        configuration.context.contentId = getUrlParameter("id")
-    }
-    localStorageGC.clear();
-    AppConfig = _.extend(AppConfig, configuration.config)
-    window.previewData = configuration;
-    configuration.config.repos && configuration.config.plugins && EkstepRendererAPI.dispatchEvent("repo:intialize");
-    EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
-    addWindowUnloadEvent();
-    EkstepRendererAPI.dispatchEvent("event:loadContent");
-
-}
-window.setContentData = function(metadata, data, configuration) {
-    if (_.isUndefined(metadata) || _.isNull(metadata)) {
-        content.metadata = defaultMetadata
-    } else {
-        content.metadata = metadata;
-    }
-    if (!_.isUndefined(data)) {
-        content.body = data;
-    }
-    _.map(configuration, function(val, key) {
-        config[key] = val;
-    });
-    if (!config.showHTMLPages) {
-        config.showEndPage = false;
-    }
-    localStorageGC.clear();
-    if (data) {
-        var object = {
-            'config': configuration,
-            'data': data,
-            'metadata': metadata
-        }
-    }
-    window.initializePreview(object);
-}
-
 function updateContentData($state, contentId) {
     if (_.isUndefined($state)) {
         console.error("updateContentData($state) - $state is not defined.");
@@ -88,26 +40,19 @@ function getContentObj(data) {
     return data;
 }
 
-function launchInitialPage(appInfo, $state) {
+function launchInitialPage(appInfo) {
     // Collection Mimetype check for the launching of the localdevlopment
     if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-        $state.go('playContent', {
-            'itemId': GlobalContext.game.id
-        });
+       window.location.hash = "/play/content/" + GlobalContext.game.id;
     } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
         (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
         if (!isbrowserpreview) {
-            // only for the LocalDevelopment we are showing the collection list
-            $state.go('contentList', {
-                "id": GlobalContext.game.id
-            });
+             window.location.hash = "/content/list/" + GlobalContext.game.id
         } else {
             console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
         }
     }
 }
-
-//Handling the logerror event from the Telemetry.js
 document.body.addEventListener("logError", telemetryError, false);
 
 function telemetryError(e) {
@@ -115,27 +60,6 @@ function telemetryError(e) {
     var $rootScope = $body.scope().$root;
     document.body.removeEventListener("logError");
 }
-
-
-function startProgressBar(w, setInter) {
-    jQuery("#progressBar").width(0);
-    jQuery('#loading').show();
-    var elem = document.getElementById("progressBar");
-    var width = w ? w : 20;
-    var id = setInterval(frame, setInter ? setInter : 0.7);
-
-    function frame() {
-        if (width >= 100) {
-            clearInterval(id);
-        } else {
-            width++;
-            if (elem && elem.style)
-                elem.style.width = width + '%';
-            jQuery('#progressCount').text(width + '%');
-        }
-    }
-}
-
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
         $cordovaFile.removeFile(cordova.file.dataDirectory, path)
@@ -176,7 +100,7 @@ function backbuttonPressed(pageId) {
     if (pageId == "coverpage") {
         TelemetryService.end();
     }
-    AudioManager.stopAll();
+    EkstepRendererAPI.stopAll();
 }
 
 // TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
@@ -192,7 +116,7 @@ function exitApp(pageId) {
     }
     localStorageGC.clear();
     localStorageGC = {};
-    genieservice.endGenieCanvas();
+    org.ekstep.services.rendererservice.endGenieCanvas();
 }
 
 function startApp(app) {
