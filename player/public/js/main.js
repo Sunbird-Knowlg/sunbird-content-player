@@ -86,25 +86,19 @@ function getContentObj(data) {
     return data;
 }
 
-function launchInitialPage(appInfo, $state) {
+function launchInitialPage(appInfo) {
     // Collection Mimetype check for the launching of the localdevlopment
     if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-        $state.go('playContent', {
-            'itemId': GlobalContext.game.id
-        });
+       window.location.hash = "/play/content/" + GlobalContext.game.id;
     } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
         (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
         if (!isbrowserpreview) {
-            // only for the LocalDevelopment we are showing the collection list
-            $state.go('contentList', {
-                "id": GlobalContext.game.id
-            });
+             window.location.hash = "/content/list/" + GlobalContext.game.id
         } else {
             console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
         }
     }
 }
-
 //Handling the logerror event from the Telemetry.js
 document.body.addEventListener("logError", telemetryError, false);
 
@@ -113,27 +107,6 @@ function telemetryError(e) {
     var $rootScope = $body.scope().$root;
     document.body.removeEventListener("logError");
 }
-
-
-function startProgressBar(w, setInter) {
-    jQuery("#progressBar").width(0);
-    jQuery('#loading').show();
-    var elem = document.getElementById("progressBar");
-    var width = w ? w : 20;
-    var id = setInterval(frame, setInter ? setInter : 0.7);
-
-    function frame() {
-        if (width >= 100) {
-            clearInterval(id);
-        } else {
-            width++;
-            if (elem && elem.style)
-                elem.style.width = width + '%';
-            jQuery('#progressCount').text(width + '%');
-        }
-    }
-}
-
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
         $cordovaFile.removeFile(cordova.file.dataDirectory, path)

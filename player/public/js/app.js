@@ -32,95 +32,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
                 this.$apply(fn);
             }
         };
-        $rootScope.getContentMetadata = function(id, cb) {
-            org.ekstep.services.contentservices.getContent(id)
-                .then(function(data) {
-                    $rootScope.setContentMetadata(data);
-                    if (!_.isUndefined(cb)) {
-                        cb(data);
-                    }
-                })
-                .catch(function(err) {
-                    console.info("contentNotAvailable : ", err);
-                    contentNotAvailable(err);
-                });
-        };
-        $rootScope.getDataforPortal = function(id) {
-            var configuration = EkstepRendererAPI.getPreviewData();
-            var headers = $rootScope.getUrlParameter();
-            if (!_.isUndefined(configuration.context.authToken)) {
-                headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
-            }
-            org.ekstep.services.contentservices.getContentMetadata(id, headers)
-                .then(function(data) {
-                    $rootScope.setContentMetadata(data);
-                })
-                .catch(function(err) {
-                    console.info("contentNotAvailable : ", err);
-                    contentNotAvailable(err);
-                });
-        };
-        $rootScope.setContentMetadata = function(contentData) {
-            var data = _.clone(contentData);
-            content["metadata"] = data;
-            GlobalContext.currentContentId = data.identifier;
-            GlobalContext.currentContentMimeType = data.mimeType;
-            if (_.isUndefined(data.localData)) {
-                data.localData = _.clone(contentData);
-            } else {
-                data = data.localData;
-            }
-            $rootScope.safeApply(function() {
-                $rootScope.content = data;
-            });
-            if ("undefined" == typeof cordova) {
-                $rootScope.getContentBody(content.metadata.identifier);
-            }
-        };
-        $rootScope.getUrlParameter = function() {
-            var urlParams = decodeURIComponent(window.location.search.substring(1)).split('&');
-            var i = urlParams.length;
-            while (i--) {
-                if ((urlParams[i].indexOf('webview') >= 0) || (urlParams[i].indexOf('id') >= 0)) {
-                    urlParams.splice(i, 1)
-                } else {
-                    urlParams[i] = urlParams[i].split("=");
-                }
-            }
-            return (_.object(urlParams))
-        }
-        $rootScope.getContentBody = function(id) {
-            var configuration = EkstepRendererAPI.getPreviewData();
-            var headers = $rootScope.getUrlParameter();
-            if (!_.isUndefined(configuration.context.authToken)) {
-                headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
-            }
-            org.ekstep.services.contentservices.getContentBody(id, headers).then(function(data) {
-                    content["body"] = data.body;
-                    launchInitialPage(content.metadata, $state);
-                })
-                .catch(function(err) {
-                    console.info("contentNotAvailable : ", err);
-                    contentNotAvailable(err);
-                });
-        };
-
-        $rootScope.deviceRendrer = function() {
-            if ($state.current.name == appConstants.stateShowContentEnd) {
-                $rootScope.$broadcast("loadEndPage");
-            } else {
-                if (isMobile) {
-                    $rootScope.getContentMetadata(GlobalContext.game.id, function() {
-                        $state.go('playContent', {
-                            'itemId': $rootScope.content.identifier
-                        });
-                    });
-                } else {
-                    launchInitialPage(GlobalContext.config.appInfo, $state);
-                }
-            }
-        };
-
         $timeout(function() {
             $ionicPlatform.ready(function() {
                 isMobile = window.cordova ? true : false,
@@ -158,7 +69,8 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
                         return;
                     if (!isbrowserpreview) {
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
-                        $rootScope.deviceRendrer();
+                        org.ekstep.contentrenderer.device();
+                        /*$rootScope.deviceRendrer();*/
                     }
                     org.ekstep.services.contentservices.getUsersList().then(function(data) {
                         $rootScope.users = data.data;
@@ -208,10 +120,10 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
         }
         $scope.endContent = function(eleId) {
             if (!$rootScope.content) {
-                $rootScope.getContentMetadata($stateParams.itemId);
+                org.ekstep.contentrenderer.getContentMetadata($stateParams.itemId);
             }
             $rootScope.pageTitle = $rootScope.content.name;
-            startProgressBar(40, 0.6);
+            org.ekstep.contentrenderer.progressbar(true);
             if (Renderer.theme) {
                 TelemetryService.interact("TOUCH", eleId, "TOUCH", {
                     stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
@@ -257,7 +169,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
             var configuration = EkstepRendererAPI.getPreviewData();
             content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
             if (_.isUndefined(configuration.data)) {
-                $rootScope.getDataforPortal(configuration.context.contentId);
+               org.ekstep.contentrenderer.web(configuration.context.contentId);
             } else {
                 content.body = configuration.data;
                 console.info("Content id is undefined or body is available !!");
@@ -300,7 +212,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
         }
 
         $scope.resetContentListCache = function() {
-            jQuery('#loading').hide();
+            org.ekstep.contentrenderer.progressbar(false)
             var collectionContentId = $stateParams.id;
             $rootScope.renderMessage("", 0);
             org.ekstep.services.contentservices.getContent(collectionContentId)
@@ -423,7 +335,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
             if ($stateParams.itemId && $rootScope.content) {
                 localStorageGC.setItem("content", $rootScope.content);
                 $rootScope.pageTitle = $rootScope.content.name;
-                startProgressBar(40, 0.6);
+                org.ekstep.contentrenderer.progressbar(true);
                 GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
                 $scope.callStartTelemetry($rootScope.content, function() {
                     $scope.item = $rootScope.content;
@@ -502,7 +414,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
         $scope.navigate = function(navType) {
             if (!$rootScope.content) {
                 // if $rootScope.content is not available get it from the base controller
-                $rootScope.getContentMetadata($stateParams.itemId);
+                org.ekstep.contentrenderer.getContentMetadata($stateParams.itemId);
             }
             GlobalContext.currentContentId = $rootScope.content.identifier;
             GlobalContext.currentContentMimeType = $rootScope.content.mimeType;
@@ -648,7 +560,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
                 .then(function(contetnIsAvailable) {
                     if (contetnIsAvailable) {
                         // This is required to setup current content details which is going to play
-                        $rootScope.getContentMetadata(content.identifier, function() {
+                        org.ekstep.contentrenderer.getContentMetadata(content.identifier, function() {
                             if ($scope.collectionTree) {
                                 GlobalContext.game.contentExtras = contentExtras;
                                 localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);

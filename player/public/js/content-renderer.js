@@ -1,51 +1,18 @@
+/**
+ * @author Manjunath Davanam <manjunathd@ilimi.in>
+ */
+
 var content_renderer = function() {};
 content_renderer.prototype._ = window._;
 window.org.ekstep.contentrenderer = new content_renderer();
-window.initializePreview = org.ekstep.contentrenderer.initializePreview;
-window.setContentData = org.ekstep.contentrenderer.setContent;
-window.previewData = {'context': {}, 'config': {} };
-org.ekstep.contentrenderer.init = function(){
+window.previewData = {'context': {}, 'config': {} }; 
+org.ekstep.contentrenderer.init = function() {
+    window.initializePreview = org.ekstep.contentrenderer.initializePreview;
+    window.setContentData = org.ekstep.contentrenderer.setContent;
     org.ekstep.services.init();
-   /* org.ekstep.contentrenderer.progressbar(true);*/
-    /*org.ekstep.contentrenderer.getMetadata();*/
-
-};
-org.ekstep.contentrenderer.init();
-org.ekstep.contentrenderer.getcontentMetadata = function(id, cb) {
-    ContentService.getContent(id)
-        .then(function(data) {
-            org.ekstep.contentrenderer.setContentMetadata(data);
-            if (!_.isUndefined(cb)) {
-                cb(data);
-            }
-        })
-        .catch(function(err) {
-            console.info("contentNotAvailable : ", err);
-            contentNotAvailable(err);
-        });
-};
-org.ekstep.contentrenderer.setContentMetadata = function(meta){
-
-};
-org.ekstep.contentrenderer.initializePreview = function(configuration) {
-    if (_.isUndefined(configuration.context)) {
-        configuration.context = {};
-    }
-    if (_.isUndefined(configuration.config)) {
-        configuration.config = {};
-    }
-    if (_.isUndefined(configuration.context.contentId)) {
-        configuration.context.contentId = getUrlParameter("id")
-    }
-    localStorageGC.clear();
-    AppConfig = _.extend(AppConfig, configuration.config)
-    window.previewData = configuration;
-    configuration.config.repos && configuration.config.plugins && EkstepRendererAPI.dispatchEvent("repo:intialize");
-    EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
-    addWindowUnloadEvent();
-    EkstepRendererAPI.dispatchEvent("event:loadContent");
-};
-org.ekstep.contentrenderer.setContentData = function(metadata, data, configuration) {
+    console.info('Content renderer start');
+}
+org.ekstep.contentrenderer.setContent = function(metadata, data, configuration){
     if (_.isUndefined(metadata) || _.isNull(metadata)) {
         content.metadata = defaultMetadata
     } else {
@@ -68,9 +35,26 @@ org.ekstep.contentrenderer.setContentData = function(metadata, data, configurati
             'metadata': metadata
         }
     }
-    window.initializePreview(object);
+    org.ekstep.contentrenderer.initializePreview(object);
 };
-
+org.ekstep.contentrenderer.initializePreview = function(configuration) {
+    if (_.isUndefined(configuration.context)) {
+        configuration.context = {};
+    }
+    if (_.isUndefined(configuration.config)) {
+        configuration.config = {};
+    }
+    if (_.isUndefined(configuration.context.contentId)) {
+        configuration.context.contentId = getUrlParameter("id")
+    }
+    localStorageGC.clear();
+    AppConfig = _.extend(AppConfig, configuration.config)
+    window.previewData = configuration;
+    configuration.config.repos && configuration.config.plugins && EkstepRendererAPI.dispatchEvent("repo:intialize");
+    EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
+    addWindowUnloadEvent();
+    EkstepRendererAPI.dispatchEvent("event:loadContent");
+};
 org.ekstep.contentrenderer.initPlugins = function(gamePath) {
     var pluginsPath = undefined;
     // @ plugin:error event is dispatching from the plugin-framework 
@@ -115,7 +99,7 @@ org.ekstep.contentrenderer.progressbar = function(switcher) {
         jQuery("#progressBar").width(0);
         jQuery('#loading').show();
         var elem = document.getElementById("progressBar");
-        var width =20;
+        var width = 40;
         var id = setInterval(function() {
             if (width >= 100) {
                 clearInterval(id);
@@ -130,3 +114,89 @@ org.ekstep.contentrenderer.progressbar = function(switcher) {
         jQuery('#loading').hide();
     }
 };
+org.ekstep.contentrenderer.getContentMetadata = function(id, cb) {
+    org.ekstep.services.contentservices.getContent(id)
+        .then(function(data) {
+            org.ekstep.contentrenderer.setContentMetadata(data);
+            if (!_.isUndefined(cb)) {
+                cb(data);
+            }
+        })
+        .catch(function(err) {
+            console.info("contentNotAvailable : ", err);
+            contentNotAvailable(err);
+        });
+};
+org.ekstep.contentrenderer.setContentMetadata = function(contentData) {
+    var data = _.clone(contentData);
+    content["metadata"] = data;
+    GlobalContext.currentContentId = data.identifier;
+    GlobalContext.currentContentMimeType = data.mimeType;
+    if (_.isUndefined(data.localData)) {
+        data.localData = _.clone(contentData);
+    } else {
+        data = data.localData;
+    }
+    if ("undefined" == typeof cordova) {
+        org.ekstep.contentrenderer.getContentBody(content.metadata.identifier);
+      }
+      content = data;
+    /*  $rootScope.safeApply(function() {
+          $rootScope.content = data;
+      });
+      if ("undefined" == typeof cordova) {
+          $rootScope.getContentBody(content.metadata.identifier);
+      }*/
+};
+org.ekstep.contentrenderer.getContentBody = function() {
+    var configuration = EkstepRendererAPI.getPreviewData();
+    var headers = org.ekstep.contentrenderer.urlparameter;
+    if (!_.isUndefined(configuration.context.authToken)) {
+        headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
+    }
+    org.ekstep.services.contentservices.getContentBody(id, headers).then(function(data) {
+            content["body"] = data.body;
+            launchInitialPage(content.metadata);
+        })
+        .catch(function(err) {
+            console.info("contentNotAvailable : ", err);
+            contentNotAvailable(err);
+        });
+};
+org.ekstep.contentrenderer.urlparameter = function() {
+    var urlParams = decodeURIComponent(window.location.search.substring(1)).split('&');
+    var i = urlParams.length;
+    while (i--) {
+        if ((urlParams[i].indexOf('webview') >= 0) || (urlParams[i].indexOf('id') >= 0)) {
+            urlParams.splice(i, 1)
+        } else {
+            urlParams[i] = urlParams[i].split("=");
+        }
+    }
+    return (_.object(urlParams))
+};
+org.ekstep.contentrenderer.web = function() {
+    var configuration = EkstepRendererAPI.getPreviewData();
+    var headers = org.ekstep.contentrenderer.urlparameter;
+    if (!_.isUndefined(configuration.context.authToken)) {
+        headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
+    }
+    org.ekstep.services.contentservices.getContentMetadata(id, headers)
+        .then(function(data) {
+            org.ekstep.contentrenderer.setContentMetadata(data);
+        })
+        .catch(function(err) {
+            console.info("contentNotAvailable : ", err);
+            contentNotAvailable(err);
+        });
+};
+org.ekstep.contentrenderer.device = function() {
+    if (isMobile) {
+        org.ekstep.contentrenderer.getContentMetadata(GlobalContext.game.id, function() {
+            window.location.hash = "/play/content/" + GlobalContext.currentContentId;
+        });
+    } else {
+        launchInitialPage(GlobalContext.config.appInfo);
+    }
+}
+org.ekstep.contentrenderer.init();
