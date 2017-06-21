@@ -1,7 +1,6 @@
 /**
  * @author Manjunath Davanam <manjunathd@ilimi.in>
  */
-
 var content_renderer = function() {};
 content_renderer.prototype._ = window._;
 window.org.ekstep.contentrenderer = new content_renderer();
@@ -11,7 +10,7 @@ org.ekstep.contentrenderer.init = function() {
     window.setContentData = org.ekstep.contentrenderer.setContent;
     org.ekstep.services.init();
     console.info('Content renderer start');
-}
+};
 org.ekstep.contentrenderer.setContent = function(metadata, data, configuration){
     if (_.isUndefined(metadata) || _.isNull(metadata)) {
         content.metadata = defaultMetadata
@@ -198,5 +197,5 @@ org.ekstep.contentrenderer.device = function() {
     } else {
         launchInitialPage(GlobalContext.config.appInfo);
     }
-}
+};
 org.ekstep.contentrenderer.init();

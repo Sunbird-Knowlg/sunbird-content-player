@@ -17,52 +17,6 @@ var packageName = "org.ekstep.quiz.app",
     config = {showEndPage: true, showHTMLPages: true }, 
     isbrowserpreview = getUrlParameter("webview")
     isCoreplugin = undefined;
-/*window.previewData = {'context': {}, 'config': {} };
-window.initializePreview = function(configuration) {
-    if (_.isUndefined(configuration.context)) {
-        configuration.context = {};
-    }
-    if (_.isUndefined(configuration.config)) {
-        configuration.config = {};
-    }
-    if (_.isUndefined(configuration.context.contentId)) {
-        configuration.context.contentId = getUrlParameter("id")
-    }
-    localStorageGC.clear();
-    AppConfig = _.extend(AppConfig, configuration.config)
-    window.previewData = configuration;
-    configuration.config.repos && configuration.config.plugins && EkstepRendererAPI.dispatchEvent("repo:intialize");
-    EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
-    addWindowUnloadEvent();
-    EkstepRendererAPI.dispatchEvent("event:loadContent");
-
-}*/
-/*window.setContentData = function(metadata, data, configuration) {
-    if (_.isUndefined(metadata) || _.isNull(metadata)) {
-        content.metadata = defaultMetadata
-    } else {
-        content.metadata = metadata;
-    }
-    if (!_.isUndefined(data)) {
-        content.body = data;
-    }
-    _.map(configuration, function(val, key) {
-        config[key] = val;
-    });
-    if (!config.showHTMLPages) {
-        config.showEndPage = false;
-    }
-    localStorageGC.clear();
-    if (data) {
-        var object = {
-            'config': configuration,
-            'data': data,
-            'metadata': metadata
-        }
-    }
-    window.initializePreview(object);
-}*/
-
 function updateContentData($state, contentId) {
     if (_.isUndefined($state)) {
         console.error("updateContentData($state) - $state is not defined.");
@@ -99,7 +53,6 @@ function launchInitialPage(appInfo) {
         }
     }
 }
-//Handling the logerror event from the Telemetry.js
 document.body.addEventListener("logError", telemetryError, false);
 
 function telemetryError(e) {

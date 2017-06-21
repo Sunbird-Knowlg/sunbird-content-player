@@ -70,12 +70,10 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
                     if (!isbrowserpreview) {
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                         org.ekstep.contentrenderer.device();
-                        /*$rootScope.deviceRendrer();*/
                     }
                     org.ekstep.services.contentservices.getUsersList().then(function(data) {
                         $rootScope.users = data.data;
                     }).catch(function(err) {
-                        // show toast message
                         reject(err);
                     });
                 }).catch(function(res) {
@@ -310,7 +308,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
             $rootScope.title = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.name : "";
             $scope.resetContentListCache();
         };
-
         $scope.init();
     }).controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams) {
         $rootScope.pageId = "ContentApp-Renderer";
