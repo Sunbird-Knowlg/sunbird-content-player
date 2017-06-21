@@ -1,4 +1,4 @@
-PluginManager.registerPlugin('launcher', Plugin.extend({
+org.ekstep.contentrenderer.registerPlguin('launcher', Plugin.extend({
     initialize: function() {
         EkstepRendererAPI.addEventListener('renderer:launcher:initLauncher', this.initLauncher, this);
     },
@@ -19,14 +19,14 @@ PluginManager.registerPlugin('launcher', Plugin.extend({
             'mimeType': content.mimeType
         });
         isCoreplugin = true;
-        PluginManager.init('renderer');
+        org.ekstep.contentrenderer.initPlugins('renderer');
         if (!_.isUndefined(contentTypePlugin)) {
             this.loadPlugin(contentTypePlugin, content);
             isCoreplugin = false;
         }
     },
     loadPlugin : function(plugin, content) {
-        PluginManager.loadPlugins(plugin, [], function() {
+        org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
             EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType, undefined, content);
         });
     }

@@ -112,7 +112,7 @@ Plugin.extend({
         instance.resizeGame(true);
         Renderer.theme.baseDir = dataObj.path;
         var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);
-        PluginManager.init(dataObj.path);
+        org.ekstep.contentrenderer.initPlugins(dataObj.path);
         var resource = instance.handleRelativePath(instance.getResource(manifest), dataObj.path + '/widgets/');
         var pluginManifest = content["plugin-manifest"];
         (_.isUndefined(pluginManifest) || _.isEmpty(pluginManifest)) && (pluginManifest = { plugin: [] });
@@ -121,7 +121,7 @@ Plugin.extend({
             _.each(previewPlugins, function(item) { pluginManifest.plugin.push({ id: item.id, ver: item.ver || 1.0, type: item.type || "plugin", depends: item.depends || "" }); });
         }
         try {
-            PluginManager.loadPlugins(pluginManifest.plugin, resource, function() {
+            org.ekstep.contentrenderer.loadPlugins(pluginManifest.plugin, resource, function() {
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
