@@ -42,6 +42,7 @@ angular.module('genie-canvas.services', ['ngResource'])
                     genieservice.getContent(id)
                        .then(function(contentData) {
                            if(!_.isUndefined(contentData)){
+                                contentData.isAvailable = item.isAvailableLocally;
                                resolve(contentData.isAvailable);
                            } else {
                                console.error("Content is not available.");
@@ -71,9 +72,9 @@ angular.module('genie-canvas.services', ['ngResource'])
                 });
             },
             // Get the Total Assessment score of particular user of particular content.
-            getLearnerAssessment: function(uid, id) {
+            getLearnerAssessment: function(uid, id, contentExtras) {
                 return new Promise(function(resolve, reject) {
-                    genieservice.getLearnerAssessment(uid, id)
+                    genieservice.getLearnerAssessment(uid, id, contentExtras)
                         .then(function(score) {
                             if (score)
                                 resolve(score);

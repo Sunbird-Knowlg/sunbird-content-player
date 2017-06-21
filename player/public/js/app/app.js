@@ -356,7 +356,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     //     console.log(err);
                     // });
                 }).catch(function(res) {
-                    console.log("Error Globalcontext.init:", res);
+                    console.log("Error GlobalContext.init:", res);
                     EkstepRendererAPI.logErrorEvent(res,{'type':'system','severity':'fatal','action':'play'})
                     alert(res.errors);
                     exitApp();
@@ -810,7 +810,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
 
         $scope.getTotalScore = function(id) {
             if ("undefined" != typeof cordova) {
-                ContentService.getLearnerAssessment(TelemetryService._user.uid, id)
+                ContentService.getLearnerAssessment(GlobalContext.user.uid, id, GlobalContext.game.contentExtras)
                     .then(function(score) {
                         if (score && score.total_questions) {
                             $scope.showScore = true;
@@ -1107,33 +1107,36 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             window.open(deepLinkURL, "_system");
         }
         $scope.getRelatedContent = function(list) {
-            // ContentService.getRelatedContent(TelemetryService._user.uid, list)
-            //     .then(function(item) {
-            //         if (!_.isEmpty(item)) {
-            //             $scope.relatedContentItem = item;
-            //             var list = [];
-            //             if (!_.isEmpty(item.collection)) {
-            //                 $scope.showRelatedContent = true;
-            //                 $scope.relatedContentPath = item.collection;
-            //                 list = [item.collection[item.collection.length - 1]];
-            //                 list[0].appIcon = list[0].path + '/' + list[0].appIcon;
-            //             } else if (!_.isEmpty(item.content)) {
-            //                 $scope.showRelatedContent = true;
-            //                 $scope.contentShowMore = true;
-            //                 list = _.first(_.isArray(item.content) ? item.content : [item.content], 2);
-            //             }
+            ContentService.getRelatedContent(GlobalContext.user.uid, list)
+            .then(function(item) {
+                if (!_.isEmpty(item)) {
+                    $scope.relatedContentItem = item;
+                    var list = [];
+                    item.collection = item.nextContent;
+                    item.content = item.relatedContents;
+                    if (!_.isEmpty(item.collection)) {
+                        $scope.showRelatedContent = true;
+                        $scope.relatedContentPath = item.collection;
+                        list = [item.collection[item.collection.length - 1]];
+                        list[0].appIcon = list[0].basePath + '/' + list[0].contentData.appIcon;
+                    } else if (!_.isEmpty(item.content)) {
+                        $scope.showRelatedContent = true;
+                        $scope.contentShowMore = true;
+                        item.content.appIcon = item.content.contentData.appIcon;
+                        list = _.first(_.isArray(item.content) ? item.content : [item.content], 2);
+                    }
 
-            //             if (!_.isEmpty(list)) {
-            //                 $scope.$apply(function() {
-            //                     $scope.relatedContents = list;
-            //                     jQuery('#endPageLoader').hide();
-            //                 });
-            //             } else {
-            //                 $scope.showRelatedContentHeader = false;
-            //                 jQuery('#endPageLoader').hide();
-            //             }
-            //         }
-            //     })
+                    if (!_.isEmpty(list)) {
+                        $scope.$apply(function() {
+                            $scope.relatedContents = list;
+                            jQuery('#endPageLoader').hide();
+                        });
+                    } else {
+                        $scope.showRelatedContentHeader = false;
+                        jQuery('#endPageLoader').hide();
+                    }
+                }
+            })
         }
 
         $scope.renderRelatedContent = function(id) {

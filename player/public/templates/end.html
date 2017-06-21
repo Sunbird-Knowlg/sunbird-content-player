@@ -85,7 +85,7 @@
             <div class="gc-related-cont" ng-show="showRelatedContent">
                 <div class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story, $index);">
                     <div class="gc-related-item">
-                        <p class="gc-text-elipsis gc-related-cont-title">{{story.name}}</p>
+                        <p class="gc-text-elipsis gc-related-cont-title">{{story.contentData.name}}</p>
                         <div class="gc-rel-content-img">
                             <img class="img-center" fallback-src="{{imageBasePath}}icn_default-content.png" ng-src="{{story.appIcon}}" />
                             <div class="gc-repeat-content">

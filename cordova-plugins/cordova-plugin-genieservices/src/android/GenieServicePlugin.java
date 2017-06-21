@@ -105,16 +105,23 @@ public class GenieServicePlugin extends CordovaPlugin {
             contentService.getContent(contentId, new GenieServicesResponse(callbackContext));
         } else if(action.equals("getRelatedContent")) {
             String uid = args.getString(0);
-            List<String> identifiers = new ArrayList<String>();
             JSONArray jsonArray = args.getJSONArray(1);
-            if(jsonArray != null && jsonArray.length() > 0) {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    identifiers.add(jsonObject.getString("identifier"));
-                }
 
+            List<Map> contentExtras = new ArrayList<Map>();
+            if(jsonArray != null && jsonArray.length() > 0) {
+                for(int i=0;i<jsonArray.length();i++) {
+                    Map map = new HashMap();
+                    Iterator keys = jsonArray.getJSONObject(i).keys();
+                    while (keys.hasNext()) {
+                        String key = (String) keys.next();
+                        map.put(key, jsonArray.getJSONObject(i).get(key));
+                    }
+
+                    contentExtras.add(map);
+                }
             }
-            contentService.getRelatedContent(identifiers, uid, new GenieServicesResponse(callbackContext));
+            // return true;
+            contentService.getRelatedContent(contentExtras, uid, new GenieServicesResponse(callbackContext));
         }
         else if(action.equals("sendFeedback")) {
             String evt = args.getString(0);
@@ -122,7 +129,27 @@ public class GenieServicePlugin extends CordovaPlugin {
         } else if(action.equals("getLearnerAssessment")) {
             String uid = args.getString(0);
             String contentId = args.getString(1);
-            summarizerService.getLearnerAssessment(uid, contentId, new GenieServicesResponse(callbackContext));
+            JSONArray jsonArray = null;    
+            if(!args.getString(2).equals("null")) {
+                jsonArray = args.getJSONArray(2);
+            }
+
+            List<Map> contentExtras = new ArrayList<Map>();
+            if(jsonArray != null && jsonArray.length() > 0) {
+                for(int i=0;i<jsonArray.length();i++) {
+                    Map map = new HashMap();
+                    Iterator keys = jsonArray.getJSONObject(i).keys();
+                    while (keys.hasNext()) {
+                        String key = (String) keys.next();
+                        map.put(key, jsonArray.getJSONObject(i).get(key));
+                    }
+
+                    contentExtras.add(map);
+                }
+                summarizerService.getLearnerAssessment(uid, contentId, contentExtras, new GenieServicesResponse(callbackContext));
+            } else {
+                summarizerService.getLearnerAssessment(uid, contentId, null, new GenieServicesResponse(callbackContext));
+            }
         } /*   else if(action.equals("getContentList")) {
             String[] filter = null;
             JSONArray jsonArray = args.getJSONArray(0);
