@@ -110,7 +110,7 @@ genieservice_web = {
 //For portal
 genieservice_portal = {
     api: {
-        // _baseUrl: undefined,
+        _baseUrl: undefined,
         contentBasePath: '/content/v3/read/',
         languageBasePath: '/language/v3/',
         telemetryBasePath: '/data/v3/telemetry',
@@ -123,16 +123,16 @@ genieservice_portal = {
         getTelematyFullAPI: function(){
             return AppConfig.host + AppConfig.apislug + this.telemetryBasePath;
         },
-        // setBaseUrl: function(baseUrl){
-        //    this._baseUrl = baseUrl;
-        // },
-        // getBaseUrl: function(){
-        //     if(_.isUndefined(this._baseUrl)) {
-        //         alert("Base path is undefined.");
-        //         return;
-        //     }
-        //    return this._baseUrl;
-        // }
+        setBaseUrl: function(baseUrl){
+           this._baseUrl = baseUrl;
+        },
+        getBaseUrl: function(){
+            if(_.isUndefined(this._baseUrl)) {
+                console.log("Base path is undefined.");
+                return;
+            }
+           return this._baseUrl;
+        }
     },
     callApi: function(url, type, headersParam, data, cb) {
         headersParam["Content-Type"] = "application/json";
@@ -211,7 +211,7 @@ genieservice_portal = {
                     resolve(content.metadata);
                 }
             } else{
-                resolve(genieservice.getContentMetadata(id));
+                resolve(genieservice.getContentMetadata(id, {}));
             }
         });
     },
