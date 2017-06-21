@@ -4,12 +4,10 @@ var packageName = "org.ekstep.quiz.app",
     geniePackageName = "org.ekstep.genieservices",
     currentUser = {},
     userList = [],
-
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
-    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive"
-
-var stack = new Array(),
+    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive",
+    stack = new Array(),
     collectionChildrenIds = new Array(),
     collectionPath = new Array(),
     collectionPathMap = {},
@@ -19,7 +17,7 @@ var stack = new Array(),
     config = {showEndPage: true, showHTMLPages: true }, 
     isbrowserpreview = getUrlParameter("webview")
     isCoreplugin = undefined;
-window.previewData = {'context': {}, 'config': {} };
+/*window.previewData = {'context': {}, 'config': {} };
 window.initializePreview = function(configuration) {
     if (_.isUndefined(configuration.context)) {
         configuration.context = {};
@@ -38,8 +36,8 @@ window.initializePreview = function(configuration) {
     addWindowUnloadEvent();
     EkstepRendererAPI.dispatchEvent("event:loadContent");
 
-}
-window.setContentData = function(metadata, data, configuration) {
+}*/
+/*window.setContentData = function(metadata, data, configuration) {
     if (_.isUndefined(metadata) || _.isNull(metadata)) {
         content.metadata = defaultMetadata
     } else {
@@ -63,7 +61,7 @@ window.setContentData = function(metadata, data, configuration) {
         }
     }
     window.initializePreview(object);
-}
+}*/
 
 function updateContentData($state, contentId) {
     if (_.isUndefined($state)) {
@@ -176,7 +174,7 @@ function backbuttonPressed(pageId) {
     if (pageId == "coverpage") {
         TelemetryService.end();
     }
-    AudioManager.stopAll();
+    EkstepRendererAPI.stopAll();
 }
 
 // TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
@@ -192,7 +190,7 @@ function exitApp(pageId) {
     }
     localStorageGC.clear();
     localStorageGC = {};
-    genieservice.endGenieCanvas();
+    org.ekstep.services.rendererservice.endGenieCanvas();
 }
 
 function startApp(app) {

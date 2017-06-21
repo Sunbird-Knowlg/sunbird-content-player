@@ -1,10 +1,33 @@
 var content_renderer = function() {};
 content_renderer.prototype._ = window._;
 window.org.ekstep.contentrenderer = new content_renderer();
-window.initializePreview = org.ekstep.contentrenderer.init;
+window.initializePreview = org.ekstep.contentrenderer.initializePreview;
 window.setContentData = org.ekstep.contentrenderer.setContent;
 window.previewData = {'context': {}, 'config': {} };
-org.ekstep.contentrenderer.init = function(configuration) {
+org.ekstep.contentrenderer.init = function(){
+    org.ekstep.services.init();
+   /* org.ekstep.contentrenderer.progressbar(true);*/
+    /*org.ekstep.contentrenderer.getMetadata();*/
+
+};
+org.ekstep.contentrenderer.init();
+org.ekstep.contentrenderer.getcontentMetadata = function(id, cb) {
+    ContentService.getContent(id)
+        .then(function(data) {
+            org.ekstep.contentrenderer.setContentMetadata(data);
+            if (!_.isUndefined(cb)) {
+                cb(data);
+            }
+        })
+        .catch(function(err) {
+            console.info("contentNotAvailable : ", err);
+            contentNotAvailable(err);
+        });
+};
+org.ekstep.contentrenderer.setContentMetadata = function(meta){
+
+};
+org.ekstep.contentrenderer.initializePreview = function(configuration) {
     if (_.isUndefined(configuration.context)) {
         configuration.context = {};
     }
@@ -78,8 +101,8 @@ org.ekstep.contentrenderer.loadPlugins = function(pluginManifest, manifestMedia,
         console.info("Framework Loaded the plugins");
         if (typeof PluginManager != 'undefined') {
             PluginManager.pluginMap = org.ekstep.pluginframework.pluginManager.plugins;
-            if (cb) cb();
         }
+        if (cb) cb();
     });
 };
 org.ekstep.contentrenderer.registerPlguin = function(id, plugin) {

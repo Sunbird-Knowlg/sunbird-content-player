@@ -49,7 +49,7 @@ GlobalContext = {
                 })
                 .then(function() {
                     if (GlobalContext.config.appInfo && COLLECTION_MIMETYPE == GlobalContext.config.appInfo.mimeType && null == GlobalContext.filter) {
-                        genieservice.getContent(GlobalContext.config.appInfo.identifier)
+                        org.ekstep.services.rendererservice.getContent(GlobalContext.config.appInfo.identifier)
                         .then(function(result) {
                             if (result.isAvailable) {
                                 GlobalContext.config.appInfo = result.localData || result.serverData;
@@ -75,7 +75,7 @@ GlobalContext = {
             // GlobalContext.config = config = { origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping"};
             console.log("Origin value is:::", config);
             if(config && config.origin == 'Genie') {
-                return genieservice.getCurrentUser();
+                return org.ekstep.services.rendererservice.getCurrentUser();
             } else {
                 reject('INVALID_ORIGIN');
             }
