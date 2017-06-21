@@ -12,8 +12,10 @@ AppConfig = {
 	SHOW_USER: true,
 	OVERLAY_SUBMIT: "off",
 	apislug: '/action',
-	SPLASH_TEXT: "Powered by EkStep Genie",
-	SPLASH_ICON: "img/icons/icn_genie.png",
-	SPLASH_IMAGE: "img/icons/background_1.png",
-	APP_DOWNLOAD_LINK: "http://www.ekstep.in"
+	splash: {
+		text: "Powered by EkStep Genie",
+		icon: "img/icons/icn_genie.png",
+		image: "img/icons/background_1.png",
+		download_link: "http://www.ekstep.in"
+	}
 }

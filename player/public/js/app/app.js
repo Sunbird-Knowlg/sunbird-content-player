@@ -476,7 +476,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.resetContentListCache = function() {
-            splashScreen.hide(3000);
+            splashScreen.hide();
 
             var collectionContentId = $stateParams.id;
             $rootScope.renderMessage("", 0);
@@ -858,7 +858,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.setCredits('voiceCredits');
             window.addEventListener('native.keyboardshow', epKeyboardShowHandler, true);
             window.addEventListener('native.keyboardhide', epKeyboardHideHandler, true);
-            splashScreen.hide(3000);
+            splashScreen.hide();
             $scope.setTotalTimeSpent();
             $scope.getTotalScore($stateParams.contentId);
             $scope.showFeedback(0);
