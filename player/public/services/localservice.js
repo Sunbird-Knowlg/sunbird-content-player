@@ -105,3 +105,4 @@ org.ekstep.service.local = new(org.ekstep.service.mainService.extend({
         return endpoint;
     }
 }));
+org.ekstep.service.renderer = org.ekstep.service.local;

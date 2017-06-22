@@ -105,3 +105,6 @@ org.ekstep.service.html = new(org.ekstep.service.mainService.extend({
         }
     }
 }));
+if (typeof cordova == 'undefined' && typeof isbrowserpreview == 'undefined' && typeof AppConfig == 'undefined') {
+    org.ekstep.service.renderer = org.ekstep.service.html;    
+}

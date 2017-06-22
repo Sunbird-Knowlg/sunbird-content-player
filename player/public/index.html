@@ -9,12 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title></title>
 
+    <!-- injector:css -->
     <link rel="stylesheet" type="text/css" href="styles/ionic.css" />
     <link rel="stylesheet" type="text/css" href="styles/bookshelf_slider.css" />
     <link rel="stylesheet" type="text/css" href="styles/skin02.css" />
     <link rel="stylesheet" type="text/css" href="styles/toastr.min.css" />
     <link rel="stylesheet" type="text/css" href="styles/jquery.mCustomScrollbar.min.css" />
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <!-- endinjector -->
 
     <style>
         #progressArea {
@@ -76,53 +78,38 @@
         </div>
         <p class="icon-font cover-page-title" id="pageTitle" ng-bind = "pageTitle">Content is loading ...</p>
     </div>
+
+    <!-- injector:js -->
     <script type="text/javascript" src="libs/jquery.min.js"></script>
     <script type="text/javascript" src="libs/jquery.easing.1.3.js"></script>
     <script type="text/javascript" src="libs/jquery.bookshelfslider.min.js"></script>
     <script type="text/javascript" src="libs/async.min.js"></script>
-
     <script type="text/javascript" src="libs/plugin-framework.min.js"></script>
     <script type="text/javascript" src="libs/toastr.min.js"></script>
     <script type="text/javascript" src="libs/md5.js"></script>
     <script type="text/javascript" src="libs/jquery.mCustomScrollbar.concat.min.js"></script>
-
     <script type="text/javascript" src="libs/ionic.bundle.min.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="libs/ng-cordova.min.js"></script>
     <script type="text/javascript" src="libs/angular-resource.min.js"></script>
     <script type="text/javascript" src="libs/underscore.js"></script>
     <script type="text/javascript" src="libs/date-format.js"></script>
-    <script type="text/javascript" src="js/speech.js"></script>
     <script type="text/javascript" src="libs/ocLazyLoad.js"></script>
-    <!-- your app's js -->
+    
     <script type="text/javascript" src="js/appConfig.js"></script>
     <script type="text/javascript" src="js/globalContext.js"></script>
     <script type="text/javascript" src="js/appMessages.js"></script>
     <script src="services/mainservice.js"></script>
-    <script src="services/interfaceService.js"></script>
     <script src="services/localservice.js"></script>
-    <script src="services/webservice.js"></script>
+    <script src="services/interfaceService.js"></script>
     <script src="services/controllerservice.js"></script>
-    <script src="services/htmlservice.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/content-renderer.js"></script>
-    
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/detectClient.js"></script>
-    <script type="text/javascript" src="services/service.js"></script>
     <script type="text/javascript" src="js/ekstepRendererApi.js"></script>
-
-    <!-- Manager -->
-    <!-- <script type="text/javascript" src="renderer/manager/PluginManager.js"></script> -->
-    <script type="text/javascript" src="renderer/manager/AudioManager.js"></script>
     <script type="text/javascript" src="js/basePlugin.js"></script>
-    <script type="text/javascript" src="renderer/plugin/LauncherPlugin.js"></script>
-
-    <!-- speech -->
-    <script type="text/javascript" src="speech/android-recorder.js"></script>
-    <script type="text/javascript" src="speech/speech.js"></script>
-
-    <!-- Telemetry -->
+    
     <script src="telemetry/InActiveEvent.js"></script>
     <script src="telemetry/TelemetryEvent.js"></script>
     <script src="telemetry/TelemetryServiceUtil.js"></script>
@@ -130,6 +117,12 @@
     <script src="telemetry/TelemetryV1Manager.js"></script>
     <script src="telemetry/TelemetryV2Manager.js"></script>
     <script src="js/test/specHelper.js"></script>
+    <!-- endinjector -->
+
+    <!-- Manager -->
+    <!-- <script type="text/javascript" src="renderer/manager/PluginManager.js"></script> -->
+    <script type="text/javascript" src="renderer/manager/AudioManager.js"></script>
+    <script type="text/javascript" src="plugins/LauncherPlugin.js"></script>
 </body>
 
 </html>

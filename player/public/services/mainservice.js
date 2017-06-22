@@ -17,17 +17,7 @@ org.ekstep.service.mainService = Class.extend({
 
 /*org.ekstep.service.init should be part of rendrer-bootstarp.js*/
 org.ekstep.service.init = function() {
-    if (typeof cordova == 'undefined') {
-        if (typeof isbrowserpreview == 'undefined') {
-            if (typeof AppConfig == 'undefined') {
-                org.ekstep.service.renderer = org.ekstep.service.html;
-            } else {
-                org.ekstep.service.renderer = org.ekstep.service.local;
-            }
-        } else {
-            org.ekstep.service.renderer = org.ekstep.service.web;
-        }
-    } else {
+    if (typeof cordova !== 'undefined') {
         org.ekstep.service.renderer = genieservice;
     }
 };

@@ -173,3 +173,4 @@ org.ekstep.service.web = new(org.ekstep.service.mainService.extend({
         }
     }
 }));
+org.ekstep.service.renderer = org.ekstep.service.web;
