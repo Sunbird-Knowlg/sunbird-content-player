@@ -9,8 +9,8 @@ Plugin.extend({
     templatePath : undefined,
     initialize: function() {
         console.info('Endpage plugin is doing initialize....');
-        templatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource('org.ekstep.endpage', '1.0', "templates/end.html");
-        var controllerPath = org.ekstep.pluginframework.pluginManager.resolvePluginResource('org.ekstep.endpage', '1.0', "js/endpageApp.js");
+        templatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource('org.ekstep.endpage', '1.0', "renderer/templates/end.html");
+        var controllerPath = org.ekstep.pluginframework.pluginManager.resolvePluginResource('org.ekstep.endpage', '1.0', "renderer/js/endpageApp.js");
         org.ekstep.service.controller.loadNgModules(templatePath, controllerPath);
         EkstepRendererAPI.addEventListener('renderer:init:endpage', this.showEndPage, this);
     },
