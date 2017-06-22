@@ -16,7 +16,8 @@ var packageName = "org.ekstep.quiz.app",
     defaultMetadata = {"identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author": "EkStep", "localData": {"questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{"identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept"}], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true, "path": "fixture-stories/item_sample"},
     config = {showEndPage: true, showHTMLPages: true }, 
     isbrowserpreview = getUrlParameter("webview")
-    isCoreplugin = undefined;
+    isCoreplugin = undefined,
+    Renderer = undefined;
 function updateContentData($state, contentId) {
     if (_.isUndefined($state)) {
         console.error("updateContentData($state) - $state is not defined.");

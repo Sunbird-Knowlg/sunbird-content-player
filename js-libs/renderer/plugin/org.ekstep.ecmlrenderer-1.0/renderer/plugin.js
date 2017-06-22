@@ -1,8 +1,14 @@
 Plugin.extend({
     loader: undefined,
+    theme: undefined,
+    update: true,
     gdata: undefined,
     running: false,
     preview: false,
+    divIds: {
+        gameArea: 'gameArea',
+        canvas: 'gameCanvas'
+    },
     initialize: function() {
         console.info('ECML Renderer initialize')
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
@@ -12,7 +18,7 @@ Plugin.extend({
         if (_.isUndefined(renderObj)) return;
         try {
             if (this.running) {
-                Renderer.cleanUp();
+                this.cleanUp();
                 TelemetryService.start(renderObj.identifier, renderObj.pkgVersion);
             }
             this.running = true;
@@ -108,6 +114,7 @@ Plugin.extend({
         this.gdata = data;
         var content = data.theme || data.ecml;
         content.canvasId = dataObj.canvasId;
+        EkstepRendererAPI.setRenderer(instance);
         Renderer.theme = new ThemePlugin(content);
         instance.resizeGame(true);
         Renderer.theme.baseDir = dataObj.path;
@@ -159,6 +166,24 @@ Plugin.extend({
             return media.type === 'css' || media.type === 'js' || media.type === 'plugin' || media.type === ' library';
         });
         return plugins;
+    },
+    cleanUp: function() {
+        Renderer.running = false;
+        AnimationManager.cleanUp();
+        AssetManager.destroy();
+        TimerManager.destroy();
+        AudioManager.cleanUp();
+        if(Renderer.theme)
+            Renderer.theme.cleanUp();
+        Renderer.theme = undefined;
+    },
+    pause: function() {
+        if (Renderer.theme)
+            Renderer.theme.pause();
+    },
+    resume: function() {
+        if (Renderer.theme)
+            Renderer.theme.resume();
     }
 });
 

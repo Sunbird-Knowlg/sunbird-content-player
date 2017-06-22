@@ -891,5 +891,11 @@ window.EkstepRendererAPI = {
             console.warn('OE_ERROR event fails to log',e);
         }
 
+    },
+    setRenderer: function(data){
+        Renderer = data;
+    },
+    getRenderer: function(){
+        return Renderer;
     }
 }
