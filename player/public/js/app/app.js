@@ -142,7 +142,7 @@ document.body.addEventListener("logError", telemetryError, false);
 function telemetryError(e) {
     var $body = angular.element(document.body);
     var $rootScope = $body.scope().$root;
-    document.body.removeEventListener("logError");
+    document.body.removeEventListener("logError", e);
 }
 
 angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
@@ -188,7 +188,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             "nextContent": "NEXT CONTENT",
             "comment": "write your comment...",
             "mute": "on",
-            "change": "change",
+            "change": "Change",
             "group": "Group",
             "child": "Child",
             "groupFallbackText": "You have not created any group",
