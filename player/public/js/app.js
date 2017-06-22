@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'quiz' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
+var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
     .constant("appConstants", {
         "contentId": "contentId",
         "stateContentList": "contentList",
@@ -99,19 +99,13 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
                 templateUrl: "templates/content-list.html",
                 controller: 'ContentListCtrl'
             })
-            .state('showContentEnd', {
-                cache: false,
-                url: "/content/end/:contentId",
-                templateUrl: "templates/end.html",
-                controller: 'EndPageCtrl'
-            })
             .state('playContent', {
                 cache: false,
                 url: "/play/content/:itemId",
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
             })
-    }).controller('BaseCtrl', function($scope, $rootScope, $state, $stateParams, appConstants) {
+    }).controller('BaseCtrl', function($scope,$rootScope, $state,$ocLazyLoad,$stateParams, appConstants) {
         $rootScope.replayContent = function() {
             $scope.endContent('gc_replay');
             $scope.startContent();
@@ -163,6 +157,22 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova'])
             data.mode = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
             TelemetryService.start(gameId, version, data);
         }
+        $scope.templates = "";
+        function loadNgModules(templatePath, controllerPath) {
+            $ocLazyLoad.load([
+                { type: 'html', path: templatePath },
+                { type: 'js', path: controllerPath }
+            ]);
+        };
+        function injectTemplates(templatePath){
+            console.log("inject templates", templatePath);
+            $scope.safeApply(function() {
+                console.log("Safe apply templates");
+                $scope.templates = templatePath;
+            });
+        }
+        org.ekstep.service.controller.initService(loadNgModules);
+        org.ekstep.service.controller.injectTemplate(injectTemplates);
         EkstepRendererAPI.addEventListener("event:loadContent", function() {
             var configuration = EkstepRendererAPI.getPreviewData();
             content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
