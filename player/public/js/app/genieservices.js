@@ -103,29 +103,29 @@ genieservice_web = {
 //For portal
 genieservice_portal = {
     api: {
-        // _baseUrl: undefined,
+        _baseUrl: undefined,
         contentBasePath: '/content/v3/read/',
         languageBasePath: '/language/v3/',
         telemetryBasePath: '/data/v3/telemetry',
         getFullAPI: function() {
-            return AppConfig.apislug + this.contentBasePath;
+            return this._baseUrl + this.contentBasePath;
         },
         getLanguageFullAPI: function() {
-            return AppConfig.apislug + this.languageBasePath;
+            return this._baseUrl + this.languageBasePath;
         },
         getTelematyFullAPI: function(){
-            return AppConfig.apislug + this.telemetryBasePath;
+            return this._baseUrl + this.telemetryBasePath;
         },
-        // setBaseUrl: function(baseUrl){
-        //    this._baseUrl = baseUrl;
-        // },
-        // getBaseUrl: function(){
-        //     if(_.isUndefined(this._baseUrl)) {
-        //         alert("Base path is undefined.");
-        //         return;
-        //     }
-        //    return this._baseUrl;
-        // }
+        setBaseUrl: function(baseUrl){
+           this._baseUrl = baseUrl;
+        },
+        getBaseUrl: function(){
+            if(_.isUndefined(this._baseUrl)) {
+                console.log("Base path is undefined.");
+                return;
+            }
+           return this._baseUrl;
+        }
     },
     callApi: function(url, type, headersParam, data, cb) {
         headersParam["Content-Type"] = "application/json";

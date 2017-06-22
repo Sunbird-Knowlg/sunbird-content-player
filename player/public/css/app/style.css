@@ -66,10 +66,10 @@
     src: url('fonts/lato/Lato-Black.ttf') format('opentype')
 }
 
-/*@font-face {
+@font-face {
     font-family: 'lato-bold';
     src: url('fonts/Lato/Lato-Bold.ttf') format('opentype')
-}*/
+}
 
 @font-face {
     font-family: 'lato-light';
