@@ -5,7 +5,6 @@ Plugin.extend({
     },
     launch: function(evt, data) {
         console.info('HTML plugin init')
-        this.initializeEndpage();
         jQuery('#loading').hide();
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";

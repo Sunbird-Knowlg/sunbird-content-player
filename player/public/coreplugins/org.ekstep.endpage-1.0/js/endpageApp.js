@@ -1,6 +1,6 @@
 var endPageApp = angular.module("endPageApp", []);
 endPageApp.controller("endPageController", function($scope, $rootScope, $state, $stateParams) {
-    console.info("i am controller endpage");
+    console.info("EndPage controller is calling");
     $scope.showFeedbackArea = true;
     $scope.commentModel = '';
     $scope.showFeedbackPopup = false;
@@ -40,7 +40,8 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
         }
 
     $scope.ep_replayContent = function() {
-        console.info("yes replay")
+        /*jQuery("#endpage").remove();*/
+        jQuery("#pluginTemplate").hide();
         $rootScope.replayContent();
         var muteElement = document.getElementById("unmute_id");
         if (!_.isNull(muteElement)) {
@@ -48,7 +49,6 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
         }
         AudioManager.unmute();
     }
-
     $scope.showFeedback = function(param) {
         $scope.userRating = param;
         $scope.popUserRating = param;
@@ -190,10 +190,13 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
         }
     };
     $scope.hideCanvas = function(){
-        jQuery('#gameCanvas').css({
-            display: 'none'
+        jQuery("#pluginTemplate").css({
+            display: 'block'
         });
-        jQuery('#overlay').css({display: 'none'})
+       /* jQuery('#gameCanvas').css({
+            display: 'none'
+        });*/
+       /* jQuery('#overlay').css({display: 'none'})*/
     };
     $scope.initEndpage();
     // $rootScope.$on('loadEndPage', function() {
@@ -369,7 +372,7 @@ endPageApp.directive('restart', function($rootScope, $state, $stateParams) {
         link: function(scope) {
             scope.restartContent = function() {
                 console.info('replay')
-                /*$rootScope.replayContent();*/
+                $rootScope.replayContent();
                 //Resetting mute state
                 var muteElement = document.getElementById("unmute_id");
                 if (!_.isNull(muteElement)) {

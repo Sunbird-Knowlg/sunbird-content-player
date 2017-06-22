@@ -16,7 +16,7 @@ org.ekstep.service.controller = new(org.ekstep.service.mainService.extend({
     injectTemplate:function(injectTemplatesFn){
     	this.loadTemplates = injectTemplatesFn;
     },
-    inject: function(templatePath){
+    inject:function(templatePath){
     	this.loadTemplates && this.loadTemplates(templatePath);
     }
 }));

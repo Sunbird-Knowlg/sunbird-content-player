@@ -141,6 +141,8 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
         $rootScope.us_replayContent = function() {
             $scope.endContent('gc_userswitch_replayContent');
             TelemetryService.setUser($rootScope.currentUser);
+            EventBus.dispatch('event:closeUserSwitchingModal')
+            jQuery("#pluginTemplate").hide();
             $scope.startContent();
         }
         $rootScope.us_continueContent = function() {
@@ -173,6 +175,7 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
         }
         org.ekstep.service.controller.initService(loadNgModules);
         org.ekstep.service.controller.injectTemplate(injectTemplates);
+        
         EkstepRendererAPI.addEventListener("event:loadContent", function() {
             var configuration = EkstepRendererAPI.getPreviewData();
             content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
