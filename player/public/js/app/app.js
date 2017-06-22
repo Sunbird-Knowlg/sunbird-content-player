@@ -1053,7 +1053,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 }, {
                     ContentIDsDisplayed: contentIds,
                 }, {
-                    id: $scope.relatedContentItem ? $scope.relatedContentItem.params.resmsgid : "",
+                    id: $scope.relatedContentItem ? $scope.relatedContentItem.responseMessageId : "",
                     type: $scope.relatedContentItem ? $scope.relatedContentItem.id : ''
                 }]
             }
@@ -1122,7 +1122,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     } else if (!_.isEmpty(item.content)) {
                         $scope.showRelatedContent = true;
                         $scope.contentShowMore = true;
-                        item.content.appIcon = item.content.contentData.appIcon;
+                        _.each(item.content, function(content) {
+                            content.appIcon = content.contentData.appIcon;
+                        })
                         list = _.first(_.isArray(item.content) ? item.content : [item.content], 2);
                     }
 

@@ -42,7 +42,7 @@ angular.module('genie-canvas.services', ['ngResource'])
                     genieservice.getContent(id)
                        .then(function(contentData) {
                            if(!_.isUndefined(contentData)){
-                                contentData.isAvailable = item.isAvailableLocally;
+                                contentData.isAvailable = contentData.isAvailableLocally;
                                resolve(contentData.isAvailable);
                            } else {
                                console.error("Content is not available.");
