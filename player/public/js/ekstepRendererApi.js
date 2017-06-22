@@ -897,5 +897,17 @@ window.EkstepRendererAPI = {
     },
     getRenderer: function(){
         return Renderer;
-    }
+    },
+    /**
+     * API to Resolve plugin resource URL. This API would resolve to the repo the plugin is loaded from.
+     * 
+     * @param  {String} pluginId      Plugin ID
+     * @param  {String} pluginVersion Plugin Version
+     * @param  {String} resource resource relative URL
+     * @return {String}          Resolved URL
+     * @memberof EkstepRendererAPI
+     */
+    resolvePluginResource: function (id, ver, resource) {
+         return org.ekstep.pluginframework.pluginManager.resolvePluginResource(id, ver, resource);
+    },
 }

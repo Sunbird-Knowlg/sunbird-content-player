@@ -38,7 +38,7 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
         }
 
     $scope.ep_replayContent = function() {
-        /*jQuery("#endpage").remove();*/
+        jQuery("#endpage").remove();
         jQuery("#pluginTemplate").hide();
         $rootScope.replayContent();
         var muteElement = document.getElementById("unmute_id");
