@@ -12,7 +12,7 @@ org.ekstep.service.mainService = Class.extend({
     initService: function(config) {},
     initialize: function(){
         console.info('main service is intialized');
-    }, 
+    }
 });
 
 /*org.ekstep.service.init should be part of rendrer-bootstarp.js*/
