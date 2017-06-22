@@ -435,7 +435,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
 
             TelemetryService.end();
-            TelemetryService.setUser($rootScope.currentUser);
+            TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
             var data = {};
             data.mode = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
             TelemetryService.start(gameId, version, data);
@@ -713,6 +713,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.stringLeft = 130;
         $scope.selectedRating = 0;
         $rootScope.pageId = "ContentApp-Endpage";
+
         $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-lato credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
 
         $scope.arrayToString = function(array) {
@@ -1219,7 +1220,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $rootScope.users = usersData;
                 $scope.groupLength = (_.where($rootScope.users, {"group": true})).length;
 
-           
+
                 if ($rootScope.users.length == 0) $rootScope.users.push($rootScope.currentUser);
 
                 // _.each($rootScope.users, function(user) {
@@ -1270,7 +1271,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.switchUser = function(replayContent) {
-            UserService.setUser($scope.selectedUser.uid).then(function(data) {                
+            UserService.setUser($scope.selectedUser.uid).then(function(data) {
                 $rootScope.$apply(function() {
                     $rootScope.currentUser = $scope.selectedUser;
                     $rootScope.currentUser.userIndex = $rootScope.sortingIndex -= 1;
