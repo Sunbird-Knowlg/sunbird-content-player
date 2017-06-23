@@ -788,6 +788,7 @@ module.exports = function(grunt) {
                         'www/preview/scripts/script.min.js',
                         'www/preview/scripts/telemetry.min.js',
                         'www/preview/scripts/AudioManager.js', 
+                        'www/preview/coreplugins/LauncherPlugin.js', 
                         'www/preview/styles/*.css'
                     ],
                 }
