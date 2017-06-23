@@ -1,5 +1,5 @@
-var endPageApp = angular.module("endPageApp", []);
-endPageApp.controller("endPageController", function($scope, $rootScope, $state, $stateParams) {
+
+angular.module("genie-canvas").controller("endPageController", function($scope, $rootScope, $state,$element, $stateParams) {
     console.info("EndPage controller is calling");
     $scope.showFeedbackArea = true;
     $scope.commentModel = '';
@@ -26,16 +26,16 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
             $scope.content[key] = null;
         }
     };
-        $scope.showCredits = function(key) {
-            if ($scope.content.imageCredits == null && $scope.content.voiceCredits == null && $scope.content.soundCredits == null) {
-                console.warn("No metadata imageCredits,voiceCredites and soundCredits");
-            }
-            jQuery("#creditsPopup").show();
-            TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {
-                stageId: "ContentApp-CreditsScreen",
-                subtype: "ContentID"
-            });
+    $scope.showCredits = function(key) {
+        if ($scope.content.imageCredits == null && $scope.content.voiceCredits == null && $scope.content.soundCredits == null) {
+            console.warn("No metadata imageCredits,voiceCredites and soundCredits");
         }
+        jQuery("#creditsPopup").show();
+        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {
+            stageId: "ContentApp-CreditsScreen",
+            subtype: "ContentID"
+        });
+    }
 
     $scope.ep_replayContent = function() {
         jQuery("#endpage").remove();
@@ -203,7 +203,7 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
     //     }
     // });
 });
-endPageApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams) {
+angular.module("genie-canvas").controller('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams) {
         $scope.showRelatedContent = false;
         $scope.contentShowMore = false;
         $scope.showRelatedContentHeader = true;
@@ -342,7 +342,7 @@ endPageApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state,
             $scope.init();
         });
 });
-endPageApp.directive('genie', function($rootScope) {
+angular.module("genie-canvas").directive('genie', function($rootScope) {
     return {
         scope: {
             icon: '@'
@@ -363,7 +363,7 @@ endPageApp.directive('genie', function($rootScope) {
         }
     }
 });
-endPageApp.directive('restart', function($rootScope, $state, $stateParams) {
+angular.module("genie-canvas").directive('restart', function($rootScope, $state, $stateParams) {
     return {
         restrict: 'E',
         template: '<div ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/><span> {{languageSupport.replay}} </span></div>',
@@ -383,7 +383,7 @@ endPageApp.directive('restart', function($rootScope, $state, $stateParams) {
         }
     }
 });
-endPageApp.directive('starRating', function($rootScope) {
+angular.module("genie-canvas").directive('starRating', function($rootScope) {
     return {
         //reference: http://jsfiddle.net/manishpatil/2fahpk7s/
         scope: {

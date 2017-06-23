@@ -168,10 +168,7 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
         };
         function injectTemplates(templatePath){
             console.log("inject templates", templatePath);
-            $scope.safeApply(function() {
-                console.log("Safe apply templates");
-                $scope.templates = templatePath;
-            });
+            $scope.templates = templatePath +"?a=" +  Date.now();
         }
         org.ekstep.service.controller.initService(loadNgModules);
         org.ekstep.service.controller.injectTemplate(injectTemplates);
