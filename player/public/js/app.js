@@ -158,11 +158,11 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
             TelemetryService.start(gameId, version, data);
         }
         $scope.templates = "";
-        function loadNgModules(templatePath, controllerPath) {
+        function loadNgModules(templatePath, controllerPath, callback) {
             $ocLazyLoad.load([
                 { type: 'html', path: templatePath },
                 { type: 'js', path: controllerPath }
-            ]);
+            ]).then(callback());
         };
         function injectTemplates(templatePath){
             console.log("inject templates", templatePath);
