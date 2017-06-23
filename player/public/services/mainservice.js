@@ -2,6 +2,7 @@
  * @author Manjunath Davanam <manjunathd@ilimi.in>
  */
 var renderer_services = function() {};
+window.org = { ekstep: {} };
 window.org.ekstep.service = new renderer_services();
 renderer_services = undefined;
 

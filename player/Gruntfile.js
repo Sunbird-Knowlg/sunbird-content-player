@@ -46,15 +46,17 @@ module.exports = function(grunt) {
                     'public/libs/jquery.min.js',
                     'public/libs/jquery.easing.1.3.js',
                     'public/libs/jquery.bookshelfslider.min.js',
-                    'public/libs/toastr.min.js',
                     'public/libs/async.min.js',
-                    'public/libs/ionic.bundle.min.js',
-                    'public/libs/ng-cordova.min.js',
-                    'public/libs/angular-resource.min.js',
-                    'public/libs/date-format.js',
-                    'public/libs/underscore.js',
+                    'public/libs/toastr.min.js',
                     'public/libs/md5.js',
-                    'public/libs/jquery.mCustomScrollbar.concat.min.js'
+                    'public/libs/jquery.mCustomScrollbar.concat.min.js',
+                    'public/libs/underscore.js',
+                    'public/libs/date-format.js',
+                    'public/libs/ionic.bundle.min.js',
+                    'public/libs/angular-resource.min.js',
+                    'public/libs/ng-cordova.min.js',
+                    'public/libs/ocLazyLoad.js',
+                    'public/libs/plugin-framework.min.js'
                 ],
                 dest: 'www/preview/scripts/external.min.js'
             },
@@ -67,14 +69,14 @@ module.exports = function(grunt) {
                     'public/services/webservice.js',
                     'public/services/interfaceService.js',
                     'public/services/controllerservice.js',
+                    'public/js/content-renderer.js',
                     'public/js/main.js',
                     'public/js/app.js',
                     'public/js/detectClient.js',
                     'public/js/ekstepRendererApi.js',
-                    'public/js/content-renderer.js',
                     'public/js/basePlugin.js'
                 ],
-                dest: 'www/preview/scripts/scriptjs.min.js'
+                dest: 'www/preview/scripts/script.min.js'
             },
             telemetry:{
                 src: [
@@ -384,7 +386,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: 'public/',
-                        src: ['assets/**', '!js/tests/**', 'js/*', 'plugins/**', 'json/*', 'libs/*', 'styles/**', 'templates/*', 'index.html', 'preview.html', 'webview.html'],
+                        src: ['assets/**', '!js/tests/**', 'js/*', 'coreplugins/**', 'json/*', 'libs/*', 'styles/**', 'templates/*', 'index.html', 'preview.html', 'webview.html'],
                         dest: 'www/preview/'
                     },
                     {
