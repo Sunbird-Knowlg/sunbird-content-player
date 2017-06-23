@@ -85,7 +85,7 @@ var ItemController = Controller.extend({
                 pass = result.pass;
                 item.score = result.score;
             }
-            if (!_.isUndefined(item.concepts)) var concepts = JSON.parse(item.concepts);
+            if (!_.isUndefined(item.concepts)) var concepts = (!_.isArray(item.concepts) || !_.isObject(item.concepts)) ? JSON.parse(item.concepts) : item.concepts;
             var data = {
                 pass: result.pass,
                 score: item.score,
