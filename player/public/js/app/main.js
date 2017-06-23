@@ -213,7 +213,7 @@ function startTelemetry(id, ver, cb) {
     correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData).then(function(response) {
         var data = {};
-        data.mode = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
+        data.mode = getPreviewMode();
         TelemetryService.start(id, ver, data);
         if (!_.isUndefined(TelemetryService.instance)) {
             var tsObj = _.clone(TelemetryService);
@@ -296,4 +296,14 @@ function compareObject(obj1, obj2) {
         if (typeof (obj1[p]) == 'undefined') return false;
     }
     return true;
+}
+
+function getPreviewMode() {
+    var mode = 'preview';
+    if ("undefined" != typeof cordova) {
+        mode = !_.isUndefined(GlobalContext.config.mode) ? GlobalContext.config.mode : 'play';
+    } else if (EkstepRendererAPI.getPreviewData().context.mode){
+        mode = EkstepRendererAPI.getPreviewData().context.mode;
+    }
+    return mode;
 }
