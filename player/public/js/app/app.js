@@ -1218,7 +1218,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             UserService.getAllUserProfile().then(function(usersData) {
                 console.log("getAllUserProfile()", usersData);
                 $rootScope.users = usersData;
-                $scope.groupLength = (_.where($rootScope.users, {"group": true})).length;
+                $scope.groupLength = (_.where($rootScope.users, {"isGroupUser": true})).length;
 
 
                 if ($rootScope.users.length == 0) $rootScope.users.push($rootScope.currentUser);
