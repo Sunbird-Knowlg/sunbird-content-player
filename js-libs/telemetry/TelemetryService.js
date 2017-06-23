@@ -173,7 +173,7 @@ TelemetryService = {
     setUser: function(user, stageId) {
         var data = user;
         TelemetryService._user = user;
-        data.stageid = stageId;
+        data.stageId = stageId;
         TelemetryService.interact("OTHER", "gc_userswitch", "OTHER", data);
     },
     assess: function(qid, subj, qlevel, data) {

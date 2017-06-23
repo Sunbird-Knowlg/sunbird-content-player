@@ -196,6 +196,7 @@ OverlayManager = {
             // set the last stage data to _contentParams[themeObj]
             var stage = Renderer.theme._currentScene;
             Renderer.theme.setParam(stage.getStagestateKey(), stage._currentState);
+            Renderer.theme._currentStage = undefined;
             window.location.hash = "/content/end/" + GlobalContext.currentContentId;
             AudioManager.stopAll();
         } else {
