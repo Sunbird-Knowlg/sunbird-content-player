@@ -392,6 +392,10 @@ module.exports = function(grunt) {
                     {
                         src: ['public/js/AppConfig.js'], dest: 'www/preview/js/AppConfig.js'
                     }
+                    ,
+                    {
+                        src: ['../js-libs/renderer/manager/AudioManager.js',], dest: 'www/preview/scripts/AudioManager.js'
+                    }
                 ]
             }
 
@@ -779,7 +783,13 @@ module.exports = function(grunt) {
                     addRootSlash: false
                 },
                 files: {
-                    'www/preview/index.html': ['www/preview/scripts/*.js', 'www/preview/styles/*.css'],
+                    'www/preview/index.html': [
+                        'www/preview/scripts/external.min.js',
+                        'www/preview/scripts/script.min.js',
+                        'www/preview/scripts/telemetry.min.js',
+                        'www/preview/scripts/AudioManager.js', 
+                        'www/preview/styles/*.css'
+                    ],
                 }
             }
         }

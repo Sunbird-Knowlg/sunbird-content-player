@@ -28,7 +28,7 @@ Plugin.extend({
                 var dataObj = {
                     'body': renderObj.body,
                     'canvasId': 'gameCanvas',
-                    'path': renderObj.gameRelPath
+                    'path': renderObj.path
                 }
                 instance.load(dataObj);
             } else {
