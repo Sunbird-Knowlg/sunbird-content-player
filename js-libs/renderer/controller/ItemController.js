@@ -66,6 +66,7 @@ var ItemController = Controller.extend({
     },
     evalItem: function() {
         try {
+            var instance = this;
             var item = this.getModel();
             var result;
             var pass = false;
@@ -84,13 +85,14 @@ var ItemController = Controller.extend({
                 pass = result.pass;
                 item.score = result.score;
             }
+            if (!_.isUndefined(item.concepts)) var concepts = (!_.isArray(item.concepts) || !_.isObject(item.concepts)) ? JSON.parse(item.concepts) : item.concepts;
             var data = {
                 pass: result.pass,
                 score: item.score,
                 res: result.res,
-                mmc: item.mmc,
+                mmc: instance.getMMC(item, result),
                 qindex: item.qindex,
-                mc: _.pluck(item.concepts, 'identifier'),
+                mc: _.pluck(concepts, 'identifier'),
                 qtitle: item.title,
                 qdesc: item.description ? item.description : ""
             };
@@ -105,6 +107,29 @@ var ItemController = Controller.extend({
 
         console.info("Item Eval result:", result);
         return result;
+    },
+    getMMC: function(item, result) {
+        try {
+            var mmc = [],
+                obj = {};
+            _.each(result.res, function(each) {
+                Object.assign(obj, each);
+            });
+            if (typeof(item.responses) === "string") item.responses = JSON.parse(item.responses);
+            _.each(item.responses, function(each){
+                // if(each.valus === obj)
+                var truthValue = compareObject(obj, each.values);
+                if(truthValue) {
+                    mmc = (each.mmc);
+                };
+            });
+            return mmc;
+        } catch (e) {
+            console.warn("Item controller failed due to", e);
+            EkstepRendererAPI.logErrorEvent(e,{'type':'content','severity':'error','action':'eval','objectId':item.identifier,'objectType':'question'})
+            showToaster('error', 'Evaluation Fails');
+            ControllerManager.addError('ItemController.evalItem() - OE_ASSESS_END error: ' + e);
+        }
     },
     feedback: function() {
         var message;

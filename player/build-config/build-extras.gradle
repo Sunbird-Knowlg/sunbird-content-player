@@ -51,7 +51,7 @@ dependencies {
 }
 
 task updateBuildNumber() {
-    def appFile =  System.getProperty("user.dir") + '/platforms/android/assets/www/js/app/AppConfig.js'
+    def appFile =  System.getProperty("user.dir") + '/platforms/android/assets/www/js/appConfig.js'
     File file = file(appFile)
     if (file.isFile()) {
         ant.loadfile(srcFile: file, property: file.name)
@@ -59,6 +59,6 @@ task updateBuildNumber() {
         new File(appFile).write(updatedContent, 'UTF-8')
         println "*** Build Number '" + android.defaultConfig.versionName + "' updated in AppConfig.js ***"
     } else {
-        println "*** platforms/android/assets/www/js/app/AppConfig.js file not found ***"
+        println "*** platforms/android/assets/www/js/appConfig.js file not found ***"
     }
 }

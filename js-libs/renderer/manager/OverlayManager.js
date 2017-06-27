@@ -197,6 +197,7 @@ OverlayManager = {
             console.info("redirecting to endpage.");
             var stage = Renderer.theme._currentScene;
             Renderer.theme.setParam(stage.getStagestateKey(), stage._currentState);
+            Renderer.theme._currentStage = undefined;
             EkstepRendererAPI.showEndPage();
             AudioManager.stopAll();
         } else {

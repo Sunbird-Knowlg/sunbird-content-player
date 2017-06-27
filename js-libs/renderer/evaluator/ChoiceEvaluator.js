@@ -32,7 +32,7 @@ MCQEvaluator = {
 					// remember in telemetry what the response was
 					if (opt.selected) {
 						var tuple = {};
-						tuple[opt.value.resindex] = opt.value.resvalue;
+						tuple[opt.value.resvalue] = "true";
 						res.push(tuple);
 					}
 
