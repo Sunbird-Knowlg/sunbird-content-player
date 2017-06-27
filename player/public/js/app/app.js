@@ -313,10 +313,18 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 if (window.StatusBar) {
                     StatusBar.styleDefault();
                 }
+                // To override back button behaviour
+                $ionicPlatform.registerBackButtonAction(function() {
+                    //TODO: Add Telemetry interact for on and Cancle
+                  if (confirm("Press 'OK' to go back to Genie.")) {
+                    backbuttonPressed(EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                  } else {
+                      // Cancle button action comes here
+                      //   alert ("Do nothing !!");
+                      //   event.preventDefault();
+                  }
+                }, 100);
 
-                $ionicPlatform.onHardwareBackButton(function() {
-                    backbuttonPressed($rootScope.pageId);
-                });
                 $ionicPlatform.on("pause", function() {
                     Renderer.pause();
                 });
