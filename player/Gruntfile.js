@@ -39,7 +39,7 @@ module.exports = function(grunt) {
                     'public/styles/toastr.min.css',
                     'public/styles/jquery.mCustomScrollbar.min.css'
                 ],
-                dest: 'www/styles/external.min.css'
+                dest: 'www/styles/renderer.external.min.css'
             },
             externaljs:{
                 src: [
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
                     'public/libs/ocLazyLoad.js',
                     'public/libs/plugin-framework.min.js'
                 ],
-                dest: 'www/scripts/external.min.js'
+                dest: 'www/scripts/renderer.external.min.js'
             },
             script:{
                 src: [
@@ -76,7 +76,7 @@ module.exports = function(grunt) {
                     'public/js/detectClient.js',
                     'public/js/ekstepRendererApi.js',
                 ],
-                dest: 'www/scripts/script.min.js'
+                dest: 'www/scripts/renderer.script.min.js'
             },
             telemetry:{
                 src: [
@@ -84,7 +84,7 @@ module.exports = function(grunt) {
                     'public/libs/date-format.js',
                     '../js-libs/telemetry/*.js'
                 ],
-                dest: 'www/scripts/telemetry.min.js'
+                dest: 'www/scripts/renderer.telemetry.min.js'
             },
             genieservicebridge:{
                 src: [
@@ -420,8 +420,23 @@ module.exports = function(grunt) {
                         src: ['../js-libs/renderer/manager/AudioManager.js',], dest: 'www/scripts/AudioManager.js'
                     }
                 ]
+            },
+            testinit:{
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'www/scripts',
+                        src: ['renderer.external.min.js', 'renderer.script.min.js', 'renderer.telemetry.min.js'],
+                        dest: 'dist'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'www/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs',
+                        src: ['renderer.min.js'],
+                        dest: 'dist'
+                    }
+                ]
             }
-
         },
         clean: {
             before: ["www", "platforms/android/assets/www", "platforms/android/build"],
@@ -811,9 +826,9 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'www/index.html': [
-                        'www/scripts/external.min.js',
-                        'www/scripts/script.min.js',
-                        'www/scripts/telemetry.min.js',
+                        'www/scripts/renderer.external.min.js',
+                        'www/scripts/renderer.script.min.js',
+                        'www/scripts/renderer.telemetry.min.js',
                         'www/scripts/AudioManager.js', 
                         'www/coreplugins/LauncherPlugin.js', 
                         'www/styles/*.css'
@@ -968,6 +983,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('local-preview-build', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js','copy:localPreviewFiles', 'copy:localPreviewMinjs', 'aws_s3:uploadLocalPreviewZip', 'clean:localPreview']);
 // ================= /
-    grunt.registerTask('new-buildPreview', ['mkdir:all', 'copy:newmain', 'concat:css', 'concat:externaljs', 'concat:telemetry', 'concat:script', 'clean:deletefiles', 'injector:prview', 'rename:preview']);
+    grunt.registerTask('new-buildPreview', ['mkdir:all', 'uglify:renderermin', 'copy:newmain', 'concat:css', 'concat:externaljs', 'concat:telemetry', 'concat:script', 'clean:deletefiles', 'injector:prview', 'rename:preview']);
     grunt.registerTask('buildapp', ['new-buildPreview', 'clean:after', 'rename:main', 'injector:prview', 'set-platforms', 'add-cordova-plugin-genieservices', 'cordovacli:add_plugins','copy:unsigned', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('test-setup', ['new-buildPreview', 'copy:testinit', 'clean']);
 };
