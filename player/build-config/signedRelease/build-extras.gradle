@@ -1,0 +1,65 @@
+ext {
+    apply from: 'CordovaLib/cordova.gradle'
+    cdvMinSdkVersion = 17
+    cdvBuildMultipleApks=false 
+}
+
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url  "https://platform.ekstep.in/downloads/content/repositories/production" }
+    }
+}
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+    maven { url "https://platform.ekstep.in/downloads/content/repositories/production" }
+}
+
+android {
+
+    packagingOptions {
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+    }
+
+    defaultConfig {
+        versionName System.getenv("BUILD_NUMBER") ?: "local"
+        setProperty("archivesBaseName", "contentapp-$versionName")
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("${keystore}")
+            storePassword "${keystore_password}"
+            keyAlias "${key_alias}"
+            keyPassword "${key_password}"
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    compile "org.apache.commons:commons-compress:1.10"
+    compile "commons-io:commons-io:2.4"
+    compile "org.ekstep.genieservices:sdks:1.0.+@aar"
+    compile "org.ekstep.genieservices:aidls:1.0.+@aar"
+}
+
+task updateBuildNumber() {
+    def appFile =  System.getProperty("user.dir") + '/platforms/android/assets/www/js/app/AppConfig.js'
+    File file = file(appFile)
+    if (file.isFile()) {
+        ant.loadfile(srcFile: file, property: file.name)
+        def updatedContent = file.getText('UTF-8').replaceAll("BUILD_NUMBER", android.defaultConfig.versionName)
+        new File(appFile).write(updatedContent, 'UTF-8')
+        println "*** Build Number '" + android.defaultConfig.versionName + "' updated in AppConfig.js ***"
+    } else {
+        println "*** platforms/android/assets/www/js/app/AppConfig.js file not found ***"
+    }
+}

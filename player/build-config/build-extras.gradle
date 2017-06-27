@@ -1,0 +1,64 @@
+ext {
+    apply from: 'CordovaLib/cordova.gradle'
+    cdvMinSdkVersion = 16
+    cdvBuildMultipleApks = false
+}
+
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url  "https://platform.ekstep.in/downloads/content/repositories/releases" }
+   }
+}
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+    maven { url "https://platform.ekstep.in/downloads/content/repositories/releases" }
+}
+
+android {
+
+    packagingOptions {
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+    }
+
+    defaultConfig {
+        versionName System.getenv("BUILD_NUMBER") ? "2.2." + System.getenv("BUILD_NUMBER"): "local"
+        setProperty("archivesBaseName", "geniecanvas-$versionName")
+    }
+
+    libraryVariants.all { variant ->
+        def buildType = variant.buildType
+        println "*** Build Type:" + buildType.name + " ***"
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.aar')) {
+                def fileName = "${archivesBaseName}-${buildType.name}.aar"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
+}
+
+dependencies {
+    compile "org.apache.commons:commons-compress:1.10"
+    compile "commons-io:commons-io:2.4"
+
+    // For undubled Genie Initegration
+    compile "org.ekstep.genieservices:genie-integration:0.1.229@aar"
+    compile "org.ekstep.genieservices:commons:0.1.229@jar"
+}
+
+task updateBuildNumber() {
+    def appFile =  System.getProperty("user.dir") + '/platforms/android/assets/www/js/app/AppConfig.js'
+    File file = file(appFile)
+    if (file.isFile()) {
+        ant.loadfile(srcFile: file, property: file.name)
+        def updatedContent = file.getText('UTF-8').replaceAll("BUILD_NUMBER", android.defaultConfig.versionName)
+        new File(appFile).write(updatedContent, 'UTF-8')
+        println "*** Build Number '" + android.defaultConfig.versionName + "' updated in AppConfig.js ***"
+    } else {
+        println "*** platforms/android/assets/www/js/app/AppConfig.js file not found ***"
+    }
+}
