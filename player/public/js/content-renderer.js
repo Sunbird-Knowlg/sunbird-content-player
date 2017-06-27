@@ -6,9 +6,12 @@ content_renderer.prototype._ = window._;
 window.org.ekstep.contentrenderer = new content_renderer();
 window.previewData = {'context': {}, 'config': {} }; 
 org.ekstep.contentrenderer.init = function() {
+    /**
+     * TODO: Need To handle Synchronus flow of org.ekstep.contentrenderer.setContent and getContent here
+     * device and web rendrer should be handle here
+     */ 
     window.initializePreview = org.ekstep.contentrenderer.initializePreview;
     window.setContentData = org.ekstep.contentrenderer.setContent;
-    org.ekstep.service.init();
     console.info('Content renderer start');
 };
 org.ekstep.contentrenderer.setContent = function(metadata, data, configuration){
@@ -49,6 +52,7 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
     localStorageGC.clear();
     AppConfig = _.extend(AppConfig, configuration.config)
     window.previewData = configuration;
+    org.ekstep.service.renderer.api.setBaseUrl(AppConfig.host + AppConfig.apislug);
     configuration.config.repos && configuration.config.plugins && EkstepRendererAPI.dispatchEvent("repo:intialize");
     EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
     addWindowUnloadEvent();
@@ -59,17 +63,15 @@ org.ekstep.contentrenderer.initPlugins = function(gamePath) {
     // @ plugin:error event is dispatching from the plugin-framework 
     // If any of the plugin is failed to load OR invoke then plugin:error event will trigger
     if (!EkstepRendererAPI.hasEventListener('plugin:error')) {
-        EkstepRendererAPI.addEventListener('plugin:error', this.logErrorEventTelemetry, this);
+        EkstepRendererAPI.addEventListener('plugin:error', org.ekstep.contentrenderer.pluginError, this);
     }
     pluginsPath = isCoreplugin ? AppConfig.CORE_PLUGINSPATH : (isbrowserpreview ? AppConfig.PREVIEW_PLUGINSPATH : AppConfig.DEVICE_PLUGINSPATH)
     var pluginRepo = gamePath + pluginsPath;
-    var pfConfig = {
-        env: "renderer",
-        async: async,
-        pluginRepo: pluginRepo,
-        repos: [org.ekstep.pluginframework.publishedRepo]
-    };
+    var pfConfig = {env: "renderer", async: async, pluginRepo: pluginRepo, repos: [org.ekstep.pluginframework.publishedRepo] };
     org.ekstep.pluginframework.initialize(pfConfig);
+};
+org.ekstep.contentrenderer.pluginError = function(event, data){
+    EkstepRendererAPI.logErrorEvent(data.err, {'type': 'plugin', 'action': data.action, 'objectType': data.plugin,'objectId':data.objectid});
 };
 org.ekstep.contentrenderer.loadPlugins = function(pluginManifest, manifestMedia, cb) {
     var pluginObj = []
@@ -114,7 +116,7 @@ org.ekstep.contentrenderer.progressbar = function(switcher) {
     }
 };
 org.ekstep.contentrenderer.getContentMetadata = function(id, cb) {
-    org.ekstep.services.contentservices.getContent(id)
+    org.ekstep.service.content.getContent(id)
         .then(function(data) {
             org.ekstep.contentrenderer.setContentMetadata(data);
             if (!_.isUndefined(cb)) {
@@ -132,6 +134,9 @@ org.ekstep.contentrenderer.setContentMetadata = function(contentData) {
     GlobalContext.currentContentId = data.identifier;
     GlobalContext.currentContentMimeType = data.mimeType;
     if (_.isUndefined(data.localData)) {
+        data.localData = _.clone(data.contentData);
+    }
+    if (_.isUndefined(data.contentData)) {
         data.localData = _.clone(contentData);
     } else {
         data = data.localData;
@@ -153,7 +158,7 @@ org.ekstep.contentrenderer.getContentBody = function() {
     if (!_.isUndefined(configuration.context.authToken)) {
         headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
     }
-    org.ekstep.services.contentservices.getContentBody(id, headers).then(function(data) {
+    org.ekstep.service.content.getContentBody(id, headers).then(function(data) {
             content["body"] = data.body;
             launchInitialPage(content.metadata);
         })
@@ -180,7 +185,7 @@ org.ekstep.contentrenderer.web = function() {
     if (!_.isUndefined(configuration.context.authToken)) {
         headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
     }
-    org.ekstep.services.contentservices.getContentMetadata(id, headers)
+    org.ekstep.service.content.getContentMetadata(id, headers)
         .then(function(data) {
             org.ekstep.contentrenderer.setContentMetadata(data);
         })

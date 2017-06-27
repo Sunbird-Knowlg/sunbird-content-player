@@ -47,9 +47,10 @@ var AppLables = {
     "nextContent": "NEXT CONTENT",
     "comment": "write your comment...",
     "mute": "on",
-    "change": "change",
+    "change": "Change",
     "group": "Group",
     "child": "Child",
     "groupFallbackText": "You have not created any group",
-    "userSwitcherTitle": "SELECT A CHILD OR A GROUP"
+    "userSwitcherTitle": "SELECT A CHILD OR A GROUP",
+    "anonymousUserName": "Anonymous"
 }

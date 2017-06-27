@@ -15,35 +15,33 @@ org.ekstep.service.local = new(org.ekstep.service.mainService.extend({
             return this.getAPI(this.contentList);
         }
     },
+
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
-            var result = {};
-            result.status = "success";
-            $.getJSON("assets/user_list/user_list.json",function(data){
-                result.data = data.userList[0];
-                resolve(result);
-            })
-        });
-    },
-    getUsersList: function() {
-        return new Promise(function(resolve, reject) {
-            var result = {};
-            result.status = "success";
-            $.getJSON("assets/user_list/user_list.json",function(data){
+            $.getJSON("assets/user_list/user_list.json", function(data) {
                 // console.log("===== data =====", data);
-                result.data = data.userList;
-                resolve(result);
+                if (data.length == 0) {
+                    data = [{"uid": "9g8h4ndAnonymouscg56ngd"}];
+                }
+                resolve(data[0]);
             })
         });
     },
-    setCurrentUser: function(uid) {
+
+    getAllUserProfile: function() {
         return new Promise(function(resolve, reject) {
-            var result = {};
-            result.status = "success";
-            // result.data = usersList;
-            resolve(result);
+            $.getJSON("assets/user_list/user_list.json",function(data){
+                resolve(data);
+            })
         });
     },
+
+    setUser: function(uid) {
+        return new Promise(function(resolve, reject) {
+            resolve(true);
+        });
+    },
+
     getMetaData: function() {
         return new Promise(function(resolve, reject) {
             var result = {};
@@ -54,6 +52,7 @@ org.ekstep.service.local = new(org.ekstep.service.mainService.extend({
             resolve(result);
         });
     },
+
     getContent: function(id, url) {
         if(isbrowserpreview) {
             return new Promise(function(resolve, reject) {

@@ -817,8 +817,8 @@ window.EkstepRendererAPI = {
     * This api will return the list of users on the Device
     * @memberof EkstepRendererAPI
     */
-   getUserList: function() {
-       EkstepRendererAPI.dispatchEvent('event:getuserlist');
+   getAllUserProfile: function() {
+       EkstepRendererAPI.dispatchEvent('event:getAllUserProfile');
        console.log("userList: ", userList);
        return userList;
     //    EkstepRendererAPI.dispatchEvent('actionReplay', data, target);
@@ -910,4 +910,18 @@ window.EkstepRendererAPI = {
     resolvePluginResource: function (id, ver, resource) {
          return org.ekstep.pluginframework.pluginManager.resolvePluginResource(id, ver, resource);
     },
+    showEndPage:function(){
+        this.dispatchEvent('renderer:init:endpage');
+    },
+    showOverly:function(){
+        jQuery('#overlay').css({display: 'block'})
+    },
+    hideOverly:function(){
+        jQuery('#overlay').css({display: 'none'})
+    }
+
+    /*hideEndPage: function() {
+        jQuery("#pluginTemplate").hide();
+        jQuery("#endpage").remove();
+    }*/
 }

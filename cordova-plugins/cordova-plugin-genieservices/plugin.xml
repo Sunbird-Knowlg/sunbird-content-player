@@ -27,6 +27,6 @@
         <source-file src="src/android/TelemetryResponse.java" target-dir="src/org/ekstep/geniecanvas" />
         <source-file src="src/android/UserProfileResponse.java" target-dir="src/org/ekstep/geniecanvas" />
         <source-file src="src/android/GenieServicesResponse.java" target-dir="src/org/ekstep/geniecanvas" />
-        <source-file src="src/android/GenieServicesListResponse.java" target-dir="src/org/ekstep/geniecanvas" />
+        <!-- <source-file src="src/android/GenieServicesListResponse.java" target-dir="src/org/ekstep/geniecanvas" /> -->
     </platform>
 </plugin>

@@ -1,23 +1,13 @@
-var packageName = "org.ekstep.quiz.app",
-    version = AppConfig.version,
-    packageNameDelhi = "org.ekstep.delhi.curriculum",
-    geniePackageName = "org.ekstep.genieservices",
-    currentUser = {},
-    userList = [],
+var packageName = "org.ekstep.quiz.app",version = AppConfig.version, packageNameDelhi = "org.ekstep.delhi.curriculum",
+    geniePackageName = "org.ekstep.genieservices", currentUser = {}, userList = [],
     CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
     ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive",
-    stack = new Array(),
-    collectionChildrenIds = new Array(),
-    collectionPath = new Array(),
-    collectionPathMap = {},
-    content = {},
+    stack = new Array(), collectionChildrenIds = new Array(), collectionPath = new Array(), collectionPathMap = {},
     collectionChildren = true,
-    defaultMetadata = {"identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author": "EkStep", "localData": {"questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{"identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept"}], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true, "path": "fixture-stories/item_sample"},
+    content = {}, defaultMetadata = {"identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author": "EkStep", "localData": {"questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{"identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept"}], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true, "path": "fixture-stories/item_sample"},
     config = {showEndPage: true, showHTMLPages: true }, 
-    isbrowserpreview = getUrlParameter("webview")
-    isCoreplugin = undefined,
-    Renderer = undefined;
+    isbrowserpreview = getUrlParameter("webview"), isCoreplugin = undefined, Renderer = undefined;
 function updateContentData($state, contentId) {
     if (_.isUndefined($state)) {
         console.error("updateContentData($state) - $state is not defined.");
@@ -27,7 +17,6 @@ function updateContentData($state, contentId) {
         'itemId': contentId
     });
 }
-
 function getContentObj(data) {
     if (_.isObject(data.body))
         return data.body;
@@ -40,9 +29,7 @@ function getContentObj(data) {
         data = JSON.parse(tempData.body)
     return data;
 }
-
 function launchInitialPage(appInfo) {
-    // Collection Mimetype check for the launching of the localdevlopment
     if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
        window.location.hash = "/play/content/" + GlobalContext.game.id;
     } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
@@ -59,7 +46,7 @@ document.body.addEventListener("logError", telemetryError, false);
 function telemetryError(e) {
     var $body = angular.element(document.body);
     var $rootScope = $body.scope().$root;
-    document.body.removeEventListener("logError");
+    document.body.removeEventListener("logError",e);
 }
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
@@ -108,7 +95,7 @@ function backbuttonPressed(pageId) {
 // So, change exitApp to do the same.
 function exitApp(pageId) {
     TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {
-        stageId: ((pageId == "renderer" && GlobalContext.config.appInfo.mimeType != "application/vnd.ekstep.content-collection" ? Renderer.theme._currentStage : pageId))
+        stageId: ((pageId == "ContentApp-Renderer" && GlobalContext.config.appInfo.mimeType != "application/vnd.ekstep.content-collection" ? Renderer.theme._currentStage : pageId))
     });
     try {
         TelemetryService.exit();
@@ -178,7 +165,8 @@ function objectAssign() {
     }
 }
 
-// GC - GenieCanvas
+/*TODO: Need to Remove the LocalStorage Logic
+Now HTML Contetnts are opening inside iframe */
 var localStorageGC = {
     name: 'canvasLS',
     isHtmlContent: false,
@@ -246,7 +234,7 @@ function startTelemetry(id, ver, cb) {
     correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData).then(function(response) {
         var data = {};
-        data.mode = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
+        data.mode =  getPreviewMode();
         TelemetryService.start(id, ver, data);
         if (!_.isUndefined(TelemetryService.instance)) {
             var tsObj = _.clone(TelemetryService);
@@ -302,3 +290,40 @@ function addWindowUnloadEvent() {
         }
     }
 }
+function compareObject(obj1, obj2) {
+    //Loop through properties in object 1
+    for (var p in obj1) {
+        //Check property exists on both objects
+        if (obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) return false;
+
+        switch (typeof (obj1[p])) {
+            //Deep compare objects
+            case 'object':
+                if (!Object.compare(obj1[p], obj2[p])) return false;
+                break;
+            //Compare function code
+            case 'function':
+                if (typeof (obj2[p]) == 'undefined' || (p != 'compare' && obj1[p].toString() != obj2[p].toString())) return false;
+                break;
+            //Compare values
+            default:
+                if (obj1[p] != obj2[p]) return false;
+        }
+    }
+
+    //Check object 2 for any extra properties
+    for (var p in obj2) {
+        if (typeof (obj1[p]) == 'undefined') return false;
+    }
+    return true;
+}
+
+function getPreviewMode() {
+   var mode = 'preview';
+    if ("undefined" != typeof cordova) {
+        mode = !_.isUndefined(GlobalContext.config.mode) ? GlobalContext.config.mode : 'play';
+    } else if (EkstepRendererAPI.getPreviewData().context.mode){
+        mode = EkstepRendererAPI.getPreviewData().context.mode;
+    }
+    return mode;
+} 

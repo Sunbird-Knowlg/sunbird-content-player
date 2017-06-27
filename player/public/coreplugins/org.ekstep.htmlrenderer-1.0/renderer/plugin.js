@@ -1,7 +1,9 @@
 Plugin.extend({
     initialize: function() {
-        console.info('HTML Renderer intialize done');
+        console.info('HTML Renderer intialize is done');
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.launch, this);
+        EkstepRendererAPI.addEventListener('renderer:show:overlay',this.showOverlay,this);
+        EkstepRendererAPI.addEventListener('renderer:hide:overlay',this.hideOverlay,this);
     },
     launch: function(evt, data) {
         console.info('HTML plugin init')
@@ -36,8 +38,11 @@ Plugin.extend({
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
     },
-    initializeEndpage: function(){
-         EkstepRendererAPI.dispatchEvent('renderer:init:endpage');
+    showOverlay:function(){
+        EkstepRendererAPI.showOverlay();
+    },
+    hideOverlay:function(){
+        EkstepRendererAPI.hideOverlay();
     },
 });
 //# sourceURL=HTMLRendererePlugin.js

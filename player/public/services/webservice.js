@@ -1,22 +1,33 @@
 org.ekstep.service.web = new(org.ekstep.service.mainService.extend({
-    init:function(){
+    init: function() {
         console.info('Web service init');
     },
-    initialize:function(){
+    initialize: function() {
         console.info("Web service intialize");
     },
     api: {
+        _baseUrl: undefined,
         contentBasePath: '/content/v3/read/',
         languageBasePath: '/language/v3/',
         telemetryBasePath: '/data/v3/telemetry',
         getAPI: function() {
-            return AppConfig.host + AppConfig.apislug + this.contentBasePath;
+            return this._baseUrl + this.contentBasePath;
         },
         getLanguageAPI: function() {
-            return AppConfig.host + AppConfig.apislug + this.languageBasePath;
+            return this._baseUrl + this.languageBasePath;
         },
-        getTelemetryAPI: function() {
-            return AppConfig.host + AppConfig.apislug + this.telemetryBasePath;
+        getTelematyAPI: function() {
+            return this._baseUrl + this.telemetryBasePath;
+        },
+        setBaseUrl: function(baseUrl) {
+            this._baseUrl = baseUrl;
+        },
+        getBaseUrl: function() {
+            if (_.isUndefined(this._baseUrl)) {
+                console.log("Base path is undefined.");
+                return;
+            }
+            return this._baseUrl;
         }
     },
     callApi: function(url, type, headersParam, data, cb) {
@@ -32,31 +43,23 @@ org.ekstep.service.web = new(org.ekstep.service.mainService.extend({
     },
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
-            var result = {};
-            result.status = "success";
             $.getJSON("assets/user_list/user_list.json", function(data) {
-                result.data = data.userList[0];
-                resolve(result);
+                resolve(data[0]);
             })
         });
     },
 
-    getUsersList: function() {
+    getAllUserProfile: function() {
         return new Promise(function(resolve, reject) {
-            var result = {};
-            result.status = "success";
             $.getJSON("assets/user_list/user_list.json", function(data) {
-                result.data = data.userList;
-                resolve(result);
+                resolve(data);
             })
         });
     },
 
-    setCurrentUser: function(uid) {
+    setUser: function(uid) {
         return new Promise(function(resolve, reject) {
-            var result = {};
-            result.status = "success";
-            resolve(result);
+            resolve(true);
         });
     },
 
@@ -136,8 +139,18 @@ org.ekstep.service.web = new(org.ekstep.service.mainService.extend({
     sendTelemetry: function(data, headersParam) {
         var instance = this;
         return new Promise(function(resolve, reject) {
+            // var teleAuth = AppConfig.telemetryApiAuth;
+            // var basicAuth = 'Basic ' + btoa(atob(teleAuth.username) + ":" + atob(teleAuth.password));
             headersParam['dataType'] = 'json';
-            instance.callApi(org.ekstep.service.web.api.getTelemetryAPI(), 'POST', headersParam, JSON.stringify(data), function(resp) {
+            instance.callApi(org.ekstep.service.web.api.getTelematyFullAPI(), 'POST', headersParam, JSON.stringify(data), function(resp) {
+                // jQuery.ajax({
+                //     type: 'POST',
+                //     url: org.ekstep.service.web.api.getTelematyFullAPI(),
+                //     headers: {"Authorization": basicAuth, "Content-Type": "application/json", },
+                //     data: JSON.stringify(data),
+                //     dataType: "json",
+                // })
+                // .done(function(resp){
                 var result = {};
                 if (!resp.error) {
                     result.data = resp;

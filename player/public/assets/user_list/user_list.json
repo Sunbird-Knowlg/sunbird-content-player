@@ -1,48 +1,46 @@
-{
-    "userList": [{
-        "avatar": "avatar_anonymous.png",
+[
+    {
+        "avatar": "assets/icons/avatar_anonymous.png",
+        "profileImage": "assets/icons/avatar_anonymous.png",
         "gender": "male",
-        "handle": "handle1",
+        "handle": "Anonymous",
         "age": 6,
         "standard": -1,
-        "uid": "9g8h4ndAnonymouscg56ngd",
-        "name": "Anonymous"
+        "uid": "9g8h4ndAnonymouscg56ngd"
     },
         {
-        "avatar": "avatar_normal_1.png",
+        "avatar": "assets/icons/avatar_normal_1.png",
+        "profileImage": "assets/icons/avatar_normal_1.png",
         "gender": "male",
-        "handle": "handle1",
+        "handle": "Vinod",
         "age": 6,
         "standard": -1,
-        "uid": "69wVinod8r81f",
-        "name": "Vinod"
+        "uid": "69wVinod8r81f"
     }, {
-        "avatar": "avatar_normal_2.png",
+        "avatar": "assets/icons/avatar_normal_2.png",
+        "profileImage": "assets/icons/avatar_normal_2.png",
         "gender": "male",
-        "handle": "handle1",
+        "handle": "Shringeri",
         "age": 6,
         "standard": -1,
-        "uid": "6f5fShringeriv16s",
-        "name": "Shringeri"
+        "uid": "6f5fShringeriv16s"
     }, {
-        "avatar": "avatar_normal_3.png",
+        "avatar": "assets/icons/avatar_normal_3.png",
+        "profileImage": "assets/icons/avatar_normal_3.png",
         "gender": "Female",
-        "handle": "handle1",
+        "handle": "Mala",
         "age": 6,
         "standard": -1,
-        "uid": "6ws55Mala1fvw6s5",
-        "name": "Mala"
+        "uid": "6ws55Mala1fvw6s5"
     },
     {
-        "avatar": "img_badge01.png",
+        "avatar": "assets/icons/img_badge01.png",
+        "profileImage": "assets/icons/img_badge01.png",
         "gender": "Female",
-        "handle": "handle1",
+        "handle": "Group-1",
         "age": 6,
         "standard": -1,
         "uid": "6ws551fGroup-1vwpeoijfw6s5",
-        "name": "Group-1",
-        "group": true
+        "isGroupUser": true
     }
 ]
-
-}

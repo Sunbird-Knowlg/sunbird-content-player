@@ -67,6 +67,7 @@ module.exports = function(grunt) {
                     'public/js/appMessages.js',
                     'public/js/main.js',
                     'public/js/app.js',
+                    'public/js/basePlugin.js',
                     'public/services/mainservice.js',
                     'public/services/webservice.js',
                     'public/services/interfaceService.js',
@@ -74,7 +75,6 @@ module.exports = function(grunt) {
                     'public/services/controllerservice.js',
                     'public/js/detectClient.js',
                     'public/js/ekstepRendererApi.js',
-                    'public/js/basePlugin.js'
                 ],
                 dest: 'www/scripts/script.min.js'
             },
