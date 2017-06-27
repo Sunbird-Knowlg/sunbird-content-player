@@ -2,7 +2,6 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
     init: function() {
         console.info('Interface service init');
     },
-    _SUPPORTED_MIMETYPES: ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.content-collection"],
     getContentList: function(filter, childrenIds) {
         return new Promise(function(resolve, reject) {
             org.ekstep.service.content._filterContentList(filter, childrenIds)
@@ -196,7 +195,7 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
     },
     _getAvailableContentList: function(list) {
         list = _.filter(list, function(item) {
-            return item.isAvailable && _.indexOf(org.ekstep.service.content._SUPPORTED_MIMETYPES, item.mimeType) > -1;
+            return item.isAvailable && _.indexOf(AppConfig.MIMETYPES, item.mimeType) > -1;
         });
         list = _.map(list, function(item) {
             return org.ekstep.service.content._prepareContent(item);

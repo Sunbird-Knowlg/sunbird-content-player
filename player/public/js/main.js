@@ -1,12 +1,8 @@
-var packageName = "org.ekstep.quiz.app",version = AppConfig.version, packageNameDelhi = "org.ekstep.delhi.curriculum",
+var packageName = "org.ekstep.quiz.app", version = AppConfig.version, packageNameDelhi = "org.ekstep.delhi.curriculum",
     geniePackageName = "org.ekstep.genieservices", currentUser = {}, userList = [],
-    CONTENT_MIMETYPES = ["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
-    ANDROID_PKG_MIMETYPE = "application/vnd.android.package-archive",
     stack = new Array(), collectionChildrenIds = new Array(), collectionPath = new Array(), collectionPathMap = {},
-    collectionChildren = true,
-    content = {}, defaultMetadata = {"identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author": "EkStep", "localData": {"questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{"identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept"}], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true, "path": "fixture-stories/item_sample"},
-    config = {showEndPage: true, showHTMLPages: true }, 
+    collectionChildren = true, content = {}, config = {showEndPage: true, showHTMLPages: true }, 
     isbrowserpreview = getUrlParameter("webview"), isCoreplugin = undefined, Renderer = undefined;
 function updateContentData($state, contentId) {
     if (_.isUndefined($state)) {
@@ -30,15 +26,10 @@ function getContentObj(data) {
     return data;
 }
 function launchInitialPage(appInfo) {
-    if (CONTENT_MIMETYPES.indexOf(appInfo.mimeType) > -1) {
+    if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
        window.location.hash = "/play/content/" + GlobalContext.game.id;
-    } else if ((COLLECTION_MIMETYPE == appInfo.mimeType) ||
-        (ANDROID_PKG_MIMETYPE == appInfo.mimeType && appInfo.code == packageName)) {
-        if (!isbrowserpreview) {
-             window.location.hash = "/content/list/" + GlobalContext.game.id
-        } else {
-            console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
-        }
+    }else{
+        !isbrowserpreview ?  window.location.hash = "/content/list/" + GlobalContext.game.id : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
     }
 }
 document.body.addEventListener("logError", telemetryError, false);

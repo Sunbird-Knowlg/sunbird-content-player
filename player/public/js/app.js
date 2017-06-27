@@ -166,7 +166,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         org.ekstep.service.controller.injectTemplate(injectTemplates);
         EkstepRendererAPI.addEventListener("event:loadContent", function() {
             var configuration = EkstepRendererAPI.getPreviewData();
-            content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
+            content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? AppConfig.DEFAULT_METADATA : configuration.metadata
             if (_.isUndefined(configuration.data)) {
                 org.ekstep.contentrenderer.web(configuration.context.contentId);
             } else {

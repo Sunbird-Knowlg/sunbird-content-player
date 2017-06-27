@@ -16,7 +16,7 @@ org.ekstep.contentrenderer.init = function() {
 };
 org.ekstep.contentrenderer.setContent = function(metadata, data, configuration){
     if (_.isUndefined(metadata) || _.isNull(metadata)) {
-        content.metadata = defaultMetadata
+        content.metadata = AppConfig.DEFAULT_METADATA
     } else {
         content.metadata = metadata;
     }
