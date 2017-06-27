@@ -105,7 +105,7 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
             })
-    }).controller('BaseCtrl', function($scope,$rootScope, $state,$ocLazyLoad,$stateParams, appConstants) {
+    }).controller('BaseCtrl', function($scope, $rootScope, $compile, $state, $ocLazyLoad, $stateParams, appConstants) {
         $rootScope.replayContent = function() {
             $scope.endContent('gc_replay');
             $scope.startContent();
@@ -157,22 +157,35 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
             data.mode = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
             TelemetryService.start(gameId, version, data);
         }
+
         $scope.templates = "";
+        $scope.overlayTemplatePath = "";
         function loadNgModules(templatePath, controllerPath, callback) {
             $ocLazyLoad.load([
                 { type: 'html', path: templatePath },
                 { type: 'js', path: controllerPath }
-            ]).then(callback());
-        };
-        function injectTemplates(templatePath){
-            console.log("inject templates", templatePath);
-            $scope.safeApply(function() {
-                console.log("Safe apply templates");
-                $scope.templates = templatePath;
+            ]).then(function(){
+                injectTemplates(templatePath);
+                if(callback) callback();
             });
+        };
+        function injectTemplates(templatePath, toElement) {
+            console.log("inject templates", templatePath);
+
+            //$scope.templates = templatePath +"?a=" +  Date.now();
+            // if(toElement) {
+                $scope.overlayTemplatePath = templatePath;
+                var el = angular.element("#gameArea");
+                /*var html = '<ng-include src="'+templatePath+'"/>';
+                var gameArea = angular.element("#gameArea");
+                gameArea.append(html);
+                var el = angular.element(html);*/
+                $compile(el.contents())($scope);
+                $scope.safeApply();
+            // }
         }
         org.ekstep.service.controller.initService(loadNgModules);
-        org.ekstep.service.controller.injectTemplate(injectTemplates);
+        org.ekstep.service.controller.injectTemplate(injectTemplates, null);
         EkstepRendererAPI.addEventListener("event:loadContent", function() {
             var configuration = EkstepRendererAPI.getPreviewData();
             content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
@@ -882,7 +895,19 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
             template: '<a href="javascript:void(0)" ng-click="goToLastPage()"><img ng-src="{{imageBasePath}}icn_back_page.png"/></a>',
             link: function(scope) {}
         }
-    }).directive('userSwitcher', function($rootScope, $compile) {
+    }).directive('dynamic', function ($compile) {
+      return {
+        restrict: 'A',
+        replace: true,
+        link: function (scope, ele, attrs) {
+          scope.$watch(attrs.dynamic, function(html) {
+            ele.html(html);
+            $compile(ele.contents())(scope);
+          });
+        }
+      };
+    })
+    .directive('userSwitcher', function($rootScope, $compile) {
         return {
             restrict: 'E',
             scope: {

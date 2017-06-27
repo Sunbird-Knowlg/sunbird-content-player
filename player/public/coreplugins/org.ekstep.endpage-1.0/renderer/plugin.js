@@ -19,8 +19,8 @@ Plugin.extend({
     },
     showEndPage:function(){
         console.info('Endpage display'); 
-        this.configEndPage();
-        org.ekstep.service.controller.inject(templatePath);
+        //this.configEndPage();
+        //org.ekstep.service.controller.inject(templatePath);
     },
     configEndPage:function(){
         console.info("Config end page");
