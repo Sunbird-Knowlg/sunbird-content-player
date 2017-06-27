@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         },
         karma: {
             unit: {
-                configFile: 'test/karma.conf.js',
+                configFile: '../js-libs/renderer/plugin/test/karma.plugin.config.js',
                 autoWatch: false,       //vinu : autoWatch: true
                 singleRun: true         //vinu : singleRun: false
               }
@@ -946,7 +946,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['uglify:renderer', 'uglify:testRenderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js']);
     grunt.registerTask('build-all', ['uglify:renderer', 'uglify:testRenderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
 
-    grunt.registerTask('karma-test', ['default','karma:unit', 'clean:minjs']);
+    grunt.registerTask('karma-test', ['karma:unit']);
     grunt.registerTask('build-jsdoc', ['jsdoc', 'compress', ]);
 
     grunt.registerTask('build-js', ['uglify:renderer', 'uglify:testRenderer', 'uglify:pluginLib',  'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS', 'clean:minjs']);

@@ -144,12 +144,6 @@ org.ekstep.contentrenderer.setContentMetadata = function(contentData) {
     if ("undefined" == typeof cordova) {
         org.ekstep.contentrenderer.getContentBody(content.metadata.identifier);
       }
-    /*  $rootScope.safeApply(function() {
-          $rootScope.content = data;
-      });
-      if ("undefined" == typeof cordova) {
-          $rootScope.getContentBody(content.metadata.identifier);
-      }*/
 };
 org.ekstep.contentrenderer.getContentBody = function() {
     var configuration = EkstepRendererAPI.getPreviewData();
