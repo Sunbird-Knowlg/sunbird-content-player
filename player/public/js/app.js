@@ -105,7 +105,7 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
             })
-    }).controller('BaseCtrl', function($scope, $rootScope, $compile, $state, $ocLazyLoad, $stateParams, appConstants) {
+    }).controller('BaseCtrl', function($scope, $rootScope, $compile, $state, $timeout, $ocLazyLoad, $stateParams, appConstants) {
         $rootScope.replayContent = function() {
             $scope.endContent('gc_replay');
             $scope.startContent();
@@ -158,34 +158,33 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
             TelemetryService.start(gameId, version, data);
         }
 
-        $scope.templates = "";
-        $scope.overlayTemplatePath = "";
+        $scope.templates = { };
         function loadNgModules(templatePath, controllerPath, callback) {
             $ocLazyLoad.load([
                 { type: 'html', path: templatePath },
                 { type: 'js', path: controllerPath }
             ]).then(function(){
-                injectTemplates(templatePath);
-                if(callback) callback();
+                // injectTemplates(templatePath);
+                if(callback) callback(injectTemplates);
             });
         };
-        function injectTemplates(templatePath, toElement) {
+
+        function injectTemplates(templatePath, toScopeVariable, toElement) {
             console.log("inject templates", templatePath);
 
             //$scope.templates = templatePath +"?a=" +  Date.now();
             // if(toElement) {
-                $scope.overlayTemplatePath = templatePath;
+                // $scope.overlayTemplatePath = templatePath;
+                $scope.templates[toScopeVariable] = templatePath;
                 var el = angular.element("#gameArea");
-                /*var html = '<ng-include src="'+templatePath+'"/>';
-                var gameArea = angular.element("#gameArea");
-                gameArea.append(html);
-                var el = angular.element(html);*/
                 $compile(el.contents())($scope);
                 $scope.safeApply();
+               
             // }
         }
+
         org.ekstep.service.controller.initService(loadNgModules);
-        org.ekstep.service.controller.injectTemplate(injectTemplates, null);
+        // org.ekstep.service.controller.injectTemplate(injectTemplates, null);
         EkstepRendererAPI.addEventListener("event:loadContent", function() {
             var configuration = EkstepRendererAPI.getPreviewData();
             content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
