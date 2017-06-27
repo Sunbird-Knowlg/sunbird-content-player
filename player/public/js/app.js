@@ -98,7 +98,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             }
             $rootScope.pageTitle = $rootScope.content.name;
             org.ekstep.contentrenderer.progressbar(true);
-            if (Renderer.theme) {
+            if (!_.isUndefined(Renderer) && Renderer.theme) {
                 TelemetryService.interact("TOUCH", eleId, "TOUCH", {
                     stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
                 });
@@ -107,6 +107,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
             }
             var menuReplay = $state.current.name == appConstants.statePlayContent;
+            org.ekstep.contentrenderer.progressbar(false);
             // 1) For HTML content onclick of replay EventListeners will be not available hence calling Telemetryservice end .
             // 2) OE_START for the HTML/ECML content will be takne care by the contentctrl rendere method always.
             EventBus.hasEventListener('actionReplay') ? EventBus.dispatch('actionReplay', {
@@ -655,7 +656,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
 
                     if (_.isEmpty(data.handle)) {
                         data.handle = "Anonymous";
-                        data.profileImage = "img/icons/avatar_anonymous.png";
+                        data.profileImage = "assets/icons/avatar_anonymous.png";
                     }
                     $rootScope.currentUser = data;
                     $rootScope.currentUser.selected = true;
@@ -874,6 +875,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 scope.imgSrc = $rootScope.imageBasePath + scope.icon
                 if (scope.enableGenie) {
                     scope.goToGenie = function() {
+                        EkstepRendererAPI.hideEndPage();
                         var pageId = $rootScope.pageId;
                         exitApp(pageId);
                     }

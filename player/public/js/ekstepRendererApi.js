@@ -121,7 +121,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getCurrentStageId: function() {
-        return Renderer.theme._currentStage;
+        return (!_.isUndefined(Renderer)) ? Renderer.theme._currentStage : '';
     },
 
     /**
@@ -930,9 +930,9 @@ window.EkstepRendererAPI = {
     */
     hideOverly:function(){
         jQuery('#overlay').css({display: 'none'})
-    }
-    /*hideEndPage: function() {
+    },
+    hideEndPage: function() {
         jQuery("#pluginTemplate").hide();
         jQuery("#endpage").remove();
-    }*/
+    }
 }
