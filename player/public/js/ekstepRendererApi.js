@@ -921,16 +921,17 @@ window.EkstepRendererAPI = {
     * This to enable the canvas overlay
     * @memberof EkstepRendererAPI
     */
-    showOverly:function(){
+    showOverlay:function(){
         jQuery('#overlay').css({display: 'block'})
     },
     /**
     * This to disable the canvas overlay
     * @memberof EkstepRendererAPI
     */
-    hideOverly:function(){
+    hideOverlay:function(){
         jQuery('#overlay').css({display: 'none'})
     },
+
     hideEndPage: function() {
         jQuery("#pluginTemplate").hide();
         jQuery("#endpage").remove();

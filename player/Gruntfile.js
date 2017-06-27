@@ -18,9 +18,10 @@ module.exports = function(grunt) {
         karma: {
             plugin: {
                 configFile: '../js-libs/renderer/plugin/test/karma.plugin.config.js',
-                autoWatch: false,       //vinu : autoWatch: true
-                singleRun: true         //vinu : singleRun: false
-              }
+            },
+            app: {
+                configFile: 'public/test/karma.app.config.js',
+            }    
         },
         jsdoc : {
             dist : {
@@ -946,7 +947,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['uglify:renderer', 'uglify:testRenderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js']);
     grunt.registerTask('build-all', ['uglify:renderer', 'uglify:testRenderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
 
-    grunt.registerTask('plugin-test', ['karma:plugin']);
+   
     grunt.registerTask('build-jsdoc', ['jsdoc', 'compress', ]);
 
     grunt.registerTask('build-js', ['uglify:renderer', 'uglify:testRenderer', 'uglify:pluginLib',  'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS', 'clean:minjs']);
@@ -986,4 +987,6 @@ module.exports = function(grunt) {
     grunt.registerTask('new-buildPreview', ['mkdir:all', 'uglify:renderermin', 'copy:newmain', 'concat:css', 'concat:externaljs', 'concat:telemetry', 'concat:script', 'clean:deletefiles', 'injector:prview', 'rename:preview']);
     grunt.registerTask('buildapp', ['new-buildPreview', 'clean:after', 'rename:main', 'injector:prview', 'set-platforms', 'add-cordova-plugin-genieservices', 'cordovacli:add_plugins','copy:unsigned', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('test-setup', ['new-buildPreview', 'copy:testinit', 'clean']);
+    grunt.registerTask('app-test', ['karma:app']);
+    grunt.registerTask('plugin-test', ['karma:plugin']);
 };
