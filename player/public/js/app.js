@@ -310,7 +310,11 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         $rootScope.pageId = "ContentApp-Renderer";
         $scope.init = function() {
             //TODO: Clena this method
-            $rootScope.content = content;
+            $rootScope.safeApply(function() {
+                if(!_.isEmpty(content)){
+                     $rootScope.content = content ;
+                }
+            });
             if (_.isUndefined($rootScope.content)) {
                 if (!_.isEmpty(content)) {
                     $rootScope.content = content.metadata;
