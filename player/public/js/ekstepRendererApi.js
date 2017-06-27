@@ -910,16 +910,27 @@ window.EkstepRendererAPI = {
     resolvePluginResource: function (id, ver, resource) {
          return org.ekstep.pluginframework.pluginManager.resolvePluginResource(id, ver, resource);
     },
+    /**
+    * This to show the canvas endpage
+    * @memberof EkstepRendererAPI
+    */
     showEndPage:function(){
         this.dispatchEvent('renderer:init:endpage');
     },
+    /**
+    * This to enable the canvas overlay
+    * @memberof EkstepRendererAPI
+    */
     showOverly:function(){
         jQuery('#overlay').css({display: 'block'})
     },
+    /**
+    * This to disable the canvas overlay
+    * @memberof EkstepRendererAPI
+    */
     hideOverly:function(){
         jQuery('#overlay').css({display: 'none'})
     }
-
     /*hideEndPage: function() {
         jQuery("#pluginTemplate").hide();
         jQuery("#endpage").remove();
