@@ -132,7 +132,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
             TelemetryService.init(tsObj._gameData, tsObj._user, correlationData);
         }
 
-        TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", {
+        TelemetryService.interact("TOUCH", $rootScope.content.identifier, "TOUCH", {
             stageId: "ContentApp-EndScreen",
             subtype: "ContentID"
         });
@@ -151,7 +151,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         window.addEventListener('native.keyboardhide', epKeyboardHideHandler, true);
         org.ekstep.contentrenderer.progressbar(false);
         $scope.setTotalTimeSpent();
-        $scope.getTotalScore($stateParams.contentId);
+        $scope.getTotalScore($rootScope.content.identifier);
         $scope.showFeedback(0);
     }
 
@@ -311,17 +311,17 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
         $scope.init = function() {
             $scope.collectionTree = localStorageGC.getItem('contentExtras');
             if ("undefined" != typeof cordova) {
-                $scope.renderRelatedContent($stateParams.contentId);
+                $scope.renderRelatedContent($rootScope.content.identifier);
             } else {
                 jQuery('#endPageLoader').hide();
                 $scope.showRelatedContentHeader = false;
             }
         }
 
-        /*$scope.$on('getRelatedContentEvent', function(event) {
-           
-        });*/
-         $scope.init();
+        setTimeout(function() {
+            $scope.init();
+        }, 0);
+         
     });
 canvasApp.directive('starRating', function($rootScope) {
     return {
