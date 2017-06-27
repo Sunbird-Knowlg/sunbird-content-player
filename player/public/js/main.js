@@ -104,7 +104,7 @@ function exitApp(pageId) {
     }
     localStorageGC.clear();
     localStorageGC = {};
-    org.ekstep.services.rendererservice.endGenieCanvas();
+    org.ekstep.service.renderer.endGenieCanvas();
 }
 
 function startApp(app) {
