@@ -17,13 +17,15 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             $rootScope.imageBasePath = serverPath + $rootScope.imageBasePath;
         $rootScope.languageSupport = AppLables;
         $rootScope.safeApply = function(fn) {
-            var phase = this.$root.$$phase;
-            if (phase == '$apply' || phase == '$digest') {
-                if (fn && (typeof(fn) === 'function')) {
-                    fn();
+            if (this.$root) {
+                var phase = this.$root.$$phase;
+                if (phase == '$apply' || phase == '$digest') {
+                    if (fn && (typeof(fn) === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
                 }
-            } else {
-                this.$apply(fn);
             }
         };
         $rootScope.addIonicEvents = function() {
