@@ -4,18 +4,7 @@ org.ekstep.contentrenderer.registerPlguin('launcher', Plugin.extend({
     },
     initLauncher: function(evt, content) {
         console.info('launcher init is calling..');
-        var dispatcher = [{
-            mimeType: 'application/vnd.ekstep.html-archive',
-            id: 'org.ekstep.htmlrenderer',
-            ver: 1.0,
-            type: 'plugin'
-        }, {
-            mimeType: 'application/vnd.ekstep.ecml-archive',
-            id: 'org.ekstep.ecmlrenderer',
-            ver: 1.0,
-            type: 'plugin'
-        }];
-        var contentTypePlugin = _.findWhere(dispatcher, {
+        var contentTypePlugin = _.findWhere(AppConfig.RENDERPLUGINS, {
             'mimeType': content.mimeType
         });
         isCoreplugin = true;
