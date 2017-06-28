@@ -14,6 +14,5 @@ AppConfig = {
     OVERLAY_SUBMIT: "off",
     ENABLE_OVERLAY: true,
     MIMETYPES:["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
-    DEFAULT_METADATA:{"identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author": "EkStep", "localData": {"questionnaire": null, "appIcon": "fixture-stories/item_sample/logo.png", "subject": "literacy_v2", "description": "Ekstep Content App", "name": "Content Preview ", "downloadUrl": "", "checksum": null, "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "concepts": [{"identifier": "LO1", "name": "Receptive Vocabulary", "objectType": "Concept"}], "identifier": "org.ekstep.item.sample", "grayScaleAppIcon": null, "pkgVersion": 1 }, "isAvailable": true, "path": "fixture-stories/item_sample"}
-   
-}
+    DEFAULT_METADATA: {"identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author": "EkStep", "localData": {"name": "Content Preview ", "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "identifier": "org.ekstep.item.sample", "pkgVersion": 1 }, "isAvailable": true, "path": ""},
+    RENDERPLUGINS: [{mimeType: 'application/vnd.ekstep.html-archive', id: 'org.ekstep.htmlrenderer', ver: 1.0, type: 'plugin'}, {mimeType: 'application/vnd.ekstep.ecml-archive', id: 'org.ekstep.ecmlrenderer', ver: 1.0, type: 'plugin'}]}
