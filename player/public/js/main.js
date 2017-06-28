@@ -84,10 +84,11 @@ function backbuttonPressed(pageId) {
 
 // TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
 // So, change exitApp to do the same.
-function exitApp(pageId) {
-    TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {
-        stageId: ((pageId == "ContentApp-Renderer" && GlobalContext.config.appInfo.mimeType != "application/vnd.ekstep.content-collection" ? Renderer.theme._currentStage : pageId))
-    });
+function exitApp(stageId) {
+    if(!stageId){
+        stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " ";
+    } 
+    TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {stageId: stageId }); 
     try {
         TelemetryService.exit();
     } catch (err) {

@@ -46,7 +46,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                     alert("Your device isn’t compatible with this version of Genie.");
                     exitApp();
                 }
-                $rootScope.addIonicEvents();
+                Renderer &&  $rootScope.addIonicEvents();
                 if (window.cordova && window.cordova.plugins.Keyboard) {
                     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
                 } else {
