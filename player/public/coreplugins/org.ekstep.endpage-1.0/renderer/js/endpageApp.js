@@ -32,8 +32,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId: "ContentApp-CreditsScreen", subtype: "ContentID"}); 
     }
     $scope.ep_replayContent = function() {
-        $scope.showEndPage = false;
-        // jQuery("#endpage").remove();
+        EkstepRendererAPI.hideEndPage();
         EventBus.dispatch('event:closeUserSwitchingModal');
         $rootScope.replayContent();
         var muteElement = document.getElementById("unmute_id");
@@ -163,7 +162,6 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         jQuery('#gcFbPopup').removeClass('gc-fc-popup-keyboard');
     }
     $scope.initEndpage = function() {
-        //$scope.showTemplate();
         $scope.handleEndpage();
         if (_.isUndefined($rootScope.content)) {
             localStorageGC.update();
@@ -172,18 +170,18 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         }
 
     };
-    EkstepRendererAPI.addEventListener('renderer:init:endpage', function(){
+    EkstepRendererAPI.addEventListener('renderer:show:endpage', function(){
         console.log("Show end page");
         $scope.showEndPage = true;
         $scope.initEndpage();
         $scope.safeApply();
     });
-    $scope.showTemplate = function(){
-        jQuery("#pluginTemplate").css({
-            display: 'block'
-        });
-    };
-    //$scope.initEndpage();
+
+    EkstepRendererAPI.addEventListener('renderer:hide:endpage',function(){
+        $scope.showEndPage = false;
+        $scope.safeApply();
+    });
+
 });
 canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams) {
         $scope.showRelatedContent = false;
@@ -194,9 +192,6 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
         $scope.collectionTree = undefined;
 
         $scope.playRelatedContent = function(content, index) {
-            // $scope.showRelatedContent = false;
-            // $scope.contentShowMore = false;
-            // $scope.showRelatedContentHeader = false;
             var contentId = [];
             collectionPath = $scope.relatedContentPath;
             var eleId = "gc_nextcontent";
@@ -227,7 +222,6 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
             GlobalContext.game.pkgVersion = content.pkgVersion;
             var contentExtras = [];
             if (!(_.isUndefined($scope.collectionTree) || _.isEmpty($scope.collectionTree))) {
-                // is a collection
                 _.each($scope.relatedContentPath, function(eachObj) {
                     contentExtras.push(_.pick(eachObj, 'identifier', 'contentType'));
                 });
@@ -237,11 +231,13 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                 .then(function(contetnIsAvailable) {
                     if (contetnIsAvailable) {
                         // This is required to setup current content details which is going to play
-                        $rootScope.getContentMetadata(content.identifier, function() {
+                        org.ekstep.contentrenderer.getContentMetadata(content.identifier, function() {
                             if ($scope.collectionTree) {
                                 GlobalContext.game.contentExtras = contentExtras;
                                 localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                             }
+                            EkstepRendererAPI.hideEndPage();
+                            $rootScope.content =  undefined;
                             $state.go('playContent', {
                                 'itemId': content.identifier
                             });
@@ -256,7 +252,6 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                 });
         }
         $scope.navigateToDownloadPage = function(contentExtras, contentId) {
-            // stringify contentExtras array to string
             var deepLinkURL = "ekstep://c/" + contentId;
             if (!_.isEmpty(contentExtras)) {
                 contentExtras.pop();

@@ -915,7 +915,7 @@ window.EkstepRendererAPI = {
     * @memberof EkstepRendererAPI
     */
     showEndPage:function(){
-        this.dispatchEvent('renderer:init:endpage');
+        this.dispatchEvent('renderer:show:endpage');
     },
     /**
     * This to enable the canvas overlay
@@ -933,7 +933,6 @@ window.EkstepRendererAPI = {
     },
 
     hideEndPage: function() {
-        jQuery("#pluginTemplate").hide();
-        jQuery("#endpage").remove();
+       this.dispatchEvent('renderer:hide:endpage');
     }
 }

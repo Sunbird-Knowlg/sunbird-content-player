@@ -128,7 +128,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
 
             EventBus.dispatch('event:closeUserSwitchingModal')
-            jQuery("#pluginTemplate").hide();
+            EkstepRendererAPI.hideEndPage();
             $scope.startContent();
         }
         $rootScope.us_continueContent = function(userSwitchHappened) {
