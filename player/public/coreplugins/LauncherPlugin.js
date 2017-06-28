@@ -27,7 +27,9 @@ org.ekstep.contentrenderer.registerPlguin('launcher', Plugin.extend({
     },
     loadPlugin : function(plugin, content) {
         org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
-            EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType, undefined, content);
+            setTimeout(function(){
+                EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType, undefined, content);
+            }, 0);
         });
     }
 

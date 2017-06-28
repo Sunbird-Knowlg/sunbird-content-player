@@ -1,0 +1,12 @@
+{
+    "id": "org.ekstep.overlay",
+    "ver": "1.0",
+    "shortId": "org.eskstep.overlay",
+    "author": "Vinu Kumar V S",
+    "description": "",
+    "publishedDate": "",
+    "renderer": {
+        "main": "renderer/plugin.js"
+    }
+
+}

@@ -137,8 +137,8 @@ var ThemePlugin = Plugin.extend({
             this.invokeStage(this._data.startStage);
         }
         this.update();
-        org.ekstep.contentrenderer.progressbar(false)
-        jQuery('#overlay').show();
+        org.ekstep.contentrenderer.progressbar(false);
+        EkstepRendererAPI.dispatchEvent("renderer:show:overlay");
     },
 
     /**

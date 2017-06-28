@@ -1,6 +1,7 @@
 var canvasApp = angular.module("genie-canvas");
 canvasApp.controller("endPageController", function($scope, $rootScope, $state,$element, $stateParams) {
     console.info("EndPage controller is calling");
+    $scope.showEndPage = false;
     $scope.showFeedbackArea = true;
     $scope.commentModel = '';
     $scope.showFeedbackPopup = false;
@@ -31,8 +32,8 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId: "ContentApp-CreditsScreen", subtype: "ContentID"}); 
     }
     $scope.ep_replayContent = function() {
-        jQuery("#pluginTemplate").hide();
-        jQuery("#endpage").remove();
+        $scope.showEndPage = false;
+        // jQuery("#endpage").remove();
         EventBus.dispatch('event:closeUserSwitchingModal');
         $rootScope.replayContent();
         var muteElement = document.getElementById("unmute_id");
@@ -162,20 +163,27 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         jQuery('#gcFbPopup').removeClass('gc-fc-popup-keyboard');
     }
     $scope.initEndpage = function() {
-        $scope.showTemplate();
+        //$scope.showTemplate();
         $scope.handleEndpage();
         if (_.isUndefined($rootScope.content)) {
             localStorageGC.update();
            content = localStorageGC.getItem('content');
             $rootScope.content = content;
         }
+
     };
+    EkstepRendererAPI.addEventListener('renderer:init:endpage', function(){
+        console.log("Show end page");
+        $scope.showEndPage = true;
+        $scope.initEndpage();
+        $scope.safeApply();
+    });
     $scope.showTemplate = function(){
         jQuery("#pluginTemplate").css({
             display: 'block'
         });
     };
-    $scope.initEndpage();
+    //$scope.initEndpage();
 });
 canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams) {
         $scope.showRelatedContent = false;

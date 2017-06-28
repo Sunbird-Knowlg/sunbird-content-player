@@ -1,32 +1,10 @@
 <div id="gameArea">
 	<!-- Navigation and Menu  -->
-	<div class="overlay-html" id="overlay" ng-controller="OverlayCtrl" ng-init="init()" ng-cloak>
-        <div ng-hide="showOverlayPrevious === state_off">
-            <a class="nav-icon nav-previous" ng-class="{'nav-disable': showOverlayPrevious == state_disable}" href="javascript:void(0);"><img ng-src="{{imageBasePath}}back.png" ng-click="navigate('previous')"></a>
-        </div>
+	<div id="overlay" ng-include="templates.overlay"></div>
 
-        <div ng-hide="showOverlayNext === state_off">
-            <a class="nav-icon nav-next" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next.png" ng-click="navigate('next')"></a>
-        </div>
-
-        <assess image="icons.assess.enable" show="showOverlaySubmit"></assess>
-
-		<reload-stage style="position: absolute;width: 7%;bottom: 1%;left: 1%;"></reload-stage>
-
-	  	<!-- Note: all the HTML elements should be above this menu tag
-	     Don't add any HTML elements after this menu tag
-	   	-->
-        <!-- Menu overlay to hide canvas -->
-        <menu></menu>
-        <!-- All the popup's should add here -->
-        <try-again ng-show="showOverlayTryAgain == state_on"></try-again>
-        <good-job ng-show="showOverlayGoodJob == state_on"></good-job>
-		<user-switcher> </user-switcher>
-    </div>
     <!-- HTML plugin elements(dynamically adding here) -->
     <!-- Canvas elment(used by CreateJS) -->
     <canvas id="gameCanvas" width="1366" height="768"></canvas>
-    <!-- <div id="pluginTemplate" ng-include="templates"></div> -->
 </div>
 <div id="errorDiv" style="z-index: 9999;" ng-show="showMessage" ng-click="showMessage = !showMessage">
     <div ng-bind-html="message" class="bar bar-energized bookshelf_message"></div>

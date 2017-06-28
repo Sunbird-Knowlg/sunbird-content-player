@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'quiz' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
+var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
     .constant("appConstants", {"contentId": "contentId", "stateContentList": "contentList", "stateShowContent": "showContent", "statePlayContent": "playContent", "stateShowContentEnd": "showContentEnd"})
     .run(function($rootScope, $ionicPlatform, $location, $timeout, $state, $stateParams, appConstants) {
         $rootScope.imageBasePath = "assets/icons/";
@@ -74,6 +74,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
 
         });
     }).config(function($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider) {
+        app.controllerProvider = $controllerProvider;
         $stateProvider
             .state('contentList', {
                 cache: false,
@@ -87,7 +88,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
             })
-    }).controller('BaseCtrl', function($scope, $rootScope, $state, $ocLazyLoad, $stateParams, appConstants) {
+    }).controller('BaseCtrl', function($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, appConstants) {
         $rootScope.replayContent = function() {
             $scope.endContent('gc_replay');
             $scope.startContent();
@@ -146,24 +147,44 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 TelemetryService.start(gameId, version, data);
             }
         }
-        $scope.templates = "";
 
-        function loadNgModules(templatePath, controllerPath) {
-            $ocLazyLoad.load([{
-                type: 'html',
-                path: templatePath
-            }, {
-                type: 'js',
-                path: controllerPath
-            }]);
-        };
-        function injectTemplates(templatePath, place) {
+        /*function injectTemplates(templatePath, place) {
             $scope.safeApply(function() {
                 $scope.templates = templatePath + "?a=" + Date.now();
+            });*/
+
+        $scope.templates = { };
+        function loadNgModules(templatePath, controllerPath, callback) {
+            $ocLazyLoad.load([
+                { type: 'html', path: templatePath },
+                { type: 'js', path: controllerPath }
+            ]).then(function(){
+                // injectTemplates(templatePath);
+                if(callback) callback(injectTemplates);
             });
+        };
+
+        function injectTemplates(templatePath, scopeVariable, toElement) {
+            console.log("inject templates", templatePath);
+
+            //$scope.templates = templatePath +"?a=" +  Date.now();
+            // if(toElement) {
+                // $scope.overlayTemplatePath = templatePath;
+                $scope.templates[scopeVariable] = templatePath;
+                var el = angular.element(toElement);
+                $compile(el.contents())($scope);
+                $scope.safeApply();
+               
+            // }
         }
+        EkstepRendererAPI.addEventListener("renderer:add:template", function(event){
+            var data = event.target;
+            injectTemplates(data.templatePath, data.scopeVariable, data.toElement);
+        });
+
+
         org.ekstep.service.controller.initService(loadNgModules);
-        org.ekstep.service.controller.injectTemplate(injectTemplates);
+        // org.ekstep.service.controller.injectTemplate(injectTemplates, null);
         EkstepRendererAPI.addEventListener("event:loadContent", function() {
             var configuration = EkstepRendererAPI.getPreviewData();
             content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? AppConfig.DEFAULT_METADATA : configuration.metadata
@@ -902,7 +923,19 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             template: '<a href="javascript:void(0)" ng-click="goToLastPage()"><img ng-src="{{imageBasePath}}icn_back_page.png"/></a>',
             link: function(scope) {}
         }
-    }).directive('userSwitcher', function($rootScope, $compile) {
+    }).directive('dynamic', function ($compile) {
+      return {
+        restrict: 'A',
+        replace: true,
+        link: function (scope, ele, attrs) {
+          scope.$watch(attrs.dynamic, function(html) {
+            ele.html(html);
+            $compile(ele.contents())(scope);
+          });
+        }
+      };
+    })
+    .directive('userSwitcher', function($rootScope, $compile) {
         return {
             restrict: 'E',
             scope: {

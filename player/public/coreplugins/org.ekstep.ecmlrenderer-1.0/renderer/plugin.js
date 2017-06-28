@@ -10,7 +10,7 @@ Plugin.extend({
         canvas: 'gameCanvas'
     },
     initialize: function() {
-        console.info('ECML Renderer initialize')
+        console.info('ECML Renderer initialize');
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
     },
