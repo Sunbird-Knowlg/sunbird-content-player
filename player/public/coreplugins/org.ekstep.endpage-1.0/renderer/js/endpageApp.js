@@ -136,7 +136,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
             stageId: "ContentApp-EndScreen",
             subtype: "ContentID"
         });
-        $scope.$broadcast('getRelatedContentEvent');
+        EkstepRendererAPI.dispatchEvent('renderer:init:relatedContent');
         var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
         creditsPopup.trigger("popupUpdate", {
             "content": $rootScope.content
@@ -171,7 +171,6 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
 
     };
     EkstepRendererAPI.addEventListener('renderer:show:endpage', function(){
-        console.log("Show end page");
         $scope.showEndPage = true;
         $scope.initEndpage();
         $scope.safeApply();
@@ -320,10 +319,12 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                 $scope.showRelatedContentHeader = false;
             }
         }
-
-        setTimeout(function() {
+        EkstepRendererAPI.addEventListener('renderer:init:relatedContent',function(){
+                $scope.init();   
+        })
+        /*setTimeout(function() {
             $scope.init();
-        }, 0);
+        }, 0);*/
          
     });
 canvasApp.directive('starRating', function($rootScope) {
