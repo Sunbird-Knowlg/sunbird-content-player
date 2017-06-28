@@ -1,101 +1,132 @@
 <!DOCTYPE html>
 <html ng-app="genie-canvas">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <meta http-equiv="Content-Security-Policy" content="default-src * data: filesystem: android-webview-video-poster:; style-src 'self' 'unsafe-inline';  script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src *;" >
+    <meta http-equiv="Content-Security-Policy" content="default-src * data: filesystem: android-webview-video-poster:; style-src 'self' 'unsafe-inline';  script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src *;">
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
     <title></title>
-    <link rel="stylesheet" href="libs/ionic/css/ionic.css?ver=BUILD_NUMBER">
-    <link rel="stylesheet" href="css/app/style.css?ver=BUILD_NUMBER">
 
-    <link rel="stylesheet" type="text/css" href="css/thirdparty/bookshelf_slider.css?ver=BUILD_NUMBER"/>
-    <link rel="stylesheet" type="text/css" href="css/thirdparty/toastr.min.css?ver=BUILD_NUMBER" />
-    <link rel="stylesheet" type="text/css" href="css/thirdparty/skin02.css?ver=BUILD_NUMBER"/>
-    <link rel="stylesheet" type="text/css" href="css/thirdparty/jquery.mCustomScrollbar.min.css" />
-
+    <!-- injector:css -->
+    <link rel="stylesheet" type="text/css" href="styles/ionic.css" />
+    <link rel="stylesheet" type="text/css" href="styles/bookshelf_slider.css" />
+    <link rel="stylesheet" type="text/css" href="styles/skin02.css" />
+    <link rel="stylesheet" type="text/css" href="styles/toastr.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/jquery.mCustomScrollbar.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <!-- endinjector -->
     <style>
-        #progressArea {
-          position: relative;
-          top: 55%;
-          left: 22%;
-          width: 57%;
-          height: 5%;
-          border-radius: 90px;
-          background-color: #ddd;
-        }
-
-        #progressBar {
-          position: absolute;
-          width: 1%;
-          height: 100%;
-          border-radius: 90px;
-          background-color: #e67300;
-        }
-        #pageTitle{
-            position: absolute;
-            bottom: 42%;
-        }
-        #gameArea {
-            position: absolute;
-            left:     50%;
-            top:      50%;
-        }
-        #gameCanvas {
-            width: 100%;
-            height: 100%;
-        }
-        .inputText {
-            -moz-border-radius: 15px;
-            border-radius: 15px;
-            border:solid 2px black !important;
-            font-size: 15px !important;
-            padding-left: 10px !important;
-            font-weight: bold !important;
-            padding-right: 5px;
-            z-index: 1000;
-            text-align: center;
-        }
+    #progressArea {
+        position: relative;
+        top: 55%;
+        left: 22%;
+        width: 57%;
+        height: 5%;
+        border-radius: 90px;
+        background-color: #ddd;
+    }
+    
+    #progressBar {
+        position: absolute;
+        width: 1%;
+        height: 100%;
+        border-radius: 90px;
+        background-color: #e67300;
+    }
+    
+    #pageTitle {
+        position: absolute;
+        bottom: 42%;
+    }
+    
+    #gameArea {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+    }
+    
+    #gameCanvas {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .inputText {
+        -moz-border-radius: 15px;
+        border-radius: 15px;
+        border: solid 2px black !important;
+        font-size: 15px !important;
+        padding-left: 10px !important;
+        font-weight: bold !important;
+        padding-right: 5px;
+        z-index: 1000;
+        text-align: center;
+    }
+    #pluginTemplate{
+        margin: auto;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+    }
     </style>
-    </head>
-    <body ng-controller="BaseCtrl">
-        <ion-nav-view></ion-nav-view>
-        <div id="loading" class="gc-loader-area">
-            <img src="assets/icons/background_1.png" class="gc-loader-img">
-            <div id="progressArea">
-              <div id="progressBar"></div>
-              <p id="progressCount" class="font-lato gc-loader-prog"></p>
-            </div>
-            <p class="icon-font cover-page-title" id="pageTitle" ng-bind = "pageTitle">Content is loading ...</p>
+</head>
+
+<body ng-controller="BaseCtrl">
+    <ion-nav-view></ion-nav-view>
+    <div id="loading" class="gc-loader-area">
+        <img src="assets/icons/background_1.png" class="gc-loader-img">
+        <div id="progressArea">
+            <div id="progressBar"></div>
+            <p id="progressCount" class="font-lato gc-loader-prog"></p>
         </div>
+        <p class="icon-font cover-page-title" id="pageTitle" ng-bind="pageTitle">Content is loading ...</p>
+    </div>
+    <div id="pluginTemplate" ng-include="templates"></div>
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+    <!-- injector:js -->
+    <script type="text/javascript" src="libs/jquery.min.js"></script>
+    <script type="text/javascript" src="libs/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="libs/jquery.bookshelfslider.min.js"></script>
+    <script type="text/javascript" src="libs/async.min.js"></script>
+    <script type="text/javascript" src="libs/plugin-framework.min.js"></script>
+    <script type="text/javascript" src="libs/toastr.min.js"></script>
+    <script type="text/javascript" src="libs/md5.js"></script>
+    <script type="text/javascript" src="libs/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="libs/ionic.bundle.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="libs/ng-cordova.min.js"></script>
+    <script type="text/javascript" src="libs/angular-resource.min.js"></script>
+    <script type="text/javascript" src="libs/underscore.js"></script>
+    <script type="text/javascript" src="libs/date-format.js"></script>
+    <script type="text/javascript" src="libs/ocLazyLoad.js"></script>
+    <script type="text/javascript" src="js/appConfig.js"></script>
+    <script type="text/javascript" src="js/globalContext.js"></script>
+    <script type="text/javascript" src="js/appMessages.js"></script>
+    <script src="services/mainservice.js"></script>
+    <script src="services/localservice.js"></script>
+    <script src="services/interfaceService.js"></script>
+    <script src="services/controllerservice.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/content-renderer.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/detectClient.js"></script>
+    <script type="text/javascript" src="js/ekstepRendererApi.js"></script>
+    <script type="text/javascript" src="js/basePlugin.js"></script>
+    <script src="telemetry/InActiveEvent.js"></script>
+    <script src="telemetry/TelemetryEvent.js"></script>
+    <script src="telemetry/TelemetryServiceUtil.js"></script>
+    <script src="telemetry/TelemetryService.js"></script>
+    <script src="telemetry/TelemetryV1Manager.js"></script>
+    <script src="telemetry/TelemetryV2Manager.js"></script>
+    <script src="js/test/specHelper.js"></script>
+    <script type="text/javascript" src="renderer/manager/AudioManager.js"></script>
+    <script type="text/javascript" src="coreplugins/LauncherPlugin.js"></script>
+    <!-- endinjector -->
+</body>
 
-        <script type="text/javascript" src="js/thirdparty/jquery.min.js?ver=BUILD_NUMBER"></script>
-        <script src="js/thirdparty/underscore.js?ver=BUILD_NUMBER"></script>
-        <script src="js/thirdparty/eventbus.min.js?ver=BUILD_NUMBER"></script>
-        <script type="text/javascript" src="js/thirdparty/toastr.min.js?ver=BUILD_NUMBER"></script>
-
-         <!-- cordova script (this will be a 404 during development) -->
-        <script src="cordova.js?ver=BUILD_NUMBER"></script>
-        <script type="text/javascript" src="js/thirdparty/jquery.easing.1.3.js?ver=BUILD_NUMBER"></script>
-        <script type="text/javascript" src="js/thirdparty/jquery.bookshelfslider.min.js?ver=BUILD_NUMBER"></script>
-        <script type="text/javascript" src="js/thirdparty/async.min.js?ver=BUILD_NUMBER"></script>
-
-        <script type="text/javascript" src="js/thirdparty/jquery.mCustomScrollbar.concat.min.js"></script>
-        
-        <!-- ionic/angularjs js -->
-        <script src="libs/ionic/js/ionic.bundle.min.js?ver=BUILD_NUMBER"></script>
-
-        <!-- cordova script (this will be a 404 during development) -->
-        <script src="libs/ngCordova/ng-cordova.min.js?ver=BUILD_NUMBER"></script>
-        <script src="libs/angular-resource/angular-resource.min.js?ver=BUILD_NUMBER"></script>
-        <!-- your app's js -->
-        <script src="js/AppConfig.js?ver=BUILD_NUMBER"></script>
-        <script src="js/script.min.js?ver=BUILD_NUMBER"></script>
-        <script src="js/renderer.min.js?ver=BUILD_NUMBER"></script>
-        <script src="js/telemetry.min.js?ver=BUILD_NUMBER"></script>
-
-    </body>
 </html>

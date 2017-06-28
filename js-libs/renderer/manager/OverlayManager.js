@@ -195,12 +195,10 @@ OverlayManager = {
     moveToEndPage: function() {
         if (config.showEndPage) {
             console.info("redirecting to endpage.");
-            // while redirecting to end page
-            // set the last stage data to _contentParams[themeObj]
             var stage = Renderer.theme._currentScene;
             Renderer.theme.setParam(stage.getStagestateKey(), stage._currentState);
-            EkstepRendererAPI.dispatchEvent('renderer:init:endpage');
-            //window.location.hash = "/content/end/" + GlobalContext.currentContentId;
+            Renderer.theme._currentStage = undefined;
+            EkstepRendererAPI.showEndPage();
             AudioManager.stopAll();
         } else {
             console.warn("Cannot move to end page of the content. please check the configurations..");

@@ -1,6 +1,7 @@
-var endPageApp = angular.module("endPageApp", []);
-endPageApp.controller("endPageController", function($scope, $rootScope, $state, $stateParams) {
-    console.info("i am controller endpage");
+var canvasApp = angular.module("genie-canvas");
+canvasApp.controller("endPageController", function($scope, $rootScope, $state,$element, $stateParams) {
+    console.info("EndPage controller is calling");
+    $scope.showEndPage = false;
     $scope.showFeedbackArea = true;
     $scope.commentModel = '';
     $scope.showFeedbackPopup = false;
@@ -10,15 +11,10 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
     $scope.selectedRating = 0;
     $rootScope.pageId = "ContentApp-Endpage";
     $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{languageSupport.credit}}</div> <div class="gc-popup-body-new"><div class="font-lato credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{languageSupport.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{languageSupport.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{languageSupport.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{languageSupport.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
-  	$rootScope.imageBasePath = "assets/icons/";
-  	$rootScope.languageSupport = AppLables;
     $scope.arrayToString = function(array) {
         return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";
     };
     $scope.ep_openUserSwitchingModal = function() {
-        TelemetryService.interact("TOUCH", "gc_open_userswitch", "TOUCH", {
-            stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-        });
         EventBus.dispatch("event:openUserSwitchingModal");
     }
     $scope.setCredits = function(key) {
@@ -28,19 +24,17 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
             $scope.content[key] = null;
         }
     };
-        $scope.showCredits = function(key) {
-            if ($scope.content.imageCredits == null && $scope.content.voiceCredits == null && $scope.content.soundCredits == null) {
-                console.warn("No metadata imageCredits,voiceCredites and soundCredits");
-            }
-            jQuery("#creditsPopup").show();
-            TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {
-                stageId: "ContentApp-CreditsScreen",
-                subtype: "ContentID"
-            });
+    $scope.showCredits = function(key) {
+        if ($scope.content.imageCredits == null && $scope.content.voiceCredits == null && $scope.content.soundCredits == null) {
+            console.warn("No metadata imageCredits,voiceCredites and soundCredits");
         }
-
+        jQuery("#creditsPopup").show();
+        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId: "ContentApp-CreditsScreen", subtype: "ContentID"}); 
+    }
     $scope.ep_replayContent = function() {
-        console.info("yes replay")
+        $scope.showEndPage = false;
+        // jQuery("#endpage").remove();
+        EventBus.dispatch('event:closeUserSwitchingModal');
         $rootScope.replayContent();
         var muteElement = document.getElementById("unmute_id");
         if (!_.isNull(muteElement)) {
@@ -48,7 +42,6 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
         }
         AudioManager.unmute();
     }
-
     $scope.showFeedback = function(param) {
         $scope.userRating = param;
         $scope.popUserRating = param;
@@ -67,7 +60,6 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
         else
             jQuery('#feedbackSubmitBtn').addClass('icon-opacity');
     }
-
     $scope.submitFeedback = function() {
         $scope.userRating = $scope.popUserRating;
         $scope.selectedRating = $scope.userRating;
@@ -84,7 +76,6 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
         }
         TelemetryService.sendFeedback(eks);
     }
-
     $scope.hideFeedback = function() {
         $scope.showFeedbackPopup = false;
         $scope.stringLeft = 130;
@@ -101,10 +92,9 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
             $scope.showFeedbackArea = false;
         }
     }
-
     $scope.getTotalScore = function(id) {
         if ("undefined" != typeof cordova) {
-            ContentService.getLearnerAssessment(TelemetryService._user.uid, id)
+            org.ekstep.service.content.getLearnerAssessment(GlobalContext.user.uid, id,GlobalContext.game.contentExtras)
                 .then(function(score) {
                     if (score && score.total_questions) {
                         $scope.showScore = true;
@@ -119,14 +109,12 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
             $scope.showScore = false
         }
     }
-
     $scope.commentLength = function() {
         if ($('#commentText').val().length > 130)
             $('#commentText').val($('#commentText').val().slice(0, 130));
         $scope.stringLeft = 130 - $('#commentText').val().length;
         $scope.enableFeedbackSubmit();
     }
-
     $scope.handleEndpage = function() {
         if (_.isUndefined($rootScope.content)) {
             localStorageGC.update();
@@ -145,14 +133,11 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
             TelemetryService.init(tsObj._gameData, tsObj._user, correlationData);
         }
 
-        TelemetryService.interact("TOUCH", $stateParams.contentId, "TOUCH", {
+        TelemetryService.interact("TOUCH", $rootScope.content.identifier, "TOUCH", {
             stageId: "ContentApp-EndScreen",
             subtype: "ContentID"
         });
-
-        // Get related contents for the current content
         $scope.$broadcast('getRelatedContentEvent');
-
         var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
         creditsPopup.trigger("popupUpdate", {
             "content": $rootScope.content
@@ -165,51 +150,53 @@ endPageApp.controller("endPageController", function($scope, $rootScope, $state, 
         $scope.setCredits('voiceCredits');
         window.addEventListener('native.keyboardshow', epKeyboardShowHandler, true);
         window.addEventListener('native.keyboardhide', epKeyboardHideHandler, true);
-        jQuery('#loading').hide();
+        org.ekstep.contentrenderer.progressbar(false);
         $scope.setTotalTimeSpent();
-        $scope.getTotalScore($stateParams.contentId);
+        $scope.getTotalScore($rootScope.content.identifier);
         $scope.showFeedback(0);
     }
 
     function epKeyboardShowHandler() {
         jQuery('#gcFbPopup').addClass('gc-fc-popup-keyboard');
     }
-
     function epKeyboardHideHandler() {
         jQuery('#gcFbPopup').removeClass('gc-fc-popup-keyboard');
     }
-
-    
     $scope.initEndpage = function() {
-        $scope.hideCanvas();
+        //$scope.showTemplate();
         $scope.handleEndpage();
         if (_.isUndefined($rootScope.content)) {
             localStorageGC.update();
            content = localStorageGC.getItem('content');
             $rootScope.content = content;
         }
+
     };
-    $scope.hideCanvas = function(){
-        jQuery('#gameCanvas').css({
-            display: 'none'
+    EkstepRendererAPI.addEventListener('renderer:init:endpage', function(){
+        console.log("Show end page");
+        $scope.showEndPage = true;
+        $scope.initEndpage();
+        $scope.safeApply();
+    });
+    $scope.showTemplate = function(){
+        jQuery("#pluginTemplate").css({
+            display: 'block'
         });
-        jQuery('#overlay').css({display: 'none'})
     };
-    $scope.initEndpage();
-    // $rootScope.$on('loadEndPage', function() {
-    //     if (_.isUndefined($rootScope.content)) {
-    //         $scope.init();
-    //     }
-    // });
+    //$scope.initEndpage();
 });
-endPageApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams) {
+canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams) {
         $scope.showRelatedContent = false;
         $scope.contentShowMore = false;
         $scope.showRelatedContentHeader = true;
         $scope.relatedContents = [];
         $scope.relatedContentPath = [];
         $scope.collectionTree = undefined;
+
         $scope.playRelatedContent = function(content, index) {
+            // $scope.showRelatedContent = false;
+            // $scope.contentShowMore = false;
+            // $scope.showRelatedContentHeader = false;
             var contentId = [];
             collectionPath = $scope.relatedContentPath;
             var eleId = "gc_nextcontent";
@@ -226,7 +213,7 @@ endPageApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state,
                 }, {
                     ContentIDsDisplayed: contentIds,
                 }, {
-                    id: $scope.relatedContentItem ? $scope.relatedContentItem.params.resmsgid : "",
+                    id: $scope.relatedContentItem ? $scope.relatedContentItem.responseMessageId : "",
                     type: $scope.relatedContentItem ? $scope.relatedContentItem.id : ''
                 }]
             }
@@ -250,7 +237,7 @@ endPageApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state,
                 .then(function(contetnIsAvailable) {
                     if (contetnIsAvailable) {
                         // This is required to setup current content details which is going to play
-                        org.ekstep.contentrenderer.getContentMetadata(content.identifier, function() {
+                        $rootScope.getContentMetadata(content.identifier, function() {
                             if ($scope.collectionTree) {
                                 GlobalContext.game.contentExtras = contentExtras;
                                 localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
@@ -280,33 +267,37 @@ endPageApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state,
             window.open(deepLinkURL, "_system");
         }
         $scope.getRelatedContent = function(list) {
-            org.ekstep.service.content.getRelatedContent(TelemetryService._user.uid, list)
-                .then(function(item) {
-                    if (!_.isEmpty(item)) {
-                        $scope.relatedContentItem = item;
-                        var list = [];
-                        if (!_.isEmpty(item.collection)) {
-                            $scope.showRelatedContent = true;
-                            $scope.relatedContentPath = item.collection;
-                            list = [item.collection[item.collection.length - 1]];
-                            list[0].appIcon = list[0].path + '/' + list[0].appIcon;
-                        } else if (!_.isEmpty(item.content)) {
-                            $scope.showRelatedContent = true;
-                            $scope.contentShowMore = true;
-                            list = _.first(_.isArray(item.content) ? item.content : [item.content], 2);
-                        }
-
-                        if (!_.isEmpty(list)) {
-                            $scope.$apply(function() {
-                                $scope.relatedContents = list;
-                                jQuery('#endPageLoader').hide();
-                            });
-                        } else {
-                            $scope.showRelatedContentHeader = false;
-                            jQuery('#endPageLoader').hide();
-                        }
+            org.ekstep.service.content.getRelatedContent(GlobalContext.user.uid, list)
+            .then(function(item) {
+                if (!_.isEmpty(item)) {
+                    $scope.relatedContentItem = item;
+                    var list = [];
+                    item.collection = item.nextContent;
+                    item.content = item.relatedContents;
+                    if (!_.isEmpty(item.collection)) {
+                        $scope.showRelatedContent = true;
+                        $scope.relatedContentPath = item.collection;
+                        list = [item.collection[item.collection.length - 1]];
+                        list[0].appIcon = list[0].basePath + '/' + list[0].contentData.appIcon;
+                    } else if (!_.isEmpty(item.content)) {
+                        $scope.showRelatedContent = true;
+                        $scope.contentShowMore = true;
+                        _.each(item.content, function(content) {
+                            content.appIcon = content.contentData.appIcon;
+                        })
+                        list = _.first(_.isArray(item.content) ? item.content : [item.content], 2);
                     }
-                })
+                    if (!_.isEmpty(list)) {
+                        $scope.$apply(function() {
+                            $scope.relatedContents = list;
+                            jQuery('#endPageLoader').hide();
+                        });
+                    } else {
+                        $scope.showRelatedContentHeader = false;
+                        jQuery('#endPageLoader').hide();
+                    }
+                }
+            })
         }
 
         $scope.renderRelatedContent = function(id) {
@@ -327,62 +318,20 @@ endPageApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state,
 
         $scope.init = function() {
             $scope.collectionTree = localStorageGC.getItem('contentExtras');
-            // GlobalContext.game.contentExtras = ("string" == typeof(GlobalContext.game.contentExtras)) ? JSON.parse(GlobalContext.game.contentExtras) : GlobalContext.game.contentExtras;
-
             if ("undefined" != typeof cordova) {
-                $scope.renderRelatedContent($stateParams.contentId);
+                $scope.renderRelatedContent($rootScope.content.identifier);
             } else {
                 jQuery('#endPageLoader').hide();
                 $scope.showRelatedContentHeader = false;
             }
         }
 
-        $scope.$on('getRelatedContentEvent', function(event) {
+        setTimeout(function() {
             $scope.init();
-        });
-});
-endPageApp.directive('genie', function($rootScope) {
-    return {
-        scope: {
-            icon: '@'
-        },
-        restrict: 'E',
-        template: '<div ng-class="enableGenie ? \'genie-home\' : \'icon-opacity genie-home\'" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/><span> {{languageSupport.home}} </span></div>',
-        /* above span will not be visible in the end page. To be handles oin css */
-        link: function(scope) {
-            scope.languageSupport = $rootScope.languageSupport;
-            scope.enableGenie = ("undefined" == typeof cordova) ? false : true;
-            scope.imgSrc = $rootScope.imageBasePath + scope.icon
-            if (scope.enableGenie) {
-                scope.goToGenie = function() {
-                    var pageId = $rootScope.pageId;
-                    exitApp(pageId);
-                }
-            }
-        }
-    }
-});
-endPageApp.directive('restart', function($rootScope, $state, $stateParams) {
-    return {
-        restrict: 'E',
-        template: '<div ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/><span> {{languageSupport.replay}} </span></div>',
-        link: function(scope) {
-            scope.restartContent = function() {
-                console.info('replay')
-                /*$rootScope.replayContent();*/
-                //Resetting mute state
-                var muteElement = document.getElementById("unmute_id");
-                if (!_.isNull(muteElement)) {
-                    muteElement.style.display = "none";
-                }
-                AudioManager.unmute();
-                if (!_.isUndefined(scope.hideMenu) && scope.menuOpened)
-                    scope.hideMenu();
-            }
-        }
-    }
-});
-endPageApp.directive('starRating', function($rootScope) {
+        }, 0);
+         
+    });
+canvasApp.directive('starRating', function($rootScope) {
     return {
         //reference: http://jsfiddle.net/manishpatil/2fahpk7s/
         scope: {

@@ -11,7 +11,7 @@ org.ekstep.service.html = new(org.ekstep.service.mainService.extend({
     },
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
-            if (org.ekstep.service.html.localData.user) {
+            if(org.ekstep.service.html.localData.user){
                 var result = org.ekstep.service.html.localData.user;
                 resolve(result);
             } else {
@@ -21,35 +21,25 @@ org.ekstep.service.html = new(org.ekstep.service.mainService.extend({
     },
     getContent: function(id) {
         return new Promise(function(resolve, reject) {
-            var result = _.findWhere(org.ekstep.service.html.localData.content, {
-                "identifier": id
-            });
+            var result = _.findWhere(org.ekstep.service.html.localData.content, {"identifier": id});
             resolve(result);
         });
     },
-    getLocalData: function(callback) {
+    getLocalData: function(callback){
         org.ekstep.service.html._callback = callback;
         org.ekstep.service.html._jsFileIndex = 0;
         org.ekstep.service.html._jsFilesToLoad = [];
-        org.ekstep.service.html._jsFilesToLoad.push({
-            "file": "test/content-list.json"
-        });
-        org.ekstep.service.html._jsFilesToLoad.push({
-            "file": "test/word-list.json",
-            "id": "wordList"
-        });
-        org.ekstep.service.html._jsFilesToLoad.push({
-            "file": "test/user.json",
-            "id": "user"
-        });
+        org.ekstep.service.html._jsFilesToLoad.push({"file":"test/content-list.json"});
+        org.ekstep.service.html._jsFilesToLoad.push({"file":"test/word-list.json", "id":"wordList"});
+        org.ekstep.service.html._jsFilesToLoad.push({"file":"test/user.json", "id":"user"});
         org.ekstep.service.html.loadJsFilesSequentially();
     },
-    loadJsFilesSequentially: function() {
-        if (org.ekstep.service.html._jsFilesToLoad[org.ekstep.service.html._jsFileIndex]) {
+    loadJsFilesSequentially: function(){
+         if (org.ekstep.service.html._jsFilesToLoad[org.ekstep.service.html._jsFileIndex]) {
             var fileObj = org.ekstep.service.html._jsFilesToLoad[org.ekstep.service.html._jsFileIndex];
             var fileToLoaded = fileObj.file;
             jQuery.getJSON(fileToLoaded, function(jsonResp) {
-                if (fileObj.id) {
+                if(fileObj.id){
                     var respObj = {};
                     respObj[fileObj.id] = jsonResp;
                     _.extend(org.ekstep.service.html.localData, respObj);
@@ -62,18 +52,18 @@ org.ekstep.service.html = new(org.ekstep.service.mainService.extend({
             });
         } else {
             console.log("js files load complete.");
-            if (org.ekstep.service.html._callback) {
+            if(org.ekstep.service.html._callback){
                 console.log("local Files loaded successfully.");
                 org.ekstep.service.html._callback();
-            } else {
+            }else{
                 console.log("local Files loaded successfully. But no callback function");
             }
         }
     },
-    languageSearch: function(filter) {
+    languageSearch: function(filter){
         return new Promise(function(resolve, reject) {
             //var result = _.findWhere(org.ekstep.service.html.localData.languageSearch, {"filter": filter});
-            if (org.ekstep.service.html.localData.wordList) {
+            if(org.ekstep.service.html.localData.wordList) {
                 resolve(org.ekstep.service.html.localData.wordList);
             } else {
                 reject("wordList data is not present in localData.")
@@ -83,7 +73,7 @@ org.ekstep.service.html = new(org.ekstep.service.mainService.extend({
     endContent: function() {
         // On close of the content call this function
         var contentId = localStorage.getItem('cotentId');
-        if (_.isUndefined(contentId)) {
+        if(_.isUndefined(contentId)) {
             console.log("ContentId is not defined in URL.");
             return;
         }
@@ -104,6 +94,7 @@ org.ekstep.service.html = new(org.ekstep.service.mainService.extend({
             window.location = "/" + pageUrl;
         }
     }
+
 }));
 if (typeof cordova == 'undefined' && typeof isbrowserpreview == 'undefined' && typeof AppConfig == 'undefined') {
     org.ekstep.service.renderer = org.ekstep.service.html;    

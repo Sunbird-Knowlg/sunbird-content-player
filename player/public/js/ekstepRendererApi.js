@@ -121,7 +121,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getCurrentStageId: function() {
-        return Renderer.theme._currentStage;
+        return (!_.isUndefined(Renderer)) ? Renderer.theme._currentStage : '';
     },
 
     /**
@@ -817,8 +817,8 @@ window.EkstepRendererAPI = {
     * This api will return the list of users on the Device
     * @memberof EkstepRendererAPI
     */
-   getUserList: function() {
-       EkstepRendererAPI.dispatchEvent('event:getuserlist');
+   getAllUserProfile: function() {
+       EkstepRendererAPI.dispatchEvent('event:getAllUserProfile');
        console.log("userList: ", userList);
        return userList;
     //    EkstepRendererAPI.dispatchEvent('actionReplay', data, target);
@@ -897,5 +897,43 @@ window.EkstepRendererAPI = {
     },
     getRenderer: function(){
         return Renderer;
+    },
+    /**
+     * API to Resolve plugin resource URL. This API would resolve to the repo the plugin is loaded from.
+     * 
+     * @param  {String} pluginId      Plugin ID
+     * @param  {String} pluginVersion Plugin Version
+     * @param  {String} resource resource relative URL
+     * @return {String}          Resolved URL
+     * @memberof EkstepRendererAPI
+     */
+    resolvePluginResource: function (id, ver, resource) {
+         return org.ekstep.pluginframework.pluginManager.resolvePluginResource(id, ver, resource);
+    },
+    /**
+    * This to show the canvas endpage
+    * @memberof EkstepRendererAPI
+    */
+    showEndPage:function(){
+        this.dispatchEvent('renderer:init:endpage');
+    },
+    /**
+    * This to enable the canvas overlay
+    * @memberof EkstepRendererAPI
+    */
+    showOverlay:function(){
+        jQuery('#overlay').css({display: 'block'})
+    },
+    /**
+    * This to disable the canvas overlay
+    * @memberof EkstepRendererAPI
+    */
+    hideOverlay:function(){
+        jQuery('#overlay').css({display: 'none'})
+    },
+
+    hideEndPage: function() {
+        jQuery("#pluginTemplate").hide();
+        jQuery("#endpage").remove();
     }
 }

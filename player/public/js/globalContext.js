@@ -29,20 +29,22 @@ GlobalContext = {
                 promises.push(GlobalContext._getIntentExtra('origin', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('contentId', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('appInfo', GlobalContext.config));
-                promises.push(GlobalContext._getIntentExtra('language_info', GlobalContext.config));
+                promises.push(GlobalContext._getIntentExtra('languageInfo', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('contentExtras', GlobalContext.config));
-
+                promises.push(GlobalContext._getIntentExtra('appQualifier', GlobalContext.config));
+                promises.push(GlobalContext._getIntentExtra('mode', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('userSwitcherEnabled', GlobalContext.config));
                 promises.push(GlobalContext._getIntentExtra('showUser', GlobalContext.config));
 
                 Promise.all(promises)
                 .then(function(result) {
+                    org.ekstep.service.renderer.initializeSdk(GlobalContext.config.appQualifier || 'org.ekstep.genieservices');
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
                         GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
                         GlobalContext.game.id = GlobalContext.config.appInfo.identifier;
                         GlobalContext.game.ver = GlobalContext.config.appInfo.pkgVersion || "1";
                         GlobalContext.game.contentExtras = GlobalContext.config.contentExtras;
-                        // GlobalContext.config.contentExtras.switchingUser = true;
+                        // GlobalContext.config.contentExtras.switchingUser = true;`
                         // Assuming filter is always an array of strings.
                         GlobalContext.filter = (GlobalContext.config.appInfo.filter)? JSON.parse(GlobalContext.config.appInfo.filter): GlobalContext.config.appInfo.filter;
                     }
@@ -81,17 +83,19 @@ GlobalContext = {
             }
         })
         .then(function(result) {
-            if (result && result.status == 'success') {
-                if (result.data.uid) {
-                    GlobalContext.user = result.data;
+            console.log(result);
+            // GlobalContext.user = result;
+            // if (result && result.status == 'success') {
+                if (result.uid) {
+                    GlobalContext.user = result;
                     GlobalContext._params.user = GlobalContext.user;
                     resolve(true);
                 } else {
                     reject('INVALID_USER');
                 }
-            } else {
-                reject('INVALID_USER');
-            }
+            // } else {
+            //     reject('INVALID_USER');
+            // }
         })
         .catch(function(err) {
             reject(err);

@@ -13,18 +13,18 @@
                 {{$root.languageSupport.child}}
             </p>
             <div id="userSlider">
-                <div ng-repeat="user in $root.users | filter: {'group': '!true'}" ng-class="user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
-                    <img ng-src="{{$root.imageBasePath + user.avatar}}" alt='user_img' />
-                    <p>{{user.name}}</p>
+                <div ng-repeat="user in $root.users | filter: {'isGroupUser': '!true'}" ng-class="user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
+                    <img ng-src="{{user.profileImage}}" alt='user_img' />
+                    <p>{{user.handle}}</p>
                 </div>
             </div>
             <p class="slider-tag">
                 {{$root.languageSupport.group}}
             </p>
             <div id="groupSlider">
-                <div ng-if="groupLength > 0" ng-repeat="user in $root.users | filter: {'group': 'true'}" ng-class="user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
-                    <img ng-src="{{$root.imageBasePath + user.avatar}}" alt='group_img' />
-                    <p>{{user.name}}</p>
+                <div ng-if="groupLength > 0" ng-repeat="user in $root.users | filter: {'isGroupUser': 'true'}" ng-class="user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
+                    <img ng-src="{{user.profileImage}}" alt='group_img' />
+                    <p>{{user.handle}}</p>
                 </div>
                 <p class="fallback-text" ng-if="groupLength == 0">
                     {{$root.languageSupport.groupFallbackText}}
@@ -32,8 +32,8 @@
             </div>
         </div>
         <div class="model-butttons">
-            <button ng-class="disableButtons ? 'icon-opacity replay' : 'replay'" ng-disabled="disableButtons" ng-click="replayContent()"><img ng-src="{{$root.imageBasePath}}replay_icon.png" alt=""><span>Replay</span></button>
-            <button ng-class="disableButtons ? 'icon-opacity continue' : 'continue'" ng-disabled="disableButtons" ng-click="continueContent()"><img src="" alt=""><span>Continue</span></button>
+            <button class="replay" ng-click="replayContent()"><img ng-src="{{$root.imageBasePath}}replay_icon.png" alt=""><span>Replay</span></button>
+            <button class="continue" ng-click="continueContent()"><img src="" alt=""><span>Continue</span></button>
         </div>
     </div>
 

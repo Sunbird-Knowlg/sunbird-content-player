@@ -1,51 +1,23 @@
-<style>
-    .swiper-background {
-        background-image: url("assets/icons/splash.png");
-        background-size: cover;
-    }
 
-    .swiper-slide {
-        background-position: center;
-        background-size: cover;
-        width: 150px;
-        height: 190px;
-        padding: 15px;
-        border-radius: 10%;
-        background-color: white;
-        margin-left: 30px !important;
-        margin-bottom: 30px !important;
-        margin-top: 10px !important;
-    }
-</style>
-
-<div class="font-lato gc-ep-cont">
+<div class="font-lato gc-ep-cont" ng-controller="endPageController" id='endpage' ng-show="showEndPage">
     <image class="gc-ep-cont-background" ng-src="{{imageBasePath}}background_1.png" />
-
     <genie icon="icn_home.png" class="gc-ep-home"></genie>
-
     <div class="gc-ep-content">
         <p class="gc-ep-cong gc-text-elipsis">{{languageSupport.congratulations}}</p>
         <p class="icon-font gc-ep-title gc-text-elipsis" ng-if="content.name">{{content.name}}</p>
         <p class="gc-content-owner gc-text-elipsis" ng-if="content.owner">{{ languageSupport.author }}: {{content.owner}}</p>
     </div>
-
-    <center class="gc-ep-credits" ng-hide ="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null ">
+    <center class="gc-ep-credits" ng-hide="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null ">
         <input class="gc-btn-credits btn-normal" type="button" ng-click="showCredits()" />
     </center>
-
     <div class="gc-ep-content-holder">
         <div class="gc-ep-assessment-cont">
-
             <div class="gc-ep-rating-cont">
                 <div class="gc-ep-rating" ng-if="!showFeedbackPopup">
                     <p>{{languageSupport.scores}}</p>
                     <star-rating empty-rating="icn_credit_star.png" selected-rating="filled_star.png" rating="userRating" read-only="false" max-rating="5" click="showFeedback(param)"></star-rating>
                 </div>
-                <div class="gc-ep-comments" style="display:none">
-                    <img src="assets/icons/feedback_icon.png" />
-                </div>
             </div>
-
             <div class="gc-ep-time-score" ng-show="showFeedbackArea">
                 <div ng-class="showScore ? 'gc-ep-time ' : 'gc-ep-time-mid '" id="timeSpentArea">
                     <image ng-class="showScore ? 'img-float-left':'img-float-mid' " ng-src="{{imageBasePath}}icn_watch.png" style="position:relative;" />
@@ -56,22 +28,17 @@
                     <p class="gc-white-text gc-ep-white-title">{{totalScore}}</p>
                 </div>
             </div>
-
             <div class="gc-ep-footer">
-
                 <div ng-click="ep_replayContent()" class="gc-ep-footer-icons gc-ep-replay">
-                    <img class="replay" src="{{imageBasePath}}icn_replay.png"/>
+                    <img class="replay" src="{{imageBasePath}}icn_replay.png" />
                     <p>{{languageSupport.replay}}</p>
                 </div>
-
                 <div ng-if="showUser" ng-click="ep_openUserSwitchingModal()" class="gc-ep-footer-icons gc-ep-userSwitch">
-                    <img class="user" ng-src="{{imageBasePath + currentUser.avatar}}"/>
-                    <p><b>{{currentUser.name}}</b><br/> <small> {{languageSupport.change}} </small></p>
-
+                    <img class="user" ng-src="{{currentUser.profileImage}}" />
+                    <p><b>{{currentUser.handle}}</b>
+                        <br/> <small> {{languageSupport.change}} </small></p>
                 </div>
-
             </div>
-
         </div>
         <div class="gc-ep-related-cont" ng-controller="RelatedContentCtrl">
             <div class="gc-ep-next">
@@ -85,7 +52,7 @@
             <div class="gc-related-cont" ng-show="showRelatedContent">
                 <div class="gc-related-list" ng-repeat="story in relatedContents" ng-click="playRelatedContent(story, $index);">
                     <div class="gc-related-item">
-                        <p class="gc-text-elipsis gc-related-cont-title">{{story.name}}</p>
+                        <p class="gc-text-elipsis gc-related-cont-title">{{story.contentData.name}}</p>
                         <div class="gc-rel-content-img">
                             <img class="img-center" fallback-src="{{imageBasePath}}icn_default-content.png" ng-src="{{story.appIcon}}" />
                             <div class="gc-repeat-content">
@@ -97,9 +64,7 @@
             </div>
         </div>
     </div>
-
     <popup id="creditsPopup" popup-body="creditsBody"></popup>
-
     <div id="gcFbPopup" class="popup" ng-if="showFeedbackPopup">
         <div class="popup-overlay" ng-click="hideFeedback()"></div>
         <div class="gc-popup-new gc-fc-popup">
@@ -123,10 +88,8 @@
             </div>
         </div>
     </div>
-
     <div class="end-license">
-        <img src="assets/icons/ccby.png" style="width: 100%;" />
+        <img src="{{imageBasePath}}ccby.png" style="width: 100%;" />
     </div>
 </div>
-
 <user-switcher> </user-switcher>

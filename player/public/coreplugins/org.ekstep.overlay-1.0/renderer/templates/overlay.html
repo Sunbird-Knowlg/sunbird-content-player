@@ -1,4 +1,4 @@
-<div class="overlay-html" id="overlay" ng-controller="OverlayController">
+<div class="overlay-html" ng-show="showOverlay" ng-controller="OverlayController">
 	<h1>Overlay </h1>
 	<div>
 		<a class="nav-icon nav-previous" ng-class="{'nav-disable': showOverlayPrevious == state_disable}" href="javascript:void(0);"><img ng-src="{{imageBasePath}}back.png" ng-click="navigate('previous')"></a>

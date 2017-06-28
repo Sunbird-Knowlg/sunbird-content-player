@@ -3,14 +3,8 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'quiz' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
-    .constant("appConstants", {
-        "contentId": "contentId",
-        "stateContentList": "contentList",
-        "stateShowContent": "showContent",
-        "statePlayContent": "playContent",
-        "stateShowContentEnd": "showContentEnd"
-    })
+var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
+    .constant("appConstants", {"contentId": "contentId", "stateContentList": "contentList", "stateShowContent": "showContent", "statePlayContent": "playContent", "stateShowContentEnd": "showContentEnd"})
     .run(function($rootScope, $ionicPlatform, $location, $timeout, $state, $stateParams, appConstants) {
         $rootScope.imageBasePath = "assets/icons/";
         $rootScope.enableEval = false;
@@ -32,38 +26,33 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                 this.$apply(fn);
             }
         };
+        $rootScope.addIonicEvents = function() {
+            $ionicPlatform.onHardwareBackButton(function() {
+                backbuttonPressed($rootScope.pageId);
+            });
+            $ionicPlatform.on("pause", function() {
+                Renderer.pause();
+            });
+            $ionicPlatform.on("resume", function() {
+                Renderer.resume();
+            });
+        };
         $timeout(function() {
             $ionicPlatform.ready(function() {
                 isMobile = window.cordova ? true : false,
                     console.log('ionic platform is ready...');
+                org.ekstep.service.init();
                 if ("undefined" == typeof Promise) {
                     alert("Your device isn’t compatible with this version of Genie.");
                     exitApp();
                 }
+                $rootScope.addIonicEvents();
                 if (window.cordova && window.cordova.plugins.Keyboard) {
                     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
                 } else {
                     AppConfig.recorder = "android";
                 }
-                if (window.StatusBar) {
-                    StatusBar.styleDefault();
-                }
-
-                $ionicPlatform.onHardwareBackButton(function() {
-                    backbuttonPressed($rootScope.pageId);
-                });
-                $ionicPlatform.on("pause", function() {
-                    Renderer.pause();
-                });
-                $ionicPlatform.on("resume", function() {
-                    Renderer.resume();
-                });
-                org.ekstep.service.renderer.getMetaData().then(function(data) {
-                    var flavor = data.flavor;
-                    if (AppConfig[flavor] == undefined)
-                        flavor = "sandbox";
-                    GlobalContext.config.flavor = flavor;
-                });
+                window.StatusBar && StatusBar.styleDefault();
                 GlobalContext.init(packageName, version).then(function(appInfo) {
                     if ("undefined" != typeof localPreview && "local" == localPreview)
                         return;
@@ -71,11 +60,6 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                         localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                         org.ekstep.contentrenderer.device();
                     }
-                    org.ekstep.service.content.getUsersList().then(function(data) {
-                        $rootScope.users = data.data;
-                    }).catch(function(err) {
-                        reject(err);
-                    });
                 }).catch(function(res) {
                     console.log("Error Globalcontext.init:", res);
                     EkstepRendererAPI.logErrorEvent(res, {
@@ -89,9 +73,8 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
             });
 
         });
-    }).config(function($stateProvider, $urlRouterProvider,$controllerProvider,$compileProvider) {
+    }).config(function($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider) {
         app.controllerProvider = $controllerProvider;
-        app.compileProvider    = $compileProvider;
         $stateProvider
             .state('contentList', {
                 cache: false,
@@ -105,7 +88,7 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                 templateUrl: "templates/renderer.html",
                 controller: 'ContentCtrl'
             })
-    }).controller('BaseCtrl', function($scope, $rootScope, $compile, $state, $timeout, $ocLazyLoad, $stateParams, appConstants) {
+    }).controller('BaseCtrl', function($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, appConstants) {
         $rootScope.replayContent = function() {
             $scope.endContent('gc_replay');
             $scope.startContent();
@@ -116,7 +99,7 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
             }
             $rootScope.pageTitle = $rootScope.content.name;
             org.ekstep.contentrenderer.progressbar(true);
-            if (Renderer.theme) {
+            if (!_.isUndefined(Renderer) && Renderer.theme) {
                 TelemetryService.interact("TOUCH", eleId, "TOUCH", {
                     stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
                 });
@@ -125,6 +108,7 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                 TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
             }
             var menuReplay = $state.current.name == appConstants.statePlayContent;
+            org.ekstep.contentrenderer.progressbar(false);
             // 1) For HTML content onclick of replay EventListeners will be not available hence calling Telemetryservice end .
             // 2) OE_START for the HTML/ECML content will be takne care by the contentctrl rendere method always.
             EventBus.hasEventListener('actionReplay') ? EventBus.dispatch('actionReplay', {
@@ -140,23 +124,34 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
         }
         $rootScope.us_replayContent = function() {
             $scope.endContent('gc_userswitch_replayContent');
-            TelemetryService.setUser($rootScope.currentUser);
+            var stageId =
+                TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+
+            EventBus.dispatch('event:closeUserSwitchingModal')
+            jQuery("#pluginTemplate").hide();
             $scope.startContent();
         }
-        $rootScope.us_continueContent = function() {
-            var gameId = TelemetryService.getGameId();
-            var version = TelemetryService.getGameVer();;
+        $rootScope.us_continueContent = function(userSwitchHappened) {
             TelemetryService.interact("TOUCH", 'gc_userswitch_continue', "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
             });
-            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+            if (userSwitchHappened) {
+                var version = TelemetryService.getGameVer();;
+                var gameId = TelemetryService.getGameId();
+                TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
 
-            TelemetryService.end();
-            TelemetryService.setUser($rootScope.currentUser);
-            var data = {};
-            data.mode = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
-            TelemetryService.start(gameId, version, data);
+                TelemetryService.end();
+                TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                var data = {};
+                data.mode = getPreviewMode();
+                TelemetryService.start(gameId, version, data);
+            }
         }
+
+        /*function injectTemplates(templatePath, place) {
+            $scope.safeApply(function() {
+                $scope.templates = templatePath + "?a=" + Date.now();
+            });*/
 
         $scope.templates = { };
         function loadNgModules(templatePath, controllerPath, callback) {
@@ -169,27 +164,32 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
             });
         };
 
-        function injectTemplates(templatePath, toScopeVariable, toElement) {
+        function injectTemplates(templatePath, scopeVariable, toElement) {
             console.log("inject templates", templatePath);
 
             //$scope.templates = templatePath +"?a=" +  Date.now();
             // if(toElement) {
                 // $scope.overlayTemplatePath = templatePath;
-                $scope.templates[toScopeVariable] = templatePath;
-                var el = angular.element("#gameArea");
+                $scope.templates[scopeVariable] = templatePath;
+                var el = angular.element(toElement);
                 $compile(el.contents())($scope);
                 $scope.safeApply();
                
             // }
         }
+        EkstepRendererAPI.addEventListener("renderer:add:template", function(event){
+            var data = event.target;
+            injectTemplates(data.templatePath, data.scopeVariable, data.toElement);
+        });
+
 
         org.ekstep.service.controller.initService(loadNgModules);
         // org.ekstep.service.controller.injectTemplate(injectTemplates, null);
         EkstepRendererAPI.addEventListener("event:loadContent", function() {
             var configuration = EkstepRendererAPI.getPreviewData();
-            content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? defaultMetadata : configuration.metadata
+            content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? AppConfig.DEFAULT_METADATA : configuration.metadata
             if (_.isUndefined(configuration.data)) {
-               org.ekstep.contentrenderer.web(configuration.context.contentId);
+                org.ekstep.contentrenderer.web(configuration.context.contentId);
             } else {
                 content.body = configuration.data;
                 console.info("Content id is undefined or body is available !!");
@@ -198,10 +198,9 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
             }
         }, this);
     }).controller('ContentListCtrl', function($scope, $rootScope, $state, $stateParams) {
-       /* contentListCtrl for the localDevelopment*/
+        /* contentListCtrl for the localDevelopment*/
         $rootScope.pageId = 'ContentApp-Collection';
         $scope.version = GlobalContext.game.ver;
-        $scope.flavor = GlobalContext.config.flavor;
         $rootScope.stories = [];
         $rootScope.showMessage = false;
 
@@ -255,7 +254,6 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                             collectionPath = pathArr;
                         }
                     }
-
                     if (!_.contains(stack, content.identifier))
                         stack.push(content.identifier);
                     if (COLLECTION_MIMETYPE == content.mimeType) {
@@ -291,7 +289,6 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                     $rootScope.renderMessage(AppMessages.ERR_GET_CONTENT_LIST, 3000);
                 });
         };
-
         $scope.playContent = function(content) {
             $rootScope.content = content;
             if (content.mimeType == COLLECTION_MIMETYPE) {
@@ -335,10 +332,13 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
         $rootScope.pageId = "ContentApp-Renderer";
         $scope.init = function() {
             if (_.isUndefined($rootScope.content)) {
-                if (!_.isEmpty(content)) {
+                if (!_.isUndefined(content.metadata)) {
                     $rootScope.content = content.metadata;
                     $scope.renderContent();
+                }else{
+                    console.info('contentMetada is undefined');
                 }
+
             } else {
                 $scope.renderContent();
             }
@@ -359,7 +359,7 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                 $scope.callStartTelemetry($rootScope.content, function() {
                     $scope.item = $rootScope.content;
                     $scope.callStartTelemetry($rootScope.content, function() {
-                        $rootScope.content.body =  isbrowserpreview ? getContentObj(content): undefined;
+                        $rootScope.content.body = isbrowserpreview ? getContentObj(content) : undefined;
                         EkstepRendererAPI.dispatchEvent('renderer:launcher:initLauncher', undefined, $rootScope.content);
                     });
                 });
@@ -440,7 +440,6 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
             if (navType === "next") {
                 EventBus.dispatch("actionNavigateNext", navType);
                 EventBus.dispatch("nextClick");
-
             } else if (navType === "previous") {
                 EventBus.dispatch("actionNavigatePrevious", navType);
                 EventBus.dispatch("previousClick");
@@ -448,9 +447,9 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
         }
 
         $scope.init = function() {
-            if (GlobalContext.config.language_info) {
-                console.log("Language updated", GlobalContext.config.language_info);
-                var languageInfo = JSON.parse(GlobalContext.config.language_info);
+            if (GlobalContext.config.languageInfo) {
+                console.log("Language updated", GlobalContext.config.languageInfo);
+                var languageInfo = JSON.parse(GlobalContext.config.languageInfo);
                 for (key in languageInfo) {
                     $rootScope.languageSupport[key] = languageInfo[key];
                 }
@@ -535,7 +534,6 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
         $scope.groupLength = undefined;
         $scope.selectedUser = {};
         $scope.showUserSwitchModal = false;
-        $scope.disableButtons = true;
 
         $scope.hideUserSwitchingModal = function() {
             TelemetryService.interact("TOUCH", "gc_userswitch_popup_close", "TOUCH", {
@@ -548,16 +546,13 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
 
         $scope.showUserSwitchingModal = function() {
             if ($rootScope.userSwitcherEnabled) {
-                $scope.disableButtons = true;
                 TelemetryService.interact("TOUCH", "gc_userswitch_popup_open", "TOUCH", {
                     stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
                 });
 
                 _.each($rootScope.users, function(user) {
-                    // if (user.selected === $rootScope.currentUser.uid) {
                     if (user.selected === true) user.selected = false;
                     if (user.uid === $rootScope.currentUser.uid) user.selected = true;
-                    // }
                 });
                 $scope.sortUserlist();
                 $rootScope.safeApply(function() {
@@ -567,41 +562,21 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                 showToaster('info', "Change of users is disabled");
             }
         }
-
-        // get userList process goes here
         $scope.getUsersList = function() {
-            // get users api call gone here
-            org.ekstep.service.content.getUsersList().then(function(data) {
-                if (data.status === "success" && _.isUndefined($rootScope.users))
-                    $rootScope.users = data.data;
+            org.ekstep.service.content.getAllUserProfile().then(function(usersData) {
+                console.log("getAllUserProfile()", usersData);
+                $rootScope.users = usersData;
                 $scope.groupLength = (_.where($rootScope.users, {
-                    "group": true
+                    "isGroupUser": true
                 })).length;
-
-                org.ekstep.service.content.getCurrentUser().then(function(data) {
-                    if (_.isUndefined($rootScope.currentUser)) $rootScope.currentUser = data.data
-
-                    _.each($rootScope.users, function(user) {
-                        if (user.uid === $rootScope.currentUser.uid) {
-                            $rootScope.safeApply(function() {
-                                $rootScope.currentUser = user;
-                            });
-                        }
-                    });
-
-                    $rootScope.currentUser.selected = true;
-                    $scope.sortUserlist();
-                }).catch(function(err) {
-                    reject(err);
-                });
+                if ($rootScope.users.length == 0) $rootScope.users.push($rootScope.currentUser);
+                $scope.sortUserlist();
             }).catch(function(err) {
-                // show toast message
-                reject(err);
+                console.error(err);
             });
         }
-
         $scope.sortUserlist = function() {
-            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'name'), 'userIndex');
+            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'handle'), 'userIndex');
         }
 
         // this function changes the selected user
@@ -614,7 +589,6 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
             TelemetryService.interact("TOUCH", selectedUser.uid, "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
             });
-            if (_.isUndefined($scope.disableButtons) || $scope.disableButtons === true) $scope.disableButtons = false;
             selectedUser.selected = true;
             $scope.selectedUser = selectedUser;
         }
@@ -633,18 +607,21 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
         }
 
         $scope.switchUser = function(replayContent) {
-            org.ekstep.service.content.setCurrentUser($scope.selectedUser.uid).then(function(data) {
-                if (data.status === "success" && !_.isEmpty($scope.selectedUser)) {
+            var userSwitchHappened;
+            if (!_.isEmpty($scope.selectedUser)) {
+                userSwitchHappened = true;
+                org.ekstep.service.content.setUser($scope.selectedUser.uid).then(function(data) {
                     $rootScope.$apply(function() {
                         $rootScope.currentUser = $scope.selectedUser;
                         $rootScope.currentUser.userIndex = $rootScope.sortingIndex -= 1;
+                        $scope.selectedUser = {};
                     });
-                }
-                $scope.hideUserSwitchingModal();
-                replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent();
-            }).catch(function(err) {
-                console.log(err);
-            })
+                }).catch(function(err) {
+                    console.log(err);
+                })
+            }
+            $scope.hideUserSwitchingModal();
+            replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent(userSwitchHappened);
         }
 
         $scope.initializeCtrl = function() {
@@ -691,7 +668,23 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                 }
             });
 
-            $scope.getUsersList();
+            if (_.isUndefined($rootScope.currentUser)) {
+                org.ekstep.service.content.getCurrentUser().then(function(data) {
+                    console.log("getCurrentUser()", data);
+
+                    if (_.isEmpty(data.handle)) {
+                        data.handle = "Anonymous";
+                        data.profileImage = "assets/icons/avatar_anonymous.png";
+                    }
+                    $rootScope.currentUser = data;
+                    $rootScope.currentUser.selected = true;
+                    $scope.getUsersList();
+                }).catch(function(err) {
+                    console.log(err);
+                })
+            } else {
+                $scope.getUsersList();
+            }
         }
     }]).directive('menu', function($rootScope, $sce) {
         return {
@@ -755,18 +748,18 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                 if (!_.isNull(muteElement)) {
                     muteElement.style.display = "none";
                 }
-                EkstepRendererAPI.muteAudio();
+                AudioManager.unmute();
                 scope.toggleMute = function() {
-                    if (EkstepRendererAPI.isMuted) {
-                        EkstepRendererAPI.unMuteAudio();
+                    if (AudioManager.muted) {
+                        AudioManager.unmute();
                         scope.muteImg = $rootScope.imageBasePath + "audio_icon.png";
                         $rootScope.languageSupport.mute = "on";
                     } else {
-                        EkstepRendererAPI.muteAudio();
+                        AudioManager.mute();
                         scope.muteImg = $rootScope.imageBasePath + "audio_mute_icon.png";
                         $rootScope.languageSupport.mute = "off";
                     }
-                    TelemetryService.interact("TOUCH", EkstepRendererAPI.muted ? "gc_mute" : "gc_unmute", "TOUCH", {
+                    TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute", "TOUCH", {
                         stageId: Renderer.theme._currentStage
                     });
                 }
@@ -864,10 +857,8 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                 $scope.assessStyle = 'assess-disable';
 
                 $rootScope.$watch('enableEval', function() {
-                    //Submit buttion style changing(enable/disable) button
                     $scope.isEnabled = $rootScope.enableEval;
                     if ($scope.isEnabled) {
-                        //Enable state
                         $timeout(function() {
                             // This timeout is required to apply the changes(because it is calling by JS)
                             $scope.assessStyle = 'assess-enable';
@@ -885,6 +876,44 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                         $rootScope.defaultSubmit();
                         EventBus.dispatch("submitClick");
                     }
+                }
+            }
+        }
+    }).directive('genie', function($rootScope) {
+        return {
+            scope: {
+                icon: '@'
+            },
+            restrict: 'E',
+            template: '<div ng-class="enableGenie ? \'genie-home\' : \'icon-opacity genie-home\'" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/><span> {{languageSupport.home}} </span></div>',
+            /* above span will not be visible in the end page. To be handles oin css */
+            link: function(scope) {
+                scope.languageSupport = $rootScope.languageSupport;
+                scope.enableGenie = ("undefined" == typeof cordova) ? false : true;
+                scope.imgSrc = $rootScope.imageBasePath + scope.icon
+                if (scope.enableGenie) {
+                    scope.goToGenie = function() {
+                        EkstepRendererAPI.hideEndPage();
+                        var pageId = $rootScope.pageId;
+                        exitApp(pageId);
+                    }
+                }
+            }
+        }
+    }).directive('restart', function($rootScope, $state, $stateParams) {
+        return {
+            restrict: 'E',
+            template: '<div ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/><span> {{languageSupport.replay}} </span></div>',
+            link: function(scope) {
+                scope.restartContent = function() {
+                    $rootScope.replayContent();
+                    var muteElement = document.getElementById("unmute_id");
+                    if (!_.isNull(muteElement)) {
+                        muteElement.style.display = "none";
+                    }
+                    AudioManager.unmute();
+                    if (!_.isUndefined(scope.hideMenu) && scope.menuOpened)
+                        scope.hideMenu();
                 }
             }
         }
@@ -915,7 +944,6 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
             controller: 'userSwitchCtrl',
             templateUrl: 'templates/user-switch-popup.html',
             link: function(scope, element, attrs, controller) {
-
                 // Get the modal
                 var userSwitchingModal = element.find("#userSwitchingModal")[0];
                 // userSwitchingModal.style.display = "block";
@@ -939,9 +967,6 @@ var app = angular.module('genie-canvas', ['ionic','ngCordova','oc.lazyLoad'])
                         }
                     });
                 }
-
-                // $("#selector_that_matches_zero_elements").mCustomScrollbar("destroy");
-
                 scope.init = function() {
                     if (GlobalContext.config.showUser === true) {
                         userSlider.mCustomScrollbar('destroy');

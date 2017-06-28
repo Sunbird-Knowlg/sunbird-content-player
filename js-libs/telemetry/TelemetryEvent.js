@@ -24,21 +24,21 @@ TelemetryEvent = Class.extend({
         TelemetryService._version == "1.0" ? this.event.ts = getTime(this.createdTime) : this.event.ets = getTime(this.createdTime);
     },
     flush: function(apiName) {
+        var instance = this;
         if (this.event) {
             if ("undefined" != typeof telemetry) {
                 telemetry.send(JSON.stringify(this.event), apiName).then(function() {
                     return JSON.stringify(this.event);
                 }).catch(function(err) {
-                    if(this.event.uid){    // TODO Find the Unknow events from(Jquery/cordova/ionic)
-                         TelemetryService.logError(this.name, err);
+                    if(instance.event.uid){    // TODO Find the Unknow events from(Jquery/cordova/ionic)
+                         TelemetryService.logError(instance.name, err);
                     }else{
-                        console.warn("uid is not Present",this.event);
+                        console.warn("uid is not Present",instance.event);
                     }
                 });
             } else {
                 console.log(JSON.stringify(this.event));
             }
-
         }
     },
     ext: function(ext) {

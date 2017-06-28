@@ -10,8 +10,9 @@ Plugin.extend({
         canvas: 'gameCanvas'
     },
     initialize: function() {
-        console.info('ECML Renderer initialize')
+        console.info('ECML Renderer initialize');
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
+        EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
     },
     start: function(evt, renderObj) {
         var instance = this;
@@ -27,7 +28,7 @@ Plugin.extend({
                 var dataObj = {
                     'body': renderObj.body,
                     'canvasId': 'gameCanvas',
-                    'path': renderObj.gameRelPath
+                    'path': renderObj.path
                 }
                 instance.load(dataObj);
             } else {
@@ -137,15 +138,11 @@ Plugin.extend({
             showToaster('error', 'Framework fails to load plugins');
         }
         createjs.Ticker.addEventListener("tick", function() {
-            if (Renderer.update) {
-                if (!_(Renderer.theme).isUndefined()) {
-                    Renderer.theme.update();
-                    Renderer.update = false;
-                }
-            } else {
-                if (Renderer.theme) {
-                    Renderer.theme.tick();
-                }
+            if (Renderer.update && (typeof Renderer.theme !== 'undefined')) {
+                Renderer.theme.update();
+                Renderer.update = false;
+            } else if (Renderer.theme) {
+                Renderer.theme.tick();
             }
         });
     },
@@ -168,7 +165,7 @@ Plugin.extend({
         return plugins;
     },
     cleanUp: function() {
-        Renderer.running = false;
+        this.running = false;
         AnimationManager.cleanUp();
         AssetManager.destroy();
         TimerManager.destroy();

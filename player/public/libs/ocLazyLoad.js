@@ -7,7 +7,10 @@
  */
 (function (angular, window) {
     'use strict';
-
+    //https://github.com/angular/angular.js/issues/7709 hack
+    angular.module('ng').config(function($filterProvider) {
+        $filterProvider.register('tel', function() {});
+    });
     var regModules = ['ng', 'oc.lazyLoad'],
         regInvokes = {},
         regConfigs = [],

@@ -6,6 +6,9 @@ window.org.ekstep.service = new renderer_services();
 renderer_services = undefined;
 
 org.ekstep.service.mainService = Class.extend({
+    getAPISlug: function() {
+        return AppConfig.apislug;
+    },
     init: function(config) {
         this.initService(config);
     },
@@ -14,8 +17,6 @@ org.ekstep.service.mainService = Class.extend({
         console.info('main service is intialized');
     }
 });
-
-/*org.ekstep.service.init should be part of rendrer-bootstarp.js*/
 org.ekstep.service.init = function() {
     if (typeof cordova !== 'undefined') {
         org.ekstep.service.renderer = genieservice;
