@@ -172,7 +172,7 @@ org.ekstep.contentrenderer.urlparameter = function() {
     }
     return (_.object(urlParams))
 };
-org.ekstep.contentrenderer.web = function() {
+org.ekstep.contentrenderer.web = function(id) {
     var configuration = EkstepRendererAPI.getPreviewData();
     var headers = org.ekstep.contentrenderer.urlparameter;
     if (!_.isUndefined(configuration.context.authToken)) {
