@@ -491,6 +491,17 @@ module.exports = function(grunt) {
                     from: "applicationVariants",
                     to: "libraryVariants"
                 }]
+            },
+            buildNumber:{
+                src: ['www/index.html'],
+                overwrite: true,
+                replacements: [{
+                    from: ".js",
+                    to: ".js?ver=BUILD_NUMBER"
+                },{
+                    from: ".css",
+                    to: ".css?ver=BUILD_NUMBER"
+                }]
             }
         },
         jsdoc: {
@@ -628,7 +639,7 @@ module.exports = function(grunt) {
     grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared', 'replace:xwalk_library']);
 
     //Build web prview
-    grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetry', 'concat:script', 'clean:deletefiles', 'injector:prview']);
+    grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetry', 'concat:script', 'clean:deletefiles', 'injector:prview', 'replace:buildNumber']);
     grunt.registerTask('build-preview', ['preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
 
     //Build AAR 

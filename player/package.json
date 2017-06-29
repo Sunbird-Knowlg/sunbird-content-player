@@ -8,6 +8,7 @@
     "download": "4.4.3",
     "ejs": "*",
     "express": "3.2.6",
+    "grunt-contrib-concat": "^1.0.1",
     "jsonfile": "*",
     "node-rest-client": ">=1.0.0",
     "underscore": "*",
