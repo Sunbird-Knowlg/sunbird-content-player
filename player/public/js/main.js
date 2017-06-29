@@ -84,7 +84,6 @@ function exitApp(stageId) {
     if(!stageId){
         stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " ";
     } 
-    TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {stageId: stageId }); 
     try {
         TelemetryService.exit();
     } catch (err) {

@@ -353,30 +353,6 @@ app.compileProvider.directive('restart', function($rootScope, $state, $statePara
         }
     }
 });
-
-app.compileProvider.directive('genie', function($rootScope) {
-    return {
-        scope: {
-            icon: '@'
-        },
-        restrict: 'E',
-        template: '<div ng-class="enableGenie ? \'genie-home\' : \'icon-opacity genie-home\'" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/><span> {{languageSupport.home}} </span></div>',
-        /* above span will not be visible in the end page. To be handles oin css */
-        link: function(scope) {
-            scope.languageSupport = $rootScope.languageSupport;
-            scope.enableGenie = ("undefined" == typeof cordova) ? false : true;
-            scope.imgSrc = $rootScope.imageBasePath + scope.icon
-            if (scope.enableGenie) {
-                scope.goToGenie = function() {
-                    EkstepRendererAPI.hideEndPage();
-                    var pageId = $rootScope.pageId;
-                    exitApp(pageId);
-                }
-            }
-        }
-    }
-});
-
 app.compileProvider.directive('menu', function($rootScope, $sce) {
     return {
         restrict: 'E',

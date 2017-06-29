@@ -6,7 +6,11 @@
     "description": "",
     "publishedDate": "",
     "renderer": {
-        "main": "renderer/plugin.js"
+        "main": "renderer/plugin.js",
+        "dependencies": [{
+            "type": "js",
+            "src": "renderer/libs/toaster.min.js"
+        }]
     }
 
 }
