@@ -137,12 +137,14 @@ Plugin.extend({
     load: function(dataObj) {
         var instance = this,
             data = dataObj.body;
+
         if (!jQuery.isPlainObject(data)) {
             var x2js = new X2JS({
                 attributePrefix: 'none'
             });
-            data = x2js.xml2json(data);
+            data = (isbrowserpreview) ? x2js.xml_str2json(data) : x2js.xml2json(data);
         }
+
         this.gdata = data;
         var content = data.theme || data.ecml;
         content.canvasId = dataObj.canvasId;
