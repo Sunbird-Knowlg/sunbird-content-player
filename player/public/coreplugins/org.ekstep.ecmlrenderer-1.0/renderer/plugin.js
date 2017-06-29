@@ -142,7 +142,14 @@ Plugin.extend({
             var x2js = new X2JS({
                 attributePrefix: 'none'
             });
-            data = (isbrowserpreview) ? x2js.xml_str2json(data) : x2js.xml2json(data);
+            var tempData = data;
+            if(isbrowserpreview){
+                data = x2js.xml_str2json(tempData)
+                if (!data || data.parsererror)
+                    data = JSON.parse(tempData)
+            }else{
+                data = x2js.xml2json(tempData);
+            }
         }
 
         this.gdata = data;
