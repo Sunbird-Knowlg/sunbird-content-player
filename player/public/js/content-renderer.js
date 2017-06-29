@@ -145,7 +145,7 @@ org.ekstep.contentrenderer.setContentMetadata = function(contentData) {
         org.ekstep.contentrenderer.getContentBody(content.metadata.identifier);
       }
 };
-org.ekstep.contentrenderer.getContentBody = function() {
+org.ekstep.contentrenderer.getContentBody = function(id) {
     var configuration = EkstepRendererAPI.getPreviewData();
     var headers = org.ekstep.contentrenderer.urlparameter;
     if (!_.isUndefined(configuration.context.authToken)) {
