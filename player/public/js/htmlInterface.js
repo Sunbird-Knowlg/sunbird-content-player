@@ -4,89 +4,119 @@
 
 var html_renderer = function() {};
 window.org = { ekstep: {} }
-window.org.ekstep.htmlrenderer = new html_renderer();
-window.org.ekstep.htmlrenderer.top  = window.top;
-window.org.ekstep.htmlrenderer._ = window.top._;
-window.org.ekstep.htmlrenderer.jQuery = window.top.$;
+org.ekstep.renderer = new html_renderer();
+org.ekstep.renderer.html = window.top;
 
 /**
- * To navigate to endPage
- * @memberof org.ekstep.htmlrenderer
+ * Interface to access canvas underscore lib 
+ * @memberof org.ekstep.renderer.html
  */
-org.ekstep.htmlrenderer.showEndPage = function() {
-	org.ekstep.htmlrenderer.top.EkstepRendererAPI.showEndPage();
-};
-/**
- * To Access Canvas Renderer API's
- * @memberof org.ekstep.htmlrenderer
- */
-org.ekstep.htmlrenderer.api  = org.ekstep.htmlrenderer.top.EkstepRendererAPI;
+org.ekstep.renderer.html._ = window.top._;
 
 /**
- * To enable Overlay on top of game
- * @memberof org.ekstep.htmlrenderer
+ * Interface to access canvas jquery lib
+ * @memberof org.ekstep.renderer.html
  */
-org.ekstep.htmlrenderer.enableOverlay = function(){
-	org.ekstep.htmlrenderer.api.showOverlay();
-};
+org.ekstep.renderer.html.jQuery = window.top.$;
 
 /**
- * To disable Overlay from top of game
- * @memberof org.ekstep.htmlrenderer
+ *  Interface to access canvas angular lib
+ * @memberof org.ekstep.renderer.html
  */
-org.ekstep.htmlrenderer.disableOverlay = function(){
-	org.ekstep.htmlrenderer.api.hideOverlay();
+org.ekstep.renderer.html.angular = window.top.angular;
+
+
+/**
+ *  Interface to navigate to endPage
+ * @memberof org.ekstep.renderer.html
+ */
+org.ekstep.renderer.html.showEndPage = function() {
+	org.ekstep.renderer.html.EkstepRendererAPI.showEndPage();
 };
 
 /**
- * To Hide the canvas endpage
- * @memberof org.ekstep.htmlrenderer
+ * Interface to Access Canvas Renderer API's
+ * @memberof org.ekstep.renderer.html
  */
-org.ekstep.htmlrenderer.hideEndPage = function(){
-	org.ekstep.htmlrenderer.top.EkstepRendererAPI.hideEndPage();
+ org.ekstep.renderer.html.api  = org.ekstep.renderer.html.EkstepRendererAPI;
+
+
+
+/**
+ * Interface to enable Overlay on top of game
+ * @memberof org.ekstep.renderer.html
+ */
+org.ekstep.renderer.html.enableOverlay = function(){
+	org.ekstep.renderer.html.api.showOverlay();
 };
 
 /**
- * To Access HTML Service
- * @memberof org.ekstep.htmlrenderer
+ * Interface to disable Overlay from top of game
+ * @memberof org.ekstep.renderer.html
  */
-org.ekstep.htmlrenderer.service = function(){
-	return org.ekstep.htmlrenderer.top.org.ekstep.service.html;
+org.ekstep.renderer.html.disableOverlay = function(){
+	org.ekstep.renderer.html.api.hideOverlay();
 };
 
 /**
- * To Access Telemetry service
- * @memberof org.ekstep.htmlrenderer
+ * Interface to Hide the canvas endpage
+ * @memberof org.ekstep.renderer.html
  */
-org.ekstep.htmlrenderer.telemetryService = org.ekstep.htmlrenderer.top.TelemetryService;
+org.ekstep.renderer.html.hideEndPage = function(){
+	org.ekstep.renderer.html.EkstepRendererAPI.hideEndPage();
+};
 
 /**
- * To Access Content Metadata
+ * Interface to Access HTML Service
+ * @memberof org.ekstep.renderer.html
+ */
+org.ekstep.renderer.html.service = function(){
+	return org.ekstep.renderer.html.org.ekstep.service.html;
+};
+
+/*
+ * Interface to Access Telemetry service
+ * @memberof org.ekstep.renderer.html
+ */
+ 
+org.ekstep.renderer.html.telemetryService = org.ekstep.renderer.html.TelemetryService;
+
+/**
+ *  Interface to exit the game 
+ * @memberof org.ekstep.renderer.html
+ */
+org.ekstep.renderer.html.contentService = function(){
+	return EkstepRendererAPI.getService();
+};
+
+/**
+ * Interface to Access Content Metadata
  * @param  {String} contentId identifier of the game
- * @memberof org.ekstep.htmlrenderer
+ * @memberof org.ekstep.renderer.html 
  */
 
-org.ekstep.htmlrenderer.getcontentMetadata = function(contentId, cb){
-	org.ekstep.htmlrenderer.top.org.ekstep.contentrenderer.getContentMetadata(contentId, function(){
+org.ekstep.renderer.html.getcontentMetadata = function(contentId, cb){
+	org.ekstep.renderer.html.org.ekstep.contentrenderer.getContentMetadata(contentId, function(){
 		if(cb) cb();
 	});
 };
 
 /**
- * To verify the env of game is running 
- * @memberof org.ekstep.htmlrenderer
+ * Interface is to verify the env of game is running 
+ * @memberof org.ekstep.renderer.html
  */
-org.ekstep.htmlrenderer.isCordovaEnv = function(){
+org.ekstep.renderer.html.isCordovaEnv = function(){
 	return window.cordova ? true : false ;
 };
 
 /**
- * To exit the game 
- * @memberof org.ekstep.htmlrenderer
+ * Interface is to exit the game 
+ * @memberof org.ekstep.renderer.html
  */
-org.ekstep.htmlrenderer.exit = function(){
-	org.ekstep.htmlrenderer.top.exitApp();
+org.ekstep.renderer.html.exit = function(){
+	org.ekstep.renderer.html.exitApp();
 };
+
 
 
 

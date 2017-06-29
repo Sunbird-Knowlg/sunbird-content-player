@@ -942,5 +942,14 @@ window.EkstepRendererAPI = {
 
     hideEndPage: function() {
        this.dispatchEvent('renderer:hide:endpage');
+    },
+
+    /**
+    * API to retrun the rendrere service where user can acccess the 
+    * renderer services
+    * @memberof EkstepRendererAPI
+    */
+    getService: function(){
+        return org.ekstep.service.content;
     }
 }
