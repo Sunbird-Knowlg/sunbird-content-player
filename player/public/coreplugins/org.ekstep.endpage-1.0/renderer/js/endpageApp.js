@@ -172,12 +172,14 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
     };
     EkstepRendererAPI.addEventListener('renderer:show:endpage', function(){
         $scope.showEndPage = true;
+        jQuery('#pluginTemplate').attr('style',  'z-index: 999');
         $scope.initEndpage();
         $scope.safeApply();
     });
 
     EkstepRendererAPI.addEventListener('renderer:hide:endpage',function(){
         $scope.showEndPage = false;
+        jQuery('#pluginTemplate').attr('style',  'z-index: -999');
         $scope.safeApply();
     });
 
