@@ -1,3 +1,10 @@
+/**
+ * This plugin is used to play ECML comntent
+ * @class ecmlRenderer
+ * @extends basePlugin
+ * @author Kartheek Palla <kartheekp@ilimi.in>
+ */
+
 Plugin.extend({
     loader: undefined,
     theme: undefined,
@@ -9,11 +16,19 @@ Plugin.extend({
         gameArea: 'gameArea',
         canvas: 'gameCanvas'
     },
+    /**
+     * registers events
+     * @memberof ecmlRenderer
+     */
     initialize: function() {
         console.info('ECML Renderer initialize');
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
     },
+    /**
+     * 
+     * @memberof ecmlRenderer
+     */
     start: function(evt, renderObj) {
         var instance = this;
         if (_.isUndefined(renderObj)) return;
@@ -53,6 +68,10 @@ Plugin.extend({
             console.warn("Canvas Renderer init is failed", e);
         }
     },
+    /**
+     * This method used for resize the gamearea
+     * @memberof ecmlRenderer
+     */
     resizeGame: function(disableDraw) {
         var gameArea = document.getElementById(Renderer.divIds.gameArea);
         var widthToHeight = 16 / 9;
@@ -74,6 +93,10 @@ Plugin.extend({
         Renderer.theme.updateCanvas(newWidth, newHeight);
         if (!disableDraw) Renderer.theme.reRender();
     },
+    /**
+     * This method is used to read content json
+     * @memberof ecmlRenderer
+     */
     initByJSON: function(gameRelPath, canvasId) {
         var instance = this;
         jQuery.getJSON(gameRelPath + '/index.json', function(data) {
@@ -88,6 +111,10 @@ Plugin.extend({
                 instance.initByXML(gameRelPath, canvasId)
             });
     },
+    /**
+     * This method is used to read content ECML
+     * @memberof ecmlRenderer
+     */
     initByXML: function(gameRelPath, canvasId) {
         var instance = this;
         jQuery.get(gameRelPath + '/index.ecml', function(data) {
@@ -103,6 +130,10 @@ Plugin.extend({
                 alert("Invalid ECML please correct the Ecml : ", err);
             });
     },
+    /**
+     * This method is used load the content
+     * @memberof ecmlRenderer
+     */
     load: function(dataObj) {
         var instance = this,
             data = dataObj.body;
@@ -164,6 +195,10 @@ Plugin.extend({
         });
         return plugins;
     },
+    /**
+     * This method is used clean renderer objects
+     * @memberof ecmlRenderer
+     */
     cleanUp: function() {
         this.running = false;
         AnimationManager.cleanUp();

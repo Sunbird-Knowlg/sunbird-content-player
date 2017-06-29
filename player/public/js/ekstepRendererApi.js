@@ -892,9 +892,17 @@ window.EkstepRendererAPI = {
         }
 
     },
+    /**
+    * API to set Renderer object
+    * @memberof EkstepRendererAPI
+    */
     setRenderer: function(data){
         Renderer = data;
     },
+    /**
+    * API to get Renderer object
+    * @memberof EkstepRendererAPI
+    */
     getRenderer: function(){
         return Renderer;
     },
