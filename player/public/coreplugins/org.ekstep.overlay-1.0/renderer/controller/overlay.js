@@ -1,9 +1,5 @@
 'use strict';
 
-//var test1 = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/user-switch-popup.html");
-
-// var test1 = "templates/user-switch-popup.html";
-
 app.controllerProvider.register("OverlayController", function($scope, $rootScope, $compile, $stateParams) {
     $rootScope.isItemScene = false;
     $rootScope.menuOpened = false;
@@ -18,8 +14,13 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.showOverlayTryAgain = false;
     $scope.overlayEvents = ["overlayNext", "overlayPrevious", "overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
     $scope.showOverlay = false;
+    $scope.pluginInstance = undefined;
 
     $scope.init = function() {
+        // instance.test();
+        $scope.pluginInstance = EkstepRendererAPI.getPluginInstance("text");
+        console.log("$scope.pluginInstance: ", $scope.pluginInstance);
+
         if (GlobalContext.config.language_info) {
             var languageInfo = JSON.parse(GlobalContext.config.language_info);
             for (key in languageInfo) {
@@ -308,18 +309,14 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
 			popupBody: '=popupBody'
 		},
 		controller: 'UserSwitchController',
-		// templateUrl: org.ekstep.pluginframework.pluginManager.resolvePluginResource("org.ekstep.overlay", "1.0", "renderer/templates/user-switch-popup.html"),
+		templateUrl: 'coreplugins/org.ekstep.overlay-1.0/renderer/templates/user-switch-popup.html',
 		// templateUrl: 'templates/user-switch-popup.html',
 		link: function(scope, element, attrs, controller) {
 			// Get the modal
 			var userSwitchingModal = element.find("#userSwitchingModal")[0];
 			// userSwitchingModal.style.display = "block";
 
-			// get the user selection div0
-            // _templateUrl = org.ekstep.pluginframework.pluginManager.resolvePluginResource("org.ekstep.overlay", "1.0", "renderer/templates/user-switch-popup.html");
-
-            // var qw = org.ekstep.pluginframework.pluginManager.resolvePluginResource("org.eskstep.overlay", "1.0", "renderer/templates/user-switch-popup.html");
-            // console.log("_templateUrl: ", _templateUrl);
+			// get the user selection div
 			var userSlider = element.find("#userSlider");
 			var groupSlider = element.find("#groupSlider");
 			scope.render = function() {
@@ -338,14 +335,8 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
 					}
 				});
 			}
-
-            scope.getTemplateUrl = function() {
-                // var _templateUrl = org.ekstep.pluginframework.pluginManager.resolvePluginResource("org.ekstep.overlay", "1.0", "renderer/templates/user-switch-popup.html");
-                // console.log("_templateUrl: ", _templateUrl);
-                // return _templateUrl;
-            }
-
 			scope.init = function() {
+                // scope.pluginInstance.test();
 				if (GlobalContext.config.showUser === true) {
 					userSlider.mCustomScrollbar('destroy');
 					groupSlider.mCustomScrollbar('destroy');
@@ -353,9 +344,7 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
 					scope.render();
 				}
 			}();
-		},
-        template: "<div ng-include=getTemplateUrl()></div>"
-
+		}
 	}
 });
 //#sourceURL=overlay.js
