@@ -79,7 +79,15 @@ function backbuttonPressed(pageId) {
     if (pageId == "coverpage") {
         TelemetryService.end();
     }
-    EkstepRendererAPI.stopAll();
+    AudioManager.stopAll();
+    try {
+        TelemetryService.exit();
+    } catch (err) {
+        console.error('End telemetry error:', err.message);
+    }
+    localStorageGC.clear();
+    localStorageGC = {};
+    org.ekstep.service.renderer.endGenieCanvas();
 }
 
 // TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
