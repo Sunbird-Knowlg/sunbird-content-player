@@ -13,18 +13,6 @@ function updateContentData($state, contentId) {
         'itemId': contentId
     });
 }
-function getContentObj(data) {
-    if (_.isObject(data.body))
-        return data.body;
-    var tempData = data;
-    var x2js = new X2JS({
-        attributePrefix: 'none'
-    });
-    data = x2js.xml_str2json(tempData.body);
-    if (!data || data.parsererror)
-        data = JSON.parse(tempData.body)
-    return data;
-}
 function launchInitialPage(appInfo) {
     if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
        window.location.hash = "/play/content/" + GlobalContext.game.id;

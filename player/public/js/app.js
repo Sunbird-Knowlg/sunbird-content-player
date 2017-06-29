@@ -362,7 +362,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 $scope.callStartTelemetry($rootScope.content, function() {
                     $scope.item = $rootScope.content;
                     $scope.callStartTelemetry($rootScope.content, function() {
-                        $rootScope.content.body = isbrowserpreview ? getContentObj(content) : undefined;
+                        $rootScope.content.body = isbrowserpreview ? content : undefined;
                         EkstepRendererAPI.dispatchEvent('renderer:launcher:initLauncher', undefined, $rootScope.content);
                     });
                 });
