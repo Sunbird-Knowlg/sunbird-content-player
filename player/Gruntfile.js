@@ -458,15 +458,23 @@ module.exports = function(grunt) {
         },
         replace: {
             sensibol: {
-                src: ['www/js/AppConfig.js', 'www/js/renderer.min.js'],
+                src: ['www/js/appConfig.js', 'www/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js'],
                 overwrite: true,
                 replacements: [{
                     from: /AUDIO_RECORDER/g,
                     to: "sensibol"
                 }]
             },
+            android: {
+                src: ['www/js/appConfig.js', 'www/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js'],
+                overwrite: true,
+                replacements: [{
+                    from: /AUDIO_RECORDER/g,
+                    to: "android"
+                }]
+            },
             build_version: {
-                src: ['www/js/AppConfig.js', 'www/preview.html', 'www/preview/preview.html'],
+                src: ['www/js/appConfig.js', 'www/preview.html', 'www/preview/preview.html'],
                 overwrite: true,
                 replacements: [{
                     from: /BUILD_NUMBER/g,
@@ -520,6 +528,14 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     src: ['docs/**']
+                }]
+            }, 
+            preview:{
+                options: {
+                    archive: 'preview.zip'
+                },
+                files: [{
+                    src: ['www/preview/**']
                 }]
             }
         },
@@ -644,7 +660,7 @@ module.exports = function(grunt) {
 
     //Build AAR 
     grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);
-    grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
 
     grunt.registerTask('build-jsdoc', ['jsdoc', 'compress', ]);
 
