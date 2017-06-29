@@ -535,7 +535,9 @@ module.exports = function(grunt) {
                     archive: 'preview.zip'
                 },
                 files: [{
-                    src: ['www/preview/**']
+                    expand:true,
+                    cwd: 'www/preview',
+                    src: ['**']
                 }]
             }
         },
@@ -656,13 +658,14 @@ module.exports = function(grunt) {
 
     //Build web prview
     grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetry', 'concat:script', 'clean:deletefiles', 'injector:prview', 'replace:buildNumber']);
-    grunt.registerTask('build-preview', ['preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
+    grunt.registerTask('build-preview', ['preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview', 'compress:preview']);
 
     //Build AAR 
     grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);
     grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-app', ['init-setup', 'build-aarshared-xwalk']);
 
-    grunt.registerTask('build-jsdoc', ['jsdoc', 'compress', ]);
+    grunt.registerTask('build-jsdoc', ['jsdoc', 'compress:main']);
 
     grunt.registerTask('test-setup', ['new-buildPreview', 'copy:testinit', 'clean']);
     grunt.registerTask('app-test', ['karma:app']);
