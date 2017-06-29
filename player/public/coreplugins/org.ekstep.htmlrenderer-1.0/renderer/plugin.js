@@ -2,8 +2,6 @@ Plugin.extend({
     initialize: function() {
         console.info('HTML Renderer intialize is done');
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.launch, this);
-        EkstepRendererAPI.addEventListener('renderer:show:overlay',this.showOverlay,this);
-        EkstepRendererAPI.addEventListener('renderer:hide:overlay',this.hideOverlay,this);
     },
     launch: function(evt, data) {
         console.info('HTML plugin init')
@@ -29,7 +27,7 @@ Plugin.extend({
     },
     setStyle: function() {
         jQuery('#gameArea') .css({left: '0px', top: '0px', width: "100%", height: "100%"}); 
-        jQuery('#htmlIframe') .css({position: 'absolute', display: 'block', background: 'rgba(49, 13, 45, 0.14)', width: '100%', height: '100%'}); 
+        jQuery('#htmlIframe') .css({position: 'absolute', display: 'block',width: '100%', height: '100%'}); 
         AppConfig.ENABLE_OVERLAY ? jQuery('#overlay').css({display: 'block'}) : jQuery('#overlay').css({display: 'none'}) 
     },
     getAsseturl: function(content) {
@@ -37,12 +35,6 @@ Plugin.extend({
         var path = window.location.origin + AppConfig.S3_CONTENT_HOST + content_type;
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
-    },
-    showOverlay:function(){
-        EkstepRendererAPI.showOverlay();
-    },
-    hideOverlay:function(){
-        EkstepRendererAPI.hideOverlay();
-    },
+    }
 });
 //# sourceURL=HTMLRendererePlugin.js
