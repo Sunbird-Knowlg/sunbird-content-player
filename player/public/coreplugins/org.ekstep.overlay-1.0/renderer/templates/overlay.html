@@ -1,5 +1,4 @@
 <div class="overlay-html" ng-show="showOverlay" ng-controller="OverlayController">
-	<h1>Overlay </h1>
 	<div>
 		<a class="nav-icon nav-previous" ng-class="{'nav-disable': showOverlayPrevious == state_disable}" href="javascript:void(0);"><img ng-src="{{imageBasePath}}back.png" ng-click="navigate('previous')"></a>
 	</div>
@@ -8,17 +7,16 @@
 		<a class="nav-icon nav-next" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next.png" ng-click="navigate('next')"></a>
 	</div>
 
-	<!-- <assess image="icons.assess.enable" show="showOverlaySubmit"></assess>
-
-	<reload-stage style="position: absolute;width: 7%;bottom: 1%;left: 1%;"></reload-stage> -->
+	<assess image="icons.assess.enable" show="showOverlaySubmit"></assess>
+	<reload-stage style="position: absolute;width: 7%;bottom: 1%;left: 1%;"></reload-stage>
 
 	<!-- Note: all the HTML elements should be above this menu tag
 	Don't add any HTML elements after this menu tag
 	-->
 	<!-- Menu overlay to hide canvas -->
-	<!-- <menu></menu> -->
+	<menu></menu>
 	<!-- All the popup's should add here -->
-	<!-- <try-again ng-show="showOverlayTryAgain == state_on"></try-again>
+	<try-again ng-show="showOverlayTryAgain == state_on"></try-again>
 	<good-job ng-show="showOverlayGoodJob == state_on"></good-job>
-	<user-switcher> </user-switcher> -->
+	<user-switcher> </user-switcher>
 </div>
