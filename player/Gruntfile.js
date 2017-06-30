@@ -64,10 +64,10 @@ module.exports = function(grunt) {
                     'public/services/mainservice.js',
                     'public/services/webservice.js',
                     'public/services/interfaceService.js',
+                    'public/js/ekstepRendererApi.js',
                     'public/js/content-renderer.js',
                     'public/services/controllerservice.js',
-                    'public/js/detectClient.js',
-                    'public/js/ekstepRendererApi.js',
+                    'public/js/detectClient.js'
                 ],
                 dest: 'www/scripts/renderer.script.min.js'
             },
@@ -458,15 +458,23 @@ module.exports = function(grunt) {
         },
         replace: {
             sensibol: {
-                src: ['www/js/AppConfig.js', 'www/js/renderer.min.js'],
+                src: ['www/js/appConfig.js', 'www/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js'],
                 overwrite: true,
                 replacements: [{
                     from: /AUDIO_RECORDER/g,
                     to: "sensibol"
                 }]
             },
+            android: {
+                src: ['www/js/appConfig.js', 'www/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js'],
+                overwrite: true,
+                replacements: [{
+                    from: /AUDIO_RECORDER/g,
+                    to: "android"
+                }]
+            },
             build_version: {
-                src: ['www/js/AppConfig.js', 'www/preview.html', 'www/preview/preview.html'],
+                src: ['www/js/appConfig.js', 'www/preview.html', 'www/preview/preview.html'],
                 overwrite: true,
                 replacements: [{
                     from: /BUILD_NUMBER/g,
@@ -491,6 +499,25 @@ module.exports = function(grunt) {
                     from: "applicationVariants",
                     to: "libraryVariants"
                 }]
+            },
+            buildNumber:{
+                src: ['www/index.html'],
+                overwrite: true,
+                replacements: [{
+                    from: ".js",
+                    to: ".js?ver=BUILD_NUMBER"
+                },{
+                    from: ".css",
+                    to: ".css?ver=BUILD_NUMBER"
+                }]
+            },
+            collectionplugin:{
+                src: ['www/scripts/renderer.script.min.js'],
+                overwrite: true,
+                replacements: [{
+                    from: "{id: 'org.ekstep.collection',ver: 1.0,type: 'plugin'}",
+                    to: ""
+                }]
             }
         },
         jsdoc: {
@@ -509,6 +536,16 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     src: ['docs/**']
+                }]
+            }, 
+            preview:{
+                options: {
+                    archive: 'preview.zip'
+                },
+                files: [{
+                    expand:true,
+                    cwd: 'www/preview',
+                    src: ['**']
                 }]
             }
         },
@@ -628,14 +665,15 @@ module.exports = function(grunt) {
     grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared', 'replace:xwalk_library']);
 
     //Build web prview
-    grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetry', 'concat:script', 'clean:deletefiles', 'injector:prview']);
+    grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetry', 'concat:script', 'clean:deletefiles', 'injector:prview', 'replace:buildNumber', 'replace:collectionplugin']);
     grunt.registerTask('build-preview', ['preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
 
     //Build AAR 
     grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);
-    grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-app', ['init-setup', 'build-aarshared-xwalk']);
 
-    grunt.registerTask('build-jsdoc', ['jsdoc', 'compress', ]);
+    grunt.registerTask('build-jsdoc', ['jsdoc', 'compress:main']);
 
     grunt.registerTask('test-setup', ['new-buildPreview', 'copy:testinit', 'clean']);
     grunt.registerTask('app-test', ['karma:app']);

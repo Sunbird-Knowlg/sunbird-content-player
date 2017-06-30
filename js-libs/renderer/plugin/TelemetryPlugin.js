@@ -104,7 +104,7 @@ var TelemetryPlugin = Plugin.extend({
         if (!_.isUndefined(configuration.context.authToken)) {
             headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
         }
-        genieservice.sendTelemetry(teleObj, headers).then(function(data) {
+        org.ekstep.service.renderer.sendTelemetry(teleObj, headers).then(function(data) {
            console.log("Telemetry API success", data);
         });
     },

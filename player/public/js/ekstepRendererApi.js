@@ -162,6 +162,16 @@ window.EkstepRendererAPI = {
     },
 
     /**
+     * Returns a plugin instance for the given plugin Id once the plugin registarion/invoke is done. Plugins can use this work with dependencies
+     * or build plugins that enhance the behavior of other plugins.
+     * @memberof EkstepRendererAPI
+     */
+    getPluginObjs: function(pluginId) {
+        return org.ekstep.pluginframework.pluginManager.pluginObjs[pluginId];
+        // return PluginManager.getPluginObject(pluginId);
+    },
+
+    /**
      * Clear the current stage rendered objects, Plugins can get access to
      * current stage canvas object and plugin can clean all current stage rendrered object
      * @memberof EkstepRendererAPI
@@ -908,7 +918,7 @@ window.EkstepRendererAPI = {
     },
     /**
      * API to Resolve plugin resource URL. This API would resolve to the repo the plugin is loaded from.
-     * 
+     *
      * @param  {String} pluginId      Plugin ID
      * @param  {String} pluginVersion Plugin Version
      * @param  {String} resource resource relative URL
@@ -945,7 +955,7 @@ window.EkstepRendererAPI = {
     },
 
     /**
-    * API to retrun the rendrere service where user can acccess the 
+    * API to retrun the rendrere service where user can acccess the
     * renderer services
     * @memberof EkstepRendererAPI
     */

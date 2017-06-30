@@ -85,7 +85,11 @@
         </div>
         <p class="icon-font cover-page-title" id="pageTitle" ng-bind="pageTitle">Content is loading ...</p>
     </div>
-    <div  id="pluginTemplate"  ng-include="templates.endPage"></div>
+    
+    <div id="org.ekstep.collection" ng-include="templates.collection"></div>
+    <div  id="org.ekstep.launcher"  ng-include="templates.playerContent"></div>
+    <div  id="org.ekstep.endpage"  ng-include="templates.endPage"></div>
+
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
     <!-- injector:js -->

@@ -6,7 +6,7 @@
     </a>
     <a ng-if="showUser" class="gc-menu-btn" href="javascript:void(0)" ng-click="openMenu()">
         <img class="menu-icon icon" ng-src="{{imageBasePath}}menu_icon.png" ng-hide="menuOpened"/>
-        <img class="menu-icon user" ng-src="{{imageBasePath + currentUser.avatar}}" ng-hide="menuOpened"/>
+        <img class="menu-icon user" ng-src="{{currentUser.profileImage}}" ng-hide="menuOpened"/>
     </a>
     <div class=" gc-menu-cont" ng-show="menuOpened">
         <div class="gc-menu-title-cont">
@@ -16,8 +16,8 @@
             <restart></restart>
         </div>
         <div ng-if="showUser" ng-click="openUserSwitchingModal()" class = "gc-menu-options profile">
-            <img alt="prof img" ng-src="{{imageBasePath + currentUser.avatar}}"/>
-            <span class="menu-text"> {{currentUser.name}} <br/> <small> {{languageSupport.change}} </small></span>
+            <img alt="prof img" ng-src="{{currentUser.profileImage}}"/>
+            <span class="menu-text"> {{currentUser.handle}} <br/> <small> {{languageSupport.change}} </small></span>
         </div>
         <div class = "gc-menu-options">
             <mute></mute>
@@ -26,7 +26,7 @@
             <stage-instructions></stage-instructions>
         </div>
         <div class = "gc-menu-options">
-            <genie icon="icn_home.png"></genie>
+            <genie></genie>
         </div>
         <div class="inst-message-cont " ng-show="showInst">
             <img class="inst-icon" ng-src="{{imageBasePath}}icn_teacherinfo.png" ng-click="expeandInstruction()" />

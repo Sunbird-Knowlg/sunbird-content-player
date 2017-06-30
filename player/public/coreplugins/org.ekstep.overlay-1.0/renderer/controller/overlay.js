@@ -17,10 +17,6 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.pluginInstance = undefined;
 
     $scope.init = function() {
-        // instance.test();
-        $scope.pluginInstance = EkstepRendererAPI.getPluginInstance("text");
-        console.log("$scope.pluginInstance: ", $scope.pluginInstance);
-
         if (GlobalContext.config.language_info) {
             var languageInfo = JSON.parse(GlobalContext.config.language_info);
             for (key in languageInfo) {
@@ -302,6 +298,184 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     }
 }]);
 
+app.compileProvider.directive('mute', function($rootScope) {
+    return {
+        restrict: 'E',
+        template: '<div ng-click="toggleMute()"><img src="{{muteImg}}"/><span>Sound {{languageSupport.mute}} </span></div>',
+        link: function(scope, url) {
+            var muteElement = document.getElementById("unmute_id");
+            scope.muteImg = $rootScope.imageBasePath + "audio_icon.png";
+            // scope muteImg = $rootScope.imageBasePath + icn_replay.png;
+            if (!_.isNull(muteElement)) {
+                muteElement.style.display = "none";
+            }
+            AudioManager.unmute();
+            scope.toggleMute = function() {
+                if (AudioManager.muted) {
+                    AudioManager.unmute();
+                    scope.muteImg = $rootScope.imageBasePath + "audio_icon.png";
+                    $rootScope.languageSupport.mute = "on";
+                } else {
+                    AudioManager.mute();
+                    scope.muteImg = $rootScope.imageBasePath + "audio_mute_icon.png";
+                    $rootScope.languageSupport.mute = "off";
+                }
+                TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute", "TOUCH", {
+                    stageId: Renderer.theme._currentStage
+                });
+            }
+        }
+    }
+});
+
+app.compileProvider.directive('reloadStage', function($rootScope) {
+    return {
+        restrict: 'E',
+        template: '<a href="javascript:void(0)" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></a>'
+    }
+});
+
+app.compileProvider.directive('restart', function($rootScope, $state, $stateParams) {
+    return {
+        restrict: 'E',
+        template: '<div ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/><span> {{languageSupport.replay}} </span></div>',
+        link: function(scope) {
+            scope.restartContent = function() {
+                $rootScope.replayContent();
+                var muteElement = document.getElementById("unmute_id");
+                if (!_.isNull(muteElement)) {
+                    muteElement.style.display = "none";
+                }
+                AudioManager.unmute();
+                if (!_.isUndefined(scope.hideMenu) && scope.menuOpened)
+                    scope.hideMenu();
+            }
+        }
+    }
+});
+app.compileProvider.directive('menu', function($rootScope, $sce) {
+    return {
+        restrict: 'E',
+        templateUrl: ("undefined" != typeof localPreview && "local" == localPreview) ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
+    }
+});
+
+app.compileProvider.directive('stageInstructions', function($rootScope) {
+    return {
+        restrict: 'E',
+        template: '<div ng-class="{\'icon-opacity\' : !stageData.params.instructions}" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;" alt="note img"/><span> {{languageSupport.instructions}} </span></div>',
+        controller: function($scope, $rootScope) {
+            $scope.stageInstMessage = "";
+            $scope.showInst = false;
+
+            $scope.showInstructions = function() {
+                $scope.stageInstMessage = ($rootScope.stageData && $rootScope.stageData.params && $rootScope.stageData.params.instructions) ? $rootScope.stageData.params.instructions : null;
+
+                $scope.showInst = ($scope.stageInstMessage != null) ? true : false;
+                $scope.logIntract("gc_showInst");
+            }
+
+            $scope.closeInstructions = function() {
+                $scope.showInst = false;
+                $scope.logIntract("gc_closeInst");
+            }
+
+            $scope.logIntract = function(eleId) {
+                TelemetryService.interact("TOUCH", eleId, "TOUCH", {
+                    stageId: Renderer.theme._currentStage
+                });
+            }
+
+            /*
+             * If menu is getting hide, then hide teacher instructions as well
+             */
+            $scope.$watch("menuOpened", function() {
+                if (!$rootScope.menuOpened) {
+
+                    $scope.showInst = false;
+                }
+            });
+        }
+    }
+});
+
+app.compileProvider.directive('assess', function($rootScope) {
+    return {
+        restrict: 'E',
+        scope: {
+            image: '=',
+            show: '='
+        },
+        template: '<a class="assess" ng-show="show" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/></a>',
+        link: function(scope, element) {
+            scope.labelSubmit = $rootScope.languageSupport.submit;
+        },
+        controller: function($scope, $rootScope, $timeout) {
+            $scope.isEnabled = false;
+            $scope.assessStyle = 'assess-disable';
+
+            $rootScope.$watch('enableEval', function() {
+                $scope.isEnabled = $rootScope.enableEval;
+                if ($scope.isEnabled) {
+                    $timeout(function() {
+                        // This timeout is required to apply the changes(because it is calling by JS)
+                        $scope.assessStyle = 'assess-enable';
+                        $scope.image = $rootScope.imageBasePath + "submit_enable.png";
+                    }, 100);
+                } else {
+                    //Disable state
+                    $scope.assessStyle = 'assess-disable';
+                    $scope.image = $rootScope.imageBasePath + "submit_disable.png";
+                }
+            });
+
+            $scope.onSubmit = function() {
+                if ($scope.isEnabled) {
+                    $rootScope.defaultSubmit();
+                    EventBus.dispatch("submitClick");
+                }
+            }
+        }
+    }
+});
+
+app.compileProvider.directive('goodJob', function($rootScope) {
+    return {
+        restrict: 'E',
+        template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-lato assess-popup assess-goodjob-popup"><img class="popup-bg-img" ng-src="{{imageBasePath}}goodJobpop.png"/><div class="goodjob_next_div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next " ng-src="{{ imageBasePath }}icon_popup_next_big.png" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div></div>',
+        controller: function($scope, $rootScope, $timeout) {
+            $scope.retryAssessment = function(id, e) {
+                $scope.hidePopup(id);
+                EventBus.dispatch("retryClick");
+            }
+
+            $scope.hidePopup = function(id) {
+                TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
+                    stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
+                });
+                $scope.showOverlayGoodJob = false;
+                $scope.showOverlayTryAgain = false;
+            }
+
+            $scope.moveToNextStage = function(navType) {
+                EventBus.dispatch("actionNavigateSkip", navType);
+                EventBus.dispatch("skipClick");
+            }
+        }
+    }
+});
+
+app.compileProvider.directive('tryAgain', function($rootScope) {
+    return {
+        restrict: 'E',
+        template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-lato assess-popup assess-tryagain-popup"><img class="popup-bg-img" ng-src="{{imageBasePath}}tryagain_popup.png"/><div class="tryagain-retry-div gc-popup-icons-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{imageBasePath}}icn_popup_replay.png" /></a><p class="gc-popup-retry-replay">{{languageSupport.replay}}</p></div><div class="tryagian-next-div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ imageBasePath }}icn_popup_next_small.png" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div></div></div></div>',
+        controller: function($scope, $rootScope, $timeout) {
+
+        }
+
+    }
+});
+
 app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
 	return {
 		restrict: 'E',
@@ -309,8 +483,6 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
 			popupBody: '=popupBody'
 		},
 		controller: 'UserSwitchController',
-		templateUrl: 'coreplugins/org.ekstep.overlay-1.0/renderer/templates/user-switch-popup.html',
-		// templateUrl: 'templates/user-switch-popup.html',
 		link: function(scope, element, attrs, controller) {
 			// Get the modal
 			var userSwitchingModal = element.find("#userSwitchingModal")[0];
@@ -335,8 +507,11 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
 					}
 				});
 			}
+			scope.getTemplate = function() {
+                var pluginsObjs = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
+                return pluginsObjs.userSwitcherTemplatePath;
+            }
 			scope.init = function() {
-                // scope.pluginInstance.test();
 				if (GlobalContext.config.showUser === true) {
 					userSlider.mCustomScrollbar('destroy');
 					groupSlider.mCustomScrollbar('destroy');
@@ -344,7 +519,9 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
 					scope.render();
 				}
 			}();
-		}
+		},
+        template: "<div ng-include=getTemplate()></div>"
 	}
 });
+
 //#sourceURL=overlay.js

@@ -28,17 +28,15 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         if ($scope.content.imageCredits == null && $scope.content.voiceCredits == null && $scope.content.soundCredits == null) {
             console.warn("No metadata imageCredits,voiceCredites and soundCredits");
         }
-        jQuery("#creditsPopup").show();
+        $scope.CreditPopup = true;
         TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId: "ContentApp-CreditsScreen", subtype: "ContentID"}); 
     }
-    $scope.ep_replayContent = function() {
+    $scope.replay = function() {
         EkstepRendererAPI.hideEndPage();
+        EventBus.dispatch('renderer:player:init');
         EventBus.dispatch('event:closeUserSwitchingModal');
-        $rootScope.replayContent();
         var muteElement = document.getElementById("unmute_id");
-        if (!_.isNull(muteElement)) {
-            muteElement.style.display = "none";
-        }
+        if (!_.isNull(muteElement)) {muteElement.style.display = "none"; } 
         AudioManager.unmute();
     }
     $scope.showFeedback = function(param) {
@@ -52,13 +50,10 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         $scope.popUserRating = param;
         $scope.enableFeedbackSubmit();
     }
-
     $scope.enableFeedbackSubmit = function() {
-        if ($scope.popUserRating > 0 || $scope.stringLeft < 130)
-            jQuery('#feedbackSubmitBtn').removeClass('icon-opacity');
-        else
-            jQuery('#feedbackSubmitBtn').addClass('icon-opacity');
+        $scope.enableFeedBackButton  =  $scope.popUserRating > 0 || $scope.stringLeft < 130 ? false : true
     }
+
     $scope.submitFeedback = function() {
         $scope.userRating = $scope.popUserRating;
         $scope.selectedRating = $scope.userRating;
@@ -117,7 +112,6 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
     $scope.handleEndpage = function() {
         if (_.isUndefined($rootScope.content)) {
             localStorageGC.update();
-            // Updating the current content object by getting from localStage
             content = localStorageGC.getItem('content');
             $rootScope.content = content;
         }
@@ -156,10 +150,10 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
     }
 
     function epKeyboardShowHandler() {
-        jQuery('#gcFbPopup').addClass('gc-fc-popup-keyboard');
+        angular.element('#gcFbPopup').addClass('gc-fc-popup-keyboard');
     }
     function epKeyboardHideHandler() {
-        jQuery('#gcFbPopup').removeClass('gc-fc-popup-keyboard');
+        angular.element('#gcFbPopup').removeClass('gc-fc-popup-keyboard');
     }
     $scope.initEndpage = function() {
         $scope.handleEndpage();
@@ -232,16 +226,14 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                 .then(function(contetnIsAvailable) {
                     if (contetnIsAvailable) {
                         // This is required to setup current content details which is going to play
-                        org.ekstep.contentrenderer.getContentMetadata(content.identifier, function() {
+                        org.ekstep.contentrenderer.getContentMetadata(content.identifier, function(obj) {
                             if ($scope.collectionTree) {
                                 GlobalContext.game.contentExtras = contentExtras;
                                 localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                             }
                             EkstepRendererAPI.hideEndPage();
-                            $rootScope.content =  undefined;
-                            $state.go('playContent', {
-                                'itemId': content.identifier
-                            });
+                            $rootScope.content = obj;
+                            EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType, undefined, $rootScope.content);
                         });
                     } else {
                         $scope.navigateToDownloadPage(contentExtras, content.identifier);
@@ -322,12 +314,10 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
             }
         }
         EkstepRendererAPI.addEventListener('renderer:init:relatedContent',function(){
-                $scope.init();   
+                console.info('Endpage init..')
+                $scope.init();  
+
         })
-        /*setTimeout(function() {
-            $scope.init();
-        }, 0);*/
-         
     });
 canvasApp.directive('starRating', function($rootScope) {
     return {

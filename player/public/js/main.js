@@ -4,34 +4,7 @@ var packageName = "org.ekstep.quiz.app", version = AppConfig.version, packageNam
     stack = new Array(), collectionChildrenIds = new Array(), collectionPath = new Array(), collectionPathMap = {},
     collectionChildren = true, content = {}, config = {showEndPage: true, showHTMLPages: true }, 
     isbrowserpreview = getUrlParameter("webview"), isCoreplugin = undefined, Renderer = undefined;
-function updateContentData($state, contentId) {
-    if (_.isUndefined($state)) {
-        console.error("updateContentData($state) - $state is not defined.");
-        return;
-    }
-    $state.go('playContent', {
-        'itemId': contentId
-    });
-}
-function getContentObj(data) {
-    if (_.isObject(data.body))
-        return data.body;
-    var tempData = data;
-    var x2js = new X2JS({
-        attributePrefix: 'none'
-    });
-    data = x2js.xml_str2json(tempData.body);
-    if (!data || data.parsererror)
-        data = JSON.parse(tempData.body)
-    return data;
-}
-function launchInitialPage(appInfo) {
-    if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-       window.location.hash = "/play/content/" + GlobalContext.game.id;
-    }else{
-        !isbrowserpreview ?  window.location.hash = "/content/list/" + GlobalContext.game.id : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
-    }
-}
+
 document.body.addEventListener("logError", telemetryError, false);
 
 function telemetryError(e) {
@@ -79,7 +52,15 @@ function backbuttonPressed(pageId) {
     if (pageId == "coverpage") {
         TelemetryService.end();
     }
-    EkstepRendererAPI.stopAll();
+    AudioManager.stopAll();
+    try {
+        TelemetryService.exit();
+    } catch (err) {
+        console.error('End telemetry error:', err.message);
+    }
+    localStorageGC.clear();
+    localStorageGC = {};
+    org.ekstep.service.renderer.endGenieCanvas();
 }
 
 // TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
@@ -88,7 +69,6 @@ function exitApp(stageId) {
     if(!stageId){
         stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " ";
     } 
-    TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {stageId: stageId }); 
     try {
         TelemetryService.exit();
     } catch (err) {

@@ -43,7 +43,7 @@ Plugin.extend({
                 var dataObj = {
                     'body': renderObj.body,
                     'canvasId': 'gameCanvas',
-                    'path': renderObj.path
+                    'path': renderObj.path || ""
                 }
                 instance.load(dataObj);
             } else {
@@ -138,12 +138,21 @@ Plugin.extend({
     load: function(dataObj) {
         var instance = this,
             data = dataObj.body;
+
         if (!jQuery.isPlainObject(data)) {
             var x2js = new X2JS({
                 attributePrefix: 'none'
             });
-            data = x2js.xml2json(data);
+            var tempData = data;
+            if(isbrowserpreview){
+                data = x2js.xml_str2json(tempData)
+                if (!data || data.parsererror)
+                    data = JSON.parse(tempData)
+            }else{
+                data = x2js.xml2json(tempData);
+            }
         }
+
         this.gdata = data;
         var content = data.theme || data.ecml;
         content.canvasId = dataObj.canvasId;
@@ -162,6 +171,7 @@ Plugin.extend({
         }
         try {
             org.ekstep.contentrenderer.loadPlugins(pluginManifest.plugin, resource, function() {
+                EkstepRendererAPI.dispatchEvent('renderer:genie:show');
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {

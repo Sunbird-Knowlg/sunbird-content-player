@@ -1,7 +1,7 @@
 
 <div class="font-lato gc-ep-cont" ng-controller="endPageController" id='endpage' ng-show="showEndPage">
     <image class="gc-ep-cont-background" ng-src="{{imageBasePath}}background_1.png" />
-    <genie icon="icn_home.png" class="gc-ep-home"></genie>
+    <genie class="gc-ep-home"></genie>
     <div class="gc-ep-content">
         <p class="gc-ep-cong gc-text-elipsis">{{languageSupport.congratulations}}</p>
         <p class="icon-font gc-ep-title gc-text-elipsis" ng-if="content.name">{{content.name}}</p>
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="gc-ep-footer">
-                <div ng-click="ep_replayContent()" class="gc-ep-footer-icons gc-ep-replay">
+                <div ng-click="replay()" class="gc-ep-footer-icons gc-ep-replay">
                     <img class="replay" src="{{imageBasePath}}icn_replay.png" />
                     <p>{{languageSupport.replay}}</p>
                 </div>
@@ -64,7 +64,7 @@
             </div>
         </div>
     </div>
-    <popup id="creditsPopup" popup-body="creditsBody"></popup>
+    <popup id="creditsPopup" ng-show = 'CreditPopup' popup-body="creditsBody"></popup>
     <div id="gcFbPopup" class="popup" ng-if="showFeedbackPopup">
         <div class="popup-overlay" ng-click="hideFeedback()"></div>
         <div class="gc-popup-new gc-fc-popup">
@@ -81,7 +81,7 @@
                             <p>{{stringLeft}}</p>
                         </div>
                     </div>
-                    <div ng-class="(popUserRating > 0 || stringLeft < 130)  ? 'gc-fd-footer' : 'gc-fd-footer icon-opacity'" id="feedbackSubmitBtn">
+                    <div ng-class="enableFeedBackButton  ? 'gc-fd-footer icon-opacity' : 'gc-fd-footer'">
                         <input class="btn-black" type="button" value="{{languageSupport.submit}}" ng-click="submitFeedback()">
                     </div>
                 </div>

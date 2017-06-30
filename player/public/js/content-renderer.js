@@ -4,17 +4,42 @@
 var content_renderer = function() {};
 content_renderer.prototype._ = window._;
 window.org.ekstep.contentrenderer = new content_renderer();
-window.previewData = {'context': {}, 'config': {} }; 
+window.previewData = {
+    'context': {},
+    'config': {}
+};
 org.ekstep.contentrenderer.init = function() {
     /**
      * TODO: Need To handle Synchronus flow of org.ekstep.contentrenderer.setContent and getContent here
      * device and web rendrer should be handle here
-     */ 
+     */
     window.initializePreview = org.ekstep.contentrenderer.initializePreview;
     window.setContentData = org.ekstep.contentrenderer.setContent;
-    console.info('Content renderer start');
+    org.ekstep.contentrenderer.loadDefaultPlugins();
+    console.info('Content renderer starts');
 };
-org.ekstep.contentrenderer.setContent = function(metadata, data, configuration){
+
+org.ekstep.contentrenderer.loadDefaultPlugins = function() {
+    isCoreplugin = true;
+    var plugin = AppConfig.DEFAULT_PLUGINS;
+    isCoreplugin = true;
+    org.ekstep.contentrenderer.initPlugins('');
+    org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
+        console.info('Launcher is Ready!!!');
+        isCoreplugin = false;
+    });
+};
+
+org.ekstep.contentrenderer.startGame = function(appInfo) {
+    console.info('Game is starting..')
+    if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
+            EkstepRendererAPI.dispatchEvent('renderer:player:init')
+    }else{
+        !isbrowserpreview ? EkstepRendererAPI.dispatchEvent('renderer:collection:show') : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
+    }
+};
+
+org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) {
     if (_.isUndefined(metadata) || _.isNull(metadata)) {
         content.metadata = AppConfig.DEFAULT_METADATA
     } else {
@@ -39,6 +64,7 @@ org.ekstep.contentrenderer.setContent = function(metadata, data, configuration){
     }
     org.ekstep.contentrenderer.initializePreview(object);
 };
+
 org.ekstep.contentrenderer.initializePreview = function(configuration) {
     if (_.isUndefined(configuration.context)) {
         configuration.context = {};
@@ -58,6 +84,7 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
     addWindowUnloadEvent();
     EkstepRendererAPI.dispatchEvent("event:loadContent");
 };
+
 org.ekstep.contentrenderer.initPlugins = function(gamePath) {
     var pluginsPath = undefined;
     // @ plugin:error event is dispatching from the plugin-framework 
@@ -67,12 +94,25 @@ org.ekstep.contentrenderer.initPlugins = function(gamePath) {
     }
     pluginsPath = isCoreplugin ? AppConfig.CORE_PLUGINSPATH : (isbrowserpreview ? AppConfig.PREVIEW_PLUGINSPATH : AppConfig.DEVICE_PLUGINSPATH)
     var pluginRepo = gamePath + pluginsPath;
-    var pfConfig = {env: "renderer", async: async, pluginRepo: pluginRepo, repos: [org.ekstep.pluginframework.publishedRepo] };
+    var pfConfig = {
+        env: "renderer",
+        async: async,
+        pluginRepo: pluginRepo,
+        repos: [org.ekstep.pluginframework.publishedRepo]
+    };
     org.ekstep.pluginframework.initialize(pfConfig);
 };
-org.ekstep.contentrenderer.pluginError = function(event, data){
-    EkstepRendererAPI.logErrorEvent(data.err, {'type': 'plugin', 'action': data.action, 'objectType': data.plugin,'objectId':data.objectid});
+
+
+org.ekstep.contentrenderer.pluginError = function(event, data) {
+    EkstepRendererAPI.logErrorEvent(data.err, {
+        'type': 'plugin',
+        'action': data.action,
+        'objectType': data.plugin,
+        'objectId': data.objectid
+    });
 };
+
 org.ekstep.contentrenderer.loadPlugins = function(pluginManifest, manifestMedia, cb) {
     var pluginObj = []
     if (!Array.isArray(pluginManifest)) {
@@ -90,11 +130,13 @@ org.ekstep.contentrenderer.loadPlugins = function(pluginManifest, manifestMedia,
         if (cb) cb();
     });
 };
+
 org.ekstep.contentrenderer.registerPlguin = function(id, plugin) {
     org.ekstep.pluginframework.pluginManager._registerPlugin(id, undefined, plugin);
     if (typeof createjs !== "undefined")
         createjs.EventDispatcher.initialize(plugin.prototype);
 };
+
 org.ekstep.contentrenderer.progressbar = function(switcher) {
     if (switcher) {
         jQuery("#progressBar").width(0);
@@ -115,20 +157,23 @@ org.ekstep.contentrenderer.progressbar = function(switcher) {
         jQuery('#loading').hide();
     }
 };
+
 org.ekstep.contentrenderer.getContentMetadata = function(id, cb) {
     org.ekstep.service.content.getContent(id)
         .then(function(data) {
-            org.ekstep.contentrenderer.setContentMetadata(data);
-            if (!_.isUndefined(cb)) {
-                cb(data);
-            }
+            org.ekstep.contentrenderer.setContentMetadata(data, function() {
+                if (!_.isUndefined(cb)) {
+                    cb(data);
+                }
+            });
         })
         .catch(function(err) {
             console.info("contentNotAvailable : ", err);
             contentNotAvailable(err);
         });
 };
-org.ekstep.contentrenderer.setContentMetadata = function(contentData) {
+
+org.ekstep.contentrenderer.setContentMetadata = function(contentData, cb) {
     var data = _.clone(contentData);
     content["metadata"] = data;
     GlobalContext.currentContentId = data.identifier;
@@ -143,9 +188,11 @@ org.ekstep.contentrenderer.setContentMetadata = function(contentData) {
     }
     if ("undefined" == typeof cordova) {
         org.ekstep.contentrenderer.getContentBody(content.metadata.identifier);
-      }
+    }
+    if(cb) cb();
 };
-org.ekstep.contentrenderer.getContentBody = function() {
+
+org.ekstep.contentrenderer.getContentBody = function(id) {
     var configuration = EkstepRendererAPI.getPreviewData();
     var headers = org.ekstep.contentrenderer.urlparameter;
     if (!_.isUndefined(configuration.context.authToken)) {
@@ -153,7 +200,7 @@ org.ekstep.contentrenderer.getContentBody = function() {
     }
     org.ekstep.service.content.getContentBody(id, headers).then(function(data) {
             content["body"] = data.body;
-            launchInitialPage(content.metadata);
+            org.ekstep.contentrenderer.startGame(content.metadata);
         })
         .catch(function(err) {
             console.info("contentNotAvailable : ", err);
@@ -172,7 +219,8 @@ org.ekstep.contentrenderer.urlparameter = function() {
     }
     return (_.object(urlParams))
 };
-org.ekstep.contentrenderer.web = function() {
+
+org.ekstep.contentrenderer.web = function(id) {
     var configuration = EkstepRendererAPI.getPreviewData();
     var headers = org.ekstep.contentrenderer.urlparameter;
     if (!_.isUndefined(configuration.context.authToken)) {
@@ -187,13 +235,15 @@ org.ekstep.contentrenderer.web = function() {
             contentNotAvailable(err);
         });
 };
+
 org.ekstep.contentrenderer.device = function() {
     if (isMobile) {
         org.ekstep.contentrenderer.getContentMetadata(GlobalContext.game.id, function() {
-            window.location.hash = "/play/content/" + GlobalContext.currentContentId;
+            org.ekstep.contentrenderer.startGame();
         });
     } else {
-        launchInitialPage(GlobalContext.config.appInfo);
+        org.ekstep.contentrenderer.startGame(GlobalContext.config.appInfo);
     }
 };
+
 org.ekstep.contentrenderer.init();
