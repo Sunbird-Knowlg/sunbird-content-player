@@ -276,6 +276,16 @@ window.EkstepRendererAPI = {
     },
 
     /**
+     * Returns boolean value if current stage contain any assesment or not.
+     * empty if the stage doesn't have any assesment.
+     * @memberof EkstepRendererAPI
+     */
+    isItemScene: function() {
+        var stage = EkstepRendererAPI.getCurrentStage();
+        return stage.isItemScene();
+    },
+
+    /**
      * Returns the param value based on the scope (e.g. stage,theme,app).
      * empty if the scope is not having param.
      * @memberof EkstepRendererAPI
@@ -961,5 +971,37 @@ window.EkstepRendererAPI = {
     */
     getService: function(){
         return org.ekstep.service.content;
+    },
+
+    /**
+    * API to hide next navigation button
+    * @memberof EkstepRendererAPI
+    */
+    hideNextNavigation: function(){
+        EkstepRendererAPI.dispatchEvent('renderer:next:hide');
+    },
+
+    /**
+    * API to show next navigation button
+    * @memberof EkstepRendererAPI
+    */
+    showNextNavigation: function(){
+        EkstepRendererAPI.dispatchEvent('renderer:next:show');
+    },
+
+    /**
+    * API to hide previous navigation button
+    * @memberof EkstepRendererAPI
+    */
+    hidePreviousNavigation: function(){
+        EkstepRendererAPI.dispatchEvent('renderer:previous:hide');
+    },
+
+    /**
+    * API to show previous navigation button
+    * @memberof EkstepRendererAPI
+    */
+    showPreviousNavigation: function(){
+        EkstepRendererAPI.dispatchEvent('renderer:previous:show');
     }
 }

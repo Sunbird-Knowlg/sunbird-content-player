@@ -10,17 +10,16 @@ Plugin.extend({
     menuTemplatePath: undefined,
     _type: "overlay",
     _ngScopeVar: "overlay",
+    _config:{},
     initialize: function() {
         console.info('overlay plugin is doing initialize....', this);
+        var instance = this;
+        instance._config = _.extend(instance._config, AppConfig.overlay);
         this._templatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/overlay.html");
         this.controllerPath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/controller/overlay.js");
-
         this.userSwitcherTemplatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/user-switch-popup.html");
         this.menuTemplatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/menu.html");
-
-        var instance = this;
         org.ekstep.service.controller.loadNgModules(this._templatePath, this.controllerPath);
-
         EkstepRendererAPI.addEventListener("render:overlay:applyStyles", instance.updateRendererStyles, instance);
     },
     updateRendererStyles: function(event, instance){

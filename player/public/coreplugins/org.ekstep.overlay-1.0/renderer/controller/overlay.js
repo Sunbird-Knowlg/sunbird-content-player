@@ -7,12 +7,12 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.state_off = "off";
     $scope.state_on = "on";
     $scope.state_disable = "disable";
-    $scope.showOverlayNext = true;
-    $scope.showOverlayPrevious = true;
+    // $scope.showOverlayNext = true;
+    // $scope.showOverlayPrevious = true;
     $scope.showOverlaySubmit = false;
     $scope.showOverlayGoodJob = false;
     $scope.showOverlayTryAgain = false;
-    $scope.overlayEvents = ["overlayNext", "overlayPrevious", "overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
+    $scope.overlayEvents = ["overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
     $scope.showOverlay = false;
     $scope.pluginInstance = undefined;
 
@@ -79,12 +79,12 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.overlayEventHandler = function(event) {
         //Switch case to handle HTML elements(Next, Previous, Submit, etc..)
         switch (event.type) {
-            case "overlayNext":
-                $scope.showOverlayNext = event.target;
-                break;
-            case "overlayPrevious":
-                $scope.showOverlayPrevious = event.target;
-                break;
+            // case "overlayNext":
+            //     $scope.showOverlayNext = event.target;
+            //     break;
+            // case "overlayPrevious":
+            //     $scope.showOverlayPrevious = event.target;
+            //     break;
             case "overlaySubmit":
                 if (event.target === "off") {
                     $scope.showOverlaySubmit = false;
