@@ -4,17 +4,20 @@
 var content_renderer = function() {};
 content_renderer.prototype._ = window._;
 window.org.ekstep.contentrenderer = new content_renderer();
-window.previewData = {'context': {}, 'config': {} }; 
+window.previewData = {
+    'context': {},
+    'config': {}
+};
 org.ekstep.contentrenderer.init = function() {
     /**
      * TODO: Need To handle Synchronus flow of org.ekstep.contentrenderer.setContent and getContent here
      * device and web rendrer should be handle here
-     */ 
+     */
     window.initializePreview = org.ekstep.contentrenderer.initializePreview;
     window.setContentData = org.ekstep.contentrenderer.setContent;
     console.info('Content renderer start');
 };
-org.ekstep.contentrenderer.setContent = function(metadata, data, configuration){
+org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) {
     if (_.isUndefined(metadata) || _.isNull(metadata)) {
         content.metadata = AppConfig.DEFAULT_METADATA
     } else {
@@ -67,11 +70,21 @@ org.ekstep.contentrenderer.initPlugins = function(gamePath) {
     }
     pluginsPath = isCoreplugin ? AppConfig.CORE_PLUGINSPATH : (isbrowserpreview ? AppConfig.PREVIEW_PLUGINSPATH : AppConfig.DEVICE_PLUGINSPATH)
     var pluginRepo = gamePath + pluginsPath;
-    var pfConfig = {env: "renderer", async: async, pluginRepo: pluginRepo, repos: [org.ekstep.pluginframework.publishedRepo] };
+    var pfConfig = {
+        env: "renderer",
+        async: async,
+        pluginRepo: pluginRepo,
+        repos: [org.ekstep.pluginframework.publishedRepo]
+    };
     org.ekstep.pluginframework.initialize(pfConfig);
 };
-org.ekstep.contentrenderer.pluginError = function(event, data){
-    EkstepRendererAPI.logErrorEvent(data.err, {'type': 'plugin', 'action': data.action, 'objectType': data.plugin,'objectId':data.objectid});
+org.ekstep.contentrenderer.pluginError = function(event, data) {
+    EkstepRendererAPI.logErrorEvent(data.err, {
+        'type': 'plugin',
+        'action': data.action,
+        'objectType': data.plugin,
+        'objectId': data.objectid
+    });
 };
 org.ekstep.contentrenderer.loadPlugins = function(pluginManifest, manifestMedia, cb) {
     var pluginObj = []
@@ -118,17 +131,18 @@ org.ekstep.contentrenderer.progressbar = function(switcher) {
 org.ekstep.contentrenderer.getContentMetadata = function(id, cb) {
     org.ekstep.service.content.getContent(id)
         .then(function(data) {
-            org.ekstep.contentrenderer.setContentMetadata(data);
-            if (!_.isUndefined(cb)) {
-                cb(data);
-            }
+            org.ekstep.contentrenderer.setContentMetadata(data, function() {
+                if (!_.isUndefined(cb)) {
+                    cb(data);
+                }
+            });
         })
         .catch(function(err) {
             console.info("contentNotAvailable : ", err);
             contentNotAvailable(err);
         });
 };
-org.ekstep.contentrenderer.setContentMetadata = function(contentData) {
+org.ekstep.contentrenderer.setContentMetadata = function(contentData, cb) {
     var data = _.clone(contentData);
     content["metadata"] = data;
     GlobalContext.currentContentId = data.identifier;
@@ -143,7 +157,8 @@ org.ekstep.contentrenderer.setContentMetadata = function(contentData) {
     }
     if ("undefined" == typeof cordova) {
         org.ekstep.contentrenderer.getContentBody(content.metadata.identifier);
-      }
+    }
+    if(cb) cb();
 };
 org.ekstep.contentrenderer.getContentBody = function(id) {
     var configuration = EkstepRendererAPI.getPreviewData();

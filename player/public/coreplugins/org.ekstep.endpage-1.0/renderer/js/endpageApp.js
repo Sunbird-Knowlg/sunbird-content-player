@@ -226,16 +226,14 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                 .then(function(contetnIsAvailable) {
                     if (contetnIsAvailable) {
                         // This is required to setup current content details which is going to play
-                        org.ekstep.contentrenderer.getContentMetadata(content.identifier, function() {
+                        org.ekstep.contentrenderer.getContentMetadata(content.identifier, function(obj) {
                             if ($scope.collectionTree) {
                                 GlobalContext.game.contentExtras = contentExtras;
                                 localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                             }
                             EkstepRendererAPI.hideEndPage();
-                            $rootScope.content =  undefined;
-                            $state.go('playContent', {
-                                'itemId': content.identifier
-                            });
+                            $rootScope.content = obj;
+                            EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType, undefined, $rootScope.content);
                         });
                     } else {
                         $scope.navigateToDownloadPage(contentExtras, content.identifier);
