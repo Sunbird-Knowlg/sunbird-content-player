@@ -15,8 +15,8 @@
         ]
     },
     "dependencies": [
-        {"plugin": "org.ekstep.endpage", "ver": "1.0", "scope": "renderer" },
-        {"plugin": "org.ekstep.overlay", "ver": "1.0", "scope": "renderer" }
+        {"plugin": "org.ekstep.overlay", "ver": "1.0", "scope": "renderer" },
+        {"plugin": "org.ekstep.endpage", "ver": "1.0", "scope": "renderer" }
     ]  
 
 }
