@@ -19,7 +19,7 @@ var splashScreen = {
         // add event listener for hide and show of splash splashScreen
         var instance = this;
 
-        setTimeout(function(){
+        setTimeout(function() {
             instance.show();
             EkstepRendererAPI.addEventListener("renderer:splash:show", instance.show);
             EkstepRendererAPI.addEventListener("renderer:splash:hide", instance.hide);
@@ -32,14 +32,12 @@ var splashScreen = {
     },
 
     show: function() {
-        console.log("show ");
         jQuery(splashScreen.elementId).show();
     },
 
     hide: function(event) {
         var delay = event.target || 3000; // splash screen is going to be hidden after 3secs.
-        console.log("delay: ", delay);
-        setTimeout(function(){
+        setTimeout(function() {
             jQuery(splashScreen.elementId).hide();
         }, delay);
     }
