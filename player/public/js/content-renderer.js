@@ -18,18 +18,9 @@ org.ekstep.contentrenderer.init = function() {
     org.ekstep.contentrenderer.loadDefaultPlugins();
     console.info('Content renderer start');
 };
-
 org.ekstep.contentrenderer.loadDefaultPlugins = function() {
     isCoreplugin = true;
-    var plugin = [{
-        id: 'org.ekstep.launcher',
-        ver: 1.0,
-        type: 'plugin'
-    },{
-        id: 'org.ekstep.collection',
-        ver: 1.0,
-        type: 'plugin'
-    }];
+    var plugin = AppConfig.DEFAULT_PLUGINS;
     isCoreplugin = true;
     org.ekstep.contentrenderer.initPlugins('');
     org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
