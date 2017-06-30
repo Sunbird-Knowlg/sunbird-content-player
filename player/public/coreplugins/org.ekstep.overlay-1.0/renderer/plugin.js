@@ -15,15 +15,37 @@ Plugin.extend({
         
         var instance = this;
         org.ekstep.service.controller.loadNgModules(this._templatePath, this.controllerPath, function(injectTemplateFn){
-            injectTemplateFn(instance._templatePath, instance._ngScopeVar, '#gameArea');
-        });
-    },
-    showOverlay:function(injectTemplates){
-        /*var gameArea = angular.element("#gameArea");
-        gameArea.append("<ng-include src="+this.templatePath+"></ng-include>");
-        $compile(gameArea)(scope);*/
-       /* EkstepRendererAPI.dispatchEvent("renderer:init:overlay");*/
-        console.info('overlay showpage'); 
+            
+                injectTemplateFn(instance._templatePath, instance._ngScopeVar, '#gameArea');
+                //instance.updateRendererStyles();
+            });
 
-    }
-})
+        EkstepRendererAPI.addEventListener("render:overlay:applyStyles", instance.updateRendererStyles, instance);
+    },
+    updateRendererStyles: function(event, instance){
+       var gameArea = document.getElementById("overlay");
+        var widthToHeight = 16 / 9;
+        var newWidth = window.innerWidth;
+        var newHeight = window.innerHeight;
+        var newWidthToHeight = newWidth / newHeight;
+        if (newWidthToHeight > widthToHeight) {
+            newWidth = newHeight * widthToHeight;
+            gameArea.style.height = newHeight + 'px';
+            gameArea.style.width = newWidth + 'px';
+        } else {
+            newHeight = newWidth / widthToHeight;
+            gameArea.style.width = newWidth + 'px';
+            gameArea.style.height = newHeight + 'px';
+        }
+
+         gameArea.style.left = "50%";
+         gameArea.style.top = "50%";
+        gameArea.style.marginTop = (-newHeight / 2) + 'px';
+        gameArea.style.marginLeft = (-newWidth / 2) + 'px';
+    },
+    applyStyles: function(ele, prop, val){
+        ele.style[prop] = val;
+        var contentArea = document.getElementById(Renderer.divIds.contentArea);
+       // contentArea.style[prop] = val;
+    },
+});

@@ -114,6 +114,10 @@ body {
     padding: 18px !important;
 }
 
+.no-events{
+    pointer-events: none;
+}
+
 .overlay-html {
     pointer-events: none;
     position: absolute;
