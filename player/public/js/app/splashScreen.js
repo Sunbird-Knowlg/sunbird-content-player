@@ -1,4 +1,5 @@
 var splashScreen = {
+    elementId : '#loading',
     config: {
         text: "Powered by EkStep Genie",
 		icon: "img/icons/icn_genie.png",
@@ -6,19 +7,23 @@ var splashScreen = {
 		download_link: "http://www.ekstep.in"
     },
     initialize: function() {
-        var appConfigKeys = _.keys(AppConfig.splash);
-        _.each(appConfigKeys, function(each){
-            splashScreen.config[each] = AppConfig.splash[each];
-        });
-        var html = splashScreen.createHtml();
-        jQuery('#loading').html(html);
-        splashScreen.show();
+        var appConfigKeys = Object.keys(AppConfig.splash);
+        // _.each(appConfigKeys, function(each){
+        for(var i = 0; i < appConfigKeys.length; i++) {
+            var objKey = appConfigKeys[i];
+            splashScreen.config[objKey] = AppConfig.splash[objKey];
+        };
+        var html = this.createHtml();
+        jQuery(this.elementId).html(html);
 
         // add event listener for hide and show of splash splashScreen
-        EkstepRendererAPI.addEventListener("renderer:splash:show", this.show);
-        EkstepRendererAPI.addEventListener("renderer:splash:hide", this.hide);
+        var instance = this;
 
-
+        setTimeout(function(){
+            instance.show();
+            EkstepRendererAPI.addEventListener("renderer:splash:show", instance.show);
+            EkstepRendererAPI.addEventListener("renderer:splash:hide", instance.hide);
+        }, 0);
     },
 
     createHtml: function() {
@@ -27,14 +32,16 @@ var splashScreen = {
     },
 
     show: function() {
-        jQuery('#loading').show();
+        console.log("show ");
+        jQuery(splashScreen.elementId).show();
     },
 
-    hide: function(delay) {
-        delay = delay || 3000; // splash screen is going to be hidden after 3secs.
+    hide: function(event) {
+        var delay = event.target || 3000; // splash screen is going to be hidden after 3secs.
+        console.log("delay: ", delay);
         setTimeout(function(){
-            jQuery('#loading').hide();
-        },delay);
+            jQuery(splashScreen.elementId).hide();
+        }, delay);
     }
-
 }
+splashScreen.initialize();
