@@ -15,6 +15,7 @@ org.ekstep.contentrenderer.init = function() {
      */
     window.initializePreview = org.ekstep.contentrenderer.initializePreview;
     window.setContentData = org.ekstep.contentrenderer.setContent;
+    org.ekstep.contentrenderer.loadDefaultPlugins();
     console.info('Content renderer start');
 };
 org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) {
@@ -202,13 +203,34 @@ org.ekstep.contentrenderer.web = function(id) {
             contentNotAvailable(err);
         });
 };
+
 org.ekstep.contentrenderer.device = function() {
     if (isMobile) {
         org.ekstep.contentrenderer.getContentMetadata(GlobalContext.game.id, function() {
             window.location.hash = "/play/content/" + GlobalContext.currentContentId;
+            org.ekstep.contentrenderer.startGame();
         });
     } else {
         launchInitialPage(GlobalContext.config.appInfo);
     }
+};
+
+org.ekstep.contentrenderer.startGame = function() {
+            
+};
+
+org.ekstep.contentrenderer.loadDefaultPlugins = function() {
+    isCoreplugin = true;
+    var plugin = [{
+        id: 'org.ekstep.launcher',
+        ver: 1.0,
+        type: 'plugin'
+    }];
+    isCoreplugin = true;
+    org.ekstep.contentrenderer.initPlugins('');
+    org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
+        console.info('Launcher is Ready!!!');
+        isCoreplugin = false;
+    });
 };
 org.ekstep.contentrenderer.init();
