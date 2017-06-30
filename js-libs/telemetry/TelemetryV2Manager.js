@@ -66,7 +66,7 @@ TelemetryV2Manager = Class.extend({
 
     },
     error: function(data) {
-        var data = {env: data.env || '', type: data.type || '', stageid: data.stageId || '', objecttype: data.objectType || '', objectid: data.objectId || '', err: data.err || '', action: data.action || '', data: data.data || '', severity: data.severity || ''} 
+        var data = {env: data.env || '', type: data.type || '', stageid: data.stageId || '', objecttype: data.objectType || '', objectid: data.objectId || '', err: data.err || '', action: data.action || '', data: data.data || '', severity: data.severity || ''}
         return this.createEvent("OE_ERROR", data);
     },
     assessEnd: function(eventObj, data) {
@@ -83,7 +83,10 @@ TelemetryV2Manager = Class.extend({
             eventObj.event.edata.eks.qindex = data.qindex || 0;
             eventObj.event.edata.eks.exlength = 0;
             eventObj.event.edata.eks.qtitle = data.qtitle;
-            eventObj.event.edata.eks.qdesc = data.qdesc.substr(0,140)
+            eventObj.event.edata.eks.qdesc = data.qdesc.substr(0,140);
+            eventObj.event.edata.eks.mmc = data.mmc;
+            eventObj.event.edata.eks.mc = data.mc;
+
             if (_.isArray(eventObj.event.edata.eks.resvalues)) {
                 eventObj.event.edata.eks.resvalues = _.map(eventObj.event.edata.eks.resvalues, function(val) {
                     val = _.isObject(val) ? val :{"0" : val};

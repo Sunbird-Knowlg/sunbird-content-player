@@ -17,9 +17,7 @@ MCQEvaluator = {
                 });
                 if (answersCount > 1) {
                     //if multiple ans is present then it is MMCQ
-
                     isMCQ = false;
-
                 } else if (answersCount == 1) {
                     //if answer count is equalto one then it is MCQ
                     isMCQ = true;
@@ -32,7 +30,8 @@ MCQEvaluator = {
 					// remember in telemetry what the response was
 					if (opt.selected) {
 						var tuple = {};
-						tuple[opt.value.resindex] = opt.value.resvalue;
+						// tuple[opt.value.resindex] = opt.value.resvalue;
+						tuple[opt.value.resvalue] = "true";
 						res.push(tuple);
 					}
 
