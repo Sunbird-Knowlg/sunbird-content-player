@@ -1,8 +1,9 @@
 var canvasApp = angular.module("genie-canvas");
 canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams) {
     $rootScope.pageId = "ContentApp-Renderer";
-    $scope.showPlayer = false;
+    $scope.showPlayer = true;
     $scope.init = function() {
+         $scope.showPlayer = true;
         if (_.isUndefined($rootScope.content)) {
             if (!_.isUndefined(content.metadata)) {
                 $rootScope.content = content.metadata;
@@ -59,7 +60,6 @@ canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateP
         }
     });
     EkstepRendererAPI.addEventListener("renderer:player:init", function() {
-        $scope.showPlayer = true;
         $scope.init();
     });
     EkstepRendererAPI.addEventListener('renderer:player:hide',function(){
