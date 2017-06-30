@@ -15,7 +15,7 @@ function updateContentData($state, contentId) {
 }
 function launchInitialPage(appInfo) {
     if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-       window.location.hash = "/play/content/" + GlobalContext.game.id;
+            org.ekstep.contentrenderer.startGame();
     }else{
         !isbrowserpreview ?  window.location.hash = "/content/list/" + GlobalContext.game.id : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
     }
