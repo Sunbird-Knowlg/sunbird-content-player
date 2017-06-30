@@ -14,9 +14,9 @@ AppConfig = {
 	OVERLAY_SUBMIT: "off",
 	apislug: '/action',
 	splash: {
-		text: "Powered by EkStep Genie",
+		text: "Powered by EkStep",
 		icon: "img/icons/icn_genie.png",
-		image: "img/icons/background_1.png",
+		bgImage: "img/icons/background_1.png",
 		download_link: "http://www.ekstep.in"
 	}
 }

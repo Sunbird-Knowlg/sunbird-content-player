@@ -2,7 +2,7 @@ var splashScreen = {
     config: {
         text: "Powered by EkStep Genie",
 		icon: "img/icons/icn_genie.png",
-		image: "img/icons/background_1.png",
+		bgImage: "img/icons/background_1.png",
 		download_link: "http://www.ekstep.in"
     },
     initialize: function() {
@@ -14,10 +14,15 @@ var splashScreen = {
         jQuery('#loading').html(html);
         splashScreen.show();
 
+        // add event listener for hide and show of splash splashScreen
+        EkstepRendererAPI.addEventListener("renderer:splash:show", this.show);
+        EkstepRendererAPI.addEventListener("renderer:splash:hide", this.hide);
+
+
     },
 
     createHtml: function() {
-        var html = '<img src=' + splashScreen.config.image + ' class="gc-loader-img"/><a href=' + splashScreen.config.download_link + '><div class="splashScreen"><img src=' + splashScreen.config.icon + ' class="splash-icon "/><span id="pageTitle">' + splashScreen.config.text + '</span></div></a>';
+        var html = '<img src=' + splashScreen.config.bgImage + ' class="gc-loader-img"/><a href=' + splashScreen.config.download_link + '><div class="splashScreen"><img src=' + splashScreen.config.icon + ' class="splash-icon "/><span id="pageTitle">' + splashScreen.config.text + '</span></div></a>';
         return html;
     },
 
