@@ -64,10 +64,10 @@ module.exports = function(grunt) {
                     'public/services/mainservice.js',
                     'public/services/webservice.js',
                     'public/services/interfaceService.js',
+                    'public/js/ekstepRendererApi.js',
                     'public/js/content-renderer.js',
                     'public/services/controllerservice.js',
-                    'public/js/detectClient.js',
-                    'public/js/ekstepRendererApi.js',
+                    'public/js/detectClient.js'
                 ],
                 dest: 'www/scripts/renderer.script.min.js'
             },
