@@ -13,13 +13,6 @@ function updateContentData($state, contentId) {
         'itemId': contentId
     });
 }
-function launchInitialPage(appInfo) {
-    if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-            org.ekstep.contentrenderer.startGame();
-    }else{
-        !isbrowserpreview ?  window.location.hash = "/content/list/" + GlobalContext.game.id : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
-    }
-}
 document.body.addEventListener("logError", telemetryError, false);
 
 function telemetryError(e) {

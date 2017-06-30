@@ -102,7 +102,7 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
                 identifier: content.identifier,
                 mediaType: "Content"
             });
-           org.ekstep.contentrenderer.startGame();
+           org.ekstep.contentrenderer.startGame(content);
         }
     };
     $scope.simulateCrash = function(fatal) {
@@ -134,9 +134,10 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
 
     EkstepRendererAPI.addEventListener('renderer:collection:show',function(){
           $scope.showCollection = true;
+          $scope.init();
     });
     
-    $scope.init();
+    
 
 
 });

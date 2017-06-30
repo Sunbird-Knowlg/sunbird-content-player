@@ -16,8 +16,9 @@ org.ekstep.contentrenderer.init = function() {
     window.initializePreview = org.ekstep.contentrenderer.initializePreview;
     window.setContentData = org.ekstep.contentrenderer.setContent;
     org.ekstep.contentrenderer.loadDefaultPlugins();
-    console.info('Content renderer start');
+    console.info('Content renderer starts');
 };
+
 org.ekstep.contentrenderer.loadDefaultPlugins = function() {
     isCoreplugin = true;
     var plugin = AppConfig.DEFAULT_PLUGINS;
@@ -29,8 +30,12 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function() {
     });
 };
 
-org.ekstep.contentrenderer.startGame = function() {
-    EkstepRendererAPI.dispatchEvent('renderer:player:init');         
+org.ekstep.contentrenderer.startGame = function(appInfo) {
+    if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
+            EkstepRendererAPI.dispatchEvent('renderer:player:init')
+    }else{
+        !isbrowserpreview ? EkstepRendererAPI.dispatchEvent('renderer:collection:show') : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
+    }
 };
 
 org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) {
@@ -58,6 +63,7 @@ org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) 
     }
     org.ekstep.contentrenderer.initializePreview(object);
 };
+
 org.ekstep.contentrenderer.initializePreview = function(configuration) {
     if (_.isUndefined(configuration.context)) {
         configuration.context = {};
@@ -77,6 +83,7 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
     addWindowUnloadEvent();
     EkstepRendererAPI.dispatchEvent("event:loadContent");
 };
+
 org.ekstep.contentrenderer.initPlugins = function(gamePath) {
     var pluginsPath = undefined;
     // @ plugin:error event is dispatching from the plugin-framework 
@@ -94,6 +101,8 @@ org.ekstep.contentrenderer.initPlugins = function(gamePath) {
     };
     org.ekstep.pluginframework.initialize(pfConfig);
 };
+
+
 org.ekstep.contentrenderer.pluginError = function(event, data) {
     EkstepRendererAPI.logErrorEvent(data.err, {
         'type': 'plugin',
@@ -102,6 +111,7 @@ org.ekstep.contentrenderer.pluginError = function(event, data) {
         'objectId': data.objectid
     });
 };
+
 org.ekstep.contentrenderer.loadPlugins = function(pluginManifest, manifestMedia, cb) {
     var pluginObj = []
     if (!Array.isArray(pluginManifest)) {
@@ -119,11 +129,13 @@ org.ekstep.contentrenderer.loadPlugins = function(pluginManifest, manifestMedia,
         if (cb) cb();
     });
 };
+
 org.ekstep.contentrenderer.registerPlguin = function(id, plugin) {
     org.ekstep.pluginframework.pluginManager._registerPlugin(id, undefined, plugin);
     if (typeof createjs !== "undefined")
         createjs.EventDispatcher.initialize(plugin.prototype);
 };
+
 org.ekstep.contentrenderer.progressbar = function(switcher) {
     if (switcher) {
         jQuery("#progressBar").width(0);
@@ -144,6 +156,7 @@ org.ekstep.contentrenderer.progressbar = function(switcher) {
         jQuery('#loading').hide();
     }
 };
+
 org.ekstep.contentrenderer.getContentMetadata = function(id, cb) {
     org.ekstep.service.content.getContent(id)
         .then(function(data) {
@@ -158,6 +171,7 @@ org.ekstep.contentrenderer.getContentMetadata = function(id, cb) {
             contentNotAvailable(err);
         });
 };
+
 org.ekstep.contentrenderer.setContentMetadata = function(contentData, cb) {
     var data = _.clone(contentData);
     content["metadata"] = data;
@@ -176,6 +190,7 @@ org.ekstep.contentrenderer.setContentMetadata = function(contentData, cb) {
     }
     if(cb) cb();
 };
+
 org.ekstep.contentrenderer.getContentBody = function(id) {
     var configuration = EkstepRendererAPI.getPreviewData();
     var headers = org.ekstep.contentrenderer.urlparameter;
@@ -184,7 +199,7 @@ org.ekstep.contentrenderer.getContentBody = function(id) {
     }
     org.ekstep.service.content.getContentBody(id, headers).then(function(data) {
             content["body"] = data.body;
-            launchInitialPage(content.metadata);
+            org.ekstep.contentrenderer.startGame(content.metadata);
         })
         .catch(function(err) {
             console.info("contentNotAvailable : ", err);
@@ -203,6 +218,7 @@ org.ekstep.contentrenderer.urlparameter = function() {
     }
     return (_.object(urlParams))
 };
+
 org.ekstep.contentrenderer.web = function(id) {
     var configuration = EkstepRendererAPI.getPreviewData();
     var headers = org.ekstep.contentrenderer.urlparameter;
@@ -225,7 +241,8 @@ org.ekstep.contentrenderer.device = function() {
             org.ekstep.contentrenderer.startGame();
         });
     } else {
-        launchInitialPage(GlobalContext.config.appInfo);
+        org.ekstep.contentrenderer.startGame(GlobalContext.config.appInfo);
     }
 };
+
 org.ekstep.contentrenderer.init();
