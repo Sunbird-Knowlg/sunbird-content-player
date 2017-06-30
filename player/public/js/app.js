@@ -144,14 +144,15 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 $scope.templates = templatePath + "?a=" + Date.now();
             });*/
 
-        $scope.templates = { };
+        $scope.templates = [];
         function loadNgModules(templatePath, controllerPath, callback) {
             $ocLazyLoad.load([
                 { type: 'html', path: templatePath },
                 { type: 'js', path: controllerPath }
             ]).then(function(){
                 // injectTemplates(templatePath);
-                if(callback) callback(injectTemplates);
+                //if(callback) callback(injectTemplates);
+                injectTemplates(templatePath);
             });
         };
 
@@ -161,8 +162,8 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             //$scope.templates = templatePath +"?a=" +  Date.now();
             // if(toElement) {
                 // $scope.overlayTemplatePath = templatePath;
-                $scope.templates[scopeVariable] = templatePath;
-                var el = angular.element(toElement);
+                $scope.templates.push(templatePath);
+                var el = angular.element("overlay");
                 $compile(el.contents())($scope);
                 $scope.safeApply();
 

@@ -6,9 +6,7 @@ Plugin.extend({
         var controllerPath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/controller/collection.js");
 
         var instance = this;
-        org.ekstep.service.controller.loadNgModules(templatePath, controllerPath, function(injectTemplateFn){
-            injectTemplateFn(templatePath, "collection", '#org.ekstep.collection');
-        });
+        org.ekstep.service.controller.loadNgModules(templatePath, controllerPath);
     }
 });
 //# sourceURL=contentlist.js

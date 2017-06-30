@@ -19,9 +19,7 @@ Plugin.extend({
         this.menuTemplatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/menu.html");
 
         var instance = this;
-        org.ekstep.service.controller.loadNgModules(this._templatePath, this.controllerPath, function(injectTemplateFn){
-            injectTemplateFn(instance._templatePath, instance._ngScopeVar, '#gameArea');
-        });
+        org.ekstep.service.controller.loadNgModules(this._templatePath, this.controllerPath);
 
         EkstepRendererAPI.addEventListener("render:overlay:applyStyles", instance.updateRendererStyles, instance);
     },
