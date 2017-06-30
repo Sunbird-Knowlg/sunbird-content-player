@@ -239,7 +239,7 @@ org.ekstep.contentrenderer.web = function(id) {
 org.ekstep.contentrenderer.device = function() {
     if (isMobile) {
         org.ekstep.contentrenderer.getContentMetadata(GlobalContext.game.id, function() {
-            org.ekstep.contentrenderer.startGame();
+            org.ekstep.contentrenderer.startGame(content.metadata);
         });
     } else {
         org.ekstep.contentrenderer.startGame(GlobalContext.config.appInfo);
