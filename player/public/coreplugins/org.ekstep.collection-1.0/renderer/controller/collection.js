@@ -124,21 +124,18 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
         exitApp();
     };
     $scope.init = function() {
-         $scope.showCollection = true;
+        $scope.showCollection = true;
         $rootScope.title = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.name : "";
         $scope.resetContentListCache();
     };
     EkstepRendererAPI.addEventListener('renderer:collection:hide',function(){
-          $scope.showCollection = false;
+        $scope.showCollection = false;
     });
 
     EkstepRendererAPI.addEventListener('renderer:collection:show',function(){
-          $scope.showCollection = true;
-          $scope.init();
+        $scope.showCollection = true;
+        $scope.init();
     });
-    
-    
-
-
+    $scope.init();
 });
 //# sourceURL=contentlistAPP.js

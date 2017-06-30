@@ -31,6 +31,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function() {
 };
 
 org.ekstep.contentrenderer.startGame = function(appInfo) {
+    console.info('Game is starting..')
     if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
             EkstepRendererAPI.dispatchEvent('renderer:player:init')
     }else{
