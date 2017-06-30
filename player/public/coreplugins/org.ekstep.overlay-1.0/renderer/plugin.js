@@ -15,10 +15,8 @@ Plugin.extend({
         
         var instance = this;
         org.ekstep.service.controller.loadNgModules(this._templatePath, this.controllerPath, function(injectTemplateFn){
-            
-                injectTemplateFn(instance._templatePath, instance._ngScopeVar, '#gameArea');
-                //instance.updateRendererStyles();
-            });
+            injectTemplateFn(instance._templatePath, instance._ngScopeVar, '#gameArea');
+        });
 
         EkstepRendererAPI.addEventListener("render:overlay:applyStyles", instance.updateRendererStyles, instance);
     },
