@@ -75,7 +75,6 @@
 </head>
 
 <body ng-controller="BaseCtrl">
-    <ion-nav-view></ion-nav-view>
     <div id="loading" class="gc-loader-area">
         <img src="assets/icons/background_1.png" class="gc-loader-img">
         <div id="progressArea">
@@ -84,7 +83,7 @@
         </div>
         <p class="icon-font cover-page-title" id="pageTitle" ng-bind = "pageTitle">Content is loading ...</p>
     </div>    
-    <div id="org.ekstep.contentlist" ng-include="templates.contentlist"></div>
+    <div id="org.ekstep.collection" ng-include="templates.collection"></div>
     <div  id="org.ekstep.launcher"  ng-include="templates.playerContent"></div>
     <div  id="org.ekstep.endpage"  ng-include="templates.endPage"></div>
 

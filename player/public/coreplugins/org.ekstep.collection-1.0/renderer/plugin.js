@@ -1,13 +1,12 @@
 Plugin.extend({
-    _type: "content-list",
+    _type: "collection",
     initialize: function() {
-        console.info('contentlist plugin is doing initialize....');
-        var templatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/content-list.html");
-        var controllerPath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/controller/contentlist.js");
+        var templatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/collection.html");
+        var controllerPath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/controller/collection.js");
 
         var instance = this;
         org.ekstep.service.controller.loadNgModules(templatePath, controllerPath, function(injectTemplateFn){
-            injectTemplateFn(templatePath, "contentlist", '#org.ekstep.contentlist');
+            injectTemplateFn(templatePath, "collection", '#org.ekstep.collection');
         });
     }
 });
