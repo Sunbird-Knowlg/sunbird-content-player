@@ -102,9 +102,7 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
                 identifier: content.identifier,
                 mediaType: "Content"
             });
-            $state.go('playContent', {
-                'itemId': content.identifier
-            });
+           org.ekstep.contentrenderer.startGame();
         }
     };
     $scope.simulateCrash = function(fatal) {
@@ -126,9 +124,20 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
         exitApp();
     };
     $scope.init = function() {
+         $scope.showCollection = true;
         $rootScope.title = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.name : "";
         $scope.resetContentListCache();
     };
+    EkstepRendererAPI.addEventListener('renderer:collection:hide',function(){
+          $scope.showCollection = false;
+    });
+
+    EkstepRendererAPI.addEventListener('renderer:collection:show',function(){
+          $scope.showCollection = true;
+    });
+    
     $scope.init();
+
+
 });
 //# sourceURL=contentlistAPP.js

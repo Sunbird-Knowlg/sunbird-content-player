@@ -170,6 +170,7 @@ Plugin.extend({
         }
         try {
             org.ekstep.contentrenderer.loadPlugins(pluginManifest.plugin, resource, function() {
+                EkstepRendererAPI.dispatchEvent('renderer:genie:show');
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {

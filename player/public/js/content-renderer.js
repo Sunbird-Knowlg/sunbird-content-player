@@ -18,6 +18,30 @@ org.ekstep.contentrenderer.init = function() {
     org.ekstep.contentrenderer.loadDefaultPlugins();
     console.info('Content renderer start');
 };
+
+org.ekstep.contentrenderer.loadDefaultPlugins = function() {
+    isCoreplugin = true;
+    var plugin = [{
+        id: 'org.ekstep.launcher',
+        ver: 1.0,
+        type: 'plugin'
+    },{
+        id: 'org.ekstep.collection',
+        ver: 1.0,
+        type: 'plugin'
+    }];
+    isCoreplugin = true;
+    org.ekstep.contentrenderer.initPlugins('');
+    org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
+        console.info('Launcher is Ready!!!');
+        isCoreplugin = false;
+    });
+};
+
+org.ekstep.contentrenderer.startGame = function() {
+    EkstepRendererAPI.dispatchEvent('renderer:player:init');         
+};
+
 org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) {
     if (_.isUndefined(metadata) || _.isNull(metadata)) {
         content.metadata = AppConfig.DEFAULT_METADATA
@@ -207,30 +231,10 @@ org.ekstep.contentrenderer.web = function(id) {
 org.ekstep.contentrenderer.device = function() {
     if (isMobile) {
         org.ekstep.contentrenderer.getContentMetadata(GlobalContext.game.id, function() {
-            window.location.hash = "/play/content/" + GlobalContext.currentContentId;
             org.ekstep.contentrenderer.startGame();
         });
     } else {
         launchInitialPage(GlobalContext.config.appInfo);
     }
-};
-
-org.ekstep.contentrenderer.startGame = function() {
-            
-};
-
-org.ekstep.contentrenderer.loadDefaultPlugins = function() {
-    isCoreplugin = true;
-    var plugin = [{
-        id: 'org.ekstep.contentlist',
-        ver: 1.0,
-        type: 'plugin'
-    }];
-    isCoreplugin = true;
-    org.ekstep.contentrenderer.initPlugins('');
-    org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
-        console.info('Launcher is Ready!!!');
-        isCoreplugin = false;
-    });
 };
 org.ekstep.contentrenderer.init();

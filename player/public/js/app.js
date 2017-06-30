@@ -78,13 +78,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
     }).config(function($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider) {
         app.controllerProvider = $controllerProvider;
         app.compileProvider = $compileProvider;
-        $stateProvider
-            .state('playContent', {
-                cache: false,
-                url: "/play/content/:itemId",
-                templateUrl: "templates/renderer.html",
-                controller: 'ContentCtrl'
-            })
+      
     }).controller('BaseCtrl', function($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, appConstants) {
         $rootScope.replayContent = function() {
             $scope.endContent('gc_replay');
@@ -112,13 +106,13 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 'menuReplay': menuReplay
             }) : TelemetryService.end();
         }
+
+
         $scope.startContent = function() {
-            if ($state.current.name == appConstants.stateShowContentEnd) {
-                $state.go(appConstants.statePlayContent, {
-                    'itemId': $rootScope.content.identifier
-                });
-            }
-        }
+           
+        };
+
+
         $rootScope.us_replayContent = function() {
             $scope.endContent('gc_userswitch_replayContent');
             var stageId =
@@ -194,73 +188,4 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 updateContentData($state, content.metadata.identifier)
             }
         }, this);
-    }).controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams) {
-        $rootScope.pageId = "ContentApp-Renderer";
-        $scope.init = function() {
-            if (_.isUndefined($rootScope.content)) {
-                if (!_.isUndefined(content.metadata)) {
-                    $rootScope.content = content.metadata;
-                    $scope.renderContent();
-                }else{
-                    console.info('contentMetada is undefined');
-                }
-
-            } else {
-                $scope.renderContent();
-            }
-        }
-        $scope.callStartTelemetry = function(content, cb) {
-            var identifier = (content && content.identifier) ? content.identifier : null;
-            var pkgVersion = !_.isUndefined(content.pkgVersion) ? content.pkgVersion.toString() : null;
-            var version = (content && pkgVersion) ? pkgVersion : "1";
-            startTelemetry(identifier, version, cb);
-        }
-        $scope.renderContent = function() {
-            //EkstepRendererAPI.dispatchEvent('renderer:launcher:initLauncher');
-            if ($stateParams.itemId && $rootScope.content) {
-                localStorageGC.setItem("content", $rootScope.content);
-                $rootScope.pageTitle = $rootScope.content.name;
-                org.ekstep.contentrenderer.progressbar(true);
-                GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
-                $scope.callStartTelemetry($rootScope.content, function() {
-                    $scope.item = $rootScope.content;
-                    $scope.callStartTelemetry($rootScope.content, function() {
-                        $rootScope.content.body = isbrowserpreview ? content.body : undefined;
-                        EkstepRendererAPI.dispatchEvent('renderer:launcher:initLauncher', undefined, $rootScope.content);
-                    });
-                });
-            } else {
-                alert('Name or Launch URL not found.');
-                exitApp();
-            }
-
-        }
-        $scope.reloadStage = function() {
-            reloadStage();
-        }
-
-        $scope.$on('$destroy', function() {})
-        $rootScope.showMessage = false;
-        $rootScope.$on('show-message', function(event, data) {
-            if (data.message && data.message != '') {
-                $rootScope.$apply(function() {
-                    $rootScope.showMessage = true;
-                    $rootScope.message = data.message;
-                });
-            }
-            if (data) {
-                setTimeout(function() {
-                    $rootScope.$apply(function() {
-                        $rootScope.showMessage = false;
-                    });
-                }, 5000);
-            }
-        });
-
-        // This is to fix FTB preview issue of causing by Ionic and Angular combination
-        // childnodes error causing by ionic framework whiel rendering FTB item
-        // reference: http://stackoverflow.com/questions/27776174/type-error-cannot-read-property-childnodes-of-undefined
-        setTimeout(function() {
-            $scope.init();
-        }, 0);
     });

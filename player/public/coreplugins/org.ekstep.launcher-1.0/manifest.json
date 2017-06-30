@@ -1,0 +1,12 @@
+{
+    "id": "org.ekstep.launcher",
+    "ver": "1.0",
+    "shortId": "org.ekstep.launcher",
+    "author": "Manjunath Davanam",
+    "description": "",
+    "publishedDate": "",
+    "renderer": {
+        "main": "renderer/plugin.js"
+    }
+
+}

@@ -1,6 +1,6 @@
-<div id="gameArea">
-	<!-- Navigation and Menu  -->
-	<div id="overlay" ng-include="templates.overlay"></div>
+<div id="gameArea" ng-controller="ContentCtrl"  ng-show = 'showPlayer'>
+    <!-- Navigation and Menu  -->
+    <div id="overlay" ng-include="templates.overlay"></div>
 
     <!-- HTML plugin elements(dynamically adding here) -->
     <!-- Canvas elment(used by CreateJS) -->

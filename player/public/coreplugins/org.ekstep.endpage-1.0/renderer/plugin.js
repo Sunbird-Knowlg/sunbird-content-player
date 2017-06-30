@@ -16,7 +16,7 @@ Plugin.extend({
         this.controllerPath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/js/endpageApp.js");
         var instance = this;
         org.ekstep.service.controller.loadNgModules(this.templatePath, this.controllerPath, function(injectTemplateFn){
-           injectTemplateFn(instance.templatePath, instance._ngScopeVar, '#pluginTemplate');
+           injectTemplateFn(instance.templatePath, instance._ngScopeVar, '#org.ekstep.endpage');
         });
     },
     initEndPage:function(event, instance){
