@@ -1,0 +1,46 @@
+<style>
+.swiper-background {
+    background-image: url("assets/icons/background_1.png");
+    background-size: cover;
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 120px;
+    height: 140px;
+    padding: 0 15px;
+    border-radius: 10%;
+    background-color: white;
+    margin-left: 25px !important;
+    margin-bottom: 15px !important;
+    margin-top: 10px !important;
+}
+
+.pane {
+    overflow-y: scroll;
+    overflow-x: scroll;
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(91, 119, 121, 0.78);
+}
+</style>
+<ion-pane class="swiper-background" ng-controller="ContentListCtrl">
+    </br>
+    <h1 class="gc-contentlist-title font-lato">{{"Canvas local Development"}}</h1>
+    <ion-content class="gc-ionic-contentlist-body" overflow-scroll="true">
+        <div class="product swiper-slide" ng-repeat="story in stories track by $index" ng-click="playContent(story);">
+            <p class="product_name">{{story.name}}</p>
+            <div class="gc-contentlist-innerdiv">
+                <img class="content-app-icon" ng-src="{{story.appIcon}}"></img>
+                <img class="gc-contentlist-play-icon" ng-src="{{imageBasePath}}icn_play_grey.png"></img>
+            </div>
+        </div>
+    </ion-content>
+</ion-pane>

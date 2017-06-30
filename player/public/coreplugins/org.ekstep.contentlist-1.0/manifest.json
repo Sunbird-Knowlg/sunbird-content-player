@@ -1,0 +1,11 @@
+{
+    "id": "org.ekstep.contentlist",
+    "ver": "1.0",
+    "shortId": "org.eskstep.contentlist",
+    "author": "Kartheek Palla",
+    "description": "",
+    "publishedDate": "",
+    "renderer": {
+        "main": "renderer/plugin.js"
+    }
+}

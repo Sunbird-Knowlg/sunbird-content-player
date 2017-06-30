@@ -222,7 +222,7 @@ org.ekstep.contentrenderer.startGame = function() {
 org.ekstep.contentrenderer.loadDefaultPlugins = function() {
     isCoreplugin = true;
     var plugin = [{
-        id: 'org.ekstep.launcher',
+        id: 'org.ekstep.contentlist',
         ver: 1.0,
         type: 'plugin'
     }];
