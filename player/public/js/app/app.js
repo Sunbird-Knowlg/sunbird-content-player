@@ -392,7 +392,7 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                 $rootScope.getContentMetadata($stateParams.itemId);
             }
             $rootScope.pageTitle = $rootScope.content.name;
-            startProgressBar(40, 0.6);
+
             TelemetryService.interact("TOUCH", eleId, "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
             });
@@ -483,7 +483,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         }
 
         $scope.resetContentListCache = function() {
-            jQuery('#loading').hide();
             var collectionContentId = $stateParams.id;
             $rootScope.renderMessage("", 0);
             ContentService.getContent(collectionContentId)
@@ -527,6 +526,8 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
                     return ContentService.getContentList(filter, childrenIds);
                 })
                 .then(function(result) {
+                    EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+
                     $rootScope.$apply(function() {
                         $rootScope.stories = result;
                     });
@@ -605,9 +606,9 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
         $scope.renderContent = function() {
             if ($stateParams.itemId && $rootScope.content) {
                 localStorageGC.setItem("content", $rootScope.content);
-
+                EkstepRendererAPI.dispatchEvent("renderer:splash:show");
                 $rootScope.pageTitle = $rootScope.content.name;
-                startProgressBar(40, 0.6);
+
                 // In the case of AT preview Just we are setting up the currentContentId
                 GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
                 $scope.callStartTelemetry($rootScope.content, function() {
@@ -863,7 +864,6 @@ angular.module('genie-canvas', ['ionic', 'ngCordova', 'genie-canvas.services'])
             $scope.setCredits('voiceCredits');
             window.addEventListener('native.keyboardshow', epKeyboardShowHandler, true);
             window.addEventListener('native.keyboardhide', epKeyboardHideHandler, true);
-            jQuery('#loading').hide();
             $scope.setTotalTimeSpent();
             $scope.getTotalScore($stateParams.contentId);
             $scope.showFeedback(0);

@@ -12,25 +12,6 @@ var packageName = "org.ekstep.quiz.app",
 // Need to modify the scope level hasStageSet
 // hasStageSet = true
 
-function startProgressBar(w, setInter) {
-    jQuery("#progressBar").width(0);
-    jQuery('#loading').show();
-    var elem = document.getElementById("progressBar");
-    var width = w ? w : 20;
-    var id = setInterval(frame, setInter ? setInter : 0.7);
-
-    function frame() {
-        if (width >= 100) {
-            clearInterval(id);
-        } else {
-            width++;
-            if (elem && elem.style)
-                elem.style.width = width + '%';
-            jQuery('#progressCount').text(width + '%');
-        }
-    }
-}
-
 function removeRecordingFiles(path) {
     _.each(RecorderManager.mediaFiles, function(path) {
         $cordovaFile.removeFile(cordova.file.dataDirectory, path)

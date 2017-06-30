@@ -10,5 +10,11 @@ AppConfig = {
 	USER_SWITCHER_ENABLED: true,
 	SHOW_USER: true,
 	apislug: '/action',
-	OVERLAY_SUBMIT: "off"
+	OVERLAY_SUBMIT: "off",
+	splash: {
+		text: "Powered by EkStep",
+		icon: "img/icons/icn_genie.png",
+		bgImage: "img/icons/background_1.png",
+		download_link: "http://www.ekstep.in"
+	}
 }

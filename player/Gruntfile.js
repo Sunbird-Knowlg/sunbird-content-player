@@ -40,6 +40,7 @@ module.exports = function(grunt) {
                     'public/js/script.min.js': [
                         'public/js/app/GlobalContext.js',
                         'public/js/app/AppMessages.js',
+                        'public/js/app/splashScreen.js',
                         'public/js/app/main.js',
                         'public/js/app/app.js',
                         'public/js/app/detectClient.js',

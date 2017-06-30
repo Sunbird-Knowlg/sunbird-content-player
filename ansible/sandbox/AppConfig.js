@@ -11,5 +11,11 @@ AppConfig = {
 	PREVIEW_PLUGINSPATH: "/content-plugins",
 	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
 	OVERLAY_SUBMIT: "off",
-	apislug: '/action'
+	apislug: '/action',
+	splash: {
+		text: "Powered by EkStep",
+		icon: "img/icons/icn_genie.png",
+		bgImage: "img/icons/background_1.png",
+		download_link: "http://www.ekstep.in"
+	}
 }
