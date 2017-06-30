@@ -107,12 +107,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             }) : TelemetryService.end();
         }
 
-
-        $scope.startContent = function() {
-           
-        };
-
-
         $rootScope.us_replayContent = function() {
             $scope.endContent('gc_userswitch_replayContent');
             var stageId =
@@ -120,8 +114,8 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
 
             EventBus.dispatch('event:closeUserSwitchingModal')
             EkstepRendererAPI.hideEndPage();
-            $scope.startContent();
         }
+        
         $rootScope.us_continueContent = function(userSwitchHappened) {
             TelemetryService.interact("TOUCH", 'gc_userswitch_continue', "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
@@ -163,7 +157,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             // if(toElement) {
                 // $scope.overlayTemplatePath = templatePath;
                 $scope.templates.push(templatePath);
-                var el = angular.element("overlay");
+                var el = angular.element("content-holder");
                 $compile(el.contents())($scope);
                 $scope.safeApply();
 
