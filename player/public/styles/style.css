@@ -1713,3 +1713,6 @@ body {
 /* User Switcher Modal endes*/
 
 /*Loader Css*/
+body {
+    background-color: #fff;
+}
