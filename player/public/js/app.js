@@ -183,9 +183,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 org.ekstep.contentrenderer.web(configuration.context.contentId);
             } else {
                 content.body = configuration.data;
-                console.info("Content id is undefined or body is available !!");
-                var $state = angular.element(document.body).injector().get('$state')
-                updateContentData($state, content.metadata.identifier)
+                org.ekstep.contentrenderer.startGame(content.metadata)
             }
         }, this);
     });
