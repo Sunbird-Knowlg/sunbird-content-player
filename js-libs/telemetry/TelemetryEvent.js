@@ -57,10 +57,9 @@ TelemetryEvent = Class.extend({
         this.startTime = getCurrentTime();
         return this;
     },
-    end: function(progress) {
+    end: function() {
         if (this._isStarted) {
             this.event.edata.eks.length = Math.round((getCurrentTime() - this.startTime ) / 1000);
-            this.event.edata.eks.progress = progress;
             this.event.ets = new Date().getTime();
             this._isStarted = false;
             return this;

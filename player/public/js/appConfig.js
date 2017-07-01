@@ -22,6 +22,7 @@ AppConfig = {
         ver: 1.0,
         type: 'plugin'
     }],
+    assetbase : 'assets/icons/',    
     DEFAULT_PLUGINS: [
         {id: 'org.ekstep.launcher',ver: 1.0,type: 'plugin'},
         {id: 'org.ekstep.collection',ver: 1.0,type: 'plugin'}

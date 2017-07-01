@@ -18,11 +18,10 @@ TelemetryV2Manager = Class.extend({
         this._start.push({id: id , ver : ver});
         return this.createEvent("OE_START", data);
     },
-    end: function(progress) {
-        var endEvent = undefined;
+    end: function(gameId) {
         if (!_.isEmpty(this._start)) {
             this._start.pop();
-             return this._end.pop().end(progress);
+            return this._end.pop().end();
         } else {
             console.warn("Telemetry service end is already logged Please log start telemetry again");
         }
