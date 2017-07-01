@@ -9,7 +9,9 @@
         "main": "renderer/plugin.js"
     },
     "dependencies": [
-        {"plugin": "org.ekstep.genie", "ver": "1.0", "scope": "renderer" }
+        {"plugin": "org.ekstep.genie", "ver": "1.0", "scope": "renderer" },
+        {"plugin": "org.ekstep.nextnavigation", "ver": "1.0", "scope": "renderer" },
+        {"plugin": "org.ekstep.previousnavigation", "ver": "1.0", "scope": "renderer" }
     ]   
 
 }

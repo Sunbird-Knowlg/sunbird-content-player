@@ -1,13 +1,7 @@
-<div class="overlay-html" ng-show="showOverlay" ng-controller="OverlayController">
-	<div>
-		<a class="nav-icon nav-previous" ng-class="{'nav-disable': showOverlayPrevious == state_disable}" href="javascript:void(0);"><img ng-src="{{imageBasePath}}back.png" ng-click="navigate('previous')"></a>
-	</div>
-
-	<div>
-		<a class="nav-icon nav-next" href="javascript:void(0);"><img ng-src="{{imageBasePath}}next.png" ng-click="navigate('next')"></a>
-	</div>
-
-	<assess image="icons.assess.enable" show="showOverlaySubmit"></assess>
+<div id="overlay" class="overlay-html" ng-show="showOverlay" ng-controller="OverlayController">
+	<previous-navigation></previous-navigation>
+	<next-navigation></next-navigation>
+	<assess image="icons.assess.enable" ng-show="showOverlaySubmit"></assess>
 	<reload-stage style="position: absolute;width: 7%;bottom: 1%;left: 1%;"></reload-stage>
 
 	<!-- Note: all the HTML elements should be above this menu tag

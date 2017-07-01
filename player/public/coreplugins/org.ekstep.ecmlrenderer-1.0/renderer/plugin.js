@@ -90,6 +90,7 @@ Plugin.extend({
 
         gameArea.style.marginTop = (-newHeight / 2) + 'px';
         gameArea.style.marginLeft = (-newWidth / 2) + 'px';
+        EkstepRendererAPI.dispatchEvent("render:overlay:applyStyles");
         Renderer.theme.updateCanvas(newWidth, newHeight);
         if (!disableDraw) Renderer.theme.reRender();
     },

@@ -7,16 +7,17 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.state_off = "off";
     $scope.state_on = "on";
     $scope.state_disable = "disable";
-    $scope.showOverlayNext = true;
-    $scope.showOverlayPrevious = true;
+    // $scope.showOverlayNext = true;
+    // $scope.showOverlayPrevious = true;
     $scope.showOverlaySubmit = false;
     $scope.showOverlayGoodJob = false;
     $scope.showOverlayTryAgain = false;
-    $scope.overlayEvents = ["overlayNext", "overlayPrevious", "overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
+    $scope.overlayEvents = ["overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
     $scope.showOverlay = false;
     $scope.pluginInstance = undefined;
 
     $scope.init = function() {
+    	$scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
         if (GlobalContext.config.language_info) {
             var languageInfo = JSON.parse(GlobalContext.config.language_info);
             for (key in languageInfo) {
@@ -36,6 +37,10 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         EkstepRendererAPI.addEventListener("renderer:init:overlay", $scope.loadOverlay);
         EkstepRendererAPI.addEventListener("renderer:show:overlay", function(event) {
             $scope.showOverlay = true;
+            $scope.safeApply();
+        });
+        EkstepRendererAPI.addEventListener("renderer:overlay:hide", function(event) {
+            $scope.showOverlay = false;
             $scope.safeApply();
         });
     }
@@ -79,12 +84,12 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.overlayEventHandler = function(event) {
         //Switch case to handle HTML elements(Next, Previous, Submit, etc..)
         switch (event.type) {
-            case "overlayNext":
-                $scope.showOverlayNext = event.target;
-                break;
-            case "overlayPrevious":
-                $scope.showOverlayPrevious = event.target;
-                break;
+            // case "overlayNext":
+            //     $scope.showOverlayNext = event.target;
+            //     break;
+            // case "overlayPrevious":
+            //     $scope.showOverlayPrevious = event.target;
+            //     break;
             case "overlaySubmit":
                 if (event.target === "off") {
                     $scope.showOverlaySubmit = false;
@@ -356,7 +361,13 @@ app.compileProvider.directive('restart', function($rootScope, $state, $statePara
 app.compileProvider.directive('menu', function($rootScope, $sce) {
     return {
         restrict: 'E',
-        templateUrl: ("undefined" != typeof localPreview && "local" == localPreview) ? $sce.trustAsResourceUrl(serverPath + 'templates/menu.html') : 'templates/menu.html'
+        scope: false,
+        link: function(scope) {
+	        scope.getTemplate = function() {
+                return scope.pluginInstance._menuTP;
+			}
+		},
+	    template: "<div ng-include=getTemplate()></div>"
     }
 });
 
@@ -468,11 +479,7 @@ app.compileProvider.directive('goodJob', function($rootScope) {
 app.compileProvider.directive('tryAgain', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-lato assess-popup assess-tryagain-popup"><img class="popup-bg-img" ng-src="{{imageBasePath}}tryagain_popup.png"/><div class="tryagain-retry-div gc-popup-icons-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{imageBasePath}}icn_popup_replay.png" /></a><p class="gc-popup-retry-replay">{{languageSupport.replay}}</p></div><div class="tryagian-next-div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ imageBasePath }}icn_popup_next_small.png" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div></div></div></div>',
-        controller: function($scope, $rootScope, $timeout) {
-
-        }
-
+        template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-lato assess-popup assess-tryagain-popup"><img class="popup-bg-img" ng-src="{{imageBasePath}}tryagain_popup.png"/><div class="tryagain-retry-div gc-popup-icons-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{imageBasePath}}icn_popup_replay.png" /></a><p class="gc-popup-retry-replay">{{languageSupport.replay}}</p></div><div class="tryagian-next-div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ imageBasePath }}icn_popup_next_small.png" ng-click="moveToNextStage(\'next\')" /></a><p>{{languageSupport.next}}</p></div></div></div></div></div></div>'
     }
 });
 

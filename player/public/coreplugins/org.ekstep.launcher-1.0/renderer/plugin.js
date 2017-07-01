@@ -14,10 +14,7 @@ Plugin.extend({
         this.templatePath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/renderer.html");
         this.controllerPath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/js/rendererApp.js");
         var instance = this;
-        org.ekstep.service.controller.loadNgModules(this.templatePath, this.controllerPath, function(injectTemplateFn){
-            console.info('Renderer page is ready..');
-           injectTemplateFn(instance.templatePath, instance._ngScopeVar, '#org.ekstep.launcher');
-        });
+        org.ekstep.service.controller.loadNgModules(this.templatePath, this.controllerPath);
     },
     start: function(evt, content) {
         console.info('launcher init is calling..');

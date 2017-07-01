@@ -45,9 +45,9 @@
 <body ng-controller="BaseCtrl">
     <div id="loading" class="gc-loader-area"></div>
 
-    <div id="org.ekstep.collection" ng-include="templates.collection"></div>
-    <div  id="org.ekstep.launcher"  ng-include="templates.playerContent"></div>
-    <div  id="org.ekstep.endpage"  ng-include="templates.endPage"></div>
+    <div class="content-holder" ng-repeat="templatePath in templates">
+        <div ng-include="templatePath"></div>
+    </div>
 
     <!-- injector:js -->
     <script type="text/javascript" src="libs/jquery.min.js"></script>

@@ -4,15 +4,7 @@ var packageName = "org.ekstep.quiz.app", version = AppConfig.version, packageNam
     stack = new Array(), collectionChildrenIds = new Array(), collectionPath = new Array(), collectionPathMap = {},
     collectionChildren = true, content = {}, config = {showEndPage: true, showHTMLPages: true }, 
     isbrowserpreview = getUrlParameter("webview"), isCoreplugin = undefined, Renderer = undefined;
-function updateContentData($state, contentId) {
-    if (_.isUndefined($state)) {
-        console.error("updateContentData($state) - $state is not defined.");
-        return;
-    }
-    $state.go('playContent', {
-        'itemId': contentId
-    });
-}
+
 document.body.addEventListener("logError", telemetryError, false);
 
 function telemetryError(e) {

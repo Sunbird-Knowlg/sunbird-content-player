@@ -90,7 +90,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
     }).controller('BaseCtrl', function($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, appConstants) {
         $rootScope.replayContent = function() {
             $scope.endContent('gc_replay');
-            $scope.startContent();
+            EkstepRendererAPI.dispatchEvent('renderer:player:init');
         }
         $scope.endContent = function(eleId) {
             if (!$rootScope.content) {
@@ -112,13 +112,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 'menuReplay': menuReplay
             }) : TelemetryService.end();
         }
-
-
-        $scope.startContent = function() {
-
-        };
-
-
+        
         $rootScope.us_replayContent = function() {
             $scope.endContent('gc_userswitch_replayContent');
             var stageId =
@@ -126,8 +120,8 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
 
             EventBus.dispatch('event:closeUserSwitchingModal')
             EkstepRendererAPI.hideEndPage();
-            $scope.startContent();
         }
+
         $rootScope.us_continueContent = function(userSwitchHappened) {
             TelemetryService.interact("TOUCH", 'gc_userswitch_continue', "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
@@ -150,14 +144,26 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 $scope.templates = templatePath + "?a=" + Date.now();
             });*/
 
-        $scope.templates = { };
+        $scope.templates = [];
         function loadNgModules(templatePath, controllerPath, callback) {
-            $ocLazyLoad.load([
-                { type: 'html', path: templatePath },
-                { type: 'js', path: controllerPath }
-            ]).then(function(){
-                // injectTemplates(templatePath);
-                if(callback) callback(injectTemplates);
+            var loadFiles = [];
+            if(templatePath){
+                if(_.isArray(templatePath)){
+                    _.each(templatePath, function(template){
+                        console.log("template", template);
+                        loadFiles.push({ type: 'html', path: template });
+                    });
+                } else {
+                    loadFiles.push({ type: 'html', path: templatePath });
+                }
+            }
+            if(controllerPath){
+                loadFiles.push({ type: 'js', path: controllerPath });
+            }
+            $ocLazyLoad.load(loadFiles).then(function(){
+                if(!_.isArray(templatePath)){
+                    injectTemplates(templatePath);
+                }
             });
         };
 
@@ -167,8 +173,8 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             //$scope.templates = templatePath +"?a=" +  Date.now();
             // if(toElement) {
                 // $scope.overlayTemplatePath = templatePath;
-                $scope.templates[scopeVariable] = templatePath;
-                var el = angular.element(toElement);
+                $scope.templates.push(templatePath);
+                var el = angular.element("content-holder");
                 $compile(el.contents())($scope);
                 $scope.safeApply();
 
@@ -189,9 +195,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 org.ekstep.contentrenderer.web(configuration.context.contentId);
             } else {
                 content.body = configuration.data;
-                console.info("Content id is undefined or body is available !!");
-                var $state = angular.element(document.body).injector().get('$state')
-                updateContentData($state, content.metadata.identifier)
+                org.ekstep.contentrenderer.startGame(content.metadata)
             }
         }, this);
     });

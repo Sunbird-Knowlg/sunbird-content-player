@@ -142,7 +142,7 @@ org.ekstep.service.web = new(org.ekstep.service.mainService.extend({
             // var teleAuth = AppConfig.telemetryApiAuth;
             // var basicAuth = 'Basic ' + btoa(atob(teleAuth.username) + ":" + atob(teleAuth.password));
             headersParam['dataType'] = 'json';
-            instance.callApi(org.ekstep.service.web.api.getTelematyFullAPI(), 'POST', headersParam, JSON.stringify(data), function(resp) {
+            instance.callApi(org.ekstep.service.web.api.getTelematyAPI(), 'POST', headersParam, JSON.stringify(data), function(resp) {
                 // jQuery.ajax({
                 //     type: 'POST',
                 //     url: org.ekstep.service.web.api.getTelematyFullAPI(),
