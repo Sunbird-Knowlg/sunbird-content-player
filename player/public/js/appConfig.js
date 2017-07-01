@@ -22,6 +22,7 @@ AppConfig = {
         ver: 1.0,
         type: 'plugin'
     }],
+    assetbase : 'assets/icons/',    
     DEFAULT_PLUGINS: [
         {id: 'org.ekstep.launcher',ver: 1.0,type: 'plugin'},
         {id: 'org.ekstep.collection',ver: 1.0,type: 'plugin'}
@@ -47,6 +48,6 @@ AppConfig = {
 		text: "Powered by EkStep",
 		icon: "assets/icons/icn_genie.png",
 		bgImage: "assets/icons/background_1.png",
-		download_link: "http://www.ekstep.in"
+		download_link: "https://www.ekstep.in"
 	}
 }

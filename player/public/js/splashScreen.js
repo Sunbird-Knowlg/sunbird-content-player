@@ -4,7 +4,7 @@ var splashScreen = {
         text: "Powered by EkStep Genie",
 		icon: "img/icons/icn_genie.png",
 		bgImage: "img/icons/background_1.png",
-		download_link: "http://www.ekstep.in"
+		download_link: "https://www.ekstep.in"
     },
     initialize: function() {
         var appConfigKeys = Object.keys(AppConfig.splash);
@@ -36,10 +36,7 @@ var splashScreen = {
     },
 
     hide: function(event) {
-        var delay = event.target || 3000; // splash screen is going to be hidden after 3secs.
-        setTimeout(function() {
-            jQuery(splashScreen.elementId).hide();
-        }, delay);
+        jQuery(splashScreen.elementId).hide();
     }
 }
 splashScreen.initialize();

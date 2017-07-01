@@ -58,6 +58,7 @@ canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateP
             }, 5000);
         }
     });
+    
     EkstepRendererAPI.addEventListener("renderer:player:init", function() {
         $scope.showPlayer = true;
         $scope.init();

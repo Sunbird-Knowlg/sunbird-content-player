@@ -33,11 +33,13 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
     }
     $scope.replay = function() {
         EkstepRendererAPI.hideEndPage();
-        EventBus.dispatch('renderer:player:init');
-        EventBus.dispatch('event:closeUserSwitchingModal');
+        $rootScope.replayContent();
+        // EventBus.dispatch('renderer:player:init');
+        // EventBus.dispatch('event:closeUserSwitchingModal');
         var muteElement = document.getElementById("unmute_id");
         if (!_.isNull(muteElement)) {muteElement.style.display = "none"; }
         AudioManager.unmute();
+        TelemetryService.end(undefined,progress);
     }
     $scope.showFeedback = function(param) {
         $scope.userRating = param;

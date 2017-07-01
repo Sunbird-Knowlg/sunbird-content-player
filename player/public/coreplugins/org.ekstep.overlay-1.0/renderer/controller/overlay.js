@@ -236,7 +236,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                 console.log(err);
             })
         }
-        $scope.hideUserSwitchingModal();
+        EventBus.dispatch('event:closeUserSwitchingModal');
         replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent(userSwitchHappened);
     }
 
@@ -337,7 +337,7 @@ app.compileProvider.directive('mute', function($rootScope) {
 app.compileProvider.directive('reloadStage', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<a href="javascript:void(0)" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></a>'
+        template: '<span class="reload-stage" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></span>'
     }
 });
 
@@ -517,7 +517,7 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
 			}
 			scope.getTemplate = function() {
                 var pluginsObjs = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
-                return pluginsObjs.userSwitcherTemplatePath;
+                return pluginsObjs._userSwitcherTP;
             }
 			scope.init = function() {
 				if (GlobalContext.config.showUser === true) {
