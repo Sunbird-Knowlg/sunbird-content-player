@@ -235,7 +235,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                 console.log(err);
             })
         }
-        $scope.hideUserSwitchingModal();
+        EventBus.dispatch('event:closeUserSwitchingModal');
         replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent(userSwitchHappened);
     }
 
@@ -516,7 +516,7 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
 			}
 			scope.getTemplate = function() {
                 var pluginsObjs = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
-                return pluginsObjs.userSwitcherTemplatePath;
+                return pluginsObjs._userSwitcherTP;
             }
 			scope.init = function() {
 				if (GlobalContext.config.showUser === true) {
