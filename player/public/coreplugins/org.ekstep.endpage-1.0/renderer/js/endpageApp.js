@@ -29,14 +29,14 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
             console.warn("No metadata imageCredits,voiceCredites and soundCredits");
         }
         $scope.CreditPopup = true;
-        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId: "ContentApp-CreditsScreen", subtype: "ContentID"}); 
+        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId: "ContentApp-CreditsScreen", subtype: "ContentID"});
     }
     $scope.replay = function() {
         EkstepRendererAPI.hideEndPage();
         EventBus.dispatch('event:closeUserSwitchingModal');
         $rootScope.replayContent();
         var muteElement = document.getElementById("unmute_id");
-        if (!_.isNull(muteElement)) {muteElement.style.display = "none"; } 
+        if (!_.isNull(muteElement)) {muteElement.style.display = "none"; }
         AudioManager.unmute();
     }
     $scope.showFeedback = function(param) {
@@ -143,7 +143,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         $scope.setCredits('voiceCredits');
         window.addEventListener('native.keyboardshow', epKeyboardShowHandler, true);
         window.addEventListener('native.keyboardhide', epKeyboardHideHandler, true);
-        org.ekstep.contentrenderer.progressbar(false);
+        EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         $scope.setTotalTimeSpent();
         $scope.getTotalScore($rootScope.content.identifier);
         $scope.showFeedback(0);
@@ -315,7 +315,7 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
         }
         EkstepRendererAPI.addEventListener('renderer:init:relatedContent',function(){
                 console.info('Endpage init..')
-                $scope.init();  
+                $scope.init();
 
         })
     });

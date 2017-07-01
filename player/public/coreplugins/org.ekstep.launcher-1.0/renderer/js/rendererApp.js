@@ -23,8 +23,8 @@ canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateP
     $scope.renderContent = function() {
         if ($rootScope.content) {
             localStorageGC.setItem("content", $rootScope.content);
+            EkstepRendererAPI.dispatchEvent("renderer:splash:show");
             $rootScope.pageTitle = $rootScope.content.name;
-            org.ekstep.contentrenderer.progressbar(true);
             GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
             $scope.callStartTelemetry($rootScope.content, function() {
                 $scope.item = $rootScope.content;

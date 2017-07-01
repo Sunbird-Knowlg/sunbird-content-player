@@ -34,5 +34,11 @@ AppConfig = {
         id: 'org.ekstep.collection',
         ver: 1.0,
         type: 'plugin'
-    }]
-}    
+    }],
+    splash: {
+		text: "Powered by EkStep",
+		icon: "img/icons/icn_genie.png",
+		bgImage: "img/icons/background_1.png",
+		download_link: "http://www.ekstep.in"
+	}
+}
