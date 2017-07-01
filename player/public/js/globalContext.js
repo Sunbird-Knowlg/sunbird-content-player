@@ -20,8 +20,8 @@ GlobalContext = {
         });
     },
     _setGlobalContext: function(resolve, reject) {
-        GlobalContext.config.userSwitcherEnabled = AppConfig.USER_SWITCHER_ENABLED;
-        GlobalContext.config.showUser = AppConfig.SHOW_USER;
+        GlobalContext.config.userSwitcherEnabled = AppConfig.overlay.userSwitcherEnabled;
+        GlobalContext.config.showUser = AppConfig.overlay.showUser;
 
         new Promise(function(resolve, reject) {
             if(window.plugins && window.plugins.webintent) {
@@ -69,7 +69,7 @@ GlobalContext = {
                     }
                 });
             } else {
-                GlobalContext.config = {userSwitcherEnabled: AppConfig.USER_SWITCHER_ENABLED, showUser: AppConfig.SHOW_USER, origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping", appInfo: {code:"org.ekstep.quiz.app", mimeType: "application/vnd.android.package-archive", identifier:"org.ekstep.quiz.app"}};
+                GlobalContext.config = {userSwitcherEnabled: AppConfig.overlay.userSwitcherEnabled, showUser: AppConfig.overlay.showUser, origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping", appInfo: {code:"org.ekstep.quiz.app", mimeType: "application/vnd.android.package-archive", identifier:"org.ekstep.quiz.app"}};
                 resolve(GlobalContext.config);
             }
         })

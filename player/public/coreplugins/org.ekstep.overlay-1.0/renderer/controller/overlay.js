@@ -9,9 +9,9 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.state_disable = "disable";
     // $scope.showOverlayNext = true;
     // $scope.showOverlayPrevious = true;
-    $scope.showOverlaySubmit = false;
-    $scope.showOverlayGoodJob = false;
-    $scope.showOverlayTryAgain = false;
+    // $scope.showOverlaySubmit = false;
+    $scope.showOverlayGoodJob = true;
+    $scope.showOverlayTryAgain = true;
     $scope.overlayEvents = ["overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
     $scope.showOverlay = false;
     $scope.pluginInstance = undefined;
@@ -422,7 +422,7 @@ app.compileProvider.directive('assess', function($rootScope) {
             image: '=',
             show: '='
         },
-        template: '<a class="assess" ng-show="show" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()"> <!-- enabled --><img ng-src="{{image}}"/></a>',
+        template: '<a class="assess" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()">{{showOverlaySubmit}} <!-- enabled --><img ng-src="{{image}}"/></a>',
         link: function(scope, element) {
             scope.labelSubmit = $rootScope.languageSupport.submit;
         },
