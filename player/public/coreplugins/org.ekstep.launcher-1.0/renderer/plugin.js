@@ -32,11 +32,9 @@ Plugin.extend({
         var instance = this;
         org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
             instance.initTelemetry(content);
-            setTimeout(function() {
-                /*jQuery('.view-container').hide();*/
-                EkstepRendererAPI.dispatchEvent('renderer:collection:hide');
-                EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType, undefined, content);
-            }, 0);
+            console.log('LAUNCHER - content:load:' + content.mimeType)
+            EkstepRendererAPI.dispatchEvent('renderer:collection:hide');
+            EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType, undefined, content);
         });
     },
     initTelemetry:function(content){

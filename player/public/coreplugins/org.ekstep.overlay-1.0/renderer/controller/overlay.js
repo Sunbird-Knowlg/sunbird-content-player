@@ -17,6 +17,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.pluginInstance = undefined;
 
     $scope.init = function() {
+    	console.log("OVERLAY - controller loaded");
     	$scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
         if (GlobalContext.config.language_info) {
             var languageInfo = JSON.parse(GlobalContext.config.language_info);

@@ -30,6 +30,7 @@ Plugin.extend({
      * @memberof ecmlRenderer
      */
     start: function(evt, renderObj) {
+        console.log("ECMLRENDERE - content:load:application/vnd.ekstep.ecml-archive: start()");
         var instance = this;
         if (_.isUndefined(renderObj)) return;
         try {
@@ -136,6 +137,7 @@ Plugin.extend({
      * @memberof ecmlRenderer
      */
     load: function(dataObj) {
+        console.log("ECMLRENDERE - Load()");
         var instance = this,
             data = dataObj.body;
 
