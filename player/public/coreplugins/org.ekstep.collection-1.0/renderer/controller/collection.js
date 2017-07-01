@@ -33,7 +33,7 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
     }
 
     $scope.resetContentListCache = function() {
-        EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+        // EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         var collectionContentId = "org.ekstep.quiz.app";
         $rootScope.renderMessage("", 0);
         org.ekstep.service.content.getContent(collectionContentId)

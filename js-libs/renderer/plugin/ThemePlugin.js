@@ -141,7 +141,7 @@ var ThemePlugin = Plugin.extend({
         // jQuery("#progressBar").width(100);
         // jQuery('#loading').3();
 
-        // EkstepRendererAPI.dispatchEvent("renderer:splash:hide"); //Hide splash screen.
+        EkstepRendererAPI.dispatchEvent("renderer:splash:hide"); //Hide splash screen.
         EkstepRendererAPI.dispatchEvent("renderer:show:overlay");
     },
 

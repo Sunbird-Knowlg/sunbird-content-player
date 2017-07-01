@@ -19,58 +19,15 @@
     <!-- endinjector -->
 
     <style>
-        #progressArea {
-            position: relative;
-            top: 55%;
-            left: 22%;
-            width: 57%;
-            height: 5%;
-            border-radius: 90px;
-            background-color: #ddd;
-        }
-
-        #progressBar {
-            position: absolute;
-            width: 1%;
-            height: 100%;
-            border-radius: 90px;
-            background-color: #e67300;
-        }
-
-        #pageTitle {
-            /*position: absolute;*/
-            /*bottom: 20%;*/
-            margin-left: 15px;
-
-        }
-
         #gameArea {
             position: absolute;
             left: 50%;
             top: 50%;
         }
-
         #gameCanvas {
             width: 100%;
             height: 100%;
         }
-        .splashScreen {
-            width: 40vw;
-            left: 30vw;
-            bottom: 2vh;
-            text-align: center;
-            position: absolute;
-            font-family: lato-medium;
-
-
-            color: #494949;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            /*line-height: 1.8em;*/
-            -webkit-line-clamp: 2;
-            font-size: 2vw;
-        }
-
         .inputText {
             -moz-border-radius: 15px;
             border-radius: 15px;
@@ -82,31 +39,11 @@
             z-index: 1000;
             text-align: center;
         }
-        #pluginTemplate{
-            margin: auto;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .splash-icon {
-            width: 35px;
-            height: 35px;
-            vertical-align: middle;
-            font-size: 5vh;
-        }
     </style>
 </head>
 
 <body ng-controller="BaseCtrl">
-    <div id="loading" class="gc-loader-area">
-        <img src="assets/icons/background_1.png" class="gc-loader-img">
-        <div id="progressArea">
-          <div id="progressBar"></div>
-          <p id="progressCount" class="font-lato gc-loader-prog"></p>
-        </div>
-        <p class="icon-font cover-page-title" id="pageTitle" ng-bind = "pageTitle">Content is loading ...</p>
-    </div>
+    <div id="loading" class="gc-loader-area"></div>
 
     <div id="org.ekstep.collection" ng-include="templates.collection"></div>
     <div  id="org.ekstep.launcher"  ng-include="templates.playerContent"></div>
