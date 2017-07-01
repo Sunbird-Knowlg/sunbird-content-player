@@ -38,6 +38,10 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
             $scope.showOverlay = true;
             $scope.safeApply();
         });
+        EkstepRendererAPI.addEventListener("renderer:overlay:hide", function(event) {
+            $scope.showOverlay = false;
+            $scope.safeApply();
+        });
     }
 
 	$scope.navigate = function(navType) {

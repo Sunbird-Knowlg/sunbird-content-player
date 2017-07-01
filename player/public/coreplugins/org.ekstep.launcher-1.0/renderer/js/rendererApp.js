@@ -64,6 +64,7 @@ canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateP
     });
     EkstepRendererAPI.addEventListener('renderer:player:hide',function(){
           $scope.showPlayer = false;
+          $scope.safeApply();
     });
     $scope.init();
 });
