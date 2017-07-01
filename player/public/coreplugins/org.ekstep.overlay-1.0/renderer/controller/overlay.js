@@ -235,8 +235,12 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                 console.log(err);
             })
         }
-        EventBus.dispatch('event:closeUserSwitchingModal');
+        $scope.closeUserSwitchingModal();
         replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent(userSwitchHappened);
+    }
+
+    $scope.closeUserSwitchingModal = function() {
+        EkstepRendererAPI.dispatchEvent('event:closeUserSwitchingModal');
     }
 
     $scope.initializeCtrl = function() {
