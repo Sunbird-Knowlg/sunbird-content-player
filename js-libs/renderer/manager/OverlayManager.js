@@ -64,11 +64,9 @@ OverlayManager = {
                 val = Renderer.theme._currentScene.getParam(eventName);
             }
             if (_.isUndefined(val)) {
-                var contentConfigVal = this._contentConfig[eventName];
-                val = _.isUndefined(contentConfigVal) ? "on" : contentConfigVal;
+                if (!_.isUndefined(this._contentConfig[eventName])) val = this._contentConfig[eventName];
             }
-
-            this._stageConfig[eventName] = val;
+            if (!_.isUndefined(val)) this._stageConfig[eventName] = val;
         }
 
         this.setStageData();
@@ -87,6 +85,7 @@ OverlayManager = {
         var eventName = this._constants.overlayPrevious;
         var val = this._stageConfig[eventName];
         var navigateToStage = this.getNavigateTo('previous');
+        // ToDo: Have to remove this if condition when ecml nav is supported by plugins;
         if (val == "on") {
             if (_.isUndefined(navigateToStage)) {
                 val = "disable";
@@ -104,7 +103,7 @@ OverlayManager = {
         var eventName = this._constants.overlaySubmit;
         var val = this._stageConfig[eventName];
         if(!_.isUndefined(Renderer.theme) && _.isUndefined(Renderer.theme.getParam(eventName)) && _.isUndefined(Renderer.theme._currentScene.getParam(eventName))) {
-            val = AppConfig.OVERLAY_SUBMIT;
+            val = AppConfig.overlay.overlaySubmit;
         }
         if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene) && Renderer.theme._currentScene.isItemScene()) {
             if (val == "on") {
