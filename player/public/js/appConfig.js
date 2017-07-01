@@ -37,8 +37,8 @@ AppConfig = {
     }],
     splash: {
 		text: "Powered by EkStep",
-		icon: "img/icons/icn_genie.png",
-		bgImage: "img/icons/background_1.png",
+		icon: "assets/icons/icn_genie.png",
+		bgImage: "assets/icons/background_1.png",
 		download_link: "http://www.ekstep.in"
 	}
 }

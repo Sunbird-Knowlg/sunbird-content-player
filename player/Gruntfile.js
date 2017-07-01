@@ -58,6 +58,7 @@ module.exports = function(grunt) {
                     'public/js/appConfig.js',
                     'public/js/globalContext.js',
                     'public/js/appMessages.js',
+                    'public/js/splashScreen.js',
                     'public/js/main.js',
                     'public/js/app.js',
                     'public/js/basePlugin.js',
@@ -529,7 +530,7 @@ module.exports = function(grunt) {
                 files: [{
                     src: ['docs/**']
                 }]
-            }, 
+            },
             preview:{
                 options: {
                     archive: 'preview.zip'
@@ -660,7 +661,7 @@ module.exports = function(grunt) {
     grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetry', 'concat:script', 'clean:deletefiles', 'injector:prview', 'replace:buildNumber']);
     grunt.registerTask('build-preview', ['preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
 
-    //Build AAR 
+    //Build AAR
     grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);
     grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('build-app', ['init-setup', 'build-aarshared-xwalk']);
