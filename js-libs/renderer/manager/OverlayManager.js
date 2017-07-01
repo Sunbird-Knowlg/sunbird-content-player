@@ -342,9 +342,9 @@ OverlayManager = {
         if (GlobalContext.currentContentId && version) {
             startTelemetry(GlobalContext.currentContentId, version);
         }
-        if (data.target && data.target.menuReplay || _.isUndefined(data.target)) {
-            EkstepRendererAPI.removeHtmlElements();
-            Renderer.theme.reRender();
-        }
+        EkstepRendererAPI.removeHtmlElements();
+        Renderer.theme.reRender();
+        // if (data.target && data.target.menuReplay || _.isUndefined(data.target)) {
+        // }
     }
 }

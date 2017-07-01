@@ -115,6 +115,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         
         $rootScope.us_replayContent = function() {
             $scope.endContent('gc_userswitch_replayContent');
+            EkstepRendererAPI.dispatchEvent('renderer:player:init')
             var stageId =
                 TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
 
