@@ -33,7 +33,7 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
     }
 
     $scope.resetContentListCache = function() {
-        org.ekstep.contentrenderer.progressbar(false);
+        // EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         var collectionContentId = "org.ekstep.quiz.app";
         $rootScope.renderMessage("", 0);
         org.ekstep.service.content.getContent(collectionContentId)
@@ -76,6 +76,8 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
                 return org.ekstep.service.content.getContentList(filter, childrenIds);
             })
             .then(function(result) {
+                EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+
                 $rootScope.$apply(function() {
                     $rootScope.stories = result;
                 });

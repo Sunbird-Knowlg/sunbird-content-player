@@ -17,9 +17,7 @@ MCQEvaluator = {
                 });
                 if (answersCount > 1) {
                     //if multiple ans is present then it is MMCQ
-
                     isMCQ = false;
-
                 } else if (answersCount == 1) {
                     //if answer count is equalto one then it is MCQ
                     isMCQ = true;

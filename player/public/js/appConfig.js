@@ -23,7 +23,7 @@ AppConfig = {
         type: 'plugin'
     }],
     DEFAULT_PLUGINS: [
-        {id: 'org.ekstep.launcher',ver: 1.0,type: 'plugin'}, 
+        {id: 'org.ekstep.launcher',ver: 1.0,type: 'plugin'},
         {id: 'org.ekstep.collection',ver: 1.0,type: 'plugin'}
     ],
     overlay: {
@@ -42,5 +42,11 @@ AppConfig = {
             showTeachersInstruction: true,
             showHome: true
         },
-    }
+    },
+    splash: {
+		text: "Powered by EkStep",
+		icon: "assets/icons/icn_genie.png",
+		bgImage: "assets/icons/background_1.png",
+		download_link: "http://www.ekstep.in"
+	}
 }

@@ -87,7 +87,7 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
 
 org.ekstep.contentrenderer.initPlugins = function(gamePath) {
     var pluginsPath = undefined;
-    // @ plugin:error event is dispatching from the plugin-framework 
+    // @ plugin:error event is dispatching from the plugin-framework
     // If any of the plugin is failed to load OR invoke then plugin:error event will trigger
     if (!EkstepRendererAPI.hasEventListener('plugin:error')) {
         EkstepRendererAPI.addEventListener('plugin:error', org.ekstep.contentrenderer.pluginError, this);
@@ -135,27 +135,6 @@ org.ekstep.contentrenderer.registerPlguin = function(id, plugin) {
     org.ekstep.pluginframework.pluginManager._registerPlugin(id, undefined, plugin);
     if (typeof createjs !== "undefined")
         createjs.EventDispatcher.initialize(plugin.prototype);
-};
-
-org.ekstep.contentrenderer.progressbar = function(switcher) {
-    if (switcher) {
-        jQuery("#progressBar").width(0);
-        jQuery('#loading').show();
-        var elem = document.getElementById("progressBar");
-        var width = 40;
-        var id = setInterval(function() {
-            if (width >= 100) {
-                clearInterval(id);
-            } else {
-                width++;
-                if (elem && elem.style)
-                    elem.style.width = width + '%';
-                jQuery('#progressCount').text(width + '%');
-            }
-        }, 0.7);
-    } else {
-        jQuery('#loading').hide();
-    }
 };
 
 org.ekstep.contentrenderer.getContentMetadata = function(id, cb) {

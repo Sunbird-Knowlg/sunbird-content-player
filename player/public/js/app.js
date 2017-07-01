@@ -29,9 +29,17 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             }
         };
         $rootScope.addIonicEvents = function() {
-            $ionicPlatform.onHardwareBackButton(function() {
-                backbuttonPressed($rootScope.pageId);
-            });
+            // To override back button behaviour
+            $ionicPlatform.registerBackButtonAction(function() {
+                //TODO: Add Telemetry interact for on and Cancle
+                if (confirm("Press 'OK' to go back to Genie.")) {
+                    backbuttonPressed(EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                } else {
+                    // Cancle button action comes here
+                    //   alert ("Do nothing !!");
+                    //   event.preventDefault();
+               }
+            }, 100);
             $ionicPlatform.on("pause", function() {
                 Renderer.pause();
             });
@@ -78,7 +86,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
     }).config(function($stateProvider, $urlRouterProvider, $controllerProvider, $compileProvider) {
         app.controllerProvider = $controllerProvider;
         app.compileProvider = $compileProvider;
-      
+
     }).controller('BaseCtrl', function($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, appConstants) {
         $rootScope.replayContent = function() {
             $scope.endContent('gc_replay');
@@ -89,7 +97,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 org.ekstep.contentrenderer.getContentMetadata($stateParams.itemId);
             }
             $rootScope.pageTitle = $rootScope.content.name;
-            org.ekstep.contentrenderer.progressbar(true);
             if (!_.isUndefined(Renderer) && Renderer.theme) {
                 TelemetryService.interact("TOUCH", eleId, "TOUCH", {
                     stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
@@ -99,14 +106,13 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
             }
             var menuReplay = $state.current.name == appConstants.statePlayContent;
-            org.ekstep.contentrenderer.progressbar(false);
             // 1) For HTML content onclick of replay EventListeners will be not available hence calling Telemetryservice end .
             // 2) OE_START for the HTML/ECML content will be takne care by the contentctrl rendere method always.
             EventBus.hasEventListener('actionReplay') ? EventBus.dispatch('actionReplay', {
                 'menuReplay': menuReplay
             }) : TelemetryService.end();
         }
-
+        
         $rootScope.us_replayContent = function() {
             $scope.endContent('gc_userswitch_replayContent');
             var stageId =
@@ -145,10 +151,10 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 if(_.isArray(templatePath)){
                     _.each(templatePath, function(template){
                         console.log("template", template);
-                        loadFiles.push({ type: 'html', path: template });                        
+                        loadFiles.push({ type: 'html', path: template });
                     });
                 } else {
-                    loadFiles.push({ type: 'html', path: templatePath }); 
+                    loadFiles.push({ type: 'html', path: templatePath });
                 }
             }
             if(controllerPath){

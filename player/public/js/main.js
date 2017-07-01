@@ -262,6 +262,7 @@ function addWindowUnloadEvent() {
         }
     }
 }
+
 function compareObject(obj1, obj2) {
     //Loop through properties in object 1
     for (var p in obj1) {

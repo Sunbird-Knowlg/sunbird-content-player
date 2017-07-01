@@ -1,9 +1,8 @@
 var canvasApp = angular.module("genie-canvas");
 canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams) {
     $rootScope.pageId = "ContentApp-Renderer";
-    $scope.showPlayer = true;
+    $scope.showPlayer = false;
     $scope.init = function() {
-         $scope.showPlayer = true;
         if (_.isUndefined($rootScope.content)) {
             if (!_.isUndefined(content.metadata)) {
                 $rootScope.content = content.metadata;
@@ -24,8 +23,8 @@ canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateP
     $scope.renderContent = function() {
         if ($rootScope.content) {
             localStorageGC.setItem("content", $rootScope.content);
+            EkstepRendererAPI.dispatchEvent("renderer:splash:show");
             $rootScope.pageTitle = $rootScope.content.name;
-            org.ekstep.contentrenderer.progressbar(true);
             GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
             $scope.callStartTelemetry($rootScope.content, function() {
                 $scope.item = $rootScope.content;
@@ -60,11 +59,10 @@ canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateP
         }
     });
     EkstepRendererAPI.addEventListener("renderer:player:init", function() {
+        $scope.showPlayer = true;
         $scope.init();
     });
     EkstepRendererAPI.addEventListener('renderer:player:hide',function(){
           $scope.showPlayer = false;
-          $scope.safeApply();
     });
-    $scope.init();
 });
