@@ -336,7 +336,7 @@ app.compileProvider.directive('mute', function($rootScope) {
 app.compileProvider.directive('reloadStage', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<a href="javascript:void(0)" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></a>'
+        template: '<span class="reload-stage" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></span>'
     }
 });
 

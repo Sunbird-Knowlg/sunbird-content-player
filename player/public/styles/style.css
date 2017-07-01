@@ -1746,3 +1746,8 @@ body {
 body {
     background-color: #fff;
 }
+
+.reload-stage {
+    position: absolute;
+    bottom: 0;
+}
