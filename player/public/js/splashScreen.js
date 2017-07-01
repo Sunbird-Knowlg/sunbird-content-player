@@ -27,7 +27,7 @@ var splashScreen = {
     },
 
     createHtml: function() {
-        var html = '<img src=' + splashScreen.config.bgImage + ' class="gc-loader-img"/><a href=' + splashScreen.config.download_link + '><div class="splashScreen"><img src=' + splashScreen.config.icon + ' class="splash-icon "/><span id="pageTitle">' + splashScreen.config.text + '</span></div></a>';
+        var html = '<img src=' + splashScreen.config.bgImage + ' class="gc-loader-img"/><a href=' + splashScreen.config.download_link + 'target="_parent"><div class="splashScreen"><img src=' + splashScreen.config.icon + ' class="splash-icon "/><span id="pageTitle">' + splashScreen.config.text + '</span></div></a>';
         return html;
     },
 
