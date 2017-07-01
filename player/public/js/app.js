@@ -82,7 +82,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
     }).controller('BaseCtrl', function($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, appConstants) {
         $rootScope.replayContent = function() {
             $scope.endContent('gc_replay');
-            $scope.startContent();
+            EkstepRendererAPI.dispatchEvent('renderer:player:init');
         }
         $scope.endContent = function(eleId) {
             if (!$rootScope.content) {
