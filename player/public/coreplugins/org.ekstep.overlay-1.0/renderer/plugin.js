@@ -6,8 +6,8 @@
  */
 Plugin.extend({
     _templatePath: undefined,
-    userSwitcherTemplatePath: undefined,
-    menuTemplatePath: undefined,
+    _userSwitcherTP: undefined,
+    _menuTP: undefined,
     _type: "overlay",
     _ngScopeVar: "overlay",
     _config:{},
@@ -17,9 +17,13 @@ Plugin.extend({
         instance._config = _.extend(instance._config, AppConfig.overlay);
         this._templatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/overlay.html");
         this.controllerPath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/controller/overlay.js");
-        this.userSwitcherTemplatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/user-switch-popup.html");
-        this.menuTemplatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/menu.html");
         org.ekstep.service.controller.loadNgModules(this._templatePath, this.controllerPath);
+
+        //Loading other related temaplated of overlay 
+        this._userSwitcherTP = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/user-switch-popup.html");
+        this._menuTP = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/menu.html");
+        org.ekstep.service.controller.loadNgModules([this._menuTP, this._userSwitcherTP]);
+        
         EkstepRendererAPI.addEventListener("render:overlay:applyStyles", instance.updateRendererStyles, instance);
     },
     updateRendererStyles: function(event, instance){

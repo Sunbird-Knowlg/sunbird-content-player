@@ -115,7 +115,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             EventBus.dispatch('event:closeUserSwitchingModal')
             EkstepRendererAPI.hideEndPage();
         }
-        
+
         $rootScope.us_continueContent = function(userSwitchHappened) {
             TelemetryService.interact("TOUCH", 'gc_userswitch_continue', "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
@@ -140,13 +140,24 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
 
         $scope.templates = [];
         function loadNgModules(templatePath, controllerPath, callback) {
-            $ocLazyLoad.load([
-                { type: 'html', path: templatePath },
-                { type: 'js', path: controllerPath }
-            ]).then(function(){
-                // injectTemplates(templatePath);
-                //if(callback) callback(injectTemplates);
-                injectTemplates(templatePath);
+            var loadFiles = [];
+            if(templatePath){
+                if(_.isArray(templatePath)){
+                    _.each(templatePath, function(template){
+                        console.log("template", template);
+                        loadFiles.push({ type: 'html', path: template });                        
+                    });
+                } else {
+                    loadFiles.push({ type: 'html', path: templatePath }); 
+                }
+            }
+            if(controllerPath){
+                loadFiles.push({ type: 'js', path: controllerPath });
+            }
+            $ocLazyLoad.load(loadFiles).then(function(){
+                if(!_.isArray(templatePath)){
+                    injectTemplates(templatePath);
+                }
             });
         };
 
