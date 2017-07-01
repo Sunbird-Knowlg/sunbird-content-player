@@ -299,4 +299,15 @@ function getPreviewMode() {
         mode = EkstepRendererAPI.getPreviewData().context.mode;
     }
     return mode;
-} 
+}
+
+function contentProgress() {
+    if (!_.isUndefined(Renderer)) {
+        var stageLenth = Renderer.theme._data.stage.length;
+        var currentIndex = _.findIndex(Renderer.theme._data.stage, {
+            id: Renderer.theme._currentScene.id
+        });
+        currentIndex = currentIndex + 1;
+        return currentIndex / stageLenth;
+    }
+}
