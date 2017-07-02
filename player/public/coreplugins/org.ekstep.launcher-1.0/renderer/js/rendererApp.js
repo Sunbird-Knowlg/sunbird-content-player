@@ -75,6 +75,11 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
         $scope.safeApply();
     });
 
+    EkstepRendererAPI.addEventListener('renderer:content:replay', function(){
+        $scope.showPlayer = true;
+        $scope.safeApply();
+    });
+
     /* TODO: Temporary solution so load content. init event is dispatched before loading/compiling this controller */
     setTimeout(function(){
         if($scope.isInitialized){
