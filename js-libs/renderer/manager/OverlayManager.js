@@ -103,7 +103,7 @@ OverlayManager = {
         var eventName = this._constants.overlaySubmit;
         var val = this._stageConfig[eventName];
         if(!_.isUndefined(Renderer.theme) && _.isUndefined(Renderer.theme.getParam(eventName)) && _.isUndefined(Renderer.theme._currentScene.getParam(eventName))) {
-            val = AppConfig.overlay.overlaySubmit;
+            val = AppConfig.overlay.showSubmit ? "on" : "off";
         }
         if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene) && Renderer.theme._currentScene.isItemScene()) {
             if (val == "on") {
@@ -120,10 +120,10 @@ OverlayManager = {
     showFeeback: function(showOverlayGoodJob) {
         var returnVal = true;
         if (showOverlayGoodJob) {
-            returnVal = this._stageConfig.overlayGoodJob == 'on' ? true : false;
+            returnVal = this._stageConfig.overlayGoodJob == 'on' ? true : AppConfig.overlay.showGoodJob;
             this.showGoodJobFb(returnVal);
         } else {
-            returnVal = this._stageConfig.overlayTryAgain == 'on' ? true : false;
+            returnVal = this._stageConfig.overlayTryAgain == 'on' ? true : AppConfig.overlay.showTryAgain;
             this.showTryAgainFb(returnVal);
         }
 
@@ -342,9 +342,9 @@ OverlayManager = {
         if (GlobalContext.currentContentId && version) {
             startTelemetry(GlobalContext.currentContentId, version);
         }
-        if (data.target && data.target.menuReplay || _.isUndefined(data.target)) {
-            EkstepRendererAPI.removeHtmlElements();
-            Renderer.theme.reRender();
-        }
+        EkstepRendererAPI.removeHtmlElements();
+        Renderer.theme.reRender();
+        // if (data.target && data.target.menuReplay || _.isUndefined(data.target)) {
+        // }
     }
 }

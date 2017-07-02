@@ -39,7 +39,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         var muteElement = document.getElementById("unmute_id");
         if (!_.isNull(muteElement)) {muteElement.style.display = "none"; }
         AudioManager.unmute();
-        TelemetryService.end(undefined,progress);
+        TelemetryService.end();
     }
     $scope.showFeedback = function(param) {
         $scope.userRating = param;
