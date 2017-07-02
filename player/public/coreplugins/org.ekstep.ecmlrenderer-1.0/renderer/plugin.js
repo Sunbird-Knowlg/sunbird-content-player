@@ -24,6 +24,7 @@ Plugin.extend({
         console.info('ECML Renderer initialize');
         // EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
+        EkstepRendererAPI.addEventListener('renderer:content:replay', this.start, this);
         this.start();
     },
     /**

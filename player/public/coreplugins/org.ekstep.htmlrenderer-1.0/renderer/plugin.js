@@ -1,9 +1,12 @@
 Plugin.extend({
     initialize: function() {
         console.info('HTML Renderer intialize is done');
-        EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.launch, this);
+        //EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.launch, this);
+        EkstepRendererAPI.addEventListener('renderer:content:replay', this.launch, this);
+        this.launch();
     },
     launch: function(evt, data) {
+        data = content;
         console.info('HTML plugin init')
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         var isMobile = window.cordova ? true : false;

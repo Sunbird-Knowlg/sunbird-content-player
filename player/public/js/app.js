@@ -90,7 +90,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
     }).controller('BaseCtrl', function($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, appConstants) {
         $rootScope.replayContent = function() {
             $scope.endContent('gc_replay');
-            EkstepRendererAPI.dispatchEvent('renderer:player:init');
+            EkstepRendererAPI.dispatchEvent('renderer:content:replay');
         }
         $scope.endContent = function(eleId) {
             if (!$rootScope.content) {
@@ -115,7 +115,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         
         $rootScope.us_replayContent = function() {
             $scope.endContent('gc_userswitch_replayContent');
-            EkstepRendererAPI.dispatchEvent('renderer:player:init')
+            EkstepRendererAPI.dispatchEvent('renderer:content:replay');
             var stageId =
                 TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
 
