@@ -1,8 +1,10 @@
-var canvasApp = angular.module("genie-canvas");
-canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams) {
+'use strict';
+
+app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $state, $stateParams) {
     $rootScope.pageId = "ContentApp-Renderer";
     $scope.showPlayer = false;
     $scope.isInitialized = false;
+
     $scope.init = function() {
         console.log("LAUNCHER - controller init");
         if (_.isUndefined($rootScope.content)) {
@@ -16,6 +18,7 @@ canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateP
             $scope.renderContent();
         }
     };
+    
     $scope.callStartTelemetry = function(content, cb) {
         var identifier = (content && content.identifier) ? content.identifier : null;
         var pkgVersion = !_.isUndefined(content.pkgVersion) ? content.pkgVersion.toString() : null;
@@ -63,11 +66,11 @@ canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateP
     EkstepRendererAPI.addEventListener("renderer:player:init", function() {
         $scope.isInitialized = true;
         $scope.showPlayer = true;
-        $scope.init();
         $scope.safeApply();
+        $scope.init();
     });
 
-    EkstepRendererAPI.addEventListener('renderer:player:hide',function(){
+    EkstepRendererAPI.addEventListener('renderer:player:hide', function(){
         $scope.showPlayer = false;
         $scope.safeApply();
     });
