@@ -22,16 +22,18 @@ Plugin.extend({
      */
     initialize: function() {
         console.info('ECML Renderer initialize');
-        EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
+        // EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
+        this.start();
     },
     /**
      * 
      * @memberof ecmlRenderer
      */
     start: function(evt, renderObj) {
-        console.log("ECMLRENDERE - content:load:application/vnd.ekstep.ecml-archive: start()");
         var instance = this;
+        renderObj = content;
+        console.log("ECMLRENDERE - content:load:application/vnd.ekstep.ecml-archive: start()", content);
         if (_.isUndefined(renderObj)) return;
         try {
             if (this.running) {

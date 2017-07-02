@@ -5,7 +5,7 @@
  */
 Plugin.extend({
     templatePath : undefined,
-    controllerPath:undefined,
+    controllerPath: undefined,
     _ngScopeVar: "playerContent",
     _injectTemplateFn: undefined,
     initialize: function() {
@@ -28,17 +28,18 @@ Plugin.extend({
             isCoreplugin = false;
         }
     },
-    loadPlugin: function(plugin, content) {
+    loadPlugin: function(plugin, contentData) {
         var instance = this;
+        content = contentData;
         org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
             instance.initTelemetry(content);
-            console.log('LAUNCHER - content:load:' + content.mimeType)
+            console.log('LAUNCHER - content:load:' + content)
             EkstepRendererAPI.dispatchEvent('renderer:collection:hide');
             EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType, undefined, content);
         });
     },
-    initTelemetry:function(content){
-        EkstepRendererAPI.dispatchEvent('renderer:telemetry:start',undefined,content);
+    initTelemetry:function(content) {
+        EkstepRendererAPI.dispatchEvent('renderer:telemetry:start', undefined, content);
     }   
 
 })
