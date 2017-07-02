@@ -2,7 +2,9 @@ var canvasApp = angular.module("genie-canvas");
 canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateParams) {
     $rootScope.pageId = "ContentApp-Renderer";
     $scope.showPlayer = false;
+    $scope.isInitialized = false;
     $scope.init = function() {
+        console.log("LAUNCHER - controller init");
         if (_.isUndefined($rootScope.content)) {
             if (!_.isUndefined(content.metadata)) {
                 $rootScope.content = content.metadata;
@@ -27,11 +29,10 @@ canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateP
             $rootScope.pageTitle = $rootScope.content.name;
             GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
             $scope.callStartTelemetry($rootScope.content, function() {
+                console.log("LAUNCHER - callStartTelemetry callback success");
                 $scope.item = $rootScope.content;
-                $scope.callStartTelemetry($rootScope.content, function() {
-                    $rootScope.content.body = isbrowserpreview ? content.body : undefined;
-                    EkstepRendererAPI.dispatchEvent('renderer:launcher:load', undefined, $rootScope.content);
-                });
+                $rootScope.content.body = isbrowserpreview ? content.body : undefined;
+                EkstepRendererAPI.dispatchEvent('renderer:launcher:load', undefined, $rootScope.content);
             });
         } else {
             alert('Name or Launch URL not found.');
@@ -60,10 +61,23 @@ canvasApp.controller('ContentCtrl', function($scope, $rootScope, $state, $stateP
     });
     
     EkstepRendererAPI.addEventListener("renderer:player:init", function() {
+        $scope.isInitialized = true;
         $scope.showPlayer = true;
         $scope.init();
+        $scope.safeApply();
     });
+
     EkstepRendererAPI.addEventListener('renderer:player:hide',function(){
-          $scope.showPlayer = false;
+        $scope.showPlayer = false;
+        $scope.safeApply();
     });
+
+    /* TODO: Temporary solution so load content. init event is dispatched before loading/compiling this controller */
+    setTimeout(function(){
+        if($scope.isInitialized){
+            $scope.isInitialized = false;
+        } else {
+            $scope.init();            
+        }
+    }, 2000);
 });
