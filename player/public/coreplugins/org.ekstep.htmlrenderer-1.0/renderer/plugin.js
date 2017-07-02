@@ -14,20 +14,21 @@ Plugin.extend({
         if (isbrowserpreview) {
             path += "&flavor=" + "t=" + getTime();
         }
+        jQuery('#ekstep_htmlIframe').remove()
         var iframe = document.createElement('iframe');
         iframe.src = path;
-        iframe.id = 'htmlIframe'
+        iframe.id = 'ekstep_htmlIframe'
         this.addIframe(iframe);
     },
     addIframe: function(iframe) {
-        jQuery('#htmlIframe').insertBefore("#gameArea");
+        jQuery('#ekstep_htmlIframe').insertBefore("#gameArea");
         var gameArea = document.getElementById('gameArea');
         gameArea.insertBefore(iframe, gameArea.childNodes[0]);
         this.setStyle();
     },
     setStyle: function() {
         jQuery('#gameArea') .css({left: '0px', top: '0px', width: "100%", height: "100%"});
-        jQuery('#htmlIframe') .css({position: 'absolute', display: 'block',width: '100%', height: '100%'});
+        jQuery('#ekstep_htmlIframe') .css({position: 'absolute', display: 'block',width: '100%', height: '100%'});
         AppConfig.ENABLE_OVERLAY ? jQuery('#overlay').css({display: 'block'}) : jQuery('#overlay').css({display: 'none'})
     },
     getAsseturl: function(content) {
