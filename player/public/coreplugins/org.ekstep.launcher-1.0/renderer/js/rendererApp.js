@@ -18,7 +18,7 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
             $scope.renderContent();
         }
     };
-    
+
     $scope.callStartTelemetry = function(content, cb) {
         var identifier = (content && content.identifier) ? content.identifier : null;
         var pkgVersion = !_.isUndefined(content.pkgVersion) ? content.pkgVersion.toString() : null;
@@ -80,6 +80,8 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
         if($scope.isInitialized){
             $scope.isInitialized = false;
         } else {
+            $scope.showPlayer = true;
+            $scope.safeApply();
             $scope.init();            
         }
     }, 2000);
