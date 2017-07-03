@@ -1,6 +1,7 @@
 'use strict';
 
 app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, $state) {
+    $scope.imageBasePath = AppConfig.assetbase;
     $rootScope.pageId = 'ContentApp-Collection';
     $scope.version = GlobalContext.game.ver;
     $rootScope.stories = [];

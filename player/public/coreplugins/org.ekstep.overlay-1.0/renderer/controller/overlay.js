@@ -15,7 +15,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.overlayEvents = ["overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
     $scope.showOverlay = false;
     $scope.pluginInstance = undefined;
-
+    $scope.imageBasePath = AppConfig.assetbase;
     $scope.init = function() {
     	console.log("OVERLAY - controller loaded");
     	$scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
@@ -314,8 +314,7 @@ app.compileProvider.directive('mute', function($rootScope) {
         template: '<div ng-click="toggleMute()"><img src="{{muteImg}}"/><span>Sound {{languageSupport.mute}} </span></div>',
         link: function(scope, url) {
             var muteElement = document.getElementById("unmute_id");
-            scope.muteImg = $rootScope.imageBasePath + "audio_icon.png";
-            // scope muteImg = $rootScope.imageBasePath + icn_replay.png;
+            scope.muteImg = scope.imageBasePath + "audio_icon.png";
             if (!_.isNull(muteElement)) {
                 muteElement.style.display = "none";
             }
@@ -323,11 +322,11 @@ app.compileProvider.directive('mute', function($rootScope) {
             scope.toggleMute = function() {
                 if (AudioManager.muted) {
                     AudioManager.unmute();
-                    scope.muteImg = $rootScope.imageBasePath + "audio_icon.png";
+                    scope.muteImg = scope.imageBasePath + "audio_icon.png";
                     $rootScope.languageSupport.mute = "on";
                 } else {
                     AudioManager.mute();
-                    scope.muteImg = $rootScope.imageBasePath + "audio_mute_icon.png";
+                    scope.muteImg = scope.imageBasePath + "audio_mute_icon.png";
                     $rootScope.languageSupport.mute = "off";
                 }
                 TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute", "TOUCH", {
@@ -436,12 +435,12 @@ app.compileProvider.directive('assess', function($rootScope) {
                     $timeout(function() {
                         // This timeout is required to apply the changes(because it is calling by JS)
                         $scope.assessStyle = 'assess-enable';
-                        $scope.image = $rootScope.imageBasePath + "submit_enable.png";
+                        $scope.image = $scope.imageBasePath + "submit_enable.png";
                     }, 100);
                 } else {
                     //Disable state
                     $scope.assessStyle = 'assess-disable';
-                    $scope.image = $rootScope.imageBasePath + "submit_disable.png";
+                    $scope.image = $scope.imageBasePath + "submit_disable.png";
                 }
             });
 

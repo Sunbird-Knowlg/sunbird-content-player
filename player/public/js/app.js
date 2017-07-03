@@ -6,7 +6,6 @@
 var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
     .constant("appConstants", {"contentId": "contentId", "stateContentList": "contentList", "stateShowContent": "showContent", "statePlayContent": "playContent", "stateShowContentEnd": "showContentEnd"})
     .run(function($rootScope, $ionicPlatform, $location, $timeout, $state, $stateParams, appConstants) {
-        $rootScope.imageBasePath = "assets/icons/";
         $rootScope.enableEval = false;
         $rootScope.userSwitcherEnabled = undefined;
         $rootScope.showUser = undefined;
@@ -14,7 +13,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         $rootScope.users = [];
         // serverPath and localPreview is a global variable defined in index.html file inside a story
         if ("undefined" != typeof localPreview && "local" == localPreview)
-            $rootScope.imageBasePath = serverPath + $rootScope.imageBasePath;
+            AppConfig.assetbase = serverPath + AppConfig.assetbase;
         $rootScope.languageSupport = AppLables;
         $rootScope.safeApply = function(fn) {
             if (this.$root) {
