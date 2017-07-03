@@ -6,7 +6,7 @@
 
 Plugin.extend({
     initialize: function() {
-        EkstepRendererAPI.addEventListener('repo:intialize', this.initializeRepo, this);
+        EkstepRendererAPI.addEventListener('renderer:repo:create', this.initializeRepo, this);
     },
     initializeRepo:function(){
         var instance = this;

@@ -25,8 +25,13 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function() {
     org.ekstep.contentrenderer.initPlugins('');
     org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
         console.info('Launcher is Ready!!!');
+        if (EkstepRendererAPI.getPreviewData().config.repos && EkstepRendererAPI.getPreviewData().config.plugins) {
+            EkstepRendererAPI.dispatchEvent("renderer:repo:create");
+            org.ekstep.contentrenderer.loadPlugins(EkstepRendererAPI.getPreviewData().config.plugins, [], function() {
+                console.info('Preview custom Plugins are loaded..');
+            })
+        }
         isCoreplugin = false;
-        EkstepRendererAPI.getPreviewData().config.repos && EkstepRendererAPI.getPreviewData().config.plugins && EkstepRendererAPI.dispatchEvent("repo:intialize");
     });
 };
 
@@ -34,7 +39,7 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
     console.info('Game is starting..')
     if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
         EkstepRendererAPI.dispatchEvent('renderer:player:init')
-    }else{
+    } else {
         !isbrowserpreview ? EkstepRendererAPI.dispatchEvent('renderer:collection:show') : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
     }
 };
@@ -167,7 +172,7 @@ org.ekstep.contentrenderer.setContentMetadata = function(contentData, cb) {
     if ("undefined" == typeof cordova) {
         org.ekstep.contentrenderer.getContentBody(content.metadata.identifier);
     }
-    if(cb) cb();
+    if (cb) cb();
 };
 
 org.ekstep.contentrenderer.getContentBody = function(id) {
