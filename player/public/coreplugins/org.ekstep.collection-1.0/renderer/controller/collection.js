@@ -4,39 +4,10 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
     $scope.imageBasePath = AppConfig.assetbase;
     $rootScope.pageId = 'ContentApp-Collection';
     $scope.version = GlobalContext.game.ver;
-    $rootScope.stories = [];
-    $rootScope.showMessage = false;
-
-    $rootScope.$on('show-message', function(event, data) {
-        if (data.message && data.message != '') {
-            $rootScope.$apply(function() {
-                $rootScope.showMessage = true;
-                $rootScope.message = data.message;
-            });
-        }
-        if (data.timeout) {
-            setTimeout(function() {
-                $rootScope.$apply(function() {
-                    $rootScope.showMessage = false;
-                });
-                if (data.callback) {
-                    data.callback();
-                }
-            }, data.timeout);
-        }
-    });
-
-    $rootScope.renderMessage = function(message, timeout, reload) {
-        $rootScope.$broadcast('show-message', {
-            "message": message,
-            "timeout": timeout
-        });
-    }
+    $scope.stories = [];
 
     $scope.resetContentListCache = function() {
-        // EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         var collectionContentId = "org.ekstep.quiz.app";
-        $rootScope.renderMessage("", 0);
         org.ekstep.service.content.getContent(collectionContentId)
             .then(function(content) {
                 GlobalContext.previousContentId = content.identifier;
@@ -79,19 +50,19 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
             .then(function(result) {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
 
-                $rootScope.$apply(function() {
-                    $rootScope.stories = result;
+                $scope.$apply(function() {
+                    $scope.stories = result;
                 });
-                if ($rootScope.stories && $rootScope.stories.length <= 0) {
-                    $rootScope.renderMessage(AppMessages.NO_CONTENT_LIST_FOUND);
+                if ($scope.stories && $scope.stories.length <= 0) {
+                    showToaster('error', AppMessages.NO_CONTENT_LIST_FOUND);
                 }
             })
             .catch(function(err) {
-                $rootScope.$apply(function() {
-                    $rootScope.stories = [];
+                $scope.$apply(function() {
+                    $scope.stories = [];
                 });
                 console.error(err);
-                $rootScope.renderMessage(AppMessages.ERR_GET_CONTENT_LIST, 3000);
+                showToaster('error', AppMessages.ERR_GET_CONTENT_LIST);
             });
     };
     $scope.playContent = function(content) {

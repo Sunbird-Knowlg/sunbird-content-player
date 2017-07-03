@@ -7,9 +7,6 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.state_off = "off";
     $scope.state_on = "on";
     $scope.state_disable = "disable";
-    // $scope.showOverlayNext = true;
-    // $scope.showOverlayPrevious = true;
-    // $scope.showOverlaySubmit = false;
     $scope.showOverlayGoodJob = true;
     $scope.showOverlayTryAgain = true;
     $scope.overlayEvents = ["overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
@@ -66,8 +63,6 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
 
     $scope.loadOverlay = function() {
         var gameArea = angular.element('#gameArea');
-        /*gameArea.append("<div ng-include="+ this.templatePath+">");
-        $compile(gameArea)($scope);*/
     }
 
     $rootScope.defaultSubmit = function() {
@@ -85,12 +80,6 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.overlayEventHandler = function(event) {
         //Switch case to handle HTML elements(Next, Previous, Submit, etc..)
         switch (event.type) {
-            // case "overlayNext":
-            //     $scope.showOverlayNext = event.target;
-            //     break;
-            // case "overlayPrevious":
-            //     $scope.showOverlayPrevious = event.target;
-            //     break;
             case "overlaySubmit":
                 if (event.target === "off") {
                     $scope.showOverlaySubmit = false;
@@ -150,6 +139,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     $scope.groupLength = undefined;
     $scope.selectedUser = {};
     $scope.showUserSwitchModal = false;
+    $scope.imageBasePath = AppConfig.assetbase;
 
     $scope.hideUserSwitchingModal = function() {
         TelemetryService.interact("TOUCH", "gc_userswitch_popup_close", "TOUCH", {
