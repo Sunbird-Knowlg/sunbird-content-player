@@ -18,9 +18,9 @@ Plugin.extend({
                     if (scope.enableGenie) {
                         scope.goToGenie = function() {
                             EkstepRendererAPI.hideEndPage();
+                            stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " ";
                             TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {stageId: stageId });
-                            var pageId = $rootScope.pageId;
-                            exitApp(pageId);
+                            exitApp();
                         }
                     }
                 }
