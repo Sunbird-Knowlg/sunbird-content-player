@@ -22,7 +22,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         if (GlobalContext.config.language_info) {
             var languageInfo = JSON.parse(GlobalContext.config.language_info);
             for (key in languageInfo) {
-                $rootScope.languageSupport[key] = languageInfo[key];
+                AppLables[key] = languageInfo[key];
             }
         }
         var evtLenth = $scope.overlayEvents.length;
@@ -323,11 +323,11 @@ app.compileProvider.directive('mute', function($rootScope) {
                 if (AudioManager.muted) {
                     AudioManager.unmute();
                     scope.muteImg = scope.imageBasePath + "audio_icon.png";
-                    $rootScope.languageSupport.mute = "on";
+                    AppLables.mute = "on";
                 } else {
                     AudioManager.mute();
                     scope.muteImg = scope.imageBasePath + "audio_mute_icon.png";
-                    $rootScope.languageSupport.mute = "off";
+                    AppLables.mute = "off";
                 }
                 TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute", "TOUCH", {
                     stageId: Renderer.theme._currentStage
@@ -347,7 +347,7 @@ app.compileProvider.directive('reloadStage', function($rootScope) {
 app.compileProvider.directive('restart', function($rootScope, $state, $stateParams) {
     return {
         restrict: 'E',
-        template: '<div ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/><span> {{languageSupport.replay}} </span></div>',
+        template: '<div ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/><span> {{AppLables.replay}} </span></div>',
         link: function(scope) {
             scope.restartContent = function() {
                 $rootScope.replayContent();
@@ -378,7 +378,7 @@ app.compileProvider.directive('menu', function($rootScope, $sce) {
 app.compileProvider.directive('stageInstructions', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div ng-class="{\'icon-opacity\' : !stageData.params.instructions}" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;" alt="note img"/><span> {{languageSupport.instructions}} </span></div>',
+        template: '<div ng-class="{\'icon-opacity\' : !stageData.params.instructions}" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;" alt="note img"/><span> {{AppLables.instructions}} </span></div>',
         controller: function($scope, $rootScope) {
             $scope.stageInstMessage = "";
             $scope.showInst = false;
@@ -423,7 +423,7 @@ app.compileProvider.directive('assess', function($rootScope) {
         },
         template: '<a class="assess" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()">{{showOverlaySubmit}} <!-- enabled --><img ng-src="{{image}}"/></a>',
         link: function(scope, element) {
-            scope.labelSubmit = $rootScope.languageSupport.submit;
+            scope.labelSubmit = AppLables.submit;
         },
         controller: function($scope, $rootScope, $timeout) {
             $scope.isEnabled = false;

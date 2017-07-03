@@ -10,9 +10,9 @@ Plugin.extend({
         app.compileProvider.directive('genie', function($rootScope) {
             return {
                 restrict: 'E',
-                template: '<div ng-class="enableGenie ? \'genie-home\' : \'icon-opacity genie-home\'" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/><span> {{languageSupport.home}} </span></div>',
+                template: '<div ng-class="enableGenie ? \'genie-home\' : \'icon-opacity genie-home\'" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/><span> {{AppLables.home}} </span></div>',
                 link: function(scope) {
-                    scope.languageSupport = $rootScope.languageSupport;
+                    scope.AppLables = AppLables;
                     scope.enableGenie = ("undefined" == typeof cordova) ? false : true;
                     scope.imgSrc = icon;
                     if (scope.enableGenie) {

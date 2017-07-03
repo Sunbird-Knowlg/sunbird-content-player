@@ -5,11 +5,11 @@
     <div class="modal-content">
         <div class="user-header">
             <span ng-click="closeUserSwitchingModal()" class="close">&times;</span>
-            <p>{{$root.languageSupport.userSwitcherTitle}}</p>
+            <p>{{AppLables.userSwitcherTitle}}</p>
         </div>
         <div id="sliderContainer" class="slider-container">
             <p class="slider-tag">
-                {{$root.languageSupport.child}}
+                {{AppLables.child}}
             </p>
             <div id="userSlider">
                 <div ng-repeat="user in $root.users | filter: {'isGroupUser': '!true'}" ng-class="user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <p class="slider-tag">
-                {{$root.languageSupport.group}}
+                {{AppLables.group}}
             </p>
             <div id="groupSlider">
                 <div ng-if="groupLength > 0" ng-repeat="user in $root.users | filter: {'isGroupUser': 'true'}" ng-class="user.selected ? 'profile selected' : 'profile'" ng-click='selectUser(user)'>
@@ -26,7 +26,7 @@
                     <p>{{user.handle}}</p>
                 </div>
                 <p class="fallback-text" ng-if="groupLength == 0">
-                    {{$root.languageSupport.groupFallbackText}}
+                    {{AppLables.groupFallbackText}}
                 </p>
             </div>
         </div>

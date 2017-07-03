@@ -14,7 +14,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         // serverPath and localPreview is a global variable defined in index.html file inside a story
         if ("undefined" != typeof localPreview && "local" == localPreview)
             AppConfig.assetbase = serverPath + AppConfig.assetbase;
-        $rootScope.languageSupport = AppLables;
         $rootScope.safeApply = function(fn) {
             if (this.$root) {
                 var phase = this.$root.$$phase;
@@ -33,11 +32,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 //TODO: Add Telemetry interact for on and Cancle
                 if (confirm("Press 'OK' to go back to Genie.")) {
                     backbuttonPressed(EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                } else {
-                    // Cancle button action comes here
-                    //   alert ("Do nothing !!");
-                    //   event.preventDefault();
-               }
+                }
             }, 100);
             $ionicPlatform.on("pause", function() {
                 Renderer.pause();
@@ -138,12 +133,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 TelemetryService.start(gameId, version, data);
             }
         }
-
-        /*function injectTemplates(templatePath, place) {
-            $scope.safeApply(function() {
-                $scope.templates = templatePath + "?a=" + Date.now();
-            });*/
-
         $scope.templates = [];
         function loadNgModules(templatePath, controllerPath, callback) {
             var loadFiles = [];
@@ -169,16 +158,10 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
 
         function injectTemplates(templatePath, scopeVariable, toElement) {
             console.log("inject templates", templatePath);
-
-            //$scope.templates = templatePath +"?a=" +  Date.now();
-            // if(toElement) {
-                // $scope.overlayTemplatePath = templatePath;
                 $scope.templates.push(templatePath);
                 var el = angular.element("content-holder");
                 $compile(el.contents())($scope);
                 $scope.safeApply();
-
-            // }
         }
         EkstepRendererAPI.addEventListener("renderer:add:template", function(event){
             var data = event.target;
@@ -187,7 +170,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
 
 
         org.ekstep.service.controller.initService(loadNgModules);
-        // org.ekstep.service.controller.injectTemplate(injectTemplates, null);
         EkstepRendererAPI.addEventListener("event:loadContent", function() {
             var configuration = EkstepRendererAPI.getPreviewData();
             content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? AppConfig.DEFAULT_METADATA : configuration.metadata
