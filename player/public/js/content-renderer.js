@@ -26,6 +26,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function() {
     org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
         console.info('Launcher is Ready!!!');
         isCoreplugin = false;
+        EkstepRendererAPI.getPreviewData().config.repos && EkstepRendererAPI.getPreviewData().config.plugins && EkstepRendererAPI.dispatchEvent("repo:intialize");
     });
 };
 
@@ -78,7 +79,6 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
     AppConfig = _.extend(AppConfig, configuration.config)
     window.previewData = configuration;
     org.ekstep.service.renderer.api.setBaseUrl(AppConfig.host + AppConfig.apislug);
-    configuration.config.repos && configuration.config.plugins && EkstepRendererAPI.dispatchEvent("repo:intialize");
     EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
     addWindowUnloadEvent();
     EkstepRendererAPI.dispatchEvent("event:loadContent");
