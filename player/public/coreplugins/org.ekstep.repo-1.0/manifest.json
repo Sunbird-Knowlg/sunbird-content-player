@@ -1,0 +1,11 @@
+{
+    "id": "org.ekstep.repo",
+    "ver": "1.0",
+    "shortId": "org.ekstep.repo",
+    "author": "Manjunath Davanam",
+    "description": "",
+    "publishedDate": "",
+    "renderer": {
+        "main": "renderer/plugin.js"
+    }
+}
