@@ -435,12 +435,12 @@ app.compileProvider.directive('assess', function($rootScope) {
                     $timeout(function() {
                         // This timeout is required to apply the changes(because it is calling by JS)
                         $scope.assessStyle = 'assess-enable';
-                        $scope.image = $scope.imageBasePath + "submit_enable.png";
+                        $scope.image = AppConfig.assetbase + "submit_enable.png";
                     }, 100);
                 } else {
                     //Disable state
                     $scope.assessStyle = 'assess-disable';
-                    $scope.image = $scope.imageBasePath + "submit_disable.png";
+                    $scope.image = AppConfig.assetbase + "submit_disable.png";
                 }
             });
 
