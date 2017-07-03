@@ -1,7 +1,7 @@
-Plugin.extend({
+ org.ekstep.contentrenderer.baseLauncher.extend({
     initialize: function() {
         console.info('HTML Renderer intialize is done');
-        //EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.launch, this);
+        EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.launch, this);
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.launch, this);
         this.launch();
     },

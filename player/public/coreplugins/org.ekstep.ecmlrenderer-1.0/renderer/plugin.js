@@ -5,7 +5,7 @@
  * @author Kartheek Palla <kartheekp@ilimi.in>
  */
 
-Plugin.extend({
+org.ekstep.contentrenderer.baseLauncher.extend({
     loader: undefined,
     theme: undefined,
     update: true,
