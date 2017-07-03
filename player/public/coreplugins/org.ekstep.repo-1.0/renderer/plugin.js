@@ -41,3 +41,4 @@ Plugin.extend({
         org.ekstep.pluginframework.resourceManager.addRepo(repoInstance);
     }
 })
+//# sourceURL=RepoPlugin.js
