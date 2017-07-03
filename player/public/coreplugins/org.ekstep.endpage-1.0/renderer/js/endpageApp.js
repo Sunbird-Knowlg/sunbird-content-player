@@ -32,15 +32,16 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         $scope.CreditPopup = true;
         TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId: "ContentApp-CreditsScreen", subtype: "ContentID"});
     }
-    $scope.replay = function() {
+    $scope.replayContent = function() {
+        var data = {
+            'interactId' : 'ge_replay',
+            'callback': $scope.replayCallback
+        };
+        EkstepRendererAPI.dispatchEvent('renderer:content:end', undefined,data);
+    }
+    $scope.replayCallback = function(){
         EkstepRendererAPI.hideEndPage();
-        $rootScope.replayContent();
-        // EventBus.dispatch('renderer:player:init');
-        // EventBus.dispatch('event:closeUserSwitchingModal');
-        var muteElement = document.getElementById("unmute_id");
-        if (!_.isNull(muteElement)) {muteElement.style.display = "none"; }
-        AudioManager.unmute();
-        TelemetryService.end();
+        EkstepRendererAPI.dispatchEvent('renderer:content:replay');   
     }
     $scope.showFeedback = function(param) {
         $scope.userRating = param;

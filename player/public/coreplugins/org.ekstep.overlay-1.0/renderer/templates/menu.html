@@ -13,7 +13,10 @@
             <p class="icon-font">{{ content.name }}</p>
         </div>
         <div class = "gc-menu-options">
-            <restart></restart>
+            <div ng-click="replayContent()">
+                <img src="{{imageBasePath}}icn_replay.png"/>
+                <span> {{AppLables.replay}} </span>
+            </div>
         </div>
         <div ng-if="showUser" ng-click="openUserSwitchingModal()" class = "gc-menu-options profile">
             <img alt="prof img" ng-src="{{currentUser.profileImage}}"/>

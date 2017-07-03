@@ -132,6 +132,20 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
             "marginLeft": ["-31%", 'easeOutExpo']
         }, 700, function() {});
     }
+
+    $scope.replayContent = function(){
+        var data = {
+            'interactId' : 'ge_replay',
+            'callback': $scope.replayCallback
+        };
+        EkstepRendererAPI.dispatchEvent('renderer:content:end', undefined, data);
+    }
+
+    $scope.replayCallback = function(){
+        $scope.hideMenu();
+        EkstepRendererAPI.dispatchEvent('renderer:content:replay');    
+    }
+
     $scope.init();
 });
 
@@ -227,7 +241,36 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
             })
         }
         $scope.closeUserSwitchingModal();
-        replayContent == true ? $rootScope.us_replayContent() : $rootScope.us_continueContent(userSwitchHappened);
+
+        if(replayContent == true){
+             var data = {
+                'interactId' : 'gc_userswitch_replayContent',
+                'callback': $scope.replayCallback
+            };
+            EkstepRendererAPI.dispatchEvent('renderer:content:end', undefined, data);
+        }else{
+           TelemetryService.interact("TOUCH", 'gc_userswitch_continue', "TOUCH", {
+                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+            });
+            if (userSwitchHappened) {
+                var version = TelemetryService.getGameVer();;
+                var gameId = TelemetryService.getGameId();
+                TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+
+                TelemetryService.end();
+                TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                var data = {};
+                data.mode = getPreviewMode();
+                TelemetryService.start(gameId, version, data);
+            }
+        }
+    }
+
+    $scope.replayCallback = function(){
+        var stageId = TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+        EkstepRendererAPI.dispatchEvent('event:closeUserSwitchingModal')
+        EkstepRendererAPI.hideEndPage();
+        EkstepRendererAPI.dispatchEvent('renderer:content:replay');
     }
 
     $scope.closeUserSwitchingModal = function() {
@@ -334,24 +377,6 @@ app.compileProvider.directive('reloadStage', function($rootScope) {
     }
 });
 
-app.compileProvider.directive('restart', function($rootScope, $state, $stateParams) {
-    return {
-        restrict: 'E',
-        template: '<div ng-click="restartContent()"><img src="{{imageBasePath}}icn_replay.png"/><span> {{AppLables.replay}} </span></div>',
-        link: function(scope) {
-            scope.restartContent = function() {
-                $rootScope.replayContent();
-                var muteElement = document.getElementById("unmute_id");
-                if (!_.isNull(muteElement)) {
-                    muteElement.style.display = "none";
-                }
-                AudioManager.unmute();
-                if (!_.isUndefined(scope.hideMenu) && scope.menuOpened)
-                    scope.hideMenu();
-            }
-        }
-    }
-});
 app.compileProvider.directive('menu', function($rootScope, $sce) {
     return {
         restrict: 'E',
@@ -359,7 +384,7 @@ app.compileProvider.directive('menu', function($rootScope, $sce) {
         link: function(scope) {
 	        scope.getTemplate = function() {
                 return scope.pluginInstance._menuTP;
-			}
+			}            
 		},
 	    template: "<div ng-include=getTemplate()></div>"
     }

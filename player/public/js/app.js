@@ -82,57 +82,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         app.compileProvider = $compileProvider;
 
     }).controller('BaseCtrl', function($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, appConstants) {
-        $rootScope.replayContent = function() {
-            $scope.endContent('gc_replay');
-            EkstepRendererAPI.dispatchEvent('renderer:content:replay');
-        }
-        $scope.endContent = function(eleId) {
-            if (!$rootScope.content) {
-                org.ekstep.contentrenderer.getContentMetadata($stateParams.itemId);
-            }
-            $rootScope.pageTitle = $rootScope.content.name;
-            if (!_.isUndefined(Renderer) && Renderer.theme) {
-                TelemetryService.interact("TOUCH", eleId, "TOUCH", {
-                    stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-                });
-            }
-            if (eleId === 'gc_userswitch_replayContent') {
-                TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-            }
-            var menuReplay = $state.current.name == appConstants.statePlayContent;
-            // 1) For HTML content onclick of replay EventListeners will be not available hence calling Telemetryservice end .
-            // 2) OE_START for the HTML/ECML content will be takne care by the contentctrl rendere method always.
-            EventBus.hasEventListener('actionReplay') ? EventBus.dispatch('actionReplay', {
-                'menuReplay': menuReplay
-            }) : TelemetryService.end();
-        }
         
-        $rootScope.us_replayContent = function() {
-            $scope.endContent('gc_userswitch_replayContent');
-            EkstepRendererAPI.dispatchEvent('renderer:content:replay');
-            var stageId =
-                TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-
-            EventBus.dispatch('event:closeUserSwitchingModal')
-            EkstepRendererAPI.hideEndPage();
-        }
-
-        $rootScope.us_continueContent = function(userSwitchHappened) {
-            TelemetryService.interact("TOUCH", 'gc_userswitch_continue', "TOUCH", {
-                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-            });
-            if (userSwitchHappened) {
-                var version = TelemetryService.getGameVer();;
-                var gameId = TelemetryService.getGameId();
-                TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-
-                TelemetryService.end();
-                TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                var data = {};
-                data.mode = getPreviewMode();
-                TelemetryService.start(gameId, version, data);
-            }
-        }
         $scope.templates = [];
         function loadNgModules(templatePath, controllerPath, callback) {
             var loadFiles = [];
@@ -168,6 +118,17 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             injectTemplates(data.templatePath, data.scopeVariable, data.toElement);
         });
 
+        EkstepRendererAPI.addEventListener("renderer:content:end", function(event, data){
+            TelemetryService.interact("TOUCH", data.interactId, "TOUCH", {
+                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+            });
+            TelemetryService.end();
+            var muteElement = document.getElementById("unmute_id");
+            if (!_.isNull(muteElement))
+                muteElement.style.display = "none";
+            AudioManager.unmute();
+            data.callback();
+        });
 
         org.ekstep.service.controller.initService(loadNgModules);
         EkstepRendererAPI.addEventListener("event:loadContent", function() {

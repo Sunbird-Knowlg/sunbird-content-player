@@ -24,7 +24,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         console.info('ECML Renderer initialize');
         // EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
-        EkstepRendererAPI.addEventListener('renderer:content:replay', this.start, this);
+        EkstepRendererAPI.addEventListener('renderer:content:replay', this.relaunch, this);
         this.start();
     },
     /**
@@ -232,6 +232,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     resume: function() {
         if (Renderer.theme)
             Renderer.theme.resume();
+    },
+    relaunch: function(){
+        OverlayManager.defaultNavigation('previous', Renderer.theme._data.startStage)
+        var data = {};
+        data.mode = getPreviewMode();
+        TelemetryService.start(GlobalContext.game.id, GlobalContext.game.ver, data);
     }
 });
 
