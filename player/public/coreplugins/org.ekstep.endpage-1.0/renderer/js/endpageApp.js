@@ -236,7 +236,7 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                             }
                             EkstepRendererAPI.hideEndPage();
                             $rootScope.content = obj;
-                            EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType, undefined, $rootScope.content);
+                            EkstepRendererAPI.dispatchEvent('renderer:launcher:load', undefined, $rootScope.content);
                         });
                     } else {
                         $scope.navigateToDownloadPage(contentExtras, content.identifier);
