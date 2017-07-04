@@ -33,7 +33,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function(){
                     console.info('Plugin loaded with repo..');
                 });
             }else{
-                org.ekstep.contentrenderer.loadPlugins('',Appconfig.PREVIEW_PLUGINSPATH);
+                org.ekstep.contentrenderer.loadPlugins('',AppConfig.PREVIEW_PLUGINSPATH);
             }
         }
     });
