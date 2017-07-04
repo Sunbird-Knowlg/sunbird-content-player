@@ -25,6 +25,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function(){
     org.ekstep.contentrenderer.loadPlugins(AppConfig.DEFAULT_PLUGINS,[],function(){
         console.info('Canvas Default plugins are loaded..');
         previewData = EkstepRendererAPI.getPreviewData();
+        console.info('Config==',previewData.config.plugins);
         if(previewData.config.plugins){
             if(previewData.config.repos){
                 EkstepRendererAPI.dispatchEvent('renderer:repo:create');
