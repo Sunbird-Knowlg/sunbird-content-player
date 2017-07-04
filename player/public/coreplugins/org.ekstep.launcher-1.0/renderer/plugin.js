@@ -21,13 +21,12 @@ Plugin.extend({
         var contentTypePlugin = _.findWhere(AppConfig.CONTENT_LAUNCHERS, {
             'mimeType': content.mimeType
         });
-        isCoreplugin = true;
-        org.ekstep.contentrenderer.initPlugins('');
+        org.ekstep.contentrenderer.initPlugins('',AppConfig.CORE_PLUGINSPATH);
         if (!_.isUndefined(contentTypePlugin)) {
             this.loadPlugin(contentTypePlugin, content);
-            isCoreplugin = false;
         }
     },
+    
     loadPlugin: function(plugin, contentData) {
         var instance = this;
         content = contentData;

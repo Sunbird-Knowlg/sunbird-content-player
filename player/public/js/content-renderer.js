@@ -19,21 +19,25 @@ org.ekstep.contentrenderer.init = function() {
     console.info('Content renderer starts');
 };
 
-org.ekstep.contentrenderer.loadDefaultPlugins = function() {
-    isCoreplugin = true;
-    var plugin = AppConfig.DEFAULT_PLUGINS;
-    org.ekstep.contentrenderer.initPlugins('');
-    org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
-        console.info('Launcher is Ready!!!');
-        if (EkstepRendererAPI.getPreviewData().config.repos && EkstepRendererAPI.getPreviewData().config.plugins) {
-            EkstepRendererAPI.dispatchEvent("renderer:repo:create");
-            org.ekstep.contentrenderer.loadPlugins(EkstepRendererAPI.getPreviewData().config.plugins, [], function() {
-                console.info('Preview custom Plugins are loaded..');
-            })
+org.ekstep.contentrenderer.loadDefaultPlugins = function(){
+    var previewData = {};
+    org.ekstep.contentrenderer.initPlugins('','coreplugins');
+    org.ekstep.contentrenderer.loadPlugins(AppConfig.DEFAULT_PLUGINS,[],function(){
+        console.info('Canvas Default plugins are loaded..');
+        previewData = EkstepRendererAPI.getPreviewData();
+        if(previewData.config.plugins){
+            if(previewData.config.repos){
+                EkstepRendererAPI.dispatchEvent('renderer:repo:create');
+                org.ekstep.contentrenderer.initPlugins('','');
+                org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins, [],function(){
+                    console.info('Plugin loaded with repo..');
+                });
+            }else{
+                org.ekstep.contentrenderer.loadPlugins('',Appconfig.PREVIEW_PLUGINSPATH);
+            }
         }
-        isCoreplugin = false;
     });
-};
+}
 
 org.ekstep.contentrenderer.startGame = function(appInfo) {
     console.info('Game is starting..')
@@ -89,20 +93,16 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
     EkstepRendererAPI.dispatchEvent("event:loadContent");
 };
 
-org.ekstep.contentrenderer.initPlugins = function(gamePath) {
+org.ekstep.contentrenderer.initPlugins = function(host, repoRelativePath) {
     var pluginsPath = undefined;
     // @ plugin:error event is dispatching from the plugin-framework
     // If any of the plugin is failed to load OR invoke then plugin:error event will trigger
     if (!EkstepRendererAPI.hasEventListener('plugin:error')) {
         EkstepRendererAPI.addEventListener('plugin:error', org.ekstep.contentrenderer.pluginError, this);
     }
-    pluginsPath = isCoreplugin ? AppConfig.CORE_PLUGINSPATH : (isbrowserpreview ? AppConfig.PREVIEW_PLUGINSPATH : AppConfig.DEVICE_PLUGINSPATH)
-    var pluginRepo = gamePath + pluginsPath;
-    var pfConfig = {
-        env: "renderer",
-        async: async,
-        pluginRepo: pluginRepo,
-        repos: [org.ekstep.pluginframework.publishedRepo]
+    host = _.isUndefined(host) ? '' : host;
+    var pluginRepo = host + repoRelativePath;
+    var pfConfig = {env: "renderer", async: async, pluginRepo: pluginRepo, repos: [org.ekstep.pluginframework.publishedRepo]
     };
     org.ekstep.pluginframework.initialize(pfConfig);
 };
