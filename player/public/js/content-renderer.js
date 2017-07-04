@@ -33,11 +33,14 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function(){
                     console.info('Plugin loaded with repo..');
                 });
             }else{
-                org.ekstep.contentrenderer.loadPlugins('',AppConfig.PREVIEW_PLUGINSPATH);
+                org.ekstep.contentrenderer.initPlugins('',AppConfig.PREVIEW_PLUGINSPATH)
+                org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins,[],function(){
+                    console.info('Preview plugins are loaded without repo.');
+                });
             }
         }
     });
-}
+};
 
 org.ekstep.contentrenderer.startGame = function(appInfo) {
     console.info('Game is starting..')
