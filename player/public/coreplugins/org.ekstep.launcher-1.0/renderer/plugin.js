@@ -26,13 +26,14 @@ Plugin.extend({
             this.loadPlugin(contentTypePlugin, content);
         }
     },
-    
+
     loadPlugin: function(plugin, contentData) {
         var instance = this;
         content = contentData;
         org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
             instance.initTelemetry(content);
-            console.log('LAUNCHER - content:load:' + content)
+            console.log('LAUNCHER - content:load:' + content);
+            EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
             EkstepRendererAPI.dispatchEvent('renderer:collection:hide');
             EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType, undefined, content);
         });

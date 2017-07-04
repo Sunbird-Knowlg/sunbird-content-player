@@ -21,35 +21,41 @@ org.ekstep.contentrenderer.init = function() {
 
 org.ekstep.contentrenderer.loadDefaultPlugins = function(){
     var previewData = {};
-    org.ekstep.contentrenderer.initPlugins('','coreplugins');
+    org.ekstep.contentrenderer.initPlugins('', 'coreplugins');
     org.ekstep.contentrenderer.loadPlugins(AppConfig.DEFAULT_PLUGINS,[],function(){
         console.info('Canvas Default plugins are loaded..');
-        previewData = EkstepRendererAPI.getPreviewData();
-        console.info('Config==',previewData.config.plugins);
-        if(previewData.config.plugins){
-            if(previewData.config.repos){
-                EkstepRendererAPI.dispatchEvent('renderer:repo:create');
-                org.ekstep.contentrenderer.initPlugins('','');
-                org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins, [],function(){
-                    console.info('Plugin loaded with repo..');
-                });
-            }else{
-                org.ekstep.contentrenderer.initPlugins('',AppConfig.PREVIEW_PLUGINSPATH)
-                org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins,[],function(){
-                    console.info('Preview plugins are loaded without repo.');
-                });
-            }
-        }
     });
 };
 
 org.ekstep.contentrenderer.startGame = function(appInfo) {
-    console.info('Game is starting..')
-    if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-        EkstepRendererAPI.dispatchEvent('renderer:player:init')
-    } else {
-        !isbrowserpreview ? EkstepRendererAPI.dispatchEvent('renderer:collection:show') : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
+    org.ekstep.contentrenderer.loadExternalPlugins(function() {
+        console.info('Game is starting..')
+        if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
+            EkstepRendererAPI.dispatchEvent('renderer:player:init');
+        } else {
+            !isbrowserpreview ? EkstepRendererAPI.dispatchEvent('renderer:collection:show') : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
+        }
+    });
+};
+
+org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
+    previewData = EkstepRendererAPI.getPreviewData();
+    console.info('Config==', previewData.config.plugins);
+    if (previewData.config.plugins) {
+        if (previewData.config.repos) {
+            EkstepRendererAPI.dispatchEvent('renderer:repo:create');
+            org.ekstep.contentrenderer.initPlugins('', '');
+            org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins, [], function() {
+                console.info('Plugin loaded with repo..');
+            });
+        } else {
+            org.ekstep.contentrenderer.initPlugins('', AppConfig.PREVIEW_PLUGINSPATH)
+            org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins, [], function() {
+                console.info('Preview plugins are loaded without repo.');
+            });
+        }
     }
+    if(cb) cb();
 };
 
 org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) {
@@ -92,7 +98,6 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
     AppConfig = _.extend(AppConfig, configuration.config)
     window.previewData = configuration;
     org.ekstep.service.renderer.api.setBaseUrl(AppConfig.host + AppConfig.apislug);
-    EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
     addWindowUnloadEvent();
     EkstepRendererAPI.dispatchEvent("event:loadContent");
 };
