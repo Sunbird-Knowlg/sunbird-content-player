@@ -180,7 +180,8 @@ LoadByStageStrategy = Class.extend({
             var mediaList = JSON.parse(JSON.stringify(instance.stageManifests[stageId]));
             mediaList = _.uniq(mediaList, function(media) {
                 return media.assetId || media.id;
-            })
+            });
+            mediaList = instance.filterVideos(mediaList);
             if (_.isArray(mediaList) && mediaList.length > 0) {
                 var loader = this._createLoader();
                 loader.stageLoaded = false;
@@ -219,10 +220,17 @@ LoadByStageStrategy = Class.extend({
             }
         }
     },
+    filterVideos: function(list){
+        list = _.filter(list, function(obj){
+            return obj.type != "video";
+        });
+        return list;
+    },
     loadCommonAssets: function() {
         var loader = this._createLoader();
         loader.setMaxConnections(this.MAX_CONNECTIONS);
         loader.installPlugin(createjs.Sound);
+        this.commonAssets = this.filterVideos(this.commonAssets);
         loader.loadManifest(this.commonAssets, true);
         loader.on("error", function(evt) {
             console.error("CommonLoader - asset preload error", evt);
@@ -232,6 +240,7 @@ LoadByStageStrategy = Class.extend({
     loadTemplateAssets: function() {
         var loader = this._createLoader();
         loader.setMaxConnections(this.MAX_CONNECTIONS);
+        this.templateAssets = this.filterVideos(this.templateAssets);
         loader.installPlugin(createjs.Sound);
         loader.loadManifest(this.templateAssets, true);
         loader.on("error", function(evt) {
