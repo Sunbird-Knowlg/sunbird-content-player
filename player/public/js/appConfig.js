@@ -33,12 +33,10 @@ AppConfig = {
     overlay: {
         userSwitcherEnabled: true,
         showUser: true,
-        enableOverlay: true,
+        showOverlay: true,
         showNext: true,
         showPrevious: true,
         showSubmit: false,
-        showGoodJob: true,
-        showTryAgain: true,
         showMenu: true,
         showReload: true,
         menu: {

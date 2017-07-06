@@ -120,10 +120,10 @@ OverlayManager = {
     showFeeback: function(showOverlayGoodJob) {
         var returnVal = true;
         if (showOverlayGoodJob) {
-            returnVal = this._stageConfig.overlayGoodJob == 'on' ? true : AppConfig.overlay.showGoodJob;
+            returnVal = this._stageConfig.overlayGoodJob == 'off' ? false : true;
             this.showGoodJobFb(returnVal);
         } else {
-            returnVal = this._stageConfig.overlayTryAgain == 'on' ? true : AppConfig.overlay.showTryAgain;
+            returnVal = this._stageConfig.overlayTryAgain == 'off' ? false : true;
             this.showTryAgainFb(returnVal);
         }
 

@@ -10,7 +10,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.showOverlayGoodJob = true;
     $scope.showOverlayTryAgain = true;
     $scope.overlayEvents = ["overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
-    $scope.showOverlay = false;
+    $scope.showOverlay = true;
     $scope.pluginInstance = undefined;
     $scope.imageBasePath = AppConfig.assetbase;
     $scope.init = function() {
