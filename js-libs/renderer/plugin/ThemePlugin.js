@@ -140,6 +140,7 @@ var ThemePlugin = Plugin.extend({
         //document.getElementById("progressBar").style.width = 100 + '%';
         // jQuery("#progressBar").width(100);
         // jQuery('#loading').3();
+        console.info("renderer content starts !!!");
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
 
         // EkstepRendererAPI.dispatchEvent("renderer:splash:hide"); //Hide splash screen.
