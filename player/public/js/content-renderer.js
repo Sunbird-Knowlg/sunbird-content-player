@@ -23,8 +23,8 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function(cb){
     console.info("Plugin repo path is = ",org.ekstep.pluginframework.config.pluginRepo);
     org.ekstep.contentrenderer.loadPlugins(AppConfig.DEFAULT_PLUGINS,[],function(){
         console.info('Canvas Default plugins are loaded..');
+                if(cb) cb()
     });
-    if(cb) cb()
 };
 
 
