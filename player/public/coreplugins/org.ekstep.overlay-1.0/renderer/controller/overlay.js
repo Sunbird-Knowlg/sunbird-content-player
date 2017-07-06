@@ -34,14 +34,20 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
 			$rootScope.stageId = !_.isUndefined($rootScope.stageData) ? $rootScope.stageData._id : undefined;
 		});
         EkstepRendererAPI.addEventListener("renderer:init:overlay", $scope.loadOverlay);
-        EkstepRendererAPI.addEventListener("renderer:show:overlay", function(event) {
-            $scope.showOverlay = true;
-            $scope.safeApply();
-        });
-        EkstepRendererAPI.addEventListener("renderer:overlay:hide", function(event) {
-            $scope.showOverlay = false;
-            $scope.safeApply();
-        });
+        EkstepRendererAPI.addEventListener("renderer:show:overlay", $scope.showOverlay);
+        EkstepRendererAPI.addEventListener("renderer:overlay:hide", $scope.hideOverlay);
+        EkstepRendererAPI.addEventListener("renderer:content:start", $scope.showOverlay);
+        EkstepRendererAPI.addEventListener("renderer:content:end", $scope.hideOverlay);
+    }
+
+    $scope.showOverlay = function() {
+        $scope.showOverlay = !_.isUndefined(AppConfig.overlay.showOverlay) && AppConfig.overlay.showOverlay ? AppConfig.overlay.showOverlay : console.warn('Overlay is disabled');
+        $scope.safeApply();
+    }
+
+    $scope.hideOverlay = function() {
+        $scope.showOverlay = false;
+        $scope.safeApply();
     }
 
 	$scope.navigate = function(navType) {
