@@ -2,10 +2,10 @@
     initialize: function() {
         console.info('HTML Renderer intialize is done');
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.launch, this);
-        EkstepRendererAPI.addEventListener('renderer:content:replay', this.launch, this);
-        this.launch();
+        EkstepRendererAPI.addEventListener('renderer:content:replay', this.relaunchGame, this);
+        this.launchGame();
     },
-    launch: function(evt, data) {
+    launchGame: function(evt, data) {
         data = content;
         console.info('HTML plugin init')
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
@@ -39,6 +39,11 @@
         var path = window.location.origin + AppConfig.S3_CONTENT_HOST + content_type;
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
+    },
+    relaunchGame:function(){
+        this.relaunch();
+        //TODO: Base functionality should take care of reLaunching of the game
+        this.launchGame();
     }
 });
 //# sourceURL=HTMLRendererePlugin.js
