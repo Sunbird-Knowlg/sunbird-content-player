@@ -22,9 +22,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      */
     initialize: function() {
         console.info('ECML Renderer initialize');
+        EkstepRendererAPI.addEventListener('renderer:content:replay', this.relaunchGame, this);
         // EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
-        EkstepRendererAPI.addEventListener('renderer:content:replay', this.relaunch, this);
         this.start();
     },
     /**
@@ -230,11 +230,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if (Renderer.theme)
             Renderer.theme.resume();
     },
-    relaunch: function(){
-        OverlayManager.defaultNavigation(undefined, Renderer.theme._data.startStage)
-        var data = {};
-        data.mode = getPreviewMode();
-        TelemetryService.start(GlobalContext.game.id, GlobalContext.game.ver, data);
+    relaunchGame: function(){
+        this.relaunch();
+        OverlayManager.defaultNavigation(undefined, Renderer.theme._data.startStage);
     }
 });
 

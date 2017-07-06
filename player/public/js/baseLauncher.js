@@ -30,12 +30,25 @@ initialize:function(data){
 },
 
 /**
+ * launching of the particular launcher
+ * @memberof org.ekstep.contentrenderer.baseLauncher
+ */
+
+launch:function(){
+	console.info('Base Launcher shuld construct');
+},
+
+
+/**
  * relaunch of the particular launcher
  * @memberof org.ekstep.contentrenderer.baseLauncher
  */
 
-relaunch:function(){
-	console.info('Base Launcher shuld construct')
+relaunch: function() {
+    console.info('Base Launcher shuld construct');
+    var data = {};
+    data.mode = getPreviewMode();
+    TelemetryService.start(GlobalContext.game.id, GlobalContext.game.ver, data);
 },
 
 /**
