@@ -60,13 +60,14 @@ var VideoPlugin = Plugin.extend({
             if (_.isUndefined(this._data.controls)) this._data.controls = false;
             if (_.isUndefined(this._data.muted)) this._data.muted = false;
         }
-        this.loadVideo(data);
+
         _instance = this;
+        _instance.loadVideo(data);
     },
     loadVideo: function(data) {
         if (!data.asset) return false;
         var lItem = this.createVideoElement();
-        var videoEle = this.getVideo(data);
+        var videoEle = this.getVideo();
         videoEle.load();
         this.registerEvents();
         this._self = new createjs.Bitmap(lItem);
@@ -80,7 +81,7 @@ var VideoPlugin = Plugin.extend({
      *   @memberof VideoPlugin
      */
     registerEvents: function() {
-        var videoEle = this.getVideo(this._data);
+        var videoEle = this.getVideo();
         jQuery(videoEle).bind('play', this.handleTelemetryLog);
         jQuery(videoEle).bind('pause', this.handleTelemetryLog);
         jQuery(videoEle).bind("error", this.logConsole);
@@ -116,7 +117,7 @@ var VideoPlugin = Plugin.extend({
         }
     },
     logConsole: function(e) {
-        console.warn("This video has", e.type);
+        console.warn("This video has", e);
     },
     sendTelemeteryData: function(action, subType) {
         if (action)
@@ -164,7 +165,7 @@ var VideoPlugin = Plugin.extend({
      *   @memberof VideoPlugin
      */
     replay: function() {
-        var videoEle = this.getVideo(this._data);
+        var videoEle = this.getVideo();
         videoEle.currentTime = 0;
         this.play();
     },
@@ -179,7 +180,6 @@ var VideoPlugin = Plugin.extend({
         if (!_.isUndefined(action)) {
             return document.getElementById(action.asset);
         } else {
-            console.info("Video started without any ECML action");
             return document.getElementById(this._data.asset);
         }
     },
@@ -212,7 +212,7 @@ var VideoPlugin = Plugin.extend({
      */
     addVideoElement: function(jqVideoEle) {
         this._theme.htmlElements.push(jQuery(jqVideoEle).attr('id'));
-        var videoEle = this.getVideo(this._data);
+        var videoEle = this.getVideo();
         var div = document.getElementById('gameArea');
         div.insertBefore(videoEle, div.childNodes[0]);
     },
@@ -234,7 +234,7 @@ var VideoPlugin = Plugin.extend({
         !_.isUndefined(this._data.type) ? jQuery(jqVideoEle).attr("type", this._data.type) : console.warn("Video type is not defined");
         this.setVideoStyle(jqVideoEle);
         this.addVideoElement(jqVideoEle);
-        var videoEle = this.getVideo(this._data);
+        var videoEle = this.getVideo();
         return new createjs.Bitmap(videoEle);
     }
 });
