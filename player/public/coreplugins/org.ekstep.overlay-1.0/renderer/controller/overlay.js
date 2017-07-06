@@ -145,7 +145,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
             'interactId' : 'ge_replay',
             'callback': $scope.replayCallback
         };
-        EkstepRendererAPI.dispatchEvent('renderer:content:end', undefined, data);
+        EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
     }
 
     $scope.replayCallback = function(){
@@ -254,7 +254,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                 'interactId' : 'gc_userswitch_replayContent',
                 'callback': $scope.replayCallback
             };
-            EkstepRendererAPI.dispatchEvent('renderer:content:end', undefined, data);
+            EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
         }else{
            TelemetryService.interact("TOUCH", 'gc_userswitch_continue', "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId

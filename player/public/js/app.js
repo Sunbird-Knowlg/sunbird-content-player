@@ -118,7 +118,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             injectTemplates(data.templatePath, data.scopeVariable, data.toElement);
         });
 
-        EkstepRendererAPI.addEventListener("renderer:content:end", function(event, data){
+        EkstepRendererAPI.addEventListener("renderer:content:close", function(event, data){
             TelemetryService.interact("TOUCH", data.interactId, "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
             });

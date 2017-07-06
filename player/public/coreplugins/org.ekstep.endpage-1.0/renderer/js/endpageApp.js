@@ -38,7 +38,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
             'callback': $scope.replayCallback
         };
         EkstepRendererAPI.dispatchEvent("renderer:show:overlay")
-        EkstepRendererAPI.dispatchEvent('renderer:content:end', undefined,data);
+        EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined,data);
     }
     $scope.replayCallback = function(){
         EkstepRendererAPI.hideEndPage();
