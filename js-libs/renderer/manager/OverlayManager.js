@@ -170,9 +170,6 @@ OverlayManager = {
     skipAndNavigateNext: function() {
       try{
         this.clean();
-        TelemetryService.interact("TOUCH", "next", null, {
-            stageId: Renderer.theme._currentStage
-        });
         var navigateTo = this.getNavigateTo("next");
         if ("undefined" == typeof navigateTo) {
             if (_.isUndefined(Renderer.theme._currentScene)) return;
@@ -298,6 +295,9 @@ OverlayManager = {
         CommandManager.handle(action);
     },
     defaultNavigation: function(navType, navigateTo) {
+        TelemetryService.interact("TOUCH", navType, null, {
+            stageId: Renderer.theme._currentStage
+        });
         var action = {
             "asset": Renderer.theme._id,
             "command": "transitionTo",
