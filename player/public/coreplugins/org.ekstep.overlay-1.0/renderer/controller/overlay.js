@@ -14,6 +14,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.pluginInstance = undefined;
     $scope.imageBasePath = AppConfig.assetbase;
     $scope.showTeacherIns = true;
+    $scope.showReload = true;
     $scope.init = function() {
     	console.log("OVERLAY - controller loaded");
     	$scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
@@ -26,6 +27,8 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         $scope.AppLables = AppLables;
         if (!_.isUndefined(AppConfig.overlay.menu) && !AppConfig.overlay.menu.showTeachersInstruction)
             $scope.showTeacherIns = AppConfig.overlay.menu.showTeachersInstruction;
+        if (!AppConfig.overlay.showReload)
+            $scope.showReload = AppConfig.overlay.showReload;
         var evtLenth = $scope.overlayEvents.length;
         for (var i = 0; i < evtLenth; i++) {
             var eventName = $scope.overlayEvents[i];
