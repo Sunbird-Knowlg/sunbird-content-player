@@ -76,6 +76,7 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
     });
 
     EkstepRendererAPI.addEventListener('renderer:content:replay', function(){
+        $rootScope.$broadcast('renderer:overlay:unmute');
         $scope.showPlayer = true;
         $scope.safeApply();
     });

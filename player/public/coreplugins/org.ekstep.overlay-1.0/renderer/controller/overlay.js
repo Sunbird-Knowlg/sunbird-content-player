@@ -347,12 +347,12 @@ app.compileProvider.directive('mute', function($rootScope) {
         restrict: 'E',
         template: '<div ng-click="toggleMute()"><img src="{{muteImg}}"/><span>Sound {{AppLables.mute}} </span></div>',
         link: function(scope, url) {
-            var muteElement = document.getElementById("unmute_id");
-            scope.muteImg = scope.imageBasePath + "audio_icon.png";
-            if (!_.isNull(muteElement)) {
-                muteElement.style.display = "none";
-            }
-            AudioManager.unmute();
+            $rootScope.$on('renderer:overlay:unmute', function() {
+                scope.muteImg = scope.imageBasePath + "audio_icon.png";
+                AppLables.mute = "on";
+                AudioManager.unmute();
+            });
+            $rootScope.$broadcast('renderer:overlay:unmute');
             scope.toggleMute = function() {
                 if (AudioManager.muted) {
                     AudioManager.unmute();

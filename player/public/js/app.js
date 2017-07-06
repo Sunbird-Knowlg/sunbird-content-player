@@ -123,10 +123,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
             });
             TelemetryService.end();
-            var muteElement = document.getElementById("unmute_id");
-            if (!_.isNull(muteElement))
-                muteElement.style.display = "none";
-            AudioManager.unmute();
             data.callback();
         });
 
