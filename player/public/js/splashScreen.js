@@ -37,7 +37,6 @@ var splashScreen = {
     },
 
     hide: function(event) {
-      console.info("Hide Splash Screen !!!")
         jQuery(splashScreen.elementId).hide();
     }
 }
