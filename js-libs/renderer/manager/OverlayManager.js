@@ -308,7 +308,6 @@ OverlayManager = {
             "pluginId": Renderer.theme._id,
             "value": navigateTo
         };
-        // (action.effect) =  (action.effect) || "fadeIn",
         action.transitionType = navType;
         CommandManager.handle(action);
     },

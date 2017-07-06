@@ -231,7 +231,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             Renderer.theme.resume();
     },
     relaunch: function(){
-        OverlayManager.defaultNavigation('previous', Renderer.theme._data.startStage)
+        OverlayManager.defaultNavigation(undefined, Renderer.theme._data.startStage)
         var data = {};
         data.mode = getPreviewMode();
         TelemetryService.start(GlobalContext.game.id, GlobalContext.game.ver, data);
