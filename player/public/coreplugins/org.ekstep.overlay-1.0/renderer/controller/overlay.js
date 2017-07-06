@@ -150,7 +150,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
 
     $scope.replayCallback = function(){
         $scope.hideMenu();
-        EkstepRendererAPI.dispatchEvent('renderer:content:replay');    
+        EkstepRendererAPI.dispatchEvent('renderer:content:replay');
     }
 
     $scope.init();
@@ -163,9 +163,6 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     $scope.imageBasePath = AppConfig.assetbase;
 
     $scope.hideUserSwitchingModal = function() {
-        TelemetryService.interact("TOUCH", "gc_userswitch_popup_close", "TOUCH", {
-            stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-        });
         $rootScope.safeApply(function() {
             $scope.showUserSwitchModal = false;
         });
@@ -223,6 +220,9 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     // When the user clicks on replayContent, replayContent the content
     $scope.replayContent = function() {
         var replayContent = true;
+        TelemetryService.interact("TOUCH", 'gc_userswitch_replayContent', "TOUCH", {
+             stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+         });
         $scope.switchUser(replayContent);
     }
 
@@ -230,6 +230,9 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     $scope.continueContent = function() {
         // here the user Selection happens
         var replayContent = false;
+        TelemetryService.interact("TOUCH", 'gc_userswitch_continue', "TOUCH", {
+             stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+         });
         $scope.switchUser(replayContent);
     }
 
@@ -242,45 +245,48 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                     $rootScope.currentUser = $scope.selectedUser;
                     $rootScope.currentUser.userIndex = $rootScope.sortingIndex -= 1;
                     $scope.selectedUser = {};
+
+                    if (replayContent == true) {
+                         var data = {
+                            'callback': $scope.replayCallback
+                        };
+                        TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                        EkstepRendererAPI.dispatchEvent('renderer:content:end', undefined, data);
+                    } else {
+                        if (userSwitchHappened) {
+                            var version = TelemetryService.getGameVer();;
+                            var gameId = TelemetryService.getGameId();
+                            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                            TelemetryService.end();
+                            TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                            var data = {};
+                            data.stageid = EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId;
+                            data.mode = getPreviewMode();
+                            TelemetryService.start(gameId, version, data);
+                        }
+                    }
+                    
                 });
             }).catch(function(err) {
                 console.log(err);
             })
         }
-        $scope.closeUserSwitchingModal();
-
-        if(replayContent == true){
-             var data = {
-                'interactId' : 'gc_userswitch_replayContent',
-                'callback': $scope.replayCallback
-            };
-            EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
-        }else{
-           TelemetryService.interact("TOUCH", 'gc_userswitch_continue', "TOUCH", {
-                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-            });
-            if (userSwitchHappened) {
-                var version = TelemetryService.getGameVer();;
-                var gameId = TelemetryService.getGameId();
-                TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-
-                TelemetryService.end();
-                TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                var data = {};
-                data.mode = getPreviewMode();
-                TelemetryService.start(gameId, version, data);
-            }
-        }
+        $scope.closeUserSwitchingModal(false);
     }
 
-    $scope.replayCallback = function(){
-        var stageId = TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+    $scope.replayCallback = function() {
+        TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
         EkstepRendererAPI.dispatchEvent('event:closeUserSwitchingModal')
         EkstepRendererAPI.hideEndPage();
         EkstepRendererAPI.dispatchEvent('renderer:content:replay');
     }
 
-    $scope.closeUserSwitchingModal = function() {
+    $scope.closeUserSwitchingModal = function(logTelemetry) {
+        if (logTelemetry) {
+          TelemetryService.interact("TOUCH", "gc_userswitch_popup_close", "TOUCH", {
+            stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+          });
+        }
         EkstepRendererAPI.dispatchEvent('event:closeUserSwitchingModal');
     }
 
@@ -391,7 +397,7 @@ app.compileProvider.directive('menu', function($rootScope, $sce) {
         link: function(scope) {
 	        scope.getTemplate = function() {
                 return scope.pluginInstance._menuTP;
-			}            
+			}
 		},
 	    template: "<div ng-include=getTemplate()></div>"
     }

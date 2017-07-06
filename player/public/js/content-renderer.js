@@ -15,29 +15,32 @@ org.ekstep.contentrenderer.init = function() {
      */
     window.initializePreview = org.ekstep.contentrenderer.initializePreview;
     window.setContentData = org.ekstep.contentrenderer.setContent;
-    org.ekstep.contentrenderer.loadDefaultPlugins();
     console.info('Content renderer starts');
 };
 
-org.ekstep.contentrenderer.loadDefaultPlugins = function(){
-    var previewData = {};
+org.ekstep.contentrenderer.loadDefaultPlugins = function(cb){
     org.ekstep.contentrenderer.initPlugins('', 'coreplugins');
     console.info("Plugin repo path is = ",org.ekstep.pluginframework.config.pluginRepo);
     org.ekstep.contentrenderer.loadPlugins(AppConfig.DEFAULT_PLUGINS,[],function(){
         console.info('Canvas Default plugins are loaded..');
+                if(cb) cb()
     });
 };
 
+
 org.ekstep.contentrenderer.startGame = function(appInfo) {
-    org.ekstep.contentrenderer.loadExternalPlugins(function() {
-        console.info('Game is starting..')
-        if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
-            EkstepRendererAPI.dispatchEvent('renderer:player:init');
-        } else {
-            !isbrowserpreview ? EkstepRendererAPI.dispatchEvent('renderer:collection:show') : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
-        }
+    org.ekstep.contentrenderer.loadDefaultPlugins(function() {
+        org.ekstep.contentrenderer.loadExternalPlugins(function() {
+            console.info('Game is starting..')
+            if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
+                EkstepRendererAPI.dispatchEvent('renderer:player:init');
+            } else {
+                !isbrowserpreview ? EkstepRendererAPI.dispatchEvent('renderer:collection:show') : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
+            }
+        });
     });
 };
+
 
 org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
     previewData = EkstepRendererAPI.getPreviewData();

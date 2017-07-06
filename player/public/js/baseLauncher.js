@@ -20,7 +20,7 @@ init:function(data){
 
 /**
  * Initializes of the launcher with the given data.
- * @param data {object} return the manifest object data any launcher must extend initialize 
+ * @param data {object} return the manifest object data any launcher must extend initialize
  * method to load the launcher in globally
  * @memberof org.ekstep.contentrenderer.baseLauncher
  */
@@ -47,6 +47,7 @@ launch:function(){
 relaunch: function() {
     console.info('Base Launcher shuld construct');
     var data = {};
+		data.stageid = EkstepRendererAPI.getCurrentStageId();
     data.mode = getPreviewMode();
     TelemetryService.start(GlobalContext.game.id, GlobalContext.game.ver, data);
 },
