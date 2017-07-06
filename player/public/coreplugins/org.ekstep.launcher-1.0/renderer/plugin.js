@@ -21,7 +21,9 @@ Plugin.extend({
         var contentTypePlugin = _.findWhere(AppConfig.CONTENT_LAUNCHERS, {
             'mimeType': content.mimeType
         });
+        console.info("Launcher:before",org.ekstep.pluginframework.config.pluginRepo);
         org.ekstep.contentrenderer.initPlugins('',AppConfig.CORE_PLUGINSPATH);
+        console.info("Launcher:after",org.ekstep.pluginframework.config.pluginRepo);
         if (!_.isUndefined(contentTypePlugin)) {
             this.loadPlugin(contentTypePlugin, content);
         }
@@ -33,7 +35,7 @@ Plugin.extend({
         org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
             instance.initTelemetry(content);
             console.log('LAUNCHER - content:load:' + content);
-            EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
+            EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize"); 
             EkstepRendererAPI.dispatchEvent('renderer:collection:hide');
             EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType, undefined, content);
         });

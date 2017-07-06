@@ -22,6 +22,7 @@ org.ekstep.contentrenderer.init = function() {
 org.ekstep.contentrenderer.loadDefaultPlugins = function(){
     var previewData = {};
     org.ekstep.contentrenderer.initPlugins('', 'coreplugins');
+    console.info("Plugin repo path is = ",org.ekstep.pluginframework.config.pluginRepo);
     org.ekstep.contentrenderer.loadPlugins(AppConfig.DEFAULT_PLUGINS,[],function(){
         console.info('Canvas Default plugins are loaded..');
     });
@@ -49,7 +50,8 @@ org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
                 console.info('Plugin loaded with repo..');
             });
         } else {
-            org.ekstep.contentrenderer.initPlugins('', AppConfig.PREVIEW_PLUGINSPATH)
+            org.ekstep.contentrenderer.initPlugins('', AppConfig.PREVIEW_PLUGINSPATH);
+            console.info("Load external plugin: repo:",org.ekstep.pluginframework.config.pluginRepo);
             org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins, [], function() {
                 console.info('Preview plugins are loaded without repo.');
             });
@@ -111,7 +113,7 @@ org.ekstep.contentrenderer.initPlugins = function(host, repoRelativePath) {
     }
     host = _.isUndefined(host) ? '' : host;
     var pluginRepo = host + repoRelativePath;
-    var pfConfig = {env: "renderer", async: async, pluginRepo: pluginRepo, repos: [org.ekstep.pluginframework.publishedRepo]
+    var pfConfig = {env: "renderer", async: async,build_number:AppConfig.version, pluginRepo: pluginRepo, repos: [org.ekstep.pluginframework.publishedRepo]
     };
     org.ekstep.pluginframework.initialize(pfConfig);
 };
