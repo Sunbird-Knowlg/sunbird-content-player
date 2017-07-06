@@ -21,6 +21,7 @@ org.ekstep.contentrenderer.init = function() {
 
 org.ekstep.contentrenderer.loadDefaultPlugins = function(){
     var previewData = {};
+    console.info("Default: before path = ",org.ekstep.pluginframework.config.pluginRepo);
     org.ekstep.contentrenderer.initPlugins('', 'coreplugins');
     console.info("Plugin repo path is = ",org.ekstep.pluginframework.config.pluginRepo);
     org.ekstep.contentrenderer.loadPlugins(AppConfig.DEFAULT_PLUGINS,[],function(){
@@ -113,7 +114,7 @@ org.ekstep.contentrenderer.initPlugins = function(host, repoRelativePath) {
     }
     host = _.isUndefined(host) ? '' : host;
     var pluginRepo = host + repoRelativePath;
-    var pfConfig = {env: "renderer", async: async, pluginRepo: pluginRepo, repos: [org.ekstep.pluginframework.publishedRepo]
+    var pfConfig = {env: "renderer", async: async,build_number:AppConfig.version, pluginRepo: pluginRepo, repos: [org.ekstep.pluginframework.publishedRepo]
     };
     org.ekstep.pluginframework.initialize(pfConfig);
 };
