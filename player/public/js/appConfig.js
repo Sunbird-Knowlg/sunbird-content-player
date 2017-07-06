@@ -37,12 +37,9 @@ AppConfig = {
         showNext: true,
         showPrevious: true,
         showSubmit: false,
-        showMenu: true,
         showReload: true,
         menu: {
-            showReplay: true,
-            showTeachersInstruction: true,
-            showHome: true
+            showTeachersInstruction: true
         },
     },
     splash: {
