@@ -22,6 +22,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
                 AppLables[key] = languageInfo[key];
             }
         }
+        $scope.AppLables = AppLables;
         var evtLenth = $scope.overlayEvents.length;
         for (var i = 0; i < evtLenth; i++) {
             var eventName = $scope.overlayEvents[i];
