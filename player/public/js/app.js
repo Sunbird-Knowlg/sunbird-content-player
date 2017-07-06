@@ -82,7 +82,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         app.compileProvider = $compileProvider;
 
     }).controller('BaseCtrl', function($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, appConstants) {
-        
+
         $scope.templates = [];
         function loadNgModules(templatePath, controllerPath, callback) {
             var loadFiles = [];
@@ -118,10 +118,12 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             injectTemplates(data.templatePath, data.scopeVariable, data.toElement);
         });
 
-        EkstepRendererAPI.addEventListener("renderer:content:end", function(event, data){
-            TelemetryService.interact("TOUCH", data.interactId, "TOUCH", {
+        EkstepRendererAPI.addEventListener("renderer:content:end", function(event, data) {
+            if (data.interactId) {
+              TelemetryService.interact("TOUCH", data.interactId, "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-            });
+              });
+            }
             TelemetryService.end();
             data.callback();
         });
