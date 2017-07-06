@@ -21,7 +21,6 @@ org.ekstep.contentrenderer.init = function() {
 
 org.ekstep.contentrenderer.loadDefaultPlugins = function(){
     var previewData = {};
-    console.info("Default: before path = ",org.ekstep.pluginframework.config.pluginRepo);
     org.ekstep.contentrenderer.initPlugins('', 'coreplugins');
     console.info("Plugin repo path is = ",org.ekstep.pluginframework.config.pluginRepo);
     org.ekstep.contentrenderer.loadPlugins(AppConfig.DEFAULT_PLUGINS,[],function(){
