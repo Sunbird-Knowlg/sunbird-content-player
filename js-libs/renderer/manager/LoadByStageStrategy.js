@@ -323,8 +323,7 @@ LoadByStageStrategy = Class.extend({
         var manifest = JSON.parse(JSON.stringify(this.stageManifests[stageId]));
         if (!_.isUndefined(this.loaders[stageId]) && this.loaders[stageId].stageLoaded) {
             return true
-        } else
-        if (_.isArray(manifest) && manifest.length == 0) {
+        } else if (_.isUndefined(this.loaders[stageId])) {
             return true
         }
         return false
