@@ -160,27 +160,28 @@ OverlayManager = {
             this.defaultSubmit();
             return;
         }
-        this.skipAndNavigateNext();
+        this.skipAndNavigateNext({"target": "next"});
       }catch(e){
         showToaster('error','Current scene having some issue');
         EkstepRendererAPI.logErrorEvent(e, {'severity':'fatal','type':'content','action':'transitionTo'});
         console.warn("Fails to navigate to next due to",e);
       }
     },
-    skipAndNavigateNext: function() {
+    skipAndNavigateNext: function(param) {
       try{
+        var actionType = param.target || "skip";
         this.clean();
         var navigateTo = this.getNavigateTo("next");
         if ("undefined" == typeof navigateTo) {
             if (_.isUndefined(Renderer.theme._currentScene)) return;
             var isItemScene = Renderer.theme._currentScene.isItemScene();
             if (isItemScene && !_.isUndefined(Renderer.theme._currentScene._stageController) && Renderer.theme._currentScene._stageController.hasNext()) {
-                this.defaultNavigation("next", navigateTo);
+                this.defaultNavigation(actionType, navigateTo);
             } else {
                 this.moveToEndPage();
             }
         } else {
-            this.defaultNavigation("next", navigateTo);
+            this.defaultNavigation(actionType, navigateTo);
         }
       }catch(e){
         showToaster('error','Current scene having some issue');
@@ -308,6 +309,7 @@ OverlayManager = {
             "pluginId": Renderer.theme._id,
             "value": navigateTo
         };
+        navType = (navType === "skip") ? "next" : navType;
         action.transitionType = navType;
         CommandManager.handle(action);
     },
