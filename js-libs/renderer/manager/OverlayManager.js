@@ -169,7 +169,7 @@ OverlayManager = {
     },
     skipAndNavigateNext: function(param) {
       try{
-        var actionType = param.target || "skip";
+        var actionType = (param) ? param.target : "skip";
         this.clean();
         var navigateTo = this.getNavigateTo("next");
         if ("undefined" == typeof navigateTo) {
