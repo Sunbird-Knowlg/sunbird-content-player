@@ -4,7 +4,7 @@ var splashScreen = {
         text: "Powered by EkStep Genie",
 		icon: "img/icons/icn_genie.png",
 		bgImage: "img/icons/background_1.png",
-		download_link: "https://www.ekstep.in"
+		webLink: "https://www.ekstep.in"
     },
     initialize: function() {
         var appConfigKeys = Object.keys(AppConfig.splash);
@@ -28,7 +28,7 @@ var splashScreen = {
     },
 
     createHtml: function() {
-        var html = '<img src=' + splashScreen.config.bgImage + ' class="gc-loader-img"/><a href= "' + splashScreen.config.download_link + '" target="_parent"><div class="splashScreen"><img src=' + splashScreen.config.icon + ' class="splash-icon "/><span id="pageTitle">' + splashScreen.config.text + '</span></div></a>';
+        var html = '<img src=' + splashScreen.config.bgImage + ' class="gc-loader-img"/><a href= "' + splashScreen.config.webLink + '" target="_parent"><div class="splashScreen"><img src=' + splashScreen.config.icon + ' class="splash-icon "/><span id="pageTitle">' + splashScreen.config.text + '</span></div></a>';
         return html;
     },
 

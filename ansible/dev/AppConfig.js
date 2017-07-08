@@ -17,6 +17,6 @@ AppConfig = {
 		text: "Powered by EkStep",
 		icon: "img/icons/icn_genie.png",
 		bgImage: "img/icons/background_1.png",
-		download_link: "http://www.ekstep.in"
+		webLink: "http://www.ekstep.in"
 	}
 }
