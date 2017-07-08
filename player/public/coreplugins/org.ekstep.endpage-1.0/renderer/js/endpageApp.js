@@ -238,7 +238,16 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                             }
                             EkstepRendererAPI.hideEndPage();
                             $rootScope.content = obj;
-                            EkstepRendererAPI.dispatchEvent('renderer:launcher:load', undefined, $rootScope.content);
+                            if (window.content.mimeType == obj.mimeType){
+                                window.content = obj;
+                                EkstepRendererAPI.clearStage();
+                                EkstepRendererAPI.dispatchEvent('renderer:content:load');
+                                EkstepRendererAPI.dispatchEvent('renderer:player:show');
+                                EkstepRendererAPI.dispatchEvent('renderer:splash:show');
+                            } else {
+                                window.content = obj;
+                                EkstepRendererAPI.dispatchEvent('renderer:launcher:load', undefined, window.content);
+                            }
                         });
                     } else {
                         $scope.navigateToDownloadPage(contentExtras, content.identifier);

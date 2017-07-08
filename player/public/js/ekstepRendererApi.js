@@ -1003,5 +1003,15 @@ window.EkstepRendererAPI = {
     */
     showPreviousNavigation: function(){
         EkstepRendererAPI.dispatchEvent('renderer:previous:show');
+    },
+
+    /**
+    * API to clear all cretejs element from canvas
+    * @memberof EkstepRendererAPI
+    */
+    clearStage: function(){
+        if (!_.isUndefined(Renderer) && !_.isUndefined(Renderer.theme)) {
+            Renderer.theme.clearStage();
+        }
     }
 }

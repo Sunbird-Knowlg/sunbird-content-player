@@ -4,16 +4,16 @@ AppConfig = {
     host: "",
     recorder: "AUDIO_RECORDER",
     flavor: "DEPLOYMENT",
-    s3_content_host: "/assets/public/content/",
-    preview_pluginspath: "/content-plugins",
-    device_pluginspath: "/widgets/content-plugins",
-    core_pluginspath: 'coreplugins',
+    s3ContentHost: "/assets/public/content/",
+    previewPluginspath: "/content-plugins",
+    devicePluginspath: "/widgets/content-plugins",
+    corePluginspath: 'coreplugins',
     apislug: '/action',
     configFeilds: ['origin', 'contentId', 'appInfo', 'languageInfo', 'contentExtras', 'appQualifier', 'mode', 'sid', 'uid','did', 'channel', 'etags', 'pdata', 'cdata', 'contentLaunchers', 'overlay', 'splash'],
     mimetypes: [
         "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"
     ],
-    default_metadata: {
+    defaultMetadata: {
         "identifier": "org.ekstep.item.sample",
         "mimeType": "application/vnd.ekstep.ecml-archive",
         "name": "Content Preview ",
@@ -27,7 +27,7 @@ AppConfig = {
         "isAvailable": true,
         "path": ""
     },
-    content_launchers: [
+    contentLaunchers: [
         {
             mimeType: 'application/vnd.ekstep.html-archive',
             id: 'org.ekstep.htmlrenderer',
@@ -41,7 +41,7 @@ AppConfig = {
         }
     ],
     assetbase: 'assets/icons/',
-    default_plugins: [
+    defaultPlugins: [
         {
             id: 'org.ekstep.launcher',
             ver: 1.0,

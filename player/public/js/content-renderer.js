@@ -21,7 +21,7 @@ org.ekstep.contentrenderer.init = function() {
 org.ekstep.contentrenderer.loadDefaultPlugins = function(cb){
     org.ekstep.contentrenderer.initPlugins('', 'coreplugins');
     console.info("Plugin repo path is = ",org.ekstep.pluginframework.config.pluginRepo);
-    org.ekstep.contentrenderer.loadPlugins(AppConfig.default_plugins,[],function(){
+    org.ekstep.contentrenderer.loadPlugins(AppConfig.defaultPlugins,[],function(){
         console.info('Canvas Default plugins are loaded..');
                 if(cb) cb()
     });
@@ -53,7 +53,7 @@ org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
                 console.info('Plugin loaded with repo..');
             });
         } else {
-            org.ekstep.contentrenderer.initPlugins('', AppConfig.preview_pluginspath);
+            org.ekstep.contentrenderer.initPlugins('', AppConfig.previewPluginspath);
             console.info("Load external plugin: repo:",org.ekstep.pluginframework.config.pluginRepo);
             org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins, [], function() {
                 console.info('Preview plugins are loaded without repo.');
@@ -65,7 +65,7 @@ org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
 
 org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) {
     if (_.isUndefined(metadata) || _.isNull(metadata)) {
-        content.metadata = AppConfig.default_metadata
+        content.metadata = AppConfig.defaultMetadata
     } else {
         content.metadata = metadata;
     }
