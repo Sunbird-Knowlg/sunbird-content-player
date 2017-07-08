@@ -65,25 +65,28 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
 
     $scope.initializePlayer = function() {
         $scope.isInitialized = true;
-        $scope.showPlayer = true;
-        $scope.safeApply();
+        EkstepRendererAPI.dispatchEvent('renderer:player:show');
         $scope.init();
     }
 
-    $scope.hidePlayer = function() {
+    $scope.hideCanvasPlayer = function() {
         $scope.showPlayer = false;
+        $scope.safeApply();
+    }
+
+    $scope.showCanvasPlayer = function() {
+        $scope.showPlayer = true;
         $scope.safeApply();
     }
     
     EkstepRendererAPI.addEventListener("renderer:player:init", $scope.initializePlayer);
-    EkstepRendererAPI.addEventListener("renderer:content:end", $scope.hidePlayer);
-
-    EkstepRendererAPI.addEventListener('renderer:player:hide', $scope.hidePlayer);
+    EkstepRendererAPI.addEventListener("renderer:content:end", $scope.hideCanvasPlayer);
+    EkstepRendererAPI.addEventListener('renderer:player:hide', $scope.hideCanvasPlayer);
+    EkstepRendererAPI.addEventListener('renderer:player:show', $scope.showCanvasPlayer);
 
     EkstepRendererAPI.addEventListener('renderer:content:replay', function(){
         $rootScope.$broadcast('renderer:overlay:unmute');
-        $scope.showPlayer = true;
-        $scope.safeApply();
+        EkstepRendererAPI.dispatchEvent('renderer:player:show')
     });
 
     /* TODO: Temporary solution so load content. init event is dispatched before loading/compiling this controller */
@@ -91,8 +94,7 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
         if($scope.isInitialized){
             $scope.isInitialized = false;
         } else {
-            $scope.showPlayer = true;
-            $scope.safeApply();
+            EkstepRendererAPI.dispatchEvent('renderer:player:show');
             $scope.init();            
         }
     }, 2000);

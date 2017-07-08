@@ -23,6 +23,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initialize: function() {
         console.info('ECML Renderer initialize');
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.relaunchGame, this);
+        EkstepRendererAPI.addEventListener('renderer:content:load', this.start, this);
         // EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
         this.start();
@@ -173,7 +174,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         (_.isUndefined(pluginManifest) || _.isEmpty(pluginManifest)) && (pluginManifest = { plugin: [] });
         try {
             org.ekstep.contentrenderer.loadPlugins(pluginManifest.plugin, resource, function() {
-                EkstepRendererAPI.dispatchEvent('renderer:genie:show');
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {

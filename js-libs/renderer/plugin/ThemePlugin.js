@@ -548,6 +548,14 @@ var ThemePlugin = Plugin.extend({
             }
         });
         return stageData;
-    }
+    },
+
+    /**
+     * Remove all create js element from canvas
+     * @memberof ThemePlugin
+     */
+     clearStage: function() {
+        this._self.clear();
+     }
 });
 PluginManager.registerPlugin('theme', ThemePlugin);
