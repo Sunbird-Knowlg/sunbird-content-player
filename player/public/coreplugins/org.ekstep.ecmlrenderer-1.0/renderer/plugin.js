@@ -166,7 +166,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         instance.resizeGame(true);
         Renderer.theme.baseDir = dataObj.path;
         var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);
-        var pluginsPath = isbrowserpreview ? AppConfig.PREVIEW_PLUGINSPATH : AppConfig.DEVICE_PLUGINSPATH
+        var pluginsPath = isbrowserpreview ? AppConfig.preview_pluginspath : AppConfig.device_pluginspath
         org.ekstep.contentrenderer.initPlugins(dataObj.path, pluginsPath);
         var resource = instance.handleRelativePath(instance.getResource(manifest), dataObj.path + '/widgets/');
         var pluginManifest = content["plugin-manifest"];

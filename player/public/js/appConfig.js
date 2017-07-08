@@ -1,18 +1,18 @@
 AppConfig = {
     version: "BUILD_NUMBER",
-    PROCESSING_TIMEOUT: 10, // in minutes
+    processing_timeout: 10, // in minutes
     host: "",
     recorder: "AUDIO_RECORDER",
     flavor: "DEPLOYMENT",
-    S3_CONTENT_HOST: "/assets/public/content/",
-    PREVIEW_PLUGINSPATH: "/content-plugins",
-    DEVICE_PLUGINSPATH: "/widgets/content-plugins",
-    CORE_PLUGINSPATH: 'coreplugins',
+    s3_content_host: "/assets/public/content/",
+    preview_pluginspath: "/content-plugins",
+    device_pluginspath: "/widgets/content-plugins",
+    core_pluginspath: 'coreplugins',
     apislug: '/action',
 
-    MIMETYPES:["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
-    DEFAULT_METADATA: {"identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author": "EkStep", "localData": {"name": "Content Preview ", "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "identifier": "org.ekstep.item.sample", "pkgVersion": 1 }, "isAvailable": true, "path": ""},
-    CONTENT_LAUNCHERS: [{
+    mimetypes:["application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"],
+    default_metadata: {"identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.ecml-archive", "name": "Content Preview ", "author": "EkStep", "localData": {"name": "Content Preview ", "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "identifier": "org.ekstep.item.sample", "pkgVersion": 1 }, "isAvailable": true, "path": ""},
+    content_launchers: [{
         mimeType: 'application/vnd.ekstep.html-archive',
         id: 'org.ekstep.htmlrenderer',
         ver: 1.0,
@@ -23,8 +23,8 @@ AppConfig = {
         ver: 1.0,
         type: 'plugin'
     }],
-    assetbase : 'assets/icons/',    
-    DEFAULT_PLUGINS: [
+    assetbase : 'assets/icons/',
+    default_plugins: [
         {id: 'org.ekstep.launcher',ver: 1.0,type: 'plugin'},
         {id: 'org.ekstep.repo',ver: 1.0, type: 'plugin'},
         {id: 'org.ekstep.collection',ver: 1.0,type: 'plugin'}

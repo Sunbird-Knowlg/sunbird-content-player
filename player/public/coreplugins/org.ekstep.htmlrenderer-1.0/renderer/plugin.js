@@ -36,7 +36,7 @@
     },
     getAsseturl: function(content) {
         var content_type = "html/";
-        var path = window.location.origin + AppConfig.S3_CONTENT_HOST + content_type;
+        var path = window.location.origin + AppConfig.s3_content_host + content_type;
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
     },

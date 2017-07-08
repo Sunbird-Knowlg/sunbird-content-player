@@ -21,7 +21,7 @@ org.ekstep.contentrenderer.init = function() {
 org.ekstep.contentrenderer.loadDefaultPlugins = function(cb){
     org.ekstep.contentrenderer.initPlugins('', 'coreplugins');
     console.info("Plugin repo path is = ",org.ekstep.pluginframework.config.pluginRepo);
-    org.ekstep.contentrenderer.loadPlugins(AppConfig.DEFAULT_PLUGINS,[],function(){
+    org.ekstep.contentrenderer.loadPlugins(AppConfig.default_plugins,[],function(){
         console.info('Canvas Default plugins are loaded..');
                 if(cb) cb()
     });
@@ -32,7 +32,7 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
     org.ekstep.contentrenderer.loadDefaultPlugins(function() {
         org.ekstep.contentrenderer.loadExternalPlugins(function() {
             console.info('Game is starting..')
-            if (AppConfig.MIMETYPES.indexOf(appInfo.mimeType) > -1) {
+            if (AppConfig.mimetypes.indexOf(appInfo.mimeType) > -1) {
                 EkstepRendererAPI.dispatchEvent('renderer:player:init');
             } else {
                 !isbrowserpreview ? EkstepRendererAPI.dispatchEvent('renderer:collection:show') : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
@@ -53,7 +53,7 @@ org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
                 console.info('Plugin loaded with repo..');
             });
         } else {
-            org.ekstep.contentrenderer.initPlugins('', AppConfig.PREVIEW_PLUGINSPATH);
+            org.ekstep.contentrenderer.initPlugins('', AppConfig.preview_pluginspath);
             console.info("Load external plugin: repo:",org.ekstep.pluginframework.config.pluginRepo);
             org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins, [], function() {
                 console.info('Preview plugins are loaded without repo.');
@@ -65,7 +65,7 @@ org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
 
 org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) {
     if (_.isUndefined(metadata) || _.isNull(metadata)) {
-        content.metadata = AppConfig.DEFAULT_METADATA
+        content.metadata = AppConfig.default_metadata
     } else {
         content.metadata = metadata;
     }

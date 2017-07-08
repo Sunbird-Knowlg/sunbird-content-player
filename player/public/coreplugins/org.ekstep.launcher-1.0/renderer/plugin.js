@@ -18,11 +18,11 @@ Plugin.extend({
     },
     start: function(evt, content) {
         console.info('LAUNCHER - start content load');
-        var contentTypePlugin = _.findWhere(AppConfig.CONTENT_LAUNCHERS, {
+        var contentTypePlugin = _.findWhere(AppConfig.content_launchers, {
             'mimeType': content.mimeType
         });
         console.info("Launcher:before",org.ekstep.pluginframework.config.pluginRepo);
-        org.ekstep.contentrenderer.initPlugins('',AppConfig.CORE_PLUGINSPATH);
+        org.ekstep.contentrenderer.initPlugins('',AppConfig.core_pluginspath);
         console.info("Launcher:after",org.ekstep.pluginframework.config.pluginRepo);
         if (!_.isUndefined(contentTypePlugin)) {
             this.loadPlugin(contentTypePlugin, content);

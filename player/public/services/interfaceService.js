@@ -195,7 +195,7 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
     },
     _getAvailableContentList: function(list) {
         list = _.filter(list, function(item) {
-            return item.isAvailable && _.indexOf(AppConfig.MIMETYPES, item.mimeType) > -1;
+            return item.isAvailable && _.indexOf(AppConfig.mimetypes, item.mimeType) > -1;
         });
         list = _.map(list, function(item) {
             return org.ekstep.service.content._prepareContent(item);
