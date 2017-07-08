@@ -20,21 +20,15 @@ GlobalContext = {
         });
     },
     _setGlobalContext: function(resolve, reject) {
-        GlobalContext.config.userSwitcherEnabled = AppConfig.overlay.userSwitcherEnabled;
-        GlobalContext.config.showUser = AppConfig.overlay.showUser;
-
         new Promise(function(resolve, reject) {
+
             if(window.plugins && window.plugins.webintent) {
                 var promises = [];
-                promises.push(GlobalContext._getIntentExtra('origin', GlobalContext.config));
-                promises.push(GlobalContext._getIntentExtra('contentId', GlobalContext.config));
-                promises.push(GlobalContext._getIntentExtra('appInfo', GlobalContext.config));
-                promises.push(GlobalContext._getIntentExtra('languageInfo', GlobalContext.config));
-                promises.push(GlobalContext._getIntentExtra('contentExtras', GlobalContext.config));
-                promises.push(GlobalContext._getIntentExtra('appQualifier', GlobalContext.config));
-                promises.push(GlobalContext._getIntentExtra('mode', GlobalContext.config));
-                promises.push(GlobalContext._getIntentExtra('userSwitcherEnabled', GlobalContext.config));
-                promises.push(GlobalContext._getIntentExtra('showUser', GlobalContext.config));
+            
+                for(var i = 0; i < AppConfig.configFields; i++){
+                    promises.push(GlobalContext._getIntentExtra(AppConfig.configFields[i],  GlobalContext.config));
+                }
+                console.log("GlobalContext.configFields: ", GlobalContext.config);
 
                 Promise.all(promises)
                 .then(function(result) {
@@ -44,6 +38,15 @@ GlobalContext = {
                         GlobalContext.game.id = GlobalContext.config.appInfo.identifier;
                         GlobalContext.game.ver = GlobalContext.config.appInfo.pkgVersion || "1";
                         GlobalContext.game.contentExtras = GlobalContext.config.contentExtras;
+
+                        GlobalContext._params.sid = GlobalContext.config.sid;
+                        GlobalContext._params.uid = GlobalContext.config.uid;
+                        GlobalContext._params.did = GlobalContext.config.did;
+                        GlobalContext._params.channel = GlobalContext.config.channel;
+                        GlobalContext._params.etags = GlobalContext.config.etags;
+                        GlobalContext._params.pdata = GlobalContext.config.pdata;
+                        GlobalContext._params.cdata = GlobalContext.config.cdata;
+
                         // GlobalContext.config.contentExtras.switchingUser = true;`
                         // Assuming filter is always an array of strings.
                         GlobalContext.filter = (GlobalContext.config.appInfo.filter)? JSON.parse(GlobalContext.config.appInfo.filter): GlobalContext.config.appInfo.filter;
@@ -69,7 +72,16 @@ GlobalContext = {
                     }
                 });
             } else {
-                GlobalContext.config = {userSwitcherEnabled: AppConfig.overlay.userSwitcherEnabled, showUser: AppConfig.overlay.showUser, origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping", appInfo: {code:"org.ekstep.quiz.app", mimeType: "application/vnd.android.package-archive", identifier:"org.ekstep.quiz.app"}};
+                GlobalContext.config = {
+                    overlay: AppConfig.overlay,
+                    origin: "Genie", 
+                    contentId: "org.ekstep.num.addition.by.grouping", 
+                    appInfo: {
+                        code:"org.ekstep.quiz.app", 
+                        mimeType: "application/vnd.android.package-archive", 
+                        identifier:"org.ekstep.quiz.app"
+                    }
+                };
                 resolve(GlobalContext.config);
             }
         })

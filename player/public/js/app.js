@@ -7,7 +7,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
     .constant("appConstants", {"contentId": "contentId", "stateContentList": "contentList", "stateShowContent": "showContent", "statePlayContent": "playContent", "stateShowContentEnd": "showContentEnd"})
     .run(function($rootScope, $ionicPlatform, $location, $timeout, $state, $stateParams, appConstants) {
         $rootScope.enableEval = false;
-        $rootScope.userSwitcherEnabled = undefined;
+        $rootScope.enableUserSwitcher = undefined;
         $rootScope.showUser = undefined;
         $rootScope.sortingIndex = 0;
         $rootScope.users = [];

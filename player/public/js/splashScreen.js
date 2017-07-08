@@ -24,7 +24,7 @@ var splashScreen = {
             EkstepRendererAPI.addEventListener("renderer:splash:show", instance.show);
             EkstepRendererAPI.addEventListener("renderer:splash:hide", instance.hide);
             EkstepRendererAPI.addEventListener("renderer:content:start", instance.hide);
-        }, 0);
+        }, 100);
     },
 
     createHtml: function() {

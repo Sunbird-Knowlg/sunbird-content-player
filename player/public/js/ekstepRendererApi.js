@@ -858,8 +858,8 @@ window.EkstepRendererAPI = {
     * @memberof EkstepRendererAPI
     * @param value {boolean} true/false to show/hide the user
     */
-   userSwitcherEnabled: function(value) {
-       EkstepRendererAPI.dispatchEvent('event:userswitcherenabled', value);
+   enableUserSwitcher: function(value) {
+       EkstepRendererAPI.dispatchEvent('event:enableUserSwitcher', value);
    },
 
    /**

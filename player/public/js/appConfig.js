@@ -9,7 +9,7 @@ AppConfig = {
     device_pluginspath: "/widgets/content-plugins",
     core_pluginspath: 'coreplugins',
     apislug: '/action',
-
+    configFeilds: ['origin', 'contentId', 'appInfo', 'languageInfo', 'contentExtras', 'appQualifier', 'mode', 'sid', 'uid','did', 'channel', 'etags', 'pdata', 'cdata', 'contentLaunchers', 'overlay', 'splash'],
     mimetypes: [
         "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"
     ],
@@ -58,7 +58,7 @@ AppConfig = {
 
     ],
     overlay: {
-        userSwitcherEnabled: true,
+        enableUserSwitcher: true,
         showUser: true,
         showOverlay: true,
         showNext: true,

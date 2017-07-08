@@ -8,6 +8,8 @@ TelemetryService = {
     _gameErrorFile: undefined,
     _gameData: undefined,
     _correlationData: undefined,
+    _producerData: undefined,
+    _etags: undefined,
     _data: [],
     _gameIds: [],
     _user: {},

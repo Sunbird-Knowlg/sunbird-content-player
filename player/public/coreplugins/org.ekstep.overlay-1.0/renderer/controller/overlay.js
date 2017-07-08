@@ -175,7 +175,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     }
 
     $scope.showUserSwitchingModal = function() {
-        if ($rootScope.userSwitcherEnabled) {
+        if ($rootScope.enableUserSwitcher) {
             TelemetryService.interact("TOUCH", "gc_userswitch_popup_open", "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
             });
@@ -297,11 +297,11 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     }
 
     $scope.initializeCtrl = function() {
-        $rootScope.showUser = GlobalContext.config.showUser;
-        $rootScope.userSwitcherEnabled = GlobalContext.config.userSwitcherEnabled;
+        $rootScope.showUser = GlobalContext.config.overlay.showUser;
+        $rootScope.enableUserSwitcher = GlobalContext.config.overlay.enableUserSwitcher;
 
-        EventBus.addEventListener("event:userSwitcherEnabled", function(value) {
-            $rootScope.userSwitcherEnabled = value.target;
+        EventBus.addEventListener("event:enableUserSwitcher", function(value) {
+            $rootScope.enableUserSwitcher = value.target;
         });
 
         EventBus.addEventListener("event:showUser", function(value) {
@@ -317,26 +317,26 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
         });
 
         EventBus.addEventListener("event:getcurrentuser", function() {
-            if (GlobalContext.config.showUser)
+            if (GlobalContext.config.overlay.showUser)
                 currentUser = $rootScope.currentUser;
         });
 
         EventBus.addEventListener("event:getuserlist", function() {
-            if (GlobalContext.config.showUser)
+            if (GlobalContext.config.overlay.showUser)
                 userList = $rootScope.users;
         });
 
         EventBus.addEventListener("event:showuser", function(value) {
-            GlobalContext.config.showUser = value;
+            GlobalContext.config.overlay.showUser = value;
             $rootScope.safeApply = function() {
                 $rootScope.showUser = value;
             }
         });
 
-        EventBus.addEventListener("event:userswitcherenabled", function(value) {
-            GlobalContext.config.userSwitcherEnabled = value;
+        EventBus.addEventListener("event:enableUserSwitcher", function(value) {
+            GlobalContext.config.overlay.enableUserSwitcher = value;
             $rootScope.safeApply = function() {
-                $rootScope.userSwitcherEnabled = value;
+                $rootScope.enableUserSwitcher = value;
             }
         });
 
@@ -557,7 +557,7 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
                 return pluginsObjs._userSwitcherTP;
             }
 			scope.init = function() {
-				if (GlobalContext.config.showUser === true) {
+				if (GlobalContext.config.overlay.showUser === true) {
 					userSlider.mCustomScrollbar('destroy');
 					groupSlider.mCustomScrollbar('destroy');
 					scope.initializeCtrl();
