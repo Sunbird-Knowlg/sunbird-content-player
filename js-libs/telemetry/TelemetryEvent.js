@@ -4,11 +4,12 @@ TelemetryEvent = Class.extend({
     startTime: 0,
     name: undefined,
     event: undefined,
-    init: function(eid, version, body, user, gdata, cdata) {
+    init: function(eid, version, body, user, gdata, cdata, otherData) {
         if("undefined" != gdata && "undefined" == gdata.ver)
             gdata.ver = "1";
         this.createdTime = getCurrentTime();
         this.name = eid;
+
         this.event = {
             ver: version,
             sid: user.uid,
@@ -21,6 +22,32 @@ TelemetryEvent = Class.extend({
             gdata: gdata,
             cdata: cdata
         };
+        if(otherData){
+            var otherKeys = Object.keys(otherData);
+            for(var i=0; i<otherKeys.length; i++){
+                var keyName = otherKeys[i];
+
+                var sourceObj = this.event[keyName];
+                var targetObj = otherData[keyName];
+                if(sourceObj){
+                    // dtat is already present
+                    if(typeof(sourceObj) === 'object'){
+                        // data is of type object or Array
+                        if(Array.isArray(sourceObj)){
+                            sourceObj.append(targetObj);;
+                        } else {
+                            Object.assign(sourceObj, targetObj);
+                        }
+                    } else {
+                        // Data is of type 'string' or number
+                        sourceObj = targetObj;
+                    }
+                } else {
+                    // Data is not present
+                    this.event[keyName] = targetObj;                   
+                }
+            }
+        }
         TelemetryService._version == "1.0" ? this.event.ts = getTime(this.createdTime) : this.event.ets = getTime(this.createdTime);
     },
     flush: function(apiName) {

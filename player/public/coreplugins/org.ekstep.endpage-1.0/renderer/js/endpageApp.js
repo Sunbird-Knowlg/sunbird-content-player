@@ -128,7 +128,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
                 "id": CryptoJS.MD5(Math.random().toString()).toString(),
                 "type": "ContentSession"
             });
-            TelemetryService.init(tsObj._gameData, tsObj._user, correlationData);
+            TelemetryService.init(tsObj._gameData, tsObj._user, correlationData, []);
         }
 
         TelemetryService.interact("TOUCH", $rootScope.content.identifier, "TOUCH", {

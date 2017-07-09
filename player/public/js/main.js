@@ -204,7 +204,8 @@ function startTelemetry(id, ver, cb) {
         }];
     }
     correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
-    TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData).then(function(response) {
+    var otherData = {channel: "ekstep", etags: []};
+    TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData, otherData).then(function(response) {
         var data = {};
         data.mode =  getPreviewMode();
         TelemetryService.start(id, ver, data);
