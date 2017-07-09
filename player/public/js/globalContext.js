@@ -25,13 +25,14 @@ GlobalContext = {
             if(window.plugins && window.plugins.webintent) {
                 var promises = [];
             
-                for(var i = 0; i < AppConfig.configFields; i++){
+                for(var i = 0; i < AppConfig.configFields.length; i++){
                     promises.push(GlobalContext._getIntentExtra(AppConfig.configFields[i],  GlobalContext.config));
                 }
                 console.log("GlobalContext.configFields: ", GlobalContext.config);
 
                 Promise.all(promises)
                 .then(function(result) {
+                    AppConfig = _.extend(AppConfig, GlobalContext.config);
                     org.ekstep.service.renderer.initializeSdk(GlobalContext.config.appQualifier || 'org.ekstep.genieservices');
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
                         GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
