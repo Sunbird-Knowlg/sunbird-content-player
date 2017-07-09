@@ -318,7 +318,7 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     dest: 'content-editor/scripts/plugin-framework.min.js',
-                    cwd: 'public/js/thirdparty/',
+                    cwd: 'public/libs/',
                     action: 'download'
                 }]
             }
