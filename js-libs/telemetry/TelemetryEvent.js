@@ -13,8 +13,8 @@ TelemetryEvent = Class.extend({
         this.event = {
             ver: version,
             uid: user.uid,
-            sid: otherData.sid,
-            did: otherData.did,
+            sid: (otherData) ? (otherData.sid || "") : "",
+            did: (otherData) ? (otherData.did || "") : "",
             edata: {
                 eks: body || {}
             },
