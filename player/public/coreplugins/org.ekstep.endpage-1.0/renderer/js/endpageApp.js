@@ -218,7 +218,7 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                 subtype: "",
                 values: values
             });
-            TelemetryService.end();
+            TelemetryService.end(logContentProgress());
             GlobalContext.game.id = content.identifier
             GlobalContext.game.pkgVersion = content.pkgVersion;
             var contentExtras = [];

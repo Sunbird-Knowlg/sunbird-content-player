@@ -256,7 +256,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                         var version = TelemetryService.getGameVer();;
                         var gameId = TelemetryService.getGameId();
                         TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                        TelemetryService.end();
+                        TelemetryService.end(logContentProgress());
                         TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
                         var data = {};
                         data.stageid = EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId;
