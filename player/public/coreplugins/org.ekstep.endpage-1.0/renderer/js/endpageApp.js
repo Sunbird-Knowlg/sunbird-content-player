@@ -124,11 +124,8 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         if (_(TelemetryService.instance).isUndefined()) {
             var tsObj = localStorageGC.getItem('telemetryService');
             var correlationData = [];
-            correlationData.push({
-                "id": CryptoJS.MD5(Math.random().toString()).toString(),
-                "type": "ContentSession"
-            });
             var otherData = GlobalContext.config.otherData;
+            !_.isUndefined(otherData.cdata) ? correlationData.push(otherData.cdata) : correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(),"type": "ContentSession"});
             TelemetryService.init(tsObj._gameData, tsObj._user, correlationData, otherData);
         }
 
