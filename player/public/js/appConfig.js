@@ -9,6 +9,7 @@ AppConfig = {
     devicePluginspath: "/widgets/content-plugins",
     corePluginspath: 'coreplugins',
     apislug: '/action',
+    telemetryEventsConfigFields: ['sid', 'uid','did', 'channel', 'etags', 'pdata', 'cdata'],
     configFields: ['origin', 'contentId', 'appInfo', 'languageInfo', 'contentExtras', 'appQualifier', 'mode', 'sid', 'uid','did', 'channel', 'etags', 'pdata', 'cdata', 'contentLaunchers', 'overlay', 'splash'],
     mimetypes: [
         "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"
