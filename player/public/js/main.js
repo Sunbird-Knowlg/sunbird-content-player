@@ -307,3 +307,20 @@ function setConfigToAppConfig(telemetryData) {
         AppConfig[AppConfig.telemetryEventsConfigFields[i]] = telemetryData[AppConfig.telemetryEventsConfigFields[i]] || AppConfig[AppConfig.telemetryEventsConfigFields[i]];
     }
 }
+
+function logContentProgress(value) {
+    if (_.isUndefined(value)) {
+        if (!_.isUndefined(Renderer)) {
+            var stageLenth = Renderer.theme._data.stage.length;
+            var currentIndex = _.findIndex(Renderer.theme._data.stage, {
+                id: Renderer.theme._currentScene.id
+            });
+            currentIndex = currentIndex + 1;
+            return (currentIndex / stageLenth) * 100;
+        } else {
+            return 100;
+        }
+    } else {
+        return value;
+    }
+}
