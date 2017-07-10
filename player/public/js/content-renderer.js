@@ -99,6 +99,14 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
         configuration.context.contentId = getUrlParameter("id")
     }
     localStorageGC.clear();
+    var otherData = {};
+
+    for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
+        var data = configuration.context[AppConfig.telemetryEventsConfigFields[i]] || AppConfig[AppConfig.telemetryEventsConfigFields[i]];
+        if (data) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
+    }
+    GlobalContext.config.otherData = otherData;
+
     AppConfig = _.extend(AppConfig, configuration.config)
     window.globalConfig = configuration;
     org.ekstep.service.renderer.api.setBaseUrl(AppConfig.host + AppConfig.apislug);

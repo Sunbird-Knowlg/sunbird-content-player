@@ -76,11 +76,6 @@ GlobalContext = {
                     }
                 });
             } else {
-                var otherData = {};
-                for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
-                    var data = GlobalContext.config[i] || AppConfig[i];
-                    if (data) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
-                }
                 GlobalContext.config = {
                     overlay: AppConfig.overlay,
                     origin: "Genie",
@@ -89,8 +84,7 @@ GlobalContext = {
                         code: "org.ekstep.quiz.app",
                         mimeType: "application/vnd.android.package-archive",
                         identifier: "org.ekstep.quiz.app"
-                    },
-                    otherData: otherData
+                    }
                 };
                 resolve(GlobalContext.config);
             }
