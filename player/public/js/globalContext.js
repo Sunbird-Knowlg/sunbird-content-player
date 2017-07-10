@@ -32,8 +32,9 @@ GlobalContext = {
 
                 Promise.all(promises).then(function(result) {
                     var otherData = {};
-                    for (var i = 0; i < AppConfig.configFields.length; i++) {
-                        otherData[AppConfig.configFields[i]] = GlobalContext.config[i] || AppConfig[i];
+                    for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
+                        var data = GlobalContext.config[i] || AppConfig[i];
+                        if (data) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
                     }
                     GlobalContext.config.otherData = otherData;
                     org.ekstep.service.renderer.initializeSdk(GlobalContext.config.appQualifier || 'org.ekstep.genieservices');
@@ -76,8 +77,9 @@ GlobalContext = {
                 });
             } else {
                 var otherData = {};
-                for (var i = 0; i < AppConfig.configFields.length; i++) {
-                    otherData[AppConfig.configFields[i]] = GlobalContext.config[i] || AppConfig[i];
+                for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
+                    var data = GlobalContext.config[i] || AppConfig[i];
+                    if (data) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
                 }
                 GlobalContext.config = {
                     overlay: AppConfig.overlay,
