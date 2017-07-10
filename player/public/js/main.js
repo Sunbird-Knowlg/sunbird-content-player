@@ -301,3 +301,9 @@ function getPreviewMode() {
     }
     return mode;
 } 
+
+function setConfigToAppConfig(telemetryData) {
+    for (var i = 0; i<AppConfig.telemetryEventsConfigFields.length; i++) {
+        AppConfig[AppConfig.telemetryEventsConfigFields[i]] = telemetryData[AppConfig.telemetryEventsConfigFields[i]] || AppConfig[AppConfig.telemetryEventsConfigFields[i]];
+    }
+}
