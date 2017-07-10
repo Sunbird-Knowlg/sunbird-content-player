@@ -68,7 +68,7 @@ var TelemetryPlugin = Plugin.extend({
             this.listenTelementryEvent();
             var did = detectClient();
             this._requiredFields = {};
-            var extConfig = EkstepRendererAPI.getPreviewData();
+            var extConfig = EkstepRendererAPI.getGlobalConfig();
             this._requiredFields.uid = extConfig.context.uid || AppConfig.uid;
             this._requiredFields.sid = extConfig.context.sid || CryptoJS.MD5(Math.random().toString()).toString();
             this._requiredFields.did = extConfig.context.did || CryptoJS.MD5(JSON.stringify(did)).toString();
@@ -99,7 +99,7 @@ var TelemetryPlugin = Plugin.extend({
         };
         // "events": JSON.parse(telemetryData)
         // console.log("teleObj to send to api", teleObj);
-        var configuration = EkstepRendererAPI.getPreviewData();
+        var configuration = EkstepRendererAPI.getGlobalConfig();
         var headers = {};
         if (!_.isUndefined(configuration.context.authToken)) {
             headers["Authorization"] = 'Bearer ' + configuration.context.authToken;

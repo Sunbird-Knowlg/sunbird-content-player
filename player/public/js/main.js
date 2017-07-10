@@ -256,7 +256,7 @@ function addWindowUnloadEvent() {
         var y = e.pageY || e.clientY;
         !y && EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.getTelemetryService().end();
     }
-    if (EkstepRendererAPI.getPreviewData().context.mode === 'edit') {
+    if (EkstepRendererAPI.getGlobalConfig().context.mode === 'edit') {
         parent.document.getElementsByTagName('iframe')[0].contentWindow.onunload = function() {
             EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId());
             EkstepRendererAPI.getTelemetryService().end();
@@ -296,8 +296,8 @@ function getPreviewMode() {
    var mode = 'preview';
     if ("undefined" != typeof cordova) {
         mode = !_.isUndefined(GlobalContext.config.mode) ? GlobalContext.config.mode : 'play';
-    } else if (EkstepRendererAPI.getPreviewData().context.mode){
-        mode = EkstepRendererAPI.getPreviewData().context.mode;
+    } else if (EkstepRendererAPI.getGlobalConfig().context.mode){
+        mode = EkstepRendererAPI.getGlobalConfig().context.mode;
     }
     return mode;
 }

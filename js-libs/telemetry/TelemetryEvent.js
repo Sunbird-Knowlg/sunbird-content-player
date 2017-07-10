@@ -42,7 +42,7 @@ TelemetryEvent = Class.extend({
                         // Data is of type 'string' or number
                         sourceObj = targetObj;
                     }
-                } else {
+                } else if(targetObj){
                     // Data is not present
                     this.event[keyName] = targetObj;
                 }

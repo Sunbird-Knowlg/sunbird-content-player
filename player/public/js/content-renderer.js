@@ -43,7 +43,7 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
 
 
 org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
-    previewData = EkstepRendererAPI.getPreviewData();
+    previewData = EkstepRendererAPI.getGlobalConfig();
     console.info('Config==', previewData.config.plugins);
     if (previewData.config.plugins) {
         if (previewData.config.repos) {
@@ -103,7 +103,7 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
     }
     localStorageGC.clear();
     AppConfig = _.extend(AppConfig, configuration.config)
-    window.previewData = configuration;
+    window.globalConfig = configuration;
     org.ekstep.service.renderer.api.setBaseUrl(AppConfig.host + AppConfig.apislug);
     addWindowUnloadEvent();
     EkstepRendererAPI.dispatchEvent("event:loadContent");
@@ -192,7 +192,7 @@ org.ekstep.contentrenderer.setContentMetadata = function(contentData, cb) {
 };
 
 org.ekstep.contentrenderer.getContentBody = function(id) {
-    var configuration = EkstepRendererAPI.getPreviewData();
+    var configuration = EkstepRendererAPI.getGlobalConfig();
     var headers = org.ekstep.contentrenderer.urlparameter;
     if (!_.isUndefined(configuration.context.authToken)) {
         headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
@@ -220,7 +220,7 @@ org.ekstep.contentrenderer.urlparameter = function() {
 };
 
 org.ekstep.contentrenderer.web = function(id) {
-    var configuration = EkstepRendererAPI.getPreviewData();
+    var configuration = EkstepRendererAPI.getGlobalConfig();
     var headers = org.ekstep.contentrenderer.urlparameter;
     if (!_.isUndefined(configuration.context.authToken)) {
         headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
