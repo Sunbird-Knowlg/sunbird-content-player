@@ -4,7 +4,7 @@
 var content_renderer = function() {};
 content_renderer.prototype._ = window._;
 window.org.ekstep.contentrenderer = new content_renderer();
-window.previewData = {
+window.globalConfig = {
     'context': {},
     'config': {}
 };
@@ -44,7 +44,6 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
 
 org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
     previewData = EkstepRendererAPI.getGlobalConfig();
-    console.info('Config==', previewData.config.plugins);
     if (previewData.config.plugins) {
         if (previewData.config.repos) {
             EkstepRendererAPI.dispatchEvent('renderer:repo:create');

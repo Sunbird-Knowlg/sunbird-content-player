@@ -31,7 +31,11 @@ GlobalContext = {
                 console.log("GlobalContext.configFields: ", GlobalContext.config);
 
                 Promise.all(promises).then(function(result) {
-                    AppConfig = _.extend(AppConfig, GlobalContext.config);
+                    var otherData = {};
+                    for (var i = 0; i < AppConfig.configFields.length; i++) {
+                        otherData[AppConfig.configFields[i]] = GlobalContext.config[i] || AppConfig[i];
+                    }
+                    GlobalContext.config.otherData = otherData;
                     org.ekstep.service.renderer.initializeSdk(GlobalContext.config.appQualifier || 'org.ekstep.genieservices');
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
                         GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
