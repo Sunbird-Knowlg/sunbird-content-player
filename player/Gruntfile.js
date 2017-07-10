@@ -269,7 +269,7 @@ module.exports = function(grunt) {
             preview: {
                 src : ['www/**/*', '!www/preview/**']
             },
-            deletefiles: ['www/styles/ionic.css', 'www/styles/bookshelf_slider.css', 'www/styles/skin02.css', 'www/styles/toastr.min.css', 'www/styles/jquery.mCustomScrollbar.min.css', 'www/libs', 'www/js'],
+            deletefiles: ['www/styles/ionic.css', 'www/styles/bookshelf_slider.css', 'www/styles/skin02.css', 'www/styles/toastr.min.css', 'www/styles/jquery.mCustomScrollbar.min.css', 'www/libs', 'www/js','www/coreplugins/org.ekstep.collection-1.0'],
         },
         rename: {
             main: {
@@ -512,14 +512,6 @@ module.exports = function(grunt) {
                     from: ".css",
                     to: ".css?ver=BUILD_NUMBER"
                 }]
-            },
-            collectionplugin:{
-                src: ['www/scripts/renderer.script.min.js'],
-                overwrite: true,
-                replacements: [{
-                    from: "{id: 'org.ekstep.collection',ver: 1.0,type: 'plugin'}",
-                    to: ""
-                }]
             }
         },
         jsdoc: {
@@ -667,7 +659,7 @@ module.exports = function(grunt) {
     grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared', 'replace:xwalk_library']);
 
     //Build web prview
-    grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetry', 'concat:script', 'clean:deletefiles', 'injector:prview', 'replace:buildNumber', 'replace:collectionplugin']);
+    grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetry', 'concat:script', 'clean:deletefiles', 'injector:prview', 'replace:buildNumber']);
     grunt.registerTask('build-preview', ['preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
 
     //Build AAR
