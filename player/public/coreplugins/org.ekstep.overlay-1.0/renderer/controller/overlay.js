@@ -43,6 +43,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         EkstepRendererAPI.addEventListener("renderer:show:overlay", $scope.showOverlay);
         EkstepRendererAPI.addEventListener("renderer:overlay:hide", $scope.hideOverlay);
         EkstepRendererAPI.addEventListener("renderer:content:start", $scope.showOverlay);
+        EkstepRendererAPI.addEventListener("renderer:content:close", $scope.showOverlay);
         EkstepRendererAPI.addEventListener("renderer:content:end", $scope.hideOverlay);
     }
 
