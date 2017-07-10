@@ -69,7 +69,7 @@ var TelemetryPlugin = Plugin.extend({
             var did = detectClient();
             this._requiredFields = {};
             var extConfig = EkstepRendererAPI.getPreviewData();
-            this._requiredFields.uid = extConfig.context.uid || "anonymous";
+            this._requiredFields.uid = extConfig.context.uid || AppConfig.uid;
             this._requiredFields.sid = extConfig.context.sid || CryptoJS.MD5(Math.random().toString()).toString();
             this._requiredFields.did = extConfig.context.did || CryptoJS.MD5(JSON.stringify(did)).toString();
         }

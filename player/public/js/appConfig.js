@@ -75,5 +75,6 @@ AppConfig = {
         icon: "assets/icons/icn_genie.png",
         bgImage: "assets/icons/background_1.png",
         webLink: "https://www.ekstep.in"
-    }
+    },
+    uid: 'anonymous'
 }

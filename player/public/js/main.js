@@ -204,10 +204,7 @@ function startTelemetry(id, ver, cb) {
         }];
     }
     correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
-    var otherData = {};
-    for (var i=0; i<AppConfig.telemetryEventsConfigFields; i++) {
-        otherData.[AppConfig.telemetryEventsConfigFields[i]] = AppConfig[AppConfig.telemetryEventsConfigFields[i]];
-    }
+    var otherData = getAppConfigDetails();
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData, otherData).then(function(response) {
         var data = {};
         data.mode =  getPreviewMode();
@@ -309,6 +306,14 @@ function setConfigToAppConfig(telemetryData) {
     for (var i = 0; i<AppConfig.telemetryEventsConfigFields.length; i++) {
         AppConfig[AppConfig.telemetryEventsConfigFields[i]] = telemetryData[AppConfig.telemetryEventsConfigFields[i]] || AppConfig[AppConfig.telemetryEventsConfigFields[i]];
     }
+}
+
+function getAppConfigDetails() {
+    var otherData = {};
+    for (var i=0; i<AppConfig.telemetryEventsConfigFields.length;i++) {
+        otherData[AppConfig.telemetryEventsConfigFields[i]] = AppConfig[AppConfig.telemetryEventsConfigFields[i]];
+    }
+    return otherData;
 }
 
 function logContentProgress(value) {

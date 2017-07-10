@@ -34,7 +34,7 @@ TelemetryEvent = Class.extend({
                     if(typeof(sourceObj) === 'object'){
                         // data is of type object or Array
                         if(Array.isArray(sourceObj)){
-                            sourceObj.append(targetObj);;
+                            sourceObj.push(targetObj);;
                         } else {
                             Object.assign(sourceObj, targetObj);
                         }
