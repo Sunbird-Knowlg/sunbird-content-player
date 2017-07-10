@@ -2,7 +2,7 @@ var packageName = "org.ekstep.quiz.app", version = AppConfig.version, packageNam
     geniePackageName = "org.ekstep.genieservices", currentUser = {}, userList = [],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
     stack = new Array(), collectionChildrenIds = new Array(), collectionPath = new Array(), collectionPathMap = {},
-    collectionChildren = true, content = {}, config = {showEndPage: true, showHTMLPages: true }, 
+    collectionChildren = true, content = {}, config = {showEndPage: true, showHTMLPages: true },
     isbrowserpreview = getUrlParameter("webview"), isCoreplugin = undefined, Renderer = undefined;
 
 document.body.addEventListener("logError", telemetryError, false);
@@ -68,7 +68,7 @@ function backbuttonPressed(pageId) {
 function exitApp(stageId) {
     if(!stageId){
         stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " ";
-    } 
+    }
     try {
         TelemetryService.exit();
     } catch (err) {
@@ -204,7 +204,10 @@ function startTelemetry(id, ver, cb) {
         }];
     }
     correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
-    var otherData = {channel: "ekstep", etags: []};
+    var otherData = {};
+    for (var i=0; i<AppConfig.telemetryEventsConfigFields; i++) {
+        otherData.[AppConfig.telemetryEventsConfigFields[i]] = AppConfig[AppConfig.telemetryEventsConfigFields[i]];
+    }
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData, otherData).then(function(response) {
         var data = {};
         data.mode =  getPreviewMode();
@@ -300,7 +303,7 @@ function getPreviewMode() {
         mode = EkstepRendererAPI.getPreviewData().context.mode;
     }
     return mode;
-} 
+}
 
 function setConfigToAppConfig(telemetryData) {
     for (var i = 0; i<AppConfig.telemetryEventsConfigFields.length; i++) {

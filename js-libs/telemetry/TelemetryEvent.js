@@ -30,7 +30,7 @@ TelemetryEvent = Class.extend({
                 var sourceObj = this.event[keyName];
                 var targetObj = otherData[keyName];
                 if(sourceObj){
-                    // dtat is already present
+                    // data is already present
                     if(typeof(sourceObj) === 'object'){
                         // data is of type object or Array
                         if(Array.isArray(sourceObj)){
@@ -44,7 +44,7 @@ TelemetryEvent = Class.extend({
                     }
                 } else {
                     // Data is not present
-                    this.event[keyName] = targetObj;                   
+                    this.event[keyName] = targetObj;
                 }
             }
         }
