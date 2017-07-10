@@ -42,7 +42,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
     }
     $scope.replayCallback = function(){
         EkstepRendererAPI.hideEndPage();
-        EkstepRendererAPI.dispatchEvent('renderer:content:replay');   
+        EkstepRendererAPI.dispatchEvent('renderer:content:replay');
     }
     $scope.showFeedback = function(param) {
         $scope.userRating = param;
@@ -128,7 +128,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
                 "id": CryptoJS.MD5(Math.random().toString()).toString(),
                 "type": "ContentSession"
             });
-            var otherData = getAppConfigDetails();
+            var otherData = GlobalContext.config.otherData;
             TelemetryService.init(tsObj._gameData, tsObj._user, correlationData, otherData);
         }
 

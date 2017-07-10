@@ -24,12 +24,12 @@ TelemetryEvent = Class.extend({
         };
         if(otherData){
             var otherKeys = Object.keys(otherData);
-            for(var i=0; i<otherKeys.length; i++){
+            for (var i=0; i<otherKeys.length; i++) {
                 var keyName = otherKeys[i];
 
                 var sourceObj = this.event[keyName];
                 var targetObj = otherData[keyName];
-                if(sourceObj){
+                if (sourceObj) {
                     // data is already present
                     if(typeof(sourceObj) === 'object'){
                         // data is of type object or Array

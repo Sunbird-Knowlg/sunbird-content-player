@@ -92,8 +92,6 @@ org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) 
 org.ekstep.contentrenderer.initializePreview = function(configuration) {
     if (_.isUndefined(configuration.context)) {
         configuration.context = {};
-    } else {
-        setConfigToAppConfig(configuration.context);
     }
     if (_.isUndefined(configuration.config)) {
         configuration.config = {};
