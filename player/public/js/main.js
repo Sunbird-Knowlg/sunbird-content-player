@@ -326,9 +326,9 @@ function getOtherData(context) {
         if (!_.isUndefined(data)) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
     }
     var etags = {
-        'dims':otherData.dims,
-        'app':otherData.dims,
-        'partner':otherData.partner
+        'dims':otherData.dims || AppConfig.etags.dims,
+        'app':otherData.app || AppConfig.etags.app,
+        'partner':otherData.partner ||  AppConfig.etags.partner
     };
     otherData.etags = etags;
     delete otherData.dims;

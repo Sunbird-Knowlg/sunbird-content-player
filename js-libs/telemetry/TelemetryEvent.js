@@ -29,7 +29,7 @@ TelemetryEvent = Class.extend({
 
                 var sourceObj = this.event[keyName];
                 var targetObj = otherData[keyName];
-                if (sourceObj) {
+                if (!_.isUndefined(sourceObj)) {
                     // data is already present
                     if(typeof(sourceObj) === 'object'){
                         // data is of type object or Array
@@ -42,7 +42,7 @@ TelemetryEvent = Class.extend({
                         // Data is of type 'string' or number
                         sourceObj = targetObj;
                     }
-                } else if(targetObj){
+                } else if(!_.isUndefined(targetObj)){
                     // Data is not present
                     this.event[keyName] = targetObj;
                 }
