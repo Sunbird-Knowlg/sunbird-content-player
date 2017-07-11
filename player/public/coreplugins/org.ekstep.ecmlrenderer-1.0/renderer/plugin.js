@@ -235,7 +235,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     relaunchGame: function(){
         this.relaunch();
-        OverlayManager.defaultNavigation(undefined, Renderer.theme._data.startStage);
+        Renderer.theme.replaceStage(Renderer.theme._data.startStage,{"duration": "100", "ease": "linear", "effect": "fadeIn", })
     }
 });
 
