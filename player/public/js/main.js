@@ -322,7 +322,7 @@ function logContentProgress(value) {
 function getOtherData(context) {
     var otherData = {};
     for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
-        var data = context[i] || AppConfig[i];
+        var data = context[AppConfig.telemetryEventsConfigFields[i]] || AppConfig[AppConfig.telemetryEventsConfigFields[i]];
         if (!_.isUndefined(data)) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
     }
     var etags = {

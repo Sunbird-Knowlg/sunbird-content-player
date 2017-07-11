@@ -82,6 +82,5 @@ AppConfig = {
         app: [],
         partner: [],
         dims: []
-    },
-    cdata: []
+    }
 }
