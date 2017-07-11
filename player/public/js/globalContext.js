@@ -31,12 +31,9 @@ GlobalContext = {
                 console.log("GlobalContext.configFields: ", GlobalContext.config);
 
                 Promise.all(promises).then(function(result) {
-                    var otherData = {};
-                    for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
-                        var data = GlobalContext.config[i] || AppConfig[i];
-                        if (data) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
-                    }
-                    GlobalContext.config.otherData = otherData;
+
+                    GlobalContext.config.otherData = getOtherData(GlobalContext.config);
+
                     org.ekstep.service.renderer.initializeSdk(GlobalContext.config.appQualifier || 'org.ekstep.genieservices');
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
                         GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);

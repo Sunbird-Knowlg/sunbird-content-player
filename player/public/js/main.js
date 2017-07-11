@@ -318,3 +318,22 @@ function logContentProgress(value) {
         return value;
     }
 }
+
+function getOtherData(context) {
+    var otherData = {};
+    for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
+        var data = context[i] || AppConfig[i];
+        if (!_.isUndefined(data)) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
+    }
+    var etags = {
+        'dims':otherData.dims,
+        'app':otherData.dims,
+        'partner':otherData.partner
+    };
+    otherData.etags = etags;
+    delete otherData.dims;
+    delete otherData.dims;
+    delete otherData.partner;
+
+    return otherData;
+}

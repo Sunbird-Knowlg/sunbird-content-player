@@ -79,9 +79,9 @@ AppConfig = {
     pdata: {},
     channel: "",
     etags: {
-        app: [""],
-        partner: [""],
-        dims: [""]
+        app: [],
+        partner: [],
+        dims: []
     },
     cdata: []
 }
