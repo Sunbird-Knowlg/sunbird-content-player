@@ -180,7 +180,8 @@ LoadByStageStrategy = Class.extend({
             var mediaList = JSON.parse(JSON.stringify(instance.stageManifests[stageId]));
             mediaList = _.uniq(mediaList, function(media) {
                 return media.assetId || media.id;
-            })
+            });
+            mediaList = instance.filterMedia(mediaList, "video");
             if (_.isArray(mediaList) && mediaList.length > 0) {
                 var loader = this._createLoader();
                 loader.stageLoaded = false;
@@ -219,10 +220,17 @@ LoadByStageStrategy = Class.extend({
             }
         }
     },
+    filterMedia: function(list, mediaType){
+        list = _.filter(list, function(obj){
+            return obj.type != mediaType;
+        });
+        return list;
+    },
     loadCommonAssets: function() {
         var loader = this._createLoader();
         loader.setMaxConnections(this.MAX_CONNECTIONS);
         loader.installPlugin(createjs.Sound);
+        this.commonAssets = this.filterMedia(this.commonAssets, "video");
         loader.loadManifest(this.commonAssets, true);
         loader.on("error", function(evt) {
             console.error("CommonLoader - asset preload error", evt);
@@ -232,6 +240,7 @@ LoadByStageStrategy = Class.extend({
     loadTemplateAssets: function() {
         var loader = this._createLoader();
         loader.setMaxConnections(this.MAX_CONNECTIONS);
+        this.templateAssets = this.filterMedia(this.templateAssets, "video");
         loader.installPlugin(createjs.Sound);
         loader.loadManifest(this.templateAssets, true);
         loader.on("error", function(evt) {
@@ -314,8 +323,7 @@ LoadByStageStrategy = Class.extend({
         var manifest = JSON.parse(JSON.stringify(this.stageManifests[stageId]));
         if (!_.isUndefined(this.loaders[stageId]) && this.loaders[stageId].stageLoaded) {
             return true
-        } else
-        if (_.isArray(manifest) && manifest.length == 0) {
+        } else if (_.isUndefined(this.loaders[stageId])) {
             return true
         }
         return false
