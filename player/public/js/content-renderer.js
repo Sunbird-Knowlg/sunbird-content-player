@@ -103,7 +103,7 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
 
     for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
         var data = configuration.context[AppConfig.telemetryEventsConfigFields[i]] || AppConfig[AppConfig.telemetryEventsConfigFields[i]];
-        if (data) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
+        if (!_.isUndefined(data)) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
     }
     GlobalContext.config.otherData = otherData;
 

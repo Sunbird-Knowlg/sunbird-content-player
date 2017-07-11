@@ -76,5 +76,12 @@ AppConfig = {
         bgImage: "assets/icons/background_1.png",
         webLink: "https://www.ekstep.in"
     },
-    uid: 'anonymous'
+    pdata: {},
+    channel: "",
+    etags: {
+        app: [""],
+        partner: [""],
+        dims: [""]
+    },
+    cdata: []
 }
