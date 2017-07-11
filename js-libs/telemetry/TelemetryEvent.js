@@ -12,9 +12,9 @@ TelemetryEvent = Class.extend({
 
         this.event = {
             ver: version,
-            sid: user.uid,
             uid: user.uid,
-            did: user.uid,
+            sid: (otherData) ? (otherData.sid || "") : "",
+            did: (otherData) ? (otherData.did || "") : "",
             edata: {
                 eks: body || {}
             },
@@ -24,17 +24,17 @@ TelemetryEvent = Class.extend({
         };
         if(otherData){
             var otherKeys = Object.keys(otherData);
-            for(var i=0; i<otherKeys.length; i++){
+            for (var i=0; i<otherKeys.length; i++) {
                 var keyName = otherKeys[i];
 
                 var sourceObj = this.event[keyName];
                 var targetObj = otherData[keyName];
-                if(sourceObj){
-                    // dtat is already present
+                if (sourceObj) {
+                    // data is already present
                     if(typeof(sourceObj) === 'object'){
                         // data is of type object or Array
                         if(Array.isArray(sourceObj)){
-                            sourceObj.append(targetObj);;
+                            sourceObj.push(targetObj);;
                         } else {
                             Object.assign(sourceObj, targetObj);
                         }
@@ -42,9 +42,9 @@ TelemetryEvent = Class.extend({
                         // Data is of type 'string' or number
                         sourceObj = targetObj;
                     }
-                } else {
+                } else if(targetObj){
                     // Data is not present
-                    this.event[keyName] = targetObj;                   
+                    this.event[keyName] = targetObj;
                 }
             }
         }
@@ -84,9 +84,10 @@ TelemetryEvent = Class.extend({
         this.startTime = getCurrentTime();
         return this;
     },
-    end: function() {
+    end: function(progress) {
         if (this._isStarted) {
             this.event.edata.eks.length = Math.round((getCurrentTime() - this.startTime ) / 1000);
+            this.event.edata.eks.progress = progress;
             this.event.ets = new Date().getTime();
             this._isStarted = false;
             return this;

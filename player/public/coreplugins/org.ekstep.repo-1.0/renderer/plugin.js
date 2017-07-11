@@ -10,7 +10,7 @@ Plugin.extend({
     },
     initializeRepo:function(){
         var instance = this;
-        var contextObj = EkstepRendererAPI.getPreviewData();
+        var contextObj = EkstepRendererAPI.getGlobalConfig();
         if (contextObj.config.repos) {
             if (_.isObject(contextObj.config.repos)) {
                 _.each(contextObj.config.repos, function(repoPath, index){

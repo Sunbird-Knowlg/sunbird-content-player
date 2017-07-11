@@ -42,7 +42,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
     }
     $scope.replayCallback = function(){
         EkstepRendererAPI.hideEndPage();
-        EkstepRendererAPI.dispatchEvent('renderer:content:replay');   
+        EkstepRendererAPI.dispatchEvent('renderer:content:replay');
     }
     $scope.showFeedback = function(param) {
         $scope.userRating = param;
@@ -124,11 +124,9 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         if (_(TelemetryService.instance).isUndefined()) {
             var tsObj = localStorageGC.getItem('telemetryService');
             var correlationData = [];
-            correlationData.push({
-                "id": CryptoJS.MD5(Math.random().toString()).toString(),
-                "type": "ContentSession"
-            });
-            TelemetryService.init(tsObj._gameData, tsObj._user, correlationData, []);
+            var otherData = GlobalContext.config.otherData;
+            !_.isUndefined(otherData.cdata) ? correlationData.push(otherData.cdata) : correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(),"type": "ContentSession"});
+            TelemetryService.init(tsObj._gameData, tsObj._user, correlationData, otherData);
         }
 
         TelemetryService.interact("TOUCH", $rootScope.content.identifier, "TOUCH", {
@@ -217,7 +215,7 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                 subtype: "",
                 values: values
             });
-            TelemetryService.end();
+            TelemetryService.end(logContentProgress());
             GlobalContext.game.id = content.identifier
             GlobalContext.game.pkgVersion = content.pkgVersion;
             var contentExtras = [];

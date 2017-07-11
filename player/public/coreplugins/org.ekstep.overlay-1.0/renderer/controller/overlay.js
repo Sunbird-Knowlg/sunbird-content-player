@@ -43,6 +43,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         EkstepRendererAPI.addEventListener("renderer:show:overlay", $scope.showOverlay);
         EkstepRendererAPI.addEventListener("renderer:overlay:hide", $scope.hideOverlay);
         EkstepRendererAPI.addEventListener("renderer:content:start", $scope.showOverlay);
+        EkstepRendererAPI.addEventListener("renderer:content:close", $scope.showOverlay);
         EkstepRendererAPI.addEventListener("renderer:content:end", $scope.hideOverlay);
     }
 
@@ -251,31 +252,29 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                     $rootScope.currentUser = $scope.selectedUser;
                     $rootScope.currentUser.userIndex = $rootScope.sortingIndex -= 1;
                     $scope.selectedUser = {};
-
-                    if (replayContent == true) {
-                         var data = {
-                            'callback': $scope.replayCallback
-                        };
+                    if (userSwitchHappened) {
+                        var version = TelemetryService.getGameVer();;
+                        var gameId = TelemetryService.getGameId();
                         TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                        EkstepRendererAPI.dispatchEvent('renderer:content:end', undefined, data);
-                    } else {
-                        if (userSwitchHappened) {
-                            var version = TelemetryService.getGameVer();;
-                            var gameId = TelemetryService.getGameId();
-                            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                            TelemetryService.end();
-                            TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                            var data = {};
-                            data.stageid = EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId;
-                            data.mode = getPreviewMode();
-                            TelemetryService.start(gameId, version, data);
-                        }
+                        TelemetryService.end(logContentProgress());
+                        TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                        var data = {};
+                        data.stageid = EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId;
+                        data.mode = getPreviewMode();
+                        TelemetryService.start(gameId, version, data);
                     }
 
                 });
             }).catch(function(err) {
                 console.log(err);
             })
+        }
+        if (replayContent == true) {
+             var data = {
+                'callback': $scope.replayCallback
+            };
+            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+            EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
         }
         $scope.closeUserSwitchingModal(false);
     }
@@ -529,10 +528,6 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
 		},
 		controller: 'UserSwitchController',
 		link: function(scope, element, attrs, controller) {
-			// Get the modal
-			var userSwitchingModal = element.find("#userSwitchingModal")[0];
-			// userSwitchingModal.style.display = "block";
-
 			// get the user selection div
 			var userSlider = element.find("#userSlider");
 			var groupSlider = element.find("#groupSlider");

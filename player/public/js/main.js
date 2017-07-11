@@ -2,7 +2,7 @@ var packageName = "org.ekstep.quiz.app", version = AppConfig.version, packageNam
     geniePackageName = "org.ekstep.genieservices", currentUser = {}, userList = [],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
     stack = new Array(), collectionChildrenIds = new Array(), collectionPath = new Array(), collectionPathMap = {},
-    collectionChildren = true, content = {}, config = {showEndPage: true, showHTMLPages: true }, 
+    collectionChildren = true, content = {}, config = {showEndPage: true, showHTMLPages: true },
     isbrowserpreview = getUrlParameter("webview"), isCoreplugin = undefined, Renderer = undefined;
 
 document.body.addEventListener("logError", telemetryError, false);
@@ -68,7 +68,7 @@ function backbuttonPressed(pageId) {
 function exitApp(stageId) {
     if(!stageId){
         stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " ";
-    } 
+    }
     try {
         TelemetryService.exit();
     } catch (err) {
@@ -203,8 +203,8 @@ function startTelemetry(id, ver, cb) {
             "type": GlobalContext.game.contentExtras[0].contentType
         }];
     }
-    correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
-    var otherData = {channel: "ekstep", etags: []};
+    var otherData = GlobalContext.config.otherData;
+    !_.isUndefined(otherData.cdata) ? correlationData.push(otherData.cdata) : correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData, otherData).then(function(response) {
         var data = {};
         data.mode =  getPreviewMode();
@@ -256,7 +256,7 @@ function addWindowUnloadEvent() {
         var y = e.pageY || e.clientY;
         !y && EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.getTelemetryService().end();
     }
-    if (EkstepRendererAPI.getPreviewData().context.mode === 'edit') {
+    if (EkstepRendererAPI.getGlobalConfig().context.mode === 'edit') {
         parent.document.getElementsByTagName('iframe')[0].contentWindow.onunload = function() {
             EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId());
             EkstepRendererAPI.getTelemetryService().end();
@@ -296,8 +296,25 @@ function getPreviewMode() {
    var mode = 'preview';
     if ("undefined" != typeof cordova) {
         mode = !_.isUndefined(GlobalContext.config.mode) ? GlobalContext.config.mode : 'play';
-    } else if (EkstepRendererAPI.getPreviewData().context.mode){
-        mode = EkstepRendererAPI.getPreviewData().context.mode;
+    } else if (EkstepRendererAPI.getGlobalConfig().context.mode){
+        mode = EkstepRendererAPI.getGlobalConfig().context.mode;
     }
     return mode;
-} 
+}
+
+function logContentProgress(value) {
+    if (_.isUndefined(value)) {
+        if (!_.isUndefined(Renderer)) {
+            var stageLenth = Renderer.theme._data.stage.length;
+            var currentIndex = _.findIndex(Renderer.theme._data.stage, {
+                id: Renderer.theme._currentScene.id
+            });
+            currentIndex = currentIndex + 1;
+            return (currentIndex / stageLenth) * 100;
+        } else {
+            return 100;
+        }
+    } else {
+        return value;
+    }
+}

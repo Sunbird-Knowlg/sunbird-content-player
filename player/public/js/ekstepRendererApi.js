@@ -805,8 +805,8 @@ window.EkstepRendererAPI = {
     *This api is going to return you the external plugin obj
     *@memberof EkstepRendererAPI
     */
-   getPreviewData: function() {
-       return window.previewData;
+   getGlobalConfig: function() {
+       return window.globalConfig;
    },
 
    /**
@@ -888,7 +888,7 @@ window.EkstepRendererAPI = {
     logErrorEvent: function(errorStack, data) {
         try {
             if (data) {
-                data.env = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getPreviewData().context.mode || 'preview';
+                data.env = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getGlobalConfig().context.mode || 'preview';
                 data.type = !_.isUndefined(data.type) ? data.type.toUpperCase() : 'OTHER';
                 data.stageId = Renderer.theme ? EkstepRendererAPI.getCurrentStageId() : '';
                 if (!data.objectType) {

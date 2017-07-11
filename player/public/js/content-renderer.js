@@ -4,7 +4,7 @@
 var content_renderer = function() {};
 content_renderer.prototype._ = window._;
 window.org.ekstep.contentrenderer = new content_renderer();
-window.previewData = {
+window.globalConfig = {
     'context': {},
     'config': {}
 };
@@ -43,8 +43,7 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
 
 
 org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
-    previewData = EkstepRendererAPI.getPreviewData();
-    console.info('Config==', previewData.config.plugins);
+    previewData = EkstepRendererAPI.getGlobalConfig();
     if (previewData.config.plugins) {
         if (previewData.config.repos) {
             EkstepRendererAPI.dispatchEvent('renderer:repo:create');
@@ -100,8 +99,16 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
         configuration.context.contentId = getUrlParameter("id")
     }
     localStorageGC.clear();
+    var otherData = {};
+
+    for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
+        var data = configuration.context[AppConfig.telemetryEventsConfigFields[i]] || AppConfig[AppConfig.telemetryEventsConfigFields[i]];
+        if (data) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
+    }
+    GlobalContext.config.otherData = otherData;
+
     AppConfig = _.extend(AppConfig, configuration.config)
-    window.previewData = configuration;
+    window.globalConfig = configuration;
     org.ekstep.service.renderer.api.setBaseUrl(AppConfig.host + AppConfig.apislug);
     addWindowUnloadEvent();
     EkstepRendererAPI.dispatchEvent("event:loadContent");
@@ -190,7 +197,7 @@ org.ekstep.contentrenderer.setContentMetadata = function(contentData, cb) {
 };
 
 org.ekstep.contentrenderer.getContentBody = function(id) {
-    var configuration = EkstepRendererAPI.getPreviewData();
+    var configuration = EkstepRendererAPI.getGlobalConfig();
     var headers = org.ekstep.contentrenderer.urlparameter;
     if (!_.isUndefined(configuration.context.authToken)) {
         headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
@@ -218,7 +225,7 @@ org.ekstep.contentrenderer.urlparameter = function() {
 };
 
 org.ekstep.contentrenderer.web = function(id) {
-    var configuration = EkstepRendererAPI.getPreviewData();
+    var configuration = EkstepRendererAPI.getGlobalConfig();
     var headers = org.ekstep.contentrenderer.urlparameter;
     if (!_.isUndefined(configuration.context.authToken)) {
         headers["Authorization"] = 'Bearer ' + configuration.context.authToken;

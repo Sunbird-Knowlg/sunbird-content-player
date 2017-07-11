@@ -37,6 +37,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         renderObj = content;
         console.log("ECMLRENDERE - content:load:application/vnd.ekstep.ecml-archive: start()", content);
         if (_.isUndefined(renderObj)) return;
+        if(isbrowserpreview){
+            renderObj.path = '';
+        }
         try {
             if (this.running) {
                 this.cleanUp();
