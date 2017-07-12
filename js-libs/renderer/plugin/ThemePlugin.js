@@ -137,13 +137,7 @@ var ThemePlugin = Plugin.extend({
             this.invokeStage(this._data.startStage);
         }
         this.update();
-        //document.getElementById("progressBar").style.width = 100 + '%';
-        // jQuery("#progressBar").width(100);
-        // jQuery('#loading').3();
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
-
-        // EkstepRendererAPI.dispatchEvent("renderer:splash:hide"); //Hide splash screen.
-        // EkstepRendererAPI.dispatchEvent("renderer:show:overlay");
     },
 
     /**

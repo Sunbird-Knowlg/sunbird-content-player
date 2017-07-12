@@ -235,14 +235,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     relaunchGame: function(){
         this.relaunch();
-        Renderer.theme.replaceStage(Renderer.theme._data.startStage,{"duration": "100", "ease": "linear", "effect": "fadeIn", })
-        // To reset the controller index on replay 
-        var controller;
-        for (k in Renderer.theme._controllerMap) {
-            controller = Renderer.theme._controllerMap[k];
-            controller.reset();
-        }
+        Renderer.theme.removeHtmlElements();
+        Renderer.theme.reRender();
     }
+
 });
 
 //# sourceURL=ECMLRenderer.js
