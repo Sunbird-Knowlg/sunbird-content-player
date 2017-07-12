@@ -21,21 +21,14 @@ GlobalContext = {
     },
     _setGlobalContext: function(resolve, reject) {
         new Promise(function(resolve, reject) {
-
             if (window.plugins && window.plugins.webintent) {
                 var promises = [];
-
                 for (var i = 0; i < AppConfig.configFields.length; i++) {
                     promises.push(GlobalContext._getIntentExtra(AppConfig.configFields[i], GlobalContext.config));
                 }
                 console.log("GlobalContext.configFields: ", GlobalContext.config);
-
                 Promise.all(promises).then(function(result) {
-                    GlobalContext.config.mimetypes = ['application/vnd.ekstep.pdf-archive'];
-                    GlobalContext.config.contentLaunchers = [{mimeType: 'application/vnd.ekstep.pdf-archive',id: 'org.ekstep.pdfrenderer',ver: 1.0,type: 'plugin'}];
-                    // GlobalContext.config.otherData = getOtherData(GlobalContext.config);
                     setGlobalConfig(GlobalContext.config);
-
                     org.ekstep.service.renderer.initializeSdk(GlobalContext.config.appQualifier || 'org.ekstep.genieservices');
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
                         GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
