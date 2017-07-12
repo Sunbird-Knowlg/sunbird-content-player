@@ -167,19 +167,20 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         }
 
     };
-    EkstepRendererAPI.addEventListener('renderer:show:endpage', function(){
-        EkstepRendererAPI.dispatchEvent('renderer:content:end');
-        $scope.showEndPage = true;
-        // EkstepRendererAPI.dispatchEvent('renderer:overlay:hide');
-        // EkstepRendererAPI.dispatchEvent('renderer:player:hide');
-        $scope.initEndpage();
-        $scope.safeApply();
-    });
-
-    EkstepRendererAPI.addEventListener('renderer:hide:endpage',function(){
-        $scope.showEndPage = false;
-        $scope.safeApply();
-    });
+    if(config.showEndPage === true) {
+        EkstepRendererAPI.addEventListener('renderer:show:endpage', function() {
+            EkstepRendererAPI.dispatchEvent('renderer:content:end');
+            $scope.showEndPage = true;
+            // EkstepRendererAPI.dispatchEvent('renderer:overlay:hide');
+            // EkstepRendererAPI.dispatchEvent('renderer:player:hide');
+            $scope.initEndpage();
+            $scope.safeApply();
+        });
+        EkstepRendererAPI.addEventListener('renderer:hide:endpage',function() {
+            $scope.showEndPage = false;
+            $scope.safeApply();
+        });
+    }
 });
 canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams) {
         $scope.showRelatedContent = false;
@@ -325,11 +326,13 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                 $scope.showRelatedContentHeader = false;
             }
         }
-        EkstepRendererAPI.addEventListener('renderer:init:relatedContent',function(){
+        if(config.showEndPage === true) {
+            EkstepRendererAPI.addEventListener('renderer:init:relatedContent',function(){
                 console.info('Endpage init..')
                 $scope.init();
 
-        })
+            })
+        }
     });
 canvasApp.directive('starRating', function($rootScope) {
     return {
