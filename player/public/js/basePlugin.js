@@ -749,7 +749,9 @@ var Plugin = Class.extend({
         instance._pluginParams[param] = fval;
     },
     destroy: function() {
-        console.log("===== Destroy it =====");
+        var pluginName = this._type;
+        delete org.ekstep.pluginframework.pluginManager.plugins[pluginName];
+        console.log(pluginName, " Plugin instance got destroyed");
     },
     setPluginParamValue: function(action) {
         var scope = action.scope;
