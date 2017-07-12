@@ -240,6 +240,7 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                             if (window.content.mimeType == obj.mimeType){
                                 window.content = obj;
                                 EkstepRendererAPI.clearStage();
+                                // PluginManager.cleanUp();
                                 EkstepRendererAPI.dispatchEvent('renderer:content:load');
                                 EkstepRendererAPI.dispatchEvent('renderer:player:show');
                                 EkstepRendererAPI.dispatchEvent('renderer:splash:show');

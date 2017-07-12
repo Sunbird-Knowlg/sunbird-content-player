@@ -748,6 +748,9 @@ var Plugin = Class.extend({
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance._pluginParams[param] = fval;
     },
+    destroy: function() {
+        console.log("===== Destroy it =====");
+    },
     setPluginParamValue: function(action) {
         var scope = action.scope;
         var param = action.param;
