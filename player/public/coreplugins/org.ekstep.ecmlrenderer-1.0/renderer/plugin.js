@@ -144,6 +144,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      * @memberof ecmlRenderer
      */
     load: function(dataObj) {
+        var globalConfig = EkstepRendererAPI.getGlobalConfig();
         console.log("ECMLRENDERE - Load()");
         var instance = this,
             data = dataObj.body;
@@ -170,7 +171,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         instance.resizeGame(true);
         Renderer.theme.baseDir = dataObj.path;
         var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);
-        var pluginsPath = isbrowserpreview ? AppConfig.previewPluginspath : AppConfig.devicePluginspath
+        var pluginsPath = isbrowserpreview ? globalConfig.previewPluginspath : globalConfig.devicePluginspath
         org.ekstep.contentrenderer.initPlugins(dataObj.path, pluginsPath);
         var resource = instance.handleRelativePath(instance.getResource(manifest), dataObj.path + '/widgets/');
         var pluginManifest = content["plugin-manifest"];
@@ -194,12 +195,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     handleRelativePath: function(manifestMedia, pluginPath) {
+        var globalConfig = EkstepRendererAPI.getGlobalConfig();
         _.each(manifestMedia, function(p) {
             if (p.src.substring(0, 4) != 'http') {
                 if (!isbrowserpreview) {
                     p.src = pluginPath + p.src;
                 } else {
-                    p.src = AppConfig.host + p.src;
+                    p.src = globalConfig.host + p.src;
                 }
             }
         });

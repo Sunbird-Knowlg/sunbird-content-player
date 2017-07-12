@@ -1,5 +1,6 @@
 var canvasApp = angular.module("genie-canvas");
 canvasApp.controller("endPageController", function($scope, $rootScope, $state,$element, $stateParams) {
+    var globalConfig = EkstepRendererAPI.getGlobalConfig();
     console.info("EndPage controller is calling");
     $scope.showEndPage = false;
     $scope.showFeedbackArea = true;
@@ -11,7 +12,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
     $scope.selectedRating = 0;
     $rootScope.pageId = "ContentApp-Endpage";
     $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{AppLables.credit}}</div> <div class="gc-popup-body-new"><div class="font-lato credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{AppLables.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{AppLables.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{AppLables.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{AppLables.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
-    $scope.imageBasePath = AppConfig.assetbase;
+    $scope.imageBasePath = globalConfig.assetbase;
     $scope.arrayToString = function(array) {
         return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";
     };
@@ -357,8 +358,9 @@ canvasApp.directive('starRating', function($rootScope) {
         },
         controller: function($scope, $element, $attrs, $rootScope) {
             $scope.maxRatings = [];
-            $scope.rating_empty = AppConfig.assetbase + $scope.emptyRating;
-            $scope.rating_selected = AppConfig.assetbase + $scope.selectedRating;
+            var globalConfig = EkstepRendererAPI.getGlobalConfig();
+            $scope.rating_empty = globalConfig.assetbase + $scope.emptyRating;
+            $scope.rating_selected = globalConfig.assetbase + $scope.selectedRating;
 
             for (var i = 1; i <= $scope.maxRating; i++) {
                 $scope.maxRatings.push({});

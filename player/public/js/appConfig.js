@@ -82,5 +82,7 @@ AppConfig = {
         app: [],
         partner: [],
         dims: []
-    }
+    },
+    context: {},
+    config: {}
 }

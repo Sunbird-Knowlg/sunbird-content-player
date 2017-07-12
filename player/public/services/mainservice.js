@@ -7,7 +7,8 @@ renderer_services = undefined;
 
 org.ekstep.service.mainService = Class.extend({
     getAPISlug: function() {
-        return AppConfig.apislug;
+        var globalConfig = EkstepRendererAPI.getGlobalConfig();
+        return globalConfig.apislug;
     },
     init: function(config) {
         this.initService(config);

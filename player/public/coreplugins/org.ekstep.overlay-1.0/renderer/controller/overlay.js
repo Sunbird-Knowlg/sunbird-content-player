@@ -1,6 +1,7 @@
 'use strict';
 
 app.controllerProvider.register("OverlayController", function($scope, $rootScope, $compile, $stateParams) {
+    var globalConfig = EkstepRendererAPI.getGlobalConfig();
     $rootScope.isItemScene = false;
     $rootScope.menuOpened = false;
     $rootScope.stageId = undefined;
@@ -12,23 +13,23 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.overlayEvents = ["overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
     $scope.showOverlay = true;
     $scope.pluginInstance = undefined;
-    $scope.imageBasePath = AppConfig.assetbase;
+    $scope.imageBasePath = globalConfig.assetbase;
     $scope.showTeacherIns = true;
     $scope.showReload = true;
     $scope.init = function() {
     	console.log("OVERLAY - controller loaded");
     	$scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
-        if (AppConfig.language_info) {
-            var languageInfo = JSON.parse(AppConfig.language_info);
+        if (globalConfig.language_info) {
+            var languageInfo = JSON.parse(globalConfig.language_info);
             for (key in languageInfo) {
                 AppLables[key] = languageInfo[key];
             }
         }
         $scope.AppLables = AppLables;
-        if (!_.isUndefined(AppConfig.overlay.menu) && !AppConfig.overlay.menu.showTeachersInstruction)
-            $scope.showTeacherIns = AppConfig.overlay.menu.showTeachersInstruction;
-        if (!AppConfig.overlay.showReload)
-            $scope.showReload = AppConfig.overlay.showReload;
+        if (!_.isUndefined(globalConfig.overlay.menu) && !globalConfig.overlay.menu.showTeachersInstruction)
+            $scope.showTeacherIns = globalConfig.overlay.menu.showTeachersInstruction;
+        if (!globalConfig.overlay.showReload)
+            $scope.showReload = globalConfig.overlay.showReload;
         var evtLenth = $scope.overlayEvents.length;
         for (var i = 0; i < evtLenth; i++) {
             var eventName = $scope.overlayEvents[i];
@@ -48,7 +49,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     }
 
     $scope.showOverlay = function() {
-        $scope.showOverlay = !_.isUndefined(AppConfig.overlay.showOverlay) && AppConfig.overlay.showOverlay ? AppConfig.overlay.showOverlay : console.warn('Overlay is disabled');
+        $scope.showOverlay = !_.isUndefined(globalConfig.overlay.showOverlay) && globalConfig.overlay.showOverlay ? globalConfig.overlay.showOverlay : console.warn('Overlay is disabled');
         $scope.safeApply();
     }
 
@@ -167,7 +168,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     $scope.groupLength = undefined;
     $scope.selectedUser = {};
     $scope.showUserSwitchModal = false;
-    $scope.imageBasePath = AppConfig.assetbase;
+    $scope.imageBasePath = globalConfig.assetbase;
 
     $scope.hideUserSwitchingModal = function() {
         $rootScope.safeApply(function() {
@@ -296,8 +297,8 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     }
 
     $scope.initializeCtrl = function() {
-        $rootScope.showUser = AppConfig.overlay.showUser;
-        $rootScope.enableUserSwitcher = AppConfig.overlay.enableUserSwitcher;
+        $rootScope.showUser = globalConfig.overlay.showUser;
+        $rootScope.enableUserSwitcher = globalConfig.overlay.enableUserSwitcher;
 
         EventBus.addEventListener("event:enableUserSwitcher", function(value) {
             $rootScope.enableUserSwitcher = value.target;
@@ -316,24 +317,24 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
         });
 
         EventBus.addEventListener("event:getcurrentuser", function() {
-            if (AppConfig.overlay.showUser)
+            if (globalConfig.overlay.showUser)
                 currentUser = $rootScope.currentUser;
         });
 
         EventBus.addEventListener("event:getuserlist", function() {
-            if (AppConfig.overlay.showUser)
+            if (globalConfig.overlay.showUser)
                 userList = $rootScope.users;
         });
 
         EventBus.addEventListener("event:showuser", function(value) {
-            AppConfig.overlay.showUser = value;
+            globalConfig.overlay.showUser = value;
             $rootScope.safeApply = function() {
                 $rootScope.showUser = value;
             }
         });
 
         EventBus.addEventListener("event:enableUserSwitcher", function(value) {
-            AppConfig.overlay.enableUserSwitcher = value;
+            globalConfig.overlay.enableUserSwitcher = value;
             $rootScope.safeApply = function() {
                 $rootScope.enableUserSwitcher = value;
             }
@@ -468,12 +469,12 @@ app.compileProvider.directive('assess', function($rootScope) {
                     $timeout(function() {
                         // This timeout is required to apply the changes(because it is calling by JS)
                         $scope.assessStyle = 'assess-enable';
-                        $scope.image = AppConfig.assetbase + "submit_enable.png";
+                        $scope.image = globalConfig.assetbase + "submit_enable.png";
                     }, 100);
                 } else {
                     //Disable state
                     $scope.assessStyle = 'assess-disable';
-                    $scope.image = AppConfig.assetbase + "submit_disable.png";
+                    $scope.image = globalConfig.assetbase + "submit_disable.png";
                 }
             });
 
@@ -552,7 +553,7 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
                 return pluginsObjs._userSwitcherTP;
             }
 			scope.init = function() {
-				if (AppConfig.overlay.showUser === true) {
+				if (globalConfig.overlay.showUser === true) {
 					userSlider.mCustomScrollbar('destroy');
 					groupSlider.mCustomScrollbar('destroy');
 					scope.initializeCtrl();

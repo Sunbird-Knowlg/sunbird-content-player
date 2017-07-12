@@ -17,7 +17,8 @@ Plugin.extend({
                     var events = ["overlayNext", "renderer:next:show", "renderer:next:hide"];
                     scope.toggleNav = function(event) {
                         var val;
-                        var defaultValue = AppConfig.overlay.showNext ? "on" : "off";
+                        var globalConfig = EkstepRendererAPI.getGlobalConfig();
+                        var defaultValue = globalConfig.overlay.showNext ? "on" : "off";
                         switch (event.type) {
                             case "renderer:next:show":
                                 val = "on";

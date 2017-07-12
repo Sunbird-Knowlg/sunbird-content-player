@@ -37,7 +37,8 @@
     },
     getAsseturl: function(content) {
         var content_type = "html/";
-        var path = window.location.origin + AppConfig.s3ContentHost + content_type;
+        var globalConfig = EkstepRendererAPI.getGlobalConfig();
+        var path = window.location.origin + globalConfig.s3ContentHost + content_type;
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
     },

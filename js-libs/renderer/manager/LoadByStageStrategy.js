@@ -23,7 +23,8 @@ LoadByStageStrategy = Class.extend({
                 if ((media) && (media.src)) {
                     if (media.src.substring(0, 4) != 'http') {
                         if (isbrowserpreview) {
-                            media.src = AppConfig.host + media.src;
+                            var globalConfig = EkstepRendererAPI.getGlobalConfig();
+                            media.src = globalConfig.host + media.src;
                         } else {
                             media.src = basePath + media.src;
                         }

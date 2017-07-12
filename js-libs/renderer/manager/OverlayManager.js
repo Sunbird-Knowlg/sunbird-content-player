@@ -103,7 +103,8 @@ OverlayManager = {
         var eventName = this._constants.overlaySubmit;
         var val = this._stageConfig[eventName];
         if(!_.isUndefined(Renderer.theme) && _.isUndefined(Renderer.theme.getParam(eventName)) && _.isUndefined(Renderer.theme._currentScene.getParam(eventName))) {
-            val = AppConfig.overlay.showSubmit ? "on" : "off";
+            var globalConfig = EkstepRendererAPI.getGlobalConfig();
+            val = globalConfig.overlay.showSubmit ? "on" : "off";
         }
         if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene) && Renderer.theme._currentScene.isItemScene()) {
             if (val == "on") {

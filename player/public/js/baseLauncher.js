@@ -35,7 +35,7 @@ initialize:function(data){
  */
 
 launch:function(){
-	console.info('Base Launcher shuld construct');
+	console.info('Base Launcher should construct');
 },
 
 
@@ -45,7 +45,7 @@ launch:function(){
  */
 
 relaunch: function() {
-    console.info('Base Launcher shuld construct');
+    console.info('Base Launcher should construct');
     var data = {};
 		data.stageid = EkstepRendererAPI.getCurrentStageId();
     data.mode = getPreviewMode();

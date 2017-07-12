@@ -1,7 +1,8 @@
 'use strict';
 
 app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, $state) {
-    $scope.imageBasePath = AppConfig.assetbase;
+    var globalConfig = EkstepRendererAPI.getGlobalConfig();
+    $scope.imageBasePath = globalConfig.assetbase;
     $rootScope.pageId = 'ContentApp-Collection';
     $scope.version = GlobalContext.game.ver;
     $scope.stories = [];

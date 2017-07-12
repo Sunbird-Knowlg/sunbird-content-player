@@ -14,7 +14,8 @@ Plugin.extend({
     initialize: function() {
         console.info('overlay plugin is doing initialize....');
         var instance = this;
-        instance._config = _.extend(instance._config, AppConfig.overlay);
+        var globalConfig = EkstepRendererAPI.getGlobalConfig();
+        instance._config = _.extend(instance._config, globalConfig.overlay);
         this._templatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/overlay.html");
         this.controllerPath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/controller/overlay.js");
         org.ekstep.service.controller.loadNgModules(this._templatePath, this.controllerPath);

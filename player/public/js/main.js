@@ -236,7 +236,8 @@ function startTelemetry(id, ver, cb) {
 
 function getAsseturl(content) {
     var content_type = content.mimeType == 'application/vnd.ekstep.html-archive' ? "html/" : "ecml/";
-    var path = window.location.origin + AppConfig.s3ContentHost + content_type;
+    var globalConfig = EkstepRendererAPI.getGlobalConfig();
+    var path = window.location.origin + globalConfig.s3ContentHost + content_type;
     path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
     return path;
 
@@ -326,21 +327,38 @@ function logContentProgress(value) {
     }
 }
 
-function getOtherData(context) {
-    var otherData = {};
-    for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
-        var data = context[AppConfig.telemetryEventsConfigFields[i]] || AppConfig[AppConfig.telemetryEventsConfigFields[i]];
-        if (!_.isUndefined(data)) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
-    }
-    var etags = {
-        'dims':otherData.dims || AppConfig.etags.dims,
-        'app':otherData.app || AppConfig.etags.app,
-        'partner':otherData.partner ||  AppConfig.etags.partner
-    };
-    otherData.etags = etags;
-    delete otherData.dims;
-    delete otherData.dims;
-    delete otherData.partner;
+function setGlobalConfig(context) {
+    if (!_.isUndefined(context)) {
+        var AppConfigCopy = _.clone(AppConfig);
+        var globalConfig = _.clone(AppConfig);
+        globalConfig = _.extend(globalConfig, context);
+        _.each(AppConfigCopy.contentLaunchers, function(launchers) {
+            globalConfig.contentLaunchers.push(launchers)
+        })
+        _.each(AppConfigCopy.mimetypes, function(mimetype) {
+            globalConfig.mimetypes.push(mimetype)
+        })
+        if (_.isUndefined(window.cordova)) {
+            org.ekstep.service.renderer.api.setBaseUrl(globalConfig.host + globalConfig.apislug);
+        }
 
-    return otherData;
+        var otherData = {};
+        for (var i = 0; i < globalConfig.telemetryEventsConfigFields.length; i++) {
+            var data = globalConfig[globalConfig.telemetryEventsConfigFields[i]] || globalConfig[globalConfig.telemetryEventsConfigFields[i]];
+            if (!_.isUndefined(data)) otherData[globalConfig.telemetryEventsConfigFields[i]] = data;
+        }
+        var etags = {
+            'dims':otherData.dims || globalConfig.etags.dims,
+            'app':otherData.app || globalConfig.etags.app,
+            'partner':otherData.partner ||  globalConfig.etags.partner
+        };
+        otherData.etags = etags;
+        delete otherData.dims;
+        delete otherData.app;
+        delete otherData.partner;    
+        GlobalContext.config.otherData = otherData;
+        window.globalConfig = globalConfig;
+    } else {
+        window.globalConfig = AppConfig;
+    }
 }
