@@ -55,9 +55,9 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
                 });
         });
     },
-    getRelatedContent: function(uid, list) {
+    getRelatedContent: function(list, contentId, uid) {
         return new Promise(function(resolve, reject) {
-            org.ekstep.service.renderer.getRelatedContent(uid, list)
+            org.ekstep.service.renderer.getRelatedContent(list, contentId, uid)
                 .then(function(item) {
                     if (item) {
                         resolve(item);

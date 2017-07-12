@@ -267,25 +267,30 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
             window.open(deepLinkURL, "_system");
         }
         $scope.getRelatedContent = function(list) {
-            org.ekstep.service.content.getRelatedContent(GlobalContext.user.uid, list)
+            org.ekstep.service.content.getRelatedContent(list, content.identifier, GlobalContext.user.uid)
             .then(function(item) {
+                console.log('getRelatedContent', item);
                 if (!_.isEmpty(item)) {
                     $scope.relatedContentItem = item;
                     var list = [];
-                    item.collection = item.nextContent;
-                    item.content = item.relatedContents;
-                    if (!_.isEmpty(item.collection)) {
-                        $scope.showRelatedContent = true;
-                        $scope.relatedContentPath = item.collection;
-                        list = [item.collection[item.collection.length - 1]];
-                        list[0].appIcon = list[0].basePath + '/' + list[0].contentData.appIcon;
-                    } else if (!_.isEmpty(item.content)) {
-                        $scope.showRelatedContent = true;
-                        $scope.contentShowMore = true;
-                        _.each(item.content, function(content) {
-                            content.appIcon = content.contentData.appIcon;
-                        })
-                        list = _.first(_.isArray(item.content) ? item.content : [item.content], 2);
+                    if(item.nextContent){
+                        if(item.nextContent.contents){
+                            var relatedContents = item.nextContent.contents;
+                            console.log('getRelatedContent-contents', relatedContents);
+                            // releated contents list
+                            $scope.showRelatedContent = true;
+                            $scope.relatedContentPath = relatedContents;
+                            list = _.first(_.isArray(relatedContents) ? relatedContents : [relatedContents], 2);
+                        } else {
+                            // Next content of the collection
+                            console.log('getRelatedContent-collection content', item.nextContent);
+                            $scope.showRelatedContent = true;
+                            $scope.contentShowMore = true;
+                            list = [item.nextContent];
+                            list = _.each(list, function(content) {
+                                content.appIcon = content.basePath + '/' + content.contentData.appIcon;
+                            });
+                        }                        
                     }
                     if (!_.isEmpty(list)) {
                         $scope.$apply(function() {
@@ -301,13 +306,9 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
         }
 
         $scope.renderRelatedContent = function(id) {
-            var list = [];
+            var list = null;
             if (_.isUndefined($scope.collectionTree) || _.isEmpty($scope.collectionTree)) {
                 if (("undefined" != typeof cordova)) {
-                    list = [{
-                        "identifier": id,
-                        "mediaType": "Content"
-                    }]
                     $scope.getRelatedContent(list);
                 }
             } else {

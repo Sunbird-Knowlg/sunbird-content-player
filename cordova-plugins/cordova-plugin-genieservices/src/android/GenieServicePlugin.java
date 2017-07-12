@@ -104,24 +104,23 @@ public class GenieServicePlugin extends CordovaPlugin {
             String contentId = args.getString(0);
             contentService.getContent(contentId, new GenieServicesResponse(callbackContext));
         } else if(action.equals("getRelatedContent")) {
-            String uid = args.getString(0);
-            JSONArray jsonArray = args.getJSONArray(1);
-
-            List<Map> contentExtras = new ArrayList<Map>();
-            if(jsonArray != null && jsonArray.length() > 0) {
-                for(int i=0;i<jsonArray.length();i++) {
-                    Map map = new HashMap();
-                    Iterator keys = jsonArray.getJSONObject(i).keys();
-                    while (keys.hasNext()) {
-                        String key = (String) keys.next();
-                        map.put(key, jsonArray.getJSONObject(i).get(key));
-                    }
-
-                    contentExtras.add(map);
+            JSONObject contentExtras = null;
+            if(!args.getString(0).equals("null")) {
+                contentExtras = args.getJSONObject(0);
+            }
+            Map map = null;
+            if (contentExtras != null) {
+                map = new HashMap();
+                Log.i(TAG, "java-getRelatedContent: new " + contentExtras);
+                Iterator keys = contentExtras.keys();
+                while (keys.hasNext()) {
+                    String key = (String) keys.next();
+                    map.put(key, contentExtras.get(key));
                 }
             }
-            // return true;
-            contentService.getRelatedContent(contentExtras, uid, new GenieServicesResponse(callbackContext));
+            String contentId = args.getString(1);
+            String uid = args.getString(2);
+            contentService.getRelatedContent(map, contentId, uid, new GenieServicesResponse(callbackContext));
         }
         else if(action.equals("sendFeedback")) {
             String evt = args.getString(0);

@@ -7,8 +7,8 @@ dependencies {
 //    compile "org.ekstep.genieservices:aidls:1.5.+@aar"
 
     // For undubled Genie Initegration
-    compile "org.ekstep.genieservices:genie-integration:0.1.281@aar"
-    compile "org.ekstep.genieservices:commons:0.1.281@jar"
+    compile "org.ekstep.genieservices:genie-integration:0.1.287@aar"
+    compile "org.ekstep.genieservices:commons:0.1.287@jar"
 
 }
 

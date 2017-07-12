@@ -42,8 +42,8 @@ genieservice.prototype.getContent = function(id) {
     return this.handleAction("getContent", [id]);
 }
 
-genieservice.prototype.getRelatedContent = function(uid, listOfContentIds) {
-    return this.handleAction("getRelatedContent", [uid, listOfContentIds]);
+genieservice.prototype.getRelatedContent = function(contentList, contentId, uid) {
+    return this.handleAction("getRelatedContent", [contentList, contentId, uid]);
 }
 
 genieservice.prototype.getLearnerAssessment = function(uid, id, contentExtras) {
