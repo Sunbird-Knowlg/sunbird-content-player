@@ -204,7 +204,13 @@ function startTelemetry(id, ver, cb) {
         }];
     }
     var otherData = GlobalContext.config.otherData;
-    (!_.isUndefined(otherData) && !_.isUndefined(otherData.cdata)) ? correlationData.push(otherData.cdata) : correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
+    if (!_.isUndefined(otherData) && !_.isUndefined(otherData.cdata)) {
+        _.each(otherData.cdata, function(cdata) {
+            correlationData.push(cdata);
+        })
+        delete otherData.cdata;
+    }
+    correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData, otherData).then(function(response) {
         var data = {};
         data.mode =  getPreviewMode();
