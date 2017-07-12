@@ -102,6 +102,8 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
     }
     localStorageGC.clear();
     var conf = _.extend(configuration.context, configuration.config)
+    conf.data = configuration.data;
+    conf.metadata = configuration.metadata
     setGlobalConfig(conf);
 
     // GlobalContext.config.otherData = getOtherData(configuration.context);
