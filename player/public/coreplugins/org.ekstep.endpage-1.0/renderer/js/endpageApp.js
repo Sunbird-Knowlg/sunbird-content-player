@@ -173,7 +173,6 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
 
     };
     EkstepRendererAPI.addEventListener('renderer:show:endpage', function() {
-        EkstepRendererAPI.dispatchEvent('renderer:content:end');
         $scope.showEndPage = true;
         // EkstepRendererAPI.dispatchEvent('renderer:overlay:hide');
         // EkstepRendererAPI.dispatchEvent('renderer:player:hide');

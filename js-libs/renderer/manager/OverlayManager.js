@@ -191,6 +191,7 @@ OverlayManager = {
       }
     },
     moveToEndPage: function() {
+        EkstepRendererAPI.dispatchEvent('renderer:content:end');
         if (config.showEndPage) {
             console.info("redirecting to endpage.");
             var stage = Renderer.theme._currentScene;

@@ -358,6 +358,7 @@ function setGlobalConfig(context) {
         delete otherData.app;
         delete otherData.partner;    
         GlobalContext.config.otherData = otherData;
+        GlobalContext.config = globalConfig;
         window.globalConfig = globalConfig;
     } else {
         window.globalConfig = AppConfig;
