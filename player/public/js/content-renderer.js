@@ -21,7 +21,8 @@ org.ekstep.contentrenderer.init = function() {
 org.ekstep.contentrenderer.loadDefaultPlugins = function(cb){
     org.ekstep.contentrenderer.initPlugins('', 'coreplugins');
     console.info("Plugin repo path is = ",org.ekstep.pluginframework.config.pluginRepo);
-    org.ekstep.contentrenderer.loadPlugins(AppConfig.defaultPlugins,[],function(){
+    var globalConfig = EkstepRendererAPI.getGlobalConfig();
+    org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins,[],function(){
         console.info('Canvas Default plugins are loaded..');
                 if(cb) cb()
     });
@@ -32,7 +33,8 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
     org.ekstep.contentrenderer.loadDefaultPlugins(function() {
         org.ekstep.contentrenderer.loadExternalPlugins(function() {
             console.info('Game is starting..')
-            if (AppConfig.mimetypes.indexOf(appInfo.mimeType) > -1) {
+            var globalConfig = EkstepRendererAPI.getGlobalConfig();
+            if (globalConfig.mimetypes.indexOf(appInfo.mimeType) > -1) {
                 EkstepRendererAPI.dispatchEvent('renderer:player:init');
             } else {
                 !isbrowserpreview ? EkstepRendererAPI.dispatchEvent('renderer:collection:show') : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
@@ -52,7 +54,7 @@ org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
                 console.info('Plugin loaded with repo..');
             });
         } else {
-            org.ekstep.contentrenderer.initPlugins('', AppConfig.previewPluginspath);
+            org.ekstep.contentrenderer.initPlugins('', previewData.previewPluginspath);
             console.info("Load external plugin: repo:",org.ekstep.pluginframework.config.pluginRepo);
             org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins, [], function() {
                 console.info('Preview plugins are loaded without repo.');
@@ -99,17 +101,16 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
         configuration.context.contentId = getUrlParameter("id")
     }
     localStorageGC.clear();
-    var otherData = {};
+    var conf = _.extend(configuration.context, configuration.config)
+    conf.data = configuration.data;
+    conf.metadata = configuration.metadata
+    setGlobalConfig(conf);
 
-    for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
-        var data = configuration.context[AppConfig.telemetryEventsConfigFields[i]] || AppConfig[AppConfig.telemetryEventsConfigFields[i]];
-        if (data) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
-    }
-    GlobalContext.config.otherData = otherData;
+    // GlobalContext.config.otherData = getOtherData(configuration.context);
 
-    AppConfig = _.extend(AppConfig, configuration.config)
-    window.globalConfig = configuration;
-    org.ekstep.service.renderer.api.setBaseUrl(AppConfig.host + AppConfig.apislug);
+    // AppConfig = _.extend(AppConfig, configuration.config)
+    // window.globalConfig = configuration;
+    // org.ekstep.service.renderer.api.setBaseUrl(AppConfig.host + AppConfig.apislug);
     addWindowUnloadEvent();
     EkstepRendererAPI.dispatchEvent("event:loadContent");
 };
@@ -123,7 +124,8 @@ org.ekstep.contentrenderer.initPlugins = function(host, repoRelativePath) {
     }
     host = _.isUndefined(host) ? '' : host;
     var pluginRepo = host + repoRelativePath;
-    var pfConfig = {env: "renderer", async: async,build_number:AppConfig.version, pluginRepo: pluginRepo, repos: [org.ekstep.pluginframework.publishedRepo]
+    var globalConfig = EkstepRendererAPI.getGlobalConfig();
+    var pfConfig = {env: "renderer", async: async,build_number:globalConfig.version, pluginRepo: pluginRepo, repos: [org.ekstep.pluginframework.publishedRepo]
     };
     org.ekstep.pluginframework.initialize(pfConfig);
 };

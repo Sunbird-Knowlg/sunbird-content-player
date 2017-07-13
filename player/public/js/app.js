@@ -11,9 +11,10 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         $rootScope.showUser = undefined;
         $rootScope.sortingIndex = 0;
         $rootScope.users = [];
+        var globalConfig = EkstepRendererAPI.getGlobalConfig();
         // serverPath and localPreview is a global variable defined in index.html file inside a story
         if ("undefined" != typeof localPreview && "local" == localPreview)
-            AppConfig.assetbase = serverPath + AppConfig.assetbase;
+            globalConfig.assetbase = serverPath + globalConfig.assetbase;
         $rootScope.safeApply = function(fn) {
             if (this.$root) {
                 var phase = this.$root.$$phase;
@@ -54,7 +55,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 if (window.cordova && window.cordova.plugins.Keyboard) {
                     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
                 } else {
-                    AppConfig.recorder = "android";
+                    globalConfig.recorder = "android";
                 }
                 window.StatusBar && StatusBar.styleDefault();
                 GlobalContext.init(packageName, version).then(function(appInfo) {
@@ -131,7 +132,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         org.ekstep.service.controller.initService(loadNgModules);
         EkstepRendererAPI.addEventListener("event:loadContent", function() {
             var configuration = EkstepRendererAPI.getGlobalConfig();
-            content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? AppConfig.defaultMetadata : configuration.metadata
+            content.metadata = (_.isUndefined(configuration.metadata) || _.isNull(configuration.metadata)) ? globalConfig.defaultMetadata : configuration.metadata
             if (_.isUndefined(configuration.data)) {
                 org.ekstep.contentrenderer.web(configuration.context.contentId);
             } else {

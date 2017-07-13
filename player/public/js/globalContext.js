@@ -21,22 +21,14 @@ GlobalContext = {
     },
     _setGlobalContext: function(resolve, reject) {
         new Promise(function(resolve, reject) {
-
             if (window.plugins && window.plugins.webintent) {
                 var promises = [];
-
                 for (var i = 0; i < AppConfig.configFields.length; i++) {
                     promises.push(GlobalContext._getIntentExtra(AppConfig.configFields[i], GlobalContext.config));
                 }
                 console.log("GlobalContext.configFields: ", GlobalContext.config);
-
                 Promise.all(promises).then(function(result) {
-                    var otherData = {};
-                    for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
-                        var data = GlobalContext.config[i] || AppConfig[i];
-                        if (data) otherData[AppConfig.telemetryEventsConfigFields[i]] = data;
-                    }
-                    GlobalContext.config.otherData = otherData;
+                    setGlobalConfig(GlobalContext.config);
                     org.ekstep.service.renderer.initializeSdk(GlobalContext.config.appQualifier || 'org.ekstep.genieservices');
                     if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
                         GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
@@ -76,6 +68,7 @@ GlobalContext = {
                     }
                 });
             } else {
+                setGlobalConfig();
                 GlobalContext.config = {
                     overlay: AppConfig.overlay,
                     origin: "Genie",

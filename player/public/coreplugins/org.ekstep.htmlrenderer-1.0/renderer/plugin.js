@@ -32,11 +32,13 @@
     setStyle: function() {
         jQuery('#gameArea') .css({left: '0px', top: '0px', width: "100%", height: "100%"});
         jQuery('#ekstep_htmlIframe') .css({position: 'absolute', display: 'block',width: '100%', height: '100%'});
-        AppConfig.overlay.showOverlay ? jQuery('#overlay').css({display: 'block'}) : jQuery('#overlay').css({display: 'none'})
+        jQuery('#overlay').css({display: 'none'}); // if html content want to show overlay, they should dispatch "renderer:overlay:show" to show overlay
+        // AppConfig.overlay.showOverlay ? jQuery('#overlay').css({display: 'block'}) : jQuery('#overlay').css({display: 'none'})
     },
     getAsseturl: function(content) {
         var content_type = "html/";
-        var path = window.location.origin + AppConfig.s3ContentHost + content_type;
+        var globalConfig = EkstepRendererAPI.getGlobalConfig();
+        var path = window.location.origin + globalConfig.s3ContentHost + content_type;
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
     },

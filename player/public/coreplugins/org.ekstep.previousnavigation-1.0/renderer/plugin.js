@@ -17,7 +17,8 @@ Plugin.extend({
                     scope.previousIcon = previousIcon;
                     scope.changeValue = function(event) {
                         var val;
-                        var defaultValue = AppConfig.overlay.showPrevious ? "on" : "off";
+                        var globalConfig = EkstepRendererAPI.getGlobalConfig();
+                        var defaultValue = globalConfig.overlay.showPrevious ? "on" : "off";
                         switch (event.type) {
                             case "overlayPrevious":
                                 val = event.target ? event.target : defaultValue;

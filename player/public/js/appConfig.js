@@ -77,5 +77,13 @@ AppConfig = {
         webLink: "https://www.ekstep.in"
     },
     showEndPage: true,
-    uid: 'anonymous'
+    pdata: {},
+    channel: "",
+    etags: {
+        app: [],
+        partner: [],
+        dims: []
+    },
+    context: {},
+    config: {}
 }
