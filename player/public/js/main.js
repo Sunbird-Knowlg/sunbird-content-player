@@ -349,18 +349,18 @@ function setGlobalConfig(context) {
             if (!_.isUndefined(data)) otherData[globalConfig.telemetryEventsConfigFields[i]] = data;
         }
         var etags = {
-            'dims':otherData.dims || globalConfig.etags.dims,
-            'app':otherData.app || globalConfig.etags.app,
-            'partner':otherData.partner ||  globalConfig.etags.partner
+            'dims':otherData.dims || AppConfig.etags.dims,
+            'app':otherData.app || AppConfig.etags.app,
+            'partner':otherData.partner ||  AppConfig.etags.partner
         };
         otherData.etags = etags;
         delete otherData.dims;
         delete otherData.app;
         delete otherData.partner;    
-        GlobalContext.config.otherData = otherData;
         GlobalContext.config = globalConfig;
-        window.globalConfig = globalConfig;
+        GlobalContext.config.otherData = otherData;
+        window.globalConfig = GlobalContext.config;
     } else {
-        window.globalConfig = AppConfig;
+        window.globalConfig = _.clone(AppConfig);
     }
 }
