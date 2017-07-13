@@ -11,9 +11,13 @@ module.exports = function(grunt) {
         },
         watch: {
             //run unit tests with karma (server needs to be already running)
-            karma: {
+            /*karma: {
                 tasks: ['karma:unit:run'] //NOTE the :run flag
-            }
+            },*/
+            src: {
+                files: '../js-libs/**/*.js',
+                tasks: ['uglify:renderermin']
+            },
         },
         karma: {
             plugin: {
