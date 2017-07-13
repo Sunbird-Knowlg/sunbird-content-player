@@ -161,7 +161,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.init();
 });
 
-app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope', '$state', '$stateParams', function($scope, $rootScope, $state, $stateParams) {
+app.controllerProvider.register('UserSwitcherController', ['$scope', '$rootScope', '$state', '$stateParams', function($scope, $rootScope, $state, $stateParams) {
     $scope.groupLength = undefined;
     $scope.selectedUser = {};
     $scope.showUserSwitchModal = false;
@@ -299,36 +299,29 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
         EventBus.addEventListener("event:enableUserSwitcher", function(value) {
             $rootScope.enableUserSwitcher = value.target;
         });
-
         EventBus.addEventListener("event:showUser", function(value) {
             $rootScope.showUser = value.target;
         });
-
         EventBus.addEventListener("event:openUserSwitchingModal", function() {
             $scope.showUserSwitchingModal();
         });
-
         EventBus.addEventListener("event:closeUserSwitchingModal", function() {
             $scope.hideUserSwitchingModal();
         });
-
         EventBus.addEventListener("event:getcurrentuser", function() {
             if (globalConfig.overlay.showUser)
                 currentUser = $rootScope.currentUser;
         });
-
         EventBus.addEventListener("event:getuserlist", function() {
             if (globalConfig.overlay.showUser)
                 userList = $rootScope.users;
         });
-
         EventBus.addEventListener("event:showuser", function(value) {
             globalConfig.overlay.showUser = value;
             $rootScope.safeApply = function() {
                 $rootScope.showUser = value;
             }
         });
-
         EventBus.addEventListener("event:enableUserSwitcher", function(value) {
             globalConfig.overlay.enableUserSwitcher = value;
             $rootScope.safeApply = function() {
@@ -521,7 +514,7 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
 		scope: {
 			popupBody: '=popupBody'
 		},
-		controller: 'UserSwitchController',
+		controller: 'UserSwitcherController',
 		link: function(scope, element, attrs, controller) {
 			// get the user selection div
 			var userSlider = element.find("#userSlider");
