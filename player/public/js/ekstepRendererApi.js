@@ -943,6 +943,7 @@ window.EkstepRendererAPI = {
     * @memberof EkstepRendererAPI
     */
     showEndPage:function(){
+        this.dispatchEvent('renderer:content:end');
         this.dispatchEvent('renderer:show:endpage');
     },
     /**
