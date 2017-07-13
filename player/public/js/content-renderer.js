@@ -37,7 +37,13 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
             if (globalConfig.mimetypes.indexOf(appInfo.mimeType) > -1) {
                 EkstepRendererAPI.dispatchEvent('renderer:player:init');
             } else {
-                !isbrowserpreview ? EkstepRendererAPI.dispatchEvent('renderer:collection:show') : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
+                if(!isbrowserpreview){
+                    org.ekstep.contentrenderer.loadPlugins({"id": "org.ekstep.collection", "ver": "1.0", "type": 'plugin'}, [], function(){
+                         EkstepRendererAPI.dispatchEvent('renderer:collection:show');
+                    });  
+                }else{
+                    console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
+                }
             }
         });
     });

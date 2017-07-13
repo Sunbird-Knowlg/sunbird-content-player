@@ -51,12 +51,7 @@ AppConfig = {
             id: 'org.ekstep.repo',
             ver: 1.0,
             type: 'plugin'
-        }, {
-            id: 'org.ekstep.collection',
-            ver: 1.0,
-            type: 'plugin'
         }
-
     ],
     overlay: {
         enableUserSwitcher: true,
