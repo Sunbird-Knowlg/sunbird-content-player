@@ -42,17 +42,18 @@ function getUrlParameter(sParam) {
 }
 
 function backbuttonPressed(pageId) {
-    var data = (Renderer.running || HTMLRenderer.running) ? {
-        type: 'EXIT_CONTENT',
-        stageId: Renderer.theme ? Renderer.theme._currentStage : ""
-    } : {
-        type: 'EXIT_APP'
-    };
-    TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', data);
-    if (pageId == "coverpage") {
-        TelemetryService.end();
+    var type = undefined;
+    var stageId = undefined;
+    if (Renderer) {
+        AudioManager.stopAll();
+        type = Renderer.running ? 'EXIT_CONTENT' : 'EXIT_APP'
+        stageId = Renderer.theme ? Renderer.theme._currentStage : pageId;
+    } else {
+        type: 'EXIT_CONTENT';
+        stageId = pageId || '';
     }
-    AudioManager.stopAll();
+    TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', {type:type,stageId:stageId});
+    if (pageId == "coverpage") {TelemetryService.end(logContentProgress()); }
     try {
         TelemetryService.exit();
     } catch (err) {
@@ -262,12 +263,12 @@ function addWindowUnloadEvent() {
     window.onbeforeunload = function(e) {
         e = e || window.event;
         var y = e.pageY || e.clientY;
-        !y && EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.getTelemetryService().end();
+        !y && EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.getTelemetryService().end(logContentProgress());
     }
     if (EkstepRendererAPI.getGlobalConfig().context.mode === 'edit') {
         parent.document.getElementsByTagName('iframe')[0].contentWindow.onunload = function() {
             EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId());
-            EkstepRendererAPI.getTelemetryService().end();
+            EkstepRendererAPI.getTelemetryService().end(logContentProgress());
         }
     }
 }

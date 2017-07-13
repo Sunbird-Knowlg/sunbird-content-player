@@ -31,8 +31,14 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             // To override back button behaviour
             $ionicPlatform.registerBackButtonAction(function() {
                 //TODO: Add Telemetry interact for on and Cancle
+                var stageId = undefined;
+                if (Renderer) {
+                    stageId = EkstepRendererAPI.getCurrentStageId();
+                } else {
+                    stageId = $rootScope.pageId || '';
+                }
                 if (confirm("Press 'OK' to go back to Genie.")) {
-                    backbuttonPressed(EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                    backbuttonPressed(stageId);
                 }
             }, 100);
             $ionicPlatform.on("pause", function() {
@@ -51,7 +57,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                     alert("Your device isn’t compatible with this version of Genie.");
                     exitApp();
                 }
-                Renderer &&  $rootScope.addIonicEvents();
+                $rootScope.addIonicEvents();
                 if (window.cordova && window.cordova.plugins.Keyboard) {
                     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
                 } else {
