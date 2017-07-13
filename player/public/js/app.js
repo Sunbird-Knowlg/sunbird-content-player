@@ -51,7 +51,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         $timeout(function() {
             $ionicPlatform.ready(function() {
                 isMobile = window.cordova ? true : false,
-                    console.log('ionic platform is ready...');
                 org.ekstep.service.init();
                 if ("undefined" == typeof Promise) {
                     alert("Your device isn’t compatible with this version of Genie.");
@@ -96,7 +95,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             if(templatePath){
                 if(_.isArray(templatePath)){
                     _.each(templatePath, function(template){
-                        console.log("template", template);
                         loadFiles.push({ type: 'html', path: template });
                     });
                 } else {
@@ -114,11 +112,10 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         };
 
         function injectTemplates(templatePath, scopeVariable, toElement) {
-            console.log("inject templates", templatePath);
-                $scope.templates.push(templatePath);
-                var el = angular.element("content-holder");
-                $compile(el.contents())($scope);
-                $scope.safeApply();
+            $scope.templates.push(templatePath);
+            var el = angular.element("content-holder");
+            $compile(el.contents())($scope);
+            $scope.safeApply();
         }
         EkstepRendererAPI.addEventListener("renderer:add:template", function(event){
             var data = event.target;

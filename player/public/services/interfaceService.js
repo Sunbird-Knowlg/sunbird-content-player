@@ -1,6 +1,5 @@
 org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
     init: function() {
-        console.info('Interface service init');
     },
     getContentList: function(filter, childrenIds) {
         return new Promise(function(resolve, reject) {
@@ -18,7 +17,6 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
         return new Promise(function(resolve, reject) {
             org.ekstep.service.renderer.getContent(id)
                 .then(function(resp) {
-                    console.log("angular getContent() is success.", resp);
                     var item = resp;
 
                     // New genie resp object having diffrent fields. Hence we are assigning new feilds to old fields

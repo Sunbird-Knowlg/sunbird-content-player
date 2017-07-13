@@ -229,7 +229,6 @@ function startTelemetry(id, ver, cb) {
         }
     }).catch(function(error) {
         EkstepRendererAPI.logErrorEvent(error, {'type':'system','action':'play','severity':'fatal'});
-        console.warn('TelemetryService init failed');
         showToaster('error', 'TelemetryService init failed.');
         exitApp();
     });

@@ -42,7 +42,6 @@ var Command = Class.extend({
 	_callBack: function(response) {
         if (!_(Renderer.theme).isUndefined()) {
 		if ("undefined" != typeof response && "success" == response.status) {
-			console.info(this._name+" completed.");
 			this._invokeRelatedActions('children');
             }
 		}

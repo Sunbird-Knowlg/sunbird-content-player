@@ -824,13 +824,8 @@ window.EkstepRendererAPI = {
     * @memberof EkstepRendererAPI
     */
    getCurrentUser: function() {
-    //    var currentUser = genieservice.getCurrentUser();
-    // console.log("globalContext: ", globalContext);
        EkstepRendererAPI.dispatchEvent('event:getcurrentuser');
-       console.log("currentUser: ", currentUser);
        return currentUser;
-    //    return unername;
-    //    EkstepRendererAPI.dispatchEvent('actionReplay', data, target);
     },
 
    /**
@@ -839,9 +834,7 @@ window.EkstepRendererAPI = {
     */
    getAllUserProfile: function() {
        EkstepRendererAPI.dispatchEvent('event:getAllUserProfile');
-       console.log("userList: ", userList);
        return userList;
-    //    EkstepRendererAPI.dispatchEvent('actionReplay', data, target);
     },
 
    /**

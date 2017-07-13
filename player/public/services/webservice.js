@@ -1,9 +1,7 @@
 org.ekstep.service.web = new(org.ekstep.service.mainService.extend({
     init: function() {
-        console.info('Web service init');
     },
     initialize: function() {
-        console.info("Web service intialize");
     },
     api: {
         _baseUrl: undefined,

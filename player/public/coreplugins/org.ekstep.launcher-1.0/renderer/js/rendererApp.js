@@ -6,7 +6,6 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
     $scope.isInitialized = false;
 
     $scope.init = function() {
-        console.log("LAUNCHER - controller init");
         if (_.isUndefined($rootScope.content)) {
             if (!_.isUndefined(content.metadata)) {
                 $rootScope.content = content.metadata;
@@ -32,7 +31,6 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
             $rootScope.pageTitle = $rootScope.content.name;
             GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
             $scope.callStartTelemetry($rootScope.content, function() {
-                console.log("LAUNCHER - callStartTelemetry callback success");
                 $scope.item = $rootScope.content;
                 $rootScope.content.body = isbrowserpreview ? content.body : undefined;
                 EkstepRendererAPI.dispatchEvent('renderer:launcher:load', undefined, $rootScope.content);

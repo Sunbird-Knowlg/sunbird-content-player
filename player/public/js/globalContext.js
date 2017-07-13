@@ -26,7 +26,6 @@ GlobalContext = {
                 for (var i = 0; i < AppConfig.configFields.length; i++) {
                     promises.push(GlobalContext._getIntentExtra(AppConfig.configFields[i], GlobalContext.config));
                 }
-                console.log("GlobalContext.configFields: ", GlobalContext.config);
                 Promise.all(promises).then(function(result) {
                     setGlobalConfig(GlobalContext.config);
                     org.ekstep.service.renderer.initializeSdk(GlobalContext.config.appQualifier || 'org.ekstep.genieservices');
@@ -84,14 +83,12 @@ GlobalContext = {
             }
         }).then(function(config) {
             // GlobalContext.config = config = { origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping"};
-            console.log("Origin value is:::", config);
             if (config && config.origin == 'Genie') {
                 return org.ekstep.service.renderer.getCurrentUser();
             } else {
                 reject('INVALID_ORIGIN');
             }
         }).then(function(result) {
-            console.log(result);
             // GlobalContext.user = result;
             // if (result && result.status == 'success') {
             if (result.uid) {
@@ -111,7 +108,6 @@ GlobalContext = {
     _getIntentExtra: function(param, contextObj) {
         return new Promise(function(resolve, reject) {
             window.plugins.webintent.getExtra(param, function(url) {
-                console.log(param + ' intent value: ' + url);
                 if (url) {
                     contextObj[param] = url;
                 }

@@ -5,7 +5,6 @@
  */
 Plugin.extend({
     initialize: function() {
-        console.info('Genie directive intialize');
         var icon = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/assets/icn_home.png");
         app.compileProvider.directive('genie', function($rootScope) {
             return {

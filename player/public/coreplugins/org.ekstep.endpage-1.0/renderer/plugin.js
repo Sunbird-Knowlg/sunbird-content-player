@@ -11,7 +11,6 @@ Plugin.extend({
     _ngScopeVar: "endPage",
     _injectTemplateFn: undefined,
     initialize: function() {
-        console.info('Endpage plugin is doing initialize....');
         this.templatePath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/end.html");
         this.controllerPath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/js/endpageApp.js");
         var instance = this;
