@@ -45,7 +45,7 @@ var splashScreen = {
     },
     hide: function(event) {
         jQuery(splashScreen.elementId).hide();
-        // splashScreen.hideProgressBar();
+        splashScreen.hideProgressBar();
     },
     showProgressBar: function() {
         splashScreen.progressEle = document.getElementById("progressBar");
