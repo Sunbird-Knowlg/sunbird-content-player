@@ -10,7 +10,7 @@ AppConfig = {
     corePluginspath: 'coreplugins',
     apislug: '/action',
     telemetryEventsConfigFields: ['sid', 'uid','did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner'],
-    configFields: ['origin', 'contentId', 'appInfo', 'languageInfo', 'contentExtras', 'appQualifier', 'mode', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'contentLaunchers', 'overlay', 'splash', 'app', 'dims', 'partner'],
+    configFields: ['origin', 'contentId', 'appInfo', 'languageInfo', 'contentExtras', 'appQualifier', 'mode', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'contentLaunchers', 'overlay', 'splash', 'showEndPage', 'app', 'dims', 'partner'],
     mimetypes: [
         "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"
     ],
@@ -76,5 +76,6 @@ AppConfig = {
         bgImage: "assets/icons/background_1.png",
         webLink: "https://www.ekstep.in"
     },
+    showEndPage: true,
     uid: 'anonymous'
 }

@@ -79,6 +79,7 @@ GlobalContext = {
                 GlobalContext.config = {
                     overlay: AppConfig.overlay,
                     origin: "Genie",
+                    showEndPage: AppConfig.showEndPage,
                     contentId: "org.ekstep.num.addition.by.grouping",
                     appInfo: {
                         code: "org.ekstep.quiz.app",

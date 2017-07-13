@@ -23,12 +23,20 @@ Plugin.extend({
         });
         console.info("Launcher:before",org.ekstep.pluginframework.config.pluginRepo);
         org.ekstep.contentrenderer.initPlugins('',AppConfig.corePluginspath);
+        this.loadEndPagePlugin();
         console.info("Launcher:after",org.ekstep.pluginframework.config.pluginRepo);
         if (!_.isUndefined(contentTypePlugin)) {
             this.loadPlugin(contentTypePlugin, content);
         }
     },
-
+    loadEndPagePlugin: function(){
+        if(GlobalContext.config.showEndPage){
+            org.ekstep.contentrenderer.loadPlugins({"id": "org.ekstep.endpage", "ver": "1.0", "type": 'plugin'}, [], function(){
+                console.info('Canvas Default plugins are loaded..');
+                console.log("End page plugin loaded..");
+            });        
+        }
+    },
     loadPlugin: function(plugin, contentData) {
         var instance = this;
         content = contentData;
