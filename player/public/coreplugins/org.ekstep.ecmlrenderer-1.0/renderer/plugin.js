@@ -24,9 +24,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         console.info('ECML Renderer initialize');
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.relaunchGame, this);
         EkstepRendererAPI.addEventListener('renderer:content:load', this.start, this);
-        // EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
-        this.start();
+        var instance = this;
+        setTimeout(function(){
+            // This is required to initialize angular controllers & directives 
+            instance.start();
+        }, 0);
     },
     /**
      * 

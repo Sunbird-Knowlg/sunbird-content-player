@@ -44,16 +44,8 @@ Plugin.extend({
         var instance = this;
         content = contentData;
         org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
-            instance.initTelemetry(content);
-            console.log('LAUNCHER - content:load:' + content);
-            EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize"); 
-            EkstepRendererAPI.dispatchEvent('renderer:collection:hide');
-            EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType, undefined, content);
+            EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
         });
-    },
-    initTelemetry:function(content) {
-        EkstepRendererAPI.dispatchEvent('renderer:telemetry:start', undefined, content);
-    }   
-
+    }
 })
 //# sourceURL=ContentLauncher.js

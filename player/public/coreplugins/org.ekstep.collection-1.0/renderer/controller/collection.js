@@ -77,6 +77,7 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
                 identifier: content.identifier,
                 mediaType: "Content"
             });
+            $scope.showCollection = false;
            org.ekstep.contentrenderer.startGame(content);
         }
     };

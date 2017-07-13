@@ -945,20 +945,7 @@ window.EkstepRendererAPI = {
     showEndPage:function(){
         this.dispatchEvent('renderer:show:endpage');
     },
-    /**
-    * This to enable the canvas overlay
-    * @memberof EkstepRendererAPI
-    */
-    showOverlay:function(){
-        jQuery('#overlay').css({display: 'block'})
-    },
-    /**
-    * This to disable the canvas overlay
-    * @memberof EkstepRendererAPI
-    */
-    hideOverlay:function(){
-        jQuery('#overlay').css({display: 'none'})
-    },
+   
 
     hideEndPage: function() {
        this.dispatchEvent('renderer:hide:endpage');

@@ -47,7 +47,7 @@ org.ekstep.renderer.html.showEndPage = function() {
  * @memberof org.ekstep.renderer.html
  */
 org.ekstep.renderer.html.enableOverlay = function(){
-	org.ekstep.renderer.html.api.dispatchEvent("renderer:show:overlay");
+	org.ekstep.renderer.html.api.dispatchEvent("renderer:overlay:show");
 };
 
 /**

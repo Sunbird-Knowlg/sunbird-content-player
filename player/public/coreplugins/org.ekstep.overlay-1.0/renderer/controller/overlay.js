@@ -11,7 +11,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.showOverlayGoodJob = true;
     $scope.showOverlayTryAgain = true;
     $scope.overlayEvents = ["overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
-    $scope.showOverlay = true;
+    $scope.overlayVisible = false;
     $scope.pluginInstance = undefined;
     $scope.imageBasePath = globalConfig.assetbase;
     $scope.showTeacherIns = true;
@@ -40,21 +40,23 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
 			//TODO: Remove this currentStage parameter and use directly stageData._currentStage
 			$rootScope.stageId = !_.isUndefined($rootScope.stageData) ? $rootScope.stageData._id : undefined;
 		});
-        EkstepRendererAPI.addEventListener("renderer:init:overlay", $scope.loadOverlay);
-        EkstepRendererAPI.addEventListener("renderer:show:overlay", $scope.showOverlay);
+
+        EkstepRendererAPI.addEventListener("renderer:overlay:show", $scope.showOverlay);
         EkstepRendererAPI.addEventListener("renderer:overlay:hide", $scope.hideOverlay);
+        
         EkstepRendererAPI.addEventListener("renderer:content:start", $scope.showOverlay);
-        EkstepRendererAPI.addEventListener("renderer:content:close", $scope.showOverlay);
         EkstepRendererAPI.addEventListener("renderer:content:end", $scope.hideOverlay);
     }
 
     $scope.showOverlay = function() {
-        $scope.showOverlay = !_.isUndefined(globalConfig.overlay.showOverlay) && globalConfig.overlay.showOverlay ? globalConfig.overlay.showOverlay : console.warn('Overlay is disabled');
+        if(!globalConfig.overlay.showOverlay) return;
+        
+        $scope.overlayVisible = true;
         $scope.safeApply();
     }
 
     $scope.hideOverlay = function() {
-        $scope.showOverlay = false;
+        $scope.overlayVisible = false;
         $scope.safeApply();
     }
 
