@@ -748,6 +748,11 @@ var Plugin = Class.extend({
         if ("undefined" != typeof max && fval >= max) fval = 0;
         instance._pluginParams[param] = fval;
     },
+    destroy: function() {
+        var pluginName = this._type;
+        delete org.ekstep.pluginframework.pluginManager.plugins[pluginName];
+        console.log(pluginName, " Plugin instance got destroyed");
+    },
     setPluginParamValue: function(action) {
         var scope = action.scope;
         var param = action.param;

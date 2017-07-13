@@ -172,7 +172,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         }
 
     };
-    EkstepRendererAPI.addEventListener('renderer:show:endpage', function(){
+    EkstepRendererAPI.addEventListener('renderer:show:endpage', function() {
         EkstepRendererAPI.dispatchEvent('renderer:content:end');
         $scope.showEndPage = true;
         // EkstepRendererAPI.dispatchEvent('renderer:overlay:hide');
@@ -180,8 +180,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         $scope.initEndpage();
         $scope.safeApply();
     });
-
-    EkstepRendererAPI.addEventListener('renderer:hide:endpage',function(){
+    EkstepRendererAPI.addEventListener('renderer:hide:endpage',function() {
         $scope.showEndPage = false;
         $scope.safeApply();
     });
@@ -244,6 +243,7 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                             if (window.content.mimeType == obj.mimeType){
                                 window.content = obj;
                                 EkstepRendererAPI.clearStage();
+                                // PluginManager.cleanUp();
                                 EkstepRendererAPI.dispatchEvent('renderer:content:load');
                                 EkstepRendererAPI.dispatchEvent('renderer:player:show');
                                 EkstepRendererAPI.dispatchEvent('renderer:splash:show');
@@ -332,8 +332,8 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
             }
         }
         EkstepRendererAPI.addEventListener('renderer:init:relatedContent',function(){
-                console.info('Endpage init..')
-                $scope.init();
+            console.info('Endpage init..')
+            $scope.init();
 
         })
     });
