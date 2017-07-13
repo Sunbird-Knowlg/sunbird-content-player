@@ -243,6 +243,7 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                                 window.content = obj;
                                 EkstepRendererAPI.clearStage();
                                 // PluginManager.cleanUp();
+                                EkstepRendererAPI.dispatchEvent('renderer:content:close');
                                 EkstepRendererAPI.dispatchEvent('renderer:content:load');
                                 EkstepRendererAPI.dispatchEvent('renderer:player:show');
                                 EkstepRendererAPI.dispatchEvent('renderer:splash:show');

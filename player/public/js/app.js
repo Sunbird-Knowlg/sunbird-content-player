@@ -126,13 +126,13 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         });
 
         EkstepRendererAPI.addEventListener("renderer:content:close", function(event, data) {
-            if (data.interactId) {
+            if (data && data.interactId) {
               TelemetryService.interact("TOUCH", data.interactId, "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
               });
             }
             TelemetryService.end(logContentProgress());
-            data.callback();
+            if (data && data.callback) data.callback();
         });
 
         org.ekstep.service.controller.initService(loadNgModules);
