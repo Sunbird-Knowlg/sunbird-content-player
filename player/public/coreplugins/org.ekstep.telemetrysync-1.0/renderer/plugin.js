@@ -4,7 +4,7 @@
  * @extends EkstepRenderer.Plugin
  * @author Krushanu Mohapatra V S <Krushanu.Mohapatra@tarento.com>
  */
-var TelemetryPlugin = Plugin.extend({
+Plugin.extend({
 
      /**
      * This explains the type of the plugin.
@@ -117,5 +117,4 @@ var TelemetryPlugin = Plugin.extend({
         }
     }
 
-});
-PluginManager.registerPlugin('telemetry', TelemetryPlugin);
+})

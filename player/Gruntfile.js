@@ -150,7 +150,6 @@ module.exports = function(grunt) {
                         '../js-libs/renderer/plugin/SpritePlugin.js',
                         '../js-libs/renderer/plugin/StagePlugin.js',
                         '../js-libs/renderer/plugin/SummaryPlugin.js',
-                        '../js-libs/renderer/plugin/TelemetryPlugin.js',
                         '../js-libs/renderer/plugin/TestcasePlugin.js',
                         '../js-libs/renderer/plugin/TextPlugin.js',
                         '../js-libs/renderer/plugin/ThemePlugin.js',
