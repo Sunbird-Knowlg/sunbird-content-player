@@ -29,7 +29,7 @@ var splashScreen = {
     },
 
     createHtml: function() {
-        var html = '<img src=' + splashScreen.config.bgImage + ' class="gc-loader-img" /><P class="splashText" id="splashTextId"> Loading your content ... </p><div id="progressArea"><div id="progressBar"></div><p id="progressCount" class="splashText font-lato gc-loader-prog"></p></div><a href="' + splashScreen.config.webLink + '" target="_parent"><div class="splashScreen"> <img src=' + splashScreen.config.icon + ' class="splash-icon " /> <span>' + splashScreen.config.text + '</span> </div></a>';
+        var html = '<img src=' + splashScreen.config.bgImage + ' class="gc-loader-img" /><P class="splashText" id="splashTextId"> Loading your content ... </p><div id="progressArea"><div id="progressBar"></div><p id="progressCount" class="font-lato gc-loader-prog"></p></div><a href="' + splashScreen.config.webLink + '" target="_parent"><div class="splashScreen"> <img src=' + splashScreen.config.icon + ' class="splash-icon " /> <span>' + splashScreen.config.text + '</span> </div></a>';
         return html;
     },
 
