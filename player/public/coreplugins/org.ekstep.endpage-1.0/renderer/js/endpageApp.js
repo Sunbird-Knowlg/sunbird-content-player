@@ -26,6 +26,9 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
             $scope.content[key] = null;
         }
     };
+    $scope.setLicense = function(){
+        $scope.licenseAttribute = $scope.content.license || 'Licensed under CC By 4.0 license'
+    };
     $scope.showCredits = function(key) {
         if ($scope.content.imageCredits == null && $scope.content.voiceCredits == null && $scope.content.soundCredits == null) {
             console.warn("No metadata imageCredits,voiceCredites and soundCredits");
@@ -121,6 +124,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
             content = localStorageGC.getItem('content');
             $rootScope.content = content;
         }
+        $scope.setLicense();
         localStorageGC.setItem('content_old', $rootScope.content)
         if (_(TelemetryService.instance).isUndefined()) {
             var tsObj = localStorageGC.getItem('telemetryService');
