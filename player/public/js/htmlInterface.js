@@ -47,7 +47,7 @@ org.ekstep.renderer.html.showEndPage = function() {
  * @memberof org.ekstep.renderer.html
  */
 org.ekstep.renderer.html.enableOverlay = function(){
-	org.ekstep.renderer.html.api.showOverlay();
+	org.ekstep.renderer.html.api.dispatchEvent("renderer:show:overlay");
 };
 
 /**
@@ -55,7 +55,7 @@ org.ekstep.renderer.html.enableOverlay = function(){
  * @memberof org.ekstep.renderer.html
  */
 org.ekstep.renderer.html.disableOverlay = function(){
-	org.ekstep.renderer.html.api.hideOverlay();
+	org.ekstep.renderer.html.api.dispatchEvent("renderer:overlay:hide");
 };
 
 /**
@@ -86,7 +86,7 @@ org.ekstep.renderer.html.telemetryService = org.ekstep.renderer.html.TelemetrySe
  * @memberof org.ekstep.renderer.html
  */
 org.ekstep.renderer.html.contentService = function(){
-	return EkstepRendererAPI.getService();
+	return org.ekstep.renderer.html.api.getService();
 };
 
 /**
