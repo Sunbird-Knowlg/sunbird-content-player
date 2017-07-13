@@ -6,6 +6,7 @@ var splashScreen = {
         bgImage: "img/icons/background_1.png",
         webLink: "https://www.ekstep.in"
     },
+    progressEle:undefined,
     initialize: function() {
         var appConfigKeys = Object.keys(AppConfig.splash);
         // _.each(appConfigKeys, function(each){
@@ -15,7 +16,6 @@ var splashScreen = {
         };
         var html = this.createHtml();
         jQuery(this.elementId).html(html);
-        splashScreen.showProgressBar();
         // add event listener for hide and show of splash splashScreen
         var instance = this;
 
@@ -35,30 +35,33 @@ var splashScreen = {
     show: function() {
         jQuery(splashScreen.elementId).show();
         splashScreen.showProgressBar();
-    },
 
+    },
     hide: function(event) {
         jQuery(splashScreen.elementId).hide();
+        splashScreen.hideProgressBar();
     },
     showProgressBar: function() {
-        var elem = document.getElementById("progressBar");
+        splashScreen.progressEle = document.getElementById("progressBar");
         jQuery("#progressBar").width(0);
         jQuery('#loading').show();
-
         var width = 20;
         var id = setInterval(frame, 0.6);
-
         function frame() {
             if (width >= 100) {
                 clearInterval(id);
             } else {
                 width++;
-                if (elem && elem.style)
-                    elem.style.width = width + '%';
+                if (splashScreen.progressEle && splashScreen.progressEle.style)
+                    splashScreen.progressEle.style.width = width + '%';
                 jQuery('#progressCount').text(width + '%');
             }
         }
 
+    },
+    hideProgressBar:function(){
+      splashScreen.progressEle.style.width = 0 + '%'
+      jQuery('#loading').hide();
     }
 }
 splashScreen.initialize();
