@@ -31,8 +31,14 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             // To override back button behaviour
             $ionicPlatform.registerBackButtonAction(function() {
                 //TODO: Add Telemetry interact for on and Cancle
+                var stageId = undefined;
+                if (Renderer) {
+                    stageId = EkstepRendererAPI.getCurrentStageId();
+                } else {
+                    stageId = $rootScope.pageId || '';
+                }
                 if (confirm("Press 'OK' to go back to Genie.")) {
-                    backbuttonPressed(EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                    backbuttonPressed(stageId);
                 }
             }, 100);
             $ionicPlatform.on("pause", function() {
@@ -45,13 +51,12 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         $timeout(function() {
             $ionicPlatform.ready(function() {
                 isMobile = window.cordova ? true : false,
-                    console.log('ionic platform is ready...');
                 org.ekstep.service.init();
                 if ("undefined" == typeof Promise) {
                     alert("Your device isn’t compatible with this version of Genie.");
                     exitApp();
                 }
-                Renderer &&  $rootScope.addIonicEvents();
+                $rootScope.addIonicEvents();
                 if (window.cordova && window.cordova.plugins.Keyboard) {
                     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
                 } else {
@@ -90,7 +95,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             if(templatePath){
                 if(_.isArray(templatePath)){
                     _.each(templatePath, function(template){
-                        console.log("template", template);
                         loadFiles.push({ type: 'html', path: template });
                     });
                 } else {
@@ -108,11 +112,10 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         };
 
         function injectTemplates(templatePath, scopeVariable, toElement) {
-            console.log("inject templates", templatePath);
-                $scope.templates.push(templatePath);
-                var el = angular.element("content-holder");
-                $compile(el.contents())($scope);
-                $scope.safeApply();
+            $scope.templates.push(templatePath);
+            var el = angular.element("content-holder");
+            $compile(el.contents())($scope);
+            $scope.safeApply();
         }
         EkstepRendererAPI.addEventListener("renderer:add:template", function(event){
             var data = event.target;
@@ -120,13 +123,13 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         });
 
         EkstepRendererAPI.addEventListener("renderer:content:close", function(event, data) {
-            if (data.interactId) {
+            if (data && data.interactId) {
               TelemetryService.interact("TOUCH", data.interactId, "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
               });
             }
             TelemetryService.end(logContentProgress());
-            data.callback();
+            if (data && data.callback) data.callback();
         });
 
         org.ekstep.service.controller.initService(loadNgModules);

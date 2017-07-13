@@ -9,7 +9,6 @@ Plugin.extend({
     _ngScopeVar: "playerContent",
     _injectTemplateFn: undefined,
     initialize: function() {
-        console.info('LAUNCHER - plugin intialize is doing..');
         EkstepRendererAPI.addEventListener('renderer:launcher:load', this.start, this);
         this.templatePath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/renderer.html");
         this.controllerPath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/js/rendererApp.js");
@@ -17,17 +16,14 @@ Plugin.extend({
         org.ekstep.service.controller.loadNgModules(this.templatePath, this.controllerPath);
     },
     start: function(evt, content) {
-        console.info('LAUNCHER - start content load');
         var globalConfig = EkstepRendererAPI.getGlobalConfig();
         var contentTypePlugin = _.findWhere(globalConfig.contentLaunchers, {
             'mimeType': content.mimeType
         });
-        console.info("Launcher:before",org.ekstep.pluginframework.config.pluginRepo);
-
+        
         org.ekstep.contentrenderer.initPlugins('',globalConfig.corePluginspath);
         this.loadEndPagePlugin();
 
-        console.info("Launcher:after",org.ekstep.pluginframework.config.pluginRepo);
         if (!_.isUndefined(contentTypePlugin)) {
             this.loadPlugin(contentTypePlugin, content);
         }

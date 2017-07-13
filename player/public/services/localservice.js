@@ -1,9 +1,7 @@
 org.ekstep.service.local = new(org.ekstep.service.mainService.extend({
     init:function(){
-        console.info('Local service init');
     },
     initialize:function(){
-        console.info("html service intialize");
     },
     api: {
         basePath: '/genie-canvas/v2/',
@@ -19,7 +17,6 @@ org.ekstep.service.local = new(org.ekstep.service.mainService.extend({
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
             $.getJSON("assets/user_list/user_list.json", function(data) {
-                // console.log("===== data =====", data);
                 if (data.length == 0) {
                     data = [{"uid": "9g8h4ndAnonymouscg56ngd"}];
                 }

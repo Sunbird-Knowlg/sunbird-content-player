@@ -17,7 +17,6 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.showTeacherIns = true;
     $scope.showReload = true;
     $scope.init = function() {
-    	console.log("OVERLAY - controller loaded");
     	$scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
         if (globalConfig.language_info) {
             var languageInfo = JSON.parse(globalConfig.language_info);
@@ -61,8 +60,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     }
 
 	$scope.navigate = function(navType) {
-		console.log("navType: ", navType);
-        if (!$rootScope.content) {
+		if (!$rootScope.content) {
             // if $rootScope.content is not available get it from the base controller
             org.ekstep.contentrenderer.getContentMetadata($stateParams.itemId);
         }
@@ -116,7 +114,6 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
                 $scope.showOverlayTryAgain = event.target;
                 break;
             default:
-                console.log("Default case got called..");
                 break;
         }
         $rootScope.safeApply();
@@ -166,7 +163,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.init();
 });
 
-app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope', '$state', '$stateParams', function($scope, $rootScope, $state, $stateParams) {
+app.controllerProvider.register('UserSwitcherController', ['$scope', '$rootScope', '$state', '$stateParams', function($scope, $rootScope, $state, $stateParams) {
     $scope.groupLength = undefined;
     $scope.selectedUser = {};
     $scope.showUserSwitchModal = false;
@@ -198,7 +195,6 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     }
     $scope.getUsersList = function() {
         org.ekstep.service.content.getAllUserProfile().then(function(usersData) {
-            console.log("getAllUserProfile()", usersData);
             $rootScope.users = usersData;
             $scope.groupLength = (_.where($rootScope.users, {
                 "isGroupUser": true
@@ -305,36 +301,29 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
         EventBus.addEventListener("event:enableUserSwitcher", function(value) {
             $rootScope.enableUserSwitcher = value.target;
         });
-
         EventBus.addEventListener("event:showUser", function(value) {
             $rootScope.showUser = value.target;
         });
-
         EventBus.addEventListener("event:openUserSwitchingModal", function() {
             $scope.showUserSwitchingModal();
         });
-
         EventBus.addEventListener("event:closeUserSwitchingModal", function() {
             $scope.hideUserSwitchingModal();
         });
-
         EventBus.addEventListener("event:getcurrentuser", function() {
             if (globalConfig.overlay.showUser)
                 currentUser = $rootScope.currentUser;
         });
-
         EventBus.addEventListener("event:getuserlist", function() {
             if (globalConfig.overlay.showUser)
                 userList = $rootScope.users;
         });
-
         EventBus.addEventListener("event:showuser", function(value) {
             globalConfig.overlay.showUser = value;
             $rootScope.safeApply = function() {
                 $rootScope.showUser = value;
             }
         });
-
         EventBus.addEventListener("event:enableUserSwitcher", function(value) {
             globalConfig.overlay.enableUserSwitcher = value;
             $rootScope.safeApply = function() {
@@ -344,8 +333,6 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
 
         if (_.isUndefined($rootScope.currentUser)) {
             org.ekstep.service.content.getCurrentUser().then(function(data) {
-                console.log("getCurrentUser()", data);
-
                 if (_.isEmpty(data.handle)) {
                     data.handle = "Anonymous";
                     data.profileImage = "assets/icons/avatar_anonymous.png";
@@ -529,7 +516,7 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
 		scope: {
 			popupBody: '=popupBody'
 		},
-		controller: 'UserSwitchController',
+		controller: 'UserSwitcherController',
 		link: function(scope, element, attrs, controller) {
 			// get the user selection div
 			var userSlider = element.find("#userSlider");

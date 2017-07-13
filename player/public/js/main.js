@@ -42,17 +42,18 @@ function getUrlParameter(sParam) {
 }
 
 function backbuttonPressed(pageId) {
-    var data = (Renderer.running || HTMLRenderer.running) ? {
-        type: 'EXIT_CONTENT',
-        stageId: Renderer.theme ? Renderer.theme._currentStage : ""
-    } : {
-        type: 'EXIT_APP'
-    };
-    TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', data);
-    if (pageId == "coverpage") {
-        TelemetryService.end();
+    var type = undefined;
+    var stageId = undefined;
+    if (Renderer) {
+        AudioManager.stopAll();
+        type = Renderer.running ? 'EXIT_CONTENT' : 'EXIT_APP'
+        stageId = Renderer.theme ? Renderer.theme._currentStage : pageId;
+    } else {
+        type: 'EXIT_CONTENT';
+        stageId = pageId || '';
     }
-    AudioManager.stopAll();
+    TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', {type:type,stageId:stageId});
+    if (pageId == "coverpage") {TelemetryService.end(logContentProgress()); }
     try {
         TelemetryService.exit();
     } catch (err) {
@@ -228,7 +229,6 @@ function startTelemetry(id, ver, cb) {
         }
     }).catch(function(error) {
         EkstepRendererAPI.logErrorEvent(error, {'type':'system','action':'play','severity':'fatal'});
-        console.warn('TelemetryService init failed');
         showToaster('error', 'TelemetryService init failed.');
         exitApp();
     });
@@ -262,12 +262,12 @@ function addWindowUnloadEvent() {
     window.onbeforeunload = function(e) {
         e = e || window.event;
         var y = e.pageY || e.clientY;
-        !y && EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.getTelemetryService().end();
+        !y && EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.getTelemetryService().end(logContentProgress());
     }
     if (EkstepRendererAPI.getGlobalConfig().context.mode === 'edit') {
         parent.document.getElementsByTagName('iframe')[0].contentWindow.onunload = function() {
             EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId());
-            EkstepRendererAPI.getTelemetryService().end();
+            EkstepRendererAPI.getTelemetryService().end(logContentProgress());
         }
     }
 }
@@ -348,17 +348,18 @@ function setGlobalConfig(context) {
             if (!_.isUndefined(data)) otherData[globalConfig.telemetryEventsConfigFields[i]] = data;
         }
         var etags = {
-            'dims':otherData.dims || globalConfig.etags.dims,
-            'app':otherData.app || globalConfig.etags.app,
-            'partner':otherData.partner ||  globalConfig.etags.partner
+            'dims':otherData.dims || AppConfig.etags.dims,
+            'app':otherData.app || AppConfig.etags.app,
+            'partner':otherData.partner ||  AppConfig.etags.partner
         };
         otherData.etags = etags;
         delete otherData.dims;
         delete otherData.app;
         delete otherData.partner;    
+        GlobalContext.config = globalConfig;
         GlobalContext.config.otherData = otherData;
-        window.globalConfig = globalConfig;
+        window.globalConfig = GlobalContext.config;
     } else {
-        window.globalConfig = AppConfig;
+        window.globalConfig = _.clone(AppConfig);
     }
 }

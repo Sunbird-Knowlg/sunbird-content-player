@@ -15,16 +15,13 @@ org.ekstep.contentrenderer.init = function() {
      */
     window.initializePreview = org.ekstep.contentrenderer.initializePreview;
     window.setContentData = org.ekstep.contentrenderer.setContent;
-    console.info('Content renderer starts');
 };
 
 org.ekstep.contentrenderer.loadDefaultPlugins = function(cb){
     org.ekstep.contentrenderer.initPlugins('', 'coreplugins');
-    console.info("Plugin repo path is = ",org.ekstep.pluginframework.config.pluginRepo);
     var globalConfig = EkstepRendererAPI.getGlobalConfig();
     org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins,[],function(){
-        console.info('Canvas Default plugins are loaded..');
-                if(cb) cb()
+        if(cb) cb()
     });
 };
 
@@ -32,12 +29,17 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function(cb){
 org.ekstep.contentrenderer.startGame = function(appInfo) {
     org.ekstep.contentrenderer.loadDefaultPlugins(function() {
         org.ekstep.contentrenderer.loadExternalPlugins(function() {
-            console.info('Game is starting..')
             var globalConfig = EkstepRendererAPI.getGlobalConfig();
             if (globalConfig.mimetypes.indexOf(appInfo.mimeType) > -1) {
                 EkstepRendererAPI.dispatchEvent('renderer:player:init');
             } else {
-                !isbrowserpreview ? EkstepRendererAPI.dispatchEvent('renderer:collection:show') : console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
+                if(!isbrowserpreview){
+                    org.ekstep.contentrenderer.loadPlugins({"id": "org.ekstep.collection", "ver": "1.0", "type": 'plugin'}, [], function(){
+                         EkstepRendererAPI.dispatchEvent('renderer:collection:show');
+                    });  
+                }else{
+                    console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
+                }
             }
         });
     });
@@ -55,7 +57,6 @@ org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
             });
         } else {
             org.ekstep.contentrenderer.initPlugins('', previewData.previewPluginspath);
-            console.info("Load external plugin: repo:",org.ekstep.pluginframework.config.pluginRepo);
             org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins, [], function() {
                 console.info('Preview plugins are loaded without repo.');
             });
@@ -150,7 +151,6 @@ org.ekstep.contentrenderer.loadPlugins = function(pluginManifest, manifestMedia,
         p.ver = parseFloat(p.ver).toFixed(1);
     });
     org.ekstep.pluginframework.pluginManager.loadAllPlugins(pluginManifest, manifestMedia, function() {
-        console.info("Framework Loaded the plugins");
         if (typeof PluginManager != 'undefined') {
             PluginManager.pluginMap = org.ekstep.pluginframework.pluginManager.plugins;
         }

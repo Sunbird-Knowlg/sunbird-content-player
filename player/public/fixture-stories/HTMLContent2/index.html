@@ -8,13 +8,10 @@
 </head>
 <body>
   <!-- External Libraries -->
-  <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/underscore.js"></script>
   
-  <!--  -->
-  <!-- <script src="assets/js/genieservices.js"></script>
-  <script src="assets/js/telemetry.min.js"></script> -->
-  <script src="assets/js/genieservice-bridge.min.js"></script>
+  
+  <script src="assets/js/htmlinterface.js"></script>
 </br></br>
  <center>
  <h1>HTML-CONTENT</h1>
@@ -22,154 +19,16 @@
  </br>
  <h3>CLICK BELOW BUTTON TO END THE GAME</h3>
  </br>
- <button onclick="genieservice.endContent()"><h3>CLOSE ME</h3></button>
+ <button onclick="org.ekstep.renderer.html.showEndPage()"><h3>CLOSE ME</h3></button>
+
+
+ <button onclick="org.ekstep.renderer.html.contentService()"><h3>Geniservice</h3></button>
  </center>   
  </center>
   
   
   
  
-  <script type="text/javascript">
-    // Storing current logged in user 
-    var currentUser = {};
-
-    // Storing query parameter "config" 
-    var config = {};
-
-    // Storing query parameter "contentId"
-    var contentId = {};
-
-    // Storing GenieService response content metadata(for contentID passed in query string)
-    var currentContent = {};
-
-    /**
-     * This is to GenieService and Telemetry
-     * callback function will be called after initalization
-     */
-    genieServiceBridge.init(function(){
-      // GenieService initalisation success
-      onGenieServiceInit();
-    });
-
-    /**
-     * Starting method of HTML content 
-     * Now it use GenieService or Telemetry 
-     */
-    function onGenieServiceInit(){
-      // Get content configuration from url pararmeter. 
-      config = getUrlParameter('config');
-      console.log("config", config);
-
-      // Get contentId(contentId) from URL parameter
-      // Required to get more information of this content from GenieService 
-      contentId = getUrlParameter('contentId'); 
-
-      // Get current user data is required to log telemetry
-      getCurrentUser();
-
-      // Get content metadata from GenieService API
-      getContent(contentId);      
-    }
-
-    /**
-     * Get current user details to log telemetry
-     * User session is madatory to log telemetry data
-     */
-    function getCurrentUser(){
-       genieservice.getCurrentUser()
-       .then(function(result) {
-          if (result && result.status == 'success') {
-              if (result.data.uid) {
-                currentUser = result;                 
-                console.log("currentUser", currentUser);
-              } else {
-                console.log('INVALID_USER');
-              }
-          } else {
-              console.log('INVALID_USER');
-          }
-      })
-      .catch(function(err) {
-          console.log("Failed - getCurrentUser", err);
-      });
-    }
-
-    /**
-     * get content data from GenieService
-     */
-    function getContent(contentId){
-      // Calling GenieService API to get Content metadata
-      // contentId: required input parameter(content identifier)
-      genieservice.getContent(contentId)
-      .then(function(result) {
-        // genieservice getcontent call success(success callback function)
-        console.log("Success - getContent", result);
-        currentContent = {};
-        currentContent.metadata = result;
-
-        //Start telemetry log for the game
-        startTelemetry(); 
-
-        // Language search
-        getDictionaryWords();
-
-        // Adding content information to the body
-        document.body.innerHTML += "<p><b>Content id:</b> "+currentContent.metadata.identifier+ "</p><p><b>Name:</b> "+currentContent.metadata.localData.name+"</p>";
-      })
-      .catch(function(err){
-        console.log("Failed", err);
-      }) 
-    }
-
-    /**
-     * Start telemetry log for the current game
-     * Required: UserData, content metadata
-     */
-    function startTelemetry(){
-      var gameInfo = {}
-      gameInfo.id = currentContent.metadata.localData.identifier;
-      gameInfo.ver = currentContent.metadata.localData.pkgVersion || "1";
-
-      TelemetryService.init(gameInfo, currentUser).then(function() {
-        console.log("TelemetryService is ready..");
-        TelemetryService.start(gameInfo);
-      });
-    }
-
-    function launchAnotherHTMLContent(id){
-      genieservice.launchContent(id, config);
-    }
-
-    /**
-     * Do dictionary search
-     */
-    function getDictionaryWords(){
-      genieservice.languageSearch('{"request":{"traversals":"rhyming_boundary_rule","fuzzy":true,"filters":{"language_id":["en"],"status":"Live","objectType":"Word"},"sort_by":{"lemma":"asc"},"limit":100}}')
-      .then(function(resp){
-        console.log("languageSearch resp", resp);
-      })
-      .catch(function(err){
-        console.log("Failed - languageSearch", err);
-      })
-    }
-
-    /** 
-     * Get url parameter value
-     * sPram: input url paramater name to get its value in url
-     */
-    function getUrlParameter(sParam) {
-     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-         sURLVariables = sPageURL.split('&'),
-         sParameterName,
-         i;
-     for (i = 0; i < sURLVariables.length; i++) {
-         sParameterName = sURLVariables[i].split('=');
-
-         if (sParameterName[0] === sParam) {
-             return sParameterName[1] === undefined ? true : sParameterName[1];
-         }
-     }
-    }
-  </script>
+  
 </body>
 </html>

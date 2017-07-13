@@ -6,7 +6,6 @@
 Plugin.extend({
     _type: "nextNavigation",
     initialize: function() {
-        console.info('Next navigation intialize');
         var nextIcon = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/assets/next.png");
         app.compileProvider.directive('nextNavigation', function($rootScope) {
             return {

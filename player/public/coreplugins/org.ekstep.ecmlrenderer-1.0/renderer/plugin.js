@@ -21,7 +21,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      * @memberof ecmlRenderer
      */
     initialize: function() {
-        console.info('ECML Renderer initialize');
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.relaunchGame, this);
         EkstepRendererAPI.addEventListener('renderer:content:load', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
@@ -38,7 +37,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     start: function(evt, renderObj) {
         var instance = this;
         renderObj = content;
-        console.log("ECMLRENDERE - content:load:application/vnd.ekstep.ecml-archive: start()", content);
         if (_.isUndefined(renderObj)) return;
         if(isbrowserpreview){
             renderObj.path = '';
@@ -148,7 +146,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      */
     load: function(dataObj) {
         var globalConfig = EkstepRendererAPI.getGlobalConfig();
-        console.log("ECMLRENDERE - Load()");
         var instance = this,
             data = dataObj.body;
 
@@ -184,7 +181,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 Renderer.theme.start(dataObj.path.replace('file:///', '') + "/assets/");
             });
         } catch (e) {
-            console.warn("Framework fails to load plugins", e);
+            logConsoleMessage.warn("Framework fails to load plugins", e);
             EkstepRendererAPI.logErrorEvent(e, { 'severity': 'fatal', 'type': 'system', 'action': 'play' });
             showToaster('error', 'Framework fails to load plugins');
         }

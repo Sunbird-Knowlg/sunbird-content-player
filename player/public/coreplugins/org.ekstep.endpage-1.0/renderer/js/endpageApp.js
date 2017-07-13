@@ -1,7 +1,6 @@
 var canvasApp = angular.module("genie-canvas");
 canvasApp.controller("endPageController", function($scope, $rootScope, $state,$element, $stateParams) {
     var globalConfig = EkstepRendererAPI.getGlobalConfig();
-    console.info("EndPage controller is calling");
     $scope.showEndPage = false;
     $scope.showFeedbackArea = true;
     $scope.commentModel = '';
@@ -172,7 +171,6 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
 
     };
     EkstepRendererAPI.addEventListener('renderer:show:endpage', function() {
-        EkstepRendererAPI.dispatchEvent('renderer:content:end');
         $scope.showEndPage = true;
         // EkstepRendererAPI.dispatchEvent('renderer:overlay:hide');
         // EkstepRendererAPI.dispatchEvent('renderer:player:hide');
@@ -243,6 +241,7 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                                 window.content = obj;
                                 EkstepRendererAPI.clearStage();
                                 // PluginManager.cleanUp();
+                                EkstepRendererAPI.dispatchEvent('renderer:content:close');
                                 EkstepRendererAPI.dispatchEvent('renderer:content:load');
                                 EkstepRendererAPI.dispatchEvent('renderer:player:show');
                                 EkstepRendererAPI.dispatchEvent('renderer:splash:show');
@@ -267,27 +266,23 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                 contentExtras = JSON.stringify(contentExtras);
                 deepLinkURL += "&contentExtras=" + contentExtras;
             }
-            console.log("deepLinkURL: ", deepLinkURL);
             window.open(deepLinkURL, "_system");
         }
         $scope.getRelatedContent = function(list) {
             org.ekstep.service.content.getRelatedContent(list, content.identifier, GlobalContext.user.uid)
             .then(function(item) {
-                console.log('getRelatedContent', item);
                 if (!_.isEmpty(item)) {
                     $scope.relatedContentItem = item;
                     var list = [];
                     if(item.nextContent){
                         if(item.nextContent.contents){
                             var relatedContents = item.nextContent.contents;
-                            console.log('getRelatedContent-contents', relatedContents);
                             // releated contents list
                             $scope.showRelatedContent = true;
                             $scope.relatedContentPath = relatedContents;
                             list = _.first(_.isArray(relatedContents) ? relatedContents : [relatedContents], 2);
                         } else {
                             // Next content of the collection
-                            console.log('getRelatedContent-collection content', item.nextContent);
                             $scope.showRelatedContent = true;
                             $scope.contentShowMore = true;
                             list = [item.nextContent];
@@ -331,9 +326,7 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
             }
         }
         EkstepRendererAPI.addEventListener('renderer:init:relatedContent',function(){
-            console.info('Endpage init..')
             $scope.init();
-
         })
     });
 canvasApp.directive('starRating', function($rootScope) {

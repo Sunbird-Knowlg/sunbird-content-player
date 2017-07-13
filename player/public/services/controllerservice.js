@@ -6,7 +6,6 @@ org.ekstep.service.controller = new(org.ekstep.service.mainService.extend({
 	loadTemplates: undefined,
     callback: undefined,
 	init:function(){
-	 	console.info('controller service init');
 	},
 	initService: function(loadModuleFn) {
         this.loadModules = loadModuleFn;

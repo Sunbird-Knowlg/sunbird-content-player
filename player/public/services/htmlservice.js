@@ -4,10 +4,8 @@ org.ekstep.service.html = new(org.ekstep.service.mainService.extend({
     _callback: undefined,
     _jsFileIndex: 0,
     init:function(){
-        console.info('HTML service init');
     },
     initialize:function(){
-        console.info("html service intialize");
     },
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
@@ -46,12 +44,10 @@ org.ekstep.service.html = new(org.ekstep.service.mainService.extend({
                 } else {
                     _.extend(org.ekstep.service.html.localData, jsonResp);
                 }
-                console.log("LocalData json loaded", org.ekstep.service.html.localData);
                 org.ekstep.service.html._jsFileIndex = org.ekstep.service.html._jsFileIndex + 1;
                 org.ekstep.service.html.loadJsFilesSequentially();
             });
         } else {
-            console.log("js files load complete.");
             if(org.ekstep.service.html._callback){
                 console.log("local Files loaded successfully.");
                 org.ekstep.service.html._callback();

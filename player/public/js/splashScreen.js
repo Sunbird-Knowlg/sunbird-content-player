@@ -6,6 +6,7 @@ var splashScreen = {
         bgImage: "img/icons/background_1.png",
         webLink: "https://www.ekstep.in"
     },
+    progressEle:undefined,
     initialize: function() {
         var appConfigKeys = Object.keys(AppConfig.splash);
         // _.each(appConfigKeys, function(each){
@@ -15,12 +16,12 @@ var splashScreen = {
         };
         var html = this.createHtml();
         jQuery(this.elementId).html(html);
-        splashScreen.showProgressBar();
         // add event listener for hide and show of splash splashScreen
         var instance = this;
 
         setTimeout(function() {
             instance.show();
+            EkstepRendererAPI.addEventListener("renderer:launcher:load", instance.loadContentDetails);
             EkstepRendererAPI.addEventListener("renderer:splash:show", instance.show);
             EkstepRendererAPI.addEventListener("renderer:splash:hide", instance.hide);
             EkstepRendererAPI.addEventListener("renderer:content:start", instance.hide);
@@ -28,37 +29,45 @@ var splashScreen = {
     },
 
     createHtml: function() {
-        var html = '<img src=' + splashScreen.config.bgImage + ' class="gc-loader-img" /><div id="progressArea"> <div id="progressBar"></div> <p id="progressCount" class="font-lato gc-loader-prog"></p> </div> <a href="' + splashScreen.config.webLink + '" target="_parent"> <div class="splashScreen"> <img src=' + splashScreen.config.icon + ' class="splash-icon " /> <span id="pageTitle">' + splashScreen.config.text + '</span> </div> </a>';
+        var html = '<img src=' + splashScreen.config.bgImage + ' class="gc-loader-img" /><P class="splashText" id="splashTextId"> Loading your content ... </p><div id="progressArea"><div id="progressBar"></div><p id="progressCount" class="splashText font-lato gc-loader-prog"></p></div><a href="' + splashScreen.config.webLink + '" target="_parent"><div class="splashScreen"> <img src=' + splashScreen.config.icon + ' class="splash-icon " /> <span>' + splashScreen.config.text + '</span> </div></a>';
         return html;
+    },
+
+    loadContentDetails: function(eve, data){
+        console.log("loadContentDetails data: ", data);
+        $("#splashTextId").text(data.name);
     },
 
     show: function() {
         jQuery(splashScreen.elementId).show();
         splashScreen.showProgressBar();
-    },
 
+    },
     hide: function(event) {
         jQuery(splashScreen.elementId).hide();
+        splashScreen.hideProgressBar();
     },
     showProgressBar: function() {
-        var elem = document.getElementById("progressBar");
+        splashScreen.progressEle = document.getElementById("progressBar");
         jQuery("#progressBar").width(0);
         jQuery('#loading').show();
-
         var width = 20;
         var id = setInterval(frame, 0.6);
-
         function frame() {
             if (width >= 100) {
                 clearInterval(id);
             } else {
                 width++;
-                if (elem && elem.style)
-                    elem.style.width = width + '%';
+                if (splashScreen.progressEle && splashScreen.progressEle.style)
+                    splashScreen.progressEle.style.width = width + '%';
                 jQuery('#progressCount').text(width + '%');
             }
         }
 
+    },
+    hideProgressBar:function(){
+      splashScreen.progressEle.style.width = 0 + '%'
+      jQuery('#loading').hide();
     }
 }
 splashScreen.initialize();

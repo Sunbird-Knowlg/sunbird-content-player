@@ -15,7 +15,6 @@ org.ekstep.service.mainService = Class.extend({
     },
     initService: function(config) {},
     initialize: function(){
-        console.info('main service is intialized');
     }
 });
 org.ekstep.service.init = function() {
@@ -29,7 +28,6 @@ telemetry_web = {
     tList: [],
     send: function(string) {
         EventBus.dispatch("telemetryEvent",string);
-        console.log(string);
         return new Promise(function(resolve, reject) {
             telemetry_web.tList.push(string);
             resolve(true);

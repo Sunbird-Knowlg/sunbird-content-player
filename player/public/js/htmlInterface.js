@@ -5,25 +5,25 @@
 var html_renderer = function() {};
 window.org = { ekstep: {} }
 org.ekstep.renderer = new html_renderer();
-org.ekstep.renderer.html = window.top;
+org.ekstep.renderer.html = window.parent;
 
 /**
  * Interface to access canvas underscore lib 
  * @memberof org.ekstep.renderer.html
  */
-org.ekstep.renderer.html._ = window.top._;
+org.ekstep.renderer.html._ = window.parent._;
 
 /**
  * Interface to access canvas jquery lib
  * @memberof org.ekstep.renderer.html
  */
-org.ekstep.renderer.html.jQuery = window.top.$;
+org.ekstep.renderer.html.jQuery = window.parent.$;
 
 /**
  *  Interface to access canvas angular lib
  * @memberof org.ekstep.renderer.html
  */
-org.ekstep.renderer.html.angular = window.top.angular;
+org.ekstep.renderer.html.angular = window.parent.angular;
 
 
 /**
