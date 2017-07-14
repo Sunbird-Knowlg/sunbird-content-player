@@ -104,18 +104,9 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
         configuration.context.contentId = getUrlParameter("id")
     }
     localStorageGC.clear();
-    var conf = _.clone(configuration.context);
-    conf.config = configuration.config;
-    conf.context = _.clone(configuration.context);
-    conf.data = configuration.data;
-    conf.metadata = configuration.metadata
-    setGlobalConfig(conf);
+    _.extend(configuration, configuration.context);  // TelemetryEvent is using globalConfig.context.sid/did
+    setGlobalConfig(configuration);
 
-    // GlobalContext.config.otherData = getOtherData(configuration.context);
-
-    // AppConfig = _.extend(AppConfig, configuration.config)
-    // window.globalConfig = configuration;
-    // org.ekstep.service.renderer.api.setBaseUrl(AppConfig.host + AppConfig.apislug);
     addWindowUnloadEvent();
     EkstepRendererAPI.dispatchEvent("event:loadContent");
 };
