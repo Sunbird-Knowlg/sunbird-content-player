@@ -14,7 +14,6 @@ Plugin.extend({
         this.controllerPath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/js/rendererApp.js");
         var instance = this;
         org.ekstep.service.controller.loadNgModules(this.templatePath, this.controllerPath);
-        this.loadOverlayPlugin();
     },
     start: function(evt, content) {
         var globalConfig = EkstepRendererAPI.getGlobalConfig();
@@ -22,7 +21,9 @@ Plugin.extend({
             'mimeType': content.mimeType
         });
         
+        // Loading chore plugins of GenieCanvas
         org.ekstep.contentrenderer.initPlugins('',globalConfig.corePluginspath);
+        this.loadOverlayPlugin();
         this.loadEndPagePlugin();
 
         if (!_.isUndefined(contentTypePlugin)) {
