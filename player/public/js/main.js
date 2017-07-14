@@ -41,7 +41,8 @@ function getUrlParameter(sParam) {
     }
 }
 
-function backbuttonPressed() {
+function backbuttonPressed(stageId) {
+    TelemetryService.interrupt("OTHER", stageId);
     TelemetryService.end(logContentProgress());
     try {
         TelemetryService.exit();
