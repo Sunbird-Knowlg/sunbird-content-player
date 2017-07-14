@@ -185,6 +185,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             EkstepRendererAPI.logErrorEvent(e, { 'severity': 'fatal', 'type': 'system', 'action': 'play' });
             showToaster('error', 'Framework fails to load plugins');
         }
+
+        // Content is started renderering, Dispatching event to show overlay and other
+        console.log("ECML RENDERER - Content rendering started");
+        EkstepRendererAPI.dispatchEvent("renderer:content:start");
+
         createjs.Ticker.addEventListener("tick", function() {
             if (Renderer.update && (typeof Renderer.theme !== 'undefined')) {
                 Renderer.theme.update();

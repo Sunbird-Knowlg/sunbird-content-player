@@ -137,7 +137,6 @@ var ThemePlugin = Plugin.extend({
             this.invokeStage(this._data.startStage);
         }
         this.update();
-        EkstepRendererAPI.dispatchEvent("renderer:content:start");
     },
 
     /**
