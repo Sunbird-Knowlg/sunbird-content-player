@@ -344,7 +344,10 @@ function setGlobalConfig(context) {
         otherData.etags = etags;
         delete otherData.dims;
         delete otherData.app;
-        delete otherData.partner;    
+        delete otherData.partner;
+        delete globalConfig.context.config;
+        delete otherData.context.data;
+        delete otherData.context.metadata;
         GlobalContext.config = globalConfig;
         GlobalContext.config.otherData = otherData;
         window.globalConfig = GlobalContext.config;
