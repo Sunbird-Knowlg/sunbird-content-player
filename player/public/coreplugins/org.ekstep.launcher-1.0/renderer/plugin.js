@@ -31,7 +31,7 @@ Plugin.extend({
         }
     },
     loadEndPagePlugin: function(){
-        if(GlobalContext.config.showEndPage){
+        if(GlobalContext.config.overlay,showOverlay){
             org.ekstep.contentrenderer.loadPlugins({"id": "org.ekstep.endpage", "ver": "1.0", "type": 'plugin'}, [], function(){
                 console.info('Canvas Default plugins are loaded..');
                 console.log("End page plugin loaded..");
