@@ -11,12 +11,18 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.showOverlayGoodJob = true;
     $scope.showOverlayTryAgain = true;
     $scope.overlayEvents = ["overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
-    $scope.overlayVisible = false;
+    $scope.overlayVisible = true;
     $scope.pluginInstance = undefined;
     $scope.imageBasePath = globalConfig.assetbase;
     $scope.showTeacherIns = true;
     $scope.showReload = true;
     $scope.init = function() {
+        EkstepRendererAPI.addEventListener("renderer:overlay:show", $scope.showOverlay);
+        EkstepRendererAPI.addEventListener("renderer:overlay:hide", $scope.hideOverlay);
+        
+        EkstepRendererAPI.addEventListener("renderer:content:start", $scope.showOverlay);
+        EkstepRendererAPI.addEventListener("renderer:content:end", $scope.hideOverlay);
+
     	$scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
         if (globalConfig.language_info) {
             var languageInfo = JSON.parse(globalConfig.language_info);
@@ -39,12 +45,6 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
 			//TODO: Remove this currentStage parameter and use directly stageData._currentStage
 			$rootScope.stageId = !_.isUndefined($rootScope.stageData) ? $rootScope.stageData._id : undefined;
 		});
-
-        EkstepRendererAPI.addEventListener("renderer:overlay:show", $scope.showOverlay);
-        EkstepRendererAPI.addEventListener("renderer:overlay:hide", $scope.hideOverlay);
-        
-        EkstepRendererAPI.addEventListener("renderer:content:start", $scope.showOverlay);
-        EkstepRendererAPI.addEventListener("renderer:content:end", $scope.hideOverlay);
     }
 
     $scope.showOverlay = function() {
