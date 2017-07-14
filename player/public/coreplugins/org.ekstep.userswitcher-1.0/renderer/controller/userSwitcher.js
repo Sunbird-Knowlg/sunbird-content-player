@@ -1,5 +1,5 @@
 /**
- * User switcher controller 
+ * User switcher controller
  * @author Akash Gupta <akash.gupta@tarento.com>
  */
 app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope', '$state', '$stateParams', function($scope, $rootScope, $state, $stateParams) {
@@ -73,7 +73,15 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
         TelemetryService.interact("TOUCH", 'gc_userswitch_replayContent', "TOUCH", {
              stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
          });
-        $scope.switchUser(replayContent);
+         if(_.isEmpty($scope.selectedUser)){
+             EkstepRendererAPI.dispatchEvent('renderer:content:close');
+
+            EkstepRendererAPI.dispatchEvent('renderer:content:replay');
+            $scope.closeUserSwitchingModal(false);
+            EkstepRendererAPI.hideEndPage(); // need to remove; hiding of endpage should happen on replay function
+         } else {
+            $scope.switchUser(replayContent);
+         }
     }
 
     // When the user clicks on Continue, Continue the content from there
@@ -96,15 +104,23 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                     $rootScope.currentUser.userIndex = $rootScope.sortingIndex -= 1;
                     $scope.selectedUser = {};
                     if (userSwitchHappened) {
-                        var version = TelemetryService.getGameVer();;
+                        var version = TelemetryService.getGameVer();
                         var gameId = TelemetryService.getGameId();
-                        TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                        TelemetryService.end(logContentProgress());
-                        TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                        var data = {};
-                        data.stageid = EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId;
-                        data.mode = getPreviewMode();
-                        TelemetryService.start(gameId, version, data);
+                        if (replayContent == true) {
+                            var data = {
+                                'callback': $scope.replayCallback
+                            };
+                            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                            EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
+                        } else {
+                            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                            TelemetryService.end(logContentProgress());
+                            TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                            var data = {};
+                            data.stageid = EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId;
+                            data.mode = getPreviewMode();
+                            TelemetryService.start(gameId, version, data);
+                        }
                     }
 
                 });
@@ -112,13 +128,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                 console.log(err);
             })
         }
-        if (replayContent == true) {
-             var data = {
-                'callback': $scope.replayCallback
-            };
-            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-            EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
-        }
+
         $scope.closeUserSwitchingModal(false);
     }
 
@@ -200,4 +210,3 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
         }
     }
 }]);
-
