@@ -105,6 +105,7 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
     }
     localStorageGC.clear();
     _.extend(configuration, configuration.context);  // TelemetryEvent is using globalConfig.context.sid/did
+    _.extend(configuration, configuration.config);
     setGlobalConfig(configuration);
 
     addWindowUnloadEvent();

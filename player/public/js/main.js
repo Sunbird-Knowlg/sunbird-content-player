@@ -350,11 +350,6 @@ function setGlobalConfig(context) {
         delete otherData.dims;
         delete otherData.app;
         delete otherData.partner;
-        if (globalConfig.context) {
-            delete globalConfig.context.config;
-            delete globalConfig.context.data;
-            delete globalConfig.context.metadata;
-        }
         GlobalContext.config = globalConfig;
         GlobalContext.config.otherData = otherData;
         window.globalConfig = GlobalContext.config;
