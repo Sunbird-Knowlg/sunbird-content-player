@@ -104,9 +104,9 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
         configuration.context.contentId = getUrlParameter("id")
     }
     localStorageGC.clear();
-    var conf = configuration.context;
+    var conf = _.clone(configuration.context);
     conf.config = configuration.config;
-    conf.context = configuration.context;
+    conf.context = _.clone(configuration.context);
     conf.data = configuration.data;
     conf.metadata = configuration.metadata
     setGlobalConfig(conf);
