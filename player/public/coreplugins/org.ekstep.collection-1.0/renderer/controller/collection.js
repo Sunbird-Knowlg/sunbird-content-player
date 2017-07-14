@@ -67,6 +67,7 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
             });
     };
     $scope.playContent = function(content) {
+        EkstepRendererAPI.dispatchEvent("renderer:splash:show");
         $rootScope.content = content;
         if (content.mimeType == COLLECTION_MIMETYPE) {
             console.info("collection nat handled")

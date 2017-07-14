@@ -19,8 +19,8 @@ var splashScreen = {
         // add event listener for hide and show of splash splashScreen
         var instance = this;
 
+        instance.show();
         setTimeout(function() {
-            instance.show();
             EkstepRendererAPI.addEventListener("renderer:launcher:load", instance.loadContentDetails);
             EkstepRendererAPI.addEventListener("renderer:splash:show", instance.show);
             EkstepRendererAPI.addEventListener("renderer:splash:hide", instance.hide);
@@ -51,8 +51,8 @@ var splashScreen = {
         splashScreen.progressEle = document.getElementById("progressBar");
         jQuery("#progressBar").width(0);
         jQuery('#loading').show();
-        var width = 20;
-        var id = setInterval(frame, 0.6);
+        var width = 1;
+        var id = setInterval(frame, 100);
         function frame() {
             if (width >= 100) {
                 clearInterval(id);
