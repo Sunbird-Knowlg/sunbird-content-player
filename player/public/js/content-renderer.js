@@ -46,18 +46,20 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
 };
 
 
+
+
 org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
-    previewData = EkstepRendererAPI.getGlobalConfig();
-    if (previewData.config.plugins) {
-        if (previewData.config.repos) {
+    var globalConfig = EkstepRendererAPI.getGlobalConfig();
+    if (globalConfig.config.plugins) {
+        if (globalConfig.config.repos) {
             EkstepRendererAPI.dispatchEvent('renderer:repo:create');
             org.ekstep.contentrenderer.initPlugins('', '');
-            org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins, [], function() {
+            org.ekstep.contentrenderer.loadPlugins(globalConfig.config.plugins, [], function() {
                 console.info('Plugin loaded with repo..');
             });
         } else {
-            org.ekstep.contentrenderer.initPlugins('', previewData.previewPluginspath);
-            org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins, [], function() {
+            org.ekstep.contentrenderer.initPlugins('', globalConfig.previewPluginspath);
+            org.ekstep.contentrenderer.loadPlugins(globalConfig.config.plugins, [], function() {
                 console.info('Preview plugins are loaded without repo.');
             });
         }
@@ -102,7 +104,9 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
         configuration.context.contentId = getUrlParameter("id")
     }
     localStorageGC.clear();
-    var conf = _.extend(configuration.context, configuration.config)
+    var conf = configuration.context;
+    conf.config = configuration.config;
+    conf.context = configuration.context;
     conf.data = configuration.data;
     conf.metadata = configuration.metadata
     setGlobalConfig(conf);

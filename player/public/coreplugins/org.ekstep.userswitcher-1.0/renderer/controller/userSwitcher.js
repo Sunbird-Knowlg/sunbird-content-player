@@ -1,5 +1,47 @@
+app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
+            return {
+                restrict: 'E',
+                controller: 'UserSwitchController',
+                link: function(scope, element, attrs, controller) {
+                    // get the user selection div
+                    var userSlider = element.find("#userSlider");
+                    var groupSlider = element.find("#groupSlider");
+                    scope.render = function() {
+                        userSlider.mCustomScrollbar({
+                            axis: "x",
+                            theme: "dark-3",
+                            advanced: {
+                                autoExpandHorizontalScroll: true
+                            }
+                        });
+                        groupSlider.mCustomScrollbar({
+                            axis: "x",
+                            theme: "dark-3",
+                            advanced: {
+                                autoExpandHorizontalScroll: true
+                            }
+                        });
+                    }
+                    scope.init = function() {
+                        if (globalConfig.overlay.showUser === true) {
+                            userSlider.mCustomScrollbar('destroy');
+                            groupSlider.mCustomScrollbar('destroy');
+                            scope.initializeCtrl();
+                            scope.render();
+                        }
+                    };
+                    scope.getUserSwitcherTemplate = function() {
+                        var userSwitcherPluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.userswitcher");
+                        return userSwitcherPluginInstance._templatePath;
+                    }
+                    scope.init();
+                },
+                template: "<div ng-include=getUserSwitcherTemplate()></div>"
+            }
+        });
+
 /**
- * User switcher controller 
+ * User switcher controller
  * @author Akash Gupta <akash.gupta@tarento.com>
  */
 app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope', '$state', '$stateParams', function($scope, $rootScope, $state, $stateParams) {
@@ -8,10 +50,6 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     $scope.showUserSwitchModal = false;
     $scope.imageBasePath = globalConfig.assetbase;
 
-    $scope.getUserSwitcherTemplate = function() {
-        var userSwitcherPluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.userswitcher");
-        return userSwitcherPluginInstance._templatePath;
-    }
 
     $scope.hideUserSwitchingModal = function() {
         $rootScope.safeApply(function() {
@@ -21,6 +59,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
 
     $scope.showUserSwitchingModal = function() {
         if ($rootScope.enableUserSwitcher) {
+            if($scope.showUserSwitchModal) return;
             TelemetryService.interact("TOUCH", "gc_userswitch_popup_open", "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
             });
@@ -34,7 +73,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                 $scope.showUserSwitchModal = true;
             });
         } else {
-            showToaster('info', "Change of users is disabled");
+            showToaster('info', "User switch is disabled");
         }
     }
     $scope.getUsersList = function() {
@@ -73,7 +112,15 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
         TelemetryService.interact("TOUCH", 'gc_userswitch_replayContent', "TOUCH", {
              stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
          });
-        $scope.switchUser(replayContent);
+         if(_.isEmpty($scope.selectedUser)){
+             EkstepRendererAPI.dispatchEvent('renderer:content:close');
+
+            EkstepRendererAPI.dispatchEvent('renderer:content:replay');
+            $scope.closeUserSwitchingModal(false);
+            EkstepRendererAPI.hideEndPage(); // need to remove; hiding of endpage should happen on replay function
+         } else {
+            $scope.switchUser(replayContent);
+         }
     }
 
     // When the user clicks on Continue, Continue the content from there
@@ -96,15 +143,23 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                     $rootScope.currentUser.userIndex = $rootScope.sortingIndex -= 1;
                     $scope.selectedUser = {};
                     if (userSwitchHappened) {
-                        var version = TelemetryService.getGameVer();;
+                        var version = TelemetryService.getGameVer();
                         var gameId = TelemetryService.getGameId();
-                        TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                        TelemetryService.end(logContentProgress());
-                        TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                        var data = {};
-                        data.stageid = EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId;
-                        data.mode = getPreviewMode();
-                        TelemetryService.start(gameId, version, data);
+                        if (replayContent == true) {
+                            var data = {
+                                'callback': $scope.replayCallback
+                            };
+                            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                            EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
+                        } else {
+                            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                            TelemetryService.end(logContentProgress());
+                            TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                            var data = {};
+                            data.stageid = EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId;
+                            data.mode = getPreviewMode();
+                            TelemetryService.start(gameId, version, data);
+                        }
                     }
 
                 });
@@ -112,20 +167,14 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                 console.log(err);
             })
         }
-        if (replayContent == true) {
-             var data = {
-                'callback': $scope.replayCallback
-            };
-            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-            EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
-        }
+
         $scope.closeUserSwitchingModal(false);
     }
 
     $scope.replayCallback = function() {
         TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-        EkstepRendererAPI.dispatchEvent('event:closeUserSwitchingModal')
-        EkstepRendererAPI.hideEndPage();
+        $scope.hideUserSwitchingModal();
+        EkstepRendererAPI.dispatchEvent('renderer:endpage:hide');
         EkstepRendererAPI.dispatchEvent('renderer:content:replay');
     }
 
@@ -135,7 +184,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
             stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
           });
         }
-        EkstepRendererAPI.dispatchEvent('event:closeUserSwitchingModal');
+        $scope.hideUserSwitchingModal();
     }
 
     $scope.initializeCtrl = function() {
@@ -143,20 +192,12 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
         $rootScope.showUser = globalConfig.overlay.showUser;
         $rootScope.enableUserSwitcher = globalConfig.overlay.enableUserSwitcher;
 
-        EventBus.addEventListener("event:enableUserSwitcher", function(value) {
-            $rootScope.enableUserSwitcher = value.target;
-        });
-
         EventBus.addEventListener("event:showUser", function(value) {
             $rootScope.showUser = value.target;
         });
 
         EventBus.addEventListener("event:openUserSwitchingModal", function() {
             $scope.showUserSwitchingModal();
-        });
-
-        EventBus.addEventListener("event:closeUserSwitchingModal", function() {
-            $scope.hideUserSwitchingModal();
         });
 
         EventBus.addEventListener("event:getcurrentuser", function() {
@@ -177,9 +218,12 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
         });
 
         EventBus.addEventListener("event:enableUserSwitcher", function(value) {
-            globalConfig.overlay.enableUserSwitcher = value;
-            $rootScope.safeApply = function() {
-                $rootScope.enableUserSwitcher = value;
+            if (globalConfig.overlay.enableUserSwitcher) {
+                $rootScope.safeApply = function() {
+                    $rootScope.enableUserSwitcher = value.target;
+                }
+            } else {
+                console.warn('User switcher is disabled in appconfig');
             }
         });
 
@@ -200,4 +244,3 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
         }
     }
 }]);
-

@@ -41,7 +41,8 @@ function getUrlParameter(sParam) {
     }
 }
 
-function backbuttonPressed() {
+function backbuttonPressed(stageId) {
+    TelemetryService.interrupt("OTHER", stageId);
     TelemetryService.end(logContentProgress());
     try {
         TelemetryService.exit();
@@ -251,12 +252,12 @@ function addWindowUnloadEvent() {
     window.onbeforeunload = function(e) {
         e = e || window.event;
         var y = e.pageY || e.clientY;
-        !y && EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.getTelemetryService().end(logContentProgress());
-    }
+        !y && EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.dispatchEvent("renderer:content:close");
+    };
     if (EkstepRendererAPI.getGlobalConfig().context.mode === 'edit') {
         parent.document.getElementsByTagName('iframe')[0].contentWindow.onunload = function() {
             EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId());
-            EkstepRendererAPI.getTelemetryService().end(logContentProgress());
+            EkstepRendererAPI.dispatchEvent("renderer:content:close");
         }
     }
 }
@@ -344,7 +345,12 @@ function setGlobalConfig(context) {
         otherData.etags = etags;
         delete otherData.dims;
         delete otherData.app;
-        delete otherData.partner;    
+        delete otherData.partner;
+        if (globalConfig.context) {
+            delete globalConfig.context.config;
+            delete globalConfig.context.data;
+            delete globalConfig.context.metadata;
+        }
         GlobalContext.config = globalConfig;
         GlobalContext.config.otherData = otherData;
         window.globalConfig = GlobalContext.config;
