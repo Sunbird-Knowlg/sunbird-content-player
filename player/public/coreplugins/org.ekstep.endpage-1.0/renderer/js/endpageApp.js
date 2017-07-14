@@ -165,11 +165,18 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         $scope.handleEndpage();
         if (_.isUndefined($rootScope.content)) {
             localStorageGC.update();
-           content = localStorageGC.getItem('content');
+            content = localStorageGC.getItem('content');
             $rootScope.content = content;
         }
 
     };
+    EkstepRendererAPI.addEventListener('renderer:content:end', function() {
+        if (globalConfig.overlay.showOverlay) {
+            $scope.showEndPage = true;
+            $scope.initEndpage();
+            $scope.safeApply();
+        }
+    });
     EkstepRendererAPI.addEventListener('renderer:endpage:show', function() {
         $scope.showEndPage = true;
         $scope.initEndpage();
@@ -287,7 +294,7 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
                             list = _.each(list, function(content) {
                                 content.appIcon = content.basePath + '/' + content.contentData.appIcon;
                             });
-                        }                        
+                        }
                     }
                     if (!_.isEmpty(list)) {
                         $scope.$apply(function() {

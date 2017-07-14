@@ -192,16 +192,11 @@ OverlayManager = {
     },
     moveToEndPage: function() {
         EkstepRendererAPI.dispatchEvent('renderer:content:end');
-        if (config.showEndPage) {
-            console.info("redirecting to endpage.");
-            var stage = Renderer.theme._currentScene;
-            Renderer.theme.setParam(stage.getStagestateKey(), stage._currentState);
-            Renderer.theme._currentStage = undefined;
-            EkstepRendererAPI.showEndPage();
-            AudioManager.stopAll();
-        } else {
-            console.warn("Cannot move to end page of the content. please check the configurations..");
-        }
+        console.info("redirecting to endpage.");
+        var stage = Renderer.theme._currentScene;
+        Renderer.theme.setParam(stage.getStagestateKey(), stage._currentState);
+        Renderer.theme._currentStage = undefined;
+        AudioManager.stopAll();
     },
     clean: function() {
         EventBus.removeEventListener("actionNavigateSkip", this.skipAndNavigateNext, this);
