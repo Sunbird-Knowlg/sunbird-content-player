@@ -937,12 +937,12 @@ window.EkstepRendererAPI = {
     */
     showEndPage:function(){
         this.dispatchEvent('renderer:content:end');
-        this.dispatchEvent('renderer:show:endpage');
+        this.dispatchEvent('renderer:endpage:show');
     },
    
 
     hideEndPage: function() {
-       this.dispatchEvent('renderer:hide:endpage');
+       this.dispatchEvent('renderer:endpage:hide');
     },
 
     /**

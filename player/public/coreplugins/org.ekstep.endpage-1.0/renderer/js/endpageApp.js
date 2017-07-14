@@ -170,14 +170,12 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         }
 
     };
-    EkstepRendererAPI.addEventListener('renderer:show:endpage', function() {
+    EkstepRendererAPI.addEventListener('renderer:endpage:show', function() {
         $scope.showEndPage = true;
-        // EkstepRendererAPI.dispatchEvent('renderer:overlay:hide');
-        // EkstepRendererAPI.dispatchEvent('renderer:player:hide');
         $scope.initEndpage();
         $scope.safeApply();
     });
-    EkstepRendererAPI.addEventListener('renderer:hide:endpage',function() {
+    EkstepRendererAPI.addEventListener('renderer:endpage:hide',function() {
         $scope.showEndPage = false;
         $scope.safeApply();
     });
