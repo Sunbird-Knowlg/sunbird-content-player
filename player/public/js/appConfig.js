@@ -76,8 +76,8 @@ AppConfig = {
         webLink: "https://www.ekstep.in"
     },
     showEndPage: true,
-    pdata: {},
-    channel: "",
+    pdata: {'id':'in.ekstep', 'ver':'1.0'},
+    channel: "in.ekstep",
     etags: {
         app: [],
         partner: [],
