@@ -49,7 +49,8 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         if($scope.pluginInstance){
             console.log("Show overlay is failed to on event handler");
             if(globalConfig.overlay.showOverlay) {
-                $scope.overlayVisible = $scope.pluginInstance.overlayVisible;                
+                $scope.overlayVisible = $scope.pluginInstance.overlayVisible;  
+                $scope.safeApply();              
             }
         }
     }
