@@ -11,7 +11,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.showOverlayGoodJob = true;
     $scope.showOverlayTryAgain = true;
     $scope.overlayEvents = ["overlaySubmit", "overlayMenu", "overlayReload", "overlayGoodJob", "overlayTryAgain"];
-    $scope.overlayVisible = true;
+    $scope.overlayVisible = false;
     $scope.pluginInstance = undefined;
     $scope.imageBasePath = globalConfig.assetbase;
     $scope.showTeacherIns = true;
@@ -41,6 +41,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
             EventBus.addEventListener(eventName, $scope.overlayEventHandler, $scope);
         }
 		EventBus.addEventListener("sceneEnter", function(data) {
+            $scope.showOverlay();
 			$rootScope.stageData = data.target;
 			//TODO: Remove this currentStage parameter and use directly stageData._currentStage
 			$rootScope.stageId = !_.isUndefined($rootScope.stageData) ? $rootScope.stageData._id : undefined;
