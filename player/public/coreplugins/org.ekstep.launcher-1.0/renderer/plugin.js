@@ -24,24 +24,23 @@ Plugin.extend({
         
         // Loading chore plugins of GenieCanvas
         org.ekstep.contentrenderer.initPlugins('',globalConfig.corePluginspath);
-        this.loadModulePlugins(function(){
+        instance.loadEndPagePlugin();
             if (!_.isUndefined(contentTypePlugin)) {
                 instance.loadPlugin(contentTypePlugin, content);
             }
-        });
-
     },
-    loadModulePlugins:function(cb){
-        if(GlobalContext.config.overlay.showOverlay && GlobalContext.config.showEndPage){
-            org.ekstep.contentrenderer.loadPlugins([{"id": "org.ekstep.endpage", "ver": "1.0", "type": 'plugin'},{"id": "org.ekstep.overlay", "ver": "1.0", "type": 'plugin'}],[],function(){
-                console.info("Plugins are loaded..");
-                     if(cb) cb();
-            })
-        }else {
-            if(cb) cb();
+
+    loadEndPagePlugin: function() {
+        if (GlobalContext.config.showEndPage) {
+            org.ekstep.contentrenderer.loadPlugins({
+                "id": "org.ekstep.endpage",
+                "ver": "1.0",
+                "type": 'plugin'
+            }, [], function() {
+                console.info('Endpage plugin is loaded..');
+            });
         }
     },
-   
     loadPlugin: function(plugin, contentData) {
         var instance = this;
         content = contentData;
