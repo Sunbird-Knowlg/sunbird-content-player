@@ -30,7 +30,7 @@
     setStyle: function() {
         jQuery('#gameArea') .css({left: '0px', top: '0px', width: "100%", height: "100%"});
         jQuery('#ekstep_htmlIframe') .css({position: 'absolute', display: 'block',width: '100%', height: '100%'});
-        jQuery('#overlay').css({display: 'none'}); // if html content want to show overlay, they should dispatch "renderer:overlay:show" to show overlay
+        // if html content want to show overlay, they should dispatch "renderer:overlay:show" to show overlay
         // AppConfig.overlay.showOverlay ? jQuery('#overlay').css({display: 'block'}) : jQuery('#overlay').css({display: 'none'})
     },
     getAsseturl: function(content) {
