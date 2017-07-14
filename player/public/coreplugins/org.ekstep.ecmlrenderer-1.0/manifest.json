@@ -15,7 +15,6 @@
         ]
     },
     "dependencies": [
-        {"plugin": "org.ekstep.overlay", "ver": "1.0", "scope": "renderer" }
     ]  
 
 }

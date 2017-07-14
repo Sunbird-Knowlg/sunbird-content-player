@@ -14,6 +14,7 @@ Plugin.extend({
         this.controllerPath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/js/rendererApp.js");
         var instance = this;
         org.ekstep.service.controller.loadNgModules(this.templatePath, this.controllerPath);
+        this.loadOverlayPlugin();
     },
     start: function(evt, content) {
         var globalConfig = EkstepRendererAPI.getGlobalConfig();
@@ -33,6 +34,14 @@ Plugin.extend({
             org.ekstep.contentrenderer.loadPlugins({"id": "org.ekstep.endpage", "ver": "1.0", "type": 'plugin'}, [], function(){
                 console.info('Canvas Default plugins are loaded..');
                 console.log("End page plugin loaded..");
+            });        
+        }
+    },
+    loadOverlayPlugin: function(){
+        if(GlobalContext.config.showEndPage){
+            org.ekstep.contentrenderer.loadPlugins({"id": "org.ekstep.overlay", "ver": "1.0", "type": 'plugin'}, [], function(){
+                console.info('Canvas Default plugins are loaded..');
+                console.log("Overlay plugin loaded..");
             });        
         }
     },
