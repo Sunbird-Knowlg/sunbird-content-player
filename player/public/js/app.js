@@ -33,12 +33,16 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 //TODO: Add Telemetry interact for on and Cancle
                 var stageId = undefined;
                 if (Renderer) {
-                    stageId = EkstepRendererAPI.getCurrentStageId();
+                    AudioManager.stopAll();
+                    type = Renderer.running ? 'EXIT_CONTENT' : 'EXIT_APP'
+                    stageId = Renderer.theme ? Renderer.theme._currentStage : pageId;
                 } else {
-                    stageId = $rootScope.pageId || '';
+                    type: 'EXIT_CONTENT';
+                    stageId = pageId || '';
                 }
+                TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', {type:type,stageId:stageId});
                 if (confirm("Press 'OK' to go back to Genie.")) {
-                    backbuttonPressed(stageId);
+                    backbuttonPressed();
                 }
             }, 100);
             $ionicPlatform.on("pause", function() {

@@ -41,19 +41,8 @@ function getUrlParameter(sParam) {
     }
 }
 
-function backbuttonPressed(pageId) {
-    var type = undefined;
-    var stageId = undefined;
-    if (Renderer) {
-        AudioManager.stopAll();
-        type = Renderer.running ? 'EXIT_CONTENT' : 'EXIT_APP'
-        stageId = Renderer.theme ? Renderer.theme._currentStage : pageId;
-    } else {
-        type: 'EXIT_CONTENT';
-        stageId = pageId || '';
-    }
-    TelemetryService.interact('END', 'DEVICE_BACK_BTN', 'EXIT', {type:type,stageId:stageId});
-    if (pageId == "coverpage") {TelemetryService.end(logContentProgress()); }
+function backbuttonPressed() {
+    TelemetryService.end(logContentProgress());
     try {
         TelemetryService.exit();
     } catch (err) {
