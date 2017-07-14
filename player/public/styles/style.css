@@ -88,16 +88,15 @@
 
 .splashText {
     position: absolute;
-    top: 15vh;
+    top: 20vh;
     text-align: center;
     width: 100vw;
     text-transform: uppercase;
     color: #494949;
     text-align: center;
     overflow: hidden;
-    padding: 1% 2%;
     text-overflow: ellipsis;
-    line-height: 1.8em;
+    line-height: 1.5em;
     width: 100%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -1776,7 +1775,7 @@ body {
 .gc-loader-prog {
     position: absolute;
     font-size: 1.5em;
-    top: 10vh;
+    top: 15vh;
     bottom: 0;
     left: 0;
     right: 0;
@@ -1785,6 +1784,11 @@ body {
     color: white;
     width: 100%;
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 
 #progressBar {

@@ -1,0 +1,15 @@
+{
+    "id": "org.ekstep.telemetrysync",
+    "ver": "1.0",
+    "shortId": "org.ekstep.telemetrysync",
+    "author": "Krushanu",
+    "description": "",
+    "publishedDate": "",
+    "renderer": {
+        "main": "renderer/plugin.js",
+        "dependencies": [
+            {"type": "js", "src": "renderer/libs/detectClient.js"},
+            {"type": "js", "src": "renderer/libs/md5.js"}
+        ]
+    }
+}

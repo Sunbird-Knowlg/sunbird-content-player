@@ -51,6 +51,10 @@ AppConfig = {
             id: 'org.ekstep.repo',
             ver: 1.0,
             type: 'plugin'
+        },{
+            id:"org.ekstep.telemetrysync",
+            ver:1.0,
+            type:'plugin'
         }
     ],
     overlay: {
