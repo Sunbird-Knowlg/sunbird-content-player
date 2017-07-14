@@ -54,7 +54,7 @@ var splashScreen = {
         jQuery('#loading').show();
         var width = 1;
         clearInterval(id);
-        var id = setInterval(frame, 1);
+        var id = setInterval(frame, 50);
         function frame() {
             if (width >= 100) {
                 clearInterval(id);
