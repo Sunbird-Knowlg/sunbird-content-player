@@ -57,6 +57,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         };
         $timeout(function() {
             $ionicPlatform.ready(function() {
+                splashScreen.addEvents();
                 isMobile = window.cordova ? true : false,
                 org.ekstep.service.init();
                 if ("undefined" == typeof Promise) {

@@ -137,6 +137,10 @@ var ThemePlugin = Plugin.extend({
             this.invokeStage(this._data.startStage);
         }
         this.update();
+        
+        // Content is started renderering, Dispatching event to show overlay and other
+        console.log("ECML RENDERER - Content rendering started");
+        EkstepRendererAPI.dispatchEvent("renderer:content:start");
     },
 
     /**
