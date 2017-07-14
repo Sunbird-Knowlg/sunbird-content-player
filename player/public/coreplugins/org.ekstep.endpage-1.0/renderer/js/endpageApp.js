@@ -171,7 +171,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
 
     };
     EkstepRendererAPI.addEventListener('renderer:content:end', function() {
-        if (globalConfig.overlay.showOverlay) {
+        if (GlobalContext.config.showEndPage) {
             $scope.showEndPage = true;
             $scope.initEndpage();
             $scope.safeApply();
