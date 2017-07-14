@@ -1,5 +1,5 @@
-var canvasApp = angular.module("genie-canvas");
-canvasApp.controller("endPageController", function($scope, $rootScope, $state,$element, $stateParams) {
+
+app.controllerProvider.register("endPageController", function($scope, $rootScope, $state,$element, $stateParams) {
     var globalConfig = EkstepRendererAPI.getGlobalConfig();
     $scope.showEndPage = false;
     $scope.showFeedbackArea = true;
@@ -170,13 +170,13 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         }
 
     };
-    EkstepRendererAPI.addEventListener('renderer:content:end', function() {
-        if (GlobalContext.config.showEndPage) {
-            $scope.showEndPage = true;
-            $scope.initEndpage();
-            $scope.safeApply();
-        }
-    });
+    // EkstepRendererAPI.addEventListener('renderer:content:end', function() {
+    //     if (GlobalContext.config.showEndPage) {
+    //         $scope.showEndPage = true;
+    //         $scope.initEndpage();
+    //         $scope.safeApply();
+    //     }
+    // });
     EkstepRendererAPI.addEventListener('renderer:endpage:show', function() {
         $scope.showEndPage = true;
         $scope.initEndpage();
@@ -187,7 +187,7 @@ canvasApp.controller("endPageController", function($scope, $rootScope, $state,$e
         $scope.safeApply();
     });
 });
-canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams) {
+app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams) {
         $scope.showRelatedContent = false;
         $scope.contentShowMore = false;
         $scope.showRelatedContentHeader = true;
@@ -334,7 +334,7 @@ canvasApp.controller('RelatedContentCtrl', function($scope, $rootScope, $state, 
             $scope.init();
         })
     });
-canvasApp.directive('starRating', function($rootScope) {
+app.compileProvider.directive('starRating', function($rootScope) {
     return {
         //reference: http://jsfiddle.net/manishpatil/2fahpk7s/
         scope: {

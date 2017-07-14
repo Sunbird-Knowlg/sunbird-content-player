@@ -1,4 +1,4 @@
-/**
+/***
  * The base plugin class that all renderer plugins inherit from. It provides the common support contract for all plugins.
  * Plugins can override specific methods to change the behavior. The most common scenario would be to override the
  * implementation of createJS callback methods to detect interactivity on the canvas.
@@ -60,13 +60,13 @@ var Plugin = Class.extend({
         if(arguments.length == 1){
            if(_.isUndefined(data)){
                // To initialize chore & custom plugin global
-               this.initialize();
+               this.initialize(data);
                return;
             } else {
                if (!data.canvasId) {
                    // Only plugin manifest is getting(calling by plugin framework)
                    this._manifest = data;
-                   this.initialize();
+                   this.initialize(data);
                    return;
                }
            }
@@ -317,7 +317,7 @@ var Plugin = Class.extend({
             this._self.scaleX = dims.w / sb.width;
         }
     },
-    initialize: function() {
+    initialize: function(data) {
         //console.info("Base plugin intialization..");
     },
     /**

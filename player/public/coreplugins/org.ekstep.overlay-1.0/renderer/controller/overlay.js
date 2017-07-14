@@ -19,9 +19,8 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.init = function() {
         EkstepRendererAPI.addEventListener("renderer:overlay:show", $scope.showOverlay);
         EkstepRendererAPI.addEventListener("renderer:overlay:hide", $scope.hideOverlay);
-        
+
         EkstepRendererAPI.addEventListener("renderer:content:start", $scope.showOverlay);
-        EkstepRendererAPI.addEventListener("renderer:content:end", $scope.hideOverlay);
 
     	$scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
         if (globalConfig.language_info) {
@@ -49,15 +48,15 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         if($scope.pluginInstance){
             console.log("Show overlay is failed to on event handler");
             if(globalConfig.overlay.showOverlay) {
-                $scope.overlayVisible = $scope.pluginInstance.overlayVisible;  
-                $scope.safeApply();              
+                $scope.overlayVisible = $scope.pluginInstance.overlayVisible;
+                $scope.safeApply();
             }
         }
     }
 
     $scope.showOverlay = function() {
         if(!globalConfig.overlay.showOverlay) return;
-        
+
         $scope.overlayVisible = true;
         $scope.safeApply();
     }

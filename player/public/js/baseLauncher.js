@@ -13,8 +13,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
  * @param data {object} return the manifest object data
  * @memberof org.ekstep.contentrenderer.baseLauncher
  */
-init:function(data){
-	console.info('Base Launcher init...');
+init:function(data) {
 	this.initialize(data);
 },
 

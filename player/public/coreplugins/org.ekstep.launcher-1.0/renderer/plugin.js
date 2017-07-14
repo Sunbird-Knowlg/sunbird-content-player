@@ -21,13 +21,13 @@ Plugin.extend({
         var contentTypePlugin = _.findWhere(globalConfig.contentLaunchers, {
             'mimeType': content.mimeType
         });
-        
+
         // Loading chore plugins of GenieCanvas
         org.ekstep.contentrenderer.initPlugins('',globalConfig.corePluginspath);
         instance.loadCommonPlugins(function(){
             if (!_.isUndefined(contentTypePlugin)) {
                 instance.loadPlugin(contentTypePlugin, content);
-            }            
+            }
         });
     },
     loadCommonPlugins: function(cb) {
@@ -38,9 +38,8 @@ Plugin.extend({
         if (GlobalContext.config.overlay.showOverlay){
             plugins.push({"id": "org.ekstep.overlay", "ver": "1.0", "type": 'plugin'});
         }
-         
+
         org.ekstep.contentrenderer.loadPlugins(plugins, [], function() {
-            console.info('Endpage plugin is loaded..');
             if(cb) cb();
         });
     },
