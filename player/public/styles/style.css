@@ -880,7 +880,7 @@ body {
 }
 
 .gc-ep-rating {
-    width: 70%;
+    width: 75%;
     height: 100%;
     position: absolute;
     background: rgba(255, 255, 255, 0.6);
@@ -957,6 +957,7 @@ body {
     overflow: auto;
     line-height: 1.2em;
     white-space: normal;
+    overflow: hidden;
 }
 
 .gc-related-item p {
@@ -1186,7 +1187,7 @@ body {
 .gc-ep-rating>p {
     font-size: 1.1em;
     color: #494949;
-    padding-bottom: 3%;
+    padding-bottom: 1%;
 }
 
 .gc-ep-next {
