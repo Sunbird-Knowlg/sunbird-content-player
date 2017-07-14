@@ -91,20 +91,18 @@ Plugin.extend({
     },
     sendTelemetry: function(telemetryData) {
         var currentTimeStamp = new Date().getTime();
-        var teleObj = {
+        var telemetryObj = {
             "id": "ekstep.telemetry",
-            "ver": "2.0",
+            "ver": TelemetryService._version,
             "ets": currentTimeStamp,
             "events": telemetryData
         };
-        // "events": JSON.parse(telemetryData)
-        // console.log("teleObj to send to api", teleObj);
         var configuration = EkstepRendererAPI.getGlobalConfig();
         var headers = {};
         if (!_.isUndefined(configuration.context.authToken)) {
             headers["Authorization"] = 'Bearer ' + configuration.context.authToken;
         }
-        org.ekstep.service.renderer.sendTelemetry(teleObj, headers).then(function(data) {
+        org.ekstep.service.renderer.sendTelemetry(telemetryObj, headers).then(function(data) {
            console.log("Telemetry API success", data);
         });
     },
