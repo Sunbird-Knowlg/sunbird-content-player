@@ -45,6 +45,7 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
  * @author Akash Gupta <akash.gupta@tarento.com>
  */
 app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope', '$state', '$stateParams', function($scope, $rootScope, $state, $stateParams) {
+    $scope.AppLables = AppLables;
     $scope.groupLength = undefined;
     $scope.selectedUser = {};
     $scope.showUserSwitchModal = false;

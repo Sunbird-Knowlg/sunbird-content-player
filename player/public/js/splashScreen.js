@@ -32,7 +32,7 @@ var splashScreen = {
         return html;
     },
 
-    loadContentDetails: function(eve, data){
+    loadContentDetails: function(eve, data) {
         console.log("loadContentDetails data: ", data);
         $("#splashTextId").text(data.name);
     },
@@ -42,15 +42,18 @@ var splashScreen = {
         splashScreen.showProgressBar();
 
     },
+
     hide: function(event) {
         jQuery(splashScreen.elementId).hide();
         splashScreen.hideProgressBar();
     },
+
     showProgressBar: function() {
         splashScreen.progressEle = document.getElementById("progressBar");
         jQuery("#progressBar").width(0);
         jQuery('#loading').show();
         var width = 1;
+        clearInterval(id);
         var id = setInterval(frame, 50);
         function frame() {
             if (width >= 100) {
@@ -64,7 +67,8 @@ var splashScreen = {
         }
 
     },
-    hideProgressBar:function(){
+
+    hideProgressBar:function() {
       splashScreen.progressEle.style.width = 0 + '%'
       jQuery('#loading').hide();
     }

@@ -67,19 +67,22 @@ GlobalContext = {
                     }
                 });
             } else {
-                setGlobalConfig();
-                GlobalContext.config = {
-                    overlay: AppConfig.overlay,
-                    origin: "Genie",
-                    showEndPage: AppConfig.showEndPage,
-                    contentId: "org.ekstep.num.addition.by.grouping",
-                    appInfo: {
-                        code: "org.ekstep.quiz.app",
-                        mimeType: "application/vnd.android.package-archive",
-                        identifier: "org.ekstep.quiz.app"
-                    }
-                };
-                resolve(GlobalContext.config);
+                // TODO: Only for the local 
+                if (!isbrowserpreview) {
+                    setGlobalConfig();
+                    GlobalContext.config = {
+                        overlay: AppConfig.overlay,
+                        origin: "Genie",
+                        showEndPage: AppConfig.showEndPage,
+                        contentId: "org.ekstep.num.addition.by.grouping",
+                        appInfo: {
+                            code: "org.ekstep.quiz.app",
+                            mimeType: "application/vnd.android.package-archive",
+                            identifier: "org.ekstep.quiz.app"
+                        }
+                    };
+                    resolve(GlobalContext.config);
+                }
             }
         }).then(function(config) {
             // GlobalContext.config = config = { origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping"};
