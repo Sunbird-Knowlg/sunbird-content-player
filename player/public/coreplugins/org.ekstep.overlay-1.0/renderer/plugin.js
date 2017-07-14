@@ -63,3 +63,5 @@ Plugin.extend({
        // contentArea.style[prop] = val;
     },
 });
+
+//# sourceURL=overlayPlugin.js
