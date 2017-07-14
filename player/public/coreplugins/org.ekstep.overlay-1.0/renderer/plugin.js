@@ -21,9 +21,9 @@ Plugin.extend({
         org.ekstep.service.controller.loadNgModules(this._templatePath, this.controllerPath);
 
         //Loading other related temaplated of overlay 
-        this._userSwitcherTP = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/user-switch-popup.html");
+        // this._userSwitcherTP = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/user-switch-popup.html");
         this._menuTP = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/menu.html");
-        org.ekstep.service.controller.loadNgModules([this._menuTP, this._userSwitcherTP]);
+        // org.ekstep.service.controller.loadNgModules(this._menuTP);
 
         EkstepRendererAPI.addEventListener("render:overlay:applyStyles", instance.updateRendererStyles, instance);
     },

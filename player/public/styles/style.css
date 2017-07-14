@@ -1577,7 +1577,7 @@ body {
     /* Hidden by default */
     position: fixed;
     /* Stay in place */
-    z-index: 1;
+    z-index: 99999;
     /* Sit on top */
     padding-top: 2vh;
     /* Location of the box */
