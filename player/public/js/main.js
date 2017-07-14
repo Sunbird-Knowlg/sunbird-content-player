@@ -251,12 +251,12 @@ function addWindowUnloadEvent() {
     window.onbeforeunload = function(e) {
         e = e || window.event;
         var y = e.pageY || e.clientY;
-        !y && EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.getTelemetryService().end(logContentProgress());
-    }
+        !y && EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.dispatchEvent("renderer:content:close");
+    };
     if (EkstepRendererAPI.getGlobalConfig().context.mode === 'edit') {
         parent.document.getElementsByTagName('iframe')[0].contentWindow.onunload = function() {
             EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId());
-            EkstepRendererAPI.getTelemetryService().end(logContentProgress());
+            EkstepRendererAPI.dispatchEvent("renderer:content:close");
         }
     }
 }
