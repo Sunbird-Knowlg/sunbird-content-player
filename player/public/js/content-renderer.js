@@ -46,18 +46,20 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
 };
 
 
+
+
 org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
-    previewData = EkstepRendererAPI.getGlobalConfig();
-    if (previewData.config.plugins) {
-        if (previewData.config.repos) {
+    var globalConfig = EkstepRendererAPI.getGlobalConfig();
+    if (globalConfig.plugins) {
+        if (globalConfig.repos) {
             EkstepRendererAPI.dispatchEvent('renderer:repo:create');
             org.ekstep.contentrenderer.initPlugins('', '');
-            org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins, [], function() {
+            org.ekstep.contentrenderer.loadPlugins(globalConfig.plugins, [], function() {
                 console.info('Plugin loaded with repo..');
             });
         } else {
-            org.ekstep.contentrenderer.initPlugins('', previewData.previewPluginspath);
-            org.ekstep.contentrenderer.loadPlugins(previewData.config.plugins, [], function() {
+            org.ekstep.contentrenderer.initPlugins('', globalConfig.previewPluginspath);
+            org.ekstep.contentrenderer.loadPlugins(globalConfig.plugins, [], function() {
                 console.info('Preview plugins are loaded without repo.');
             });
         }
