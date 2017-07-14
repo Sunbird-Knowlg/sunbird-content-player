@@ -322,12 +322,16 @@ function setGlobalConfig(context) {
         var AppConfigCopy = _.clone(AppConfig);
         var globalConfig = _.clone(AppConfig);
         globalConfig = _.extend(globalConfig, context);
-        _.each(AppConfigCopy.contentLaunchers, function(launchers) {
-            globalConfig.contentLaunchers.push(launchers)
-        })
-        _.each(AppConfigCopy.mimetypes, function(mimetype) {
-            globalConfig.mimetypes.push(mimetype)
-        })
+        if (_.isArray(context.contentLaunchers) && context.contentLaunchers.length>0) {
+            _.each(AppConfigCopy.contentLaunchers, function(launchers) {
+                globalConfig.contentLaunchers.push(launchers)
+            })
+        }
+        if (_.isArray(context.mimetypes) && context.mimetypes.length>0) {
+            _.each(AppConfigCopy.mimetypes, function(mimetype) {
+                globalConfig.mimetypes.push(mimetype)
+            })
+        }
         if (_.isUndefined(window.cordova)) {
             org.ekstep.service.renderer.api.setBaseUrl(globalConfig.host + globalConfig.apislug);
         }
