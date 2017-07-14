@@ -31,17 +31,15 @@ Plugin.extend({
         }
     },
     loadEndPagePlugin: function(){
-        if(GlobalContext.config.overlay,showOverlay){
+        if(GlobalContext.config.overlay.showOverlay){
             org.ekstep.contentrenderer.loadPlugins({"id": "org.ekstep.endpage", "ver": "1.0", "type": 'plugin'}, [], function(){
-                console.info('Canvas Default plugins are loaded..');
-                console.log("End page plugin loaded..");
+                console.info('Endpage plugin is loaded..');
             });        
         }
     },
     loadOverlayPlugin: function(){
         if(GlobalContext.config.showEndPage){
             org.ekstep.contentrenderer.loadPlugins({"id": "org.ekstep.overlay", "ver": "1.0", "type": 'plugin'}, [], function(){
-                console.info('Canvas Default plugins are loaded..');
                 console.log("Overlay plugin loaded..");
             });        
         }
