@@ -13,8 +13,6 @@
             {"type": "js", "src": "renderer/libs/cordovaaudioplugin-0.6.1.min.js"},
             {"type": "js", "src": "renderer/libs/renderer.min.js"}
         ]
-    },
-    "dependencies": [
-    ]  
+    } 
 
 }

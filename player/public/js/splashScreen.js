@@ -22,10 +22,10 @@ var splashScreen = {
         instance.show();
     },
     addEvents: function(){
-        EkstepRendererAPI.addEventListener("renderer:launcher:load", this.loadContentDetails);
-        EkstepRendererAPI.addEventListener("renderer:splash:show", this.show);
-        EkstepRendererAPI.addEventListener("renderer:splash:hide", this.hide);
-        EkstepRendererAPI.addEventListener("renderer:content:start", this.hide);
+        EkstepRendererAPI.addEventListener("renderer:launcher:load", splashScreen.loadContentDetails);
+        EkstepRendererAPI.addEventListener("renderer:splash:show", splashScreen.show);
+        EkstepRendererAPI.addEventListener("renderer:splash:hide", splashScreen.hide);
+        EkstepRendererAPI.addEventListener("renderer:content:start", splashScreen.hide);
     },
     createHtml: function() {
         var html = '<img src=' + splashScreen.config.bgImage + ' class="gc-loader-img" /><P class="splashText" id="splashTextId"> Loading your content ... </p><div id="progressArea"><div id="progressBar"></div><p id="progressCount" class="font-lato gc-loader-prog"></p></div><a href="' + splashScreen.config.webLink + '" target="_blank"><div class="splashScreen"> <img src=' + splashScreen.config.icon + ' class="splash-icon " /> <span>' + splashScreen.config.text + '</span> </div></a>';

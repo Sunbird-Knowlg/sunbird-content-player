@@ -17,33 +17,31 @@ Plugin.extend({
     },
     start: function(evt, content) {
         var globalConfig = EkstepRendererAPI.getGlobalConfig();
+        var instance = this;
         var contentTypePlugin = _.findWhere(globalConfig.contentLaunchers, {
             'mimeType': content.mimeType
         });
         
         // Loading chore plugins of GenieCanvas
         org.ekstep.contentrenderer.initPlugins('',globalConfig.corePluginspath);
-        this.loadOverlayPlugin();
-        this.loadEndPagePlugin();
+        this.loadModulePlugins(function(){
+            if (!_.isUndefined(contentTypePlugin)) {
+                instance.loadPlugin(contentTypePlugin, content);
+            }
+        });
 
-        if (!_.isUndefined(contentTypePlugin)) {
-            this.loadPlugin(contentTypePlugin, content);
+    },
+    loadModulePlugins:function(cb){
+        if(GlobalContext.config.overlay.showOverlay && GlobalContext.config.showEndPage){
+            org.ekstep.contentrenderer.loadPlugins([{"id": "org.ekstep.endpage", "ver": "1.0", "type": 'plugin'},{"id": "org.ekstep.overlay", "ver": "1.0", "type": 'plugin'}],[],function(){
+                console.info("Plugins are loaded..");
+                     if(cb) cb();
+            })
+        }else {
+            if(cb) cb();
         }
     },
-    loadEndPagePlugin: function(){
-        if(GlobalContext.config.showEndPage){
-            org.ekstep.contentrenderer.loadPlugins({"id": "org.ekstep.endpage", "ver": "1.0", "type": 'plugin'}, [], function(){
-                console.info('Endpage plugin is loaded..');
-            });        
-        }
-    },
-    loadOverlayPlugin: function(){
-        if(GlobalContext.config.overlay.showOverlay){
-            org.ekstep.contentrenderer.loadPlugins({"id": "org.ekstep.overlay", "ver": "1.0", "type": 'plugin'}, [], function(){
-                console.log("Overlay plugin loaded..");
-            });        
-        }
-    },
+   
     loadPlugin: function(plugin, contentData) {
         var instance = this;
         content = contentData;
