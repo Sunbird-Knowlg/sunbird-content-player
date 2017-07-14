@@ -1116,6 +1116,8 @@ body {
     position: absolute;
     bottom: 3%;
     left: 9%;
+    color: #494949;
+    font-size: 0.9em;
 }
 
 .icon-opacity {
