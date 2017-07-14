@@ -46,6 +46,12 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
 			//TODO: Remove this currentStage parameter and use directly stageData._currentStage
 			$rootScope.stageId = !_.isUndefined($rootScope.stageData) ? $rootScope.stageData._id : undefined;
 		});
+        if($scope.pluginInstance){
+            console.log("Show overlay is failed to on event handler");
+            if(globalConfig.overlay.showOverlay) {
+                $scope.overlayVisible = $scope.pluginInstance.overlayVisible;                
+            }
+        }
     }
 
     $scope.showOverlay = function() {

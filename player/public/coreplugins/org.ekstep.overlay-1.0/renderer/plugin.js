@@ -11,6 +11,7 @@ Plugin.extend({
     _type: "overlay",
     _ngScopeVar: "overlay",
     _config:{},
+    overlayVisible: false, 
     initialize: function() {
         console.info('overlay plugin is doing initialize....');
         var instance = this;
@@ -26,6 +27,12 @@ Plugin.extend({
         // org.ekstep.service.controller.loadNgModules(this._menuTP);
 
         EkstepRendererAPI.addEventListener("render:overlay:applyStyles", instance.updateRendererStyles, instance);
+        EkstepRendererAPI.addEventListener("renderer:overlay:show", instance.showOrHideOverlay);        
+        EkstepRendererAPI.addEventListener("renderer:content:start", instance.showOrHideOverlay);
+    },
+    showOrHideOverlay: function(){
+        // TODO: temaparary solution to handle overlay is not showing in dev some times
+        this.overlayVisible = true;
     },
     updateRendererStyles: function(event, instance){
         setTimeout(function(){
