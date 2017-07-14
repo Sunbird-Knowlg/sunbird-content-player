@@ -27,8 +27,8 @@ Plugin.extend({
         // org.ekstep.service.controller.loadNgModules(this._menuTP);
 
         EkstepRendererAPI.addEventListener("render:overlay:applyStyles", instance.updateRendererStyles, instance);
-        EkstepRendererAPI.addEventListener("renderer:overlay:show", instance.showOrHideOverlay);        
-        EkstepRendererAPI.addEventListener("renderer:content:start", instance.showOrHideOverlay);
+        EkstepRendererAPI.addEventListener("renderer:overlay:show", instance.showOrHideOverlay, instance);        
+        EkstepRendererAPI.addEventListener("renderer:content:start", instance.showOrHideOverlay, instance);
     },
     showOrHideOverlay: function(){
         // TODO: temaparary solution to handle overlay is not showing in dev some times
