@@ -95,7 +95,7 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
     }
     $scope.getTotalScore = function(id) {
         if ("undefined" != typeof cordova) {
-            org.ekstep.service.content.getLearnerAssessment(GlobalContext.user.uid, id,GlobalContext.game.contentExtras)
+            org.ekstep.service.content.getLearnerAssessment(GlobalContext.user.uid, id, GlobalContext.game.contentExtras)
                 .then(function(score) {
                     if (score && score.total_questions) {
                         $scope.showScore = true;
@@ -251,7 +251,6 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
         $scope.navigateToDownloadPage = function(contentExtras, contentId) {
             var deepLinkURL = "ekstep://c/" + contentId;
             if (!_.isEmpty(contentExtras)) {
-                contentExtras.pop();
                 contentExtras = JSON.stringify(contentExtras);
                 deepLinkURL += "&contentExtras=" + contentExtras;
             }
@@ -281,7 +280,7 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
                             });
                         }
                     }
-                    if (!_.isEmpty(list)) {
+                    if (list.length != 0) {
                         $scope.$apply(function() {
                             $scope.relatedContents = list;
                             jQuery('#endPageLoader').hide();
