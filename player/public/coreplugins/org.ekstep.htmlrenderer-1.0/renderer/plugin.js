@@ -24,7 +24,7 @@
         var instance = this;
         org.ekstep.pluginframework.resourceManager.loadResource(path, 'TEXT', function(err, data) {
             if (err) {
-                showToaster("error", "Sorry!!.. Unable to open the Game!")
+                showToaster("error", "Sorry!!.. Unable to open the Game!",{timeOut:200000})
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
                 instance.addIframe(iframe);
