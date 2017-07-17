@@ -21,6 +21,10 @@ TelemetryV2Manager = Class.extend({
     end: function(progress) {
         if (!_.isEmpty(this._start)) {
             this._start.pop();
+            if(progress == undefined) {
+                // Bu default we are sending as 50. If any external guys called telemetryService.end() directly
+                progress = 50;
+            }
             return this._end.pop().end(progress);
         } else {
             console.warn("Telemetry service end is already logged Please log start telemetry again");
