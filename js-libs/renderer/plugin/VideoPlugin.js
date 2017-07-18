@@ -241,7 +241,7 @@ var VideoPlugin = Plugin.extend({
         var videoEle = this.getVideo();
         return new createjs.Bitmap(videoEle);
     },
-    showReplay: function(event, dims, replay) {
+    showReplay: function(event) {
         try {
             var dims = _instance.getRelativeDims(org.ekstep.pluginframework.pluginManager.pluginInstances[event.target.id]._data);
             var img = document.createElement('img');
