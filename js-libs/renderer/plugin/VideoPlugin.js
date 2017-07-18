@@ -53,6 +53,9 @@ var VideoPlugin = Plugin.extend({
      *   @memberof VideoPlugin
      *   @override
      */
+
+    _replayIcon: '/assets/icons/video_replay.png',
+
     initPlugin: function(data) {
         this._data = data;
         if (this._data) {
@@ -87,7 +90,7 @@ var VideoPlugin = Plugin.extend({
         jQuery(videoEle).bind("error", this.logConsole);
         jQuery(videoEle).bind("abort", this.logConsole);
         jQuery(videoEle).bind("loadeddata", this.onLoadData);
-        jQuery(videoEle).bind('ended',this.showPoster);
+        jQuery(videoEle).bind('ended', this.showReplay);
     },
 
     /**
@@ -238,44 +241,48 @@ var VideoPlugin = Plugin.extend({
         var videoEle = this.getVideo();
         return new createjs.Bitmap(videoEle);
     },
-    showPoster: function(event) {
+    showReplay: function(event, dims, replay) {
         try {
             var dims = _instance.getRelativeDims(org.ekstep.pluginframework.pluginManager.pluginInstances[event.target.id]._data);
-            //var replay = document.createElement("div");
-            //replay.innerHTML="<img src='/assets/icons/icn_replay.png' />";
-            var replay = document.createElement('img');
-            jQuery(replay).attr({
-                src: '/assets/icons/icn_replay.png',
-            });
+            var img = document.createElement('img');
             var replay_id = 'replay_' + event.target.id;
-            if (_.isNull(document.getElementById(replay_id))) {
-                console.info("dims",dims);
-                jQuery(replay).insertAfter("#" + _instance.id);
-                jQuery(replay).attr({
-                    id: replay_id
-                }).css({
-                    width: '100px',
-                    height: '100px',
-                    position: "absolute",
-                    top: dims.y + (dims.h / 2 - 40) + "px",
-                    display: "block",
-                    left: dims.x + (dims.w / 2 - 30) + "px"
-                }).css('z-index', '1')
-            } else {
-                jQuery('#' + replay_id).css('display', 'block');
-            }
-            jQuery('#' + replay_id).bind('click', _instance.replay);
+            jQuery(img).attr({src: _instance._replayIcon, id: replay_id }); 
+            _instance.disableBackground(event.target.id, true);
+            if (_.isNull(document.getElementById(replay_id))) { jQuery(img).insertAfter("#" + _instance.id); } 
+            !window.screenTop && !window.screenY ? _instance.onFullScreen(event) : _instance.onNormalScreen(event);
+            jQuery('#' + replay_id).bind('click', _instance.hideReplay);
         } catch (e) {
-            console.warn("video fails to show the poster",e);
+            console.warn("video fails to show the poster", e);
         }
     },
-    replay:function(event){
+    setReplayIconStyle: function(elementId, CustomStyleObj) {
+        jQuery('#'+elementId).css(CustomStyleObj);
+    },
+    hideReplay: function(event) {
         var vidoeId = event.target.id.replace("replay_", "");
+        _instance.disableBackground(vidoeId, false);
         document.getElementById(vidoeId).play();
         jQuery("#" + event.target.id).css('display', 'none');
-
-
-
+    },
+    disableBackground: function(id, flag) {
+        if (flag) {
+            jQuery('#' + id).css({'opacity': '0.4', "pointer-events": "none"});
+        } else {
+            jQuery('#' + id).css({'opacity': '1', "pointer-events": " "}); 
+        }
+    },
+    onFullScreen: function(event) {
+        var replay_id = 'replay_' + event.target.id;
+        var element = document.getElementById(event.target.id);
+        var positionInfo = element.getBoundingClientRect();
+        _instance.setReplayIconStyle(replay_id, {width: "100px", height: "100px", "z-index": "55555555555", position: "absolute", "top": positionInfo.height / 2, "left": positionInfo.width / 2, "display": "block"})
+    },
+    onNormalScreen: function(event) {
+        var replay_id = 'replay_' + event.target.id;
+        var dims = _instance.getRelativeDims(org.ekstep.pluginframework.pluginManager.pluginInstances[event.target.id]._data);
+        var top = dims.y + (dims.h / 2 - 40) + "px";
+        var left = dims.x + (dims.w / 2 - 30) + "px";
+        _instance.setReplayIconStyle(replay_id, {width: "50px", height: "50px", "z-index": "1", position: "absolute", "top": top, "left": left, "display": "block"});
     }
 });
 PluginManager.registerPlugin('video', VideoPlugin);
