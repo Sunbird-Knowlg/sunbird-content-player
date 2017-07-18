@@ -87,6 +87,7 @@ var VideoPlugin = Plugin.extend({
         jQuery(videoEle).bind("error", this.logConsole);
         jQuery(videoEle).bind("abort", this.logConsole);
         jQuery(videoEle).bind("loadeddata", this.onLoadData);
+        jQuery(videoEle).bind('ended',this.showPoster);
     },
 
     /**
@@ -236,6 +237,45 @@ var VideoPlugin = Plugin.extend({
         this.addVideoElement(jqVideoEle);
         var videoEle = this.getVideo();
         return new createjs.Bitmap(videoEle);
+    },
+    showPoster: function(event) {
+        try {
+            var dims = _instance.getRelativeDims(org.ekstep.pluginframework.pluginManager.pluginInstances[event.target.id]._data);
+            //var replay = document.createElement("div");
+            //replay.innerHTML="<img src='/assets/icons/icn_replay.png' />";
+            var replay = document.createElement('img');
+            jQuery(replay).attr({
+                src: '/assets/icons/icn_replay.png',
+            });
+            var replay_id = 'replay_' + event.target.id;
+            if (_.isNull(document.getElementById(replay_id))) {
+                console.info("dims",dims);
+                jQuery(replay).insertAfter("#" + _instance.id);
+                jQuery(replay).attr({
+                    id: replay_id
+                }).css({
+                    width: '100px',
+                    height: '100px',
+                    position: "absolute",
+                    top: dims.y + (dims.h / 2 - 40) + "px",
+                    display: "block",
+                    left: dims.x + (dims.w / 2 - 30) + "px"
+                }).css('z-index', '1')
+            } else {
+                jQuery('#' + replay_id).css('display', 'block');
+            }
+            jQuery('#' + replay_id).bind('click', _instance.replay);
+        } catch (e) {
+            console.warn("video fails to show the poster",e);
+        }
+    },
+    replay:function(event){
+        var vidoeId = event.target.id.replace("replay_", "");
+        document.getElementById(vidoeId).play();
+        jQuery("#" + event.target.id).css('display', 'none');
+
+
+
     }
 });
 PluginManager.registerPlugin('video', VideoPlugin);
