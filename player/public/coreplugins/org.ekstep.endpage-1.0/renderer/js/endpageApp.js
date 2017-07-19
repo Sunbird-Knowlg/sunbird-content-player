@@ -95,7 +95,7 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
     }
     $scope.getTotalScore = function(id) {
         if ("undefined" != typeof cordova) {
-            org.ekstep.service.content.getLearnerAssessment(GlobalContext.user.uid, id,GlobalContext.game.contentExtras)
+            org.ekstep.service.content.getLearnerAssessment(GlobalContext.user.uid, id, GlobalContext.game.contentExtras)
                 .then(function(score) {
                     if (score && score.total_questions) {
                         $scope.showScore = true;
@@ -192,54 +192,38 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
         $scope.contentShowMore = false;
         $scope.showRelatedContentHeader = true;
         $scope.relatedContents = [];
-        $scope.relatedContentPath = [];
-        $scope.collectionTree = undefined;
+        $scope.relatedContentResp = null;
+        $scope.contentExtras = undefined;
 
         $scope.playRelatedContent = function(content, index) {
             var contentId = [];
-            collectionPath = $scope.relatedContentPath;
+            // collectionPath = $scope.relatedContentPath;
             var eleId = "gc_nextcontent";
             var values = [];
             var contentIds = [];
-            // Send only for normal contet/ content played directly from Genie
-            if (_.isUndefined($scope.collectionTree) || _.isEmpty($scope.collectionTree)) {
-                if ($scope.relatedContents.length > 0) {
-                    contentIds = _.pluck($scope.relatedContents, 'identifier');
-                }
-                eleId = "gc_relatedcontent";
-                values = [{
-                    PositionClicked: index + 1
-                }, {
-                    ContentIDsDisplayed: contentIds,
-                }, {
-                    id: $scope.relatedContentItem ? $scope.relatedContentItem.responseMessageId : "",
-                    type: $scope.relatedContentItem ? $scope.relatedContentItem.id : ''
-                }]
-            }
             TelemetryService.interact("TOUCH", eleId, "TOUCH", {
-                stageId: "endpage",
+                stageId: $rootScope.pageId,
                 subtype: "",
                 values: values
             });
             TelemetryService.end(logContentProgress());
             GlobalContext.game.id = content.identifier
             GlobalContext.game.pkgVersion = content.pkgVersion;
-            var contentExtras = [];
-            if (!(_.isUndefined($scope.collectionTree) || _.isEmpty($scope.collectionTree))) {
-                _.each($scope.relatedContentPath, function(eachObj) {
-                    contentExtras.push(_.pick(eachObj, 'identifier', 'contentType'));
-                });
-            }
+
             // Check is content is downloaded or not in Genie.
+            var contentExtras = _.isUndefined($scope.relatedContentResp.contentExtras) ? null : $scope.relatedContentResp.contentExtras;
+                        
             org.ekstep.service.content.getContentAvailability(content.identifier)
                 .then(function(contetnIsAvailable) {
                     if (contetnIsAvailable) {
                         // This is required to setup current content details which is going to play
                         org.ekstep.contentrenderer.getContentMetadata(content.identifier, function(obj) {
-                            if ($scope.collectionTree) {
+                            console.log("Related content data:", content);
+                            // if (content.contentExtras) {
+                            // $scope.contentExtras = content.contentExtras
                                 GlobalContext.game.contentExtras = contentExtras;
                                 localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
-                            }
+                            // }
                             EkstepRendererAPI.hideEndPage();
                             $rootScope.content = obj;
                             if (window.content.mimeType == obj.mimeType){
@@ -267,24 +251,24 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
         $scope.navigateToDownloadPage = function(contentExtras, contentId) {
             var deepLinkURL = "ekstep://c/" + contentId;
             if (!_.isEmpty(contentExtras)) {
-                contentExtras.pop();
                 contentExtras = JSON.stringify(contentExtras);
                 deepLinkURL += "&contentExtras=" + contentExtras;
             }
             window.open(deepLinkURL, "_system");
         }
-        $scope.getRelatedContent = function(list) {
-            org.ekstep.service.content.getRelatedContent(list, content.identifier, GlobalContext.user.uid)
+        $scope.getRelatedContent = function(contentExtras) {
+            org.ekstep.service.content.getRelatedContent(contentExtras, content.identifier, GlobalContext.user.uid)
             .then(function(item) {
                 if (!_.isEmpty(item)) {
-                    $scope.relatedContentItem = item;
+                    $scope.relatedContentResp = item;
                     var list = [];
                     if(item.nextContent){
                         if(item.nextContent.contents){
                             var relatedContents = item.nextContent.contents;
+
                             // releated contents list
                             $scope.showRelatedContent = true;
-                            $scope.relatedContentPath = relatedContents;
+                            // $scope.relatedContentPath = relatedContents;
                             list = _.first(_.isArray(relatedContents) ? relatedContents : [relatedContents], 2);
                         } else {
                             // Next content of the collection
@@ -296,7 +280,7 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
                             });
                         }
                     }
-                    if (!_.isEmpty(list)) {
+                    if (list.length != 0) {
                         $scope.$apply(function() {
                             $scope.relatedContents = list;
                             jQuery('#endPageLoader').hide();
@@ -310,19 +294,19 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
         }
 
         $scope.renderRelatedContent = function(id) {
-            var list = null;
-            if (_.isUndefined($scope.collectionTree) || _.isEmpty($scope.collectionTree)) {
+            var contentExtras = null;
+            if (_.isUndefined($scope.contentExtras) || _.isEmpty($scope.contentExtras)) {
                 if (("undefined" != typeof cordova)) {
-                    $scope.getRelatedContent(list);
+                    $scope.getRelatedContent(contentExtras);
                 }
             } else {
-                list = $scope.collectionTree;
-                $scope.getRelatedContent(list);
+                contentExtras = $scope.contentExtras;
+                $scope.getRelatedContent(contentExtras);
             }
         }
 
         $scope.init = function() {
-            $scope.collectionTree = localStorageGC.getItem('contentExtras');
+            $scope.contentExtras = localStorageGC.getItem('contentExtras');
             if ("undefined" != typeof cordova) {
                 $scope.renderRelatedContent($rootScope.content.identifier);
             } else {

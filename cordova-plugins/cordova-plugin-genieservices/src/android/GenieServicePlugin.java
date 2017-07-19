@@ -128,27 +128,21 @@ public class GenieServicePlugin extends CordovaPlugin {
         } else if(action.equals("getLearnerAssessment")) {
             String uid = args.getString(0);
             String contentId = args.getString(1);
-            JSONArray jsonArray = null;    
+            JSONObject contentExtras = null;
             if(!args.getString(2).equals("null")) {
-                jsonArray = args.getJSONArray(2);
+                contentExtras = args.getJSONObject(2);
             }
-
-            List<Map> contentExtras = new ArrayList<Map>();
-            if(jsonArray != null && jsonArray.length() > 0) {
-                for(int i=0;i<jsonArray.length();i++) {
-                    Map map = new HashMap();
-                    Iterator keys = jsonArray.getJSONObject(i).keys();
-                    while (keys.hasNext()) {
-                        String key = (String) keys.next();
-                        map.put(key, jsonArray.getJSONObject(i).get(key));
-                    }
-
-                    contentExtras.add(map);
+            Map map = null;
+            if (contentExtras != null) {
+                map = new HashMap();
+                Log.i(TAG, "java-getLearnerAssessment: new " + contentExtras);
+                Iterator keys = contentExtras.keys();
+                while (keys.hasNext()) {
+                    String key = (String) keys.next();
+                    map.put(key, contentExtras.get(key));
                 }
-                summarizerService.getLearnerAssessment(uid, contentId, contentExtras, new GenieServicesResponse(callbackContext));
-            } else {
-                summarizerService.getLearnerAssessment(uid, contentId, null, new GenieServicesResponse(callbackContext));
-            }
+            } 
+            summarizerService.getLearnerAssessment(uid, contentId, map, new GenieServicesResponse(callbackContext));
         } /*   else if(action.equals("getContentList")) {
             String[] filter = null;
             JSONArray jsonArray = args.getJSONArray(0);
