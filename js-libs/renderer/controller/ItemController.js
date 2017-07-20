@@ -92,7 +92,7 @@ var ItemController = Controller.extend({
                 res: result.res,
                 mmc: instance.getMMC(item, result),
                 qindex: item.qindex,
-                mc: _.pluck(concepts, 'identifier'),
+                mc: _.without(concepts, undefined),
                 qtitle: item.title,
                 qdesc: item.description ? item.description : ""
             };
