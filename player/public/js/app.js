@@ -41,7 +41,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                     stageId = pageId || '';
                 }
                 TelemetryService.interact('TOUCH', 'DEVICE_BACK_BTN', 'EXIT', {type:type,stageId:stageId});
-                if (confirm("Press 'OK' to go back to Genie.")) {
+                if (confirm("Would you like to leave this content ?")) {
                     TelemetryService.interact('END', 'ALERT_OK', 'EXIT', {type:type,stageId:stageId});
                     backbuttonPressed(stageId);
                 } else {
