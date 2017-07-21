@@ -121,7 +121,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getCurrentStageId: function() {
-        return (!_.isUndefined(Renderer)) ? Renderer.theme._currentStage : '';
+        return (!_.isUndefined(Renderer)) ? ((Renderer.theme._currentStage) ? Renderer.theme._currentStage : angular.element(document).scope().pageId) : '';
     },
 
     /**
@@ -939,7 +939,7 @@ window.EkstepRendererAPI = {
         this.dispatchEvent('renderer:content:end');
         this.dispatchEvent('renderer:endpage:show');
     },
-   
+
 
     hideEndPage: function() {
        this.dispatchEvent('renderer:endpage:hide');

@@ -163,11 +163,11 @@ TelemetryService = {
                 return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver, data), TelemetryService.apis.telemetry);
         }
     },
-    end: function(progress) {
+    end: function(progress, data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return this.flushEvent(TelemetryService.instance.end(progress), TelemetryService.apis.telemetry);
+        return this.flushEvent(TelemetryService.instance.end(progress, data), TelemetryService.apis.telemetry);
     },
     interact: function(type, id, extype, data) {
         if (!TelemetryService.isActive) {

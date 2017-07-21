@@ -310,6 +310,8 @@ OverlayManager = {
         action.transitionType = navType;
         CommandManager.handle(action);
     },
+
+    // Stage reload
     actionReload: function() {
         if (this._reloadInProgress) {
             // continuous reload clicks was handling the stage
@@ -334,6 +336,8 @@ OverlayManager = {
             stageId: currentStage
         });
     },
+
+    // Content replay
     actionReplay: function(data) {
         var version = TelemetryService.getGameVer();
         TelemetryService.end();

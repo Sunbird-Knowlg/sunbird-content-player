@@ -127,7 +127,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
              stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
          });
          if(_.isEmpty($scope.selectedUser)){
-             EkstepRendererAPI.dispatchEvent('renderer:content:close');
+            EkstepRendererAPI.dispatchEvent('renderer:content:close');
 
             EkstepRendererAPI.dispatchEvent('renderer:content:replay');
             $scope.closeUserSwitchingModal(false);
@@ -167,7 +167,9 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                             EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
                         } else {
                             TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                            TelemetryService.end(logContentProgress());
+                            var data = {};
+                            data.stageid = EkstepRendererAPI.getCurrentStageId();
+                            TelemetryService.end(logContentProgress(), data);
                             TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
                             var data = {};
                             data.stageid = EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId;
@@ -250,7 +252,6 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                 /* Have an empty check for image validation
                  * If image is not available at the given path, replace the image with "avatar_anonymous" image
                  */
-
                  var imageUrl = data.profileImage;
                 imageExists(imageUrl, function(exists) {
                     if (exists === false) data.profileImage = "assets/icons/avatar_anonymous.png"
