@@ -29,8 +29,7 @@ GlobalContext = {
                 Promise.all(promises).then(function(result) {
                     setGlobalConfig(GlobalContext.config);
                     org.ekstep.service.renderer.initializeSdk(GlobalContext.config.appQualifier || 'org.ekstep.genieservices');
-                    if (GlobalContext.config.appInfo && _.isString(GlobalContext.config.appInfo)) {
-                        GlobalContext.config.appInfo = JSON.parse(GlobalContext.config.appInfo);
+                    if (GlobalContext.config.appInfo) {
                         GlobalContext.game.id = GlobalContext.config.appInfo.identifier;
                         GlobalContext.game.ver = GlobalContext.config.appInfo.pkgVersion || "1";
                         GlobalContext.game.contentExtras = GlobalContext.config.contentExtras;
@@ -112,10 +111,14 @@ GlobalContext = {
         return new Promise(function(resolve, reject) {
             window.plugins.webintent.getExtra(param, function(url) {
                 if (url) {
-                    contextObj[param] = url;
+                    try {
+                        contextObj[param] = JSON.parse(url);
+                    } catch(e) {
+                        contextObj[param] = url;
+                    }
                 }
                 resolve(true);
-            }, function() {
+            }, function(e) {
                 console.log('intent value not set for: ' + param);
                 resolve(true);
             });
