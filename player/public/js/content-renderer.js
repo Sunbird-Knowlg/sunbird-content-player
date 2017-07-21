@@ -31,6 +31,12 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
         org.ekstep.contentrenderer.loadExternalPlugins(function() {
             var globalConfig = EkstepRendererAPI.getGlobalConfig();
             if (globalConfig.mimetypes.indexOf(appInfo.mimeType) > -1) {
+                /**
+                 * 'renderer.player.init' event will get dispatch after loading default & external injected plugins
+                 * @event 'renderer.player.init'
+                 * @fires 'renderer.player.init'
+                 * @memberof EkstepRendererEvents
+                 */
                 EkstepRendererAPI.dispatchEvent('renderer:player:init');
             } else {
                 if(!isbrowserpreview){
@@ -109,7 +115,13 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
     setGlobalConfig(configuration);
 
     addWindowUnloadEvent();
-    EkstepRendererAPI.dispatchEvent("event:loadContent");
+    /**
+     * 'renderer.player.init' event will get dispatch after loading default & external injected plugins
+     * @event 'renderer.player.init'
+     * @fires 'renderer.player.init'
+     * @memberof EkstepRendererEvents
+     */
+    EkstepRendererAPI.dispatchEvent("renderer.content.getMetadata");
 };
 
 org.ekstep.contentrenderer.initPlugins = function(host, repoRelativePath) {
