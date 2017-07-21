@@ -48,6 +48,11 @@ function getUrlParameter(sParam) {
     }
 }
 
+function getCurrentStageId() {
+    var stageId = EkstepRendererAPI.getCurrentStageId();
+    return (stageId) ? stageId : angular.element(document).scope().pageId;
+}
+
 function backbuttonPressed(stageId) {
     TelemetryService.interrupt("OTHER", stageId);
     TelemetryService.end(logContentProgress());

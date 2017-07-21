@@ -168,7 +168,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                         } else {
                             TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
                             var data = {};
-                            data.stageid = EkstepRendererAPI.getCurrentStageId();
+                            data.stageid = getCurrentStageId();
                             TelemetryService.end(logContentProgress(), data);
                             TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
                             var data = {};
