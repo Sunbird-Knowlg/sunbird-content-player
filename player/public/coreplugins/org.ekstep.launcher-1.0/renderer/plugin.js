@@ -21,9 +21,7 @@ Plugin.extend({
         var contentTypePlugin = _.findWhere(globalConfig.contentLaunchers, {
             'mimeType': content.mimeType
         });
-
-        // Loading chore plugins of GenieCanvas
-        org.ekstep.contentrenderer.initPlugins('',globalConfig.corePluginspath);
+        EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined, [globalConfig.corePluginspath]);
         instance.loadCommonPlugins(function(){
             if (!_.isUndefined(contentTypePlugin)) {
                 instance.loadPlugin(contentTypePlugin, content);
