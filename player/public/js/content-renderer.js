@@ -15,7 +15,7 @@ window.globalConfig = {
 };
 org.ekstep.contentrenderer.init = function() {
     /**
-     * TODO: Need To handle Synchronus flow of org.ekstep.contentrenderer.setContent and getContent here
+     * TODO: Need To handle Synchronus flow of org.ekstep.contentrenderer.getContent and setContent here
      * device and web rendrer should be handle here
      */
     window.initializePreview = org.ekstep.contentrenderer.initializePreview;
@@ -65,12 +65,17 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
 };
 /**
  * To create a multiple repo instance to load the plugins
+ * If the repo path is undefined then framework is considering default paths
  */
 org.ekstep.contentrenderer.addRepos = function() {
     var obj = EkstepRendererAPI.getGlobalConfig();
-    if(!_.isUndefined(obj.config.repos)){
-        EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, obj.config.repos);
-    }; 
+    if (_.isUndefined(obj.config.repos)) {
+        obj.config.repos = isMobile ? obj.devicePluginspath : obj.previewPluginspath;
+    }
+    EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, {
+        path: obj.config.repos,
+        position: 0
+    });    
 };
 
 /**
