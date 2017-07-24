@@ -54,7 +54,7 @@ var VideoPlugin = Plugin.extend({
      *   @override
      */
 
-    _replayIcon: '/assets/icons/video_replay.png',
+    _replayIcon: 'assets/icons/video_replay.png',
 
     initPlugin: function(data) {
         this._data = data;
