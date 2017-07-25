@@ -8,9 +8,7 @@
     "renderer": {
         "main": "renderer/plugin.js"
     },
-    "dependencies": [
-         {"plugin": "org.ekstep.endpage", "ver": "1.0", "scope": "renderer" }
-    ]
+    "dependencies": []
     
 
 }
