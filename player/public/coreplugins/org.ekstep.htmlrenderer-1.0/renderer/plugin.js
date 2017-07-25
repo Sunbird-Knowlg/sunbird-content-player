@@ -6,7 +6,6 @@
     },
     launchGame: function(evt, data) {
         data = content;
-        EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
         var launchData = {"env": envHTML, "envpath": 'dev'};
@@ -15,11 +14,22 @@
         if (isbrowserpreview) {
             path += "&flavor=" + "t=" + getTime();
         }
-        jQuery('#ekstep_htmlIframe').remove()
+        jQuery('#ekstep_htmlIframe').remove();
         var iframe = document.createElement('iframe');
         iframe.src = path;
-        iframe.id = 'ekstep_htmlIframe'
-        this.addIframe(iframe);
+        iframe.id = 'ekstep_htmlIframe';
+        this.validateSrc(path, iframe);
+    },
+    validateSrc: function(path, iframe) {
+        var instance = this;
+        org.ekstep.pluginframework.resourceManager.loadResource(path, 'TEXT', function(err, data) {
+            if (err) {
+                showToaster("error", "Sorry!!.. Unable to open the Game!",{timeOut:200000})
+            } else {
+                EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+                instance.addIframe(iframe);
+            }
+        });        
     },
     addIframe: function(iframe) {
         jQuery('#ekstep_htmlIframe').insertBefore("#gameArea");
@@ -31,7 +41,6 @@
         jQuery('#gameArea') .css({left: '0px', top: '0px', width: "100%", height: "100%"});
         jQuery('#ekstep_htmlIframe') .css({position: 'absolute', display: 'block',width: '100%', height: '100%'});
         // if html content want to show overlay, they should dispatch "renderer:overlay:show" to show overlay
-        // AppConfig.overlay.showOverlay ? jQuery('#overlay').css({display: 'block'}) : jQuery('#overlay').css({display: 'none'})
     },
     getAsseturl: function(content) {
         var content_type = "html/";

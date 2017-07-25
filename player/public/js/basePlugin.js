@@ -132,6 +132,8 @@ var Plugin = Class.extend({
             }
 
             if (this._self) {
+                this._self.id = this.id;
+                this._self.type = this._type;
                 this._self['z-index'] = data['z-index'];
             }
 

@@ -27,6 +27,13 @@ function createCustomEvent(evtName, data) {
     var evt = new CustomEvent(evtName, data);
 }
 
+function imageExists(url, callback, index) {
+    var img = new Image();
+    img.onload = function() { callback(true, index); };
+    img.onerror = function() { callback(false, index); };
+    img.src = url;
+}
+
 function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),

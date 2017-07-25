@@ -77,9 +77,21 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
             showToaster('info', "User switch is disabled");
         }
     }
+
+    $scope.checkUsersImage = function() {
+        _.each($rootScope.users, function(user) {
+            var imageUrl = user.profileImage;
+            imageExists(imageUrl, function(exists) {
+               if (exists === false) user.profileImage = "assets/icons/avatar_anonymous.png"
+               console.log('RESULT: url=' + imageUrl + ', exists=' + exists);
+            });
+        })
+    }
+
     $scope.getUsersList = function() {
         org.ekstep.service.content.getAllUserProfile().then(function(usersData) {
             $rootScope.users = usersData;
+            $scope.checkUsersImage();
             $scope.groupLength = (_.where($rootScope.users, {
                 "isGroupUser": true
             })).length;
@@ -89,6 +101,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
             console.error(err);
         });
     }
+
     $scope.sortUserlist = function() {
         $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'handle'), 'userIndex');
     }
@@ -232,8 +245,18 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
             org.ekstep.service.content.getCurrentUser().then(function(data) {
                 if (_.isEmpty(data.handle)) {
                     data.handle = "Anonymous";
-                    data.profileImage = "assets/icons/avatar_anonymous.png";
+                    data.profileImage = "assets/icons/avatar_1anonymous.png";
                 }
+                /* Have an empty check for image validation
+                 * If image is not available at the given path, replace the image with "avatar_anonymous" image
+                 */
+
+                 var imageUrl = data.profileImage;
+                imageExists(imageUrl, function(exists) {
+                    if (exists === false) data.profileImage = "assets/icons/avatar_anonymous.png"
+                    console.log('RESULT: url=' + imageUrl + ', exists=' + exists);
+                });
+
                 $rootScope.currentUser = data;
                 $rootScope.currentUser.selected = true;
                 $scope.getUsersList();

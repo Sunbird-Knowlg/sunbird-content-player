@@ -171,8 +171,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         instance.resizeGame(true);
         Renderer.theme.baseDir = dataObj.path;
         var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);
-        var pluginsPath = isbrowserpreview ? globalConfig.previewPluginspath : globalConfig.devicePluginspath
-        org.ekstep.contentrenderer.initPlugins(dataObj.path, pluginsPath);
+        var pluginsPath = isbrowserpreview ? globalConfig.previewPluginspath : globalConfig.devicePluginspath;
+        EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined, {path: dataObj.path + pluginsPath, position:0});
         var resource = instance.handleRelativePath(instance.getResource(manifest), dataObj.path + '/widgets/');
         var pluginManifest = content["plugin-manifest"];
         (_.isUndefined(pluginManifest) || _.isEmpty(pluginManifest)) && (pluginManifest = { plugin: [] });
