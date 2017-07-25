@@ -1,5 +1,5 @@
 TelemetryService = {
-    _version: "2.0",
+    _version: "2.1",
     _baseDir: 'EkStep Content App',
     isActive: false,
     _config: undefined,
@@ -8,6 +8,8 @@ TelemetryService = {
     _gameErrorFile: undefined,
     _gameData: undefined,
     _correlationData: undefined,
+    _producerData: undefined,
+    _otherData: undefined,
     _data: [],
     _gameIds: [],
     _user: {},
@@ -21,7 +23,7 @@ TelemetryService = {
         mousedown: 'DROP',
         pressup: 'DRAG'
     },
-    init: function(gameData, user, correlationData) {
+    init: function(gameData, user, correlationData, otherData) {
         var localStorageInstance = TelemetryService.getLocalStorageInstance();
         if (!_.isEmpty(localStorageInstance)) {
             TelemetryService.setTelemetryService(localStorageInstance, gameData);
@@ -49,6 +51,9 @@ TelemetryService = {
                 };
                 if(correlationData && !_.isEmpty(correlationData)){
                     TelemetryService._correlationData = correlationData;
+                };
+                if(otherData && !_.isEmpty(otherData)){
+                    TelemetryService._otherData = otherData;
                 };
                 resolve(true);
             } else {
@@ -158,11 +163,11 @@ TelemetryService = {
                 return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver, data), TelemetryService.apis.telemetry);
         }
     },
-    end: function() {
+    end: function(progress) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return this.flushEvent(TelemetryService.instance.end(), TelemetryService.apis.telemetry);
+        return this.flushEvent(TelemetryService.instance.end(progress), TelemetryService.apis.telemetry);
     },
     interact: function(type, id, extype, data) {
         if (!TelemetryService.isActive) {
@@ -170,8 +175,9 @@ TelemetryService = {
         }
         return TelemetryService.flushEvent(TelemetryService.instance.interact(type, id, extype, data), TelemetryService.apis.telemetry);
     },
-    setUser: function(data) {
+    setUser: function(data, stageid) {
         TelemetryService._user = data;
+        data.stageId = stageid;
         TelemetryService.interact("TOUCH", "gc_userswitch", "TOUCH", data);
     },
     assess: function(qid, subj, qlevel, data) {

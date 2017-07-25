@@ -1,14 +1,14 @@
 AppConfig = {
 	version: "BUILD_NUMBER",
-	PROCESSING_TIMEOUT: 10, // in minutes
+	processing_timeout: 10, // in minutes
 	APP_STATUS: "AT",
 	App_RUNTIME: "AT",
 	host: "",
 	recorder: "AUDIO_RECORDER",
 	flavor: "QA",
-	S3_CONTENT_HOST: "/assets/public/content/",
-	PREVIEW_PLUGINSPATH: "/content-plugins",
-	DEVICE_PLUGINSPATH: "/widgets/content-plugins",
+	s3ContentHost: "/assets/public/content/",
+	previewPluginspath: "/content-plugins",
+	devicePluginspath: "/widgets/content-plugins",
 	USER_SWITCHER_ENABLED: true,
 	SHOW_USER: true,
 	OVERLAY_SUBMIT: "off",
@@ -17,6 +17,6 @@ AppConfig = {
 		text: "Powered by EkStep",
 		icon: "img/icons/icn_genie.png",
 		bgImage: "img/icons/background_1.png",
-		download_link: "http://www.ekstep.in"
+		webLink: "http://www.ekstep.in"
 	}
 }

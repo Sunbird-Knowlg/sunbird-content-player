@@ -137,12 +137,10 @@ var ThemePlugin = Plugin.extend({
             this.invokeStage(this._data.startStage);
         }
         this.update();
-        //document.getElementById("progressBar").style.width = 100 + '%';
-        // jQuery("#progressBar").width(100);
-        // jQuery('#loading').3();
-
-        EkstepRendererAPI.dispatchEvent("renderer:splash:hide"); //Hide splash screen.
-        jQuery('#overlay').show();
+        
+        // Content is started renderering, Dispatching event to show overlay and other
+        console.log("ECML RENDERER - Content rendering started");
+        EkstepRendererAPI.dispatchEvent("renderer:content:start");
     },
 
     /**
@@ -547,6 +545,14 @@ var ThemePlugin = Plugin.extend({
             }
         });
         return stageData;
-    }
+    },
+
+    /**
+     * Remove all create js element from canvas
+     * @memberof ThemePlugin
+     */
+     clearStage: function() {
+        this._self.clear();
+     }
 });
 PluginManager.registerPlugin('theme', ThemePlugin);

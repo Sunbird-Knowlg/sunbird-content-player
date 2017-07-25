@@ -6,14 +6,14 @@ genieservice.prototype.handleAction = function(actionName, args) {
     console.info("genieservice Action: " + actionName + " args: ", args);
     return new Promise(function(resolve, reject) {
         exec(function(result) {
-                console.log("genieservice result of " + actionName + ": ", result);
-                resolve(result);
-            },
-            function(error) {
-                console.log("genieservice error of " + actionName + ": ", error);
-                reject(error);
-            },
-            "GenieServicePlugin", actionName, args);
+            console.log("genieservice result of " + actionName + ": ", result);
+            resolve(result);
+        },
+        function(error) {
+            console.log("genieservice error of " + actionName + ": ", error);
+            reject(error);
+        },
+        "GenieServicePlugin", actionName, args);
     });
 }
 
@@ -21,20 +21,33 @@ genieservice.prototype.getCurrentUser = function() {
     return this.handleAction("getCurrentUser", []);
 }
 
-genieservice.prototype.getMetaData = function() {
-    return this.handleAction("getMetaData", []);
+genieservice.prototype.getAllUserProfile = function() {
+    return this.handleAction("getAllUserProfile", []);
+}
+
+genieservice.prototype.setUser = function(userId) {
+    return this.handleAction("setUser", [userId]);
+}
+
+// Won't work now
+// genieservice.prototype.getMetaData = function() {
+//     return this.handleAction("getMetaData", []);
+// }
+
+genieservice.prototype.initializeSdk = function(appQualifier) {
+    return this.handleAction("initializeSdk", [appQualifier]);
 }
 
 genieservice.prototype.getContent = function(id) {
     return this.handleAction("getContent", [id]);
 }
 
-genieservice.prototype.getRelatedContent = function(uid, listOfContentIds) {
-    return this.handleAction("getRelatedContent", [uid, listOfContentIds]);
+genieservice.prototype.getRelatedContent = function(contentList, contentId, uid) {
+    return this.handleAction("getRelatedContent", [contentList, contentId, uid]);
 }
 
-genieservice.prototype.getLearnerAssessment = function(uid, id) {
-    return this.handleAction("getLearnerAssessment", [uid, id]);
+genieservice.prototype.getLearnerAssessment = function(uid, id, contentExtras) {
+    return this.handleAction("getLearnerAssessment", [uid, id, contentExtras]);
 }
 
 genieservice.prototype.getContentList = function(filter) {

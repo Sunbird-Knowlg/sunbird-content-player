@@ -64,11 +64,9 @@ OverlayManager = {
                 val = Renderer.theme._currentScene.getParam(eventName);
             }
             if (_.isUndefined(val)) {
-                var contentConfigVal = this._contentConfig[eventName];
-                val = _.isUndefined(contentConfigVal) ? "on" : contentConfigVal;
+                if (!_.isUndefined(this._contentConfig[eventName])) val = this._contentConfig[eventName];
             }
-
-            this._stageConfig[eventName] = val;
+            if (!_.isUndefined(val)) this._stageConfig[eventName] = val;
         }
 
         this.setStageData();
@@ -87,6 +85,7 @@ OverlayManager = {
         var eventName = this._constants.overlayPrevious;
         var val = this._stageConfig[eventName];
         var navigateToStage = this.getNavigateTo('previous');
+        // ToDo: Have to remove this if condition when ecml nav is supported by plugins;
         if (val == "on") {
             if (_.isUndefined(navigateToStage)) {
                 val = "disable";
@@ -103,8 +102,9 @@ OverlayManager = {
     handleSubmit: function() {
         var eventName = this._constants.overlaySubmit;
         var val = this._stageConfig[eventName];
-        if(_.isUndefined(Renderer.theme.getParam(eventName)) && _.isUndefined(Renderer.theme._currentScene.getParam(eventName))) {
-            val = AppConfig.OVERLAY_SUBMIT;
+        if(!_.isUndefined(Renderer.theme) && _.isUndefined(Renderer.theme.getParam(eventName)) && _.isUndefined(Renderer.theme._currentScene.getParam(eventName))) {
+            var globalConfig = EkstepRendererAPI.getGlobalConfig();
+            val = globalConfig.overlay.showSubmit ? "on" : "off";
         }
         if (!_.isUndefined(Renderer.theme) && !_.isUndefined(Renderer.theme._currentScene) && Renderer.theme._currentScene.isItemScene()) {
             if (val == "on") {
@@ -121,10 +121,10 @@ OverlayManager = {
     showFeeback: function(showOverlayGoodJob) {
         var returnVal = true;
         if (showOverlayGoodJob) {
-            returnVal = this._stageConfig.overlayGoodJob == 'on' ? true : false;
+            returnVal = this._stageConfig.overlayGoodJob == 'off' ? false : true;
             this.showGoodJobFb(returnVal);
         } else {
-            returnVal = this._stageConfig.overlayTryAgain == 'on' ? true : false;
+            returnVal = this._stageConfig.overlayTryAgain == 'off' ? false : true;
             this.showTryAgainFb(returnVal);
         }
 
@@ -161,30 +161,28 @@ OverlayManager = {
             this.defaultSubmit();
             return;
         }
-        this.skipAndNavigateNext();
+        this.skipAndNavigateNext({"target": "next"});
       }catch(e){
         showToaster('error','Current scene having some issue');
         EkstepRendererAPI.logErrorEvent(e, {'severity':'fatal','type':'content','action':'transitionTo'});
         console.warn("Fails to navigate to next due to",e);
       }
     },
-    skipAndNavigateNext: function() {
+    skipAndNavigateNext: function(param) {
       try{
+        var actionType = (param) ? param.target : "skip";
         this.clean();
-        TelemetryService.interact("TOUCH", "next", null, {
-            stageId: Renderer.theme._currentStage
-        });
         var navigateTo = this.getNavigateTo("next");
         if ("undefined" == typeof navigateTo) {
             if (_.isUndefined(Renderer.theme._currentScene)) return;
             var isItemScene = Renderer.theme._currentScene.isItemScene();
             if (isItemScene && !_.isUndefined(Renderer.theme._currentScene._stageController) && Renderer.theme._currentScene._stageController.hasNext()) {
-                this.defaultNavigation("next", navigateTo);
+                this.defaultNavigation(actionType, navigateTo);
             } else {
                 this.moveToEndPage();
             }
         } else {
-            this.defaultNavigation("next", navigateTo);
+            this.defaultNavigation(actionType, navigateTo);
         }
       }catch(e){
         showToaster('error','Current scene having some issue');
@@ -193,17 +191,12 @@ OverlayManager = {
       }
     },
     moveToEndPage: function() {
-        if (config.showEndPage) {
-            console.info("redirecting to endpage.");
-            // while redirecting to end page
-            // set the last stage data to _contentParams[themeObj]
-            var stage = Renderer.theme._currentScene;
-            Renderer.theme.setParam(stage.getStagestateKey(), stage._currentState);
-            window.location.hash = "/content/end/" + GlobalContext.currentContentId;
-            AudioManager.stopAll();
-        } else {
-            console.warn("Cannot move to end page of the content. please check the configurations..");
-        }
+        EkstepRendererAPI.dispatchEvent('renderer:content:end');
+        console.info("redirecting to endpage.");
+        var stage = Renderer.theme._currentScene;
+        Renderer.theme.setParam(stage.getStagestateKey(), stage._currentState);
+        Renderer.theme._currentStage = undefined;
+        AudioManager.stopAll();
     },
     clean: function() {
         EventBus.removeEventListener("actionNavigateSkip", this.skipAndNavigateNext, this);
@@ -300,6 +293,9 @@ OverlayManager = {
         CommandManager.handle(action);
     },
     defaultNavigation: function(navType, navigateTo) {
+        TelemetryService.interact("TOUCH", navType, null, {
+            stageId: Renderer.theme._currentStage
+        });
         var action = {
             "asset": Renderer.theme._id,
             "command": "transitionTo",
@@ -310,7 +306,7 @@ OverlayManager = {
             "pluginId": Renderer.theme._id,
             "value": navigateTo
         };
-        // (action.effect) =  (action.effect) || "fadeIn",
+        navType = (navType === "skip") ? "next" : navType;
         action.transitionType = navType;
         CommandManager.handle(action);
     },
@@ -344,9 +340,9 @@ OverlayManager = {
         if (GlobalContext.currentContentId && version) {
             startTelemetry(GlobalContext.currentContentId, version);
         }
-        if (data.target && data.target.menuReplay || _.isUndefined(data.target)) {
-            EkstepRendererAPI.removeHtmlElements();
-            Renderer.theme.reRender();
-        }
+        EkstepRendererAPI.removeHtmlElements();
+        Renderer.theme.reRender();
+        // if (data.target && data.target.menuReplay || _.isUndefined(data.target)) {
+        // }
     }
 }

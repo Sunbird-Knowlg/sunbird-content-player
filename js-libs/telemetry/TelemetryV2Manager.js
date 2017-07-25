@@ -10,7 +10,7 @@ TelemetryV2Manager = Class.extend({
         TelemetryServiceV2.exitApp();
     },
     createEvent: function(eventName, body) {
-        return new TelemetryEvent(eventName, TelemetryService._version, body, TelemetryService._user, TelemetryService._gameData, TelemetryService._correlationData);
+        return new TelemetryEvent(eventName, TelemetryService._version, body, TelemetryService._user, TelemetryService._gameData, TelemetryService._correlationData, TelemetryService._otherData);
     },
     start: function(id, ver, data) {
         TelemetryService._gameData = {id: id , ver : ver};
@@ -18,10 +18,14 @@ TelemetryV2Manager = Class.extend({
         this._start.push({id: id , ver : ver});
         return this.createEvent("OE_START", data);
     },
-    end: function(gameId) {
+    end: function(progress) {
         if (!_.isEmpty(this._start)) {
             this._start.pop();
-            return this._end.pop().end();
+            if(progress == undefined) {
+                // Bu default we are sending as 50. If any external guys called telemetryService.end() directly
+                progress = 50;
+            }
+            return this._end.pop().end(progress);
         } else {
             console.warn("Telemetry service end is already logged Please log start telemetry again");
         }
@@ -86,7 +90,6 @@ TelemetryV2Manager = Class.extend({
             eventObj.event.edata.eks.qdesc = data.qdesc.substr(0,140);
             eventObj.event.edata.eks.mmc = data.mmc;
             eventObj.event.edata.eks.mc = data.mc;
-
             if (_.isArray(eventObj.event.edata.eks.resvalues)) {
                 eventObj.event.edata.eks.resvalues = _.map(eventObj.event.edata.eks.resvalues, function(val) {
                     val = _.isObject(val) ? val :{"0" : val};

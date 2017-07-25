@@ -1,0 +1,21 @@
+{
+    "id": "org.ekstep.ecmlrenderer",
+    "ver": "1.0",
+    "shortId": "org.eskstep.ecmlrenderer",
+    "author": "Kartheek Palla",
+    "description": "",
+    "publishedDate": "",
+    "renderer": {
+        "main": "renderer/plugin.js",
+        "dependencies": [
+            {"type": "js", "src": "renderer/libs/createjs.min.js"},
+            {"type": "js", "src": "renderer/libs/creatine-1.0.0.min.js"},
+            {"type": "js", "src": "renderer/libs/cordovaaudioplugin-0.6.1.min.js"},
+            {"type": "js", "src": "renderer/libs/renderer.min.js"}
+        ]
+    },
+    "dependencies": [
+        
+    ]  
+
+}

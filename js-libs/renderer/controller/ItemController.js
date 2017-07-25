@@ -85,14 +85,14 @@ var ItemController = Controller.extend({
                 pass = result.pass;
                 item.score = result.score;
             }
-            if (!_.isUndefined(item.concepts)) var concepts = JSON.parse(item.concepts);
+            if (!_.isUndefined(item.concepts)) var concepts = (!_.isArray(item.concepts) || !_.isObject(item.concepts)) ? JSON.parse(item.concepts) : item.concepts;
             var data = {
                 pass: result.pass,
                 score: item.score,
                 res: result.res,
                 mmc: instance.getMMC(item, result),
                 qindex: item.qindex,
-                mc: _.pluck(concepts, 'identifier'),
+                mc: _.without(_.pluck(concepts, 'identifier'), undefined),
                 qtitle: item.title,
                 qdesc: item.description ? item.description : ""
             };

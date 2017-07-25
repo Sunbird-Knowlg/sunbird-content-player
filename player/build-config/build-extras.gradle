@@ -24,7 +24,7 @@ android {
     }
 
     defaultConfig {
-        versionName System.getenv("BUILD_NUMBER") ? "2.1." + System.getenv("BUILD_NUMBER"): "local"
+        versionName System.getenv("BUILD_NUMBER") ? "2.3." + System.getenv("BUILD_NUMBER"): "local"
         setProperty("archivesBaseName", "geniecanvas-$versionName")
     }
 
@@ -44,12 +44,14 @@ android {
 dependencies {
     compile "org.apache.commons:commons-compress:1.10"
     compile "commons-io:commons-io:2.4"
-    compile "org.ekstep.genieservices:sdks:1.5.+@aar"
-    compile "org.ekstep.genieservices:aidls:1.5.+@aar"
+
+    // For undubled Genie Initegration
+    compile "org.ekstep.genieservices:genie-integration:0.1.305@aar"
+    compile "org.ekstep.genieservices:commons:0.1.305@jar"
 }
 
 task updateBuildNumber() {
-    def appFile =  System.getProperty("user.dir") + '/platforms/android/assets/www/js/app/AppConfig.js'
+    def appFile =  System.getProperty("user.dir") + '/platforms/android/assets/www/js/appConfig.js'
     File file = file(appFile)
     if (file.isFile()) {
         ant.loadfile(srcFile: file, property: file.name)
@@ -57,6 +59,6 @@ task updateBuildNumber() {
         new File(appFile).write(updatedContent, 'UTF-8')
         println "*** Build Number '" + android.defaultConfig.versionName + "' updated in AppConfig.js ***"
     } else {
-        println "*** platforms/android/assets/www/js/app/AppConfig.js file not found ***"
+        println "*** platforms/android/assets/www/js/appConfig.js file not found ***"
     }
 }

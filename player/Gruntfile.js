@@ -4,277 +4,264 @@ module.exports = function(grunt) {
         buildNumber: process.env.BUILD_NUMBER,
         mkdir: {
             all: {
-              options: {
+                options: {
                     create: ['www']
                 },
             },
         },
         watch: {
-          //run unit tests with karma (server needs to be already running)
-          karma: {
-            tasks: ['karma:unit:run'] //NOTE the :run flag
-          }
+            //run unit tests with karma (server needs to be already running)
+            /*karma: {
+                tasks: ['karma:unit:run'] //NOTE the :run flag
+            },*/
+            src: {
+                files: '../js-libs/**/*.js',
+                tasks: ['uglify:renderermin']
+            },
         },
         karma: {
-            unit: {
-                configFile: 'test/karma.conf.js',
-                autoWatch: false,       //vinu : autoWatch: true
-                singleRun: true         //vinu : singleRun: false
-              }
+            plugin: {
+                configFile: '../js-libs/renderer/plugin/test/karma.plugin.config.js',
+            },
+            app: {
+                configFile: 'public/test/karma.app.config.js',
+            }
         },
-        jsdoc : {
-            dist : {
-                src: ['public/*.js'],
-                options: {
-                    destination: 'doc'
-                }
+        concat: {
+            css: {
+                src: [
+                    'public/styles/ionic.css',
+                    'public/lstyles/bookshelf_slider.css',
+                    'public/styles/skin02.css',
+                    'public/styles/toastr.min.css',
+                    'public/styles/jquery.mCustomScrollbar.min.css'
+                ],
+                dest: 'www/styles/renderer.external.min.css'
+            },
+            externaljs: {
+                src: [
+                    'public/libs/jquery.min.js',
+                    'public/libs/jquery.easing.1.3.js',
+                    'public/libs/jquery.bookshelfslider.min.js',
+                    'public/libs/async.min.js',
+                    'public/libs/toastr.min.js',
+                    'public/libs/md5.js',
+                    'public/libs/jquery.mCustomScrollbar.concat.min.js',
+                    'public/libs/underscore.js',
+                    'public/libs/date-format.js',
+                    'public/libs/ionic.bundle.min.js',
+                    'public/libs/angular-resource.min.js',
+                    'public/libs/ng-cordova.min.js',
+                    'public/libs/ocLazyLoad.js',
+                    'public/libs/plugin-framework.min.js'
+                ],
+                dest: 'www/scripts/renderer.external.min.js'
+            },
+            script: {
+                src: [
+                    'public/js/appConfig.js',
+                    'public/js/globalContext.js',
+                    'public/js/appMessages.js',
+                    'public/js/splashScreen.js',
+                    'public/js/main.js',
+                    'public/js/app.js',
+                    'public/js/basePlugin.js',
+                    'public/services/mainservice.js',
+                    'public/services/webservice.js',
+                    'public/services/interfaceService.js',
+                    'public/js/ekstepRendererApi.js',
+                    'public/js/content-renderer.js',
+                    'public/js/baseLauncher.js',
+                    'public/js/baseEndpage.js',
+                    'public/services/controllerservice.js',
+                    'public/js/detectClient.js'
+                ],
+                dest: 'www/scripts/renderer.script.min.js'
+            },
+            telemetry: {
+                src: [
+                    'public/libs/class.js',
+                    'public/libs/date-format.js',
+                    '../js-libs/telemetry/*.js'
+                ],
+                dest: 'www/scripts/renderer.telemetry.min.js'
+            },
+            genieservicebridge: {
+                src: [
+                    'www/preview/scripts/telemetry.min.js',
+                    'public/services/htmlservice.js',
+                    'public/js/genieservice-bridge.js'
+                ],
+                dest: 'www/scripts/genieservice-bridge.min.js'
             }
         },
         uglify: {
-            js: {
-                options: {
-                    beautify: true,
-                    mangle: false
-                },
-                files: {
-                    'public/js/script.min.js': [
-                        'public/js/app/GlobalContext.js',
-                        'public/js/app/AppMessages.js',
-                        'public/js/app/splashScreen.js',
-                        'public/js/app/main.js',
-                        'public/js/app/app.js',
-                        'public/js/app/detectClient.js',
-                        'public/js/app/overlay.js',
-                    ],
-                    'public/js/renderer.min.js': [
-                        'public/js/app/speech.js',
-                        'public/js/app/services.js',
-                        'public/js/thirdparty/exclude/xml2json.js',
-                        'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
-                        'public/js/thirdparty/exclude/cordovaaudioplugin-0.6.1.min.js',
-                        'public/js/thirdparty/exclude/creatine-1.0.0.min.js',
-                        'public/js/thirdparty/exclude/eventbus.min.js',
-                        'public/js/thirdparty/exclude/Class.js',
-                        'public/js/thirdparty/exclude/underscore.js',
-                        'public/js/thirdparty/exclude/md5.js',
-                        'public/js/app/genieservices.js',
-                        'public/js/app/EkstepRendererApi.js',
-                        'public/js/app/renderer.js'
-                    ],
-                    'public/js/genieservice-bridge.min.js' : [
-                        'public/js/app/genieservices.js',
-                        'public/js/thirdparty/exclude/date-format.js',
-                        'public/js/thirdparty/exclude/Class.js',
-                        'public/js/app/telemetry.js',
-                        'public/js/app/genieservice-bridge.js'
-                    ],
-                    'public/js/telemetry.min.js' : [
-                        'public/js/thirdparty/exclude/date-format.js',
-                        'public/js/thirdparty/exclude/Class.js',
-                        'public/js/app/telemetry.js'
-                    ]
-                }
-            },
             speech: {
                 options: {
                     beautify: true,
                     mangle: false
                 },
-                files:{
+                files: {
                     'public/js/app/speech.js': ['../js-libs/speech/speech.js', '../js-libs/speech/android-recorder.js']
                 }
             },
-            pluginLib: {
+            renderermin: {
                 options: {
                     beautify: true,
                     mangle: false
                 },
                 files: {
-                    'public/js/app/plugin-lib.js': [
-                        'public/js/thirdparty/exclude/createjs-2015.11.26.min.js',
-                        'public/js/thirdparty/exclude/Class.js',
-                        'public/js/thirdparty/exclude/eventbus.min.js',
-                        'public/js/thirdparty/exclude/md5.js',
-                        'public/js/thirdparty/plugin-framework.min.js',
-                        '../js-libs/renderer/plugin/Plugin.js',
-                        '../js-libs/renderer/plugin/HTMLPlugin.js',
+                    'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js': [
+                        'public/libs/xml2json.min.js',
                         '../js-libs/renderer/manager/PluginManager.js',
-                        '../js-libs/renderer/manager/AnimationManager.js',
-                        '../js-libs/renderer/plugin/LayoutPlugin.js',
-                        '../js-libs/renderer/plugin/ShapePlugin.js',
-                        '../js-libs/renderer/plugin/*Plugin.js'
-                    ]
-                }
-            },
-            renderer: {
-                options: {
-                    beautify: true,
-                    mangle: false
-                },
-                files: {
-                    'public/js/app/renderer.js': [
-                        'public/js/thirdparty/plugin-framework.min.js',
-                        '../js-libs/renderer/plugin/Plugin.js',
-                        '../js-libs/renderer/plugin/HTMLPlugin.js',
-                        '../js-libs/renderer/manager/*.js',
-                        '../js-libs/renderer/command/Command.js',
-                        '../js-libs/renderer/command/*.js',
-                        '../js-libs/renderer/controller/*Controller.js',
-                        '../js-libs/renderer/generator/*.js',
-                        '../js-libs/renderer/evaluator/*.js',
-                        '../js-libs/renderer/plugin/LayoutPlugin.js',
-                        '../js-libs/renderer/plugin/ShapePlugin.js',
-                        '../js-libs/renderer/plugin/*Plugin.js',
-                        '../js-libs/renderer/renderer/*.js',
-                        'public/js/app/EkstepRendererApi.js'
-                    ]
-                }
-            },
-            testRenderer: {
-                options: {
-                    beautify: true,
-                    mangle: false
-                },
-                files: {
-                    'public/js/app/testRenderer.js': [
-                        'public/js/thirdparty/plugin-framework.min.js',
-                        '../js-libs/renderer/command/Command.js',
-                        '../js-libs/renderer/command/*.js',
+                        '../js-libs/renderer/manager/ControllerManager.js',
+                        '../js-libs/renderer/manager/AudioManager.js',
                         '../js-libs/renderer/controller/Controller.js',
-                        '../js-libs/renderer/controller/*Controller.js',
-                        '../js-libs/renderer/manager/*.js',
-
-                        '../js-libs/renderer/evaluator/*.js',
-                        '../js-libs/renderer/plugin/Plugin.js',
-                        '../js-libs/renderer/plugin/*Plugin.js',
-                        '../js-libs/renderer/renderer/CanvasRenderer.js',
-
-                        //Excluded files for test coverage
-                        '!../js-libs/renderer/manager/RecordManager.js',
-                        '!../js-libs/renderer/plugin/VideoPlugin.js',
-                        '!../js-libs/renderer/plugin/HighlightTextPlugin.js',
-                        '!../js-libs/renderer/plugin/TestcasePlugin.js',
-                        '!../js-libs/renderer/plugin/SummaryPlugin.js'
-
-                    ]
-                }
-            },
-            telemetry: {
-                options: {
-                    beautify:true,
-                    mangle: false
-                },
-                files: {
-                    'public/js/app/telemetry.js': [
-                        '../js-libs/telemetry/*.js',
+                        '../js-libs/renderer/controller/DataController.js',
+                        '../js-libs/renderer/controller/ItemController.js',
+                        '../js-libs/renderer/evaluator/ChoiceEvaluator.js',
+                        '../js-libs/renderer/evaluator/FTBEvaluator.js',
+                        '../js-libs/renderer/evaluator/MTFEvaluator.js',
+                        '../js-libs/renderer/manager/AnimationManager.js',
+                        '../js-libs/renderer/manager/AssetManager.js',
+                        '../js-libs/renderer/manager/CommandManager.js',
+                        '../js-libs/renderer/manager/EventManager.js',
+                        '../js-libs/renderer/manager/OverlayManager.js',
+                        '../js-libs/renderer/manager/LoadByStageStrategy.js',
+                        '../js-libs/renderer/manager/RecorderManager.js',
+                        '../js-libs/renderer/manager/TimerManager.js',
+                        '../js-libs/renderer/generator/DataGenerator.js',
+                        '../js-libs/renderer/generator/ItemDataGenerator.js',
+                        '../js-libs/renderer/command/Command.js',
+                        '../js-libs/renderer/command/*.js',
+                        '../js-libs/renderer/plugin/HTMLPlugin.js',
+                        '../js-libs/renderer/plugin/AnimationPlugin.js',
+                        '../js-libs/renderer/plugin/LayoutPlugin.js',
+                        '../js-libs/renderer/plugin/ShapePlugin.js',
+                        '../js-libs/renderer/plugin/AudioPlugin.js',
+                        '../js-libs/renderer/plugin/ContainerPlugin.js',
+                        '../js-libs/renderer/plugin/RepoPlugin.js',
+                        '../js-libs/renderer/plugin/DivPlugin.js',
+                        '../js-libs/renderer/plugin/EmbedPlugin.js',
+                        '../js-libs/renderer/plugin/HotspotPlugin.js',
+                        '../js-libs/renderer/plugin/ImagePlugin.js',
+                        '../js-libs/renderer/plugin/InputPlugin.js',
+                        '../js-libs/renderer/plugin/MCQPlugin.js',
+                        '../js-libs/renderer/plugin/MTFPlugin.js',
+                        '../js-libs/renderer/plugin/OptionPlugin.js',
+                        '../js-libs/renderer/plugin/OptionsPlugin.js',
+                        '../js-libs/renderer/plugin/PlaceHolderPlugin.js',
+                        '../js-libs/renderer/plugin/SetPlugin.js',
+                        '../js-libs/renderer/plugin/SpritePlugin.js',
+                        '../js-libs/renderer/plugin/StagePlugin.js',
+                        '../js-libs/renderer/plugin/SummaryPlugin.js',
+                        '../js-libs/renderer/plugin/TestcasePlugin.js',
+                        '../js-libs/renderer/plugin/TextPlugin.js',
+                        '../js-libs/renderer/plugin/ThemePlugin.js',
+                        '../js-libs/renderer/plugin/TweenPlugin.js',
+                        '../js-libs/renderer/plugin/ScribblePlugin.js',
+                        '../js-libs/renderer/plugin/VideoPlugin.js',
+                        '../js-libs/renderer/plugin/GridlayoutPlugin.js',
+                        '../js-libs/renderer/plugin/HighlightTextPlugin.js',
+                        '../js-libs/speech/android-recorder.js',
+                        '../js-libs/speech/speech.js'
                     ]
                 }
             }
         },
         copy: {
             main: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'public/',
-                        src: ['**', '!**/controller/**', '!**/evaluator/**', '!**/manager/**', '!**/plugin/**', '!**/renderer/**', '!**/generator/**', '!**/telemetry/**', '!**/test/**', '!**/tests/**', '!**/jasmine-2.3.4/**', '!**/exclude/**'],
-                        dest: 'www/'
-                    },
-                    {
-                        src: ['public/js/app/AppConfig.js'], dest: 'www/js/AppConfig.js'
-                    }
-                ]
+                files: [{
+                    expand: true,
+                    cwd: 'public/',
+                    src: ['assets/**', '!js/tests/**', 'js/*', 'coreplugins/**', 'json/*', 'libs/*', 'styles/**', 'templates/*', 'index.html', 'index_min.html'],
+                    dest: 'www/'
+                }, {
+                    src: ['public/js/AppConfig.js'],
+                    dest: 'www/js/AppConfig.js'
+                }, {
+                    src: ['../js-libs/renderer/manager/AudioManager.js', ],
+                    dest: 'www/scripts/AudioManager.js'
+                }]
             },
             previewFiles: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'public/',
-                        src: ['img/**', 'fonts/**', 'templates/**', 'libs/**', 'json/**', 'css/**', 'assets/**', 'js/**', 'webview.html', 'preview.html'],
-                        dest: 'www/v3/preview/'
-                    },
-                    {
-                        src: ['public/js/app/AppConfig.js'], dest: 'www/v3/preview/js/AppConfig.js'
-                    }
-                ]
-            },
-            localPreviewFiles: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'public/',
-                        src: ['img/**', 'css/**', 'libs/**', 'templates/**', 'js/**'],
-                        dest: 'public/local-preview/'
-                    }
-                ]
-            },
-            localPreviewMinjs: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'public/js/',
-                        src: ['renderer.min.js','telemetry.min.js', 'script.min.js'],
-                        dest: 'public/local-preview/'
-                    }
-                ]
+                files: [{
+                    expand: true,
+                    cwd: 'public/',
+                    src: ['img/**', 'fonts/**', 'templates/**', 'libs/**', 'json/**', 'css/**', 'assets/**', 'js/**', 'webview.html', 'preview.html'],
+                    dest: 'www/preview/'
+                }, {
+                    src: ['public/js/app/AppConfig.js'],
+                    dest: 'www/preview/js/AppConfig.js'
+                }]
             },
             unsigned: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'build-config/',
-                        src: 'build-extras.gradle',
-                        dest: 'platforms/android/'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'build-config/',
-                        src: 'gradle.properties',
-                        dest: 'platforms/android/'
-                    }
-                ]
+                files: [{
+                    expand: true,
+                    cwd: 'build-config/',
+                    src: 'build-extras.gradle',
+                    dest: 'platforms/android/'
+                }, {
+                    expand: true,
+                    cwd: 'build-config/',
+                    src: 'gradle.properties',
+                    dest: 'platforms/android/'
+                }]
             },
             signed: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'build-config/signedRelease',
-                        src: 'build-extras.gradle',
-                        dest: 'platforms/android/'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'build-config/signedRelease',
-                        src: 'gradle.properties',
-                        dest: 'platforms/android/'
-                    },
-                    {
-                        expand: true,
-                        cwd: 'build-config/signedRelease',
-                        src: 'ekstep.keystore',
-                        dest: 'platforms/android/'
-                    }
-                ]
+                files: [{
+                    expand: true,
+                    cwd: 'build-config/signedRelease',
+                    src: 'build-extras.gradle',
+                    dest: 'platforms/android/'
+                }, {
+                    expand: true,
+                    cwd: 'build-config/signedRelease',
+                    src: 'gradle.properties',
+                    dest: 'platforms/android/'
+                }, {
+                    expand: true,
+                    cwd: 'build-config/signedRelease',
+                    src: 'ekstep.keystore',
+                    dest: 'platforms/android/'
+                }]
             },
             androidLib: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'build-config',
-                        src: 'AndroidManifest.xml',
-                        dest: 'platforms/android/'
-                    }
-                ]
+                files: [{
+                    expand: true,
+                    cwd: 'build-config',
+                    src: 'AndroidManifest.xml',
+                    dest: 'platforms/android/'
+                }]
             },
             customActivity: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'build-config',
-                        src: 'MainActivity.java',
-                        dest: 'platforms/android/src/org/ekstep/geniecanvas'
-                    }
-                ]
+                files: [{
+                    expand: true,
+                    cwd: 'build-config',
+                    src: 'MainActivity.java',
+                    dest: 'platforms/android/src/org/ekstep/geniecanvas'
+                }]
+            },
+            testinit: {
+                files: [{
+                    expand: true,
+                    cwd: 'www/scripts',
+                    src: ['renderer.external.min.js', 'renderer.script.min.js', 'renderer.telemetry.min.js'],
+                    dest: 'dist'
+                }, {
+                    expand: true,
+                    cwd: 'www/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs',
+                    src: ['renderer.min.js'],
+                    dest: 'dist'
+                }]
+            },
+            toPreview:{
+                files: [{
+                    expand: true,
+                    cwd: 'www',
+                    src: ['**', '!preview/**'],
+                    dest: 'www/preview'
+                }]
             }
         },
         clean: {
@@ -282,12 +269,20 @@ module.exports = function(grunt) {
             after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html", "www/webview.html", "www/preview.html"],
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
             minjs: ['public/js/*.min.js'],
-            localPreview: ["public/local-preview"]
+            minhtml: ['www/index_min.html'],
+            preview: {
+                src : ['www/**/*', '!www/preview/**']
+            },
+            deletefiles: ['www/styles/ionic.css', 'www/styles/bookshelf_slider.css', 'www/styles/skin02.css', 'www/styles/toastr.min.css', 'www/styles/jquery.mCustomScrollbar.min.css', 'www/libs', 'www/js','www/coreplugins/org.ekstep.collection-1.0'],
         },
         rename: {
             main: {
                 src: 'www/index_min.html',
                 dest: 'www/index.html'
+            },
+            preview: {
+                src: 'www/index.html',
+                dest: 'www/preview.html'
             }
         },
         aws_s3: {
@@ -299,84 +294,17 @@ module.exports = function(grunt) {
                 accessKeyId: '', // Use the variables
                 secretAccessKey: '', // You can also use env variables
             },
-            uploadJS: {
-                options: {
-                    bucket: 'ekstep-public',
-                    mime: {
-                        'public/js/renderer.min.js': 'application/javascript',
-                        'public/js/telemetry.min.js': 'application/javascript'
-                    }
-                },
-                files: [{
-                    expand: true,
-                    cwd: 'public/js/',
-                    src: ['*.min.js'],
-                    dest: 'js/'
-                }]
-            },
-            uploadPreviewFilesToDev : {
+            uploadPreviewFilesToDev: {
                 options: {
                     bucket: 'ekstep-public-dev',
-                    uploadConcurrency : 4,
+                    uploadConcurrency: 4,
                     progress: 'progressBar'
                 },
                 files: [{
                     expand: true,
-                    cwd: 'www/v3/preview',
+                    cwd: 'www/preview',
                     src: ['**'],
-                    dest: '/v3/preview/'
-                }]
-            },
-            uploadPreviewFilesToQA : {
-                options: {
-                    bucket: 'ekstep-public-qa',
-                    access: 'public-read',
-                    uploadConcurrency : 4,
-                    progress: 'progressBar'
-                },
-                files: [{
-                    expand: true,
-                    cwd: 'www/v3/preview',
-                    src: ['**'],
-                    dest: '/v3/preview/'
-                }]
-            },
-            uploadPreviewFilesToProduction : {
-                options: {
-                    bucket: 'ekstep-public-production',
-                    access: 'public-read',
-                    uploadConcurrency : 4,
-                    progress: 'progressBar'
-                },
-                files: [{
-                    expand: true,
-                    cwd: 'www/v3/preview',
-                    src: ['**'],
-                    dest: '/v3/preview/'
-                }]
-            },
-            cleanJS: {
-                options: {
-                    bucket: 'ekstep-public-dev/preview'
-                },
-                files: [{
-                    dest: 'js/renderer.min.js',
-                    exclude: "**/.*",
-                    action: 'delete'
-                },
-                {
-                    dest: 'js/telemetry.min.js',
-                    exclude: "**/.*",
-                    action: 'delete'
-                }]
-            },
-            cleanQAPreview: {
-                options: {
-                    bucket: 'ekstep-public-qa'
-                },
-                files: [{
-                    dest: 'v3/preview/',
-                    action: 'delete'
+                    dest: '/preview/'
                 }]
             },
             cleanDevPreview: {
@@ -384,27 +312,17 @@ module.exports = function(grunt) {
                     bucket: 'ekstep-public-dev'
                 },
                 files: [{
-                    dest: 'v3/preview/',
+                    dest: 'preview/',
                     action: 'delete'
                 }]
             },
-            cleanProductionPreview: {
-                options: {
-                    bucket: 'ekstep-public-production'
-                },
-                files: [{
-                    dest: 'v3/preview/',
-                    action: 'delete'
-                }]
-            },
-
             PluginframeworkFromDev: {
                 options: {
                     bucket: 'ekstep-public-dev',
                 },
                 files: [{
                     dest: 'content-editor/scripts/plugin-framework.min.js',
-                    cwd: 'public/js/thirdparty/',
+                    cwd: 'public/libs/',
                     action: 'download'
                 }]
             }
@@ -412,7 +330,7 @@ module.exports = function(grunt) {
         cordovacli: {
             options: {
                 path: 'www',
-                cli: 'cordova'  // cca or cordova
+                cli: 'cordova' // cca or cordova
             },
             add_platforms: {
                 options: {
@@ -465,7 +383,7 @@ module.exports = function(grunt) {
                     plugins: [
                         'https://github.com/etabard/cordova-fabric-crashlytics-plugin'
                     ],
-                    args:['--variable','CRASHLYTICS_API_SECRET=a98a1c7293881445c6e471588c3adaaef3814c89bdf26b4c1393196162ba9e1c','--variable','CRASHLYTICS_API_KEY=4a735dc3520070ad4ea3339e4d8d2bb00efe8eaa']
+                    args: ['--variable', 'CRASHLYTICS_API_SECRET=a98a1c7293881445c6e471588c3adaaef3814c89bdf26b4c1393196162ba9e1c', '--variable', 'CRASHLYTICS_API_KEY=4a735dc3520070ad4ea3339e4d8d2bb00efe8eaa']
                 }
             },
             add_xwalk: {
@@ -475,7 +393,7 @@ module.exports = function(grunt) {
                     plugins: [
                         'cordova-plugin-crosswalk-webview@2.3.0'
                     ],
-                    args:['--variable','XWALK_MODE=embedded']
+                    args: ['--variable', 'XWALK_MODE=embedded']
                 }
             },
             add_xwalk_shared: {
@@ -485,9 +403,7 @@ module.exports = function(grunt) {
                     plugins: [
                         'cordova-plugin-crosswalk-webview@2.3.0'
                     ],
-                    args:['--variable','XWALK_MODE=shared']
-
-
+                    args: ['--variable', 'XWALK_MODE=shared']
                 }
             },
             rm_xwalk: {
@@ -541,27 +457,14 @@ module.exports = function(grunt) {
             build_android: {
                 options: {
                     command: 'build',
-					force: true,
-                    platforms: ['android']
-                }
-            },
-            build_android_release: {
-                options: {
-                    command: 'build',
-                    platforms: ['android'],
-                    args: ['--release']
-                }
-            },
-            run_android: {
-                options: {
-                    command: 'run',
+                    force: true,
                     platforms: ['android']
                 }
             }
         },
         replace: {
             sensibol: {
-                src: ['www/js/AppConfig.js', 'www/js/renderer.min.js'],
+                src: ['www/js/appConfig.js', 'www/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js'],
                 overwrite: true,
                 replacements: [{
                     from: /AUDIO_RECORDER/g,
@@ -569,7 +472,7 @@ module.exports = function(grunt) {
                 }]
             },
             android: {
-                src: ['www/js/AppConfig.js', 'www/js/renderer.min.js'],
+                src: ['www/js/appConfig.js', 'www/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js'],
                 overwrite: true,
                 replacements: [{
                     from: /AUDIO_RECORDER/g,
@@ -577,50 +480,23 @@ module.exports = function(grunt) {
                 }]
             },
             build_version: {
-                src: ['www/v3/js/AppConfig.js', 'www/v3/preview.html', 'www/v3/preview/preview.html'],
+                src: ['www/preview/scripts/renderer.script.min.js', 'www/preview.html', 'www/preview/preview.html'],
                 overwrite: true,
                 replacements: [{
                     from: /BUILD_NUMBER/g,
                     to: '<%= buildNumber %>'
                 }]
             },
-            preview_dev: {
-                src: ['www/v3/preview/js/AppConfig.js', 'www/v3/preview/webview.html', 'www/v3/preview/preview.html'],
-                overwrite: true,
-                replacements: [{
-                    from: /DEPLOYMENT/g,
-                    to: "dev"
-                },{
-                    from: /DEPLOYMENT/g,
-                    to: "dev"
-                }]
-            },
-            preview_production: {
-                src: ['www/v3/preview/js/AppConfig.js', 'www/v3/preview/webview.html'],
-                overwrite: true,
-                replacements: [{
-                    from: /DEPLOYMENT/g,
-                    to: "production"
-                }]
-            },
-            preview_QA: {
-                src: ['www/v3/preview/js/AppConfig.js', 'www/v3/preview/webview.html'],
-                overwrite: true,
-                replacements: [{
-                    from: /DEPLOYMENT/g,
-                    to: "qa"
-                }]
-            },
             androidLib: {
-               src: ['platforms/android/build.gradle'],
-               overwrite: true,
-               replacements: [{
-                   from: "apply plugin: 'com.android.application'",
-                   to: "apply plugin: 'com.android.library'"
-               }, {
+                src: ['platforms/android/build.gradle'],
+                overwrite: true,
+                replacements: [{
+                    from: "apply plugin: 'com.android.application'",
+                    to: "apply plugin: 'com.android.library'"
+                }, {
                     from: 'applicationId privateHelpers.extractStringFromManifest("package")',
                     to: ' '
-               }]
+                }]
             },
             xwalk_library: {
                 src: ['platforms/android/cordova-plugin-crosswalk-webview/geniecanvas-xwalk.gradle'],
@@ -629,11 +505,22 @@ module.exports = function(grunt) {
                     from: "applicationVariants",
                     to: "libraryVariants"
                 }]
+            },
+            build_Number:{
+                src: ['www/index.html'],
+                overwrite: true,
+                replacements: [{
+                    from: ".js",
+                    to: ".js?ver=BUILD_NUMBER"
+                },{
+                    from: ".css",
+                    to: ".css?ver=BUILD_NUMBER"
+                }]
             }
         },
-        jsdoc : {
-            dist : {
-                src: ['../js-libs/renderer/**/*.js', 'public/js/app/EkstepRendererApi.js', '../README.md'],
+        jsdoc: {
+            dist: {
+                src: ['../js-libs/renderer/**/*.js', 'public/js/*.js','public/js/coreplugins/**/*.js', '../README.md'],
                 options: {
                     destination: 'docs'
                 }
@@ -648,8 +535,36 @@ module.exports = function(grunt) {
                 files: [{
                     src: ['docs/**']
                 }]
+            },
+            preview:{
+                options: {
+                    archive: 'preview.zip'
+                },
+                files: [{
+                    expand:true,
+                    cwd: 'www/preview',
+                    src: ['**']
+                }]
             }
         },
+        injector: {
+            prview: {
+                options: {
+                    ignorePath: 'www/',
+                    addRootSlash: false
+                },
+                files: {
+                    'www/index.html': [
+                        'www/scripts/renderer.external.min.js',
+                        'www/scripts/renderer.script.min.js',
+                        'www/scripts/renderer.telemetry.min.js',
+                        'www/scripts/AudioManager.js',
+                        'www/coreplugins/LauncherPlugin.js',
+                        'www/styles/*.css'
+                    ],
+                }
+            }
+        }
     });
 
     grunt.loadNpmTasks('grunt-cordovacli');
@@ -664,6 +579,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-jsdoc');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-injector');
 
     var recorder = grunt.option('recorder') || "android";
     recorder = recorder.toLowerCase().trim();
@@ -675,11 +592,11 @@ module.exports = function(grunt) {
             grunt.task.run(['cordovacli:rm_platforms', 'cordovacli:add_platforms']);
         } else {
         }*/
-            grunt.task.run(['cordovacli:rm_platforms', 'cordovacli:add_platforms']);
+        grunt.task.run(['cordovacli:rm_platforms', 'cordovacli:add_platforms']);
     });
 
     grunt.registerTask('deploy-preview', function(flavor) {
-        if(!flavor){
+        if (!flavor) {
             grunt.fail.fatal("deployment argument value should be any one of: ['dev', 'production', 'qa'].");
             return;
         }
@@ -688,10 +605,6 @@ module.exports = function(grunt) {
         var tasks = [];
         if ("dev" == flavor) {
             tasks.push('deploy-preview-dev');
-        } else if("production" == flavor) {
-            tasks.push('preview-production');
-        } else if("qa" == flavor) {
-            tasks.push('preview-qa');
         }
 
         if (tasks.length > 0) {
@@ -702,15 +615,10 @@ module.exports = function(grunt) {
     // grunt to download the pluginFramework files
     grunt.registerTask('download-plugin-framework-dev', ['aws_s3:PluginframeworkFromDev'])
 
-
-    // After this 'build-preview' task run
-    // grunt updateVersion
-    grunt.registerTask('build-preview', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js', 'clean:before', 'copy:previewFiles']);
-
     //This is to update the Jenkins version number
     grunt.registerTask('updateVersion', function(jenBuildNumber) {
         //This method need to call after preview build is generated(grunt build-preview);
-        if(jenBuildNumber){
+        if (jenBuildNumber) {
             grunt.config.set('buildNumber', jenBuildNumber);
         }
 
@@ -718,9 +626,8 @@ module.exports = function(grunt) {
         grunt.task.run(tasks);
     });
 
-    grunt.registerTask('deploy-preview-dev', ['replace:preview_dev', 'aws_s3:cleanDevPreview', 'aws_s3:uploadPreviewFilesToDev']);
-    grunt.registerTask('preview-production', ['replace:preview_production', 'aws_s3:cleanProductionPreview', 'aws_s3:uploadPreviewFilesToProduction']);
-    grunt.registerTask('preview-qa', ['replace:preview_QA', 'aws_s3:cleanQAPreview', 'aws_s3:uploadPreviewFilesToQA']);
+    grunt.registerTask('deploy-preview-dev', ['aws_s3:cleanDevPreview', 'aws_s3:uploadPreviewFilesToDev']);
+
 
     grunt.registerTask('rm-cordova-plugin-sensibol', function() {
         if (grunt.file.exists('plugins/cordova-plugin-sensibol')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
@@ -739,59 +646,34 @@ module.exports = function(grunt) {
         if (recorder == "sensibol")
             tasks.push('add-cordova-plugin-sensibol');
         tasks.push('uglify:speech');
-        tasks.push('replace:'+recorder);
+        tasks.push('replace:' + recorder);
         grunt.task.run(tasks);
     });
-
     grunt.registerTask('rm-cordova-plugin-genieservices', function() {
         if (grunt.file.exists('plugins/cordova-plugin-genieservices')) grunt.task.run(['cordovacli:rm_genie_service']);
     });
     grunt.registerTask('add-cordova-plugin-genieservices', function() {
         grunt.task.run(['rm-cordova-plugin-genieservices', 'cordovacli:add_genie_services']);
     });
-
     grunt.registerTask('rm_custom_plugins', function() {
         if (grunt.file.exists('plugins/org.ekstep.genie.service.plugin')) grunt.task.run(['cordovacli:rm_genie_service']);
         if (grunt.file.exists('plugins/org.ekstep.recorder.service.plugin')) grunt.task.run(['cordovacli:rm_sensibol_recorder']);
     });
+    grunt.registerTask('set-android-library', ['copy:androidLib', 'replace:androidLib']);
+    grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared', 'replace:xwalk_library']);
 
-    grunt.registerTask('default', ['uglify:renderer', 'uglify:testRenderer', 'uglify:speech', 'uglify:telemetry', 'uglify:pluginLib', 'uglify:js']);
-    grunt.registerTask('build-all', ['uglify:renderer', 'uglify:testRenderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS']);
+    //Build web prview
+    grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetry', 'concat:script', 'clean:deletefiles', 'injector:prview', 'replace:build_Number']);
+    grunt.registerTask('build-preview', ['clean','preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
 
-    grunt.registerTask('karma-test', ['default','karma:unit', 'clean:minjs']);
-    grunt.registerTask('build-jsdoc', ['jsdoc', 'compress', ]);
+    //Build AAR
+    grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);
+    grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-app', ['init-setup', 'build-aarshared-xwalk']);
 
-    grunt.registerTask('build-js', ['uglify:renderer', 'uglify:testRenderer', 'uglify:pluginLib',  'uglify:speech', 'uglify:telemetry', 'uglify:js', 'aws_s3:uploadJS', 'clean:minjs']);
-    grunt.registerTask('update_custom_plugins', ['rm_custom_plugins', 'add-cordova-plugin-genieservices']);
-    grunt.registerTask('build-unsigned-apk-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
-    grunt.registerTask('build-apk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('build-unsigned-apk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
-    grunt.registerTask('build-signed-apk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
-    grunt.registerTask('build-apk-quick', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('install-apk-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'cordovacli:run_android', 'clean:minjs']);
-    grunt.registerTask('install-apk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'cordovacli:run_android', 'clean:minjs']);
-    grunt.registerTask('install-apk-quick', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'update_custom_plugins', 'add-speech', 'cordovacli:run_android', 'clean:minjs']);
+    grunt.registerTask('build-jsdoc', ['jsdoc', 'compress:main']);
 
-
-    grunt.registerTask('build-apk-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('build-signed-apk-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'cordovacli:add_crashlytics_plugin', 'add-speech', 'cordovacli:build_android_release', 'clean:minjs']);
-
-    grunt.registerTask('init-setup', ['mkdir:all', 'copy:main', 'set-platforms', 'add-cordova-plugin-genieservices']);
-
-    grunt.registerTask('ci-build-debug', ['build-apk-xwalk']);
-    grunt.registerTask('ci-build-signed', ['build-signed-apk-xwalk']);
-
-    grunt.registerTask('set-android-library',['copy:androidLib', 'replace:androidLib']);
-    grunt.registerTask('set-xwalk-library', ['cordovacli:add_xwalk','replace:xwalk_library']);
-    grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared','replace:xwalk_library']);
-
-    grunt.registerTask('build-aar', ['uglify:renderer', 'uglify:pluginLib', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('build-unsigned-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
-    grunt.registerTask('build-signed-aar', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:signed', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'cordovacli:rm_xwalk', 'update_custom_plugins', 'add-speech', 'set-android-library', 'cordovacli:build_android_release', 'clean:minjs']);
-
-
-    grunt.registerTask('build-aar-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalk-library', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('build-aarshared-xwalk', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js', 'clean:before', 'copy:main', 'copy:unsigned', 'rename', 'clean:after', 'clean:samples', 'cordovacli:add_plugins', 'update_custom_plugins', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
-
-    grunt.registerTask('local-preview-build', ['uglify:renderer', 'uglify:speech', 'uglify:telemetry', 'uglify:js','copy:localPreviewFiles', 'copy:localPreviewMinjs', 'aws_s3:uploadLocalPreviewZip', 'clean:localPreview']);
+    grunt.registerTask('test-setup', ['new-buildPreview', 'copy:testinit', 'clean']);
+    grunt.registerTask('app-test', ['karma:app']);
+    grunt.registerTask('plugin-test', ['karma:plugin']);
 };

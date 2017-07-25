@@ -24,7 +24,7 @@
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
     <platform name="android">
-        <icon src="public/img/icons/blank.png" />
-        <splash src="public/img/icons/blank.png" />
+        <icon src="public/assets/icons/blank.png" />
+        <splash src="public/assets/icons/blank.png" />
     </platform>
 </widget>
