@@ -9,7 +9,6 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
     $scope.popUserRating = 0;
     $scope.stringLeft = 130;
     $scope.selectedRating = 0;
-    $rootScope.pageId = "ContentApp-Endpage";
     $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{AppLables.credit}}</div> <div class="gc-popup-body-new"><div class="font-lato credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{AppLables.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{AppLables.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{AppLables.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{AppLables.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
     $scope.imageBasePath = globalConfig.assetbase;
     $scope.arrayToString = function(array) {
@@ -117,6 +116,7 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
         $scope.enableFeedbackSubmit();
     }
     $scope.handleEndpage = function() {
+        $rootScope.pageId = "ContentApp-Endpage";
         if (_.isUndefined($rootScope.content)) {
             localStorageGC.update();
             content = localStorageGC.getItem('content');

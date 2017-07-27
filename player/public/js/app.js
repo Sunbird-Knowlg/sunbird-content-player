@@ -32,13 +32,14 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             $ionicPlatform.registerBackButtonAction(function() {
                 //TODO: Add Telemetry interact for ok and Cancle
                 var stageId = undefined;
+                var type = undefined;
                 if (Renderer) {
                     AudioManager.stopAll();
                     type = Renderer.running ? 'EXIT_CONTENT' : 'EXIT_APP'
-                    stageId = Renderer.theme ? Renderer.theme._currentStage : pageId;
+                    stageId = Renderer.theme ? Renderer.theme._currentStage : $rootScope.pageId;
                 } else {
                     type: 'EXIT_CONTENT';
-                    stageId = pageId || '';
+                    stageId = $rootScope.pageId || '';
                 }
                 TelemetryService.interact('TOUCH', 'DEVICE_BACK_BTN', 'EXIT', {type:type,stageId:stageId});
                 if (confirm("Would you like to leave this content ?")) {
@@ -49,10 +50,10 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 }
             }, 100);
             $ionicPlatform.on("pause", function() {
-                Renderer.pause();
+                Renderer && Renderer.pause();
             });
             $ionicPlatform.on("resume", function() {
-                Renderer.resume();
+                Renderer && Renderer.resume();
             });
         };
         $timeout(function() {
