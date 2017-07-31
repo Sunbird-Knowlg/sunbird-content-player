@@ -333,7 +333,7 @@ function setGlobalConfig(context) {
         if (_.isUndefined(window.cordova)) {
             org.ekstep.service.renderer.api.setBaseUrl(globalConfig.host + globalConfig.apislug);
         }
-        TelemetryV2SetConfig();
+        TelemetryV2SetConfig(globalConfig);
 
     } else {
         window.globalConfig = _.clone(AppConfig);
@@ -341,7 +341,7 @@ function setGlobalConfig(context) {
     splashScreen.initialize();
 }
 
-function TelemetryV2SetConfig() {
+function TelemetryV2SetConfig(globalConfig) {
     var otherData = {};
     for (var i = 0; i < globalConfig.telemetryEventsConfigFields.length; i++) {
         var data = globalConfig[globalConfig.telemetryEventsConfigFields[i]] || globalConfig[globalConfig.telemetryEventsConfigFields[i]];
