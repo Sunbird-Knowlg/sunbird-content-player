@@ -32,6 +32,12 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
             $scope.callStartTelemetry($rootScope.content, function() {
                 $scope.item = $rootScope.content;
                 $rootScope.content.body = isbrowserpreview ? content.body : undefined;
+                /**
+                 * 'renderer:launcher:load' event will get dispatch once core launcher, metadata,body is ready .
+                 * @event 'renderer:launcher:load'
+                 * @fires 'renderer:launcher:load'
+                 * @memberof EkstepRendererEvents
+                 */
                 EkstepRendererAPI.dispatchEvent('renderer:launcher:load', undefined, $rootScope.content);
             });
         } else {
@@ -62,6 +68,12 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
 
     $scope.initializePlayer = function() {
         $scope.isInitialized = true;
+        /**
+         * 'renderer:player:show' event will get dispatch to show the canvas player .
+         * @event 'renderer:player:show'
+         * @fires 'renderer:player:show'
+         * @memberof EkstepRendererEvents
+         */
         EkstepRendererAPI.dispatchEvent('renderer:player:show');
         $scope.init();
     }
@@ -74,7 +86,7 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
     $scope.showCanvasPlayer = function() {
         $scope.showPlayer = true;
         $scope.safeApply();
-    }
+    };
 
     /**
      * 'org.ekstep.launcher' registering for event 'renderer.player.init'

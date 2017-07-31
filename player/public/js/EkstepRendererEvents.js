@@ -27,6 +27,13 @@ org.ekstep.contentrenderer.events = {
 		 * @memberof EkstepRendererEvents
 		 */
 		"renderer.player.show":  "renderer.player.show",
-}
+
+		/**
+		 * 'renderer:content:end' event will get dispatch once content is ended.
+		 * @memberOf EkstepRendererEvents
+		 */
+		"renderer.content.end":  "renderer.player.end",
+
+};
 
 EkstepRendererEvents = org.ekstep.contentrenderer.events;

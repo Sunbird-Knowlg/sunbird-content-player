@@ -21,6 +21,12 @@ Plugin.extend({
         var contentTypePlugin = _.findWhere(globalConfig.contentLaunchers, {
             'mimeType': content.mimeType
         });
+        /**
+         * 'renderer:repo:create' event will get dispatch to add a custom repo to load the plugins from the path.
+         * @event 'renderer:repo:create'
+         * @fires 'renderer:repo:create'
+         * @memberof EkstepRendererEvents
+         */
         EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined, [globalConfig.corePluginspath]);
         instance.loadCommonPlugins(function(){
             if (!_.isUndefined(contentTypePlugin)) {
@@ -45,6 +51,12 @@ Plugin.extend({
         var instance = this;
         content = contentData;
         org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
+        /**
+         * 'telemetryPlugin:intialize' event will get dispatch to Initialize the telemetry plugin before loading of the launchers.
+         * @event 'telemetryPlugin:intialize'
+         * @fires 'telemetryPlugin:intialize'
+         * @memberof EkstepRendererEvents
+         */
             EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
         });
     }
