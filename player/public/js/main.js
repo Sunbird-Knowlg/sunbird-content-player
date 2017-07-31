@@ -328,39 +328,59 @@ function setGlobalConfig(context) {
     if (!_.isUndefined(context)) {
         var AppConfigCopy = _.clone(AppConfig);
         var globalConfig = _.clone(AppConfig);
-        globalConfig = _.extend(globalConfig, context);
-        if (_.isArray(context.contentLaunchers) && context.contentLaunchers.length>0) {
-            _.each(AppConfigCopy.contentLaunchers, function(launchers) {
-                globalConfig.contentLaunchers.push(launchers)
-            })
-        }
-        if (_.isArray(context.mimetypes) && context.mimetypes.length>0) {
-            _.each(AppConfigCopy.mimetypes, function(mimetype) {
-                globalConfig.mimetypes.push(mimetype)
-            })
-        }
+        globalConfig = mergeJSON(globalConfig, context);
+
         if (_.isUndefined(window.cordova)) {
             org.ekstep.service.renderer.api.setBaseUrl(globalConfig.host + globalConfig.apislug);
         }
+        TelemetryV2SetConfig();
 
-        var otherData = {};
-        for (var i = 0; i < globalConfig.telemetryEventsConfigFields.length; i++) {
-            var data = globalConfig[globalConfig.telemetryEventsConfigFields[i]] || globalConfig[globalConfig.telemetryEventsConfigFields[i]];
-            if (!_.isUndefined(data)) otherData[globalConfig.telemetryEventsConfigFields[i]] = data;
-        }
-        var etags = {
-            'dims':otherData.dims || AppConfig.etags.dims,
-            'app':otherData.app || AppConfig.etags.app,
-            'partner':otherData.partner ||  AppConfig.etags.partner
-        };
-        otherData.etags = etags;
-        delete otherData.dims;
-        delete otherData.app;
-        delete otherData.partner;
-        GlobalContext.config = globalConfig;
-        GlobalContext.config.otherData = otherData;
-        window.globalConfig = GlobalContext.config;
     } else {
         window.globalConfig = _.clone(AppConfig);
     }
+    splashScreen.initialize();
+}
+
+function TelemetryV2SetConfig() {
+    var otherData = {};
+    for (var i = 0; i < globalConfig.telemetryEventsConfigFields.length; i++) {
+        var data = globalConfig[globalConfig.telemetryEventsConfigFields[i]] || globalConfig[globalConfig.telemetryEventsConfigFields[i]];
+        if (!_.isUndefined(data)) otherData[globalConfig.telemetryEventsConfigFields[i]] = data;
+    }
+    var etags = {
+        'dims':otherData.dims || AppConfig.etags.dims,
+        'app':otherData.app || AppConfig.etags.app,
+        'partner':otherData.partner ||  AppConfig.etags.partner
+    };
+    otherData.etags = etags;
+    delete otherData.dims;
+    delete otherData.app;
+    delete otherData.partner;
+    GlobalContext.config = globalConfig;
+    GlobalContext.config.otherData = otherData;
+    window.globalConfig = GlobalContext.config;
+}
+
+function mergeJSON(a, b) {
+    // create new object and copy the properties of first one
+    var res = Object.assign({}, a);
+    //iterate over the keys of second object
+    Object.keys(b).forEach(function(e) {
+        // check key is present in first object
+        // check type of both value is object(not array) and then
+        // recursively call the function
+        if (e in res && typeof res[e] == 'object' && typeof res[e] == 'object' && !(Array.isArray(res[e]) || Array.isArray(b[e]))) {
+            // recursively call the function and update the value
+            // with the returned ne object
+            res[e] = mergeJSON(res[e], b[e]);
+        } else {
+            // otherwise define the preperty directly
+            if ((Array.isArray(res[e]) && Array.isArray(b[e]))) {
+                res[e] = _.union(res[e], b[e]);
+            } else {
+                res[e] = b[e];
+            }
+        }
+    });
+    return res;
 }

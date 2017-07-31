@@ -9,10 +9,10 @@ var splashScreen = {
     progressEle:undefined,
     initialize: function() {
         var appConfigKeys = Object.keys(AppConfig.splash);
-        // _.each(appConfigKeys, function(each){
+
         for (var i = 0; i < appConfigKeys.length; i++) {
             var objKey = appConfigKeys[i];
-            splashScreen.config[objKey] = AppConfig.splash[objKey];
+            splashScreen.config[objKey] = GlobalContext.config[objKey] || AppConfig.splash[objKey];
         };
         var html = this.createHtml();
         jQuery(this.elementId).html(html);
@@ -69,8 +69,8 @@ var splashScreen = {
     },
 
     hideProgressBar:function() {
-      splashScreen.progressEle.style.width = 0 + '%'
+    //   splashScreen.progressEle.style.width = 0 + '%'
       jQuery('#loading').hide();
     }
-}
-splashScreen.initialize();
+};
+// splashScreen.initialize();

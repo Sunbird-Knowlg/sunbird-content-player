@@ -34,13 +34,9 @@ GlobalContext = {
                         GlobalContext.game.ver = GlobalContext.config.appInfo.pkgVersion || "1";
                         GlobalContext.game.contentExtras = GlobalContext.config.contentExtras;
 
-                        GlobalContext._params.sid = GlobalContext.config.sid;
-                        GlobalContext._params.uid = GlobalContext.config.uid;
-                        GlobalContext._params.did = GlobalContext.config.did;
-                        GlobalContext._params.channel = GlobalContext.config.channel;
-                        GlobalContext._params.etags = GlobalContext.config.etags;
-                        GlobalContext._params.pdata = GlobalContext.config.pdata;
-                        GlobalContext._params.cdata = GlobalContext.config.cdata;
+                        for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
+                            GlobalContext._params[AppConfig.telemetryEventsConfigFields[i]] = GlobalContext.config[AppConfig.telemetryEventsConfigFields[i]];
+                        }
 
                         // GlobalContext.config.contentExtras.switchingUser = true;`
                         // Assuming filter is always an array of strings.
@@ -66,7 +62,7 @@ GlobalContext = {
                     }
                 });
             } else {
-                // TODO: Only for the local 
+                // TODO: Only for the local
                 if (!isbrowserpreview) {
                     setGlobalConfig();
                     GlobalContext.config = {
