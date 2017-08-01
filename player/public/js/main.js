@@ -325,27 +325,22 @@ function logContentProgress(value) {
 }
 
 function setGlobalConfig(context) {
-    if (!_.isUndefined(context)) {
-        var AppConfigCopy = _.clone(AppConfig);
-        var globalConfig = _.clone(AppConfig);
-        globalConfig = mergeJSON(globalConfig, context);
+    GlobalContext.config  = mergeJSON(AppConfig, context);
+    window.globalConfig = GlobalContext.config;
 
-        if (_.isUndefined(window.cordova)) {
-            org.ekstep.service.renderer.api.setBaseUrl(globalConfig.host + globalConfig.apislug);
-        }
-        TelemetryV2SetConfig(globalConfig);
-
-    } else {
-        window.globalConfig = _.clone(AppConfig);
+    if (_.isUndefined(window.cordova)) {
+        org.ekstep.service.renderer.api.setBaseUrl(window.globalConfig.host + window.globalConfig.apislug);
     }
+    setTelemetryEventFields(window.globalConfig);
     splashScreen.initialize();
 }
 
-function TelemetryV2SetConfig(globalConfig) {
+function setTelemetryEventFields(globalConfig) {
     var otherData = {};
     for (var i = 0; i < globalConfig.telemetryEventsConfigFields.length; i++) {
-        var data = globalConfig[globalConfig.telemetryEventsConfigFields[i]] || globalConfig[globalConfig.telemetryEventsConfigFields[i]];
-        if (!_.isUndefined(data)) otherData[globalConfig.telemetryEventsConfigFields[i]] = data;
+        var value = globalConfig[globalConfig.telemetryEventsConfigFields[i]] || globalConfig[globalConfig.telemetryEventsConfigFields[i]];
+        var key = globalConfig.telemetryEventsConfigFields[i];
+        if (!_.isUndefined(value)) otherData[key] = value;
     }
     var etags = {
         'dims':otherData.dims || AppConfig.etags.dims,
@@ -356,14 +351,12 @@ function TelemetryV2SetConfig(globalConfig) {
     delete otherData.dims;
     delete otherData.app;
     delete otherData.partner;
-    GlobalContext.config = globalConfig;
     GlobalContext.config.otherData = otherData;
-    window.globalConfig = GlobalContext.config;
 }
 
 function mergeJSON(a, b) {
     // create new object and copy the properties of first one
-    var res = Object.assign({}, a);
+    var res = _.clone(a);
     //iterate over the keys of second object
     Object.keys(b).forEach(function(e) {
         // check key is present in first object

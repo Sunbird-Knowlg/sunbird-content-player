@@ -64,11 +64,8 @@ GlobalContext = {
             } else {
                 // TODO: Only for the local
                 if (!isbrowserpreview) {
-                    setGlobalConfig();
                     GlobalContext.config = {
-                        overlay: AppConfig.overlay,
                         origin: "Genie",
-                        showEndPage: AppConfig.showEndPage,
                         contentId: "org.ekstep.num.addition.by.grouping",
                         appInfo: {
                             code: "org.ekstep.quiz.app",
@@ -76,6 +73,8 @@ GlobalContext = {
                             identifier: "org.ekstep.quiz.app"
                         }
                     };
+                    window.globalConfig = mergeJSON(GlobalContext.config, AppConfig);
+                    GlobalContext.config = window.globalConfig;
                     resolve(GlobalContext.config);
                 }
             }
