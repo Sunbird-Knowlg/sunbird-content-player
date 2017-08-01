@@ -1795,3 +1795,12 @@ body {
   border-radius: 90px;
   background-color: #e67300;
 }
+/*Ionic is overwriting css for ul & ol css bullets and numbers*/
+/*This is for richtext support*/
+#gameArea > div > ul {
+    list-style-type: disc !important;
+}
+
+#gameArea > div > ol {
+    list-style-type: decimal !important;
+}
