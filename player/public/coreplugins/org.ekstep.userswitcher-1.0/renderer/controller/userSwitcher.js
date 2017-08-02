@@ -167,9 +167,10 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                             EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
                         } else {
                             TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                            var data = {};
-                            data.stageid = getCurrentStageId();
-                            TelemetryService.end(logContentProgress(), data);
+                            var telemetryEndData = {};
+                            telemetryEndData.stageid = getCurrentStageId();
+                            telemetryEndData.progress = logContentProgress();
+                            TelemetryService.end(telemetryEndData);
                             TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
                             var data = {};
                             data.stageid = EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId;

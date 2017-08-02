@@ -106,6 +106,7 @@ TelemetryService = {
         TelemetryService._data.push(event);
         if (event)
             event.flush(apiName);
+        console.log(JSON.stringify(event));
         return event;
     },
     setTelemetryService: function(localStorageInstance, gameData) {
@@ -163,11 +164,11 @@ TelemetryService = {
                 return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver, data), TelemetryService.apis.telemetry);
         }
     },
-    end: function(progress, data) {
+    end: function(data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return this.flushEvent(TelemetryService.instance.end(progress, data), TelemetryService.apis.telemetry);
+        return this.flushEvent(TelemetryService.instance.end(data), TelemetryService.apis.telemetry);
     },
     interact: function(type, id, extype, data) {
         if (!TelemetryService.isActive) {

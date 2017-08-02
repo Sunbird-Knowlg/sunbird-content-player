@@ -55,7 +55,11 @@ function getCurrentStageId() {
 
 function backbuttonPressed(stageId) {
     TelemetryService.interrupt("OTHER", stageId);
-    TelemetryService.end(logContentProgress());
+
+    var telemetryEndData = {};
+    telemetryEndData.stageid = getCurrentStageId();
+    telemetryEndData.progress = logContentProgress();
+    TelemetryService.end(telemetryEndData);
     try {
         TelemetryService.exit();
     } catch (err) {
@@ -306,7 +310,7 @@ function getPreviewMode() {
    var mode = 'preview';
     if ("undefined" != typeof cordova) {
         mode = !_.isUndefined(GlobalContext.config.mode) ? GlobalContext.config.mode : 'play';
-    } else if (EkstepRendererAPI.getGlobalConfig().context.mode){
+    } else if (EkstepRendererAPI.getGlobalConfig().context.mode) {
         mode = EkstepRendererAPI.getGlobalConfig().context.mode;
     }
     return mode;

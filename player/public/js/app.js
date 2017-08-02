@@ -136,7 +136,10 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
               });
             }
-            TelemetryService.end(logContentProgress());
+            var telemetryEndData = {};
+            telemetryEndData.stageid = getCurrentStageId();
+            telemetryEndData.progress = logContentProgress();
+            TelemetryService.end(telemetryEndData);
             if (data && data.callback) data.callback();
         });
 
