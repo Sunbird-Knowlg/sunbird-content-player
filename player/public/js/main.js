@@ -61,7 +61,7 @@ function backbuttonPressed(stageId) {
     telemetryEndData.progress = logContentProgress();
     TelemetryService.end(telemetryEndData);
     try {
-        TelemetryService.exit();
+        TelemetryService.exit(stageId);
     } catch (err) {
         console.error('End telemetry error:', err.message);
     }
@@ -77,7 +77,7 @@ function exitApp(stageId) {
         stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " ";
     }
     try {
-        TelemetryService.exit();
+        TelemetryService.exit(stageId);
     } catch (err) {
         console.error('End telemetry error:', err.message);
     }
@@ -91,7 +91,8 @@ function startApp(app) {
     if (!_.isUndefined(navigator) && !_.isUndefined(navigator.startApp)) {
         navigator.startApp.start(app, function(message) {
             exitApp();
-            TelemetryService.exit(packageName, version)
+            TelemetryService.exit(getCurrentStageId())
+            // TelemetryService.exit(packageName, version)
         }, function(error) {
             if (app == geniePackageName)
                 showToaster('error', "Unable to start Genie App.");

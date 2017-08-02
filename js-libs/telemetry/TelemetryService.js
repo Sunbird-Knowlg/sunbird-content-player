@@ -243,13 +243,15 @@ TelemetryService = {
             TelemetryService.start()
         }
     },
-    exit: function() {
+    exit: function(stageId) {
         if (TelemetryService.isActive) {
             TelemetryService._data = [];
+            var data = {};
+            data.stageid = stageId;
             if (!_.isEmpty(TelemetryService.instance._end)) {
                 var len = TelemetryService.instance._end.length;
                 for (var i = 0; i < len; i++)
-                    TelemetryService.end();
+                    TelemetryService.end(data);
             }
             if (_.isEmpty(TelemetryService.instance._end)) {
                 TelemetryService.isActive = false;
