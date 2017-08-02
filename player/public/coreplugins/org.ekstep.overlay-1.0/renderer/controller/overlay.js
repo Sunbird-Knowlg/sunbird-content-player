@@ -22,7 +22,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
 
         EkstepRendererAPI.addEventListener("renderer:content:start", $scope.showOverlay);
 
-    	$scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
+        $scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.overlay");
         if (globalConfig.language_info) {
             var languageInfo = JSON.parse(globalConfig.language_info);
             for (key in languageInfo) {
@@ -39,15 +39,15 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
             var eventName = $scope.overlayEvents[i];
             EventBus.addEventListener(eventName, $scope.overlayEventHandler, $scope);
         }
-		EventBus.addEventListener("sceneEnter", function(data) {
+        EventBus.addEventListener("sceneEnter", function(data) {
             $scope.showOverlay();
-			$rootScope.stageData = data.target;
-			//TODO: Remove this currentStage parameter and use directly stageData._currentStage
-			$rootScope.stageId = !_.isUndefined($rootScope.stageData) ? $rootScope.stageData._id : undefined;
-		});
-        if($scope.pluginInstance){
+            $rootScope.stageData = data.target;
+            //TODO: Remove this currentStage parameter and use directly stageData._currentStage
+            $rootScope.stageId = !_.isUndefined($rootScope.stageData) ? $rootScope.stageData._id : undefined;
+        });
+        if ($scope.pluginInstance) {
             console.log("Show overlay is failed to on event handler");
-            if(globalConfig.overlay.showOverlay) {
+            if (globalConfig.overlay.showOverlay) {
                 $scope.overlayVisible = $scope.pluginInstance.overlayVisible;
                 $scope.safeApply();
             }
@@ -55,7 +55,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     }
 
     $scope.showOverlay = function() {
-        if(!globalConfig.overlay.showOverlay) return;
+        if (!globalConfig.overlay.showOverlay) return;
 
         $scope.overlayVisible = true;
         $scope.safeApply();
@@ -66,8 +66,8 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         $scope.safeApply();
     }
 
-	$scope.navigate = function(navType) {
-		if (!$rootScope.content) {
+    $scope.navigate = function(navType) {
+        if (!$rootScope.content) {
             // if $rootScope.content is not available get it from the base controller
             org.ekstep.contentrenderer.getContentMetadata($stateParams.itemId);
         }
@@ -154,15 +154,15 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         }, 700, function() {});
     }
 
-    $scope.replayContent = function(){
+    $scope.replayContent = function() {
         var data = {
-            'interactId' : 'ge_replay',
+            'interactId': 'ge_replay',
             'callback': $scope.replayCallback
         };
         EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
     }
 
-    $scope.replayCallback = function(){
+    $scope.replayCallback = function() {
         $scope.hideMenu();
         EkstepRendererAPI.dispatchEvent('renderer:content:replay');
     }
@@ -211,11 +211,11 @@ app.compileProvider.directive('menu', function($rootScope, $sce) {
         restrict: 'E',
         scope: false,
         link: function(scope) {
-	        scope.getTemplate = function() {
+            scope.getTemplate = function() {
                 return scope.pluginInstance._menuTP;
-			}
-		},
-	    template: "<div ng-include=getTemplate()></div>"
+            }
+        },
+        template: "<div ng-include=getTemplate()></div>"
     }
 });
 
@@ -301,7 +301,7 @@ app.compileProvider.directive('assess', function($rootScope) {
 app.compileProvider.directive('goodJob', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-lato assess-popup assess-goodjob-popup"><img class="popup-bg-img" ng-src="{{imageBasePath}}goodJobpop.png"/><div class="goodjob_next_div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-goodjob-next " ng-src="{{ imageBasePath }}icon_popup_next_big.png" ng-click="moveToNextStage(\'next\')" /></a><p>{{AppLables.next}}</p></div></div></div></div>',
+        template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-tryagain-popup"> <div class="correct-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner1.png"> </div> <div class="sign-board"> <img ng-src="{{imageBasePath}}check.png" /> </div> </div> <div class="popup-buttons-container"> <div class="primary center button">NEXT</div> </div> </div> </div> </div>',
         controller: function($scope, $rootScope, $timeout) {
             $scope.retryAssessment = function(id, e) {
                 $scope.hidePopup(id);
@@ -327,7 +327,7 @@ app.compileProvider.directive('goodJob', function($rootScope) {
 app.compileProvider.directive('tryAgain', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div class="popup"><div class="popup-overlay" ng-click="hidePopup()"></div><div class="popup-full-body"><div class="font-lato assess-popup assess-tryagain-popup"><img class="popup-bg-img" ng-src="{{imageBasePath}}tryagain_popup.png"/><div class="tryagain-retry-div gc-popup-icons-div"><a ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);"><img class="popup-retry" ng-src="{{imageBasePath}}icn_popup_replay.png" /></a><p class="gc-popup-retry-replay">{{AppLables.replay}}</p></div><div class="tryagian-next-div gc-popup-icons-div"><a href="javascript:void(0);" ng-click="hidePopup()"><img class="popup-retry-next" ng-src="{{ imageBasePath }}icn_popup_next_small.png" ng-click="moveToNextStage(\'skip\')" /></a><p>{{AppLables.next}}</p></div></div></div></div></div></div>'
+        template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-tryagain-popup"> <div class="wrong-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner2.png"> </div> <div class="sign-board"> <img ng-src="{{imageBasePath}}retry.png" id="retryButton" style="z-index:100;" /> <img ng-src="{{imageBasePath}}incorrect.png" id="incorrectButton" style="z-index:-1; position:relative; top:-65px;" /> </div> </div> <div class="popup-buttons-container"> <div class="left button">NEXT</div> <div class="right primary button">TRY AGAIN</div> </div> </div> </div> </div>'
     }
 });
 
