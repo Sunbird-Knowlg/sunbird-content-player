@@ -86,13 +86,18 @@ TelemetryEvent = Class.extend({
     },
     end: function(data) {
         if (this._isStarted) {
-            this.event.edata.eks.length = Math.round((getCurrentTime() - this.startTime ) / 1000);
+            var eks= {};
             // This method is called for access end as well. For OE_ASSESS it should not log "progress" data
             if(!_.isUndefined(data) && !_.isUndefined(data.progress)) {
-                this.event.edata.eks.progress = data.progress; // Default progress value is 50 later we need to remove
+                eks.progress = data.progress; // Default progress value is 50 later we need to remove
             }
             if (!_.isUndefined(data) && !_.isUndefined(data.stageid)) {
-                this.event.edata.eks.stageid = data.stageid; // attach stage id to eks
+                eks.stageid = data.stageid; // attach stage id to eks
+            }
+            this.event.edata.eks = {
+                "length": Math.round((getCurrentTime() - this.startTime ) / 1000),
+                "progress": eks.progress || undefined,
+                "stageid": eks.stageid || ""
             }
             this.event.ets = new Date().getTime();
             this._isStarted = false;

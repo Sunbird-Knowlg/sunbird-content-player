@@ -106,7 +106,6 @@ TelemetryService = {
         TelemetryService._data.push(event);
         if (event)
             event.flush(apiName);
-        console.log(JSON.stringify(event));
         return event;
     },
     setTelemetryService: function(localStorageInstance, gameData) {
