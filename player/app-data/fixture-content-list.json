@@ -12,6 +12,30 @@
     "responseCode": "OK",
     "result": {
         "content": [
+            {
+                "identifier": "epub-demo",
+                "mimeType": "application/vnd.ekstep.epub-archive",
+                "localData": {
+                    "questionnaire": null,
+                    "appIcon": "fixture-stories/bgae-fn/logo.png",
+                    "subject": "literacy_v2",
+                    "description": "epub - Beyond Good and Evil",
+                    "name": "epub - Beyond Good and Evil",
+                    "downloadUrl": "",
+                    "checksum": null,
+                    "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                    "concepts": [{
+                        "identifier": "LO1",
+                        "name": "Receptive Vocabulary",
+                        "objectType": "Concept"
+                    }],
+                    "identifier": "epub-demo",
+                    "grayScaleAppIcon": null,
+                    "pkgVersion": 1
+                },
+                "isAvailable": true,
+                "path": "fixture-stories/bgae-fn"
+            },
         {
             "identifier": "org.ekstep.dependency",
             "mimeType": "application/vnd.ekstep.ecml-archive",
