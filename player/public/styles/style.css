@@ -2061,6 +2061,7 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    text-transform: uppercase;
 }
 
 .popup-buttons-container .button {
