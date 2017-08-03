@@ -34,6 +34,11 @@
 }
 
 
+
+
+
+
+
 /*@font-face {
     font-family: 'NotoNastaliqUrdu';
     src: url('fonts/NotoNastaliqUrdu-Regular.ttf') format('truetype')
@@ -119,6 +124,7 @@
     -webkit-line-clamp: 2;
     font-size: 2vw;
 }
+
 .splash-icon {
     width: 35px;
     height: 35px;
@@ -296,7 +302,6 @@ body {
     /*vertical-align: middle;*/
     /*padding-left: 5%;*/
     /*overflow: hidden;*/
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -515,8 +520,8 @@ body {
 /* For .assess-popup height:65% is important to make it align vertically and horizontally with the screen */
 .assess-popup {
     position: absolute;
-    width: 43%;
-    height: 65%;
+    width: 55%;
+    height: 68%;
     border-radius: 10px;
     top: 0;
     right: 0;
@@ -529,8 +534,6 @@ body {
     top: 8%;
     left: 30%;
 }
-
-
 
 .credit-popup {
     width: 60%;
@@ -612,7 +615,6 @@ body {
 .gc-cp-scroll-ionic {
     transform: translate3d(0px, -28px, 0px) scale(1);
     height: 100%;
-
 }
 
 .gc-cp-header-div {
@@ -857,7 +859,6 @@ body {
 
     /* margin: 0 -5%; */
     /* margin-left: -50%; */
-
 }
 
 .gc-ep-footer-icons.gc-ep-userSwitch {
@@ -868,7 +869,6 @@ body {
 
     /* margin: 0 -5%; */
     /* margin-left: 50%; */
-
 }
 
 .gc-ep-footer-icons img.replay {
@@ -1578,6 +1578,7 @@ body {
 
 /* User Switcher Modal css starts */
 
+
 /* The Modal (background) */
 
 #userSwitchingModal.user-modal {
@@ -1603,6 +1604,7 @@ body {
     /* Black w/ opacity */
     font-family: lato-black lato-black-italic lato-bold lato-bold-italic lato-hairline lato-hairline-italic lato-heavy lato-heavy-italic lato-light lato-light-italic lato-medium lato-medium-italic lato-regular lato-semibold lato-semibold-italic lato-thin lato-thin-italic;
 }
+
 /* Modal Content */
 
 #userSwitchingModal .modal-content {
@@ -1626,6 +1628,17 @@ body {
     padding-top: 7px;
     text-transform: uppercase;
 }
+
+
+
+
+
+
+
+
+
+
+
 /* The Close Button */
 
 #userSwitchingModal .close {
@@ -1763,9 +1776,17 @@ body {
 .mCS-dark-3.mCSB_scrollTools .mCSB_draggerRail {
     background-color: rgba(0, 0, 0, 0);
 }
+
+
+
+
+
+
 /* User Switcher Modal endes*/
 
+
 /*Loader Css*/
+
 body {
     background-color: #fff;
 }
@@ -1805,7 +1826,15 @@ body {
   border-radius: 90px;
   background-color: #e67300;
 }
+
+
+
+
+
+
 /*Ionic is overwriting css for ul & ol css bullets and numbers*/
+
+
 /*This is for richtext support*/
 #gameArea > div > ul {
     list-style-type: disc !important;
@@ -1814,3 +1843,253 @@ body {
 #gameArea > div > ol {
     list-style-type: decimal !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+/* new popup style */
+
+@-webkit-keyframes sign-board-anim {
+    from {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+    to {
+        -webkit-transform: translateY(-100px);
+        transform: translateY(-100px);
+    }
+}
+
+@keyframes sign-board-anim {
+    from {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+    to {
+        -webkit-transform: translateY(-100px);
+        transform: translateY(-100px);
+    }
+}
+
+@-webkit-keyframes banner-anim {
+    from {
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+    }
+    to {
+        -webkit-transition: all 0.1s ease-in;
+        -o-transition: all 0.1s ease-in;
+        transition: all 0.1s ease-in;
+
+        -webkit-transform: scale(1);
+        -khtml-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes banner-anim {
+    from {
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+    }
+    to {
+        -webkit-transition: all 0.1s ease-in;
+        -o-transition: all 0.1s ease-in;
+        transition: all 0.1s ease-in;
+
+        -webkit-transform: scale(1);
+        -khtml-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@-webkit-keyframes incorrect-button-anim {
+    from {
+        visibility: visible;
+        z-index: 100;
+    }
+    to {
+        visibility: hidden;
+        z-index: -1;
+    }
+}
+
+@keyframes incorrect-button-anim {
+    from {
+        visibility: visible;
+        z-index: 100;
+    }
+    to {
+        visibility: hidden;
+        z-index: -1;
+    }
+}
+
+@-webkit-keyframes retry-button-anim {
+    from {
+        visibility: visible;
+        z-index: 100;
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -khtml-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        visibility: visible;
+        z-index: 100;
+        display: block;
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -khtml-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes retry-button-anim {
+    from {
+        visibility: visible;
+        z-index: 100;
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -khtml-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        visibility: visible;
+        z-index: 100;
+        display: block;
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -khtml-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+
+.correct-answer,
+.wrong-answer {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: #F8D764;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+}
+
+.banner,
+.sign-board {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.banner {
+    z-index: 10;
+    height: 70px;
+    width: 50%;
+    bottom: -12px;
+    background: #F8D764;
+}
+
+.sign-board {
+    z-index: 5;
+    background-color: #fff;
+    bottom: -50px;
+    width: 30%;
+    height: 120px;
+    border-radius: .5em;
+    -webkit-animation: sign-board-anim 0.2s ease-out forwards;
+    animation: sign-board-anim 0.2s ease-out forwards;
+    -webkit-animation-delay: 0.4s;
+    animation-delay: 0.4s;
+}
+
+.sign-board img {
+    margin: auto;
+    margin-top: 22px;
+}
+
+.banner img {
+    height: 80%;
+    width: 100%;
+    position: relative;
+    top: -23px;
+    -webkit-animation: banner-anim 0.2s ease-out forwards;
+    animation: banner-anim 0.2s ease-out forwards;
+}
+
+#retryButton {
+    -webkit-animation: retry-button-anim 2s forwards;
+    animation: retry-button-anim 2s forwards;
+    -webkit-animation-delay: 1.9s;
+    animation-delay: 1.9s;
+}
+
+#incorrectButton {
+    position: absolute;
+    left: 0;
+    right: 0;
+    -webkit-animation: incorrect-button-anim 1s forwards;
+    animation: incorrect-button-anim 1s forwards;
+    -webkit-animation-delay: 0.9s;
+    animation-delay: 0.9s;
+}
+
+.wrong-answer .sign-board {
+    display: block;
+}
+
+.wrong-answer .sign-board img {
+    visibility: hidden;
+}
+
+
+.popup-buttons-container {
+    background-color: white;
+    height: 5.5em;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.popup-buttons-container .button {
+    min-height: 0!important;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    padding-right: 2em;
+    padding-left: 2em;
+    border-radius: 0.6em;
+    align-items: center;
+    border: 0.1px solid grey;
+}
+
+.primary {
+    background: #3098CD!important;
+    color: white!important;
+}
+
+.center {
+    margin: 0 auto;
+}
+
+
+
+
+
+
+
+
+
+/* new popup style */
