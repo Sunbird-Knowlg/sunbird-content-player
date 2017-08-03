@@ -1,0 +1,13 @@
+{
+    "taskDescription": "<p>What are the colors of these berries when they are ripe?</p>\n",
+    "checkAnswer": "Check",
+    "tryAgain": "Retry",
+    "showSolution": "Show Solution",
+    "score": "Score: @score of @total.",
+    "behaviour": {
+        "enableRetry": true,
+        "enableSolutionsButton": true,
+        "instantFeedback": false
+    },
+    "textField": "Blueberries are *blue:Check the name of the berry!*.\nStrawberries are *red*.\nCloudberries are *orange*."
+}

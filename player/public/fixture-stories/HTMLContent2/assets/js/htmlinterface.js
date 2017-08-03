@@ -7,6 +7,10 @@ var RendererInterface = function() {
 
   var _parent = window.parent; 
   var _telemetryService =  _parent.TelemetryService;
+  
+  var logTelemetry = function(eventName, data){
+
+  }
 
   this.htmlInterfaceObj = {};
   this.htmlInterfaceObj.parent = _parent;
@@ -32,29 +36,12 @@ var RendererInterface = function() {
   };
 
   /**
-   * Interface to access content-renderer configuration
-   * @memberof org.ekstep.contentrenderer.interface 
-   */
-  this.htmlInterfaceObj.getConfig = function(){
-    this.EkstepRendererAPI.getGlobalConfig();
-  };
-
-  /**
    * Interface to Access Content Metadata
    * @param  {Object} data: Telemetry event data
    * @memberof org.ekstep.contentrenderer.interface 
    */
   this.htmlInterfaceObj.logTelemetryInteract = function(data){
-    _telemetryService.interact(data.type, data.id, data.extype, data.eks);
-  }
-
-  /**
-   * Interface to Access Content Metadata
-   * @param  {Object} data: Telemetry event data
-   * @memberof org.ekstep.contentrenderer.interface 
-   */
-  this.htmlInterfaceObj.logTelemetryAssess = function(data){
-    _telemetryService.interact(data.type, data.id, data.extype, data.eks);
+    _telemetryService.interact(data);
   }
 
   /**

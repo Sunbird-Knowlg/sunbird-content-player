@@ -36,7 +36,31 @@
             "isAvailable": true,
             "path": "fixture-stories/Dependency-managment"
         },
-          {
+        {
+            "identifier": "org.ekstep.H5P_Sample",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/H5P_Sample/logo.png",
+                "subject": "literacy_v2",
+                "description": "H5P sample content",
+                "name": "H5P Sample",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Loading H5P content..",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.H5P_Sample",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/H5P_Sample"
+        },
+        {
             "identifier": "org.ekstep.desertflip",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
