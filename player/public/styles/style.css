@@ -1616,6 +1616,7 @@ body {
 #userSwitchingModal .modal-content .user-header P {
     margin-bottom: 0;
     padding-top: 7px;
+    text-transform: uppercase;
 }
 /* The Close Button */
 

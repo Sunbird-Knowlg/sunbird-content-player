@@ -42,7 +42,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                     stageId = $rootScope.pageId || '';
                 }
                 TelemetryService.interact('TOUCH', 'DEVICE_BACK_BTN', 'EXIT', {type:type,stageId:stageId});
-                if (confirm("Would you like to leave this content ?")) {
+                if (confirm(AppLables.backButtonText)) {
                     TelemetryService.interact('END', 'ALERT_OK', 'EXIT', {type:type,stageId:stageId});
                     backbuttonPressed(stageId);
                 } else {
@@ -130,7 +130,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             var data = event.target;
             injectTemplates(data.templatePath, data.scopeVariable, data.toElement);
         });
-        
+
         EkstepRendererAPI.addEventListener("renderer:content:close", function(event, data) {
             if (data && data.interactId) {
               TelemetryService.interact("TOUCH", data.interactId, "TOUCH", {

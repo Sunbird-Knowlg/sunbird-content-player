@@ -36,7 +36,6 @@ var AppLables = {
     "audio": "Audio",
     "author": "Author",
     "instructions": "Teacher's Note",
-    "replay": "Replay",
     "feedback": "Feedback",
     "noCreditsAvailable": "There are no credits available",
     "congratulations": "Congratulations! You just completed",
@@ -48,9 +47,12 @@ var AppLables = {
     "comment": "write your comment...",
     "mute": "on",
     "change": "Change",
+	"replay": "Replay",
+	"continue": "Continue",
     "group": "Group",
     "child": "Child",
     "groupFallbackText": "You have not created any group",
-    "userSwitcherTitle": "SELECT A CHILD OR A GROUP",
-    "anonymousUserName": "Anonymous"
+    "userSwitcherTitle": "Select a child or a group",
+    "anonymousUserName": "Anonymous",
+	"backButtonText": "Would you like to leave this content ?"
 }
