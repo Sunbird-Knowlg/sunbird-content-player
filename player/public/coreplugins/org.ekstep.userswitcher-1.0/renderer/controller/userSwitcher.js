@@ -52,8 +52,8 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     $scope.imageBasePath = globalConfig.assetbase;
 
     $scope.hideUserSwitchingModal = function() {
-        EkstepRendererAPI.removeEventListener("event:backbuttonpressed", $scope.hideUserSwitchingModal, $scope);
         $rootScope.safeApply(function() {
+            EkstepRendererAPI.removeEventListener("event:backbuttonpressed", $scope.hideUserSwitchingModal, $scope);
             $scope.showUserSwitchModal = false;
         });
     }
@@ -64,6 +64,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
             TelemetryService.interact("TOUCH", "gc_userswitch_popup_open", "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
             });
+            EventBus.addEventListener("event:backbuttonpressed", $scope.hideUserSwitchingModal, $scope);
 
             _.each($rootScope.users, function(user) {
                 if (user.selected === true) user.selected = false;
@@ -73,7 +74,6 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
             $rootScope.safeApply(function() {
                 $scope.showUserSwitchModal = true;
             });
-            EventBus.addEventListener("event:backbuttonpressed", $scope.hideUserSwitchingModal, $scope);
         } else {
             showToaster('info', "User switch is disabled");
         }
