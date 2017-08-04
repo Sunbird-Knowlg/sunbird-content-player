@@ -73,17 +73,14 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         }
         GlobalContext.currentContentId = $rootScope.content.identifier;
         GlobalContext.currentContentMimeType = $rootScope.content.mimeType;
+        TelemetryService.interact("TOUCH", navType, null, {
+            stageId: EkstepRendererAPI.getCurrentStageId()
+        });
         if (navType === "next") {
-            TelemetryService.interact("TOUCH", navType, null, {
-                stageId: EkstepRendererAPI.getCurrentStageId()
-            });
             EventBus.dispatch("actionNavigateNext", navType);
             EventBus.dispatch("nextClick");
 
         } else if (navType === "previous") {
-            TelemetryService.interact("TOUCH", navType, null, {
-                stageId: EkstepRendererAPI.getCurrentStageId()
-            });
             EventBus.dispatch("actionNavigatePrevious", navType);
             EventBus.dispatch("previousClick");
         }
