@@ -18,6 +18,14 @@ org.ekstep.contentrenderer.baseEndepage = Plugin.extend({
 init: function(data, parent, stage, theme) {
 	var instance = this;
 	this._isAvailable = true;
+	/**
+     * 'renderer:content:end' event will get dispatch once content ends (i.e. Once all stages/game is ends)
+     * @example
+     * It will be usefull to show endpage or perform some action once the content is ended.
+     * @event 'renderer:content:end'
+     * @fires 'renderer:content:end'
+     * @memberof EkstepRendererEvents
+     */
 	EkstepRendererAPI.addEventListener("renderer:content:end", instance.contentEnd, instance);
 	this.initialize(data);
 },

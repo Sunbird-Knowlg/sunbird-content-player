@@ -45,7 +45,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 if (EkstepRendererAPI.hasEventListener("event:backbuttonpressed")) {
                     EkstepRendererAPI.dispatchEvent("event:backbuttonpressed");
                 } else {
-                    if (confirm("Would you like to leave this content ?")) {
+                    if (confirm(AppLables.backButtonText)) {
                        TelemetryService.interact('END', 'ALERT_OK', 'EXIT', {type:type,stageId:stageId});
                         backbuttonPressed(stageId);
                     } else {
@@ -141,7 +141,10 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
               });
             }
-            TelemetryService.end(logContentProgress());
+            var telemetryEndData = {};
+            telemetryEndData.stageid = getCurrentStageId();
+            telemetryEndData.progress = logContentProgress();
+            TelemetryService.end(telemetryEndData);
             if (data && data.callback) data.callback();
         });
 

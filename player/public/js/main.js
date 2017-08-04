@@ -48,11 +48,20 @@ function getUrlParameter(sParam) {
     }
 }
 
+function getCurrentStageId() {
+    var stageId = EkstepRendererAPI.getCurrentStageId();
+    return (stageId) ? stageId : angular.element(document).scope().pageId;
+}
+
 function backbuttonPressed(stageId) {
     TelemetryService.interrupt("OTHER", stageId);
-    TelemetryService.end(logContentProgress());
+
+    var telemetryEndData = {};
+    telemetryEndData.stageid = getCurrentStageId();
+    telemetryEndData.progress = logContentProgress();
+    TelemetryService.end(telemetryEndData);
     try {
-        TelemetryService.exit();
+        TelemetryService.exit(stageId);
     } catch (err) {
         console.error('End telemetry error:', err.message);
     }
@@ -68,7 +77,7 @@ function exitApp(stageId) {
         stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " ";
     }
     try {
-        TelemetryService.exit();
+        TelemetryService.exit(stageId);
     } catch (err) {
         console.error('End telemetry error:', err.message);
     }
@@ -82,7 +91,8 @@ function startApp(app) {
     if (!_.isUndefined(navigator) && !_.isUndefined(navigator.startApp)) {
         navigator.startApp.start(app, function(message) {
             exitApp();
-            TelemetryService.exit(packageName, version)
+            TelemetryService.exit(getCurrentStageId())
+            // TelemetryService.exit(packageName, version)
         }, function(error) {
             if (app == geniePackageName)
                 showToaster('error', "Unable to start Genie App.");
@@ -301,7 +311,7 @@ function getPreviewMode() {
    var mode = 'preview';
     if ("undefined" != typeof cordova) {
         mode = !_.isUndefined(GlobalContext.config.mode) ? GlobalContext.config.mode : 'play';
-    } else if (EkstepRendererAPI.getGlobalConfig().context.mode){
+    } else if (EkstepRendererAPI.getGlobalConfig().context.mode) {
         mode = EkstepRendererAPI.getGlobalConfig().context.mode;
     }
     return mode;
@@ -325,42 +335,55 @@ function logContentProgress(value) {
 }
 
 function setGlobalConfig(context) {
-    if (!_.isUndefined(context)) {
-        var AppConfigCopy = _.clone(AppConfig);
-        var globalConfig = _.clone(AppConfig);
-        globalConfig = _.extend(globalConfig, context);
-        if (_.isArray(context.contentLaunchers) && context.contentLaunchers.length>0) {
-            _.each(AppConfigCopy.contentLaunchers, function(launchers) {
-                globalConfig.contentLaunchers.push(launchers)
-            })
-        }
-        if (_.isArray(context.mimetypes) && context.mimetypes.length>0) {
-            _.each(AppConfigCopy.mimetypes, function(mimetype) {
-                globalConfig.mimetypes.push(mimetype)
-            })
-        }
-        if (_.isUndefined(window.cordova)) {
-            org.ekstep.service.renderer.api.setBaseUrl(globalConfig.host + globalConfig.apislug);
-        }
+    GlobalContext.config  = mergeJSON(AppConfig, context);
+    window.globalConfig = GlobalContext.config;
 
-        var otherData = {};
-        for (var i = 0; i < globalConfig.telemetryEventsConfigFields.length; i++) {
-            var data = globalConfig[globalConfig.telemetryEventsConfigFields[i]] || globalConfig[globalConfig.telemetryEventsConfigFields[i]];
-            if (!_.isUndefined(data)) otherData[globalConfig.telemetryEventsConfigFields[i]] = data;
-        }
-        var etags = {
-            'dims':otherData.dims || AppConfig.etags.dims,
-            'app':otherData.app || AppConfig.etags.app,
-            'partner':otherData.partner ||  AppConfig.etags.partner
-        };
-        otherData.etags = etags;
-        delete otherData.dims;
-        delete otherData.app;
-        delete otherData.partner;
-        GlobalContext.config = globalConfig;
-        GlobalContext.config.otherData = otherData;
-        window.globalConfig = GlobalContext.config;
-    } else {
-        window.globalConfig = _.clone(AppConfig);
+    if (_.isUndefined(window.cordova)) {
+        org.ekstep.service.renderer.api.setBaseUrl(window.globalConfig.host + window.globalConfig.apislug);
     }
+    setTelemetryEventFields(window.globalConfig);
+    splashScreen.initialize();
+}
+
+function setTelemetryEventFields(globalConfig) {
+    var otherData = {};
+    for (var i = 0; i < globalConfig.telemetryEventsConfigFields.length; i++) {
+        var value = globalConfig[globalConfig.telemetryEventsConfigFields[i]] || globalConfig[globalConfig.telemetryEventsConfigFields[i]];
+        var key = globalConfig.telemetryEventsConfigFields[i];
+        if (!_.isUndefined(value)) otherData[key] = value;
+    }
+    var etags = {
+        'dims':otherData.dims || AppConfig.etags.dims,
+        'app':otherData.app || AppConfig.etags.app,
+        'partner':otherData.partner ||  AppConfig.etags.partner
+    };
+    otherData.etags = etags;
+    delete otherData.dims;
+    delete otherData.app;
+    delete otherData.partner;
+    GlobalContext.config.otherData = otherData;
+}
+
+function mergeJSON(a, b) {
+    // create new object and copy the properties of first one
+    var res = _.clone(a);
+    //iterate over the keys of second object
+    Object.keys(b).forEach(function(e) {
+        // check key is present in first object
+        // check type of both value is object(not array) and then
+        // recursively call the function
+        if (e in res && typeof res[e] == 'object' && typeof res[e] == 'object' && !(Array.isArray(res[e]) || Array.isArray(b[e]))) {
+            // recursively call the function and update the value
+            // with the returned ne object
+            res[e] = mergeJSON(res[e], b[e]);
+        } else {
+            // otherwise define the preperty directly
+            if ((Array.isArray(res[e]) && Array.isArray(b[e]))) {
+                res[e] = _.union(res[e], b[e]);
+            } else {
+                res[e] = b[e];
+            }
+        }
+    });
+    return res;
 }
