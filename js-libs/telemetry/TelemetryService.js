@@ -163,11 +163,11 @@ TelemetryService = {
                 return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver, data), TelemetryService.apis.telemetry);
         }
     },
-    end: function(progress) {
+    end: function(data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return this.flushEvent(TelemetryService.instance.end(progress), TelemetryService.apis.telemetry);
+        return this.flushEvent(TelemetryService.instance.end(data), TelemetryService.apis.telemetry);
     },
     interact: function(type, id, extype, data) {
         if (!TelemetryService.isActive) {
@@ -242,13 +242,15 @@ TelemetryService = {
             TelemetryService.start()
         }
     },
-    exit: function() {
+    exit: function(stageId) {
         if (TelemetryService.isActive) {
             TelemetryService._data = [];
+            var data = {};
+            data.stageid = stageId;
             if (!_.isEmpty(TelemetryService.instance._end)) {
                 var len = TelemetryService.instance._end.length;
                 for (var i = 0; i < len; i++)
-                    TelemetryService.end();
+                    TelemetryService.end(data);
             }
             if (_.isEmpty(TelemetryService.instance._end)) {
                 TelemetryService.isActive = false;
