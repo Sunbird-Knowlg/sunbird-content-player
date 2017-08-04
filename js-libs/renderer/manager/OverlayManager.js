@@ -293,9 +293,6 @@ OverlayManager = {
         CommandManager.handle(action);
     },
     defaultNavigation: function(navType, navigateTo) {
-        TelemetryService.interact("TOUCH", navType, null, {
-            stageId: Renderer.theme._currentStage
-        });
         var action = {
             "asset": Renderer.theme._id,
             "command": "transitionTo",
