@@ -51,8 +51,8 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     $scope.showUserSwitchModal = false;
     $scope.imageBasePath = globalConfig.assetbase;
 
-
     $scope.hideUserSwitchingModal = function() {
+        EkstepRendererAPI.removeEventListener("event:backbuttonpressed", $scope.hideUserSwitchingModal, $scope);
         $rootScope.safeApply(function() {
             $scope.showUserSwitchModal = false;
         });
@@ -73,6 +73,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
             $rootScope.safeApply(function() {
                 $scope.showUserSwitchModal = true;
             });
+            EventBus.addEventListener("event:backbuttonpressed", $scope.hideUserSwitchingModal, $scope);
         } else {
             showToaster('info', "User switch is disabled");
         }

@@ -42,12 +42,16 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                     stageId = $rootScope.pageId || '';
                 }
                 TelemetryService.interact('TOUCH', 'DEVICE_BACK_BTN', 'EXIT', {type:type,stageId:stageId});
-                if (confirm("Would you like to leave this content ?")) {
-                    TelemetryService.interact('END', 'ALERT_OK', 'EXIT', {type:type,stageId:stageId});
-                    backbuttonPressed(stageId);
+                if (EkstepRendererAPI.hasEventListener("event:backbuttonpressed")) {
+                    EkstepRendererAPI.dispatchEvent("event:backbuttonpressed");
                 } else {
-                    TelemetryService.interact('TOUCH', 'ALERT_CANCEL', 'EXIT', {type:type,stageId:stageId});
-                }
+                    if (confirm("Would you like to leave this content ?")) {
+                       TelemetryService.interact('END', 'ALERT_OK', 'EXIT', {type:type,stageId:stageId});
+                        backbuttonPressed(stageId);
+                    } else {
+                        TelemetryService.interact('TOUCH', 'ALERT_CANCEL', 'EXIT', {type:type,stageId:stageId});
+                    }
+                }    
             }, 100);
             $ionicPlatform.on("pause", function() {
                 Renderer && Renderer.pause();
