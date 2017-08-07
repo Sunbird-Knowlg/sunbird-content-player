@@ -6,7 +6,8 @@
  */
 
 org.ekstep.contentrenderer.baseLauncher.extend({
-    book: {},
+    book: undefined,
+    start: undefined,
     initialize: function () {
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.epub-archive', this.launch, this);
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.resetContent, this);
@@ -36,7 +37,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             height: document.getElementById('gameArea').offsetHeight
         };
         this.book = ePub(epubPath, epubOptions);
-
         this.book.renderTo('gameArea');
         EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
         this.addEventHandlers();
@@ -45,10 +45,23 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         EventBus.addEventListener('nextClick', function () {
             instance.book.nextPage();
+            // TelemetryService.interact()
         });
 
         EventBus.addEventListener('previousClick', function () {
             instance.book.prevPage();
+        });
+
+        instance.book.getToc().then(function(toc){
+            instance.start = toc[0].href;
+        });
+
+        instance.book.generatePagination().then(function () {
+            console.log("The pagination has been generated");
+        });
+
+        instance.book.on('book:pageChanged', function (data) {
+           console.log(data); //DEBUG!
         });
     },
     getAssetURL: function (content) {
@@ -60,8 +73,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     resetContent: function () {
         this.relaunch();
-        //TODO: Base functionality should take care of reLaunching of the game
-        this.initContent();
+        this.gotoStart();
+    },
+    gotoStart: function () {
+        if(this.start) {
+            this.book.goto(this.start);
+        }
     }
 });
 //# sourceURL=ePubRendererPlugin.js
