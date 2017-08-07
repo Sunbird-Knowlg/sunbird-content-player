@@ -317,8 +317,6 @@ app.compileProvider.directive('goodJob', function($rootScope) {
             }
 
             $scope.hidePopup = function(id) {
-
-                // Check if "backbuttonpressed" is available then remove the listener.
                 TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
                     stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
                 });
