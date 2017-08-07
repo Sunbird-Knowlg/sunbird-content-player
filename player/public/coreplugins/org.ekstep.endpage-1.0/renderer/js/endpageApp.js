@@ -206,13 +206,16 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
                 subtype: "",
                 values: values
             });
-            TelemetryService.end(logContentProgress());
+            var telemetryEndData = {};
+            telemetryEndData.stageid = getCurrentStageId();
+            telemetryEndData.progress = logContentProgress();
+            TelemetryService.end(telemetryEndData);
             GlobalContext.game.id = content.identifier
             GlobalContext.game.pkgVersion = content.pkgVersion;
 
             // Check is content is downloaded or not in Genie.
             var contentExtras = _.isUndefined($scope.relatedContentResp.contentExtras) ? null : $scope.relatedContentResp.contentExtras;
-                        
+
             org.ekstep.service.content.getContentAvailability(content.identifier)
                 .then(function(contetnIsAvailable) {
                     if (contetnIsAvailable) {

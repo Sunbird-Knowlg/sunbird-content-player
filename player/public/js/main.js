@@ -48,11 +48,20 @@ function getUrlParameter(sParam) {
     }
 }
 
+function getCurrentStageId() {
+    var stageId = EkstepRendererAPI.getCurrentStageId();
+    return (stageId) ? stageId : angular.element(document).scope().pageId;
+}
+
 function backbuttonPressed(stageId) {
     TelemetryService.interrupt("OTHER", stageId);
-    TelemetryService.end(logContentProgress());
+
+    var telemetryEndData = {};
+    telemetryEndData.stageid = getCurrentStageId();
+    telemetryEndData.progress = logContentProgress();
+    TelemetryService.end(telemetryEndData);
     try {
-        TelemetryService.exit();
+        TelemetryService.exit(stageId);
     } catch (err) {
         console.error('End telemetry error:', err.message);
     }
@@ -68,7 +77,7 @@ function exitApp(stageId) {
         stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " ";
     }
     try {
-        TelemetryService.exit();
+        TelemetryService.exit(stageId);
     } catch (err) {
         console.error('End telemetry error:', err.message);
     }
@@ -82,7 +91,8 @@ function startApp(app) {
     if (!_.isUndefined(navigator) && !_.isUndefined(navigator.startApp)) {
         navigator.startApp.start(app, function(message) {
             exitApp();
-            TelemetryService.exit(packageName, version)
+            TelemetryService.exit(getCurrentStageId())
+            // TelemetryService.exit(packageName, version)
         }, function(error) {
             if (app == geniePackageName)
                 showToaster('error', "Unable to start Genie App.");
@@ -301,7 +311,7 @@ function getPreviewMode() {
    var mode = 'preview';
     if ("undefined" != typeof cordova) {
         mode = !_.isUndefined(GlobalContext.config.mode) ? GlobalContext.config.mode : 'play';
-    } else if (EkstepRendererAPI.getGlobalConfig().context.mode){
+    } else if (EkstepRendererAPI.getGlobalConfig().context.mode) {
         mode = EkstepRendererAPI.getGlobalConfig().context.mode;
     }
     return mode;

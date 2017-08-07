@@ -18,14 +18,14 @@ TelemetryV2Manager = Class.extend({
         this._start.push({id: id , ver : ver});
         return this.createEvent("OE_START", data);
     },
-    end: function(progress) {
+    end: function(data) {
         if (!_.isEmpty(this._start)) {
             this._start.pop();
-            if(progress == undefined) {
+            if(data.progress == undefined) {
                 // Bu default we are sending as 50. If any external guys called telemetryService.end() directly
-                progress = 50;
+                data.progress = 50;
             }
-            return this._end.pop().end(progress);
+            return this._end.pop().end(data);
         } else {
             console.warn("Telemetry service end is already logged Please log start telemetry again");
         }

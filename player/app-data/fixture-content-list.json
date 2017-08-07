@@ -37,6 +37,55 @@
                 "path": "fixture-stories/bgae-fn"
             },
         {
+            "identifier": "org.ekstep.pratham-camal",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "stories/pratham-camal/logo.png",
+                "subject": "literacy_v2",
+                "description": "pratham-camal",
+                "name": "Pratham Camal",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.pratham-camal",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "stories/pratham-camal"
+        },
+        {
+            "identifier": "org.ekstep.dependency",
+            "mimeType": "application/vnd.ekstep.ecml-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/shapes/logo.png",
+                "subject": "literacy_v2",
+                "description": "shapes",
+                "name": "Dependency-Managment Test",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.dependency",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/Dependency-managment"
+        },
+
+        {
             "identifier": "org.ekstep.dependency",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
@@ -200,31 +249,6 @@
             "isAvailable": true,
             "language": ["english"],
             "path": "fixture-stories/font"
-        },
-
-        {
-            "identifier": "org.ekstep.pratham-camal",
-            "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
-                "questionnaire": null,
-                "appIcon": "stories/pratham-camal/logo.png",
-                "subject": "literacy_v2",
-                "description": "pratham-camal",
-                "name": "Pratham Camal",
-                "downloadUrl": "",
-                "checksum": null,
-                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
-                "concepts": [{
-                    "identifier": "LO1",
-                    "name": "Receptive Vocabulary",
-                    "objectType": "Concept"
-                }],
-                "identifier": "org.ekstep.pratham-camal",
-                "grayScaleAppIcon": null,
-                "pkgVersion": 1
-            },
-            "isAvailable": true,
-            "path": "stories/pratham-camal"
         },
 
         {
