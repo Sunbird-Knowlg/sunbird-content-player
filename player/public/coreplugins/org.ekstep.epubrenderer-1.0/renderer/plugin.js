@@ -8,6 +8,8 @@
 org.ekstep.contentrenderer.baseLauncher.extend({
     book: undefined,
     start: undefined,
+    currentPage: 1,
+    totalPages: 0,
     initialize: function () {
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.epub-archive', this.launch, this);
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.resetContent, this);
@@ -45,7 +47,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         EventBus.addEventListener('nextClick', function () {
             instance.book.nextPage();
-            // TelemetryService.interact()
         });
 
         EventBus.addEventListener('previousClick', function () {
@@ -56,12 +57,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.start = toc[0].href;
         });
 
-        instance.book.generatePagination().then(function () {
-            console.log("The pagination has been generated");
+        instance.book.generatePagination().then(function (data) {
+            instance.totalPages = data.length;
         });
 
         instance.book.on('book:pageChanged', function (data) {
-           console.log(data); //DEBUG!
+            instance.logTelemetryInteract({currentPage: instance.currentPage});
+            instance.logTelemetryNavigate({fromPage: instance.currentPage, toPage: data.anchorPage});
+            instance.currentPage = data.anchorPage;
         });
     },
     getAssetURL: function (content) {
@@ -79,6 +82,28 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if(this.start) {
             this.book.goto(this.start);
         }
+    },
+    logTelemetryInteract: function (data) {
+        var oeInteractData = {
+            type: "TOUCH",
+            id: "",
+            extype: "",
+            eks: {
+                stageId: data.currentPage,
+                type: "TOUCH",
+                subtype: "",
+                extype: "",
+                pos: [],
+                values: [],
+                id: "",
+                tid: "",
+                uri: ""
+            }
+        };
+        TelemetryService.interact(oeInteractData.type, oeInteractData.id, oeInteractData.extype, oeInteractData.eks);
+    },
+    logTelemetryNavigate: function (data) {
+        TelemetryService.navigate(data.fromPage, data.toPage);
     }
 });
 //# sourceURL=ePubRendererPlugin.js
