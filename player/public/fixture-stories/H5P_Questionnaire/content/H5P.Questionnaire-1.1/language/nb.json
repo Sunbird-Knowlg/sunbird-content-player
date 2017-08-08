@@ -1,0 +1,124 @@
+{
+  "semantics": [
+    {
+      "englishLabel": "Questionnaire elements",
+      "label": "Spørreskjema",
+      "widgets": [
+        {
+          "englishLabel": "Default",
+          "label": "Normal verdi"
+        }
+      ],
+      "englishEntity": "element",
+      "entity": "Element",
+      "field": {
+        "englishLabel": "Choose library",
+        "label": "Velg innholdstype",
+        "fields": [
+          {
+            "englishLabel": "Library",
+            "label": "Innholdstype",
+            "englishDescription": "Choose a library",
+            "description": "Velg innholdstype"
+          },
+          {
+            "englishLabel": "Required field",
+            "label": "Nødvendig felt"
+          }
+        ]
+      }
+    },
+    {
+      "englishLabel": "Success screen options",
+      "label": "Suksess-skjerm alternativer",
+      "fields": [
+        {
+          "englishLabel": "Enable success screen",
+          "label": "Slå på suksess-skjerm"
+        },
+        {
+          "englishLabel": "Add success screen image",
+          "label": "Legg til bilde for suksess-skjerm",
+          "fields": [
+            {
+              "englishLabel": "Replace success icon with image",
+              "label": "Bytt ut suksess-skjerm ikon med bilde"
+            }
+          ]
+        },
+        {
+          "englishLabel": "Text to display on submit",
+          "label": "Tekst ved ferdig innsending",
+          "englishDefault": "You successfully answered all of the questions.",
+          "default": "Du har svart på alle spørsmålene."
+        }
+      ]
+    },
+    {
+      "englishLabel": "UI Elements",
+      "label": "Oversettelser av grensesnitt",
+      "fields": [
+        {
+          "englishLabel": "Button labels",
+          "label": "Knappe-etiketter",
+          "fields": [
+            {
+              "englishLabel": "Previous button label",
+              "label": "Forrige knapp etikett",
+              "englishDefault": "Previous",
+              "default": "Forrige"
+            },
+            {
+              "englishLabel": "Next button label",
+              "label": "Neste knapp etikett",
+              "englishDefault": "Next",
+              "default": "Neste"
+            },
+            {
+              "englishLabel": "Submit button label",
+              "label": "Send inn etikett",
+              "englishDefault": "Submit",
+              "default": "Send inn"
+            }
+          ]
+        },
+        {
+          "englishLabel": "Accessibility",
+          "label": "Oversettelser for hjelpemiddelteknologi",
+          "fields": [
+            {
+              "englishLabel": "Required message exit button label",
+              "label": "Lukk \"nødvendig felt tekst\" knappetikett",
+              "englishDefault": "Close error message",
+              "default": "Lukk feilmelding"
+            },
+            {
+              "englishLabel": "Progress bar text",
+              "label": "Framgang tekst",
+              "englishDefault": "Question %current of %max",
+              "default": "Spørsmål %current av %max",
+              "englishDescription": "Used to tell assistive technologies what question it is. Variables: [ %current, %max ]",
+              "description": "Brukes for å fortelle hjelpemiddelteknologier hvilket spørsmål vi er på. Variabler: [ %current, %max ]"
+            }
+          ]
+        },
+        {
+          "englishLabel": "Required message",
+          "label": "Nødvendig spørsmål tekst",
+          "englishDefault": "This question requires an answer",
+          "default": "Dette spørsmålet krever et svar",
+          "englishDescription": "Will display if this field is unanswered and required by a wrapper content type",
+          "description": "Vises dersom dette feltet er krevet, men ikke besvart."
+        },
+        {
+          "englishLabel": "Required symbol text",
+          "label": "Nødvendig spørsmål symbol tekst",
+          "englishDefault": "required",
+          "default": "nødvendig",
+          "englishDescription": "Text that will accompany an asterisk to signal that a question is required",
+          "description": "Tekst som vil vises ved siden av asterisk for å vise at spørsmålet er påkrevd."
+        }
+      ]
+    }
+  ]
+}

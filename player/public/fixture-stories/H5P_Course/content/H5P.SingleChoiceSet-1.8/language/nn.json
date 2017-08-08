@@ -1,0 +1,128 @@
+{
+  "semantics": [
+    {
+      "englishLabel": "List of questions",
+      "label": "Spørsmålsliste",
+      "englishEntity": "question",
+      "entity": "spørsmål",
+      "field": {
+        "englishLabel": "Question & alternatives",
+        "label": "Spørsmål & alternativer",
+        "fields": [
+          {
+            "englishLabel": "Question",
+            "label": "Spørsmål"
+          },
+          {
+            "englishLabel": "Alternatives - first alternative is the correct one.",
+            "label": "Alternativer. Det første alternativet er rett.",
+            "englishEntity": "answer",
+            "entity": "svar",
+            "field": {
+              "englishLabel": "Alternative",
+              "label": "Svar"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "englishLabel": "Behavioural settings",
+      "label": "Innstillinger for oppførsel",
+      "fields": [
+        {
+          "englishLabel": "Timeout on correct answers",
+          "label": "Pause ved korrekt svar",
+          "englishDescription": "Value in milliseconds",
+          "description": "Verdien er i millisekunder (1000 millisekunder = 1 sekund)"
+        },
+        {
+          "englishLabel": "Timeout on wrong answers",
+          "label": "Pause ved feil svar",
+          "englishDescription": "Value in milliseconds",
+          "description": "Verdien er i millisekunder (1000 millisekunder = 1 sekund)"
+        },
+        {
+          "englishLabel": "Enable sound effects",
+          "label": "Lydeffekter"
+        },
+        {
+          "englishLabel": "Enable retry button",
+          "label": "\"Prøv igjen\" knapp"
+        },
+        {
+          "englishLabel": "Enable show solution button",
+          "label": "\"Vis svar\" knapp"
+        },
+        {
+          "label": "Pass percentage",
+          "description": "Percentage of Total score required for passing the quiz."
+        }
+      ]
+    },
+    {
+      "englishLabel": "Localize single choice set",
+      "label": "Ledetekster",
+      "fields": [
+        {
+          "englishLabel": "Title for result slide",
+          "label": "Tittel på resultatside",
+          "englishDefault": "You got :numcorrect of :maxscore correct",
+          "default": "Du fikk :numcorrect av :maxscore poeng",
+          "englishDescription": ":numcorrect is replaced by the number of correct answers and :maxscore is replaced by number of questions",
+          "description": ":numcorrect byttes ut med antall korrekte svar og :maxscore byttes ut med antall spørsmål"
+        },
+        {
+          "englishLabel": "Label for the \"Show solution\" button",
+          "label": "Etikett på \"Vis svar\" knappen",
+          "englishDefault": "Show solution",
+          "default": "Vis svar"
+        },
+        {
+          "englishLabel": "Label for the \"Retry\" button",
+          "label": "Etikett på \"Prøv igjen\" knappen",
+          "englishDefault": "Retry",
+          "default": "Prøv igjen"
+        },
+        {
+          "englishLabel": "Title for the show solution view",
+          "label": "Tittelen på svarvisnings-siden",
+          "englishDefault": "Solution",
+          "default": "Svar"
+        },
+        {
+          "englishLabel": "Readspeaker text for correct answer",
+          "label": "Readspeaker tekst for korrekt svar",
+          "englishDefault": "Correct!",
+          "default": "Riktig!"
+        },
+        {
+          "englishLabel": "Readspeaker text for incorrect answer",
+          "label": "Readspeaker tekst for feil svar",
+          "englishDefault": "Incorrect!",
+          "default": "Feil!"
+        },
+        {
+          "englishLabel": "Label for the \"mute\" button, to disable feedback sound",
+          "label": "Merkelapp for \"mute\"-knappen",
+          "englishDefault": "Mute feedback sound",
+          "default": "Skru av tilbakemeldingslyd"
+        },
+        {
+          "englishLabel": "Label for the \"Close\" button",
+          "label": "Merkelapp for \"Lukk\"-knappen",
+          "englishDefault": "Back",
+          "default": "Lukk"
+        },
+        {
+          "englishLabel": "Slide number text",
+          "label": "Side nummer tekst",
+          "englishDescription": "Announces current slide and total number of slides, variables are :num and :total",
+          "description": "Angir nåværende side og totalt antall sider, variabler er :num og :total",
+          "englishDefault": "Slide :num of :total",
+          "default": "Side :num av :total"
+        }
+      ]
+    }
+  ]
+}

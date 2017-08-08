@@ -1,0 +1,22 @@
+{
+  "libraryStrings": {
+    "englishTransformLabel": "Transform",
+    "transformLabel": "Transformer",
+    "englishEditLabel": "Edit",
+    "editLabel": "Editer",
+    "englishLremoveLabel": "Remove",
+    "removeLabel": "Supprimer",
+    "englishBringToFrontLabel": "Bring to Front",
+    "bringToFrontLabel": "Amener au premier plan",
+    "englishUnableToPaste": "Cannot paste this object. Unfortunately, the object you are trying to paste is not supported by this content type or version.",
+    "unableToPaste": "Impossible de coller cet objet. Malheureusemennt l'objet que vous essayez de coller n'est pas supporté par ce type de contenu ou la version en cours.",
+    "englishSizeLabel": "Size",
+    "sizeLabel": "Dimensions",
+    "englishPositionLabel": "Position",
+    "positionLabel": "Position",
+    "englishHeightLabel": "Height",
+    "heightLabel": "Hauteur",
+    "englishWidthLabel": "Width",
+    "widthLabel": "Largeur"
+  }
+}
