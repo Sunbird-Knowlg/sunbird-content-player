@@ -12,6 +12,30 @@
     "responseCode": "OK",
     "result": {
         "content": [
+            {
+                "identifier": "epub-demo",
+                "mimeType": "application/vnd.ekstep.epub-archive",
+                "localData": {
+                    "questionnaire": null,
+                    "appIcon": "fixture-stories/bgae-fn/logo.png",
+                    "subject": "literacy_v2",
+                    "description": "epub - Beyond Good and Evil",
+                    "name": "epub - Beyond Good and Evil",
+                    "downloadUrl": "",
+                    "checksum": null,
+                    "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                    "concepts": [{
+                        "identifier": "LO1",
+                        "name": "Receptive Vocabulary",
+                        "objectType": "Concept"
+                    }],
+                    "identifier": "epub-demo",
+                    "grayScaleAppIcon": null,
+                    "pkgVersion": 1
+                },
+                "isAvailable": true,
+                "path": "fixture-stories/bgae-fn"
+            },
         {
             "identifier": "org.ekstep.pratham-camal",
             "mimeType": "application/vnd.ekstep.ecml-archive",
@@ -85,7 +109,103 @@
             "isAvailable": true,
             "path": "fixture-stories/Dependency-managment"
         },
-          {
+        {
+            "identifier": "org.ekstep.H5P_Sample",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/H5P_Sample/logo.png",
+                "subject": "literacy_v2",
+                "description": "H5P sample content",
+                "name": "H5P Sample",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Loading H5P content..",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.H5P_Sample",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/H5P_Sample"
+        },
+        {
+            "identifier": "org.ekstep.H5P_Course",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/H5P_Course/logo.png",
+                "subject": "literacy_v2",
+                "description": "H5P sample content",
+                "name": "H5P Course",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Loading H5P content..",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.H5P_Course",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/H5P_Course"
+        },
+        {
+            "identifier": "org.ekstep.H5P_Quiz",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/H5P_Quiz/logo.png",
+                "subject": "literacy_v2",
+                "description": "H5P Quiz content",
+                "name": "H5P Quiz",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Loading H5P content..",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.H5P_Quiz",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/H5P_Quiz"
+        },
+        {
+            "identifier": "org.ekstep.H5P_Questionnaire",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/H5P_Questionnaire/logo.png",
+                "subject": "literacy_v2",
+                "description": "H5P sample content",
+                "name": "H5P Questionnaire",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Loading H5P content..",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.H5P_Questionnaire",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/H5P_Questionnaire"
+        },
+        {
             "identifier": "org.ekstep.desertflip",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
