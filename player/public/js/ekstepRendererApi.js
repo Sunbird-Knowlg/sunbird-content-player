@@ -939,7 +939,7 @@ window.EkstepRendererAPI = {
         this.dispatchEvent('renderer:content:end');
         this.dispatchEvent('renderer:endpage:show');
     },
-   
+
 
     hideEndPage: function() {
        this.dispatchEvent('renderer:endpage:hide');

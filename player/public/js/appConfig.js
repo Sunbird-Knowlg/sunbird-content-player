@@ -12,7 +12,7 @@ AppConfig = {
     telemetryEventsConfigFields: ['sid', 'uid','did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner'],
     configFields: ['origin', 'contentId', 'appInfo', 'languageInfo', 'contentExtras', 'appQualifier', 'mode', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'contentLaunchers', 'overlay', 'splash', 'showEndPage', 'app', 'dims', 'partner'],
     mimetypes: [
-        "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive"
+        "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.epub-archive"
     ],
     defaultMetadata: {
         "identifier": "org.ekstep.item.sample",
@@ -39,7 +39,14 @@ AppConfig = {
             id: 'org.ekstep.ecmlrenderer',
             ver: 1.0,
             type: 'plugin'
+        },
+        {
+            mimeType: 'application/vnd.ekstep.epub-archive',
+            id: 'org.ekstep.epubrenderer',
+            ver: 1.0,
+            type: 'plugin'
         }
+
     ],
     assetbase: 'assets/icons/',
     defaultPlugins: [

@@ -34,6 +34,12 @@
 }
 
 
+
+
+
+
+
+
 /*@font-face {
     font-family: 'NotoNastaliqUrdu';
     src: url('fonts/NotoNastaliqUrdu-Regular.ttf') format('truetype')
@@ -119,13 +125,15 @@
     -webkit-line-clamp: 2;
     font-size: 2vw;
 }
+
 .splash-icon {
     width: 35px;
     height: 35px;
     vertical-align: middle;
     font-size: 5vh;
 }
-#pluginTemplate{
+
+#pluginTemplate {
     margin: auto;
     position: absolute;
     width: 100%;
@@ -160,7 +168,7 @@ body {
     padding: 18px !important;
 }
 
-.no-events{
+.no-events {
     pointer-events: none;
 }
 
@@ -296,7 +304,6 @@ body {
     /*vertical-align: middle;*/
     /*padding-left: 5%;*/
     /*overflow: hidden;*/
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -512,21 +519,17 @@ body {
     padding-top: 10%;
 }
 
+
+/* For .assess-popup height:65% is important to make it align vertically and horizontally with the screen */
+
 .assess-popup {
-    position: absolute;
-    width: 43%;
-    height: 80%;
+    height: 100%;
     border-radius: 10px;
 }
 
 .assess-goodjob-popup {
     top: 8%;
     left: 30%;
-}
-
-.assess-tryagain-popup {
-    top: 26%;
-    left: 27%;
 }
 
 .credit-popup {
@@ -537,7 +540,10 @@ body {
 }
 
 .popup {
-    position: absolute;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
     z-index: 9999;
@@ -562,11 +568,17 @@ body {
 }
 
 .popup-overlay {
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 100%;
     background-color: black;
     opacity: 0.6;
+    z-index: -1;
+}
+
+.popup-full-body {
+    width: 65vw;
+    height: 70vh;
 }
 
 .popup-close {
@@ -609,7 +621,6 @@ body {
 .gc-cp-scroll-ionic {
     transform: translate3d(0px, -28px, 0px) scale(1);
     height: 100%;
-
 }
 
 .gc-cp-header-div {
@@ -641,22 +652,26 @@ body {
     cursor: pointer;
 }
 
-.credit-body-icon-font::-webkit-scrollbar, .stage-Teacherinst::-webkit-scrollbar {
+.credit-body-icon-font::-webkit-scrollbar,
+.stage-Teacherinst::-webkit-scrollbar {
     width: 3%;
     border-radius: 30%;
 }
 
-.credit-body-icon-font::-webkit-scrollbar-track, .stage-Teacherinst::-webkit-scrollbar-track {
+.credit-body-icon-font::-webkit-scrollbar-track,
+.stage-Teacherinst::-webkit-scrollbar-track {
     background-color: #d0cfce;
     border-radius: 10%;
 }
 
-.credit-body-icon-font::-webkit-scrollbar-thumb, .stage-Teacherinst::-webkit-scrollbar-thumb {
+.credit-body-icon-font::-webkit-scrollbar-thumb,
+.stage-Teacherinst::-webkit-scrollbar-thumb {
     background-color: #000000;
     border-radius: 35%;
 }
 
-.credit-body-icon-font::-webkit-scrollbar-thumb:hover, .stage-Teacherinst::-webkit-scrollbar-thumb:hover {
+.credit-body-icon-font::-webkit-scrollbar-thumb:hover,
+.stage-Teacherinst::-webkit-scrollbar-thumb:hover {
     background-color: #000000;
     border-radius: 10%;
 }
@@ -706,7 +721,8 @@ body {
     width: 25%;
 }
 
-.gc-ep-cong, .gc-ep-related-cont-next {
+.gc-ep-cong,
+.gc-ep-related-cont-next {
     width: 100%;
     text-align: center;
     font-size: 1.1em;
@@ -849,7 +865,6 @@ body {
 
     /* margin: 0 -5%; */
     /* margin-left: -50%; */
-
 }
 
 .gc-ep-footer-icons.gc-ep-userSwitch {
@@ -860,7 +875,6 @@ body {
 
     /* margin: 0 -5%; */
     /* margin-left: 50%; */
-
 }
 
 .gc-ep-footer-icons img.replay {
@@ -1334,6 +1348,7 @@ body {
 }
 
 
+
 /*Loader css*/
 
 #loaderArea {
@@ -1568,7 +1583,9 @@ body {
 }
 
 
+
 /* User Switcher Modal css starts */
+
 
 /* The Modal (background) */
 
@@ -1595,6 +1612,8 @@ body {
     /* Black w/ opacity */
     font-family: lato-black lato-black-italic lato-bold lato-bold-italic lato-hairline lato-hairline-italic lato-heavy lato-heavy-italic lato-light lato-light-italic lato-medium lato-medium-italic lato-regular lato-semibold lato-semibold-italic lato-thin lato-thin-italic;
 }
+
+
 /* Modal Content */
 
 #userSwitchingModal .modal-content {
@@ -1616,7 +1635,20 @@ body {
 #userSwitchingModal .modal-content .user-header P {
     margin-bottom: 0;
     padding-top: 7px;
+    text-transform: uppercase;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 /* The Close Button */
 
 #userSwitchingModal .close {
@@ -1647,7 +1679,8 @@ body {
     height: 35vh;
 }
 
-#userSwitchingModal #userSlider, #userSwitchingModal #groupSlider {
+#userSwitchingModal #userSlider,
+#userSwitchingModal #groupSlider {
     min-height: 145px;
     width: 100%;
     padding: 5px 20px 0px 20px;
@@ -1753,9 +1786,18 @@ body {
 .mCS-dark-3.mCSB_scrollTools .mCSB_draggerRail {
     background-color: rgba(0, 0, 0, 0);
 }
+
+
+
+
+
+
+
 /* User Switcher Modal endes*/
 
+
 /*Loader Css*/
+
 body {
     background-color: #fff;
 }
@@ -1766,14 +1808,14 @@ body {
 }
 
 #progressArea {
-  position: relative;
-  left: 25vw;
-  top: 50vh;
-  width: 50vw;
-  height: 2em;
-  text-align: center;
-  border-radius: 90px;
-  background-color: #ddd;
+    position: relative;
+    left: 25vw;
+    top: 50vh;
+    width: 50vw;
+    height: 2em;
+    text-align: center;
+    border-radius: 90px;
+    background-color: #ddd;
 }
 
 .gc-loader-prog {
@@ -1790,17 +1832,290 @@ body {
 }
 
 #progressBar {
-  position: absolute;
-  height: 2em;
-  border-radius: 90px;
-  background-color: #e67300;
+    position: absolute;
+    height: 2em;
+    border-radius: 90px;
+    background-color: #e67300;
 }
+
+
+
+
+
+
+
 /*Ionic is overwriting css for ul & ol css bullets and numbers*/
+
+
 /*This is for richtext support*/
-#gameArea > div > ul {
+
+#gameArea>div>ul {
     list-style-type: disc !important;
 }
 
-#gameArea > div > ol {
+#gameArea>div>ol {
     list-style-type: decimal !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/* new popup style */
+
+@-webkit-keyframes sign-board-anim {
+    from {
+        visibility: hidden;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+    to {
+        visibility: visible;
+        -webkit-transform: translateY(-85%);
+        transform: translateY(-85%);
+    }
+}
+
+@keyframes sign-board-anim {
+    from {
+        visibility: hidden;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+    to {
+        visibility: visible;
+        -webkit-transform: translateY(-85%);
+        transform: translateY(-85%);
+    }
+}
+
+@-webkit-keyframes banner-anim {
+    from {
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+    }
+    to {
+        -webkit-transition: all 0.1s ease-in;
+        -o-transition: all 0.1s ease-in;
+        transition: all 0.1s ease-in;
+
+        -webkit-transform: scale(1);
+        -khtml-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes banner-anim {
+    from {
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+    }
+    to {
+        -webkit-transition: all 0.1s ease-in;
+        -o-transition: all 0.1s ease-in;
+        transition: all 0.1s ease-in;
+
+        -webkit-transform: scale(1);
+        -khtml-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@-webkit-keyframes incorrect-button-anim {
+    from {
+        visibility: visible;
+        z-index: 100;
+    }
+    to {
+        visibility: hidden;
+        z-index: -1;
+    }
+}
+
+@keyframes incorrect-button-anim {
+    from {
+        visibility: visible;
+        z-index: 100;
+    }
+    to {
+        visibility: hidden;
+        z-index: -1;
+    }
+}
+
+@-webkit-keyframes retry-button-anim {
+    from {
+        visibility: visible;
+        z-index: 100;
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -khtml-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        visibility: visible;
+        z-index: 100;
+        display: block;
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -khtml-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes retry-button-anim {
+    from {
+        visibility: visible;
+        z-index: 100;
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -khtml-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        visibility: visible;
+        z-index: 100;
+        display: block;
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -khtml-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+
+.correct-answer,
+.wrong-answer {
+    position: relative;
+    height: 70%;
+    overflow: hidden;
+    background: #F8D764;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+}
+
+.banner,
+.sign-board {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.banner {
+    z-index: 10;
+    height: 30%;
+    width: 50%;
+    background: #F8D764;
+}
+
+.sign-board {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    background-color: #fff;
+    bottom: -35%;
+    width: 30%;
+    height: 65%;
+    border-radius: .5em;
+    -webkit-animation: sign-board-anim 0.2s ease-out forwards;
+    animation: sign-board-anim 0.2s ease-out forwards;
+    -webkit-animation-delay: 0.4s;
+    animation-delay: 0.4s;
+}
+
+.sign-board img {
+    position: relative;
+    margin: auto;
+}
+
+.banner img {
+    position: relative;
+    top: -30%;
+    -webkit-animation: banner-anim 0.2s ease-out forwards;
+    animation: banner-anim 0.2s ease-out forwards;
+}
+
+#retryButton {
+    -webkit-animation: retry-button-anim 2s forwards;
+    animation: retry-button-anim 2s forwards;
+    -webkit-animation-delay: 1.9s;
+    animation-delay: 1.9s;
+}
+
+#incorrectButton {
+    position: absolute;
+    left: 0;
+    right: 0;
+    -webkit-animation: incorrect-button-anim 1s forwards;
+    animation: incorrect-button-anim 1s forwards;
+    -webkit-animation-delay: 0.9s;
+    animation-delay: 0.9s;
+}
+
+.wrong-answer .sign-board {
+    display: block;
+}
+
+.correct-answer .sign-board img {
+    top: -2vh;
+}
+
+.wrong-answer .sign-board img {
+    visibility: hidden;
+    top: 4vh;
+}
+
+
+#popup-buttons-container {
+    background-color: white;
+    height: 30%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+#popup-buttons-container .button {
+    font-size: 2.5vw;
+    min-height: 0;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    padding-right: 5vw;
+    padding-left: 5vw;
+    border-radius: 0.6em;
+    align-items: center;
+    border: 0.1px solid grey;
+}
+
+#popup-buttons-container .primary {
+    background: #3098CD;
+    color: white;
+}
+
+.center {
+    margin: 0 auto;
+}
+
+
+
+
+
+
+
+
+
+
+/* new popup style */
