@@ -30,28 +30,28 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         $rootScope.addIonicEvents = function() {
             // To override back button behaviour
             $ionicPlatform.registerBackButtonAction(function() {
-                //TODO: Add Telemetry interact for ok and Cancle
-                var stageId = undefined;
-                var type = undefined;
-                if (Renderer) {
-                    AudioManager.stopAll();
-                    type = Renderer.running ? 'EXIT_CONTENT' : 'EXIT_APP'
-                    stageId = Renderer.theme ? Renderer.theme._currentStage : $rootScope.pageId;
+                if (EkstepRendererAPI.hasEventListener(EkstepRendererEvents.backbuttonpressed)) {
+                    EkstepRendererAPI.dispatchEvent(EkstepRendererEvents.backbuttonpressed);
                 } else {
-                    type: 'EXIT_CONTENT';
-                    stageId = $rootScope.pageId || '';
-                }
-                TelemetryService.interact('TOUCH', 'DEVICE_BACK_BTN', 'EXIT', {type:type,stageId:stageId});
-                if (EkstepRendererAPI.hasEventListener("event:backbuttonpressed")) {
-                    EkstepRendererAPI.dispatchEvent("event:backbuttonpressed");
-                } else {
-                    if (confirm(AppLables.backButtonText)) {
-                       TelemetryService.interact('END', 'ALERT_OK', 'EXIT', {type:type,stageId:stageId});
-                        backbuttonPressed(stageId);
+                    //TODO: Add Telemetry interact for ok and Cancle
+                    var stageId = undefined;
+                    var type = undefined;
+                    if (Renderer) {
+                        AudioManager.stopAll();
+                        type = Renderer.running ? 'EXIT_CONTENT' : 'EXIT_APP'
+                        stageId = Renderer.theme ? Renderer.theme._currentStage : $rootScope.pageId;
                     } else {
-                        TelemetryService.interact('TOUCH', 'ALERT_CANCEL', 'EXIT', {type:type,stageId:stageId});
+                        type: 'EXIT_CONTENT';
+                        stageId = $rootScope.pageId || '';
                     }
-                }    
+                    TelemetryService.interact('TOUCH', 'DEVICE_BACK_BTN', 'EXIT', {type:type,stageId:stageId});
+                        if (confirm(AppLables.backButtonText)) {
+                        TelemetryService.interact('END', 'ALERT_OK', 'EXIT', {type:type,stageId:stageId});
+                            backbuttonPressed(stageId);
+                        } else {
+                            TelemetryService.interact('TOUCH', 'ALERT_CANCEL', 'EXIT', {type:type,stageId:stageId});
+                        }
+                }  
             }, 100);
             $ionicPlatform.on("pause", function() {
                 Renderer && Renderer.pause();
