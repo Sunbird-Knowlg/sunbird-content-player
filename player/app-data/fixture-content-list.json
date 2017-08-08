@@ -61,6 +61,78 @@
             "path": "fixture-stories/H5P_Sample"
         },
         {
+            "identifier": "org.ekstep.H5P_Course",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/H5P_Course/logo.png",
+                "subject": "literacy_v2",
+                "description": "H5P sample content",
+                "name": "H5P Course",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Loading H5P content..",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.H5P_Course",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/H5P_Course"
+        },
+        {
+            "identifier": "org.ekstep.H5P_Quiz",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/H5P_Quiz/logo.png",
+                "subject": "literacy_v2",
+                "description": "H5P Quiz content",
+                "name": "H5P Quiz",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Loading H5P content..",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.H5P_Quiz",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/H5P_Quiz"
+        },
+        {
+            "identifier": "org.ekstep.H5P_Questionnaire",
+            "mimeType": "application/vnd.ekstep.html-archive",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "fixture-stories/H5P_Questionnaire/logo.png",
+                "subject": "literacy_v2",
+                "description": "H5P sample content",
+                "name": "H5P Questionnaire",
+                "downloadUrl": "",
+                "checksum": null,
+                "loadingMessage": "Loading H5P content..",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.H5P_Questionnaire",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/H5P_Questionnaire"
+        },
+        {
             "identifier": "org.ekstep.desertflip",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {

@@ -16,6 +16,12 @@
       });
     })(H5P.jQuery);
 
+    H5P.externalDispatcher.on('xAPI', function (event) {
+      console.log("H5P event: \n", event);
+      console.log("H5P verb: \n", event.getVerb());
+      console.log("H5P event object: \n", event.data.statement.object);
+    });
+
     //console.log("org.ekstep.renderer.html.telemetryService", RI.TelemetryService);
 
     function logTelemetryInteract(elementId) {
@@ -30,7 +36,7 @@
                       };
         RI.logTelemetryInteract(eventData);
 
-        setTimeout(gotoEndPage, 5000);
+        //setTimeout(gotoEndPage, 5000);
     }
 
     function gotoEndPage(){
@@ -42,7 +48,6 @@
 </head>
   <body>
     <div class="h5p-container">
-      <h1>H5P content</h1>
     </div>
   </body>
 </html>
