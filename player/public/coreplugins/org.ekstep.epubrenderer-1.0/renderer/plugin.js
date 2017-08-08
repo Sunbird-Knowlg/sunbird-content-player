@@ -10,6 +10,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     start: undefined,
     currentPage: 1,
     totalPages: 0,
+    progress: 0,
     initialize: function () {
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.epub-archive', this.launch, this);
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.resetContent, this);
@@ -36,12 +37,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         jQuery('#gameArea').css({left: '10%', top: '0px', width: "80%", height: "90%", margin: "5% 0 5% 0"});
         var epubOptions = {
             width: document.getElementById('gameArea').offsetWidth,
-            height: document.getElementById('gameArea').offsetHeight
+            height: document.getElementById('gameArea').offsetHeight,
+            spreads: false
         };
         this.book = ePub(epubPath, epubOptions);
+        this.book.forceSingle(true);
         this.book.renderTo('gameArea');
         EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
+        jQuery('.reload-stage').hide();
         this.addEventHandlers();
+        this.initProgressElements();
     },
     addEventHandlers: function () {
         var instance = this;
@@ -53,18 +58,25 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.book.prevPage();
         });
 
+        EventBus.addEventListener('actionReload', function () {
+           instance.resetContent();
+        });
+
         instance.book.getToc().then(function(toc){
             instance.start = toc[0].href;
         });
 
         instance.book.generatePagination().then(function (data) {
             instance.totalPages = data.length;
+            instance.updateProgressElements();
         });
 
         instance.book.on('book:pageChanged', function (data) {
             instance.logTelemetryInteract({currentPage: instance.currentPage});
             instance.logTelemetryNavigate({fromPage: instance.currentPage, toPage: data.anchorPage});
             instance.currentPage = data.anchorPage;
+            instance.progress = data.percentage;
+            instance.updateProgressElements();
         });
     },
     getAssetURL: function (content) {
@@ -104,6 +116,23 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     logTelemetryNavigate: function (data) {
         TelemetryService.navigate(data.fromPage, data.toPage);
+    },
+    initProgressElements: function () {
+        // Add page number display container
+        var $pageDiv = jQuery('<div>', {id: 'page'}).css({position: 'absolute', top: '5px', width: '40%', height: '30px', overflow: 'hidden', margin: '0 auto', left:0, right:0, 'text-align': 'center' });
+        jQuery('#gameArea').parent().append($pageDiv);
+
+        // Add progress bar
+        var $progressDiv = jQuery('<div>', {id: 'progress-container'}).css({width: '80%', margin: '0 auto', position: 'absolute', top: 0, left: 0, right:0});
+        var $progressContainer = jQuery('<div>', {id: 'progress'}).css({overflow: 'hidden', height: '0.33em', 'background-color': '#e5e5e5'});
+        var $progressBar = jQuery('<div>', {id: 'bar'}).css({width: '0%', height: '0.33em', 'background-color': '#7f7f7f'});
+        $progressContainer.append($progressBar);
+        $progressDiv.append($progressContainer);
+        jQuery('#gameArea').parent().append($progressDiv);
+    },
+    updateProgressElements: function () {
+        jQuery('#page').html(this.currentPage + ' of ' + this.totalPages);
+        jQuery('#bar').css({width: (this.progress * 100) + '%'});
     }
 });
 //# sourceURL=ePubRendererPlugin.js
