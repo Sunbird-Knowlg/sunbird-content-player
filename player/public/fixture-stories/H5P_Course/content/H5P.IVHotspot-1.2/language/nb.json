@@ -1,0 +1,108 @@
+{
+  "semantics": [
+    {
+      "englishLabel": "Destination",
+      "label": "Endepunkt",
+      "fields": [
+        {
+          "englishLabel": "Type",
+          "label": "Type",
+          "options": [
+            {
+              "englishLabel": "Timecode",
+              "label": "Tidskode"
+            },
+            {
+              "englishLabel": "Another page (URL)",
+              "label": "Annen side (URL)"
+            }
+          ]
+        },
+        {
+          "englishLabel": "Go To",
+          "label": "Gå til",
+          "englishDescription": "The target time the user will be taken to upon pressing the hotspot. Enter timecode in the format M:SS.",
+          "description": "Tidskoden brukeren tas til ved å trykke på hotspot. Tidskoden må være i formatet M:SS."
+        },
+        {
+          "englishLabel": "URL",
+          "label": "URL",
+          "fields": [
+            {
+              "englishLabel": "Protocol",
+              "label": "Protokoll",
+              "options": [
+                {
+                  "englishLabel": "http://",
+                  "label": "http://"
+                },
+                {
+                  "englishLabel": "https://",
+                  "label": "https://"
+                },
+                {
+                  "englishLabel": "(root relative)",
+                  "label": "(rot relativt)"
+                },
+                {
+                  "englishLabel": "other",
+                  "label": "andre"
+                }
+              ]
+            },
+            {
+              "englishLabel": "URL",
+              "label": "URL"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "englishLabel": "Visuals",
+      "label": "Visuelle egenskaper",
+      "fields": [
+        {
+          "englishLabel": "Shape",
+          "label": "Form",
+          "options": [
+            {
+              "englishLabel": "Rectangular",
+              "label": "Rektangulær"
+            },
+            {
+              "englishLabel": "Circular",
+              "label": "Sirkulær"
+            }
+          ]
+        },
+        {
+          "englishLabel": "Background color for hotspot",
+          "label": "Bakgrunnsfarge for hotspot",
+          "englishDefault": "rgba(255, 255, 255, 0)",
+          "default": "rgba(255, 255, 255, 0)"
+        },
+        {
+          "englishLabel": "Use pointer cursor",
+          "label": "Visuell effekt for muse-peker"
+        },
+        {
+          "englishLabel": "Add blinking effect",
+          "label": "Vis blinkende effekt",
+          "englishDescription": "Note: Blinking effect is always enabled in the editor so you are able to find transparent hotspots",
+          "description": "Blinkende effekt er alltid på i editor så du kan se hvor gjennomsiktige hotspots befinner seg."
+        }
+      ]
+    },
+    {
+      "englishLabel": "Texts",
+      "label": "Tekster",
+      "fields": [
+        {
+          "englishLabel": "Descriptive text for assistive technologies",
+          "label": "Beskrivende tekst for hjelpemiddelteknologier"
+        }
+      ]
+    }
+  ]
+}

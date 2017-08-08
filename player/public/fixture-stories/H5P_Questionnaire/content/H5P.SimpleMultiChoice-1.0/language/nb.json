@@ -1,0 +1,32 @@
+{
+  "semantics": [
+    {
+      "englishLabel": "Question",
+      "label": "Spørsmål"
+    },
+    {
+      "englishLabel": "Multiple choice type",
+      "label": "Flervalgsoppgave",
+      "options": [
+        {
+          "englishLabel": "Multiple answers",
+          "label": "Flere rette svar"
+        },
+        {
+          "englishLabel": "Single answer",
+          "label": "Ett rett svar"
+        }
+      ]
+    },
+    {
+      "englishLabel": "Answer alternatives",
+      "label": "Svaralternativer",
+      "englishEntity": "Alternative",
+      "entity": "Alternativ",
+      "field": {
+        "englishLabel": "Alternative",
+        "label": "Alternativ"
+      }
+    }
+  ]
+}

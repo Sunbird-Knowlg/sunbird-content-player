@@ -1,0 +1,53 @@
+<html>
+<head>
+  <link type="text/css" rel="stylesheet" media="all" href="styles/h5p.css" />
+  <meta charset="utf-8" />
+  <script type="text/javascript" src="js/h5p-standalone-main.min.js"></script>
+  <script type="text/javascript" src="js/htmlinterface.js"></script>
+
+  <script type="text/javascript">
+    (function($) {
+      $(function() {
+        $('.h5p-container').h5p({
+          frameJs: 'js/h5p-standalone-frame.min.js',
+          frameCss: 'styles/h5p.css',
+          h5pContent: './content'
+        });
+      });
+    })(H5P.jQuery);
+
+    H5P.externalDispatcher.on('xAPI', function (event) {
+      console.log("H5P event: \n", event);
+      console.log("H5P verb: \n", event.getVerb());
+      console.log("H5P event object: \n", event.data.statement.object);
+    });
+
+    //console.log("org.ekstep.renderer.html.telemetryService", RI.TelemetryService);
+
+    function logTelemetryInteract(elementId) {
+      var eventData = {
+                        type: "TOUCH", 
+                        id: elementId, 
+                        extype: "", 
+                        eks: {
+                          stageId: "HTML-page-id", 
+                          subtype: ""
+                        }
+                      };
+        RI.logTelemetryInteract(eventData);
+
+        //setTimeout(gotoEndPage, 5000);
+    }
+
+    function gotoEndPage(){
+      RI.gotoEndPage();
+    }
+
+    logTelemetryInteract("html-element-id");
+  </script>
+</head>
+  <body>
+    <div class="h5p-container">
+    </div>
+  </body>
+</html>

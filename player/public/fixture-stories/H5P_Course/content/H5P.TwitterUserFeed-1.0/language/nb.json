@@ -1,0 +1,18 @@
+{
+  "semantics": [
+    {
+      "englishLabel": "Username on Twitter",
+      "label": "Brukernavn på Twitter",
+      "englishDescription": "The username we'll be fetching tweets from",
+      "description": "Brukernavnet som tweets blir hentet fra"
+    },
+    {
+      "englishLabel": "Show replies",
+      "label": "Vis svar"
+    },
+    {
+      "englishLabel": "Number of tweets",
+      "label": "Antall tweets som skal vises"
+    }
+  ]
+}

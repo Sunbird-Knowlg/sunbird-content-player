@@ -1,0 +1,151 @@
+{
+  "semantics": [
+    {
+      "label": "Media",
+      "fields": [
+        {
+          "label": "Type",
+          "description": "Optional media to display above the question."
+        }
+      ]
+    },
+    {
+      "label": "وصف النشاط",
+      "description": "دليل يشرح للمستخدم كيفية الإجابة على هذا السؤال"
+    },
+    {
+      "label": "النشاط",
+      "entity": "النشاط",
+      "field": {
+        "label": "سطر من النص",
+        "description": " يتم اضافت الفراغات بإدخال النجمة (*) قبل وبعد الكلمة او الجملة الصحيحة ويمكنك إضافة إجابات بديلة بفصلهم بالخط المائل كما يلي (/). يمكنك إضافة تلميح نصي، وذلك باستخدام بنقطتين (:) أمام الكلمة. مثلايمكنك انشاء نشاطات وتحريرها باستخدام H5P *المتصفح/متصفح الإنترنت: مثال شيء كنت تستخدم كل يوم*"
+      }
+    },
+    {
+      "label": "ملاحظات النص",
+      "description": "ملاحظات النص، والمتغيرات المتاحة: النتيجة والمجموع. مثال: هل حصلت على درجة من مجموع النقاط الممكنة"
+    },
+    {
+      "label": "النص ل \"مشاهدة الحل \" الزر"
+    },
+    {
+      "label": "النص ل \"إعادة المحاولة \" الزر"
+    },
+    {
+      "label": "النص ل \"تحقق \" الزر"
+    },
+    {
+      "label": "النص ل \"لا جواب \" رسالة"
+    },
+    {
+      "label": "Text for \"':ans' is correct\" message",
+      "default": "':ans' is correct"
+    },
+    {
+      "label": "Text for \"':ans' is wrong\" message",
+      "default": "':ans' is wrong"
+    },
+    {
+      "label": "Text for \"Answered correctly\" message",
+      "default": "Answered correctly"
+    },
+    {
+      "label": "Text for \"Answered incorrectly\" message",
+      "default": "Answered incorrectly"
+    },
+    {
+      "label": "Assistive technology label for solution",
+      "default": "Correct answer:"
+    },
+    {
+      "label": "Assistive technology label for input field",
+      "description": "Use @num and @total to replace current cloze number and total cloze number",
+      "default": "Blank input @num of @total"
+    },
+    {
+      "label": "Assistive technology label for saying an input has a tip tied to it",
+      "default": "Tip available"
+    },
+    {
+      "label": "Tip icon label",
+      "default": "Tip"
+    },
+    {
+      "label": "إعدادت النشاط",
+      "description": "وهذه الخيارات تمكنك من التحكم في كيفية سلوك هذا النشاط",
+      "fields": [
+        {
+          "label": "تمكين \"إعادة المحاولة \""
+        },
+        {
+          "label": "تمكين \"مشاهدة الحل \" الزر"
+        },
+        {
+          "label": "تحقق تلقائيا بعد إدخال الإجابات"
+        },
+        {
+          "label": "حساسية الاجابة",
+          "description": "يتأكد من إجابة المستخدم بأن تكون بالضبط نفس الجواب"
+        },
+        {
+          "label": "يتم طلب كل الاجابات والرد عليها، قبل أن يتم عرض الحل"
+        },
+        {
+          "label": "وضع فراغات الكلمات على خطوط منفصلة"
+        },
+        {
+          "label": "Disable image zooming for question image."
+        },
+        {
+          "label": "Show confirmation dialog on \"Check\"",
+          "description": "This options is not compatible with the \"Automatically check answers after input\" option"
+        },
+        {
+          "label": "Show confirmation dialog on \"Retry\""
+        }
+      ]
+    },
+    {
+      "label": "Check confirmation dialog",
+      "fields": [
+        {
+          "label": "Header text",
+          "default": "Finish ?"
+        },
+        {
+          "label": "Body text",
+          "default": "Are you sure you wish to finish ?"
+        },
+        {
+          "label": "Cancel button label",
+          "default": "Cancel"
+        },
+        {
+          "label": "Confirm button label",
+          "default": "Finish"
+        }
+      ]
+    },
+    {
+      "label": "Retry confirmation dialog",
+      "fields": [
+        {
+          "label": "Header text",
+          "default": "Retry ?"
+        },
+        {
+          "label": "Body text",
+          "default": "Are you sure you wish to retry ?"
+        },
+        {
+          "label": "Cancel button label",
+          "default": "Cancel"
+        },
+        {
+          "label": "Confirm button label",
+          "default": "Confirm"
+        }
+      ]
+    }
+  ]
+}
