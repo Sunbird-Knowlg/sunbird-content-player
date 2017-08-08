@@ -94,11 +94,9 @@ TelemetryEvent = Class.extend({
             if (!_.isUndefined(data) && !_.isUndefined(data.stageid)) {
                 eks.stageid = data.stageid; // attach stage id to eks
             }
-            this.event.edata.eks = {
-                "length": Math.round((getCurrentTime() - this.startTime ) / 1000),
-                "progress": eks.progress || undefined,
-                "stageid": eks.stageid || undefined
-            }
+            this.event.edata.eks.length = Math.round((getCurrentTime() - this.startTime ) / 1000);
+            this.event.edata.eks.progress = eks.progress || undefined;
+            this.event.edata.eks.stageid = eks.stageid || undefined;
             this.event.ets = new Date().getTime();
             this._isStarted = false;
             return this;
