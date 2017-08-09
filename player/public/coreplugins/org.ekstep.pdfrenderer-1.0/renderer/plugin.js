@@ -64,6 +64,7 @@
      renderPDF: function(path, canvasContainer, manifestData) {
          EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
          var pdfMainContainer = document.createElement("div");
+         this.logheartBeatEvent(true);
          pdfMainContainer.id = "pdf-main-container";
          pdfMainContainer.style.overflowX = "scroll";
          pdfMainContainer.style.overflowY = "scroll";
@@ -204,6 +205,7 @@
          if (context.CURRENT_PAGE != context.TOTAL_PAGES)
              context.showPage(++context.CURRENT_PAGE);
          if (context.CURRENT_PAGE == context.TOTAL_PAGES) {
+             this.logheartBeatEvent(false);
              EkstepRendererAPI.dispatchEvent('renderer:content:end');
          }
      },
@@ -316,7 +318,18 @@
              width: '100%',
              height: '100%'
          });
-     }
+     },
+     logheartBeatEvent: function(flag) {
+        var instance = this;
+        if (flag) {
+            instance._time = setInterval(function() {
+                EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {});
+            }, 3000);
+        }
+        if (!flag) {
+            clearInterval(instance._time);
+        }
+    },
  });
 
  //# sourceURL=PDFRenderer.js
