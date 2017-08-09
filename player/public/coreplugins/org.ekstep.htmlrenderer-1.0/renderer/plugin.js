@@ -29,10 +29,20 @@
                 showToaster("error", "Sorry!!.. Unable to open the Game!",{timeOut:200000})
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+                instance.configOverlay();
                 instance.logheartBeatEvent(true);
                 instance.addIframe(iframe);
             }
         });        
+    },
+    configOverlay:function(){
+        setTimeout(function(){
+            EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
+            EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
+            EkstepRendererAPI.dispatchEvent('renderer:next:hide');
+            EkstepRendererAPI.dispatchEvent('renderer:previous:hide');
+        },100)
+         
     },
     addIframe: function(iframe) {
         jQuery('#ekstep_htmlIframe').insertBefore("#gameArea");
