@@ -1846,16 +1846,29 @@ body {
 
 /*Ionic is overwriting css for ul & ol css bullets and numbers*/
 
-
 /*This is for richtext support*/
-
-#gameArea>div>ul {
+.richText ul {
     list-style-type: disc !important;
 }
 
-#gameArea>div>ol {
+.richText ul, .richText ol {
+    -webkit-margin-before: 1em !important;
+    -webkit-margin-after: 1em !important;
+    -webkit-margin-start: 0px !important;
+    -webkit-margin-end: 0px !important;
+    -webkit-padding-start: 40px !important;
+}
+
+.richText ol {
     list-style-type: decimal !important;
 }
+
+/*For richtext WYSIWYG preview*/
+.richText p {
+    margin: 0 0 1em !important;
+    line-height: 1.4285em !important;
+}
+
 
 
 
