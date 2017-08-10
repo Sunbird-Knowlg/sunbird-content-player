@@ -1,0 +1,6 @@
+/*
+ * Write your custom css for changing video player style 
+ */
+.video-js .vjs-control-bar {
+    z-index: 100000;
+}
