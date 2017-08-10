@@ -43,6 +43,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var source = document.createElement("source");
         source.src = path;
         video.appendChild(source);
+        var player = videojs('renderer_videos');
+        player.play();
         this.addvideoListeners(video);
     },
     _loadYoutube: function(path) {
@@ -147,7 +149,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     logheartBeatEvent: function(flag) {
         var instance = this;
-        var stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
+        var stageId = content.mimeType === 'video/x-youtube' ? 'youtube-stage' : 'video-stage';
         if (flag) {
             instance._time = setInterval(function() {
                 EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {
