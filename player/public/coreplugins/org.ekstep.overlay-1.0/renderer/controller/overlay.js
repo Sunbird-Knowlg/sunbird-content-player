@@ -153,7 +153,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         });
         jQuery('.menu-overlay').css('display', 'none');
         jQuery(".gc-menu").animate({
-            "marginLeft": ["-31%", 'easeOutExpo']
+            "marginLeft": ["-35%", 'easeOutExpo']
         }, 700, function() {});
     }
 
@@ -205,7 +205,41 @@ app.compileProvider.directive('mute', function($rootScope) {
 app.compileProvider.directive('reloadStage', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<span class="reload-stage" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></span>'
+        template: '<span class="reload-stage" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" ng-show="reload !== state_off" src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></span>',
+        link: function(scope) {
+
+            scope.toggleReload = function(event) {
+                var val;
+                var globalConfig = EkstepRendererAPI.getGlobalConfig();
+                var defaultValue = globalConfig.overlay.showReload ? "on" : "off";
+                switch (event.type) {
+                    case "renderer:stagereload:show":
+                        val = "on";
+                        break;
+                    case "renderer:stagereload:hide":
+                        val = "off";
+                        break;
+                    default:
+                        val = defaultValue;
+                }
+                scope.reload = val;
+                $rootScope.safeApply();
+            };
+            /**
+             * 'renderer:stagereload:show' Event to show the stage reload icon.
+             * @event renderer:stagereload:show
+             * @listen renderer:stagereload:show
+             * @memberOf EkstepRendererEvents
+             */
+            EkstepRendererAPI.addEventListener("renderer:stagereload:show", scope.toggleReload, scope);
+            /**
+             * 'renderer:stagereload:hide' Event to hide the stage reload icon.
+             * @event renderer:stagereload:hide
+             * @listen renderer:stagereload:hide
+             * @memberOf EkstepRendererEvents
+             */
+            EkstepRendererAPI.addEventListener("renderer:stagereload:hide", scope.toggleReload, scope)
+        }
     }
 });
 

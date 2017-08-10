@@ -4,6 +4,7 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
     $rootScope.pageId = "ContentApp-Renderer";
     $scope.showPlayer = false;
     $scope.isInitialized = false;
+    $scope.canvas = false;
 
     $scope.init = function() {
         if (_.isUndefined($rootScope.content)) {
@@ -28,6 +29,7 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
         if ($rootScope.content) {
             localStorageGC.setItem("content", $rootScope.content);
             $rootScope.pageTitle = $rootScope.content.name;
+            $scope.canvas  = $rootScope.content.mimeType == 'application/vnd.ekstep.ecml-archive' ? true : false;
             GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
             $scope.callStartTelemetry($rootScope.content, function() {
                 $scope.item = $rootScope.content;

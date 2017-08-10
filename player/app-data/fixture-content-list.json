@@ -36,7 +36,7 @@
                 "isAvailable": true,
                 "path": "fixture-stories/bgae-fn"
             },
-        {
+          {
             "identifier": "org.ekstep.pratham-camal",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
@@ -59,6 +59,77 @@
             },
             "isAvailable": true,
             "path": "stories/pratham-camal"
+        },{
+            "identifier": "org.ekstep.videorenderer",
+            "mimeType": "video/mp4",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "stories/pratham-camal/logo.png",
+                "subject": "literacy_v2",
+                "description": "pratham-camal",
+                "name": "Video-Renderer",
+                "downloadUrl": "cat.mp4",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.videorenderer",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/video-renderer"
+        },
+        {
+            "identifier": "org.ekstep.pdfrenderer",
+            "mimeType": "application/pdf",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "stories/pratham-camal/logo.png",
+                "subject": "literacy_v2",
+                "description": "pratham-camal",
+                "name": "Pdf-Renderer",
+                "downloadUrl": "index.pdf",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.pdfrenderer",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/pdf-renderer"
+        },
+        {
+            "identifier": "org.ekstep.youtube",
+            "mimeType": "video/youtube",
+            "localData": {
+                "questionnaire": null,
+                "appIcon": "stories/pratham-camal/logo.png",
+                "subject": "literacy_v2",
+                "description": "pratham-camal",
+                "name": "Youtube Renderer",
+                "downloadUrl": "https://www.youtube.com/embed/5dsGWM5XGdg?autoplay=1&enablejsapi=1",
+                "checksum": null,
+                "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",
+                "concepts": [{
+                    "identifier": "LO1",
+                    "name": "Receptive Vocabulary",
+                    "objectType": "Concept"
+                }],
+                "identifier": "org.ekstep.youtube",
+                "grayScaleAppIcon": null,
+                "pkgVersion": 1
+            },
+            "isAvailable": true,
+            "path": "fixture-stories/video-renderer"
         },
         {
             "identifier": "org.ekstep.dependency",

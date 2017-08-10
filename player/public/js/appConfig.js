@@ -4,6 +4,7 @@ AppConfig = {
     host: "",
     recorder: "AUDIO_RECORDER",
     flavor: "DEPLOYMENT",
+    heartBeatTime:180000,
     s3ContentHost: "/assets/public/content/",
     previewPluginspath: "/content-plugins",
     devicePluginspath: "/widgets/content-plugins",
@@ -12,7 +13,7 @@ AppConfig = {
     telemetryEventsConfigFields: ['sid', 'uid','did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner'],
     configFields: ['origin', 'contentId', 'appInfo', 'languageInfo', 'contentExtras', 'appQualifier', 'mode', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'contentLaunchers', 'overlay', 'splash', 'showEndPage', 'app', 'dims', 'partner'],
     mimetypes: [
-        "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.epub-archive"
+        "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.epub-archive", "video/mp4", "application/pdf","video/youtube"
     ],
     defaultMetadata: {
         "identifier": "org.ekstep.item.sample",
@@ -45,7 +46,25 @@ AppConfig = {
             id: 'org.ekstep.epubrenderer',
             ver: 1.0,
             type: 'plugin'
-        }
+        },
+        {
+            mimeType: 'video/mp4',
+            id: 'org.ekstep.videorenderer',
+            ver: 1.0,
+            type: 'plugin'
+        },
+        {
+            mimeType: 'application/pdf',
+            id: 'org.ekstep.pdfrenderer',
+            ver: 1.0,
+            type: 'plugin'
+        },
+        {
+            mimeType: 'video/youtube',
+            id: 'org.ekstep.videorenderer',
+            ver: 1.0,
+            type: 'plugin'
+        },
 
     ],
     assetbase: 'assets/icons/',
