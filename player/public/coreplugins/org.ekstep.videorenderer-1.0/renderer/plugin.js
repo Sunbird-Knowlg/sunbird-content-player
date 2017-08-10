@@ -189,6 +189,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             EkstepRendererAPI.dispatchEvent("renderer:next:hide");
             EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
             EkstepRendererAPI.dispatchEvent("renderer:previous:hide");
+            EkstepRendererAPI.dispatchEvent("renderer:contentclose:show");
         }, 100);
     },
 });

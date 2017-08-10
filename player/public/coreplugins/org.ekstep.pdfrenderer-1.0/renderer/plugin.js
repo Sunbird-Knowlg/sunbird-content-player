@@ -19,6 +19,7 @@
      enableOverly: function() {
          EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
          EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
+         EkstepRendererAPI.dispatchEvent("renderer:contentclose:show");
          $('#pdf-buttons').css({
              display: 'block'
          });
@@ -100,7 +101,7 @@
          var findTextField = document.createElement("input");
          findTextField.type = "text";
          findTextField.id = "pdf-find-text";
-         findTextField.placeholder = "Search Page";
+         findTextField.placeholder = "Enter page number";
 
          var findSubmit = document.createElement("button");
          findSubmit.id = "pdf-find";
