@@ -105,7 +105,6 @@ TelemetryService = {
     flushEvent: function(event, apiName) {
         TelemetryService._data.push(event);
         if (event)
-            console.log(JSON.stringify(event));
             event.flush(apiName);
         return event;
     },
