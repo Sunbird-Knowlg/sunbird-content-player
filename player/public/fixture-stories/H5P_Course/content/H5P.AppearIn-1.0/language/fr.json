@@ -1,0 +1,21 @@
+{
+  "semantics": [
+    {
+      "label": "Nom du salon de discussion",
+      "default": "h5p",
+      "description": "Nom du salon de discussion appear.in"
+    },
+    {
+      "label": "Remplir tout l'espace",
+      "description": "Le chat remplira tout l'espace disponible ; cela écrasera toute hauteur ou largeur définie à 100%."
+    },
+    {
+      "label": "Hauteur",
+      "description": "Définit la hauteur du salon de discussion"
+    },
+    {
+      "label": "Largeur",
+      "description": "Définit la largeur du salon de discussion"
+    }
+  ]
+}

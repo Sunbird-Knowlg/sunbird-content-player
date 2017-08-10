@@ -1,0 +1,38 @@
+{
+  "semantics": [
+    {
+      "englishLabel": "Question or description",
+      "label": "Spørsmål eller beskrivelse"
+    },
+    {
+      "englishLabel": "Placeholder text",
+      "label": "Plassholder",
+      "englishDefault": "Start writing...",
+      "default": "Skriver her..."
+    },
+    {
+      "englishLabel": "Input rows",
+      "label": "Rader av tekst",
+      "englishDescription": "Number of lines for the input field.",
+      "description": "Antall rader of tekst som brukeren kan fylle inn",
+      "options": [
+        {
+          "englishLabel": "1 line",
+          "label": "1 linje"
+        },
+        {
+          "englishLabel": "2 lines",
+          "label": "2 linjer"
+        },
+        {
+          "englishLabel": "3 lines",
+          "label": "3 linjer"
+        },
+        {
+          "englishLabel": "10 lines",
+          "label": "10 linjer"
+        }
+      ]
+    }
+  ]
+}

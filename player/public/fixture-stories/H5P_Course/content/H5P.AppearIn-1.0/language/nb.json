@@ -1,0 +1,28 @@
+{
+  "semantics": [
+    {
+      "englishLabel": "Room name",
+      "label": "Navn på rom",
+      "englishDescription": "Name of the appear.in room",
+      "description": "Navn på appear.in rommet brukere møtest i"
+    },
+    {
+      "englishLabel": "Fit to container",
+      "label": "Tilpass størrelse",
+      "englishDescription": "Make the room fit its container, will override any height and width defined with 100% values.",
+      "description": "Tvinger størrelsen til å tilpasses elementet den tilhører. Dette vil overstyre høyde og bredde instillinger."
+    },
+    {
+      "englishLabel": "Height",
+      "label": "Høyde",
+      "englishDescription": "Set Height of chat/talk room",
+      "description": "Sett høyden til rommet"
+    },
+    {
+      "englishLabel": "Width",
+      "label": "Bredde",
+      "englishDescription": "Set Width of chat/talk room",
+      "description": "Sett bredden til rommet"
+    }
+  ]
+}

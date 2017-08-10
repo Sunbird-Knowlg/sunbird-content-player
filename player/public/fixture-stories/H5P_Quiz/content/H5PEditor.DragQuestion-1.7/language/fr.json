@@ -1,0 +1,28 @@
+{
+  "libraryStrings": {
+    "englishInsertElement": "Insert :type",
+    "insertElement": "Insérer :type",
+    "englishDone": "Done",
+    "done": "OK",
+    "englishRemove": "Remove",
+    "remove": "Supprimer",
+    "englishImage": "Image",
+    "image": "Image",
+    "englishText": "Text",
+    "text": "Texte",
+    "englishNoTaskSize": "Please specify task size first.",
+    "noTaskSize": "Veuillez commencer par indiquer les dimensions de la zone d'activité.",
+    "englishConfirmRemoval": "Are you sure you wish to remove this element?",
+    "confirmRemoval": "Êtes-vous certain de vouloir supprimer cet élément ?",
+    "englishBackgroundOpacityOverridden": "The background opacity is overridden",
+    "backgroundOpacityOverridden": "L'opacité de l'arrière-plan est écrasée",
+    "englishAdvancedtext": "Advanced text",
+    "advancedtext": "Texte avancé",
+    "englishDropzone": "Drop zone",
+    "dropzone": "Zone de dépôt",
+    "englishSelectAll": "Select all",
+    "selectAll": "Sélectionner tout ",
+    "englishDeselectAll": "Deselect all",
+    "deselectAll": "Désélectionner tout"
+  }
+}

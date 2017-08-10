@@ -1,0 +1,44 @@
+{
+  "semantics": [
+    {
+      "englishLabel": "Question Text",
+      "label": "Spørsmålstekst",
+      "englishDescription": "The question that the user will make a choice based upon.",
+      "description": "Spørsmålet som brukeren blir stilt."
+    },
+    {
+      "englishLabel": "Choices",
+      "label": "Alternativer",
+      "englishEntity": "choice",
+      "entity": "alternativ",
+      "field": {
+        "fields": [
+          {
+            "englishLabel": "Choice Text",
+            "label": "Alternativ tekst",
+            "englishDescription": "The label that will displayed on the choice button.",
+            "description": "Etiketten som vil vises på alternativ knappen."
+          },
+          {
+            "englishLabel": "Go To",
+            "label": "Gå til",
+            "englishDescription": "The target time the user will be taken to upon pressing the choice button. Enter timecode in the format M:SS.",
+            "description": "Tidskoden brukeren vil flyttes til når knappen er trykket. Tidskoden må være på formatet M:SS."
+          },
+          {
+            "englishLabel": "If Chosen Text",
+            "label": "Valgt tekst",
+            "englishDescription": "An optional confirmation text that will be displayed after the user has pressed the choice button.",
+            "description": "En valgfri bekreftelsestekst som vises etter brukeren har gjort et valg."
+          }
+        ]
+      }
+    },
+    {
+      "englishLabel": "Continue Button Label",
+      "label": "Continue Button Label",
+      "englishDefault": "Continue",
+      "default": "Fortsett"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "semantics": [
+    {
+      "englishLabel": "List of questions",
+      "label": "قائمة الأسئلة",
+      "englishEntity": "question",
+      "entity": "السؤال",
+      "field": {
+        "englishLabel": "Question & alternatives",
+        "label": "أسئلة واجوبة بديلة",
+        "fields": [
+          {
+            "englishLabel": "Question",
+            "label": "السؤال"
+          },
+          {
+            "englishLabel": "Alternatives - first alternative is the correct one.",
+            "label": "اجوبة بديلة - أول جواب هو الصحيح",
+            "englishEntity": "answer",
+            "entity": "جواب",
+            "field": {
+              "englishLabel": "Alternative",
+              "label": "اجوبة بديلة"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "englishLabel": "Behavioural settings",
+      "label": "إعدادات سلوكية",
+      "fields": [
+        {
+          "englishLabel": "Timeout on correct answers",
+          "label": "مهلة على الإجابات الصحيحة",
+          "englishDescription": "Value in milliseconds",
+          "description": "القيمة بالمللي ثانية"
+        },
+        {
+          "englishLabel": "Timeout on wrong answers",
+          "label": "المهلة على الإجابات الخاطئة",
+          "englishDescription": "Value in milliseconds",
+          "description": "القيمة بالمللي ثانية"
+        },
+        {
+          "englishLabel": "Enable sound effects",
+          "label": "تفعيل المؤثرات الصوتية"
+        },
+        {
+          "englishLabel": "Enable retry button",
+          "label": "تفعيل زر إعادة المحاولة"
+        },
+        {
+          "englishLabel": "Enable show solution button",
+          "label": "تفعيل إظهار زر الحل"
+        },
+        {
+          "label": "Pass percentage",
+          "description": "Percentage of Total score required for passing the quiz."
+        }
+      ]
+    },
+    {
+      "englishLabel": "Localize single choice set",
+      "label": "توطين مجموعة الخيار واحد",
+      "fields": [
+        {
+          "englishLabel": "Title for result slide",
+          "label": "عنوان لشريحة النتائج",
+          "englishDefault": "You got :numcorrect of :maxscore correct",
+          "default": "كنت حصلت :numcorrect أو :maxscore صحيحة",
+          "englishDescription": ":numcorrect is replaced by the number of correct answers and :maxscore is replaced by number of questions",
+          "description": "يتم استبدال الرقم الصحيح يتم استبدال عدد من الإجابات الصحيحة ودرجة تقييم كحد أقصى من قبل عدد من الأسئلة"
+        },
+        {
+          "englishLabel": "Label for the \"Show solution\" button",
+          "label": "تسمية لزر \"مشاهدة حل \"",
+          "englishDefault": "Show solution",
+          "default": "مشاهدة الحل"
+        },
+        {
+          "englishLabel": "Label for the \"Retry\" button",
+          "label": "تسمية لزر \"إعادة المحاولة \"",
+          "englishDefault": "Retry",
+          "default": "إعادة المحاولة"
+        },
+        {
+          "englishLabel": "Title for the show solution view",
+          "label": "عنوان مشاهدة عرض الحل",
+          "englishDefault": "Solution",
+          "default": "حل"
+        },
+        {
+          "englishLabel": "Readspeaker text for correct answer",
+          "label": "النص Readspeaker عن الإجابة الصحيحة",
+          "englishDefault": "Correct!",
+          "default": "صحيح!"
+        },
+        {
+          "englishLabel": "Readspeaker text for incorrect answer",
+          "label": "النص Readspeaker للإجابة غير صحيحة",
+          "englishDefault": "Incorrect!",
+          "default": "غير صحيح!"
+        },
+        {
+          "englishLabel": "Label for the \"mute\" button, to disable feedback sound",
+          "label": "تسمية لزر كتم الصوت، لتعطيل الصوت ردود الفعل",
+          "englishDefault": "Mute feedback sound",
+          "default": "صوت ردود الفعل البكم"
+        },
+        {
+          "englishLabel": "Label for the \"Close\" button",
+          "label": "تسمية الزر إغلاق",
+          "englishDefault": "Close",
+          "default": "أغلق"
+        },
+        {
+          "englishLabel": "Slide number text",
+          "label": "النص رقم الشريحة",
+          "englishDescription": "Announces current slide and total number of slides, variables are :num and :total",
+          "description": "تعلن الشريحة الحالية وعدد من الشرائح، والمتغيرات :num و:total",
+          "englishDefault": "Slide :num of :total",
+          "default": "الشريحة :num أو :total"
+        }
+      ]
+    }
+  ]
+}
