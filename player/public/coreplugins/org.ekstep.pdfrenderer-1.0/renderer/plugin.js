@@ -323,7 +323,7 @@
         var instance = this;
         if (flag) {
             instance._time = setInterval(function() {
-                EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {});
+                EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {stageId:context.CURRENT_PAGE.toString()});
             },EkstepRendererAPI.getGlobalConfig().heartBeatTime);
         }
         if (!flag) {

@@ -76,34 +76,34 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         videoHolder.onplay = function(e) {
             instance.logheartBeatEvent(true);
-            instance.logTelemetry({
-                stageId: "",
+            instance.logTelemetry('TOUCH',{
+                stageId: "videostage",
                 subtype: "PLAY",
                 values: [e.timeStamp]
             })
         };
         videoHolder.onpause = function(e) {
             instance.logheartBeatEvent(false);
-            instance.logTelemetry({
-                stageId: "",
+            instance.logTelemetry('TOUCH',{
+                stageId: "videostage",
                 subtype: "PAUSE",
                 values: [e.timeStamp]
             })
         };
         videoHolder.onended = function(e) {
             instance.logheartBeatEvent(false);
-            instance.logTelemetry({
-                stageId: "",
+            instance.logTelemetry('END',{
+                stageId: "videostage",
                 subtype: "STOP"
             });
             EkstepRendererAPI.dispatchEvent('renderer:content:end');
         };
         videoHolder.onseeked = function(e) {
-            instance.logTelemetry({
-                stageId: "",
+            instance.logTelemetry('TOUCH',{
+                stageId: "videostage",
                 subtype: "DRAG",
                 values: [e.timeStamp]
-            })
+            });
         };
     },
     addYOUTUBEListeners: function(videoHolder) {
@@ -111,45 +111,48 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         videoHolder.on('play', function(e) {
             instance.logheartBeatEvent(true);
-            instance.logTelemetry({
-                stageId: "",
+            instance.logTelemetry('TOUCH',{
+                stageId: "youtubestage",
                 subtype: "PLAY",
                 values: [videoHolder.currentTime()]
             })
         });
         videoHolder.on('pause', function(e) {
             instance.logheartBeatEvent(false);
-            instance.logTelemetry({
-                stageId: "",
+            instance.logTelemetry('TOUCH',{
+                stageId: "youtubestage",
                 subtype: "PAUSE",
                 values: [videoHolder.currentTime()]
             })
         });
 
         videoHolder.on('seeked', function(e) {
-            instance.logTelemetry({
-                stageId: "",
+            instance.logTelemetry('TOUCH', {
+                stageId: "youtubestage",
                 subtype: "DRAG",
                 values: [videoHolder.currentTime()]
             })
         });
         videoHolder.on('ended', function() {
             instance.logheartBeatEvent(false);
-            instance.logTelemetry({
-                stageId: "",
+            instance.logTelemetry('END',{
+                stageId: "youtubestage",
                 subtype: "STOP"
             });
             EkstepRendererAPI.dispatchEvent('renderer:content:end');
         });
     },
-    logTelemetry: function(eksData) {
-        EkstepRendererAPI.getTelemetryService().interact("TOUCH", "", "", eksData);
+    logTelemetry: function(type, eksData) {
+        EkstepRendererAPI.getTelemetryService().interact(type || 'TOUCH',"", "", eksData);
     },
     logheartBeatEvent: function(flag) {
         var instance = this;
+        var stageId = content.mimeType === 'video/youtube' ? 'youtubestage' : 'videostage';
         if (flag) {
             instance._time = setInterval(function() {
-                EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {});
+                EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {
+                    stageId:stageId
+                });
             },EkstepRendererAPI.getGlobalConfig().heartBeatTime);
         }
         if (!flag) {
