@@ -31,41 +31,34 @@ AppConfig = {
     },
     contentLaunchers: [
         {
-            mimeType: 'application/vnd.ekstep.html-archive',
+            mimeType: ['application/vnd.ekstep.html-archive'],
             id: 'org.ekstep.htmlrenderer',
             ver: 1.0,
             type: 'plugin'
         }, {
-            mimeType: 'application/vnd.ekstep.ecml-archive',
+            mimeType: ['application/vnd.ekstep.ecml-archive'],
             id: 'org.ekstep.ecmlrenderer',
             ver: 1.0,
             type: 'plugin'
         },
         {
-            mimeType: 'application/epub+zip',
+            mimeType: ['application/epub+zip'],
             id: 'org.ekstep.epubrenderer',
             ver: 1.0,
             type: 'plugin'
         },
         {
-            mimeType: 'video/mp4',
+            mimeType: ['video/mp4', 'video/x-youtube'],
             id: 'org.ekstep.videorenderer',
             ver: 1.0,
             type: 'plugin'
         },
         {
-            mimeType: 'application/pdf',
+            mimeType: ['application/pdf'],
             id: 'org.ekstep.pdfrenderer',
             ver: 1.0,
             type: 'plugin'
-        },
-        {
-            mimeType: 'video/x-youtube',
-            id: 'org.ekstep.videorenderer',
-            ver: 1.0,
-            type: 'plugin'
-        },
-
+        }
     ],
     assetbase: 'assets/icons/',
     defaultPlugins: [
