@@ -71,6 +71,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.lastPage = false;
         });
 
+        EventBus.addEventListener('actionContentClose', function () {
+            instance.logTelemetryInteract(instance.currentPage.toString());
+            instance.removeProgressElements();
+        });
+
         instance.book.generatePagination().then(function (data) {
             instance.start = data[0].cfi;
             instance.totalPages = data.length;
