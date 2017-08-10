@@ -13,7 +13,7 @@ AppConfig = {
     telemetryEventsConfigFields: ['sid', 'uid','did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner'],
     configFields: ['origin', 'contentId', 'appInfo', 'languageInfo', 'contentExtras', 'appQualifier', 'mode', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'contentLaunchers', 'overlay', 'splash', 'showEndPage', 'app', 'dims', 'partner'],
     mimetypes: [
-        "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.epub-archive", "video/mp4", "application/pdf","video/youtube"
+        "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/epub+zip", "video/mp4", "application/pdf","video/x-youtube"
     ],
     defaultMetadata: {
         "identifier": "org.ekstep.item.sample",
@@ -42,7 +42,7 @@ AppConfig = {
             type: 'plugin'
         },
         {
-            mimeType: 'application/vnd.ekstep.epub-archive',
+            mimeType: 'application/epub+zip',
             id: 'org.ekstep.epubrenderer',
             ver: 1.0,
             type: 'plugin'
@@ -60,7 +60,7 @@ AppConfig = {
             type: 'plugin'
         },
         {
-            mimeType: 'video/youtube',
+            mimeType: 'video/x-youtube',
             id: 'org.ekstep.videorenderer',
             ver: 1.0,
             type: 'plugin'

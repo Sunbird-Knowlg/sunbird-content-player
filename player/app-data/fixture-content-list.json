@@ -14,7 +14,7 @@
         "content": [
             {
                 "identifier": "epub-demo",
-                "mimeType": "application/vnd.ekstep.epub-archive",
+                "mimeType": "application/epub+zip",
                 "localData": {
                     "questionnaire": null,
                     "appIcon": "fixture-stories/bgae-fn/logo.png",
@@ -109,7 +109,7 @@
         },
         {
             "identifier": "org.ekstep.youtube",
-            "mimeType": "video/youtube",
+            "mimeType": "video/x-youtube",
             "localData": {
                 "questionnaire": null,
                 "appIcon": "stories/pratham-camal/logo.png",
