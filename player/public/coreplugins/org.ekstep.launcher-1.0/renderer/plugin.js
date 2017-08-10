@@ -20,10 +20,7 @@ Plugin.extend({
         var instance = this;
 
         var contentTypePlugin = _.find(globalConfig.contentLaunchers, function(eachConfig) {
-            var hasMimeType = _.find(eachConfig.mimeType, function(e) {
-                if (e === content.mimeType) return true;
-            });
-            if (hasMimeType) return eachConfig;
+            if (_.contains(eachConfig.mimeType, content.mimeType)) return eachConfig;
         });
 
         /**
