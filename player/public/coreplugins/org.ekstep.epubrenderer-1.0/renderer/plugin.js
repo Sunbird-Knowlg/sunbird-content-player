@@ -55,15 +55,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             if (instance.lastPage) {
                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
                 instance.removeProgressElements();
+            } else {
+                instance.book.nextPage();
             }
-            instance.book.nextPage();
-
         });
 
         EventBus.addEventListener('previousClick', function () {
             if(instance.currentPage === 2) {
                 // This is needed because some ePubs do not go back to the cover page on `book.prevPage()`
                 instance.gotoStart();
+                instance.logTelemetryNavigate("2", "1");
             } else {
                 instance.book.prevPage();
             }
@@ -77,8 +78,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
 
         instance.book.on('book:pageChanged', function (data) {
-            instance.logTelemetryInteract({currentPage: instance.currentPage.toString()});
-            instance.logTelemetryNavigate({fromPage: instance.currentPage.toString(), toPage: data.anchorPage.toString()});
+            instance.logTelemetryInteract(instance.currentPage.toString());
+            instance.logTelemetryNavigate(instance.currentPage.toString(), data.anchorPage.toString());
             instance.currentPage = data.pageRange[1];
             instance.updateProgressElements();
             if (instance.book.pagination.lastPage === data.anchorPage || instance.book.pagination.lastPage === data.pageRange[1]) {
@@ -100,7 +101,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     gotoStart: function () {
         if (this.start) {
             this.book.gotoCfi(this.start);
-            instance.currentPage = 1;
+            this.currentPage = 1;
             this.lastPage = false;
             EkstepRendererAPI.dispatchEvent('renderer:overlay:hide');
             EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
@@ -108,13 +109,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             this.initProgressElements();
         }
     },
-    logTelemetryInteract: function (data) {
+    logTelemetryInteract: function (stageId) {
         var oeInteractData = {
             type: "TOUCH",
             id: "",
             extype: "",
             eks: {
-                stageId: data.currentPage.toString(),
+                stageId: stageId,
                 type: "TOUCH",
                 subtype: "",
                 extype: "",
@@ -127,8 +128,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         };
         TelemetryService.interact(oeInteractData.type, oeInteractData.id, oeInteractData.extype, oeInteractData.eks);
     },
-    logTelemetryNavigate: function (data) {
-        TelemetryService.navigate(data.fromPage.toString(), data.toPage.toString());
+    logTelemetryNavigate: function (fromPage, toPage) {
+        TelemetryService.navigate(fromPage, toPage);
     },
     initProgressElements: function () {
         // Add page number display container
