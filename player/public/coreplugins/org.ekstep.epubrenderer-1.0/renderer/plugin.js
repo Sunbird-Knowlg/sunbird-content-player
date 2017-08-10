@@ -15,6 +15,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.epub-archive', this.launch, this);
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.resetContent, this);
         EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
+        EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
+        EkstepRendererAPI.dispatchEvent('renderer:contentclose:show');
         this.initContent();
     },
     initContent: function (event, data) {
@@ -44,7 +46,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.book = ePub(epubPath, epubOptions);
         this.book.forceSingle(true);
         this.book.renderTo('gameArea');
-        jQuery('.reload-stage').hide();
         this.addEventHandlers();
         this.initProgressElements();
     },
@@ -69,11 +70,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.lastPage = false;
         });
 
-        instance.book.getToc().then(function (toc) {
-            instance.start = toc[0].cfi;
-        });
-
         instance.book.generatePagination().then(function (data) {
+            instance.start = data[0].cfi;
             instance.totalPages = data.length;
             instance.updateProgressElements();
         });
