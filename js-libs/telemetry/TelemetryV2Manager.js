@@ -19,7 +19,7 @@ TelemetryV2Manager = Class.extend({
         return this.createEvent("OE_START", data);
     },
     end: function(data) {
-        if (!_.isEmpty(this._start)) {
+        if (this.telemetryStartActive()) {
             this._start.pop();
             if(data.progress == undefined) {
                 // Bu default we are sending as 50. If any external guys called telemetryService.end() directly
@@ -45,7 +45,8 @@ TelemetryV2Manager = Class.extend({
                 "extype": "",
                 "values": eks.values ? eks.values : []
             };
-            return this.createEvent("OE_INTERACT", eks);
+            var eventName = this.telemetryStartActive() ? "OE_INTERACT" : "GE_INTERACT"
+            return this.createEvent(eventName, eks);
         }
     },
     assess: function(qid, subj, qlevel, data) {
@@ -139,5 +140,8 @@ TelemetryV2Manager = Class.extend({
     },
     sendFeedback: function(eks) {
         return this.createEvent("", eks);
+    },
+    telemetryStartActive: function() {
+        return (!_.isEmpty(this._start));
     }
 })

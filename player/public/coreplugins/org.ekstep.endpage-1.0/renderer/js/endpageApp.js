@@ -82,7 +82,10 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
         $scope.userRating = $scope.selectedRating;
     }
     $scope.setTotalTimeSpent = function() {
-        var startTime = (TelemetryService && TelemetryService.instance && TelemetryService.instance._end[TelemetryService.instance._end.length - 1]) ? TelemetryService.instance._end[TelemetryService.instance._end.length - 1].startTime : 0;
+        var endEvent = _.filter(TelemetryService._data, function(event) {
+            return event.name == "OE_END";
+        })
+        var startTime = endEvent.length > 0 ? endEvent[0].startTime : 0;
         if (startTime) {
             var totalTime = Math.round((new Date().getTime() - startTime) / 1000);
             var mm = Math.floor(totalTime / 60);
@@ -170,14 +173,8 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
         }
 
     };
-    // EkstepRendererAPI.addEventListener('renderer:content:end', function() {
-    //     if (GlobalContext.config.showEndPage) {
-    //         $scope.showEndPage = true;
-    //         $scope.initEndpage();
-    //         $scope.safeApply();
-    //     }
-    // });
     EkstepRendererAPI.addEventListener('renderer:endpage:show', function() {
+        EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
         $scope.showEndPage = true;
         $scope.initEndpage();
         $scope.safeApply();
@@ -206,10 +203,10 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
                 subtype: "",
                 values: values
             });
-            var telemetryEndData = {};
-            telemetryEndData.stageid = getCurrentStageId();
-            telemetryEndData.progress = logContentProgress();
-            TelemetryService.end(telemetryEndData);
+            // var telemetryEndData = {};
+            // telemetryEndData.stageid = getCurrentStageId();
+            // telemetryEndData.progress = logContentProgress();
+            // TelemetryService.end(telemetryEndData);
             GlobalContext.game.id = content.identifier
             GlobalContext.game.pkgVersion = content.pkgVersion;
 

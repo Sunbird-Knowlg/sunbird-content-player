@@ -191,6 +191,7 @@ OverlayManager = {
       }
     },
     moveToEndPage: function() {
+        EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
         EkstepRendererAPI.dispatchEvent('renderer:content:end');
         console.info("redirecting to endpage.");
         var stage = Renderer.theme._currentScene;
@@ -334,19 +335,17 @@ OverlayManager = {
         });
     },
 
-    // Content replay
-    actionReplay: function(data) {
-        var version = TelemetryService.getGameVer();
-        var telemetryEndData = {};
-        telemetryEndData.stageid = getCurrentStageId();
-        telemetryEndData.progress = logContentProgress();
-        TelemetryService.end(telemetryEndData);
-        if (GlobalContext.currentContentId && version) {
-            startTelemetry(GlobalContext.currentContentId, version);
-        }
-        EkstepRendererAPI.removeHtmlElements();
-        Renderer.theme.reRender();
-        // if (data.target && data.target.menuReplay || _.isUndefined(data.target)) {
-        // }
-    }
+    // // Content replay
+    // actionReplay: function(data) {
+    //     // var telemetryEndData = {};
+    //     // telemetryEndData.stageid = getCurrentStageId();
+    //     // telemetryEndData.progress = logContentProgress();
+    //     // TelemetryService.end(telemetryEndData);
+    //     var version = TelemetryService.getGameVer();
+    //     if (GlobalContext.currentContentId && version) {
+    //         startTelemetry(GlobalContext.currentContentId, version);
+    //     }
+    //     EkstepRendererAPI.removeHtmlElements();
+    //     Renderer.theme.reRender();
+    // }
 }
