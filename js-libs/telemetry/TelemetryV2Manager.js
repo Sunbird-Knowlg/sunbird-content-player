@@ -30,7 +30,7 @@ TelemetryV2Manager = Class.extend({
             console.warn("Telemetry service end is already logged Please log start telemetry again");
         }
     },
-    interact: function(type, id, extype, eks) {
+    interact: function(type, id, extype, eks, eid) {
         if (eks.optionTag)
             TelemetryService.flushEvent(this.itemResponse(eks), TelemetryService.apis.telemetry);
         if (type != "DRAG") {
@@ -45,7 +45,7 @@ TelemetryV2Manager = Class.extend({
                 "extype": "",
                 "values": eks.values ? eks.values : []
             };
-            var eventName = this.telemetryStartActive() ? "OE_INTERACT" : "GE_INTERACT"
+            var eventName = eid ? eid : "OE_INTERACT"
             return this.createEvent(eventName, eks);
         }
     },
@@ -104,13 +104,14 @@ TelemetryV2Manager = Class.extend({
             return eventObj;
         }
     },
-    interrupt: function(type, id) {
+    interrupt: function(type, id, eid) {
             var eventStr = TelemetryService._config.events["OE_INTERRUPT"];
             var eks = {
                 "type": type,
                 "stageid": id || ''
             };
-            return this.createEvent("OE_INTERRUPT", eks);
+            var eventName = eid ? eid : "OE_INTERRUPT";
+            return this.createEvent(eventName, eks);
     },
     exitApp: function() {
         setTimeout(function() {

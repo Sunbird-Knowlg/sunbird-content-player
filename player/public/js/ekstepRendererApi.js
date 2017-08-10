@@ -987,7 +987,7 @@ window.EkstepRendererAPI = {
     },
 
     /**
-    * API to clear all cretejs element from canvas
+    * API to clear all createjs element from canvas
     * @memberof EkstepRendererAPI
     */
     clearStage: function(){

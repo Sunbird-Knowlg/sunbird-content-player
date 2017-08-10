@@ -162,11 +162,11 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
             'interactId': 'ge_replay',
             'callback': $scope.replayCallback
         };
+        $scope.hideMenu();
         EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
     }
 
     $scope.replayCallback = function() {
-        $scope.hideMenu();
         EkstepRendererAPI.dispatchEvent('renderer:content:replay');
     }
 

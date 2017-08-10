@@ -185,21 +185,6 @@ var ThemePlugin = Plugin.extend({
     tick: function() {
         this._self.tick();
     },
-    // restart: function() {
-    //     var instance = this;
-    //     var telemetryEndData = {};
-    //     telemetryEndData.stageid = getCurrentStageId();
-    //     telemetryEndData.progress = logContentProgress();
-    //     TelemetryService.end(telemetryEndData);
-    //     AssetManager.initStage(this._data.startStage, null, null, function() {
-    //         var gameId = TelemetryService.getGameId();
-    //         var version = TelemetryService.getGameVer();;
-    //         if (gameId && version) {
-    //             TelemetryService.start(gameId, version);
-    //         }
-    //         instance.render();
-    //     });
-    // },
     getAsset: function(aid) {
         return AssetManager.getAsset(this._currentStage, aid);
     },

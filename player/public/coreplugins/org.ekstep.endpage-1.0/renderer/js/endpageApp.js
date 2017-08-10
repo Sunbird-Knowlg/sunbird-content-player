@@ -32,7 +32,8 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
             console.warn("No metadata imageCredits,voiceCredites and soundCredits");
         }
         $scope.CreditPopup = true;
-        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId: "ContentApp-CreditsScreen", subtype: "ContentID"});
+        var eid = getTelemetryEventPrefix() + 'INTERACT';
+        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId: "ContentApp-CreditsScreen", subtype: "ContentID"}, eid);
     }
     $scope.replayContent = function() {
         var data = {
@@ -134,11 +135,11 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
             !_.isUndefined(otherData.cdata) ? correlationData.push(otherData.cdata) : correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(),"type": "ContentSession"});
             TelemetryService.init(tsObj._gameData, tsObj._user, correlationData, otherData);
         }
-
+        var eid = getTelemetryEventPrefix() + 'INTERACT';
         TelemetryService.interact("TOUCH", $rootScope.content.identifier, "TOUCH", {
             stageId: "ContentApp-EndScreen",
             subtype: "ContentID"
-        });
+        }, eid);
         EkstepRendererAPI.dispatchEvent('renderer:init:relatedContent');
         var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
         creditsPopup.trigger("popupUpdate", {
@@ -198,15 +199,12 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
             var eleId = "gc_nextcontent";
             var values = [];
             var contentIds = [];
+            var eid = getTelemetryEventPrefix() + 'INTERACT';
             TelemetryService.interact("TOUCH", eleId, "TOUCH", {
                 stageId: $rootScope.pageId,
                 subtype: "",
                 values: values
-            });
-            // var telemetryEndData = {};
-            // telemetryEndData.stageid = getCurrentStageId();
-            // telemetryEndData.progress = logContentProgress();
-            // TelemetryService.end(telemetryEndData);
+            }, eid);
             GlobalContext.game.id = content.identifier
             GlobalContext.game.pkgVersion = content.pkgVersion;
 
@@ -219,17 +217,13 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
                         // This is required to setup current content details which is going to play
                         org.ekstep.contentrenderer.getContentMetadata(content.identifier, function(obj) {
                             console.log("Related content data:", content);
-                            // if (content.contentExtras) {
-                            // $scope.contentExtras = content.contentExtras
-                                GlobalContext.game.contentExtras = contentExtras;
-                                localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
-                            // }
+                            GlobalContext.game.contentExtras = contentExtras;
+                            localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                             EkstepRendererAPI.hideEndPage();
                             $rootScope.content = obj;
                             if (window.content.mimeType == obj.mimeType){
                                 window.content = obj;
                                 EkstepRendererAPI.clearStage();
-                                // PluginManager.cleanUp();
                                 EkstepRendererAPI.dispatchEvent('renderer:content:close');
                                 EkstepRendererAPI.dispatchEvent('renderer:content:load');
                                 EkstepRendererAPI.dispatchEvent('renderer:player:show');

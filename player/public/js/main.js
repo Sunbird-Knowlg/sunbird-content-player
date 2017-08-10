@@ -54,7 +54,8 @@ function getCurrentStageId() {
 }
 
 function backbuttonPressed(stageId) {
-    TelemetryService.interrupt("OTHER", stageId);
+    var eid = getTelemetryEventPrefix() + 'INTERRUPT';
+    TelemetryService.interrupt("OTHER", stageId, eid);
 
     var telemetryEndData = {};
     telemetryEndData.stageid = getCurrentStageId();
@@ -382,4 +383,13 @@ function mergeJSON(a, b) {
         }
     });
     return res;
+}
+
+function getTelemetryEventPrefix() {
+    var stageId = EkstepRendererAPI.getCurrentStageId();
+    if (_.isUndefined(stageId) || _.isEmpty(stageId)) {
+        return "GE_"
+    } else {
+        return "OE_"
+    }
 }

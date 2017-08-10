@@ -61,9 +61,10 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     $scope.showUserSwitchingModal = function() {
         if ($rootScope.enableUserSwitcher) {
             if($scope.showUserSwitchModal) return;
+            var eid = getTelemetryEventPrefix() + 'INTERACT';
             TelemetryService.interact("TOUCH", "gc_userswitch_popup_open", "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-            });
+            }, eid);
 
             _.each($rootScope.users, function(user) {
                 if (user.selected === true) user.selected = false;
@@ -113,9 +114,10 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
         _.each($rootScope.users, function(user) {
             if (user.selected === true) user.selected = false;
         });
+        var eid = getTelemetryEventPrefix() + 'INTERACT';
         TelemetryService.interact("TOUCH", selectedUser.uid, "TOUCH", {
             stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-        });
+        }, eid);
         selectedUser.selected = true;
         $scope.selectedUser = selectedUser;
     }
@@ -123,9 +125,10 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     // When the user clicks on replayContent, replayContent the content
     $scope.replayContent = function() {
         var replayContent = true;
+        var eid = getTelemetryEventPrefix() + 'INTERACT';
         TelemetryService.interact("TOUCH", 'gc_userswitch_replayContent', "TOUCH", {
              stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-         });
+         }, eid);
          if(_.isEmpty($scope.selectedUser)){
             EkstepRendererAPI.dispatchEvent('renderer:content:close');
 
@@ -141,9 +144,10 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     $scope.continueContent = function() {
         // here the user Selection happens
         var replayContent = false;
+        var eid = getTelemetryEventPrefix() + 'INTERACT';
         TelemetryService.interact("TOUCH", 'gc_userswitch_continue', "TOUCH", {
              stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-         });
+         }, eid);
         $scope.switchUser(replayContent);
     }
 
@@ -163,17 +167,21 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                             var data = {
                                 'callback': $scope.replayCallback
                             };
-                            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                            EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
+                            var eid = getTelemetryEventPrefix() + 'INTERRUPT';
+                            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId, eid);
                             EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
                         } else {
-                            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+                            var eid = getTelemetryEventPrefix() + 'INTERRUPT';
+                            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId, eid);
                             EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
-                            TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
-                            var data = {};
-                            data.stageid = EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId;
-                            data.mode = getPreviewMode();
-                            TelemetryService.start(gameId, version, data);
+                            var eid = getTelemetryEventPrefix() + 'INTERACT';
+                            TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId, eid);
+                            if (EkstepRendererAPI.getCurrentStageId()) {                    // If stage id is not available that means user is on Endpage.
+                                var data = {};
+                                data.stageid = EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId;
+                                data.mode = getPreviewMode();
+                                TelemetryService.start(gameId, version, data);
+                            }
                         }
                     }
 
@@ -187,7 +195,8 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
     }
 
     $scope.replayCallback = function() {
-        TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
+        var eid = getTelemetryEventPrefix() + 'INTERACT';
+        TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId, eid);
         $scope.hideUserSwitchingModal();
         EkstepRendererAPI.dispatchEvent('renderer:endpage:hide');
         EkstepRendererAPI.dispatchEvent('renderer:content:replay');
@@ -195,9 +204,10 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
 
     $scope.closeUserSwitchingModal = function(logTelemetry) {
         if (logTelemetry) {
+            var eid = getTelemetryEventPrefix() + 'INTERACT';
           TelemetryService.interact("TOUCH", "gc_userswitch_popup_close", "TOUCH", {
             stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-          });
+          }, eid);
         }
         $scope.hideUserSwitchingModal();
     }
