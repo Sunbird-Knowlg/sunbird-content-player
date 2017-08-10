@@ -156,7 +156,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         });
         jQuery('.menu-overlay').css('display', 'none');
         jQuery(".gc-menu").animate({
-            "marginLeft": ["-31%", 'easeOutExpo']
+            "marginLeft": ["-35%", 'easeOutExpo']
         }, 700, function() {});
     }
 
@@ -210,7 +210,7 @@ app.compileProvider.directive('reloadStage', function($rootScope) {
         restrict: 'E',
         template: '<span class="reload-stage" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" ng-show="reload !== state_off" src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></span>',
         link: function(scope) {
-            
+
             scope.toggleReload = function(event) {
                 var val;
                 var globalConfig = EkstepRendererAPI.getGlobalConfig();

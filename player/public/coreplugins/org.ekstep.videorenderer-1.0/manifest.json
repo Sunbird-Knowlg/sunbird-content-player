@@ -10,6 +10,7 @@
         "dependencies": [
             {"type": "js", "src": "renderer/libs/video.js"},
             {"type": "css", "src": "renderer/libs/videojs.css"},
+            {"type": "css", "src": "renderer/libs/style.css"},
             {"type": "js", "src": "renderer/libs/videoyoutube.js"}
         ]
     },

@@ -205,11 +205,6 @@ function startTelemetry(id, ver, cb) {
     var correlationData = [];
     if (!_.isEmpty(GlobalContext.game.contentExtras) && !_.isUndefined(GlobalContext.game.contentExtras)) {
         GlobalContext.game.contentExtras = ("string" == typeof(GlobalContext.game.contentExtras)) ? JSON.parse(GlobalContext.game.contentExtras) : GlobalContext.game.contentExtras;
-        // for (var parentTree = '', contentExtrasLength = GlobalContext.game.contentExtras.length - 1, i = 0; i < contentExtrasLength && (parentTree += GlobalContext.game.contentExtras[i].identifier, i != contentExtrasLength - 1); i += 1) parentTree += "/";
-        // correlationData = [{
-        //     "id": parentTree,
-        //     "type": GlobalContext.game.contentExtras[0].contentType
-        // }];
         correlationData.push(GlobalContext.game.contentExtras);
     }
     var otherData = GlobalContext.config.otherData;
@@ -221,6 +216,7 @@ function startTelemetry(id, ver, cb) {
     }
     correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData, otherData).then(function(response) {
+        TelemetryService.eventDispatcher = EkstepRendererAPI.dispatchEvent;
         var data = {};
         data.mode =  getPreviewMode();
         TelemetryService.start(id, ver, data);
