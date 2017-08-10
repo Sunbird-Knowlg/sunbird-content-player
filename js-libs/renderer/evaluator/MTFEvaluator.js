@@ -20,6 +20,7 @@ MTFEvaluator = {
 						var obj = {};
 						obj[opt.value.resvalue] = opt.value.mapped;
 						res.push(obj);
+						selectedOptions.push(opt);
 					}
 
 					// Answer is specified and correctly matched
@@ -33,11 +34,6 @@ MTFEvaluator = {
  							pass = false;
  						}
 					 }
-					
-					// Add selected option in the new array
-					if (typeof opt.selected != 'undefined'){
-						selectedOptions.push(opt);
-					}
 				});
 			}
 
