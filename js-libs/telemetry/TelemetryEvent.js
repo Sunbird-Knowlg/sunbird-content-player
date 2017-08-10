@@ -54,6 +54,7 @@ TelemetryEvent = Class.extend({
         var instance = this;
         if (this.event) {
             if ("undefined" != typeof telemetry) {
+                TelemetryService.eventDispatcher('telemetryEvent', JSON.stringify(instance.event));
                 telemetry.send(JSON.stringify(this.event), apiName).then(function() {
                     return JSON.stringify(this.event);
                 }).catch(function(err) {

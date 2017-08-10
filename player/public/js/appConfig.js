@@ -4,6 +4,7 @@ AppConfig = {
     host: "",
     recorder: "AUDIO_RECORDER",
     flavor: "DEPLOYMENT",
+    heartBeatTime:180000,
     s3ContentHost: "/assets/public/content/",
     previewPluginspath: "/content-plugins",
     devicePluginspath: "/widgets/content-plugins",
@@ -12,7 +13,7 @@ AppConfig = {
     telemetryEventsConfigFields: ['sid', 'uid','did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner'],
     configFields: ['origin', 'contentId', 'appInfo', 'languageInfo', 'contentExtras', 'appQualifier', 'mode', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'contentLaunchers', 'overlay', 'splash', 'showEndPage', 'app', 'dims', 'partner'],
     mimetypes: [
-        "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.epub-archive"
+        "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/epub+zip", "video/mp4", "application/pdf","video/x-youtube"
     ],
     defaultMetadata: {
         "identifier": "org.ekstep.item.sample",
@@ -30,23 +31,34 @@ AppConfig = {
     },
     contentLaunchers: [
         {
-            mimeType: 'application/vnd.ekstep.html-archive',
+            mimeType: ['application/vnd.ekstep.html-archive'],
             id: 'org.ekstep.htmlrenderer',
             ver: 1.0,
             type: 'plugin'
         }, {
-            mimeType: 'application/vnd.ekstep.ecml-archive',
+            mimeType: ['application/vnd.ekstep.ecml-archive'],
             id: 'org.ekstep.ecmlrenderer',
             ver: 1.0,
             type: 'plugin'
         },
         {
-            mimeType: 'application/vnd.ekstep.epub-archive',
+            mimeType: ['application/epub+zip'],
             id: 'org.ekstep.epubrenderer',
             ver: 1.0,
             type: 'plugin'
+        },
+        {
+            mimeType: ['video/mp4', 'video/x-youtube', 'video/webm'],
+            id: 'org.ekstep.videorenderer',
+            ver: 1.0,
+            type: 'plugin'
+        },
+        {
+            mimeType: ['application/pdf'],
+            id: 'org.ekstep.pdfrenderer',
+            ver: 1.0,
+            type: 'plugin'
         }
-
     ],
     assetbase: 'assets/icons/',
     defaultPlugins: [
@@ -72,6 +84,7 @@ AppConfig = {
         showPrevious: true,
         showSubmit: false,
         showReload: true,
+        showContentClose: false,
         menu: {
             showTeachersInstruction: true
         }

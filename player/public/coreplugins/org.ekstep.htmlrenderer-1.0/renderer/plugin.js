@@ -1,7 +1,9 @@
  org.ekstep.contentrenderer.baseLauncher.extend({
     initialize: function() {
+        var instance = this;
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.launch, this);
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.relaunchGame, this);
+        EkstepRendererAPI.addEventListener("renderer:content:end",function(){instance.logheartBeatEvent(false);});
         this.launchGame();
     },
     launchGame: function(evt, data) {
@@ -27,9 +29,21 @@
                 showToaster("error", "Sorry!!.. Unable to open the Game!",{timeOut:200000})
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+                instance.configOverlay();
+                instance.logheartBeatEvent(true);
                 instance.addIframe(iframe);
             }
         });        
+    },
+    configOverlay:function(){
+        setTimeout(function(){
+            EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
+            EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
+            EkstepRendererAPI.dispatchEvent('renderer:contentclose:show');
+            EkstepRendererAPI.dispatchEvent('renderer:next:hide');
+            EkstepRendererAPI.dispatchEvent('renderer:previous:hide');
+        },100)
+         
     },
     addIframe: function(iframe) {
         jQuery('#ekstep_htmlIframe').insertBefore("#gameArea");
@@ -53,6 +67,17 @@
         this.relaunch();
         //TODO: Base functionality should take care of reLaunching of the game
         this.launchGame();
-    }
+    },
+    logheartBeatEvent: function(flag) {
+        var instance = this;
+        if (flag) {
+            instance._time = setInterval(function() {
+                EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {});
+            },EkstepRendererAPI.getGlobalConfig().heartBeatTime);
+        }
+        if (!flag) {
+            clearInterval(instance._time);
+        }
+    },
 });
 //# sourceURL=HTMLRendererePlugin.js
