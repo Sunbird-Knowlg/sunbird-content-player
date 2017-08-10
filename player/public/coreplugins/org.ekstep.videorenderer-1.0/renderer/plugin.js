@@ -66,7 +66,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     setYoutubeStyles: function(youtube) {
-        youtube.controlBar.el_.style.display = 'block';
         youtube.bigPlayButton.hide().el_.style.display = 'none';
         videojs('renderer_videos').ready(function() {
             var video = document.getElementById("renderer_videos");
@@ -127,7 +126,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 values: [videoHolder.currentTime()]
             })
         });
-        
+
         videoHolder.on('seeked', function(e) {
             instance.logTelemetry({
                 stageId: "",
