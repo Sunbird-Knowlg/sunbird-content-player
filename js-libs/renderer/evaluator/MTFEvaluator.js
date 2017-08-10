@@ -11,6 +11,7 @@ MTFEvaluator = {
 			// 	index.push(opt.index);
 			// });
 			var options = item.rhs_options;
+			var selectedOptions = [];
 			if (_.isArray(options)) {
 				_.each(options ,function(opt) {
 
@@ -19,6 +20,7 @@ MTFEvaluator = {
 						var obj = {};
 						obj[opt.value.resvalue] = opt.value.mapped;
 						res.push(obj);
+						selectedOptions.push(opt);
 					}
 
 					// Answer is specified and correctly matched
@@ -31,12 +33,12 @@ MTFEvaluator = {
  						if(typeof opt.selected != 'undefined') {
  							pass = false;
  						}
- 					}
+					 }
 				});
 			}
 
 			if(pass){
-				var ansMatched = _.isEqual(_.pluck(options, "selected"), _.pluck(options, "answer"));
+				var ansMatched = (_.isEqual(_.pluck(selectedOptions, "selected"), _.pluck(selectedOptions, "answer")) && item.lhs_options.length == selectedOptions.length) || false;
 				pass = ansMatched;
 			}
 
