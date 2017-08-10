@@ -91,6 +91,7 @@ AppConfig = {
         showPrevious: true,
         showSubmit: false,
         showReload: true,
+        showContentClose: false,
         menu: {
             showTeachersInstruction: true
         }
