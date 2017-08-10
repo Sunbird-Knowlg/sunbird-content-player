@@ -324,7 +324,7 @@
         if (flag) {
             instance._time = setInterval(function() {
                 EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {});
-            }, 3000);
+            },EkstepRendererAPI.getGlobalConfig().heartBeatTime);
         }
         if (!flag) {
             clearInterval(instance._time);

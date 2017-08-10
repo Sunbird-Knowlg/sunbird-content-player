@@ -1,5 +1,6 @@
 /**
- * @author Manjunath Davanam and Krushanu Mohapatra
+ * @description Launcher to render the Video or youtube URL's
+ * @extends {class} org.ekstep.contentrenderer.baseLauncher
  */
 
 org.ekstep.contentrenderer.baseLauncher.extend({
@@ -36,7 +37,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.className = 'video-js vjs-default-skin';
         this.adddiv(video);
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
-        data.mimeType === 'video/youtube' ? this._loadYoutube(path) : this._loadVideo(path);
+        data.mimeType === 'video/youtube' ? this._loadYoutube(data.downloadUrl) : this._loadVideo(path);
     },
     _loadVideo: function(path) {
         var source = document.createElement("source");
@@ -151,7 +152,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if (flag) {
             instance._time = setInterval(function() {
                 EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {});
-            }, 3000);
+            },EkstepRendererAPI.getGlobalConfig().heartBeatTime);
         }
         if (!flag) {
             clearInterval(instance._time);

@@ -4,6 +4,7 @@ AppConfig = {
     host: "",
     recorder: "AUDIO_RECORDER",
     flavor: "DEPLOYMENT",
+    heartBeatTime:180000,
     s3ContentHost: "/assets/public/content/",
     previewPluginspath: "/content-plugins",
     devicePluginspath: "/widgets/content-plugins",
