@@ -37,7 +37,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.className = 'video-js vjs-default-skin';
         this.adddiv(video);
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
-        data.mimeType === 'video/youtube' ? this._loadYoutube(data.downloadUrl) : this._loadVideo(path);
+        data.mimeType === 'video/x-youtube' ? this._loadYoutube(data.downloadUrl) : this._loadVideo(path);
     },
     _loadVideo: function(path) {
         var source = document.createElement("source");
@@ -147,7 +147,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     logheartBeatEvent: function(flag) {
         var instance = this;
-        var stageId = content.mimeType === 'video/youtube' ? 'youtubestage' : 'videostage';
+        var stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         if (flag) {
             instance._time = setInterval(function() {
                 EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {
