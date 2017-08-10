@@ -41,7 +41,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     _loadVideo: function(path) {
         var source = document.createElement("source");
-        source.type = "video/mp4";
         source.src = path;
         video.appendChild(source);
         this.addvideoListeners(video);
