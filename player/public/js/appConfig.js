@@ -13,7 +13,7 @@ AppConfig = {
     telemetryEventsConfigFields: ['sid', 'uid','did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner'],
     configFields: ['origin', 'contentId', 'appInfo', 'languageInfo', 'contentExtras', 'appQualifier', 'mode', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'contentLaunchers', 'overlay', 'splash', 'showEndPage', 'app', 'dims', 'partner'],
     mimetypes: [
-        "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/epub+zip", "video/mp4", "application/pdf","video/x-youtube"
+        "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/epub+zip", "video/mp4", "application/pdf","video/x-youtube"
     ],
     defaultMetadata: {
         "identifier": "org.ekstep.item.sample",
@@ -31,7 +31,7 @@ AppConfig = {
     },
     contentLaunchers: [
         {
-            mimeType: ['application/vnd.ekstep.html-archive'],
+            mimeType: ['application/vnd.ekstep.html-archive', 'application/vnd.ekstep.h5p-archive'],
             id: 'org.ekstep.htmlrenderer',
             ver: 1.0,
             type: 'plugin'
