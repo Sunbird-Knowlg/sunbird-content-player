@@ -30,8 +30,8 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         $rootScope.addIonicEvents = function() {
             // To override back button behaviour
             $ionicPlatform.registerBackButtonAction(function() {
-                if (EkstepRendererAPI.hasEventListener(EkstepRendererEvents.backbuttonpressed)) {
-                    EkstepRendererAPI.dispatchEvent(EkstepRendererEvents.backbuttonpressed);
+                if (EkstepRendererAPI.hasEventListener(EkstepRendererEvents.renderer.device.back)) {
+                    EkstepRendererAPI.dispatchEvent(EkstepRendererEvents.renderer.device.back);
                 } else {
                     //TODO: Add Telemetry interact for ok and Cancle
                     var stageId = undefined;
