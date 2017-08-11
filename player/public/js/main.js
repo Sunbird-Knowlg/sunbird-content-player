@@ -54,13 +54,13 @@ function getCurrentStageId() {
 }
 
 function backbuttonPressed(stageId) {
-    var eid = getTelemetryEventPrefix() + 'INTERRUPT';
-    TelemetryService.interrupt("OTHER", stageId, eid);
+    TelemetryService.interrupt("OTHER", stageId);
 
-    var telemetryEndData = {};
-    telemetryEndData.stageid = getCurrentStageId();
-    telemetryEndData.progress = logContentProgress();
-    TelemetryService.end(telemetryEndData);
+    // var telemetryEndData = {};
+    // telemetryEndData.stageid = getCurrentStageId();
+    // telemetryEndData.progress = logContentProgress();
+    // TelemetryService.end(telemetryEndData);
+    EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
     try {
         TelemetryService.exit(stageId);
     } catch (err) {
@@ -383,13 +383,4 @@ function mergeJSON(a, b) {
         }
     });
     return res;
-}
-
-function getTelemetryEventPrefix() {
-    var stageId = EkstepRendererAPI.getCurrentStageId();
-    if (_.isUndefined(stageId) || _.isEmpty(stageId)) {
-        return "GE_"
-    } else {
-        return "OE_"
-    }
 }

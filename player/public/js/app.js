@@ -146,13 +146,9 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             if (data && data.interactId) {
               TelemetryService.interact("TOUCH", data.interactId, "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-              });
+              }, 'GE_INTERACT');
             }
             EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
-            // var telemetryEndData = {};
-            // telemetryEndData.stageid = getCurrentStageId();
-            // telemetryEndData.progress = logContentProgress();
-            // TelemetryService.end(telemetryEndData);
             if (data && data.callback) data.callback();
         });
 

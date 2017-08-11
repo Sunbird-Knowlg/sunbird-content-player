@@ -16,6 +16,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.imageBasePath = globalConfig.assetbase;
     $scope.showTeacherIns = true;
     $scope.showReload = true;
+    $scope.TelemetryEvent ={};
     $scope.init = function() {
         EkstepRendererAPI.addEventListener("renderer:overlay:show", $scope.showOverlay);
         EkstepRendererAPI.addEventListener("renderer:overlay:hide", $scope.hideOverlay);
@@ -98,7 +99,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         TelemetryService.interact("TOUCH", "gc_open_userswitch", "TOUCH", {
             stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
         });
-        EventBus.dispatch("event:openUserSwitchingModal");
+        EventBus.dispatch("event:openUserSwitchingModal", $scope.TelemetryEvent);
         $scope.hideMenu();
     }
 
