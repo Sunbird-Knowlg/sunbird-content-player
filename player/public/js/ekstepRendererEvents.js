@@ -34,6 +34,12 @@ org.ekstep.contentrenderer.events = {
 		 */
 		"renderer.content.end":  "renderer.player.end",
 
+		/**
+		 * 'backbuttonpressed' event will get dispatch once device back button is pressed
+		 * @memberOf EkstepRendererEvents
+		 */
+		"renderer:device:back": "renderer:device:back"
+
 };
 
 EkstepRendererEvents = org.ekstep.contentrenderer.events;

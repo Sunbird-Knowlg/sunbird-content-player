@@ -71,11 +71,11 @@ module.exports = function(grunt) {
                     'public/services/interfaceService.js',
                     'public/js/ekstepRendererApi.js',
                     'public/js/content-renderer.js',
-                    'public/js/ekstepRendererEvents.js',
                     'public/js/baseLauncher.js',
                     'public/js/baseEndpage.js',
                     'public/services/controllerservice.js',
-                    'public/js/detectClient.js'
+                    'public/js/detectClient.js',
+                    'public/js/ekstepRendererEvents.js',
                 ],
                 dest: 'www/scripts/renderer.script.min.js'
             },

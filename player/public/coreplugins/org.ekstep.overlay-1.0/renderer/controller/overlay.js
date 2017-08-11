@@ -122,9 +122,11 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
                 break;
             case "overlayGoodJob":
                 $scope.showOverlayGoodJob = event.target;
+                EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hidePopup, $scope);
                 break;
             case "overlayTryAgain":
                 $scope.showOverlayTryAgain = event.target;
+                EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hidePopup, $scope);
                 break;
             default:
                 break;
@@ -147,9 +149,11 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         jQuery(".gc-menu").animate({
             "marginLeft": ["0%", 'easeOutExpo']
         }, 700, function() {});
+        EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideMenu, $scope);
     }
 
     $scope.hideMenu = function() {
+        if (EkstepRendererAPI.hasEventListener(EkstepRendererEvents['renderer:device:back'])) EkstepRendererAPI.removeEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideMenu, $scope);
         $scope.menuOpened = false;
         TelemetryService.interact("TOUCH", "gc_menuclose", "TOUCH", {
             stageId: $rootScope.stageId
@@ -158,6 +162,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         jQuery(".gc-menu").animate({
             "marginLeft": ["-35%", 'easeOutExpo']
         }, 700, function() {});
+        $rootScope.safeApply();
     }
 
     $scope.replayContent = function() {
@@ -352,8 +357,10 @@ app.compileProvider.directive('goodJob', function($rootScope) {
                 TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
                     stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
                 });
+                if (EkstepRendererAPI.hasEventListener(EkstepRendererEvents['renderer:device:back'])) EkstepRendererAPI.removeEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hidePopup, $scope);
                 $scope.showOverlayGoodJob = false;
                 $scope.showOverlayTryAgain = false;
+                $rootScope.safeApply();
             }
 
             $scope.moveToNextStage = function(navType) {
