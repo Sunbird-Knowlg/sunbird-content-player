@@ -14,7 +14,7 @@
         "content": [
             {
                 "identifier": "epub-demo",
-                "mimeType": "application/epub+zip",
+                "mimeType": "application/epub",
                 "localData": {
                     "questionnaire": null,
                     "appIcon": "fixture-stories/bgae-fn/logo.png",
