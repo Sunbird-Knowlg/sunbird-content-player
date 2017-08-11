@@ -16,7 +16,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.resetContent, this);
         EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
-        EkstepRendererAPI.dispatchEvent('renderer:contentclose:show');
         this.initContent();
     },
     initContent: function (event, data) {
@@ -37,7 +36,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     renderEpub: function (epubPath) {
         jQuery('#gameCanvas').remove();
-        jQuery('#gameArea').css({left: '10%', top: '0px', width: "80%", height: "90%", margin: "5% 0 5% 0"});
+        jQuery('#gameArea').css({left: '0px', top: '0px', width: "100%", height: "90%", margin: "5% 0 0 0"});
         var epubOptions = {
             width: document.getElementById('gameArea').offsetWidth,
             height: document.getElementById('gameArea').offsetHeight,
@@ -153,7 +152,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         // Add progress bar
         var $progressDiv = jQuery('<div>', {id: 'progress-container'}).css({
-            width: '80%',
+            width: '100%',
             margin: '0 auto',
             position: 'absolute',
             top: 0,
