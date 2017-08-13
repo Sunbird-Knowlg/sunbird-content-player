@@ -49,6 +49,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     _loadYoutube: function(path) {
         var instance = this;
+        if(!navigator.onLine){
+            EkstepRendererAPI.logErrorEvent('No internet',{'type':'content','action':'play','severity':'error'});
+            showToaster('error', "Please connect to internet");
+        }
         var vid = videojs("renderer_videos", {
                 "techOrder": ["youtube"],
                 "src": path

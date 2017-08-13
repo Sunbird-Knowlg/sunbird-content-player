@@ -158,7 +158,9 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getPluginInstance: function(pluginId) {
-        return PluginManager.getPluginObject(pluginId);
+        if(typeof PluginManager !='undefined'){
+            return PluginManager.getPluginObject(pluginId);
+        }
     },
 
     /**
@@ -883,7 +885,7 @@ window.EkstepRendererAPI = {
             if (data) {
                 data.env = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getGlobalConfig().context.mode || 'preview';
                 data.type = !_.isUndefined(data.type) ? data.type.toUpperCase() : 'OTHER';
-                data.stageId = Renderer.theme ? EkstepRendererAPI.getCurrentStageId() : '';
+                data.stageId = this.getCurrentStageId();
                 if (!data.objectType) {
                     data.objectType = !_.isUndefined(this.getPluginInstance(data.asset)) ? this.getPluginInstance(data.asset)._data.pluginType : '';
                 }
