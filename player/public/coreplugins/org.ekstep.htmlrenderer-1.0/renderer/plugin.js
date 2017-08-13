@@ -26,7 +26,8 @@
         var instance = this;
         org.ekstep.pluginframework.resourceManager.loadResource(path, 'TEXT', function(err, data) {
             if (err) {
-                showToaster("error", "Sorry!!.. Unable to open the Game!",{timeOut:200000})
+                showToaster("error", "Sorry!!.. Unable to open the Game!",{timeOut:200000});
+                EkstepRendererAPI.logErrorEvent('index.html file not found.',{'type':'content','action':'play','severity':'fatal'});
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
                 instance.configOverlay();
