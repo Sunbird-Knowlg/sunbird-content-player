@@ -162,10 +162,14 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                             var data = {
                                 'callback': $scope.replayCallback
                             };
-                            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId, $scope.TelemetryEvent.interrupt);
+                            if (TelemetryService.instance.telemetryStartActive()) {
+                                TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId, $scope.TelemetryEvent.interrupt);
+                            }
                             EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
                         } else {
-                            TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId, $scope.TelemetryEvent.interrupt);
+                            if (TelemetryService.instance.telemetryStartActive()) {
+                                TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId, $scope.TelemetryEvent.interrupt);
+                            }
                             EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
                             TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId, $scope.TelemetryEvent.interact);
                             if (EkstepRendererAPI.getCurrentStageId()) {                    // If stage id is not available that means user is on Endpage.
