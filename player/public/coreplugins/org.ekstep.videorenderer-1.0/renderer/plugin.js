@@ -14,7 +14,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.reset();
         this.launch();
         this.manifestData = manifestData;
-        var prefix_url = data.baseDir;
+        var prefix_url = data.baseDir || '';
         var path = prefix_url + "/" + data.artifactUrl;
         this.createVideo(path, data);
         this.configOverlay();

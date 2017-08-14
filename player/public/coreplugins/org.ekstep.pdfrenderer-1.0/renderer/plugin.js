@@ -29,7 +29,7 @@
          var data = _.clone(content);
          this.manifestData = manifestData;
 
-         var prefix_url = data.baseDir;
+         var prefix_url = data.baseDir || '';
          var path = prefix_url + "/" + data.artifactUrl;
 
          console.log("path pdf ", path);
