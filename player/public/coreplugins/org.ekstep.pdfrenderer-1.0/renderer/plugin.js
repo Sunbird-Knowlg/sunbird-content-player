@@ -30,7 +30,7 @@
          this.manifestData = manifestData;
 
          var prefix_url = data.baseDir;
-         var path = prefix_url + "/" + data.downloadUrl;
+         var path = prefix_url + "/" + data.artifactUrl;
 
          console.log("path pdf ", path);
          var div = document.createElement('div');

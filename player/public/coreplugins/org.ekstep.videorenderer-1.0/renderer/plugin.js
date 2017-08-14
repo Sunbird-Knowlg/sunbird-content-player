@@ -15,7 +15,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.launch();
         this.manifestData = manifestData;
         var prefix_url = data.baseDir;
-        var path = prefix_url + "/" + data.downloadUrl;
+        var path = prefix_url + "/" + data.artifactUrl;
         this.createVideo(path, data);
         this.configOverlay();
     },
@@ -37,7 +37,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.className = 'video-js vjs-default-skin';
         this.adddiv(video);
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
-        data.mimeType === 'video/x-youtube' ? this._loadYoutube(data.downloadUrl) : this._loadVideo(path);
+        data.mimeType === 'video/x-youtube' ? this._loadYoutube(data.artifactUrl) : this._loadVideo(path);
     },
     _loadVideo: function(path) {
         var source = document.createElement("source");
@@ -85,7 +85,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "videostage",
                 subtype: "PLAY",
-                values: [e.timeStamp]
+                values: [{time:e.timeStamp}]
             })
         };
         videoHolder.onpause = function(e) {
@@ -93,7 +93,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "videostage",
                 subtype: "PAUSE",
-                values: [e.timeStamp]
+                values: [{time:e.timeStamp}]
             })
         };
         videoHolder.onended = function(e) {
@@ -108,7 +108,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "videostage",
                 subtype: "DRAG",
-                values: [e.timeStamp]
+                values: [{time:e.timeStamp}]
             });
         };
     },
@@ -120,7 +120,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "youtubestage",
                 subtype: "PLAY",
-                values: [videoHolder.currentTime()]
+                values: [{time:videoHolder.currentTime()}]
             })
         });
         videoHolder.on('pause', function(e) {
@@ -128,7 +128,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "youtubestage",
                 subtype: "PAUSE",
-                values: [videoHolder.currentTime()]
+                values: [{time:videoHolder.currentTime()}]
             })
         });
 
@@ -136,7 +136,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH', {
                 stageId: "youtubestage",
                 subtype: "DRAG",
-                values: [videoHolder.currentTime()]
+                values: [{time:videoHolder.currentTime()}]
             })
         });
         videoHolder.on('ended', function() {
