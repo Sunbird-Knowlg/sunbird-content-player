@@ -153,7 +153,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     logheartBeatEvent: function(flag) {
         var instance = this;
-        var stageId = content.mimeType === 'video/x-youtube' ? 'youtube-stage' : 'video-stage';
+        var stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         if (flag) {
             instance._time = setInterval(function() {
                 EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {
