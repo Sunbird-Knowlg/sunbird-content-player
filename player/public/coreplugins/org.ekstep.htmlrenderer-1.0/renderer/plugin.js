@@ -26,7 +26,8 @@
         var instance = this;
         org.ekstep.pluginframework.resourceManager.loadResource(path, 'TEXT', function(err, data) {
             if (err) {
-                showToaster("error", "Sorry!!.. Unable to open the Game!",{timeOut:200000})
+                showToaster("error", "Sorry!!.. Unable to open the Game!",{timeOut:200000});
+                EkstepRendererAPI.logErrorEvent('index.html file not found.',{'type':'content','action':'play','severity':'fatal'});
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
                 instance.configOverlay();
@@ -39,8 +40,10 @@
         setTimeout(function(){
             EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
             EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
+            EkstepRendererAPI.dispatchEvent('renderer:contentclose:show');
             EkstepRendererAPI.dispatchEvent('renderer:next:hide');
             EkstepRendererAPI.dispatchEvent('renderer:previous:hide');
+            EkstepRendererAPI.dispatchEvent("renderer:contentclose:show");
         },100)
          
     },

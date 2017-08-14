@@ -227,6 +227,12 @@ TelemetryService = {
         }
         return this.flushEvent(TelemetryService.instance.sendFeedback(eks), TelemetryService.apis.feedback);
     },
+    xapi: function(eks) {
+        if (!TelemetryService.isActive) {
+            return new InActiveEvent();
+        }
+        return this.flushEvent(TelemetryService.instance.xapi(eks), TelemetryService.apis.xapi);
+    },
     itemResponse: function(data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();

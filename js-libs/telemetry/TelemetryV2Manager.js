@@ -144,5 +144,10 @@ TelemetryV2Manager = Class.extend({
     },
     telemetryStartActive: function() {
         return (!_.isEmpty(this._start));
+    },
+    xapi: function(data) {
+        var jsonString = _.isObject(data) ? JSON.stringify(data) : data;
+        var eks = {xapi: jsonString};
+        return this.createEvent("OE_XAPI", eks);
     }
 })

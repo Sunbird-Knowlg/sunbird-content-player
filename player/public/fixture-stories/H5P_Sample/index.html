@@ -17,10 +17,13 @@
     })(H5P.jQuery);
 
     H5P.externalDispatcher.on('xAPI', function (event) {
+      RI.logTelemetryXapi(JSON.stringify(event));
       console.log("H5P event: \n", event);
       console.log("H5P verb: \n", event.getVerb());
       console.log("H5P event object: \n", event.data.statement.object);
     });
+
+
 
     //console.log("org.ekstep.renderer.html.telemetryService", RI.TelemetryService);
 

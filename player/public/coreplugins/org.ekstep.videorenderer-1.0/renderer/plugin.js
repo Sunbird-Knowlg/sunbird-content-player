@@ -37,16 +37,22 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.className = 'video-js vjs-default-skin';
         this.adddiv(video);
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
-        data.mimeType === 'video/youtube' ? this._loadYoutube(data.downloadUrl) : this._loadVideo(path);
+        data.mimeType === 'video/x-youtube' ? this._loadYoutube(data.downloadUrl) : this._loadVideo(path);
     },
     _loadVideo: function(path) {
         var source = document.createElement("source");
         source.src = path;
         video.appendChild(source);
+        var player = videojs('renderer_videos');
+        player.play();
         this.addvideoListeners(video);
     },
     _loadYoutube: function(path) {
         var instance = this;
+        if(!navigator.onLine){
+            EkstepRendererAPI.logErrorEvent('No internet',{'type':'content','action':'play','severity':'error'});
+            showToaster('error', "Please connect to internet");
+        }
         var vid = videojs("renderer_videos", {
                 "techOrder": ["youtube"],
                 "src": path
@@ -147,7 +153,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     logheartBeatEvent: function(flag) {
         var instance = this;
-        var stageId = content.mimeType === 'video/youtube' ? 'youtubestage' : 'videostage';
+        var stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         if (flag) {
             instance._time = setInterval(function() {
                 EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {
@@ -189,6 +195,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             EkstepRendererAPI.dispatchEvent("renderer:next:hide");
             EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
             EkstepRendererAPI.dispatchEvent("renderer:previous:hide");
+            EkstepRendererAPI.dispatchEvent("renderer:contentclose:show");
         }, 100);
     },
 });

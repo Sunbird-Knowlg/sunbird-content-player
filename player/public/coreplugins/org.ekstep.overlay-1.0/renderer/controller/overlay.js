@@ -17,6 +17,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.showTeacherIns = true;
     $scope.showReload = true;
     $scope.TelemetryEvent ={};
+    $scope.showContentClose = false;
     $scope.init = function() {
         EkstepRendererAPI.addEventListener("renderer:overlay:show", $scope.showOverlay);
         EkstepRendererAPI.addEventListener("renderer:overlay:hide", $scope.hideOverlay);
@@ -35,6 +36,8 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
             $scope.showTeacherIns = globalConfig.overlay.menu.showTeachersInstruction;
         if (!globalConfig.overlay.showReload)
             $scope.showReload = globalConfig.overlay.showReload;
+        if (globalConfig.overlay.showContentClose)
+            $scope.showContentClose = globalConfig.overlay.showContentClose;
         var evtLenth = $scope.overlayEvents.length;
         for (var i = 0; i < evtLenth; i++) {
             var eventName = $scope.overlayEvents[i];
@@ -120,9 +123,11 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
                 break;
             case "overlayGoodJob":
                 $scope.showOverlayGoodJob = event.target;
+                EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hidePopup, $scope);
                 break;
             case "overlayTryAgain":
                 $scope.showOverlayTryAgain = event.target;
+                EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hidePopup, $scope);
                 break;
             default:
                 break;
@@ -145,9 +150,11 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         jQuery(".gc-menu").animate({
             "marginLeft": ["0%", 'easeOutExpo']
         }, 700, function() {});
+        EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideMenu, $scope);
     }
 
     $scope.hideMenu = function() {
+        if (EkstepRendererAPI.hasEventListener(EkstepRendererEvents['renderer:device:back'])) EkstepRendererAPI.removeEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideMenu, $scope);
         $scope.menuOpened = false;
         TelemetryService.interact("TOUCH", "gc_menuclose", "TOUCH", {
             stageId: $rootScope.stageId
@@ -156,6 +163,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         jQuery(".gc-menu").animate({
             "marginLeft": ["-35%", 'easeOutExpo']
         }, 700, function() {});
+        $rootScope.safeApply();
     }
 
     $scope.replayContent = function() {
@@ -339,7 +347,7 @@ app.compileProvider.directive('assess', function($rootScope) {
 app.compileProvider.directive('goodJob', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-goodjob-popup"> <div class="correct-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner1.png" height="100%" width="100%"> </div> <div class="sign-board"> <img ng-src="{{imageBasePath}}check.png" width="40%" /> </div> </div> <div id="popup-buttons-container"> <div ng-click="hidePopup(); moveToNextStage(\'next\');" class="primary center button">{{AppLables.next}}</div> </div> </div> </div> </div>',
+        template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-goodjob-popup"> <div class="correct-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner1.png" height="100%" width="100%"> </div> <div class="sign-board"> <img ng-src="{{imageBasePath}}check.png" id="correctButton" width="40%" /> </div> </div> <div id="popup-buttons-container"> <div ng-click="hidePopup(); moveToNextStage(\'next\');" class="primary center button">{{AppLables.next}}</div> </div> </div> </div> </div>',
         controller: function($scope, $rootScope, $timeout) {
             $scope.retryAssessment = function(id, e) {
                 $scope.hidePopup(id);
@@ -350,8 +358,10 @@ app.compileProvider.directive('goodJob', function($rootScope) {
                 TelemetryService.interact("TOUCH", id ? id : "gc_popupclose", "TOUCH", {
                     stageId: ($rootScope.pageId == "endpage" ? "endpage" : $rootScope.stageId)
                 });
+                if (EkstepRendererAPI.hasEventListener(EkstepRendererEvents['renderer:device:back'])) EkstepRendererAPI.removeEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hidePopup, $scope);
                 $scope.showOverlayGoodJob = false;
                 $scope.showOverlayTryAgain = false;
+                $rootScope.safeApply();
             }
 
             $scope.moveToNextStage = function(navType) {
@@ -366,6 +376,57 @@ app.compileProvider.directive('tryAgain', function($rootScope) {
     return {
         restrict: 'E',
         template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-tryagain-popup"> <div class="wrong-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner2.png" height="100%" width="100%"> </div> <div class="sign-board"> <img ng-src="{{imageBasePath}}retry.png" id="retryButton" width="40%" style="z-index:100;" /> <img ng-src="{{imageBasePath}}incorrect.png" width="40%" id="incorrectButton" /> </div> </div> <div id="popup-buttons-container"> <div ng-click="hidePopup(); moveToNextStage(\'next\');" class="left button">{{AppLables.next}}</div> <div ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);" class="right primary button">{{AppLables.tryAgain}}</div> </div> </div> </div> </div>'
+    }
+});
+
+app.compileProvider.directive('contentClose', function($rootScope) {
+    return {
+        restrict: 'E',
+        template: '<span class="content-close" ng-click="closeContent();" ng-show="showContentClose !== state_off"><img id="content_close" ng-src="{{contentCloseIcon}}" style="width:100%;"/></span>',
+        link: function(scope) {
+            scope.contentCloseIcon = EkstepRendererAPI.resolvePluginResource(scope.pluginInstance._manifest.id, scope.pluginInstance._manifest.ver, "renderer/assets/icons/content-close.png");
+
+            scope.toggleContentClose = function(event) {
+                var val;
+                var globalConfig = EkstepRendererAPI.getGlobalConfig();
+                var defaultValue = globalConfig.overlay.showContentClose ? "on" : "off";
+                switch (event.type) {
+                    case "renderer:contentclose:show":
+                        val = "on";
+                        break;
+                    case "renderer:contentclose:hide":
+                        val = "off";
+                        break;
+                    default:
+                        val = defaultValue;
+                }
+                scope.showContentClose = val;
+                $rootScope.safeApply();
+            };
+
+            scope.closeContent = function () {
+                EkstepRendererAPI.dispatchEvent('renderer:content:end');
+                EventBus.dispatch('actionContentClose');
+                TelemetryService.interact("TOUCH", "content_close", "TOUCH", {
+                    stageId: $rootScope.stageId
+                });
+            };
+
+            /**
+             * 'renderer:contentclose:show' Event to show the close icon.
+             * @event renderer:contentclose:show
+             * @listen renderer:contentclose:show
+             * @memberOf EkstepRendererEvents
+             */
+            EkstepRendererAPI.addEventListener("renderer:contentclose:show", scope.toggleContentClose, scope);
+            /**
+             * 'renderer:contentclose:hide' Event to hide the close icon.
+             * @event renderer:contentclose:hide
+             * @listen renderer:contentclose:hide
+             * @memberOf EkstepRendererEvents
+             */
+            EkstepRendererAPI.addEventListener("renderer:contentclose:hide", scope.toggleContentClose, scope)
+        }
     }
 });
 

@@ -14,7 +14,7 @@
         "content": [
             {
                 "identifier": "epub-demo",
-                "mimeType": "application/vnd.ekstep.epub-archive",
+                "mimeType": "application/epub",
                 "localData": {
                     "questionnaire": null,
                     "appIcon": "fixture-stories/bgae-fn/logo.png",
@@ -36,7 +36,7 @@
                 "isAvailable": true,
                 "path": "fixture-stories/bgae-fn"
             },
-          {
+            {
             "identifier": "org.ekstep.pratham-camal",
             "mimeType": "application/vnd.ekstep.ecml-archive",
             "localData": {
@@ -109,7 +109,7 @@
         },
         {
             "identifier": "org.ekstep.youtube",
-            "mimeType": "video/youtube",
+            "mimeType": "video/x-youtube",
             "localData": {
                 "questionnaire": null,
                 "appIcon": "stories/pratham-camal/logo.png",
@@ -182,7 +182,7 @@
         },
         {
             "identifier": "org.ekstep.H5P_Sample",
-            "mimeType": "application/vnd.ekstep.html-archive",
+            "mimeType": "application/vnd.ekstep.h5p-archive",
             "localData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/H5P_Sample/logo.png",
@@ -206,7 +206,7 @@
         },
         {
             "identifier": "org.ekstep.H5P_Course",
-            "mimeType": "application/vnd.ekstep.html-archive",
+            "mimeType": "application/vnd.ekstep.h5p-archive",
             "localData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/H5P_Course/logo.png",
@@ -230,7 +230,7 @@
         },
         {
             "identifier": "org.ekstep.H5P_Quiz",
-            "mimeType": "application/vnd.ekstep.html-archive",
+            "mimeType": "application/vnd.ekstep.h5p-archive",
             "localData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/H5P_Quiz/logo.png",
@@ -254,7 +254,7 @@
         },
         {
             "identifier": "org.ekstep.H5P_Questionnaire",
-            "mimeType": "application/vnd.ekstep.html-archive",
+            "mimeType": "application/vnd.ekstep.h5p-archive",
             "localData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/H5P_Questionnaire/logo.png",

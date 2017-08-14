@@ -18,9 +18,11 @@ Plugin.extend({
     start: function(evt, content) {
         var globalConfig = EkstepRendererAPI.getGlobalConfig();
         var instance = this;
-        var contentTypePlugin = _.findWhere(globalConfig.contentLaunchers, {
-            'mimeType': content.mimeType
+
+        var contentTypePlugin = _.find(globalConfig.contentLaunchers, function(eachConfig) {
+            if (_.contains(eachConfig.mimeType, content.mimeType)) return eachConfig;
         });
+
         /**
          * 'renderer:repo:create' event will get dispatch to add a custom repo to load the plugins from the path.
          * @event 'renderer:repo:create'

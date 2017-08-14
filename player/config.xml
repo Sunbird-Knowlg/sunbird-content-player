@@ -23,21 +23,9 @@
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
-    <platform name="android">
-        <allow-intent href="market:*" />
-        <splash density="land-ldpi" src="public/assets/icons/background_1.png" />
-        <splash density="land-mdpi" src="public/assets/icons/background_1.png" />
-        <splash density="land-hdpi" src="public/assets/icons/background_1.png" />
-        <splash density="land-xhdpi" src="public/assets/icons/background_1.png" />
-        <splash density="land-xxhdpi" src="public/assets/icons/background_1.png" />
-        <splash density="land-xxxhdpi" src="public/assets/icons/background_1.png" />
-    </platform>
+
 
     <preference name="SplashMaintainAspectRatio" value="true" />
-    <preference name="SplashShowOnlyFirstTime" value="false" />
-    <preference name="SplashScreen" value="screen" />
-    <preference name="ShowSplashScreenSpinner" value="false" />
-    <preference name="SplashScreenDelay" value="4000" />
-    <preference name="Fullscreen" value="true" />
+    <preference name="SplashScreen" value="false" />
 
 </widget>
