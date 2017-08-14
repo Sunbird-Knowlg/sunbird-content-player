@@ -14,8 +14,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.reset();
         this.launch();
         this.manifestData = manifestData;
-        var prefix_url = data.baseDir || '';
-        var path = prefix_url + "/" + data.artifactUrl;
+        if (window.cordova || !isbrowserpreview) {
+            var prefix_url = data.baseDir || '';
+            path = prefix_url + "/" + data.artifactUrl;
+        } else {
+            path = data.artifactUrl;
+        }
         this.createVideo(path, data);
         this.configOverlay();
     },

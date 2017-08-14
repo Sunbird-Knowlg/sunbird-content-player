@@ -28,9 +28,13 @@
          this.launch();
          var data = _.clone(content);
          this.manifestData = manifestData;
-
-         var prefix_url = data.baseDir || '';
-         var path = prefix_url + "/" + data.artifactUrl;
+         var path = undefined;
+        if (window.cordova || !isbrowserpreview) {
+            var prefix_url = data.baseDir || '';
+            path = prefix_url + "/" + data.artifactUrl;
+        } else {
+            path = data.artifactUrl;
+        }
 
          console.log("path pdf ", path);
          var div = document.createElement('div');
