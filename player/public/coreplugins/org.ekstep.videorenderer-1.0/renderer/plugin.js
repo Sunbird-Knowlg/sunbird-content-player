@@ -43,8 +43,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var source = document.createElement("source");
         source.src = path;
         video.appendChild(source);
-        var player = videojs('renderer_videos');
-        player.play();
+        /*var player = videojs('renderer_videos');
+        player.play();*/
         this.addvideoListeners(video);
     },
     _loadYoutube: function(path) {
