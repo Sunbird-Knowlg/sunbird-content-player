@@ -1,6 +1,6 @@
    #pdf-main-container {
-       width: 700px;
-       height: 1700px;
+       width: 100%;
+       height: auto;
        margin: 0px auto;
    }
    #pdf-loader {
@@ -26,7 +26,10 @@
    }
    #pdf-meta {
        width:100%;
-       margin: 30px 0 30px 0;
+       padding-top: 1%;
+       background: white;
+       position: fixed;
+       border: 2px thin black
    }
    #pdf-buttons {
        width:30%;
@@ -38,7 +41,6 @@
    }
 
    #pdf-search-container {
-       width:30%;
        float: left;
    }
 
@@ -51,8 +53,8 @@
    }
 
    #page-count-container {
-       width:40%;
        text-align: right;
+       margin-right: 20%;
        float: right;
    }
    #pdf-current-page {
@@ -64,6 +66,8 @@
    #pdf-canvas {
        border: 1px solid rgba(0, 0, 0, 0.2);
        box-sizing: border-box;
+       width: 100%;
+       height:auto;
    }
    #page-loader {
        height: 100px;
@@ -72,4 +76,7 @@
        display: none;
        color: #999999;
        font-size: 13px;
+   }
+   #htmldiv {
+    height: 100%;
    }

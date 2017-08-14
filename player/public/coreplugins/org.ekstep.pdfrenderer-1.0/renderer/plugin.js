@@ -162,7 +162,6 @@
 
          document.getElementById('htmldiv').style.overflowX = "scroll";
          document.getElementById('htmldiv').style.overflowY = "scroll";
-         document.getElementById('htmldiv').style.height = "1000px";
 
          context.PDF_DOC = 0;
          context.CURRENT_PAGE = 0;
