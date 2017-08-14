@@ -149,7 +149,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         EkstepRendererAPI.addEventListener("renderer:content:close", function(event, data) {
             if (data && data.interactId) {
                 var eventName = 'OE_INTERACT';
-                var isTelemetryStartActive = if (TelemetryService.instance) TelemetryService.instance.telemetryStartActive();
+                if (TelemetryService.instance) var isTelemetryStartActive = TelemetryService.instance.telemetryStartActive();
                 if (!isTelemetryStartActive) {
                     eventName = 'GE_INTERACT'
                 }
