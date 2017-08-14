@@ -9,14 +9,14 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
     $scope.popUserRating = 0;
     $scope.stringLeft = 130;
     $scope.selectedRating = 0;
-    $scope.TelemetryEvent = {interact: 'GE_INTERACT', interrupt: 'GE_INTERRUPT'};
     $scope.creditsBody = '<div class="gc-popup-new credit-popup"><div class="gc-popup-title-new"> {{AppLables.credit}}</div> <div class="gc-popup-body-new"><div class="font-lato credit-body-icon-font"><div class="content-noCredits" ng-show="content.imageCredits == null && content.voiceCredits == null && content.soundCredits == null">{{AppLables.noCreditsAvailable}}</div><table style="width:100%; table-layout: fixed;"><tr ng-hide="content.imageCredits==null"><td class="credits-title">{{AppLables.image}}</td><td class="credits-data">{{content.imageCredits}}</td></tr><tr ng-hide="content.voiceCredits==null"><td class="credits-title">{{AppLables.voice}}</td><td class="credits-data">{{content.voiceCredits}}</td></tr><tr ng-hide="content.soundCredits==null"><td class="credits-title">{{AppLables.audio}}</td><td class="credits-data">{{content.soundCredits}}</td></tr></table></div></div></div>';
     $scope.imageBasePath = globalConfig.assetbase;
+    $scope.pluginInstance = {};
     $scope.arrayToString = function(array) {
         return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";
     };
     $scope.ep_openUserSwitchingModal = function() {
-        EventBus.dispatch("event:openUserSwitchingModal", $scope.TelemetryEvent);
+        EventBus.dispatch("event:openUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
     };
     $scope.setCredits = function(key) {
         if ($scope.content[key]) {
@@ -33,7 +33,7 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
             console.warn("No metadata imageCredits,voiceCredites and soundCredits");
         }
         $scope.CreditPopup = true;
-        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId: "ContentApp-CreditsScreen", subtype: "ContentID"}, $scope.TelemetryEvent.interact);
+        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId: "ContentApp-CreditsScreen", subtype: "ContentID"}, "GE_INTERACT");
     }
     $scope.replayContent = function() {
         var data = {
@@ -123,6 +123,7 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
     }
     $scope.handleEndpage = function() {
         $rootScope.pageId = "ContentApp-Endpage";
+        $scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.endpage")
         if (_.isUndefined($rootScope.content)) {
             localStorageGC.update();
             content = localStorageGC.getItem('content');
@@ -140,7 +141,7 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
         TelemetryService.interact("TOUCH", $rootScope.content.identifier, "TOUCH", {
             stageId: "ContentApp-EndScreen",
             subtype: "ContentID"
-        }, $scope.TelemetryEvent.interact);
+        }, "GE_INTERACT");
         EkstepRendererAPI.dispatchEvent('renderer:init:relatedContent');
         var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
         creditsPopup.trigger("popupUpdate", {
@@ -204,7 +205,7 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
                 stageId: $rootScope.pageId,
                 subtype: "",
                 values: values
-            }, $scope.TelemetryEvent.interact);
+            }, "GE_INTERACT");
             GlobalContext.game.id = content.identifier
             GlobalContext.game.pkgVersion = content.pkgVersion;
 

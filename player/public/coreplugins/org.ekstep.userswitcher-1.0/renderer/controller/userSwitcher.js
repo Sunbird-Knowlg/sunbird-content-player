@@ -163,13 +163,13 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                             var data = {
                                 'callback': $scope.replayCallback
                             };
-                            if (TelemetryService.instance.telemetryStartActive()) {
-                                TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId, $scope.TelemetryEvent.interrupt);
+                            if (_.isUndefined($scope.TelemetryEvent.logGEEvent)) {
+                                TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
                             }
                             EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
                         } else {
-                            if (TelemetryService.instance.telemetryStartActive()) {
-                                TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId, $scope.TelemetryEvent.interrupt);
+                            if (_.isUndefined($scope.TelemetryEvent.logGEEvent)) {
+                                TelemetryService.interrupt("SWITCH", EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId);
                             }
                             EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
                             TelemetryService.setUser($rootScope.currentUser, EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId, $scope.TelemetryEvent.interact);
@@ -217,8 +217,9 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
         });
 
         EventBus.addEventListener("event:openUserSwitchingModal", function(data) {
-            if (data && data.target) {
-                $scope.TelemetryEvent = data.target;
+            $scope.TelemetryEvent = {};
+            if (data && data.target && data.target.logGEEvent) {
+                $scope.TelemetryEvent = {'interact':'GE_INTERACT', 'logGEEvent': true};
             }
             $scope.showUserSwitchingModal();
         });
