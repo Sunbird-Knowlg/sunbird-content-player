@@ -84,7 +84,9 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
     }
     $scope.setTotalTimeSpent = function() {
         var endEvent = _.filter(TelemetryService._data, function(event) {
-            return event.name == "OE_END";
+            if (event) {
+                return event.name == "OE_END";
+            }
         })
         var startTime = endEvent.length > 0 ? endEvent[0].startTime : 0;
         if (startTime) {
