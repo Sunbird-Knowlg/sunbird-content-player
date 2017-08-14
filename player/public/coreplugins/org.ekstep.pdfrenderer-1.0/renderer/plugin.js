@@ -19,7 +19,6 @@
      enableOverly: function() {
          EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
          EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
-         EkstepRendererAPI.dispatchEvent("renderer:contentclose:show");
          $('#pdf-buttons').css({
              display: 'block'
          });
