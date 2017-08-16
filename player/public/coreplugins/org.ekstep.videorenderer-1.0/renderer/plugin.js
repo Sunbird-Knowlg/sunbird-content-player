@@ -16,7 +16,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.manifestData = manifestData;
         if (window.cordova || !isbrowserpreview) {
             var prefix_url = data.baseDir || '';
-            path = prefix_url + "/" + data.artifactUrl;
+            path = prefix_url + "/" + data.downloadUrl;
         } else {
             path = data.artifactUrl;
         }
