@@ -45,8 +45,8 @@ window.EkstepRendererAPI = {
      * empty if the event not registed.
      * @memberof EkstepRendererAPI
      */
-    hasEventListener: function(eventName) {
-        return EventBus.hasEventListener(eventName)
+    hasEventListener: function(eventName, callback, scope) {
+        return EventBus.hasEventListener(eventName, callback, scope)
     },
 
     /**
