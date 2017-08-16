@@ -31,7 +31,7 @@
          var path = undefined;
         if (window.cordova || !isbrowserpreview) {
             var prefix_url = data.baseDir || '';
-            path = prefix_url + "/" + data.downloadUrl;
+            path = prefix_url + "/" + data.artifactUrl;
         } else {
             path = data.artifactUrl;
         }
