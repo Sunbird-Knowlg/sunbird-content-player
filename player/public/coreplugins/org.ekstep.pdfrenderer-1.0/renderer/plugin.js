@@ -20,7 +20,7 @@
          EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
          EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
          $('#pdf-buttons').css({
-             display: 'block'
+             display: 'none'
          });
      },
      start: function(manifestData) {
@@ -102,7 +102,7 @@
          pdfSearchContainer.id = "pdf-search-container";
 
          var findTextField = document.createElement("input");
-         findTextField.type = "text";
+         findTextField.type = "number";
          findTextField.id = "pdf-find-text";
          findTextField.placeholder = "Enter page number";
 
@@ -179,7 +179,7 @@
          $("#pdf-find").on('click', function() {
              var searchText = document.getElementById("pdf-find-text");
              console.log("SEARCH TEXT", searchText.value);
-             EkstepRendererAPI.getTelemetryService().interact("TOUCH", "search", "TOUCH", {
+             EkstepRendererAPI.getTelemetryService().interact("TOUCH", "navigate", "TOUCH", {
                  stageId: context.CURRENT_PAGE.toString(),
                  subtype: ''
              });
@@ -246,9 +246,10 @@
              // If error re-show the upload button
              $("#pdf-loader").hide();
              $("#upload-button").show();
+             EkstepRendererAPI.logErrorEvent(error.message,{'type':'content','action':'play','severity':'fatal'});
+             showToaster('error', "Unable to open PDF");
 
-             alert(error.message);
-         });;
+         });
      },
      showPage: function(page_no) {
 
@@ -298,6 +299,7 @@
                  });
              });
          } else {
+            showToaster('error', "Page not found");
              $("#pdf-no-page").show();
              $("#page-loader").hide();
              $("#pdf-canvas").hide();
