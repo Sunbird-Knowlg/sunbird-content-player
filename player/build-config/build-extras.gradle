@@ -24,7 +24,7 @@ android {
     }
 
     defaultConfig {
-        versionName System.getenv("BUILD_NUMBER") ? "2.3." + System.getenv("BUILD_NUMBER"): "local"
+        versionName System.getenv("BUILD_NUMBER") ? "2.4." + System.getenv("BUILD_NUMBER"): "local"
         setProperty("archivesBaseName", "geniecanvas-$versionName")
     }
 
