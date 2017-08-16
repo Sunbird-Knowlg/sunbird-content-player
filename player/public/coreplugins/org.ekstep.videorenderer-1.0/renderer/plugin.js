@@ -89,7 +89,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "videostage",
                 subtype: "PLAY",
-                values: [{time:e.timeStamp}]
+                values: [{time:Math.floor(e.timeStamp)}]
             })
         };
         videoHolder.onpause = function(e) {
@@ -97,7 +97,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "videostage",
                 subtype: "PAUSE",
-                values: [{time:e.timeStamp}]
+                values: [{time:Math.floor(e.timeStamp)}]
             })
         };
         videoHolder.onended = function(e) {
@@ -112,7 +112,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "videostage",
                 subtype: "DRAG",
-                values: [{time:e.timeStamp}]
+                values: [{time:Math.floor(e.timeStamp)}]
             });
         };
     },
@@ -124,7 +124,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "youtubestage",
                 subtype: "PLAY",
-                values: [{time:videoHolder.currentTime()}]
+                values: [{time:Math.floor(videoHolder.currentTime())}]
             })
         });
         videoHolder.on('pause', function(e) {
@@ -132,7 +132,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "youtubestage",
                 subtype: "PAUSE",
-                values: [{time:videoHolder.currentTime()}]
+                values: [{time:Math.floor(videoHolder.currentTime())}]
             })
         });
 
@@ -140,7 +140,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH', {
                 stageId: "youtubestage",
                 subtype: "DRAG",
-                values: [{time:videoHolder.currentTime()}]
+                values: [{time:Math.floor(videoHolder.currentTime())}]
             })
         });
         videoHolder.on('ended', function() {

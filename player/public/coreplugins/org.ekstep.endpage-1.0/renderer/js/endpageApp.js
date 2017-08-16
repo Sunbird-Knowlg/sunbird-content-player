@@ -33,7 +33,7 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
             console.warn("No metadata imageCredits,voiceCredites and soundCredits");
         }
         $scope.CreditPopup = true;
-        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId: "ContentApp-CreditsScreen", subtype: "ContentID"}, "GE_INTERACT");
+        TelemetryService.interact("TOUCH", "gc_credit", "TOUCH", {stageId: "ContentApp-CreditsScreen", subtype: ""}, "GE_INTERACT");
     }
     $scope.replayContent = function() {
         var data = {
@@ -140,7 +140,7 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
         }
         TelemetryService.interact("TOUCH", $rootScope.content.identifier, "TOUCH", {
             stageId: "ContentApp-EndScreen",
-            subtype: "ContentID"
+            subtype: ""
         }, "GE_INTERACT");
         EkstepRendererAPI.dispatchEvent('renderer:init:relatedContent');
         var creditsPopup = angular.element(jQuery("popup[id='creditsPopup']"));
