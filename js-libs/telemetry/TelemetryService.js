@@ -169,16 +169,16 @@ TelemetryService = {
         }
         return this.flushEvent(TelemetryService.instance.end(data), TelemetryService.apis.telemetry);
     },
-    interact: function(type, id, extype, data) {
+    interact: function(type, id, extype, data, eid) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.interact(type, id, extype, data), TelemetryService.apis.telemetry);
+        return TelemetryService.flushEvent(TelemetryService.instance.interact(type, id, extype, data, eid), TelemetryService.apis.telemetry);
     },
-    setUser: function(data, stageid) {
+    setUser: function(data, stageid, eid) {
         TelemetryService._user = data;
         data.stageId = stageid;
-        TelemetryService.interact("TOUCH", "gc_userswitch", "TOUCH", data);
+        TelemetryService.interact("TOUCH", "gc_userswitch", "TOUCH", data, eid);
     },
     assess: function(qid, subj, qlevel, data) {
         if (!TelemetryService.isActive) {
@@ -204,11 +204,11 @@ TelemetryService = {
             return new InActiveEvent();
         }
     },
-    interrupt: function(type, id) {
+    interrupt: function(type, id, eid) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.interrupt(type, id), TelemetryService.apis.telemetry);
+        return TelemetryService.flushEvent(TelemetryService.instance.interrupt(type, id, eid), TelemetryService.apis.telemetry);
     },
     exitApp: function() {
         setTimeout(function() {
