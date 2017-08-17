@@ -1,4 +1,8 @@
  org.ekstep.contentrenderer.baseLauncher.extend({
+    s3_folders:{
+        'application/vnd.ekstep.html-archive':"html/",
+        'application/vnd.ekstep.h5p-archive':'h5p/'
+    },
     initialize: function() {
         var instance = this;
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.launch, this);
@@ -57,9 +61,8 @@
         // if html content want to show overlay, they should dispatch "renderer:overlay:show" to show overlay
     },
     getAsseturl: function(content) {
-        var content_type = "html/";
         var globalConfig = EkstepRendererAPI.getGlobalConfig();
-        var path = window.location.origin + globalConfig.s3ContentHost + content_type;
+        var path = window.location.origin + globalConfig.s3ContentHost + this.s3_folders[content.mimeType];
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
     },
