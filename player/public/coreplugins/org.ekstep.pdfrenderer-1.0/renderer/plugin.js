@@ -20,7 +20,7 @@
          EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
          EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
          $('#pdf-buttons').css({
-             display: 'block'
+             display: 'none'
          });
      },
      start: function(manifestData) {
@@ -28,9 +28,13 @@
          this.launch();
          var data = _.clone(content);
          this.manifestData = manifestData;
-
-         var prefix_url = data.baseDir;
-         var path = prefix_url + "/" + data.downloadUrl;
+         var path = undefined;
+        if (window.cordova || !isbrowserpreview) {
+            var prefix_url = data.baseDir || '';
+            path = prefix_url + "/" + data.artifactUrl;
+        } else {
+            path = data.artifactUrl;
+        }
 
          console.log("path pdf ", path);
          var div = document.createElement('div');
@@ -98,7 +102,7 @@
          pdfSearchContainer.id = "pdf-search-container";
 
          var findTextField = document.createElement("input");
-         findTextField.type = "text";
+         findTextField.type = "number";
          findTextField.id = "pdf-find-text";
          findTextField.placeholder = "Enter page number";
 
@@ -175,7 +179,7 @@
          $("#pdf-find").on('click', function() {
              var searchText = document.getElementById("pdf-find-text");
              console.log("SEARCH TEXT", searchText.value);
-             EkstepRendererAPI.getTelemetryService().interact("TOUCH", "search", "TOUCH", {
+             EkstepRendererAPI.getTelemetryService().interact("TOUCH", "navigate", "TOUCH", {
                  stageId: context.CURRENT_PAGE.toString(),
                  subtype: ''
              });
@@ -199,7 +203,9 @@
      },
 
      nextNavigation: function() {
-
+        EkstepRendererAPI.getTelemetryService().interact("TOUCH", "next", null, {
+            stageId: context.CURRENT_PAGE.toString()
+        });
          EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE + 1).toString());
          if (context.CURRENT_PAGE != context.TOTAL_PAGES)
              context.showPage(++context.CURRENT_PAGE);
@@ -209,7 +215,9 @@
          }
      },
      previousNavigation: function() {
-
+         EkstepRendererAPI.getTelemetryService().interact("TOUCH", "previous", null, {
+            stageId: context.CURRENT_PAGE.toString()
+         });
          EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE - 1).toString());
          if (context.CURRENT_PAGE != 1)
              context.showPage(--context.CURRENT_PAGE);
@@ -238,9 +246,10 @@
              // If error re-show the upload button
              $("#pdf-loader").hide();
              $("#upload-button").show();
+             EkstepRendererAPI.logErrorEvent(error.message,{'type':'content','action':'play','severity':'fatal'});
+             showToaster('error', "Unable to open PDF");
 
-             alert(error.message);
-         });;
+         });
      },
      showPage: function(page_no) {
 
@@ -290,6 +299,7 @@
                  });
              });
          } else {
+            showToaster('error', "Page not found");
              $("#pdf-no-page").show();
              $("#page-loader").hide();
              $("#pdf-canvas").hide();

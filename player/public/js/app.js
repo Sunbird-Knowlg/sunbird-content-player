@@ -135,16 +135,29 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             injectTemplates(data.templatePath, data.scopeVariable, data.toElement);
         });
 
+        EkstepRendererAPI.addEventListener('renderer:telemetry:end', function() {
+            if (TelemetryService.instance.telemetryStartActive()) {
+                var telemetryEndData = {};
+                telemetryEndData.stageid = getCurrentStageId();
+                telemetryEndData.progress = logContentProgress();
+                TelemetryService.end(telemetryEndData);
+            } else {
+              console.warn('Telemetry service end is already logged Please log start telemetry again');
+            }
+        })
+
         EkstepRendererAPI.addEventListener("renderer:content:close", function(event, data) {
             if (data && data.interactId) {
+                var eventName = 'OE_INTERACT';
+                if (TelemetryService.instance) var isTelemetryStartActive = TelemetryService.instance.telemetryStartActive();
+                if (!isTelemetryStartActive) {
+                    eventName = 'GE_INTERACT'
+                }
               TelemetryService.interact("TOUCH", data.interactId, "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-              });
+              }, eventName);
             }
-            var telemetryEndData = {};
-            telemetryEndData.stageid = getCurrentStageId();
-            telemetryEndData.progress = logContentProgress();
-            TelemetryService.end(telemetryEndData);
+            EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
             if (data && data.callback) data.callback();
         });
 

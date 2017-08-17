@@ -56,10 +56,11 @@ function getCurrentStageId() {
 function backbuttonPressed(stageId) {
     TelemetryService.interrupt("OTHER", stageId);
 
-    var telemetryEndData = {};
-    telemetryEndData.stageid = getCurrentStageId();
-    telemetryEndData.progress = logContentProgress();
-    TelemetryService.end(telemetryEndData);
+    // var telemetryEndData = {};
+    // telemetryEndData.stageid = getCurrentStageId();
+    // telemetryEndData.progress = logContentProgress();
+    // TelemetryService.end(telemetryEndData);
+    EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
     try {
         TelemetryService.exit(stageId);
     } catch (err) {

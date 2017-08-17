@@ -42,6 +42,7 @@
 
    #pdf-search-container {
        float: left;
+       margin-left: 30%;
    }
 
    #pdf-find-text {

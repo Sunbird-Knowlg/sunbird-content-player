@@ -187,8 +187,7 @@ var ThemePlugin = Plugin.extend({
     },
     restart: function() {
         var gameId = TelemetryService.getGameId();
-        var version = TelemetryService.getGameVer();;
-
+        var version = TelemetryService.getGameVer();
         var instance = this;
         var telemetryEndData = {};
         telemetryEndData.stageid = getCurrentStageId();
