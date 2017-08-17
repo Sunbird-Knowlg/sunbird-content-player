@@ -1823,6 +1823,19 @@ body {
   list-style-type: decimal !important;
 }
 
+.richText em {
+  font-style: italic !important;
+}
+
+.richText strong {
+  font-weight: bold !important;
+}
+
+.richText s {
+  text-decoration: line-through !important;
+}
+
+
 
 /*For richtext WYSIWYG preview*/
 
