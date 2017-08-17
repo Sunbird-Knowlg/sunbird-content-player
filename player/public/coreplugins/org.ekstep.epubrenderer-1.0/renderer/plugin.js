@@ -39,7 +39,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     renderEpub: function (epubPath) {
         jQuery('#gameCanvas').remove();
-        jQuery('#gameArea').css({left: '0px', top: '0px', width: "100%", height: "90%", margin: "5% 0 0 0"});
+        jQuery('#gameArea').css({left: '10%', top: '0px', width: "80%", height: "90%", margin: "5% 0 0 0"});
         var epubOptions = {
             width: document.getElementById('gameArea').offsetWidth,
             height: document.getElementById('gameArea').offsetHeight,
