@@ -231,7 +231,7 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return this.flushEvent(TelemetryService.instance.xapi(eks), TelemetryService.apis.xapi);
+        return this.flushEvent(TelemetryService.instance.xapi(eks), TelemetryService.apis.telemetry);
     },
     itemResponse: function(data) {
         if (!TelemetryService.isActive) {
