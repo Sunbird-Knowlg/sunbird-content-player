@@ -286,6 +286,9 @@ var StagePlugin = Plugin.extend({
                 this._currentState["isEvaluated"] = true;
                 EventBus.dispatch("evaluated", result);
 
+                // setting the stage state change as false
+                this.isStageStateChanged(false);
+
                 if (showImmediateFeedback) {
                     //Show valid feeback
                     if (valid == true) {
