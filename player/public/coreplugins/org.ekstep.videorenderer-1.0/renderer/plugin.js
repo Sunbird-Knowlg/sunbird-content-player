@@ -170,6 +170,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     replayContent: function() {
+        this.relaunch();
         this.start();
     },
     adddiv: function(div) {
