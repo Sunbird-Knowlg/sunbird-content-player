@@ -1,49 +1,9 @@
-app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
-            return {
-                restrict: 'E',
-                controller: 'UserSwitchController',
-                link: function(scope, element, attrs, controller) {
-                    // get the user selection div
-                    var userSlider = element.find("#userSlider");
-                    var groupSlider = element.find("#groupSlider");
-                    scope.render = function() {
-                        userSlider.mCustomScrollbar({
-                            axis: "x",
-                            theme: "dark-3",
-                            advanced: {
-                                autoExpandHorizontalScroll: true
-                            }
-                        });
-                        groupSlider.mCustomScrollbar({
-                            axis: "x",
-                            theme: "dark-3",
-                            advanced: {
-                                autoExpandHorizontalScroll: true
-                            }
-                        });
-                    }
-                    scope.init = function() {
-                        if (globalConfig.overlay.showUser === true) {
-                            userSlider.mCustomScrollbar('destroy');
-                            groupSlider.mCustomScrollbar('destroy');
-                            scope.initializeCtrl();
-                            scope.render();
-                        }
-                    };
-                    scope.getUserSwitcherTemplate = function() {
-                        var userSwitcherPluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.userswitcher");
-                        return userSwitcherPluginInstance._templatePath;
-                    }
-                    scope.init();
-                },
-                template: "<div ng-include=getUserSwitcherTemplate()></div>"
-            }
-        });
 
 /**
  * User switcher controller
- * @author Akash Gupta <akash.gupta@tarento.com>
+ * @author Krushanu Mohapatra <krushanu.mohapatra@tarento.com> Akash Gupta <akash.gupta@tarento.com>
  */
+
 app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope', '$state', '$stateParams', function($scope, $rootScope, $state, $stateParams) {
     $scope.AppLables = AppLables;
     $scope.groupLength = undefined;
@@ -96,6 +56,7 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
                 "isGroupUser": true
             })).length;
             if ($rootScope.users.length == 0) $rootScope.users.push($rootScope.currentUser);
+            $scope.addScroll();
             $scope.sortUserlist();
         }).catch(function(err) {
             console.error(err);
@@ -277,3 +238,46 @@ app.controllerProvider.register('UserSwitchController', ['$scope', '$rootScope',
         }
     }
 }]);
+
+app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
+    return {
+        restrict: 'E',
+        controller: 'UserSwitchController',
+        template: "<div ng-include='getUserSwitcherTemplate()' ></div>",
+        link: function(scope, element, attrs, controller) {
+            // get the user selection div
+            // var userSlider = element.find("#userSlider");
+            // var groupSlider = element.find("#groupSlider");
+
+            scope.addScroll = function() {
+                var userSlider = element.find("#userSlider");
+                var groupSlider = element.find("#groupSlider");
+                userSlider.mCustomScrollbar({
+                    axis: "x",
+                    theme: "dark-3",
+                    advanced: {
+                        autoExpandHorizontalScroll: true
+                    }
+                });
+                groupSlider.mCustomScrollbar({
+                    axis: "x",
+                    theme: "dark-3",
+                    advanced: {
+                        autoExpandHorizontalScroll: true
+                    }
+                });
+            }
+            scope.init = function() {
+                if (globalConfig.overlay.showUser === true) {
+                    element.find("#userSlider").mCustomScrollbar('destroy');
+                    element.find("#groupSlider").mCustomScrollbar('destroy');
+                    scope.initializeCtrl();
+                }
+            };
+            scope.getUserSwitcherTemplate = function() {
+                var userSwitcherPluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.userswitcher");
+                return userSwitcherPluginInstance._templatePath;
+            }
+        }
+    }
+});
