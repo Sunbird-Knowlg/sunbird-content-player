@@ -177,7 +177,6 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
 
     };
     EkstepRendererAPI.addEventListener('renderer:endpage:show', function() {
-        EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
         $scope.showEndPage = true;
         $scope.initEndpage();
         $scope.safeApply();

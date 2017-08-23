@@ -96,6 +96,7 @@ var ItemController = Controller.extend({
                 qtitle: item.title,
                 qdesc: item.description ? item.description : ""
             };
+            EkstepRendererAPI.dispatchEvent("renderer:assesment:eval", this.assessStartEvent);
             TelemetryService.assessEnd(this.assessStartEvent, data);
 
         } catch (e) {

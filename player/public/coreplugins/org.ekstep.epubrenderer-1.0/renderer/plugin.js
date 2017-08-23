@@ -11,6 +11,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     currentPage: 1,
     totalPages: 0,
     lastPage: false,
+    stageId:[],
     initialize: function () {
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.epub-archive', this.launch, this);
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.resetContent, this);
@@ -22,6 +23,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         data = content;
         var epubPath = undefined;
+        this.initContentProgress();
         if (window.cordova || !isbrowserpreview) {
             var prefix_url = data.baseDir || '';
             epubPath = prefix_url + "/" + data.artifactUrl;
@@ -54,6 +56,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     addEventHandlers: function () {
         var instance = this;
         EventBus.addEventListener('nextClick', function () {
+            EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
             if (instance.lastPage) {
                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
                 instance.removeProgressElements();
@@ -63,6 +66,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
 
         EventBus.addEventListener('previousClick', function () {
+            EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
             if(instance.currentPage === 2) {
                 // This is needed because some ePubs do not go back to the cover page on `book.prevPage()`
                 instance.gotoStart();
@@ -177,6 +181,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     updateProgressElements: function () {
         jQuery('#page').html(this.currentPage + ' of ' + this.totalPages);
         jQuery('#bar').css({width: ((this.currentPage / this.totalPages) * 100) + '%'});
-    }
+    },
+    initContentProgress: function(){
+        var instance = this;
+        EkstepRendererAPI.addEventListener("sceneEnter",function(event){
+            instance.stageId.push(event.target.currentPage);
+        });
+    },
+    contentProgress:function(){
+        var totalStages = this.totalPages;
+        var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
+        return this.progres(currentStageIndex, totalStages);
+    },
 });
 //# sourceURL=ePubRendererPlugin.js

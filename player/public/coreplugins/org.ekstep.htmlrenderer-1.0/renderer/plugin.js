@@ -3,15 +3,18 @@
         'application/vnd.ekstep.html-archive':"html/",
         'application/vnd.ekstep.h5p-archive':'h5p/'
     },
+    currentIndex: 50,
+    totalIndex:100,
     initialize: function() {
         var instance = this;
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.launch, this);
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.relaunchGame, this);
-        EkstepRendererAPI.addEventListener("renderer:content:end",function(){instance.logheartBeatEvent(false);});
+        EkstepRendererAPI.addEventListener("renderer:content:end",this.onContentEnd,this);
         this.launchGame();
     },
     launchGame: function(evt, data) {
         data = content;
+        this.reset();
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
         var launchData = {"env": envHTML, "envpath": 'dev'};
@@ -71,6 +74,12 @@
         //TODO: Base functionality should take care of reLaunching of the game
         this.launchGame();
     },
+    onContentEnd:function(){
+        this.currentIndex = 100;
+        this.totalIndex = 100;
+        this.logheartBeatEvent(false);
+        this.endTelemetry();
+    },
     logheartBeatEvent: function(flag) {
         var instance = this;
         if (flag) {
@@ -82,5 +91,12 @@
             clearInterval(instance._time);
         }
     },
+    contentProgress:function(){
+        return this.progres(this.currentIndex, this.totalIndex);
+    },
+    reset:function(){
+      this.currentIndex = 50;
+      this.totalIndex = 100;
+    }
 });
 //# sourceURL=HTMLRendererePlugin.js
