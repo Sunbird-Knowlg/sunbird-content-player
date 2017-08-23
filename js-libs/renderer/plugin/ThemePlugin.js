@@ -373,7 +373,7 @@ var ThemePlugin = Plugin.extend({
 
     /**
      * Removes current stage HTML elements. This could be useful when plugins work across stages
-     * Using this, a plugin can get access to remove the current stage HTML element such vidoe html element etc.,
+     * Using this, a plugin can get access to remove the current stage HTML element such video html element etc.,
      * @memberof ThemePlugin
      */
     removeHtmlElements: function() {

@@ -996,5 +996,19 @@ window.EkstepRendererAPI = {
         if (!_.isUndefined(Renderer) && !_.isUndefined(Renderer.theme)) {
             Renderer.theme.clearStage();
         }
+    },
+    /**
+    * Remove all Html elements from game area
+    * @memberof EkstepRendererAPI
+    */
+    removeHtmlElements: function() {
+        var gameAreaEle = jQuery('#' + Renderer.divIds.gameArea);
+        var chilElemtns = gameAreaEle.children();
+        jQuery(chilElemtns).each(function() {
+            if ((this.id !== "overlay") && (this.id !== "gameCanvas")) {
+                jQuery(this).remove();
+            }
+        });
     }
+
 }
