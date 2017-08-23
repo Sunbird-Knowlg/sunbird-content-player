@@ -16,6 +16,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         gameArea: 'gameArea',
         canvas: 'gameCanvas'
     },
+    stageId:[],
+    qid:[],
     /**
      * registers events
      * @memberof ecmlRenderer
@@ -24,6 +26,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.relaunchGame, this);
         EkstepRendererAPI.addEventListener('renderer:content:load', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
+        EkstepRendererAPI.addEventListener('renderer:content:end',this.onContentEnd,this);
         var instance = this;
         setTimeout(function(){
             // This is required to initialize angular controllers & directives 
@@ -38,6 +41,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         renderObj = content;
         if (_.isUndefined(renderObj)) return;
+        this.initContentProgress();
         if(isbrowserpreview){
             renderObj.path = '';
         }
@@ -240,7 +244,39 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.relaunch();
         Renderer.theme.removeHtmlElements();
         Renderer.theme.reRender();
-    }
+    },
+    onContentEnd:function(){
+        this.endTelemetry();
+    },
+    getContentAssesmentList:function(){
+        var questionCount = 0;
+        _.find(Renderer.theme._data.stage,function(obj){
+            if(obj['org.ekstep.quiz']){
+                var itemData = JSON.parse(obj['org.ekstep.quiz'].data);
+                questionCount =  questionCount + itemData.questionnaire.total_items;
+                console.info("questionCount",questionCount);
+            }
+        });
+        return questionCount;
+    },
+    initContentProgress: function(){
+        var totalStages = undefined;
+        var currentStageIndex = undefined;
+        var instance = this;
+        EkstepRendererAPI.addEventListener("sceneEnter",function(event){
+            if(!Renderer.theme._currentScene.isItemScene()){
+                instance.stageId.push(event.target.id);
+            }
+        });
+        EkstepRendererAPI.addEventListener("renderer:assesment:eval",function(event){
+            instance.qid.push(event.target.event.edata.eks.qid);
+        });
+    },
+    contentProgress:function(){
+        currentStageIndex = _.size(_.uniq(this.stageId)) + _.size(_.uniq(this.qid)) || 1;
+        totalStages = Renderer.theme._data.stage.length + this.getContentAssesmentList();
+        return this.progres(currentStageIndex, totalStages);
+    },
 
 });
 

@@ -14,6 +14,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
  * @memberof org.ekstep.contentrenderer.baseLauncher
  */
 init:function(data) {
+	EkstepRendererAPI.addEventListener("renderer:telemetry:end",this.endTelemetry, this);
 	this.initialize(data);
 },
 
@@ -58,6 +59,25 @@ relaunch: function() {
 
 clear:function(){
 	console.info('Clearing the launcher instance')
+},
+
+progres:function(currentIndex, totalIndex){
+	return progress = (currentIndex / totalIndex) * 100;
+},
+contentProgress:function(){
+	console.warn("Child Launcher should calculate");
+},
+endTelemetry:function(event){
+	if (TelemetryService.instance.telemetryStartActive()) {
+		var telemetryEndData = {};
+		telemetryEndData.stageid = getCurrentStageId();
+		telemetryEndData.progress = this.contentProgress();
+		console.info("telemetryEndData",telemetryEndData);
+		TelemetryService.end(telemetryEndData);
+	} else {
+		console.warn('Telemetry service end is already logged Please log start telemetry again');
+	}
+ 
 }
 
 });

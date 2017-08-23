@@ -7,11 +7,13 @@
      PDF_DOC: undefined,
      CANVAS_CTX: undefined,
      context: undefined,
+     stageId:[],
      initialize: function(manifestData) {
          console.info('PDF Renderer init', manifestData)
          EkstepRendererAPI.addEventListener("renderer:content:replay", this.replayContent, this);
          EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
          EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
+         EkstepRendererAPI.addEventListener('renderer:content:end', this.onContentEnd, this);
          this._manifest = manifestData
          this.start(manifestData);
 
@@ -27,6 +29,7 @@
          context = this;
          this.launch();
          var data = _.clone(content);
+         this.initContentProgress();
          this.manifestData = manifestData;
          var path = undefined;
         if (window.cordova || !isbrowserpreview) {
@@ -252,7 +255,7 @@
          });
      },
      showPage: function(page_no) {
-
+        EkstepRendererAPI.dispatchEvent("sceneEnter", context);
          if (page_no <= context.TOTAL_PAGES && page_no > 0) {
 
              context.PAGE_RENDERING_IN_PROGRESS = 1;
@@ -338,6 +341,20 @@
         if (!flag) {
             clearInterval(instance._time);
         }
+    },
+    onContentEnd:function(){
+        this.endTelemetry();
+    },
+    initContentProgress: function(){
+        var instance = this;
+        EkstepRendererAPI.addEventListener("sceneEnter",function(event){
+            instance.stageId.push(event.target.CURRENT_PAGE);
+        });
+    },
+    contentProgress:function(){
+        var totalStages = this.TOTAL_PAGES;
+        var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
+        return this.progres(currentStageIndex, totalStages);
     },
  });
 
