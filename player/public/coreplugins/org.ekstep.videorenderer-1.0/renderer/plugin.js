@@ -253,6 +253,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     onContentEnd: function() {
         this.logheartBeatEvent(false);
+        this.endTelemetry();
+        EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
     }
 
 
