@@ -330,45 +330,46 @@ var ThemePlugin = Plugin.extend({
         }
         var stage = this._currentScene;
         // In transistion save Currentstate to themeObj
-        // stage._currentState = stage.params;
         this.setParam(stage.getStagestateKey(), stage._currentState);
         RecorderManager.stopRecording();
         AudioManager.stopAll();
-        // RecorderManager._deleteRecordedaudio();
         TimerManager.stopAll(this._currentStage);
         if (!action.transitionType) action.transitionType = action.param;
-        if (action.transitionType === 'previous') {
-            this._isSceneChanging = true;
-            if (stage._stageController && stage._stageController.hasPrevious()) {
-                stage._stageController.decrIndex(2);
-                this.replaceStage(stage._data.id, action);
-            } else {
-                if (stage._stageController) {
-                    stage._stageController.setIndex(-1);
-                    if (action.reset == true) {
-                        stage._stageController.reset();
-                    }
-                }
-                this.replaceStage(action.value, action);
-            }
-        } else if (action.transitionType === 'skip') {
-            if (stage._stageController && action.reset == true) {
-                stage._stageController.reset();
-            }
-            this.replaceStage(action.value, action);
+        if (action.transitionType === 'skip') {
+            this.jumpToStage(action.value, action);
         } else {
             this._isSceneChanging = true;
-            if (stage._stageController && stage._stageController.hasNext()) {
+            if(action.transitionType === 'previous') {
+                if (stage._stageController && stage._stageController.hasPrevious()) {
+                    stage._stageController.decrIndex(2);
+                    this.replaceStage(stage._data.id, action);
+                } else {
+                    if (stage._stageController) {
+                        stage._stageController.setIndex(-1);
+                        if (action.reset == true) {
+                            stage._stageController.reset();
+                        }
+                    }
+                    this.replaceStage(action.value, action);
+                }
+            } else if (action.transitionType === 'next' && stage._stageController && stage._stageController.hasNext()) {
                 this.replaceStage(stage._data.id, action);
             } else {
-                if (stage._stageController && action.reset == true) {
-                    stage._stageController.reset();
-                }
-                this.replaceStage(action.value, action);
+                this.jumpToStage(action.value, action);
             }
         }
         // set the Plugin data to theme level from the stagePlugin.
-
+    },
+    
+    /*
+     * Checks reset status of the controller
+     * Replaces stage with given stage id
+    */
+    jumpToStage: function(stageId, action) {
+        if (stage._stageController && action.reset) {
+            stage._stageController.reset();
+        }
+        this.replaceStage(stageId, action);
     },
 
     /**
