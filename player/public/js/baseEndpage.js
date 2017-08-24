@@ -49,6 +49,7 @@ contentEnd: function(evnt, instance) {
 	if (this._isAvailable) {
 		EkstepRendererAPI.dispatchEvent("renderer:overlay:hide");
 		EkstepRendererAPI.dispatchEvent("renderer:player:hide");
+		EkstepRendererAPI.dispatchEvent("renderer:telemetry:end");
 		EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
 	} else {
 	}

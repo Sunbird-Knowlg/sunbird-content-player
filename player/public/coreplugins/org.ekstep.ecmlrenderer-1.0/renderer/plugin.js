@@ -41,7 +41,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         renderObj = content;
         if (_.isUndefined(renderObj)) return;
-        this.initContentProgress();
+        instance.initContentProgress();
         if(isbrowserpreview){
             renderObj.path = '';
         }
@@ -264,18 +264,18 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initContentProgress: function(){
         var instance = this;
         EkstepRendererAPI.addEventListener("sceneEnter",function(event){
-            if(!Renderer.theme._currentScene.isItemScene()){
-                instance.stageId.push(event.target.id);
-            }
+             instance.stageId.push(event.target.id);
         });
+
         EkstepRendererAPI.addEventListener("renderer:assesment:eval",function(event){
             instance.qid.push(event.target.event.edata.eks.qid);
+            instance.stageId = _.without(instance.stageId, Renderer.theme._currentStage);;
         });
     },
     contentProgress:function(){
-       var currentStageIndex = _.size(_.uniq(this.stageId)) + _.size(_.uniq(this.qid));
+       var currentStageIndex = _.size(_.uniq(this.stageId)) + _.size(_.uniq(this.qid))  ;
        var totalStages = Renderer.theme._data.stage.length + this.getContentAssesmentCount();
-        return this.progres(currentStageIndex + 1, totalStages);
+        return this.progres(currentStageIndex, totalStages);
     },
 
 });

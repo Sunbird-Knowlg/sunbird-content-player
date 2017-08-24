@@ -78,7 +78,6 @@
         this.currentIndex = 100;
         this.totalIndex = 100;
         this.logheartBeatEvent(false);
-        this.endTelemetry();
     },
     logheartBeatEvent: function(flag) {
         var instance = this;
