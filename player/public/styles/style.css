@@ -36,10 +36,6 @@
 
 
 
-
-
-
-
 /*@font-face {
     font-family: 'NotoNastaliqUrdu';
     src: url('fonts/NotoNastaliqUrdu-Regular.ttf') format('truetype')
@@ -292,7 +288,6 @@ body {
     vertical-align: middle;
     padding-left: 5%;
     overflow: hidden;
-
     /*white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;*/
@@ -311,7 +306,7 @@ body {
 
 .gc-menu-title-cont p {
     position: relative;
-    color: #FFFFFF ;
+    color: #FFFFFF;
     text-align: center;
     font-size: 2.8vw;
     width: 100%;
@@ -520,6 +515,8 @@ body {
 }
 
 
+
+
 /* For .assess-popup height:65% is important to make it align vertically and horizontally with the screen */
 
 .assess-popup {
@@ -541,9 +538,6 @@ body {
 
 .popup {
     position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
     height: 100%;
     z-index: 9999;
@@ -577,9 +571,15 @@ body {
 }
 
 .popup-full-body {
-    width: 60vw;
-    height: 70vh;
-}
+     position: absolute;
+     top: 0;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     margin: auto;
+     width: 60vw;
+     height: 70vh;
+ }
 
 .popup-close {
     position: inherit;
@@ -862,7 +862,6 @@ body {
     width: 48%;
     height: 100%;
     text-align: center;
-
     /* margin: 0 -5%; */
     /* margin-left: -50%; */
 }
@@ -872,7 +871,6 @@ body {
     width: 48%;
     height: 100%;
     text-align: center;
-
     /* margin: 0 -5%; */
     /* margin-left: 50%; */
 }
@@ -1349,6 +1347,7 @@ body {
 
 
 
+
 /*Loader css*/
 
 #loaderArea {
@@ -1584,6 +1583,7 @@ body {
 
 
 
+
 /* User Switcher Modal css starts */
 
 
@@ -1614,6 +1614,8 @@ body {
 }
 
 
+
+
 /* Modal Content */
 
 #userSwitchingModal .modal-content {
@@ -1637,14 +1639,6 @@ body {
     padding-top: 7px;
     text-transform: uppercase;
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -1790,9 +1784,6 @@ body {
 
 
 
-
-
-
 /* User Switcher Modal endes*/
 
 
@@ -1841,17 +1832,17 @@ body {
 
 
 
-
-
-
 /*Ionic is overwriting css for ul & ol css bullets and numbers*/
 
+
 /*This is for richtext support*/
+
 .richText ul {
     list-style-type: disc !important;
 }
 
-.richText ul, .richText ol {
+.richText ul,
+.richText ol {
     -webkit-margin-before: 1em !important;
     -webkit-margin-after: 1em !important;
     -webkit-margin-start: 0px !important;
@@ -1863,20 +1854,28 @@ body {
     list-style-type: decimal !important;
 }
 
-/*For richtext WYSIWYG preview*/
-.richText p {
-    margin: 0 0 1em !important;
-    line-height: 1.4285em !important;
+.richText em {
+  font-style: italic !important;
+}
+
+.richText strong {
+  font-weight: bold !important;
+}
+
+.richText s {
+  text-decoration: line-through !important;
 }
 
 
 
 
 
+/*For richtext WYSIWYG preview*/
 
-
-
-
+.richText p {
+    margin: 0 0 1em !important;
+    line-height: 1.4285em !important;
+}
 
 
 
@@ -1911,14 +1910,10 @@ body {
 
 @-webkit-keyframes banner-anim {
     from {
-        -webkit-transform: scale(0.8);
-        transform: scale(0.8);
+        -webkit-transform: scale(0.2);
+        transform: scale(0.2);
     }
     to {
-        -webkit-transition: all 0.1s ease-in;
-        -o-transition: all 0.1s ease-in;
-        transition: all 0.1s ease-in;
-
         -webkit-transform: scale(1);
         -khtml-transform: scale(1);
         -ms-transform: scale(1);
@@ -1928,14 +1923,10 @@ body {
 
 @keyframes banner-anim {
     from {
-        -webkit-transform: scale(0.8);
-        transform: scale(0.8);
+        -webkit-transform: scale(0.2);
+        transform: scale(0.2);
     }
     to {
-        -webkit-transition: all 0.1s ease-in;
-        -o-transition: all 0.1s ease-in;
-        transition: all 0.1s ease-in;
-
         -webkit-transform: scale(1);
         -khtml-transform: scale(1);
         -ms-transform: scale(1);
@@ -1945,75 +1936,81 @@ body {
 
 @-webkit-keyframes incorrect-button-anim {
     from {
-        visibility: visible;
-        z-index: 100;
+        visibility: hidden;
+        -webkit-transform: scale(0.2);
+        transform: scale(0.2);
     }
     to {
-        visibility: hidden;
-        z-index: -1;
+        visibility: visible;
+        -webkit-transform: scale(1.1);
+        -khtml-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        transform: scale(1.1);
     }
 }
 
 @keyframes incorrect-button-anim {
     from {
-        visibility: visible;
-        z-index: 100;
-    }
-    to {
         visibility: hidden;
-        z-index: -1;
-    }
-}
-
-@-webkit-keyframes retry-button-anim {
-    from {
-        visibility: visible;
-        z-index: 100;
-        -webkit-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        -khtml-transform: rotate(0deg);
-        transform: rotate(0deg);
+        -webkit-transform: scale(0.2);
+        transform: scale(0.2);
     }
     to {
         visibility: visible;
-        z-index: 100;
-        display: block;
-        -webkit-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        -khtml-transform: rotate(360deg);
-        transform: rotate(360deg);
+        -webkit-transform: scale(1.1);
+        -khtml-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        transform: scale(1.1);
     }
 }
 
-@keyframes retry-button-anim {
+@-webkit-keyframes correct-button-anim {
     from {
-        visibility: visible;
-        z-index: 100;
-        -webkit-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        -khtml-transform: rotate(0deg);
-        transform: rotate(0deg);
+        visibility: hidden;
+        -webkit-transform: scale(0.2);
+        transform: scale(0.2);
     }
     to {
         visibility: visible;
-        z-index: 100;
-        display: block;
-        -webkit-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        -khtml-transform: rotate(360deg);
-        transform: rotate(360deg);
+        -webkit-transform: scale(1.1);
+        -khtml-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        transform: scale(1.1);
     }
 }
 
+@keyframes correct-button-anim {
+    from {
+        visibility: hidden;
+        -webkit-transform: scale(0.2);
+        transform: scale(0.2);
+    }
+    to {
+        visibility: visible;
+        -webkit-transform: scale(1.1);
+        -khtml-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+}
 
 .correct-answer,
 .wrong-answer {
     position: relative;
     height: 70%;
     overflow: hidden;
-    background: #F8D764;
     border-top-left-radius: 0.5em;
     border-top-right-radius: 0.5em;
+}
+
+.correct-answer,
+.correct-answer .banner {
+    background: #A3D39C;
+}
+
+.wrong-answer,
+.wrong-answer .banner {
+    background: #9CC0D3;
 }
 
 .banner,
@@ -2029,7 +2026,6 @@ body {
     z-index: 10;
     height: 30%;
     width: 50%;
-    background: #F8D764;
 }
 
 .sign-board {
@@ -2056,40 +2052,29 @@ body {
 .banner img {
     position: relative;
     top: -30%;
-    -webkit-animation: banner-anim 0.2s ease-out forwards;
-    animation: banner-anim 0.2s ease-out forwards;
-}
-
-#retryButton {
-    -webkit-animation: retry-button-anim 2s forwards;
-    animation: retry-button-anim 2s forwards;
-    -webkit-animation-delay: 1.9s;
-    animation-delay: 1.9s;
+    -webkit-animation: banner-anim 0.1s ease-out forwards;
+    animation: banner-anim 0.1s ease-out forwards;
 }
 
 #incorrectButton {
-    position: absolute;
-    left: 0;
-    right: 0;
-    -webkit-animation: incorrect-button-anim 1s forwards;
-    animation: incorrect-button-anim 1s forwards;
-    -webkit-animation-delay: 0.9s;
-    animation-delay: 0.9s;
+    -webkit-animation: incorrect-button-anim 0.1s ease-out forwards;
+    animation: incorrect-button-anim 0.1s ease-out forwards;
+    -webkit-animation-delay: 0.7s;
+    animation-delay: 0.7s;
 }
 
-.wrong-answer .sign-board {
-    display: block;
+#correctButton {
+    -webkit-animation: correct-button-anim 0.1s ease-out forwards;
+    animation: correct-button-anim 0.1s ease-out forwards;
+    -webkit-animation-delay: 0.7s;
+    animation-delay: 0.7s;
 }
 
+.wrong-answer .sign-board img,
 .correct-answer .sign-board img {
-    top: -2vh;
-}
-
-.wrong-answer .sign-board img {
+    top: -4vh;
     visibility: hidden;
-    top: 4vh;
 }
-
 
 #popup-buttons-container {
     background-color: white;
@@ -2121,12 +2106,6 @@ body {
 .center {
     margin: 0 auto;
 }
-
-
-
-
-
-
 
 
 

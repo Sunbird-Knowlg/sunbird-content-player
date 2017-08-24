@@ -40,12 +40,21 @@ var RendererInterface = function() {
   };
 
   /**
-   * Interface to Access Content Metadata
+   * Interface to log temetry interact(OE_INTERACT) event
    * @param  {Object} data: Telemetry event data
-   * @memberof org.ekstep.contentrenderer.interface 
+   * @memberof org.ekstep.contentrenderer.interface
    */
   this.htmlInterfaceObj.logTelemetryInteract = function(data){
     _telemetryService.interact(data.type, data.id, data.extype, data.eks);
+  }
+
+  /**
+   * Interface to log telemetry xapi(OE_XAPI) event
+   * @param  {Object} data: Telemetry event data
+   * @memberof org.ekstep.contentrenderer.interface
+   */
+  this.htmlInterfaceObj.logTelemetryXapi = function(data){
+    _telemetryService.xapi(data);
   }
 
   /**

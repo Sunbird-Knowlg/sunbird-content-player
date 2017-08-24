@@ -1,4 +1,8 @@
  org.ekstep.contentrenderer.baseLauncher.extend({
+    s3_folders:{
+        'application/vnd.ekstep.html-archive':"html/",
+        'application/vnd.ekstep.h5p-archive':'h5p/'
+    },
     initialize: function() {
         var instance = this;
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.launch, this);
@@ -26,7 +30,8 @@
         var instance = this;
         org.ekstep.pluginframework.resourceManager.loadResource(path, 'TEXT', function(err, data) {
             if (err) {
-                showToaster("error", "Sorry!!.. Unable to open the Game!",{timeOut:200000})
+                showToaster("error", "Sorry!!.. Unable to open the Game!",{timeOut:200000});
+                EkstepRendererAPI.logErrorEvent('index.html file not found.',{'type':'content','action':'play','severity':'fatal'});
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
                 instance.configOverlay();
@@ -39,10 +44,8 @@
         setTimeout(function(){
             EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
             EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
-            EkstepRendererAPI.dispatchEvent('renderer:contentclose:show');
             EkstepRendererAPI.dispatchEvent('renderer:next:hide');
             EkstepRendererAPI.dispatchEvent('renderer:previous:hide');
-            EkstepRendererAPI.dispatchEvent("renderer:contentclose:show");
         },100)
          
     },
@@ -58,9 +61,8 @@
         // if html content want to show overlay, they should dispatch "renderer:overlay:show" to show overlay
     },
     getAsseturl: function(content) {
-        var content_type = "html/";
         var globalConfig = EkstepRendererAPI.getGlobalConfig();
-        var path = window.location.origin + globalConfig.s3ContentHost + content_type;
+        var path = window.location.origin + globalConfig.s3ContentHost + this.s3_folders[content.mimeType];
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
     },

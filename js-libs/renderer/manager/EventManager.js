@@ -44,7 +44,7 @@ EventManager = {
             if (_.contains(createjs.DisplayObject._MOUSE_EVENTS, evt.type)) {
                 var element = plugin._self;
                 if (element) {
-                    if (plugin instanceof HTMLPlugin) {
+                    if (plugin instanceof HTMLPlugin || plugin._div) {
                         element = plugin._self.htmlElement;
                         element.style.cursor = 'pointer';
                     } else {

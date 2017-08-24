@@ -14,8 +14,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.reset();
         this.launch();
         this.manifestData = manifestData;
-        var prefix_url = data.baseDir;
-        var path = prefix_url + "/" + data.downloadUrl;
+        if (window.cordova || !isbrowserpreview) {
+            var prefix_url = data.baseDir || '';
+            path = prefix_url + "/" + data.artifactUrl;
+        } else {
+            path = data.artifactUrl;
+        }
         this.createVideo(path, data);
         this.configOverlay();
     },
@@ -37,18 +41,22 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.className = 'video-js vjs-default-skin';
         this.adddiv(video);
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
-        data.mimeType === 'video/x-youtube' ? this._loadYoutube(data.downloadUrl) : this._loadVideo(path);
+        data.mimeType === 'video/x-youtube' ? this._loadYoutube(data.artifactUrl) : this._loadVideo(path);
     },
     _loadVideo: function(path) {
         var source = document.createElement("source");
         source.src = path;
         video.appendChild(source);
-        var player = videojs('renderer_videos');
-        player.play();
+        /*var player = videojs('renderer_videos');
+        player.play();*/
         this.addvideoListeners(video);
     },
     _loadYoutube: function(path) {
         var instance = this;
+        if(!navigator.onLine){
+            EkstepRendererAPI.logErrorEvent('No internet',{'type':'content','action':'play','severity':'error'});
+            showToaster('error', "Please connect to internet");
+        }
         var vid = videojs("renderer_videos", {
                 "techOrder": ["youtube"],
                 "src": path
@@ -81,7 +89,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "videostage",
                 subtype: "PLAY",
-                values: [e.timeStamp]
+                values: [{time:Math.floor(e.timeStamp)}]
             })
         };
         videoHolder.onpause = function(e) {
@@ -89,7 +97,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "videostage",
                 subtype: "PAUSE",
-                values: [e.timeStamp]
+                values: [{time:Math.floor(e.timeStamp)}]
             })
         };
         videoHolder.onended = function(e) {
@@ -104,7 +112,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "videostage",
                 subtype: "DRAG",
-                values: [e.timeStamp]
+                values: [{time:Math.floor(e.timeStamp)}]
             });
         };
     },
@@ -116,7 +124,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "youtubestage",
                 subtype: "PLAY",
-                values: [videoHolder.currentTime()]
+                values: [{time:Math.floor(videoHolder.currentTime())}]
             })
         });
         videoHolder.on('pause', function(e) {
@@ -124,7 +132,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH',{
                 stageId: "youtubestage",
                 subtype: "PAUSE",
-                values: [videoHolder.currentTime()]
+                values: [{time:Math.floor(videoHolder.currentTime())}]
             })
         });
 
@@ -132,7 +140,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.logTelemetry('TOUCH', {
                 stageId: "youtubestage",
                 subtype: "DRAG",
-                values: [videoHolder.currentTime()]
+                values: [{time:Math.floor(videoHolder.currentTime())}]
             })
         });
         videoHolder.on('ended', function() {
@@ -149,7 +157,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     logheartBeatEvent: function(flag) {
         var instance = this;
-        var stageId = content.mimeType === 'video/x-youtube' ? 'youtube-stage' : 'video-stage';
+        var stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         if (flag) {
             instance._time = setInterval(function() {
                 EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {
@@ -162,6 +170,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     replayContent: function() {
+        this.relaunch();
         this.start();
     },
     adddiv: function(div) {
@@ -191,7 +200,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             EkstepRendererAPI.dispatchEvent("renderer:next:hide");
             EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
             EkstepRendererAPI.dispatchEvent("renderer:previous:hide");
-            EkstepRendererAPI.dispatchEvent("renderer:contentclose:show");
         }, 100);
     },
 });

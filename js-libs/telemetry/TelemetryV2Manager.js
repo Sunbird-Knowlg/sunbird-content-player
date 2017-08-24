@@ -19,7 +19,7 @@ TelemetryV2Manager = Class.extend({
         return this.createEvent("OE_START", data);
     },
     end: function(data) {
-        if (!_.isEmpty(this._start)) {
+        if (this.telemetryStartActive()) {
             this._start.pop();
             if(data.progress == undefined) {
                 // Bu default we are sending as 50. If any external guys called telemetryService.end() directly
@@ -30,7 +30,7 @@ TelemetryV2Manager = Class.extend({
             console.warn("Telemetry service end is already logged Please log start telemetry again");
         }
     },
-    interact: function(type, id, extype, eks) {
+    interact: function(type, id, extype, eks, eid) {
         if (eks.optionTag)
             TelemetryService.flushEvent(this.itemResponse(eks), TelemetryService.apis.telemetry);
         if (type != "DRAG") {
@@ -45,7 +45,8 @@ TelemetryV2Manager = Class.extend({
                 "extype": "",
                 "values": eks.values ? eks.values : []
             };
-            return this.createEvent("OE_INTERACT", eks);
+            var eventName = eid ? eid : "OE_INTERACT"
+            return this.createEvent(eventName, eks);
         }
     },
     assess: function(qid, subj, qlevel, data) {
@@ -103,13 +104,14 @@ TelemetryV2Manager = Class.extend({
             return eventObj;
         }
     },
-    interrupt: function(type, id) {
+    interrupt: function(type, id, eid) {
             var eventStr = TelemetryService._config.events["OE_INTERRUPT"];
             var eks = {
                 "type": type,
                 "stageid": id || ''
             };
-            return this.createEvent("OE_INTERRUPT", eks);
+            var eventName = eid ? eid : "OE_INTERRUPT";
+            return this.createEvent(eventName, eks);
     },
     exitApp: function() {
         setTimeout(function() {
@@ -140,9 +142,11 @@ TelemetryV2Manager = Class.extend({
     sendFeedback: function(eks) {
         return this.createEvent("", eks);
     },
-    xapi: function(data) {
-        var jsonString = _.isObject(data) ? JSON.stringify(data) : data;
-        var eks = {xapi: jsonString};
-        return this.createEvent("OE_XAPI", eks);
+    telemetryStartActive: function() {
+        return (!_.isEmpty(this._start));
     },
+    xapi: function(data) {
+        var eks = {xapi: data};
+        return this.createEvent("OE_XAPI", eks);
+    }
 })

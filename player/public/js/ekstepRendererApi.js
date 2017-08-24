@@ -45,8 +45,8 @@ window.EkstepRendererAPI = {
      * empty if the event not registed.
      * @memberof EkstepRendererAPI
      */
-    hasEventListener: function(eventName) {
-        return EventBus.hasEventListener(eventName)
+    hasEventListener: function(eventName, callback, scope) {
+        return EventBus.hasEventListener(eventName, callback, scope)
     },
 
     /**
@@ -158,7 +158,9 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getPluginInstance: function(pluginId) {
-        return PluginManager.getPluginObject(pluginId);
+        if(typeof PluginManager !='undefined'){
+            return PluginManager.getPluginObject(pluginId);
+        }
     },
 
     /**
@@ -883,7 +885,7 @@ window.EkstepRendererAPI = {
             if (data) {
                 data.env = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getGlobalConfig().context.mode || 'preview';
                 data.type = !_.isUndefined(data.type) ? data.type.toUpperCase() : 'OTHER';
-                data.stageId = Renderer.theme ? EkstepRendererAPI.getCurrentStageId() : '';
+                data.stageId = this.getCurrentStageId();
                 if (!data.objectType) {
                     data.objectType = !_.isUndefined(this.getPluginInstance(data.asset)) ? this.getPluginInstance(data.asset)._data.pluginType : '';
                 }
@@ -987,12 +989,26 @@ window.EkstepRendererAPI = {
     },
 
     /**
-    * API to clear all cretejs element from canvas
+    * API to clear all createjs element from canvas
     * @memberof EkstepRendererAPI
     */
     clearStage: function(){
         if (!_.isUndefined(Renderer) && !_.isUndefined(Renderer.theme)) {
             Renderer.theme.clearStage();
         }
+    },
+    /**
+    * Remove all Html elements from game area
+    * @memberof EkstepRendererAPI
+    */
+    removeHtmlElements: function() {
+        var gameAreaEle = jQuery('#' + Renderer.divIds.gameArea);
+        var chilElemtns = gameAreaEle.children();
+        jQuery(chilElemtns).each(function() {
+            if ((this.id !== "overlay") && (this.id !== "gameCanvas")) {
+                jQuery(this).remove();
+            }
+        });
     }
+
 }

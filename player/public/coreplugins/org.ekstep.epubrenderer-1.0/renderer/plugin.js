@@ -16,16 +16,18 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.resetContent, this);
         EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
-        EkstepRendererAPI.dispatchEvent('renderer:contentclose:show');
         this.initContent();
     },
     initContent: function (event, data) {
         var instance = this;
         data = content;
-
-        var epubURL = isbrowserpreview ? this.getAssetURL(data) : data.baseDir;
-        var epubPath = epubURL + '/index.epub';
-
+        var epubPath = undefined;
+        if (window.cordova || !isbrowserpreview) {
+            var prefix_url = data.baseDir || '';
+            epubPath = prefix_url + "/" + data.artifactUrl;
+        } else {
+            epubPath = data.artifactUrl;
+        }
         org.ekstep.pluginframework.resourceManager.loadResource(epubPath, 'TEXT', function (err, data) {
             if (err) {
                 showToaster("error", "Unable to open eBook!", {timeOut: 200000})
@@ -37,7 +39,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     renderEpub: function (epubPath) {
         jQuery('#gameCanvas').remove();
-        jQuery('#gameArea').css({left: '10%', top: '0px', width: "80%", height: "90%", margin: "5% 0 5% 0"});
+        jQuery('#gameArea').css({left: '10%', top: '0px', width: "80%", height: "90%", margin: "5% 0 0 0"});
         var epubOptions = {
             width: document.getElementById('gameArea').offsetWidth,
             height: document.getElementById('gameArea').offsetHeight,
@@ -91,13 +93,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 instance.lastPage = true;
             }
         });
-    },
-    getAssetURL: function (content) {
-        var content_type = "epub/";
-        var globalConfig = EkstepRendererAPI.getGlobalConfig();
-        var path = window.location.origin + globalConfig.s3ContentHost + content_type;
-        path += content.status === "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
-        return path;
     },
     resetContent: function () {
         this.relaunch();
@@ -153,7 +148,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         // Add progress bar
         var $progressDiv = jQuery('<div>', {id: 'progress-container'}).css({
-            width: '80%',
+            width: '100%',
             margin: '0 auto',
             position: 'absolute',
             top: 0,
