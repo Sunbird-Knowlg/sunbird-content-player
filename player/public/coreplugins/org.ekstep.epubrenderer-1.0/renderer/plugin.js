@@ -17,6 +17,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener('renderer:content:replay', this.resetContent, this);
         EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
+        EkstepRendererAPI.addEventListener('renderer:content:end', this.onContentEnd, this);
         this.initContent();
     },
     initContent: function (event, data) {
@@ -99,6 +100,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     resetContent: function () {
+        this.stageId = [];
         this.relaunch();
         this.gotoStart();
     },
@@ -191,7 +193,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     contentProgress:function(){
         var totalStages = this.totalPages;
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
-        return this.progres(currentStageIndex, totalStages);
+        return this.progres(currentStageIndex + 1, totalStages);
+    },
+    onContentEnd:function(){
+        this.endTelemetry();
+        EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
     },
 });
 //# sourceURL=ePubRendererPlugin.js

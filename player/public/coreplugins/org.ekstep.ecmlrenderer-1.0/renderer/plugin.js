@@ -41,7 +41,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         renderObj = content;
         if (_.isUndefined(renderObj)) return;
-        instance.initContentProgress();
+        this.initContentProgress();
         if(isbrowserpreview){
             renderObj.path = '';
         }
@@ -277,6 +277,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
        var totalStages = Renderer.theme._data.stage.length + this.getContentAssesmentCount();
         return this.progres(currentStageIndex, totalStages);
     },
+
 
 });
 

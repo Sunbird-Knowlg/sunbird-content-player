@@ -13,7 +13,7 @@
          EkstepRendererAPI.addEventListener("renderer:content:replay", this.replayContent, this);
          EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
          EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
-         //EkstepRendererAPI.addEventListener('renderer:content:end', this.onContentEnd, this);
+         EkstepRendererAPI.addEventListener('renderer:content:end', this.onContentEnd, this);
          this._manifest = manifestData
          this.start(manifestData);
 
@@ -341,6 +341,10 @@
         if (!flag) {
             clearInterval(instance._time);
         }
+    },
+    onContentEnd:function(){
+        this.endTelemetry();
+        EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
     },
     initContentProgress: function(){
         var instance = this;
