@@ -61,8 +61,10 @@ clear:function(){
 	console.info('Clearing the launcher instance')
 },
 
-progres:function(currentIndex, totalIndex){
-	return progress = (currentIndex / totalIndex) * 100;
+progres: function(currentIndex, totalIndex) {
+    var totalProgress = (currentIndex / totalIndex) * 100;
+    totalProgress = totalProgress > 100 ? 100 : totalProgress;
+    return totalProgress;
 },
 contentProgress:function(){
 	console.warn("Child Launcher should calculate");

@@ -242,26 +242,26 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     relaunchGame: function(){
         this.relaunch();
+        this.qid = [];
+        this.stageId = [];
         Renderer.theme.removeHtmlElements();
         Renderer.theme.reRender();
     },
     onContentEnd:function(){
         this.endTelemetry();
     },
-    getContentAssesmentList:function(){
+    getContentAssesmentCount: function() {
         var questionCount = 0;
-        _.find(Renderer.theme._data.stage,function(obj){
-            if(obj['org.ekstep.quiz']){
+        _.find(Renderer.theme._data.stage, function(obj) {
+            if (obj['org.ekstep.quiz']) {
                 var itemData = JSON.parse(obj['org.ekstep.quiz'].data);
-                questionCount =  questionCount + itemData.questionnaire.total_items;
-                console.info("questionCount",questionCount);
+                questionCount = questionCount + (itemData.questionnaire.total_items - 1);
+                console.info("questionCount", questionCount);
             }
         });
         return questionCount;
     },
     initContentProgress: function(){
-        var totalStages = undefined;
-        var currentStageIndex = undefined;
         var instance = this;
         EkstepRendererAPI.addEventListener("sceneEnter",function(event){
             if(!Renderer.theme._currentScene.isItemScene()){
@@ -273,9 +273,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     contentProgress:function(){
-        currentStageIndex = _.size(_.uniq(this.stageId)) + _.size(_.uniq(this.qid)) || 1;
-        totalStages = Renderer.theme._data.stage.length + this.getContentAssesmentList();
-        return this.progres(currentStageIndex, totalStages);
+       var currentStageIndex = _.size(_.uniq(this.stageId)) + _.size(_.uniq(this.qid));
+       var totalStages = Renderer.theme._data.stage.length + this.getContentAssesmentCount();
+        return this.progres(currentStageIndex + 1, totalStages);
     },
 
 });

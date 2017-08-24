@@ -5,8 +5,11 @@
 
 org.ekstep.contentrenderer.baseLauncher.extend({
     _time: undefined,
+    currentTime: 0,
+    videoPlayer: undefined,
     initialize: function(manifestData) {
         EkstepRendererAPI.addEventListener("renderer:content:replay", this.replayContent, this);
+        EkstepRendererAPI.addEventListener("renderer:content:end", this.onContentEnd, this);
         this.start(manifestData);
     },
     start: function(manifestData) {
@@ -28,6 +31,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             videojs('renderer_videos').dispose();
             jQuery('#renderer_videos').remove();
         }
+        this.progressTimer(false);
+        this.currentTime = 0;
     },
     createVideo: function(path, data) {
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
@@ -47,14 +52,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var source = document.createElement("source");
         source.src = path;
         video.appendChild(source);
-        /*var player = videojs('renderer_videos');
-        player.play();*/
         this.addvideoListeners(video);
+        this.videoPlayer = video;
     },
     _loadYoutube: function(path) {
         var instance = this;
-        if(!navigator.onLine){
-            EkstepRendererAPI.logErrorEvent('No internet',{'type':'content','action':'play','severity':'error'});
+        if (!navigator.onLine) {
+            EkstepRendererAPI.logErrorEvent('No internet', {
+                'type': 'content',
+                'action': 'play',
+                'severity': 'error'
+            });
             showToaster('error', "Please connect to internet");
         }
         var vid = videojs("renderer_videos", {
@@ -72,6 +80,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             });
             instance.addYOUTUBEListeners(youtubeInstance);
             instance.setYoutubeStyles(youtubeInstance);
+            instance.videoPlayer = youtubeInstance;
+
         });
     },
     setYoutubeStyles: function(youtube) {
@@ -82,70 +92,88 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             video.style.height = '100%';
         });
     },
-    addvideoListeners: function(videoHolder) {
+    addvideoListeners: function(videoPlayer) {
         var instance = this;
-        videoHolder.onplay = function(e) {
+        videoPlayer.onplay = function(e) {
             instance.logheartBeatEvent(true);
-            instance.logTelemetry('TOUCH',{
+            instance.progressTimer(true);
+            instance.logTelemetry('TOUCH', {
                 stageId: "videostage",
                 subtype: "PLAY",
-                values: [{time:Math.floor(e.timeStamp)}]
+                values: [{
+                    time: Math.floor(e.timeStamp)
+                }]
             })
         };
-        videoHolder.onpause = function(e) {
+        videoPlayer.onpause = function(e) {
             instance.logheartBeatEvent(false);
-            instance.logTelemetry('TOUCH',{
+            instance.progressTimer(false);
+            instance.logTelemetry('TOUCH', {
                 stageId: "videostage",
                 subtype: "PAUSE",
-                values: [{time:Math.floor(e.timeStamp)}]
+                values: [{
+                    time: Math.floor(e.timeStamp)
+                }]
             })
         };
-        videoHolder.onended = function(e) {
+        videoPlayer.onended = function(e) {
             instance.logheartBeatEvent(false);
-            instance.logTelemetry('END',{
+            instance.progressTimer(false);
+            instance.logTelemetry('END', {
                 stageId: "videostage",
                 subtype: "STOP"
             });
             EkstepRendererAPI.dispatchEvent('renderer:content:end');
         };
-        videoHolder.onseeked = function(e) {
-            instance.logTelemetry('TOUCH',{
+        videoPlayer.onseeked = function(e) {
+            instance.progressTimer(false);
+            instance.logTelemetry('TOUCH', {
                 stageId: "videostage",
                 subtype: "DRAG",
-                values: [{time:Math.floor(e.timeStamp)}]
+                values: [{
+                    time: Math.floor(e.timeStamp)
+                }]
             });
         };
     },
-    addYOUTUBEListeners: function(videoHolder) {
+    addYOUTUBEListeners: function(videoPlayer) {
         var instance = this;
-
-        videoHolder.on('play', function(e) {
+        videoPlayer.on('play', function(e) {
             instance.logheartBeatEvent(true);
-            instance.logTelemetry('TOUCH',{
+            instance.progressTimer(true);
+            instance.logTelemetry('TOUCH', {
                 stageId: "youtubestage",
                 subtype: "PLAY",
-                values: [{time:Math.floor(videoHolder.currentTime())}]
+                values: [{
+                    time: Math.floor(videoPlayer.currentTime())
+                }]
             })
         });
-        videoHolder.on('pause', function(e) {
+        videoPlayer.on('pause', function(e) {
             instance.logheartBeatEvent(false);
-            instance.logTelemetry('TOUCH',{
+            instance.progressTimer(false);
+            instance.logTelemetry('TOUCH', {
                 stageId: "youtubestage",
                 subtype: "PAUSE",
-                values: [{time:Math.floor(videoHolder.currentTime())}]
+                values: [{
+                    time: Math.floor(videoPlayer.currentTime())
+                }]
             })
         });
 
-        videoHolder.on('seeked', function(e) {
+        videoPlayer.on('seeked', function(e) {
+            instance.progressTimer(false);
             instance.logTelemetry('TOUCH', {
                 stageId: "youtubestage",
                 subtype: "DRAG",
-                values: [{time:Math.floor(videoHolder.currentTime())}]
+                values: [{
+                    time: Math.floor(videoPlayer.currentTime())
+                }]
             })
         });
-        videoHolder.on('ended', function() {
-            instance.logheartBeatEvent(false);
-            instance.logTelemetry('END',{
+        videoPlayer.on('ended', function() {
+            instance.progressTimer(false);
+            instance.logTelemetry('END', {
                 stageId: "youtubestage",
                 subtype: "STOP"
             });
@@ -153,7 +181,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     logTelemetry: function(type, eksData) {
-        EkstepRendererAPI.getTelemetryService().interact(type || 'TOUCH',"", "", eksData);
+        EkstepRendererAPI.getTelemetryService().interact(type || 'TOUCH', "", "", eksData);
     },
     logheartBeatEvent: function(flag) {
         var instance = this;
@@ -161,9 +189,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if (flag) {
             instance._time = setInterval(function() {
                 EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {
-                    stageId:stageId
+                    stageId: stageId
                 });
-            },EkstepRendererAPI.getGlobalConfig().heartBeatTime);
+            }, EkstepRendererAPI.getGlobalConfig().heartBeatTime);
         }
         if (!flag) {
             clearInterval(instance._time);
@@ -202,6 +230,33 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             EkstepRendererAPI.dispatchEvent("renderer:previous:hide");
         }, 100);
     },
+    progressTimer: function(flag) {
+        var instance = this;
+        if (flag) {
+            instance.progressTime = setInterval(function(e) {
+                instance.currentTime = instance.currentTime + 1;
+                console.info("Time:", instance.currentTime);
+            }, 1000);
+        }
+        if (!flag) {
+            clearInterval(instance.progressTime);
+        }
+    },
+    contentProgress: function() {
+        var totalDuration = 0;
+        if (content.mimeType === 'video/x-youtube') {
+            totalDuration = this.videoPlayer.duration();
+        } else {
+            var totalDuration = this.videoPlayer.duration;
+        }
+        return this.progres(this.currentTime, totalDuration);
+    },
+    onContentEnd: function() {
+        this.logheartBeatEvent(false);
+        this.endTelemetry();
+    }
+
+
 });
 
 //# sourceURL=videoRenderer.js
