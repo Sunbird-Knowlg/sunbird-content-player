@@ -336,7 +336,7 @@ var ThemePlugin = Plugin.extend({
         TimerManager.stopAll(this._currentStage);
         if (!action.transitionType) action.transitionType = action.param;
         if (action.transitionType === 'skip') {
-            this.jumpToStage(action.value, action);
+            this.jumpToStage(action);
         } else {
             this._isSceneChanging = true;
             if(action.transitionType === 'previous') {
@@ -355,7 +355,7 @@ var ThemePlugin = Plugin.extend({
             } else if (action.transitionType === 'next' && stage._stageController && stage._stageController.hasNext()) {
                 this.replaceStage(stage._data.id, action);
             } else {
-                this.jumpToStage(action.value, action);
+                this.jumpToStage(action);
             }
         }
         // set the Plugin data to theme level from the stagePlugin.
@@ -365,11 +365,11 @@ var ThemePlugin = Plugin.extend({
      * Checks reset status of the controller
      * Replaces stage with given stage id
     */
-    jumpToStage: function(stageId, action) {
+    jumpToStage: function(action) {
         if (stage._stageController && action.reset) {
             stage._stageController.reset();
         }
-        this.replaceStage(stageId, action);
+        this.replaceStage(action.value, action);
     },
 
     /**
