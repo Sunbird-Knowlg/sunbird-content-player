@@ -186,21 +186,22 @@ app.compileProvider.directive('mute', function($rootScope) {
         restrict: 'E',
         template: '<div ng-click="toggleMute()"><img src="{{muteImg}}"/><span>Sound {{AppLables.mute}} </span></div>',
         link: function(scope, url) {
-            $rootScope.$on('renderer:overlay:unmute', function() {
+            EkstepRendererAPI.addEventListener('renderer:overlay:unmute', function() {
                 scope.muteImg = scope.imageBasePath + "audio_icon.png";
                 AppLables.mute = "on";
                 AudioManager.unmute();
             });
-            $rootScope.$broadcast('renderer:overlay:unmute');
-            scope.toggleMute = function() {
-                if (AudioManager.muted) {
-                    AudioManager.unmute();
-                    scope.muteImg = scope.imageBasePath + "audio_icon.png";
-                    AppLables.mute = "on";
-                } else {
+            EkstepRendererAPI.addEventListener('renderer:overlay:mute', function() {
                     AudioManager.mute();
                     scope.muteImg = scope.imageBasePath + "audio_mute_icon.png";
                     AppLables.mute = "off";
+            });
+            EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
+            scope.toggleMute = function() {
+                if (AudioManager.muted) {
+                    EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
+                } else {
+                    EkstepRendererAPI.dispatchEvent('renderer:overlay:mute');
                 }
                 TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute", "TOUCH", {
                     stageId: Renderer.theme._currentStage
