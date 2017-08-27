@@ -91,6 +91,8 @@ var VideoPlugin = Plugin.extend({
         jQuery(videoEle).bind("abort", this.logConsole);
         jQuery(videoEle).bind("loadeddata", this.onLoadData);
         jQuery(videoEle).bind('ended', this.showReplay);
+        EkstepRendererAPI.addEventListener('renderer:overlay:mute', this.muteAll, this);
+        EkstepRendererAPI.addEventListener('renderer:overlay:unmute', this.unmuteAll, this);
     },
 
     /**
@@ -283,6 +285,22 @@ var VideoPlugin = Plugin.extend({
         var top = dims.y + (dims.h / 2 - 40) + "px";
         var left = dims.x + (dims.w / 2 - 30) + "px";
         _instance.setReplayIconStyle(replay_id, {width: "50px", height: "50px", "z-index": "1", position: "absolute", "top": top, "left": left, "display": "block"});
+    },
+    muteAll: function() {
+        var videoElements = document.querySelectorAll('video');
+        if (videoElements.length>0) {
+               _.each(videoElements, function(videoElem) {
+                      videoElem.muted = true;
+               })
+        }
+    },
+    unmuteAll: function() {
+        var videoElements = document.querySelectorAll('video');
+        if (videoElements.length>0) {
+               _.each(videoElements, function(videoElem) {
+                      videoElem.muted = false;
+               })
+        }
     }
 });
 PluginManager.registerPlugin('video', VideoPlugin);
