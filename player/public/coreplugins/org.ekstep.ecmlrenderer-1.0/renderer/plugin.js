@@ -262,20 +262,29 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
         return questionCount;
     },
-    initContentProgress: function(){
+    initContentProgress: function() {
         var instance = this;
-        EkstepRendererAPI.addEventListener("sceneEnter",function(event){
-             instance.stageId.push(event.target.id);
+        EkstepRendererAPI.addEventListener("sceneEnter", function(event) {
+            var currentScene = Renderer.theme._currentScene
+            if (currentScene.isItemScene()) {
+                if (!_.contains(instance.qid, currentScene._stageController.assessStartEvent.event.edata.eks.qid)) {
+                    instance.stageId.push(event.target.id);
+                }
+            } else {
+                instance.stageId.push(event.target.id);
+            }
         });
 
-        EkstepRendererAPI.addEventListener("renderer:assesment:eval",function(event){
+        EkstepRendererAPI.addEventListener("renderer:assesment:eval", function(event) {
             instance.qid.push(event.target.event.edata.eks.qid);
             instance.stageId = _.without(instance.stageId, Renderer.theme._currentStage);;
         });
     },
     contentProgress:function(){
-       var currentStageIndex = _.size(_.uniq(this.stageId)) + _.size(_.uniq(this.qid))  ;
+       var currentStageIndex = _.size(_.uniq(this.stageId)) + _.size(_.uniq(this.qid));
+       console.info("currentStageIndex",currentStageIndex);
        var totalStages = Renderer.theme._data.stage.length + this.getContentAssesmentCount();
+
         return this.progres(currentStageIndex, totalStages);
     },
 
