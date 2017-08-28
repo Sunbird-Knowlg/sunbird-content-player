@@ -258,7 +258,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         _.find(Renderer.theme._data.stage, function(obj) {
             if (obj['org.ekstep.quiz']) {
                 if(_.isArray(obj['org.ekstep.quiz'])){
-                    if(obj['org.ekstep.quiz'].data){
+                    if(obj['org.ekstep.quiz'][0].data){
                         itemData = JSON.parse(obj['org.ekstep.quiz'][0].data.__cdata);
                     }
                 }else{
