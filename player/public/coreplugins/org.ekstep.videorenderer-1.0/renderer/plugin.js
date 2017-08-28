@@ -235,7 +235,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if (flag) {
             instance.progressTime = setInterval(function(e) {
                 instance.currentTime = instance.currentTime + 1;
-                console.info("Time:", instance.currentTime);
             }, 1000);
         }
         if (!flag) {

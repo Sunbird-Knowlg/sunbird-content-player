@@ -253,9 +253,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     getContentAssesmentCount: function() {
         var questionCount = 0;
+        var itemData =undefined;
+        // TODO : Need to check in the preview getting wrong quiz plugin data.
         _.find(Renderer.theme._data.stage, function(obj) {
             if (obj['org.ekstep.quiz']) {
-                var itemData = JSON.parse(obj['org.ekstep.quiz'].data);
+                if(_.isArray(obj['org.ekstep.quiz'])){
+                    if(obj['org.ekstep.quiz'].data){
+                        itemData = JSON.parse(obj['org.ekstep.quiz'][0].data.__cdata);
+                    }
+                }else{
+                    itemData = JSON.parse(obj['org.ekstep.quiz'].data);                    
+                }
                 questionCount = questionCount + (itemData.questionnaire.total_items - 1);
                 console.info("questionCount", questionCount);
             }
