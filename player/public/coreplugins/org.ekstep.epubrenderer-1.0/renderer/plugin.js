@@ -26,8 +26,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var epubPath = undefined;
         this.initContentProgress();
         if (window.cordova || !isbrowserpreview) {
-            var prefix_url = data.baseDir || '';
-            epubPath = prefix_url + "/" + data.artifactUrl;
+            epubPath = data.baseDir? (data.baseDir + "/") : data.artifactUrl;
         } else {
             epubPath = data.artifactUrl;
         }

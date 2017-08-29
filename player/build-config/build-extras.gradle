@@ -46,8 +46,8 @@ dependencies {
     compile "commons-io:commons-io:2.4"
 
     // For undubled Genie Initegration
-    compile "org.ekstep.genieservices:genie-integration:0.1.372@aar"
-    compile "org.ekstep.genieservices:commons:0.1.372@jar"
+    compile "org.ekstep.genieservices:genie-integration:1.0.392@aar"
+    compile "org.ekstep.genieservices:commons:1.0.392@jar"
 }
 
 task updateBuildNumber() {
