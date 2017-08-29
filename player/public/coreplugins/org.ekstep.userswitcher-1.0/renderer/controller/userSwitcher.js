@@ -1,6 +1,7 @@
+
 /**
  * User switcher controller
- * @author Akash Gupta <akash.gupta@tarento.com>, Krushanu Mohapatra <krushanu.mohapatra@tarento.com>
+ * @author Krushanu Mohapatra <krushanu.mohapatra@tarento.com> Akash Gupta <akash.gupta@tarento.com>
  */
 
 app.controllerProvider.register('UserSwitchController', [
@@ -300,7 +301,6 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
                         autoExpandHorizontalScroll: true
                     }
                 });
-                
             }
             scope.init = function() {
                 if (globalConfig.overlay.showUser === true) {

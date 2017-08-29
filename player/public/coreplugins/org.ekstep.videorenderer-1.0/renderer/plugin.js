@@ -126,7 +126,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             EkstepRendererAPI.dispatchEvent('renderer:content:end');
         };
         videoPlayer.onseeked = function(e) {
-            instance.progressTimer(false);
             instance.logTelemetry('TOUCH', {
                 stageId: "videostage",
                 subtype: "DRAG",
