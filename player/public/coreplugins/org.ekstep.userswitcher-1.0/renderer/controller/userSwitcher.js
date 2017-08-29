@@ -301,7 +301,6 @@ app.compileProvider.directive('userSwitcher', function($rootScope, $compile) {
                         autoExpandHorizontalScroll: true
                     }
                 });
-
             }
             scope.init = function() {
                 if (globalConfig.overlay.showUser === true) {
