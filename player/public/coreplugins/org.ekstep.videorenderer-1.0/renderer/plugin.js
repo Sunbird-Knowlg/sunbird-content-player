@@ -245,8 +245,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if (content.mimeType === 'video/x-youtube') {
             totalDuration = this.videoPlayer.duration();
         } else {
-            var totalDuration = this.videoPlayer.duration;
+            totalDuration = this.videoPlayer.duration;
         }
+        totalDuration = (this.currentTime < totalDuration) ? Math.floor(totalDuration) : Math.ceil(totalDuration);
         return this.progres(this.currentTime, totalDuration);
     },
     onContentEnd: function() {

@@ -64,7 +64,7 @@ clear:function(){
 progres: function(currentIndex, totalIndex) {
     var totalProgress = (currentIndex / totalIndex) * 100;
     totalProgress = totalProgress > 100 ? 100 : totalProgress;
-    return totalProgress;
+    return Math.round(totalProgress);
 },
 contentProgress:function(){
 	console.warn("Child Launcher should calculate");
