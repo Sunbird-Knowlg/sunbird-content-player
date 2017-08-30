@@ -47,7 +47,7 @@ launch:function(){
 relaunch: function() {
     console.info('Base Launcher should construct');
     var data = {};
-		data.stageid = EkstepRendererAPI.getCurrentStageId();
+	data.stageid = EkstepRendererAPI.getCurrentStageId();
     data.mode = getPreviewMode();
     TelemetryService.start(GlobalContext.game.id, GlobalContext.game.ver, data);
 },
@@ -79,7 +79,7 @@ endTelemetry:function(event){
 	} else {
 		console.warn('Telemetry service end is already logged Please log start telemetry again');
 	}
- 
+
 }
 
 });
