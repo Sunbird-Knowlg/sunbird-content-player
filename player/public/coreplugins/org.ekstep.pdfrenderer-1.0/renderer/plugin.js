@@ -212,7 +212,7 @@
          EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE + 1).toString());
          if (context.CURRENT_PAGE != context.TOTAL_PAGES)
              context.showPage(++context.CURRENT_PAGE);
-         if (context.CURRENT_PAGE == context.TOTAL_PAGES) {
+         else if (context.CURRENT_PAGE == context.TOTAL_PAGES) {
              this.logheartBeatEvent(false);
              EkstepRendererAPI.dispatchEvent('renderer:content:end');
          }
