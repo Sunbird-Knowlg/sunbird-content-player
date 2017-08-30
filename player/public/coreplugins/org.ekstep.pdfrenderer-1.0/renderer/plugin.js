@@ -303,9 +303,9 @@
              });
          } else {
             showToaster('error', "Page not found");
-             $("#pdf-no-page").show();
+             //$("#pdf-no-page").show();
              $("#page-loader").hide();
-             $("#pdf-canvas").hide();
+             //$("#pdf-canvas").hide();
          }
      },
 
