@@ -70,7 +70,7 @@ contentProgress:function(){
 	console.warn("Child Launcher should calculate");
 },
 endTelemetry:function(event){
-	if (TelemetryService.instance.telemetryStartActive()) {
+	if (TelemetryService.instance && TelemetryService.instance.telemetryStartActive()) {
 		var telemetryEndData = {};
 		telemetryEndData.stageid = getCurrentStageId();
 		telemetryEndData.progress = this.contentProgress();
