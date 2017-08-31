@@ -121,8 +121,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getCurrentStageId: function() {
-        var stageId = (!_.isUndefined(Renderer) && !_.isUndefined(Renderer.theme._currentStage)) ? Renderer.theme._currentStage : '';
-        return stageId;
+        return (!_.isUndefined(Renderer)) ? Renderer.theme._currentStage : '';
     },
 
     /**
