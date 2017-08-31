@@ -25,10 +25,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         data = content;
         var epubPath = undefined;
         this.initContentProgress();
-        if (window.cordova || !isbrowserpreview) {
-            epubPath = data.baseDir? (data.baseDir + "/") : data.artifactUrl;
+        if (window.cordova) {
+          // For device index.epub will be extracted/unziped to folder. So point to the folder
+          epubPath = data.baseDir + "/";
         } else {
-            epubPath = data.artifactUrl;
+          // For local and portal, read index.epub file
+          epubPath = isbrowserpreview ? data.artifactUrl : data.baseDir + "/" + data.artifactUrl;
         }
         org.ekstep.pluginframework.resourceManager.loadResource(epubPath, 'TEXT', function (err, data) {
             if (err) {
