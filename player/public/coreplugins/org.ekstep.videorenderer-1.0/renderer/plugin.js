@@ -101,7 +101,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 stageId: "videostage",
                 subtype: "PLAY",
                 values: [{
-                    time: Math.floor(e.timeStamp)
+                    time: Math.floor(instance.videoPlayer.currentTime * 1000)
                 }]
             })
         };
@@ -112,7 +112,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 stageId: "videostage",
                 subtype: "PAUSE",
                 values: [{
-                    time: Math.floor(e.timeStamp)
+                    time: Math.floor(instance.videoPlayer.currentTime * 1000)
                 }]
             })
         };
@@ -130,7 +130,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 stageId: "videostage",
                 subtype: "DRAG",
                 values: [{
-                    time: Math.floor(e.timeStamp)
+                    time: Math.floor(instance.videoPlayer.currentTime * 1000)
                 }]
             });
         };
@@ -144,7 +144,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 stageId: "youtubestage",
                 subtype: "PLAY",
                 values: [{
-                    time: Math.floor(videoPlayer.currentTime())
+                    time: Math.floor(videoPlayer.currentTime() * 1000)
                 }]
             })
         });
@@ -155,7 +155,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 stageId: "youtubestage",
                 subtype: "PAUSE",
                 values: [{
-                    time: Math.floor(videoPlayer.currentTime())
+                    time: Math.floor(videoPlayer.currentTime() * 1000)
                 }]
             })
         });
@@ -166,7 +166,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 stageId: "youtubestage",
                 subtype: "DRAG",
                 values: [{
-                    time: Math.floor(videoPlayer.currentTime())
+                    time: Math.floor(videoPlayer.currentTime() * 1000)
                 }]
             })
         });
