@@ -265,11 +265,13 @@ app.controllerProvider.register('UserSwitchController', [
                     $rootScope.currentUser = data;
                     $rootScope.currentUser.selected = true;
                     $scope.getUsersList();
+                    $rootScope.safeApply();
                 }).catch(function(err) {
                     console.log(err);
                 })
             } else {
                 $scope.getUsersList();
+                $rootScope.safeApply();
             }
         }
     }
