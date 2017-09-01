@@ -5,7 +5,7 @@
 
 org.ekstep.contentrenderer.baseLauncher.extend({
     _time: undefined,
-    currentTime: 0,
+    currentTime: 1,
     videoPlayer: undefined,
     initialize: function(manifestData) {
         EkstepRendererAPI.addEventListener("renderer:content:replay", this.replayContent, this);
