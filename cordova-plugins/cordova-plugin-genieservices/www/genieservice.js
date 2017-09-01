@@ -29,6 +29,10 @@ genieservice.prototype.setUser = function(userId) {
     return this.handleAction("setUser", [userId]);
 }
 
+genieservice.prototype.launchPortal = function(url) {
+    return this.handleAction("launchPortal", [url]);
+}
+
 // Won't work now
 // genieservice.prototype.getMetaData = function() {
 //     return this.handleAction("getMetaData", []);
