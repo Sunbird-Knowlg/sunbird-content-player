@@ -108,6 +108,7 @@
          findTextField.type = "number";
          findTextField.id = "pdf-find-text";
          findTextField.placeholder = "Enter page number";
+         findTextField.min = 1;
 
          var findSubmit = document.createElement("button");
          findSubmit.id = "pdf-find";

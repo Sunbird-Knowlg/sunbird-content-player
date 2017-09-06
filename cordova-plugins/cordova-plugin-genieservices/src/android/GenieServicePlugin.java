@@ -1,5 +1,7 @@
 package org.ekstep.geniecanvas;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 
 import org.apache.cordova.CallbackContext;
@@ -166,6 +168,11 @@ public class GenieServicePlugin extends CordovaPlugin {
         }else if("endGenieCanvas".equals(action)) {
             System.out.println("*** Activity:" + activity);
             activity.finish();
+        } else if("launchPortal".equals(action)) {
+            String url = args.getString(0);
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            activity.startActivity(i);
         }
         return true;
     }
