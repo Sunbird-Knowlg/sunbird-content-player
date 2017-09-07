@@ -7,6 +7,16 @@ var packageName = "org.ekstep.quiz.app", version = AppConfig.version, packageNam
 
 document.body.addEventListener("logError", telemetryError, false);
 
+// Create IE + others compatible event handler
+var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+var eventer = window[eventMethod];
+var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+// Listen to message from child window
+eventer(messageEvent,function(e) {
+  console.info('parent received message!:  ',e.data);
+},false);
+
 function telemetryError(e) {
     var $body = angular.element(document.body);
     var $rootScope = $body.scope().$root;
