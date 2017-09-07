@@ -7,23 +7,24 @@ var packageName = "org.ekstep.quiz.app", version = AppConfig.version, packageNam
 
 document.body.addEventListener("logError", telemetryError, false);
 
-function postMessageHandler( event ) {
-  console.log("We've got a message!");
-  console.log("* Message:", event.data);
-  console.log("* Origin:", event.origin);
-  console.log("* Source:", event.source);  
-  // check request is from legitimate source and message is expected or not
-  if ( event.origin !== window.location.origin ) { return; }
-  if ( event.data === 'Hello' ) {
-    // give response
-    event.source.postMessage( 'world!', window.location.origin);
+function postMessageHandler(event) {
+    console.log("We've got a message!");
+    console.log("* Message:", event.data);
+    console.log("* Origin:", event.origin);
+    console.log("* Source:", event.source);
+    // check request is from legitimate source and message is expected or not
+    if (event.origin !== window.location.origin) {
+        return;
+    }
+    if (event.data) {
+        org.ekstep.contentrenderer.initializePreview(event.data)
     }
 }
 
 if (window.addEventListener) {
-  window.addEventListener("message", postMessageHandler, false);
-  } else {
-  window.attachEvent("onmessage", postMessageHandler);
+    window.addEventListener("message", postMessageHandler, false);
+} else {
+    window.attachEvent("onmessage", postMessageHandler);
 }
 
 function telemetryError(e) {
