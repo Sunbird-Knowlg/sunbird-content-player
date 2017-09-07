@@ -13,9 +13,6 @@ function postMessageHandler(event) {
     console.log("* Origin:", event.origin);
     console.log("* Source:", event.source);
     // check request is from legitimate source and message is expected or not
-    if (event.origin !== window.location.origin) {
-        return;
-    }
     if (event.data) {
         org.ekstep.contentrenderer.initializePreview(event.data)
     }
