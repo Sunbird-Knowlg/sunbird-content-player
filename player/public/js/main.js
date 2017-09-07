@@ -7,15 +7,24 @@ var packageName = "org.ekstep.quiz.app", version = AppConfig.version, packageNam
 
 document.body.addEventListener("logError", telemetryError, false);
 
-// Create IE + others compatible event handler
-var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-var eventer = window[eventMethod];
-var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+function postMessageHandler( event ) {
+  console.log("We've got a message!");
+  console.log("* Message:", event.data);
+  console.log("* Origin:", event.origin);
+  console.log("* Source:", event.source);  
+  // check request is from legitimate source and message is expected or not
+  if ( event.origin !== window.location.origin ) { return; }
+  if ( event.data === 'Hello' ) {
+    // give response
+    event.source.postMessage( 'world!', window.location.origin);
+    }
+}
 
-// Listen to message from child window
-eventer(messageEvent,function(e) {
-  console.info('parent received message!:  ',e.data);
-},false);
+if (window.addEventListener) {
+  window.addEventListener("message", postMessageHandler, false);
+  } else {
+  window.attachEvent("onmessage", postMessageHandler);
+}
 
 function telemetryError(e) {
     var $body = angular.element(document.body);
