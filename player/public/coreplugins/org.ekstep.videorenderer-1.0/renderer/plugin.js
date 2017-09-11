@@ -144,11 +144,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
 
         videoPlayer.onplay = function(e) {
-            instance.play("videostage", Math.floor(e.timeStamp));
+            instance.play("videostage", Math.floor(instance.videoPlayer.timeStamp)*1000);
         };
 
         videoPlayer.onpause = function(e) {
-            instance.pause("videostage", Math.floor(e.timeStamp));
+            instance.pause("videostage", Math.floor(instance.videoPlayer.timeStamp)*1000);
         };
 
         videoPlayer.onended = function(e) {
@@ -156,7 +156,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         };
 
         videoPlayer.onseeked = function(e) {
-            instance.seeked("videostage", Math.floor(e.timeStamp));
+            instance.seeked("videostage", Math.floor(instance.videoPlayer.timeStamp)*1000);
         };
 
     },
@@ -164,18 +164,18 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
 
         videoPlayer.on('play', function(e) {
-            instance.play("youtubestage", Math.floor(videoPlayer.currentTime()));
+            instance.play("youtubestage", Math.floor(videoPlayer.currentTime())*1000);
         });
 
         videoPlayer.on('pause', function(e) {
-            instance.pause("youtubestage", Math.floor(videoPlayer.currentTime()));
+            instance.pause("youtubestage", Math.floor(videoPlayer.currentTime())*1000);
         });
 
         videoPlayer.on('ended', function() {
             instance.ended("youtubestage");
         });
         videoPlayer.on('seeked', function(e) {
-            instance.seeked("youtubestage", Math.floor(videoPlayer.currentTime()));
+            instance.seeked("youtubestage", Math.floor(videoPlayer.currentTime())*1000);
         });
     },
     logTelemetry: function(type, eksData) {
