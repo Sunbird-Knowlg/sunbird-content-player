@@ -58,10 +58,10 @@ var VideoPlugin = Plugin.extend({
 
     initPlugin: function(data) {
         this._data = data;
+        this._data.muted = AudioManager.muted ? true : false; 
         if (this._data) {
             if (_.isUndefined(this._data.autoplay)) this._data.autoplay = true;
             if (_.isUndefined(this._data.controls)) this._data.controls = false;
-            if (_.isUndefined(this._data.muted)) this._data.muted = false;
         }
 
         _instance = this;
