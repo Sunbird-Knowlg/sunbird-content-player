@@ -8,11 +8,7 @@ var packageName = "org.ekstep.quiz.app", version = AppConfig.version, packageNam
 document.body.addEventListener("logError", telemetryError, false);
 
 function postMessageHandler(event) {
-    console.log("We've got a message!");
-    console.log("* Message:", event.data);
-    console.log("* Origin:", event.origin);
-    console.log("* Source:", event.source);
-    // check request is from legitimate source and message is expected or not
+    console.info("PostMessage is invoked")
     if (event.data) {
         org.ekstep.contentrenderer.initializePreview(event.data)
     }
