@@ -645,7 +645,7 @@ var Plugin = Class.extend({
         return value;
     },
     getDefaultFont: function() {
-        this._defaultFont = 'NotoSans, NotoSansGujarati, NotoSansOriya, NotoSansMalayalam';
+        this._defaultFont = 'NotoSans';
         return this._defaultFont;
     },
     transitionTo: function() {
