@@ -89,17 +89,24 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
         $scope.showPlayer = true;
         $scope.safeApply();
     };
+    
+    EkstepRendererAPI.addEventListener("renderer:player:init", $scope.initializePlayer);
 
     /**
-     * 'org.ekstep.launcher' registering for event 'renderer.player.init'
+     * renderer:player:hide event to hide the player.
      * @event 'renderer.player.init'
      * @listens 'renderer.player.init'
      * @memberof 'org.ekstep.launcher'
      */
-    EkstepRendererAPI.addEventListener("renderer:player:init", $scope.initializePlayer);
     EkstepRendererAPI.addEventListener('renderer:player:hide', $scope.hideCanvasPlayer);
     EkstepRendererAPI.addEventListener('renderer:player:show', $scope.showCanvasPlayer);
 
+     /**
+     * renderer:content:replay event to replay the current content.
+     * @event 'renderer:content:replay'
+     * @listens 'renderer:content:replay'
+     * @memberof 'org.ekstep.launcher'
+     */
     EkstepRendererAPI.addEventListener('renderer:content:replay', function(){
         $rootScope.$broadcast('renderer:overlay:unmute');
         $scope.showCanvasPlayer()

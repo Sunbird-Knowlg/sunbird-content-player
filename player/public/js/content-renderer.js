@@ -44,9 +44,9 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
             var globalConfig = EkstepRendererAPI.getGlobalConfig();
             if (globalConfig.mimetypes.indexOf(appInfo.mimeType) > -1) {
                 /**
-                 * 'renderer.player.init' event will get dispatch after loading default & external injected plugins
-                 * @event 'renderer.player.init'
-                 * @fires 'renderer.player.init'
+                 * renderer:player:init event will get dispatch after loading default & external injected plugins
+                 * @event 'renderer:player:init'
+                 * @fires 'renderer:player:init'
                  * @memberof EkstepRendererEvents
                  */
                 EkstepRendererAPI.dispatchEvent('renderer:player:init');
@@ -138,7 +138,7 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
 
     addWindowUnloadEvent();
     /**
-     * 'renderer.player.init' event will get dispatch after loading default & external injected plugins
+     * renderer.player.init event will get dispatch after loading default & external injected plugins
      * @event 'renderer.player.init'
      * @fires 'renderer.player.init'
      * @memberof EkstepRendererEvents

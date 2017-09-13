@@ -24,7 +24,7 @@ Plugin.extend({
         });
 
         /**
-         * 'renderer:repo:create' event will get dispatch to add a custom repo to load the plugins from the path.
+         * renderer:repo:create event will get dispatch to add a custom repo to load the plugins from the path.
          * @event 'renderer:repo:create'
          * @fires 'renderer:repo:create'
          * @memberof EkstepRendererEvents
@@ -54,7 +54,7 @@ Plugin.extend({
         content = contentData;
         org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
         /**
-         * 'telemetryPlugin:intialize' event will get dispatch to Initialize the telemetry plugin before loading of the launchers.
+         * telemetryPlugin:intialize event will get dispatch to Initialize the telemetry plugin before loading of the launchers.
          * @event 'telemetryPlugin:intialize'
          * @fires 'telemetryPlugin:intialize'
          * @memberof EkstepRendererEvents
