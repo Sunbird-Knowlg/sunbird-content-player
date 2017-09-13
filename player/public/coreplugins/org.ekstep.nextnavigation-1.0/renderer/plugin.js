@@ -19,9 +19,21 @@ Plugin.extend({
                         var globalConfig = EkstepRendererAPI.getGlobalConfig();
                         var defaultValue = globalConfig.overlay.showNext ? "on" : "off";
                         switch (event.type) {
+                            /**
+                             * renderer:next:show Event to show next navigation icon.
+                             * @event renderer:next:show
+                             * @listen renderer:next:show
+                             * @memberOf EkstepRendererEvents
+                             */
                             case "renderer:next:show":
                                 val = "on";
                                 break;
+                            /**
+                             * renderer:next:hide Event to hide next navigation icon.
+                             * @event renderer:next:hide
+                             * @listen renderer:next:hide
+                             * @memberOf EkstepRendererEvents
+                             */    
                             case "renderer:next:hide":
                                 val = "off";
                                 break;

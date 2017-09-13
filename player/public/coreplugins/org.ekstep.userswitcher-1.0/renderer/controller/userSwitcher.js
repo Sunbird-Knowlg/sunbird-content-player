@@ -216,18 +216,36 @@ app.controllerProvider.register('UserSwitchController', [
                 $scope.showUserSwitchingModal();
             });
 
+            /**
+             * event:getcurrentuser Event to get the current user being playing the content.
+             * @event event:getcurrentuser
+             * @listen event:getcurrentuser
+             * @memberOf EkstepRendererEvents
+             */
             EventBus.addEventListener("event:getcurrentuser", function() {
                 if (globalConfig.overlay.showUser)
                     currentUser = $rootScope.currentUser;
                 }
             );
 
+            /**
+             * event:getuserlist Event to get the user list.
+             * @event event:getuserlist
+             * @listen event:getuserlist
+             * @memberOf EkstepRendererEvents
+             */
             EventBus.addEventListener("event:getuserlist", function() {
                 if (globalConfig.overlay.showUser)
                     userList = $rootScope.users;
                 }
             );
 
+            /**
+             * event:showuser Event to show the user icon.
+             * @event event:showuser
+             * @listen event:showuser
+             * @memberOf EkstepRendererEvents
+             */
             EventBus.addEventListener("event:showuser", function(value) {
                 globalConfig.overlay.showUser = value;
                 $rootScope.safeApply = function() {
@@ -235,6 +253,12 @@ app.controllerProvider.register('UserSwitchController', [
                 }
             });
 
+            /**
+             * event:enableUserSwitcher Event to enable the userswitcher.
+             * @event event:enableUserSwitcher
+             * @listen event:enableUserSwitcher
+             * @memberOf EkstepRendererEvents
+             */
             EventBus.addEventListener("event:enableUserSwitcher", function(value) {
                 if (globalConfig.overlay.enableUserSwitcher) {
                     $rootScope.safeApply = function() {
