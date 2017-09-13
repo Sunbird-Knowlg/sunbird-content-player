@@ -521,7 +521,7 @@ module.exports = function(grunt) {
         },
         jsdoc: {
             dist: {
-                src: ['../js-libs/renderer/**/*.js', 'public/js/*.js','public/js/coreplugins/**/*.js', '../README.md'],
+                src: ['../js-libs/renderer/**/*.js', 'public/js/*.js','public/coreplugins/**/renderer/js/*.js','public/coreplugins/**/renderer/*.js', '../README.md'],
                 options: {
                     destination: 'docs'
                 }

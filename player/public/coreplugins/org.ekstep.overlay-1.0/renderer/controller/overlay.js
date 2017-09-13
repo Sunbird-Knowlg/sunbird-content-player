@@ -18,7 +18,22 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     $scope.showReload = true;
     $scope.showContentClose = false;
     $scope.init = function() {
+
+        /**
+         * renderer:overlay:show event to show the overlay on top the content.
+         * @event renderer:overlay:show
+         * @listens renderer:overlay:show
+         * @memberof EkstepRendererEvents
+         */
         EkstepRendererAPI.addEventListener("renderer:overlay:show", $scope.showOverlay);
+
+        /**
+         * renderer:overlay:hide event to hide the overlay.
+         * @event renderer:overlay:hide
+         * @listens renderer:overlay:hide
+         * @memberof EkstepRendererEvents
+         */
+
         EkstepRendererAPI.addEventListener("renderer:overlay:hide", $scope.hideOverlay);
 
         EkstepRendererAPI.addEventListener("renderer:content:start", $scope.showOverlay);
@@ -42,6 +57,15 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
             var eventName = $scope.overlayEvents[i];
             EventBus.addEventListener(eventName, $scope.overlayEventHandler, $scope);
         }
+
+
+        /**
+         * sceneEnter event will tigger when the scene is got changed(i.e. when user navigates form one scene to another scene)
+         * @event sceneEnter
+         * @listens sceneEnter
+         * @memberof EkstepRendererEvents
+         */
+
         EventBus.addEventListener("sceneEnter", function(data) {
             $scope.showOverlay();
             $rootScope.stageData = data.target;
@@ -80,10 +104,24 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
             stageId: EkstepRendererAPI.getCurrentStageId()
         });
         if (navType === "next") {
+
+        /**
+         * actionNavigateNext  event used to navigate to next stage from the current stage of the content.
+         * @event actionNavigateNext
+         * @fires actionNavigateNext
+         * @memberof EkstepRendererEvents
+         */
             EventBus.dispatch("actionNavigateNext", navType);
             EventBus.dispatch("nextClick");
 
         } else if (navType === "previous") {
+
+        /**
+         * actionNavigatePrevious  event used to navigate to previous stage from the current stage of the content.
+         * @event actionNavigatePrevious
+         * @fires actionNavigatePrevious
+         * @memberof EkstepRendererEvents
+         */
             EventBus.dispatch("actionNavigatePrevious", navType);
             EventBus.dispatch("previousClick");
         }
@@ -94,6 +132,12 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     }
 
     $rootScope.defaultSubmit = function() {
+        /**
+         * actionDefaultSubmit  will dispatch to eval the item(question's).
+         * @event actionDefaultSubmit
+         * @fires actionDefaultSubmit
+         * @memberof EkstepRendererEvents
+         */
         EventBus.dispatch("actionDefaultSubmit");
     }
 
@@ -101,6 +145,13 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         TelemetryService.interact("TOUCH", "gc_open_userswitch", "TOUCH", {
             stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
         });
+
+        /**
+         * actionDefaultSubmit  event used to show the userswitch model.
+         * @event event:openUserSwitchingModal
+         * @fires event:openUserSwitchingModal
+         * @memberof EkstepRendererEvents
+         */
         EventBus.dispatch("event:openUserSwitchingModal");
         $scope.hideMenu();
     }
@@ -175,6 +226,12 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     }
 
     $scope.replayCallback = function() {
+        /**
+         * renderer:content:replay  event used to replay the current playing content.
+         * @event renderer:content:replay
+         * @fires renderer:content:replay
+         * @memberof EkstepRendererEvents
+         */
         EkstepRendererAPI.dispatchEvent('renderer:content:replay');
     }
 
@@ -186,11 +243,26 @@ app.compileProvider.directive('mute', function($rootScope) {
         restrict: 'E',
         template: '<div ng-click="toggleMute()"><img src="{{muteImg}}"/><span>Sound {{AppLables.mute}} </span></div>',
         link: function(scope, url) {
+
+            /**
+             * renderer:overlay:unmute  event used to unmute the content audio from the menu.
+             * @event renderer:overlay:unmute
+             * @listens renderer:overlay:unmute
+             * @memberof EkstepRendererEvents
+             */
+
             EkstepRendererAPI.addEventListener('renderer:overlay:unmute', function() {
                 scope.muteImg = scope.imageBasePath + "audio_icon.png";
                 AppLables.mute = "on";
                 AudioManager.unmute();
             });
+
+            /**
+             * renderer:overlay:mute  event used to mute the content audio from the menu.
+             * @event renderer:overlay:mute
+             * @listens renderer:overlay:mute
+             * @memberof EkstepRendererEvents
+             */
             EkstepRendererAPI.addEventListener('renderer:overlay:mute', function() {
                     AudioManager.mute();
                     scope.muteImg = scope.imageBasePath + "audio_mute_icon.png";
@@ -204,7 +276,7 @@ app.compileProvider.directive('mute', function($rootScope) {
                     EkstepRendererAPI.dispatchEvent('renderer:overlay:mute');
                 }
                 TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute", "TOUCH", {
-                    stageId: Renderer.theme._currentStage
+                    stageId: EkstepRendererAPI.getCurrentStageId()
                 });
             }
         }
@@ -413,14 +485,14 @@ app.compileProvider.directive('contentClose', function($rootScope) {
             };
 
             /**
-             * 'renderer:contentclose:show' Event to show the close icon.
+             * renderer:contentclose:show Event to show the close icon.
              * @event renderer:contentclose:show
              * @listen renderer:contentclose:show
              * @memberOf EkstepRendererEvents
              */
             EkstepRendererAPI.addEventListener("renderer:contentclose:show", scope.toggleContentClose, scope);
             /**
-             * 'renderer:contentclose:hide' Event to hide the close icon.
+             * renderer:contentclose:hide Event to hide the close icon.
              * @event renderer:contentclose:hide
              * @listen renderer:contentclose:hide
              * @memberOf EkstepRendererEvents
