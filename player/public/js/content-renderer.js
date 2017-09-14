@@ -138,9 +138,9 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
 
     addWindowUnloadEvent();
     /**
-     * renderer.player.init event will get dispatch after loading default & external injected plugins
-     * @event 'renderer.player.init'
-     * @fires 'renderer.player.init'
+     * renderer:player:init event will get dispatch after loading default & external injected plugins
+     * @event 'renderer:player:init'
+     * @fires 'renderer:player:init'
      * @memberof EkstepRendererEvents
      */
     EkstepRendererAPI.dispatchEvent("renderer.content.getMetadata");
