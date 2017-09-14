@@ -47,6 +47,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.adddiv(video);
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
         data.mimeType === 'video/x-youtube' ? this._loadYoutube(data.artifactUrl) : this._loadVideo(path);
+        video.onvolumechange = function() {
+            if (video.muted) {
+                EkstepRendererAPI.dispatchEvent('renderer:overlay:mute');
+            } else {
+                EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
+            }
+        };
     },
     _loadVideo: function(path) {
         var source = document.createElement("source");
