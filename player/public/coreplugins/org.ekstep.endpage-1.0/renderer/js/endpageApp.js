@@ -176,11 +176,25 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
         }
 
     };
+
+    /**
+     * renderer:endpage:show Event to show the endpage.
+     * @event renderer:endpage:show
+     * @listen renderer:endpage:show
+     * @memberOf EkstepRendererEvents
+     */
     EkstepRendererAPI.addEventListener('renderer:endpage:show', function() {
         $scope.showEndPage = true;
         $scope.initEndpage();
         $scope.safeApply();
     });
+
+    /**
+     * renderer:endpage:hide Event to hide the endpage.
+     * @event renderer:endpage:hide
+     * @listen renderer:endpage:hide
+     * @memberOf EkstepRendererEvents
+     */
     EkstepRendererAPI.addEventListener('renderer:endpage:hide',function() {
         $scope.showEndPage = false;
         $scope.safeApply();
