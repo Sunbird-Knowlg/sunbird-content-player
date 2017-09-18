@@ -272,8 +272,10 @@ app.compileProvider.directive('mute', function($rootScope) {
             scope.toggleMute = function() {
                 if (AudioManager.muted) {
                     EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
+                    EkstepRendererAPI.dispatchEvent('renderer:player:unmute');
                 } else {
                     EkstepRendererAPI.dispatchEvent('renderer:overlay:mute');
+                    EkstepRendererAPI.dispatchEvent('renderer:player:mute');
                 }
                 TelemetryService.interact("TOUCH", AudioManager.muted ? "gc_mute" : "gc_unmute", "TOUCH", {
                     stageId: EkstepRendererAPI.getCurrentStageId()

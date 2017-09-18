@@ -10,6 +10,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initialize: function(manifestData) {
         EkstepRendererAPI.addEventListener("renderer:content:replay", this.replayContent, this);
         EkstepRendererAPI.addEventListener("renderer:content:end", this.onContentEnd, this);
+        EkstepRendererAPI.addEventListener("renderer:player:mute", this.onContentMute, this);
+        EkstepRendererAPI.addEventListener("renderer:player:unmute", this.onContentUnmute, this);
         this.start(manifestData);
     },
     start: function(manifestData) {
@@ -48,11 +50,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
         data.mimeType === 'video/x-youtube' ? this._loadYoutube(data.artifactUrl) : this._loadVideo(path);
         video.onvolumechange = function() {
-            if (video.muted) {
-                EkstepRendererAPI.dispatchEvent('renderer:overlay:mute');
-            } else {
-                EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
-            }
+            (video.muted) ? EkstepRendererAPI.dispatchEvent('renderer:overlay:mute') : EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
         };
     },
     _loadVideo: function(path) {
@@ -88,7 +86,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.addYOUTUBEListeners(youtubeInstance);
             instance.setYoutubeStyles(youtubeInstance);
             instance.videoPlayer = youtubeInstance;
-
+            youtubeInstance.on('volumechange', function(){
+                (youtubeInstance.muted()) ? EkstepRendererAPI.dispatchEvent('renderer:overlay:mute') : EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
+              })
         });
     },
     setYoutubeStyles: function(youtube) {
@@ -203,6 +203,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     replayContent: function() {
+        EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
         this.relaunch();
         this.start();
     },
@@ -260,9 +261,21 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.logheartBeatEvent(false);
         this.endTelemetry();
         EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
+    },
+    onContentMute: function() {
+        if (this.videoPlayer.currentType_ === 'video/youtube') {
+            this.videoPlayer.muted(true);
+        } else {
+            this.videoPlayer.muted = true;
+        }
+    },
+    onContentUnmute: function() {
+        if(this.videoPlayer.currentType_ === 'video/youtube') {
+            this.videoPlayer.muted(false);
+        } else {
+            this.videoPlayer.muted = false;
+        }
     }
-
-
 });
 
 //# sourceURL=videoRenderer.js
