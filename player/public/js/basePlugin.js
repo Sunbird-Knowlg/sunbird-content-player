@@ -357,6 +357,9 @@ var Plugin = Class.extend({
         if (_.contains(this.events, 'show')) {
             EventManager.dispatchEvent(this._data.id, 'show');
         } else if (!this._self.visible) {
+            if(this._self.parent.type == 'org.ekstep.scribblepad'){
+                this._self.parent.visible = true;
+            }
             this._self.visible = true;
             EventManager.processAppTelemetry(action, 'SHOW', this);
         }
@@ -373,6 +376,9 @@ var Plugin = Class.extend({
         if (_.contains(this.events, 'hide')) {
             EventManager.dispatchEvent(this._data.id, 'hide');
         } else if (this._self && this._self.visible) {
+            if(this._self.parent.type == 'org.ekstep.scribblepad'){
+                this._self.parent.visible = false;
+            }
             this._self.visible = false;
             EventManager.processAppTelemetry(action, 'HIDE', this);
         }
@@ -389,6 +395,9 @@ var Plugin = Class.extend({
         if (_.contains(this.events, 'toggleShow')) {
             EventManager.dispatchEvent(this._data.id, 'toggleShow');
         } else {
+            if(this._self.parent.type == 'org.ekstep.scribblepad'){
+                this._self.parent.visible = !this._self.visible;
+            }
             this._self.visible = !this._self.visible;
             EventManager.processAppTelemetry(action, this._self.visible ? 'SHOW' : 'HIDE', this);
         }
