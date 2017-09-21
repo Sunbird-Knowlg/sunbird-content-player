@@ -63,7 +63,6 @@ org.ekstep.contentrenderer.events = {
      */
     "renderer:overlay:unmute": "renderer:overlay:unmute",
 
-
     /**
      * 'renderer:content:replay' event to replay the current playing content.
      * @memberOf EkstepRendererEvents
