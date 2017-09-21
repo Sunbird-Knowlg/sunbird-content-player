@@ -10,8 +10,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initialize: function(manifestData) {
         EkstepRendererAPI.addEventListener("renderer:content:replay", this.replayContent, this);
         EkstepRendererAPI.addEventListener("renderer:content:end", this.onContentEnd, this);
-        EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onContentMute, this);
-        EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onContentUnmute, this);
+        EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
+        EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
         this.start(manifestData);
     },
     start: function(manifestData) {
@@ -262,7 +262,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.endTelemetry();
         EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
     },
-    onContentMute: function() {
+    onOverlayAudioMute: function() {
         if (this.videoPlayer.currentType_ === 'video/youtube') {
             if (!this.videoPlayer.muted()) {
                 this.videoPlayer.muted(true);
@@ -271,7 +271,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             this.videoPlayer.muted = true;
         }
     },
-    onContentUnmute: function() {
+    onOverlayAudioUnmute: function() {
         if(this.videoPlayer.currentType_ === 'video/youtube') {
             if (this.videoPlayer.muted()) {
                 this.videoPlayer.muted(false);
