@@ -64,18 +64,6 @@ org.ekstep.contentrenderer.events = {
     "renderer:overlay:unmute": "renderer:overlay:unmute",
 
     /**
-     * 'renderer:player:mute' event to mute the audio's which is playing in content from player.
-     * @memberOf EkstepRendererEvents
-     */
-    "renderer:player:mute": "renderer:player:mute",
-    
-    /**
-     * 'renderer:player:mute' event to mute the audio's which is playing in content from player.
-     * @memberOf EkstepRendererEvents
-     */
-    "renderer:player:unmute": "renderer:player:unmute",
-
-    /**
      * 'renderer:content:replay' event to replay the current playing content.
      * @memberOf EkstepRendererEvents
      */
