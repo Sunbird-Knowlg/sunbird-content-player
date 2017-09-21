@@ -211,7 +211,10 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
         $scope.playRelatedContent = function(content, index) {
             var contentId = [];
             // collectionPath = $scope.relatedContentPath;
-            var eleId = "gc_nextcontent";
+
+            // If hierarchyInfo is available then it's a collection or textbook, else it's a related content
+            var eleId = content.hierarchyInfo ? "gc_nextcontent" : "gc_relatedcontent";
+
             var values = [];
             var contentIds = [];
             TelemetryService.interact("TOUCH", eleId, "TOUCH", {
