@@ -34,6 +34,16 @@
     src: url('fonts/lato/Lato-Regular.ttf') format('opentype')
 }
 
+@font-face {
+    font-family: 'NotoSansOriya';
+     src: url('fonts/NotoSansOriya-Regular.ttf') format('truetype')
+    }
+
+@font-face {
+    font-family: 'NotoSansGujarati';
+    src: url('fonts/NotoSansGujarati-Regular.ttf') format('truetype')
+}
+
 .splashText {
     position: absolute;
     top: 20vh;
