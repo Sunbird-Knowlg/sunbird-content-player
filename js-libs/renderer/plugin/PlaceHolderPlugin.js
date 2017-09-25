@@ -155,6 +155,13 @@ var PlaceHolderPlugin = Plugin.extend({
           // This code assumes that the img aspect ratio is 1. i.e. the image is a square
           // Hardcoding the cell size adjusting factor to 1.5. Need to invent a new algorithm
           var pixelPerImg = instance.computePixel(area, repeat) - parseFloat(pad / 1.5);
+          var columns = Math.floor(instance.dimensions().w / pixelPerImg);
+          var rows = Math.ceil(repeat / columns);
+          var placeholderHeight = pixelPerImg * rows;
+          var overflow = placeholderHeight - instance.dimensions().h;
+          if (overflow > 1) {
+            pixelPerImg = pixelPerImg - (overflow / rows);
+          }
           var param = instance.param;
           var paddedImg = instance.getAssetBound(img, pad);
           var assetBounds = paddedImg.getBounds();
