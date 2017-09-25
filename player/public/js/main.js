@@ -66,6 +66,26 @@ function getCurrentStageId() {
     return (stageId) ? stageId : angular.element(document).scope().pageId;
 }
 
+function contentExitCall() {
+    //TODO: Add Telemetry interact for ok and Cancle
+    var stageId = undefined;
+    var type = undefined;
+    if (Renderer) {
+        AudioManager.stopAll();
+        type = Renderer.running ? 'EXIT_CONTENT' : 'EXIT_APP'
+        stageId = Renderer.theme ? Renderer.theme._currentStage : $rootScope.pageId;
+    } else {
+        type: 'EXIT_CONTENT';
+        stageId = $rootScope.pageId || '';
+    }
+    if (confirm(AppLables.backButtonText)) {
+        TelemetryService.interact('END', 'ALERT_OK', 'EXIT', {type:type,stageId:stageId});
+        backbuttonPressed(stageId);
+    } else {
+        TelemetryService.interact('TOUCH', 'ALERT_CANCEL', 'EXIT', {type:type,stageId:stageId});
+    }
+}
+
 function backbuttonPressed(stageId) {
     TelemetryService.interrupt("OTHER", stageId);
 
