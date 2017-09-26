@@ -67,32 +67,18 @@ function getCurrentStageId() {
 }
 
 function contentExitCall() {
-    //TODO: Add Telemetry interact for ok and Cancle
-    var stageId = undefined;
-    var type = undefined;
-    if (Renderer) {
-        AudioManager.stopAll();
-        type = Renderer.running ? 'EXIT_CONTENT' : 'EXIT_APP'
-        stageId = Renderer.theme ? Renderer.theme._currentStage : $rootScope.pageId;
-    } else {
-        type: 'EXIT_CONTENT';
-        stageId = $rootScope.pageId || '';
-    }
+    var stageId = getCurrentStageId();
+    var type = (Renderer && !Renderer.running) ? 'EXIT_APP' : 'EXIT_CONTENT';
     if (confirm(AppLables.backButtonText)) {
         TelemetryService.interact('END', 'ALERT_OK', 'EXIT', {type:type,stageId:stageId});
-        backbuttonPressed(stageId);
+        exitContent(stageId);
     } else {
         TelemetryService.interact('TOUCH', 'ALERT_CANCEL', 'EXIT', {type:type,stageId:stageId});
     }
 }
 
-function backbuttonPressed(stageId) {
+function exitContent(stageId) {
     TelemetryService.interrupt("OTHER", stageId);
-
-    // var telemetryEndData = {};
-    // telemetryEndData.stageid = getCurrentStageId();
-    // telemetryEndData.progress = logContentProgress();
-    // TelemetryService.end(telemetryEndData);
     EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
     try {
         TelemetryService.exit(stageId);
