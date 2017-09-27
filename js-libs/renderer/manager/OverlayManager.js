@@ -219,7 +219,6 @@ OverlayManager = {
         if (_.isUndefined(navigateToStage)) {
             if (!(Renderer.theme._currentScene.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious())) {
                 var rendererData = EkstepRendererAPI.getContentData(), currentStage = getCurrentStageId();
-                console.log("rendererData.startStage === currentStage: ", rendererData.startStage === currentStage);
                 if (rendererData.startStage === currentStage) contentExitCall();
                 return;
             }
