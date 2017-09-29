@@ -81,6 +81,9 @@ var Plugin = Class.extend({
             this._parent = parent;
             this._data = data;
             this.handleFont(data);
+            if (data.font && _.includes(this._unSupportedFonts, data.font)) {
+                data.font = this.getDefaultFont();
+            }
             this.initPlugin(data);
             var dims = this.relativeDims();
             if (dims && this._self) {
