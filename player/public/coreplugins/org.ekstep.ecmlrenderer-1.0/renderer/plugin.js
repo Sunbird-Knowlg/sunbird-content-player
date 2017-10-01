@@ -29,12 +29,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener('renderer:content:end',this.onContentEnd,this);
         var instance = this;
         setTimeout(function(){
-            // This is required to initialize angular controllers & directives 
+            // This is required to initialize angular controllers & directives
             instance.start();
         }, 0);
     },
     /**
-     * 
+     *
      * @memberof ecmlRenderer
      */
     start: function(evt, renderObj) {
@@ -88,8 +88,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     resizeGame: function(disableDraw) {
         var gameArea = document.getElementById(Renderer.divIds.gameArea);
         var widthToHeight = 16 / 9;
-        var newWidth = window.innerWidth;
-        var newHeight = window.innerHeight;
+        var newWidth = (window.innerWidth > window.innerHeight) ? window.innerWidth : window.innerHeight;
+        var newHeight = (window.innerWidth > window.innerHeight) ? window.innerHeight : window.innerWidth;
         var newWidthToHeight = newWidth / newHeight;
         if (newWidthToHeight > widthToHeight) {
             newWidth = newHeight * widthToHeight;
@@ -241,11 +241,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             Renderer.theme.resume();
     },
     relaunchGame: function(){
-        this.relaunch();
         this.qid = [];
         this.stageId = [];
         Renderer.theme.removeHtmlElements();
         Renderer.theme.reRender();
+        this.relaunch();
     },
     onContentEnd:function(){
         this.endTelemetry();
@@ -262,7 +262,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                         itemData = JSON.parse(obj['org.ekstep.quiz'][0].data.__cdata);
                     }
                 }else{
-                    itemData = JSON.parse(obj['org.ekstep.quiz'].data);                    
+                    itemData = JSON.parse(obj['org.ekstep.quiz'].data);
                 }
                 questionCount = questionCount + (itemData.questionnaire.total_items - 1);
                 console.info("questionCount", questionCount);

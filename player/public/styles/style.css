@@ -1,58 +1,4 @@
 @font-face {
-    font-family: 'NotoSansDevanagari';
-    src: url('fonts/NotoSansDevanagari-Regular.ttf') format('truetype')
-}
-
-@font-face {
-    font-family: 'NotoSansTelugu';
-    src: url('fonts/NotoSansTelugu-Regular.ttf') format('truetype')
-}
-
-@font-face {
-    font-family: 'NotoSansKannada';
-    src: url('fonts/NotoSansKannada-Regular.ttf') format('truetype')
-}
-
-@font-face {
-    font-family: 'NotoSansOriya';
-    src: url('fonts/NotoSansOriya-Regular.ttf') format('truetype')
-}
-
-@font-face {
-    font-family: 'NotoSansGujarati';
-    src: url('fonts/NotoSansGujarati-Regular.ttf') format('truetype')
-}
-
-@font-face {
-    font-family: 'NotoSansBengali';
-    src: url('fonts/NotoSansBengali-Regula.ttf') format('truetype')
-}
-
-@font-face {
-    font-family: 'NotoSansMalayalam';
-    src: url('fonts/NotoSansMalayalam-Regular.ttf') format('truetype')
-}
-
-
-
-
-/*@font-face {
-    font-family: 'NotoNastaliqUrdu';
-    src: url('fonts/NotoNastaliqUrdu-Regular.ttf') format('truetype')
-}
-
-@font-face {
-    font-family: 'NotoSansGurmukhi';
-    src: url('fonts/NotoSansGurmukhi-Regular.ttf') format('truetype')
-}
-*/
-
-@font-face {
-    font-family: 'NotoSansTamil';
-    src: url('fonts/NotoSansTamil-Regular.ttf') format('truetype')
-}
-
-@font-face {
     font-family: 'flavours';
     src: url('fonts/Flavors-Regular.ttf') format('truetype')
 }
@@ -151,7 +97,7 @@ ion-popover-view.fit ion-content {
 }
 
 body {
-    font-family: NotoSans, NotoSansOriya, NotoSansGujarati, NotoSansMalayalam;
+    font-family: NotoSans;
 }
 
 .platform-android ion-popover-view.fit {
@@ -407,7 +353,7 @@ body {
 }
 
 .inst-message-cont p {
-    font-family: NotoSansRegular;
+    font-family: NotoSans;
     font-size: 1.2em;
     margin: 25% 5%;
     height: 72%;
@@ -508,7 +454,7 @@ body {
     line-height: 100%;
     font-size: 5vh;
     color: white;
-    font-family: NotoSansRegular;
+    font-family: NotoSans;
     text-align: center;
     width: 100%;
     padding-top: 10%;
@@ -1875,6 +1821,10 @@ body {
 .richText p {
     margin: 0 0 1em !important;
     line-height: 1.4285em !important;
+}
+
+.richText div {
+    line-height: 1.6;
 }
 
 

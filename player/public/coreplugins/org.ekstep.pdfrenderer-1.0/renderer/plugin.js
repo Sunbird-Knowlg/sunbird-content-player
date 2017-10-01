@@ -108,6 +108,7 @@
          findTextField.type = "number";
          findTextField.id = "pdf-find-text";
          findTextField.placeholder = "Enter page number";
+         findTextField.min = 1;
 
          var findSubmit = document.createElement("button");
          findSubmit.id = "pdf-find";
@@ -210,9 +211,9 @@
             stageId: context.CURRENT_PAGE.toString()
         });
          EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE + 1).toString());
-         if (context.CURRENT_PAGE != context.TOTAL_PAGES)
+         if (context.CURRENT_PAGE != context.TOTAL_PAGES) {
              context.showPage(++context.CURRENT_PAGE);
-         if (context.CURRENT_PAGE == context.TOTAL_PAGES) {
+         } else if (context.CURRENT_PAGE == context.TOTAL_PAGES) {
              this.logheartBeatEvent(false);
              EkstepRendererAPI.dispatchEvent('renderer:content:end');
          }
@@ -303,9 +304,9 @@
              });
          } else {
             showToaster('error', "Page not found");
-             $("#pdf-no-page").show();
+             //$("#pdf-no-page").show();
              $("#page-loader").hide();
-             $("#pdf-canvas").hide();
+             //$("#pdf-canvas").hide();
          }
      },
 

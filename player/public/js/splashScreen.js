@@ -18,6 +18,10 @@ var splashScreen = {
         jQuery(this.elementId).html(html);
         // add event listener for hide and show of splash splashScreen
         var instance = this;
+        var elem = document.getElementById('splashScreen');
+        elem.onclick = function() {
+            instance.launchPortal();
+        };
 
         instance.show();
     },
@@ -28,8 +32,15 @@ var splashScreen = {
         EkstepRendererAPI.addEventListener("renderer:content:start", splashScreen.hide);
     },
     createHtml: function() {
-        var html = '<img src=' + splashScreen.config.bgImage + ' class="gc-loader-img" /><P class="splashText" id="splashTextId"> Loading your content ... </p><div id="progressArea"><div id="progressBar"></div><p id="progressCount" class="font-lato gc-loader-prog"></p></div><a href="' + splashScreen.config.webLink + '" target="_blank"><div class="splashScreen"> <img src=' + splashScreen.config.icon + ' class="splash-icon " /> <span>' + splashScreen.config.text + '</span> </div></a>';
+        var html = '<img src=' + splashScreen.config.bgImage + ' class="gc-loader-img" /><P class="splashText" id="splashTextId"> Loading your content ... </p><div id="progressArea"><div id="progressBar"></div><p id="progressCount" class="font-lato gc-loader-prog"></p></div><a href="' + splashScreen.config.webLink + '" target="_blank"><div id="splashScreen" class="splashScreen"> <img src=' + splashScreen.config.icon + ' class="splash-icon " /> <span>' + splashScreen.config.text + '</span> </div></a>';
         return html;
+    },
+
+    launchPortal: function() {
+        if (window.cordova) {
+            var url = splashScreen.config.webLink;
+            genieservice.launchPortal(url);
+        }
     },
 
     loadContentDetails: function(eve, data) {

@@ -7,6 +7,19 @@ var packageName = "org.ekstep.quiz.app", version = AppConfig.version, packageNam
 
 document.body.addEventListener("logError", telemetryError, false);
 
+function postMessageHandler(event) {
+    console.info("PostMessage is invoked")
+    if (event.data) {
+        org.ekstep.contentrenderer.initializePreview(event.data)
+    }
+}
+
+if (window.addEventListener) {
+    window.addEventListener("message", postMessageHandler, false);
+} else {
+    window.attachEvent("onmessage", postMessageHandler);
+}
+
 function telemetryError(e) {
     var $body = angular.element(document.body);
     var $rootScope = $body.scope().$root;
@@ -219,6 +232,7 @@ function startTelemetry(id, ver, cb) {
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData, otherData).then(function(response) {
         TelemetryService.eventDispatcher = EkstepRendererAPI.dispatchEvent;
         var data = {};
+        data.stageid = EkstepRendererAPI.getCurrentStageId();
         data.mode =  getPreviewMode();
         TelemetryService.start(id, ver, data);
         if (!_.isUndefined(TelemetryService.instance)) {

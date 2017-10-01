@@ -36,7 +36,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function(cb){
 /**
  * Is the starting point of the game. Before launching the game it loads the canvas 
  * default and external plugin and then initializes the player "renderer:player:init"
- * @param  {[obj]} appInfo [metadata]
+ * @param  {obj} appInfo [metadata]
  */
 org.ekstep.contentrenderer.startGame = function(appInfo) {
     org.ekstep.contentrenderer.loadDefaultPlugins(function() {
@@ -44,9 +44,9 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
             var globalConfig = EkstepRendererAPI.getGlobalConfig();
             if (globalConfig.mimetypes.indexOf(appInfo.mimeType) > -1) {
                 /**
-                 * 'renderer.player.init' event will get dispatch after loading default & external injected plugins
-                 * @event 'renderer.player.init'
-                 * @fires 'renderer.player.init'
+                 * renderer:player:init event will get dispatch after loading default & external injected plugins
+                 * @event 'renderer:player:init'
+                 * @fires 'renderer:player:init'
                  * @memberof EkstepRendererEvents
                  */
                 EkstepRendererAPI.dispatchEvent('renderer:player:init');
@@ -138,9 +138,9 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
 
     addWindowUnloadEvent();
     /**
-     * 'renderer.player.init' event will get dispatch after loading default & external injected plugins
-     * @event 'renderer.player.init'
-     * @fires 'renderer.player.init'
+     * renderer:player:init event will get dispatch after loading default & external injected plugins
+     * @event 'renderer:player:init'
+     * @fires 'renderer:player:init'
      * @memberof EkstepRendererEvents
      */
     EkstepRendererAPI.dispatchEvent("renderer.content.getMetadata");
@@ -148,8 +148,8 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
 
 /**
  * initialize of the plugin framework
- * @param  {[string]} host             [name of the domain or host ]
- * @param  {[string]} repoRelativePath [replative path]
+ * @param  {string} host             [name of the domain or host ]
+ * @param  {string} repoRelativePath [replative path]
  */
 org.ekstep.contentrenderer.initPlugins = function(host, repoRelativePath) {
     var pluginsPath = undefined;
@@ -170,7 +170,7 @@ org.ekstep.contentrenderer.initPlugins = function(host, repoRelativePath) {
  * Added the plguin error event if any of the plugin is failed then 
  * dispatching oE_ERROR event with data
  * @event plugin:error whihc is being dispatching from the plugin framework
- * @param  {[obj]} data  [data which is need to be log in the OE_ERROR Telemetry event]
+ * @param  {obj} data  [data which is need to be log in the OE_ERROR Telemetry event]
  */
 org.ekstep.contentrenderer.pluginError = function(event, data) {
     EkstepRendererAPI.logErrorEvent(data.err, {
@@ -183,8 +183,8 @@ org.ekstep.contentrenderer.pluginError = function(event, data) {
 
 /**
  * Loading of the plguins
- * @param  {[array]}   pluginManifest [Pluginmanifest which is need to be loaded]
- * @param  {[array]}   manifestMedia  [Its optional if any other manifest media need to be load it behaves same as plguinManifest]
+ * @param  {array}   pluginManifest [Pluginmanifest which is need to be loaded]
+ * @param  {array}   manifestMedia  [Its optional if any other manifest media need to be load it behaves same as plguinManifest]
  * @param  {Function} cb             [After loading of the plguins callback will be invoked]
  */
 org.ekstep.contentrenderer.loadPlugins = function(pluginManifest, manifestMedia, cb) {
@@ -207,9 +207,8 @@ org.ekstep.contentrenderer.loadPlugins = function(pluginManifest, manifestMedia,
 /**
  * Registering of the plugin dynamically using createjs initialize without plguinframework
  * It will initializes the instance of the plugin
- * @param  {[type]} id     [description]
- * @param  {[type]} plugin [description]
- * @return {[type]}        [description]
+ * @param  {int} id     [Plugin identifier]
+ * @param  {class} plugin [Plugin instance]
  */
 org.ekstep.contentrenderer.registerPlguin = function(id, plugin) {
     org.ekstep.pluginframework.pluginManager._registerPlugin(id, undefined, plugin);
@@ -219,8 +218,8 @@ org.ekstep.contentrenderer.registerPlguin = function(id, plugin) {
 
 /**
  * It will fetchs the content metaData
- * @param  {[string]}   id [Content Identifer]
- * @return {[object]}      [Content Metadata]
+ * @param  {init}   id [Content Identifer]
+ * @return {object}      [Content Metadata]
  */
 org.ekstep.contentrenderer.getContentMetadata = function(id, cb) {
     org.ekstep.service.content.getContent(id)
@@ -259,7 +258,7 @@ org.ekstep.contentrenderer.setContentMetadata = function(contentData, cb) {
 /**
  * It will fetches the content body.
  * @param  {contentId} id [Content identifier]
- * @return {[obj]}    [Content body]
+ * @return {obj}    [Content body]
  */
 org.ekstep.contentrenderer.getContentBody = function(id) {
     var configuration = EkstepRendererAPI.getGlobalConfig();

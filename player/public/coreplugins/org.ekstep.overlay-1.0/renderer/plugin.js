@@ -38,8 +38,8 @@ Plugin.extend({
         setTimeout(function(){
             var gameArea = document.getElementById("overlay");
             var widthToHeight = 16 / 9;
-            var newWidth = window.innerWidth;
-            var newHeight = window.innerHeight;
+            var newWidth = (window.innerWidth > window.innerHeight) ? window.innerWidth : window.innerHeight;
+            var newHeight = (window.innerWidth > window.innerHeight) ? window.innerHeight : window.innerWidth;
             var newWidthToHeight = newWidth / newHeight;
             if (newWidthToHeight > widthToHeight) {
                 newWidth = newHeight * widthToHeight;

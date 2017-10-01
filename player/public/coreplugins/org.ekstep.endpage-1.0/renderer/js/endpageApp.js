@@ -176,11 +176,25 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
         }
 
     };
+
+    /**
+     * renderer:endpage:show Event to show the endpage.
+     * @event renderer:endpage:show
+     * @listen renderer:endpage:show
+     * @memberOf EkstepRendererEvents
+     */
     EkstepRendererAPI.addEventListener('renderer:endpage:show', function() {
         $scope.showEndPage = true;
         $scope.initEndpage();
         $scope.safeApply();
     });
+
+    /**
+     * renderer:endpage:hide Event to hide the endpage.
+     * @event renderer:endpage:hide
+     * @listen renderer:endpage:hide
+     * @memberOf EkstepRendererEvents
+     */
     EkstepRendererAPI.addEventListener('renderer:endpage:hide',function() {
         $scope.showEndPage = false;
         $scope.safeApply();
@@ -197,7 +211,10 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
         $scope.playRelatedContent = function(content, index) {
             var contentId = [];
             // collectionPath = $scope.relatedContentPath;
-            var eleId = "gc_nextcontent";
+
+            // If hierarchyInfo is available then it's a collection or textbook, else it's a related content
+            var eleId = content.hierarchyInfo ? "gc_nextcontent" : "gc_relatedcontent";
+
             var values = [];
             var contentIds = [];
             TelemetryService.interact("TOUCH", eleId, "TOUCH", {
