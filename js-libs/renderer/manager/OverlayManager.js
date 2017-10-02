@@ -218,6 +218,8 @@ OverlayManager = {
         var navigateToStage = this.getNavigateTo('previous');
         if (_.isUndefined(navigateToStage)) {
             if (!(Renderer.theme._currentScene.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious())) {
+                var rendererData = EkstepRendererAPI.getContentData(), currentStage = getCurrentStageId();
+                if (rendererData.startStage === currentStage) contentExitCall();
                 return;
             }
         }
