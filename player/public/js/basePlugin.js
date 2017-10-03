@@ -174,7 +174,7 @@ var Plugin = Class.extend({
         if (data.font) {
             data.font = data.font.trim();
         }
-        if ( _.isEmpty(data.font) || ( (!_.isUndefined(data.font) && ( _.includes(this._unSupportedFonts, data.font) || _.includes(this._unSupportedFonts, data.font.toLowerCase()) ) ) ) {
+        if ( _.isEmpty(data.font) || (!_.isUndefined(data.font) && ( _.includes(this._unSupportedFonts, data.font) || _.includes(this._unSupportedFonts, data.font.toLowerCase()) ) ) ) {
             // This is fallback support for fonts & we are ignoring NotoSans, NotoSans Oriya, Verdana
             data.font = this.getDefaultFont();
         }
