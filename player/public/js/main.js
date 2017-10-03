@@ -7,6 +7,19 @@ var packageName = "org.ekstep.quiz.app", version = AppConfig.version, packageNam
 
 document.body.addEventListener("logError", telemetryError, false);
 
+function postMessageHandler(event) {
+    console.info("PostMessage is invoked")
+    if (event.data) {
+        org.ekstep.contentrenderer.initializePreview(event.data)
+    }
+}
+
+if (window.addEventListener) {
+    window.addEventListener("message", postMessageHandler, false);
+} else {
+    window.attachEvent("onmessage", postMessageHandler);
+}
+
 function telemetryError(e) {
     var $body = angular.element(document.body);
     var $rootScope = $body.scope().$root;
@@ -53,29 +66,24 @@ function getCurrentStageId() {
     return (stageId) ? stageId : angular.element(document).scope().pageId;
 }
 
-function backbuttonPressed(stageId) {
-    TelemetryService.interrupt("OTHER", stageId);
-
-    // var telemetryEndData = {};
-    // telemetryEndData.stageid = getCurrentStageId();
-    // telemetryEndData.progress = logContentProgress();
-    // TelemetryService.end(telemetryEndData);
-    EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
-    try {
-        TelemetryService.exit(stageId);
-    } catch (err) {
-        console.error('End telemetry error:', err.message);
+function contentExitCall() {
+    var stageId = getCurrentStageId();
+    var type = (Renderer && !Renderer.running) ? 'EXIT_APP' : 'EXIT_CONTENT';
+    if (confirm(AppLables.backButtonText)) {
+        TelemetryService.interact('END', 'ALERT_OK', 'EXIT', {type:type,stageId:stageId});
+        TelemetryService.interrupt("OTHER", stageId);
+        EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
+        exitApp(stageId);
+    } else {
+        TelemetryService.interact('TOUCH', 'ALERT_CANCEL', 'EXIT', {type:type,stageId:stageId});
     }
-    localStorageGC.clear();
-    localStorageGC = {};
-    org.ekstep.service.renderer.endGenieCanvas();
 }
 
 // TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
 // So, change exitApp to do the same.
 function exitApp(stageId) {
     if(!stageId){
-        stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " ";
+        stageId = getCurrentStageId();
     }
     try {
         TelemetryService.exit(stageId);

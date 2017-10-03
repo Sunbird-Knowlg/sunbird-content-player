@@ -29,7 +29,7 @@ describe('Video plugin Jasmine test cases', function() {
                 "asset": "add_video",
                 "autoplay": true,
                 "controls": true,
-                "font": "NotoSans, NotoSansGujarati, NotoSansOriya, NotoSansMalayalam",
+                "font": "NotoSans",
                 "h": 78,
                 "muted": false,
                 "pluginType": "video",

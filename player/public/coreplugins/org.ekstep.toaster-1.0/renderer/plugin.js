@@ -7,6 +7,13 @@
 Plugin.extend({
     initialize: function() {
         console.info('Toaster init is done');
+        
+        /**
+         * renderer:toast:show Event to show the toast message with custom object.
+         * @event renderer:toast:show
+         * @listen renderer:toast:show
+         * @memberOf EkstepRendererEvents
+         */
         EkstepRendererAPI.addEventListener('renderer:toast:show', this.customize, this);
     },
     customize: function(event, obj) {

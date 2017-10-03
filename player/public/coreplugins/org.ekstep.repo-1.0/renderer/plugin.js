@@ -24,8 +24,8 @@ Plugin.extend({
      * EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined,['/location1','/location2'])
      * @example
      * EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined,{path:'location1',position:0})
-     * @param  {[string]} event [Name of the event]
-     * @param  {[array]} repos [repos]
+     * @param  {string} event [Name of the event]
+     * @param  {array} repos [repos]
      */
     start: function(event, repos) {
         var instance = this;
@@ -52,9 +52,9 @@ Plugin.extend({
     },
     /**
      * Create the plugin repo instance to load the plugin
-     * @param  {[string]} repoPath [path of the plugin which is need to be load]
-     * @param  {[integer]} position [Which increases speed of loading plugin from the path]
-     * @return {[class]}          [creates the repo instance]
+     * @param  {string} repoPath [path of the plugin which is need to be load]
+     * @param  {integer} position [Which increases speed of loading plugin from the path]
+     * @return {class}          [creates the repo instance]
      */
     createInstance: function(repoPath, position) {
         var repoInstance = new(org.ekstep.pluginframework.iRepo.extend({
@@ -77,8 +77,8 @@ Plugin.extend({
     },
     /**
      * It will add the repo instance to registredRepo stack
-     * @param {[class]} repoInstance [Repo instance]
-     * @param {[integer]} position     [postion of the registedRepos stack]
+     * @param {class} repoInstance [Repo instance]
+     * @param {integer} position     [postion of the registedRepos stack]
      */
     addInstance: function(repoInstance, position) {
         org.ekstep.pluginframework.resourceManager.addRepo(repoInstance, position);
@@ -86,7 +86,7 @@ Plugin.extend({
 
     /**
      * To avoid duplicate repos
-     * @param  {[path]}   repo [repo path]
+     * @param  {path}   repo [repo path]
      * @return {Boolean}       [If the path is already present then it will return true else false in the callback]
      */
     isAvailable: function(repo, cb) {

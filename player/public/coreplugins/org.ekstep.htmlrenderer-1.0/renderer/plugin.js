@@ -65,7 +65,7 @@
     },
     getAsseturl: function(content) {
         var globalConfig = EkstepRendererAPI.getGlobalConfig();
-        var path = window.location.origin + globalConfig.s3ContentHost + this.s3_folders[content.mimeType];
+        var path = globalConfig.host + globalConfig.s3ContentHost + this.s3_folders[content.mimeType];
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
     },

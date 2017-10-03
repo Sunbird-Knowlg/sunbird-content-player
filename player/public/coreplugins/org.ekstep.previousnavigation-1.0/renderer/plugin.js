@@ -13,7 +13,7 @@ Plugin.extend({
                 restrict: 'E',
                 template: '<div><a class="nav-icon nav-previous" ng-show="showOverlayPrevious !== state_off" ng-class="{\'nav-disable\': showOverlayPrevious == state_disable}" href="javascript:void(0);"><img ng-src="{{previousIcon}}" ng-click="navigate(\'previous\')"></a></div>',
                 link: function(scope) {
-                	var events = ["renderer:previous:show", "renderer:previous:hide", "overlayPrevious"];
+                    var events = ["renderer:previous:show", "renderer:previous:hide", "overlayPrevious"];
                     scope.previousIcon = previousIcon;
                     scope.changeValue = function(event) {
                         var val;
@@ -23,9 +23,21 @@ Plugin.extend({
                             case "overlayPrevious":
                                 val = event.target ? event.target : defaultValue;
                                 break;
+                                /**
+                                 * renderer:previous:show Event to show previous navigation icon.
+                                 * @event renderer:previous:show
+                                 * @listen renderer:previous:show
+                                 * @memberOf EkstepRendererEvents
+                                 */
                             case "renderer:previous:show":
                                 val = "on";
                                 break;
+                                /**
+                                 * renderer:previous:hide Event to hide previous navigation icon.
+                                 * @event renderer:previous:hide
+                                 * @listen renderer:previous:hide
+                                 * @memberOf EkstepRendererEvents
+                                 */
                             case "renderer:previous:hide":
                                 val = "off";
                                 break;

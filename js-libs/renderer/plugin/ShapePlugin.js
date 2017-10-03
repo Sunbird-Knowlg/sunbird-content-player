@@ -46,6 +46,10 @@ var ShapePlugin = Plugin.extend({
         if(data.stroke) {
 			graphics.beginStroke(data.stroke);
 		}
+        if(data['strokeWidth']) {
+          // Content-Editor issue fix for storkeWidth 
+          data['stroke-width'] = data['strokeWidth'];
+        }
 
         if(data['stroke-width']) {
             graphics.setStrokeStyle(data['stroke-width']);
