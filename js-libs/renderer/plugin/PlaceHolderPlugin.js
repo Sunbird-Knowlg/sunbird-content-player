@@ -159,18 +159,18 @@ var PlaceHolderPlugin = Plugin.extend({
           // Hardcoding the cell size adjusting factor to 1.5. Need to invent a new algorithm
           // var pixelPerImg = instance.computePixel(area, repeat) - parseFloat(pad / 1.5);
 
-          var px = Math.ceil(Math.sqrt(n * rectHeight / rectWidth));
-          if (Math.floor(px * rectWidth / rectHeight) * px < n)
-            var sx = rectWidth / Math.ceil(px * rectWidth / rectHeight);
+          var imgCountRow = Math.ceil(Math.sqrt(n * rectHeight / rectWidth));
+          if (Math.floor(imgCountRow * rectWidth / rectHeight) * imgCountRow < n)
+            var pixelPerImgX = rectWidth / Math.ceil(imgCountRow * rectWidth / rectHeight);
           else
-            sx = rectHeight / px;
+            pixelPerImgX = rectHeight / imgCountRow;
 
-          var py = Math.ceil(Math.sqrt(n * rectWidth / rectHeight));
-          if (Math.floor(py * rectHeight / rectWidth) * py < n)
-            var sy = rectHeight / Math.ceil(rectHeight * py / rectWidth);
+          var imgCountCol = Math.ceil(Math.sqrt(n * rectWidth / rectHeight));
+          if (Math.floor(imgCountCol * rectHeight / rectWidth) * imgCountCol < n)
+            var pixelPerImgY = rectHeight / Math.ceil(rectHeight * imgCountCol / rectWidth);
           else
-            sy = rectWidth / py;
-          var pixelPerImg = (sx) > (sy) ? sx : sy;
+            pixelPerImgY = rectWidth / imgCountCol;
+          var pixelPerImg = (pixelPerImgX) > (pixelPerImgY) ? pixelPerImgX : pixelPerImgY;
 
           var param = instance.param;
           var paddedImg = instance.getAssetBound(img, pad);
