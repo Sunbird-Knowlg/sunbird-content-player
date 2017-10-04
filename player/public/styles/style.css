@@ -1812,23 +1812,10 @@ body {
   text-decoration: line-through !important;
 }
 
-
-
-
-
 /*For richtext WYSIWYG preview*/
-
-.richText p {
-    margin: 0 0 1em !important;
-    line-height: 1.4285em !important;
+.richText * {
+    line-height: 1.6 !important;
 }
-
-.richText div {
-    line-height: 1.6;
-}
-
-
-
 
 /* new popup style */
 

@@ -32,6 +32,7 @@ var ItemController = Controller.extend({
                     if ("undefined" == typeof item.model || null == item.model) item.model = {};
                     // Start assessment telemetry
                     d = item.model;
+                    item.qid = (_.isString(item.qid) && !_.isEmpty(item.qid)) ? item.qid : "na";
 
                     try {
                         this.assessStartEvent = TelemetryService.assess((_.isString(item.identifier) && !_.isEmpty(item.identifier)) ? item.identifier : item.qid.trim(), this._data.subject, item.qlevel, {
