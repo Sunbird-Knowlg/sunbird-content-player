@@ -54,9 +54,9 @@ var ScribblePlugin = Plugin.extend({
         this._self.on("pressup", this.handleMouseUp.bind(this), true);
     },
     handleMouseMove: function(event) {
-        if (event.pointerID == -1) {
+        /*if (event.pointerID == -1) {
             return false;
-        }
+        }*/
         var mousePoint = {x: event.stageX, y: event.stageY};
         var thickness = this.isInt(this._data.thickness) ?  this._data.thickness : 3;
         if (((mousePoint.x > this._startPoint.x) && (mousePoint.x < this._endPoint.x)) && ((mousePoint.y > this._startPoint.y) && (mousePoint.y < this._endPoint.y))) {
