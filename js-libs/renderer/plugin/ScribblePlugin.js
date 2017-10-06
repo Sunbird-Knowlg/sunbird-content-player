@@ -76,6 +76,18 @@ var ScribblePlugin = Plugin.extend({
       var x = parseFloat(value);
       return !isNaN(value) && (x | 0) === x;
     },
+    show: function(){
+        this._self.visible = this._self.parent.visible = true;
+        Renderer.update = true;
+    },
+    hide: function(){
+        this._self.visible = this._self.parent.visible = false;
+        Renderer.update = true;
+    },
+    toggleShow: function(){
+        this._self.visible = this._self.parent.visible = !this._self.visible;
+        Renderer.update = true;
+    },
     drawBorder : function() {}
 });
 PluginManager.registerPlugin('scribble', ScribblePlugin);
