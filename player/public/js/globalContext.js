@@ -73,7 +73,7 @@ GlobalContext = {
                             identifier: "org.ekstep.quiz.app"
                         }
                     };
-                    window.globalConfig = mergeJSON(GlobalContext.config, AppConfig);
+                    window.globalConfig = mergeJSON(AppConfig, GlobalContext.config);
                     GlobalContext.config = window.globalConfig;
                     resolve(GlobalContext.config);
                 }

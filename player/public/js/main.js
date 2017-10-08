@@ -387,7 +387,9 @@ function mergeJSON(a, b) {
             if ((Array.isArray(res[e]) && Array.isArray(b[e]))) {
                 res[e] = _.union(res[e], b[e]);
             } else {
-                res[e] = b[e];
+                if (!_.isUndefined(b[e]) && !_.isEmpty(b[e])) {
+                    res[e] = b[e];
+                }
             }
         }
     });
