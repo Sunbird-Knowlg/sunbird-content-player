@@ -10,26 +10,28 @@ module.exports = function(config) {
             'jasmine',
             'jasmine-matchers'
         ],
-        files: [{pattern: 'http-image/**/*', watched: false, included: false, served: true },
-            //TODO: Need to use hosted files path 
+        files: [
+            {pattern: 'http-image/**/*', watched: false, included: false, served: true },
+            'https://s3.ap-south-1.amazonaws.com/ekstep-public-prod/v3/preview/scripts/renderer.external.min.js',
             '../coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/createjs.min.js',
             '../coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/cordovaaudioplugin-0.6.1.min.js',
-            '../coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js',   
-            '../libs/plugin-framework.min.js',
-            '../../dist/renderer.external.min.js',
+            '../coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js',
+            'https://s3.ap-south-1.amazonaws.com/ekstep-public-prod/v3/preview/scripts/renderer.script.min.js',
+            'https://s3.ap-south-1.amazonaws.com/ekstep-public-prod/v3/preview/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js',
+            '../coreplugins/**/renderer/*.js',
+            //'../coreplugins/**/renderer/**/*.js', // for angular controllers inside core 
             '../js/basePlugin.js',
             '../js/ekstepRendererApi.js',
-            '../../dist/renderer.min.js',
-            '../../dist/renderer.script.min.js',
-            '../../dist/renderer.telemetry.min.js',
-            '../../public/coreplugins/LauncherPlugin.js',
-            'spec/*.js',
+            '../coreplugins/**/spec/*.js',
             '../services/*.js',
             '../js/*.js',
+            'specs/*.spec.js',
+            
         ],
-        exclude: ['coverage'],
+        exclude: ['coverage','../js/htmlInterface.js'], // Need to remove the htmlInterface.js  file
         preprocessors: {
-            '../*.js': ['coverage'],
+            '../coreplugins/**/renderer/*.js': ['coverage'],
+            '../js/*.js': ['coverage'],
         },
         reporters: ['verbose', 'progress', 'coverage'],      
         junitReporter: {
