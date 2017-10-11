@@ -20,8 +20,8 @@ module.exports = function(grunt) {
             },
         },
         karma: {
-            plugin: {
-                configFile: '../js-libs/renderer/plugin/test/karma.plugin.config.js',
+            renderer: {
+                configFile: '../js-libs/renderer/test/karma.renderer.config.js',
             },
             app: {
                 configFile: 'public/test/karma.app.config.js',
@@ -675,6 +675,6 @@ module.exports = function(grunt) {
     grunt.registerTask('build-jsdoc', ['jsdoc', 'compress:main']);
 
     grunt.registerTask('test-setup', ['new-buildPreview', 'copy:testinit', 'clean']);
-    grunt.registerTask('app-test', ['karma:app']);
-    grunt.registerTask('plugin-test', ['karma:plugin']);
+    grunt.registerTask('player-test', ['karma:app']);
+    grunt.registerTask('renderer-test', ['karma:renderer']);
 };
