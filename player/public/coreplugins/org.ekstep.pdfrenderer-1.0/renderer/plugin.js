@@ -8,6 +8,7 @@
      CANVAS_CTX: undefined,
      context: undefined,
      stageId:[],
+     heartBeatData: {},
      initLauncher: function(manifestData) {
          console.info('PDF Renderer init', manifestData)
          this._manifest = manifestData;
@@ -65,7 +66,6 @@
      renderPDF: function(path, canvasContainer) {
          EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
          var pdfMainContainer = document.createElement("div");
-         this.heartBeatEvent(true);
          pdfMainContainer.id = "pdf-main-container";
          pdfMainContainer.style.overflowX = "scroll";
          pdfMainContainer.style.overflowY = "scroll";
@@ -197,6 +197,8 @@
              });
              context.nextNavigation();
          });
+         this.heartBeatData.stageId = context.CURRENT_PAGE.toString();
+         this.heartBeatEvent(true);
          context.showPDF(path, context.manifest);
      },
 
@@ -254,7 +256,7 @@
          if (page_no <= context.TOTAL_PAGES && page_no > 0) {
 
              context.PAGE_RENDERING_IN_PROGRESS = 1;
-             context.CURRENT_PAGE = page_no;
+             context.CURRENT_PAGE = this.heartBeatData.stageId = page_no;
 
              // Disable Prev & Next buttons while page is being loaded
              $("#pdf-next, #pdf-prev").attr('disabled', 'disabled');

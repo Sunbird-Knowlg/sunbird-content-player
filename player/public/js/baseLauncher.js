@@ -121,7 +121,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
         var instance = this;
         if (flag) {
             instance._time = setInterval(function() {
-                EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", data || {});
+                EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", instance.heartBeatData || {});
             }, EkstepRendererAPI.getGlobalConfig().heartBeatTime);
         }
         if (!flag) {

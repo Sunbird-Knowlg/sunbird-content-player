@@ -8,6 +8,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     currentTime: 1,
     videoPlayer: undefined,
     stageId: undefined,
+    heartBeatData:{},
     initLauncher: function(manifestData) {
 
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
@@ -17,7 +18,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     start: function() {
         this._super();
         var data = _.clone(content);
-        this.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
+        this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         if (window.cordova || !isbrowserpreview) {
             var prefix_url = data.baseDir || '';
             path = prefix_url + "/" + data.artifactUrl;

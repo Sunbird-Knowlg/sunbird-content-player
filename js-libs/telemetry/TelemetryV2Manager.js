@@ -35,7 +35,7 @@ TelemetryV2Manager = Class.extend({
             TelemetryService.flushEvent(this.itemResponse(eks), TelemetryService.apis.telemetry);
         if (type != "DRAG") {
             var eks = {
-                "stageid": eks.stageId ? eks.stageId : "",
+                "stageid": eks.stageId ? eks.stageId.toString() : "",
                 "type": type,
                 "subtype": eks.subtype ? eks.subtype : "",
                 "pos": eks.pos ? eks.pos : [],

@@ -3,6 +3,7 @@
         'application/vnd.ekstep.html-archive':"html/",
         'application/vnd.ekstep.h5p-archive':'h5p/'
     },
+    heartBeatData:{},
     currentIndex: 50,
     totalIndex:100,
     initLauncher: function() {
