@@ -7,20 +7,19 @@
 
 org.ekstep.contentrenderer.baseLauncher.extend({
     book: undefined,
-    start: undefined,
+    _start: undefined,
     currentPage: 1,
     totalPages: 0,
     lastPage: false,
     stageId:[],
-    initialize: function () {
+    initLauncher: function () {
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.epub-archive', this.launch, this);
-        EkstepRendererAPI.addEventListener('renderer:content:replay', this.resetContent, this);
         EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
-        EkstepRendererAPI.addEventListener('renderer:content:end', this.onContentEnd, this);
-        this.initContent();
+        this.start();
     },
-    initContent: function (event, data) {
+    start: function (event, data) {
+        this._super()
         var instance = this;
         data = content;
         var epubPath = undefined;
@@ -85,7 +84,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
 
         instance.book.generatePagination().then(function (data) {
-            instance.start = data[0].cfi;
+            instance._start = data[0].cfi;
             instance.totalPages = data.length;
             instance.updateProgressElements();
         });
@@ -100,22 +99,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }
         });
     },
-    resetContent: function () {
+    replay:function(){
         this.stageId = [];
-        this.relaunch();
-        this.gotoStart();
+        this.lastPage = false;
+        this.currentPage = 1;
+        this.removeProgressElements();
+        this._super();
     },
-    gotoStart: function () {
-        if (this.start) {
-            this.book.gotoCfi(this.start);
-            this.currentPage = 1;
-            this.lastPage = false;
-            EkstepRendererAPI.dispatchEvent('renderer:overlay:hide');
-            EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
-            this.removeProgressElements();
-            this.initProgressElements();
-        }
-    },
+   
     logTelemetryInteract: function (stageId) {
         var oeInteractData = {
             type: "TOUCH",
@@ -195,10 +186,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var totalStages = this.totalPages;
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
         return this.progres(currentStageIndex + 1, totalStages);
-    },
-    onContentEnd:function(){
-        this.endTelemetry();
-        EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
-    },
+    }
+    
 });
 //# sourceURL=ePubRendererPlugin.js

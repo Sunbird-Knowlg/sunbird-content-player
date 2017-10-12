@@ -22,14 +22,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      * registers events
      * @memberof ecmlRenderer
      */
-    initialize: function() {
-        EkstepRendererAPI.addEventListener('renderer:content:replay', this.relaunchGame, this);
+    initLauncher: function(manifest) {
         EkstepRendererAPI.addEventListener('renderer:content:load', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
-        EkstepRendererAPI.addEventListener('renderer:content:end',this.onContentEnd,this);
         var instance = this;
         setTimeout(function(){
-            // This is required to initialize angular controllers & directives
             instance.start();
         }, 0);
     },
@@ -38,6 +35,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      * @memberof ecmlRenderer
      */
     start: function(evt, renderObj) {
+        this._super();
         var instance = this;
         renderObj = content;
         if (_.isUndefined(renderObj)) return;
@@ -48,7 +46,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         try {
             if (this.running) {
                 this.cleanUp();
-                TelemetryService.start(renderObj.identifier, renderObj.pkgVersion);
             }
             this.running = true;
             this.preview = renderObj.preview || false;
@@ -240,17 +237,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if (Renderer.theme)
             Renderer.theme.resume();
     },
-    relaunchGame: function(){
+    replay: function(){
         this.qid = [];
         this.stageId = [];
         Renderer.theme.removeHtmlElements();
         Renderer.theme.reRender();
-        this.relaunch();
+        this.startTelemetry();
     },
-    onContentEnd:function(){
-        this.endTelemetry();
-        EkstepRendererAPI.dispatchEvent("renderer:endpage:show")
-    },
+    
     getContentAssesmentCount: function() {
         var questionCount = 0;
         var itemData =undefined;

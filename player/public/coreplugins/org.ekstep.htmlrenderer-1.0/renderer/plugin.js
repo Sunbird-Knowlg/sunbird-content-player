@@ -5,14 +5,13 @@
     },
     currentIndex: 50,
     totalIndex:100,
-    initialize: function() {
+    initLauncher: function() {
         var instance = this;
-        EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.launch, this);
-        EkstepRendererAPI.addEventListener('renderer:content:replay', this.relaunchGame, this);
-        EkstepRendererAPI.addEventListener("renderer:content:end",this.onContentEnd,this);
-        this.launchGame();
+        //EkstepRendererAPI.addEventListener("renderer:content:end",this.end,this);
+        this.start();
     },
-    launchGame: function(evt, data) {
+    start: function(evt, data) {
+        this._super();
         data = content;
         this.reset();
         var isMobile = window.cordova ? true : false;
@@ -23,10 +22,9 @@
         if (isbrowserpreview) {
             path += "&flavor=" + "t=" + getTime();
         }
-        jQuery('#ekstep_htmlIframe').remove();
+        jQuery(this.manifest.id).remove();
         var iframe = document.createElement('iframe');
         iframe.src = path;
-        iframe.id = 'ekstep_htmlIframe';
         this.validateSrc(path, iframe);
     },
     validateSrc: function(path, iframe) {
@@ -38,8 +36,8 @@
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
                 instance.configOverlay();
-                instance.logheartBeatEvent(true);
-                instance.addIframe(iframe);
+                instance.heartBeatEvent(true);
+                instance.addToGameArea(iframe);
             }
         });        
     },
@@ -52,47 +50,21 @@
         },100)
          
     },
-    addIframe: function(iframe) {
-        jQuery('#ekstep_htmlIframe').insertBefore("#gameArea");
-        var gameArea = document.getElementById('gameArea');
-        gameArea.insertBefore(iframe, gameArea.childNodes[0]);
-        this.setStyle();
-    },
-    setStyle: function() {
-        jQuery('#gameArea') .css({left: '0px', top: '0px', width: "100%", height: "100%"});
-        jQuery('#ekstep_htmlIframe') .css({position: 'absolute', display: 'block',width: '100%', height: '100%'});
-        // if html content want to show overlay, they should dispatch "renderer:overlay:show" to show overlay
-    },
+    
     getAsseturl: function(content) {
         var globalConfig = EkstepRendererAPI.getGlobalConfig();
         var path = globalConfig.host + globalConfig.s3ContentHost + this.s3_folders[content.mimeType];
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
     },
-    relaunchGame:function(){
-        this.relaunch();
-        //TODO: Base functionality should take care of reLaunching of the game
-        this.launchGame();
-    },
-    onContentEnd:function(){
+    
+    end:function(){
         this.currentIndex = 100;
         this.totalIndex = 100;
-        this.logheartBeatEvent(false);
-        this.endTelemetry();
-        EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
-
+        this.heartBeatEvent(false);
+        this._super();
     },
-    logheartBeatEvent: function(flag) {
-        var instance = this;
-        if (flag) {
-            instance._time = setInterval(function() {
-                EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {});
-            },EkstepRendererAPI.getGlobalConfig().heartBeatTime);
-        }
-        if (!flag) {
-            clearInterval(instance._time);
-        }
-    },
+    
     contentProgress:function(){
         return this.progres(this.currentIndex, this.totalIndex);
     },
