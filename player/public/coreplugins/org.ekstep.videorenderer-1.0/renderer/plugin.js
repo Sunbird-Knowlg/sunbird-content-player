@@ -9,6 +9,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     videoPlayer: undefined,
     stageId: undefined,
     initLauncher: function(manifestData) {
+
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
         this.start();
@@ -215,9 +216,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
         totalDuration = (this.currentTime < totalDuration) ? Math.floor(totalDuration) : Math.ceil(totalDuration);
         return this.progres(this.currentTime, totalDuration);
-    },
-    end:function(){
-        this.heartBeatEvent(false,{stageId:this.stageId});
     },
     onOverlayAudioMute: function() {
         if (this.videoPlayer.currentType_ === 'video/youtube') {

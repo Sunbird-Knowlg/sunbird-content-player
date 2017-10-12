@@ -1,7 +1,10 @@
 /**
- * Base launcher will launches all launcher it porvides a common supports for all the launcher.
- * any launcher can overide the specific method to change the behavior.
- * @class org.ekstep.contentrenderer.baseLauncher
+ * @description 
+ * Base Launcher to launch any type launcher i.e Ecml/Html/Pdf/Youtube/video/h5p launcher.
+ * child launcher can overide the specific method to change the behavior.
+ * To extend the functionality of the baseLauncher child Launcher should use this._super();
+ * @class org.ekstep.contentrenderer.baseLauncher.
+ * @extends Class
  * @author Manjunath Davanam <manjunathd@ilimi.in>
  */
 
@@ -17,7 +20,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     init: function(manifest) {
         try {
             EkstepRendererAPI.addEventListener("renderer:telemetry:end", this.endTelemetry, this);
-            EkstepRendererAPI.addEventListener('renderer:content:end',this.end,this);
+            EkstepRendererAPI.addEventListener('renderer:content:end',this.end, this);
             EkstepRendererAPI.addEventListener('renderer:content:replay', this.replay, this);
             this.manifest = manifest;
             this.initLauncher(this.manifest);
@@ -29,8 +32,9 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     initLauncher: function(){
     	console.info("Base launcher should constuct.");
     },
+
     /**
-     * launching of the particular launcher
+     * launch of the particular launcher based on the mimetype.
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     start: function() {
@@ -39,18 +43,24 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
         this.startTelemetry();
     },
 
-
+    /**
+     * End of the content listen for the renderer:content:end event.
+     * Any child launcher can extend/override this functionality.
+     * @memberof org.ekstep.contentrenderer.baseLauncher
+	 */	
     end:function(){
+    	this.heartBeatEvent(false);
     	this.endTelemetry();
         EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
     },
 
     /**
-     * relaunch of the particular launcher
+     * Replay of the particular launcher.
+     * Any child launcher can extends/override this functionality.
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
-
     replay: function() {
+    	this.endTelemetry();
     	this.start();
     },
 
@@ -58,11 +68,15 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * Clearing of the Lancher instace
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
-
     clear: function() {
         console.info('Clearing the launcher instance')
     },
 
+    /**
+     * Calculates the content progress
+     * @param currentIndex {int} Current stage number
+     * @param totalIndex {int} Total number of stages in the content.
+     */
     progres: function(currentIndex, totalIndex) {
         var totalProgress = (currentIndex / totalIndex) * 100;
         totalProgress = totalProgress > 100 ? 100 : totalProgress;
@@ -71,12 +85,21 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     contentProgress: function() {
         console.warn("Child Launcher should calculate");
     },
+
+    /**
+     * Generation of the OE_START Telemetry event.
+     */
+
     startTelemetry: function() {
         var data = {};
         data.stageid = EkstepRendererAPI.getCurrentStageId();
         data.mode = getPreviewMode();
         TelemetryService.start(GlobalContext.game.id, GlobalContext.game.ver, data);
     },
+
+    /**
+     * Generation of OE_END Telemetry event.
+     */
     endTelemetry: function(event) {
         if (TelemetryService.instance && TelemetryService.instance.telemetryStartActive()) {
             var telemetryEndData = {};
@@ -88,6 +111,12 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
             console.warn('Telemetry service end is already logged Please log start telemetry again');
         }
     },
+
+    /**
+     * It Generates the HEARTBEAT Telemetry event. 
+     * Any child launcher can extends/overide this functionality.
+     */
+		
     heartBeatEvent: function(flag, data) {
         var instance = this;
         if (flag) {
@@ -99,6 +128,11 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
             clearInterval(instance._time);
         }
     },
+
+    /**
+     * Provides an ability to add dom element to player gamearea.
+     * Any child launcher can extends/override this functionality. 
+     */
     addToGameArea: function(domElement) {
         domElement.id = this.manifest.id;
         jQuery('#' + this.manifest.id).insertBefore("#gameArea");
@@ -116,6 +150,11 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
         elementId.style.width = '100%';
         elementId.style.height = '100%';
     },
+
+    /**
+     * Provides an ability to remove the dom element from player gamearea.
+     * Any child launcher can extends/override this functionality.
+     */
     resetDomElement: function() {
         console.info('Child Launcher should implement');
         jQuery('#' + this.manifest.id).remove();
@@ -126,6 +165,11 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
             }
         });
     },
+
+    /**
+     * Provides an ability to throw an custom error message and it will generates an OE_ERROR events.
+     * Any child launcher can extends/override this functionality.
+     */
     throwError: function(errorInfo) {
         var errorMessage = 'Sorry!!.. Unable to open the Content';
         var errorStack = undefined;
@@ -140,16 +184,6 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
         showToaster("error", errorMessage, {
             timeOut: 200000
         });
-    },
-    reset: function() {
-        if (document.getElementById(this.manifest.id)) {
-            videojs(this.manifest.id).dispose();
-            jQuery('#' + this.manifest.id).remove();
-        }
-        this.progressTimer(false);
-        this.currentTime = 0;
-    },
-    
-
+    }
 
 });

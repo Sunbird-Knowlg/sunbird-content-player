@@ -7,10 +7,9 @@
     totalIndex:100,
     initLauncher: function() {
         var instance = this;
-        //EkstepRendererAPI.addEventListener("renderer:content:end",this.end,this);
         this.start();
     },
-    start: function(evt, data) {
+    start: function() {
         this._super();
         data = content;
         this.reset();
@@ -57,14 +56,12 @@
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
     },
-    
     end:function(){
         this.currentIndex = 100;
         this.totalIndex = 100;
         this.heartBeatEvent(false);
         this._super();
     },
-    
     contentProgress:function(){
         return this.progres(this.currentIndex, this.totalIndex);
     },

@@ -10,10 +10,10 @@
      stageId:[],
      initLauncher: function(manifestData) {
          console.info('PDF Renderer init', manifestData)
+         this._manifest = manifestData;
          EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
          EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
-         this._manifest = manifestData
-         this.start(manifestData);
+         this.start();
 
      },
      enableOverly: function() {
@@ -23,24 +23,23 @@
              display: 'none'
          });
      },
-     start: function(manifestData) {
+     start: function() {
         this._super();
         context = this;
         var data = _.clone(content);
         this.initContentProgress();
-        this.manifestData = manifestData;
          var path = undefined;
         if (window.cordova || !isbrowserpreview) {
             var prefix_url = data.baseDir || '';
-            path = prefix_url + "/" + data.artifactUrl;
+            path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
         } else {
-            path = data.artifactUrl;
+            path = data.artifactUrl + "?" + new Date().getSeconds();
         }
-         console.log("path pdf ", path);
+         console.log("path pdf is ", path);
          var div = document.createElement('div');
          div.src = path;
          context.addToGameArea(div);
-         context.renderPDF(path, document.getElementById(this.manifest.id), manifestData);
+         context.renderPDF(path, document.getElementById(this.manifest.id), this.manifest);
          setTimeout(function() {
              context.enableOverly();
          }, 100);
@@ -60,10 +59,10 @@
          });
      },
      replay: function() {
+        this._super();
         this.enableOverly();
-        context.showPage(1);
      },
-     renderPDF: function(path, canvasContainer, manifestData) {
+     renderPDF: function(path, canvasContainer) {
          EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
          var pdfMainContainer = document.createElement("div");
          this.heartBeatEvent(true);
@@ -198,7 +197,7 @@
              });
              context.nextNavigation();
          });
-         context.showPDF(path, manifestData);
+         context.showPDF(path, context.manifest);
      },
 
      nextNavigation: function() {
@@ -221,13 +220,13 @@
          if (context.CURRENT_PAGE != 1)
              context.showPage(--context.CURRENT_PAGE);
      },
-     showPDF: function(pdf_url, manifestData) {
+     showPDF: function(pdf_url) {
          $("#pdf-loader").show(); // use rendere loader
          PDFJS.disableWorker = true;
-         console.log("MANIFEST DATA", manifestData)
+         console.log("MANIFEST DATA",this.manifest)
 
          // use api to resolve the plugin resource
-         PDFJS.workerSrc = org.ekstep.pluginframework.pluginManager.resolvePluginResource(manifestData.id, manifestData.ver, "renderer/libs/pdf.worker.js");
+         PDFJS.workerSrc = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/libs/pdf.worker.js");
          PDFJS.getDocument({
              url: pdf_url
          }).then(function(pdf_doc) {
