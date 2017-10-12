@@ -20,7 +20,8 @@ var ScribblePlugin = Plugin.extend({
         this._self.on("mousedown", this.handleMouseDown.bind(this), true);
 
         createjs.Ticker.setFPS(50); // This is for smooth drawing of line while mouse move
-        
+
+        data.opacity = (data.opacity == "0" ? "0.01" : data.opacity); // if opacity is coming as 0% then make it 0.01%
         var shapeData = {"shape":{"type":"rect","x":0,"y":0,"w":100,"h":100}};
         if (data.fill) shapeData.shape.fill = data.fill;
         if (data.stroke) shapeData.shape.stroke = data.stroke;
@@ -36,7 +37,7 @@ var ScribblePlugin = Plugin.extend({
         this._self.addChild(this.paintBrush);
     },
     setBounderies: function() {
-        if (this._startPoint && this._endPoint) 
+        if (this._startPoint && this._endPoint)
             return;
         var dims = this.relativeDims();
         var startPoint = this._self.localToGlobal(0, 0);
