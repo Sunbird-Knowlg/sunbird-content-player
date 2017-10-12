@@ -6,6 +6,7 @@
     heartBeatData:{},
     currentIndex: 50,
     totalIndex:100,
+    enableHeartBeatEvent:true,
     initLauncher: function() {
         var instance = this;
         this.start();
@@ -36,8 +37,8 @@
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
                 instance.configOverlay();
-                instance.heartBeatEvent(true);
                 instance.addToGameArea(iframe);
+
             }
         });        
     },
@@ -60,7 +61,6 @@
     end:function(){
         this.currentIndex = 100;
         this.totalIndex = 100;
-        this.heartBeatEvent(false);
         this._super();
     },
     contentProgress:function(){

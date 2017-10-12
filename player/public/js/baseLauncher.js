@@ -9,8 +9,10 @@
  */
 
 org.ekstep.contentrenderer.baseLauncher = Class.extend({
-    contentData: undefined,
+    contentMetaData: undefined,
     manifest: undefined,
+    enableHeartBeatEvent: false,
+    heartBeatData: {},
 
     /**
      * init of the launcher with the given data.
@@ -20,17 +22,18 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     init: function(manifest) {
         try {
             EkstepRendererAPI.addEventListener("renderer:telemetry:end", this.endTelemetry, this);
-            EkstepRendererAPI.addEventListener('renderer:content:end',this.end, this);
+            EkstepRendererAPI.addEventListener('renderer:content:end', this.end, this);
             EkstepRendererAPI.addEventListener('renderer:content:replay', this.replay, this);
             this.manifest = manifest;
+            this.contentMetaData = content;
             this.initLauncher(this.manifest);
         } catch (error) {
             this.throwError(error);
         }
     },
 
-    initLauncher: function(){
-    	console.info("Base launcher should constuct.");
+    initLauncher: function() {
+        console.info("Base launcher should constuct.");
     },
 
     /**
@@ -41,16 +44,19 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
         console.info('Base Launcher should construct');
         this.resetDomElement();
         this.startTelemetry();
+        if (this.enableHeartBeatEvent) {
+            this.heartBeatEvent(true);
+        }
     },
 
     /**
      * End of the content listen for the renderer:content:end event.
      * Any child launcher can extend/override this functionality.
      * @memberof org.ekstep.contentrenderer.baseLauncher
-	 */	
-    end:function(){
-    	this.heartBeatEvent(false);
-    	this.endTelemetry();
+     */
+    end: function() {
+        this.heartBeatEvent(false);
+        this.endTelemetry();
         EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
     },
 
@@ -60,8 +66,9 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     replay: function() {
-    	this.endTelemetry();
-    	this.start();
+        this.heartBeatEvent(false);
+        this.endTelemetry();
+        this.start();
     },
 
     /**
@@ -116,8 +123,8 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * It Generates the HEARTBEAT Telemetry event. 
      * Any child launcher can extends/overide this functionality.
      */
-		
-    heartBeatEvent: function(flag, data) {
+
+    heartBeatEvent: function(flag) {
         var instance = this;
         if (flag) {
             instance._time = setInterval(function() {
@@ -130,13 +137,20 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     },
 
     /**
+     * It return the current player gameArea.
+     */
+    getGameArea: function() {
+        return document.getElementById('gameArea');
+    },
+
+    /**
      * Provides an ability to add dom element to player gamearea.
      * Any child launcher can extends/override this functionality. 
      */
     addToGameArea: function(domElement) {
         domElement.id = this.manifest.id;
         jQuery('#' + this.manifest.id).insertBefore("#gameArea");
-        var gameArea = document.getElementById('gameArea');
+        var gameArea = this.getGameArea();
         gameArea.insertBefore(domElement, gameArea.childNodes[0]);
         jQuery('#gameArea').css({
             left: '0px',
@@ -167,23 +181,30 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     },
 
     /**
+     * Return the dom element which is being added to gameArea.
+     */
+    getLauncherDom: function() {
+        return document.getElementById(this.manifest.id);
+    },
+
+    /**
      * Provides an ability to throw an custom error message and it will generates an OE_ERROR events.
      * Any child launcher can extends/override this functionality.
      */
-    throwError: function(errorInfo) {
-        var errorMessage = 'Sorry!!.. Unable to open the Content';
+    throwError: function(errorObj) {
         var errorStack = undefined;
-        if (errorInfo) {
-            errorStack = errorInfo.stack
-        };
-        EkstepRendererAPI.logErrorEvent(errorStack, {
-            'severity': 'fatal',
-            'type': 'content',
-            'action': 'play'
-        });
-        showToaster("error", errorMessage, {
-            timeOut: 200000
-        });
+        if (errorObj) {
+            EkstepRendererAPI.dispatchEvent("renderer:toast:show", undefined, {
+                message: errorObj.message || 'Sorry!!.. Unable to open the Content',
+                type: "error",
+                custom: {timeOut: 200000}, 
+                errorInfo: {
+                    errorStack: errorObj.stack,
+                    data: errorObj.data || {'severity': 'fatal', 'type': 'content', 'action': 'play'} 
+                }
+            })
+        }
+
     }
 
 });

@@ -9,6 +9,7 @@
      context: undefined,
      stageId:[],
      heartBeatData: {},
+     enableHeartBeatEvent:true,
      initLauncher: function(manifestData) {
          console.info('PDF Renderer init', manifestData)
          this._manifest = manifestData;
@@ -198,7 +199,6 @@
              context.nextNavigation();
          });
          this.heartBeatData.stageId = context.CURRENT_PAGE.toString();
-         this.heartBeatEvent(true);
          context.showPDF(path, context.manifest);
      },
 
@@ -210,7 +210,6 @@
          if (context.CURRENT_PAGE != context.TOTAL_PAGES) {
              context.showPage(++context.CURRENT_PAGE);
          } else if (context.CURRENT_PAGE == context.TOTAL_PAGES) {
-             this.heartBeatEvent(false);
              EkstepRendererAPI.dispatchEvent('renderer:content:end');
          }
      },
@@ -246,9 +245,8 @@
              // If error re-show the upload button
              $("#pdf-loader").hide();
              $("#upload-button").show();
-             EkstepRendererAPI.logErrorEvent(error.message,{'type':'content','action':'play','severity':'fatal'});
-             showToaster('error', "Unable to open PDF");
-
+             error.message = "Missing PDF"
+             context.throwError(error);
          });
      },
      showPage: function(page_no) {

@@ -12,6 +12,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     totalPages: 0,
     lastPage: false,
     stageId:[],
+    enableHeartBeatEvent: false,
     initLauncher: function () {
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.epub-archive', this.launch, this);
         EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
@@ -33,7 +34,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
         org.ekstep.pluginframework.resourceManager.loadResource(epubPath, 'TEXT', function (err, data) {
             if (err) {
-                showToaster("error", "Unable to open eBook!", {timeOut: 200000})
+                err.message = 'Unable to open the content.'
+                instance.throwError(err)
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
                 instance.renderEpub(epubPath);

@@ -9,6 +9,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     videoPlayer: undefined,
     stageId: undefined,
     heartBeatData:{},
+    enableHeartBeatEvent:false,
     initLauncher: function(manifestData) {
 
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
@@ -67,7 +68,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 'action': 'play',
                 'severity': 'error'
             });
-            showToaster('error', "Please connect to internet");
+            instance.throwError({message:'Please connect to internet'});
         }
         var vid = videojs(instance.manifest.id, {
                 "techOrder": ["youtube"],
@@ -100,8 +101,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     play: function(stageid, time) {
         var instance = this;
-
-        instance.heartBeatEvent(true,{stageId:this.stageId});
+        instance.heartBeatEvent(true);
         instance.progressTimer(true);
         instance.logTelemetry('TOUCH', {
             stageId: stageid,
@@ -113,7 +113,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     pause: function(stageid, time) {
         var instance = this;
-        instance.heartBeatEvent(false,{stageId:this.stageId});
+        instance.heartBeatEvent(false);
         instance.progressTimer(false);
         instance.logTelemetry('TOUCH', {
             stageId: stageid,
@@ -125,7 +125,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     ended: function(stageid) {
         var instance = this;
-        instance.heartBeatEvent(false, this.stageId);
         instance.progressTimer(false);
         instance.logTelemetry('END', {
             stageId: stageid,

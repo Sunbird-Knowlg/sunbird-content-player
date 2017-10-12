@@ -18,6 +18,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     stageId:[],
     qid:[],
+    enableHeartBeatEvent:false,
+
     /**
      * registers events
      * @memberof ecmlRenderer
