@@ -15,7 +15,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     enableHeartBeatEvent: false,
     initLauncher: function () {
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.epub-archive', this.launch, this);
-        EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
         this.start();
     },
@@ -38,6 +37,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 instance.throwError(err)
             } else {
                 EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+                EkstepRendererAPI.dispatchEvent('renderer:overlay:show');
                 instance.renderEpub(epubPath);
             }
         });
