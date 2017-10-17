@@ -45,7 +45,15 @@ describe("Preview streaming", function() {
 
     describe("When content launcher is loaded.", function() {
 
+        it("should load the respective launcher based on content mimeType", function() {
+
+        });
+
         describe("When ECML launcher is loaded", function() {
+
+            it("Should load the index.ecml from S3", function() {
+
+            })
 
             it("Should have a instance of ECML launcher", function() {
 
@@ -63,6 +71,22 @@ describe("Preview streaming", function() {
         describe("When HTML launcher is loaded", function() {
 
             it("Should have a instance of HTML launcher", function() {
+
+            });
+
+            it("Should load the index.html file from S3", function() {
+
+            });
+
+        });
+
+        describe("When PDF launcher is loaded", function() {
+
+            it("Should have a instance of PDF launcher", function() {
+
+            });
+
+            it("Should load the index.pdf file from S3", function() {
 
             });
 
