@@ -7,7 +7,7 @@
 Plugin.extend({
     initialize: function() {
         console.info('Toaster init is done');
-        
+
         /**
          * renderer:toast:show Event to show the toast message with custom object.
          * @event renderer:toast:show
@@ -35,6 +35,10 @@ Plugin.extend({
                 }
                 if (obj.type.toUpperCase() === 'ERROR') {
                     toastr.error(obj.message);
+                    if (obj.errorInfo) {
+                        EkstepRendererAPI.logErrorEvent(obj.errorInfo.errorStack, obj.errorInfo.data);
+                    }
+
                 }
                 if (obj.type.toUpperCase() === 'INFO') {
                     toastr.info(obj.message);

@@ -7,18 +7,19 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     _time: undefined,
     currentTime: 1,
     videoPlayer: undefined,
-    initialize: function(manifestData) {
-        EkstepRendererAPI.addEventListener("renderer:content:replay", this.replayContent, this);
-        EkstepRendererAPI.addEventListener("renderer:content:end", this.onContentEnd, this);
+    stageId: undefined,
+    heartBeatData:{},
+    enableHeartBeatEvent:false,
+    initLauncher: function(manifestData) {
+
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
-        this.start(manifestData);
+        this.start();
     },
-    start: function(manifestData) {
+    start: function() {
+        this._super();
         var data = _.clone(content);
-        this.reset();
-        this.launch();
-        this.manifestData = manifestData;
+        this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         if (window.cordova || !isbrowserpreview) {
             var prefix_url = data.baseDir || '';
             path = prefix_url + "/" + data.artifactUrl;
@@ -28,10 +29,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.createVideo(path, data);
         this.configOverlay();
     },
-    reset: function() {
-        if (document.getElementById("renderer_videos")) {
-            videojs('renderer_videos').dispose();
-            jQuery('#renderer_videos').remove();
+    resetDomElement: function() {
+        if (document.getElementById(this.manifest.id)) {
+            videojs(this.manifest.id).dispose();
+            jQuery('#' + this.manifest.id).remove();
         }
         this.progressTimer(false);
         this.currentTime = 0;
@@ -41,12 +42,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video = document.createElement('video');
         video.style.width = '100%';
         video.style.height = '100%';
-        video.id = "renderer_videos";
         video.controls = true;
         video.autoplay = true;
         video.preload = "auto";
         video.className = 'video-js vjs-default-skin';
-        this.adddiv(video);
+        this.addToGameArea(video);
         EkstepRendererAPI.dispatchEvent("renderer:content:start");
         data.mimeType === 'video/x-youtube' ? this._loadYoutube(data.artifactUrl) : this._loadVideo(path);
         video.onvolumechange = function() {
@@ -68,16 +68,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 'action': 'play',
                 'severity': 'error'
             });
-            showToaster('error', "Please connect to internet");
+            instance.throwError({message:'Please connect to internet'});
         }
-        var vid = videojs("renderer_videos", {
+        var vid = videojs(instance.manifest.id, {
                 "techOrder": ["youtube"],
                 "src": path
             },
             function() {
                 $(".vjs-has-started, .vjs-poster").css("display", "none")
             });
-        videojs('renderer_videos').ready(function() {
+        videojs(instance.manifest.id).ready(function() {
             var youtubeInstance = this;
             youtubeInstance.src({
                 type: 'video/youtube',
@@ -93,16 +93,15 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     setYoutubeStyles: function(youtube) {
         youtube.bigPlayButton.hide().el_.style.display = 'none';
-        videojs('renderer_videos').ready(function() {
-            var video = document.getElementById("renderer_videos");
+        videojs(this.manifest.id).ready(function() {
+            var video = document.getElementById(this.manifest.id);
             video.style.width = '100%';
             video.style.height = '100%';
         });
     },
     play: function(stageid, time) {
         var instance = this;
-
-        instance.logheartBeatEvent(true);
+        instance.heartBeatEvent(true);
         instance.progressTimer(true);
         instance.logTelemetry('TOUCH', {
             stageId: stageid,
@@ -114,8 +113,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     pause: function(stageid, time) {
         var instance = this;
-
-        instance.logheartBeatEvent(false);
+        instance.heartBeatEvent(false);
         instance.progressTimer(false);
         instance.logTelemetry('TOUCH', {
             stageId: stageid,
@@ -127,8 +125,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     ended: function(stageid) {
         var instance = this;
-
-        instance.logheartBeatEvent(false);
         instance.progressTimer(false);
         instance.logTelemetry('END', {
             stageId: stageid,
@@ -188,45 +184,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     logTelemetry: function(type, eksData) {
         EkstepRendererAPI.getTelemetryService().interact(type || 'TOUCH', "", "", eksData);
     },
-    logheartBeatEvent: function(flag) {
-        var instance = this;
-        var stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
-        if (flag) {
-            instance._time = setInterval(function() {
-                EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {
-                    stageId: stageId
-                });
-            }, EkstepRendererAPI.getGlobalConfig().heartBeatTime);
-        }
-        if (!flag) {
-            clearInterval(instance._time);
-        }
-    },
-    replayContent: function() {
-        EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
-        this.relaunch();
-        this.start();
-    },
-    adddiv: function(div) {
-        jQuery('#htmldiv').insertBefore("#gameArea");
-        var gameArea = document.getElementById('gameArea');
-        gameArea.insertBefore(div, gameArea.childNodes[0]);
-        this.setStyle();
-    },
-    setStyle: function() {
-        jQuery('#gameArea').css({
-            left: '0px',
-            top: '0px',
-            width: "100%",
-            height: "100%"
-        });
-        jQuery('#htmlIframe').css({
-            position: 'absolute',
-            display: 'block',
-            background: 'rgba(49, 13, 45, 0.14)',
-            width: '100%',
-            height: '100%'
-        });
+    replay:function(){
+       EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
+       this.start();
     },
     configOverlay: function() {
         setTimeout(function() {
@@ -256,11 +216,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
         totalDuration = (this.currentTime < totalDuration) ? Math.floor(totalDuration) : Math.ceil(totalDuration);
         return this.progres(this.currentTime, totalDuration);
-    },
-    onContentEnd: function() {
-        this.logheartBeatEvent(false);
-        this.endTelemetry();
-        EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
     },
     onOverlayAudioMute: function() {
         if (this.videoPlayer.currentType_ === 'video/youtube') {
