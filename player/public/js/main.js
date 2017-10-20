@@ -226,10 +226,6 @@ function startTelemetry(id, ver, cb) {
     correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData, otherData).then(function(response) {
         TelemetryService.eventDispatcher = EkstepRendererAPI.dispatchEvent;
-        var data = {};
-        data.stageid = EkstepRendererAPI.getCurrentStageId();
-        data.mode =  getPreviewMode();
-        TelemetryService.start(id, ver, data);
         if (!_.isUndefined(TelemetryService.instance)) {
             var tsObj = _.clone(TelemetryService);
             tsObj._start = JSON.stringify(tsObj.instance._start);
@@ -387,9 +383,7 @@ function mergeJSON(a, b) {
             if ((Array.isArray(res[e]) && Array.isArray(b[e]))) {
                 res[e] = _.union(res[e], b[e]);
             } else {
-                if (!_.isUndefined(b[e]) && !_.isEmpty(b[e])) {
-                    res[e] = b[e];
-                }
+                res[e] = b[e];
             }
         }
     });

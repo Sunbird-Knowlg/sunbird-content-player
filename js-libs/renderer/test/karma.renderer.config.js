@@ -11,22 +11,30 @@ module.exports = function(config) {
             'jasmine-matchers'
         ],
         files: [{pattern: 'http-image/**/*', watched: false, included: false, served: true },
-            //TODO: Need to use hosted files path    
-            '../../../../player/public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/createjs.min.js',
-            '../../../../player/public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/cordovaaudioplugin-0.6.1.min.js',
-            '../../../../player/public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js',
-            '../../../../player/dist/renderer.external.min.js',
-            '../../../../player/public/js/basePlugin.js',
-            '../../../../player/public/js/ekstepRendererApi.js',
-            '../../../../player/dist/renderer.min.js',
-            '../../../../player/dist/renderer.script.min.js',
-            '../../../../player/dist/renderer.telemetry.min.js',
+            '../../../player/public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/createjs.min.js',
+            '../../../player/public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/cordovaaudioplugin-0.6.1.min.js',
+            '../../../player/public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js',
+            'https://s3.ap-south-1.amazonaws.com/ekstep-public-prod/v3/preview/scripts/renderer.external.min.js',
+            'https://s3.ap-south-1.amazonaws.com/ekstep-public-prod/v3/preview/scripts/renderer.telemetry.min.js',
+            'https://s3.ap-south-1.amazonaws.com/ekstep-public-prod/v3/preview/scripts/renderer.script.min.js',
+            '../../../player/public/js/basePlugin.js',
+            '../../../player/public/js/ekstepRendererApi.js',
+            'https://s3.ap-south-1.amazonaws.com/ekstep-public-prod/v3/preview/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js',
+            '../**/*Plugin.js',
+            '../**/*Command.js',
+            '../**/*Manager.js',
+            '../**/*Controller.js',
+            '../**/*Generator.js',
             'spec/*PluginSpec.js',
-            '../*Plugin.js'
         ],
-        exclude: ['coverage'],
+        exclude: ['coverage','../test/'],
         preprocessors: {
-            '../*Plugin.js': ['coverage'],
+            '../plugin/*.js': ['coverage'],
+            '../command/*.js': ['coverage'],
+            '../manager/*.js': ['coverage'],
+            '../controller/*.js': ['coverage'],
+            '../evaluator/*.js': ['coverage'],
+            '../generator/*.js': ['coverage']
         },
         reporters: ['verbose', 'progress', 'coverage'],      
         junitReporter: {
@@ -64,6 +72,6 @@ module.exports = function(config) {
         client: {captureConsole: false }, 
         browsers: ['PhantomJS'],
         singleRun: false,
-        browserNoActivityTimeout: 60000
+        browserNoActivityTimeout: 3000
     })
 }

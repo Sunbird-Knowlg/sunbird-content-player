@@ -10,30 +10,65 @@ module.exports = function(config) {
             'jasmine',
             'jasmine-matchers'
         ],
-        files: [{pattern: 'http-image/**/*', watched: false, included: false, served: true },
-            //TODO: Need to use hosted files path 
+        files: [{
+                pattern: 'http-image/**/*',
+                watched: false,
+                included: false,
+                served: true
+            },
+            'https://s3.ap-south-1.amazonaws.com/ekstep-public-prod/v3/preview/scripts/renderer.external.min.js',
             '../coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/createjs.min.js',
             '../coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/cordovaaudioplugin-0.6.1.min.js',
-            '../coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js',   
-            '../libs/plugin-framework.min.js',
-            '../../dist/renderer.external.min.js',
+            '../coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min.js',
+            '../../www/preview/scripts/renderer.telemetry.min.js',
             '../js/basePlugin.js',
+            '../js/appConfig.js',
+            '../js/globalContext.js',
+            '../js/appMessages.js',
+            '../js/splashScreen.js',
+            '../js/main.js',
+            '../js/app.js',
+            '../js/basePlugin.js',
+            '../services/mainservice.js',
+            '../services/webservice.js',
+            '../services/interfaceService.js',
             '../js/ekstepRendererApi.js',
-            '../../dist/renderer.min.js',
-            '../../dist/renderer.script.min.js',
-            '../../dist/renderer.telemetry.min.js',
-            '../../public/coreplugins/LauncherPlugin.js',
-            'spec/*.js',
-            '../services/*.js',
-            '../js/*.js',
+            '../js/content-renderer.js',
+            '../js/baseLauncher.js',
+            '../js/baseEndpage.js',
+            '../services/controllerservice.js',
+            '../js/detectClient.js',
+            '../js/ekstepRendererEvents.js',
+            'https://s3.ap-south-1.amazonaws.com/ekstep-public-prod/v3/preview/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js',
+            '../coreplugins/**/renderer/*.js',
+            '../coreplugins/**/spec/*.js',
+            'specs/*.spec.js',
+
         ],
-        exclude: ['coverage'],
+        exclude: ['coverage', '../js/htmlInterface.js'], // Need to remove the htmlInterface.js  file
         preprocessors: {
-            '../*.js': ['coverage'],
+            '../coreplugins/**/renderer/*.js': ['coverage'],
+            '../js/*.js': ['coverage'],
         },
-        reporters: ['verbose', 'progress', 'coverage'],      
+        reporters: ['mocha', 'coverage'],
+
+        // reporter options
+        mochaReporter: {
+            colors: {
+                success: 'green',
+                info: 'bgYellow',
+                warning: 'cyan',
+                error: 'bgRed'
+            },
+            symbols: {
+                success: '✔',
+                info: '#',
+                warning: '!',
+                error: 'x'
+            }
+        },
         junitReporter: {
-            outputDir: 'coverage', 
+            outputDir: 'coverage',
             outputFile: 'test-results.xml',
         },
         coverageReporter: {
@@ -57,10 +92,10 @@ module.exports = function(config) {
         port: 8080,
         colors: true,
         autoWatch: true,
-        logLevel:config.LOG_WARN,
+        logLevel: config.LOG_WARN,
         client: {
             captureConsole: false
-        }, 
+        },
         browsers: ['PhantomJS'],
         singleRun: false,
         browserNoActivityTimeout: 60000

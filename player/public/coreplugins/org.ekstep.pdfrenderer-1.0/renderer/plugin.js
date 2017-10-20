@@ -8,14 +8,14 @@
      CANVAS_CTX: undefined,
      context: undefined,
      stageId:[],
-     initialize: function(manifestData) {
+     heartBeatData: {},
+     enableHeartBeatEvent:true,
+     initLauncher: function(manifestData) {
          console.info('PDF Renderer init', manifestData)
-         EkstepRendererAPI.addEventListener("renderer:content:replay", this.replayContent, this);
+         this._manifest = manifestData;
          EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
          EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
-         EkstepRendererAPI.addEventListener('renderer:content:end', this.onContentEnd, this);
-         this._manifest = manifestData
-         this.start(manifestData);
+         this.start();
 
      },
      enableOverly: function() {
@@ -25,26 +25,23 @@
              display: 'none'
          });
      },
-     start: function(manifestData) {
-         context = this;
-         this.launch();
-         var data = _.clone(content);
-         this.initContentProgress();
-         this.manifestData = manifestData;
+     start: function() {
+        this._super();
+        context = this;
+        var data = _.clone(content);
+        this.initContentProgress();
          var path = undefined;
         if (window.cordova || !isbrowserpreview) {
             var prefix_url = data.baseDir || '';
-            path = prefix_url + "/" + data.artifactUrl;
+            path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
         } else {
-            path = data.artifactUrl;
+            path = data.artifactUrl + "?" + new Date().getSeconds();
         }
-
-         console.log("path pdf ", path);
+         console.log("path pdf is ", path);
          var div = document.createElement('div');
          div.src = path;
-         div.id = 'htmldiv';
-         context.adddiv(div);
-         context.renderPDF(path, document.getElementById('htmldiv'), manifestData);
+         context.addToGameArea(div);
+         context.renderPDF(path, document.getElementById(this.manifest.id), this.manifest);
          setTimeout(function() {
              context.enableOverly();
          }, 100);
@@ -53,7 +50,7 @@
      },
      onScrollEvents: function() {
          var timeout = null;
-         $('#htmldiv').bind('scroll', function() {
+         $('#' + this.manifest.id).bind('scroll', function() {
              clearTimeout(timeout);
              timeout = setTimeout(function() {
                  EkstepRendererAPI.getTelemetryService().interact('SCROLL', 'page', '', {
@@ -63,15 +60,13 @@
              }, 50);
          });
      },
-     replayContent: function() {
-         context.relaunch();
-         this.enableOverly();
-         context.showPage(1);
+     replay: function() {
+        this._super();
+        this.enableOverly();
      },
-     renderPDF: function(path, canvasContainer, manifestData) {
+     renderPDF: function(path, canvasContainer) {
          EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
          var pdfMainContainer = document.createElement("div");
-         this.logheartBeatEvent(true);
          pdfMainContainer.id = "pdf-main-container";
          pdfMainContainer.style.overflowX = "scroll";
          pdfMainContainer.style.overflowY = "scroll";
@@ -168,8 +163,8 @@
 
          canvasContainer.appendChild(pdfMainContainer);
 
-         document.getElementById('htmldiv').style.overflowX = "scroll";
-         document.getElementById('htmldiv').style.overflowY = "scroll";
+         document.getElementById(this.manifest.id).style.overflowX = "scroll";
+         document.getElementById(this.manifest.id).style.overflowY = "scroll";
 
          context.PDF_DOC = 0;
          context.CURRENT_PAGE = 0;
@@ -203,7 +198,8 @@
              });
              context.nextNavigation();
          });
-         context.showPDF(path, manifestData);
+         this.heartBeatData.stageId = context.CURRENT_PAGE.toString();
+         context.showPDF(path, context.manifest);
      },
 
      nextNavigation: function() {
@@ -214,7 +210,6 @@
          if (context.CURRENT_PAGE != context.TOTAL_PAGES) {
              context.showPage(++context.CURRENT_PAGE);
          } else if (context.CURRENT_PAGE == context.TOTAL_PAGES) {
-             this.logheartBeatEvent(false);
              EkstepRendererAPI.dispatchEvent('renderer:content:end');
          }
      },
@@ -226,13 +221,13 @@
          if (context.CURRENT_PAGE != 1)
              context.showPage(--context.CURRENT_PAGE);
      },
-     showPDF: function(pdf_url, manifestData) {
+     showPDF: function(pdf_url) {
          $("#pdf-loader").show(); // use rendere loader
          PDFJS.disableWorker = true;
-         console.log("MANIFEST DATA", manifestData)
+         console.log("MANIFEST DATA",this.manifest)
 
          // use api to resolve the plugin resource
-         PDFJS.workerSrc = org.ekstep.pluginframework.pluginManager.resolvePluginResource(manifestData.id, manifestData.ver, "renderer/libs/pdf.worker.js");
+         PDFJS.workerSrc = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/libs/pdf.worker.js");
          PDFJS.getDocument({
              url: pdf_url
          }).then(function(pdf_doc) {
@@ -250,9 +245,8 @@
              // If error re-show the upload button
              $("#pdf-loader").hide();
              $("#upload-button").show();
-             EkstepRendererAPI.logErrorEvent(error.message,{'type':'content','action':'play','severity':'fatal'});
-             showToaster('error', "Unable to open PDF");
-
+             error.message = "Missing PDF"
+             context.throwError(error);
          });
      },
      showPage: function(page_no) {
@@ -260,7 +254,7 @@
          if (page_no <= context.TOTAL_PAGES && page_no > 0) {
 
              context.PAGE_RENDERING_IN_PROGRESS = 1;
-             context.CURRENT_PAGE = page_no;
+             context.CURRENT_PAGE = this.heartBeatData.stageId = page_no;
 
              // Disable Prev & Next buttons while page is being loaded
              $("#pdf-next, #pdf-prev").attr('disabled', 'disabled');
@@ -309,44 +303,6 @@
              //$("#pdf-canvas").hide();
          }
      },
-
-     adddiv: function(div) {
-         jQuery('#htmldiv').insertBefore("#gameArea");
-         var gameArea = document.getElementById('gameArea');
-         gameArea.insertBefore(div, gameArea.childNodes[0]);
-         this.setStyle();
-     },
-     setStyle: function() {
-         // remove the background color
-         jQuery('#gameArea').css({
-             left: '0px',
-             top: '0px',
-             width: "100%",
-             height: "100%"
-         });
-         jQuery('#htmlIframe').css({
-             position: 'absolute',
-             display: 'block',
-             background: 'rgba(49, 13, 45, 0.14)',
-             width: '100%',
-             height: '100%'
-         });
-     },
-     logheartBeatEvent: function(flag) {
-        var instance = this;
-        if (flag) {
-            instance._time = setInterval(function() {
-                EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", {stageId:context.CURRENT_PAGE.toString()});
-            },EkstepRendererAPI.getGlobalConfig().heartBeatTime);
-        }
-        if (!flag) {
-            clearInterval(instance._time);
-        }
-    },
-    onContentEnd:function(){
-        this.endTelemetry();
-        EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
-    },
     initContentProgress: function(){
         var instance = this;
         EkstepRendererAPI.addEventListener("sceneEnter",function(event){

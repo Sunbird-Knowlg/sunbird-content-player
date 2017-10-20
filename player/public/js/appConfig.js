@@ -74,6 +74,10 @@ AppConfig = {
             id:"org.ekstep.telemetrysync",
             ver:1.0,
             type:'plugin'
+        },{
+            id:"org.ekstep.toaster",
+            ver:1.0,
+            type:'plugin'
         }
     ],
     overlay: {

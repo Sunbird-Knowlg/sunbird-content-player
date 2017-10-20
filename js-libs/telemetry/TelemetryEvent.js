@@ -7,6 +7,15 @@ TelemetryEvent = Class.extend({
     init: function(eid, version, body, user, gdata, cdata, otherData) {
         if("undefined" != gdata && "undefined" == gdata.ver)
             gdata.ver = "1";
+
+        if (otherData) {
+            var defaultChannel =  "in.ekstep" ;
+           if (undefined == otherData.channel){
+                 otherData.channel = defaultChannel;
+           } else if(otherData.channel == "") {
+                 otherData.channel = defaultChannel;
+           }
+        }
         this.createdTime = getCurrentTime();
         this.name = eid;
 
