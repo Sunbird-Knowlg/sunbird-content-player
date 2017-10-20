@@ -146,7 +146,6 @@ var PlaceHolderPlugin = Plugin.extend({
         };
 
         var renderGridImages = function() {
-          // Needs Improvement
           var x = 0,
               y = 0,
               area = instance.dimensions().w * instance.dimensions().h,
@@ -156,7 +155,6 @@ var PlaceHolderPlugin = Plugin.extend({
               rectWidth = instance.dimensions().w;
 
           // This code assumes that the img aspect ratio is 1. i.e. the image is a square
-          // Hardcoding the cell size adjusting factor to 1.5. Need to invent a new algorithm
           // var pixelPerImg = instance.computePixel(area, repeat) - parseFloat(pad / 1.5);
 
           var imgCountRow = Math.ceil(Math.sqrt(n * rectHeight / rectWidth));
