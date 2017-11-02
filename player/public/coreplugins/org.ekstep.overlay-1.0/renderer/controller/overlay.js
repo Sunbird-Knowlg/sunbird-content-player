@@ -438,6 +438,7 @@ app.compileProvider.directive('goodJob', function($rootScope) {
             $scope.moveToNextStage = function(navType) {
                 EventBus.dispatch("actionNavigateSkip", navType);
                 EventBus.dispatch("skipClick");
+                EkstepRendererAPI.unRegisterEval();
             }
         }
     }
