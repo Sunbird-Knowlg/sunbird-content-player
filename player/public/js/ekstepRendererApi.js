@@ -1012,6 +1012,8 @@ window.EkstepRendererAPI = {
     },
     /**
     * Registers new custom Evaluator and store plugin instance
+    * @param {string} evalType - custom evaluator type
+    * @param {Object} pluginInstance - plugin instance of the custom evaluator
     * @memberof EkstepRendererAPI
     */
     registerEval: function(evalType, pluginInstance) {
@@ -1019,6 +1021,7 @@ window.EkstepRendererAPI = {
     },
     /**
     * Unregisters or removes the custom evaluators entries from the globalContext.
+    * @param {string} evalType - custom evaluator type
     * @memberof EkstepRendererAPI
     */
     unRegisterEval: function(evalType) {
