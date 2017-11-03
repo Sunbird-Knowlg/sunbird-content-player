@@ -1015,7 +1015,7 @@ window.EkstepRendererAPI = {
     * @memberof EkstepRendererAPI
     */
     registerEval: function(evalType, pluginInstance) {
-        GlobalContext.registerEval[evalType] = pluginInstance;
+        GlobalContext.registerEval[evalType.toLowerCase()] = pluginInstance;
     },
     /**
     * Unregisters or removes the custom evaluators entries from the globalContext.
@@ -1023,7 +1023,7 @@ window.EkstepRendererAPI = {
     */
     unRegisterEval: function(evalType) {
         if(evalType)
-            delete GlobalContext.registerEval[evalType]
+            delete GlobalContext.registerEval[evalType.toLowerCase()]
         else
             GlobalContext.registerEval = [];
     }
