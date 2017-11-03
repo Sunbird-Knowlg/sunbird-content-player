@@ -1,7 +1,6 @@
 /***
- * The iEvaluator plugin class is the interfce class, other custom evaluator should have to
- * extend this class with the given default methods.
- * @class EkstepRenderer.Plugin
+ * The IEvaluator plugin class is the interfce class, other custom evaluator should have to extend this class with the given default methods.
+ * @class IEvaluator
  * @author Vivek Kasture <vivek_kasture@techjoomla.com>
  */
 IEvaluator = Class.extend({
