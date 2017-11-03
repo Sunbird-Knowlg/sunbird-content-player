@@ -25,6 +25,7 @@ TelemetryV2Manager = Class.extend({
                 data.progress = 50;
             }
             Telemetry.isActive = false;
+            Telemetry.instance = undefined;
             return this._end.pop().end(data);
         } else {
             console.warn("Telemetry service end is already logged Please log start telemetry again");
@@ -104,7 +105,7 @@ TelemetryV2Manager = Class.extend({
             eventObj.event.edata.eks.mmc = data.mmc;
             eventObj.event.edata.eks.mc = data.mc;
             if (Array.isArray(eventObj.event.edata.eks.resvalues)) {
-                eventObj.event.edata.eks.resvalues = array.map(eventObj.event.edata.eks.resvalues, function(val) {
+                eventObj.event.edata.eks.resvalues = eventObj.event.edata.eks.resvalues.map(function(val) {
                     val = ("object" == typeof val) ? val :{"0" : val};
                     return val;
                 });
