@@ -94,6 +94,21 @@ module.exports = function(grunt) {
                     'public/js/genieservice-bridge.js'
                 ],
                 dest: 'www/scripts/genieservice-bridge.min.js'
+            },
+            telemetryLib: {
+                src: [
+                    '../js-libs/telemetryLib/class.js',
+                    '../js-libs/telemetryLib/jquery.min.js',
+                    '../js-libs/telemetryLib/detectClient.js',
+                    '../js-libs/telemetryLib/md5.js',
+                    '../js-libs/telemetryLib/InActiveEvent.js',
+                    '../js-libs/telemetryLib/TelemetryEvent.js',
+                    '../js-libs/telemetryLib/TelemetryServiceUtil.js',
+                    '../js-libs/telemetryLib/TelemetryV2Manager.js',
+                    '../js-libs/telemetryLib/telemetry.js',
+                    '../js-libs/telemetryLib/telemetrySyncManager.js'
+                ],
+                dest: '../js-libs/telemetryLib/telemetry.min.js'
             }
         },
         uglify: {
@@ -677,4 +692,5 @@ module.exports = function(grunt) {
     grunt.registerTask('test-setup', ['new-buildPreview', 'copy:testinit', 'clean']);
     grunt.registerTask('player-test', ['karma:app']);
     grunt.registerTask('renderer-test', ['karma:renderer']);
+    grunt.registerTask('build-telemetryLib', ['concat:telemetryLib']);
 };
