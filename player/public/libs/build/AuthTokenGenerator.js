@@ -251,20 +251,24 @@ if(typeof KJUR=="undefined"||!KJUR){KJUR={}}if(typeof KJUR.jws=="undefined"||!KJ
 
 
 /*
-AuthToken Generation
+ * AuthToken Generator to generate authtoken or regenerate expired authtoken
+ * 
+ * @author Akash Gupta <akash.gupta@tarento.com>
 */
-var authTokenGenerate = {	
+var AuthTokenGenerate = {
 	generate: function(key, secret) {
-		var token = KJUR.jws.JWS.sign(null, {typ: "JWT", alg:"HS256"}, {
-	    	"iss": key,
-		    "iat": null,
-		    "exp": null,
-		    "aud": "",
-		    "sub": ""
-		}, {utf8:secret});
+		if (key == null || key == undefined) {
+			throw 'key is invalid or null';
+			// return;
+		}
+		if (secret == null || secret == undefined) {
+			throw 'secret is invalid or null';
+			// return;
+		}
+		var token = KJUR.jws.JWS.sign(null,{typ:"JWT",alg:"HS256"},{"iss": key,"iat": null,"exp": null,"aud": "","sub": ""},{utf8:secret});
 		return token;
 	},
-	refresh: function() {
+	refresh: function(oldAuthToken) {
 		console.warn("Api method is not available");
 	}
 }
