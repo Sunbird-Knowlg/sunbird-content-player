@@ -259,11 +259,9 @@ var AuthTokenGenerate = {
 	generate: function(key, secret) {
 		if (key == null || key == undefined) {
 			throw 'key is invalid or null';
-			// return;
 		}
 		if (secret == null || secret == undefined) {
 			throw 'secret is invalid or null';
-			// return;
 		}
 		var token = KJUR.jws.JWS.sign(null,{typ:"JWT",alg:"HS256"},{"iss": key,"iat": null,"exp": null,"aud": "","sub": ""},{utf8:secret});
 		return token;
