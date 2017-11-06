@@ -10,7 +10,8 @@ GlobalContext = {
         contentId: "",
         flavor: "",
         appInfo: undefined
-    },
+    }, 
+    registerEval:[],
     filter: undefined,
     init: function(gid, ver) {
         return new Promise(function(resolve, reject) {

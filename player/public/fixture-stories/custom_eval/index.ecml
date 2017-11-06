@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<theme id="theme" version="1.0" startStage="29192b17-b35e-4ea9-88ec-ce02d78e4693" compatibilityVersion="2">
+  <stage x="0" y="0" w="100" h="100" id="29192b17-b35e-4ea9-88ec-ce02d78e4693" rotate="">
+    <config>
+      <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"color":"#FFFFFF","genieControls":false,"instructions":""}]]>
+    </config>
+    <manifest/>
+    <org.ekstep.quiz x="9" y="6" w="80" h="85" rotate="0" z-index="0" id="e178c846-06b4-4be1-a021-b6736d34a81b">
+      <data>
+        <![CDATA[{"questionnaire":{"items":{"wings.en.A.2":[{"template":"org.ekstep.mcq.t.ta","code":"wings.en.A.2","keywords":["number sense","names of numbers"],"qlevel":"MEDIUM","language":["English"],"type":"mcq","title":"Write in numerals","partial_scoring":false,"createdOn":"2016-08-09T10:28:25.352+0000","objectType":"AssessmentItem","gradeLevel":["Grade 3"],"options":[{"value":{"type":"mixed","text":"105","resvalue":"105","resindex":0},"answer":false},{"value":{"type":"mixed","text":"154","resvalue":"154","resindex":1},"answer":false},{"value":{"type":"mixed","text":"149","resvalue":"149","resindex":2},"answer":false},{"value":{"type":"mixed","text":"169","resvalue":"169","resindex":3},"answer":true}],"lastUpdatedOn":"2017-06-07T07:21:33.249+0000","used_for":"worksheet","model":{},"identifier":"wings.en.A.2","question":"one hundred sixty nine","portalOwner":334,"graph_id":"domain","nodeType":"DATA_NODE","max_score":1,"name":"Write in numerals","num_answers":1,"template_id":"domain_3490","node_id":43207,"createdBy":334,"consumerId":"2c43f136-c02f-4494-9fb9-fd228e2c77e6","versionKey":"1496820093249","channel":"in.ekstep","appId":"qa.ekstep.in","keywords_bkp":["number sense","names of numbers"],"es_metadata_id":"wings.en.A.2","isSelected":true,"$$hashKey":"object:269"}]},"item_sets":[{"count":1,"id":"wings.en.A.2"}],"title":"Custom Eval","shuffle":false,"showImmediateFeedback":true,"myQuestions":false,"concepts":"(0) Concepts","total_items":1,"max_score":1,"range":[1],"optionShuffle":true},"template":[{"text":[{"event":{"action":[{"sound":true,"command":"stop","type":"command"},{"command":"play","asset_model":"item.question_audio","type":"command"}],"type":"click"},"w":100,"model":"item.title","lineHeight":1.4,"color":"black","font":"Verdana","align":"center","valign":"top","y":5,"h":20,"fontsize":"2.5vw","x":0},{"w":100,"model":"item.question","lineHeight":1.4,"color":"black","font":"Verdana","align":"center","valign":"top","y":26,"h":20,"fontsize":"3vw","x":0}],"shape":{"event":{"action":[{"sound":true,"command":"stop","type":"command"},{"command":"play","asset_model":"item.question_audio","type":"command"}],"type":"click"},"w":100,"type":"rect","y":0,"hitArea":true,"h":20,"x":0},"org.ekstep.customeval":{"w":100,"y":0,"h":100,"x":0},"mcq":{"options":{"shape":{"w":100,"fill":"#ccc","type":"roundrect","y":0,"h":100,"x":0},"text":{"w":100,"model":"option.value.text","lineHeight":1.4,"font":"Verdana","align":"center","valign":"middle","y":0,"h":100,"fontsize":"2.5vw","x":0},"event":{"action":[{"sound":true,"command":"stop","type":"command"},{"command":"play","asset_model":"option.value.audio","type":"command"}],"type":"click"},"w":97,"cols":4,"layout":"table","highlight":"yellow","y":50,"marginY":5,"h":50,"x":1.5,"options":"options","marginX":5},"model":"item","multi_select":false,"shadow":"#56B1F7"},"id":"org.ekstep.mcq.t.ta"}]}]]>
+      </data>
+      <config>
+        <![CDATA[{"type":"items","var":"item","shuffle":false,"total_items":1,"showImmediateFeedback":true,"max_score":1,"title":"Custom Eval","optionShuffle":true}]]>
+      </config>
+    </org.ekstep.quiz>
+  </stage>
+  <manifest>
+    <media id="org.ekstep.quiz" plugin="org.ekstep.quiz" ver="1.0" src="/content-plugins/org.ekstep.quiz-1.0/renderer/plugin.js" type="plugin"/>
+    <media id="org.ekstep.quiz_manifest" plugin="org.ekstep.quiz" ver="1.0" src="/content-plugins/org.ekstep.quiz-1.0/manifest.json" type="json"/>
+  </manifest>
+  <plugin-manifest>
+    <plugin id="org.ekstep.quiz" ver="1.0" type="plugin" depends=""/>
+    <plugin id="org.ekstep.customeval" ver="1.0" type="plugin" depends=""/>
+  </plugin-manifest>
+</theme>

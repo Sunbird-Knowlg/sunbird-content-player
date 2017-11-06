@@ -76,6 +76,7 @@ module.exports = function(grunt) {
                     'public/services/controllerservice.js',
                     'public/js/detectClient.js',
                     'public/js/ekstepRendererEvents.js',
+                    'public/js/iEvaluator.js'
                 ],
                 dest: 'www/scripts/renderer.script.min.js'
             },

@@ -1009,6 +1009,26 @@ window.EkstepRendererAPI = {
                 jQuery(this).remove();
             }
         });
+    },
+    /**
+    * Registers new custom Evaluator and store plugin instance
+    * @param {string} evalType - custom evaluator type
+    * @param {Object} pluginInstance - plugin instance of the custom evaluator
+    * @memberof EkstepRendererAPI
+    */
+    registerEval: function(evalType, pluginInstance) {
+        GlobalContext.registerEval[evalType.toLowerCase()] = pluginInstance;
+    },
+    /**
+    * Unregisters or removes the custom evaluators entries from the globalContext.
+    * @param {string} evalType - custom evaluator type
+    * @memberof EkstepRendererAPI
+    */
+    unRegisterEval: function(evalType) {
+        if(evalType)
+            delete GlobalContext.registerEval[evalType.toLowerCase()]
+        else
+            GlobalContext.registerEval = [];
     }
 
 }
