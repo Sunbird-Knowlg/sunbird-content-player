@@ -46,7 +46,7 @@ var Plugin = Class.extend({
     borderShape: undefined,
     _pluginParams: {},
     _manifest: {},
-    _unSupportedFonts: ["notosans", "verdana", "notosans oriya", "NotoSansTamil", "NotoSansGurmukhi", "NotoSansMalayalam", "NotoSansBengali", "NotoSansGujarati", "NotoSansOriya", "NotoSansKannada", "NotoSansTelugu", "NotoSansDevanagari"],
+    _unSupportedFonts: ["notosans", "verdana", "notosans oriya"],
     /**
      * Initializes the plugin with the given data and parent object
      * @param data {object} Init parameters for the plugin
@@ -645,7 +645,7 @@ var Plugin = Class.extend({
         return value;
     },
     getDefaultFont: function() {
-        this._defaultFont = 'NotoSans';
+        this._defaultFont = 'NotoSans, NotoSansGujarati, NotoSansOriya, NotoSansMalayalam';
         return this._defaultFont;
     },
     transitionTo: function() {
