@@ -48,18 +48,6 @@ TelemetryServiceUtil = {
 // Generate Genie format ts as per Telemetry wiki
 // https://github.com/ekstep/Common-Design/wiki/Telemetry
 // YYYY-MM-DDThh:mm:ss+/-nn:nn
-function getTime(ms) {
-    var v = undefined;
-    if (Telemetry._version == "1.0") {
-        var dte = new Date(ms);
-        dte.setTime(dte.getTime() +(dte.getTimezoneOffset()+330)*60*1000);
-        v = dateFormat(dte, "yyyy-mm-dd'T'HH:MM:ss")+"+05:30";
-        return v;
-    } else {
-        v = new Date().getTime();
-        return v;
-    }
-}
 
 function getCurrentTime() {
     return new Date().getTime();

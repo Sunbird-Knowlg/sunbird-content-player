@@ -49,7 +49,7 @@ var TelemetrySyncManager = {
         return data;
     },
     sendTelemetry: function(telemetryData) {
-        var currentTimeStamp = new Date().getTime();
+        var currentTimeStamp = new Date().getCurrentTime();
         var telemetryObj = {
             "id": "ekstep.telemetry",
             "ver": Telemetry._version,

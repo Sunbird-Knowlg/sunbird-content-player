@@ -74,7 +74,6 @@ TelemetryV2Manager = Class.extend({
                 return this.createEvent("OE_ASSESS", eks).start();
             } else {
                 console.error("qid is required to create assess event.", qid);
-                // TelemetryService.logError("OE_ASSESS", "qid is required to create assess event.")
                 return new InActiveEvent();
             }
         } else {
