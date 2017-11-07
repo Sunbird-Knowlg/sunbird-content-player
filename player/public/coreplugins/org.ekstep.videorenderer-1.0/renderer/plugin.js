@@ -72,6 +72,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
         var vid = videojs(instance.manifest.id, {
                 "techOrder": ["youtube"],
+                "youtube": {
+                    "modestbranding": 1,    // hide youtube branding from control bar
+                    "iv_load_policy": 3,    // hide video annotation
+                    "rel": 0,               // hide related videos when video is paused
+                    "enablejsapi": 1        // Enable control of player via iframe or javascript
+                },
                 "src": path
             },
             function() {
@@ -93,8 +99,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     setYoutubeStyles: function(youtube) {
         youtube.bigPlayButton.hide().el_.style.display = 'none';
+        var instance = this;
         videojs(this.manifest.id).ready(function() {
-            var video = document.getElementById(this.manifest.id);
+            var video = document.getElementById(instance.manifest.id);
             video.style.width = '100%';
             video.style.height = '100%';
         });
