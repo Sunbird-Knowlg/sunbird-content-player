@@ -3,8 +3,8 @@
  * @author Krushanu Mohapatra <Krushanu.Mohapatra@tarento.com>
  */
 
-Telemetry = Class.extend({
-    _version: "2.1",
+Telemetry = {
+    _version: "2.2",
     isActive: false,
     config: undefined,
     instance: undefined,
@@ -27,7 +27,7 @@ Telemetry = Class.extend({
         tags: [],
         cdata: [],
         apislug: "/action"
-    }
+    },
 
 
     start: function(config, contentId, contentVer, type, data) {
@@ -54,45 +54,32 @@ Telemetry = Class.extend({
         };
 
         Telemetry.user = { uid: config.uid };
-
         if ("undefined" == typeof Telemetry.config) Telemetry.config = config;
         TelemetrySyncManager.updateConfig();
 
-        return new Promise(function(resolve, reject) {
-            if (!Telemetry.instance && 'undefined' != typeof Telemetry.config.pdata && 'undefined' != typeof Telemetry.config.channel && 'undefined' != typeof Telemetry.config.uid && 'undefined' != typeof Telemetry.config.did && 'undefined' != typeof Telemetry.config.authtoken) {
-                if (Telemetry._version == "2.1") {
-                    Telemetry.instance = new TelemetryV2Manager();
-                } else {
-                    // Telemetry v3 instance gets assigned here to "Telemetry.instance"
-                }
-                TelemetryServiceUtil.getConfig().then(function(config) {
-                    Telemetry.config.events = config.events;
-                    if (config.isActive) Telemetry.isActive = config.isActive;
-                    resolve(true);
-                }).catch(function(err) {
-                    reject(err);
-                });
-                if (config.cData && !isEmpty(config.cData)) {
-                    Telemetry._correlationData = config.cData;
-                };
-
-                if (data.otherData && !isEmpty(data.otherData)) {
-                    Telemetry._otherData = data.otherData;
-                };
-
-                if (findWhere(Telemetry.instance._start, {
-                        contentId: contentId
-                    }))
-                    return new InActiveEvent();
-                else
-                    return Telemetry.flushEvent(Telemetry.instance.start(contentId, contentVer, data));
-
-                resolve(true);
+        if (!Telemetry.instance && 'undefined' != typeof Telemetry.config.pdata && 'undefined' != typeof Telemetry.config.channel && 'undefined' != typeof Telemetry.config.uid && 'undefined' != typeof Telemetry.config.did && 'undefined' != typeof Telemetry.config.authtoken) {
+            if (Telemetry._version == "2.2") {
+                Telemetry.instance = new TelemetryV2Manager();
             } else {
-                resolve(true)
-                console.log("Telemetry instance is not create")
+                // Telemetry v3 instance gets assigned here to "Telemetry.instance"
             }
-        });
+
+            Telemetry.isActive = true;
+
+            if (data.otherData && !isEmpty(data.otherData)) {
+                Telemetry._otherData = data.otherData;
+            };
+
+            if (findWhere(Telemetry.instance._start, {
+                    contentId: contentId
+                }))
+                return new InActiveEvent();
+            else
+                return Telemetry.flushEvent(Telemetry.instance.start(config, contentId, contentVer, type, data));
+
+        } else {
+            console.log("Telemetry instance is not create")
+        }
     },
 
     impression: function(pageid, type, subtype, data) {
@@ -185,4 +172,4 @@ Telemetry = Class.extend({
             event.flush(apiName);
         return event;
     }
-});
+};

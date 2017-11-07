@@ -10,9 +10,9 @@ TelemetryV2Manager = Class.extend({
         TelemetryServiceV2.exitApp();
     },
     createEvent: function(eventName, body) {
-        return new TelemetryEvent(eventName, Telemetry._version, body, Telemetry.user, Telemetry._gameData, Telemetry._correlationData, Telemetry._otherData);
+        return new TelemetryEvent(eventName, Telemetry._version, body, Telemetry.user, Telemetry._gameData, Telemetry.config.cdata, Telemetry._otherData);
     },
-    start: function(contentId, contentVer, data) {
+    start: function(config, contentId, contentVer, type, data) {
         this._end.push(this.createEvent("OE_END", {}).start());
         this._start.push({contentId: contentId , contentVer : contentVer});
         return this.createEvent("OE_START", data);
@@ -120,7 +120,6 @@ TelemetryV2Manager = Class.extend({
     },
     interrupt: function(data) {
         if (data.type) {
-            var eventStr = Telemetry.config.events["OE_INTERRUPT"];
             var eks = {
                 "type": data.type,
                 "stageid": data.pageid || ''
