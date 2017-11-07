@@ -1,0 +1,15 @@
+{
+    "id": "org.ekstep.customeval",
+    "ver": "1.0",
+    "author": "Vivek",
+    "title": "Custom Evaluation",
+    "description": "",
+    "publishedDate": "",
+    "editor": {},
+    "renderer": {
+        "main": "renderer/plugin.js",
+        "dependencies": [
+            {"type": "js", "src": "renderer/customEval.js"}
+        ]
+    }
+}

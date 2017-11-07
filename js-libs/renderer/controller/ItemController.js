@@ -75,12 +75,17 @@ var ItemController = Controller.extend({
                 console.warn("Max score(max_score) is not defined for this item.", item);
                 result = {};
             }*/
-            if (item.type.toLowerCase() == 'ftb') {
-                result = FTBEvaluator.evaluate(item);
-            } else if (item.type.toLowerCase() == 'mcq' || item.type.toLowerCase() == 'mmcq') {
-                result = MCQEvaluator.evaluate(item);
-            } else if (item.type.toLowerCase() == 'mtf') {
-                result = MTFEvaluator.evaluate(item);
+            if (GlobalContext.registerEval[item.type.toLowerCase()]) {
+                var customEvalInstance = GlobalContext.registerEval[item.type.toLowerCase()];
+                result = customEvalInstance.evaluate(item);
+            } else {
+                if (item.type.toLowerCase() == 'ftb') {
+                    result = FTBEvaluator.evaluate(item);
+                } else if (item.type.toLowerCase() == 'mcq' || item.type.toLowerCase() == 'mmcq') {
+                    result = MCQEvaluator.evaluate(item);
+                } else if (item.type.toLowerCase() == 'mtf') {
+                    result = MTFEvaluator.evaluate(item);
+                }
             }
             if (result) {
                 pass = result.pass;
