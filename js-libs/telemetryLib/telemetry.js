@@ -11,10 +11,11 @@
     
     this.startTime = 0;
     this._defaultValue = {
-        pdataId: "genie",
-        pdataVer: "6.5.2567",
-        pdataPid: "",
-
+        pdata:{
+            id: "genie",
+            var: "6.5.2567",
+            pid: ""
+        },
         channel: "in.ekstep",
         uid: "anonymous",
         did: "",
@@ -30,30 +31,11 @@
     }
 
     this.init = function(config, contentId, contentVer){
-      config = {
-            pdata : {
-                id: (config && config.pdata) ? config.pdata.id : this._defaultValue.pdataId,
-                ver: (config && config.pdata) ? config.pdata.ver : this._defaultValue.pdataVer,
-                pid: (config && config.pdata) ? config.pdata.pid : this._defaultValue.pdataPid
-            },
-            channel : (config && config.channel) ? config.channel : this._defaultValue.channel,
-            uid: (config && config.uid) ? config.uid : this._defaultValue.uid,
-            did: (config && config.did) ? config.did : this._defaultValue.did,
-            authtoken: (config && config.authtoken) ? config.authtoken : this._defaultValue.authtoken,
-
-            sid: (config && config.sid) ? config.sid : this._defaultValue.sid,
-            batchsize: (config && config.batchsize) ? config.batchsize : this._defaultValue.batchsize,
-            mode: (config && config.mode) ? config.mode : this._defaultValue.mode,
-            host: (config && config.host) ? config.host : this._defaultValue.host,
-            endpoint: (config && config.endpoint) ? config.endpoint : this._defaultValue.endpoint,
-            tags: (config && config.tags) ? config.tags : this._defaultValue.tags,
-            cdata: (config && config.cdata) ? config.cdata : this._defaultValue.cdata,
-
-            apislug: (config && config.apislug )? config.apislug : this._defaultValue.apislug
-        };
-
-        isActive = true;
-        Telemetry.config = config;
+        Telemetry._defaultValue.gdata = {
+            "id": contentId,
+            "ver": contentVer
+        }
+        Telemetry.config = Object.assign(config, Telemetry._defaultValue);
         console.log("Telemetry config ", Telemetry.config);
     }
 
@@ -116,14 +98,37 @@
             qid: qid,
             maxscore: maxscore
         };
-        getEvent('OE_ASSESS', eksData);
+        return this.getEvent('OE_ASSESS', eksData);
     },
 
     Telemetry.endAssessment= function(assessStartEvent, data) {
-        if (!Telemetry.isActive) {
-            return new InActiveEvent();
+        if (!this.hasRequiredData(data, ["qtitle", "qdesc", "mmc", "mc"])) {
+            console.error('Invalid end assessment data');
+            return;
         }
-        return Telemetry.flushEvent(Telemetry.instance.assessEnd(assessStartEvent, data));
+        if (undefined == assessStartEvent) {
+            console.error('Invalid end assessment data');
+            return;
+        }
+        assessStartEvent.event.edata.eks.resvalues = Array.isArray(assessStartEvent.event.edata.eks.resvalues ? assessStartEvent.event.edata.eks.resvalues.map(function(val) {
+            val = ("object" == typeof val) ? val :{"0" : val};
+            return val;
+        }); : [];
+
+        var endeks = Object.assign(assessStartEvent.event.edata.eks, {
+            "score": data.score || 0,
+            "pass": data.pass ? 'Yes' : 'No',
+            "resvalues": isEmpty(data.res)? [] : data.res,
+            "uri": data.uri || "",
+            "qindex": data.qindex || 0,
+            "exlength": 0,
+            "qtitle": data.qtitle,
+            "qdesc": data.qdesc.substr(0,140),
+            "mmc": data.mmc,
+            "mc": data.mc
+            "length": Math.round(((new Date()).getTime() - assessStartEvent.event.ets ) / 1000);
+        })
+        this.getEvent('OE_ASSESS', endeks);
     }
 
     Telemetry.response= function(data) {
@@ -153,13 +158,13 @@
         getEvent('OE_INTERRUPT', eksData);
     }
     
-    Telemetry.error= function(error) {
+    Telemetry.error= function(data) {
         if (!this.hasRequiredData(data, ["err", "errtype"])) {
             console.error('Invalid error data');
             return;
         }
         var eksData = {
-            err: data.err, 
+            "err": data.err, 
             "type": data.errtype,
             "env": data.env || '', 
             "stacktrace": data.stacktrace, 
@@ -181,15 +186,13 @@
     }
 
     Telemetry.exdata= function(type, data) {
-        if (!Telemetry.isActive) {
-            return new InActiveEvent();
-        }
-        return this.flushEvent(Telemetry.instance.xapi(type, data));
+        getEvent('OE_XAPI', {
+            "xapi": data
+        });
     }
     
     Telemetry.assess= function(data) {
         console.log("This method comes in V3 release");
-
     }
 
     Telemetry.feedback= function(data) {
