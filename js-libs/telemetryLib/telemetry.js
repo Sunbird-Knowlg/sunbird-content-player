@@ -30,6 +30,9 @@
     }
 
     this.init = function(config, contentId, contentVer){
+      if (typeof Object.assign != 'function') {
+        objectAssign();
+      }
       config = {
             pdata : {
                 id: (config && config.pdata) ? config.pdata.id : this._defaultValue.pdataId,
@@ -55,6 +58,28 @@
         isActive = true;
         Telemetry.config = config;
         console.log("Telemetry config ", Telemetry.config);
+    }
+
+    this.objectAssign = function(){      
+      Object.assign = function (target) {
+        'use strict';
+        if (target == null) {
+          throw new TypeError('Cannot convert undefined or null to object');
+        }
+
+        target = Object(target);
+        for (var index = 1; index < arguments.length; index++) {
+          var source = arguments[index];
+          if (source != null) {
+            for (var key in source) {
+              if (Object.prototype.hasOwnProperty.call(source, key)) {
+                target[key] = source[key];
+              }
+            }
+          }
+        }
+        return target;
+      };
     }
 
     Telemetry.start = function(config, contentId, contentVer, type, data) {
@@ -174,10 +199,13 @@
     }
 
     Telemetry.end= function(data) {
-        if (!Telemetry.isActive) {
-            return new InActiveEvent();
-        }
-        return this.flushEvent(Telemetry.instance.end(data));
+      var eksData = {
+        "progress": data.progress || 50,
+        "stageid": data.pageid || '',
+        "length": (((new Date()).getTime() - startTime) / 1000)
+      };
+     
+      getEvent('OE_END', eksData);
     }
 
     Telemetry.exdata= function(type, data) {
