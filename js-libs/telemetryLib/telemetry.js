@@ -30,42 +30,13 @@
         apislug: "/action"
     }
 
-    this.init = function(config, contentId, contentVer){
-        if (typeof Object.assign != 'function') {
-          objectAssign();
-        }
-
-        _defaultValue.gdata = {
-            "id": contentId,
-            "ver": contentVer
-        }
-        Telemetry.config = Object.assign(config, _defaultValue);
-        console.log("Telemetry config ", Telemetry.config);
-    }
-
-    this.objectAssign = function(){      
-      Object.assign = function (target) {
-        'use strict';
-        if (target == null) {
-          throw new TypeError('Cannot convert undefined or null to object');
-        }
-
-        target = Object(target);
-        for (var index = 1; index < arguments.length; index++) {
-          var source = arguments[index];
-          if (source != null) {
-            for (var key in source) {
-              if (Object.prototype.hasOwnProperty.call(source, key)) {
-                target[key] = source[key];
-              }
-            }
-          }
-        }
-        return target;
-      }
-    }
-
     Telemetry.start = function(config, contentId, contentVer, type, data) {
+        var requiredData = Object.assign(config, {"contentId": contentId, "contentVer": contentVer, "type": type});
+
+        if (!hasRequiredData(requiredData, ["contentId", "contentVer", "pdata", "channel", "uid", "authtoken"])) {
+            console.error('Invalid start data');
+            return;
+        }
         init(config, contentId, contentVer);
         
         var startEventObj = getEvent('OE_START', data);
@@ -74,15 +45,7 @@
         startTime = startEventObj.ets;
     }
 
-    hasRequiredData= function(data, mandatoryFields) {
-        var isValid = true;
-        mandatoryFields.forEach(function(key) {
-            if (!data.hasOwnProperty(key)) isValid = false;
-        });
-        return isValid;
-    }
-
-    Telemetry.impression= function(pageid, type, subtype, data) {
+    Telemetry.impression = function(pageid, type, subtype, data) {
         if (undefined == pageid ||  undefined == type) {
             console.error('Invalid impression data');
             return;
@@ -96,7 +59,7 @@
         getEvent('OE_NAVIGATE', eksData);
     }
 
-    Telemetry.interact= function(data) {
+    Telemetry.interact = function(data) {
         if (!hasRequiredData(data, ["type", "id"])) {
             console.error('Invalid interact data');
             return;
@@ -115,7 +78,7 @@
         getEvent('OE_INTERACT', eksData);
     }
 
-    Telemetry.startAssessment= function(qid, data) {
+    Telemetry.startAssessment = function(qid, data) {
         if (undefined == qid){
             console.error('Invalid interact data');
             return;
@@ -127,7 +90,7 @@
         return getEvent('OE_ASSESS', eksData);
     },
 
-    Telemetry.endAssessment= function(assessStartEvent, data) {
+    Telemetry.endAssessment = function(assessStartEvent, data) {
         if (!hasRequiredData(data, ["qtitle", "qdesc", "mmc", "mc"])) {
             console.error('Invalid end assessment data');
             return;
@@ -185,7 +148,7 @@
         getEvent('OE_INTERRUPT', eksData);
     }
     
-    Telemetry.error= function(data) {
+    Telemetry.error = function(data) {
         if (!hasRequiredData(data, ["err", "errtype"])) {
             console.error('Invalid error data');
             return;
@@ -205,7 +168,7 @@
         getEvent('OE_ERROR', eksData);
     }
 
-    Telemetry.end= function(data) {
+    Telemetry.end = function(data) {
       var eksData = {
         "progress": data.progress || 50,
         "stageid": data.pageid || '',
@@ -215,40 +178,42 @@
       getEvent('OE_END', eksData);
     }
 
-    Telemetry.exdata= function(type, data) {
+    Telemetry.exdata = function(type, data) {
         getEvent('OE_XAPI', {
             "xapi": data
         });
     }
     
-    Telemetry.assess= function(data) {
+    Telemetry.assess = function(data) {
         console.log("This method comes in V3 release");
     }
 
-    Telemetry.feedback= function(data) {
+    Telemetry.feedback = function(data) {
         console.log("This method comes in V3 release");
     }
 
-    Telemetry.share= function(data) {
+    Telemetry.share = function(data) {
         console.log("This method comes in V3 release");
     }
 
-    Telemetry.log= function(data) {
+    Telemetry.log = function(data) {
         console.log("This method comes in V3 release");
     }
 
-    Telemetry.search= function(data) {
+    Telemetry.search = function(data) {
         console.log("This method comes in V3 release");
     }
 
-    this.flushEvent= function(event, apiName) {
-        Telemetry._data.push(event);
-        if (event)
-            event.flush(apiName);
-        return event;
+    this.init = function(config, contentId, contentVer){
+        _defaultValue.gdata = {
+            "id": contentId,
+            "ver": contentVer
+        }
+        Telemetry.config = Object.assign(config, _defaultValue);
+        console.log("Telemetry config ", Telemetry.config);
     }
 
-    getEvent= function(eventId, data) {
+    this.getEvent = function(eventId, data) {
         var eventObj = {
             "eid": eventId,
             "ver": 2.2,
@@ -269,6 +234,41 @@
           console.log("Event Type" + eventId, eventObj);
         return eventObj;
     }
+
+    this.hasRequiredData = function(data, mandatoryFields) {
+        var isValid = true;
+        mandatoryFields.forEach(function(key) {
+            if (!data.hasOwnProperty(key)) isValid = false;
+        });
+        return isValid;
+    }
+
+    this.objectAssign = function(){      
+      Object.assign = function (target) {
+        'use strict';
+        if (target == null) {
+          throw new TypeError('Cannot convert undefined or null to object');
+        }
+
+        target = Object(target);
+        for (var index = 1; index < arguments.length; index++) {
+          var source = arguments[index];
+          if (source != null) {
+            for (var key in source) {
+              if (Object.prototype.hasOwnProperty.call(source, key)) {
+                target[key] = source[key];
+              }
+            }
+          }
+        }
+        return target;
+      }
+    }
+
+    if (typeof Object.assign != 'function') {
+      objectAssign();
+    }
+
 
     return Telemetry;
 })();
