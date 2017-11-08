@@ -129,6 +129,7 @@ module.exports = function(grunt) {
             },
             telemetrymin: {
                 options: {
+                  beautify: true,
                     mangle: false
                 },
                 files: {
@@ -140,7 +141,7 @@ module.exports = function(grunt) {
                     mangle: false
                 },
                 files: {
-                    'public/libs/build/auth-token-generator.min.js': ['public/libs/build/auth-token-generator.js']
+                    'public/libs/build/auth-token-generator.min.js': ['../js-libs/auth-token-generator/auth-token-generator.js']
                 }
             },
             renderermin: {
@@ -715,5 +716,5 @@ module.exports = function(grunt) {
     grunt.registerTask('test-setup', ['new-buildPreview', 'copy:testinit', 'clean']);
     grunt.registerTask('player-test', ['karma:app']);
     grunt.registerTask('renderer-test', ['karma:renderer']);
-    grunt.registerTask('build-telemetryLib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator", "clean:cleantelemetrybuild"]);
+    grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator", "clean:cleantelemetrybuild"]);
 };

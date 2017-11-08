@@ -3,14 +3,13 @@
  * @author Krushanu Mohapatra <Krushanu.Mohapatra@tarento.com>
  */
 
-Telemetry = {
-    _version: "2.2",
-    isActive: false,
-    config: undefined,
-    instance: undefined,
-    _data: [],
-    user: {},
-    _defaultValue: {
+(function() {
+    this.Telemetry = function() {};
+
+    Telemetry.isActive = false;
+    Telemetry.config = undefined;
+    
+    this._defaultValue = {
         pdataId: "genie",
         pdataVer: "6.5.2567",
         pdataPid: "",
@@ -27,149 +26,39 @@ Telemetry = {
         tags: [],
         cdata: [],
         apislug: "/action"
-    },
+    }
 
-
-    start: function(config, contentId, contentVer, type, data) {
-        config = {
+    this.setConfig = function(config, contentId, contentVer){
+      config = {
             pdata : {
-                id: (config && config.pdata) ? config.pdata.id : Telemetry._defaultValue.pdataId,
-                ver: (config && config.pdata) ? config.pdata.ver : Telemetry._defaultValue.pdataVer,
-                pid: (config && config.pdata) ? config.pdata.pid : Telemetry._defaultValue.pdataPid
+                id: (config && config.pdata) ? config.pdata.id : this._defaultValue.pdataId,
+                ver: (config && config.pdata) ? config.pdata.ver : this._defaultValue.pdataVer,
+                pid: (config && config.pdata) ? config.pdata.pid : this._defaultValue.pdataPid
             },
-            channel : (config && config.channel) ? config.channel : Telemetry._defaultValue.channel,
-            uid: (config && config.uid) ? config.uid : Telemetry._defaultValue.uid,
-            did: (config && config.did) ? config.did : Telemetry._defaultValue.did,
-            authtoken: (config && config.authtoken) ? config.authtoken : Telemetry._defaultValue.authtoken,
+            channel : (config && config.channel) ? config.channel : this._defaultValue.channel,
+            uid: (config && config.uid) ? config.uid : this._defaultValue.uid,
+            did: (config && config.did) ? config.did : this._defaultValue.did,
+            authtoken: (config && config.authtoken) ? config.authtoken : this._defaultValue.authtoken,
 
-            sid: (config && config.sid) ? config.sid : Telemetry._defaultValue.sid,
-            batchsize: (config && config.batchsize) ? config.batchsize : Telemetry._defaultValue.batchsize,
-            mode: (config && config.mode) ? config.mode : Telemetry._defaultValue.mode,
-            host: (config && config.host) ? config.host : Telemetry._defaultValue.host,
-            endpoint: (config && config.endpoint) ? config.endpoint : Telemetry._defaultValue.endpoint,
-            tags: (config && config.tags) ? config.tags : Telemetry._defaultValue.tags,
-            cdata: (config && config.cdata) ? config.cdata : Telemetry._defaultValue.cdata,
+            sid: (config && config.sid) ? config.sid : this._defaultValue.sid,
+            batchsize: (config && config.batchsize) ? config.batchsize : this._defaultValue.batchsize,
+            mode: (config && config.mode) ? config.mode : this._defaultValue.mode,
+            host: (config && config.host) ? config.host : this._defaultValue.host,
+            endpoint: (config && config.endpoint) ? config.endpoint : this._defaultValue.endpoint,
+            tags: (config && config.tags) ? config.tags : this._defaultValue.tags,
+            cdata: (config && config.cdata) ? config.cdata : this._defaultValue.cdata,
 
-            apislug: (config && config.apislug )? config.apislug : Telemetry._defaultValue.apislug
+            apislug: (config && config.apislug )? config.apislug : this._defaultValue.apislug
         };
 
-        Telemetry.user = { uid: config.uid };
-        if ("undefined" == typeof Telemetry.config) Telemetry.config = config;
-        TelemetrySyncManager.updateConfig();
-
-        if (!Telemetry.instance && 'undefined' != typeof Telemetry.config.pdata && 'undefined' != typeof Telemetry.config.channel && 'undefined' != typeof Telemetry.config.uid && 'undefined' != typeof Telemetry.config.did && 'undefined' != typeof Telemetry.config.authtoken) {
-            if (Telemetry._version == "2.2") {
-                Telemetry.instance = new TelemetryV2Manager();
-            } else {
-                // Telemetry v3 instance gets assigned here to "Telemetry.instance"
-            }
-
-            Telemetry.isActive = true;
-
-            if (data.otherData && !isEmpty(data.otherData)) {
-                Telemetry._otherData = data.otherData;
-            };
-
-            if (findWhere(Telemetry.instance._start, {
-                    contentId: contentId
-                }))
-                return new InActiveEvent();
-            else
-                return Telemetry.flushEvent(Telemetry.instance.start(config, contentId, contentVer, type, data));
-
-        } else {
-            console.log("Telemetry instance is not create")
-        }
-    },
-
-    impression: function(pageid, type, subtype, data) {
-        if (!Telemetry.isActive) {
-            return new InActiveEvent();
-        }
-        return this.flushEvent(Telemetry.instance.navigate(pageid, type, subtype));
-    },
-
-    interact: function(data) {
-        if (!Telemetry.isActive) {
-            return new InActiveEvent();
-        }
-        return Telemetry.flushEvent(Telemetry.instance.interact(data));
-    },
-
-    assess: function(data) {
-        console.log("This method comes in V3 release");
-
-    },
-
-    startAssessment: function(qid, subject, qlevel, data) {
-        if (!Telemetry.isActive) {
-            return new InActiveEvent();
-        }
-        return Telemetry.instance.assess(qid, subject, qlevel, data);
-    },
-
-    endAssessment: function(assessStartEvent, data) {
-        if (!Telemetry.isActive) {
-            return new InActiveEvent();
-        }
-        return Telemetry.flushEvent(Telemetry.instance.assessEnd(assessStartEvent, data));
-    },
-
-    response: function(data) {
-        if (!Telemetry.isActive) {
-            return new InActiveEvent();
-        }
-        return Telemetry.instance.itemResponse(data);
-    },
-
-    interrupt: function(data) {
-        if (!Telemetry.isActive) {
-            return new InActiveEvent();
-        }
-        return Telemetry.flushEvent(Telemetry.instance.interrupt(data));
-    },
-
-    error: function(error) {
-        if (!Telemetry.isActive) {
-            return new InActiveEvent();
-        }
-        return Telemetry.flushEvent(Telemetry.instance.error(error));
-    },
-
-    feedback: function(data) {
-        console.log("This method comes in V3 release");
-    },
-
-    end: function(data) {
-        if (!Telemetry.isActive) {
-            return new InActiveEvent();
-        }
-        return this.flushEvent(Telemetry.instance.end(data));
-    },
-
-    share: function(data) {
-        console.log("This method comes in V3 release");
-    },
-
-    log: function(data) {
-        console.log("This method comes in V3 release");
-    },
-
-    search: function(data) {
-        console.log("This method comes in V3 release");
-    },
-
-    exdata: function(type, data) {
-        if (!Telemetry.isActive) {
-            return new InActiveEvent();
-        }
-        return this.flushEvent(Telemetry.instance.xapi(type, data));
-    },
-
-    flushEvent: function(event, apiName) {
-        Telemetry._data.push(event);
-        if (event)
-            event.flush(apiName);
-        return event;
+        this.isActive = true;
+        Telemetry.config = config;
+        console.log("Telemetry config ", Telemetry.config);
     }
-};
+
+    Telemetry.start = function(config, contentId, contentVer, type, data) {
+        setConfig(config, contentId, contentVer);
+    }
+
+    return Telemetry;
+})();
