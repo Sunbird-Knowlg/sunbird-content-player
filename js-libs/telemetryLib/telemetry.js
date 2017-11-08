@@ -48,7 +48,7 @@
         startTime = startEventObj.ets;
     }
 
-    this.hasRequiredData= function(data, mandatoryFields) {
+    hasRequiredData= function(data, mandatoryFields) {
         var isValid = true;
         mandatoryFields.forEach(function(key) {
             if (!data.hasOwnProperty(key)) isValid = false;
@@ -57,7 +57,7 @@
     }
 
     Telemetry.impression= function(pageid, type, subtype, data) {
-        if (!this.hasRequiredData(data, ["pageid", "type"])) {
+        if (undefined == pageid ||  undefined == type) {
             console.error('Invalid impression data');
             return;
         }
@@ -71,7 +71,7 @@
     }
 
     Telemetry.interact= function(data) {
-        if (!this.hasRequiredData(data, ["type", "id"])) {
+        if (!hasRequiredData(data, ["type", "id"])) {
             console.error('Invalid interact data');
             return;
         }
@@ -98,11 +98,11 @@
             qid: qid,
             maxscore: maxscore
         };
-        return this.getEvent('OE_ASSESS', eksData);
+        return getEvent('OE_ASSESS', eksData);
     },
 
     Telemetry.endAssessment= function(assessStartEvent, data) {
-        if (!this.hasRequiredData(data, ["qtitle", "qdesc", "mmc", "mc"])) {
+        if (!hasRequiredData(data, ["qtitle", "qdesc", "mmc", "mc"])) {
             console.error('Invalid end assessment data');
             return;
         }
@@ -128,11 +128,11 @@
             "mc": data.mc
             "length": Math.round(((new Date()).getTime() - assessStartEvent.event.ets ) / 1000);
         })
-        this.getEvent('OE_ASSESS', endeks);
+        getEvent('OE_ASSESS', endeks);
     }
 
     Telemetry.response= function(data) {
-        if (!this.hasRequiredData(data, ["target", "qid", "type"])) {
+        if (!hasRequiredData(data, ["target", "qid", "type"])) {
             console.error('Invalid response data');
             return;
         }
@@ -147,7 +147,7 @@
     }
     
     Telemetry.interrupt= function(data) {
-        if (!this.hasRequiredData(data, ["type"])) {
+        if (!hasRequiredData(data, ["type"])) {
             console.error('Invalid interrupt data');
             return;
         }
@@ -159,7 +159,7 @@
     }
     
     Telemetry.error= function(data) {
-        if (!this.hasRequiredData(data, ["err", "errtype"])) {
+        if (!hasRequiredData(data, ["err", "errtype"])) {
             console.error('Invalid error data');
             return;
         }
