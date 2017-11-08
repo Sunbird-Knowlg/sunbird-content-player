@@ -9,6 +9,7 @@
     Telemetry.isActive = false;
     Telemetry.config = undefined;
     
+    this.startTime = 0;
     this._defaultValue = {
         pdataId: "genie",
         pdataVer: "6.5.2567",
@@ -28,7 +29,7 @@
         apislug: "/action"
     }
 
-    this.setConfig = function(config, contentId, contentVer){
+    this.init = function(config, contentId, contentVer){
       config = {
             pdata : {
                 id: (config && config.pdata) ? config.pdata.id : this._defaultValue.pdataId,
@@ -51,13 +52,18 @@
             apislug: (config && config.apislug )? config.apislug : this._defaultValue.apislug
         };
 
-        this.isActive = true;
+        isActive = true;
         Telemetry.config = config;
         console.log("Telemetry config ", Telemetry.config);
     }
 
     Telemetry.start = function(config, contentId, contentVer, type, data) {
-        setConfig(config, contentId, contentVer);
+        init(config, contentId, contentVer);
+        
+        var startEventObj = getEvent('OE_START', data);
+
+        // Required to calculate the time spent of content while generating OE_END
+        startTime = startEventObj.ets;
     }
 
     this.hasRequiredData= function(data, mandatoryFields) {
@@ -74,12 +80,12 @@
             return;
         }
         var eksData = {
-            "stageid": pageid
+            "stageid": pageid,
             "stageto": (data && data.stageto) ? data.stageto : "",
             "type": type,
             "subtype": subtype ? subtype : ""
         };
-        this.getEvent('OE_NAVIGATE', eksData);
+        getEvent('OE_NAVIGATE', eksData);
     }
 
     Telemetry.interact= function(data) {
@@ -98,7 +104,7 @@
             "extype": "",
             "values": data.extra.values ? data.extra.values : []
         };
-        this.getEvent('OE_INTERACT', eksData);
+        getEvent('OE_INTERACT', eksData);
     }
 
     Telemetry.startAssessment= function(qid, data) {
@@ -110,7 +116,7 @@
             qid: qid,
             maxscore: maxscore
         };
-        this.getEvent('OE_ASSESS', eksData);
+        getEvent('OE_ASSESS', eksData);
     },
 
     Telemetry.endAssessment= function(assessStartEvent, data) {
@@ -132,7 +138,7 @@
             "state": data.state || "",
             "resvalues": isEmpty(data.values) ? [] : data.values
         }
-        this.getEvent('OE_ITEM_RESPONSE', eksData);
+        getEvent('OE_ITEM_RESPONSE', eksData);
     }
     
     Telemetry.interrupt= function(data) {
@@ -144,7 +150,7 @@
             "type": data.type,
             "stageid": data.pageid || ''
         }
-        this.getEvent('OE_INTERRUPT', eksData);
+        getEvent('OE_INTERRUPT', eksData);
     }
     
     Telemetry.error= function(error) {
@@ -164,7 +170,7 @@
             "data": data.data || '', 
             "severity": data.severity || ''
         }
-        this.getEvent('OE_ERROR', eksData);
+        getEvent('OE_ERROR', eksData);
     }
 
     Telemetry.end= function(data) {
@@ -209,24 +215,26 @@
         return event;
     }
 
-    this.getEvent= function(eventId, data) {
-        return {
+    getEvent= function(eventId, data) {
+        var eventObj = {
             "eid": eventId,
-            "ver": this._version,
+            "ver": 2.2,
             "mid": "",
             "ets": (new Date()).getTime(),
-            "channel": this.config.channel,
-            "pdata": this.config.pdata,
-            "gdata": this.config.gdata,
-            "cdata": this.config.cdata, //TODO: No correlation data as of now. Needs to be sent by portal in context
-            "uid": this.config.uid, // uuid of the requester
-            "sid": this.config.sid,
-            "did": this.config.did,
+            "channel": Telemetry.config.channel,
+            "pdata": Telemetry.config.pdata,
+            "gdata": Telemetry.config.gdata,
+            "cdata": Telemetry.config.cdata, //TODO: No correlation data as of now. Needs to be sent by portal in context
+            "uid": Telemetry.config.uid, // uuid of the requester
+            "sid": Telemetry.config.sid,
+            "did": Telemetry.config.did,
             "edata": { "eks": data },
             "etags": {
-                "tags": this.config.tags
+                "tags": Telemetry.config.tags
             }
-        }
+          }
+          console.log("Event Type" + eventId, eventObj);
+        return eventObj;
     }
 
     return Telemetry;

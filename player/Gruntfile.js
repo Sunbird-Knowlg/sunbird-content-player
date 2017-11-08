@@ -98,13 +98,8 @@ module.exports = function(grunt) {
             },
             telemetryLib: {
                 src: [
-                    '../js-libs/telemetryLib/class.js',
                     '../js-libs/telemetryLib/detectClient.js',
                     '../js-libs/telemetryLib/md5.js',
-                    '../js-libs/telemetryLib/InActiveEvent.js',
-                    '../js-libs/telemetryLib/TelemetryEvent.js',
-                    '../js-libs/telemetryLib/TelemetryServiceUtil.js',
-                    '../js-libs/telemetryLib/TelemetryV2Manager.js',
                     '../js-libs/telemetryLib/telemetry.js',
                     '../js-libs/telemetryLib/telemetrySyncManager.js'
                 ],
