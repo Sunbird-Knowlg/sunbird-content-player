@@ -85,7 +85,7 @@
         }
         var eksData = {
             qid: qid,
-            maxscore: maxscore
+            maxscore: data.maxscore || 1
         };
         return getEvent('OE_ASSESS', eksData);
     },
@@ -99,16 +99,16 @@
             console.error('Invalid end assessment data');
             return;
         }
-        var resvalues = assessStartEvent.event.edata.eks.resvalues;
+        var resvalues = data.res ? [] : data.res;
         resvalues = Array.isArray(resvalues) ? resvalues.map(function(val) {
             val = ("object" == typeof val) ? val :{"0" : val};
             return val;
         }) : [];
 
-        var endeks = Object.assign(assessStartEvent.event.edata.eks, {
+        var endeks = Object.assign(assessStartEvent.edata.eks, {
             "score": data.score || 0,
             "pass": data.pass ? 'Yes' : 'No',
-            "resvalues": isEmpty(data.res)? [] : data.res,
+            "resvalues": resvalues,
             "uri": data.uri || "",
             "qindex": data.qindex || 0,
             "exlength": 0,
@@ -116,7 +116,7 @@
             "qdesc": data.qdesc.substr(0,140),
             "mmc": data.mmc,
             "mc": data.mc,
-            "length": Math.round(((new Date()).getTime() - assessStartEvent.event.ets ) / 1000)
+            "length": Math.round(((new Date()).getTime() - assessStartEvent.ets ) / 1000)
         })
         getEvent('OE_ASSESS', endeks);
     }
@@ -131,7 +131,7 @@
             "qid": data.qid,
             "type": data.type,
             "state": data.state || "",
-            "resvalues": isEmpty(data.values) ? [] : data.values
+            "resvalues": data.values ? [] : data.values
         }
         getEvent('OE_ITEM_RESPONSE', eksData);
     }
