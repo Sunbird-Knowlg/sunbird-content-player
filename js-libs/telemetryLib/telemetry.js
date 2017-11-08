@@ -6,8 +6,9 @@
 (function() {
     this.Telemetry = function() {};
 
-    Telemetry.isActive = false;
+    Telemetry.initialized = true;
     Telemetry.config = undefined;
+    Telemetry._version = "2.2";
     
     this.startTime = 0;
     this._defaultValue = {
@@ -35,11 +36,13 @@
 
         if (!hasRequiredData(requiredData, ["contentId", "contentVer", "pdata", "channel", "uid", "authtoken"])) {
             console.error('Invalid start data');
+            Telemetry.initialized = false;
             return;
         }
         init(config, contentId, contentVer);
         
         var startEventObj = getEvent('OE_START', data);
+        dispatchEvent(startEventObj)
 
         // Required to calculate the time spent of content while generating OE_END
         startTime = startEventObj.ets;
@@ -56,7 +59,7 @@
             "type": type,
             "subtype": subtype ? subtype : ""
         };
-        getEvent('OE_NAVIGATE', eksData);
+        dispatchEvent(getEvent('OE_NAVIGATE', eksData));
     }
 
     Telemetry.interact = function(data) {
@@ -75,7 +78,7 @@
             "extype": "",
             "values": data.extra.values ? data.extra.values : []
         };
-        getEvent('OE_INTERACT', eksData);
+        dispatchEvent(getEvent('OE_INTERACT', eksData));
     }
 
     Telemetry.startAssessment = function(qid, data) {
@@ -118,7 +121,7 @@
             "mc": data.mc,
             "length": Math.round(((new Date()).getTime() - assessStartEvent.ets ) / 1000)
         })
-        getEvent('OE_ASSESS', endeks);
+        dispatchEvent(getEvent('OE_ASSESS', endeks));
     }
 
     Telemetry.response= function(data) {
@@ -133,7 +136,7 @@
             "state": data.state || "",
             "resvalues": data.values ? [] : data.values
         }
-        getEvent('OE_ITEM_RESPONSE', eksData);
+        dispatchEvent(getEvent('OE_ITEM_RESPONSE', eksData));
     }
     
     Telemetry.interrupt= function(data) {
@@ -145,7 +148,7 @@
             "type": data.type,
             "stageid": data.pageid || ''
         }
-        getEvent('OE_INTERRUPT', eksData);
+        dispatchEvent(getEvent('OE_INTERRUPT', eksData));
     }
     
     Telemetry.error = function(data) {
@@ -165,7 +168,7 @@
             "data": data.data || '', 
             "severity": data.severity || ''
         }
-        getEvent('OE_ERROR', eksData);
+        dispatchEvent(getEvent('OE_ERROR', eksData));
     }
 
     Telemetry.end = function(data) {
@@ -175,13 +178,14 @@
         "length": (((new Date()).getTime() - startTime) / 1000)
       };
      
-      getEvent('OE_END', eksData);
+      dispatchEvent(getEvent('OE_END', eksData));
     }
 
     Telemetry.exdata = function(type, data) {
         getEvent('OE_XAPI', {
             "xapi": data
         });
+        dispatchEvent(getEvent('OE_XAPI', eksData));
     }
     
     Telemetry.assess = function(data) {
@@ -209,14 +213,15 @@
             "id": contentId,
             "ver": contentVer
         }
-        Telemetry.config = Object.assign(config, _defaultValue);
+        config.batchsize = config.batchsize ? (config.batchsize < 10 ? 10 : (config.batchsize > 1000 ? 1000 : config.batchsize)) : _defaultValue.batchsize;
+        Telemetry.config = Object.assign(_defaultValue, config);
         console.log("Telemetry config ", Telemetry.config);
     }
 
     this.getEvent = function(eventId, data) {
         var eventObj = {
             "eid": eventId,
-            "ver": 2.2,
+            "ver": Telemetry._version,
             "mid": "",
             "ets": (new Date()).getTime(),
             "channel": Telemetry.config.channel,
@@ -233,6 +238,13 @@
           }
           console.log("Event Type" + eventId, eventObj);
         return eventObj;
+    }
+
+    this.dispatchEvent = function(telemetryEvent){
+        if(Telemetry.initialized){
+            telemetryEvent.mid = 'OE_' + CryptoJS.MD5(JSON.stringify(telemetryEvent)).toString();
+            TelemetrySyncManager.sendTelemetry(telemetryEvent);
+        }
     }
 
     this.hasRequiredData = function(data, mandatoryFields) {
