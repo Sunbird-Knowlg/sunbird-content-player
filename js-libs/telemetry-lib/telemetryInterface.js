@@ -215,6 +215,9 @@
         }
         config.batchsize = config.batchsize ? (config.batchsize < 10 ? 10 : (config.batchsize > 1000 ? 1000 : config.batchsize)) : _defaultValue.batchsize;
         Telemetry.config = Object.assign(_defaultValue, config);
+        //pid is rquired for V3 spec. Hence we are deleting from pdata of V2.
+        if(Telemetry.config.pdata.pid != undefined)
+            delete Telemetry.config.pdata.pid;
         console.log("Telemetry config ", Telemetry.config);
     }
 
@@ -233,7 +236,7 @@
             "did": Telemetry.config.did,
             "edata": { "eks": data },
             "etags": {
-                "tags": Telemetry.config.tags
+                "partner": Telemetry.config.tags
             }
           }
         return eventObj;

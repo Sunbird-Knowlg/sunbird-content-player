@@ -408,7 +408,7 @@ var CryptoJS = CryptoJS || function(s, p) {
         did: "",
         authtoken: "",
         sid: "",
-        batchsize: 2,
+        batchsize: 20,
         mode: "play",
         host: "https://api.ekstep.in",
         endpoint: "/data/v3/telemetry",
@@ -601,6 +601,9 @@ var CryptoJS = CryptoJS || function(s, p) {
         }
         config.batchsize = config.batchsize ? (config.batchsize < 10 ? 10 : (config.batchsize > 1000 ? 1000 : config.batchsize)) : _defaultValue.batchsize;
         Telemetry.config = Object.assign(_defaultValue, config);
+        //pid is rquired for V3 spec. Hence we are deleting from pdata of V2.
+        if(Telemetry.config.pdata.pid != undefined)
+            delete Telemetry.config.pdata.pid;
         console.log("Telemetry config ", Telemetry.config);
     }
 
@@ -619,7 +622,7 @@ var CryptoJS = CryptoJS || function(s, p) {
             "did": Telemetry.config.did,
             "edata": { "eks": data },
             "etags": {
-                "tags": Telemetry.config.tags
+                "partner": Telemetry.config.tags
             }
           }
         return eventObj;
