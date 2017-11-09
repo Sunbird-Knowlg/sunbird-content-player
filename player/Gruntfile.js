@@ -297,7 +297,6 @@ module.exports = function(grunt) {
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
             minjs: ['public/js/*.min.js'],
             minhtml: ['www/index_min.html'],
-            telemetrylib: ["../js-libs/build/telemetry.js"],
             preview: {
                 src : ['www/**/*', '!www/preview/**']
             },
