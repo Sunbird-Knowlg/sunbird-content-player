@@ -22,7 +22,7 @@
         did: "",
         authtoken: "",
         sid: "",
-        batchsize: 2,
+        batchsize: 20,
         mode: "play",
         host: "https://api.ekstep.in",
         endpoint: "/data/v3/telemetry",
