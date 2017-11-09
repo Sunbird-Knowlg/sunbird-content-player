@@ -6,16 +6,22 @@
 
 var TelemetrySyncManager = {
 
-   /**
+    /**
     * This is the telemetry data for the perticular stage.
     * @member {object} _teleData
     * @memberof TelemetryPlugin
     */
-   _teleData: [],
-    sendTelemetry: function(telemetryEvent) {
-        this._teleData.push(telemetryEvent);
-        if((telemetryEvent.eid.toUpperCase() == "OE_END") || (this._teleData.length >= Telemetry.config.batchsize)) {
-            var telemetryData = this._teleData;
+    _teleData: [],
+    init: function(){
+        var instance = this;
+        document.addEventListener('TelemetryEvent', this.sendTelemetry);
+    },
+    sendTelemetry: function(event) {
+        var telemetryEvent = event.detail;
+        var instance = TelemetrySyncManager;
+        instance._teleData.push(telemetryEvent);
+        if((telemetryEvent.eid.toUpperCase() == "OE_END") || (instance._teleData.length >= Telemetry.config.batchsize)) {
+            var telemetryData = instance._teleData;
             var telemetryObj = {
                 "id": "ekstep.telemetry",
                 "ver": Telemetry._version,
@@ -35,7 +41,7 @@ var TelemetrySyncManager = {
                 headers: headersParam,
                 data: telemetryObj
             }).done(function(resp) {
-                this._teleData = [];
+                instance._teleData = [];
                 console.log("Telemetry API success", resp);
             }).fail(function(error, textStatus, errorThrown) {
                 if (error.status == 403) {
@@ -47,3 +53,4 @@ var TelemetrySyncManager = {
         }
     }
 }
+TelemetrySyncManager.init();

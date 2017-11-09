@@ -22,7 +22,7 @@
         did: "",
         authtoken: "",
         sid: "",
-        batchsize: 20,
+        batchsize: 2,
         mode: "play",
         host: "https://api.ekstep.in",
         endpoint: "/data/v3/telemetry",
@@ -42,7 +42,7 @@
         init(config, contentId, contentVer);
         
         var startEventObj = getEvent('OE_START', data);
-        dispatchEvent(startEventObj)
+        addEvent(startEventObj)
 
         // Required to calculate the time spent of content while generating OE_END
         startTime = startEventObj.ets;
@@ -59,7 +59,7 @@
             "type": type,
             "subtype": subtype ? subtype : ""
         };
-        dispatchEvent(getEvent('OE_NAVIGATE', eksData));
+        addEvent(getEvent('OE_NAVIGATE', eksData));
     }
 
     Telemetry.interact = function(data) {
@@ -78,7 +78,7 @@
             "extype": "",
             "values": data.extra.values ? data.extra.values : []
         };
-        dispatchEvent(getEvent('OE_INTERACT', eksData));
+        addEvent(getEvent('OE_INTERACT', eksData));
     }
 
     Telemetry.startAssessment = function(qid, data) {
@@ -121,7 +121,7 @@
             "mc": data.mc,
             "length": Math.round(((new Date()).getTime() - assessStartEvent.ets ) / 1000)
         })
-        dispatchEvent(getEvent('OE_ASSESS', endeks));
+        addEvent(getEvent('OE_ASSESS', endeks));
     }
 
     Telemetry.response= function(data) {
@@ -136,7 +136,7 @@
             "state": data.state || "",
             "resvalues": data.values ? [] : data.values
         }
-        dispatchEvent(getEvent('OE_ITEM_RESPONSE', eksData));
+        addEvent(getEvent('OE_ITEM_RESPONSE', eksData));
     }
     
     Telemetry.interrupt= function(data) {
@@ -148,7 +148,7 @@
             "type": data.type,
             "stageid": data.pageid || ''
         }
-        dispatchEvent(getEvent('OE_INTERRUPT', eksData));
+        addEvent(getEvent('OE_INTERRUPT', eksData));
     }
     
     Telemetry.error = function(data) {
@@ -168,7 +168,7 @@
             "data": data.data || '', 
             "severity": data.severity || ''
         }
-        dispatchEvent(getEvent('OE_ERROR', eksData));
+        addEvent(getEvent('OE_ERROR', eksData));
     }
 
     Telemetry.end = function(data) {
@@ -178,14 +178,14 @@
         "length": (((new Date()).getTime() - startTime) / 1000)
       };
      
-      dispatchEvent(getEvent('OE_END', eksData));
+      addEvent(getEvent('OE_END', eksData));
     }
 
     Telemetry.exdata = function(type, data) {
         getEvent('OE_XAPI', {
             "xapi": data
         });
-        dispatchEvent(getEvent('OE_XAPI', eksData));
+        addEvent(getEvent('OE_XAPI', eksData));
     }
     
     Telemetry.assess = function(data) {
@@ -240,10 +240,11 @@
         return eventObj;
     }
 
-    this.dispatchEvent = function(telemetryEvent){
+    this.addEvent = function(telemetryEvent){
         if(Telemetry.initialized){
             telemetryEvent.mid = 'OE_' + CryptoJS.MD5(JSON.stringify(telemetryEvent)).toString();
-            TelemetrySyncManager.sendTelemetry(telemetryEvent);
+            var customEvent = new CustomEvent('TelemetryEvent', {detail: telemetryEvent});
+            document.dispatchEvent(customEvent);
         }
     }
 
