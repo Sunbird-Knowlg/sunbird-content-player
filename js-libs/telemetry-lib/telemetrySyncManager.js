@@ -39,15 +39,15 @@ var TelemetrySyncManager = {
                 url: fullPath,
                 type: "POST",
                 headers: headersParam,
-                data: telemetryObj
+                data: JSON.stringify(telemetryObj)
             }).done(function(resp) {
                 instance._teleData = [];
                 console.log("Telemetry API success", resp);
             }).fail(function(error, textStatus, errorThrown) {
                 if (error.status == 403) {
-                    console.error("Authentication error " + textStatus);
+                    console.error("Authentication error: ", error);
                 } else {
-                    console.error("Error while sync of Telemetry: " + textStatus);
+                    console.log("Error while Telemetry sync to server: ", error);
                 }
             });
         }

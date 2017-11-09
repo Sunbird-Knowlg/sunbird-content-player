@@ -236,7 +236,6 @@
                 "tags": Telemetry.config.tags
             }
           }
-          console.log("Event Type" + eventId, eventObj);
         return eventObj;
     }
 
