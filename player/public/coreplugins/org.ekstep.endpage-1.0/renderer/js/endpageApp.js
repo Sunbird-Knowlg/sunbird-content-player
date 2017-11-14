@@ -88,12 +88,14 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
                 return event.name == "OE_END";
             }
         })
-        var startTime = endEvent.length > 0 ? endEvent[0].startTime : 0;
+        var startTime = endEvent.length > 0 ? endEvent[endEvent.length - 1].startTime : 0;
+        console.log("startTime: ", startTime);
         if (startTime) {
             var totalTime = Math.round((new Date().getTime() - startTime) / 1000);
             var mm = Math.floor(totalTime / 60);
             var ss = Math.floor(totalTime % 60);
             $scope.totalTimeSpent = (mm > 9 ? mm : ("0" + mm)) + ":" + (ss > 9 ? ss : ("0" + ss));
+            console.log("$scope.totalTimeSpent: ", $scope.totalTimeSpent);
         } else {
             $scope.showFeedbackArea = false;
         }
