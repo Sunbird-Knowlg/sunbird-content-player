@@ -98,18 +98,12 @@ module.exports = function(grunt) {
             },
             telemetryLib: {
                 src: [
-                    '../js-libs/telemetryLib/class.js',
-                    '../js-libs/telemetryLib/jquery.min.js',
-                    '../js-libs/telemetryLib/detectClient.js',
-                    '../js-libs/telemetryLib/md5.js',
-                    '../js-libs/telemetryLib/InActiveEvent.js',
-                    '../js-libs/telemetryLib/TelemetryEvent.js',
-                    '../js-libs/telemetryLib/TelemetryServiceUtil.js',
-                    '../js-libs/telemetryLib/TelemetryV2Manager.js',
-                    '../js-libs/telemetryLib/telemetry.js',
-                    '../js-libs/telemetryLib/telemetrySyncManager.js'
+                    '../js-libs/telemetry-lib/detectClient.js',
+                    '../js-libs/telemetry-lib/md5.js',
+                    '../js-libs/telemetry-lib/telemetryInterface.js',
+                    '../js-libs/telemetry-lib/telemetrySyncManager.js'
                 ],
-                dest: '../js-libs/telemetryLib/telemetry.min.js'
+                dest: '../js-libs/build/telemetry.js'
             }
         },
         uglify: {
@@ -122,9 +116,25 @@ module.exports = function(grunt) {
                     'public/js/app/speech.js': ['../js-libs/speech/speech.js', '../js-libs/speech/android-recorder.js']
                 }
             },
+            telemetrymin: {
+                options: {
+                    mangle: false
+                },
+                files: {
+                    '../js-libs/build/telemetry.min.js': ['../js-libs/build/telemetry.js']
+                }
+            },
+            authtokengenerator: {
+                options: {
+                    mangle: false
+                },
+                files: {
+                    '../js-libs/build/auth-token-generator.min.js': ['../js-libs/auth-token-generator/auth-token-generator.js']
+                }
+            },
             renderermin: {
                 options: {
-                    beautify: true,
+                    beautify: false,
                     mangle: false
                 },
                 files: {
@@ -693,5 +703,5 @@ module.exports = function(grunt) {
     grunt.registerTask('test-setup', ['new-buildPreview', 'copy:testinit', 'clean']);
     grunt.registerTask('player-test', ['karma:app']);
     grunt.registerTask('renderer-test', ['karma:renderer']);
-    grunt.registerTask('build-telemetryLib', ['concat:telemetryLib']);
+    grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator"]);
 };
