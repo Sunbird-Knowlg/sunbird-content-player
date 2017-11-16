@@ -3,12 +3,12 @@
  * @author Krushanu Mohapatra <Krushanu.Mohapatra@tarento.com>
  */
 
-(function() {
-    this.Telemetry = function() {};
-
-    Telemetry.initialized = true;
-    Telemetry.config = undefined;
-    Telemetry._version = "2.2";
+var Telemetry = (function() {
+    this.telemetry = function(){ };
+    var instance = function(){ };
+    this.telemetry.initialized = false;
+    this.telemetry.config = undefined;
+    this.telemetry._version = "2.2";
     
     this.startTime = 0;
     this._defaultValue = {
@@ -31,24 +31,17 @@
         apislug: "/action"
     }
 
-    Telemetry.start = function(config, contentId, contentVer, type, data) {
-        var requiredData = Object.assign(config, {"contentId": contentId, "contentVer": contentVer, "type": type});
+    this.telemetry.start = function(config, contentId, contentVer, type, data) {        
+        if(instance.init(config, contentId, contentVer, type)){
+            var startEventObj = instance.getEvent('OE_START', data);
+            instance.addEvent(startEventObj)
 
-        if (!hasRequiredData(requiredData, ["contentId", "contentVer", "pdata", "channel", "uid", "authtoken"])) {
-            console.error('Invalid start data');
-            Telemetry.initialized = false;
-            return;
-        }
-        init(config, contentId, contentVer);
-        
-        var startEventObj = getEvent('OE_START', data);
-        addEvent(startEventObj)
-
-        // Required to calculate the time spent of content while generating OE_END
-        startTime = startEventObj.ets;
+            // Required to calculate the time spent of content while generating OE_END
+            Telemetry.startTime = startEventObj.ets;          
+        }        
     }
 
-    Telemetry.impression = function(pageid, type, subtype, data) {
+    this.telemetry.impression = function(pageid, type, subtype, data) {
         if (undefined == pageid ||  undefined == type) {
             console.error('Invalid impression data');
             return;
@@ -59,11 +52,11 @@
             "type": type,
             "subtype": subtype ? subtype : ""
         };
-        addEvent(getEvent('OE_NAVIGATE', eksData));
+        instance.addEvent(instance.getEvent('OE_NAVIGATE', eksData));
     }
 
-    Telemetry.interact = function(data) {
-        if (!hasRequiredData(data, ["type", "id"])) {
+    this.telemetry.interact = function(data) {
+        if (!instance.hasRequiredData(data, ["type", "id"])) {
             console.error('Invalid interact data');
             return;
         }
@@ -78,10 +71,10 @@
             "extype": "",
             "values": data.extra.values ? data.extra.values : []
         };
-        addEvent(getEvent('OE_INTERACT', eksData));
+        instance.addEvent(instance.getEvent('OE_INTERACT', eksData));
     }
 
-    Telemetry.startAssessment = function(qid, data) {
+    this.telemetry.startAssessment = function(qid, data) {
         if (undefined == qid){
             console.error('Invalid interact data');
             return;
@@ -90,11 +83,11 @@
             qid: qid,
             maxscore: data.maxscore || 1
         };
-        return getEvent('OE_ASSESS', eksData);
+        return instance.getEvent('OE_ASSESS', eksData);
     },
 
-    Telemetry.endAssessment = function(assessStartEvent, data) {
-        if (!hasRequiredData(data, ["qtitle", "qdesc", "mmc", "mc"])) {
+    this.telemetry.endAssessment = function(assessStartEvent, data) {
+        if (!instance.hasRequiredData(data, ["qtitle", "qdesc", "mmc", "mc"])) {
             console.error('Invalid end assessment data');
             return;
         }
@@ -121,11 +114,11 @@
             "mc": data.mc,
             "length": Math.round(((new Date()).getTime() - assessStartEvent.ets ) / 1000)
         })
-        addEvent(getEvent('OE_ASSESS', endeks));
+        instance.addEvent(instance.getEvent('OE_ASSESS', endeks));
     }
 
-    Telemetry.response= function(data) {
-        if (!hasRequiredData(data, ["target", "qid", "type"])) {
+    this.telemetry.response= function(data) {
+        if (!instance.hasRequiredData(data, ["target", "qid", "type"])) {
             console.error('Invalid response data');
             return;
         }
@@ -136,11 +129,11 @@
             "state": data.state || "",
             "resvalues": data.values ? [] : data.values
         }
-        addEvent(getEvent('OE_ITEM_RESPONSE', eksData));
+        instance.addEvent(instance.getEvent('OE_ITEM_RESPONSE', eksData));
     }
     
-    Telemetry.interrupt= function(data) {
-        if (!hasRequiredData(data, ["type"])) {
+    this.telemetry.interrupt= function(data) {
+        if (!instance.hasRequiredData(data, ["type"])) {
             console.error('Invalid interrupt data');
             return;
         }
@@ -148,11 +141,11 @@
             "type": data.type,
             "stageid": data.pageid || ''
         }
-        addEvent(getEvent('OE_INTERRUPT', eksData));
+        instance.addEvent(instance.getEvent('OE_INTERRUPT', eksData));
     }
     
-    Telemetry.error = function(data) {
-        if (!hasRequiredData(data, ["err", "errtype"])) {
+    this.telemetry.error = function(data) {
+        if (!instance.hasRequiredData(data, ["err", "errtype"])) {
             console.error('Invalid error data');
             return;
         }
@@ -168,60 +161,76 @@
             "data": data.data || '', 
             "severity": data.severity || ''
         }
-        addEvent(getEvent('OE_ERROR', eksData));
+        instance.addEvent(instance.getEvent('OE_ERROR', eksData));
     }
 
-    Telemetry.end = function(data) {
+    this.telemetry.end = function(data) {
       var eksData = {
         "progress": data.progress || 50,
         "stageid": data.pageid || '',
-        "length": (((new Date()).getTime() - startTime) / 1000)
+        "length": (((new Date()).getTime() - Telemetry.startTime) / 1000)
       };
      
-      addEvent(getEvent('OE_END', eksData));
+      instance.addEvent(instance.getEvent('OE_END', eksData));
+      Telemetry.initialized = false;
     }
 
-    Telemetry.exdata = function(type, data) {
-        getEvent('OE_XAPI', {
+    this.telemetry.exdata = function(type, data) {
+        instance.getEvent('OE_XAPI', {
             "xapi": data
         });
-        addEvent(getEvent('OE_XAPI', eksData));
+        instance.addEvent(instance.getEvent('OE_XAPI', eksData));
     }
     
-    Telemetry.assess = function(data) {
+    this.telemetry.assess = function(data) {
         console.log("This method comes in V3 release");
     }
 
-    Telemetry.feedback = function(data) {
+    this.telemetry.feedback = function(data) {
         console.log("This method comes in V3 release");
     }
 
-    Telemetry.share = function(data) {
+    this.telemetry.share = function(data) {
         console.log("This method comes in V3 release");
     }
 
-    Telemetry.log = function(data) {
+    this.telemetry.log = function(data) {
         console.log("This method comes in V3 release");
     }
 
-    Telemetry.search = function(data) {
+    this.telemetry.search = function(data) {
         console.log("This method comes in V3 release");
     }
 
-    this.init = function(config, contentId, contentVer){
+    instance.init = function(config, contentId, contentVer, type){
+        if(Telemetry.initialized){
+            console.log("Telemetry is already initialized..");
+            return false;
+        }
+
+        var requiredData = Object.assign(config, {"contentId": contentId, "contentVer": contentVer, "type": type});
+
+        if (!instance.hasRequiredData(requiredData, ["contentId", "contentVer", "pdata", "channel", "uid", "authtoken"])) {
+            console.error('Invalid start data');
+            Telemetry.initialized = false;
+            return Telemetry.initialized;
+        }
+
         _defaultValue.gdata = {
             "id": contentId,
             "ver": contentVer
         }
         config.batchsize = config.batchsize ? (config.batchsize < 10 ? 10 : (config.batchsize > 1000 ? 1000 : config.batchsize)) : _defaultValue.batchsize;
         Telemetry.config = Object.assign(_defaultValue, config);
+        Telemetry.initialized = true;
         //pid is rquired for V3 spec. Hence we are deleting from pdata of V2.
         if(Telemetry.config.pdata.pid != undefined)
             delete Telemetry.config.pdata.pid;
-        console.log("Telemetry config ", Telemetry.config);
+
+        return Telemetry.initialized;
     }
 
-    this.getEvent = function(eventId, data) {
+    instance.getEvent = function(eventId, data) {
         var eventObj = {
             "eid": eventId,
             "ver": Telemetry._version,
@@ -242,15 +251,18 @@
         return eventObj;
     }
 
-    this.addEvent = function(telemetryEvent){
+    instance.addEvent = function(telemetryEvent){
         if(Telemetry.initialized){
             telemetryEvent.mid = 'OE_' + CryptoJS.MD5(JSON.stringify(telemetryEvent)).toString();
             var customEvent = new CustomEvent('TelemetryEvent', {detail: telemetryEvent});
+            console.log("Telemetry Event ", telemetryEvent);
             document.dispatchEvent(customEvent);
+        }else{
+          console.log("Telemetry is not initialized. Please start Telemetry to log events.");
         }
     }
 
-    this.hasRequiredData = function(data, mandatoryFields) {
+    instance.hasRequiredData = function(data, mandatoryFields) {
         var isValid = true;
         mandatoryFields.forEach(function(key) {
             if (!data.hasOwnProperty(key)) isValid = false;
@@ -258,7 +270,7 @@
         return isValid;
     }
 
-    this.objectAssign = function(){      
+    instance.objectAssign = function(){      
       Object.assign = function (target) {
         'use strict';
         if (target == null) {
@@ -284,6 +296,5 @@
       objectAssign();
     }
 
-
-    return Telemetry;
+    return this.telemetry;
 })();
