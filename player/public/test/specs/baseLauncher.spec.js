@@ -3,8 +3,9 @@ describe('Base launcher', function() {
     beforeAll(function() {
         // Loading html renderer plugin 
         window.isMobile = window.cordova;
-        window.content = {"identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.html-archive", "name": "Content Preview ", "author": "EkStep", "localData": {"name": "Content Preview ", "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "identifier": "org.ekstep.item.sample", "pkgVersion": 1 }, "isAvailable": true, "path": ""}
-        setGlobalConfig({}); org.ekstep.service.init();
+        window.content = JSON.parse('{"baseDir":"base/public/test/testContent", "identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.html-archive", "name": "Content Preview ", "author": "EkStep", "localData": {"name": "Content Preview ", "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "identifier": "org.ekstep.item.sample", "pkgVersion": 1 }, "isAvailable": true, "path": ""}');
+        setGlobalConfig({});
+        org.ekstep.service.init();
         TelemetryService.isActive = true;
         // var gameData = {"id":"org.ekstep.quiz.app","ver":"BUILD_NUMBER"};
         // var userInfo = {"avatar":"assets/icons/avatar_anonymous.png","profileImage":"assets/icons/avatar_anonymous.png","gender":"male","handle":"Anonymous","age":6,"standard":-1,"uid":"9g8h4ndAnonymouscg56ngd"};
@@ -12,7 +13,7 @@ describe('Base launcher', function() {
         // //TelemetryService.init(gameData,userInfo,coreRelateionData,undefined);
         AppConfig.corePluginspath = 'https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/v3/preview/coreplugins';
         org.ekstep.contentrenderer.initPlugins('', 'https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/v3/preview/coreplugins');
-        org.ekstep.contentrenderer.loadPlugins([{"id": "org.ekstep.htmlrenderer", "ver": "1.0", "type": 'plugin'}], [], function() {console.log("html renderer plugin is loaded"); });
+        // org.ekstep.contentrenderer.loadPlugins([{"id": "org.ekstep.htmlrenderer", "ver": "1.0", "type": 'plugin'}], [], function() {console.log("html renderer plugin is loaded"); });
         var body = document.getElementsByTagName("body")[0];
         var div = document.createElement('div');
         div.id = 'gameArea'
@@ -160,7 +161,8 @@ describe('Base launcher', function() {
             spyOn(baseLauncher, 'getLauncherDom').and.callThrough();
             baseLauncher.getLauncherDom();
             expect(baseLauncher.getLauncherDom).toHaveBeenCalled();
-            baseLauncher.addToGameArea("<iframe></iframe>");
+            spyOn(baseLauncher, 'addToGameArea').and.callThrough();
+            baseLauncher.addToGameArea(document.createElement('iframe'));
            	expect(baseLauncher.addToGameArea).toHaveBeenCalled();
 
             expect(baseLauncher.getLauncherDom("org.ekstep.htmlrenderer")).not.toBe(undefined);

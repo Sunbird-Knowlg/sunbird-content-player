@@ -227,9 +227,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         AssetManager.destroy();
         TimerManager.destroy();
         AudioManager.cleanUp();
-        if(Renderer.theme)
+        if(Renderer && Renderer.theme) {
             Renderer.theme.cleanUp();
-        Renderer.theme = undefined;
+            Renderer.theme = undefined;
+        }
     },
     pause: function() {
         if (Renderer.theme)

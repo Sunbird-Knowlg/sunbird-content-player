@@ -135,7 +135,8 @@ module.exports = function(grunt) {
             renderermin: {
                 options: {
                     beautify: false,
-                    mangle: false
+                    mangle: false,
+                    compress: false
                 },
                 files: {
                     'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js': [
