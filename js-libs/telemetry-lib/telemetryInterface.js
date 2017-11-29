@@ -13,8 +13,8 @@ var Telemetry = (function() {
     this.startTime = 0;
     this._defaultValue = {
         pdata:{
-            id: "genie",
-            var: "6.5.2567",
+            id: "in.ekstep",
+            ver: "1.0",
             pid: ""
         },
         channel: "in.ekstep",
