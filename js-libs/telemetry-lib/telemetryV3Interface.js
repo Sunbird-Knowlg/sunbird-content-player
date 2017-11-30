@@ -3,7 +3,7 @@
  * @author Akash Gupta <Akash.Gupta@tarento.com>
  */
 
-var Telemetry = (function() {
+var EkTelemetry = (function() {
     this.telemetry = function() {};
     var instance = function() {};
     var telemetryInstance = this;
@@ -24,7 +24,7 @@ var Telemetry = (function() {
         authtoken: "",
         sid: "",
         batchsize: 20,
-        mode: "play",
+        mode: "",
         host: "https://api.ekstep.in",
         endpoint: "/data/v3/telemetry",
         tags: [],
@@ -44,7 +44,7 @@ var Telemetry = (function() {
     this.cdataRequiredFields = ["type","id"],
     this.targetObjectRequiredFields = ["type","id"],
 
-    this.telemetry.start = function(config, contentId, contentVer, type, data) {
+    this.telemetry.start = function(config, contentId, contentVer, data) {
         if (!instance.hasRequiredData(data, ["type"])) {
             console.error('Invalid start data');
             return;
@@ -57,9 +57,17 @@ var Telemetry = (function() {
             console.error('Invalid user agent spec')
             return;
         }
-        data.duration = (((new Date()).getTime() - Telemetry.startTime) / 1000);
-        if (instance.init(config, contentId, contentVer, type)) {
-            var startEventObj = instance.getEvent('START', data);
+        var eksData = {
+            "type": data.type,
+            "dspec": data.dspec || "",
+            "uaspec": data.uaspec || "",
+            "loc": data.loc || "",
+            "mode": data.mode || "",
+            "duration": data.duration,
+            "pageid": (data && data.stageto) ? data.stageto : ""
+        }
+        if (instance.init(config, contentId, contentVer, data.type)) {
+            var startEventObj = instance.getEvent('START', eksData);
             instance.addEvent(startEventObj)
 
             // Required to calculate the time spent of content while generating OE_END
@@ -72,8 +80,14 @@ var Telemetry = (function() {
             console.error('Invalid end data');
             return;
         }
-        data.duration = (((new Date()).getTime() - Telemetry.startTime) / 1000);
-        instance.addEvent(instance.getEvent('END', data));
+        var eksData = {
+            "type": data.type,
+            "mode": data.mode || '',
+            "duration" : data.duration,
+            "pageid": (data && data.stageto) ? data.stageto : "",
+            "summary": data.summary || ''
+        } 
+        instance.addEvent(instance.getEvent('END', eksData));
         Telemetry.initialized = false;
     }
 
@@ -86,7 +100,14 @@ var Telemetry = (function() {
             console.error('Invalid visits spec')
             return;
         }
-        instance.addEvent(instance.getEvent('IMPRESSION', data));
+        var eksData = {
+            "type": type,
+            "subtype": subtype || '',
+            "pageid": pageid,
+            "uri": uri,
+            "visits": data.visit || ''
+        }
+        instance.addEvent(instance.getEvent('IMPRESSION', eksData));
     }
 
     this.telemetry.interact = function(data) {
@@ -102,7 +123,19 @@ var Telemetry = (function() {
             console.error('Invalid plugin spec')
             return;
         }
-        instance.addEvent(instance.getEvent('INTERACT', data));
+        var eksData = {
+            "type": data.type,
+            "subtype": data.subtype || '',
+            "id": data.id,
+            "pageid": data.stageId ? data.stageId.toString() : "",
+            "target": data.target || '',
+            "plugin": data.plugin || '',
+            "extra": {
+              "pos": (data.extra && data.extra.pos) ? data.extra.pos : [],
+              "values": (data.extra && data.extra.values) ? data.extra.values : []
+            }
+        }
+        instance.addEvent(instance.getEvent('INTERACT', eksData));
     }
 
     this.telemetry.assess = function(data) {
@@ -114,7 +147,15 @@ var Telemetry = (function() {
             console.error('Invalid question spec')
             return;
         }
-        instance.addEvent(instance.getEvent('ASSESS', data));
+        var eksData = {
+            "item": data.item,
+            "index": data.index || '',
+            "pass": data.pass || 'No',
+            "score": data.score || 0,
+            "resvalues": data.resvalues,
+            "duration": data.duration
+        }
+        instance.addEvent(instance.getEvent('ASSESS', eksData));
     }
 
     this.telemetry.response = function(data) {
@@ -126,7 +167,12 @@ var Telemetry = (function() {
             console.error('Invalid target spec')
             return;
         }
-        instance.addEvent(instance.getEvent('RESPONSE', data));
+        var eksData = {
+            "target": data.target,
+            "type": data.values,
+            "values": data.type
+        }
+        instance.addEvent(instance.getEvent('RESPONSE', eksData));
     }
 
     this.telemetry.interrupt = function(data) {
@@ -134,22 +180,44 @@ var Telemetry = (function() {
             console.error('Invalid interrupt data');
             return;
         }
-        instance.addEvent(instance.getEvent('INTERRUPT', data));
+        var eksData = {
+            "type": data.type,
+            "pageid": data.stageid || ''
+        }
+        instance.addEvent(instance.getEvent('INTERRUPT', eksData));
     }
 
     this.telemetry.feedback = function(data) {
+        var eksData = {
+            "rating": data.rating || '',
+            "comments": data.comments || ''
+        }
         instance.addEvent(instance.getEvent('FEEDBACK', data));
     }
 
     //Share
     this.telemetry.share = function(data) {
-        console.log("This method comes in V3 release");
+        if (!instance.hasRequiredData(data, ["items"])) {
+            console.error('Invalid share data');
+            return;
+        }
+        var eksData = {
+            "dir": data.dir || '',
+            "type": data.type || '',
+            "items": data.items
+        }
+        instance.addEvent(instance.getEvent('INTERRUPT', eksData));
     }
 
     this.telemetry.audit = function(data) {
         if (!instance.hasRequiredData(data, ["prop"])) {
             console.error('Invalid audit data');
             return;
+        }
+        var eksData = {
+            "props": data.props,
+            "state": data.state || '',
+            "prevstate": data.prevstate || ''
         }
         instance.addEvent(instance.getEvent('AUDIT', data));
     }
@@ -167,7 +235,15 @@ var Telemetry = (function() {
             console.error('Invalid plugin spec')
             return;
         }
-        instance.addEvent(instance.getEvent('ERROR', data));
+        var eksData = {
+            "err": data.err,
+            "errtype": data.errtype,
+            "stacktrace": data.stacktrace,
+            "pageid": data.stageId || '',
+            "object": data.object || '',
+            "plugin": data.plugin || ''
+        }
+        instance.addEvent(instance.getEvent('ERROR', eksData));
     }
 
     this.telemetry.heartbeat = function(data) {
@@ -179,7 +255,14 @@ var Telemetry = (function() {
             console.error('Invalid log data');
             return;
         }
-        instance.addEvent(instance.getEvent('LOG', data));
+        var eksData = {
+            "type": data.type,
+            "level": data.level,
+            "message": data.message,
+            "pageid": data.stageid || '',
+            "params": data.params || ''
+        }
+        instance.addEvent(instance.getEvent('LOG', eksData));
     }
 
     this.telemetry.search = function(data) {
@@ -187,7 +270,16 @@ var Telemetry = (function() {
             console.error('Invalid search data');
             return;
         }
-        instance.addEvent(instance.getEvent('SEARCH', data));
+        var eksData = {
+            "type": data.type || '',
+            "query": data.query,
+            "filters": data.filters || {},
+            "sort": data.sort || {},
+            "correlationid": data.correlationid || "",
+            "size": data.size,
+            "topn": data.type || []
+        }
+        instance.addEvent(instance.getEvent('SEARCH', eksData));
     }
 
     this.telemetry.metrics = function(data) {
@@ -195,13 +287,29 @@ var Telemetry = (function() {
     }
 
     this.telemetry.exdata = function(type, data) {
-        instance.addEvent(instance.getEvent('EXDATA', data));
+        var eksData = {
+            "type": type || '',
+            "data": data || ''
+        }
+        instance.addEvent(instance.getEvent('EXDATA', eksData));
     }
 
     this.telemetry.summary = function(type, data) {
         if (!instance.hasRequiredData(data, ["type", "starttime", "endtime", "timespent","pageviews","interactions"])) {
             console.error('Invalid summary data');
             return;
+        }
+        var eksData = {
+            "type": data.type,
+            "mode": data.mode || '',
+            "starttime": data.starttime,
+            "endtime": data.endtime,
+            "timespent": data.timespent,
+            "pageviews": data.pageviews,
+            "interactions": data.interactions,
+            "envsummary": data.envsummary || [],
+            "eventssummary": data.eventssummary || [],
+            "pagesummary": data.pagesummary || []
         }
         instance.addEvent(instance.getEvent('SUMMARY', data));
     }    
