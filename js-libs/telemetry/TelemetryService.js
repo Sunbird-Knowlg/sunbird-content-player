@@ -1,5 +1,5 @@
 TelemetryService = {
-    _version: "2.1",
+    _version: "3.0",
     _baseDir: 'EkStep Content App',
     isActive: false,
     _config: undefined,
@@ -31,7 +31,8 @@ TelemetryService = {
         return new Promise(function(resolve, reject) {
             if (!TelemetryService.instance) {
                 TelemetryService._user = user;
-                TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
+                //TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
+                TelemetryService.instance = new TelemetryV3Manager();
                 if (gameData) {
                     if (gameData.id && gameData.ver) {
                         TelemetryService._parentGameData = gameData;
@@ -154,13 +155,13 @@ TelemetryService = {
             console.log("TelemetryService is not active.");
             return new InActiveEvent();
         } else {
-            ver = (ver) ? ver + "" : "1"; // setting default ver to 1
+            //ver = (ver) ? ver + "" : "1"; // setting default ver to 1
             if (_.findWhere(TelemetryService.instance._start, {
                     id: id
                 }))
                 return new InActiveEvent();
             else
-                return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver, data), TelemetryService.apis.telemetry);
+                return TelemetryService.flushEvent(TelemetryService.instance.start(id, "3", data), TelemetryService.apis.telemetry);
         }
     },
     end: function(data) {
