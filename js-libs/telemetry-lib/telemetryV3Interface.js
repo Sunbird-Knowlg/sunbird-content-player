@@ -39,13 +39,12 @@ var EkTelemetry = (function() {
     this.questionRequiredFields = ["id","maxscore","exlength","desc","title"],
     this.configRequiredFields = ["uid","channel","env"],
     this.pdataRequiredFields = ["id"],
-    this.cdataRequiredFields = ["type","id"],
     this.targetObjectRequiredFields = ["type","id"],
 
     this.telemetry.start = function(config, contentId, contentVer, data) {
         if (EkTelemetry.initialized) {
             console.log("Telemetry is already initialized..");
-            return false;
+            return;
         }
         if (!instance.hasRequiredData(data, ["type"])) {
             console.error('Invalid start data');
@@ -74,13 +73,14 @@ var EkTelemetry = (function() {
 
             // Required to calculate the time spent of content while generating OE_END
             EkTelemetry.startTime = startEventObj.ets;
+            return startEventObj;
         }
     }
 
     this.telemetry.end = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         if (!instance.hasRequiredData(data, ["type", "pageid"])) {
             console.error('Invalid end data');
@@ -100,7 +100,7 @@ var EkTelemetry = (function() {
     this.telemetry.impression = function(pageid, type, subtype, uri, visit) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         if (undefined == pageid || undefined == type || undefined == uri) {
             console.error('Invalid impression data');
@@ -123,7 +123,7 @@ var EkTelemetry = (function() {
     this.telemetry.interact = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         if (!instance.hasRequiredData(data, ["type", "id"])) {
             console.error('Invalid interact data');
@@ -155,7 +155,7 @@ var EkTelemetry = (function() {
     this.telemetry.assess = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         if (!instance.hasRequiredData(data, ["item", "pass", "score", "resvalues", "duration"])) {
             console.error('Invalid assess data');
@@ -179,7 +179,7 @@ var EkTelemetry = (function() {
     this.telemetry.response = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         if (!instance.hasRequiredData(data, ["target", "values", "type"])) {
             console.error('Invalid response data');
@@ -200,7 +200,7 @@ var EkTelemetry = (function() {
     this.telemetry.interrupt = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         if (!instance.hasRequiredData(data, ["type"])) {
             console.error('Invalid interrupt data');
@@ -216,20 +216,20 @@ var EkTelemetry = (function() {
     this.telemetry.feedback = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         var eksData = {
             "rating": data.rating || '',
             "comments": data.comments || ''
         }
-        instance.addEvent(instance.getEvent('FEEDBACK', data));
+        instance.addEvent(instance.getEvent('FEEDBACK', eksData));
     }
 
     //Share
     this.telemetry.share = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         if (!instance.hasRequiredData(data, ["items"])) {
             console.error('Invalid share data');
@@ -246,9 +246,9 @@ var EkTelemetry = (function() {
     this.telemetry.audit = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
-        if (!instance.hasRequiredData(data, ["prop"])) {
+        if (!instance.hasRequiredData(data, ["props"])) {
             console.error('Invalid audit data');
             return;
         }
@@ -257,23 +257,23 @@ var EkTelemetry = (function() {
             "state": data.state || '',
             "prevstate": data.prevstate || ''
         }
-        instance.addEvent(instance.getEvent('AUDIT', data));
+        instance.addEvent(instance.getEvent('AUDIT', eksData));
     }
 
     this.telemetry.error = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         if (!instance.hasRequiredData(data, ["err", "errtype", "stacktrace"])) {
             console.error('Invalid error data');
             return;
         }
-        if (!instance.checkRequiredField(data.object, telemetryInstance.objectRequiredFields)) {
+        if (data.object && !instance.checkRequiredField(data.object, telemetryInstance.objectRequiredFields)) {
             console.error('Invalid object spec')
             return;
         }
-        if (!instance.checkRequiredField(data.plugin, telemetryInstance.pluginRequiredFields)) {
+        if (data.plugin && !instance.checkRequiredField(data.plugin, telemetryInstance.pluginRequiredFields)) {
             console.error('Invalid plugin spec')
             return;
         }
@@ -291,7 +291,7 @@ var EkTelemetry = (function() {
     this.telemetry.heartbeat = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         instance.addEvent(instance.getEvent('HEARTBEAT', data));
     }
@@ -299,7 +299,7 @@ var EkTelemetry = (function() {
     this.telemetry.log = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         if (!instance.hasRequiredData(data, ["type", "level", "message"])) {
             console.error('Invalid log data');
@@ -318,7 +318,7 @@ var EkTelemetry = (function() {
     this.telemetry.search = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         if (!instance.hasRequiredData(data, ["query", "size", "topn"])) {
             console.error('Invalid search data');
@@ -339,7 +339,7 @@ var EkTelemetry = (function() {
     this.telemetry.metrics = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         instance.addEvent(instance.getEvent('METRICS', data));
     }
@@ -347,7 +347,7 @@ var EkTelemetry = (function() {
     this.telemetry.exdata = function(type, data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         var eksData = {
             "type": type || '',
@@ -356,10 +356,10 @@ var EkTelemetry = (function() {
         instance.addEvent(instance.getEvent('EXDATA', eksData));
     }
 
-    this.telemetry.summary = function(type, data) {
+    this.telemetry.summary = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
-            return false;
+            return;
         }
         if (!instance.hasRequiredData(data, ["type", "starttime", "endtime", "timespent","pageviews","interactions"])) {
             console.error('Invalid summary data');
@@ -377,13 +377,13 @@ var EkTelemetry = (function() {
             "eventssummary": data.eventssummary || [],
             "pagesummary": data.pagesummary || []
         }
-        instance.addEvent(instance.getEvent('SUMMARY', data));
+        instance.addEvent(instance.getEvent('SUMMARY', eksData));
     }    
 
     instance.init = function(config, contentId, contentVer, type) {
         if (EkTelemetry.initialized) {
             console.log("Telemetry is already initialized..");
-            return false;
+            return;
         }
         // Validating Required fields for config
         if (!instance.checkRequiredField(config, telemetryInstance.configRequiredFields)) {
@@ -394,10 +394,6 @@ var EkTelemetry = (function() {
             console.error('Invalid pdata spec in config')
             return;
         }
-        if (config.cdata && !instance.checkRequiredField(config.cdata, telemetryInstance.cdataRequiredFields)) {
-            console.error('Invalid cdata spec in config')
-            return;
-        }
         if (config.object && !instance.checkRequiredField(config.object, telemetryInstance.targetObjectRequiredFields)) {
             console.error('Invalid target object spec in config')
             return;
@@ -405,7 +401,7 @@ var EkTelemetry = (function() {
 
         var requiredData = Object.assign(config, { "contentId": contentId, "contentVer": contentVer, "type": type });
 
-        if (!instance.hasRequiredData(requiredData, ["contentId", "contentVer", "pdata", "channel", "uid", "authtoken"])) {
+        if (!instance.hasRequiredData(requiredData, ["contentId", "contentVer", "pdata", "channel", "uid"])) {
             console.error('Invalid start data');
             EkTelemetry.initialized = false;
             return EkTelemetry.initialized;
