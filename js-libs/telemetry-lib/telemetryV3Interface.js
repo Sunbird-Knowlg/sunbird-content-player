@@ -506,7 +506,7 @@ var EkTelemetry = (function() {
 })();
 
 var libraryDispatcher = {
-    dispatch = function(event){
+    dispatch: function(event){
         var customEvent = new CustomEvent('TelemetryEvent', { detail: event });
         console.log("Telemetry Event ", event);
         document.dispatchEvent(customEvent);
