@@ -415,7 +415,7 @@ var EkTelemetry = (function() {
 
     instance._dispatch = function(message) {
         if (EkTelemetry.initialized) {
-            message.mid = 'CE:' + CryptoJS.MD5(JSON.stringify(message)).toString();
+            message.mid = message.eid + ':' + CryptoJS.MD5(JSON.stringify(message)).toString();
             dispatcher.dispatch(message);
         }
     }
