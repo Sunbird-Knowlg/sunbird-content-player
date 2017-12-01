@@ -96,7 +96,7 @@ var EkTelemetry = (function() {
         EkTelemetry.initialized = false;
     }
 
-    this.telemetry.impression = function(pageid, type, subtype, uri, visit) {
+    this.telemetry.impression = function(pageid, type, subtype, uri, visits) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -105,7 +105,7 @@ var EkTelemetry = (function() {
             console.error('Invalid impression data');
             return;
         }
-        if (data.visits && !instance.checkRequiredField(data.visits, telemetryInstance.visitRequiredFields)) {
+        if (visits && !instance.checkRequiredField(visits, telemetryInstance.visitRequiredFields)) {
             console.error('Invalid visits spec')
             return;
         }
