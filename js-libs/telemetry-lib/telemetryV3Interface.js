@@ -37,7 +37,6 @@ var EkTelemetry = (function() {
     this.pluginRequiredFields = ["id","ver"],
     this.visitRequiredFields = ["objid","objtype"],
     this.questionRequiredFields = ["id","maxscore","exlength","desc","title"],
-    this.configRequiredFields = ["uid","channel","env"],
     this.pdataRequiredFields = ["id"],
     this.targetObjectRequiredFields = ["type","id"],
 
@@ -385,11 +384,6 @@ var EkTelemetry = (function() {
             console.log("Telemetry is already initialized..");
             return;
         }
-        // Validating Required fields for config
-        if (!instance.checkRequiredField(config, telemetryInstance.configRequiredFields)) {
-            console.error('Invalid config spec')
-            return;
-        }
         if (config.pdata && !instance.checkRequiredField(config.pdata, telemetryInstance.pdataRequiredFields)) {
             console.error('Invalid pdata spec in config')
             return;
@@ -401,7 +395,7 @@ var EkTelemetry = (function() {
 
         var requiredData = Object.assign(config, { "contentId": contentId, "contentVer": contentVer, "type": type });
 
-        if (!instance.hasRequiredData(requiredData, ["contentId", "contentVer", "pdata", "channel", "uid"])) {
+        if (!instance.hasRequiredData(requiredData, ["contentId", "contentVer", "pdata", "channel", "uid", "env"])) {
             console.error('Invalid start data');
             EkTelemetry.initialized = false;
             return EkTelemetry.initialized;

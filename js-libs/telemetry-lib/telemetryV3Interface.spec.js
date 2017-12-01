@@ -1,5 +1,5 @@
 describe("Telemetry tests", function() {
-	var telemetryObj,config;
+	var telemetryObj,config,newConfig;
 	this.emptyFunction = function(data) {
 		console.log(data.detail.eid, "  Telemetry is generated");
 	}
@@ -7,47 +7,44 @@ describe("Telemetry tests", function() {
 	beforeAll(function() {
 		document.addEventListener('TelemetryEvent', instance.emptyFunction, instance);
 		telemetryObj = EkTelemetry;
-	    config = {
-	        uid: "anonymous",
-	        channel: "in.ekstep",
-            pdata: {
-	            id: "in.ekstep",
-	            ver: "1.0",
-	            pid: ""
-	        },
-	        env: "preview",
-	        sid: "",
-	        did: "",
-	        cdata: [{
-	        	"type": "worksheet",
-	        	"id": "do_736298262"
-	        }],
-	        rollup: {
-	        	"l1": "",
-	        	"l2": ""
-	        },
-	        object: {
-    			"id": "do_9823y23",
-    			"type": "Conten",
-    			"ver": "",
-    			"rollup": {
-					"l1": "",
-					"l2": ""
-			    }
-	        },
-	        batchsize: 20,
-	        host: "https://api.ekstep.in",
-	        endpoint: "/data/v3/telemetry",
-	        tags: [],
-	        apislug: "/action"
-        };
+	    config = {"uid":"anonymous","channel":"in.ekstep","pdata":{"id":"in.ekstep","ver":"1.0","pid":""},"env":"preview","sid":"","did":"","cdata":[{"type":"worksheet","id":"do_736298262"}],"rollup":{"l1":"","l2":""},"object":{"id":"do_9823y23","type":"Conten","ver":"","rollup":{"l1":"","l2":""}},"batchsize":20,"host":"https://api.ekstep.in","endpoint":"/data/v3/telemetry","tags":[],"apislug":"/action"};
 	});
 
 	describe("Telemetry START", function() {
+	    it("It should not call init if config spec is invalid", function() {
+	    	var newConfig = JSON.parse(JSON.stringify(config));
+	    	delete newConfig.uid;
+	    	data = {"type":"player"};
+	    	spyOn(telemetryObj, "start").and.callThrough();
+	     	var telemetryElement = telemetryObj.start(newConfig, "abc","123", data);
+	     	expect(telemetryElement).toBeUndefined();
+	     	expect(EkTelemetry.initialized).not.toBeTruthy();
+	     	expect(telemetryObj.start).toHaveBeenCalled();
+	    })
+	    it("It should not call init if pdata spec is invalid in config", function() {
+	    	var newConfig = JSON.parse(JSON.stringify(config));
+	    	delete newConfig.pdata.id;
+	    	data = {"type":"player"};
+	    	spyOn(telemetryObj, "start").and.callThrough();
+	     	var telemetryElement = telemetryObj.start(newConfig, "abc","123", data);
+	     	expect(telemetryElement).toBeUndefined();
+	     	expect(EkTelemetry.initialized).not.toBeTruthy();
+	     	expect(telemetryObj.start).toHaveBeenCalled();
+	    })
+	    it("It should not call init if object spec is invalid in config", function() {
+	    	var newConfig = JSON.parse(JSON.stringify(config));
+	    	delete newConfig.object.id;
+	    	data = {"type":"player"};
+	    	spyOn(telemetryObj, "start").and.callThrough();
+	     	var telemetryElement = telemetryObj.start(newConfig, "abc","123", data);
+	     	expect(telemetryElement).toBeUndefined();
+	     	expect(EkTelemetry.initialized).not.toBeTruthy();
+	     	expect(telemetryObj.start).toHaveBeenCalled();
+	    })
 	    it("It should not call init if required data is unavailable", function() {
 	    	data = {};
 	    	spyOn(telemetryObj, "start").and.callThrough();
-	     	var telemetryElement = telemetryObj.start(config, "abc","123", "player", data);
+	     	var telemetryElement = telemetryObj.start(config, "abc","123", data);
 	     	expect(telemetryElement).toBeUndefined();
 	     	expect(EkTelemetry.initialized).not.toBeTruthy();
 	     	expect(telemetryObj.start).toHaveBeenCalled();
@@ -64,32 +61,14 @@ describe("Telemetry tests", function() {
 	    it("It should not call init if telemetry is already running", function() {
 	    	data = {"type":"player"};
 	    	spyOn(telemetryObj, "start").and.callThrough();
-	     	var telemetryElement = telemetryObj.start(config, "abc","123", "player", data);
+	     	var telemetryElement = telemetryObj.start(config, "abc","123", data);
 	     	expect(telemetryElement).toBeUndefined();
 	     	expect(EkTelemetry.initialized).toBeTruthy();
 	     	expect(telemetryObj.start).toHaveBeenCalled();
 	     	
 	    })
-	    // it("It should not call init if device spec available data is wrong", function() {
-	    // 	data = {"type":"player"};
-	    // 	spyOn(telemetryObj, "start").and.callThrough();
-	    //  	var telemetryElement = telemetryObj.start(config, "abc","123", "player", data);
-	    //  	expect(telemetryElement).toBeUndefined();
-	    //  	expect(EkTelemetry.initialized).toBeTruthy();
-	    //  	expect(telemetryObj.start).toHaveBeenCalled();
-	     	
-	    // })
 
 	});
-
-	// describe("Telemetry INIT", function() { 
-	// 	it("It should invoke init", function() {
-	// 		spyOn(telemetryObj, "init").and.callThrough();
- //        	instance.init(config, "abc","123", data);
-	//      	expect(telemetryObj.init).toHaveBeenCalled();
-	//      	expect(telemetry.initialized).toBeTruthy;
-	//      });
-	// });
 
 	describe("Telemetry IMPRESSION", function() { 
 		it("It should invoke impression", function() {
@@ -472,7 +451,7 @@ describe("Telemetry tests", function() {
 				"data": ""
 			}
 			spyOn(telemetryObj, "exdata").and.callThrough();
-			telemetryObj.exdata(data,type,data.data);
+			telemetryObj.exdata(data.type,data.data);
 	     	expect(telemetryObj.exdata).toHaveBeenCalled();
 		});
 	});
