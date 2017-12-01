@@ -439,7 +439,7 @@ var EkTelemetry = (function() {
 
     instance.addEvent = function(telemetryEvent) {
         if (EkTelemetry.initialized) {
-            telemetryEvent.mid = telemetryEvent.edata.eks + '_' + CryptoJS.MD5(JSON.stringify(telemetryEvent)).toString();
+            telemetryEvent.mid = telemetryEvent.eid + '_' + CryptoJS.MD5(JSON.stringify(telemetryEvent)).toString();
             var customEvent = new CustomEvent('TelemetryEvent', { detail: telemetryEvent });
             console.log("Telemetry Event ", telemetryEvent);
             document.dispatchEvent(customEvent);
