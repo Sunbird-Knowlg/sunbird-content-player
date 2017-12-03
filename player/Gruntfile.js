@@ -25,6 +25,9 @@ module.exports = function(grunt) {
             },
             app: {
                 configFile: 'public/test/karma.app.config.js',
+            },
+            telemetryV3: {
+                configFile: '../js-libs/telemetry-lib/test/karma.renderer.config.js',
             }
         },
         concat: {
@@ -704,4 +707,5 @@ module.exports = function(grunt) {
     grunt.registerTask('player-test', ['karma:app']);
     grunt.registerTask('renderer-test', ['karma:renderer']);
     grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator"]);
+    grunt.registerTask('renderer-telemetryV3', ['karma:telemetryV3']);
 };

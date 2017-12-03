@@ -17,10 +17,11 @@ var TelemetrySyncManager = {
         document.addEventListener('TelemetryEvent', this.sendTelemetry);
     },
     sendTelemetry: function(event) {
+        var Telemetry = EkTelemetry || Telemetry;
         var telemetryEvent = event.detail;
         var instance = TelemetrySyncManager;
         instance._teleData.push(telemetryEvent);
-        if((telemetryEvent.eid.toUpperCase() == "OE_END") || (instance._teleData.length >= Telemetry.config.batchsize)) {
+        if((telemetryEvent.eid.toUpperCase() == "END") || (instance._teleData.length >= Telemetry.config.batchsize)) {
             var telemetryData = instance._teleData;
             var telemetryObj = {
                 "id": "ekstep.telemetry",

@@ -1,5 +1,5 @@
 /**
- * this is the Telemetry V3 Interface
+ * Telemetry V3 Library
  * @author Akash Gupta <Akash.Gupta@tarento.com>
  */
 
@@ -115,7 +115,7 @@ var EkTelemetry = (function() {
             "subtype": subtype || '',
             "pageid": pageid,
             "uri": uri,
-            "visits": data.visit || ''
+            "visits": visits || ''
         }
         instance._dispatch(instance.getEvent('IMPRESSION', eksData));
     }
