@@ -25,6 +25,7 @@ TelemetryV3Manager = Class.extend({
             sid: EkstepRendererAPI.getGlobalConfig().sid || "",
             did: GlobalContext.config.did || CryptoJS.MD5(JSON.stringify(deviceId)).toString(),
             authtoken: "",
+            dispatcher: ("undefined" == typeof cordova) ? org.ekstep.contentrenderer.webDispatcher : org.ekstep.contentrenderer.deviceDispatcher
         };
         var startData = {
             type: GlobalContext.config.type,
