@@ -3,7 +3,6 @@ TelemetryV3Manager = Class.extend({
     _start: new Array(),
      init: function() {
         console.info("TelemetryService Version 3 initialized..");
-        TelemetryV3Manager.instance = EkTelemetry;
     },
     exitWithError: function(error) {
         var message = '';
@@ -11,13 +10,16 @@ TelemetryV3Manager = Class.extend({
         TelemetryServiceV3.exitApp();
     },
     start: function(id, ver, data) {
+        if(id == undefined || ver == undefined || data == undefined) {
+            console.error('Invalid start data');
+            return;
+        }
         var deviceId = detectClient();
         var config = {
             pdata: {
                 id: EkstepRendererAPI.getGlobalConfig().pdata.id || "in.ekstep",
                 ver: EkstepRendererAPI.getGlobalConfig().pdata.ver || "1.0",
                 pid: data.pid || "",
-                ver: data.ver || ""
             },
             channel: EkstepRendererAPI.getGlobalConfig().channel,
             env: EkstepRendererAPI.getGlobalConfig().mode,
@@ -34,40 +36,34 @@ TelemetryV3Manager = Class.extend({
             loc: data.loc || "",
             mode:  data.mode || EkstepRendererAPI.getGlobalConfig().mode,
             pageid: data.pageid || EkstepRendererAPI.getCurrentStageId(),
-
+            duration: ""
         }
-        TelemetryV3Manager.instance.start(config, GlobalContext.config.context.contentId, ver, startData);
+        this._end.push("END", {});
+        this._start.push({id: id , ver : ver});
+        EkTelemetry.start(config, GlobalContext.currentContentId, ver, startData);
     },
     end: function(data) {
+        if (data == undefined) {
+            console.error('Invalid end data');
+            return;
+        }
         if (this.telemetryStartActive()) {
             this._start.pop();
             data.type = GlobalContext.config.type;
             data.mode = data.mode;
             data.summary = data.summary || [];
             data.pageid = EkstepRendererAPI.getCurrentStageId();
-            TelemetryV3Manager.instance.end(data);
+            this._end.pop();
+            EkTelemetry.end(data);
         } else {
             console.warn("Telemetry service end is already logged Please log start telemetry again");
         }
     },
     interact: function(type, id, extype, eks, eid) {
-        /* if (eks.optionTag)
-            TelemetryService.flushEvent(this.itemResponse(eks), TelemetryService.apis.telemetry);
-        if (type != "DRAG") {
-            var eks = {
-                "stageid": eks.stageId ? eks.stageId.toString() : "",
-                "type": type,
-                "subtype": eks.subtype ? eks.subtype : "",
-                "pos": eks.pos ? eks.pos : [],
-                "id": id,
-                "tid": eks.tid ? eks.tid : "",
-                "uri": eks.uri ? eks.uri : "",
-                "extype": "",
-                "values": eks.values ? eks.values : []
-            };
-            var eventName = eid ? eid : "OE_INTERACT"
-            return this.createEvent(eventName, eks);
-        } */
+        if(type == undefined || id == undefined) {
+            console.error('Invalid interact data');
+            return;
+        }
         var data = {
             type: type,
             subtype: "",
@@ -77,7 +73,7 @@ TelemetryV3Manager = Class.extend({
             plugin: "",
             extra: {}
         }
-        TelemetryV3Manager.instance.interact(data);
+        EkTelemetry.interact(data);
     },
     assess: function(qid, subj, qlevel, data) {
         var maxscore;
@@ -106,12 +102,7 @@ TelemetryV3Manager = Class.extend({
                 resvalues: data.resvalues || [],
                 duration: data.duration || ""
             }
-            var eks = {
-                qid: qid,
-                maxscore: maxscore ,
-                params: []
-            };
-            TelemetryV3Manager.instance.assess(questionData);
+            EkTelemetry.assess(questionData);
         } else {
             console.error("qid is required to create assess event.", qid);
             // TelemetryService.logError("OE_ASSESS", "qid is required to create assess event.")
@@ -143,18 +134,18 @@ TelemetryV3Manager = Class.extend({
             object: data.object || object,
             plugin:plugin
         }
-        TelemetryV3Manager.instance.error(errorData);
+        EkTelemetry.error(errorData);
     },
     interrupt: function(type, id, eid) {
-        /* if (!this.instance.hasRequiredData(data, ["type"])) {
+        if(type == undefined || id == undefined || eid == undefined) {
             console.error('Invalid interrupt data');
             return;
-        } */
+        }
         var interruptData = {
             "type": type,
             "pageid": id || stageid  || '',
         };  
-        TelemetryV3Manager.instance.interrupt(interruptData);
+        EkTelemetry.interrupt(interruptData);
     },
     exitApp: function() {
         setTimeout(function() {
@@ -163,7 +154,7 @@ TelemetryV3Manager = Class.extend({
     },
     navigate: function(stageid, stageto, type, subtype, uri, visit) {
         if (stageto != undefined && stageid != undefined && stageto != stageid) {
-            TelemetryV3Manager.instance.impression(stageto || "", type || "workflow", subtype || "Paginate", uri || "", visit || []);
+            EkTelemetry.impression(stageto || "", type || "workflow", subtype || "Paginate", uri || "", visit);
         } else {
             console.error('Invalid impression data');
             return;
@@ -183,10 +174,10 @@ TelemetryV3Manager = Class.extend({
             type: data.type,
             values: _.isEmpty(data.res) ? [] : data.res
         }
-        TelemetryV3Manager.instance.response(data);
+        EkTelemetry.response(data);
     },
     sendFeedback: function(data) {
-        TelemetryV3Manager.instance.feedback(data);
+        EkTelemetry.feedback(data);
     },
     telemetryStartActive: function() {
         return (!_.isEmpty(this._start));
@@ -196,7 +187,7 @@ TelemetryV3Manager = Class.extend({
             type: type,
             data: data
         }
-        TelemetryV3Manager.instance.exdata(data);
+        EkTelemetry.exdata(data);
     },
     hasRequiredData: function(data, mandatoryFields) {
         var isValid = true;

@@ -155,26 +155,25 @@ TelemetryService = {
             console.log("TelemetryService is not active.");
             return new InActiveEvent();
         } else {
-            //ver = (ver) ? ver + "" : "1"; // setting default ver to 1
             if (_.findWhere(TelemetryService.instance._start, {
                     id: id
                 }))
                 return new InActiveEvent();
             else
-                return TelemetryService.flushEvent(TelemetryService.instance.start(id, "3", data), TelemetryService.apis.telemetry);
+                return TelemetryService.instance.start(id, "3", data);
         }
     },
     end: function(data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return this.flushEvent(TelemetryService.instance.end(data), TelemetryService.apis.telemetry);
+        return TelemetryService.instance.end(data);
     },
     interact: function(type, id, extype, data, eid) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.interact(type, id, extype, data, eid), TelemetryService.apis.telemetry);
+        return TelemetryService.instance.interact(type, id, extype, data, eid);
     },
     setUser: function(data, stageid, eid) {
         TelemetryService._user = data;
@@ -185,19 +184,20 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.instance.assess(qid, subj, qlevel, data);
+        TelemetryService.instance.assess(qid, subj, qlevel, data);
+
     },
     error: function(errorObj) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.error(errorObj), TelemetryService.apis.telemetry);
+        return TelemetryService.instance.error(errorObj);
     },
     assessEnd: function(event, data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.assessEnd(event, data), TelemetryService.apis.telemetry);
+        TelemetryService.instance.assessEnd(event, data);
     },
     levelSet: function(eventData) {
         if (TelemetryService.isActive) {
@@ -209,7 +209,7 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.interrupt(type, id, eid), TelemetryService.apis.telemetry);
+        TelemetryService.instance.interrupt(type, id, eid);
     },
     exitApp: function() {
         setTimeout(function() {
@@ -220,25 +220,25 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService._version == "1.0" ? "" : this.flushEvent(TelemetryService.instance.navigate(stageid, stageto), TelemetryService.apis.telemetry);
+        TelemetryService.instance.navigate(stageid, stageto);
     },
     sendFeedback: function(eks) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return this.flushEvent(TelemetryService.instance.sendFeedback(eks), TelemetryService.apis.feedback);
+        TelemetryService.instance.sendFeedback(eks);
     },
     xapi: function(eks) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return this.flushEvent(TelemetryService.instance.xapi(eks), TelemetryService.apis.telemetry);
+        TelemetryService.instance.xapi(eks);
     },
     itemResponse: function(data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.instance.itemResponse(data);
+        TelemetryService.instance.itemResponse(data);
     },
     resume: function(newUserId, NewContentId, gameData, user) {
         var previousContentId = TelemetryService._gameData;
