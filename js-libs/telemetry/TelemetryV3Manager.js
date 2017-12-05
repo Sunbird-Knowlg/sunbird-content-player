@@ -107,11 +107,14 @@ TelemetryV3Manager = Class.extend({
                 exlength: "0",
                 params: data.params || [],
                 uri: data.uri || "",
-                desc: data.qdesc.substr(0,140) || data.desc.substr(0,140),
                 title: data.qtitle || data.title,
                 mmc: data.mmc || "",
                 mc: data.mc || ""
             }
+            if(data.qdesc || data.desc)
+                questionItem.desc =  data.qdesc.substr(0,140) || data.desc.substr(0,140);
+            else
+                questionItem.desc = "";
             var questionData = {
                 item: questionItem,
                 index: data.qindex || data.index || 0,
