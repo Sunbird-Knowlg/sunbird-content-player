@@ -87,6 +87,8 @@ module.exports = function(grunt) {
                 src: [
                     'public/libs/class.js',
                     'public/libs/date-format.js',
+                    '!../js-libs/telemetry/telemetryServiceSpec.js',
+                    '../js-libs/build/telemetry.js',
                     '../js-libs/telemetry/*.js'
                 ],
                 dest: 'www/scripts/renderer.telemetry.min.js'
@@ -103,7 +105,7 @@ module.exports = function(grunt) {
                 src: [
                     '../js-libs/telemetry-lib/detectClient.js',
                     '../js-libs/telemetry-lib/md5.js',
-                    '../js-libs/telemetry-lib/telemetryInterface.js',
+                    '../js-libs/telemetry-lib/telemetryV3Interface.js',
                     '../js-libs/telemetry-lib/telemetrySyncManager.js'
                 ],
                 dest: '../js-libs/build/telemetry.js'
