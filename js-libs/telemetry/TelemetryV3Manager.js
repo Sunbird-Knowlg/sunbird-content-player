@@ -90,7 +90,7 @@ TelemetryV3Manager = Class.extend({
         if (qid) {
             var edata = {
                 qid: qid,
-                maxscore: (data && data.maxscore) ? data.maxscore || 1,
+                maxscore: (data && data.maxscore) ? data.maxscore : 1,
                 subj: subj || "",
                 qlevel: qlevel || "MEDIUM",
                 startTime: getCurrentTime()
