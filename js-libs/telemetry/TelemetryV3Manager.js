@@ -150,14 +150,10 @@ TelemetryV3Manager = Class.extend({
         EkTelemetry.error(errorData);
     },
     interrupt: function(type, id, eid) {
-        if(type == undefined || id == undefined || eid == undefined) {
-            console.error('Invalid interrupt data');
-            return;
-        }
         var interruptData = {
             "type": type,
-            "pageid": id || stageid  || '',
-        };  
+            "pageid": id || '',
+        };
         EkTelemetry.interrupt(interruptData);
     },
     exitApp: function() {
@@ -202,7 +198,7 @@ TelemetryV3Manager = Class.extend({
     },
     xapi: function(data) {
         var data = {
-            type: type,
+            type: data.type || "",
             data: data
         }
         EkTelemetry.exdata(data);
