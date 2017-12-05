@@ -13,7 +13,6 @@ TelemetryV3Manager = Class.extend({
     getConfig: function(){
       var configData = TelemetryService._otherData;
       configData['env'] = configData.mode || "preview";
-      configData['uid'] = TelemetryService._user.uid;
       configData["dispatcher"] = ("undefined" == typeof cordova) ? org.ekstep.contentrenderer.webDispatcher : org.ekstep.contentrenderer.deviceDispatcher;
       this._config = configData;
       return this._config;
