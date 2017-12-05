@@ -1,6 +1,7 @@
 TelemetryV3Manager = Class.extend({
     _end: new Array(),
     _start: new Array(),
+    _config: {},
      init: function() {
         console.info("TelemetryService Version 3 initialized..");
     },
@@ -9,38 +10,29 @@ TelemetryV3Manager = Class.extend({
         if (error) message += ' Error: ' + JSON.stringify(error);
         TelemetryServiceV3.exitApp();
     },
+    getConfig: function(){
+      var configData = TelemetryService._otherData;
+      configData['env'] = configData.mode || "preview";
+      configData['uid'] = TelemetryService._user.id;
+      configData["dispatcher"] = ("undefined" == typeof cordova) ? org.ekstep.contentrenderer.webDispatcher : org.ekstep.contentrenderer.deviceDispatcher;
+      this._config = configData;
+      return this._config;
+    },
     start: function(id, ver, data) {
         if(id == undefined || ver == undefined || data == undefined) {
             console.error('Invalid start data');
             return;
         }
-        var deviceId = detectClient();
-        var config = {
-            pdata: {
-                id: EkstepRendererAPI.getGlobalConfig().pdata.id || "in.ekstep",
-                ver: EkstepRendererAPI.getGlobalConfig().pdata.ver || "1.0",
-                pid: data.pid || "",
-            },
-            channel: EkstepRendererAPI.getGlobalConfig().channel,
-            env: EkstepRendererAPI.getGlobalConfig().mode,
-            uid: GlobalContext.user.uid || "anonymous",
-            sid: EkstepRendererAPI.getGlobalConfig().sid || "",
-            did: GlobalContext.config.did || CryptoJS.MD5(JSON.stringify(deviceId)).toString(),
-            authtoken: "",
-            dispatcher: ("undefined" == typeof cordova) ? org.ekstep.contentrenderer.webDispatcher : org.ekstep.contentrenderer.deviceDispatcher
-        };
-        var startData = {
-            type: GlobalContext.config.type,
-            dspec: data.dspec || "",
-            uaspec: data.uaspec || "",
-            loc: data.loc || "",
-            mode:  data.mode || EkstepRendererAPI.getGlobalConfig().mode,
-            pageid: data.pageid || EkstepRendererAPI.getCurrentStageId(),
-            duration: ""
-        }
+        // var deviceId = detectClient();
+
         this._end.push("END", {});
         this._start.push({id: id , ver : ver});
-        EkTelemetry.start(config, GlobalContext.currentContentId, ver, startData);
+        var config = this.getConfig();
+        
+        data.mode = data.mode || this._config.mode;
+        data.type = data.type || "player";
+
+        EkTelemetry.start(config, TelemetryService._gameData.id, ver, data);
     },
     end: function(data) {
         if (data == undefined) {

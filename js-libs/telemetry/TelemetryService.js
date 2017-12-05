@@ -31,9 +31,7 @@ TelemetryService = {
         return new Promise(function(resolve, reject) {
             if (!TelemetryService.instance) {
                 TelemetryService._user = user;
-                //TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
-                //TelemetryService.instance = new TelemetryV3Manager();
-                TelemetryService.changeVersion(TelemetryService._version);
+                TelemetryService.getTelemetryIntance(TelemetryService._version);
                 if (gameData) {
                     if (gameData.id && gameData.ver) {
                         TelemetryService._parentGameData = gameData;
@@ -76,7 +74,7 @@ TelemetryService = {
                 });
         });
     },
-    changeVersion: function(version) {
+    getTelemetryIntance: function(version) {
         TelemetryService._version = version;
         switch(version){
           case "1.0" : 
@@ -88,6 +86,7 @@ TelemetryService = {
           default : 
             TelemetryService.instance = new TelemetryV3Manager();
         }
+        return TelemetryService.instance;
         //TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
         console.info("Telemetry Version updated to:", version);
     },

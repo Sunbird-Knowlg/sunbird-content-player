@@ -350,8 +350,8 @@ function setGlobalConfig(context) {
 function setTelemetryEventFields(globalConfig) {
     var otherData = {};
     for (var i = 0; i < globalConfig.telemetryEventsConfigFields.length; i++) {
-        var value = globalConfig[globalConfig.telemetryEventsConfigFields[i]] || globalConfig[globalConfig.telemetryEventsConfigFields[i]];
         var key = globalConfig.telemetryEventsConfigFields[i];
+        var value = globalConfig[key];
         if (!_.isUndefined(value)) otherData[key] = value;
     }
     var etags = {
@@ -360,6 +360,7 @@ function setTelemetryEventFields(globalConfig) {
         'partner':otherData.partner ||  AppConfig.etags.partner
     };
     otherData.etags = etags;
+    otherData.env = globalConfig.env ? globalConfig.env : getPreviewMode();
     delete otherData.dims;
     delete otherData.app;
     delete otherData.partner;
