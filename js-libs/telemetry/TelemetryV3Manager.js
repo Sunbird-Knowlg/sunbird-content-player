@@ -106,7 +106,7 @@ TelemetryV3Manager = Class.extend({
             var questionItem = {
                 id: eventObj.qid,
                 maxscore: eventObj.maxscore,
-                exlength: "0",
+                exlength: 0,
                 params: data.params || [],
                 uri: data.uri || "",
                 title: data.qtitle || data.title,
