@@ -37,7 +37,7 @@ var ItemController = Controller.extend({
                     try {
                         this.assessStartEvent = TelemetryService.assess((_.isString(item.identifier) && !_.isEmpty(item.identifier)) ? item.identifier : item.qid.trim(), this._data.subject, item.qlevel, {
                             maxscore: item.max_score
-                        }).start();
+                        });
                     } catch (e) {
                         EkstepRendererAPI.logErrorEvent(e,{'type':'content','severity':'fatal','action':'transitionTo','objectId':item.identifier,'objectType':'question'})
                         ControllerManager.addError('ItemController.next() - OE_ASSESS_START error: ' + e);
