@@ -13,7 +13,7 @@ TelemetryV3Manager = Class.extend({
     getConfig: function(){
       var configData = TelemetryService._otherData;
       configData['env'] = configData.mode || "preview";
-      configData['uid'] = TelemetryService._user.id;
+      configData['uid'] = TelemetryService._user.uid;
       configData["dispatcher"] = ("undefined" == typeof cordova) ? org.ekstep.contentrenderer.webDispatcher : org.ekstep.contentrenderer.deviceDispatcher;
       this._config = configData;
       return this._config;
@@ -87,35 +87,46 @@ TelemetryV3Manager = Class.extend({
         EkTelemetry.interact(eksData);
     },
     assess: function(qid, subj, qlevel, data) {
-        var maxscore;
-        subj = subj ? subj : "";
-        if (data) {
-            maxscore = data.maxscore || 1;
-        }
-        qlevel = qlevel ? qlevel : "MEDIUM";
         if (qid) {
+            var edata = {
+                qid: qid,
+                maxscore: (data && data.maxscore) ? data.maxscore || 1,
+                subj: subj || "",
+                qlevel: qlevel || "MEDIUM",
+                startTime: getCurrentTime()
+            };
+            return edata;
+        } else {
+            console.error("qid is required to create assess event.", qid);
+            // TelemetryService.logError("OE_ASSESS", "qid is required to create assess event.")
+            return new InActiveEvent();
+        }
+
+    },
+    assessEnd: function(eventObj, data) {
+        if (eventObj) {
             var questionItem = {
-                id: qid,
-                maxscore: data.maxscore || 1,
-                exlength: "",
+                id: eventObj.qid,
+                maxscore: eventObj.maxscore,
+                exlength: "0",
                 params: data.params || [],
                 uri: data.uri || "",
-                desc: data.desc || "",
-                title: data.title || "",
+                desc: data.qdesc.substr(0,140) || data.desc.substr(0,140),
+                title: data.qtitle || data.title,
                 mmc: data.mmc || "",
                 mc: data.mc || ""
             }
             var questionData = {
                 item: questionItem,
-                index: "",
-                pass: data.pass || "No",
-                score: data.score || (data.pass ? 1 : 0),
-                resvalues: data.resvalues || [],
-                duration: data.duration || ""
+                index: data.qindex || data.index || 0,
+                pass: data.pass ? 'Yes' : 'No',
+                score: data.score || (data.pass == 'Yes' ? 1 : 0),
+                resvalues: data.res || data.resvalues || [],
+                duration: Math.round((getCurrentTime() - eventObj.startTime ) / 1000)
             }
             EkTelemetry.assess(questionData);
         } else {
-            console.error("qid is required to create assess event.", qid);
+            console.error("question id is required to create assess event.");
             // TelemetryService.logError("OE_ASSESS", "qid is required to create assess event.")
             return new InActiveEvent();
         }
