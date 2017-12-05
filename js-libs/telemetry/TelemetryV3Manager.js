@@ -129,15 +129,10 @@ TelemetryV3Manager = Class.extend({
 
     },
     error: function(data) {
-        /* if (!TelemetryV3Manager.hasRequiredData(data, ["err", "errtype"])) {
-            console.error('Invalid error data');
-            return;
-        } */
         var object = {
             id: data.objectId,
             type: data.objectType || "",
             ver: data.objectVersion || "",
-            rollup: data.rollup || {}
         }
         var plugin = {
             id: data.id || "",
@@ -148,7 +143,7 @@ TelemetryV3Manager = Class.extend({
             err: data.err,
             errtype: data.type || data.errtype,
             stacktrace: data.stacktrace || "",
-            pageid: data.stageId || EkstepRendererAPI.getCurrentStageId(),
+            pageid: data.stageId || "",
             object: data.object || object,
             plugin: plugin
         }
