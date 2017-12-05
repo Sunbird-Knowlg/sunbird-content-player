@@ -52,6 +52,8 @@ TelemetryV3Manager = Class.extend({
             console.error('Invalid interact data');
             return;
         }
+        if (eks.optionTag)
+            this.itemResponse(eks);
         var eksData = {
             "type": type,
             "subtype": eks.subtype ? eks.subtype : "",
@@ -104,14 +106,17 @@ TelemetryV3Manager = Class.extend({
             var questionItem = {
                 id: eventObj.qid,
                 maxscore: eventObj.maxscore,
-                exlength: "0",
+                exlength: 0,
                 params: data.params || [],
                 uri: data.uri || "",
-                desc: data.qdesc.substr(0,140) || data.desc.substr(0,140),
                 title: data.qtitle || data.title,
                 mmc: data.mmc || "",
                 mc: data.mc || ""
             }
+            if(data.qdesc || data.desc)
+                questionItem.desc =  data.qdesc.substr(0,140) || data.desc.substr(0,140);
+            else
+                questionItem.desc = "";
             var questionData = {
                 item: questionItem,
                 index: data.qindex || data.index || 0,
@@ -175,20 +180,17 @@ TelemetryV3Manager = Class.extend({
         }
     },
     itemResponse: function(data) {
-        var type = data.optionTag == "MCQ" ? "CHOOSE" : "MATCH";
-        var target = {
-            id: data.itemId || "",
-            ver: data.ver || "",
-            type: data.type || "",
-            state: data.state || "",
-            parent: data.parent || {}
-        }
+        var target = (data.target) ? data.target : { 
+            "id": data.itemId,
+            "ver": "1.0",
+            "type": "Plugin"
+        };
         var responseData = {
             target: target,
-            type: data.type,
+            type: data.optionTag == "MCQ" ? "CHOOSE" : "MATCH",
             values: _.isEmpty(data.res) ? [] : data.res
         }
-        EkTelemetry.response(data);
+        EkTelemetry.response(responseData);
     },
     sendFeedback: function(data) {
         EkTelemetry.feedback(data);
