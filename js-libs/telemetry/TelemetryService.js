@@ -32,7 +32,8 @@ TelemetryService = {
             if (!TelemetryService.instance) {
                 TelemetryService._user = user;
                 //TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
-                TelemetryService.instance = new TelemetryV3Manager();
+                //TelemetryService.instance = new TelemetryV3Manager();
+                TelemetryService.changeVersion(TelemetryService._version);
                 if (gameData) {
                     if (gameData.id && gameData.ver) {
                         TelemetryService._parentGameData = gameData;
@@ -77,7 +78,17 @@ TelemetryService = {
     },
     changeVersion: function(version) {
         TelemetryService._version = version;
-        TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
+        switch(version){
+          case "1.0" : 
+            TelemetryService.instance = new TelemetryV1Manager(); break;
+          case "2.0" : 
+          case "2.1" : 
+          case "2.2" : 
+            TelemetryService.instance = new TelemetryV2Manager(); break;
+          default : 
+            TelemetryService.instance = new TelemetryV3Manager();
+        }
+        //TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
         console.info("Telemetry Version updated to:", version);
     },
     getDataByField: function(field) {
@@ -216,11 +227,11 @@ TelemetryService = {
             navigator.app.exitApp();
         }, 5000);
     },
-    navigate: function(stageid, stageto) {
+    navigate: function(stageid, stageto, data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        TelemetryService.instance.navigate(stageid, stageto);
+        TelemetryService.instance.navigate(stageid, stageto, data);
     },
     sendFeedback: function(eks) {
         if (!TelemetryService.isActive) {

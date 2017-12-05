@@ -83,7 +83,7 @@ var EkTelemetry = (function() {
             return;
         }
         if (!instance.hasRequiredData(data, ["type", "pageid"])) {
-            console.error('Invalid end data');
+            console.error('Invalid end data. Required fields are missing.', data);
             return;
         }
         var eksData = {
@@ -97,27 +97,20 @@ var EkTelemetry = (function() {
         EkTelemetry.initialized = false;
     }
 
-    this.telemetry.impression = function(pageid, type, subtype, uri, visits) {
+    this.telemetry.impression = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
         }
-        if (undefined == pageid || undefined == type || undefined == uri) {
-            console.error('Invalid impression data');
+        if (undefined == data.pageid || undefined == data.type || undefined == data.uri) {
+            console.error('Invalid impression data. Required fields are missing.', data);
             return;
         }
-        if (visits && !instance.checkRequiredField(visits, telemetryInstance.visitRequiredFields)) {
+        if (data.visits && !instance.checkRequiredField(data.visits, telemetryInstance.visitRequiredFields)) {
             console.error('Invalid visits spec')
             return;
         }
-        var eksData = {
-            "type": type,
-            "subtype": subtype || '',
-            "pageid": pageid,
-            "uri": uri,
-            "visits": visits || ''
-        }
-        instance._dispatch(instance.getEvent('IMPRESSION', eksData));
+        instance._dispatch(instance.getEvent('IMPRESSION', data));
     }
 
     this.telemetry.interact = function(data) {
@@ -137,19 +130,8 @@ var EkTelemetry = (function() {
             console.error('Invalid plugin spec')
             return;
         }
-        var eksData = {
-            "type": data.type,
-            "subtype": data.subtype || '',
-            "id": data.id,
-            "pageid": data.stageId ? data.stageId.toString() : "",
-            "target": data.target || '',
-            "plugin": data.plugin || '',
-            "extra": {
-              "pos": (data.extra && data.extra.pos) ? data.extra.pos : [],
-              "values": (data.extra && data.extra.values) ? data.extra.values : []
-            }
-        }
-        instance._dispatch(instance.getEvent('INTERACT', eksData));
+
+        instance._dispatch(instance.getEvent('INTERACT', data));
     }
 
     this.telemetry.assess = function(data) {

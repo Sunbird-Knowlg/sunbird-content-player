@@ -64,16 +64,35 @@ TelemetryV3Manager = Class.extend({
             console.error('Invalid interact data');
             return;
         }
-        var data = {
-            type: type,
-            subtype: "",
-            id: id,
-            pageid: EkstepRendererAPI.getCurrentStageId(),
-            target: "",
-            plugin: "",
-            extra: {}
+        var eksData = {
+            "type": type,
+            "subtype": eks.subtype ? eks.subtype : "",
+            "id": id,
+            "pageid": eks.stageId ? eks.stageId.toString() : "",
         }
-        EkTelemetry.interact(data);
+        if(eks.extra){
+          var extraObj ={
+            "pos": (eks.extra && eks.pos) ? eks.pos : [],
+            "values": (eks.extra && eks.values) ? data.values : []
+          }
+          eksData["extra"] = extraObj;
+        }
+        if(eks.target) { 
+          var targetObj = {
+            "id": id,
+            "ver": "1.0",
+            "type": "Plugin"
+          }
+          eksData["target"] =  eks.target || targetObj; 
+        }
+        if(eks.plugin) { 
+           var pluginObj = {
+            "id": id,
+            "ver": "1.0"
+          }
+          eksData["plugin"] =  eks.plugin || pluginObj;
+        }
+        EkTelemetry.interact(eksData);
     },
     assess: function(qid, subj, qlevel, data) {
         var maxscore;
@@ -132,7 +151,7 @@ TelemetryV3Manager = Class.extend({
             stacktrace: data.stacktrace || "",
             pageid: data.stageId || EkstepRendererAPI.getCurrentStageId(),
             object: data.object || object,
-            plugin:plugin
+            plugin: plugin
         }
         EkTelemetry.error(errorData);
     },
@@ -152,9 +171,14 @@ TelemetryV3Manager = Class.extend({
             navigator.app.exitApp();
         }, 5000);
     },
-    navigate: function(stageid, stageto, type, subtype, uri, visit) {
-        if (stageto != undefined && stageid != undefined && stageto != stageid) {
-            EkTelemetry.impression(stageto || "", type || "workflow", subtype || "Paginate", uri || "", visit);
+    navigate: function(stageid, stageto, data) {
+        var data = {
+          "type": (data && data.type) ? data.type : "workflow" ,
+          "pageid": stageid,
+          "uri": (data && data.uri) ? data.uri : ""
+        }
+        if (stageid != undefined) {
+            EkTelemetry.impression(data);
         } else {
             console.error('Invalid impression data');
             return;
