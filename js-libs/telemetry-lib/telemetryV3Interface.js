@@ -60,13 +60,15 @@ var EkTelemetry = (function() {
         }
         var eksData = {
             "type": data.type,
-            "dspec": data.dspec || "",
-            "uaspec": data.uaspec || "",
             "loc": data.loc || "",
             "mode": data.mode || "",
             "duration": data.duration,
             "pageid": (data && data.stageto) ? data.stageto : ""
         }
+        if(data.dspec)
+            eksData.dspec = data.dspec;
+        if(data.uaspec)
+            eksData.uaspec = data.uaspec;
         if (instance.init(config, contentId, contentVer, data.type)) {
             var startEventObj = instance.getEvent('START', eksData);
             instance._dispatch(startEventObj)
