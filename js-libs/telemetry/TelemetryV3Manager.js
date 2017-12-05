@@ -35,16 +35,12 @@ TelemetryV3Manager = Class.extend({
         EkTelemetry.start(config, TelemetryService._gameData.id, ver, data);
     },
     end: function(data) {
-        if (data == undefined) {
-            console.error('Invalid end data');
-            return;
-        }
         if (this.telemetryStartActive()) {
             this._start.pop();
-            data.type = GlobalContext.config.type;
-            data.mode = data.mode;
+            data.type = data.type || "player";
+            data.mode = this._config['env'];
             data.summary = data.summary || [];
-            data.pageid = EkstepRendererAPI.getCurrentStageId();
+            data.pageid = data.stageid ? data.stageid : "",
             this._end.pop();
             EkTelemetry.end(data);
         } else {
