@@ -175,8 +175,8 @@ var EkTelemetry = (function() {
         }
         var eksData = {
             "target": data.target,
-            "type": data.values,
-            "values": data.type
+            "type": data.type,
+            "values": data.values
         }
         instance._dispatch(instance.getEvent('RESPONSE', eksData));
     }
