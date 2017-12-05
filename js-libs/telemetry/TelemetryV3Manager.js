@@ -52,6 +52,8 @@ TelemetryV3Manager = Class.extend({
             console.error('Invalid interact data');
             return;
         }
+        if (eks.optionTag)
+            this.itemResponse(eks);
         var eksData = {
             "type": type,
             "subtype": eks.subtype ? eks.subtype : "",
@@ -182,20 +184,17 @@ TelemetryV3Manager = Class.extend({
         }
     },
     itemResponse: function(data) {
-        var type = data.optionTag == "MCQ" ? "CHOOSE" : "MATCH";
-        var target = {
-            id: data.itemId || "",
-            ver: data.ver || "",
-            type: data.type || "",
-            state: data.state || "",
-            parent: data.parent || {}
-        }
+        var target = (data.target) ? data.target : { 
+            "id": data.itemId,
+            "ver": "1.0",
+            "type": "Plugin"
+        };
         var responseData = {
             target: target,
-            type: data.type,
+            type: data.optionTag == "MCQ" ? "CHOOSE" : "MATCH",
             values: _.isEmpty(data.res) ? [] : data.res
         }
-        EkTelemetry.response(data);
+        EkTelemetry.response(responseData);
     },
     sendFeedback: function(data) {
         EkTelemetry.feedback(data);
