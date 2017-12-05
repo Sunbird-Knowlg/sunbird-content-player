@@ -67,20 +67,11 @@ TelemetryV3Manager = Class.extend({
           }
           eksData["extra"] = extraObj;
         }
-        if(eks.target) { 
-          var targetObj = {
-            "id": id,
-            "ver": "1.0",
-            "type": "Plugin"
-          }
-          eksData["target"] =  eks.target || targetObj; 
+        if(eks.target){
+            eksData["target"] = eks.target;
         }
-        if(eks.plugin) { 
-           var pluginObj = {
-            "id": id,
-            "ver": "1.0"
-          }
-          eksData["plugin"] =  eks.plugin || pluginObj;
+        if(eks.plugin) {
+            eksData["plugin"] = eks.plugin;
         }
         EkTelemetry.interact(eksData);
     },
@@ -99,7 +90,6 @@ TelemetryV3Manager = Class.extend({
             // TelemetryService.logError("OE_ASSESS", "qid is required to create assess event.")
             return new InActiveEvent();
         }
-
     },
     assessEnd: function(eventObj, data) {
         if (eventObj) {
@@ -134,23 +124,17 @@ TelemetryV3Manager = Class.extend({
 
     },
     error: function(data) {
-        var object = {
-            id: data.objectId,
-            type: data.objectType || "",
-            ver: data.objectVersion || "",
-        }
-        var plugin = {
-            id: data.id || "",
-            ver: data.ver || "",
-            category: data.category || ""
-        }
         var errorData = {
             err: data.err,
             errtype: data.type || data.errtype,
             stacktrace: data.stacktrace || "",
-            pageid: data.stageId || "",
-            object: data.object || object,
-            plugin: plugin
+            pageid: data.stageId || ""
+        }
+        if(data.object) {
+            errorData["object"] = data.object;
+        }
+        if(data.plugin) {
+            errorData["plugin"] = data.plugin;
         }
         EkTelemetry.error(errorData);
     },
