@@ -116,3 +116,4 @@ Plugin.extend({
     }
 
 })
+//# sourceURL=TelemetrySyncPlugin.js

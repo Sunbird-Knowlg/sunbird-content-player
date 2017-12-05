@@ -4,12 +4,12 @@
  */
 
 var EkTelemetry = (function() {
-    this.telemetry = function() {};
+    this.ektelemetry = function() {};
     var instance = function() {};
     var telemetryInstance = this;
-    this.telemetry.initialized = false;
-    this.telemetry.config = undefined;
-    this.telemetry._version = "3.0";
+    this.ektelemetry.initialized = false;
+    this.ektelemetry.config = undefined;
+    this.ektelemetry._version = "3.0";
     dispatcher = undefined;
 
     this.startTime = 0;
@@ -41,7 +41,7 @@ var EkTelemetry = (function() {
     this.pdataRequiredFields = ["id"],
     this.targetObjectRequiredFields = ["type","id"],
 
-    this.telemetry.start = function(config, contentId, contentVer, data) {
+    this.ektelemetry.start = function(config, contentId, contentVer, data) {
         if (EkTelemetry.initialized) {
             console.log("Telemetry is already initialized..");
             return;
@@ -60,13 +60,15 @@ var EkTelemetry = (function() {
         }
         var eksData = {
             "type": data.type,
-            "dspec": data.dspec || "",
-            "uaspec": data.uaspec || "",
             "loc": data.loc || "",
             "mode": data.mode || "",
             "duration": data.duration,
             "pageid": (data && data.stageto) ? data.stageto : ""
         }
+        if(data.dspec)
+            eksData.dspec = data.dspec;
+        if(data.uaspec)
+            eksData.uaspec = data.uaspec;
         if (instance.init(config, contentId, contentVer, data.type)) {
             var startEventObj = instance.getEvent('START', eksData);
             instance._dispatch(startEventObj)
@@ -77,7 +79,7 @@ var EkTelemetry = (function() {
         }
     }
 
-    this.telemetry.end = function(data) {
+    this.ektelemetry.end = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -97,7 +99,7 @@ var EkTelemetry = (function() {
         EkTelemetry.initialized = false;
     }
 
-    this.telemetry.impression = function(data) {
+    this.ektelemetry.impression = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -113,7 +115,7 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('IMPRESSION', data));
     }
 
-    this.telemetry.interact = function(data) {
+    this.ektelemetry.interact = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -134,7 +136,7 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('INTERACT', data));
     }
 
-    this.telemetry.assess = function(data) {
+    this.ektelemetry.assess = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -158,7 +160,7 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('ASSESS', eksData));
     }
 
-    this.telemetry.response = function(data) {
+    this.ektelemetry.response = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -179,7 +181,7 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('RESPONSE', eksData));
     }
 
-    this.telemetry.interrupt = function(data) {
+    this.ektelemetry.interrupt = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -195,7 +197,7 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('INTERRUPT', eksData));
     }
 
-    this.telemetry.feedback = function(data) {
+    this.ektelemetry.feedback = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -208,7 +210,7 @@ var EkTelemetry = (function() {
     }
 
     //Share
-    this.telemetry.share = function(data) {
+    this.ektelemetry.share = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -225,7 +227,7 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('INTERRUPT', eksData));
     }
 
-    this.telemetry.audit = function(data) {
+    this.ektelemetry.audit = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -242,7 +244,7 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('AUDIT', eksData));
     }
 
-    this.telemetry.error = function(data) {
+    this.ektelemetry.error = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -270,7 +272,7 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('ERROR', eksData));
     }
 
-    this.telemetry.heartbeat = function(data) {
+    this.ektelemetry.heartbeat = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -278,7 +280,7 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('HEARTBEAT', data));
     }
 
-    this.telemetry.log = function(data) {
+    this.ektelemetry.log = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -297,7 +299,7 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('LOG', eksData));
     }
 
-    this.telemetry.search = function(data) {
+    this.ektelemetry.search = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -318,7 +320,7 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('SEARCH', eksData));
     }
 
-    this.telemetry.metrics = function(data) {
+    this.ektelemetry.metrics = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -326,7 +328,7 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('METRICS', data));
     }
 
-    this.telemetry.exdata = function(type, data) {
+    this.ektelemetry.exdata = function(type, data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -338,7 +340,7 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('EXDATA', eksData));
     }
 
-    this.telemetry.summary = function(data) {
+    this.ektelemetry.summary = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
@@ -484,7 +486,7 @@ var EkTelemetry = (function() {
         instance.objectAssign();
     }
 
-    return this.telemetry;
+    return this.ektelemetry;
 })();
 
 var libraryDispatcher = {
