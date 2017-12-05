@@ -271,7 +271,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener("sceneEnter", function(event) {
             var currentScene = Renderer.theme._currentScene
             if (currentScene.isItemScene()) {
-                if (!_.contains(instance.qid, currentScene._stageController.assessStartEvent.qid)) {
+                if (!_.contains(instance.qid, currentScene._stageController._model[currentScene._stageController._index].qid)) {
                     instance.stageId.push(event.target.id);
                 }
             } else {

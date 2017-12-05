@@ -194,8 +194,7 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        TelemetryService.instance.assess(qid, subj, qlevel, data);
-
+        return TelemetryService.instance.assess(qid, subj, qlevel, data);
     },
     error: function(errorObj) {
         if (!TelemetryService.isActive) {
