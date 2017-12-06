@@ -58,19 +58,10 @@ var EkTelemetry = (function() {
             console.error('Invalid user agent spec')
             return;
         }
-        var eksData = {
-            "type": data.type,
-            "loc": data.loc || "",
-            "mode": data.mode || "",
-            "duration": data.duration,
-            "pageid": (data && data.stageto) ? data.stageto : ""
-        }
-        if(data.dspec)
-            eksData.dspec = data.dspec;
-        if(data.uaspec)
-            eksData.uaspec = data.uaspec;
+        data.duration = data.duration || (new Date()).getTime();
+        
         if (instance.init(config, contentId, contentVer, data.type)) {
-            var startEventObj = instance.getEvent('START', eksData);
+            var startEventObj = instance.getEvent('START', data);
             instance._dispatch(startEventObj)
 
             // Required to calculate the time spent of content while generating OE_END
@@ -88,13 +79,7 @@ var EkTelemetry = (function() {
             console.error('Invalid end data. Required fields are missing.', data);
             return;
         }
-        var eksData = {
-            "type": data.type,
-            "mode": data.mode || '',
-            "duration" : ((new Date()).getTime() - EkTelemetry.startTime),
-            "pageid": (data && data.stageto) ? data.stageto : "",
-            "summary": data.summary || ''
-        } 
+        data.duration = ((new Date()).getTime() - EkTelemetry.startTime)
         instance._dispatch(instance.getEvent('END', eksData));
         EkTelemetry.initialized = false;
     }
@@ -149,15 +134,8 @@ var EkTelemetry = (function() {
             console.error('Invalid question spec')
             return;
         }
-        var eksData = {
-            "item": data.item,
-            "index": data.index || '',
-            "pass": data.pass || 'No',
-            "score": data.score || 0,
-            "resvalues": data.resvalues,
-            "duration": data.duration
-        }
-        instance._dispatch(instance.getEvent('ASSESS', eksData));
+
+        instance._dispatch(instance.getEvent('ASSESS', data));
     }
 
     this.ektelemetry.response = function(data) {
@@ -173,12 +151,8 @@ var EkTelemetry = (function() {
             console.error('Invalid target spec')
             return;
         }
-        var eksData = {
-            "target": data.target,
-            "type": data.type,
-            "values": data.values
-        }
-        instance._dispatch(instance.getEvent('RESPONSE', eksData));
+
+        instance._dispatch(instance.getEvent('RESPONSE', data));
     }
 
     this.ektelemetry.interrupt = function(data) {
@@ -190,11 +164,8 @@ var EkTelemetry = (function() {
             console.error('Invalid interrupt data');
             return;
         }
-        var eksData = {
-            "type": data.type,
-            "pageid": data.stageid || ''
-        }
-        instance._dispatch(instance.getEvent('INTERRUPT', eksData));
+
+        instance._dispatch(instance.getEvent('INTERRUPT', data));
     }
 
     this.ektelemetry.feedback = function(data) {
@@ -219,12 +190,8 @@ var EkTelemetry = (function() {
             console.error('Invalid share data');
             return;
         }
-        var eksData = {
-            "dir": data.dir || '',
-            "type": data.type || '',
-            "items": data.items
-        }
-        instance._dispatch(instance.getEvent('INTERRUPT', eksData));
+        
+        instance._dispatch(instance.getEvent('INTERRUPT', data));
     }
 
     this.ektelemetry.audit = function(data) {
@@ -236,12 +203,8 @@ var EkTelemetry = (function() {
             console.error('Invalid audit data');
             return;
         }
-        var eksData = {
-            "props": data.props,
-            "state": data.state || '',
-            "prevstate": data.prevstate || ''
-        }
-        instance._dispatch(instance.getEvent('AUDIT', eksData));
+        
+        instance._dispatch(instance.getEvent('AUDIT', data));
     }
 
     this.ektelemetry.error = function(data) {
@@ -261,15 +224,8 @@ var EkTelemetry = (function() {
             console.error('Invalid plugin spec')
             return;
         }
-        var eksData = {
-            "err": data.err,
-            "errtype": data.errtype,
-            "stacktrace": data.stacktrace,
-            "pageid": data.stageId || '',
-            "object": data.object || '',
-            "plugin": data.plugin || ''
-        }
-        instance._dispatch(instance.getEvent('ERROR', eksData));
+
+        instance._dispatch(instance.getEvent('ERROR', data));
     }
 
     this.ektelemetry.heartbeat = function(data) {
@@ -289,14 +245,7 @@ var EkTelemetry = (function() {
             console.error('Invalid log data');
             return;
         }
-        var eksData = {
-            "type": data.type,
-            "level": data.level,
-            "message": data.message,
-            "pageid": data.stageid || '',
-            "params": data.params || ''
-        }
-        instance._dispatch(instance.getEvent('LOG', eksData));
+        instance._dispatch(instance.getEvent('LOG', data));
     }
 
     this.ektelemetry.search = function(data) {
@@ -308,16 +257,8 @@ var EkTelemetry = (function() {
             console.error('Invalid search data');
             return;
         }
-        var eksData = {
-            "type": data.type || '',
-            "query": data.query,
-            "filters": data.filters || {},
-            "sort": data.sort || {},
-            "correlationid": data.correlationid || "",
-            "size": data.size,
-            "topn": data.type || []
-        }
-        instance._dispatch(instance.getEvent('SEARCH', eksData));
+        
+        instance._dispatch(instance.getEvent('SEARCH', data));
     }
 
     this.ektelemetry.metrics = function(data) {
@@ -328,16 +269,12 @@ var EkTelemetry = (function() {
         instance._dispatch(instance.getEvent('METRICS', data));
     }
 
-    this.ektelemetry.exdata = function(type, data) {
+    this.ektelemetry.exdata = function(data) {
         if (!EkTelemetry.initialized) {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
         }
-        var eksData = {
-            "type": type || '',
-            "data": data || ''
-        }
-        instance._dispatch(instance.getEvent('EXDATA', eksData));
+        instance._dispatch(instance.getEvent('EXDATA', data));
     }
 
     this.ektelemetry.summary = function(data) {
@@ -349,19 +286,8 @@ var EkTelemetry = (function() {
             console.error('Invalid summary data');
             return;
         }
-        var eksData = {
-            "type": data.type,
-            "mode": data.mode || '',
-            "starttime": data.starttime,
-            "endtime": data.endtime,
-            "timespent": data.timespent,
-            "pageviews": data.pageviews,
-            "interactions": data.interactions,
-            "envsummary": data.envsummary || [],
-            "eventssummary": data.eventssummary || [],
-            "pagesummary": data.pagesummary || []
-        }
-        instance._dispatch(instance.getEvent('SUMMARY', eksData));
+        
+        instance._dispatch(instance.getEvent('SUMMARY', data));
     }    
 
     instance.init = function(config, contentId, contentVer, type) {
