@@ -48,12 +48,16 @@ TelemetryV3Manager = Class.extend({
     end: function(data) {
         if (this.telemetryStartActive()) {
             this._start.pop();
-            data.type = data.type || "player";
-            data.mode = this._config['env'];
-            data.summary = data.summary || [];
-            data.pageid = data.stageid ? data.stageid : "",
+            var edata = {
+              "type" : data.type || "player",
+              "mode" : this._config['env'],
+              "summary" : data.summary || [],
+              "pageid" : data.pageid || data.stageid,
+              "progress": data.progress || 50
+            }
+            
             this._end.pop();
-            EkTelemetry.end(data);
+            EkTelemetry.end(edata);
         } else {
             console.warn("Telemetry service end is already logged Please log start telemetry again");
         }
