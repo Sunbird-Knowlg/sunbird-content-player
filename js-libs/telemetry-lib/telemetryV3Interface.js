@@ -84,7 +84,7 @@ var EkTelemetry = (function() {
             console.log("Telemetry is not initialized, Please start telemetry first");
             return;
         }
-        if (!instance.hasRequiredData(data, ["type", "pageid"])) {
+        if (!instance.hasRequiredData(data, ["type"])) {
             console.error('Invalid end data. Required fields are missing.', data);
             return;
         }
