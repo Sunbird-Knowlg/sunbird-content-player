@@ -101,7 +101,9 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
         var data = {};
         data.stageid = EkstepRendererAPI.getCurrentStageId();
         data.mode = getPreviewMode();
-        TelemetryService.start(GlobalContext.game.id, GlobalContext.game.ver, data);
+        var gameId = TelemetryService.getGameId();
+        var version = TelemetryService.getGameVer();
+        TelemetryService.start(gameId, version, data);
     },
 
     /**

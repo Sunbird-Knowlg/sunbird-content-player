@@ -170,7 +170,7 @@ TelemetryService = {
                 }))
                 return new InActiveEvent();
             else
-                return TelemetryService.instance.start(id, this._version, data);
+                return TelemetryService.instance.start(id, ver, data);
         }
     },
     end: function(data) {

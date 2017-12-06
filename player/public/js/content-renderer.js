@@ -129,12 +129,14 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
         configuration.config = {};
     }
     if (_.isUndefined(configuration.context.contentId)) {
-        configuration.context.contentId = getUrlParameter("id")
+        configuration.context.contentId = getUrlParameter("id");
     }
     localStorageGC.clear();
     _.extend(configuration, configuration.context);  // TelemetryEvent is using globalConfig.context.sid/did
     _.extend(configuration, configuration.config);
     setGlobalConfig(configuration);
+    GlobalContext.game = {id: configuration.contentId, ver: configuration.contentVer || '1.0'};
+    GlobalContext.user = {uid: configuration.uid};
 
     addWindowUnloadEvent();
     /**
