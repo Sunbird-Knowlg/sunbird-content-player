@@ -33,8 +33,8 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 if (EkstepRendererAPI.hasEventListener(EkstepRendererEvents['renderer:device:back'])) {
                     EkstepRendererAPI.dispatchEvent(EkstepRendererEvents['renderer:device:back']);
                 } else {
-                    var type = Renderer.running ? 'EXIT_CONTENT' : 'EXIT_APP'
-                    var stageId = Renderer.theme ? Renderer.theme._currentStage : $rootScope.pageId;
+                    var type = (Renderer && !Renderer.running) ? 'EXIT_APP' : 'EXIT_CONTENT';
+                    var stageId = getCurrentStageId();
                     TelemetryService.interact('TOUCH', 'DEVICE_BACK_BTN', 'EXIT', {type:type,stageId:stageId});
                     contentExitCall();
                 }
