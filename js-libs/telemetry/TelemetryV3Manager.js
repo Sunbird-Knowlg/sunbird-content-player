@@ -164,7 +164,7 @@ TelemetryV3Manager = Class.extend({
     navigate: function(stageid, stageto, data) {
         var eksData = {
           "type": (data && data.type) ? data.type : "workflow" ,
-          "pageid": stageid,
+          "pageid": stageto,
           "uri": (data && data.uri) ? data.uri : ""
         }
         if (stageid != undefined) {
