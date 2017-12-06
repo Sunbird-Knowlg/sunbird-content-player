@@ -28,11 +28,22 @@ TelemetryV3Manager = Class.extend({
         this._end.push("END", {});
         this._start.push({id: id , ver : ver});
         var config = this.getConfig();
-        
-        data.mode = data.mode || this._config.mode;
-        data.type = data.type || "player";
+        var edata = {
+          "type":  data.type || "player",
+          "mode": data.mode || config.mode,
+          "pageid": data.pageid || data.stageid
+        }
+        if(data.dspec){ 
+          edata["dspec"] = data.dspec;
+        }
+        if(data.uaspec){ 
+          edata["uaspec"] = data.uaspec;
+        }
+        if(data.loc){
+          edata["loc"] = data.loc;
+        }
 
-        EkTelemetry.start(config, TelemetryService._gameData.id, ver, data);
+        EkTelemetry.start(config, TelemetryService._gameData.id, ver, edata);
     },
     end: function(data) {
         if (this.telemetryStartActive()) {
@@ -151,13 +162,13 @@ TelemetryV3Manager = Class.extend({
         }, 5000);
     },
     navigate: function(stageid, stageto, data) {
-        var data = {
+        var eksData = {
           "type": (data && data.type) ? data.type : "workflow" ,
           "pageid": stageid,
           "uri": (data && data.uri) ? data.uri : ""
         }
         if (stageid != undefined) {
-            EkTelemetry.impression(data);
+            EkTelemetry.impression(eksData);
         } else {
             console.error('Invalid impression data');
             return;
