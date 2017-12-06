@@ -80,7 +80,7 @@ var EkTelemetry = (function() {
             return;
         }
         data.duration = ((new Date()).getTime() - EkTelemetry.startTime)
-        instance._dispatch(instance.getEvent('END', eksData));
+        instance._dispatch(instance.getEvent('END', data));
         EkTelemetry.initialized = false;
     }
 
