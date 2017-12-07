@@ -151,9 +151,9 @@ TelemetryV3Manager = Class.extend({
                 mc: data.mc || ""
             }
             if(data.qdesc || data.desc){
-                questionItem.desc =  data.qdesc.substr(0,140) || data.desc.substr(0,140);
+                v3questionItem.desc =  data.qdesc.substr(0,140) || data.desc.substr(0,140);
             }else{
-                questionItem.desc = "";
+                v3questionItem.desc = "";
             }
             var v3questionData = {
                 item: v3questionItem,
