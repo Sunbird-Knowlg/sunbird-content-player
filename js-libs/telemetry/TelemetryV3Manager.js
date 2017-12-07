@@ -56,11 +56,9 @@ TelemetryV3Manager = Class.extend({
             var edata = {
               "type" : data.type || "player",
               "mode" : this._config['env'],
-              "summary" : data.summary || [],
               "pageid" : data.pageid || data.stageid,
-              "progress": data.progress || 50
-            }
-            
+              "summary" : data.summary || [{"progress": data.progress || 50}]
+            }            
             this._end.pop();
             EkTelemetry.end(edata);
         } else {
