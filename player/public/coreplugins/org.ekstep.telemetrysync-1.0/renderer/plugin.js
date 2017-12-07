@@ -78,15 +78,15 @@ Plugin.extend({
         var instance = this;
         EventBus.addEventListener("telemetryEvent", function(data) {
             data = JSON.parse(data.target);
-            data = instance.appendRequiredFields(data);
-
-            instance.addToQueue(data);
+            if(parseInt(data.ver) >= 3){
+                data = instance.appendRequiredFields(data);
+                instance.addToQueue(data);
+            }
         });
     },
     appendRequiredFields: function(data){
         //updating sid, did, uid and mid to the telemetry event object
         _.extend(data, this._requiredFields);
-        data.mid = 'OE_' + CryptoJS.MD5(JSON.stringify(data)).toString();
         return data;
     },
     sendTelemetry: function(telemetryData) {
@@ -108,7 +108,7 @@ Plugin.extend({
     },
     addToQueue: function(data) {
         this._teleData.push(data);
-        if((data.eid.toUpperCase() == "OE_END") || (this._teleData.length >= this._maxTeleInstance)) {
+        if((data.eid.toUpperCase() == "END") || (this._teleData.length >= this._maxTeleInstance)) {
             var telemetryData = _.clone(this._teleData);
             this._teleData = [];
             this.sendTelemetry(telemetryData);
