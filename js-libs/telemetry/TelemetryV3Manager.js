@@ -106,7 +106,7 @@ TelemetryV3Manager = Class.extend({
                 maxscore: maxscore ,
                 params: []
             };
-            return new TelemetryEvent("OE_ASSESS", "2.1", eks, TelemetryService._user, TelemetryService._gameData, TelemetryService._correlationData, TelemetryService._otherData);
+            //return new TelemetryEvent("OE_ASSESS", "2.1", eks, TelemetryService._user, TelemetryService._gameData, TelemetryService._correlationData, TelemetryService._otherData);
         } else {
             console.error("qid is required to create assess event.", qid);
             // TelemetryService.logError("OE_ASSESS", "qid is required to create assess event.")
@@ -115,31 +115,6 @@ TelemetryV3Manager = Class.extend({
     },
     assessEnd: function(eventObj, data) {
         if (eventObj) {
-            //v2 data - support backward compatibility
-            if (!eventObj._isStarted) {
-                eventObj._isStarted = true; // reset start status to true for re-assess events
-            }
-
-            eventObj.event.edata.eks.score = data.score || 0;
-            eventObj.event.edata.eks.pass = data.pass ? 'Yes' : 'No';
-            eventObj.event.edata.eks.resvalues = _.isEmpty(data.res)? [] : data.res;
-            eventObj.event.edata.eks.uri = data.uri || "";
-            eventObj.event.edata.eks.qindex = data.qindex || 0;
-            eventObj.event.edata.eks.exlength = 0;
-            eventObj.event.edata.eks.qtitle = data.qtitle;
-            eventObj.event.edata.eks.qdesc = data.qdesc.substr(0,140);
-            eventObj.event.edata.eks.mmc = data.mmc;
-            eventObj.event.edata.eks.mc = data.mc;
-            if (_.isArray(eventObj.event.edata.eks.resvalues)) {
-                eventObj.event.edata.eks.resvalues = _.map(eventObj.event.edata.eks.resvalues, function(val) {
-                    val = _.isObject(val) ? val :{"0" : val};
-                    return val;
-                });
-            } else {
-                eventObj.event.edata.eks.resvalues = [];
-            }
-
-            //v3 data
             var v3questionItem = {
                 id: eventObj.event.edata.eks.qid,
                 maxscore: eventObj.event.edata.eks.maxscore,
@@ -164,9 +139,6 @@ TelemetryV3Manager = Class.extend({
                 duration: Math.round((getCurrentTime() - eventObj.startTime ) / 1000)
             }
             EkTelemetry.assess(v3questionData);
-
-            eventObj.end();
-            TelemetryService.eventDispatcher('telemetryEvent', JSON.stringify(eventObj));
         } else {
             console.error("question id is required to create assess event.");
             // TelemetryService.logError("OE_ASSESS", "qid is required to create assess event.")
@@ -234,7 +206,7 @@ TelemetryV3Manager = Class.extend({
         return (!_.isEmpty(this._start));
     },
     xapi: function(data) {
-        var data = {
+        var xdata = {
             type: data.type || "",
             data: data
         }
