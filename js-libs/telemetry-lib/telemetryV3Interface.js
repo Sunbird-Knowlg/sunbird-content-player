@@ -264,10 +264,8 @@ var EkTelemetry = (function() {
     }
 
     instance._dispatch = function(message) {
-        if (EkTelemetry.initialized) {
-            message.mid = message.eid + ':' + CryptoJS.MD5(JSON.stringify(message)).toString();
-            dispatcher.dispatch(message);
-        }
+        message.mid = message.eid + ':' + CryptoJS.MD5(JSON.stringify(message)).toString();
+        dispatcher.dispatch(message);
     }
 
     instance.getEvent = function(eventId, data) {
