@@ -188,7 +188,7 @@ TelemetryV3Manager = Class.extend({
     },
     itemResponse: function(data) {
         var target = (data.target) ? data.target : { 
-            "id": data.itemId,
+            "id": data.itemId || "unknown_id",
             "ver": "1.0",
             "type": "Plugin"
         };
