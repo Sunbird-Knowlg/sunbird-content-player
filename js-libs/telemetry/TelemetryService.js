@@ -116,7 +116,7 @@ TelemetryService = {
         TelemetryService.instance.exitApp();
     },
     flushEvent: function(eventObj, apiName) {
-      if(eventObj.event.ver = "2.1")
+      if(eventObj && eventObj.event.ver == "2.1")
         TelemetryService._data.push(eventObj);
         if (eventObj)
             eventObj.flush(apiName);
