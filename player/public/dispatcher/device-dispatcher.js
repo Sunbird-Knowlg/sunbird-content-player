@@ -2,11 +2,11 @@ org.ekstep.contentrenderer.deviceDispatcher = new(org.ekstep.contentrenderer.IDi
     type: "deviceDispatcher",
     initDispatcher: function() {},
     dispatch: function(event) {        
-        event = (typeof event === "string") ? event : JSON.stringify(event);
+        var eventStr = (typeof event === "string") ? event : JSON.stringify(event);
         if(event.eid.toUpperCase() === "FEEDBACK")
-            telemetry.send(event, "sendFeedback");
+            telemetry.send(eventStr, "sendFeedback");
         else
-            telemetry.send(event, "sendTelemetry");    
+            telemetry.send(eventStr, "sendTelemetry");    
         
     }
 }));

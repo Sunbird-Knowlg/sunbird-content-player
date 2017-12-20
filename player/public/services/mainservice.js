@@ -27,7 +27,7 @@ org.ekstep.service.init = function() {
 telemetry_web = {
     tList: [],
     send: function(string) {
-      console.log("Telemetry Event:", string);
+      console.log("V3 Telemetry Event - ", string);
         //EventBus.dispatch("telemetryEvent",string);
         return new Promise(function(resolve, reject) {
             telemetry_web.tList.push(string);

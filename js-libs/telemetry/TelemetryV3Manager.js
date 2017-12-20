@@ -14,7 +14,7 @@ TelemetryV3Manager = Class.extend({
       var configData = TelemetryService._otherData;
 
       //Adding Details values
-      configData['env'] = configData.mode || "preview";
+      configData['env'] = configData.mode || "ContentPlayer";
       configData['uid'] = TelemetryService._user.uid || 'anonymous';
       configData['channel'] = configData.channel || 'in.ekstep';
       configData['object'] = { id: TelemetryService.getGameId(), type: 'Content', ver: TelemetryService.getGameVer()};
@@ -56,11 +56,9 @@ TelemetryV3Manager = Class.extend({
             var edata = {
               "type" : data.type || "player",
               "mode" : this._config['env'],
-              "summary" : data.summary || [],
               "pageid" : data.pageid || data.stageid,
-              "progress": data.progress || 50
-            }
-            
+              "summary" : data.summary || [{"progress": data.progress || 50}]
+            }            
             this._end.pop();
             EkTelemetry.end(edata);
         } else {
@@ -96,15 +94,19 @@ TelemetryV3Manager = Class.extend({
         EkTelemetry.interact(eksData);
     },
     assess: function(qid, subj, qlevel, data) {
+        var maxscore;
+        subj = subj ? subj : "";
+        if (data) {
+            maxscore = data.maxscore || 1;
+        }
+        qlevel = qlevel ? qlevel : "MEDIUM";
         if (qid) {
-            var edata = {
+            var eks = {
                 qid: qid,
-                maxscore: (data && data.maxscore) ? data.maxscore : 1,
-                subj: subj || "",
-                qlevel: qlevel || "MEDIUM",
-                startTime: getCurrentTime()
+                maxscore: maxscore ,
+                params: []
             };
-            return edata;
+            //return new TelemetryEvent("OE_ASSESS", "2.1", eks, TelemetryService._user, TelemetryService._gameData, TelemetryService._correlationData, TelemetryService._otherData);
         } else {
             console.error("qid is required to create assess event.", qid);
             // TelemetryService.logError("OE_ASSESS", "qid is required to create assess event.")
@@ -113,29 +115,30 @@ TelemetryV3Manager = Class.extend({
     },
     assessEnd: function(eventObj, data) {
         if (eventObj) {
-            var questionItem = {
-                id: eventObj.qid,
-                maxscore: eventObj.maxscore,
+            var v3questionItem = {
+                id: eventObj.event.edata.eks.qid,
+                maxscore: eventObj.event.edata.eks.maxscore,
                 exlength: 0,
-                params: data.params || [],
+                params: data.params || eventObj.event.edata.eks.params || [],
                 uri: data.uri || "",
                 title: data.qtitle || data.title,
                 mmc: data.mmc || "",
                 mc: data.mc || ""
             }
-            if(data.qdesc || data.desc)
-                questionItem.desc =  data.qdesc.substr(0,140) || data.desc.substr(0,140);
-            else
-                questionItem.desc = "";
-            var questionData = {
-                item: questionItem,
+            if(data.qdesc || data.desc){
+                v3questionItem.desc =  data.qdesc.substr(0,140) || data.desc.substr(0,140);
+            }else{
+                v3questionItem.desc = "";
+            }
+            var v3questionData = {
+                item: v3questionItem,
                 index: data.qindex || data.index || 0,
                 pass: data.pass ? 'Yes' : 'No',
                 score: data.score || (data.pass == 'Yes' ? 1 : 0),
                 resvalues: data.res || data.resvalues || [],
                 duration: Math.round((getCurrentTime() - eventObj.startTime ) / 1000)
             }
-            EkTelemetry.assess(questionData);
+            EkTelemetry.assess(v3questionData);
         } else {
             console.error("question id is required to create assess event.");
             // TelemetryService.logError("OE_ASSESS", "qid is required to create assess event.")
@@ -185,7 +188,7 @@ TelemetryV3Manager = Class.extend({
     },
     itemResponse: function(data) {
         var target = (data.target) ? data.target : { 
-            "id": data.itemId,
+            "id": data.itemId || "unknown_id",
             "ver": "1.0",
             "type": "Plugin"
         };
@@ -203,7 +206,7 @@ TelemetryV3Manager = Class.extend({
         return (!_.isEmpty(this._start));
     },
     xapi: function(data) {
-        var data = {
+        var xdata = {
             type: data.type || "",
             data: data
         }

@@ -24,7 +24,7 @@ android {
     }
 
     defaultConfig {
-        versionName System.getenv("BUILD_NUMBER") ? "2.7." + System.getenv("BUILD_NUMBER"): "local"
+        versionName System.getenv("BUILD_NUMBER") ? "2.8." + System.getenv("BUILD_NUMBER"): "local"
         setProperty("archivesBaseName", "geniecanvas-$versionName")
     }
 
@@ -46,8 +46,8 @@ dependencies {
     compile "commons-io:commons-io:2.4"
 
     // For undubled Genie Initegration
-    compile "org.ekstep.genieservices:genie-integration:1.0.392@aar"
-    compile "org.ekstep.genieservices:commons:1.0.392@jar"
+    compile "org.ekstep.genieservices:genie-integration:1.0.496@aar"
+    compile "org.ekstep.genieservices:commons:1.0.496@jar"
 }
 
 task updateBuildNumber() {

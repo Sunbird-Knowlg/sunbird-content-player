@@ -4,6 +4,7 @@ TelemetryService = {
     isActive: false,
     _config: undefined,
     instance: undefined,
+    instanceV2: undefined,
     gameOutputFile: undefined,
     _gameErrorFile: undefined,
     _gameData: undefined,
@@ -32,6 +33,7 @@ TelemetryService = {
             if (!TelemetryService.instance) {
                 TelemetryService._user = user;
                 TelemetryService.getTelemetryIntance(TelemetryService._version);
+                TelemetryService.instanceV2 = new TelemetryV2Manager();
                 if (gameData) {
                     if (gameData.id && gameData.ver) {
                         TelemetryService._parentGameData = gameData;
@@ -113,11 +115,12 @@ TelemetryService = {
         if (error) message += ' Error: ' + JSON.stringify(error);
         TelemetryService.instance.exitApp();
     },
-    flushEvent: function(event, apiName) {
-        TelemetryService._data.push(event);
-        if (event)
-            event.flush(apiName);
-        return event;
+    flushEvent: function(eventObj, apiName) {
+      if(eventObj && eventObj.event.ver == "2.1")
+        TelemetryService._data.push(eventObj);
+        if (eventObj)
+            eventObj.flush(apiName);
+        return eventObj;
     },
     setTelemetryService: function(localStorageInstance, gameData) {
         // This is specific to HTML games launched by GenieCanvas
@@ -137,6 +140,7 @@ TelemetryService = {
             if (!_.isUndefined(start)) {
                 for (var i = 0; i < start.length; i++) {
                     TelemetryService.instance._start.push(start[i]);
+                    TelemetryService.instanceV2._start.push(start[i]);
                 }
             }
             if (!_.isUndefined(end)) {
@@ -147,6 +151,7 @@ TelemetryService = {
                 }
                 teEndevent.startTime = startTime;
                 TelemetryService.instance._end.push(teEndevent);
+                TelemetryService.instanceV2._end.push(teEndevent);
             }
         } else {
             console.info("Game id is not same", gameData.id);
@@ -167,23 +172,28 @@ TelemetryService = {
         } else {
             if (_.findWhere(TelemetryService.instance._start, {
                     id: id
-                }))
-                return new InActiveEvent();
-            else
-                return TelemetryService.instance.start(id, ver, data);
+                })){
+                return new InActiveEvent();              
+            }
+            else{
+              TelemetryService.instance.start(id, ver, data);
+              return TelemetryService.instanceV2.start(id, ver, data);              
+            }
         }
     },
     end: function(data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.instance.end(data);
+        TelemetryService.instance.end(data);
+        return this.flushEvent(TelemetryService.instanceV2.end(data), TelemetryService.apis.telemetry);
     },
     interact: function(type, id, extype, data, eid) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.instance.interact(type, id, extype, data, eid);
+        TelemetryService.instance.interact(type, id, extype, data, eid);
+        return TelemetryService.flushEvent(TelemetryService.instanceV2.interact(type, id, extype, data, eid), TelemetryService.apis.telemetry);
     },
     setUser: function(data, stageid, eid) {
         TelemetryService._user = data;
@@ -194,19 +204,22 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.instance.assess(qid, subj, qlevel, data);
+        TelemetryService.instance.assess(qid, subj, qlevel, data);
+        return TelemetryService.instanceV2.assess(qid, subj, qlevel, data);
     },
     error: function(errorObj) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.instance.error(errorObj);
+        TelemetryService.instance.error(errorObj);
+        return TelemetryService.flushEvent(TelemetryService.instance.error(errorObj), TelemetryService.apis.telemetry);
     },
     assessEnd: function(event, data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
         TelemetryService.instance.assessEnd(event, data);
+        return TelemetryService.flushEvent(TelemetryService.instanceV2.assessEnd(event, data), TelemetryService.apis.telemetry);
     },
     levelSet: function(eventData) {
         if (TelemetryService.isActive) {
@@ -219,6 +232,7 @@ TelemetryService = {
             return new InActiveEvent();
         }
         TelemetryService.instance.interrupt(type, id, eid);
+         return TelemetryService.flushEvent(TelemetryService.instanceV2.interrupt(type, id, eid), TelemetryService.apis.telemetry);
     },
     exitApp: function() {
         setTimeout(function() {
@@ -230,6 +244,7 @@ TelemetryService = {
             return new InActiveEvent();
         }
         TelemetryService.instance.navigate(stageid, stageto, data);
+         return TelemetryService._version == "1.0" ? "" : this.flushEvent(TelemetryService.instanceV2.navigate(stageid, stageto), TelemetryService.apis.telemetry);
     },
     sendFeedback: function(eks) {
         if (!TelemetryService.isActive) {
@@ -248,6 +263,7 @@ TelemetryService = {
             return new InActiveEvent();
         }
         TelemetryService.instance.itemResponse(data);
+        return TelemetryService.instanceV2.itemResponse(data);
     },
     resume: function(newUserId, NewContentId, gameData, user) {
         var previousContentId = TelemetryService._gameData;

@@ -271,7 +271,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.addEventListener("sceneEnter", function(event) {
             var currentScene = Renderer.theme._currentScene
             if (currentScene.isItemScene()) {
-                if (!_.contains(instance.qid, currentScene._stageController._model[currentScene._stageController._index].qid)) {
+                if (!_.contains(instance.qid, currentScene._stageController.assessStartEvent.event.edata.eks.qid)) {
                     instance.stageId.push(event.target.id);
                 }
             } else {
@@ -280,7 +280,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
 
         EkstepRendererAPI.addEventListener("renderer:assesment:eval", function(event) {
-            instance.qid.push(event.target.qid);
+            instance.qid.push(event.target.event.edata.eks.qid);
             instance.stageId = _.without(instance.stageId, Renderer.theme._currentStage);;
         });
     },
