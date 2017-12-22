@@ -67,11 +67,11 @@ var RendererInterface = function() {
     * Interface method to get telemetry service
     * @memberof org.ekstep.contentrenderer.interface
     */
-    this.getTelemetryService = function(){
+    this.htmlInterfaceObj.getTelemetryService = function(){
       return this.telemetryService;
     }
 
-    var telemetryService = {
+    this.htmlInterfaceObj.telemetryService = {
         /**
          * Interface to log temetry interact(INTERACT) event
          * @param  {Object} data: Telemetry event data
@@ -127,8 +127,6 @@ var RendererInterface = function() {
             _telemetryService.navigate(data.stageid, data.stageto, data.data);
         }
     }
-
-    this.htmlInterfaceObj.telemetryService = telemetryService;
 
     return this.htmlInterfaceObj;
 };
