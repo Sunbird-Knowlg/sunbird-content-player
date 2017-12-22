@@ -145,6 +145,14 @@ module.exports = function(grunt) {
                     '../js-libs/build/auth-token-generator.min.js': ['../js-libs/auth-token-generator/auth-token-generator.js']
                 }
             },
+            htmlinterfacemin: {
+                options: {
+                    mangle: false
+                },
+                files: {
+                    '../js-libs/build/htmlinterface.min.js': ['public/js/htmlinterface.js']
+                }
+            },
             renderermin: {
                 options: {
                     beautify: false,
@@ -716,6 +724,6 @@ module.exports = function(grunt) {
     grunt.registerTask('test-setup', ['new-buildPreview', 'copy:testinit', 'clean']);
     grunt.registerTask('player-test', ['karma:app']);
     grunt.registerTask('renderer-test', ['karma:renderer']);
-    grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator"]);
+    grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator", "uglify:htmlinterfacemin"]);
     grunt.registerTask('renderer-telemetryV3', ['karma:telemetryV3']);
 };
