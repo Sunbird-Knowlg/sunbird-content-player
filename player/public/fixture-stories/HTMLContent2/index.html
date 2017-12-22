@@ -22,29 +22,29 @@
         <button onclick="RI.gotoEndPage()">
             <h3>CLOSE ME</h3>
         </button>
-        <button onclick='RI.logTelemetryInteract({"type":"TOUCH","id":"next","extype":null,"eks":{"stageId":"splash"}})'>
+        <button onclick='RI.telemetryService.interact({"type":"TOUCH","id":"next","extype":null,"eks":{"stageId":"splash"}})'>
             <h3>Interact</h3>
         </button>
         <button onclick='startAsses()'>
             <h3>Assesment Start</h3>
         </button>
-        <button  onclick='RI.logTelemetryResponse({"type":"TOUCH","id":"option","extype":"CHOOSE","eks":{"type": "click","x": 394,"y": 394.441506148656,"choice_id": 1,"itemId": "wings.en.A.2","res": [{"option": "105"}],"state": "SELECTED","optionTag": "MCQ","stageId": "29192b17-b35e-4ea9-88ec-ce02d78e4693"}})'>
+        <button  onclick='RI.telemetryService.response({"type":"TOUCH","id":"option","extype":"CHOOSE","eks":{"type": "click","x": 394,"y": 394.441506148656,"choice_id": 1,"itemId": "wings.en.A.2","res": [{"option": "105"}],"state": "SELECTED","optionTag": "MCQ","stageId": "29192b17-b35e-4ea9-88ec-ce02d78e4693"}})'>
             <h3>Assesment Response</h3>
         </button>
         <button  onclick='endAssess()'>
             <h3>Assesment End</h3>
         </button>
-        <button onclick='RI.logTelemetryImpression({"stageid":"stage1","stageto":"stage2"})'>
+        <button onclick='RI.telemetryService.impression({"stageid":"stage1","stageto":"stage2"})'>
             <h3>Impression</h3>
         </button>
     </center>
     <script>
     	var assesStartEvent;
     	function startAsses() {
-    		assesStartEvent = RI.assessmentStart({"qid":"wings.en.A.2","subj":undefined,"qlevel":"MEDIUM","data":{"maxscore":1}})
+    		assesStartEvent = RI.telemetryService.assessmentStart({"qid":"wings.en.A.2","subj":undefined,"qlevel":"MEDIUM","data":{"maxscore":1}})
     	}
     	function endAssess() {
-    		RI.logTelemetryAssess(assesStartEvent,{"pass": false,"score": 1,"res": [],"mmc": [],"qindex": 1,"mc": [],"qtitle": "Write in numerals","qdesc": ""});
+    		RI.telemetryService.assess(assesStartEvent,{"pass": false,"score": 1,"res": [],"mmc": [],"qindex": 1,"mc": [],"qtitle": "Write in numerals","qdesc": ""});
     	}
     </script>
 </body>

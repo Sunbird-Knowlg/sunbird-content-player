@@ -5,120 +5,132 @@
 window.org = {"ekstep": {} }
 var RendererInterface = function() {
 
-  var _parent = window.parent; 
-  var _telemetryService =  _parent.TelemetryService;
+    var _parent = window.parent; 
+    var _telemetryService =  _parent.TelemetryService;
 
-  this.htmlInterfaceObj = {};
-  this.htmlInterfaceObj.parent = _parent;
-  this.htmlInterfaceObj.EkstepRendererAPI = _parent.EkstepRendererAPI;
+    this.htmlInterfaceObj = {};
+    this.htmlInterfaceObj.parent = _parent;
+    this.htmlInterfaceObj.EkstepRendererAPI = _parent.EkstepRendererAPI;
 
-  /**
-   * Interface method to dispatch events to do some actions
-   * @memberof org.ekstep.contentrenderer.interface
-   */
-  this.htmlInterfaceObj.dispatchEvent = function(eventName) {
-    this.EkstepRendererAPI.dispatchEvent(eventName);
-  };
+    /**
+    * Interface method to dispatch events to do some actions
+    * @memberof org.ekstep.contentrenderer.interface
+    */
+    this.htmlInterfaceObj.dispatchEvent = function(eventName) {
+        this.EkstepRendererAPI.dispatchEvent(eventName);
+    };    
 
-  /**
-   * Interface to Access Content Metadata
-   * @param  {String} contentId identifier of the game
-   * @memberof org.ekstep.contentrenderer.interface 
-   */
-  this.htmlInterfaceObj.getcontentMetadata = function(contentId, cb){
-    this.EkstepRendererAPI.getContentMetadata(contentId, function(){
-      if(cb) cb();
-    });
-  };
+    /**
+    * Interface to Access Content Metadata
+    * @param  {String} contentId identifier of the game
+    * @memberof org.ekstep.contentrenderer.interface 
+    */
+    this.htmlInterfaceObj.getcontentMetadata = function(contentId, cb){
+        this.EkstepRendererAPI.getContentMetadata(contentId, function(){
+        if(cb) cb();
+        });
+    };
 
-  /**
-   * Interface to access content-renderer configuration
-   * @memberof org.ekstep.contentrenderer.interface 
-   */
-  this.htmlInterfaceObj.getConfig = function(){
-    this.EkstepRendererAPI.getGlobalConfig();
-  };
+    /**
+    * Interface to access content-renderer configuration
+    * @memberof org.ekstep.contentrenderer.interface 
+    */
+    this.htmlInterfaceObj.getConfig = function(){
+        this.EkstepRendererAPI.getGlobalConfig();
+    };
 
-  /**
-   * Interface to log temetry interact(INTERACT) event
-   * @param  {Object} data: Telemetry event data
-   * @memberof org.ekstep.contentrenderer.interface
-   */
-  this.htmlInterfaceObj.logTelemetryInteract = function(data){
-    _telemetryService.interact(data.type, data.id, data.extype, data.eks);
-  }
+    /**
+    * Interface method to goto end page 
+    * @memberof org.ekstep.contentrenderer.interface 
+    */
+    this.htmlInterfaceObj.gotoEndPage = function(){
+        this.dispatchEvent("renderer:content:end");
+    }
 
-  /**
-   * Interface to log telemetry Exdata(EXDATA) event
-   * @param  {Object} data: Telemetry event data
-   * @memberof org.ekstep.contentrenderer.interface
-   */
-  this.htmlInterfaceObj.logTelemetryExdata = function(data){
-    _telemetryService.xapi(data);
-  }
+    /**
+    * Interface is to verify the env of game is running 
+    * @memberof org.ekstep.contentrenderer.interface
+    */
+    this.htmlInterfaceObj.isMobile = function(){
+        return window.cordova ? true : false ;
+    };
 
-  /**
-   * Interface to log telemetry response(RESPONSE) event
-   * @param  {Object} data: Telemetry event data
-   * @memberof org.ekstep.contentrenderer.interface 
-   */
-  this.htmlInterfaceObj.logTelemetryResponse = function(data){
-    _telemetryService.interact(data.type, data.id, data.extype, data.eks);
-  }
+    /**
+    * Interface is to exit the game 
+    * @memberof org.ekstep.contentrenderer.interface
+    */
+    this.htmlInterfaceObj.exit = function(){
+        this.parent.exitApp();
+    };
 
-  /**
-   * Interface to get assess start event
-   * @param  {Object} data: Telemetry event data
-   * @memberof org.ekstep.contentrenderer.interface 
-   */
-  this.htmlInterfaceObj.assessmentStart = function(data){
-    return _telemetryService.assess(data.qid, data.subj, data.qlevel, data.data);
-  }
+    /**
+    * Interface method to get telemetry service
+    * @memberof org.ekstep.contentrenderer.interface
+    */
+    this.getTelemetryService = function(){
+      return this.telemetryService;
+    }
 
-  /**
-   * Interface to log telemetry assess(ASSESS) event
-   * @param  {Object} event: assess start event data
-   * @param  {Object} data: data
-   * @memberof org.ekstep.contentrenderer.interface 
-   */
-  this.htmlInterfaceObj.logTelemetryAssess = function(event, data){
-    _telemetryService.assessEnd(event, data);
-  }
+    var telemetryService = {
+        /**
+         * Interface to log temetry interact(INTERACT) event
+         * @param  {Object} data: Telemetry event data
+         * @memberof org.ekstep.contentrenderer.interface
+         */
+        interact: function(data){
+            _telemetryService.interact(data.type, data.id, data.extype, data.eks);
+        },
 
-  /**
-   * Interface to log telemetry assess(ASSESS) event
-   * @param  {Object} data: Telemetry event data
-   * @memberof org.ekstep.contentrenderer.interface 
-   */
-  this.htmlInterfaceObj.logTelemetryImpression = function(data){
-    _telemetryService.navigate(data.stageid, data.stageto, data.data);
-  }
+        /**
+         * Interface to log telemetry Exdata(EXDATA) event
+         * @param  {Object} data: Telemetry event data
+         * @memberof org.ekstep.contentrenderer.interface
+         */
+        exdata: function(data){
+            _telemetryService.xapi(data);
+        },
 
-  /**
-   * Interface method to goto end page 
-   * @memberof org.ekstep.contentrenderer.interface 
-   */
-  this.htmlInterfaceObj.gotoEndPage = function(){
-    this.dispatchEvent("renderer:content:end");
-  }
+        /**
+         * Interface to log telemetry response(RESPONSE) event
+         * @param  {Object} data: Telemetry event data
+         * @memberof org.ekstep.contentrenderer.interface 
+         */
+        response: function(data){
+            _telemetryService.interact(data.type, data.id, data.extype, data.eks);
+        },
 
-  /**
-   * Interface is to verify the env of game is running 
-   * @memberof org.ekstep.contentrenderer.interface
-   */
-  this.htmlInterfaceObj.isMobile = function(){
-    return window.cordova ? true : false ;
-  };
+        /**
+         * Interface to get assess start event
+         * @param  {Object} data: Telemetry event data
+         * @memberof org.ekstep.contentrenderer.interface 
+         */
+        assessmentStart: function(data){
+            return _telemetryService.assess(data.qid, data.subj, data.qlevel, data.data);
+        },
 
-  /**
-   * Interface is to exit the game 
-   * @memberof org.ekstep.contentrenderer.interface
-   */
-  this.htmlInterfaceObj.exit = function(){
-    this.parent.exitApp();
-  };
+        /**
+         * Interface to log telemetry assess(ASSESS) event
+         * @param  {Object} event: assess start event data
+         * @param  {Object} data: data
+         * @memberof org.ekstep.contentrenderer.interface 
+         */
+        assess: function(event, data){
+            _telemetryService.assessEnd(event, data);
+        },
 
-  return this.htmlInterfaceObj;
+        /**
+         * Interface to log telemetry assess(ASSESS) event
+         * @param  {Object} data: Telemetry event data
+         * @memberof org.ekstep.contentrenderer.interface 
+         */
+        impression: function(data){
+            _telemetryService.navigate(data.stageid, data.stageto, data.data);
+        }
+    }
+
+    this.htmlInterfaceObj.telemetryService = telemetryService;
+
+    return this.htmlInterfaceObj;
 };
 org.ekstep.contentrenderer = window.parent.org.ekstep.contentrenderer;
 
