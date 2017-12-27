@@ -135,7 +135,7 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
     _.extend(configuration, configuration.context);  // TelemetryEvent is using globalConfig.context.sid/did
     _.extend(configuration, configuration.config);
     setGlobalConfig(configuration);
-    GlobalContext.game = {id: configuration.contentId, ver: configuration.contentVer || '1.0'};
+    GlobalContext.game = {id: configuration.contentId || GlobalContext.game.id, ver: configuration.contentVer || '1.0'};
     GlobalContext.user = {uid: configuration.uid};
 
     addWindowUnloadEvent();
