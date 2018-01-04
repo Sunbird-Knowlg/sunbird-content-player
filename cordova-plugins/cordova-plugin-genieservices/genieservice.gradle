@@ -3,13 +3,9 @@ repositories {
 }
 
 dependencies {
-//    compile "org.ekstep.genieservices:sdks:1.5.+@aar"
-//    compile "org.ekstep.genieservices:aidls:1.5.+@aar"
-
     // For undubled Genie Initegration
-    compile "org.ekstep.genieservices:genie-integration:1.0.392@aar"
-    compile "org.ekstep.genieservices:commons:1.0.392@jar"
-
+    compile "org.ekstep.genieservices:genie-integration:1.0.496@aar"
+    compile "org.ekstep.genieservices:commons:1.0.496@jar"
 }
 
 android {

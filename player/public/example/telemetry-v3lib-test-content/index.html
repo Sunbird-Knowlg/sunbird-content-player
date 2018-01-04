@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html ng-app="genie-canvas">
+<head>
+	<script type="text/javascript" src="jquery.min.js"></script>	
+	<script type="text/javascript" src="auth-token-generator.min.js"></script>
+	<script type="text/javascript" src="telemetry.min.js"></script>
+</head>
+<body>
+	<button class="button" onclick="startTelemetry();">Call start</button></br>
+	<button class="button" onclick="interact();">Call interact</button></br>
+
+	<button class="button" onclick="impression();">Call impression</button></br>
+	
+	<button class="button" onclick="response();">Call response</button></br>
+	<button class="button" onclick="assess();">Call Assessment</button></br>
+
+	<button class="button" onclick="interrupt();">Call interrupt</button></br>
+	
+	<button class="button" onclick="end();">Call end</button></br>
+    
+	<button class="button" onclick="error();">Call error</button></br>
+	<button class="button" onclick="exdata()">Call exdata</button>
+
+  <script type="text/javascript">
+      var key = undefined;
+      var secret = undefined;
+
+      var config = {
+          pdata : {
+              id: "genie",
+              ver: "6.5.2567",
+              pid: "regse"
+          },
+          channel : "in.ekstep",
+          uid: "anonymous",
+          did: "fbcb2d91047b6182af5156ef4af0726d",
+          sid: "jbpjdo91diu25l79tpvctfthl1",
+          authtoken: "",
+          host: "https://dev.ekstep.in",
+          env: "ContentPlayer"
+      }
+      
+      var endEvent = {"createdTime":1513746847298,"name":"OE_ASSESS","event":{"ver":"2.1","uid":"473","sid":"jbpjdo91diu25l79tpvctfthl1","did":"fbcb2d91047b6182af5156ef4af0726d","edata":{"eks":{"qid":"do_3122706365413130242191","maxscore":1,"params":[]}},"eid":"OE_ASSESS","gdata":{"id":"do_3121666254938849282587","ver":"1.0"},"cdata":[{"id":"8a30f166fa97f368ac40474fe5f2cf19","type":"ContentSession"}],"channel":"in.ekstep","pdata":{"id":"in.ekstep","ver":"1.0"},"ets":1513746847298},"_isStarted":true,"startTime":1513746847298};
+
+      function startTelemetry(){
+          var data = {"mode": "play", "stageid": "splash", "type": "player"};
+          console.log(config);
+          EkTelemetry.start(config, "abc", "123", data);
+      }
+
+      function startAssessment() {
+
+          endEvent = EkTelemetry.startAssessment('qid', ['english, hindi'], 'Medium', {maxscore: 4});
+      }
+
+      function assess() {
+          var questionData = {
+            "id": "qid", 
+            "maxscore": 1,
+            "exlength": 0, 
+            "params": [ ],
+            "desc": "short description",
+            "title": "title",
+            "mmc": [],
+            "mc": []
+          }
+          var data = {
+            "item": questionData,
+            "pass": false,
+            "score": 0,
+            "resvalues": [],
+            "duration": 1234
+          }
+          EkTelemetry.assess(data);
+      }
+
+      function error(){
+          EkTelemetry.error({err: 1, errtype: 'CONTENT', stacktrace: 'stacktrace'});
+      }
+
+      function exdata(){
+        var exdata = {
+          type: "xapi",
+          data: ""
+        };
+        EkTelemetry.exdata(data);
+      }
+      
+      function impression(){
+          var data = {
+            "type": "workflow", 
+            "pageid": "12",
+            "uri": ""
+          }
+          EkTelemetry.impression(data);
+      }
+
+      function interact(){
+          var target = {
+              "id": "Required. unique id for the target",
+              "ver": " Required. version of the target",
+              "type": " Required. Type of the target",
+              "parent": {
+                  "id": " Optional. parent id of the object",
+                  "type": " Optional. parent type of the object. Required if parentid is present."
+              }
+          };
+          var itemResponsedata = {qid: "65441", type: "ecml", target: target, values: {d:1, f:2} };
+          var interactData = {type: "wqwq", id: 1212, extra: {optionTag: itemResponsedata } };
+          EkTelemetry.interact(interactData)
+      }
+
+      function interrupt(){
+          var interuptData = {type: "qwqw", id: 1212, eventid: "qwerty_INTERUPT"};
+          EkTelemetry.interrupt(interuptData);
+      }
+
+      function response(){
+          var target = {
+              "id": "Required. unique id for the target",
+              "ver": " Required. version of the target",
+              "type": " Required. Type of the target",
+              "parent": {
+                  "id": " Optional. parent id of the object",
+                  "type": " Optional. parent type of the object. Required if parentid is present."
+              }
+          };
+          var itemResponsedata = {qid: "65441", type: "ecml", target: target, values: {d:1, f:2} };
+          EkTelemetry.response(itemResponsedata);
+      }
+
+      function end(){
+          var endData = {
+            contentId: "abc",
+            type: "ECML",
+            duration: "2:34",
+            pageId: "",
+          };
+          EkTelemetry.end(endData);
+      }
+
+      function init() {
+        if((typeof key == "undefined") || (typeof secret == "undefined")){
+          alert("Please update key & secret values");
+        }else{
+          // Generate auth token
+          var token = AuthTokenGenerate.generate(key, secret);
+          config.authtoken = token;
+
+          startTelemetry();
+        }
+      }
+      init();
+      
+  </script>
+</body>

@@ -1,9 +1,10 @@
 TelemetryService = {
-    _version: "2.1",
+    _version: "3.0",
     _baseDir: 'EkStep Content App',
     isActive: false,
     _config: undefined,
     instance: undefined,
+    instanceV2: undefined,
     gameOutputFile: undefined,
     _gameErrorFile: undefined,
     _gameData: undefined,
@@ -31,7 +32,8 @@ TelemetryService = {
         return new Promise(function(resolve, reject) {
             if (!TelemetryService.instance) {
                 TelemetryService._user = user;
-                TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
+                TelemetryService.getTelemetryIntance(TelemetryService._version);
+                TelemetryService.instanceV2 = new TelemetryV2Manager();
                 if (gameData) {
                     if (gameData.id && gameData.ver) {
                         TelemetryService._parentGameData = gameData;
@@ -74,9 +76,20 @@ TelemetryService = {
                 });
         });
     },
-    changeVersion: function(version) {
+    getTelemetryIntance: function(version) {
         TelemetryService._version = version;
-        TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
+        switch(version){
+          case "1.0" : 
+            TelemetryService.instance = new TelemetryV1Manager(); break;
+          case "2.0" : 
+          case "2.1" : 
+          case "2.2" : 
+            TelemetryService.instance = new TelemetryV2Manager(); break;
+          default : 
+            TelemetryService.instance = new TelemetryV3Manager();
+        }
+        return TelemetryService.instance;
+        //TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
         console.info("Telemetry Version updated to:", version);
     },
     getDataByField: function(field) {
@@ -102,11 +115,12 @@ TelemetryService = {
         if (error) message += ' Error: ' + JSON.stringify(error);
         TelemetryService.instance.exitApp();
     },
-    flushEvent: function(event, apiName) {
-        TelemetryService._data.push(event);
-        if (event)
-            event.flush(apiName);
-        return event;
+    flushEvent: function(eventObj, apiName) {
+      if(eventObj && eventObj.event.ver == "2.1")
+        TelemetryService._data.push(eventObj);
+        if (eventObj)
+            eventObj.flush(apiName);
+        return eventObj;
     },
     setTelemetryService: function(localStorageInstance, gameData) {
         // This is specific to HTML games launched by GenieCanvas
@@ -126,6 +140,7 @@ TelemetryService = {
             if (!_.isUndefined(start)) {
                 for (var i = 0; i < start.length; i++) {
                     TelemetryService.instance._start.push(start[i]);
+                    TelemetryService.instanceV2._start.push(start[i]);
                 }
             }
             if (!_.isUndefined(end)) {
@@ -136,6 +151,7 @@ TelemetryService = {
                 }
                 teEndevent.startTime = startTime;
                 TelemetryService.instance._end.push(teEndevent);
+                TelemetryService.instanceV2._end.push(teEndevent);
             }
         } else {
             console.info("Game id is not same", gameData.id);
@@ -154,26 +170,30 @@ TelemetryService = {
             console.log("TelemetryService is not active.");
             return new InActiveEvent();
         } else {
-            ver = (ver) ? ver + "" : "1"; // setting default ver to 1
             if (_.findWhere(TelemetryService.instance._start, {
                     id: id
-                }))
-                return new InActiveEvent();
-            else
-                return TelemetryService.flushEvent(TelemetryService.instance.start(id, ver, data), TelemetryService.apis.telemetry);
+                })){
+                return new InActiveEvent();              
+            }
+            else{
+              TelemetryService.instance.start(id, ver, data);
+              return TelemetryService.instanceV2.start(id, ver, data);              
+            }
         }
     },
     end: function(data) {
         if (!TelemetryService.isActive || !TelemetryService.instance) {
             return new InActiveEvent();
         }
-        return this.flushEvent(TelemetryService.instance.end(data), TelemetryService.apis.telemetry);
+        TelemetryService.instance.end(data);
+        return this.flushEvent(TelemetryService.instanceV2.end(data), TelemetryService.apis.telemetry);
     },
     interact: function(type, id, extype, data, eid) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.interact(type, id, extype, data, eid), TelemetryService.apis.telemetry);
+        TelemetryService.instance.interact(type, id, extype, data, eid);
+        return TelemetryService.flushEvent(TelemetryService.instanceV2.interact(type, id, extype, data, eid), TelemetryService.apis.telemetry);
     },
     setUser: function(data, stageid, eid) {
         TelemetryService._user = data;
@@ -184,19 +204,22 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.instance.assess(qid, subj, qlevel, data);
+        TelemetryService.instance.assess(qid, subj, qlevel, data);
+        return TelemetryService.instanceV2.assess(qid, subj, qlevel, data);
     },
     error: function(errorObj) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
+        TelemetryService.instance.error(errorObj);
         return TelemetryService.flushEvent(TelemetryService.instance.error(errorObj), TelemetryService.apis.telemetry);
     },
     assessEnd: function(event, data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.assessEnd(event, data), TelemetryService.apis.telemetry);
+        TelemetryService.instance.assessEnd(event, data);
+        return TelemetryService.flushEvent(TelemetryService.instanceV2.assessEnd(event, data), TelemetryService.apis.telemetry);
     },
     levelSet: function(eventData) {
         if (TelemetryService.isActive) {
@@ -208,36 +231,39 @@ TelemetryService = {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.flushEvent(TelemetryService.instance.interrupt(type, id, eid), TelemetryService.apis.telemetry);
+        TelemetryService.instance.interrupt(type, id, eid);
+         return TelemetryService.flushEvent(TelemetryService.instanceV2.interrupt(type, id, eid), TelemetryService.apis.telemetry);
     },
     exitApp: function() {
         setTimeout(function() {
             navigator.app.exitApp();
         }, 5000);
     },
-    navigate: function(stageid, stageto) {
+    navigate: function(stageid, stageto, data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService._version == "1.0" ? "" : this.flushEvent(TelemetryService.instance.navigate(stageid, stageto), TelemetryService.apis.telemetry);
+        TelemetryService.instance.navigate(stageid, stageto, data);
+         return TelemetryService._version == "1.0" ? "" : this.flushEvent(TelemetryService.instanceV2.navigate(stageid, stageto), TelemetryService.apis.telemetry);
     },
     sendFeedback: function(eks) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return this.flushEvent(TelemetryService.instance.sendFeedback(eks), TelemetryService.apis.feedback);
+        TelemetryService.instance.sendFeedback(eks);
     },
     xapi: function(eks) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return this.flushEvent(TelemetryService.instance.xapi(eks), TelemetryService.apis.telemetry);
+        TelemetryService.instance.xapi(eks);
     },
     itemResponse: function(data) {
         if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
-        return TelemetryService.instance.itemResponse(data);
+        TelemetryService.instance.itemResponse(data);
+        return TelemetryService.instanceV2.itemResponse(data);
     },
     resume: function(newUserId, NewContentId, gameData, user) {
         var previousContentId = TelemetryService._gameData;

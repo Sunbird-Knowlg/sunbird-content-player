@@ -76,6 +76,7 @@ GlobalContext = {
                     };
                     window.globalConfig = mergeJSON(AppConfig, GlobalContext.config);
                     GlobalContext.config = window.globalConfig;
+                    setTelemetryEventFields(window.globalConfig);
                     resolve(GlobalContext.config);
                 }
             }

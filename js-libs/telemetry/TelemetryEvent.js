@@ -4,6 +4,7 @@ TelemetryEvent = Class.extend({
     startTime: 0,
     name: undefined,
     event: undefined,
+    omitV3Fields: {'object': true, 'dispatcher': true, 'contentId': true, 'contentVer': true, 'type': true, 'batchsize': true,  'tags': true,  'rollup': true, "env": true},
     init: function(eid, version, body, user, gdata, cdata, otherData) {
         if("undefined" != gdata && "undefined" == gdata.ver)
             gdata.ver = "1";
@@ -36,6 +37,8 @@ TelemetryEvent = Class.extend({
             for (var i=0; i<otherKeys.length; i++) {
                 var keyName = otherKeys[i];
 
+                if(this.omitV3Fields[keyName]) continue;
+
                 var sourceObj = this.event[keyName];
                 var targetObj = otherData[keyName];
                 if (!_.isUndefined(sourceObj)) {
@@ -63,16 +66,19 @@ TelemetryEvent = Class.extend({
         var instance = this;
         if (this.event) {
             if ("undefined" != typeof telemetry) {
-                TelemetryService.eventDispatcher('telemetryEvent', JSON.stringify(instance.event));
-                telemetry.send(JSON.stringify(this.event), apiName).then(function() {
-                    return JSON.stringify(this.event);
-                }).catch(function(err) {
-                    if(instance.event.uid){    // TODO Find the Unknow events from(Jquery/cordova/ionic)
-                         TelemetryService.logError(instance.name, err);
-                    }else{
-                        console.warn("uid is not Present",instance.event);
-                    }
-                });
+                var eventStr = JSON.stringify(this.event);
+                console.log("V2 Telemetry event - ", eventStr);
+                TelemetryService.eventDispatcher('telemetryEvent', eventStr);
+                return eventStr;
+                // telemetry.send(JSON.stringify(this.event), apiName).then(function() {
+                //     return JSON.stringify(this.event);
+                // }).catch(function(err) {
+                //     if(instance.event.uid){    // TODO Find the Unknow events from(Jquery/cordova/ionic)
+                //          TelemetryService.logError(instance.name, err);
+                //     }else{
+                //         console.warn("uid is not Present",instance.event);
+                //     }
+                // });
             } else {
                 console.log(JSON.stringify(this.event));
             }

@@ -25,6 +25,9 @@ module.exports = function(grunt) {
             },
             app: {
                 configFile: 'public/test/karma.app.config.js',
+            },
+            telemetryV3: {
+                configFile: '../js-libs/telemetry-lib/test/karma.renderer.config.js',
             }
         },
         concat: {
@@ -76,7 +79,10 @@ module.exports = function(grunt) {
                     'public/services/controllerservice.js',
                     'public/js/detectClient.js',
                     'public/js/ekstepRendererEvents.js',
-                    'public/js/iEvaluator.js'
+                    'public/js/iEvaluator.js',
+                    'public/dispatcher/idispatcher.js',
+                    'public/dispatcher/web-dispatcher.js',
+                    'public/dispatcher/device-dispatcher.js'
                 ],
                 dest: 'www/scripts/renderer.script.min.js'
             },
@@ -84,7 +90,14 @@ module.exports = function(grunt) {
                 src: [
                     'public/libs/class.js',
                     'public/libs/date-format.js',
-                    '../js-libs/telemetry/*.js'
+                    '../js-libs/build/telemetry.js',
+                    '../js-libs/telemetry/InActiveEvent.js',
+                    '../js-libs/telemetry/TelemetryEvent.js',
+                    '../js-libs/telemetry/TelemetryService.js',
+                    '../js-libs/telemetry/TelemetryServiceUtil.js',
+                    '../js-libs/telemetry/TelemetryV1Manager.js',
+                    '../js-libs/telemetry/TelemetryV2Manager.js',
+                    '../js-libs/telemetry/TelemetryV3Manager.js'
                 ],
                 dest: 'www/scripts/renderer.telemetry.min.js'
             },
@@ -100,7 +113,7 @@ module.exports = function(grunt) {
                 src: [
                     '../js-libs/telemetry-lib/detectClient.js',
                     '../js-libs/telemetry-lib/md5.js',
-                    '../js-libs/telemetry-lib/telemetryInterface.js',
+                    '../js-libs/telemetry-lib/telemetryV3Interface.js',
                     '../js-libs/telemetry-lib/telemetrySyncManager.js'
                 ],
                 dest: '../js-libs/build/telemetry.js'
@@ -130,6 +143,14 @@ module.exports = function(grunt) {
                 },
                 files: {
                     '../js-libs/build/auth-token-generator.min.js': ['../js-libs/auth-token-generator/auth-token-generator.js']
+                }
+            },
+            htmlinterfacemin: {
+                options: {
+                    mangle: false
+                },
+                files: {
+                    '../js-libs/build/htmlinterface.min.js': ['public/js/htmlinterface.js']
                 }
             },
             renderermin: {
@@ -691,8 +712,8 @@ module.exports = function(grunt) {
     grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared', 'replace:xwalk_library']);
 
     //Build web prview
-    grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetry', 'concat:script', 'clean:deletefiles', 'injector:prview', 'replace:build_Number']);
-    grunt.registerTask('build-preview', ['clean','preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
+    grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetryLib', 'concat:telemetry', "uglify:telemetrymin", 'concat:script', 'clean:deletefiles', 'injector:prview', 'replace:build_Number']);
+    grunt.registerTask('build-preview', ['clean', 'build-telemetry-lib', 'preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
 
     //Build AAR
     grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);
@@ -704,5 +725,6 @@ module.exports = function(grunt) {
     grunt.registerTask('test-setup', ['new-buildPreview', 'copy:testinit', 'clean']);
     grunt.registerTask('player-test', ['karma:app']);
     grunt.registerTask('renderer-test', ['karma:renderer']);
-    grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator"]);
+    grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator", "uglify:htmlinterfacemin"]);
+    grunt.registerTask('renderer-telemetryV3', ['karma:telemetryV3']);
 };
