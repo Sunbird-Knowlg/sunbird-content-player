@@ -80,7 +80,7 @@ var EkTelemetry = (function() {
             }
         }else{
             if(contentId && contentVer){
-                EkTelemetry.config.object = {id:contentId,ver:contentVer}
+                EkTelemetry.config.object = {id:contentId, ver:contentVer}
             }
         }
         var startEventObj = instance.getEvent('START', data);
@@ -106,7 +106,7 @@ var EkTelemetry = (function() {
             return;
         }
         data.duration = ((new Date()).getTime() - EkTelemetry.startTime)
-        context && instance.mergeContext(context)
+        context && instance.updateContext(context)
         instance._dispatch(instance.getEvent('END', data));
         EkTelemetry.initialized = false;
     }
@@ -120,7 +120,7 @@ var EkTelemetry = (function() {
             console.error('Invalid visits spec')
             return;
         }
-        context && instance.mergeContext(context)
+        context && instance.updateContext(context)
         instance._dispatch(instance.getEvent('IMPRESSION', data));
     }
 
@@ -137,7 +137,7 @@ var EkTelemetry = (function() {
             console.error('Invalid plugin spec')
             return;
         }
-        context && instance.mergeContext(context)
+        context && instance.updateContext(context)
         instance._dispatch(instance.getEvent('INTERACT', data));
     }
 
@@ -150,7 +150,7 @@ var EkTelemetry = (function() {
             console.error('Invalid question spec')
             return;
         }
-        context && instance.mergeContext(context)
+        context && instance.updateContext(context)
         instance._dispatch(instance.getEvent('ASSESS', data));
     }
 
@@ -163,7 +163,7 @@ var EkTelemetry = (function() {
             console.error('Invalid target spec')
             return;
         }
-        context && instance.mergeContext(context)
+        context && instance.updateContext(context)
         instance._dispatch(instance.getEvent('RESPONSE', data));
     }
 
@@ -172,7 +172,7 @@ var EkTelemetry = (function() {
             console.error('Invalid interrupt data');
             return;
         }
-        context && instance.mergeContext(context)
+        context && instance.updateContext(context)
         instance._dispatch(instance.getEvent('INTERRUPT', data));
     }
 
@@ -181,17 +181,16 @@ var EkTelemetry = (function() {
             "rating": data.rating || '',
             "comments": data.comments || ''
         }
-        context && instance.mergeContext(context)
+        context && instance.updateContext(context)
         instance._dispatch(instance.getEvent('FEEDBACK', eksData));
     }
 
-    //Share
     this.ektelemetry.share = function(data, context) {
         if (!instance.hasRequiredData(data, ["items"])) {
             console.error('Invalid share data');
             return;
         }
-        context && instance.mergeContext(context)
+        context && instance.updateContext(context)
         instance._dispatch(instance.getEvent('INTERRUPT', data));
     }
 
@@ -200,7 +199,7 @@ var EkTelemetry = (function() {
             console.error('Invalid audit data');
             return;
         }
-        context && instance.mergeContext(context)
+        context && instance.updateContext(context)
         instance._dispatch(instance.getEvent('AUDIT', data));
     }
 
@@ -217,11 +216,12 @@ var EkTelemetry = (function() {
             console.error('Invalid plugin spec')
             return;
         }
-        context && instance.mergeContext(context)
+        context && instance.updateContext(context)
         instance._dispatch(instance.getEvent('ERROR', data));
     }
 
-    this.ektelemetry.heartbeat = function(data) {
+    this.ektelemetry.heartbeat = function(data, context) {
+        context && instance.updateContext(context)
         instance._dispatch(instance.getEvent('HEARTBEAT', data));
     }
 
@@ -230,7 +230,7 @@ var EkTelemetry = (function() {
             console.error('Invalid log data');
             return;
         }
-        context && instance.mergeContext(context);
+        context && instance.updateContext(context);
         instance._dispatch(instance.getEvent('LOG', data));
     }
 
@@ -239,28 +239,32 @@ var EkTelemetry = (function() {
             console.error('Invalid search data');
             return;
         }
-        context && instance.mergeContext(context)
+        context && instance.updateContext(context)
         instance._dispatch(instance.getEvent('SEARCH', data));
     }
 
     this.ektelemetry.metrics = function(data, context) {
-        context && instance.mergeContext(context);
+        context && instance.updateContext(context);
         instance._dispatch(instance.getEvent('METRICS', data));
     }
 
     this.ektelemetry.exdata = function(data, context) {
-        context && instance.mergeContext(context);
+        context && instance.updateContext(context);
         instance._dispatch(instance.getEvent('EXDATA', data));
     }
 
-    this.ektelemetry.summary = function(data) {
+    this.ektelemetry.summary = function(data, context) {
         if (!instance.hasRequiredData(data, ["type", "starttime", "endtime", "timespent","pageviews","interactions"])) {
             console.error('Invalid summary data');
             return;
         }
-        context && instance.mergeContext(context);
+        context && instance.updateContext(context);
         instance._dispatch(instance.getEvent('SUMMARY', data));
-    }    
+    } 
+
+    this.ektelemetry.isInitialized = function(){
+        return EkTelemetry.initialized;
+    }   
 
     instance.init = function(config, contentId, contentVer, type) {
         if (EkTelemetry.initialized) {
@@ -298,6 +302,7 @@ var EkTelemetry = (function() {
         EkTelemetry.config = Object.assign(_defaultValue, config);
         EkTelemetry.initialized = true;
         dispatcher = EkTelemetry.config.dispatcher ? EkTelemetry.config.dispatcher : libraryDispatcher;
+        console.info("Telemetry is initialized.")
     }
 
     instance._dispatch = function(message) {
@@ -343,7 +348,7 @@ var EkTelemetry = (function() {
         return isValid;
     }
 
-    instance.mergeContext = function(context){
+    instance.updateContext = function(context){
         telemetryInstance.newContext = context
     }
 
@@ -380,7 +385,6 @@ var EkTelemetry = (function() {
 var libraryDispatcher = {
     dispatch: function(event){
         var customEvent = new CustomEvent('TelemetryEvent', { detail: event });
-        telemetryInstance.newContext = {};
         console.log("Telemetry Event ", event);
         document.dispatchEvent(customEvent);
     }
