@@ -43,6 +43,7 @@ var EkTelemetry = (function() {
         "tags": "",
         "edata": ""
     }
+    this.startData = [];
     this.deviceSpecRequiredFields = ["os","make","id","mem","idisk","edisk","scrn","camera","cpu","sims","cap"],
     this.userAgentRequiredFields = ["agent","ver","system","platform","raw"],
     this.objectRequiredFields = ["id","type","ver"],
@@ -56,7 +57,7 @@ var EkTelemetry = (function() {
     this.ektelemetry.initialize = function(config){
         instance.init(config);
     }
-    this.ektelemetry.start = function(config, contentId, contentVer, data) {
+    this.ektelemetry.start = function(config, contentId, contentVer, data, context) {
         if (!instance.hasRequiredData(data, ["type"])) {
             console.error('Invalid start data');
             return;
@@ -83,8 +84,10 @@ var EkTelemetry = (function() {
                 EkTelemetry.config.object = {id:contentId, ver:contentVer}
             }
         }
+        context && instance.updateContext(context);
         var startEventObj = instance.getEvent('START', data);
         instance._dispatch(startEventObj)
+        telemetryInstance.startData.push(startEventObj);
 
         // Required to calculate the time spent of content while generating OE_END
         EkTelemetry.startTime = startEventObj.ets;
@@ -105,10 +108,14 @@ var EkTelemetry = (function() {
             console.log("Unable to invoke end event, Please invoke start event first. ");
             return;
         }
-        data.duration = ((new Date()).getTime() - EkTelemetry.startTime)
-        context && instance.updateContext(context)
-        instance._dispatch(instance.getEvent('END', data));
-        EkTelemetry.initialized = false;
+        if(telemetryInstance.startData.length){
+            var startEventObj = telemetryInstance.startData.pop();
+            data.duration = ((new Date()).getTime() - startEventObj.ets)
+            context && instance.updateContext(context)
+            instance._dispatch(instance.getEvent('END', data));
+        }else{
+            console.info("Please invoke start before invoking end event.")
+        }
     }
 
     this.ektelemetry.impression = function(data, context) {
@@ -264,7 +271,15 @@ var EkTelemetry = (function() {
 
     this.ektelemetry.isInitialized = function(){
         return EkTelemetry.initialized;
-    }   
+    } 
+
+    this.ektelemetry.resetContext = function(){
+        telemetryInstance.newContext = {};
+    };
+
+    this.ektelemetry.getNewContext = function(){
+        return telemetryInstance.newContext
+    }  
 
     instance.init = function(config, contentId, contentVer, type) {
         if (EkTelemetry.initialized) {
@@ -307,7 +322,6 @@ var EkTelemetry = (function() {
 
     instance._dispatch = function(message) {
         message.mid = message.eid + ':' + CryptoJS.MD5(JSON.stringify(message)).toString();
-        telemetryInstance.newContext = {};
         dispatcher.dispatch(message);
     }
 
@@ -329,7 +343,7 @@ var EkTelemetry = (function() {
             "id": EkTelemetry.config.uid,
             "type": 'User'
         },
-        telemetryInstance.telemetryEnvelop.context = Object.assign(globalContext, telemetryInstance.newContext)
+        telemetryInstance.telemetryEnvelop.context = Object.assign(globalContext, EkTelemetry.getNewContext())
         telemetryInstance.telemetryEnvelop.object = EkTelemetry.config.object,
         telemetryInstance.telemetryEnvelop.tags = EkTelemetry.config.tags,
         telemetryInstance.telemetryEnvelop.edata = data
@@ -351,7 +365,6 @@ var EkTelemetry = (function() {
     instance.updateContext = function(context){
         telemetryInstance.newContext = context
     }
-
     // For device which dont support ECMAScript 6
     instance.objectAssign = function() {
         Object.assign = function(target) {
