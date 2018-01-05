@@ -87,7 +87,7 @@ var EkTelemetry = (function() {
         context && instance.updateContext(context);
         var startEventObj = instance.getEvent('START', data);
         instance._dispatch(startEventObj)
-        telemetryInstance.startData.push(startEventObj);
+        telemetryInstance.startData.push(JSON.parse(JSON.stringify(startEventObj)));
 
         // Required to calculate the time spent of content while generating OE_END
         EkTelemetry.startTime = startEventObj.ets;
@@ -119,6 +119,10 @@ var EkTelemetry = (function() {
     }
 
     this.ektelemetry.impression = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         if (undefined == data.pageid || undefined == data.type || undefined == data.uri) {
             console.error('Invalid impression data. Required fields are missing.', data);
             return;
@@ -132,6 +136,10 @@ var EkTelemetry = (function() {
     }
 
     this.ektelemetry.interact = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         if (!instance.hasRequiredData(data, ["type", "id"])) {
             console.error('Invalid interact data');
             return;
@@ -149,6 +157,10 @@ var EkTelemetry = (function() {
     }
 
     this.ektelemetry.assess = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         if (!instance.hasRequiredData(data, ["item", "pass", "score", "resvalues", "duration"])) {
             console.error('Invalid assess data');
             return;
@@ -162,6 +174,10 @@ var EkTelemetry = (function() {
     }
 
     this.ektelemetry.response = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         if (!instance.hasRequiredData(data, ["target", "values", "type"])) {
             console.error('Invalid response data');
             return;
@@ -175,6 +191,10 @@ var EkTelemetry = (function() {
     }
 
     this.ektelemetry.interrupt = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         if (!instance.hasRequiredData(data, ["type"])) {
             console.error('Invalid interrupt data');
             return;
@@ -184,6 +204,10 @@ var EkTelemetry = (function() {
     }
 
     this.ektelemetry.feedback = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         var eksData = {
             "rating": data.rating || '',
             "comments": data.comments || ''
@@ -193,6 +217,10 @@ var EkTelemetry = (function() {
     }
 
     this.ektelemetry.share = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         if (!instance.hasRequiredData(data, ["items"])) {
             console.error('Invalid share data');
             return;
@@ -202,6 +230,10 @@ var EkTelemetry = (function() {
     }
 
     this.ektelemetry.audit = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         if (!instance.hasRequiredData(data, ["props"])) {
             console.error('Invalid audit data');
             return;
@@ -211,6 +243,10 @@ var EkTelemetry = (function() {
     }
 
     this.ektelemetry.error = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         if (!instance.hasRequiredData(data, ["err", "errtype", "stacktrace"])) {
             console.error('Invalid error data');
             return;
@@ -228,11 +264,19 @@ var EkTelemetry = (function() {
     }
 
     this.ektelemetry.heartbeat = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         context && instance.updateContext(context)
         instance._dispatch(instance.getEvent('HEARTBEAT', data));
     }
 
     this.ektelemetry.log = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         if (!instance.hasRequiredData(data, ["type", "level", "message"])) {
             console.error('Invalid log data');
             return;
@@ -242,6 +286,10 @@ var EkTelemetry = (function() {
     }
 
     this.ektelemetry.search = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         if (!instance.hasRequiredData(data, ["query", "size", "topn"])) {
             console.error('Invalid search data');
             return;
@@ -251,16 +299,28 @@ var EkTelemetry = (function() {
     }
 
     this.ektelemetry.metrics = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         context && instance.updateContext(context);
         instance._dispatch(instance.getEvent('METRICS', data));
     }
 
     this.ektelemetry.exdata = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         context && instance.updateContext(context);
         instance._dispatch(instance.getEvent('EXDATA', data));
     }
 
     this.ektelemetry.summary = function(data, context) {
+        if (!EkTelemetry.initialized) {
+            console.info("Please initialize telemetry first.");
+            return;
+        }
         if (!instance.hasRequiredData(data, ["type", "starttime", "endtime", "timespent","pageviews","interactions"])) {
             console.error('Invalid summary data');
             return;
