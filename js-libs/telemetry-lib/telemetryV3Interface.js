@@ -333,11 +333,11 @@ var EkTelemetry = (function() {
         return EkTelemetry.initialized;
     } 
 
-    this.ektelemetry.resetContext = function(){
-        telemetryInstance.newContext = {};
+    this.ektelemetry.resetContext = function(context){
+        telemetryInstance.newContext = context || {};
     };
 
-    this.ektelemetry.getNewContext = function(){
+    this.ektelemetry.getCurrentContext = function(){
         return telemetryInstance.newContext
     }  
 
@@ -403,7 +403,7 @@ var EkTelemetry = (function() {
             "id": EkTelemetry.config.uid,
             "type": 'User'
         },
-        telemetryInstance.telemetryEnvelop.context = Object.assign(globalContext, EkTelemetry.getNewContext())
+        telemetryInstance.telemetryEnvelop.context = Object.assign(globalContext, EkTelemetry.getCurrentContext())
         telemetryInstance.telemetryEnvelop.object = EkTelemetry.config.object,
         telemetryInstance.telemetryEnvelop.tags = EkTelemetry.config.tags,
         telemetryInstance.telemetryEnvelop.edata = data
