@@ -51,7 +51,7 @@ var AppLables = {
 	"continue": "Continue",
     "group": "Group",
     "child": "Child",
-    "groupFallbackText": "You have not created any group",
+    "groupFallback": "You have not created any group",
     "userSwitcherTitle": "Select a child or a group",
     "anonymousUserName": "Anonymous",
 	"backButtonText": "Would you like to leave this content ?",
