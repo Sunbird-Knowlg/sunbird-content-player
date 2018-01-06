@@ -1,0 +1,61 @@
+{
+    "id": "org.ekstep.questionunit.mcq",
+    "ver": "1.0",
+    "author": "Manoj Chandrashekar",
+    "title": "Question Unit Plugin: MCQ",
+    "description": "Question Unit Plugin that creates multiple choice questions",
+    "publishedDate": "",
+    "editor": {
+        "main": "editor/plugin.js",
+        "help": {
+            "src": "editor/help.md",
+            "dataType": "text"
+        },
+        "dependencies": [
+            {
+                "type": "plugin",
+                "plugin": "org.ekstep.questionunit",
+                "ver": "1.0"
+            }
+        ],
+        "menu": [],
+        "configManifest": []
+    },
+    "renderer": {
+        "main": "renderer/plugin.js",
+        "dependencies":[{
+            "type":"js",
+            "src":"renderer/util/evaluator.js",
+            "scope":"renderer"
+        }]
+    },
+    "dependencies": [
+        {
+            "type": "plugin",
+            "plugin": "org.ekstep.questionunit",
+            "ver": "1.0",
+            "scope": "renderer"
+        },
+        {
+            "type":"js",
+            "src":"renderer/util/evaluator.js",
+            "scope":"renderer"
+        }
+    ],
+    "templates": [
+        {
+            "id": "horizontalTemplate",
+            "thumbnail": "",
+            "description": "",
+            "title": "",
+            "editor": {
+                "template": "editor/templates/horizontalTemplate.html",
+                "controller": "editor/controllers/horizontalTemplate.js"
+            },
+            "renderer": {
+                "template": "renderer/templates/horizontalTemplate.html",
+                "controller": "renderer/controllers/horizontalTemplate.js"
+            }
+        }
+    ]
+}

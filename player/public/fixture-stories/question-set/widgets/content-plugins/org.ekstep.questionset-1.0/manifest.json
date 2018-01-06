@@ -1,0 +1,16 @@
+{
+   "id": "org.ekstep.questionset",
+   "ver": "1.0",
+   "author": "Manju dr",
+   "title": "Question Set Plugin",
+   "description": "",
+   "publishedDate": "",
+   "renderer": {
+       "main": "renderer/plugin.js"
+    },
+    "dependencies": [
+     {
+            "type": "css",
+            "src": "renderer/style.css"
+        }
+    ]}

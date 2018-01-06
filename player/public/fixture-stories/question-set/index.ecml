@@ -1,0 +1,46 @@
+<theme id="theme" ver="0.2" startStage="splash">
+
+    <stage x="0" y="0" w="100" h="100" id="splash" rotate="">
+        <config>
+            <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"color":"#FFFFFF","genieControls":false,"instructions":""}]]>
+        </config>
+        <manifest>
+            <media assetId="placeholder"/>
+        </manifest>
+        <org.ekstep.questionset x="10" y="10" w="79.8" h="79.8" rotate="0" z-index="0" id="3bb0dcd3-5447-4b78-b1ee-1a44073d6ed3">
+            <config>
+                <![CDATA[{"config":"QuestionSet config","questionCount":"3","isShuffle":"false"}]]>
+            </config>
+            <org.ekstep.question id="c943d0a9-0727-4471-a057-2e593eab49c" type="unit" pluginId="org.ekstep.questionunit.mcq" pluginVer="1.0" templateId="horizontalTemplate">
+                <data>
+                    <![CDATA[{"title":"What is the question?","options":[{"id": "opt1", "text":"question is the solve answere"},{"id":"opt2","text":"Answere the question please"}],"correctAnswers":["opt1", "opt2"]}]]>
+                </data>
+                <config>
+                    <![CDATA[{"metadata":{"title":"question title","description":"question description","language":"English"},"max_time":0,"max_score":1,"partial_scoring":false}]]>
+                </config>
+            </org.ekstep.question>
+           
+           
+           
+            <org.ekstep.question id="c943d0a9-0727-4471-a057-2e593eab49c3" type="unit" pluginId="org.ekstep.plugins.ftbcoreplugin" pluginVer="1.0" templateId="horizontalFTB">
+                <data>
+                    <![CDATA[{"title":"What is the answer?","options":[{"text":"Yes","image":"renderer/assets/yes.png"},{"text":"No","image":"renderer/assets/no.png"}]}]]>
+                </data>
+                <config>
+                    <![CDATA[{"metadata":{"title":"question title","description":"question description","language":"English"},"max_time":0,"max_score":1,"partial_scoring":false}]]>
+                </config>
+            </org.ekstep.question>
+        </org.ekstep.questionset>
+         </stage>
+    <manifest>
+        <media id="org.ekstep.questionset" plugin="org.ekstep.questionset" ver="1.0" src="/content-plugins/org.ekstep.questionset-1.0/renderer/plugin.js" type="plugin"/>
+        <media id="org.ekstep.questionset_manifest" plugin="org.ekstep.questionset" ver="1.0" src="/content-plugins/org.ekstep.questionset-1.0/manifest.json" type="json"/>
+        <media id="placeholder" src="/content-plugins/org.ekstep.questionset-1.0/editor/assets/ph.png" assetId="placeholder" type="image" preload="true"/>
+    </manifest>
+    <plugin-manifest>
+        <plugin id="org.ekstep.questionset" ver="1.0" type="plugin"/>
+        <plugin id="org.ekstep.questionunit" ver="1.0" type="plugin"/>
+        <plugin id="org.ekstep.questionunit.mcq" ver="1.0" type="plugin"/>
+         <plugin id="org.ekstep.plugins.ftbcoreplugin" ver="1.0" type="plugin"/>
+    </plugin-manifest>
+</theme>
