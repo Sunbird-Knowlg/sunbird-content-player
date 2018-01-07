@@ -1,0 +1,53 @@
+{
+    "id": "org.ekstep.plugins.ftbcoreplugin",
+    "ver": "1.0",
+    "author": "",
+    "type": "widget",
+    "title": "org.ekstep.plugins.ftbcoreplugin-1.0",
+    "description": "",
+    "publishedDate": "",
+    "editor": {
+        "main": "editor/plugin.js",
+        "help": {
+            "src": "editor/help.md",
+            "dataType": "text"
+        },
+        "init-data": {
+            "type": "circle",
+            "radius": 90,
+            "strokeWidth": 10,
+            "x": 10,
+            "y": 10,
+            "w": 10,
+            "h": 10,
+            "fill": "",
+            "stroke": "rgba(0,192,255,0.5)"
+        }
+    },
+    "renderer": {
+        "main": "renderer/plugin.js"
+    },
+     "templates": [
+        {
+            "id": "horizontalFTB",
+            "title": "Horizantal ftb",
+            "disc": "Horizantal ftb template",
+            "category": "ftb",
+            "editor":
+            {
+                "templateURL": "editor/createquestionui.html",
+                "controllerURL": "editor/createquestionapp.js",
+                "template": "mcqtemplate",
+                "controller": "QuestionFormController"
+            },
+            "renderer":
+            {
+                "template": "renderer/ftb.html",
+                "controller": "renderer/ftb.js",
+                "templatename": "ftbtemplate",
+                "controllername": "ftbctrl"
+            }
+
+        }]
+
+}
