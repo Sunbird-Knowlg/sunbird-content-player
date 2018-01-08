@@ -21,7 +21,8 @@ var EkTelemetry = (function() {
     this.ektelemetry._version = "3.0";
     this.dispatcher = libraryDispatcher;
     this.startTime = 0;
-    this.newContext = {};
+    this._context = {};
+    this._object = {};
     this._defaultValue = {
         pdata: {
             id: "in.ekstep",
@@ -48,7 +49,7 @@ var EkTelemetry = (function() {
         "mid": '',
         "actor": {},
         "context": {},
-        "object": "",
+        "object": {},
         "tags": "",
         "edata": ""
     }
@@ -66,7 +67,7 @@ var EkTelemetry = (function() {
     this.ektelemetry.initialize = function(config){
         instance.init(config);
     }
-    this.ektelemetry.start = function(config, contentId, contentVer, data, context) {
+    this.ektelemetry.start = function(config, contentId, contentVer, data, context, object) {
         if (!instance.hasRequiredData(data, ["type"])) {
             console.error('Invalid start data');
             return;
@@ -87,18 +88,16 @@ var EkTelemetry = (function() {
         if (!EkTelemetry.initialized) {
             instance.init(config, contentId, contentVer, data.type);
         }
-        context && instance.updateContext(context);
+        instance.updateValues(context, object);
         var startEventObj = instance.getEvent('START', data);
         instance._dispatch(startEventObj)
         telemetryInstance.startData.push(JSON.parse(JSON.stringify(startEventObj)));
-
         // Required to calculate the time spent of content while generating OE_END
         EkTelemetry.startTime = startEventObj.ets;
         return startEventObj;
-
     }
 
-    this.ektelemetry.end = function(data, context) {
+    this.ektelemetry.end = function(data, context, object) {
         if (!instance.hasRequiredData(data, ["type"])) {
             console.error('Invalid end data. Required fields are missing.', data);
             return;
@@ -106,14 +105,14 @@ var EkTelemetry = (function() {
         if(telemetryInstance.startData.length){
             var startEventObj = telemetryInstance.startData.pop();
             data.duration = ((new Date()).getTime() - startEventObj.ets)
-            context && instance.updateContext(context)
+            instance.updateValues(context, object);
             instance._dispatch(instance.getEvent('END', data));
         }else{
             console.info("Please invoke start before invoking end event.")
         }
     }
 
-    this.ektelemetry.impression = function(data, context) {
+    this.ektelemetry.impression = function(data, context, object) {
         if (undefined == data.pageid || undefined == data.type || undefined == data.uri) {
             console.error('Invalid impression data. Required fields are missing.', data);
             return;
@@ -122,11 +121,11 @@ var EkTelemetry = (function() {
             console.error('Invalid visits spec')
             return;
         }
-        context && instance.updateContext(context)
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('IMPRESSION', data));
     }
 
-    this.ektelemetry.interact = function(data, context) {
+    this.ektelemetry.interact = function(data, context, object) {
         if (!instance.hasRequiredData(data, ["type", "id"])) {
             console.error('Invalid interact data');
             return;
@@ -139,11 +138,11 @@ var EkTelemetry = (function() {
             console.error('Invalid plugin spec')
             return;
         }
-        context && instance.updateContext(context)
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('INTERACT', data));
     }
 
-    this.ektelemetry.assess = function(data, context) {
+    this.ektelemetry.assess = function(data, context, object) {
         if (!instance.hasRequiredData(data, ["item", "pass", "score", "resvalues", "duration"])) {
             console.error('Invalid assess data');
             return;
@@ -152,11 +151,11 @@ var EkTelemetry = (function() {
             console.error('Invalid question spec')
             return;
         }
-        context && instance.updateContext(context)
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('ASSESS', data));
     }
 
-    this.ektelemetry.response = function(data, context) {
+    this.ektelemetry.response = function(data, context, object) {
         if (!instance.hasRequiredData(data, ["target", "values", "type"])) {
             console.error('Invalid response data');
             return;
@@ -165,47 +164,47 @@ var EkTelemetry = (function() {
             console.error('Invalid target spec')
             return;
         }
-        context && instance.updateContext(context)
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('RESPONSE', data));
     }
 
-    this.ektelemetry.interrupt = function(data, context) {
+    this.ektelemetry.interrupt = function(data, context, object) {
         if (!instance.hasRequiredData(data, ["type"])) {
             console.error('Invalid interrupt data');
             return;
         }
-        context && instance.updateContext(context)
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('INTERRUPT', data));
     }
 
-    this.ektelemetry.feedback = function(data, context) {
+    this.ektelemetry.feedback = function(data, context, object) {
         var eksData = {
             "rating": data.rating || '',
             "comments": data.comments || ''
         }
-        context && instance.updateContext(context)
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('FEEDBACK', eksData));
     }
 
-    this.ektelemetry.share = function(data, context) {
+    this.ektelemetry.share = function(data, context, object) {
         if (!instance.hasRequiredData(data, ["items"])) {
             console.error('Invalid share data');
             return;
         }
-        context && instance.updateContext(context)
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('INTERRUPT', data));
     }
 
-    this.ektelemetry.audit = function(data, context) {
+    this.ektelemetry.audit = function(data, context, object) {
         if (!instance.hasRequiredData(data, ["props"])) {
             console.error('Invalid audit data');
             return;
         }
-        context && instance.updateContext(context)
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('AUDIT', data));
     }
 
-    this.ektelemetry.error = function(data, context) {
+    this.ektelemetry.error = function(data, context, object) {
         if (!instance.hasRequiredData(data, ["err", "errtype", "stacktrace"])) {
             console.error('Invalid error data');
             return;
@@ -218,49 +217,49 @@ var EkTelemetry = (function() {
             console.error('Invalid plugin spec')
             return;
         }
-        context && instance.updateContext(context)
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('ERROR', data));
     }
 
-    this.ektelemetry.heartbeat = function(data, context) {
-        context && instance.updateContext(context)
+    this.ektelemetry.heartbeat = function(data, context, object) {
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('HEARTBEAT', data));
     }
 
-    this.ektelemetry.log = function(data, context) {
+    this.ektelemetry.log = function(data, context, object) {
         if (!instance.hasRequiredData(data, ["type", "level", "message"])) {
             console.error('Invalid log data');
             return;
         }
-        context && instance.updateContext(context);
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('LOG', data));
     }
 
-    this.ektelemetry.search = function(data, context) {
+    this.ektelemetry.search = function(data, context, object) {
         if (!instance.hasRequiredData(data, ["query", "size", "topn"])) {
             console.error('Invalid search data');
             return;
         }
-        context && instance.updateContext(context)
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('SEARCH', data));
     }
 
-    this.ektelemetry.metrics = function(data, context) {
-        context && instance.updateContext(context);
+    this.ektelemetry.metrics = function(data, context, object) {
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('METRICS', data));
     }
 
-    this.ektelemetry.exdata = function(data, context) {
-        context && instance.updateContext(context);
+    this.ektelemetry.exdata = function(data, context, object) {
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('EXDATA', data));
     }
 
-    this.ektelemetry.summary = function(data, context) {
+    this.ektelemetry.summary = function(data, context, object) {
         if (!instance.hasRequiredData(data, ["type", "starttime", "endtime", "timespent","pageviews","interactions"])) {
             console.error('Invalid summary data');
             return;
         }
-        context && instance.updateContext(context);
+        instance.updateValues(context, object);
         instance._dispatch(instance.getEvent('SUMMARY', data));
     } 
 
@@ -269,12 +268,20 @@ var EkTelemetry = (function() {
     } 
 
     this.ektelemetry.resetContext = function(context){
-        telemetryInstance.newContext = context || {};
-    };
+        telemetryInstance._context = context || {};
+    }
+
+    this.ektelemetry.resetObject = function(object){
+        telemetryInstance._object = object || {};
+    }  
 
     this.ektelemetry.getCurrentContext = function(){
-        return telemetryInstance.newContext
-    }  
+        return telemetryInstance._context
+    }
+
+    this.ektelemetry.getCurrentObject = function(){
+        return telemetryInstance._object
+    }
 
     instance.init = function(config, contentId, contentVer, type) {
         if (EkTelemetry.initialized) {
@@ -322,7 +329,7 @@ var EkTelemetry = (function() {
         telemetryInstance.telemetryEnvelop.mid = '',
         telemetryInstance.telemetryEnvelop.actor = {"id": EkTelemetry.config.uid || 'anonymous', "type": 'User'}, 
         telemetryInstance.telemetryEnvelop.context = Object.assign(instance.getGlobalContext(), EkTelemetry.getCurrentContext())
-        telemetryInstance.telemetryEnvelop.object = EkTelemetry.config.object,
+        telemetryInstance.telemetryEnvelop.object = Object.assign(EkTelemetry.config.object || {}, EkTelemetry.getCurrentObject()),
         telemetryInstance.telemetryEnvelop.tags = EkTelemetry.config.tags || [],
         telemetryInstance.telemetryEnvelop.edata = data
         return telemetryInstance.telemetryEnvelop;
@@ -353,8 +360,9 @@ var EkTelemetry = (function() {
         return globalContext;
     }
 
-    instance.updateContext = function(context){
-        telemetryInstance.newContext = context
+    instance.updateValues = function(context, object){
+        context && (telemetryInstance._context = context);
+        object && (telemetryInstance._object = object)
     }
     // For device which dont support ECMAScript 6
     instance.objectAssign = function() {
