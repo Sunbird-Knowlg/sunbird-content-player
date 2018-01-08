@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "quizApp: An Ionic project",
   "dependencies": {
+    "angular-mocks": "^1.4.0",
     "async": "*",
     "audiosprite": "*",
     "download": "4.4.3",
@@ -10,7 +11,9 @@
     "express": "3.2.6",
     "grunt-contrib-concat": "^1.0.1",
     "jsonfile": "*",
+    "karma-mocha-reporter": "^2.2.5",
     "node-rest-client": ">=1.0.0",
+    "promise-polyfill": "^7.0.0",
     "underscore": "*",
     "xml2json": "*"
   },

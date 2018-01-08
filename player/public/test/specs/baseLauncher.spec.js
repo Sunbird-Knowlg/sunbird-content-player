@@ -14,10 +14,6 @@ describe('Base launcher', function() {
         AppConfig.corePluginspath = 'https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/v3/preview/coreplugins';
         org.ekstep.contentrenderer.initPlugins('', 'https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/v3/preview/coreplugins');
         // org.ekstep.contentrenderer.loadPlugins([{"id": "org.ekstep.htmlrenderer", "ver": "1.0", "type": 'plugin'}], [], function() {console.log("html renderer plugin is loaded"); });
-        var body = document.getElementsByTagName("body")[0];
-        var div = document.createElement('div');
-        div.id = 'gameArea'
-        body.appendChild(div);
     });
     var baseLauncher = org.ekstep.contentrenderer.baseLauncher.prototype;
     describe("When it is initialized", function() {
@@ -55,14 +51,6 @@ describe('Base launcher', function() {
             spyOn(baseLauncher, "start").and.callThrough();
             baseLauncher.start();
             expect(baseLauncher.start).toHaveBeenCalled();
-        });
-        it('It should reset the dome element', function() {
-            baseLauncher.manifest = {
-                id: 'org.ekstep.htmlrenderer'
-            }
-            spyOn(baseLauncher, "resetDomElement").and.callThrough();
-            baseLauncher.resetDomElement();
-            expect(baseLauncher.resetDomElement).toHaveBeenCalled();
         });
         it('It should reset the dome element', function() {
             baseLauncher.manifest = {

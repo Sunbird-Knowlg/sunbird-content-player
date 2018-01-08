@@ -1,7 +1,7 @@
 describe('Launcher Plugin', function() {
 	var manifest, LauncherPluginInstance;
     this.eventReciever = function(event) {
-        console.log('fake function is called for event', event.type);
+        console.log('test function is called for event', event.type);
     }
     var instance = this;
     beforeAll(function(callback) {

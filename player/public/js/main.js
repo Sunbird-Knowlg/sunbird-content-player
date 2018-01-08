@@ -63,7 +63,7 @@ function getUrlParameter(sParam) {
 
 function getCurrentStageId() {
     var stageId = EkstepRendererAPI.getCurrentStageId();
-    return (stageId) ? stageId : angular.element(document).scope().pageId;
+    return (stageId) ? stageId : (angular.element(document).scope() ? angular.element(document).scope().pageId : "");
 }
 
 function contentExitCall() {
