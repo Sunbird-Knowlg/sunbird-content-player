@@ -52,8 +52,6 @@ var EkTelemetry = (function() {
     },
     this._globalObject = {};
     this.startData = [];
-    this._currentContext = {};
-    this._currentObject = {};
     this.deviceSpecRequiredFields = ["os","make","id","mem","idisk","edisk","scrn","camera","cpu","sims","cap"],
     this.userAgentRequiredFields = ["agent","ver","system","platform","raw"],
     this.objectRequiredFields = ["id","type","ver"],
@@ -401,16 +399,16 @@ var EkTelemetry = (function() {
      * Which is used to get the currentContext value.
      * @return {object} 
      */
-    this.ektelemetry.getCurrentContext = function(){
-        return telemetryInstance._currentContext;
+    this.ektelemetry.getUpdatedContext = function(){
+        return telemetryInstance._currentContext || {};
     }
 
     /**
      * Which is used to get the current Object value.
      * @return {object} 
      */
-    this.ektelemetry.getCurrentObject = function(){
-        return telemetryInstance._currentObject;
+    this.ektelemetry.getUpdatedObject = function(){
+        return telemetryInstance._currentObject || {};
     }   
 
 
@@ -472,8 +470,8 @@ var EkTelemetry = (function() {
         telemetryInstance.telemetryEnvelop.ver = EkTelemetry._version,
         telemetryInstance.telemetryEnvelop.mid = '',
         telemetryInstance.telemetryEnvelop.actor = {"id": EkTelemetry.config.uid || 'anonymous', "type": 'User'}, 
-        telemetryInstance.telemetryEnvelop.context = Object.assign(instance.getGlobalContext(), EkTelemetry.getCurrentContext())
-        telemetryInstance.telemetryEnvelop.object = Object.assign(instance.getGlobalObject(), EkTelemetry.getCurrentObject()),
+        telemetryInstance.telemetryEnvelop.context = Object.assign({}, instance.getGlobalContext(), EkTelemetry.getUpdatedContext())
+        telemetryInstance.telemetryEnvelop.object = Object.assign({}, instance.getGlobalObject(), EkTelemetry.getUpdatedObject()),
         telemetryInstance.telemetryEnvelop.tags = EkTelemetry.config.tags || [],
         telemetryInstance.telemetryEnvelop.edata = data
         return telemetryInstance.telemetryEnvelop;
