@@ -12,7 +12,7 @@ describe("Telemetry tests", function() {
     var instance = this;
     beforeAll(function() {
         telemetryObj = EkTelemetry;
-        config = JSON.parse('{"uid":"anonymous","channel":"in.ekstep","pdata":{"id":"in.ekstep","ver":"1.0","pid":""},"env":"preview","sid":"","did":"","cdata":[{"type":"worksheet","id":"do_736298262"}],"rollup":{"l1":"","l2":""},"object":{"id":"do_9823y23","type":"Conten","ver":"","rollup":{"l1":"","l2":""}},"batchsize":20,"host":"https://api.ekstep.in","endpoint":"/data/v3/telemetry","tags":[],"apislug":"/action"}');
+        config = JSON.parse('{"uid":"anonymous","channel":"in.ekstep","pdata":{"id":"in.ekstep","ver":"1.0","pid":""},"env":"preview","sid":"","did":"","cdata":[{"type":"worksheet","id":"do_736298262"}],"rollup":{"l1":"","l2":""},"object":{"id":"do_9823y23","type":"Conten","ver":"","rollup":{"l1":"","l2":""}},"batchsize":20,"host":"https://api.ekstep.in","endpoint":"/data/v3/telemetry","tags":[], "apislug":"/action"}');
     });
 
     describe("Telemetry START", function() {
@@ -193,9 +193,14 @@ describe("Telemetry tests", function() {
     describe("Telemetry FEEDBACK", function() {
         it("It should log telemetry feedback event", function() {
             var context = {}
-            data = JSON.parse('{"rating": "2","comments": "Nice app"}')
             spyOn(telemetryObj, "feedback").and.callThrough();
             telemetryObj.feedback(data, context);
+            expect(telemetryObj.feedback).toHaveBeenCalled();
+        });
+        it("It should take default feedback values", function() {
+            var context = {}
+            spyOn(telemetryObj, "feedback").and.callThrough();
+            telemetryObj.feedback({}, context);
             expect(telemetryObj.feedback).toHaveBeenCalled();
         });
     });
@@ -221,7 +226,7 @@ describe("Telemetry tests", function() {
         it("It should log telemetry audit event", function() {
             data = JSON.parse('{"props": ["123"],"state": "","prevstate": ""}');
             spyOn(telemetryObj, "audit").and.callThrough();
-            telemetryObj.audit(data);
+            telemetryObj.audit(data, {});
             expect(telemetryObj.audit).toHaveBeenCalled();
         });
         it("It should return if the required data is unavailable", function() {
@@ -380,8 +385,15 @@ describe("Telemetry tests", function() {
             expect(telemetryObj.resetContext).toHaveBeenCalled();
             var currentContext = telemetryObj.getCurrentContext();
             expect(currentContext).not.toBeUndefined();
-            console.log("currentContext",currentContext)
             expect(currentContext.channel).toEqual('in.ilimi')
+        });
+
+        it('Should be empty, when undefined is passed to reset context',function(){
+            spyOn(telemetryObj,'resetContext').and.callThrough();
+            telemetryObj.resetContext(undefined);
+            expect(telemetryObj.resetContext).toHaveBeenCalled();
+            var currentContext = telemetryObj.getCurrentContext();
+            expect(currentContext).not.toBeUndefined();
         });
 
         it('It should reset the context',function(){
@@ -398,6 +410,16 @@ describe("Telemetry tests", function() {
             telemetryObj.summary(undefined, {});
             expect(telemetryObj.summary).toHaveBeenCalled();
         });
+
+        it('Should validate the getContext',function(){
+            EkTelemetry.initialized = false;
+            data = JSON.parse('{"type": "app_update","level": "ERROR","message": "Error occurred in updating app","pageid": "101"}');
+            spyOn(telemetryObj, "heartbeat").and.callThrough();
+            EkTelemetry.config = {};
+            telemetryObj.heartbeat(data, {});
+            expect(telemetryObj.heartbeat).toHaveBeenCalled();
+        })
+
     })
 
     describe('Invoke initialization',function(){
@@ -419,8 +441,8 @@ describe("Telemetry tests", function() {
         })
         it('It should invoke initialize, when invalid object',function(){
             EkTelemetry.initialized = false;
+            //var config = {};
             var config = {};
-            config.object = {};
             spyOn(telemetryObj, 'initialize').and.callThrough();
             telemetryObj.initialize(config);
             expect(telemetryObj.initialize).toHaveBeenCalled();
