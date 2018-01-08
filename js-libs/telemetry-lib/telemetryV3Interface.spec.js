@@ -297,7 +297,7 @@ describe("Telemetry tests", function() {
         it("It should log telemetry search event", function() {
             data = JSON.parse('{"query": "app_update","size": "333","topn": [{"h1":"H!"}]}');
             spyOn(telemetryObj, "search").and.callThrough();
-            telemetryObj.search(data, {});
+            telemetryObj.search(data, {},{});
             expect(telemetryObj.search).toHaveBeenCalled();
         });
         it("It should return if the required data is unavailable", function() {
@@ -383,7 +383,7 @@ describe("Telemetry tests", function() {
             spyOn(telemetryObj,'resetContext').and.callThrough();
             telemetryObj.resetContext({channel:'in.ilimi'});
             expect(telemetryObj.resetContext).toHaveBeenCalled();
-            var currentContext = telemetryObj.getCurrentContext();
+            var currentContext = telemetryObj.getUpdatedContext();
             expect(currentContext).not.toBeUndefined();
             expect(currentContext.channel).toEqual('in.ilimi')
         });
@@ -392,7 +392,7 @@ describe("Telemetry tests", function() {
             spyOn(telemetryObj,'resetContext').and.callThrough();
             telemetryObj.resetContext(undefined);
             expect(telemetryObj.resetContext).toHaveBeenCalled();
-            var currentContext = telemetryObj.getCurrentContext();
+            var currentContext = telemetryObj.getUpdatedContext();
             expect(currentContext).not.toBeUndefined();
         });
 
@@ -400,7 +400,7 @@ describe("Telemetry tests", function() {
             spyOn(telemetryObj,'resetContext').and.callThrough();
             telemetryObj.resetContext({channel:'in.ilimi'});
             expect(telemetryObj.resetContext).toHaveBeenCalled();
-            var currentContext = telemetryObj.getCurrentContext();
+            var currentContext = telemetryObj.getUpdatedContext();
             expect(currentContext).not.toBeUndefined();
             console.log("currentContext",currentContext)
             expect(currentContext.channel).toEqual('in.ilimi')
@@ -409,6 +409,15 @@ describe("Telemetry tests", function() {
             spyOn(telemetryObj, "summary").and.callThrough();
             telemetryObj.summary(undefined, {});
             expect(telemetryObj.summary).toHaveBeenCalled();
+        });
+
+       it('It should reset the object',function(){
+            spyOn(telemetryObj,'resetObject').and.callThrough();
+            telemetryObj.resetObject({id:'123'});
+            expect(telemetryObj.resetObject).toHaveBeenCalled();
+            var currentObject = telemetryObj.getUpdatedObject();
+            expect(currentObject).not.toBeUndefined();
+            expect(currentObject.id).toEqual('123')
         });
 
         it('Should validate the getContext',function(){
