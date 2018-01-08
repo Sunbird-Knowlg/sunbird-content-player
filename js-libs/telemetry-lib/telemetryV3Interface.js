@@ -103,10 +103,6 @@ var EkTelemetry = (function() {
             console.error('Invalid end data. Required fields are missing.', data);
             return;
         }
-        if(!EkTelemetry.startTime){
-            console.log("Unable to invoke end event, Please invoke start event first. ");
-            return;
-        }
         if(telemetryInstance.startData.length){
             var startEventObj = telemetryInstance.startData.pop();
             data.duration = ((new Date()).getTime() - startEventObj.ets)
@@ -285,18 +281,15 @@ var EkTelemetry = (function() {
             console.log("Telemetry is already initialized..");
             return;
         }
-        if(config){
-            if (config.pdata && !instance.hasRequiredData(config.pdata, telemetryInstance.pdataRequiredFields)) {
-                console.error('Invalid pdata spec in config')
-                return;
-            }
-            if (config.object && !instance.hasRequiredData(config.object, telemetryInstance.targetObjectRequiredFields)) {
-                console.error('Invalid target object spec in config')
-                return;
-            }
-        }else{
-            config = {}
-        }    
+        if(!config) config = {};
+        if (config.pdata && !instance.hasRequiredData(config.pdata, telemetryInstance.pdataRequiredFields)) {
+            console.error('Invalid pdata spec in config')
+            return;
+        }
+        if (config.object && !instance.hasRequiredData(config.object, telemetryInstance.targetObjectRequiredFields)) {
+            console.error('Invalid target object spec in config')
+            return;
+        }
         var requiredData = config;
         if(contentId && contentVer){
             requiredData = Object.assign(config, { "contentId": contentId, "contentVer": contentVer, "type": type });
