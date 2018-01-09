@@ -13,7 +13,16 @@
             </config>
             <org.ekstep.question id="c943d0a9-0727-4471-a057-2e593eab49c" type="unit" pluginId="org.ekstep.questionunit.mcq" pluginVer="1.0" templateId="horizontalTemplate">
                 <data>
-                    <![CDATA[{"title":"What is the question?","options":[{"id": "opt1", "text":"question is the solve answere"},{"id":"opt2","text":"Answere the question please"}],"correctAnswers":["opt1", "opt2"]}]]>
+                    <![CDATA[{"title":"What is the mcq?","options":[{"id": "opt1", "text":"question is the solve answere"},{"id":"opt2","text":"Answere the question please"}],"correctAnswers":["opt1"]}]]>
+                </data>
+                <config>
+                    <![CDATA[{"metadata":{"title":"question title","description":"question description","language":"English"},"max_time":0,"max_score":1,"partial_scoring":false}]]>
+                </config>
+            </org.ekstep.question>
+
+             <org.ekstep.question id="c943d0a9-0727-4471-a057-2e593eab29c" type="unit" pluginId="org.ekstep.questionunit.ftb" pluginVer="1.0" templateId="horizontalTemplate">
+                <data>
+                    <![CDATA[{"title":"What is the ftb?","options":[{"id": "opt1", "text":"question is the solve answere"},{"id":"opt2","text":"Answere the question please"}],"correctAnswers":["opt1"]}]]>
                 </data>
                 <config>
                     <![CDATA[{"metadata":{"title":"question title","description":"question description","language":"English"},"max_time":0,"max_score":1,"partial_scoring":false}]]>
@@ -35,12 +44,12 @@
     <manifest>
         <media id="org.ekstep.questionset" plugin="org.ekstep.questionset" ver="1.0" src="/content-plugins/org.ekstep.questionset-1.0/renderer/plugin.js" type="plugin"/>
         <media id="org.ekstep.questionset_manifest" plugin="org.ekstep.questionset" ver="1.0" src="/content-plugins/org.ekstep.questionset-1.0/manifest.json" type="json"/>
-        <media id="placeholder" src="/content-plugins/org.ekstep.questionset-1.0/editor/assets/ph.png" assetId="placeholder" type="image" preload="true"/>
     </manifest>
     <plugin-manifest>
         <plugin id="org.ekstep.questionset" ver="1.0" type="plugin"/>
         <plugin id="org.ekstep.questionunit" ver="1.0" type="plugin"/>
         <plugin id="org.ekstep.questionunit.mcq" ver="1.0" type="plugin"/>
+         <plugin id="org.ekstep.questionunit.ftb" ver="1.0" type="plugin"/>
          <plugin id="org.ekstep.plugins.ftbcoreplugin" ver="1.0" type="plugin"/>
     </plugin-manifest>
 </theme>
