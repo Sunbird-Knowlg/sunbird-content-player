@@ -9,14 +9,18 @@ org.ekstep.contentrenderer.questionUnitPlugin.extend({
     _type: 'org.ekstep.questionunit.mcq',
     _isContainer: true,
     _render: true,
+    _selectedanswere:undefined,
     initPlugin: function (data) {
         //TODO: Implement logic and define interfaces from org.ekstep.questionunit
 
         //TODO: Remove placeholder images from assets (no.png and yes.png)
     },
     evaluate: function (data) {
-        var evaluator = new mcqEvaluator(data);
-        return evaluator.evaluate();
+        console.log(data);
+
+        EkstepRendererAPI.dispatchEvent(this._manifest.id + ":evaluate");
+        // var evaluator = new mcqEvaluator();
+        // return evaluator.evaluate(data);
     }
 });
 //# sourceURL=questionunitMCQPlugin.js

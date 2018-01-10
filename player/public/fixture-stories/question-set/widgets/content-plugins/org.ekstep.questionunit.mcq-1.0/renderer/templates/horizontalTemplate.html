@@ -3,10 +3,10 @@
 
 <div id="preview-mcq-horizontal" ng-app="MCQRendererApp" ng-controller="MCQRendererController" ng-show="showTemplate">
 	<link rel="stylesheet" type="text/css" href="{{cssPath}}">
-	<div class="question-text">{{questionObj.title}}</div>
+	<div class="question-text">{{questionObj.question.text}}</div>
 	<div class="option-container">
 		<div ng-repeat="val in questionObj.options" class="option-value">
-			<div id="{{val.value.id}}" ng-click="selectedValue(val.id, $event)">{{val.text}}</div>
+			<div id="{{val.id}}" ng-click="selectedValue(val, $event)">{{val.text}}</div>
 		</div>
 	</div>
 </div>
