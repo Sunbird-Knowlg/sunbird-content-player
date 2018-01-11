@@ -5,10 +5,12 @@
  */
 
 var libraryDispatcher = {
-    dispatch: function(event){
-        var customEvent = new CustomEvent('TelemetryEvent', { detail: event });
+    dispatch: function(event) {
+        var customEvent = new CustomEvent('TelemetryEvent', {detail: event});
         console.log("Telemetry Event ", event);
-        document.dispatchEvent(customEvent);
+        if (typeof document != 'undefined') {
+            document.dispatchEvent(customEvent);
+        }
     }
 };
 
@@ -27,7 +29,6 @@ var EkTelemetry = (function() {
         batchsize: 20,
         host: "https://api.ekstep.in",
         endpoint: "/data/v3/telemetry",
-        tags: [],
         apislug: "/action",
     },
     this.telemetryEnvelop = {
@@ -38,7 +39,7 @@ var EkTelemetry = (function() {
         "actor": {},
         "context": {},
         "object": {},
-        "tags": "",
+        "tags": [],
         "edata": ""
     }
     this._globalContext = {
@@ -390,7 +391,7 @@ var EkTelemetry = (function() {
      * @param  {object} object [Object value]
      */
     this.ektelemetry.resetTags = function(tags){
-        telemetryInstance._currentTags = tags || {};
+        telemetryInstance._currentTags = tags || [];
     }     
 
     /**
@@ -453,7 +454,7 @@ var EkTelemetry = (function() {
         telemetryInstance.telemetryEnvelop.actor = Object.assign({}, {"id": EkTelemetry.config.uid || 'anonymous', "type": 'User'},instance.getUpdatedValue('actor'));
         telemetryInstance.telemetryEnvelop.context = Object.assign({}, instance.getGlobalContext(), instance.getUpdatedValue('context'));
         telemetryInstance.telemetryEnvelop.object = Object.assign({}, instance.getGlobalObject(), instance.getUpdatedValue('object'));
-        telemetryInstance.telemetryEnvelop.tags = Object.assign({}, EkTelemetry.config.tags, instance.getUpdatedValue('tags'));
+        telemetryInstance.telemetryEnvelop.tags = Object.assign([], EkTelemetry.config.tags, instance.getUpdatedValue('tags'));
         telemetryInstance.telemetryEnvelop.edata = data;
         return telemetryInstance.telemetryEnvelop;
     }
@@ -539,7 +540,7 @@ var EkTelemetry = (function() {
                 return telemetryInstance._currentActor || {};
                 break;
             case 'tags':
-                return telemetryInstance._currentTags || {};
+                return telemetryInstance._currentTags || [];
                 break;    
         }
     }
