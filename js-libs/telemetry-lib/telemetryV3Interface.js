@@ -6,10 +6,11 @@
 
 var libraryDispatcher = {
     dispatch: function(event) {
-        var customEvent = new CustomEvent('TelemetryEvent', {detail: event});
-        console.log("Telemetry Event ", event);
         if (typeof document != 'undefined') {
-            document.dispatchEvent(customEvent);
+            //To Support for external user who ever lisenting on this 'TelemetryEvent' event.
+            document.dispatchEvent(new CustomEvent('TelemetryEvent', {detail: event }));
+        } else {
+            TelemetrySyncManager.sendTelemetry({detail: event });
         }
     }
 };
@@ -98,13 +99,20 @@ var EkTelemetry = (function() {
             telemetryInstance._globalObject.id =  contentId;
             telemetryInstance._globalObject.ver = contentVer;
         }
+
         if (!EkTelemetry.initialized && config) {
-            instance.init(config, contentId, contentVer, data.type);
+            instance.init(config, contentId, contentVer, data.type, function() {
+                instance.updateValues(options);
+                var startEventObj = instance.getEvent('START', data);
+                instance._dispatch(startEventObj)
+                telemetryInstance.startData.push(JSON.parse(JSON.stringify(startEventObj)));
+            });
+        } else {
+            instance.updateValues(options);
+            var startEventObj = instance.getEvent('START', data);
+            instance._dispatch(startEventObj)
+            telemetryInstance.startData.push(JSON.parse(JSON.stringify(startEventObj)));
         }
-        instance.updateValues(options);
-        var startEventObj = instance.getEvent('START', data);
-        instance._dispatch(startEventObj)
-        telemetryInstance.startData.push(JSON.parse(JSON.stringify(startEventObj)));
     }
 
     /**
@@ -401,7 +409,7 @@ var EkTelemetry = (function() {
      * @param  {string} contentVer [Version]
      * @param  {object} type       [object type]
      */
-    instance.init = function(config, contentId, contentVer, type) {
+    instance.init = function(config, contentId, contentVer, type, cb) {
         if (EkTelemetry.initialized) {
             console.log("Telemetry is already initialized..");
             return;
@@ -425,9 +433,18 @@ var EkTelemetry = (function() {
         }
         config.batchsize = config.batchsize ? (config.batchsize < 10 ? 10 : (config.batchsize > 1000 ? 1000 : config.batchsize)) : _defaultValue.batchsize;
         EkTelemetry.config = Object.assign(_defaultValue, config);
-        instance.updateConfigurations(config);
         EkTelemetry.initialized = true;
         telemetryInstance.dispatcher = EkTelemetry.config.dispatcher ? EkTelemetry.config.dispatcher : libraryDispatcher;
+        if (!config.did) {
+            new Fingerprint2().get(function(result, components) {
+                config.did = result;
+                instance.updateConfigurations(config);
+                if(cb) cb()
+            })
+        } else {
+            instance.updateConfigurations(config);
+            if(cb) cb();
+        }
         console.info("Telemetry is initialized.")
     }
 
@@ -577,3 +594,9 @@ var EkTelemetry = (function() {
 
     return this.ektelemetry;
 })();
+
+/**
+ * Name space which is being fallowed
+ * @type {[type]}
+ */
+window.Telemetry = window.$t = EkTelemetry;
