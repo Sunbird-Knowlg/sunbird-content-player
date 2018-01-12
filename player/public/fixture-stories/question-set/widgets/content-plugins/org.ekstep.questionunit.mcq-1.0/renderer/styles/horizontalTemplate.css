@@ -1,43 +1,129 @@
-#preview {
-	height: 323px;
-	width: 574px;
-	background-color: #fff;
+#preview-mcq-horizontal {
+    height: 90vh;
+    margin: auto;
+    text-align: center;
+    line-height: 2em;
+    width: 80%;
+    margin-top: 2%;
+    position: relative;
+    display: grid;
 }
 
-.question-text {
-	width: 100%;
-	height: 20%;
-	margin: auto;
-	text-align: center;
-	padding-top: 3%;
-	font-size: 18px;
+
+.qc-mcqlayout {
+    width: 100%;
+    top: 10px;
+    position: relative;
+    margin: auto;
 }
 
-.option-container {
-    width: 90%;
-    left: 5%;
+header.qc-long-text-header {
+    width: 100%;
+    background-color: #404041;
+    height: auto;
+}
+
+.qc-question-text {
+    padding: 17px 10px 16px 10px;
+    color: white;
+    font-size: 100%;
+    line-height: normal;
+    text-align: center;
+}
+
+.qc-option-container {
+    width: 100%;
     height: 70%;
     text-align: center;
+    margin-top: 23px;
+}
+
+.qc-option-value {
+    border-top: 1px solid #c8ccd0;
+    border-bottom: 1px solid #c8ccd0;
+    cursor: pointer;
+    border-left: 7px solid transparent;
+}
+
+.qc-option-checkbox {
+    vertical-align: middle;
+}
+
+td.qc-option-text {
+    float: left;
+    padding: 7px 13px;
+    font-size: 100%;
+    margin: 5px;
+}
+
+input.qc-option-input-checkbox {
+    -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
+    -ms-appearance: checkbox;
+}
+
+input.qc-option-input-checkbox {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
     position: relative;
+    top: 5.33333px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    transition: all 0.15s ease-out 0s;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 0.5rem;
+    outline: 2px solid #cbd1d8;
+    position: relative;
+    z-index: 1000;
 }
 
-.option-value {
-	width: 84%;
-	margin: auto;
-	padding: 4px 0;
-	border-radius: 16px;
-	margin-bottom: 9px;
-	border: 2px solid #166ca6;
-	color: #000;
-	cursor: pointer;
+input.qc-option-input-checkbox:hover {
+    background: #9faab7;
 }
 
-.option-value:hover {
-	box-shadow: 2px 2px 2px 2px #93bdda;
-	z-index: 2;
+input.qc-option-input-checkbox:checked {
+    background: #4a90e2;
 }
-.option-value-select {
-    border: 3px solid #166ca6;
-    z-index: 4;
-    box-shadow: 2px 2px 2px 2px #93bdda;
+
+input.qc-option-input-checkbox:checked::before {
+    height: 40px;
+    width: 20px;
+    position: absolute;
+    content: '✔';
+    display: inline-block;
+    font-size: 21.66667px;
+    text-align: center;
+    line-height: 21px;
+}
+
+input.qc-option-input-checkbox:checked::after {
+    -webkit-animation: click-wave 0.65s;
+    -moz-animation: click-wave 0.65s;
+    animation: click-wave 0.65s;
+    background: #40e0d0;
+    content: '';
+    display: block;
+    position: relative;
+    z-index: 100;
+}
+
+.qsselectedopt {
+    border-left-color: #4a90e2;
+}
+table.qc-option-container{
+    height: 18em;
+    overflow-y: scroll;
+    display: block;
+}
+table.qc-option-container > tbody{
+    width: 100%;
+    display: inline-table;
 }

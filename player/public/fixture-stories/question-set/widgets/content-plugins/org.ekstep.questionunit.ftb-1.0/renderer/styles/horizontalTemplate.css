@@ -1,0 +1,36 @@
+#preview-ftb-horizontal {
+    position: relative;
+    margin: auto;
+    text-align: center;
+    line-height: 2em;
+    width: 80%;
+    margin-top: 2%;
+    display: grid;
+}
+
+.ftbanswer-container input {
+    border-bottom: 3px dotted;
+    width: -webkit-fill-available;
+}
+
+.ftbanswer-container {
+    width: 90%;
+    left: 5%;
+    height: 70%;
+    text-align: center;
+    position: relative;
+}
+
+.qc-ftb-layout {
+    margin: 22%;
+}
+.qc-text-textarea{
+  position: relative;
+    margin: auto;
+    text-align: center;
+    line-height: 2em;
+    width: 80%;
+    margin-top: 2%;
+    display: grid;
+
+}

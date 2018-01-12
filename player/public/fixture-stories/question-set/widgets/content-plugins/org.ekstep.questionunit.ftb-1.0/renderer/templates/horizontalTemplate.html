@@ -1,0 +1,18 @@
+<div id="preview-ftb-horizontal" ng-app="FTBRendererApp" ng-controller="FTBRendererController" ng-show="showTemplate">
+	<link rel="stylesheet" type="text/css" href="{{cssPath}}">
+	<div class="qc-ftb-layout" ng-show="ftbquestion">
+	<header>
+<div class="question-text"><p>{{questionObj.question.text}}</p></div>
+	</header>
+	<div class="ftbanswer-container">
+		 <input id="ftbanswerInput" type="text" name="answer" ng-model="ftbAnswer" autofocus="autofocus">
+	</div>
+	</div>
+	<div class="qc-text-textarea" ng-show="answeretextarea">
+<textarea rows="4" cols="20" style="
+    outline: 5px solid black;
+">
+</textarea>
+		<div>
+
+</div>

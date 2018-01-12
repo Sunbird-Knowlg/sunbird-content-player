@@ -1,0 +1,61 @@
+{
+    "id": "org.ekstep.questionunit.ftb",
+    "ver": "1.0",
+    "author": "Gourav More",
+    "title": "Question Unit Plugin: FTB",
+    "description": "Question Unit Plugin that creates fill in the blanks questions",
+    "publishedDate": "",
+    "editor": {
+        "main": "editor/plugin.js",
+        "help": {
+            "src": "editor/help.md",
+            "dataType": "text"
+        },
+        "dependencies": [
+            {
+                "type": "plugin",
+                "plugin": "org.ekstep.questionunit",
+                "ver": "1.0"
+            }
+        ],
+        "menu": [],
+        "configManifest": []
+    },
+    "renderer": {
+        "main": "renderer/plugin.js",
+        "dependencies":[{
+            "type":"js",
+            "src":"renderer/util/evaluator.js",
+            "scope":"renderer"
+        }]
+    },
+    "dependencies": [
+        {
+            "type": "plugin",
+            "plugin": "org.ekstep.questionunit",
+            "ver": "1.0",
+            "scope": "renderer"
+        },
+        {
+            "type":"js",
+            "src":"renderer/util/evaluator.js",
+            "scope":"renderer"
+        }
+    ],
+    "templates": [
+        {
+            "id": "ftbtemplate",
+            "thumbnail": "",
+            "description": "",
+            "title": "",
+            "editor": {
+                "template": "editor/templates/horizontalTemplate.html",
+                "controller": "editor/controllers/horizontalTemplate.js"
+            },
+            "renderer": {
+                "template": "renderer/templates/horizontalTemplate.html",
+                "controller": "renderer/controllers/horizontalTemplate.js"
+            }
+        }
+    ]
+}
