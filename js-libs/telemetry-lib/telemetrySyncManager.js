@@ -19,6 +19,7 @@ var TelemetrySyncManager = {
     sendTelemetry: function(event) {
         var Telemetry = EkTelemetry || Telemetry;
         var telemetryEvent = event.detail;
+        console.log("Telemetry Events ", telemetryEvent);
         var instance = TelemetrySyncManager;
         instance._teleData.push(telemetryEvent);
         if((telemetryEvent.eid.toUpperCase() == "END") || (instance._teleData.length >= Telemetry.config.batchsize)) {
@@ -54,4 +55,6 @@ var TelemetrySyncManager = {
         }
     }
 }
-TelemetrySyncManager.init();
+if (typeof document != 'undefined') {
+    TelemetrySyncManager.init();
+}
