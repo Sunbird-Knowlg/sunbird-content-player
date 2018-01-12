@@ -8,9 +8,10 @@ var libraryDispatcher = {
     dispatch: function(event) {
         if (typeof document != 'undefined') {
             //To Support for external user who ever lisenting on this 'TelemetryEvent' event.
+            // IT  WORKS ONLY FOR CLIENT SIDE
             document.dispatchEvent(new CustomEvent('TelemetryEvent', {detail: event }));
         } else {
-            TelemetrySyncManager.sendTelemetry({detail: event });
+            console.info("Library dispatcher supports only for client side.");
         }
     }
 };
@@ -23,6 +24,7 @@ var EkTelemetry = (function() {
     this.ektelemetry.initialized = false;
     this.ektelemetry.config = {};
     this.ektelemetry._version = "3.0";
+    this.ektelemetry.fingerPrintId = undefined;
     this.dispatcher = libraryDispatcher;
     this._defaultValue = {
         uid: "anonymous",
@@ -52,6 +54,7 @@ var EkTelemetry = (function() {
         "cdata": [],
         "rollup": {}
     },
+    this.runningEnv = 'client';
     this._globalObject = {};
     this.startData = [];
     this.deviceSpecRequiredFields = ["os","make","id","mem","idisk","edisk","scrn","camera","cpu","sims","cap"],
@@ -101,18 +104,13 @@ var EkTelemetry = (function() {
         }
 
         if (!EkTelemetry.initialized && config) {
-            instance.init(config, contentId, contentVer, data.type, function() {
-                instance.updateValues(options);
-                var startEventObj = instance.getEvent('START', data);
-                instance._dispatch(startEventObj)
-                telemetryInstance.startData.push(JSON.parse(JSON.stringify(startEventObj)));
-            });
-        } else {
-            instance.updateValues(options);
-            var startEventObj = instance.getEvent('START', data);
-            instance._dispatch(startEventObj)
-            telemetryInstance.startData.push(JSON.parse(JSON.stringify(startEventObj)));
+            instance.init(config, contentId, contentVer)
+
         }
+        instance.updateValues(options);
+        var startEventObj = instance.getEvent('START', data);
+        instance._dispatch(startEventObj)
+        telemetryInstance.startData.push(JSON.parse(JSON.stringify(startEventObj)));
     }
 
     /**
@@ -409,7 +407,7 @@ var EkTelemetry = (function() {
      * @param  {string} contentVer [Version]
      * @param  {object} type       [object type]
      */
-    instance.init = function(config, contentId, contentVer, type, cb) {
+    instance.init = function(config, contentId, contentVer) {
         if (EkTelemetry.initialized) {
             console.log("Telemetry is already initialized..");
             return;
@@ -425,26 +423,17 @@ var EkTelemetry = (function() {
         }
         contentId && (telemetryInstance._globalObject.id = contentId);
         contentVer && (telemetryInstance._globalObject.ver = contentVer);
-        type && (telemetryInstance._globalObject.type = type);
         if (!instance.hasRequiredData(config, ["pdata", "channel", "uid", "env"])) {
             console.error('Invalid start data');
             EkTelemetry.initialized = false;
             return;
         }
+        config.runningEnv && (telemetryInstance.runningEnv = config.runningEnv);
         config.batchsize = config.batchsize ? (config.batchsize < 10 ? 10 : (config.batchsize > 1000 ? 1000 : config.batchsize)) : _defaultValue.batchsize;
         EkTelemetry.config = Object.assign(_defaultValue, config);
         EkTelemetry.initialized = true;
         telemetryInstance.dispatcher = EkTelemetry.config.dispatcher ? EkTelemetry.config.dispatcher : libraryDispatcher;
-        if (!config.did) {
-            new Fingerprint2().get(function(result, components) {
-                config.did = result;
-                instance.updateConfigurations(config);
-                if(cb) cb()
-            })
-        } else {
-            instance.updateConfigurations(config);
-            if(cb) cb();
-        }
+        instance.updateConfigurations(config);
         console.info("Telemetry is initialized.")
     }
 
@@ -454,7 +443,24 @@ var EkTelemetry = (function() {
      */
     instance._dispatch = function(message) {
         message.mid = message.eid + ':' + CryptoJS.MD5(JSON.stringify(message)).toString();
-        dispatcher.dispatch(message);
+        if (telemetryInstance.runningEnv === 'client') {
+            if (!message.context.did) {
+                if (!EkTelemetry.fingerPrintId) {
+                    instance.getFingerPrint(function(result, components) {
+                        message.context.did = result;
+                        EkTelemetry.fingerPrintId = result;
+                        dispatcher.dispatch(message);
+                    })
+                } else {
+                    message.context.did = EkTelemetry.fingerPrintId;
+                    dispatcher.dispatch(message);
+                }
+            } else {
+                dispatcher.dispatch(message);
+            }
+        } else {
+            dispatcher.dispatch(message);
+        }
     }
 
     /**
@@ -537,6 +543,7 @@ var EkTelemetry = (function() {
             options.object && (telemetryInstance._currentObject = options.object);
             options.actor && (telemetryInstance._currentActor = options.actor);
             options.tags && (telemetryInstance._currentTags = options.tags);
+            options.runningEnv && (telemetryInstance.runningEnv = options.runningEnv);
         }
     }
     
@@ -588,6 +595,11 @@ var EkTelemetry = (function() {
         }
     }
 
+    instance.getFingerPrint = function(cb) {
+        new Fingerprint2().get(function(result, components) {
+            if (cb) cb(result, components)
+        })
+    }
     if (typeof Object.assign != 'function') {
         instance.objectAssign();
     }
@@ -599,4 +611,12 @@ var EkTelemetry = (function() {
  * Name space which is being fallowed
  * @type {[type]}
  */
-window.Telemetry = window.$t = EkTelemetry;
+Telemetry = $t = EkTelemetry;
+
+
+/**
+ * To support for the node backEnd, So any node developer can import this telemetry lib.
+ */
+if(typeof module != 'undefined'){
+    module.exports = Telemetry;
+}
