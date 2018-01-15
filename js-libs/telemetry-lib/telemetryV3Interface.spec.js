@@ -57,9 +57,33 @@ describe("Telemetry tests", function() {
         it("It should invoke init", function() {
             data = JSON.parse('{ "type": "player" }');
             var context = {};
+            context.runningEnv = 'client'
+            spyOn(telemetryObj, "start").and.callThrough();
+            config.sid = '3432432';
+            var telemetryElement = telemetryObj.start(config, "abc", "123", data, context);
+            expect(EkTelemetry.initialized).toBeTruthy();
+            expect(telemetryObj.start).toHaveBeenCalled();
+        })
+
+         it("It should invoke init when running in server sid", function() {
+            data = JSON.parse('{ "type": "player" }');
+            var context = {};
+            config.runningEnv = 'server'
+            spyOn(telemetryObj, "start").and.callThrough();
+            config.sid = '3432432';
+            config.did = '5354353';
+            var telemetryElement = telemetryObj.start(config, "abc", "123", data, context);
+            expect(EkTelemetry.initialized).toBeTruthy();
+            expect(telemetryObj.start).toHaveBeenCalled();
+        })
+
+          it("It should not generate a finger print when did value is present", function() {
+            data = JSON.parse('{ "type": "player" }');
+            var context = {};
+            config.runningEnv = 'client';
+            config.did = '43243243242';
             spyOn(telemetryObj, "start").and.callThrough();
             var telemetryElement = telemetryObj.start(config, "abc", "123", data, context);
-            expect(telemetryElement).not.toBeUndefined();;
             expect(EkTelemetry.initialized).toBeTruthy();
             expect(telemetryObj.start).toHaveBeenCalled();
         })
@@ -120,6 +144,21 @@ describe("Telemetry tests", function() {
             data.plugin = {}
             spyOn(telemetryObj, "interact").and.callThrough();
             var telemetryInteract = telemetryObj.interact(data);
+            expect(telemetryObj.interact).toHaveBeenCalled();
+            expect(telemetryInteract).toBeUndefined();
+        });
+
+        it("It should set the context, actor,object", function() {
+            data = JSON.parse('{"type": "LISTEN","id": "123","target": {"id": "targetId","ver": "1.0","type": "Plugin"},"spec": {"id": "targetId","ver": "1.0"}}')
+            var options = {
+                context : {},
+                object : {},
+                actor:{},
+                tags:{},
+                runningEnv:'server'
+            }
+            spyOn(telemetryObj, "interact").and.callThrough();
+            var telemetryInteract = telemetryObj.interact(data, options);
             expect(telemetryObj.interact).toHaveBeenCalled();
             expect(telemetryInteract).toBeUndefined();
         });
@@ -383,27 +422,27 @@ describe("Telemetry tests", function() {
             spyOn(telemetryObj,'resetContext').and.callThrough();
             telemetryObj.resetContext({channel:'in.ilimi'});
             expect(telemetryObj.resetContext).toHaveBeenCalled();
-            var currentContext = telemetryObj.getUpdatedContext();
-            expect(currentContext).not.toBeUndefined();
-            expect(currentContext.channel).toEqual('in.ilimi')
+            // var currentContext = telemetryObj.getUpdatedValue('context');
+            // expect(currentContext).not.toBeUndefined();
+            // expect(currentContext.channel).toEqual('in.ilimi')
         });
 
         it('Should be empty, when undefined is passed to reset context',function(){
             spyOn(telemetryObj,'resetContext').and.callThrough();
             telemetryObj.resetContext(undefined);
             expect(telemetryObj.resetContext).toHaveBeenCalled();
-            var currentContext = telemetryObj.getUpdatedContext();
-            expect(currentContext).not.toBeUndefined();
+            // var currentContext = telemetryObj.getUpdatedValue('context');
+            // expect(currentContext).not.toBeUndefined();
         });
 
         it('It should reset the context',function(){
             spyOn(telemetryObj,'resetContext').and.callThrough();
             telemetryObj.resetContext({channel:'in.ilimi'});
             expect(telemetryObj.resetContext).toHaveBeenCalled();
-            var currentContext = telemetryObj.getUpdatedContext();
-            expect(currentContext).not.toBeUndefined();
-            console.log("currentContext",currentContext)
-            expect(currentContext.channel).toEqual('in.ilimi')
+            // var currentContext = telemetryObj.getUpdatedValue('context');
+            // expect(currentContext).not.toBeUndefined();
+            // console.log("currentContext",currentContext)
+            // expect(currentContext.channel).toEqual('in.ilimi')
         });
         it("Should validate the has required data", function() {
             spyOn(telemetryObj, "summary").and.callThrough();
@@ -415,9 +454,9 @@ describe("Telemetry tests", function() {
             spyOn(telemetryObj,'resetObject').and.callThrough();
             telemetryObj.resetObject({id:'123'});
             expect(telemetryObj.resetObject).toHaveBeenCalled();
-            var currentObject = telemetryObj.getUpdatedObject();
-            expect(currentObject).not.toBeUndefined();
-            expect(currentObject.id).toEqual('123')
+            // var currentObject = telemetryObj.getUpdatedValue('object');
+            // expect(currentObject).not.toBeUndefined();
+            // expect(currentObject.id).toEqual('123')
         });
 
         it('Should validate the getContext',function(){
@@ -429,16 +468,40 @@ describe("Telemetry tests", function() {
             expect(telemetryObj.heartbeat).toHaveBeenCalled();
         })
 
+        it('Should reset the actor', function(){
+            spyOn(telemetryObj, "resetActor").and.callThrough();
+            telemetryObj.resetActor({});
+            expect(telemetryObj.resetActor).toHaveBeenCalled();
+        })
+
+        it('Should reset the tags', function(){
+            spyOn(telemetryObj, "resetTags").and.callThrough();
+            telemetryObj.resetTags({});
+            expect(telemetryObj.resetTags).toHaveBeenCalled();
+        })
+
+        it('Should not throw an error when module is undefined', function(){
+            spyOn(telemetryObj, "resetTags").and.callThrough();
+            telemetryObj.resetTags({});
+            expect(telemetryObj.resetTags).toHaveBeenCalled();
+        })
+
+         it("It should generate the did if the did is undefined ", function() {
+            data = JSON.parse('{ "type": "player" }');
+            var options = {}
+            options.runningEnv = 'client';
+            spyOn(telemetryObj, "start").and.callThrough();
+            var telemetryElement = telemetryObj.start(config, "abc", "123", options);
+           // expect(telemetryElement).not.toBeUndefined();;
+           // expect(EkTelemetry.initialized).toBeTruthy();
+            expect(telemetryObj.start).toHaveBeenCalled();
+        })
+
     })
 
     describe('Invoke initialization',function(){
         it('It should not invoke initialize, when invalid pdata',function(){
-            EkTelemetry.initialized = false;
-            var config = {};
-            config.pdata = {};
-            spyOn(telemetryObj, 'initialize').and.callThrough();
-            telemetryObj.initialize(config);
-            expect(telemetryObj.initialize).toHaveBeenCalled();
+           module = {}
         })
         it('It should not invoke initialize, when invalid object',function(){
             EkTelemetry.initialized = false;
@@ -450,7 +513,6 @@ describe("Telemetry tests", function() {
         })
         it('It should invoke initialize, when invalid object',function(){
             EkTelemetry.initialized = false;
-            //var config = {};
             var config = {};
             spyOn(telemetryObj, 'initialize').and.callThrough();
             telemetryObj.initialize(config);
@@ -468,6 +530,7 @@ describe("Telemetry tests", function() {
         it('It should not initialize the telemetry if it is already initialized',function(){
             EkTelemetry.initialized = true;
             spyOn(telemetryObj, 'initialize').and.callThrough();
+            config.runningEnv = 'server'
             telemetryObj.initialize(config);
             expect(telemetryObj.initialize).toHaveBeenCalled();
         })
@@ -475,6 +538,29 @@ describe("Telemetry tests", function() {
             EkTelemetry.initialized = false;
             spyOn(telemetryObj, 'initialize').and.callThrough();
             telemetryObj.initialize(undefined);
+            expect(telemetryObj.initialize).toHaveBeenCalled();
+        })
+
+        it('It should not initialize when required pdata is not present,',function(){
+            EkTelemetry.initialized = false;
+            spyOn(telemetryObj, 'initialize').and.callThrough();
+            config.pdata = {}
+            telemetryObj.initialize(config);
+            expect(telemetryObj.initialize).toHaveBeenCalled();
+        })
+
+         it('It should default batchsize and ruuningEnv,',function(){
+            EkTelemetry.initialized = false;
+            spyOn(telemetryObj, 'initialize').and.callThrough();
+            module = 'undefined'
+            console.log("Module",module)
+            config.pdata = {"id":"in.ekstep","ver":"1.0","pid":""}
+            config.runningEnv = 'client';
+            config.batchsize = 9;
+            config.uid = '343242';
+            config.did = '4335345435'
+            config.channel = 'in.ekstep.'
+            telemetryObj.initialize(config);
             expect(telemetryObj.initialize).toHaveBeenCalled();
         })
     })
