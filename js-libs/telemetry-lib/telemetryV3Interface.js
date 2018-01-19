@@ -512,6 +512,8 @@ var EkTelemetry = (function() {
         config.sid && (telemetryInstance._globalContext.sid = config.sid);
         config.did && (telemetryInstance._globalContext.did = config.did);
         config.cdata && (telemetryInstance._globalContext.cdata = config.cdata);
+        config.pdata && (telemetryInstance._globalContext.pdata = config.pdata);
+
 
     }
 
