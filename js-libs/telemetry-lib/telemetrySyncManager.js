@@ -21,7 +21,7 @@ var TelemetrySyncManager = {
         var telemetryEvent = event.detail;
         console.log("Telemetry Events ", telemetryEvent);
         var instance = TelemetrySyncManager;
-        instance._teleData.push(telemetryEvent);
+        instance._teleData.push(Object.assign({},telemetryEvent));
         if((telemetryEvent.eid.toUpperCase() == "END") || (instance._teleData.length >= Telemetry.config.batchsize)) {
             var telemetryData = instance._teleData;
             var telemetryObj = {
