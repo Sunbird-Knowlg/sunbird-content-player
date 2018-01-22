@@ -4,250 +4,288 @@
  * @author sachin.kumar@goodworklabs.com>
  */
 Plugin.extend({
-    _type: 'org.ekstep.questionset',
-    _isContainer: true,
-    _render: true,
-    _questionSetConfig: {},
-    _questionSet: [],
-    _masterQuestionSet: [],
-    _renderedQuestions: [],
-    _questionStates: {},
-    _renderedQuestionCount: 0,
-    _shuffle: undefined,
-    _currentQuestion: undefined,
-    _currentQuestionState: undefined,
-    _constants: {
-        questionPluginId: 'org.ekstep.question',
-        qsParam: 'globalQuestionSet'
+  _type: 'org.ekstep.questionset',
+  _isContainer: true,
+  _render: true,
+  _questionSetConfig: {'total_items': 1,'show_feedback' : true,'shuffle_questions' : false},
+  _masterQuestionSet: [],
+  _renderedQuestions: [],
+  _questionStates: {},
+  _currentQuestion: undefined,
+  _currentQuestionState: undefined,
+  _loadedTemplates: [],
+  _stageObject: undefined,
+  _constants: {
+    questionPluginId: 'org.ekstep.question',
+    qsElement: '#questionset',
+    prevCSS: {
+      cursor: 'pointer',
+      position: 'absolute',
+      width: '7.5%',
+      top: '44%',
+      left: '1%'
     },
-    initPlugin: function(data) {
-        this._masterQuestionSet = _.clone(data[this._constants.questionPluginId]);
-        // If questionSet was already invoked, fetch that information from theme params
-        var globalQuestionSet = Renderer.theme.getParam(this._constants.qsParam);
-        if (globalQuestionSet) {
-            this._currentQuestion = globalQuestionSet.currentQuestion;
-            this._renderedQuestions = globalQuestionSet.renderedQuestions;
-            this._questionStates = globalQuestionSet.questionStates;
-            this.renderQuestion(this._currentQuestion);
-            this.showCustomNextNavigation();
-            if (this.getCurrentQuestionIndex() >= 1) {
-                this.showCustomPrevNavigation();
-            }
-        } else {
-            this._questionSetConfig = JSON.parse(this._data.config);
-            this._shuffle = this._questionSetConfig.shuffle_options
-            this._questionSet = _.clone(data[this._constants.questionPluginId]);
-            var qobj = this.getNextQuestion();
-            if (qobj) {
-                //showing custom navigation for next question
-                this.showCustomNextNavigation();
-                //render the view of first question
-                this.renderQuestion(qobj);
-            } else {
-                // If no questions found
-                console.log('No questions found in question set.'); //DEBUG
-                this.showDefaultNextNavigation();
-                this.showDefaultPrevNavigation();
-                OverlayManager.skipAndNavigateNext();
-            }
-        }
+    nextCSS: {
+      cursor: 'pointer',
+      position: 'absolute',
+      width: '7.5%',
+      top: '44%',
+      right: '1%'
     },
-    getCurrentQuestionIndex: function() {
-        var instance = this;
-        if (this._currentQuestion) {
-            return this._renderedQuestions.indexOf(this._currentQuestion.id);
-        } else {
-            return -1;
-        }
-    },
-    getQuestionState: function(id) {
-        return this._questionStates[id];
-    },
-    renderQuestion: function(qobj) {
-        this._renderedQuestions = _.union(this._renderedQuestions, [qobj.id]);
-        this._renderedQuestionCount = this._renderedQuestions.length;
-        // Save current question state before moving to next question
-        this.saveCurrentQuestionState();
-        if (this._currentQuestion) {
-            EkstepRendererAPI.dispatchEvent(this._currentQuestion.pluginId + ":hide");
-        }
-        // Set incoming question as current question and clear its state
-        this._currentQuestion = qobj;
-        this._currentQuestionState = this.getQuestionState(qobj.id); // TODO: Pass this object to questionunit renderer
-        if (!qobj.rendered) this.setRendered(qobj);
+    qsPrefix: 'qs',
+  },
+  initPlugin: function (data) {
+    var instance = this;
+    EkstepRendererAPI.addEventListener('renderer:content:start', this.resetQS, this);
+    EkstepRendererAPI.addEventListener(this._manifest.id + ':saveQuestionState', function (event) {
+      var state = event.target;
+      instance.saveQuestionState(instance._currentQuestion.id, state);
+    }, this);
+    this.loadTemplateContainer();
+    this._questionSetConfig = this._data.config ? JSON.parse(this._data.config.__cdata) : this._questionSetConfig;
+    this.setupNavigation();
+    this._masterQuestionSet =angular.copy(data[this._constants.questionPluginId]);
 
-        var getPluginManifest = org.ekstep.pluginframework.pluginManager.pluginObjs[qobj.pluginId];
-        var unitTemplates = getPluginManifest._manifest.templates;
-        var templateData = _.find(unitTemplates, function(template) {
-            return template.id === qobj.templateId;
-        });
-        var pluginVer = (qobj.pluginVer === 1) ? '1.0' : qobj.pluginVer.toString();
-        var templatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(qobj.pluginId, pluginVer, templateData.renderer.template);
-        var controllerPath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(qobj.pluginId, pluginVer, templateData.renderer.controller);
-        org.ekstep.service.controller.loadNgModules(templatePath, controllerPath);
-        setTimeout(function() {
-            EkstepRendererAPI.dispatchEvent(qobj.pluginId + ":show", instance);
-        }, 500);
-
-    },
-    showCustomNextNavigation: function() {
-        instance = this;
-        var nextButton = $('.nav-next');
-        nextButton.css("display", "none");
-        var imageSrc = nextButton.find('img').attr("src"); //take default image path
-
-        var img = $('<img />', {
-            src: imageSrc,
-            id: "show-nextcustom-navigation",
-            class: ""
-        }).css({
-            cursor: "pointer",
-            position: "absolute",
-            width: "7.5%",
-            top: "44%",
-            right: "1%"
-        });
-        img.on("click", function() {
-            instance.showNextQuestion();
-        });
-        img.appendTo('#gameArea');
-    },
-    showCustomPrevNavigation: function() {
-        instance = this;
-        var customPrevButton = $('#show-prevcustom-navigation');
-        var prevButton = $('.nav-previous');
-        if (!customPrevButton.length) {
-            prevButton.hide();
-            var imageSrc = prevButton.find('img').attr("src");
-            var img = $('<img />', {
-                src: imageSrc,
-                id: "show-prevcustom-navigation",
-                class: ""
-            }).css({
-                cursor: "pointer",
-                position: "absolute",
-                width: "7.5%",
-                top: "44%",
-                left: "1%"
-            });
-            img.on("click", function() {
-                instance.showPrevQuestion();
-            });
-            img.appendTo('#gameArea');
-        } else {
-            customPrevButton.show();
-            prevButton.hide();
-        }
-    },
-    showDefaultPrevNavigation: function() {
-        $("#show-prevcustom-navigation").hide();
-        $('.nav-previous').show();
-    },
-    showDefaultNextNavigation: function() {
-        $("#show-nextcustom-navigation").hide();
-        $('.nav-next').show();
-    },
-    showPrevQuestion: function() {
-        var instance = this;
-        this.saveCurrentQuestionState();
-        // Hide current question
-        EkstepRendererAPI.dispatchEvent(this._currentQuestion.pluginId + ":hide");
-        // Fetch previous question to render
-        var qobj = this.getPrevQuestion();
-        if (qobj) {
-            EkstepRendererAPI.dispatchEvent(qobj.pluginId + ":show", instance);
-            this.renderQuestion(qobj);
-            if (this.getCurrentQuestionIndex() < 1) {
-                this.showDefaultPrevNavigation();
-            }
-        }
-
-    },
-    /**
-     * renderer:questionset:show next question.
-     * @event renderer:questionset:click
-     * @memberof org.ekstep.questionset
-     */
-    showNextQuestion: function() {
-
-        //call the evalution function in question unit
-        var qunitInstance = org.ekstep.pluginframework.pluginManager.pluginObjs[this._currentQuestion.pluginId];
-        qunitInstance.evaluate(this._currentQuestion)
-        //onclick next save question state
-        this.saveCurrentQuestionState();
-        var qobj = this.getNextQuestion();
-        if (qobj) {
-            // Hide previous question
-            EkstepRendererAPI.dispatchEvent(this._currentQuestion.pluginId + ":hide");
-            //render the obj to canvas
-            this.renderQuestion(qobj);
-            if (this.getCurrentQuestionIndex() >= 1) {
-                this.showCustomPrevNavigation();
-            }
-        } else {
-            EkstepRendererAPI.dispatchEvent(this._currentQuestion.pluginId + ":hide");
-            this.showDefaultNextNavigation();
-            this.showDefaultPrevNavigation();
-            //send to next stage
-            OverlayManager.skipAndNavigateNext();
-        }
-    },
-    /**
-     * renderer:questionset:check shuffle question and end question
-     * @event getNextQuestion
-     * @fires getNextQuestion
-     * @memberof org.ekstep.questionset
-     */
-    getNextQuestion: function() {
-        var instance = this;
-        var qobj = this.getRenderedQuestionById(this._renderedQuestions[this.getCurrentQuestionIndex() + 1]);
-        if (qobj) {
-            return qobj;
-        } else {
-            if (this.endOfQuestions())
-                return undefined;
-            else if (this._shuffle) {
-                return _.sample(_.omit(instance._masterQuestionSet, function(item) {
-                    return (typeof item.rendered === 'undefined') ? false : item.rendered;
-                }));
-            } else {
-                return instance._questionSet.shift();
-            }
-        }
-    },
-    getPrevQuestion: function() {
-        var currentQuestionIndex = this.getCurrentQuestionIndex();
-        if (currentQuestionIndex > 0) {
-            return this.getRenderedQuestionById(this._renderedQuestions[currentQuestionIndex - 1]);
-        } else {
-            return undefined;
-        }
-    },
-    setRendered: function(obj) {
-        var instance = this,
-            element;
-        element = _.find(instance._masterQuestionSet, function(item) {
-            return item.id === obj.id;
-        });
-        element.rendered = true;
-    },
-    endOfQuestions: function() {
-        return this._renderedQuestionCount == this._questionSetConfig.total_items;
-    },
-    getRenderedQuestionById: function(id) {
-        return _.find(this._masterQuestionSet, function(q) {
-            return q.id === id;
-        });
-    },
-    saveCurrentQuestionState: function() {
-        if (this._currentQuestion) {
-            this._questionStates[this._currentQuestion.id] = this._currentQuestionState;
-            var globalQuestionSet = Renderer.theme.getParam('globalQuestionSet') || {};
-            globalQuestionSet.currentQuestion = this._currentQuestion;
-            globalQuestionSet.renderedQuestions = this._renderedQuestions;
-            globalQuestionSet.questionStates = this._questionStates;
-            Renderer.theme.setParam('globalQuestionSet', globalQuestionSet);
-        }
+    var savedQSState = this.getQuestionSetState();
+    if (savedQSState) {
+      this._renderedQuestions = savedQSState.renderedQuestions;
+      this._currentQuestion = savedQSState.currentQuestion;
+      this._currentQuestionState = this.getQuestionState();
+      this._questionStates = savedQSState.questionStates;
+    } else {
+      this._currentQuestion = this.getNextQuestion();
     }
+    this.saveQuestionSetState();
+    this.renderQuestion(this._currentQuestion);
+  },
+  renderQuestion: function (question) {
+    var instance = this;
+    this._renderedQuestions = _.union(this._renderedQuestions, [question]);
+    if (this._currentQuestion) {
+      EkstepRendererAPI.dispatchEvent(this._currentQuestion.pluginId + ':hide');
+    }
+    //if render question second then show custom prev navigaion
+    if(this._renderedQuestions.length >= 1)this.showCustomPrevNav();
+    this.setRendered(question);
+    this._currentQuestion = question;
+    this._currentQuestionState = this.getQuestionState(this._currentQuestion.id);
+    this.loadModules(question, function () {
+      setTimeout(function () {
+        EkstepRendererAPI.dispatchEvent(question.pluginId + ':show', instance);
+      }, 500);
+    });
+  },
+  setRendered: function (question) {
+    var instance = this, element;
+    element = _.find(instance._masterQuestionSet, function (item) {
+      return item.id === question.id;
+    });
+    element.rendered = true;
+  },
+  endOfQuestionSet: function () {
+    return (this._renderedQuestions.length >= this._questionSetConfig.total_items);
+  },
+  nextQuestion: function () {
+    var instance = this;
+    EkstepRendererAPI.dispatchEvent(this._currentQuestion.pluginId + ':evaluate', function (result) {
+      if(instance._questionSetConfig.show_feedback == true) {
+        instance.displayFeedback(result.eval);
+
+      } else {
+        this.renderNextQuestion();
+      }
+    });
+  },
+  displayFeedback: function (res) {
+    if(res === true) {
+      alert('Correct Answer!');
+
+      //TODO: This will move to the feedback pop-up next button
+      this.renderNextQuestion();
+    } else {
+      alert('Wrong Answer');
+    }
+  },
+  renderNextQuestion: function () {
+    var nextQ = this.getNextQuestion();
+    if (nextQ) {
+      this.renderQuestion(nextQ);
+    } else {
+      this.saveQuestionSetState();
+      EkstepRendererAPI.dispatchEvent(this._currentQuestion.pluginId + ':hide');
+      this.resetNavigation();
+      OverlayManager.skipAndNavigateNext();
+    }
+  },
+  prevQuestion: function () {
+    this.renderPrevQuestion();
+  },
+  renderPrevQuestion: function () {
+    var prevQ = this.getPrevQuestion();
+    if (prevQ) {
+      this.renderQuestion(prevQ);
+      //if previous stage not their and question is first 
+       if(this.getRenderedIndex()==0 && typeof this._stage.params.previous === "undefined"){
+      this.showDefaultPrevNav();
+       }
+    } else {
+      this.saveQuestionSetState();
+      EkstepRendererAPI.dispatchEvent(this._currentQuestion.pluginId + ':hide');
+      this.resetNavigation();
+      OverlayManager.navigatePrevious();
+    }
+  },
+  getNextQuestion: function () {
+    var renderIndex = this.getRenderedIndex();
+    if ((renderIndex + 1 >= this._renderedQuestions.length) && !this.endOfQuestionSet()) {
+      var unRenderedQuestions = this._masterQuestionSet.filter(function (q) {
+        return (_.isUndefined(q.rendered)) ? true : !q.rendered;
+      });
+      if (this._questionSetConfig.shuffle_questions) {
+        return _.sample(unRenderedQuestions);
+      }
+      return unRenderedQuestions.shift();
+    } else {
+      return this._renderedQuestions[renderIndex + 1];
+    }
+  },
+  getPrevQuestion: function () {
+    var renderIndex = this.getRenderedIndex();
+    if (renderIndex - 1 < 0) {
+      return undefined;
+    }
+    return this._renderedQuestions[renderIndex - 1];
+  },
+  getRenderedIndex: function () {
+    return this._renderedQuestions.indexOf(this._currentQuestion);
+  },
+  loadModules: function (question, callback) {
+    var instance = this;
+    var getPluginManifest = org.ekstep.pluginframework.pluginManager.pluginObjs[question.pluginId];
+    var unitTemplates = getPluginManifest._manifest.templates;
+    var templateData = _.find(unitTemplates, function (template) {
+      return template.id === question.templateId;
+    });
+    if (this._loadedTemplates.indexOf(templateData.id) === -1) {
+      var pluginVer = (question.pluginVer === 1) ? '1.0' : question.pluginVer.toString();
+      var templatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(question.pluginId, pluginVer, templateData.renderer.template);
+      var controllerPath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(question.pluginId, pluginVer, templateData.renderer.controller);
+      this.loadController(controllerPath, function (data) {
+        instance.loadTemplate(templatePath, instance._constants.qsElement, function (data) {
+          instance._loadedTemplates.push(templateData.id);
+          callback();
+        });
+      });
+    } else {
+      callback();
+    }
+  },
+  loadController: function (path, callback) {
+    EkstepRendererAPI.dispatchEvent('renderer:load:js', {path: path, callback: callback});
+  },
+  loadTemplate: function (path, toElement, callback) {
+    EkstepRendererAPI.dispatchEvent('renderer:load:html', {path: path, toElement: toElement, callback: callback});
+  },
+  loadTemplateContainer: function () {
+    var qsElement = angular.element(this._constants.qsElement);
+    if (qsElement.length === 0) {
+      angular.element('body').append(angular.element('<div id="' + this._constants.qsElement.replace('#', '') + '"></div>'));
+    }
+  },
+  resetNavigation: function () {
+    this.showDefaultNextNav();
+    this.showDefaultPrevNav();
+  },
+  showDefaultPrevNav: function () {
+    $('#qs-custom-prev').hide();
+    $('.nav-previous').show();
+  },
+  showDefaultNextNav: function () {
+    $('#qs-custom-next').hide();
+    $('.nav-next').show();
+  },
+  showCustomPrevNav: function () {
+    $('#qs-custom-prev').show();
+    $('.nav-previous').hide();
+  },
+  showCustomNextNav: function () {
+    $('#qs-custom-next').show();
+    $('.nav-next').hide();
+  },
+  setupNavigation: function () {
+    instance = this;
+
+    // Next
+    var next = angular.element('#qs-custom-next');
+    if (next.length === 0) {
+      var nextButton = $('.nav-next');
+      var nextImageSrc = nextButton.find('img').attr('src');
+
+      var customNextButton = $('<img />', {
+        src: nextImageSrc,
+        id: 'qs-custom-next',
+        class: ''
+      }).css(this._constants.nextCSS);
+      customNextButton.on('click', function () {
+        instance.nextQuestion();
+      });
+      customNextButton.appendTo('#gameArea');
+    }
+
+    // Prev
+    var prev = angular.element('#qs-custom-prev')
+    if (prev.length === 0) {
+      var prevButton = $('.nav-previous');
+      var prevImageSrc = prevButton.find('img').attr('src');
+
+      var customPrevButton = $('<img />', {
+        src: prevImageSrc,
+        id: 'qs-custom-prev',
+        class: ''
+      }).css(this._constants.prevCSS);
+      customPrevButton.on('click', function () {
+        instance.prevQuestion();
+      });
+      customPrevButton.appendTo('#gameArea');
+    }
+    // Show Custom Navigation
+    this.showCustomNextNav();
+    this.showCustomPrevNav();
+  },
+  getQuestionState: function (questionId) {
+    return this._questionStates[questionId];
+  },
+  getQuestionSetState: function () {
+    return Renderer.theme.getParam(this._data.id);
+  },
+  saveQuestionState: function (questionId, state) {
+    if (state) {
+      var qsState = this.getQuestionSetState();
+      this._questionStates[questionId] = state;
+      qsState.questionStates = this._questionStates;
+      Renderer.theme.setParam(this._data.id, qsState);
+    }
+    //TODO: Generate itemresponse telemetry here?
+  },
+  saveQuestionSetState: function () {
+    var qsState = {
+      masterQuestionSet: this._masterQuestionSet,
+      renderedQuestions: this._renderedQuestions,
+      currentQuestion: this._currentQuestion,
+      questionStates: this._questionStates
+    };
+    Renderer.theme.setParam(this._data.id, qsState);
+  },
+  resetQS: function() {
+    this.resetNavigation();
+    Renderer.theme.setParam(this._data.id, undefined);
+    if (this._currentQuestion) {
+        EkstepRendererAPI.dispatchEvent(this._currentQuestion.pluginId + ':hide');
+    }
+    //if first stage is question set show custom next navigation
+    if (this._renderedQuestions.length != this._masterQuestionSet.length) {
+      this.showCustomNextNav();
+    }
+}
 });
 //# sourceURL=questionSetRenderer.js

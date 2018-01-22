@@ -1,1 +1,158 @@
-<!-- TODO: HTML template for horizontal MCQ -->
+<div ng-controller="mcqQuestionFormController" ng-init="init()">
+  <div class="ui grid mcqFullGrid">
+    <div class="one column row">
+      <div class="column innerScroll">
+        <div class="headQA">
+          <div class="one column row qHeader">
+            <span class="ui header">Enter the question</span>
+          </div>
+          <form name="mcqForm">
+            <div class="ui segments" ng-class="{cardBorder: $ctrl.focused}">
+              <div class="ui segment">
+                <div class="ui pointing secondary demo menu ">
+                  <a class="item active" data-tab="questionTextTab"><i class="checkmark icon" ng-show="mcqFormData.question.text.length > 2"></i> Text</a>
+                  <a class="item" data-tab="questionImageTab" ng-show="false"><i class="checkmark icon"></i> Image</a>
+                  <a class="item" data-tab="questionAudioTab" ng-show="false"><i class="checkmark icon"></i> Audio</a>
+                  <div class="ui dropdown right floated item" ng-show="false">
+                    Customize
+                    <div class="menu" ng-show="false">
+                      <div class="item"><span ng-click="addTab('image',index)">Insert image</span></div>
+                      <div class="item"><span ng-click="addTab('audio',index)">Insert audio</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ui tab active optionTab" data-tab="questionTextTab">
+                  <div class="form-group segment textBoxDiv">
+                    <textarea class="form-control textboxQ" ng-class="{'has-success':mcqForm.question.$valid, 'has-error': submitted && mcqForm.question.$error.required}" placeholder="Enter the question" name="question" ng-model="mcqFormData.question.text" maxlength="220" ng-init="$ctrl.focused = false" ng-focus="$ctrl.focused = true" ng-blur="$ctrl.focused = false"  required></textarea>
+                  </div>
+                </div>
+                <div class="ui tab" data-tab="questionImageTab" ng-show="false">
+                  <div class="ui three column grid">
+                    <div class="two wide column">
+                      <img src="{{mcqFormData.question.image}}">
+                    </div>
+                    <div class="one column">
+                      <div class="ui grid two column row">
+                        <div class="column">
+                          <a href="" class="" ng-click="deleteImage(index,isQuestion)"><i class="trash icon"></i>Delete</a>
+                        </div>
+                        <div class="column">
+                          <a href="" class=""><i class="repeat icon"></i>Repeat</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ui tab" data-tab="questionAudioTab" ng-show="false">
+                  <div class="ui two column grid">
+                    <div class="one wide column">
+                      <audio src="{{mcqFormData.question.audio}}" controls="" class="audio-container">
+                      </audio>
+                      <i class="large icon blue" ng-click="playAudio(play)"></i>
+                    </div>
+                    <div class="column">
+                      <a href="" class="" ng-click="deleteAudio(index)" s><i class="trash icon"></i>Delete</a>&nbsp;&nbsp;
+                      <a href="" class=""><i class="repeat icon"></i>Repeat</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ui secondary segment">
+                <div class="ui grid">
+                  <div class="one column row">
+                    <div class="column right floated">
+                      <span class="maxLengthText">{{mcqFormData.question.text.length}}/220</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="one column row" ng-if="mcqFormData.options.length > 0">
+              <div class="qHeader">
+              <span class="ui header">Set answer</span>
+              </div>
+            </div>
+            <div ng-repeat="(key, value) in mcqFormData.options">
+              <div class="ui segments" ng-class="{cardBorder: focused}" id="eachCard">
+                <div class="ui segment">
+                  <div class="ui pointing secondary demo menu ">
+                    <a class="item active" data-tab="optionTextTab"><i class="checkmark icon" ng-show="mcqFormData.options[key].text.length > 1"></i> Text</a>
+                    <a class="item" data-tab="optionImageTab" ng-show="false"><i class="checkmark icon"></i> Image</a>
+                    <a class="item" data-tab="optionAudioTab" ng-show="false"><i class="checkmark icon"></i> Audio</a>
+                    <div class="ui dropdown right floated item" ng-show="false">
+                      Customize
+                      <div class="menu" ng-show="false">
+                        <div class="item"><span ng-click="addTab('image',index)">Insert image</span></div>
+                        <div class="item"><span ng-click="addTab('audio',index)">Insert audio</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ui tab active optionTab" data-tab="optionTextTab">
+                    <div class="form-group segment textBoxDiv">
+                      <input type="text" class="form-control textbox" ng-class="{'has-success':mcqForm['options_' + $index].$valid, 'has-error': submitted && mcqForm['options_' + $index].$error.required}" placeholder="Enter answer" name="options_{{$index}}" ng-model="mcqFormData.options[key].text" maxlength="25" ng-init="focused = false" ng-focus="focused = true" ng-blur="focused = false" required/>
+                    </div>
+                  </div>
+                  <div class="ui tab" data-tab="optionImageTab" ng-show="false">
+                    <div class="ui three column grid">
+                      <div class="two wide column">
+                        <img src="{{value.image}}">
+                      </div>
+                      <div class="one column">
+                        <div class="ui grid two column row">
+                          <div class="column">
+                            <a href="" class="" ng-click="deleteImage(index,isQuestion)"><i class="trash icon"></i>Delete</a>
+                          </div>
+                          <div class="column">
+                            <a href="" class=""><i class="repeat icon"></i>Repeat</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ui tab" data-tab="optionAudioTab" ng-show="false">
+                    <div class="ui two column grid">
+                      <div class="one wide column">
+                        <audio src="{{value.audio}}" controls="" class="audio-container">
+                        </audio>
+                        <i class="large icon blue" ng-click="playAudio(play)"></i>
+                      </div>
+                      <div class="column">
+                        <a href="" class="" ng-click="deleteAudio(index)" s><i class="trash icon"></i>Delete</a>&nbsp;&nbsp;
+                        <a href="" class=""><i class="repeat icon"></i>Repeat</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ui secondary segment">
+                  <div class="ui grid">
+                    <div class="three column row">
+                      <div class="column">
+                        <label>
+                          <a href="" ng-click="deleteAnswer(key)" class="deleteText"><i class="trash icon"></i> Delete</a>
+                        </label>
+                      </div>
+                      <div class="column">
+                        <div class="ui radio">
+                          <input type="radio" id="{{$index}}" name="correctans_{{$index}}" ng-checked="value.isCorrect" ng-model="$parent.selectedOption" value="{{$index}}"/>
+                          <label for="{{$index}}" ng-class="{'has-success-text':selLbl == 'error' , 'has-error-text':selLbl == 'success' }">Correct answer</label>
+                        </div>
+                      </div>
+                      <div class="column">
+                        <span class="maxLengthText">{{value.text.length}}/25</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="one column row">
+            <div class="column addAns">
+              <button class="ui primary basic button large" id="mcq-add-ans-button" ng-click="addAnswerField();">Add answer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -6,6 +6,7 @@
     width: 80%;
     margin-top: 2%;
     display: grid;
+     height: 90vh;
 }
 
 .ftbanswer-container input {
@@ -22,15 +23,19 @@
 }
 
 .qc-ftb-layout {
-    margin: 22%;
+    margin:auto;
 }
-.qc-text-textarea{
-  position: relative;
-    margin: auto;
-    text-align: center;
-    line-height: 2em;
-    width: 80%;
-    margin-top: 2%;
-    display: grid;
 
+.qc-ftb-question-text {
+    font-size: 100%;
+    text-align: initial;
+}
+
+input#ftbanswerInput {
+    text-align: center;
+    font-size: 100%;
+        width: 100%;
+}
+.qcalgin{
+    margin: 33px 0px 0px 2px;
 }

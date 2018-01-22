@@ -1,14 +1,16 @@
-/**
- * 
- * Question Unit plugin to create a MCQ question
- * @class org.ekstep.questionunit.mcq
+ /**
+ *
+ * Plugin to create mcq question
  * @extends org.ekstep.contenteditor.questionUnitPlugin
- * @author Manoj Chandrashekar <manoj.chandrashekar@tarento.com>
+ * @author Jagadish P <jagadish.pujari@tarento.com>
  */
-org.ekstep.contenteditor.questionUnitPlugin.extend({
-    type: "org.ekstep.questionunit.mcq",
-    initialize: function() {
-        // TODO: Implement logic and define interfaces from org.ekstep.questionunit
-    },
-});
-//# sourceURL=questionunitMCQPlugin.js
+ org.ekstep.contenteditor.questionUnitPlugin.extend({
+ 	
+ 	initialize: function() {  
+ 		ecEditor.addEventListener("org.ekstep.plugins.mcqplugin:showpopup", this.loadHtml, this);
+ 		var templatePath = ecEditor.resolvePluginResource(this.manifest.id, this.manifest.ver, 'editor/templates/horizontalTemplate.html');
+ 		var controllerPath = ecEditor.resolvePluginResource(this.manifest.id, this.manifest.ver, 'editor/controllers/horizontalTemplate.js');
+ 		ecEditor.getService(ServiceConstants.POPUP_SERVICE).loadNgModules(templatePath, controllerPath);
+ 	}
+ });
+//# sourceURL=mcqpluginEditorPlugin.js
