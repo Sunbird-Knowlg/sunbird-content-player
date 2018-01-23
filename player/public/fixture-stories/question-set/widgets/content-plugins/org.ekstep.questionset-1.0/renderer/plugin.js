@@ -93,8 +93,8 @@ Plugin.extend({
     return (this._renderedQuestions.length >= this._questionSetConfig.total_items);
   },
   nextQuestion: function () {
-    var instance = this;
-    EkstepRendererAPI.dispatchEvent(this._currentQuestion.pluginId + ':evaluate', function (result) {
+    var instance = this;    
+    EkstepRendererAPI.dispatchEvent(this._currentQuestion.pluginId + ":evaluate", function (result) {
       if(instance._questionSetConfig.show_feedback == true) {
         instance.displayFeedback(result.eval);
 
@@ -114,6 +114,7 @@ Plugin.extend({
     }
   },
   renderNextQuestion: function () {
+    // EkstepRendererAPI.removeEventListener($scope.pluginInstance._manifest.id + ":evaluate");
     var nextQ = this.getNextQuestion();
     if (nextQ) {
       this.renderQuestion(nextQ);
@@ -173,7 +174,7 @@ Plugin.extend({
     var templateData = _.find(unitTemplates, function (template) {
       return template.id === question.templateId;
     });
-    if (this._loadedTemplates.indexOf(templateData.id) === -1) {
+    // if (this._loadedTemplates.indexOf(templateData.id) === -1) {
       var pluginVer = (question.pluginVer === 1) ? '1.0' : question.pluginVer.toString();
       var templatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(question.pluginId, pluginVer, templateData.renderer.template);
       var controllerPath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(question.pluginId, pluginVer, templateData.renderer.controller);
@@ -183,9 +184,9 @@ Plugin.extend({
           callback();
         });
       });
-    } else {
-      callback();
-    }
+    // } else {
+    //   callback();
+    // }
   },
   loadController: function (path, callback) {
     EkstepRendererAPI.dispatchEvent('renderer:load:js', {path: path, callback: callback});
