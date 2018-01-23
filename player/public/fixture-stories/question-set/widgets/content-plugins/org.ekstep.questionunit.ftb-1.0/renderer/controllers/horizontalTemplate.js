@@ -19,6 +19,10 @@ angular.module('FTBRendererApp', []).controller("FTBRendererController", functio
       $scope.ftbAnswer="";
      var qData=$scope.question._currentQuestion.data.__cdata||$scope.question._currentQuestion.data;
       var questionData = JSON.parse(qData);
+      var qState = $scope.question._currentQuestionState;
+      if(qState && qState.val) {
+         $scope.ftbAnswer = qState.val;
+      }
       $scope.questionObj = questionData;
       $scope.showTemplate = true;
       $scope.safeApply();
@@ -75,10 +79,14 @@ angular.module('FTBRendererApp', []).controller("FTBRendererController", functio
         if (typeof newValue!="undefined" &&newValue.length > 25){
             $scope.ftbAnswer = oldValue;
         }
+        var state = {
+         val: $scope.ftbAnswer
+       }
+       EkstepRendererAPI.dispatchEvent('org.ekstep.questionset:saveQuestionState', state);
     });
   $scope.evaluate = function(callback) {
     var correctAnswer = false;
-    if ($scope.questionObj.answer[0].text.toLowerCase().replace(/ /g, '') === $scope.ftbAnswer.toLowerCase().replace(/ /g, '')) {
+    if ($scope.questionObj.answers[0].text.toLowerCase().replace(/ /g, '') === $scope.ftbAnswer.toLowerCase().replace(/ /g, '')) {
       correctAnswer = true;
     }
     var result = {

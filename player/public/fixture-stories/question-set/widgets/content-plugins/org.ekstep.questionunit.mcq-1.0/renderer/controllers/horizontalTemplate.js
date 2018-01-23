@@ -58,6 +58,7 @@ angular.module('genie-canvas').controllerProvider.register("MCQRendererControlle
         }
     }
     if(_.isFunction(callback)) callback(result);
+    $scope.selectedIndex = null;
   }
 
 });

@@ -37,7 +37,7 @@ Plugin.extend({
   initPlugin: function (data) {
     var instance = this;
     EkstepRendererAPI.addEventListener('renderer:content:start', this.resetQS, this);
-    EkstepRendererAPI.addEventListener(this._manifest.id + ':saveQuestionState', function (event) {
+    EkstepRendererAPI.addEventListener(instance._data.pluginType + ':saveQuestionState', function (event) {
       var state = event.target;
       instance.saveQuestionState(instance._currentQuestion.id, state);
     }, this);
