@@ -228,7 +228,7 @@ var EkTelemetry = (function() {
             return;
         }
         instance.updateValues(options);
-        instance._dispatch(instance.getEvent('INTERRUPT', data));
+        instance._dispatch(instance.getEvent('SHARE', data));
     }
 
     /**
