@@ -490,14 +490,28 @@ var EkTelemetry = (function() {
      */
     instance.hasRequiredData = function(data, mandatoryFields) {
         var isValid = true;
-        mandatoryFields.forEach(function(key) {
-            if (data) {
-                if (!data.hasOwnProperty(key)) isValid = false;
-            } else {
-                isValid = false
-            }
-        });
-        return isValid;
+        var checkValidation = function(data, mandatoryFields) {
+            mandatoryFields.forEach(function(key) {
+                if (data) {
+                    if (!data.hasOwnProperty(key)) {
+                        isValid = false;
+                        return;             // stopping loop if even single obj is incorrect
+                    }
+                } else {
+                    isValid = false
+                    return
+                }
+            });
+        }
+        if (Array.isArray(data)) {
+            data.forEach(function(obj){
+                checkValidation(obj, mandatoryFields);
+            })
+            return isValid
+        } else {
+            checkValidation(data, mandatoryFields);
+            return isValid
+        }
     }
 
     /**
