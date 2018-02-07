@@ -85,7 +85,6 @@ Plugin.extend({
         });
     },
     appendRequiredFields: function(data){
-        //updating sid, did, uid and mid to the telemetry event object
         _.extend(data, this._requiredFields);
         return data;
     },
