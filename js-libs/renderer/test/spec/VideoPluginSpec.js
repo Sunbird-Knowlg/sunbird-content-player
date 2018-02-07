@@ -39,13 +39,6 @@ describe('Video plugin Jasmine test cases', function() {
                 "y": 10,
                 "z-index": -1,
             };
-
-
-
-
-
-
-        Renderer.theme = { _currentStage: '' };
         this.plugin = PluginManager.invoke('video', data, parent);
         spyOn(this.plugin, 'initPlugin').and.callThrough()
     });

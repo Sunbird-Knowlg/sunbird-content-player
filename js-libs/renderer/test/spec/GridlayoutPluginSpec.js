@@ -30,10 +30,11 @@ var gridLayoutData = {
             "y": "10"
         }
 };
+var parent;
 describe('Gridlayout Plugin test cases', function() {
 
     beforeEach(function(done) {            
-        var parent = {
+        parent = {
             dimensions: function() {
                 return {
                     x: 0,
@@ -45,7 +46,6 @@ describe('Gridlayout Plugin test cases', function() {
             addChild: function() {}
         }
 
-        Renderer.theme = { _currentStage: '' };
         this.plugin = PluginManager.invoke('grid', gridLayoutData, parent, {_templateVars:[], getModelValue : function(){}}, {});
 
         spyOn(this.plugin,'getTableProperties').and.callThrough()
@@ -89,9 +89,6 @@ describe('Gridlayout Plugin test cases', function() {
     describe('When cols and rows both given', function() {
         beforeEach(function(done) {
             gridLayoutData.hitArea = true;
-            Renderer.theme = {
-                _currentStage: ''
-            };
             gridLayoutData.rows = 1;
             this.plugin = PluginManager.invoke('grid', gridLayoutData, parent, {_templateVars:[], getModelValue : function(){}}, {});
             spyOn(this.plugin, 'initPlugin').and.callThrough();

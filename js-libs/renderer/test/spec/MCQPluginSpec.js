@@ -34,7 +34,6 @@ describe('MCQ Plugin test cases', function() {
             addChild: function() {}
         }
 
-        Renderer.theme = { _currentStage: '' };
         this.plugin = PluginManager.invoke('mcq', data, parent, {getController: function(){return {getModelValue : function(){}};}}, {});
         this.option = PluginManager.invoke('option', data, parent, "splash", {});
         spyOn(this.plugin, 'initPlugin').and.callThrough();

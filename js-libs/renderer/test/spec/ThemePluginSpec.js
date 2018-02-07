@@ -132,7 +132,6 @@ describe('Theme Plugin test cases', function() {
             ]
            }
         }
-        // Renderer.theme = { _currentStage: '' };
         startRenderer(themeData);
         this.plugin = Renderer.theme;
 

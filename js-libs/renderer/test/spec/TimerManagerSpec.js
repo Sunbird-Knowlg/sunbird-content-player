@@ -2,7 +2,6 @@ describe('Timer manager test cases', function() {
 
     beforeEach(function(done) {
         jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-        Renderer.theme = {_currentStage:''};
         spyOn(CommandManager, 'handle').and.callThrough();
         spyOn(TimerManager, 'start').and.callThrough();
         this.plugin = createAndInvokePlugin();

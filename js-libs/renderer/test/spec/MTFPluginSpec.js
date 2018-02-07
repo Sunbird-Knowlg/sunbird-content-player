@@ -22,8 +22,6 @@ describe('MTF Plugin test cases', function() {
             },
             addChild: function() {}
         };
-
-        Renderer.theme = { _currentStage: '' };
       
         this.plugin = PluginManager.invoke('mtf', MTFData, parent, {getController: function(){return {setModelValue : function(){}}}}, {});
         spyOn(this.plugin, 'initPlugin').and.callThrough();

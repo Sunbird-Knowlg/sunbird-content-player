@@ -20,9 +20,6 @@ describe('Hotspot Plugin test cases', function() {
                     "h": 50
                 };
 
-        Renderer.theme = {
-            _currentStage: ''
-        };
         this.plugin = PluginManager.invoke('hotspot', data, parent);
         spyOn(this.plugin, 'initPlugin').and.callThrough();
 

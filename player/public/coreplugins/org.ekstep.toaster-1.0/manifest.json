@@ -9,7 +9,7 @@
         "main": "renderer/plugin.js",
         "dependencies": [{
             "type": "js",
-            "src": "renderer/libs/toaster.min.js"
+            "src": "renderer/libs/toastr.min.js"
         }]
     }
 

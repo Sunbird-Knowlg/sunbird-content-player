@@ -27,8 +27,9 @@ describe('Scribble Plugin test cases', function() {
             addChild: function() {}
         }
 
-        Renderer.theme = { _currentStage: '', mousePoint: function() {
-                return { x: 200, y: 200 } } };
+        Renderer.theme.mousePoint = function() {
+            return { x: 200, y: 200 }
+        };
         this.plugin = PluginManager.invoke('scribble', scribbleData, parent);
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'handleMouseDown').and.callThrough();

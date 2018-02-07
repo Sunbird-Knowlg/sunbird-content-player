@@ -20,9 +20,6 @@ describe('Embed Plugin test cases', function() {
                "var-item": "item"
             }
         };
-        Renderer.theme = {
-            _currentStage: ''
-        };
         this.plugin = PluginManager.invoke('embed', data, parent);
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'refresh').and.callThrough();

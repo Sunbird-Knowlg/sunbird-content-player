@@ -32,9 +32,6 @@ describe('Text plugin data test cases', function() {
             addChild: function() {}
         }
 
-        Renderer.theme = {
-            _currentStage: ''
-        };
         this.plugin = PluginManager.invoke('text', text_data, parent);
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'refresh').and.callThrough();

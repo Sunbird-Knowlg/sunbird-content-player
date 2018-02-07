@@ -82,9 +82,6 @@ describe('Shape Plugin test cases', function() {
    /* describe('Shape Plugin - Circle', function() {
         beforeEach(function(done) {
             shapedata.type = "circle";
-            Renderer.theme = {
-                _currentStage: ''
-            };
             this.plugin = PluginManager.invoke('shape', shapedata, parent);
             spyOn(this.plugin, 'initPlugin').and.callThrough();
             done();
@@ -92,9 +89,6 @@ describe('Shape Plugin test cases', function() {
         describe('Hit Area', function() {
             beforeEach(function(done) {
                 shapedata.hitArea = true;
-                Renderer.theme = {
-                    _currentStage: ''
-                };
                 this.plugin = PluginManager.invoke('shape', shapedata, parent);
                 spyOn(this.plugin, 'initPlugin').and.callThrough();
                 done();
@@ -108,9 +102,6 @@ describe('Shape Plugin test cases', function() {
    /* describe('Shape Plugin - Rectangle', function() {
         beforeEach(function(done) {
             shapedata.type = "rect";
-            Renderer.theme = {
-                _currentStage: ''
-            };
             this.plugin = PluginManager.invoke('shape', shapedata, parent);
             spyOn(this.plugin, 'initPlugin').and.callThrough();
             done();
@@ -118,9 +109,6 @@ describe('Shape Plugin test cases', function() {
         describe('Hit Area', function() {
             beforeEach(function(done) {
                 shapedata.hitArea = true;
-                Renderer.theme = {
-                    _currentStage: ''
-                };
                 this.plugin = PluginManager.invoke('shape', shapedata, parent);
                 spyOn(this.plugin, 'initPlugin').and.callThrough();
                 done();
@@ -134,9 +122,6 @@ describe('Shape Plugin test cases', function() {
    /* describe('Shape Plugin - Ellipse', function() {
         beforeEach(function(done) {
             shapedata.type = "ellipse";
-            Renderer.theme = {
-                _currentStage: ''
-            };
             this.plugin = PluginManager.invoke('shape', shapedata, parent);
             spyOn(this.plugin, 'initPlugin').and.callThrough();
             done();
@@ -144,9 +129,6 @@ describe('Shape Plugin test cases', function() {
         describe('Hit Area', function() {
             beforeEach(function(done) {
                 shapedata.hitArea = true;
-                Renderer.theme = {
-                    _currentStage: ''
-                };
                 this.plugin = PluginManager.invoke('shape', shapedata, parent);
                 spyOn(this.plugin, 'initPlugin').and.callThrough();
                 done();

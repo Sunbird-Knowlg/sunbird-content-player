@@ -42,9 +42,6 @@ var data = {
 describe('Stage Plugin test cases', function() {
 
     beforeEach(function(done) {
-        Renderer.theme = {
-            _currentStage: ''
-        };
         this.plugin = PluginManager.invoke('stage', data, parent, {}, {replaceStage : function(){}});
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'setParamValue').and.callThrough();
