@@ -55,6 +55,7 @@ TelemetryService = {
                     TelemetryService._correlationData = correlationData;
                 };
                 if(otherData && !_.isEmpty(otherData)){
+                    otherData.pdata.pid = 'contentplayer';
                     TelemetryService._otherData = otherData;
                 };
                 resolve(true);
