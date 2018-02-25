@@ -622,6 +622,16 @@ module.exports = function(grunt) {
                     cwd: 'www/preview',
                     src: ['**']
                 }]
+            },
+            libs:{
+                options: {
+                    archive: 'libs.zip'
+                },
+                files: [{
+                    expand:true,
+                    cwd: 'www/',
+                    src: ['**']
+                }]
             }
         },
         injector: {
