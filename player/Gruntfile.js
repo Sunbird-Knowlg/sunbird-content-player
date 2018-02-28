@@ -2,7 +2,6 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         buildNumber: process.env.BUILD_NUMBER,
-        libsVer: "1.0",
         mkdir: {
             all: {
                 options: {
@@ -324,8 +323,12 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '../js-libs/build',
-                    src: ['auth-token-generator.min.js', 'htmlinterface.min.js', 'telemetry.min.js'],
-                    dest: '../libs'
+                    src: ['auth-token-generator.min.js', 'renderer.min.js'],
+                    ver: '1.0',
+                    dest: '../libs/',
+                    rename: function(dest, src, data) {
+                        return dest + src.replace('.min.js', data.ver + '.min.js'); 
+                    }
                 }]
             }
         },
@@ -348,18 +351,6 @@ module.exports = function(grunt) {
             preview: {
                 src: 'www/index.html',
                 dest: 'www/preview.html'
-            },
-            authtoken:{
-                src: '../libs/auth-token-generator.min.js',
-                dest: '../libs/auth-token-generator-<%= libsVer %>.min.js'
-            },
-            htmlinterface:{
-                src: '../libs/htmlinterface.min.js',
-                dest: '../libs/htmlinterface-<%= libsVer %>.min.js'
-            },
-            telemetry:{
-                src: '../libs/telemetry.min.js',
-                dest: '../libs/telemetry-<%= libsVer %>.min.js'
             }
         },
         aws_s3: {
@@ -765,6 +756,5 @@ module.exports = function(grunt) {
     grunt.registerTask('renderer-test', ['karma:renderer']);
     grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator", "uglify:htmlinterfacemin"]);
     grunt.registerTask('renderer-telemetryV3', ['karma:telemetryV3']);
-    grunt.registerTask('rename-libs', ['rename:authtoken', 'rename:htmlinterface', 'rename:telemetry']);
-    grunt.registerTask('generate-libs', ['copy:generatelibs', 'rename-libs']);
+    grunt.registerTask('generate-libs', ['copy:generatelibs']);
 };
