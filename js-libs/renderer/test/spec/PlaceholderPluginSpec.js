@@ -1,7 +1,5 @@
 describe('Placeholder Plugin test cases', function() {
-
     beforeEach(function(done) {
-
         var parent = {
             dimensions: function() {
                 return {
@@ -13,23 +11,14 @@ describe('Placeholder Plugin test cases', function() {
             },
             addChild: function() {}
         }
-        var data = data || {
-            "x": 0,
-            "y": 0,
-            "w": 50,
-            "h": 50,
-            "asset": "sringeri",
-            "dimensions": "10"
-        }
-        AssetManager.strategy = { loadAsset: function(){return}}
-        this.plugin = PluginManager.invoke('placeholder', data, parent, {_data: {id: "splash"}}, {getAsset: function(){return "next.png"}});
+        
+        this.plugin = PluginManager.invoke('placeholder', data, parent, Renderer.theme._currentScene, Renderer.theme);
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'renderPlaceHolder').and.callThrough();
         spyOn(this.plugin, 'renderText').and.callThrough();
         spyOn(this.plugin, 'renderImage').and.callThrough();
         spyOn(this.plugin, 'renderGridLayout').and.callThrough();
         spyOn(this.plugin, 'refresh').and.callThrough();
-
         done();
     });
 

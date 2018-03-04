@@ -10,12 +10,7 @@ module.exports = function(config) {
             'jasmine',
             'jasmine-matchers'
         ],
-        files: [{
-                pattern: 'http-image/**/*', 
-                watched: false, 
-                included: false, 
-                served: true 
-            },
+        files: [
             'https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js',
             'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/createjs.min.js',
             'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/cordovaaudioplugin-0.6.1.min.js',
@@ -77,8 +72,11 @@ module.exports = function(config) {
             { pattern: 'public/coreplugins/org.ekstep.ecmlrenderer-1.0/manifest.json', watched: false, served: true, included: false },
             'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/plugin.js',
             { pattern: 'public/assets/sounds/*.mp3', watched: false, served: true, included: false },
-            { pattern: 'public/test/test-content/assets/assets/public/content/*.jpg', watched: false, served: true, included: false },
-            { pattern: 'public/test/test-content/assets/assets/public/content/*.mp3', watched: false, served: true, included: false },
+            { pattern: 'public/assets/icons/*.png', watched: false, served: true, included: false },
+            { pattern: 'public/test/testContent/assets/assets/public/content/*.jpg', watched: false, served: true, included: false },
+            { pattern: 'public/test/testContent/items/assessment_mtf.json', watched: false, served: true, included: false },
+            { pattern: 'public/test/testContent/assets/assets/public/content/*.mp3', watched: false, served: true, included: false },
+            { pattern: 'public/test/testContent/assets/assets/public/content/*.mp4', watched: false, served: true, included: false },
             '../js-libs/renderer/test/spec/beforeAll.js',
             '../js-libs/renderer/test/spec/AnimationPluginSpec.js',
             '../js-libs/renderer/test/spec/AudioPluginSpec.js',
@@ -90,7 +88,18 @@ module.exports = function(config) {
             '../js-libs/renderer/test/spec/HotspotPluginSpec.js',
             '../js-libs/renderer/test/spec/ImagePluginSpec.js',
             '../js-libs/renderer/test/spec/InputPluginSpec.js',
-            '../js-libs/renderer/test/spec/LayoutPluginSpec.js'
+            '../js-libs/renderer/test/spec/LayoutPluginSpec.js',
+            '../js-libs/renderer/test/spec/MCQPluginSpec.js',
+            '../js-libs/renderer/test/spec/MTFPluginSpec.js',
+            '../js-libs/renderer/test/spec/OptionPluginSpec.js',
+            '../js-libs/renderer/test/spec/OptionsPluginSpec.js',
+            '../js-libs/renderer/test/spec/PlaceholderPluginSpec.js',
+            '../js-libs/renderer/test/spec/ScribblePluginSpec.js',
+            '../js-libs/renderer/test/spec/SetPluginSpec.js',
+            '../js-libs/renderer/test/spec/ShapePluginSpec.js',
+            '../js-libs/renderer/test/spec/StagePluginSpec.js',
+            '../js-libs/renderer/test/spec/TextPluginSpec.js',
+            '../js-libs/renderer/test/spec/TimerManagerSpec.js'
         ],
         exclude: ['coverage'],
         preprocessors: {
@@ -101,7 +110,8 @@ module.exports = function(config) {
             '../js-libs/renderer/evaluator/*.js': ['coverage'],
             '../js-libs/renderer/generator/*.js': ['coverage']
         },
-        reporters: ['mocha', 'verbose', 'progress', 'coverage'],      
+        reporters: ['mocha', 'verbose', 'progress', 'coverage'],
+        client: { captureConsole: false },    
          // reporter options
         mochaReporter: {
             colors: {
@@ -146,13 +156,13 @@ module.exports = function(config) {
         proxies: {
             "/public/coreplugins/": "/base/public/coreplugins/",
             "/assets/sounds/": "/base/public/assets/sounds/",
-            "/assets/user_list/": "/base/public/assets/user_list/"
+            "/assets/user_list/": "/base/public/assets/user_list/",
+            "/assets/icons/": "/base/public/assets/icons/",
         },
         port: 8080,
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        client: {captureConsole: false }, 
         browsers: ['PhantomJS'],
         singleRun: false,
         browserNoActivityTimeout: 60000

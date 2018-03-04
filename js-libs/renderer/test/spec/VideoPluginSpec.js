@@ -1,49 +1,16 @@
 describe('Video plugin Jasmine test cases', function() {
-
-    var data;
-    beforeEach(function() {
-        var parent = {
-            dimensions: function() {
-                return {
-                    x: 0,
-                    y: 0,
-                    w: 500,
-                    h: 500
-                }
-            },
-            addChild: function() {}
-        }
-        data = {
-
-            "x": 0,
-            "y": 0,
-            "w": 40,
-            "h": 50,
-            "src": "videos/Wheels_On_The_Bus.webm",
-            "type": "video/webm",
-            "autoplay": false,
-            "controls": false
-
-        }
-        action = {
-                "asset": "add_video",
-                "autoplay": true,
-                "controls": true,
-                "font": "NotoSans",
-                "h": 78,
-                "muted": false,
-                "pluginType": "video",
-                "type": "video/webm",
-                "w": 80,
-                "x": 10,
-                "y": 10,
-                "z-index": -1,
-            };
-        this.plugin = PluginManager.invoke('video', data, parent);
+    var data, action;
+    beforeAll(function() {
+        var parent = {dimensions: function() {return {x: 0,y: 0,w: 500,h: 500}},addChild: function() {}};
+        data = {"x": 0,"y": 0,"w": 40,"h": 50,"asset":"video","src": "/base/public/test/testContent/assets/assets/public/content/video.mp4","type": "video/webm","autoplay": false,"controls": false};
+        action = {"asset": "video","autoplay": true,"controls": true,"font": "NotoSans","h": 78,"muted": false,"pluginType": "video","type": "video/webm","w": 80,"x": 10,"y": 10,"z-index": -1,};
+        this.plugin = org.ekstep.pluginframework.pluginManager.pluginInstances.video;
         spyOn(this.plugin, 'initPlugin').and.callThrough()
     });
 
     it("Video plugin initPlugin function validation", function() {
+        var element = document.getElementsByTagName('video')[0];
+        element.parentNode.removeChild(element);
         this.plugin.initPlugin(data)
         expect(this.plugin.initPlugin).toHaveBeenCalled();
         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
@@ -70,8 +37,8 @@ describe('Video plugin Jasmine test cases', function() {
     });
 
     it("Check video format", function() {
-        expect(data.src).toMatch(/(.*?)\.(ogv|webm)/g);
-        expect(data.type).toMatch(/(.*?)\/(ogv|webm)/g);
+        expect(data.src).toMatch(/(.*?)\.(ogv|webm|mp4)/g);
+        expect(data.type).toMatch(/(.*?)\/(ogv|webm|mp4)/g);
     })
 
     xit("Play Video", function() {

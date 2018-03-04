@@ -14,7 +14,8 @@ var optionsData = {
     "offsetX": 2,
     "offsetY": 3,
     "multiple": 4,
-    "opacity": 0.6
+    "opacity": 0.6,
+    "text": { "w": 100, "h": 100, "x": 0, "y": 0, "fontsize": "2.5vw", "model": "option.value.text", "lineHeight": 1.4, "valign": "middle", "align": "center", "font": "Verdana" }
 }
 describe('Options Plugin test cases', function() {
 
@@ -51,6 +52,7 @@ describe('Options Plugin test cases', function() {
     });
 
     it("Options plugin renderTableLayout function validation", function() {
+        Object.assign = undefined;          // Making object.assign function undefined to handle case where ECMAScript 6 is not supported.
         this.plugin.renderTableLayout([1,2])
         expect(this.plugin.renderTableLayout).toHaveBeenCalled();
         expect(this.plugin.renderTableLayout.calls.count()).toEqual(1);

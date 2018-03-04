@@ -14,25 +14,9 @@ var text_data = {
             "shadow": "gray",
             "__text": "This a text plugin"
     };
-    var data = {
-        "stage1": "this is model data."
-    };
 describe('Text plugin data test cases', function() {
-    //startRenderer(data);
     beforeEach(function(done) {
-        var parent = {
-            dimensions: function() {
-                return {
-                    x: 0,
-                    y: 0,
-                    w: 500,
-                    h: 500
-                }
-            },
-            addChild: function() {}
-        }
-
-        this.plugin = PluginManager.invoke('text', text_data, parent);
+        this.plugin = org.ekstep.pluginframework.pluginManager.pluginInstances['text'];
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'refresh').and.callThrough();
         done();
@@ -91,8 +75,4 @@ describe('Text plugin data test cases', function() {
         }
         expect(this.plugin._self.lineHeight).not.toBe(null);
     });
-
-
-
-
 });

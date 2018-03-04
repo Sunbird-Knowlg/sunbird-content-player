@@ -23,7 +23,7 @@ describe('MTF Plugin test cases', function() {
             addChild: function() {}
         };
       
-        this.plugin = PluginManager.invoke('mtf', MTFData, parent, {getController: function(){return {setModelValue : function(){}}}}, {});
+        this.plugin = PluginManager.invoke('mtf', MTFData, parent, Renderer.theme._currentScene, Renderer.theme);
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'getLhsOption').and.callThrough();
         spyOn(this.plugin, 'setAnswerMapping').and.callThrough();

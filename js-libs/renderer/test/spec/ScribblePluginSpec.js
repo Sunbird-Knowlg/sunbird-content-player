@@ -1,36 +1,7 @@
-var scribbleData = {
-    "x": 0,
-    "y": 0,
-    "w": 50,
-    "h": 50,
-    "fill": "red",
-    "stroke": "green",
-    "stroke-width": 10,
-    "thickness": 30,
-    "z-index": "10",
-    "stroke": 6,
-    "bgcolor": "skyblue",
-    "color": "yellow"
-};
 describe('Scribble Plugin test cases', function() {
 
     beforeEach(function(done) {
-        var parent = {
-            dimensions: function() {
-                return {
-                    x: 0,
-                    y: 0,
-                    w: 500,
-                    h: 500
-                }
-            },
-            addChild: function() {}
-        }
-
-        Renderer.theme.mousePoint = function() {
-            return { x: 200, y: 200 }
-        };
-        this.plugin = PluginManager.invoke('scribble', scribbleData, parent);
+        this.plugin = org.ekstep.pluginframework.pluginManager.pluginInstances.scribble;
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'handleMouseDown').and.callThrough();
         spyOn(this.plugin, 'handleMouseMove').and.callThrough();

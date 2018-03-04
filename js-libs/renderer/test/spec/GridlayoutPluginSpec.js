@@ -24,7 +24,9 @@ var gridLayoutData = {
             "fontsize": "600",
             "h": "90",
             "model": "user.name",
+            "align": "center",
             "valign": "middle",
+            "textBaseline": true,
             "w": "90",
             "x": "40",
             "y": "10"

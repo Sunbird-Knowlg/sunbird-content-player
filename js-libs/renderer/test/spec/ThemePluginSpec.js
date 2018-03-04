@@ -1,182 +1,38 @@
 describe('Theme Plugin test cases', function() {
 
-    beforeEach(function(done) {
-        var themeData = {
-           theme : {
-            canvasId: "gameCanvas",
-            startStage: "splash",
-            manifest: {
-                media: [
-                    { id: 'sringeri', src: 'http-image/sringeri.png', type: 'image' },
-                    { id: 'splash_audio', src: 'http-image/splash.ogg', type: 'audio' }
-                ]
-            },
-            controller: [
-                {
-                    "identifier": "haircut_story_1",
-                    "item_sets": [
-                        {
-                            "count": 4,
-                            "id": "set_1"
-                        }
-                    ],
-                    "items": {
-                        "set_1": [
-                            {
-                                "feedback": "",
-                                "hints": [
-                                    {
-                                        "asset": "learning11_sound",
-                                        "type": "audio"
-                                    },
-                                    {
-                                        "asset": "Barber has Scissors to Cut hair.",
-                                        "type": "text"
-                                    }
-                                ],
-                                "identifier": "hs1_set_1_1",
-                                "max_score": 1,
-                                "model": {
-                                    "title_audio": {
-                                        "asset": "learning10_sound",
-                                        "type": "audio"
-                                    }
-                                },
-                                "num_answers": 1,
-                                "options": [
-                                    {
-                                        "value": {
-                                            "asset": "carpenter_img",
-                                            "type": "image"
-                                        }
-                                    },
-                                    {
-                                        "answer": true,
-                                        "value": {
-                                            "asset": "barber_img",
-                                            "type": "image"
-                                        }
-                                    },
-                                    {
-                                        "value": {
-                                            "asset": "tailor_img",
-                                            "type": "image"
-                                        }
-                                    },
-                                    {
-                                        "value": {
-                                            "asset": "wife_img",
-                                            "type": "image"
-                                        }
-                                    }
-                                ],
-                                "partial_scoring": false,
-                                "qlevel": "MEDIUM",
-                                "template": "mcq_template_1",
-                                "title": "Find the Barber.",
-                                "type": "mcq"
-                            }
-                        ]
-                    },
-                    "max_score": 9,
-                    "shuffle": false,
-                    "subject": "LIT",
-                    "title": "Haircut Story Assessment",
-                    "total_items": 4
-                }],
-            stage: [
-                { "id": "splash", 
-                "audio": [{ asset: 'splash_audio' }], 
-                "text": [{
-                    "x" : 0,
-                    "y" : 0,
-                    "w" : 100,
-                    "h" : 20,
-                    "fontsize": 12,
-                    "__text": "Testing text plugin"
-                }],
-                "image": [{ asset: 'sringeri' }], 
-                    "x" : 0,
-                    "y" : 0,
-                    "w" : 100,
-                    "h" : 100,
-                    "param" : [{
-                            "name" : "instructions",
-                            "value" : ""
-                        }, {
-                            "name" : "next",
-                            "value" : "splash1"
-                        }
-                    ],
-                    "image" : [{
-                        "x" : 10,
-                        "y" : 20,
-                        "w" : 70,
-                        "h" : 80,
-                        "visible" : true,
-                        "editable" : true,
-                        "asset" : "sringeri",
-                        "z-index" : 4,
-                    }],
-                    "event": [{
-                        "type": "enter", 
-                        "action": {
-                            "type": "command",
-                           "asset": "sringeri",
-                           "command": "toggleShow",
-                       }
-                   }]
-                },
-                { id: "splash1", audio: [{ asset: 'splash_audio' }], img: [{ asset: 'sringeri' }] },
-                { id: "splash2", audio: [{ asset: 'splash_audio' }], img: [{ asset: 'sringeri' }] }
-            ]
-           }
-        }
-        startRenderer(themeData);
+    beforeAll(function(done) {
         this.plugin = Renderer.theme;
-
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'start').and.callThrough();
         spyOn(this.plugin, 'updateCanvas').and.callThrough();
         spyOn(this.plugin, 'render').and.callThrough();
-
         spyOn(this.plugin, 'addController').and.callThrough();
         spyOn(this.plugin, 'initStageControllers').and.callThrough();
         spyOn(this.plugin, 'reRender').and.callThrough();
-
         spyOn(this.plugin, 'update').and.callThrough();
         spyOn(this.plugin, 'tick').and.callThrough();
         spyOn(this.plugin, 'restart').and.callThrough();
-
         // spyOn(this.plugin, 'addChild').and.callThrough();
-
         spyOn(this.plugin, 'invokeStage').and.callThrough();
         spyOn(this.plugin, 'replaceStage').and.callThrough();
-
         spyOn(this.plugin, 'preloadStages').and.callThrough();
         //spyOn(this.plugin, 'mergeStages').and.callThrough();
         //spyOn(this.plugin, 'isStageChanging').and.callThrough();
         spyOn(this.plugin, 'transitionTo').and.callThrough();
-
         spyOn(this.plugin, 'removeHtmlElements').and.callThrough();
         spyOn(this.plugin, 'disableInputs').and.callThrough();
         spyOn(this.plugin, 'enableInputs').and.callThrough();
-
         //spyOn(this.plugin, 'getTransitionEffect').and.callThrough();
-
         spyOn(this.plugin, 'getDirection').and.callThrough();
         spyOn(this.plugin, 'getEase').and.callThrough();
         //spyOn(this.plugin, 'getAsset').and.callThrough();
         spyOn(this.plugin, 'mousePoint').and.callThrough();
-
         spyOn(this.plugin, 'getStagesToPreLoad').and.callThrough();
         //spyOn(this.plugin, 'cleanUp').and.callThrough();
         //spyOn(this.plugin, 'pause').and.callThrough();
         //spyOn(this.plugin, 'resume').and.callThrough();
         //spyOn(this.plugin, 'setParam').and.callThrough();
         //spyOn(this.plugin, 'getParam').and.callThrough();
-
-
         done();
     });
     
@@ -188,10 +44,8 @@ describe('Theme Plugin test cases', function() {
         this.plugin.initPlugin({canvasId : "gameCanvas"});
         expect(this.plugin.initPlugin).toHaveBeenCalled();
         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
-
-        // expect(true).toEqual(this.plugin._self instanceof createjs.Stage);
-        // expect(true).toEqual(this.plugin._self.mouseMoveOutside);
-
+        expect(true).toEqual(this.plugin._self instanceof createjs.Stage);
+        expect(true).toEqual(this.plugin._self.mouseMoveOutside);
     });
 
     it('Theme plugin updateCanvas()', function() {
@@ -215,13 +69,11 @@ describe('Theme Plugin test cases', function() {
     it('Theme plugin addController()', function() {
         this.plugin.addController({name: "Test", type:"item", id:"Test"});
         expect(this.plugin.addController).toHaveBeenCalled();
-        expect(this.plugin.addController.calls.count()).toEqual(1);
     });
 
     it('Theme plugin initStageControllers()', function() {
         this.plugin.initStageControllers("");
         expect(this.plugin.initStageControllers).toHaveBeenCalled();
-        expect(this.plugin.initStageControllers.calls.count()).toEqual(1);
     });
 
     it('Theme plugin reRender()', function() {
@@ -323,11 +175,8 @@ describe('Theme Plugin test cases', function() {
             expect(mediaAsset).toBeDefined();
         }, 2000);
 
-
         expect(callback).not.toHaveBeenCalled();
-
         jasmine.clock().tick(2000);
-
         expect(callback).toHaveBeenCalled();
 
         // CommandManager.handle({"type": "command", "asset": "sringeri", "command": "toggleShow", "stageInstanceId": Renderer.theme._currentScene._stageInstanceId,
