@@ -64,9 +64,9 @@ Plugin.extend({
             event.target();
         }, this);
 
-        EkstepRendererAPI.addEventListener(instance._data.pluginType + ':getQuestionState', function(event, data) {
-            var qState =  instance._questionStates[data];
-            event.target(qState);
+        EkstepRendererAPI.addEventListener(instance._data.pluginType + ':getQuestionState', function(event) {
+            var qState =  instance.getQuestionState(event.target.qid);
+            event.target.callback(qState);
         }, this);
 
 

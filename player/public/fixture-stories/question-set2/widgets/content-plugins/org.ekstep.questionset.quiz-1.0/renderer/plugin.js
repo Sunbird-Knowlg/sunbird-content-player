@@ -106,19 +106,22 @@ Plugin.extend({
             var stageKey = this._stage.getStagestateKey();
 
             if (typeof this._theme.getParam === "function") {
-                 this._stage._currentState = this._theme.getParam(stageKey);
+                this._stage._currentState = this._theme.getParam(stageKey);
 
-                 
-        var questionState = this.getStates(this.qid);
-        if (questionState) {
-            this._stage._stageController._model = questionState.model;
-        }
-                // if (_.isUndefined(this._stage._currentState)) {
-                //     this._stage.setParam(this._stage._type, {
-                //         id: Renderer.theme._currentStage,
-                //         stateId: stageKey
-                //     });
-                // }
+
+                var questionState = this.getStates(this.qid);
+                if (questionState) {
+                    var item = this._stage._stageController._model[0];
+                    if (item.type.toLowerCase() == 'mcq' || item.type.toLowerCase() == 'mmcq') {
+                        questionState.model[0].options.forEach(function(i) {
+                        if (i.oSelected) {
+                            i.selected = true;
+                        }
+                    });
+                    }
+                    
+                    this._stage._stageController._model = _.clone(questionState.model);
+                }
             }
         }
     },
@@ -126,10 +129,20 @@ Plugin.extend({
         var result = {},
             res = {};
         var item = this._stage._stageController._model[0];
+        /*item.options.forEach(function(i) {
+            
+            if (i.selected) {
+                i.oSelected = true;
+            }else{
+                i.oSelected = false;
+            }
+        });*/
 
-          EkstepRendererAPI.dispatchEvent('org.ekstep.questionset:savev1QuestionState', function(data) {
-            console.log("jdhfydygyfgeujyfge", data);
-        }, state)
+        var state = {
+            model: _.clone(this._stage._stageController._model)
+        }
+
+        EkstepRendererAPI.dispatchEvent('org.ekstep.questionset:savev1QuestionState', function(data) {}, state)
 
 
         if (item.type.toLowerCase() == 'ftb') {
@@ -143,10 +156,7 @@ Plugin.extend({
         result.score = res.score;
         result.res = res.res;
 
-        var state = {
-            model: this._stage._stageController._model
-        }
-      
+
 
         if (_.isFunction(callback)) {
             callback(result);
@@ -154,10 +164,12 @@ Plugin.extend({
     },
     getStates: function(questionId) {
         var qState;
-        EkstepRendererAPI.dispatchEvent('org.ekstep.questionset:getQuestionState', function(data) {
-            console.log("jdhfydygyfgeujyfge", data)
-            qState = data;
-        }, questionId);
+        EkstepRendererAPI.dispatchEvent('org.ekstep.questionset:getQuestionState', {
+            qid: questionId,
+            callback: function(data) {
+                qState = data;
+            }
+        });
         return qState;
     }
 });

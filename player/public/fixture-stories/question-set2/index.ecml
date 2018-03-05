@@ -1,5 +1,8 @@
 <theme compatibilityVersion="2" id="theme" version="1.0" startStage="6a319536-2739-409e-9ae9-2000b30bc912">
     <manifest>
+      <media assetId="nkeyboard"/>
+      <media assetId="arithmeticOperations"/>
+      <media assetId="keyboard_css"/>
         <media ver="1.1" plugin="org.ekstep.text" src="content-plugins/org.ekstep.text-1.1/renderer/supertextplugin.js" id="org.ekstep.text" type="plugin"></media>
         <media ver="1.1" plugin="org.ekstep.text" src="content-plugins/org.ekstep.text-1.1/manifest.json" id="org.ekstep.text_manifest" type="json"></media>
         <media ver="1.0" plugin="org.ekstep.questionset" src="content-plugins/org.ekstep.questionset-1.0/renderer/controller/questionset_ctrl.js" id="8d129bd4-05a4-4a6d-b749-92d7bd113018" type="js"></media>
@@ -17,6 +20,9 @@
         <media src="content-plugins/org.ekstep.questionset-1.0/editor/assets/quizimage.png" assetId="QuizImage" id="QuizImage" type="image" preload="true"></media>
         <media id="org.ekstep.quiz" plugin="org.ekstep.quiz" ver="1.0" src="/plugins/org.ekstep.quiz-1.0/renderer/plugin.js" type="plugin" />
         <media id="org.ekstep.quiz_manifest" plugin="org.ekstep.quiz" ver="1.0" src="/plugins/org.ekstep.quiz-1.0/manifest.json" type="json" />
+        <media src="/assets/public/content/do_1121897789736960001122/assets/1488010532889/customnumkeyboard.js" id="nkeyboard" type="plugin" preload="true" plugin="org.ekstep.questionset.quiz" ver="1.0" />
+        <media src="/assets/public/content/do_1121897789736960001122/assets/1488010532889/arithmeticoperations.js" id="arithmeticOperations" type="plugin" preload="true" plugin="org.ekstep.questionset.quiz" ver="1.0" />
+        <media src="/assets/public/content/do_1121897789736960001122/assets/1488010532940/numerickeyboard.css" id="keyboard_css" type="css" preload="true" plugin="org.ekstep.questionset.quiz" ver="1.0" />
     </manifest>
     <stage w="100" x="0" h="100" y="0" id="6a319536-2739-409e-9ae9-2000b30bc912">
         <config>
@@ -55,220 +61,107 @@
                     <![CDATA[{"metadata":{"category":"mcq","title":"What is 4 + 5?","language":["English"],"qlevel":"Easy","gradeLevel":["Grade 1"],"concepts":["Num:C3:SC2"],"max_score":1},"max_time":0,"max_score":1,"partial_scoring":false,"layout":"Horizontal"}]]>
                 </config>
             </org.ekstep.question>
-            <org.ekstep.question pluginId="org.ekstep.questionset.quiz" pluginVer="1.0" id="80532057-749a-4534-812b-ec702c99b4b8" type="mcq" templateId="horizontalMCQ" rotate="0" z-index="0" w="80" x="9" h="85" y="6">
+            <org.ekstep.question pluginId="org.ekstep.questionset.quiz" pluginVer="1.0" id="80532057-749a-4534-812b-ec702c99b4b8" type="ftb" templateId="horizontalMCQ" rotate="0" z-index="0" w="80" x="50" h="85" y="50">
                 <data>
                     <![CDATA[{
-    "questionnaire": {
-        "items": {
-            "do_112395987534864384169":[ {
-                "template": "org.ekstep.mcq.i.ta",
-                "code": "org.ekstep.assessmentitem.science_5a3153781a79b",
-                "subject": "domain",
-                "qlevel": "EASY",
-                "channel": "in.ekstep",
-                "description": "",
-                "language": ["English"],
-                "type": "mcq",
-                "title": "Which state or union territory has French as an official language?",
-                "createdOn": "2017-12-13T16:21:12.127+0000",
-                "gradeLevel": ["Kindergarten", "Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9", "Grade 10", "Grade 11", "Grade 12", "Other"],
-                "appId": "ekstep_portal",
-                "options": [{
-                    "value": {
-                        "type": "mixed",
-                        "text": "Pondicherry",
-                        "count": "",
-                        "image": null,
-                        "audio": null,
-                        "resvalue": "Pondicherry",
-                        "resindex": 0
-                    },
-                    "score": 1,
-                    "answer": true
-                }, {
-                    "value": {
-                        "type": "mixed",
-                        "text": "Goa",
-                        "count": "",
-                        "image": null,
-                        "audio": null,
-                        "resvalue": "Goa",
-                        "resindex": 1
-                    }
-                }, {
-                    "value": {
-                        "type": "mixed",
-                        "text": "MP",
-                        "count": "",
-                        "image": null,
-                        "audio": null,
-                        "resvalue": "MP",
-                        "resindex": 2
-                    }
-                }, {
-                    "value": {
-                        "type": "mixed",
-                        "text": "UP",
-                        "count": "",
-                        "image": null,
-                        "audio": null,
-                        "resvalue": "UP",
-                        "resindex": 3
-                    }
-                }],
-                "lastUpdatedOn": "2017-12-13T16:21:12.127+0000",
-                "used_for": "worksheet",
-                "lastUpdatedBy": "385",
-                "identifier": "do_112395987534864384169",
-                "question": "Which state or union territory has French as an official language?",
-                "consumerId": "f6878ac4-e9c9-4bc4-80be-298c5a73b447",
-                "version": 1,
-                "versionKey": "1513182072127",
-                "concepts": [{
-                    "identifier": "do_1121976612633149441200",
-                    "name": "Lorem",
-                    "objectType": "Concept",
-                    "relation": "associatedTo",
-                    "description": null,
-                    "index": null,
-                    "status": null,
-                    "depth": null,
-                    "mimeType": null,
-                    "visibility": null,
-                    "compatibilityLevel": null
-                }],
-                "createdBy": "385",
-                "domain": ["science"],
-                "max_score": 1,
-                "name": "Which state or union territory has French as an official language?",
-                "template_id": "domain_49157",
-                "status": "Live",
-                "$$hashKey": "object:5138"
-            }]
-        },
-        "item_sets": [{
-            "count": "1",
-            "id": "do_112395987534864384169"
-        }]
+  "questionnaire": {
+    "items": {
+      "do_1121897928576286721125": [
+        {
+          "template": "org.ekstep.ftb.arithmetic_operations",
+          "code": "org.ekstep.assessmentitem._58b1420a686ad",
+          "qlevel": "EASY",
+          "channel": "in.ekstep",
+          "description": "",
+          "language": [
+            "English"
+          ],
+          "type": "ftb",
+          "title": "test\r\n \r\naddition",
+          "createdOn": "2017-02-25T08:37:03.441+0000",
+          "objectType": "AssessmentItem",
+          "gradeLevel": [
+            "Grade2"
+          ],
+          "appId": "dev.ekstep.in",
+          "lastUpdatedOn": "2017-06-06T17:10:04.660+0000",
+          "used_for": "worksheet",
+          "model": {
+            "numDigit": 1,
+            "operator": "+",
+            "carryBorrow": false,
+            "keys": "0,1,2,3,4,5,6,7,8,9,+,-,×,÷,=,(,),/,."
+          },
+          "lastUpdatedBy": "408",
+          "identifier": "do_1121897928576286721125",
+          "question": "test addition",
+          "consumerId": "f6878ac4-e9c9-4bc4-80be-298c5a73b447",
+          "portalOwner": "408",
+          "graph_id": "domain",
+          "nodeType": "DATA_NODE",
+          "version": 1,
+          "versionKey": "1496769004660",
+          "answer": {
+            "ans1": {
+              "value": "",
+              "score": 1
+            }
+          },
+          "createdBy": "408",
+          "max_score": 1,
+          "name": "test addition",
+          "template_id": "do_1121897789736960001122",
+          "node_id": 95657,
+          "isSelected": true,
+          "$$hashKey": "object:1045"
+        }
+      ]
     },
-    "template": [{
-        "text": {
-            "event": {
-                "action": [{
-                    "command": "stop",
-                    "sound": true,
-                    "type": "command"
-                }, {
-                    "asset_model": "item.question_audio",
-                    "command": "play",
-                    "type": "command"
-                }],
-                "type": "click"
-            },
-            "align": "center",
-            "color": "black",
-            "font": "Verdana",
-            "fontsize": "2em",
-            "h": 4,
-            "lineHeight": 2,
-            "model": "item.question",
-            "w": 100,
-            "x": 0,
-            "y": 5
+    "item_sets": [
+      {
+        "count": 1,
+        "id": "do_1121897928576286721125"
+      }
+    ],
+    "title": "t",
+    "shuffle": false,
+    "showImmediateFeedback": true,
+    "myQuestions": false,
+    "concepts": "(0)Concepts",
+    "total_items": 1,
+    "max_score": 2,
+    "range": [
+      1,
+      2
+    ],
+    "optionShuffle": true
+  },
+  "template": [
+    {
+      "g": {
+        "arithmeticOperations": {
+          "withOrWithout": "item.carryBorrow",
+          "w": 100,
+          "h": 100,
+          "x": 0,
+          "y": 0,
+          "id": "ranNumGenerator",
+          "type": "custom",
+          "numDigit": "item.numDigit",
+          "operator": "item.operator"
         },
-        "shape": {
-            "event": {
-                "action": [{
-                    "command": "stop",
-                    "sound": true,
-                    "type": "command"
-                }, {
-                    "asset_model": "item.question_audio",
-                    "command": "play",
-                    "type": "command"
-                }],
-                "type": "click"
-            },
-            "h": 15,
-            "hitArea": true,
-            "type": "rect",
-            "w": 100,
-            "x": 0,
-            "y": 5
-        },
-        "g": {
-            "image": {
-                "event": {
-                    "action": [{
-                        "command": "stop",
-                        "sound": true,
-                        "type": "command"
-                    }, {
-                        "asset_model": "item.question_audio",
-                        "command": "play",
-                        "type": "command"
-                    }],
-                    "type": "click"
-                },
-                "align": "center",
-                "h": 100,
-                "model": "item.question_image",
-                "stretch": false,
-                "valign": "middle",
-                "w": 100
-            },
-            "h": 45,
-            "id": "qImage",
-            "w": 50,
-            "x": 25,
-            "y": 25
-        },
-        "mcq": {
-            "options": {
-                "text": {
-                    "align": "center",
-                    "font": "Verdana",
-                    "fontsize": "1.6em",
-                    "h": 100,
-                    "model": "option.value.text",
-                    "valign": "middle",
-                    "w": 100,
-                    "x": 0,
-                    "y": 0
-                },
-                "event": {
-                    "action": [{
-                        "command": "stop",
-                        "sound": true,
-                        "type": "command"
-                    }, {
-                        "asset_model": "option.value.audio",
-                        "command": "play",
-                        "type": "command"
-                    }],
-                    "type": "click"
-                },
-                "cols": 4,
-                "h": 15,
-                "highlight": "yellow",
-                "layout": "table",
-                "marginX": 5,
-                "marginY": 5,
-                "options": "options",
-                "w": 97,
-                "x": 1.5,
-                "y": 75
-            },
-            "model": "item",
-            "multi_select": false,
-            "shadow": "#56B1F7"
-        },
-        "id": "org.ekstep.mcq.i.ta"
-    }]
+        "w": 50,
+        "h": 47,
+        "x": 25,
+        "y": 33
+      },
+      "id": "org.ekstep.ftb.arithmetic_operations"
+    }
+  ]
 }]]>
                 </data>
                 <config>
-                    <![CDATA[{"type":"items","var":"item","shuffle":false,"total_items":1,"showImmediateFeedback":true,"max_score":5,"title":"q123","optionShuffle":true}]]>
+                    <![CDATA[{"type":"items","var":"item","media":{"nkeyboard":{"src":"/assets/public/content/do_1121897789736960001122/assets/1488010532889/customnumkeyboard.js","id":"nkeyboard","type":"plugin","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"},"arithmeticOperations":{"src":"/assets/public/content/do_1121897789736960001122/assets/1488010532889/arithmeticoperations.js","id":"arithmeticOperations","type":"plugin","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"},"keyboard_css":{"src":"/assets/public/content/do_1121897789736960001122/assets/1488010532940/numerickeyboard.css","id":"keyboard_css","type":"css","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"}},"shuffle":false,"total_items":1,"showImmediateFeedback":true,"max_score":2,"title":"t","optionShuffle":true}]]>
                 </config>
             </org.ekstep.question>
             <org.ekstep.question pluginId="org.ekstep.questionset.quiz" pluginVer="1.0" id="80532057-749a-4534-812b-ec702c99b4b9" type="mcq" templateId="horizontalMCQ" rotate="0" z-index="0" w="80" x="9" h="85" y="6">
@@ -519,7 +412,6 @@
                     <![CDATA[{"type":"items","var":"item","shuffle":false,"total_items":1,"showImmediateFeedback":true,"max_score":5,"title":"q123","optionShuffle":true}]]>
                 </config>
             </org.ekstep.question>
-           
             <org.ekstep.question id="13c25c5c-8baa-4216-a47c-ad49810a0056" type="unit" pluginId="org.ekstep.questionunit.mcq" pluginVer="1.0" templateId="horizontalMCQ">
                 <data>
                     <![CDATA[{"question":{"text":"What is the capital of India?"},"options":[{"isAnswerCorrect":false,"score":0,"text":"Chennai"},{"isAnswerCorrect":false,"score":0,"text":"Kolkata"},{"isAnswerCorrect":true,"score":1,"text":"New Delhi"}]}]]>
@@ -528,7 +420,7 @@
                     <![CDATA[{"metadata":{"title":"question tile","language":"English","qlevel":"Easy","gradeLevel":["Kindergarten"],"concepts":[{"id":"do_112300246933831680110","name":"abcd"}]},"max_time":1,"max_score":1,"partial_scoring":true}]]>
                 </config>
             </org.ekstep.question>
-                <org.ekstep.question pluginId="org.ekstep.questionset.quiz" pluginVer="1.0" id="1ace855c-80c9-45ed-9553-8c549eec62ec" type="mcq" templateId="horizontalMCQ" rotate="0" z-index="0" w="80" x="9" h="85" y="6">
+            <org.ekstep.question pluginId="org.ekstep.questionset.quiz" pluginVer="1.0" id="1ace855c-80c9-45ed-9553-8c549eec62ec" type="mcq" templateId="horizontalMCQ" rotate="0" z-index="0" w="80" x="9" h="85" y="6">
                 <data>
                     <![CDATA[{"questionnaire":{"items":{"ek.n.ib.en.ad.Q.39":[{"template":"org.ekstep.mcq.ta","code":"ek.n.ib.en.ad.Q.39","keywords":["add","addition","sum"],"qlevel":"DIFFICULT","channel":"in.ekstep","language":["English"],"type":"mcq","partial_scoring":true,"title":"Make a given number (2-20) - pick statement","createdOn":"2016-06-28T08:17:23.492+0000","objectType":"AssessmentItem","feedback":"Please try again!","gradeLevel":["Grade 2"],"appId":"dev.ekstep.in","options":[{"value":{"type":"mixed","text":"6 + 3"},"answer":false},{"value":{"type":"mixed","text":"1 + 5"},"answer":true},{"value":{"type":"mixed","text":"1 + 6"},"answer":false},{"value":{"type":"mixed","text":"5 + 1"},"answer":true}],"lastUpdatedOn":"2017-06-06T17:09:37.089+0000","used_for":"worksheet","owner":"Feroz","lastUpdatedBy":"csv-import","identifier":"ek.n.ib.en.ad.Q.39","question":"Which of these are equal to 6?","consumerId":"f6878ac4-e9c9-4bc4-80be-298c5a73b447","portalOwner":"128","graph_id":"domain","nodeType":"DATA_NODE","version":1,"versionKey":"1496768977089","createdBy":"128","domain":"numeracy","max_score":2,"name":"Make a given number (2-20) - pick statement","template_id":"domain_49165","num_answers":2,"node_id":90139,"isSelected":true,"$$hashKey":"object:642"}]},"item_sets":[{"count":1,"id":"ek.n.ib.en.ad.Q.39"}],"title":"j","shuffle":false,"showImmediateFeedback":true,"myQuestions":false,"concepts":"(0) Concepts","total_items":1,"max_score":1,"range":[1],"optionShuffle":true},"template":[{"text":{"event":{"action":[{"command":"stop","sound":true,"type":"command"},{"asset_model":"item.question_audio","command":"play","type":"command"}],"type":"click"},"align":"center","color":"black","font":"Verdana","fontsize":"2em","h":20,"lineHeight":2,"model":"item.question","valign":"top","w":100,"x":0,"y":5},"shape":[{"event":{"action":[{"command":"stop","sound":true,"type":"command"},{"asset_model":"item.question_audio","command":"play","type":"command"}],"type":"click"},"h":10,"hitArea":true,"type":"rect","w":100,"x":0,"y":15},{"h":20,"stroke":"black","w":100,"x":0,"y":5}],"mcq":{"options":{"shape":{"h":100,"stroke":"black","type":"roundrect","w":100,"x":0,"y":0},"text":{"align":"center","font":"Verdana","fontsize":"1.6em","h":100,"lineHeight":2.25,"model":"option.value.text","valign":"middle","w":100,"x":0,"y":0},"event":{"action":[{"command":"stop","sound":true,"type":"command"},{"asset_model":"option.value.audio","command":"play","type":"command"}],"type":"click"},"cols":4,"h":60,"highlight":"yellow","layout":"table","marginX":5,"marginY":5,"options":"options","w":97,"x":1.5,"y":30},"model":"item","multi_select":false,"shadow":"#56B1F7"},"id":"org.ekstep.mcq.ta"}]}]]>
                 </data>
