@@ -26,7 +26,7 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
         }
     };
     $scope.setLicense = function(){
-        $scope.licenseAttribute = $scope.content.license || 'Licensed under CC By 4.0 license'
+        $scope.licenseAttribute = $scope.content.license || 'CC BY 4.0'
     };
     $scope.showCredits = function(key) {
         if ($scope.content.imageCredits == null && $scope.content.voiceCredits == null && $scope.content.soundCredits == null) {
