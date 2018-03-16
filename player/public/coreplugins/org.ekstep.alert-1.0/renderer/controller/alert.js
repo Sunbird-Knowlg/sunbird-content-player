@@ -16,7 +16,6 @@ app.compileProvider.directive('alert', function($rootScope, $compile) {
             scope.showCancelButton = true;
             scope.detailBtnText = "Details";
             scope.okBtnText = "Exit";
-            scope.detailstopMargin = "";
             scope.copyAnswer = 'Copy';
             scope.showDetailsPopUp = false;
             scope.rendererVersion = EkstepRendererAPI.getGlobalConfig().canvasVersion;
@@ -55,18 +54,15 @@ app.compileProvider.directive('alert', function($rootScope, $compile) {
             scope.showDetails = function(){
               if(scope.showDetailsPopUp){
                 scope.showDetailsPopUp = false;
-                scope.detailstopMargin = "";
                 scope.copyAnswer = "Copy";
                 scope.detailsIcon = scope.downIcon;
               }else{
                 scope.showDetailsPopUp = true;
-                scope.detailstopMargin = "detailstopMargin";
                 scope.detailsIcon = scope.upIcon;
               }
               scope.safeApply();
             }
             scope.hideDetails = function(){
-              scope.detailstopMargin = "";
               scope.showDetailsPopUp = false;
               scope.safeApply();
             }
