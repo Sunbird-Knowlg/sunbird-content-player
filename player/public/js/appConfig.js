@@ -2,7 +2,7 @@ AppConfig = {
     version: "BUILD_NUMBER",
     processing_timeout: 10, // in minutes
     host: "",
-    canvasVersion: "1.2",
+    canvasVersion: "genie-canvas-version",
     recorder: "AUDIO_RECORDER",
     flavor: "DEPLOYMENT",
     heartBeatTime:180000,
