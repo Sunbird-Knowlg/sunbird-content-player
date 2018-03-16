@@ -2,7 +2,7 @@ AppConfig = {
     version: "BUILD_NUMBER",
     processing_timeout: 10, // in minutes
     host: "",
-    canvasVersion: "genie-canvas-version",
+    canvasVersion: "1.2",
     recorder: "AUDIO_RECORDER",
     flavor: "DEPLOYMENT",
     heartBeatTime:180000,
@@ -77,6 +77,10 @@ AppConfig = {
             type:'plugin'
         },{
             id:"org.ekstep.toaster",
+            ver:1.0,
+            type:'plugin'
+        },{
+            id:"org.ekstep.alert",
             ver:1.0,
             type:'plugin'
         }

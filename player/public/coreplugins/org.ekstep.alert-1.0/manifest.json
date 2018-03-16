@@ -1,0 +1,11 @@
+{
+    "id": "org.ekstep.alert",
+    "ver": "1.0",
+    "shortId": "org.ekstep.alert",
+    "author": "Gourav More",
+    "description": "",
+    "publishedDate": "",
+    "renderer": {
+        "main": "renderer/plugin.js"
+    }
+}
