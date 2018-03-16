@@ -8,8 +8,8 @@ app.compileProvider.directive('alert', function($rootScope, $compile) {
         restrict: 'E',
         template: "<div ng-include='getAlertPluginInstance()' ></div>",
         link: function(scope, element, attrs, controller) {
-            scope.upIcon = EkstepRendererAPI.resolvePluginResource("org.ekstep.alert", "1.0", "/assets/up.png");
-            scope.downIcon = EkstepRendererAPI.resolvePluginResource("org.ekstep.alert", "1.0", "/assets/down.png");
+            scope.upIcon = EkstepRendererAPI.resolvePluginResource("org.ekstep.alert", "1.0", "assets/up.png");
+            scope.downIcon = EkstepRendererAPI.resolvePluginResource("org.ekstep.alert", "1.0", "assets/down.png");
             scope.title = "";
             scope.text = "";
             scope.type = null;
