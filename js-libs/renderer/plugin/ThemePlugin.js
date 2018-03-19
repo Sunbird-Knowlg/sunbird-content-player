@@ -236,6 +236,9 @@ var ThemePlugin = Plugin.extend({
             this._currentScene = childPlugin;
             this._director.replace(child);
         }
+        document.fonts.ready.then(function () {
+            Renderer.update = true;
+        });
         childPlugin.setIndex(nextIdx);
     },
     replaceStage: function(stageId, effect) {
