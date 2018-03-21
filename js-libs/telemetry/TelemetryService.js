@@ -25,10 +25,6 @@ TelemetryService = {
         pressup: 'DRAG'
     },
     init: function(gameData, user, correlationData, otherData) {
-        var localStorageInstance = TelemetryService.getLocalStorageInstance();
-        if (!_.isEmpty(localStorageInstance)) {
-            TelemetryService.setTelemetryService(localStorageInstance, gameData);
-        }
         return new Promise(function(resolve, reject) {
             if (!TelemetryService.instance) {
                 TelemetryService._user = user;
@@ -122,49 +118,6 @@ TelemetryService = {
         if (eventObj)
             eventObj.flush(apiName);
         return eventObj;
-    },
-    setTelemetryService: function(localStorageInstance, gameData) {
-        // This is specific to HTML games launched by GenieCanvas
-        // HTML content OE_START is already logged by GenieCanvas coverpage
-        // OE_START should not log by HTML content once again(if they are using GenieCanvasBridge.js)
-        if (localStorageInstance._gameData.id == gameData.id) {
-            var start = localStorageInstance._start; //JSON.parse(localStorage.getItem("_start"));
-            var end = localStorageInstance._end; //JSON.parse(localStorage.getItem("_end"));
-            if (!_.isUndefined(localStorageInstance)) {
-                for (var prop in localStorageInstance) {
-                    if (TelemetryService.hasOwnProperty(prop)) {
-                        TelemetryService[prop] = localStorageInstance[prop];
-                    }
-                }
-            }
-            TelemetryService.instance = (TelemetryService._version == "1.0") ? new TelemetryV1Manager() : new TelemetryV2Manager();
-            if (!_.isUndefined(start)) {
-                for (var i = 0; i < start.length; i++) {
-                    TelemetryService.instance._start.push(start[i]);
-                    TelemetryService.instanceV2._start.push(start[i]);
-                }
-            }
-            if (!_.isUndefined(end)) {
-                var teEndevent = TelemetryService.instance.createEvent("OE_END", {}).start();
-                var startTime = 0;
-                if(end.length > 0){
-                    startTime = end[end.length - 1].startTime;
-                }
-                teEndevent.startTime = startTime;
-                TelemetryService.instance._end.push(teEndevent);
-                TelemetryService.instanceV2._end.push(teEndevent);
-            }
-        } else {
-            console.info("Game id is not same", gameData.id);
-        }
-    },
-    getLocalStorageInstance: function() {
-        var telemetryLocalStorageData = localStorageGC.getItem("telemetryService");
-            if(!_.isEmpty(telemetryLocalStorageData)){
-                 telemetryLocalStorageData._start = JSON.parse(telemetryLocalStorageData._start);
-                 telemetryLocalStorageData._end = JSON.parse(telemetryLocalStorageData._end);
-        }
-        return telemetryLocalStorageData;
     },
     start: function(id, ver, data) {
         if (!TelemetryService.isActive) {

@@ -34,7 +34,6 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
                 if (COLLECTION_MIMETYPE == content.mimeType) {
                     $rootScope.title = content.name;
                     $rootScope.collection = content;
-                    localStorageGC.setItem("collection", $rootScope.collection);
                     TelemetryService.start(content.identifier, content.pkgVersion);
                 } else {
                     $rootScope.collection = {};
