@@ -311,6 +311,54 @@ module.exports = function(grunt) {
                     src: ['**', '!preview/**'],
                     dest: 'www/preview'
                 }]
+            },
+            authtoken:{
+                files: [{
+                    expand: true,
+                    cwd: '../js-libs/build',
+                    src: ['auth-token-generator.min.js'],
+                    ver: '1.0',
+                    dest: '../js-libs/build/libs/',
+                    rename: function(dest, src, data) {
+                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js'); 
+                    }
+                }]
+            },
+            telemetry:{
+                files: [{
+                    expand: true,
+                    cwd: '../js-libs/build',
+                    src: ['telemetry.min.js'],
+                    ver: '1.0',
+                    dest: '../js-libs/build/libs/',
+                    rename: function(dest, src, data) {
+                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js'); 
+                    }
+                }]
+            },
+            htmlinterface:{
+                files: [{
+                    expand: true,
+                    cwd: '../js-libs/build',
+                    src: ['htmlinterface.min.js'],
+                    ver: '1.0',
+                    dest: '../js-libs/build/player/',
+                    rename: function(dest, src, data) {
+                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js'); 
+                    }
+                }]
+            },
+            renderer:{
+                files: [{
+                    expand: true,
+                    cwd: 'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs',
+                    src: ['renderer.min.js'],
+                    ver: '1.0',
+                    dest: '../js-libs/build/player/',
+                    rename: function(dest, src, data) {
+                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js'); 
+                    }
+                }]
             }
         },
         clean: {
@@ -565,6 +613,22 @@ module.exports = function(grunt) {
                     from: ".css",
                     to: ".css?ver=BUILD_NUMBER"
                 }]
+            },
+            gradleCanvasVersion:{
+                src: ['platforms/android/build-extras.gradle', 'www/scripts/renderer.script.min.js'],
+                overwrite: true,
+                replacements: [{
+                    from: "genie-canvas-version",
+                    to: "<%= pkg.version %>"
+                }]
+            },
+            previewAppConfigCanvasVersion:{
+                src: ['www/preview/scripts/renderer.script.min.js'],
+                overwrite: true,
+                replacements: [{
+                    from: "genie-canvas-version",
+                    to: "<%= pkg.version %>"
+                }]
             }
         },
         jsdoc: {
@@ -592,6 +656,16 @@ module.exports = function(grunt) {
                 files: [{
                     expand:true,
                     cwd: 'www/preview',
+                    src: ['**']
+                }]
+            },
+            libs:{
+                options: {
+                    archive: 'libs.zip'
+                },
+                files: [{
+                    expand:true,
+                    cwd: '../js-libs/build',
                     src: ['**']
                 }]
             }
@@ -713,11 +787,11 @@ module.exports = function(grunt) {
 
     //Build web prview
     grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetryLib', 'concat:telemetry', "uglify:telemetrymin", 'concat:script', 'clean:deletefiles', 'injector:prview', 'replace:build_Number']);
-    grunt.registerTask('build-preview', ['clean', 'build-telemetry-lib', 'preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
+    grunt.registerTask('build-preview', ['clean', 'build-telemetry-lib', 'preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'replace:previewAppConfigCanvasVersion', 'clean:preview']);
 
     //Build AAR
     grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);
-    grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned','replace:gradleCanvasVersion', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('build-app', ['init-setup', 'build-aarshared-xwalk']);
 
     grunt.registerTask('build-jsdoc', ['jsdoc', 'compress:main']);
@@ -727,4 +801,5 @@ module.exports = function(grunt) {
     grunt.registerTask('renderer-test', ['karma:renderer']);
     grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator", "uglify:htmlinterfacemin"]);
     grunt.registerTask('renderer-telemetryV3', ['karma:telemetryV3']);
+    grunt.registerTask('generate-libs', ['copy:authtoken', 'copy:telemetry', 'copy:htmlinterface', 'copy:renderer' ]);
 };

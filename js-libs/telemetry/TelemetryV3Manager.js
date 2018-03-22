@@ -14,6 +14,7 @@ TelemetryV3Manager = Class.extend({
       var configData = TelemetryService._otherData;
 
       //Adding Details values
+      configData['cdata'] = TelemetryService._correlationData;
       configData['env'] = configData.mode || "ContentPlayer";
       configData['uid'] = TelemetryService._user.uid || 'anonymous';
       configData['channel'] = configData.channel || 'in.ekstep';

@@ -8,7 +8,7 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
     $scope.stories = [];
 
     $scope.resetContentListCache = function() {
-        var collectionContentId = "org.ekstep.quiz.app";
+        var collectionContentId = "org.ekstep.contentplayer";
         org.ekstep.service.content.getContent(collectionContentId)
             .then(function(content) {
                 GlobalContext.previousContentId = content.identifier;

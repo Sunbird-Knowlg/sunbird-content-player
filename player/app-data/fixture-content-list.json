@@ -745,7 +745,7 @@
             "isAvailable": true,
             "path": "fixture-stories/read-along"
         },{
-            "identifier": "org.ekstep.quiz.app",
+            "identifier": "org.ekstep.contentplayer",
             "mimeType": "application/vnd.ekstep.content-collection",
             "localData": {
                 "questionnaire": null,
@@ -761,7 +761,7 @@
                     "name": "Receptive Vocabulary",
                     "objectType": "Concept"
                 }],
-                "identifier": "org.ekstep.quiz.app",
+                "identifier": "org.ekstep.contentplayer",
                 "grayScaleAppIcon": null,
                 "pkgVersion": 1
             },
