@@ -24,29 +24,31 @@ GlobalContext = {
         new Promise(function(resolve, reject) {
             if (window.plugins && window.plugins.webintent) {
                 var promises = [];
-                var playerConfig;
+                var configuration = {};
                 // for (var i = 0; i < AppConfig.configFields.length; i++) {
-                promises.push(GlobalContext._getIntentExtra('playerConfig', playerConfig));
+                promises.push(GlobalContext._getIntentExtra('playerConfig', configuration));
                 // }
                 Promise.all(promises).then(function(result) {
-                    _.extend(playerConfig, playerConfig.context);  // TelemetryEvent is using globalConfig.context.sid/did
-                    _.extend(playerConfig, playerConfig.config);
-                    setGlobalConfig(playerConfig);
-                    org.ekstep.service.renderer.initializeSdk(GlobalContext.config.context.appQualifier || 'org.ekstep.genieservices');
-                    if (GlobalContext.config.metadata) {
-                        GlobalContext.game.id = GlobalContext.config.metadata.identifier;
-                        GlobalContext.game.ver = GlobalContext.config.metadata.pkgVersion || "1";
+                    _.extend(configuration.playerConfig, configuration.playerConfig.context);  // TelemetryEvent is using globalConfig.context.sid/did
+                    _.extend(configuration.playerConfig, configuration.playerConfig.config);
+                    (typeof configuration.playerConfig.metadata == "string") ? configuration.playerConfig.metadata = JSON.parse(configuration.playerConfig.metadata): "";
+                    setGlobalConfig(configuration.playerConfig);
+                    var globalConfig = EkstepRendererAPI.getGlobalConfig();
+                    org.ekstep.service.renderer.initializeSdk(globalConfig.appQualifier || 'org.ekstep.genieservices');
+                    if (globalConfig.metadata) {
+                        GlobalContext.game.id = globalConfig.metadata.identifier;
+                        GlobalContext.game.ver = globalConfig.metadata.pkgVersion || "1";
                         // GlobalContext.game.contentExtras = GlobalContext.config.contentExtras;
                         for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
-                            GlobalContext._params[AppConfig.telemetryEventsConfigFields[i]] = GlobalContext.config.config[AppConfig.telemetryEventsConfigFields[i]];
+                            GlobalContext._params[AppConfig.telemetryEventsConfigFields[i]] = globalConfig.config[AppConfig.telemetryEventsConfigFields[i]];
                         }
                         // GlobalContext.config.contentExtras.switchingUser = true;`
                         // Assuming filter is always an array of strings.
-                        GlobalContext.filter = (GlobalContext.config.metadata.filter)
-                            ? JSON.parse(GlobalContext.config.metadata.filter)
-                            : GlobalContext.config.metadata.filter;
+                        GlobalContext.filter = (globalConfig.metadata.filter)
+                            ? JSON.parse(globalConfig.metadata.filter)
+                            : globalConfig.metadata.filter;
                     }
-                    resolve(GlobalContext.config);
+                    resolve(globalConfig);
                 })
             } else {
                 // TODO: Only for the local
@@ -67,7 +69,7 @@ GlobalContext = {
                 }
             }
         }).then(function(config) {
-            if (config && config.context.origin == 'Genie') {
+            if (config.origin == 'Genie') {
                 return org.ekstep.service.renderer.getCurrentUser();
             } else {
                 reject('INVALID_ORIGIN');
