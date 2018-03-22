@@ -311,6 +311,54 @@ module.exports = function(grunt) {
                     src: ['**', '!preview/**'],
                     dest: 'www/preview'
                 }]
+            },
+            authtoken:{
+                files: [{
+                    expand: true,
+                    cwd: '../js-libs/build',
+                    src: ['auth-token-generator.min.js'],
+                    ver: '1.0',
+                    dest: '../js-libs/build/libs/',
+                    rename: function(dest, src, data) {
+                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js'); 
+                    }
+                }]
+            },
+            telemetry:{
+                files: [{
+                    expand: true,
+                    cwd: '../js-libs/build',
+                    src: ['telemetry.min.js'],
+                    ver: '1.0',
+                    dest: '../js-libs/build/libs/',
+                    rename: function(dest, src, data) {
+                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js'); 
+                    }
+                }]
+            },
+            htmlinterface:{
+                files: [{
+                    expand: true,
+                    cwd: '../js-libs/build',
+                    src: ['htmlinterface.min.js'],
+                    ver: '1.0',
+                    dest: '../js-libs/build/player/',
+                    rename: function(dest, src, data) {
+                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js'); 
+                    }
+                }]
+            },
+            renderer:{
+                files: [{
+                    expand: true,
+                    cwd: 'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs',
+                    src: ['renderer.min.js'],
+                    ver: '1.0',
+                    dest: '../js-libs/build/player/',
+                    rename: function(dest, src, data) {
+                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js'); 
+                    }
+                }]
             }
         },
         clean: {
@@ -610,6 +658,16 @@ module.exports = function(grunt) {
                     cwd: 'www/preview',
                     src: ['**']
                 }]
+            },
+            libs:{
+                options: {
+                    archive: 'libs.zip'
+                },
+                files: [{
+                    expand:true,
+                    cwd: '../js-libs/build',
+                    src: ['**']
+                }]
             }
         },
         injector: {
@@ -743,4 +801,5 @@ module.exports = function(grunt) {
     grunt.registerTask('renderer-test', ['karma:renderer']);
     grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator", "uglify:htmlinterfacemin"]);
     grunt.registerTask('renderer-telemetryV3', ['karma:telemetryV3']);
+    grunt.registerTask('generate-libs', ['copy:authtoken', 'copy:telemetry', 'copy:htmlinterface', 'copy:renderer' ]);
 };
