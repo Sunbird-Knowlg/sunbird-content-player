@@ -11,7 +11,6 @@ AppConfig = {
     corePluginspath: 'coreplugins',
     apislug: '/action',
     telemetryEventsConfigFields: ['env', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner', 'tags', 'rollup', 'mode'],
-    configFields: ['origin', 'contentId', 'appInfo', 'languageInfo', 'contentExtras', 'appQualifier', 'mode', 'env', 'sid', 'uid', 'did', 'channel', 'etags', 'tags', 'rollup', 'pdata', 'cdata', 'contentLaunchers', 'overlay', 'splash', 'showEndPage', 'app', 'dims', 'partner'],
     mimetypes: [
         "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/epub", "video/mp4", "application/pdf","video/x-youtube","video/webm"
     ],
@@ -101,7 +100,7 @@ AppConfig = {
     },
     showEndPage: true,
     env: 'ContentPlayer',
-    pdata: {'id':'in.ekstep', 'ver':'1.0'},
+    pdata: { 'id': 'in.ekstep', 'ver': '1.0', 'pid': 'contentplayer'},
     channel: "in.ekstep",
     etags: {
         app: [],
