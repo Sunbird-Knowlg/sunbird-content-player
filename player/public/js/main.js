@@ -1,4 +1,4 @@
-var packageName = "org.ekstep.quiz.app", version = AppConfig.version, packageNameDelhi = "org.ekstep.delhi.curriculum",
+var packageName = "org.ekstep.contentplayer", version = AppConfig.version, packageNameDelhi = "org.ekstep.delhi.curriculum",
     geniePackageName = "org.ekstep.genieservices", currentUser = {}, userList = [],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
     stack = new Array(), collectionChildrenIds = new Array(), collectionPath = new Array(), collectionPathMap = {},

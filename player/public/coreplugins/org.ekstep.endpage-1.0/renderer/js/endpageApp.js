@@ -184,6 +184,7 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
     });
 });
 app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams) {
+        var globalConfig = EkstepRendererAPI.getGlobalConfig();
         $scope.showRelatedContent = false;
         $scope.contentShowMore = false;
         $scope.showRelatedContentHeader = true;
@@ -216,6 +217,7 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
                     if (contetnIsAvailable) {
                         // This is required to setup current content details which is going to play
                         org.ekstep.contentrenderer.getContentMetadata(content.identifier, function(obj) {
+                            globalConfig.basepath = obj.basepath;
                             console.log("Related content data:", content);
                             GlobalContext.game.contentExtras = contentExtras;
                             EkstepRendererAPI.hideEndPage();

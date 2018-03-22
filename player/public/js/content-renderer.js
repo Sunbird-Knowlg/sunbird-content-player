@@ -305,12 +305,18 @@ org.ekstep.contentrenderer.web = function(id) {
 };
 
 org.ekstep.contentrenderer.device = function() {
-    if (isMobile) {
+    var globalconfig = EkstepRendererAPI.getGlobalConfig();
+    // TODO: Hardcoaded data
+    globalconfig.baseDir = "file:///storage/emulated/0/Android/data/org.ekstep.genieservices.qa/files/content/" + globalconfig.metadata.identifier;
+    if (!globalconfig.metadata || !globalconfig.basepath) {
         org.ekstep.contentrenderer.getContentMetadata(GlobalContext.game.id, function() {
+            globalconfig.basepath = content.metadata.basepath;
             org.ekstep.contentrenderer.startGame(content.metadata);
         });
     } else {
-        org.ekstep.contentrenderer.startGame(GlobalContext.config.appInfo);
+        org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
+            org.ekstep.contentrenderer.startGame(content.metadata);
+        });
     }
 };
 

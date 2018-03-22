@@ -38,6 +38,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      */
     start: function(evt, renderObj) {
         this._super();
+        var globalConfig = EkstepRendererAPI.getGlobalConfig();
         var instance = this;
         renderObj = content;
         if (_.isUndefined(renderObj)) return;
@@ -59,9 +60,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 }
                 instance.load(dataObj);
             } else {
-                instance.initByJSON(renderObj.baseDir, 'gameCanvas');
+                instance.initByJSON(globalConfig.basepath, 'gameCanvas');
                 if (typeof sensibol != "undefined") {
-                    sensibol.recorder.init(renderObj.baseDir + "/lesson.metadata")
+                    sensibol.recorder.init(globalConfig.basepath + "/lesson.metadata")
                         .then(function(res) {
                             console.info("Init lesson successful.", res);
                         })
@@ -172,7 +173,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.setRenderer(instance);
         Renderer.theme = new ThemePlugin(content);
         instance.resizeGame(true);
-        Renderer.theme.baseDir = dataObj.path;
+        Renderer.theme.baseDir = globalConfig.basepath || dataObj.path;
         var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);
         var pluginsPath = isbrowserpreview ? globalConfig.previewPluginspath : globalConfig.devicePluginspath;
         EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined, {path: dataObj.path + pluginsPath, position:0});

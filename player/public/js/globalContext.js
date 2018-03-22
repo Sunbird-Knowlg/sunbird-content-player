@@ -24,44 +24,30 @@ GlobalContext = {
         new Promise(function(resolve, reject) {
             if (window.plugins && window.plugins.webintent) {
                 var promises = [];
-                for (var i = 0; i < AppConfig.configFields.length; i++) {
-                    promises.push(GlobalContext._getIntentExtra(AppConfig.configFields[i], GlobalContext.config));
-                }
+                var playerConfig;
+                // for (var i = 0; i < AppConfig.configFields.length; i++) {
+                promises.push(GlobalContext._getIntentExtra('playerConfig', playerConfig));
+                // }
                 Promise.all(promises).then(function(result) {
-                    setGlobalConfig(GlobalContext.config);
-                    org.ekstep.service.renderer.initializeSdk(GlobalContext.config.appQualifier || 'org.ekstep.genieservices');
-                    if (GlobalContext.config.appInfo) {
-                        GlobalContext.game.id = GlobalContext.config.appInfo.identifier;
-                        GlobalContext.game.ver = GlobalContext.config.appInfo.pkgVersion || "1";
-                        GlobalContext.game.contentExtras = GlobalContext.config.contentExtras;
-
+                    _.extend(playerConfig, playerConfig.context);  // TelemetryEvent is using globalConfig.context.sid/did
+                    _.extend(playerConfig, playerConfig.config);
+                    setGlobalConfig(playerConfig);
+                    org.ekstep.service.renderer.initializeSdk(GlobalContext.config.context.appQualifier || 'org.ekstep.genieservices');
+                    if (GlobalContext.config.metadata) {
+                        GlobalContext.game.id = GlobalContext.config.metadata.identifier;
+                        GlobalContext.game.ver = GlobalContext.config.metadata.pkgVersion || "1";
+                        // GlobalContext.game.contentExtras = GlobalContext.config.contentExtras;
                         for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
-                            GlobalContext._params[AppConfig.telemetryEventsConfigFields[i]] = GlobalContext.config[AppConfig.telemetryEventsConfigFields[i]];
+                            GlobalContext._params[AppConfig.telemetryEventsConfigFields[i]] = GlobalContext.config.config[AppConfig.telemetryEventsConfigFields[i]];
                         }
-
                         // GlobalContext.config.contentExtras.switchingUser = true;`
                         // Assuming filter is always an array of strings.
-                        GlobalContext.filter = (GlobalContext.config.appInfo.filter)
-                            ? JSON.parse(GlobalContext.config.appInfo.filter)
-                            : GlobalContext.config.appInfo.filter;
+                        GlobalContext.filter = (GlobalContext.config.metadata.filter)
+                            ? JSON.parse(GlobalContext.config.metadata.filter)
+                            : GlobalContext.config.metadata.filter;
                     }
-                }).then(function() {
-                    if (GlobalContext.config.appInfo && COLLECTION_MIMETYPE == GlobalContext.config.appInfo.mimeType && null == GlobalContext.filter) {
-                        org.ekstep.service.renderer.getContent(GlobalContext.config.appInfo.identifier).then(function(result) {
-                            if (result.isAvailable) {
-                                GlobalContext.config.appInfo = result.localData || result.serverData;
-                                resolve(GlobalContext.config);
-                            } else {
-                                reject('CONTENT_NOT_FOUND');
-                            }
-                        }).catch(function(err) {
-                            console.error(err);
-                            reject('CONTENT_NOT_FOUND');
-                        });
-                    } else {
-                        resolve(GlobalContext.config);
-                    }
-                });
+                    resolve(GlobalContext.config);
+                })
             } else {
                 // TODO: Only for the local
                 if (!isbrowserpreview) {
@@ -69,9 +55,9 @@ GlobalContext = {
                         origin: "Genie",
                         contentId: "org.ekstep.num.addition.by.grouping",
                         appInfo: {
-                            code: "org.ekstep.quiz.app",
+                            code: "org.ekstep.contentplayer",
                             mimeType: "application/vnd.android.package-archive",
-                            identifier: "org.ekstep.quiz.app"
+                            identifier: "org.ekstep.contentplayer"
                         }
                     };
                     window.globalConfig = mergeJSON(AppConfig, GlobalContext.config);
@@ -81,8 +67,7 @@ GlobalContext = {
                 }
             }
         }).then(function(config) {
-            // GlobalContext.config = config = { origin: "Genie", contentId: "org.ekstep.num.addition.by.grouping"};
-            if (config && config.origin == 'Genie') {
+            if (config && config.context.origin == 'Genie') {
                 return org.ekstep.service.renderer.getCurrentUser();
             } else {
                 reject('INVALID_ORIGIN');
