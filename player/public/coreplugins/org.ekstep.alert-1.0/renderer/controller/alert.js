@@ -6,12 +6,12 @@
 app.compileProvider.directive('alert', function($rootScope, $compile) {
     return {
         restrict: 'E',
-        template: "<div ng-include='getAlertPluginInstance()' ></div>",
+        template: "<div ng-include='getAlertPluginTemplate()' ></div>",
         link: function(scope, element, attrs, controller) {
-            scope.upIcon = EkstepRendererAPI.resolvePluginResource("org.ekstep.alert", "1.0", "assets/up.png");
-            scope.downIcon = EkstepRendererAPI.resolvePluginResource("org.ekstep.alert", "1.0", "assets/down.png");
+            var upIcon = EkstepRendererAPI.resolvePluginResource("org.ekstep.alert", "1.0", "assets/up.png");
+            var downIcon = EkstepRendererAPI.resolvePluginResource("org.ekstep.alert", "1.0", "assets/down.png");
             scope.title = "";
-            scope.text = "";
+            scope.text = ""; 
             scope.type = null;
             scope.showCancelButton = true;
             scope.detailBtnText = "Details";
@@ -19,8 +19,7 @@ app.compileProvider.directive('alert', function($rootScope, $compile) {
             scope.copyAnswer = 'Copy';
             scope.showDetailsPopUp = false;
             scope.rendererVersion = EkstepRendererAPI.getGlobalConfig().canvasVersion;
-            scope.detailsIcon = scope.downIcon;
-            scope.imageBasePath = globalConfig.assetbase;
+            scope.detailsIcon = downIcon;
             scope.init = function() {
                 /**
                  * renderer:alert:show event to show the alerts.
@@ -37,7 +36,7 @@ app.compileProvider.directive('alert', function($rootScope, $compile) {
                  * @memberof EkstepRendererEvents
                  */
 
-                EkstepRendererAPI.addEventListener("renderer:alert:hide", scope.hideAlert);
+                EkstepRendererAPI.addEventListener("renderer:alert:hide", scope.hidePopup);
             };
             scope.showAlert = function(event, data) {
                 scope.text = data.text;
@@ -45,20 +44,19 @@ app.compileProvider.directive('alert', function($rootScope, $compile) {
                 scope.showPopup = true;
                 scope.safeApply();
             }
-            scope.hideAlert = function() {
-            }
             scope.hidePopup = function(){
               scope.showPopup = false;
+              if ("undefined" != typeof cordova) exitApp();
               scope.safeApply();
             }
             scope.showDetails = function(){
               if(scope.showDetailsPopUp){
                 scope.showDetailsPopUp = false;
                 scope.copyAnswer = "Copy";
-                scope.detailsIcon = scope.downIcon;
+                scope.detailsIcon = downIcon;
               }else{
                 scope.showDetailsPopUp = true;
-                scope.detailsIcon = scope.upIcon;
+                scope.detailsIcon = upIcon;
               }
               scope.safeApply();
             }
@@ -80,7 +78,7 @@ app.compileProvider.directive('alert', function($rootScope, $compile) {
                     scope.copyAnswer = 'Unsupported Browser!';
                 }
             }
-            scope.getAlertPluginInstance = function() {
+            scope.getAlertPluginTemplate = function() {
                 var alertPluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.alert");
                 return alertPluginInstance._templatePath;
             }
