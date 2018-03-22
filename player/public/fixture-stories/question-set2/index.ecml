@@ -1,0 +1,454 @@
+<theme compatibilityVersion="2" id="theme" version="1.0" startStage="6a319536-2739-409e-9ae9-2000b30bc912">
+    <manifest>
+      <media assetId="nkeyboard"/>
+      <media assetId="arithmeticOperations"/>
+      <media assetId="keyboard_css"/>
+        <media ver="1.1" plugin="org.ekstep.text" src="content-plugins/org.ekstep.text-1.1/renderer/supertextplugin.js" id="org.ekstep.text" type="plugin"></media>
+        <media ver="1.1" plugin="org.ekstep.text" src="content-plugins/org.ekstep.text-1.1/manifest.json" id="org.ekstep.text_manifest" type="json"></media>
+        <media ver="1.0" plugin="org.ekstep.questionset" src="content-plugins/org.ekstep.questionset-1.0/renderer/controller/questionset_ctrl.js" id="8d129bd4-05a4-4a6d-b749-92d7bd113018" type="js"></media>
+        <media ver="1.0" plugin="org.ekstep.questionset" src="content-plugins/org.ekstep.questionset-1.0/renderer/templates/questionset_template.html" id="243dbb1e-562e-4823-b25d-0891a47daadd" type="js"></media>
+        <media ver="1.0" plugin="org.ekstep.questionset" src="content-plugins/org.ekstep.questionset-1.0/renderer/plugin.js" id="org.ekstep.questionset" type="plugin"></media>
+        <media ver="1.0" plugin="org.ekstep.questionset" src="content-plugins/org.ekstep.questionset-1.0/manifest.json" id="org.ekstep.questionset_manifest" type="json"></media>
+        <media ver="1.0" plugin="org.ekstep.questionunit" src="content-plugins/org.ekstep.questionunit-1.0/renderer/plugin.js" id="org.ekstep.questionunit" type="plugin"></media>
+        <media ver="1.0" plugin="org.ekstep.questionunit" src="content-plugins/org.ekstep.questionunit-1.0/manifest.json" id="org.ekstep.questionunit_manifest" type="json"></media>
+        <media ver="1.0" plugin="org.ekstep.questionunit.mcq" src="content-plugins/org.ekstep.questionunit.mcq-1.0/renderer/styles/style.css" id="35613355-b7d8-4c69-9c3e-b1953c3dc1b9" type="css"></media>
+        <media ver="1.0" plugin="org.ekstep.questionunit.mcq" src="content-plugins/org.ekstep.questionunit.mcq-1.0/renderer/util/evaluator.js" id="24659d8c-2074-4b16-9a2a-8ed4089330c9" type="js"></media>
+        <media ver="1.0" plugin="org.ekstep.questionunit.mcq" src="content-plugins/org.ekstep.questionunit.mcq-1.0/renderer/controllers/horizontal_controller.js" id="40505462-ab10-4ba9-bde0-7e19c694cd65" type="js"></media>
+        <media ver="1.0" plugin="org.ekstep.questionunit.mcq" src="content-plugins/org.ekstep.questionunit.mcq-1.0/renderer/templates/horizontal_template.html" id="309195ba-6987-4e28-8939-122546c46696" type="js"></media>
+        <media ver="1.0" plugin="org.ekstep.questionunit.mcq" src="content-plugins/org.ekstep.questionunit.mcq-1.0/renderer/plugin.js" id="org.ekstep.questionunit.mcq" type="plugin"></media>
+        <media ver="1.0" plugin="org.ekstep.questionunit.mcq" src="content-plugins/org.ekstep.questionunit.mcq-1.0/manifest.json" id="org.ekstep.questionunit.mcq_manifest" type="json"></media>
+        <media src="content-plugins/org.ekstep.questionset-1.0/editor/assets/quizimage.png" assetId="QuizImage" id="QuizImage" type="image" preload="true"></media>
+        <media id="org.ekstep.quiz" plugin="org.ekstep.quiz" ver="1.0" src="/plugins/org.ekstep.quiz-1.0/renderer/plugin.js" type="plugin" />
+        <media id="org.ekstep.quiz_manifest" plugin="org.ekstep.quiz" ver="1.0" src="/plugins/org.ekstep.quiz-1.0/manifest.json" type="json" />
+        <media src="/assets/public/content/do_1121897789736960001122/assets/1488010532889/customnumkeyboard.js" id="nkeyboard" type="plugin" preload="true" plugin="org.ekstep.questionset.quiz" ver="1.0" />
+        <media src="/assets/public/content/do_1121897789736960001122/assets/1488010532889/arithmeticoperations.js" id="arithmeticOperations" type="plugin" preload="true" plugin="org.ekstep.questionset.quiz" ver="1.0" />
+        <media src="/assets/public/content/do_1121897789736960001122/assets/1488010532940/numerickeyboard.css" id="keyboard_css" type="css" preload="true" plugin="org.ekstep.questionset.quiz" ver="1.0" />
+    </manifest>
+    <stage w="100" x="0" h="100" y="0" id="6a319536-2739-409e-9ae9-2000b30bc912">
+        <config>
+            <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"color":"#FFFFFF","genieControls":false,"instructions":""}]]>
+        </config>
+        <param name="next" value="02dd0c7a-3323-4e1c-b765-74b5c4bd23c5"></param>
+        <org.ekstep.text strokeWidth="1" rotate="0" z-index="0" editable="false" h="7.25" fontsize="69.33" weight="" minWidth="20" textType="text" fill="#000000" fontStyle="normal" stroke="rgba(255, 255, 255, 0)" w="35" x="0.69" y="0.74" lineHeight="1.3" id="c7245335-10dd-4800-b2ed-c0394b5849b9" opacity="1" fontWeight="normal" maxWidth="500" font="NotoSans">
+            <config>
+                <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"text":"Stage 1","color":"#000000","fontfamily":"NotoSans","fontsize":26,"fontweight":false,"fontstyle":false,"align":"left"}]]>
+            </config>
+        </org.ekstep.text>
+        <shape strokeWidth="1" rotate="0" z-index="1" h="25" type="rect" fill="#00ff00" stroke="rgba(255, 255, 255, 0)" w="99.72" x="0" y="74.57" id="d260aeda-e648-43b9-9a97-37455cea384c" opacity="1">
+            <config>
+                <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"color":"#00ff00"}]]>
+            </config>
+        </shape>
+    </stage>
+    <stage w="100" x="0" h="100" y="0" id="02dd0c7a-3323-4e1c-b765-74b5c4bd23c5">
+        <config>
+            <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"color":"#FFFFFF","genieControls":false,"instructions":""}]]>
+        </config>
+        <param name="previous" value="6a319536-2739-409e-9ae9-2000b30bc912"></param>
+        <param name="next" value="94ec55a8-5a43-4bea-b7bb-06c2045aa01c"></param>
+        <org.ekstep.questionset rotate="0" z-index="0" w="80" x="9" h="85" y="6" id="87b26169-257a-4316-bc7c-9a475986913b">
+            <data>
+                <![CDATA[[{"code":"NA","name":"What is 4 + 5?","qlevel":"Easy","title":"What is 4 + 5?","question":"What is 4 + 5?","max_score":1,"body":"{\"data\":{\"plugin\":{\"id\":\"org.ekstep.questionunit.mcq\",\"version\":\"1.0\",\"templateId\":\"horizontalMCQ\"},\"data\":{\"question\":{\"text\":\"What is 4 + 5?\",\"image\":\"\",\"audio\":\"\",\"hint\":\"\"},\"options\":[{\"text\":\"9\",\"image\":\"\",\"audio\":\"\",\"hint\":\"\",\"isCorrect\":true,\"$$hashKey\":\"object:4255\"},{\"text\":\"10\",\"image\":\"\",\"audio\":\"\",\"hint\":\"\",\"isCorrect\":false,\"$$hashKey\":\"object:4256\"},{\"text\":\"8\",\"image\":\"\",\"audio\":\"\",\"isCorrect\":false,\"$$hashKey\":\"object:4272\"}],\"media\":[]},\"config\":{\"metadata\":{\"category\":\"mcq\",\"title\":\"What is 4 + 5?\",\"language\":[\"English\"],\"qlevel\":\"Easy\",\"gradeLevel\":[\"Grade 1\"],\"concepts\":[\"Num:C3:SC2\"],\"max_score\":1},\"max_time\":0,\"max_score\":1,\"partial_scoring\":false,\"layout\":\"Horizontal\"},\"media\":[]}}","language":["English"],"itemType":"unit","version":2,"category":"mcq","createdBy":"773","channel":"in.ekstep","type":"mcq","template":"NA","template_id":"NA","options":[{"answer":true,"value":{"type":"text","asset":"1"}}],"identifier":"do_21243971319622860811032","isSelected":true,"$$hashKey":"object:4329"}]]]>
+            </data>
+            <config>
+                <![CDATA[{"title":"123","max_score":1,"allow_skip":true,"show_feedback":true,"shuffle_questions":false,"shuffle_options":false,"total_items":5,"btn_edit":"Edit"}]]>
+            </config>
+            <org.ekstep.question pluginId="org.ekstep.questionunit.mcq" pluginVer="1.0" id="80532057-749a-4534-812b-ec702c99b4b7" type="mcq" templateId="horizontalMCQ">
+                <data rotate="0" z-index="0" w="77.6" x="10" h="90.16" y="3">
+                    <![CDATA[{"question":{"text":"What is 4 + 5?","image":"","audio":"","hint":""},"options":[{"text":"9","image":"","audio":"","hint":"","isCorrect":true,"$$hashKey":"object:4255"},{"text":"10","image":"","audio":"","hint":"","isCorrect":false,"$$hashKey":"object:4256"},{"text":"8","image":"","audio":"","isCorrect":false,"$$hashKey":"object:4272"}],"media":[]}]]>
+                </data>
+                <config>
+                    <![CDATA[{"metadata":{"category":"mcq","title":"What is 4 + 5?","language":["English"],"qlevel":"Easy","gradeLevel":["Grade 1"],"concepts":["Num:C3:SC2"],"max_score":1},"max_time":0,"max_score":1,"partial_scoring":false,"layout":"Horizontal"}]]>
+                </config>
+            </org.ekstep.question>
+            <org.ekstep.question pluginId="org.ekstep.questionset.quiz" pluginVer="1.0" id="80532057-749a-4534-812b-ec702c99b4b8" type="ftb" templateId="horizontalMCQ" rotate="0" z-index="0" w="80" x="50" h="85" y="50">
+                <data>
+                    <![CDATA[{
+  "questionnaire": {
+    "items": {
+      "do_1121897928576286721125": [
+        {
+          "template": "org.ekstep.ftb.arithmetic_operations",
+          "code": "org.ekstep.assessmentitem._58b1420a686ad",
+          "qlevel": "EASY",
+          "channel": "in.ekstep",
+          "description": "",
+          "language": [
+            "English"
+          ],
+          "type": "ftb",
+          "title": "test\r\n \r\naddition",
+          "createdOn": "2017-02-25T08:37:03.441+0000",
+          "objectType": "AssessmentItem",
+          "gradeLevel": [
+            "Grade2"
+          ],
+          "appId": "dev.ekstep.in",
+          "lastUpdatedOn": "2017-06-06T17:10:04.660+0000",
+          "used_for": "worksheet",
+          "model": {
+            "numDigit": 1,
+            "operator": "+",
+            "carryBorrow": false,
+            "keys": "0,1,2,3,4,5,6,7,8,9,+,-,×,÷,=,(,),/,."
+          },
+          "lastUpdatedBy": "408",
+          "identifier": "do_1121897928576286721125",
+          "question": "test addition",
+          "consumerId": "f6878ac4-e9c9-4bc4-80be-298c5a73b447",
+          "portalOwner": "408",
+          "graph_id": "domain",
+          "nodeType": "DATA_NODE",
+          "version": 1,
+          "versionKey": "1496769004660",
+          "answer": {
+            "ans1": {
+              "value": "",
+              "score": 1
+            }
+          },
+          "createdBy": "408",
+          "max_score": 1,
+          "name": "test addition",
+          "template_id": "do_1121897789736960001122",
+          "node_id": 95657,
+          "isSelected": true,
+          "$$hashKey": "object:1045"
+        }
+      ]
+    },
+    "item_sets": [
+      {
+        "count": 1,
+        "id": "do_1121897928576286721125"
+      }
+    ],
+    "title": "t",
+    "shuffle": false,
+    "showImmediateFeedback": true,
+    "myQuestions": false,
+    "concepts": "(0)Concepts",
+    "total_items": 1,
+    "max_score": 2,
+    "range": [
+      1,
+      2
+    ],
+    "optionShuffle": true
+  },
+  "template": [
+    {
+      "g": {
+        "arithmeticOperations": {
+          "withOrWithout": "item.carryBorrow",
+          "w": 100,
+          "h": 100,
+          "x": 0,
+          "y": 0,
+          "id": "ranNumGenerator",
+          "type": "custom",
+          "numDigit": "item.numDigit",
+          "operator": "item.operator"
+        },
+        "w": 50,
+        "h": 47,
+        "x": 25,
+        "y": 33
+      },
+      "id": "org.ekstep.ftb.arithmetic_operations"
+    }
+  ]
+}]]>
+                </data>
+                <config>
+                    <![CDATA[{"type":"items","var":"item","media":{"nkeyboard":{"src":"/assets/public/content/do_1121897789736960001122/assets/1488010532889/customnumkeyboard.js","id":"nkeyboard","type":"plugin","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"},"arithmeticOperations":{"src":"/assets/public/content/do_1121897789736960001122/assets/1488010532889/arithmeticoperations.js","id":"arithmeticOperations","type":"plugin","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"},"keyboard_css":{"src":"/assets/public/content/do_1121897789736960001122/assets/1488010532940/numerickeyboard.css","id":"keyboard_css","type":"css","preload":"true","plugin":"org.ekstep.quiz","ver":"1.0"}},"shuffle":false,"total_items":1,"showImmediateFeedback":true,"max_score":2,"title":"t","optionShuffle":true}]]>
+                </config>
+            </org.ekstep.question>
+            <org.ekstep.question pluginId="org.ekstep.questionset.quiz" pluginVer="1.0" id="80532057-749a-4534-812b-ec702c99b4b9" type="mcq" templateId="horizontalMCQ" rotate="0" z-index="0" w="80" x="9" h="85" y="6">
+                <data>
+                    <![CDATA[{
+  "questionnaire": {
+    "items": {
+      "do_10095896": [
+        {
+          "template": "org.ekstep.mcq.t.ta",
+          "identifier": "do_10095896",
+          "code": "org.ekstep.assessmentitem._57f2206010018",
+          "question": "T text of thequestion",
+          "qlevel": "EASY",
+          "portalOwner": "129",
+          "language": [
+            "English"
+          ],
+          "type": "mcq",
+          "title": "T Title ",
+          "graph_id": "domain",
+          "nodeType": "DATA_NODE",
+          "createdOn": "2016-10-03T09:07:45.270+0000",
+          "objectType": "AssessmentItem",
+          "gradeLevel": [
+            "Grade 1"
+          ],
+          "max_score": 1,
+          "options": [
+            {
+              "value": {
+                "type": "mixed",
+                "text": "T OA",
+                "count": "",
+                "image": null,
+                "audio": null,
+                "resvalue": "T OA",
+                "resindex": 0
+              },
+              "score": 1,
+              "answer": true
+            },
+            {
+              "value": {
+                "type": "mixed",
+                "text": "T Option B",
+                "count": "",
+                "image": null,
+                "audio": null,
+                "resvalue": "T OA",
+                "resindex": 1
+              }
+            },
+            {
+              "value": {
+                "type": "mixed",
+                "text": "T OC",
+                "count": "",
+                "image": null,
+                "audio": null,
+                "resvalue": "T OA",
+                "resindex": 2
+              }
+            },
+            {
+              "value": {
+                "type": "mixed",
+                "text": "T OD",
+                "count": "",
+                "image": null,
+                "audio": null,
+                "resvalue": "T OA",
+                "resindex": 3
+              }
+            }
+          ],
+          "name": "T Title of theQuestion",
+          "lastUpdatedOn": "2017-06-06T17:09:56.459+0000",
+          "used_for": "worksheet",
+          "template_id": "domain_49164",
+          "model": null,
+          "node_id": 93245,
+          "concepts": [
+            "LO1"
+          ],
+          "createdBy": "129",
+          "consumerId": "f6878ac4-e9c9-4bc4-80be-298c5a73b447",
+          "versionKey": "1496768996459",
+          "lastUpdatedBy": "129",
+          "domain": [
+            "literacy"
+          ],
+          "channel": "in.ekstep",
+          "appId": "dev.ekstep.in",
+          "version": 1,
+          "es_metadata_id": "do_10095896",
+          "isSelected": true,
+          "$$hashKey": "object:1220"
+        }
+      ]
+    },
+    "item_sets": [
+      {
+        "count": 1,
+        "id": "do_10095896"
+      }
+    ],
+    "title": "q123",
+    "shuffle": false,
+    "showImmediateFeedback": true,
+    "myQuestions": false,
+    "concepts": "(1) conceptsselected",
+    "total_items": 1,
+    "max_score": 5,
+    "range": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "optionShuffle": true
+  },
+  "template": [
+    {
+      "text": [
+        {
+          "event": {
+            "action": [
+              {
+                "command": "stop",
+                "sound": true,
+                "type": "command"
+              },
+              {
+                "asset_model": "item.question_audio",
+                "command": "play",
+                "type": "command"
+              }
+            ],
+            "type": "click"
+          },
+          "align": "center",
+          "color": "black",
+          "font": "Verdana",
+          "fontsize": "2em",
+          "h": 4,
+          "lineHeight": 2,
+          "model": "item.title",
+          "w": 100,
+          "x": 0,
+          "y": 7
+        },
+        {
+          "align": "center",
+          "color": "black",
+          "fontsize": "2em",
+          "h": 30,
+          "lineHeight": 2,
+          "model": "item.question",
+          "valign": "middle",
+          "w": 100,
+          "x": 0,
+          "y": 25
+        }
+      ],
+      "shape": {
+        "event": {
+          "action": [
+            {
+              "command": "stop",
+              "sound": true,
+              "type": "command"
+            },
+            {
+              "asset_model": "item.question_audio",
+              "command": "play",
+              "type": "command"
+            }
+          ],
+          "type": "click"
+        },
+        "h": 15,
+        "hitArea": true,
+        "type": "rect",
+        "w": 100,
+        "x": 0,
+        "y": 7
+      },
+      "mcq": {
+        "options": {
+          "shape": {
+            "h": 100,
+            "stroke": "black",
+            "type": "roundrect",
+            "w": 100,
+            "x": 0,
+            "y": 0
+          },
+          "text": {
+            "align": "center",
+            "font": "Verdana",
+            "fontsize": "1.6em",
+            "h": 100,
+            "lineHeight": 2.5,
+            "model": "option.value.text",
+            "valign": "middle",
+            "w": 100,
+            "x": 0,
+            "y": 0
+          },
+          "event": {
+            "action": [
+              {
+                "command": "stop",
+                "sound": true,
+                "type": "command"
+              },
+              {
+                "asset_model": "option.value.audio",
+                "command": "play",
+                "type": "command"
+              }
+            ],
+            "type": "click"
+          },
+          "cols": 4,
+          "h": 25,
+          "highlight": "yellow",
+          "layout": "table",
+          "marginX": 5,
+          "marginY": 5,
+          "options": "options",
+          "w": 97,
+          "x": 1.5,
+          "y": 70
+        },
+        "model": "item",
+        "multi_select": false,
+        "shadow": "#56B1F7"
+      },
+      "id": "org.ekstep.mcq.t.ta"
+    }
+  ]
+}]]>
+                </data>
+                <config>
+                    <![CDATA[{"type":"items","var":"item","shuffle":false,"total_items":1,"showImmediateFeedback":true,"max_score":5,"title":"q123","optionShuffle":true}]]>
+                </config>
+            </org.ekstep.question>
+            <org.ekstep.question id="13c25c5c-8baa-4216-a47c-ad49810a0056" type="unit" pluginId="org.ekstep.questionunit.mcq" pluginVer="1.0" templateId="horizontalMCQ">
+                <data>
+                    <![CDATA[{"question":{"text":"What is the capital of India?"},"options":[{"isAnswerCorrect":false,"score":0,"text":"Chennai"},{"isAnswerCorrect":false,"score":0,"text":"Kolkata"},{"isAnswerCorrect":true,"score":1,"text":"New Delhi"}]}]]>
+                </data>
+                <config>
+                    <![CDATA[{"metadata":{"title":"question tile","language":"English","qlevel":"Easy","gradeLevel":["Kindergarten"],"concepts":[{"id":"do_112300246933831680110","name":"abcd"}]},"max_time":1,"max_score":1,"partial_scoring":true}]]>
+                </config>
+            </org.ekstep.question>
+            <org.ekstep.question pluginId="org.ekstep.questionset.quiz" pluginVer="1.0" id="1ace855c-80c9-45ed-9553-8c549eec62ec" type="mcq" templateId="horizontalMCQ" rotate="0" z-index="0" w="80" x="9" h="85" y="6">
+                <data>
+                    <![CDATA[{"questionnaire":{"items":{"ek.n.ib.en.ad.Q.39":[{"template":"org.ekstep.mcq.ta","code":"ek.n.ib.en.ad.Q.39","keywords":["add","addition","sum"],"qlevel":"DIFFICULT","channel":"in.ekstep","language":["English"],"type":"mcq","partial_scoring":true,"title":"Make a given number (2-20) - pick statement","createdOn":"2016-06-28T08:17:23.492+0000","objectType":"AssessmentItem","feedback":"Please try again!","gradeLevel":["Grade 2"],"appId":"dev.ekstep.in","options":[{"value":{"type":"mixed","text":"6 + 3"},"answer":false},{"value":{"type":"mixed","text":"1 + 5"},"answer":true},{"value":{"type":"mixed","text":"1 + 6"},"answer":false},{"value":{"type":"mixed","text":"5 + 1"},"answer":true}],"lastUpdatedOn":"2017-06-06T17:09:37.089+0000","used_for":"worksheet","owner":"Feroz","lastUpdatedBy":"csv-import","identifier":"ek.n.ib.en.ad.Q.39","question":"Which of these are equal to 6?","consumerId":"f6878ac4-e9c9-4bc4-80be-298c5a73b447","portalOwner":"128","graph_id":"domain","nodeType":"DATA_NODE","version":1,"versionKey":"1496768977089","createdBy":"128","domain":"numeracy","max_score":2,"name":"Make a given number (2-20) - pick statement","template_id":"domain_49165","num_answers":2,"node_id":90139,"isSelected":true,"$$hashKey":"object:642"}]},"item_sets":[{"count":1,"id":"ek.n.ib.en.ad.Q.39"}],"title":"j","shuffle":false,"showImmediateFeedback":true,"myQuestions":false,"concepts":"(0) Concepts","total_items":1,"max_score":1,"range":[1],"optionShuffle":true},"template":[{"text":{"event":{"action":[{"command":"stop","sound":true,"type":"command"},{"asset_model":"item.question_audio","command":"play","type":"command"}],"type":"click"},"align":"center","color":"black","font":"Verdana","fontsize":"2em","h":20,"lineHeight":2,"model":"item.question","valign":"top","w":100,"x":0,"y":5},"shape":[{"event":{"action":[{"command":"stop","sound":true,"type":"command"},{"asset_model":"item.question_audio","command":"play","type":"command"}],"type":"click"},"h":10,"hitArea":true,"type":"rect","w":100,"x":0,"y":15},{"h":20,"stroke":"black","w":100,"x":0,"y":5}],"mcq":{"options":{"shape":{"h":100,"stroke":"black","type":"roundrect","w":100,"x":0,"y":0},"text":{"align":"center","font":"Verdana","fontsize":"1.6em","h":100,"lineHeight":2.25,"model":"option.value.text","valign":"middle","w":100,"x":0,"y":0},"event":{"action":[{"command":"stop","sound":true,"type":"command"},{"asset_model":"option.value.audio","command":"play","type":"command"}],"type":"click"},"cols":4,"h":60,"highlight":"yellow","layout":"table","marginX":5,"marginY":5,"options":"options","w":97,"x":1.5,"y":30},"model":"item","multi_select":false,"shadow":"#56B1F7"},"id":"org.ekstep.mcq.ta"}]}]]>
+                </data>
+                <config>
+                    <![CDATA[{"type":"items","var":"item","shuffle":false,"total_items":1,"showImmediateFeedback":true,"max_score":1,"title":"j","optionShuffle":true}]]>
+                </config>
+            </org.ekstep.question>
+        </org.ekstep.questionset>
+        <manifest>
+            <media assetId="QuizImage"></media>
+        </manifest>
+    </stage>
+    <stage w="100" x="0" h="100" y="0" id="94ec55a8-5a43-4bea-b7bb-06c2045aa01c">
+        <config>
+            <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"color":"#FFFFFF","genieControls":false,"instructions":""}]]>
+        </config>
+        <param name="previous" value="02dd0c7a-3323-4e1c-b765-74b5c4bd23c5"></param>
+        <shape strokeWidth="1" rotate="0" z-index="1" h="25" type="rect" fill="#00" stroke="rgba(255, 255, 255, 0)" w="99.72" x="0" y="74.57" id="d260aeda-e648-43b9-9a97-37455cea384c" opacity="1">
+            <config>
+                <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"color":"#00ff00"}]]>
+            </config>
+        </shape>
+    </stage>
+    <plugin-manifest>
+        <plugin ver="1.1" depends="" id="org.ekstep.text" type="plugin"></plugin>
+        <plugin ver="1.0" depends="" id="org.ekstep.questionset" type="plugin"></plugin>
+        <plugin ver="1.0" depends="" id="org.ekstep.questionunit" type="plugin"></plugin>
+        <plugin ver="1.0" depends="org.ekstep.questionunit" id="org.ekstep.questionunit.mcq" type="plugin"></plugin>
+        <plugin id="org.ekstep.questionset.quiz" ver="1.0" type="plugin" depends="" />
+    </plugin-manifest>
+</theme>

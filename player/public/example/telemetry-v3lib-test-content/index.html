@@ -3,10 +3,17 @@
 <head>
 	<script type="text/javascript" src="jquery.min.js"></script>	
 	<script type="text/javascript" src="auth-token-generator.min.js"></script>
-	<script type="text/javascript" src="telemetry.min.js"></script>
+	<script type="text/javascript" src="telemetry.js"></script>
 </head>
 <body>
 	<button class="button" onclick="startTelemetry();">Call start</button></br>
+  <button class="button" onclick="InitializeTelemetry();">Initialize</button></br>
+  <button class="button" onclick="startTelemetryWithoutConfig();">Start-WithoutConfig(contentId and Ver shoudl be defined)</button></br>
+  <button class="button" onclick="startTelemetryWithoutConfigWithId();">Start-WithoutConfig(contentId and Ver be undefined)</button></br>
+
+
+
+
 	<button class="button" onclick="interact();">Call interact</button></br>
 
 	<button class="button" onclick="impression();">Call impression</button></br>
@@ -21,6 +28,15 @@
 	<button class="button" onclick="error();">Call error</button></br>
 	<button class="button" onclick="exdata()">Call exdata</button>
 
+  <button class="button" onclick="start1();">Start1</button></br>
+  <button class="button" onclick="start2();">Start2</button></br>
+  <button class="button" onclick="start3();">Start3</button></br>
+
+  <button class="button" onclick="end1();">End1</button></br>
+  <button class="button" onclick="end2();">End2</button></br>
+  <button class="button" onclick="end3();">End3</button></br>
+
+
   <script type="text/javascript">
       var key = undefined;
       var secret = undefined;
@@ -31,17 +47,95 @@
               ver: "6.5.2567",
               pid: "regse"
           },
-          channel : "in.ekstep",
+          channel : "in.sunbird",
           uid: "anonymous",
           did: "fbcb2d91047b6182af5156ef4af0726d",
           sid: "jbpjdo91diu25l79tpvctfthl1",
           authtoken: "",
-          host: "https://dev.ekstep.in",
+          host: "https://sunbird.ekstep.in",
           env: "ContentPlayer"
+      }
+
+      var context1 = {
+        channel : 'context1',
+        env:'context1',
+        context : "one"
+      }
+      var context2 = {
+        channel : 'context2',
+        env:'context2',
+        context : "two"
+      }
+      var context3 = {
+        channel : 'context3',
+        env:'context3',
+        context :"three"
       }
       
       var endEvent = {"createdTime":1513746847298,"name":"OE_ASSESS","event":{"ver":"2.1","uid":"473","sid":"jbpjdo91diu25l79tpvctfthl1","did":"fbcb2d91047b6182af5156ef4af0726d","edata":{"eks":{"qid":"do_3122706365413130242191","maxscore":1,"params":[]}},"eid":"OE_ASSESS","gdata":{"id":"do_3121666254938849282587","ver":"1.0"},"cdata":[{"id":"8a30f166fa97f368ac40474fe5f2cf19","type":"ContentSession"}],"channel":"in.ekstep","pdata":{"id":"in.ekstep","ver":"1.0"},"ets":1513746847298},"_isStarted":true,"startTime":1513746847298};
 
+      function InitializeTelemetry(){
+        EkTelemetry.initialize(config)
+      }
+
+
+      function start1(){
+        var data = {"mode": "portal1", "stageid": "splash", "type": "portal1"};
+        console.log(config);
+        EkTelemetry.start(config, "start1", "1.1", data, context1);
+      }
+
+      function start2(){
+        var data = {"mode": "portal2", "stageid": "splash", "type": "portal2"};
+        console.log(config);
+        EkTelemetry.start(config, "start2", "1.1", data, context2);
+      }
+
+      function start3(){
+        var data = {"mode": "portal3", "stageid": "splash", "type": "portal3"};
+        console.log(config);
+        EkTelemetry.start(config, "start2", "1.1", data, context3);
+      }
+
+      function end1(){
+        var endData = {
+            contentId: "end1",
+            type: "portal1",
+            pageId: "",
+          };
+          EkTelemetry.end(endData, context1);
+      }
+
+      function end2(){
+        var endData = {
+            contentId: "end2",
+            type: "portal2",
+            pageId: "",
+          };
+          EkTelemetry.end(endData, context2);
+      }
+
+      function end3(){
+        var endData = {
+            contentId: "end3",
+            type: "portal3",
+            pageId: "",
+          };
+          EkTelemetry.end(endData, context3);
+      }
+
+      function startTelemetryWithoutConfig(){
+        EkTelemetry.start(undefined, '12345','11.6',{type:'Play'})
+      }
+
+      function startTelemetryWithoutConfigWithId(){
+        EkTelemetry.start(undefined, undefined, undefined, {type:'Play'})
+
+      }
+
+      function withoutStart(){
+
+      }
       function startTelemetry(){
           var data = {"mode": "play", "stageid": "splash", "type": "player"};
           console.log(config);
@@ -79,7 +173,7 @@
       }
 
       function exdata(){
-        var exdata = {
+        var data = {
           type: "xapi",
           data: ""
         };
@@ -92,7 +186,11 @@
             "pageid": "12",
             "uri": ""
           }
-          EkTelemetry.impression(data);
+          var context = {
+              "test":"manju",
+              "king":"hello"
+          }
+          EkTelemetry.impression(data,context);
       }
 
       function interact(){

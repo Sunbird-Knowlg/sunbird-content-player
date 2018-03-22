@@ -1,0 +1,347 @@
+#preview-mcq-horizontal {
+    height: 90vh;
+    margin: auto;
+    text-align: center;
+    line-height: 2em;
+    width: 80%;
+    margin-top: 2%;
+    position: relative;
+    display: grid;
+}
+
+
+.qc-mcqlayout {
+    width: 100%;
+    top: 10px;
+    position: relative;
+    margin: auto;
+}
+
+header.qc-long-text-header {
+    width: 100%;
+    background-color: #404041;
+    height: 56px;
+}
+
+.qc-question-text {
+    padding: 17px 10px 16px 10px;
+    color: white;
+    font-size: initial;
+    line-height: normal;
+    text-align: initial;
+}
+
+
+.qc-option-container {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-top: 6%;
+    height: 52vh;
+    overflow-y: auto;
+}
+
+.qc-option-value {
+    border-top: 1px solid #c8ccd0;
+    border-bottom: 1px solid #c8ccd0;
+    cursor: pointer;
+    padding: 5%;
+    display: list-item;
+    max-height: 70px;
+    border-left: 7px solid transparent;
+}
+
+.qc-option-checkbox {
+    float: right;
+}
+
+.qc-option-text {
+    float: left;
+    padding: -3%;
+    top: -14.66667px;
+    text-align: initial;
+    width: 77%;
+    font-size: initial;
+    position: relative;
+    padding: -2% 1% 2% 9%;
+}
+
+input.qc-option-input-checkbox {
+    -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
+    -ms-appearance: checkbox;
+}
+
+input.qc-option-input-checkbox {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    position: relative;
+    top: -9.66667px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    transition: all 0.15s ease-out 0s;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    outline: 2px solid #cbd1d8;
+    position: relative;
+    z-index: 1000;
+}
+
+
+
+input.qc-option-input-checkbox:checked {
+    background: #4a90e2;
+}
+
+input.qc-option-input-checkbox:checked::before {
+    height: 40px;
+    width: 20px;
+    position: absolute;
+    content: '✔';
+    display: inline-block;
+    font-size: 21.66667px;
+    text-align: center;
+    line-height: 21px;
+}
+
+input.qc-option-input-checkbox:checked::after {
+    -webkit-animation: click-wave 0.65s;
+    -moz-animation: click-wave 0.65s;
+    animation: click-wave 0.65s;
+    background: #40e0d0;
+    content: '';
+    display: block;
+    position: relative;
+    z-index: 100;
+}
+
+.qsselectedopt {
+    border-left-color: #4a90e2;
+}
+
+.qclongtextheaderimage {
+    min-height: 52px;
+}
+
+img.qc-question-image {
+    width: 10%;
+    width: 15%;
+    height: 56px;
+    float: left;
+}
+
+img.qc-option-image {
+    width: 21%;
+    margin-top: 0%;
+    margin-left: -5%;
+    height: 56px;
+}
+
+.qc-question-zoomin {
+    width: 4%;
+    left: -0.5%;
+    top: 0%;
+    position: absolute;
+}
+
+img.qc-question-fullimage {
+    width: 83%;
+    height: 100%;
+}
+
+audio.qc-question-audio {
+    float: left;
+}
+
+audio.qc-question-audio-with-text {
+    left: 0%;
+    top: 11%;
+    float: initial;
+    position: absolute;
+}
+
+audio#qc-question-audio::-webkit-media-controls-panel {
+    display: block;
+}
+
+audio#qc-option-audio::-webkit-media-controls-panel {
+    background-color: transparent;
+}
+
+audio#qc-option-audio::-webkit-media-controls-panel {
+    display: block;
+}
+
+audio#qc-question-audio::-webkit-media-controls-panel {
+    background-color: transparent;
+}
+
+audio.qc-question-audio {
+    margin-top: 3%;
+    margin-left: 8%;
+    position: initial;
+}
+
+audio.qc-option-audio-with-image {
+    margin-top: -4%;
+    margin-left: 14%;
+    position: absolute;
+    width: 30%;
+}
+
+.qc-option-txt {
+    position: absolute;
+    left: 20%;
+    top: 33%;
+    width: 100%;
+}
+
+.qc-option-zoomin {
+    width: 5%;
+    left: -5.5%;
+    top: 0%;
+    position: absolute;
+    cursor: pointer;
+}
+
+.qc-popup-close-button {
+    position: absolute;
+    right: -35px;
+    color: white;
+    bottom: 90%;
+}
+
+.qc-text-with-audio {
+    width: 28%;
+    top: 2%;
+    position: absolute;
+}
+
+audio.qc-question-audio {
+    float: initial;
+    position: absolute;
+    left: 7%;
+    top: 8%;
+}
+
+.qc-option-txt-with-image {
+    position: absolute;
+    margin-left: 4%;
+    width: 100%;
+}
+
+.qc-long-text-header-image {
+    width: 100%;
+    background-color: #404041;
+    height: 56px;
+}
+
+
+
+/*Grid CSS*/
+
+.qc-grid-option-container {
+    margin: 0;
+    text-align: left;
+    overflow: hidden;
+    width: 100%;
+    display: table;
+    margin-top: 2%;
+    height: 26vh;
+}
+
+.qc-grid-option-outer-value {
+    cursor: pointer;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0;
+    width: 25%;
+}
+
+.qc-grid-option-value {
+    margin: 0 5px;
+    border: 1px solid #c8ccd0;
+    height: 100%;
+}
+
+.qc-grid-option-text-outer {
+    line-height: 1.5;
+    padding: 5px;
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+.qc-grid-option-text {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    word-break: break-all;
+}
+
+.qc-grid-option-value.grid-selected-option {
+    border: 1px solid #4a90e2;
+}
+
+
+#qc-vertical-option-containar {
+    width: 80vw;
+    overflow-x: auto;
+
+    margin-top: 5%;
+    height: 40vh;
+    overflow-y: hidden;
+}
+
+#qc-vertical-option-table {
+    height: 100%;
+    width: 100%;
+}
+
+.qc-vertical-option-outer {
+    height: 100%;
+}
+
+.qc-vertical-option-value {
+    border: 1px solid #c8ccd0;
+    height: 100%;
+    display: table;
+    width: 100%;
+}
+
+
+.qc-vertical-option-td {
+    padding: 0% 0.5%;
+    min-width: 20vw;
+}
+
+
+
+
+.qc-option-vertical-text {
+    display: table-cell;
+    vertical-align: middle;
+    height: 22vh;
+    word-break: break-all;
+    line-height: 1.2;
+    width: 65%;
+}
+
+.qc-option-vertical-checkbox {
+    display: table-cell;
+    position: relative;
+    top: 50%;
+    right: 3%;
+}
+
+.qsverticalselectedopt {
+    border: 1px solid blue;
+}

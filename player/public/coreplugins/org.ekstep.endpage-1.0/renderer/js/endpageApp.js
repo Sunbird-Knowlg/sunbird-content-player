@@ -26,7 +26,7 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
         }
     };
     $scope.setLicense = function(){
-        $scope.licenseAttribute = $scope.content.license || 'Licensed under CC By 4.0 license'
+        $scope.licenseAttribute = $scope.content.license || 'CC BY 4.0'
     };
     $scope.showCredits = function(key) {
         if ($scope.content.imageCredits == null && $scope.content.voiceCredits == null && $scope.content.soundCredits == null) {
@@ -126,20 +126,7 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
     $scope.handleEndpage = function() {
         $rootScope.pageId = "ContentApp-Endpage";
         $scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.endpage")
-        if (_.isUndefined($rootScope.content)) {
-            localStorageGC.update();
-            content = localStorageGC.getItem('content');
-            $rootScope.content = content;
-        }
         $scope.setLicense();
-        localStorageGC.setItem('content_old', $rootScope.content)
-        if (_(TelemetryService.instance).isUndefined()) {
-            var tsObj = localStorageGC.getItem('telemetryService');
-            var correlationData = [];
-            var otherData = GlobalContext.config.otherData;
-            !_.isUndefined(otherData.cdata) ? correlationData.push(otherData.cdata) : correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(),"type": "ContentSession"});
-            TelemetryService.init(tsObj._gameData, tsObj._user, correlationData, otherData);
-        }
         TelemetryService.interact("TOUCH", $rootScope.content.identifier, "TOUCH", {
             stageId: "ContentApp-EndScreen",
             subtype: ""
@@ -171,12 +158,6 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
     }
     $scope.initEndpage = function() {
         $scope.handleEndpage();
-        if (_.isUndefined($rootScope.content)) {
-            localStorageGC.update();
-            content = localStorageGC.getItem('content');
-            $rootScope.content = content;
-        }
-
     };
 
     /**
@@ -237,7 +218,6 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
                         org.ekstep.contentrenderer.getContentMetadata(content.identifier, function(obj) {
                             console.log("Related content data:", content);
                             GlobalContext.game.contentExtras = contentExtras;
-                            localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                             EkstepRendererAPI.hideEndPage();
                             $rootScope.content = obj;
                             if (window.content.mimeType == obj.mimeType){
@@ -319,7 +299,6 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
         }
 
         $scope.init = function() {
-            $scope.contentExtras = localStorageGC.getItem('contentExtras');
             if ("undefined" != typeof cordova) {
                 $scope.renderRelatedContent($rootScope.content.identifier);
             } else {

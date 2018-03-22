@@ -113,8 +113,9 @@ module.exports = function(grunt) {
                 src: [
                     '../js-libs/telemetry-lib/detectClient.js',
                     '../js-libs/telemetry-lib/md5.js',
-                    '../js-libs/telemetry-lib/telemetryV3Interface.js',
-                    '../js-libs/telemetry-lib/telemetrySyncManager.js'
+                    '../js-libs/telemetry-lib/fingerprint2.min.js',
+                    '../js-libs/telemetry-lib/telemetrySyncManager.js',
+                    '../js-libs/telemetry-lib/telemetryV3Interface.js'
                 ],
                 dest: '../js-libs/build/telemetry.js'
             }
@@ -620,6 +621,22 @@ module.exports = function(grunt) {
                     from: ".css",
                     to: ".css?ver=BUILD_NUMBER"
                 }]
+            },
+            gradleCanvasVersion:{
+                src: ['platforms/android/build-extras.gradle', 'www/scripts/renderer.script.min.js'],
+                overwrite: true,
+                replacements: [{
+                    from: "genie-canvas-version",
+                    to: "<%= pkg.version %>"
+                }]
+            },
+            previewAppConfigCanvasVersion:{
+                src: ['www/preview/scripts/renderer.script.min.js'],
+                overwrite: true,
+                replacements: [{
+                    from: "genie-canvas-version",
+                    to: "<%= pkg.version %>"
+                }]
             }
         },
         jsdoc: {
@@ -778,11 +795,11 @@ module.exports = function(grunt) {
 
     //Build web prview
     grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetryLib', 'concat:telemetry', "uglify:telemetrymin", 'concat:script', 'clean:deletefiles', 'injector:prview', 'replace:build_Number']);
-    grunt.registerTask('build-preview', ['clean', 'build-telemetry-lib', 'preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
+    grunt.registerTask('build-preview', ['clean', 'build-telemetry-lib', 'preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'replace:previewAppConfigCanvasVersion', 'clean:preview']);
 
     //Build AAR
     grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);
-    grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned','replace:gradleCanvasVersion', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('build-app', ['init-setup', 'build-aarshared-xwalk']);
 
     grunt.registerTask('build-jsdoc', ['jsdoc', 'compress:main']);

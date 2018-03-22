@@ -1,6 +1,6 @@
 {
   "name": "quizapp",
-  "version": "1.0.0",
+  "version": "3.1",
   "description": "quizApp: An Ionic project",
   "dependencies": {
     "async": "*",
