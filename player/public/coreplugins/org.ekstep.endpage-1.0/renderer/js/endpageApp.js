@@ -217,7 +217,6 @@ app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScop
                     if (contetnIsAvailable) {
                         // This is required to setup current content details which is going to play
                         org.ekstep.contentrenderer.getContentMetadata(content.identifier, function(obj) {
-                            globalConfig.basepath = obj.baseDir;
                             console.log("Related content data:", content);
                             GlobalContext.game.contentExtras = contentExtras;
                             EkstepRendererAPI.hideEndPage();

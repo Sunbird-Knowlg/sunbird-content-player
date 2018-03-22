@@ -31,8 +31,9 @@
         var data = _.clone(content);
         this.initContentProgress();
          var path = undefined;
+         var globalConfig = EkstepRendererAPI.getGlobalConfig();
         if (window.cordova || !isbrowserpreview) {
-            var prefix_url = data.baseDir || '';
+            var prefix_url = data.baseDir || globalConfig.basepath || '';
             path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
         } else {
             path = data.artifactUrl + "?" + new Date().getSeconds();

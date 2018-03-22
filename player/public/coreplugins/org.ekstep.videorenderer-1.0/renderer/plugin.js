@@ -21,7 +21,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var data = _.clone(content);
         this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         if (window.cordova || !isbrowserpreview) {
-            var prefix_url = data.baseDir || '';
+            var prefix_url = data.baseDir || globalConfig.basepath || '';
             path = prefix_url + "/" + data.artifactUrl;
         } else {
             path = data.artifactUrl;
