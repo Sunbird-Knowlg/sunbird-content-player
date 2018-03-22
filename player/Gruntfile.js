@@ -216,14 +216,6 @@ module.exports = function(grunt) {
                         '../js-libs/speech/speech.js'
                     ]
                 }
-            },
-            telemetryminlibs: {
-                options: {
-                    mangle: false
-                },
-                files: {
-                    '../js-libs/build/telemetry.min.js': ['../js-libs/build/telemetry.js']
-                }
             }
         },
         copy: {
