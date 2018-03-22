@@ -359,7 +359,7 @@ module.exports = function(grunt) {
             renderer:{
                 files: [{
                     expand: true,
-                    cwd: 'www/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs',
+                    cwd: 'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js',
                     src: ['renderer.min.js'],
                     ver: '1.0',
                     dest: '../js-libs/build/player/',
