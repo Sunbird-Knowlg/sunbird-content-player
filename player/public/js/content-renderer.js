@@ -130,8 +130,6 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
     if (_.isUndefined(configuration.context.contentId)) {
         configuration.context.contentId = getUrlParameter("id");
     }
-    _.extend(configuration, configuration.context);  // TelemetryEvent is using globalConfig.context.sid/did
-    _.extend(configuration, configuration.config);
     setGlobalConfig(configuration);
     GlobalContext.game = {id: configuration.contentId || GlobalContext.game.id, ver: configuration.contentVer || '1.0'};
     GlobalContext.user = {uid: configuration.uid};
@@ -306,15 +304,19 @@ org.ekstep.contentrenderer.web = function(id) {
 
 org.ekstep.contentrenderer.device = function() {
     var globalconfig = EkstepRendererAPI.getGlobalConfig();
-    if (!globalconfig.metadata || !globalconfig.basepath) {
-        org.ekstep.contentrenderer.getContentMetadata(GlobalContext.game.id, function() {
-            globalconfig.basepath = content.metadata.basepath;
-            org.ekstep.contentrenderer.startGame(content.metadata);
-        });
+    if (isMobile) {
+        if (!globalconfig.metadata || !globalconfig.basepath) {
+            org.ekstep.contentrenderer.getContentMetadata(GlobalContext.game.id, function() {
+                globalconfig.basepath = content.metadata.basepath;
+                org.ekstep.contentrenderer.startGame(content.metadata);
+            });
+        } else {
+            org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
+                org.ekstep.contentrenderer.startGame(content.metadata);
+            });
+        }
     } else {
-        org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
-            org.ekstep.contentrenderer.startGame(content.metadata);
-        });
+        org.ekstep.contentrenderer.startGame(GlobalContext.config.appInfo);
     }
 };
 

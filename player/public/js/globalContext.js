@@ -5,12 +5,7 @@ GlobalContext = {
         ver: ""
     },
     _params: {},
-    config: {
-        origin: "",
-        contentId: "",
-        flavor: "",
-        appInfo: undefined
-    }, 
+    config: {}, 
     registerEval:[],
     filter: undefined,
     init: function(gid, ver) {
@@ -25,25 +20,17 @@ GlobalContext = {
             if (window.plugins && window.plugins.webintent) {
                 var promises = [];
                 var configuration = {};
-                // for (var i = 0; i < AppConfig.configFields.length; i++) {
                 promises.push(GlobalContext._getIntentExtra('playerConfig', configuration));
-                // }
                 Promise.all(promises).then(function(result) {
-                    _.extend(configuration.playerConfig, configuration.playerConfig.context);  // TelemetryEvent is using globalConfig.context.sid/did
-                    _.extend(configuration.playerConfig, configuration.playerConfig.config);
-                    (typeof configuration.playerConfig.metadata == "string") ? configuration.playerConfig.metadata = JSON.parse(configuration.playerConfig.metadata): "";
                     setGlobalConfig(configuration.playerConfig);
                     var globalConfig = EkstepRendererAPI.getGlobalConfig();
                     org.ekstep.service.renderer.initializeSdk(globalConfig.appQualifier || 'org.ekstep.genieservices');
                     if (globalConfig.metadata) {
                         GlobalContext.game.id = globalConfig.metadata.identifier;
                         GlobalContext.game.ver = globalConfig.metadata.pkgVersion || "1";
-                        // GlobalContext.game.contentExtras = GlobalContext.config.contentExtras;
                         for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
                             GlobalContext._params[AppConfig.telemetryEventsConfigFields[i]] = globalConfig.config[AppConfig.telemetryEventsConfigFields[i]];
                         }
-                        // GlobalContext.config.contentExtras.switchingUser = true;`
-                        // Assuming filter is always an array of strings.
                         GlobalContext.filter = (globalConfig.metadata.filter)
                             ? JSON.parse(globalConfig.metadata.filter)
                             : globalConfig.metadata.filter;
@@ -75,8 +62,6 @@ GlobalContext = {
                 reject('INVALID_ORIGIN');
             }
         }).then(function(result) {
-            // GlobalContext.user = result;
-            // if (result && result.status == 'success') {
             if (result.uid) {
                 GlobalContext.user = result;
                 GlobalContext._params.user = GlobalContext.user;
@@ -84,9 +69,6 @@ GlobalContext = {
             } else {
                 reject('INVALID_USER');
             }
-            // } else {
-            //     reject('INVALID_USER');
-            // }
         }).catch(function(err) {
             reject(err);
         });
