@@ -673,7 +673,7 @@ module.exports = function(grunt) {
                 },
                 files: [{
                     expand:true,
-                    cwd: 'www/',
+                    cwd: '../js-libs/build',
                     src: ['**']
                 }]
             }
