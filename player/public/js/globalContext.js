@@ -38,7 +38,6 @@ GlobalContext = {
                         for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
                             GlobalContext._params[AppConfig.telemetryEventsConfigFields[i]] = GlobalContext.config[AppConfig.telemetryEventsConfigFields[i]];
                         }
-
                         // GlobalContext.config.contentExtras.switchingUser = true;`
                         // Assuming filter is always an array of strings.
                         GlobalContext.filter = (GlobalContext.config.appInfo.filter)
