@@ -184,7 +184,6 @@ app.controllerProvider.register("endPageController", function($scope, $rootScope
     });
 });
 app.controllerProvider.register('RelatedContentCtrl', function($scope, $rootScope, $state, $stateParams) {
-        var globalConfig = EkstepRendererAPI.getGlobalConfig();
         $scope.showRelatedContent = false;
         $scope.contentShowMore = false;
         $scope.showRelatedContentHeader = true;

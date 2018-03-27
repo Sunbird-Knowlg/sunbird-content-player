@@ -33,7 +33,7 @@
          var path = undefined;
          var globalConfig = EkstepRendererAPI.getGlobalConfig();
         if (window.cordova || !isbrowserpreview) {
-            var prefix_url = data.baseDir || globalConfig.basepath || '';
+            var prefix_url = globalConfig.basepath || '';
             path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
         } else {
             path = data.artifactUrl + "?" + new Date().getSeconds();

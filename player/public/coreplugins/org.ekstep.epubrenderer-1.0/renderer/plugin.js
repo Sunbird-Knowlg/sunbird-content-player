@@ -26,7 +26,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.initContentProgress();
         if (window.cordova) {
           // For device index.epub will be extracted/unziped to folder. So point to the folder
-          epubPath = (data.baseDir || globalConfig.basepath) + "/";
+          epubPath = globalConfig.basepath + "/";
         } else {
           // For local and portal, read index.epub file
           epubPath = isbrowserpreview ? data.artifactUrl : data.baseDir + "/" + data.artifactUrl;

@@ -28,12 +28,9 @@ GlobalContext = {
                     if (globalConfig.metadata) {
                         GlobalContext.game.id = globalConfig.metadata.identifier;
                         GlobalContext.game.ver = globalConfig.metadata.pkgVersion || "1";
-                        for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
-                            GlobalContext._params[AppConfig.telemetryEventsConfigFields[i]] = globalConfig.config[AppConfig.telemetryEventsConfigFields[i]];
-                        }
-                        GlobalContext.filter = (globalConfig.metadata.filter)
-                            ? JSON.parse(globalConfig.metadata.filter)
-                            : globalConfig.metadata.filter;
+                    }
+                    for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
+                        GlobalContext._params[AppConfig.telemetryEventsConfigFields[i]] = globalConfig.config[AppConfig.telemetryEventsConfigFields[i]];
                     }
                     resolve(globalConfig);
                 })
@@ -59,6 +56,7 @@ GlobalContext = {
             if (config.origin == 'Genie') {
                 return org.ekstep.service.renderer.getCurrentUser();
             } else {
+                showToaster('error', 'Invalid Origin');
                 reject('INVALID_ORIGIN');
             }
         }).then(function(result) {
