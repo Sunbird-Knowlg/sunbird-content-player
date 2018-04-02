@@ -27,7 +27,6 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
     };
     $scope.renderContent = function() {
         if ($rootScope.content) {
-            localStorageGC.setItem("content", $rootScope.content);
             $rootScope.pageTitle = $rootScope.content.name;
             $scope.canvas  = $rootScope.content.mimeType == 'application/vnd.ekstep.ecml-archive' ? true : false;
             GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;

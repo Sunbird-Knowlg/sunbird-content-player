@@ -1,0 +1,103 @@
+.textbox:focus {
+  border-width: 0px 0px 1px 0px solid #aeabab;
+  outline: 0;
+  /*box-shadow: 0 4px 6px -6px #000000;*/
+  border-color: #9090e4;
+}
+.textboxQ:focus {
+  border-width: 0px 0px 1px 0px solid #aeabab;
+  outline: 0;
+  /*box-shadow: 0 4px 6px -6px #000000;*/
+  border-color: #9090e4;
+}
+
+.textbox {
+  width: 75%;
+  border-width: 0px 0px 1px 0px;
+  height: 33px;
+  color: inherit;
+  text-align: center;
+}
+.textboxQ {
+  width: 100%;
+  border-width: 0px 0px 1px 0px;
+  height: 33px;
+  color: inherit;
+  text-align: center;
+}
+.cardBorder{
+  box-shadow: 0px 1px 5px 1px #aeabab !important;
+}
+
+.maxLengthText {
+  float: right;
+}
+
+.optionError {
+  color: red;
+}
+
+.optionTab {
+  text-align: center;
+}
+
+.has-error {
+  border-bottom-color: #ea7575;
+  /*border-bottom-width: 1.5px;*/
+  transition:all linear 0.5s;
+}
+
+.has-success {
+  border-bottom-color: #dfcfcf;
+  transition:all linear 0.5s;
+}
+
+.has-error-text {
+  color: inherit;
+  transition:all linear 0.5s;
+}
+
+.has-success-text {
+  color: red;
+  transition:all linear 0.5s;
+}
+
+.mcqFullGrid {
+  max-height: 80vh;
+  width: 100%;
+  margin-left: 0%;
+  margin-top: 0%
+}
+
+.innerScroll {
+  padding-left: 4%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-left: 5%;
+}
+
+#eachCard {
+  /*box-shadow: 1px 1px 1px #9da1a5;*/
+  margin-bottom: 2%
+}
+
+.textBoxDiv {
+  text-align: center;
+}
+
+.deleteText {
+  color: #8b8c8d;
+}
+
+.addAns {
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.headQA {
+  margin-top: 3%;
+}
+.qHeader{
+  padding-bottom: 2%;
+}

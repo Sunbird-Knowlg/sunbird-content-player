@@ -1,0 +1,99 @@
+{
+    "id": "org.ekstep.questionunit.mcq",
+    "ver": "1.0",
+    "author": "Jagadish",
+    "title": "Add question",
+    "description": "",
+    "publishedDate": "",
+    "icon": "assets/createquestion.png",
+    "languages": ["English"],
+    "categories": [],
+    "keywords": ["mcqplugin"],
+    "editor":
+    {
+        "main": "editor/plugin.js",
+        "dependencies": [
+        {
+            "type": "plugin",
+            "plugin": "org.ekstep.questionunit",
+            "ver": "1.0"
+        },
+        {
+            "type": "css",
+            "src": "editor/styles/style.css"
+        }],
+        "menu": [],
+        "init-data":
+        {
+            "type": "rect",
+            "x": 10,
+            "y": 2,
+            "w": 80,
+            "h": 80,
+            "fill": "#DCDCDC"
+        },
+        "configManifest": [
+        {
+
+        }],
+        "help":
+        {
+            "src": "editor/help.md",
+            "dataType": "text"
+        }
+    },
+    "templates": [
+    {
+      "id": "horizontalMCQ",
+      "thumbnail": "editor/assets/mcq-horizontal.png",
+      "title": "Horizontal MCQ",
+      "disc": "Horizontal MCQ template",
+      "category": "mcq",
+      "editor":
+      {
+        "templateURL": "editor/templates/horizontal_template.html",
+        "controllerURL": "editor/controllers/horizontal_controller.js",
+        "template": "horizontalMCQ",
+        "controller": "QuestionFormController"
+      },
+      "renderer":
+      {
+        "template": "renderer/templates/horizontal_template.html",
+        "controller": "renderer/controllers/horizontal_controller.js"
+      }
+
+    }],
+    "renderer":
+    {
+        "main": "renderer/plugin.js",
+        "dependencies": [
+            {
+                "type": "css",
+                "src": "renderer/styles/style.css"
+            },
+            {
+                "type": "js",
+                "src": "renderer/util/evaluator.js"
+            },
+             {
+                "type": "js",
+                "src": "renderer/controllers/horizontal_controller.js"
+            },
+            {
+                "type": "js",
+                "src": "renderer/templates/horizontal_template.html"
+
+            }
+
+        ]
+    },
+    "dependencies": [
+        {
+            "plugin": "org.ekstep.questionunit",
+            "ver": "1.0",
+            "type": "plugin",
+            "scope": "all"
+        }
+
+    ]
+}

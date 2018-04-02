@@ -34,7 +34,7 @@
 }
 
 
-/*@font-face {
+@font-face {
     font-family: 'NotoNastaliqUrdu';
     src: url('fonts/NotoNastaliqUrdu-Regular.ttf') format('truetype')
 }
@@ -43,7 +43,7 @@
     font-family: 'NotoSansGurmukhi';
     src: url('fonts/NotoSansGurmukhi-Regular.ttf') format('truetype')
 }
-*/
+
 
 @font-face {
     font-family: 'NotoSansTamil';

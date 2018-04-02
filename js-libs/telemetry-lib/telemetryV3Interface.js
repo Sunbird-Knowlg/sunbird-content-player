@@ -1,36 +1,62 @@
+
 /**
  * Telemetry V3 Library
  * @author Akash Gupta <Akash.Gupta@tarento.com>
  */
+
+var libraryDispatcher = {
+    dispatch: function(event) {
+        if (typeof document != 'undefined') {
+            //To Support for external user who ever lisenting on this 'TelemetryEvent' event.
+            // IT  WORKS ONLY FOR CLIENT SIDE
+            document.dispatchEvent(new CustomEvent('TelemetryEvent', {detail: event }));
+        } else {
+            console.info("Library dispatcher supports only for client side.");
+        }
+    }
+};
+
 
 var EkTelemetry = (function() {
     this.ektelemetry = function() {};
     var instance = function() {};
     var telemetryInstance = this;
     this.ektelemetry.initialized = false;
-    this.ektelemetry.config = undefined;
+    this.ektelemetry.config = {};
     this.ektelemetry._version = "3.0";
-    dispatcher = undefined;
-
-    this.startTime = 0;
+    this.ektelemetry.fingerPrintId = undefined;
+    this.dispatcher = libraryDispatcher;
     this._defaultValue = {
-        pdata: {
-            id: "in.ekstep",
-            ver: "1.0",
-            pid: ""
-        },
-        channel: "in.ekstep",
         uid: "anonymous",
-        did: "",
         authtoken: "",
-        sid: "",
         batchsize: 20,
         host: "https://api.ekstep.in",
         endpoint: "/data/v3/telemetry",
-        tags: [],
-        cdata: [],
-        apislug: "/action"
+        apislug: "/action",
     },
+    this.telemetryEnvelop = {
+        "eid": "",
+        "ets": "",
+        "ver": "",
+        "mid": '',
+        "actor": {},
+        "context": {},
+        "object": {},
+        "tags": [],
+        "edata": ""
+    }
+    this._globalContext = {
+        "channel": 'in.ekstep',
+        "pdata": {id: "in.ekstep", ver: "1.0", pid: ""},
+        "env": 'ContentPlayer',
+        "sid": "",
+        "did": "",
+        "cdata": [],
+        "rollup": {}
+    },
+    this.runningEnv = 'client';
+    this._globalObject = {};
+    this.startData = [];
     this.deviceSpecRequiredFields = ["os","make","id","mem","idisk","edisk","scrn","camera","cpu","sims","cap"],
     this.userAgentRequiredFields = ["agent","ver","system","platform","raw"],
     this.objectRequiredFields = ["id","type","ver"],
@@ -41,289 +67,528 @@ var EkTelemetry = (function() {
     this.pdataRequiredFields = ["id"],
     this.targetObjectRequiredFields = ["type","id"],
 
-    this.ektelemetry.start = function(config, contentId, contentVer, data) {
-        if (EkTelemetry.initialized) {
-            console.log("Telemetry is already initialized..");
-            return;
-        }
+    /**
+     * Which is used to initialize the telemetry event
+     * @param  {object} config - Configurations for the telemetry lib to initialize the service. " Example: config = { batchsize:10,host:"" } "
+     */
+    this.ektelemetry.initialize = function(config){
+        instance.init(config);
+    }
+
+    /**
+     * Which is used to start and initialize the telemetry event. 
+     * If the telemetry is already initialzed then it will trigger only start event.
+     * @param  {object} config     [Telemetry lib configurations]
+     * @param  {string} contentId  [Content Identifier]
+     * @param  {string} contentVer [Content version]
+     * @param  {object} data       [Can have userAgent,device spec object]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.start = function(config, contentId, contentVer, data, options) {
         if (!instance.hasRequiredData(data, ["type"])) {
             console.error('Invalid start data');
             return;
         }
-        if (data.dspec && !instance.checkRequiredField(data.dspec, telemetryInstance.deviceSpecRequiredFields)) {
+        if (data.dspec && !instance.hasRequiredData(data.dspec, telemetryInstance.deviceSpecRequiredFields)) {
             console.error('Invalid device spec')
             return;
         }
-        if (data.uaspec && !instance.checkRequiredField(data.uaspec, telemetryInstance.userAgentRequiredFields)) {
+        if (data.uaspec && !instance.hasRequiredData(data.uaspec, telemetryInstance.userAgentRequiredFields)) {
             console.error('Invalid user agent spec')
             return;
         }
         data.duration = data.duration || (new Date()).getTime();
-        
-        if (instance.init(config, contentId, contentVer, data.type)) {
-            var startEventObj = instance.getEvent('START', data);
-            instance._dispatch(startEventObj)
-
-            // Required to calculate the time spent of content while generating OE_END
-            EkTelemetry.startTime = startEventObj.ets;
-            return startEventObj;
+        if(contentId && contentVer){
+            telemetryInstance._globalObject.id =  contentId;
+            telemetryInstance._globalObject.ver = contentVer;
         }
+
+        if (!EkTelemetry.initialized && config) {
+            instance.init(config, contentId, contentVer)
+
+        }
+        instance.updateValues(options);
+        var startEventObj = instance.getEvent('START', data);
+        instance._dispatch(startEventObj)
+        telemetryInstance.startData.push(JSON.parse(JSON.stringify(startEventObj)));
     }
 
-    this.ektelemetry.end = function(data) {
-        if (!EkTelemetry.initialized) {
-            console.log("Telemetry is not initialized, Please start telemetry first");
-            return;
-        }
-        if (!instance.hasRequiredData(data, ["type"])) {
-            console.error('Invalid end data. Required fields are missing.', data);
-            return;
-        }
-        data.duration = ((new Date()).getTime() - EkTelemetry.startTime)
-        instance._dispatch(instance.getEvent('END', data));
-        EkTelemetry.initialized = false;
-    }
-
-    this.ektelemetry.impression = function(data) {
+    /**
+     * Which is used to log the impression telemetry event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.impression = function(data, options) {
         if (undefined == data.pageid || undefined == data.type || undefined == data.uri) {
             console.error('Invalid impression data. Required fields are missing.', data);
             return;
         }
-        if (data.visits && !instance.checkRequiredField(data.visits, telemetryInstance.visitRequiredFields)) {
+        if (data.visits && !instance.hasRequiredData(data.visits, telemetryInstance.visitRequiredFields)) {
             console.error('Invalid visits spec')
             return;
         }
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('IMPRESSION', data));
     }
 
-    this.ektelemetry.interact = function(data) {
+    /**
+     * Which is used to log the interact telemetry event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.interact = function(data, options) {
         if (!instance.hasRequiredData(data, ["type", "id"])) {
             console.error('Invalid interact data');
             return;
         }
-        if (data.target && !instance.checkRequiredField(data.target, telemetryInstance.targetRequiredFields)) {
+        if (data.target && !instance.hasRequiredData(data.target, telemetryInstance.targetRequiredFields)) {
             console.error('Invalid target spec')
             return;
         }
-        if (data.plugin && !instance.checkRequiredField(data.plugin, telemetryInstance.pluginRequiredFields)) {
+        if (data.plugin && !instance.hasRequiredData(data.plugin, telemetryInstance.pluginRequiredFields)) {
             console.error('Invalid plugin spec')
             return;
         }
-
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('INTERACT', data));
     }
 
-    this.ektelemetry.assess = function(data) {
+    /**
+     * Which is used to log the assess telemetry event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.assess = function(data, options) {
         if (!instance.hasRequiredData(data, ["item", "pass", "score", "resvalues", "duration"])) {
             console.error('Invalid assess data');
             return;
         }
-        if (!instance.checkRequiredField(data.item, telemetryInstance.questionRequiredFields)) {
+        if (!instance.hasRequiredData(data.item, telemetryInstance.questionRequiredFields)) {
             console.error('Invalid question spec')
             return;
         }
-
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('ASSESS', data));
     }
 
-    this.ektelemetry.response = function(data) {
+    /**
+     * Which is used to log the response telemetry event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.response = function(data, options) {
         if (!instance.hasRequiredData(data, ["target", "values", "type"])) {
             console.error('Invalid response data');
             return;
         }
-        if (!instance.checkRequiredField(data.target, telemetryInstance.targetRequiredFields)) {
+        if (!instance.hasRequiredData(data.target, telemetryInstance.targetRequiredFields)) {
             console.error('Invalid target spec')
             return;
         }
-
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('RESPONSE', data));
     }
 
-    this.ektelemetry.interrupt = function(data) {
+    /**
+     * Which is used to log the interrupt telemetry event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.interrupt = function(data, options) {
         if (!instance.hasRequiredData(data, ["type"])) {
             console.error('Invalid interrupt data');
             return;
         }
-
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('INTERRUPT', data));
     }
 
-    this.ektelemetry.feedback = function(data) {
+    /**
+     * Which is used to log the feedback telemetry event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.feedback = function(data, options) {
         var eksData = {
             "rating": data.rating || '',
             "comments": data.comments || ''
         }
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('FEEDBACK', eksData));
     }
 
-    //Share
-    this.ektelemetry.share = function(data) {
+    /**
+     * Which is used to log the share telemetry event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+    */
+    this.ektelemetry.share = function(data, options) {
         if (!instance.hasRequiredData(data, ["items"])) {
             console.error('Invalid share data');
             return;
         }
-        
-        instance._dispatch(instance.getEvent('INTERRUPT', data));
+        instance.updateValues(options);
+        instance._dispatch(instance.getEvent('SHARE', data));
     }
 
-    this.ektelemetry.audit = function(data) {
+    /**
+     * Which is used to log the audit telemetry event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.audit = function(data, options) {
         if (!instance.hasRequiredData(data, ["props"])) {
             console.error('Invalid audit data');
             return;
         }
-        
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('AUDIT', data));
     }
 
-    this.ektelemetry.error = function(data) {
+    /**
+     * Which is used to log the error telemetry event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.error = function(data, options) {
         if (!instance.hasRequiredData(data, ["err", "errtype", "stacktrace"])) {
             console.error('Invalid error data');
             return;
         }
-        if (data.object && !instance.checkRequiredField(data.object, telemetryInstance.objectRequiredFields)) {
+        if (data.object && !instance.hasRequiredData(data.object, telemetryInstance.objectRequiredFields)) {
             console.error('Invalid object spec')
             return;
         }
-        if (data.plugin && !instance.checkRequiredField(data.plugin, telemetryInstance.pluginRequiredFields)) {
+        if (data.plugin && !instance.hasRequiredData(data.plugin, telemetryInstance.pluginRequiredFields)) {
             console.error('Invalid plugin spec')
             return;
         }
-
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('ERROR', data));
     }
 
-    this.ektelemetry.heartbeat = function(data) {
+    /**
+     * Which is used to log the heartbeat telemetry event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.heartbeat = function(data, options) {
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('HEARTBEAT', data));
     }
 
-    this.ektelemetry.log = function(data) {
+    /**
+     * Which is used to log the log event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.log = function(data, options) {
         if (!instance.hasRequiredData(data, ["type", "level", "message"])) {
             console.error('Invalid log data');
             return;
         }
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('LOG', data));
     }
 
-    this.ektelemetry.search = function(data) {
+    /**
+     * Which is used to log the search event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.search = function(data, options) {
         if (!instance.hasRequiredData(data, ["query", "size", "topn"])) {
             console.error('Invalid search data');
             return;
         }
-        
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('SEARCH', data));
     }
 
-    this.ektelemetry.metrics = function(data) {
+    /**
+     * Which is used to log the metrics event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.metrics = function(data, options) {
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('METRICS', data));
     }
 
-    this.ektelemetry.exdata = function(data) {
+    /**
+     * Which is used to log the exdata event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.exdata = function(data, options) {
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('EXDATA', data));
     }
 
-    this.ektelemetry.summary = function(data) {
+    /**
+     * Which is used to log the summary event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.summary = function(data, options) {
         if (!instance.hasRequiredData(data, ["type", "starttime", "endtime", "timespent","pageviews","interactions"])) {
             console.error('Invalid summary data');
             return;
         }
-        
+        instance.updateValues(options);
         instance._dispatch(instance.getEvent('SUMMARY', data));
-    }    
+    } 
 
-    instance.init = function(config, contentId, contentVer, type) {
+    /**
+     * Which is used to log the end telemetry event.
+     * @param  {object} data       [data which is need to pass in this event ex: {"type":"player","mode":"ContentPlayer","pageid":"splash"}]
+     * @param  {object} options    [It can have `context, object, actor` can be explicitly passed in this event]
+     */
+    this.ektelemetry.end = function(data, options) {
+        if (!instance.hasRequiredData(data, ["type"])) {
+            console.error('Invalid end data. Required fields are missing.', data);
+            return;
+        }
+        if(telemetryInstance.startData.length){
+            var startEventObj = telemetryInstance.startData.pop();
+            data.duration = ((new Date()).getTime() - startEventObj.ets)
+            instance.updateValues(options);
+            instance._dispatch(instance.getEvent('END', data));
+        }else{
+            console.info("Please invoke start before invoking end event.")
+        }
+    }
+
+    /**
+     * Which is used to know the whether telemetry is initialized or not. 
+     * @return {Boolean} 
+     */
+    this.ektelemetry.isInitialized = function(){
+        return EkTelemetry.initialized;
+    } 
+
+    /**
+     * Which is used to reset the current context
+     * @param  {object} context [Context value]
+     */
+    this.ektelemetry.resetContext = function(context){
+        telemetryInstance._currentContext = context || {};
+    }
+
+    /**
+     * Which is used to reset the current object value.
+     * @param  {object} object [Object value]
+     */
+    this.ektelemetry.resetObject = function(object){
+        telemetryInstance._currentObject = object || {};
+    },
+
+    /**
+     * Which is used to reset the current actor value.
+     * @param  {object} object [Object value]
+     */
+    this.ektelemetry.resetActor = function(actor){
+        telemetryInstance._currentActor = actor || {};
+    }
+
+
+    /**
+     * Which is used to reset the current actor value.
+     * @param  {object} object [Object value]
+     */
+    this.ektelemetry.resetTags = function(tags){
+        telemetryInstance._currentTags = tags || [];
+    }     
+
+    /**
+     * Which is used to initialize the telemetry in globally.
+     * @param  {object} config     [Telemetry configurations]
+     * @param  {string} contentId  [Identifier value]
+     * @param  {string} contentVer [Version]
+     * @param  {object} type       [object type]
+     */
+    instance.init = function(config, contentId, contentVer) {
         if (EkTelemetry.initialized) {
             console.log("Telemetry is already initialized..");
             return;
         }
-        if (config.pdata && !instance.checkRequiredField(config.pdata, telemetryInstance.pdataRequiredFields)) {
+        !config && (config = {})
+        if (config.pdata && !instance.hasRequiredData(config.pdata, telemetryInstance.pdataRequiredFields)) {
             console.error('Invalid pdata spec in config')
             return;
         }
-        if (config.object && !instance.checkRequiredField(config.object, telemetryInstance.targetObjectRequiredFields)) {
+        if (config.object && !instance.hasRequiredData(config.object, telemetryInstance.targetObjectRequiredFields)) {
             console.error('Invalid target object spec in config')
             return;
         }
-
-        var requiredData = Object.assign(config, { "contentId": contentId, "contentVer": contentVer, "type": type });
-
-        if (!instance.hasRequiredData(requiredData, ["contentId", "contentVer", "pdata", "channel", "uid", "env"])) {
+        contentId && (telemetryInstance._globalObject.id = contentId);
+        contentVer && (telemetryInstance._globalObject.ver = contentVer);
+        if (!instance.hasRequiredData(config, ["pdata", "channel", "uid", "env"])) {
             console.error('Invalid start data');
             EkTelemetry.initialized = false;
-            return EkTelemetry.initialized;
+            return;
         }
-
-        _defaultValue.gdata = {
-            "id": contentId,
-            "ver": contentVer
-        }
+        config.runningEnv && (telemetryInstance.runningEnv = config.runningEnv);
         config.batchsize = config.batchsize ? (config.batchsize < 10 ? 10 : (config.batchsize > 1000 ? 1000 : config.batchsize)) : _defaultValue.batchsize;
         EkTelemetry.config = Object.assign(_defaultValue, config);
         EkTelemetry.initialized = true;
-        dispatcher = EkTelemetry.config.dispatcher ? EkTelemetry.config.dispatcher : libraryDispatcher;
-        return EkTelemetry.initialized;
+        telemetryInstance.dispatcher = EkTelemetry.config.dispatcher ? EkTelemetry.config.dispatcher : libraryDispatcher;
+        instance.updateConfigurations(config);
+        console.info("Telemetry is initialized.")
     }
 
+    /**
+     * Which is used to dispatch a telemetry events.
+     * @param  {object} message [Telemetry event object]
+     */
     instance._dispatch = function(message) {
         message.mid = message.eid + ':' + CryptoJS.MD5(JSON.stringify(message)).toString();
-        dispatcher.dispatch(message);
-    }
-
-    instance.getEvent = function(eventId, data) {
-        var eventObj = {
-            "eid": eventId,
-            "ets": (new Date()).getTime(),
-            "ver": EkTelemetry._version,
-            "mid": '',
-            "actor": {
-                "id": EkTelemetry.config.uid,
-                "type": 'User'
-            },
-            "context": {
-                "channel": EkTelemetry.config.channel,
-                "pdata": EkTelemetry.config.pdata,
-                "env": EkTelemetry.config.env,
-                "sid": EkTelemetry.config.sid,
-                "did": EkTelemetry.config.did,
-                "cdata": EkTelemetry.config.cdata, //TODO: No correlation data as of now. Needs to be sent by portal in context
-                "rollup": EkTelemetry.config.rollup || {}
-            },
-            "object": EkTelemetry.config.object,
-            "tags": EkTelemetry.config.tags,
-            "edata": data
+        if (telemetryInstance.runningEnv === 'client') {
+            if (!message.context.did) {
+                if (!EkTelemetry.fingerPrintId) {
+                    instance.getFingerPrint(function(result, components) {
+                        message.context.did = result;
+                        EkTelemetry.fingerPrintId = result;
+                        dispatcher.dispatch(message);
+                    })
+                } else {
+                    message.context.did = EkTelemetry.fingerPrintId;
+                    dispatcher.dispatch(message);
+                }
+            } else {
+                dispatcher.dispatch(message);
+            }
+        } else {
+            dispatcher.dispatch(message);
         }
-        return eventObj;
     }
 
-    // instance.addEvent = function(telemetryEvent) {
-    //     if (EkTelemetry.initialized) {
-    //         telemetryEvent.mid = telemetryEvent.eid + '_' + CryptoJS.MD5(JSON.stringify(telemetryEvent)).toString();
-    //         var customEvent = new CustomEvent('TelemetryEvent', { detail: telemetryEvent });
-    //         console.log("Telemetry Event ", telemetryEvent);
-    //         document.dispatchEvent(customEvent);
-    //     } else {
-    //         console.log("Telemetry is not initialized. Please start Telemetry to log events.");
-    //     }
-    // }
+    /**
+     * Which is used to get the telemetry envelop data
+     * @param  {string} eventId [Name of the event]
+     * @param  {object} data    [Event data]
+     * @return {object}         [Telemetry envelop data]
+     */
+    instance.getEvent = function(eventId, data) {
+        telemetryInstance.telemetryEnvelop.eid =  eventId;
+        telemetryInstance.telemetryEnvelop.ets = (new Date()).getTime();
+        telemetryInstance.telemetryEnvelop.ver = EkTelemetry._version;
+        telemetryInstance.telemetryEnvelop.mid = '';
+        telemetryInstance.telemetryEnvelop.actor = Object.assign({}, {"id": EkTelemetry.config.uid || 'anonymous', "type": 'User'},instance.getUpdatedValue('actor'));
+        telemetryInstance.telemetryEnvelop.context = Object.assign({}, instance.getGlobalContext(), instance.getUpdatedValue('context'));
+        telemetryInstance.telemetryEnvelop.object = Object.assign({}, instance.getGlobalObject(), instance.getUpdatedValue('object'));
+        telemetryInstance.telemetryEnvelop.tags = Object.assign([], EkTelemetry.config.tags, instance.getUpdatedValue('tags'));
+        telemetryInstance.telemetryEnvelop.edata = data;
+        return telemetryInstance.telemetryEnvelop;
+    }
 
+    /**
+     * Which is used to validate the object
+     * @param  {object}  data            [Object which is need to be validate]
+     * @param  {object}  mandatoryFields [required fields should be present in the object]
+     * @return {Boolean}                  
+     */
     instance.hasRequiredData = function(data, mandatoryFields) {
         var isValid = true;
-        mandatoryFields.forEach(function(key) {
-            if (!data.hasOwnProperty(key)) isValid = false;
-        });
-        return isValid;
+        var checkValidation = function(data, mandatoryFields) {
+            mandatoryFields.forEach(function(key) {
+                if (data) {
+                    if (!data.hasOwnProperty(key)) {
+                        isValid = false;
+                        return;             // stopping loop if even single obj is incorrect
+                    }
+                } else {
+                    isValid = false
+                    return
+                }
+            });
+        }
+        if (Array.isArray(data)) {
+            data.forEach(function(obj){
+                checkValidation(obj, mandatoryFields);
+            })
+            return isValid
+        } else {
+            checkValidation(data, mandatoryFields);
+            return isValid
+        }
     }
 
-    instance.checkRequiredField = function(data, defaultKeys) {
-        var returnValue = true;
-        defaultKeys.forEach(function(key) {
-            if (!data.hasOwnProperty(key)) {
-                returnValue = false
-            }
-        })
-        return returnValue;
+    /**
+     * Which is used to assing to globalObject and globalContext value from the telemetry configurations.
+     * @param  {object} config [Telemetry configurations]
+     */
+    instance.updateConfigurations = function(config) {
+        config.object && (telemetryInstance._globalObject = config.object);
+        config.channel && (telemetryInstance._globalContext.channel = config.channel);
+        config.env && (telemetryInstance._globalContext.env = config.env);
+        config.rollup && (telemetryInstance._globalContext.rollup = config.rollup);
+        config.sid && (telemetryInstance._globalContext.sid = config.sid);
+        config.did && (telemetryInstance._globalContext.did = config.did);
+        config.cdata && (telemetryInstance._globalContext.cdata = config.cdata);
+        config.pdata && (telemetryInstance._globalContext.pdata = config.pdata);
+
+
     }
 
-    // For device which dont support ECMAScript 6
+    /**
+     * Which is used to get the current updated global context value.
+     * @return {object} 
+     */
+    instance.getGlobalContext = function() {
+       return telemetryInstance._globalContext;
+    }
+
+    /**
+     * Which is used to get the current global object value.
+     * @return {object} 
+     */
+    instance.getGlobalObject = function(){
+        return telemetryInstance._globalObject;
+    }
+
+    /**
+     * Which is used to update the both context and object vlaue.
+     * For any event explicitly context and object value can be passed.
+     * @param  {object} context [Context value object]
+     * @param  {object} object  [Object value]
+     */
+    instance.updateValues = function(options) {
+        if (options) {
+            options.context && (telemetryInstance._currentContext = options.context);
+            options.object && (telemetryInstance._currentObject = options.object);
+            options.actor && (telemetryInstance._currentActor = options.actor);
+            options.tags && (telemetryInstance._currentTags = options.tags);
+            options.runningEnv && (telemetryInstance.runningEnv = options.runningEnv);
+        }
+    }
+    
+    /**
+     * Which is used to get the value of 'context','actor','object'
+     * @param  {string} key [ Name of object which we is need to get ]
+     * @return {object}     
+     */
+    instance.getUpdatedValue = function(key) {
+        switch (key.toLowerCase()) {
+            case 'context':
+                return telemetryInstance._currentContext || {};
+                break;
+            case 'object':
+                return telemetryInstance._currentObject || {};
+                break;
+            case 'actor':
+                return telemetryInstance._currentActor || {};
+                break;
+            case 'tags':
+                return telemetryInstance._currentTags || [];
+                break;    
+        }
+    }
+
+    /**
+     * Which is used to support for lower end deviecs.
+     * If any of the devices which is not supporting ECMAScript 6 version
+     */
     instance.objectAssign = function() {
         Object.assign = function(target) {
             'use strict';
@@ -346,6 +611,11 @@ var EkTelemetry = (function() {
         }
     }
 
+    instance.getFingerPrint = function(cb) {
+        new Fingerprint2().get(function(result, components) {
+            if (cb) cb(result, components)
+        })
+    }
     if (typeof Object.assign != 'function') {
         instance.objectAssign();
     }
@@ -353,10 +623,16 @@ var EkTelemetry = (function() {
     return this.ektelemetry;
 })();
 
-var libraryDispatcher = {
-    dispatch: function(event){
-        var customEvent = new CustomEvent('TelemetryEvent', { detail: event });
-        console.log("Telemetry Event ", event);
-        document.dispatchEvent(customEvent);
-    }
-};
+/**
+ * Name space which is being fallowed
+ * @type {[type]}
+ */
+Telemetry = $t = EkTelemetry;
+
+
+/**
+ * To support for the node backEnd, So any node developer can import this telemetry lib.
+ */
+if(typeof module != 'undefined'){
+    module.exports = Telemetry;
+}

@@ -1,0 +1,18 @@
+{
+    "id": "org.ekstep.questionunit",
+    "ver": "1.0",
+    "author": "Manoj Chandrashekar",
+    "title": "Question Unit Base Plugin",
+    "description": "Question Unit Base Plugin that declares the interfaces that Question Unit Plugins must define.",
+    "publishedDate": "",
+    "editor": {
+        "main": "editor/plugin.js",
+        "help": {
+            "src": "editor/help.md",
+            "dataType": "text"
+        }
+    },
+    "renderer": {
+        "main": "renderer/plugin.js"
+    }
+}

@@ -1,0 +1,90 @@
+{
+    "id": "org.ekstep.questionunit.ftb",
+    "ver": "1.0",
+    "author": "Gourav More",
+    "title": "FTB question",
+    "description": "",
+    "publishedDate": "",
+    "languages": ["English"],
+    "categories": [],
+    "keywords": ["ftbplugin"],
+    "editor":
+    {
+        "main": "editor/plugin.js",
+        "dependencies": [
+        {
+            "type": "plugin",
+            "plugin": "org.ekstep.questionunit",
+            "ver": "1.0"
+        },
+        {
+            "type": "css",
+            "src": "editor/styles/horizontalTemplate.css"
+        }],
+        "menu": [],
+        "init-data":
+        {
+            "type": "rect",
+            "x": 10,
+            "y": 2,
+            "w": 80,
+            "h": 80,
+            "fill": "#DCDCDC"
+        },
+        "configManifest": [
+        {
+
+        }],
+        "help":
+        {
+            "src": "editor/help.md",
+            "dataType": "text"
+        }
+    },
+    "dependencies": [
+        {
+            "type": "plugin",
+            "plugin": "org.ekstep.questionunit",
+            "ver": "1.0",
+            "scope": "renderer"
+        },
+        {
+            "type":"js",
+            "src":"renderer/util/evaluator.js",
+            "scope":"renderer"
+        }
+    ],
+    "templates": [
+    {
+        "id": "ftbtemplate",
+        "thumbnail": "editor/assets/ftb-horizontal.png",
+        "title": "Horizantal FTB",
+        "disc": "Horizantal FTB template",
+        "category": "ftb",
+        "editor":
+        {
+            "templateURL": "editor/templates/horizontalTemplate.html",
+            "controllerURL": "editor/controllers/horizontalTemplate.js",
+            "template": "ftbtemplate",
+            "controller": "QuestionFormController"
+        },
+        "renderer":
+        {
+            "template": "renderer/templates/horizontalTemplate.html",
+            "controller": "renderer/controllers/horizontalTemplate.js"
+        }
+
+    }],
+    "renderer":
+    {
+        "main": "renderer/plugin.js"
+    },
+    "dependencies": [
+        {
+            "plugin": "org.ekstep.questionunit",
+            "ver": "1.0",
+            "type": "plugin",
+            "scope": "all"
+        }
+    ]
+}

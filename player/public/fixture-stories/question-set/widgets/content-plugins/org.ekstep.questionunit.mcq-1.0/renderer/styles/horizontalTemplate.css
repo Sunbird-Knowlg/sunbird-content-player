@@ -1,0 +1,125 @@
+#preview-mcq-horizontal {
+    height: 90vh;
+    margin: auto;
+    text-align: center;
+    line-height: 2em;
+    width: 80%;
+    margin-top: 2%;
+    position: relative;
+    display: grid;
+}
+
+
+.qc-mcqlayout {
+    width: 100%;
+    top: 10px;
+    position: relative;
+    margin: auto;
+}
+
+header.qc-long-text-header {
+    width: 100%;
+    background-color: #404041;
+    height: auto;
+}
+
+.qc-question-text {
+    padding: 17px 10px 16px 10px;
+    color: white;
+    font-size: 100%;
+    line-height: normal;
+    text-align: center;
+}
+
+.qc-option-container {
+    width: 100%;
+    display: block;
+    text-align: center;
+    margin-top: 6%;
+    height: 52vh;
+    overflow-y: auto;
+
+}
+
+.qc-option-value {
+    border-top: 1px solid #c8ccd0;
+    border-bottom: 1px solid #c8ccd0;
+    cursor: pointer;
+    padding: 5%;
+    border-left: 7px solid transparent;
+}
+
+.qc-option-checkbox {
+    float: right;
+}
+
+.qc-option-text {
+    float: left;
+    padding: -3%;
+    top: -14.66667px;
+    text-align: initial;
+    line-height: 1.5;
+    width: 77%;
+    position: relative;
+    padding: -2% 1% 2% 9%;
+}
+
+input.qc-option-input-checkbox {
+    -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
+    -ms-appearance: checkbox;
+}
+
+input.qc-option-input-checkbox {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    position: relative;
+    top: -9.66667px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    transition: all 0.15s ease-out 0s;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    outline: 2px solid #cbd1d8;
+    position: relative;
+    z-index: 1000;
+}
+
+
+
+input.qc-option-input-checkbox:checked {
+    background: #4a90e2;
+}
+
+input.qc-option-input-checkbox:checked::before {
+    height: 40px;
+    width: 20px;
+    position: absolute;
+    content: '✔';
+    display: inline-block;
+    font-size: 21.66667px;
+    text-align: center;
+    line-height: 21px;
+}
+
+input.qc-option-input-checkbox:checked::after {
+    -webkit-animation: click-wave 0.65s;
+    -moz-animation: click-wave 0.65s;
+    animation: click-wave 0.65s;
+    background: #40e0d0;
+    content: '';
+    display: block;
+    position: relative;
+    z-index: 100;
+}
+
+.qsselectedopt {
+    border-left-color: #4a90e2;
+}

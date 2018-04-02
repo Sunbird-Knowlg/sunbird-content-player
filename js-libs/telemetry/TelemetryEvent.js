@@ -4,7 +4,7 @@ TelemetryEvent = Class.extend({
     startTime: 0,
     name: undefined,
     event: undefined,
-    omitV3Fields: {'object': true, 'dispatcher': true, 'contentId': true, 'contentVer': true, 'type': true, 'batchsize': true,  'tags': true,  'rollup': true, "env": true},
+    omitV3Fields: {'object': true, 'dispatcher': true, 'contentId': true, 'contentVer': true, 'type': true, 'batchsize': true,  'tags': true,  'rollup': true, "env": true, "cdata": true},
     init: function(eid, version, body, user, gdata, cdata, otherData) {
         if("undefined" != gdata && "undefined" == gdata.ver)
             gdata.ver = "1";

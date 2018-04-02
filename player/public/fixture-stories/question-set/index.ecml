@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<theme id="theme" version="1.0" startStage="splash" compatibilityVersion="2">
+  <stage x="0" y="0" w="100" h="100" id="splash">
+    <param name="next" value="70a9d047-a2ee-4270-8b22-47a5a34900cc" />
+    <shape type="rect" x="-10" y="75" w="120" h="65" fill="red" opacity="0.8" stroke="white" stroke-width="5" />
+  </stage>
+  <stage x="0" y="0" w="100" h="100" id="70a9d047-a2ee-4270-8b22-47a5a34900cc" rotate="">
+    <param name="next" value="astage" />
+        <param name="previous" value="splash" />
+    <config>
+      <![CDATA[{"opacity":100,"strokeWidth":1,"stroke":"rgba(255, 255, 255, 0)","autoplay":false,"visible":true,"color":"#FFFFFF","genieControls":false,"instructions":""}]]>
+    </config>
+    <manifest>
+      <media assetId="QuizImage"/>
+    </manifest>
+    <org.ekstep.questionset x="8.75" y="1.23" w="79.59" h="94" rotate="0" z-index="0" id="e31be28a-3e0c-4302-beee-39b8ec173e79">
+      <config>
+        <![CDATA[{"title":"mcqftbquestion","max_score":1,"allow_skip":true,"show_feedback":true,"shuffle_questions":false,"shuffle_options":true,"total_items":5}]]>
+      </config>
+       <org.ekstep.question id="13c25c5c-8baa-4216-a47c-ad49810a00a8" type="unit" pluginId="org.ekstep.questionunit.mcq" pluginVer="1.0" templateId="horizontalMCQ">
+        <data>
+          <![CDATA[{"question":{"text":"What is the capital of India?"},"options":[{"isAnswerCorrect":false,"score":0,"text":"Chennai"},{"isAnswerCorrect":false,"score":0,"text":"Kolkata"},{"isAnswerCorrect":true,"score":1,"text":"New Delhi"}]}]]>
+        </data>
+        <config>
+          <![CDATA[{"metadata":{"title":"question tile","language":"English","qlevel":"Easy","gradeLevel":["Kindergarten"],"concepts":[{"id":"do_112300246933831680110","name":"abcd"}]},"max_time":1,"max_score":1,"partial_scoring":true}]]>
+        </config>
+      </org.ekstep.question>
+      <org.ekstep.question id="68696ba7-4436-4370-a215-66992207e508" type="unit" pluginId="org.ekstep.questionunit.ftb" pluginVer="1.0" templateId="ftbtemplate">
+       <data>
+         <![CDATA[{"question":{"text":"ftb question"},"answers":[{"text":"b"}]}]]>
+       </data>
+       <config>
+         <![CDATA[{"metadata":{"title":"ftb question title","language":"English","qlevel":"Easy","gradeLevel":["Grade 1"],"concepts":[{"id":"C24","name":"Time"}]},"max_time":1,"max_score":1,"partial_scoring":true}]]>
+       </config>
+      </org.ekstep.question>
+      <org.ekstep.question id="13c25c5c-8baa-4216-a47c-ad49810a00a1" type="unit" pluginId="org.ekstep.questionunit.mcq" pluginVer="1.0" templateId="horizontalMCQ">
+        <data>
+          <![CDATA[{"question":{"text":"What is the capital of India?"},"options":[{"isAnswerCorrect":false,"score":0,"text":"Chennai"},{"isAnswerCorrect":false,"score":0,"text":"Kolkata"},{"isAnswerCorrect":true,"score":1,"text":"New Delhi"}]}]]>
+        </data>
+        <config>
+          <![CDATA[{"metadata":{"title":"question tile","language":"English","qlevel":"Easy","gradeLevel":["Kindergarten"],"concepts":[{"id":"do_112300246933831680110","name":"abcd"}]},"max_time":1,"max_score":1,"partial_scoring":true}]]>
+        </config>
+      </org.ekstep.question>
+      
+      <org.ekstep.question id="68696ba7-4436-4370-a215-66992207e507" type="unit" pluginId="org.ekstep.questionunit.ftb" pluginVer="1.0" templateId="ftbtemplate">
+       <data>
+         <![CDATA[{"question":{"text":"ftb question"},"answers":[{"text":"a"}]}]]>
+       </data>
+       <config>
+         <![CDATA[{"metadata":{"title":"ftb question title","language":"English","qlevel":"Easy","gradeLevel":["Grade 1"],"concepts":[{"id":"C24","name":"Time"}]},"max_time":1,"max_score":1,"partial_scoring":true}]]>
+       </config>
+      </org.ekstep.question>
+    
+      <org.ekstep.question id="68696ba7-4436-4370-a215-66992207e509" type="unit" pluginId="org.ekstep.questionunit.ftb" pluginVer="1.0" templateId="ftbtemplate">
+       <data>
+         <![CDATA[{"question":{"text":"ftb question"},"answers":[{"text":"c"}]}]]>
+       </data>
+       <config>
+         <![CDATA[{"metadata":{"title":"ftb question title","language":"English","qlevel":"Easy","gradeLevel":["Grade 1"],"concepts":[{"id":"C24","name":"Time"}]},"max_time":1,"max_score":1,"partial_scoring":true}]]>
+       </config>
+      </org.ekstep.question>
+    </org.ekstep.questionset>
+  </stage>
+  <stage x="0" y="0" w="100" h="100" id="astage">
+        <param name="previous" value="70a9d047-a2ee-4270-8b22-47a5a34900cc" />
+        <shape type="rect" x="-10" y="75" w="120" h="65" fill="green" opacity="0.8" stroke="white" stroke-width="5" />
+    </stage>
+  <manifest>
+  </manifest>
+  <plugin-manifest>
+    <plugin id="org.ekstep.questionunit.mcq" ver="1.0" type="plugin" depends=""/>
+    <plugin id="org.ekstep.questionunit.ftb" ver="1.0" type="plugin" depends=""/>
+    <plugin id="org.ekstep.questionset" ver="1.0" type="plugin" depends=""/>
+  </plugin-manifest>
+</theme>

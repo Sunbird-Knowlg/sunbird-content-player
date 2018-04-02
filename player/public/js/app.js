@@ -66,7 +66,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                     if ("undefined" != typeof localPreview && "local" == localPreview)
                         return;
                     if (!isbrowserpreview) {
-                        localStorageGC.setItem("contentExtras", GlobalContext.game.contentExtras);
                         org.ekstep.contentrenderer.device();
                     }
                 }).catch(function(res) {

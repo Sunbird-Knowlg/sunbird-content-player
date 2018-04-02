@@ -1,4 +1,4 @@
-var packageName = "org.ekstep.quiz.app", version = AppConfig.version, packageNameDelhi = "org.ekstep.delhi.curriculum",
+var packageName = "org.ekstep.contentplayer", version = AppConfig.version, packageNameDelhi = "org.ekstep.delhi.curriculum",
     geniePackageName = "org.ekstep.genieservices", currentUser = {}, userList = [],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
     stack = new Array(), collectionChildrenIds = new Array(), collectionPath = new Array(), collectionPathMap = {},
@@ -90,8 +90,6 @@ function exitApp(stageId) {
     } catch (err) {
         console.error('End telemetry error:', err.message);
     }
-    localStorageGC.clear();
-    localStorageGC = {};
     org.ekstep.service.renderer.endGenieCanvas();
 }
 
@@ -154,63 +152,7 @@ function objectAssign() {
     }
 }
 
-/*TODO: Need to Remove the LocalStorage Logic
-Now HTML Contetnts are opening inside iframe */
-var localStorageGC = {
-    name: 'canvasLS',
-    isHtmlContent: false,
-    isCollection: false,
-    content: {},
-    collection: {},
-    telemetryService: {},
-    setItem: function(param, data) {
-        if (data) {
-            this[param] = _.isString(data) ? data : JSON.stringify(data);
-        }
-    },
-    getItem: function(param) {
-        if (param) {
-            var paramVal = this[param];
-            paramVal = _.isEmpty(paramVal) ? {} : JSON.parse(paramVal);
-            return paramVal;
-        } else {
-            return;
-        }
-    },
-    removeItem: function(param) {
-        this[param] = {};
-        //localStorage.removeItem(canvasLS.param);
-    },
-    save: function() {
-        // Storing into localStorage
-        var thisData = {};
-        thisData.content = this.content;
-        thisData.collection = this.collection;
-        thisData.telemetryService = this.telemetryService;
-        thisData.isCollection = this.isCollection;
-        thisData.isHtmlContent = this.isHtmlContent;
-
-        localStorage.setItem(this.name, JSON.stringify(thisData));
-    },
-    clear: function() {
-        localStorage.removeItem(this.name);
-    },
-    update: function() {
-        //gettting from localstorage and updating all its values
-        var lsData = localStorage.getItem(this.name);
-        if (lsData) {
-            lsData = JSON.parse(lsData);
-            var lsKeys = _.keys(lsData);
-            var instance = this;
-            _.each(lsKeys, function(key) {
-                instance.setItem(key, lsData[key]);
-            })
-        }
-    }
-}
-
 function startTelemetry(id, ver, cb) {
-    localStorageGC.removeItem("telemetryService");
     var correlationData = [];
     if (!_.isEmpty(GlobalContext.game.contentExtras) && !_.isUndefined(GlobalContext.game.contentExtras)) {
         GlobalContext.game.contentExtras = ("string" == typeof(GlobalContext.game.contentExtras)) ? JSON.parse(GlobalContext.game.contentExtras) : GlobalContext.game.contentExtras;
@@ -230,8 +172,6 @@ function startTelemetry(id, ver, cb) {
             var tsObj = _.clone(TelemetryService);
             tsObj._start = JSON.stringify(tsObj.instance._start);
             tsObj._end = JSON.stringify(tsObj.instance._end);
-            localStorageGC.setItem("telemetryService", tsObj);
-            localStorageGC.save();
         }
         if (!_.isUndefined(cb) && response == true) {
             cb();

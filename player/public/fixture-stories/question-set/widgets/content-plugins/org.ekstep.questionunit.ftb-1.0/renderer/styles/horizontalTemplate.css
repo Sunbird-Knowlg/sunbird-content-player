@@ -1,0 +1,41 @@
+#preview-ftb-horizontal {
+    position: relative;
+    margin: auto;
+    text-align: center;
+    line-height: 2em;
+    width: 80%;
+    margin-top: 2%;
+    display: grid;
+     height: 90vh;
+}
+
+.ftbanswer-container input {
+    border-bottom: 3px dotted;
+    width: -webkit-fill-available;
+}
+
+.ftbanswer-container {
+    width: 90%;
+    left: 5%;
+    height: 70%;
+    text-align: center;
+    position: relative;
+}
+
+.qc-ftb-layout {
+    margin:auto;
+}
+
+.qc-ftb-question-text {
+    font-size: 100%;
+    text-align: initial;
+}
+
+input#ftbanswerInput {
+    text-align: center;
+    font-size: 100%;
+        width: 100%;
+}
+.qcalgin{
+    margin: 33px 0px 0px 2px;
+}

@@ -1,0 +1,88 @@
+<div id="preview-mcq-horizontal" ng-controller="MCQRendererController" ng-init="init()" ng-show="showTemplate">
+    <link rel="stylesheet" type="text/css" href="{{cssPath}}">
+    <div class="qc-mcqlayout" ng-if="questionObj.questionConfig.layout == 'Horizontal' || (questionObj.questionConfig.layout == undefined)">
+        <div class="popup" ng-show="bigImage" ng-if="imageUrl.length>0">
+            <div class="popup-overlay" ng-click="hideImagePopup()"></div>
+            <div class="popup-full-body">
+                <div class="font-lato assess-popup assess-goodjob-popup">
+                    <img class="qc-question-fullimage" src="{{imageUrl}}" />
+                    <div ng-click="hideImagePopup();" class="qc-popup-close-button">X</div>
+                </div>
+            </div>
+        </div>
+        <header ng-class="{'qc-long-text-header-image': questionObj.question.image.length > 0,'qc-long-text-header':questionObj.question.image.length==0}">
+            <span ng-if="questionObj.question.image.length > 0"><img class="qc-question-zoomin" ng-click="showImageModel(questionObj.question.image)" ng-src={{imageZoomPath}}></span>
+            <span ng-if="questionObj.question.image.length>0"><img class="qc-question-image" ng-click="showImageModel()" ng src={{questionObj.question.image}}></span>
+            <span class="qc-question-text">{{questionObj.question.text}}</span>
+            <span ng-if="questionObj.question.audio.length > 0">
+            <audio id="qc-question-audio" ng-class="{'qc-question-audio':questionObj.question.image,'qc-question-audio-with-text':questionObj.question.audio && questionObj.question.image.length==0}" controls controlsList="nodownload">
+
+               <source src={{trustSrcurl(questionObj.question.audio)}} type="audio/mpeg" ng-init="loadAudio();">
+            </audio>
+         </span>
+        </header>
+        <div class="qc-option-container">
+            <div class="qc-option-value" ng-repeat="val in questionObj.options" ng-class="{qsselectedopt: $index+1 == selectedIndex}" ng-click="selectedvalue(val, $index+1);">
+                <div class="qc-option-text" id="{{val.id}}">
+                    <span ng-if="val.image.length > 0"><img class="qc-option-zoomin" ng-click="showImageModel(val.image)" ng-src={{imageZoomPath}}></span>
+                    <span ng-if="val.audio.length > 0">
+                  <audio id="qc-option-audio" src={{trustSrcurl(val.audio)}} ng-class="{'qc-text-with-audio': val.image.length==0,'qc-option-audio-with-image':val.image.length > 0}" controls controlsList="nodownload" ng-init="loadAudio();"> 
+                  </audio>
+               </span>
+                    <span ng-if="val.image.length>0"><img class="qc-option-image" ng src={{val.image}}></span>
+                    <span ng-class="{'qc-option-txt': val.audio.length > 0 ,'qc-option-txt-with-image':val.audio.length==0}">
+               {{val.text}}<span>
+               
+            </div>
+            <div class="qc-option-checkbox">
+               <input type="radio" name="radio" value="pass" class="qc-option-input-checkbox" ng-checked="$index+1 == selectedIndex" ng-click="telemetry($event);" id="option">
+            </div>
+         </div>
+      </div>
+    </div>
+
+    <div class="qc-mcqlayout" ng-if="questionObj.questionConfig.layout == 'Grid'">
+        <header class="qc-long-text-header">
+            <div class="qc-question-text">{{questionObj.question.text}}</div>
+        </header>
+        <div class="qc-grid-option-container">
+            <div class="qc-grid-option-outer-value" ng-repeat="val in questionObj.topOptions"  ng-click="selectedvalue(val.option, val.key+1);">
+                <div class="qc-grid-option-value" ng-class="{'grid-selected-option': val.key+1 == selectedIndex}">
+                    <div class="qc-grid-option-text-outer" id="{{val.key+1}}">
+                        <div class="qc-grid-option-text">{{val.option.text}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="qc-grid-option-container" ng-if="questionObj.bottomOptions.length != 0">
+          <div class="qc-grid-option-outer-value" ng-repeat="val in questionObj.bottomOptions"  ng-click="selectedvalue(val.option, val.key+1);">
+              <div class="qc-grid-option-value" ng-class="{'grid-selected-option': val.key+1 == selectedIndex}">
+                  <div class="qc-grid-option-text-outer" id="{{val.key+1}}">
+                      <div class="qc-grid-option-text">{{val.option.text}}</div>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+
+     <div class="qc-mcqlayout" ng-if="questionObj.questionConfig.layout == 'Vertical'">
+        <header class="qc-long-text-header">
+            <div class="qc-question-text">{{questionObj.question.text}}</div>
+        </header>
+         <div id="qc-vertical-option-containar">
+            <table id="qc-vertical-option-table">
+                <tr class="qc-vertical-option-outer">
+                    <td ng-repeat="val in questionObj.options" class="qc-vertical-option-td" ng-click="selectedvalue(val, $index+1);">
+                        <div class="qc-vertical-option-value" ng-class="{qsverticalselectedopt : $index+1 == selectedIndex}">
+                            <div id="{{val.id}}" class="qc-option-vertical-text">{{val.text}}</div>
+                            <div class="qc-option-vertical-checkbox">
+                                 <input type="radio" name="radio" value="pass" class="qc-option-input-checkbox" ng-checked="$index+1 == selectedIndex" ng-click="telemetry($event);" id="option">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</div>

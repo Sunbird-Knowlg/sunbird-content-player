@@ -68,9 +68,7 @@
          EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
          var pdfMainContainer = document.createElement("div");
          pdfMainContainer.id = "pdf-main-container";
-         pdfMainContainer.style.overflowX = "scroll";
-         pdfMainContainer.style.overflowY = "scroll";
-
+         
          var pdfLoader = document.createElement("div");
          pdfLoader.id = "pdf-loader";
          pdfLoader.textContent = "Loading document ...";
@@ -163,9 +161,8 @@
 
          canvasContainer.appendChild(pdfMainContainer);
 
-         document.getElementById(this.manifest.id).style.overflowX = "scroll";
-         document.getElementById(this.manifest.id).style.overflowY = "scroll";
-
+         document.getElementById(this.manifest.id).style.overflow = "auto";
+         
          context.PDF_DOC = 0;
          context.CURRENT_PAGE = 0;
          context.TOTAL_PAGES = 0;
@@ -237,6 +234,7 @@
              // Hide the pdf loader and show pdf container in HTML
              $("#pdf-loader").hide();
              $("#pdf-contents").show();
+             context.CANVAS.width = $('#pdf-contents').width();
              $("#pdf-total-pages").text(context.TOTAL_PAGES);
 
              // Show the first page

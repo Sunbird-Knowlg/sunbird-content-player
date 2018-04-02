@@ -69,9 +69,9 @@ GlobalContext = {
                         origin: "Genie",
                         contentId: "org.ekstep.num.addition.by.grouping",
                         appInfo: {
-                            code: "org.ekstep.quiz.app",
+                            code: "org.ekstep.contentplayer",
                             mimeType: "application/vnd.android.package-archive",
-                            identifier: "org.ekstep.quiz.app"
+                            identifier: "org.ekstep.contentplayer"
                         }
                     };
                     window.globalConfig = mergeJSON(AppConfig, GlobalContext.config);

@@ -2,6 +2,7 @@ AppConfig = {
     version: "BUILD_NUMBER",
     processing_timeout: 10, // in minutes
     host: "",
+    canvasVersion: "genie-canvas-version",
     recorder: "AUDIO_RECORDER",
     flavor: "DEPLOYMENT",
     heartBeatTime:180000,
@@ -10,7 +11,7 @@ AppConfig = {
     devicePluginspath: "/widgets/content-plugins",
     corePluginspath: 'coreplugins',
     apislug: '/action',
-    telemetryEventsConfigFields: ['env', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner', 'tags', 'rollup'],
+    telemetryEventsConfigFields: ['env', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner', 'tags', 'rollup', 'mode'],
     configFields: ['origin', 'contentId', 'appInfo', 'languageInfo', 'contentExtras', 'appQualifier', 'mode', 'env', 'sid', 'uid', 'did', 'channel', 'etags', 'tags', 'rollup', 'pdata', 'cdata', 'contentLaunchers', 'overlay', 'splash', 'showEndPage', 'app', 'dims', 'partner'],
     mimetypes: [
         "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/epub", "video/mp4", "application/pdf","video/x-youtube","video/webm"
@@ -76,6 +77,10 @@ AppConfig = {
             type:'plugin'
         },{
             id:"org.ekstep.toaster",
+            ver:1.0,
+            type:'plugin'
+        },{
+            id:"org.ekstep.alert",
             ver:1.0,
             type:'plugin'
         }

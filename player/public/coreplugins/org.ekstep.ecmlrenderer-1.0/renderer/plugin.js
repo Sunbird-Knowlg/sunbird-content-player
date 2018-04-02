@@ -140,7 +140,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             }, null, 'xml')
             .fail(function(err) {
                 EkstepRendererAPI.logErrorEvent(err, { 'severity': 'fatal', 'type': 'content', 'action': 'play' });
-                alert("Invalid ECML please correct the Ecml : ", err);
+                EventBus.dispatch("renderer:alert:show", undefined, {
+                  title: "Error",
+                  text: "Invalid ECML please correct the Ecml",
+                  type: "error",
+                  data: err
+                });
             });
     },
     /**

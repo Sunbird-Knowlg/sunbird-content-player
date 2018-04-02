@@ -1,0 +1,59 @@
+  .headBred {
+    margin-top: 1px;
+    margin-left: 10px;
+  }
+
+  input:focus {
+    border-width: 0px 0px 1px 0px !important solid blue;
+    outline: 0;
+    border-color: blue;
+  }
+
+  .textbox {
+    width: 50%;
+    border-width: 0px 0px 1px 0px !important;
+    height: 33px;
+    color: inherit;
+  }
+
+  .cretateQuestion {
+    padding-left: 7%;
+  }
+
+  .questionbox:focus {
+    box-shadow: 1px 1px 1px #9c60f7;
+  }
+
+  /*input[type="radio"] {
+    -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
+    -ms-appearance: checkbox;
+  }*/
+
+  .preview-window .ngdialog-content {
+    background: none !important;
+  }
+
+  .ngdialog.ngdialog-theme-plain .ngdialog-content {
+    background: none !important;
+  }
+
+  .main {
+    position: relative;
+    height: auto;
+  }
+
+  #previewContentIframeWrapper {
+    position: relative;
+    /*width: 900px;*/
+    height: calc( 400px / (16/9));
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0;
+  }
+
+  #previewContentIframe {
+    height: 100%;
+    width: 100%;
+    border: none;
+  }
