@@ -20,8 +20,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this._super();
         var data = _.clone(content);
         this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
+        var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         if (window.cordova || !isbrowserpreview) {
-            var prefix_url = data.baseDir || '';
+            var prefix_url = globalConfigObj.basepath || '';
             path = prefix_url + "/" + data.artifactUrl;
         } else {
             path = data.artifactUrl;

@@ -115,6 +115,7 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
             var path = (item.path.charAt(item.path.length - 1) == '/') ? item.path.substring(0, item.path.length - 1) : item.path;
             path = (window.cordova) ? "file://" + path : path;
             data.baseDir = path;
+            globalConfig.basepath = path;
             if ("undefined" != typeof cordova)
                 data.appIcon = (data.appIcon) ? path + "/" + data.appIcon : path + "/logo.png";
             else

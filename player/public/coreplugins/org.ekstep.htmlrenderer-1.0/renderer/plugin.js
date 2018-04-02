@@ -18,7 +18,8 @@
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
         var launchData = {"env": envHTML, "envpath": 'dev'};
-        var prefix_url = isbrowserpreview ? this.getAsseturl(data) : data.baseDir;
+        var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
+        var prefix_url = isbrowserpreview ? this.getAsseturl(data) : globalConfigObj.basepath;
         var path = prefix_url + '/index.html?contentId=' + data.identifier + '&launchData=' + JSON.stringify(launchData) + "&appInfo=" + JSON.stringify(GlobalContext.config.appInfo);
         if (isbrowserpreview) {
             path += "&flavor=" + "t=" + getTime();
@@ -53,8 +54,8 @@
     },
     
     getAsseturl: function(content) {
-        var globalConfig = EkstepRendererAPI.getGlobalConfig();
-        var path = globalConfig.host + globalConfig.s3ContentHost + this.s3_folders[content.mimeType];
+        var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
+        var path = globalConfigObj.host + globalConfigObj.s3ContentHost + this.s3_folders[content.mimeType];
         path += content.status == "Live" ? content.identifier + "-latest" : content.identifier + "-snapshot";
         return path;
     },

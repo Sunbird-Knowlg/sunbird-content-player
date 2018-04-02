@@ -39,6 +39,7 @@ org.ekstep.contentrenderer.loadDefaultPlugins = function(cb){
  * @param  {obj} appInfo [metadata]
  */
 org.ekstep.contentrenderer.startGame = function(appInfo) {
+    globalConfig.basepath = globalConfig.basepath ? globalConfig.basepath : appInfo.baseDir;
     org.ekstep.contentrenderer.loadDefaultPlugins(function() {
         org.ekstep.contentrenderer.loadExternalPlugins(function() {
             var globalConfig = EkstepRendererAPI.getGlobalConfig();
@@ -130,8 +131,6 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
     if (_.isUndefined(configuration.context.contentId)) {
         configuration.context.contentId = getUrlParameter("id");
     }
-    _.extend(configuration, configuration.context);  // TelemetryEvent is using globalConfig.context.sid/did
-    _.extend(configuration, configuration.config);
     setGlobalConfig(configuration);
     GlobalContext.game = {id: configuration.contentId || GlobalContext.game.id, ver: configuration.contentVer || '1.0'};
     GlobalContext.user = {uid: configuration.uid};
@@ -241,6 +240,9 @@ org.ekstep.contentrenderer.setContentMetadata = function(contentData, cb) {
     content["metadata"] = data;
     GlobalContext.currentContentId = data.identifier;
     GlobalContext.currentContentMimeType = data.mimeType;
+    // Since metadata is optional now, calling api to get metadata & setting on GlobalContext.game variable
+    GlobalContext.game.id = data.identifier;
+    GlobalContext.game.ver = data.pkgVersion || "1";
     if (_.isUndefined(data.localData)) {
         data.localData = _.clone(data.contentData);
     }
@@ -305,10 +307,17 @@ org.ekstep.contentrenderer.web = function(id) {
 };
 
 org.ekstep.contentrenderer.device = function() {
+    var globalconfig = EkstepRendererAPI.getGlobalConfig();
     if (isMobile) {
-        org.ekstep.contentrenderer.getContentMetadata(GlobalContext.game.id, function() {
-            org.ekstep.contentrenderer.startGame(content.metadata);
-        });
+        if (globalconfig.metadata) {
+            org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
+                org.ekstep.contentrenderer.startGame(content.metadata);
+            });
+        } else {
+            org.ekstep.contentrenderer.getContentMetadata(globalconfig.contentId, function () {
+                org.ekstep.contentrenderer.startGame(content.metadata);
+            });
+        }
     } else {
         org.ekstep.contentrenderer.startGame(GlobalContext.config.appInfo);
     }

@@ -44,6 +44,7 @@ var splashScreen = {
     },
 
     show: function() {
+        EkstepRendererAPI.dispatchEvent('renderer:launcher:load', undefined, window.content);
         jQuery(splashScreen.elementId).show();
         splashScreen.showProgressBar();
 

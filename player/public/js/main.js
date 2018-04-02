@@ -276,8 +276,14 @@ function logContentProgress(value) {
     }
 }
 
-function setGlobalConfig(context) {
-    GlobalContext.config  = mergeJSON(AppConfig, context);
+function setGlobalConfig(configuration) {
+    _.extend(configuration, configuration.context);  // TelemetryEvent is using globalConfig.context.sid/did
+    _.extend(configuration, configuration.config);
+    (typeof configuration.metadata == "string") ? configuration.metadata = JSON.parse(configuration.metadata) : "";
+    if (!_.isUndefined(configuration.context.pdata) && !_.isUndefined(configuration.context.pdata.pid)) {
+        configuration.context.pdata.pid = configuration.context.pdata.pid + '.' + AppConfig.pdata.pid;
+    }
+    GlobalContext.config = mergeJSON(AppConfig, configuration);
     window.globalConfig = GlobalContext.config;
 
     if (_.isUndefined(window.cordova)) {
