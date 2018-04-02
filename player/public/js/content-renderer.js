@@ -122,18 +122,19 @@ org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) 
 };
 
 org.ekstep.contentrenderer.initializePreview = function(configuration) {
-    if (_.isUndefined(configuration.context)) {
-        configuration.context = {};
+    var configurationObj = _.clone(configuration);
+    if (_.isUndefined(configurationObj.context)) {
+        configurationObj.context = {};
     }
-    if (_.isUndefined(configuration.config)) {
-        configuration.config = {};
+    if (_.isUndefined(configurationObj.config)) {
+        configurationObj.config = {};
     }
-    if (_.isUndefined(configuration.context.contentId)) {
-        configuration.context.contentId = getUrlParameter("id");
+    if (_.isUndefined(configurationObj.context.contentId)) {
+        configurationObj.context.contentId = getUrlParameter("id");
     }
-    setGlobalConfig(configuration);
-    GlobalContext.game = {id: configuration.contentId || GlobalContext.game.id, ver: configuration.contentVer || '1.0'};
-    GlobalContext.user = {uid: configuration.uid};
+    setGlobalConfig(configurationObj);
+    GlobalContext.game = { id: configurationObj.contentId || GlobalContext.game.id, ver: configurationObj.contentVer || '1.0'};
+    GlobalContext.user = { uid: configurationObj.uid};
 
     addWindowUnloadEvent();
     /**
