@@ -24,13 +24,14 @@ GlobalContext = {
                 Promise.all(promises).then(function(result) {
                     setGlobalConfig(configuration.playerConfig);
                     var globalConfig = EkstepRendererAPI.getGlobalConfig();
-                    org.ekstep.service.renderer.initializeSdk(globalConfig.appQualifier || 'org.ekstep.genieservices');
+                    org.ekstep.service.renderer.initializeSdk(globalConfig.appQualifier);
                     if (globalConfig.metadata) {
                         GlobalContext.game.id = globalConfig.metadata.identifier;
                         GlobalContext.game.ver = globalConfig.metadata.pkgVersion || "1";
                     }
-                    for (var i = 0; i < AppConfig.telemetryEventsConfigFields.length; i++) {
-                        GlobalContext._params[AppConfig.telemetryEventsConfigFields[i]] = globalConfig.config[AppConfig.telemetryEventsConfigFields[i]];
+                    var telemetryEventFields = AppConfig.telemetryEventsConfigFields;
+                    for (var i = 0; i < telemetryEventFields.length; i++) {
+                        GlobalContext._params[telemetryEventFields[i]] = globalConfig.config[telemetryEventFields[i]];
                     }
                     resolve(globalConfig);
                 })
@@ -56,7 +57,7 @@ GlobalContext = {
             if (config.origin == 'Genie') {
                 return org.ekstep.service.renderer.getCurrentUser();
             } else {
-                showToaster('error', 'Invalid Origin');
+                showToaster('error', 'Invalid Origin ' + config.origin);
                 reject('INVALID_ORIGIN');
             }
         }).then(function(result) {

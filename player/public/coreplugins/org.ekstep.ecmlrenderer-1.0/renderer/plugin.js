@@ -38,7 +38,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      */
     start: function(evt, renderObj) {
         this._super();
-        var globalConfig = EkstepRendererAPI.getGlobalConfig();
+        var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         var instance = this;
         renderObj = content;
         if (_.isUndefined(renderObj)) return;
@@ -60,9 +60,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 }
                 instance.load(dataObj);
             } else {
-                instance.initByJSON(globalConfig.basepath, 'gameCanvas');
+                instance.initByJSON(globalConfigObj.basepath, 'gameCanvas');
                 if (typeof sensibol != "undefined") {
-                    sensibol.recorder.init(globalConfig.basepath + "/lesson.metadata")
+                    sensibol.recorder.init(globalConfigObj.basepath + "/lesson.metadata")
                         .then(function(res) {
                             console.info("Init lesson successful.", res);
                         })
@@ -154,7 +154,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      * @memberof ecmlRenderer
      */
     load: function(dataObj) {
-        var globalConfig = EkstepRendererAPI.getGlobalConfig();
+        var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         var instance = this,
             data = dataObj.body;
 
@@ -178,9 +178,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.setRenderer(instance);
         Renderer.theme = new ThemePlugin(content);
         instance.resizeGame(true);
-        Renderer.theme.baseDir = globalConfig.basepath || dataObj.path;
+        Renderer.theme.baseDir = globalConfigObj.basepath || dataObj.path;
         var manifest = content.manifest ? content.manifest : AssetManager.getManifest(content);
-        var pluginsPath = isbrowserpreview ? globalConfig.previewPluginspath : globalConfig.devicePluginspath;
+        var pluginsPath = isbrowserpreview ? globalConfigObj.previewPluginspath : globalConfigObj.devicePluginspath;
         EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined, {path: dataObj.path + pluginsPath, position:0});
         var resource = instance.handleRelativePath(instance.getResource(manifest), dataObj.path + '/widgets/');
         var pluginManifest = content["plugin-manifest"];
@@ -205,13 +205,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     handleRelativePath: function(manifestMedia, pluginPath) {
-        var globalConfig = EkstepRendererAPI.getGlobalConfig();
+        var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         _.each(manifestMedia, function(p) {
             if (p.src.substring(0, 4) != 'http') {
                 if (!isbrowserpreview) {
                     p.src = pluginPath + p.src;
                 } else {
-                    p.src = globalConfig.host + p.src;
+                    p.src = globalConfigObj.host + p.src;
                 }
             }
         });

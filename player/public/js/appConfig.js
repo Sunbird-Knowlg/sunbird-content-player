@@ -1,5 +1,6 @@
 AppConfig = {
     version: "BUILD_NUMBER",
+    appQualifier: "org.ekstep.genieservices",
     processing_timeout: 10, // in minutes
     host: "",
     canvasVersion: "genie-canvas-version",
