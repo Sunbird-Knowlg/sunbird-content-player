@@ -98,7 +98,9 @@ module.exports = function(config) {
             '../js-libs/renderer/test/spec/SetPluginSpec.js',
             '../js-libs/renderer/test/spec/ShapePluginSpec.js',
             '../js-libs/renderer/test/spec/StagePluginSpec.js',
+            '../js-libs/renderer/test/spec/SummaryPluginSpec.js',
             '../js-libs/renderer/test/spec/TextPluginSpec.js',
+            '../js-libs/renderer/test/spec/TweenPluginSpec.js',
             '../js-libs/renderer/test/spec/TimerManagerSpec.js'
         ],
         exclude: ['coverage'],
