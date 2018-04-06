@@ -20,10 +20,10 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
     };
 
     $scope.callStartTelemetry = function(content, cb) {
-        var identifier = (content && content.identifier) ? content.identifier : null;
-        var pkgVersion = !_.isUndefined(content.pkgVersion) ? content.pkgVersion.toString() : null;
-        var version = (content && pkgVersion) ? pkgVersion : "1";
-        startTelemetry(identifier, version, cb);
+        var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
+        var identifier = globalConfigObj.contentId;
+        var pkgVersion = (!_.isUndefined(globalConfigObj.metadata) && !_.isUndefined(globalConfigObj.metadata.pkgVersion)) ? globalConfigObj.metadata.pkgVersion.toString() : null;
+        startTelemetry(identifier, pkgVersion, cb);
     };
     $scope.renderContent = function() {
         if ($rootScope.content) {
