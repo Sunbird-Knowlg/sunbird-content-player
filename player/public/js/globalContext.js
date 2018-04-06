@@ -10,8 +10,8 @@ GlobalContext = {
     filter: undefined,
     init: function(gid, ver) {
         return new Promise(function(resolve, reject) {
-            GlobalContext.game.id = gid;
-            GlobalContext.game.ver = ver;
+            GlobalContext.game.id = !GlobalContext.game.id ? gid : GlobalContext.game.id;
+            GlobalContext.game.ver = !GlobalContext.game.ver ? ver : GlobalContext.game.ver;
             GlobalContext._setGlobalContext(resolve, reject);
         });
     },
