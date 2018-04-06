@@ -64,11 +64,11 @@ var InputPlugin = HTMLPlugin.extend({
         this._theme.inputs.push(data.id);
         this._stage._inputs.push(this);
         var instance=this;
-        $('input').on('change', function(){
+        $('#' + data.id).on('change', function(){
             instance.updateState(true);
             // update the state of the input when user gives input to the textbox
         });
-        $("input").on("click", function (event) {
+        $('#' + data.id).on("click", function (event) {
             var telemetryEdata = {
                 type: event.type,
                 x: event.pageX,
