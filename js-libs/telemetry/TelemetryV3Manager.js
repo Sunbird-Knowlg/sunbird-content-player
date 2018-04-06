@@ -193,9 +193,21 @@ TelemetryV3Manager = Class.extend({
             "ver": "1.0",
             "type": "Plugin"
         };
+        var optionTag;
+        switch (data.optionTag) {
+            case 'MCQ':
+                optionTag = "CHOOSE"
+                break;
+            case 'FTB':
+                optionTag = "INPUT"
+                break;
+            case 'MTF':
+                optionTag = "MATCH"
+                break;
+        }
         var responseData = {
             target: target,
-            type: data.optionTag == "MCQ" ? "CHOOSE" : "MATCH",
+            type: optionTag,
             values: _.isEmpty(data.res) ? [] : data.res
         }
         EkTelemetry.response(responseData);

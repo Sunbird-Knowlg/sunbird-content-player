@@ -6,6 +6,7 @@ var InputPlugin = HTMLPlugin.extend({
         // get the model data from the _current state object
         // and update the input/ftb model
         var controller=this._stage._stageController;
+        var identifier = controller.getModelValue("identifier");
         if (!_.isUndefined(controller)) {
            plugindata = this.getState(controller._model[controller._index].type);
            if (!_.isUndefined(plugindata)) {
@@ -66,6 +67,16 @@ var InputPlugin = HTMLPlugin.extend({
         $('input').on('change', function(){
             instance.updateState(true);
             // update the state of the input when user gives input to the textbox
+        });
+        $("input").on("click", function (event) {
+            var telemetryEdata = {
+                type: event.type,
+                x: event.pageX,
+                y: event.pageY,
+                itemId: identifier,
+                optionTag: "FTB"
+            }
+            EventManager.processAppTelemetry({}, 'TOUCH', instance, telemetryEdata);
         });
         instance.updateState(false);
         // update the state of input when user land to the page

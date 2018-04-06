@@ -99,7 +99,7 @@ var ItemController = Controller.extend({
                 mmc: instance.getMMC(item, result),
                 qindex: item.qindex,
                 mc: _.without(_.pluck(concepts, 'identifier'), undefined),
-                qtitle: item.title,
+                qtitle: item.title || item.name,
                 qdesc: item.description ? item.description : ""
             };
             EkstepRendererAPI.dispatchEvent("renderer:assesment:eval", this.assessStartEvent);
