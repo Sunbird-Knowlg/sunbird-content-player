@@ -897,7 +897,7 @@ window.EkstepRendererAPI = {
                     }
                 }
                 if (errorStack) {
-                    data.err = errorStack.message || errorStack;
+                    data.err = errorStack.status || errorStack;
                     data.stacktrace = errorStack.stack || errorStack.responseText;
                 }
                 EkstepRendererAPI.getTelemetryService().error(data);
