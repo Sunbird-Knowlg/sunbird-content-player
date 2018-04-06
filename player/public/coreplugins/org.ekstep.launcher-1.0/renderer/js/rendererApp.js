@@ -21,7 +21,7 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
 
     $scope.callStartTelemetry = function(content, cb) {
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
-        var identifier = globalConfigObj.identifier;
+        var identifier = globalConfigObj.contentId;
         var pkgVersion = (!_.isUndefined(globalConfigObj.metadata) && !_.isUndefined(globalConfigObj.metadata.pkgVersion)) ? globalConfigObj.metadata.pkgVersion.toString() : null;
         startTelemetry(identifier, pkgVersion, cb);
     };
