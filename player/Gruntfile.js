@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        version: '3.1.',
+        version: '3.1.1.',
         buildNumber: process.env.BUILD_NUMBER,
         mkdir: {
             all: {
