@@ -897,13 +897,13 @@ window.EkstepRendererAPI = {
                     }
                 }
                 if (errorStack) {
-                    data.err = errorStack.message || errorStack;
-                    data.data = errorStack.stack;
+                    data.err = errorStack.status || errorStack;
+                    data.stacktrace = errorStack.stack || errorStack.responseText;
                 }
                 EkstepRendererAPI.getTelemetryService().error(data);
             }
         } catch (e) {
-            console.warn('OE_ERROR event fails to log',e);
+            console.warn('ERROR event fails to log',e);
         }
 
     },

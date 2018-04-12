@@ -35,7 +35,7 @@ TelemetryV3Manager = Class.extend({
         this._start.push({id: id , ver : ver});
         var config = this.getConfig();
         var edata = {
-          "type":  data.type || "player",
+          "type":  data.type || "content",
           "mode": data.mode || config.mode,
           "pageid": data.pageid || data.stageid
         }
@@ -55,7 +55,7 @@ TelemetryV3Manager = Class.extend({
         if (this.telemetryStartActive()) {
             this._start.pop();
             var edata = {
-              "type" : data.type || "player",
+              "type" : data.type || "content",
               "mode" : this._config['env'],
               "pageid" : data.pageid || data.stageid,
               "summary" : data.summary || [{"progress": data.progress || 50}]
@@ -193,9 +193,21 @@ TelemetryV3Manager = Class.extend({
             "ver": "1.0",
             "type": "Plugin"
         };
+        var optionTag;
+        switch (data.optionTag) {
+            case 'MCQ':
+                optionTag = "CHOOSE"
+                break;
+            case 'FTB':
+                optionTag = "INPUT"
+                break;
+            case 'MTF':
+                optionTag = "MATCH"
+                break;
+        }
         var responseData = {
             target: target,
-            type: data.optionTag == "MCQ" ? "CHOOSE" : "MATCH",
+            type: optionTag,
             values: _.isEmpty(data.res) ? [] : data.res
         }
         EkTelemetry.response(responseData);
