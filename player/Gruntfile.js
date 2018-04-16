@@ -1,4 +1,6 @@
 module.exports = function(grunt) {
+    var target = grunt.option('target') || 'ekstep';
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         version: '3.1.1.',
@@ -63,7 +65,6 @@ module.exports = function(grunt) {
             },
             script: {
                 src: [
-                    'public/js/appConfig.js',
                     'public/js/globalContext.js',
                     'public/js/appMessages.js',
                     'public/js/splashScreen.js',
@@ -85,6 +86,14 @@ module.exports = function(grunt) {
                     'public/dispatcher/web-dispatcher.js',
                     'public/dispatcher/device-dispatcher.js'
                 ],
+                dest: 'www/scripts/renderer.script.js'
+            },
+            ekstep: {
+                src: ['public/js/appConfig.js', 'www/scripts/renderer.script.js'],
+                dest: 'www/scripts/renderer.script.min.js'
+            },
+            sunbird: {
+                src: ['public/js/appConfig-Sunbird.js', 'www/scripts/renderer.script.js'],
                 dest: 'www/scripts/renderer.script.min.js'
             },
             telemetry: {
@@ -366,6 +375,7 @@ module.exports = function(grunt) {
             before: ["www", "platforms/android/assets/www", "platforms/android/build"],
             after: ["www/TelemetrySpecRunner.html", "www/WorksheetSpecRunner.html", "www/webview.html", "www/preview.html"],
             samples: ["www/stories", "www/fixture-stories", "www/worksheets"],
+            script: ["www/scripts/renderer.script.js"],
             minjs: ['public/js/*.min.js'],
             minhtml: ['www/index_min.html'],
             preview: {
@@ -458,7 +468,6 @@ module.exports = function(grunt) {
                         'cordova-plugin-whitelist@1.2.1',
                         'cordova-plugin-crosswalk-webview@2.3.0',
                         'cordova-plugin-file-transfer@1.6.1',
-                        'com.lampa.startapp@0.1.4',
                         'cordova-plugin-inappbrowser@1.6.1',
                         'cordova-plugin-market@1.1'
                     ]
@@ -469,7 +478,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        '../cordova-plugins/cordova-plugin-genieservices/'
+                        'D:/New backup/projects/EkStep/Genie-Canvas/cordova-plugins/cordova-plugin-genieservices/'
                     ]
                 }
             },
@@ -517,7 +526,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        '../cordova-plugins/cordova-plugin-sensibol/'
+                        'D:/New backup/projects/EkStep/Genie-Canvas/cordova-plugins/cordova-plugin-sensibol/'
                     ]
                 }
             },
@@ -786,13 +795,16 @@ module.exports = function(grunt) {
     grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared', 'replace:xwalk_library']);
 
     //Build web prview
-    grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetryLib', 'concat:telemetry', "uglify:telemetrymin", 'concat:script', 'clean:deletefiles', 'injector:prview', 'replace:build_Number']);
+    grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetryLib', 'concat:telemetry', "uglify:telemetrymin", 'concat:script', 'concat:' + target, 'clean:script', 'clean:deletefiles', 'injector:prview', 'replace:build_Number']);
     grunt.registerTask('build-preview', ['clean', 'build-telemetry-lib', 'preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'replace:previewAppConfigCanvasVersion', 'clean:preview']);
 
     //Build AAR
     grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);
     grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned','replace:gradleCanvasVersion', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('build-app', ['init-setup', 'build-aarshared-xwalk']);
+    grunt.registerTask('build-app', ['init-setup', 'build-aar']);
+    //Added on 16/04/18. Simple command to build aar file. There is no xwalk build required. This changes made to share build for Sunbird.
+    grunt.registerTask('build-aar', ['build-aarshared-xwalk']);
+   
 
     grunt.registerTask('build-jsdoc', ['jsdoc', 'compress:main']);
 
