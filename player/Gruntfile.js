@@ -803,7 +803,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned','replace:gradleCanvasVersion', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
     grunt.registerTask('build-app', ['init-setup', 'build-aar']);
     //Added on 16/04/18. Simple command to build aar file. There is no xwalk build required. This changes made to share build for Sunbird.
-    grunt.registerTask('build-aar', ['build-aarshared-xwalk']);
+    grunt.registerTask('build-aar', ['mkdir:all', 'build-aarshared-xwalk']);
    
 
     grunt.registerTask('build-jsdoc', ['jsdoc', 'compress:main']);
