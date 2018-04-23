@@ -478,7 +478,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        'D:/New backup/projects/EkStep/Genie-Canvas/cordova-plugins/cordova-plugin-genieservices/'
+                        '../cordova-plugins/cordova-plugin-genieservices/'
                     ]
                 }
             },
@@ -526,7 +526,7 @@ module.exports = function(grunt) {
                     command: 'plugin',
                     action: 'add',
                     plugins: [
-                        'D:/New backup/projects/EkStep/Genie-Canvas/cordova-plugins/cordova-plugin-sensibol/'
+                        '../cordova-plugins/cordova-plugin-sensibol/'
                     ]
                 }
             },
