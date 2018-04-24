@@ -66,6 +66,7 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
             });
     };
     $scope.playContent = function(content) {
+        globalConfig.basepath = content.baseDir;
         EkstepRendererAPI.dispatchEvent("renderer:splash:show");
         $rootScope.content = content;
         if (content.mimeType == COLLECTION_MIMETYPE) {

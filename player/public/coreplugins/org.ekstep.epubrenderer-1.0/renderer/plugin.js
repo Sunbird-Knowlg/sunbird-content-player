@@ -23,10 +23,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var instance = this;
         data = content;
         var epubPath = undefined;
+        var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         this.initContentProgress();
         if (window.cordova) {
           // For device index.epub will be extracted/unziped to folder. So point to the folder
-          epubPath = data.baseDir + "/";
+            epubPath = globalConfigObj.basepath + "/";
         } else {
           // For local and portal, read index.epub file
           epubPath = isbrowserpreview ? data.artifactUrl : data.baseDir + "/" + data.artifactUrl;
@@ -46,11 +47,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         jQuery('#gameCanvas').remove();
         jQuery('#gameArea').css({left: '10%', top: '0px', width: "80%", height: "90%", margin: "5% 0 0 0"});
         var epubOptions = {
-            width: '100%',
+            width: document.getElementById('gameArea').offsetWidth,
             height: document.getElementById('gameArea').offsetHeight,
             spreads: false
         };
         this.book = ePub(epubPath, epubOptions);
+        this.book.setStyle("padding-right", "1px");
+        this.book.setStyle("padding-left", "1px");
         this.book.forceSingle(true);
         this.book.renderTo('gameArea');
         this.addEventHandlers();

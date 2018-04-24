@@ -41,9 +41,11 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             }, 100);
             $ionicPlatform.on("pause", function() {
                 Renderer && Renderer.pause();
+                TelemetryService.interrupt("BACKGROUND", getCurrentStageId);
             });
             $ionicPlatform.on("resume", function() {
                 Renderer && Renderer.resume();
+                TelemetryService.interrupt("RESUME", getCurrentStageId);
             });
         };
         $timeout(function() {
