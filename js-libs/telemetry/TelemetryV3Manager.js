@@ -11,7 +11,7 @@ TelemetryV3Manager = Class.extend({
         TelemetryServiceV3.exitApp();
     },
     getConfig: function(){
-      var configData = TelemetryService._otherData;
+      var configData = TelemetryService._otherData || {};
 
       //Adding Details values
       configData['cdata'] = TelemetryService._correlationData;
