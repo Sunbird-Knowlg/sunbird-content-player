@@ -1,4 +1,4 @@
-var text_data = {
+var textSampleData = {
             "align": "center",
             "color": "black",
             "font": "Verdana",
@@ -28,15 +28,15 @@ describe('Text plugin data test cases', function() {
         expect(this.plugin.refresh.calls.count()).toEqual(1);
     });
     it('initPlugin', function() {
-        this.plugin.initPlugin(text_data);
+        this.plugin.initPlugin(textSampleData);
         expect(this.plugin.initPlugin).toHaveBeenCalled();
         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
     });
 
     it('initPlugin with model', function() {
-        text_data.model = data.stage1;
-        delete text_data.__text;
-        this.plugin.initPlugin(text_data);
+        textSampleData.model = 'item.title';
+        delete textSampleData.__text;
+        this.plugin.initPlugin(textSampleData);
         expect(this.plugin.initPlugin).toHaveBeenCalled();
         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
     });

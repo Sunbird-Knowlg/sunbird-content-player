@@ -1,5 +1,5 @@
 
-var data = {
+var sampleData = {
     model:"item",
     shadow: "red",
     blur: 30,
@@ -20,22 +20,9 @@ var data = {
 
 describe('MCQ Plugin test cases', function() {
 
-    beforeEach(function(done) {
-        var parent = {
-            _data : {x:0, y:0, w:50, h:50},
-            dimensions: function() {
-                return {
-                    x: 0,
-                    y: 0,
-                    w: 500,
-                    h: 500
-                }
-            },
-            addChild: function() {}
-        }
-
-        this.plugin = PluginManager.invoke('mcq', data, parent, Renderer.theme._currentScene, Renderer.theme);
-        this.option = PluginManager.invoke('option', data, parent, Renderer.theme._currentScene, Renderer.theme);
+    beforeAll(function(done) {
+        this.plugin = PluginManager.invoke('mcq', sampleData, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
+        this.option = PluginManager.invoke('option', sampleData, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'isMultiSelect').and.callThrough();
         spyOn(this.plugin, 'selectOption').and.callThrough();

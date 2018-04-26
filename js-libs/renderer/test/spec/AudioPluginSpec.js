@@ -1,16 +1,5 @@
 describe('Audio Plugin test cases', function() {
     beforeEach(function(done) {
-        var parent = {
-            dimensions: function() {
-                return {
-                    x: 0,
-                    y: 0,
-                    w: 500,
-                    h: 500
-                }
-            }
-
-        }
         var data = {
             "event": {
                 "action": {
@@ -21,7 +10,7 @@ describe('Audio Plugin test cases', function() {
             }
 
         }
-        this.plugin = PluginManager.invoke('audio', data, parent, Renderer.theme._self, Renderer.theme);
+        this.plugin = PluginManager.invoke('audio', data, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
         spyOn(this.plugin, 'play').and.callThrough()
         spyOn(this.plugin, 'stop').and.callThrough();
         spyOn(this.plugin, 'togglePlay').and.callThrough();

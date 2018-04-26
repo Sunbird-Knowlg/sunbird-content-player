@@ -1,6 +1,6 @@
 describe('Summary Plugin test cases', function () {
    var data;
-   beforeAll(function (done) {
+   beforeEach(function (done) {
       this.plugin = SummaryPlugin.prototype;
       this.plugin._theme = Renderer.theme;
       this.plugin._stage = Renderer.theme._currentScene;
@@ -21,7 +21,7 @@ describe('Summary Plugin test cases', function () {
    });
 
    it('Summary renderTextSummary function', function (done) {
-      this.plugin.renderTextSummary("text", undefined);
+      this.plugin.renderTextSummary("text", data);
       expect(this.plugin.renderTextSummary).toHaveBeenCalled();
       expect(this.plugin.renderTextSummary.calls.count()).toEqual(1);
       setTimeout(function () {

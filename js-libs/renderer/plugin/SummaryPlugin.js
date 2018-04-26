@@ -22,7 +22,7 @@ var SummaryPlugin = Plugin.extend({
     },
     renderTextSummary: function(text, data) {
         data.$t = text;
-        PluginManager.invoke('text', data, this._parent, this._stage, this._theme);
+        PluginManager.invoke('text', data, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
     }
 });
 PluginManager.registerPlugin('summary', SummaryPlugin);

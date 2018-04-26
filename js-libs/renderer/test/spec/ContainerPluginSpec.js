@@ -24,24 +24,12 @@ var container_data = {
     ]
 
 };
-var parent = {
-    dimensions: function() {
-        return {
-            x: 0,
-            y: 0,
-            w: 500,
-            h: 500
-        }
-    },
-    addChild: function() {}
-}
-describe('Container Plugin test cases', function() {
 
-    beforeEach(function(done) {
-        this.plugin = PluginManager.invoke('g', container_data, parent);
+describe('Container Plugin test cases', function() {
+    beforeEach(function() {
+        this.plugin = PluginManager.invoke('g', container_data, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'refresh').and.callThrough();
-        done();
     });
 
     it('Container plugin initPlugin', function() {

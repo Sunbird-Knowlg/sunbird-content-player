@@ -7,7 +7,7 @@ function setUpRenderer() {
     var div = document.createElement('div');
     div.innerHTML = canvas;
     body.appendChild(div.children[0]);
-    setGlobalConfig({});
+    setGlobalConfig({"context": {}, 'config': {}});
     window.isMobile = window.cordova;
     window.content = JSON.parse('{"baseDir":"base/public/test/testContent", "identifier": "org.ekstep.item.sample", "mimeType": "application/vnd.ekstep.html-archive", "name": "Content Preview ", "author": "EkStep", "localData": {"name": "Content Preview ", "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...", "identifier": "org.ekstep.item.sample" }, "pkgVersion": 1, "isAvailable": true, "path": ""}');
     org.ekstep.service.init();

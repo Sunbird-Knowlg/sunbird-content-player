@@ -8,32 +8,53 @@ describe('Animation Plugin test cases', function() {
             setTimeout(function() {
                 AnimationPlugin = AnimationManager.pluginMap.tween.prototype;
                 spyOn(AnimationPlugin, 'init').and.callThrough();
-                spyOn(AnimationPlugin, 'initPlugin').and.callThrough();
-                spyOn(AnimationPlugin, 'animate').and.callThrough();
                 spyOn(AnimationManager, 'registerPluginObject').and.callThrough();
                 done();
             }, 1000)
         });
     });
 
-    xit('Animation Plugin initPlugin test', function() {
-        AnimationPlugin.initPlugin();
-        expect(AnimationPlugin.initPlugin).toHaveBeenCalled();
-        expect(AnimationPlugin.initPlugin.calls.count()).toEqual(0);
+    it('Animation Plugin init called', function(done) {
+        setTimeout(function() {
+            AnimationPlugin.init(themeData, org.ekstep.pluginframework.pluginManager.pluginInstances.do_2122479583895552001118_tween);
+            expect(AnimationPlugin._id).toEqual('do_10096317Walking');
+            expect(AnimationPlugin.init).toHaveBeenCalled();
+            expect(AnimationPlugin._data).toBeDefined();
+            expect(AnimationPlugin._id).toBeDefined();
+            expect(AnimationPlugin._id).toBeDefined();
+            expect(AnimationManager.registerPluginObject).toHaveBeenCalled();
+            done();
+        }, 10);
     });
 
-    xit('Animation Plugin animate test', function() {
-        AnimationPlugin.animate();
-        expect(AnimationPlugin.animate).toHaveBeenCalled();
-        expect(AnimationPlugin.animate.calls.count()).toEqual(1);
+    it('Animation Plugin init called when data id is not available', function (done) {
+        setTimeout(function () {
+            delete themeData.id;
+            AnimationPlugin.init(themeData, org.ekstep.pluginframework.pluginManager.pluginInstances.do_2122479583895552001118_tween);
+            expect(AnimationPlugin.init).toHaveBeenCalled();
+            expect(AnimationPlugin._data).toBeDefined();
+            expect(AnimationPlugin._id).toBeDefined();
+            expect(AnimationPlugin._id).toBeDefined();
+            expect(AnimationManager.registerPluginObject).toHaveBeenCalled();
+            done();
+        }, 10);
     });
 
-    it('Animation Plugin init called', function() {
-        AnimationPlugin.init(themeData, org.ekstep.pluginframework.pluginManager.pluginInstances.do_2122479583895552001118_tween);
-        expect(AnimationPlugin.init).toHaveBeenCalled();
-        expect(AnimationPlugin._data).toBeDefined();
-        expect(AnimationPlugin._id).toBeDefined();
-        expect(AnimationPlugin._id).toBeDefined();
-        expect(AnimationManager.registerPluginObject).toHaveBeenCalled();
+    it('Animation Plugin initPlugin test', function() {
+        setTimeout(function () {
+            spyOn(AnimationPlugin, 'initPlugin').and.callThrough();
+            AnimationPlugin.initPlugin(themeData, org.ekstep.pluginframework.pluginManager.pluginInstances.do_2122479583895552001118_tween);
+            expect(AnimationPlugin.initPlugin).toHaveBeenCalled();
+            expect(AnimationPlugin.initPlugin.calls.count()).toEqual(1);
+        }, 10)
+    });
+
+    it('Animation Plugin animate test', function() {
+        setTimeout(function () {
+            spyOn(AnimationPlugin, 'animate').and.callThrough();
+            AnimationPlugin.animate(org.ekstep.pluginframework.pluginManager.pluginInstances.do_2122479583895552001118_tween, function() {});
+            expect(AnimationPlugin.animate).toHaveBeenCalled();
+            expect(AnimationPlugin.animate.calls.count()).toEqual(1);
+        }, 10)
     });
 });

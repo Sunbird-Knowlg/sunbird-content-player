@@ -100,8 +100,10 @@ module.exports = function(config) {
             '../js-libs/renderer/test/spec/StagePluginSpec.js',
             '../js-libs/renderer/test/spec/SummaryPluginSpec.js',
             '../js-libs/renderer/test/spec/TextPluginSpec.js',
-            '../js-libs/renderer/test/spec/TweenPluginSpec.js',
-            '../js-libs/renderer/test/spec/TimerManagerSpec.js'
+            '../js-libs/renderer/test/spec/TimerManagerSpec.js',
+            '../js-libs/renderer/test/spec/ThemePluginSpec.js',
+            '../js-libs/renderer/test/spec/TweenPluginSpec.js'
+            // '../js-libs/renderer/test/spec/VideoPluginSpec.js'
         ],
         exclude: ['coverage'],
         preprocessors: {
@@ -113,7 +115,6 @@ module.exports = function(config) {
             '../js-libs/renderer/generator/*.js': ['coverage']
         },
         reporters: ['mocha', 'verbose', 'progress', 'coverage'],
-        client: { captureConsole: false },    
          // reporter options
         mochaReporter: {
             colors: {
@@ -163,10 +164,11 @@ module.exports = function(config) {
         },
         port: 8080,
         colors: true,
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_DISABLE,
         autoWatch: true,
         browsers: ['PhantomJS'],
         singleRun: false,
-        browserNoActivityTimeout: 60000
+        browserNoActivityTimeout: 60000,
+        client: { captureConsole: false }
     })
 }

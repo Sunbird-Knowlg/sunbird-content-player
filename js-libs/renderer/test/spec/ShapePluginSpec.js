@@ -1,15 +1,4 @@
 var shapedata;
-var parent = {
-    dimensions: function() {
-        return {
-            x: 0,
-            y: 0,
-            w: 500,
-            h: 500
-        }
-    },
-    addChild: function() {}
-};
 describe('Shape Plugin test cases', function() {
     beforeEach(function(done) {
         shapedata = {
@@ -27,17 +16,16 @@ describe('Shape Plugin test cases', function() {
                 "z-index": 0,
                 "id": "textBg",
                 "config": {
-                        ".__cdata": [{"x":100,"y":59.8},{"x":74,"y":68},{"x":72.9,"y":100},{"x":50.8,"y":80},{"x":29.6,"y":100},{"x":27.1,"y":69.4},{"x":0,"y":62.5},{"x":20.6,"y":44.1},{"x":10,"y":19.9},{"x":36.2,"y":23.3},{"x":48.6,"y":0},{"x":62.3,"y":22.6},{"x":88.2,"y":17.7},{"x":79,"y":42.5}]
+                        "__cdata": '[{"x":100,"y":59.8},{"x":74,"y":68},{"x":72.9,"y":100},{"x":50.8,"y":80},{"x":29.6,"y":100},{"x":27.1,"y":69.4},{"x":0,"y":62.5},{"x":20.6,"y":44.1},{"x":10,"y":19.9},{"x":36.2,"y":23.3},{"x":48.6,"y":0},{"x":62.3,"y":22.6},{"x":88.2,"y":17.7},{"x":79,"y":42.5}]'
                 }
         };
-        this.plugin = PluginManager.invoke('shape', shapedata, parent);
+        this.plugin = PluginManager.invoke('shape', shapedata, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
         spyOn(this.plugin, 'initPlugin').and.callThrough();
+        spyOn(this.plugin, 'getPoints').and.callThrough();
         done();
     });
     it('initPlugin', function() {
-        this.plugin.initPlugin({
-            primary: true
-        });
+        this.plugin.initPlugin({primary: true});
         expect(this.plugin.initPlugin).toHaveBeenCalled();
         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
     });
@@ -68,10 +56,17 @@ describe('Shape Plugin test cases', function() {
     it('Opacity', function() {
         expect(this.plugin._self.opacity).not.toBeNull();
     });
+    it('shape getPoints', function () {
+        shapedata.type = "test";
+        this.plugin.getPoints(shapedata);
+        expect(this.plugin.getPoints).toHaveBeenCalled();
+        expect(this.plugin.getPoints.calls.count()).toEqual(1);
+    });
     describe('Hit Area', function() {
         beforeEach(function(done) {
             shapedata.hitArea = true;
-            this.plugin = PluginManager.invoke('shape', shapedata, parent);
+            shapedata.type = "ellipse";
+            this.plugin = PluginManager.invoke('shape', shapedata, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
             spyOn(this.plugin, 'initPlugin').and.callThrough();
             done();
         });
@@ -79,106 +74,78 @@ describe('Shape Plugin test cases', function() {
             expect(true).not.toBeNull(this.plugin._self.hitArea);
         });
     });
-   /* describe('Shape Plugin - Circle', function() {
+   describe('Shape Plugin - Circle', function() {
         beforeEach(function(done) {
             shapedata.type = "circle";
-            this.plugin = PluginManager.invoke('shape', shapedata, parent);
+            shapedata.hitArea = true;
+            this.plugin = PluginManager.invoke('shape', shapedata, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
             spyOn(this.plugin, 'initPlugin').and.callThrough();
             done();
         });
-        describe('Hit Area', function() {
-            beforeEach(function(done) {
-                shapedata.hitArea = true;
-                this.plugin = PluginManager.invoke('shape', shapedata, parent);
-                spyOn(this.plugin, 'initPlugin').and.callThrough();
-                done();
-            });
-            it('hitArea', function() {
-                expect(true).not.toBeNull(this.plugin._self.hitArea);
-                //expect(true).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
-            });
+        it('hitArea', function() {
+            expect(true).not.toBeNull(this.plugin._self.hitArea);
+            expect(true).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
         });
-    });*/
-   /* describe('Shape Plugin - Rectangle', function() {
+    });
+    describe('Shape Plugin - Rectangle', function() {
         beforeEach(function(done) {
             shapedata.type = "rect";
-            this.plugin = PluginManager.invoke('shape', shapedata, parent);
+            shapedata.hitArea = true;
+            this.plugin = PluginManager.invoke('shape', shapedata, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
             spyOn(this.plugin, 'initPlugin').and.callThrough();
             done();
         });
         describe('Hit Area', function() {
-            beforeEach(function(done) {
-                shapedata.hitArea = true;
-                this.plugin = PluginManager.invoke('shape', shapedata, parent);
-                spyOn(this.plugin, 'initPlugin').and.callThrough();
-                done();
-            });
             it('hitArea', function() {
                 expect(true).not.toBeNull(this.plugin._self.hitArea);
-                //expect(true).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
+                expect(true).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
             });
         });
-    });*/
-   /* describe('Shape Plugin - Ellipse', function() {
+    });
+    describe('Shape Plugin - Ellipse', function() {
         beforeEach(function(done) {
             shapedata.type = "ellipse";
-            this.plugin = PluginManager.invoke('shape', shapedata, parent);
+            shapedata.hitArea = true;
+            this.plugin = PluginManager.invoke('shape', shapedata, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
             spyOn(this.plugin, 'initPlugin').and.callThrough();
             done();
         });
         describe('Hit Area', function() {
-            beforeEach(function(done) {
-                shapedata.hitArea = true;
-                this.plugin = PluginManager.invoke('shape', shapedata, parent);
-                spyOn(this.plugin, 'initPlugin').and.callThrough();
-                done();
-            });
             it('hitArea', function() {
                 expect(true).not.toBeNull(this.plugin._self.hitArea);
+                expect(true).toEqual(this.plugin._self.hitArea instanceof createjs.Shape);
             });
         });
-    });*/
+    });
 
-    /*describe('Shape Plugin - Polygon', function() {
+    describe('Shape Plugin - Polygon', function() {
         beforeEach(function(done) {
             shapedata.type = "Polygon";
-            Renderer.theme = {
-                _currentStage: ''
-            };
-            this.plugin = PluginManager.invoke('shape', shapedata, parent);
+            shapedata.hitArea = true;
+            shapedata.corners = 5;
+            this.plugin = PluginManager.invoke('shape', shapedata, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
             spyOn(this.plugin, 'initPlugin').and.callThrough();
             done();
         });
         describe('Hit Area', function() {
-            beforeEach(function() {
-                shapedata.hitArea = true;
-                shapedata.corners = 5;
-                Renderer.theme = {
-                    _currentStage: ''
-                };
-                this.plugin = PluginManager.invoke('shape', shapedata, parent);
-                spyOn(this.plugin, 'initPlugin').and.callThrough();
-                // done();
-            });
             it('hitArea corners', function() {
                 expect(true).not.toBeNull(this.plugin._self.hitArea);
             });
             it('hitArea sides', function() {
                 shapedata.sides = 6;
-                this.plugin = PluginManager.invoke('shape', shapedata, parent);
+                this.plugin = PluginManager.invoke('shape', shapedata, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
                 expect(true).not.toBeNull(this.plugin._self.hitArea);
             });
-
             it('hitArea try', function() {
                 shapedata.sides = false;
                 shapedata.corners = false;
                 shapedata.shape = "2s0";
-                this.plugin = PluginManager.invoke('shape', shapedata, parent);
+                shapedata.config.__cdata = [{"x":100,"y":59.8},{"x":74,"y":68},{"x":72.9,"y":100},{"x":50.8,"y":80},{"x":29.6,"y":100},{"x":27.1,"y":69.4},{"x":0,"y":62.5},{"x":20.6,"y":44.1},{"x":10,"y":19.9},{"x":36.2,"y":23.3},{"x":48.6,"y":0},{"x":62.3,"y":22.6},{"x":88.2,"y":17.7},{"x":79,"y":42.5}];
+                this.plugin = PluginManager.invoke('shape', shapedata, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
                 expect(true).not.toBeNull(this.plugin._self.hitArea);
             });
-
         });
-    });*/
+    });
 
 });
 
