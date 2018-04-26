@@ -9,7 +9,8 @@ document.body.addEventListener("logError", telemetryError, false);
 
 function postMessageHandler(event) {
     console.info("PostMessage is invoked")
-    if (event.data) {
+    // TODO: Should remove hardcoaded mimetype
+    if (event.data && (content.mimeType !== undefined && content.mimeType !== 'video/x-youtube')) {
         org.ekstep.contentrenderer.initializePreview(event.data)
     }
 }
