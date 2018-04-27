@@ -209,7 +209,7 @@ function showToaster(toastType, message, customOptions) {
 
 function addWindowUnloadEvent() {
     // TODO: Use Iframe unload event
-    window.onbeforeunload = function(e) {
+    window.onunload = function(e) { //onbeforeunload is not dispatched when navigating to other page
         e = e || window.event;
         var y = e.pageY || e.clientY;
         !y && EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.dispatchEvent("renderer:content:close");
