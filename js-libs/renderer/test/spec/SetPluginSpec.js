@@ -1,6 +1,6 @@
 describe('set Plugin test cases', function() {
     var setPluginData = { 
-        param: "explore", scope: "content", value:"true", model: "item.title"
+        param: "explore", scope: "content", value:"true", model: "item.title", item: {tens: '1'}
     }
      beforeEach(function(done) {
         this.plugin = PluginManager.invoke('set', setPluginData, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
@@ -63,10 +63,24 @@ describe('set Plugin test cases', function() {
         expect(this.plugin.replaceExpressions.calls.count()).toEqual(1);
     });
 
-    it('Set plugin setParam', function() {
-        this.plugin.setParam({param:"Param_name", value:"12", incr:12, scope:"stage", max:10});
-        expect(this.plugin.setParam).toHaveBeenCalled();
-        expect(this.plugin.setParam.calls.count()).toEqual(1);
+    describe('Set plugin setParam function', function() {
+        it('When scope is app', function () {
+            this.plugin.setParam("Param_name", "12", 12, "app", 10 );
+            expect(this.plugin.setParam).toHaveBeenCalled();
+            expect(this.plugin.setParam.calls.count()).toEqual(1);
+        });
+
+        it('When scope is stage', function() {
+            this.plugin.setParam("Param_name", "12", 12, "stage", 10);
+            expect(this.plugin.setParam).toHaveBeenCalled();
+            expect(this.plugin.setParam.calls.count()).toEqual(1);
+        });
+
+        it('When scope is parent', function () {
+            this.plugin.setParam("Param_name", "12", 12, "parent", 10 );
+            expect(this.plugin.setParam).toHaveBeenCalled();
+            expect(this.plugin.setParam.calls.count()).toEqual(1);
+        });
     });
 
     it('Get plugin getParam', function() {
@@ -76,26 +90,62 @@ describe('set Plugin test cases', function() {
     });
 
     describe('SetPlugin setParamValue', function() {
-        it('When param-index is previous', function() {
-            var action = { param: "Param_name", value: "12", incr: 12, scope: "stage", max: 10 }
-            action['param-index'] = 'previous';
-            action['param-max'] = 'previous';
-            this.plugin.setParamValue(action);
-            expect(this.plugin.setParamValue).toHaveBeenCalled();
-            expect(this.plugin.setParamValue.calls.count()).toEqual(1);
-        });
+        describe('when param-index is previous', function() {
+            it('When model is not an array', function() {
+                var action = { param: "Param_name", value: "12", incr: 12, scope: "stage", max: 10 }
+                action['param-index'] = 'previous';
+                action['param-max'] = 'previous';
+                this.plugin.setParamValue(action);
+                expect(this.plugin.setParamValue).toHaveBeenCalled();
+                expect(this.plugin.setParamValue.calls.count()).toEqual(1);
+            });
 
-        it('When param-index is not previous', function () {
-            var action = { param: "Param_name", value: "12", incr: 12, scope: "stage", max: 10 }
-            action['param-index'] = '1';
-            this.plugin.setParamValue(action);
-            expect(this.plugin.setParamValue).toHaveBeenCalled();
-            expect(this.plugin.setParamValue.calls.count()).toEqual(1);
-        });
+            it('When model is an array', function () {
+                var action = { param: "Param_name", value: "12", incr: 12, scope: "stage", max: 10 }
+                action['param-index'] = 'previous';
+                action['param-max'] = 'previous';
+                this.plugin._model = ['1', '2'];
+                this.plugin.setParamValue(action);
+                expect(this.plugin.setParamValue).toHaveBeenCalled();
+                expect(this.plugin.setParamValue.calls.count()).toEqual(1);
+            });
 
-        it('When param-key is available & model is object', function () {
+            it('When model is an array & index is > 0', function () {
+                var action = { param: "Param_name", value: "12", incr: 12, scope: "stage", max: 10 }
+                action['param-index'] = 'previous';
+                action['param-max'] = '0';
+                this.plugin._model = ['1', '2'];
+                this.plugin._index = 1;
+                this.plugin.setParamValue(action);
+                expect(this.plugin.setParamValue).toHaveBeenCalled();
+                expect(this.plugin.setParamValue.calls.count()).toEqual(1);
+            });
+        })
+
+        describe('When param-index is not previous', function() {
+            it('When index is < model length', function () {
+                var action = { param: "Param_name", value: "12", incr: 12, scope: "stage", max: 10 }
+                action['param-index'] = '1';
+                this.plugin._model = ['1', '2'];
+                this.plugin.setParamValue(action);
+                expect(this.plugin.setParamValue).toHaveBeenCalled();
+                expect(this.plugin.setParamValue.calls.count()).toEqual(1);
+            });
+
+            it('When index is > model length', function () {
+                var action = { param: "Param_name", value: "12", incr: 12, scope: "stage", max: 10 }
+                action['param-index'] = '1';
+                this.plugin._model = ['1', '2'];
+                this.plugin._index = 3;
+                this.plugin.setParamValue(action);
+                expect(this.plugin.setParamValue).toHaveBeenCalled();
+                expect(this.plugin.setParamValue.calls.count()).toEqual(1);
+            });
+        })
+
+        it('When param-key is available', function () {
             var action = { param: "Param_name", value: "12", incr: 12, scope: "stage", max: 10 }
-            action['param-key'] = '1';
+            action['param-key'] = 'test';
             this.plugin.setParamValue(action);
             expect(this.plugin.setParamValue).toHaveBeenCalled();
             expect(this.plugin.setParamValue.calls.count()).toEqual(1);
@@ -109,20 +159,22 @@ describe('set Plugin test cases', function() {
             expect(this.plugin.setParamValue.calls.count()).toEqual(1);
         });
 
-        it('When ev-value is available & model is array', function () {
-            var action = { param: "Param_name", value: "12", incr: 12, scope: "stage", max: 10 }
-            action['ev-value'] = '1';
-            this.plugin.setParamValue(action);
-            expect(this.plugin.setParamValue).toHaveBeenCalled();
-            expect(this.plugin.setParamValue.calls.count()).toEqual(1);
-        });
+        describe('When ev-value is available', function() {
+            xit('When model is array', function () {
+                var action = { param: "Param_name", value: "12", incr: 12, scope: "stage", max: 10 }
+                action['ev-value'] = '${item.tens}';
+                this.plugin.setParamValue(action);
+                expect(this.plugin.setParamValue).toHaveBeenCalled();
+                expect(this.plugin.setParamValue.calls.count()).toEqual(1);
+            });
 
-        it('When ev-value is available & model is not array', function () {
-            var action = { param: "Param_name", value: "12", incr: 12, scope: "stage", max: 10 }
-            action['ev-value'] = '1';
-            this.plugin.setParamValue(action);
-            expect(this.plugin.setParamValue).toHaveBeenCalled();
-            expect(this.plugin.setParamValue.calls.count()).toEqual(1);
+            it('When ev-value is available & model is not array', function () {
+                var action = { param: "Param_name", value: "12", incr: 12, scope: "stage", max: 10 }
+                action['ev-value'] = '1';
+                this.plugin.setParamValue(action);
+                expect(this.plugin.setParamValue).toHaveBeenCalled();
+                expect(this.plugin.setParamValue.calls.count()).toEqual(1);
+            });
         });
 
         it('When ev-model is available & model is array', function () {

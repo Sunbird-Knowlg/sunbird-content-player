@@ -23,7 +23,7 @@ describe('Tween Plugin test cases', function () {
    });
 
    it('Tween animate function', function (done) {
-      this.plugin.animate(org.ekstep.pluginframework.pluginManager.pluginInstances.do_2122479583895552001118_tween, function() {});
+      this.plugin.animate(org.ekstep.pluginframework.pluginManager.pluginInstances.do_2122479583895552001118_tween);
       expect(this.plugin.animate).toHaveBeenCalled();
       expect(this.plugin.animate.calls.count()).toEqual(1);
       setTimeout(function() {

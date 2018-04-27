@@ -12,7 +12,8 @@ var textSampleData = {
             "z-index": -1,
             "pluginType": "text",
             "shadow": "gray",
-            "__text": "This a text plugin"
+            "__text": "This a text plugin",
+            "outline": 1
     };
 describe('Text plugin data test cases', function() {
     beforeEach(function(done) {
@@ -22,11 +23,6 @@ describe('Text plugin data test cases', function() {
         done();
     });
 
-    it('Refresh', function() {
-        this.plugin.refresh();
-        expect(this.plugin.refresh).toHaveBeenCalled();
-        expect(this.plugin.refresh.calls.count()).toEqual(1);
-    });
     it('initPlugin', function() {
         this.plugin.initPlugin(textSampleData);
         expect(this.plugin.initPlugin).toHaveBeenCalled();
@@ -42,7 +38,7 @@ describe('Text plugin data test cases', function() {
     });
 
     it("outline test", function() {
-        expect(this.plugin._self.outline).toBe(0);
+        expect(this.plugin._self.outline).toBe(textSampleData.outline);
         expect(this.plugin._self.outline).not.toBe(null);
 
     });
@@ -74,5 +70,33 @@ describe('Text plugin data test cases', function() {
             expect(this.plugin._self.lineHeight).toBe(0);
         }
         expect(this.plugin._self.lineHeight).not.toBe(null);
+    });
+
+    describe('Refresh text', function () {
+        it('Refresh when __text is available', function () {
+            this.plugin.refresh();
+            expect(this.plugin.refresh).toHaveBeenCalled();
+            expect(this.plugin.refresh.calls.count()).toEqual(1);
+        });
+
+        it('Refresh when model is available', function () {
+            delete this.plugin._data.$t;
+            delete this.plugin._data.__text;
+            delete this.plugin._data.param;
+            this.plugin._data.model = "item.title"
+            this.plugin.refresh();
+            expect(this.plugin.refresh).toHaveBeenCalled();
+            expect(this.plugin.refresh.calls.count()).toEqual(1);
+        });
+
+        it('Refresh when param is available', function () {
+            delete this.plugin._data.$t;
+            delete this.plugin._data.__text;
+            delete this.plugin._data.model;
+            this.plugin._data.param = "item.title"
+            this.plugin.refresh();
+            expect(this.plugin.refresh).toHaveBeenCalled();
+            expect(this.plugin.refresh.calls.count()).toEqual(1);
+        });
     });
 });

@@ -28,9 +28,9 @@ var optionParent = {
     selectOption: function() {}
 }
 describe('Option Plugin test cases: parent type is mcq', function() {
-
     beforeEach(function(done) {
         this.plugin = PluginManager.invoke('option', optionData, optionParent, { _stageController: { "_model": [{ "options": [{ "selected": false }] }], _index: 0 }, _templateVars: {}, addChild: function () { return; }, getModelValue: function () { return { "value": { "type": "text", "asset": "carpenter_img" }}}}, Renderer.theme);
+        this.plugin._parent = this.plugin._parent ? this.plugin._parent : Renderer.theme._currentScene._self;
         spyOn(this.plugin, 'initPlugin').and.callThrough();
         spyOn(this.plugin, 'renderMCQOption').and.callThrough();
         spyOn(this.plugin, 'renderImage').and.callThrough();
@@ -61,7 +61,8 @@ describe('Option Plugin test cases: parent type is mcq', function() {
         spyOn(OverlayManager, 'handleSubmit').and.callThrough();
         spyOn(EventManager, 'processAppTelemetry').and.callThrough();
         expect(OverlayManager.handleSubmit).toBeDefined();
-        this.plugin.renderMCQOption({primary : true})
+        this.plugin._modelValue.selected = true;
+        this.plugin.renderMCQOption();
         this.plugin._self.dispatchEvent('click');
         expect(this.plugin.renderMCQOption).toHaveBeenCalled();
         expect(OverlayManager.handleSubmit).toHaveBeenCalled();
@@ -192,10 +193,18 @@ describe('Option Plugin test cases: parent type is mcq', function() {
         });
 
         describe('Option plugin renderMTFOption function pressup event', function() {
-            it("Option plugin renderMTFOption function pressup event", function () {
+            it("Option plugin renderMTFOption function pressup event & force equals false", function () {
                 var asset = org.ekstep.pluginframework.pluginManager.pluginInstances['do_2122479583895552001118'];
-                asset._self.x = 200;
-                asset._self.y = 300;
+                asset._self.x = 400;
+                asset._self.y = 700;
+                asset._self.dispatchEvent('pressup');
+            });
+
+            it("Option plugin renderMTFOption function pressup event & force equals true", function () {
+                var asset = org.ekstep.pluginframework.pluginManager.pluginInstances['do_2122479583895552001118'];
+                asset._self.x = 400;
+                asset._self.y = 700;
+                asset._parent._force = true;
                 asset._self.dispatchEvent('pressup');
             });
         });

@@ -1,4 +1,3 @@
-
 var sampleData = {
     model:"item",
     shadow: "red",
@@ -19,8 +18,7 @@ var sampleData = {
 };
 
 describe('MCQ Plugin test cases', function() {
-
-    beforeAll(function(done) {
+    beforeEach(function(done) {
         this.plugin = PluginManager.invoke('mcq', sampleData, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
         this.option = PluginManager.invoke('option', sampleData, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
         spyOn(this.plugin, 'initPlugin').and.callThrough();
@@ -31,7 +29,9 @@ describe('MCQ Plugin test cases', function() {
     });
 
     it('MCQ plugin initPlugin', function() {
-        this.plugin.initPlugin({ primary: true });
+        this.plugin._stage._currentState.mcq = this.plugin._stage._currentState.mtf;
+        sampleData.multi_select = null;
+        this.plugin.initPlugin(sampleData);
         expect(this.plugin.initPlugin).toHaveBeenCalled();
         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
     });

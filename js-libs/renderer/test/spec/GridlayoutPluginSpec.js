@@ -32,24 +32,10 @@ var gridLayoutData = {
             "y": "10"
         }
 };
-var parent;
+
 describe('Gridlayout Plugin test cases', function() {
-
     beforeEach(function(done) {            
-        parent = {
-            dimensions: function() {
-                return {
-                    x: 0,
-                    y: 0,
-                    w: 500,
-                    h: 500
-                }
-            },
-            addChild: function() {}
-        }
-
-        this.plugin = PluginManager.invoke('grid', gridLayoutData, parent, {_templateVars:[], getModelValue : function(){}}, {});
-
+        this.plugin = PluginManager.invoke('grid', gridLayoutData, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
         spyOn(this.plugin,'getTableProperties').and.callThrough()
         spyOn(this.plugin,'generateLayout').and.callThrough()
         done();
@@ -92,7 +78,7 @@ describe('Gridlayout Plugin test cases', function() {
         beforeEach(function(done) {
             gridLayoutData.hitArea = true;
             gridLayoutData.rows = 1;
-            this.plugin = PluginManager.invoke('grid', gridLayoutData, parent, {_templateVars:[], getModelValue : function(){}}, {});
+            this.plugin = PluginManager.invoke('grid', gridLayoutData, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
             spyOn(this.plugin, 'initPlugin').and.callThrough();
             done();
         });

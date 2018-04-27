@@ -13,11 +13,30 @@ describe('Summary Plugin test cases', function () {
       done();
    });
 
-   it('Summary initPlugin function', function () {
-      this.plugin.initPlugin(data);
-      expect(this.plugin.initPlugin).toHaveBeenCalled();
-      expect(this.plugin.initPlugin.calls.count()).toEqual(1);
-      expect(this.plugin.renderTextSummary).toHaveBeenCalled();
+   describe('Summary initPlugin function', function() {
+      it('When controller is available in theme', function () {
+         this.plugin.initPlugin(data);
+         expect(this.plugin.initPlugin).toHaveBeenCalled();
+         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
+         expect(this.plugin.renderTextSummary).toHaveBeenCalled();
+      });
+
+      it('When controller is same as stage controller', function () {
+         data.controller = "item";
+         this.plugin.initPlugin(data);
+         expect(this.plugin.initPlugin).toHaveBeenCalled();
+         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
+         expect(this.plugin.renderTextSummary).toHaveBeenCalled();
+      });
+
+      it('When multiple stage controller are available', function () {
+         this.plugin._stage._controllerMap['assesment_mtf1'] = this.plugin._stage._stageController;
+         data.controller = "assesment_mtf1";
+         this.plugin.initPlugin(data);
+         expect(this.plugin.initPlugin).toHaveBeenCalled();
+         expect(this.plugin.initPlugin.calls.count()).toEqual(1);
+         expect(this.plugin.renderTextSummary).toHaveBeenCalled();
+      });
    });
 
    it('Summary renderTextSummary function', function (done) {
