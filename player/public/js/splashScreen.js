@@ -15,9 +15,11 @@ var splashScreen = {
         // add event listener for hide and show of splash splashScreen
         var instance = this;
         var elem = document.getElementById('splashScreen');
-        elem.onclick = function() {
-            instance.launchPortal();
-        };
+        if (elem != null || elem != undefined) {
+            elem.onclick = function() {
+                instance.launchPortal();
+            };
+        }
 
         instance.show();
     },
