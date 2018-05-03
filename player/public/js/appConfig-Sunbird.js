@@ -108,7 +108,7 @@ AppConfig = {
         bgImage: "assets/icons/background_1.png",
         webLink: "https://www.ekstep.in"
     },
-    showEndPage: true,
+    showEndPage: false,
     env: 'ContentPlayer',
     pdata: {'id':'in.ekstep', 'ver':'1.0'},
     channel: "in.ekstep",
