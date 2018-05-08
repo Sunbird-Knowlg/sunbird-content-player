@@ -6,33 +6,46 @@ describe('Video plugin test cases', function() {
         videoPlugin = PluginManager.invoke('video', videoSampleData, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);;
     });
     
-    xit("Video plugin initPlugin function validation", function() {
+    it("Video plugin initPlugin function validation", function() {
         spyOn(videoPlugin, 'initPlugin').and.callThrough()
         spyOn(videoPlugin, 'loadVideo').and.callThrough()
+        delete videoSampleData.asset;
         videoPlugin.initPlugin(videoSampleData)
         expect(videoPlugin.initPlugin).toHaveBeenCalled();
         expect(videoPlugin.loadVideo).toHaveBeenCalled();
         expect(videoPlugin.initPlugin.calls.count()).toEqual(1);
     });
 
-    xit("Video plugin loadVideo function", function () {
+    it("Video plugin loadVideo function", function () {
         spyOn(videoPlugin, 'createVideoElement').and.callThrough()
         spyOn(videoPlugin, 'getVideo').and.callThrough()
         spyOn(videoPlugin, 'registerEvents').and.callThrough()
         videoSampleData.autoplay = true;
+        videoSampleData.asset = "video";
         videoPlugin.loadVideo(videoSampleData)
         expect(videoPlugin.createVideoElement).toHaveBeenCalled();
         expect(videoPlugin.getVideo).toHaveBeenCalled();
+        // expect(videoPlugin.registerEvents).toHaveBeenCalled();
+    });
+
+    it("Register events Video", function () {
+        spyOn(videoPlugin, 'registerEvents').and.callThrough();
+        expect(this.getVideo()).toBeDefined();
+        videoPlugin.registerEvents();
+        expect(EkstepRendererAPI.hasEventListener('renderer:overlay:mute', videoPlugin.muteAll, videoPlugin)).toBeDefined();
+        expect(EkstepRendererAPI.hasEventListener('renderer:overlay:unmute', videoPlugin.unmuteAll, videoPlugin)).toBeDefined();
         expect(videoPlugin.registerEvents).toHaveBeenCalled();
-        // expect(videoPlugin.initPlugin.calls.count()).toEqual(1);
+        expect(videoPlugin.registerEvents.calls.count()).toEqual(1);
     });
 
-
-    xit("Video object defined", function() {
-        expect(videoSampleData).toBeDefined();
+    xit("Handle telemetry log Video", function () {
+        spyOn(videoPlugin, 'handleTelemetryLog').and.callThrough();
+        videoPlugin.handleTelemetryLog();
+        expect(videoPlugin.handleTelemetryLog).toHaveBeenCalled();
+        expect(videoPlugin.handleTelemetryLog.calls.count()).toEqual(1);
     });
 
-    xit("Video properties", function() {
+    it("Video properties", function() {
         expect(videoSampleData.x).toBeDefined();
         expect(videoSampleData.y).toBeDefined();
         expect(videoSampleData.w).toBeGreaterThan(0);
@@ -43,88 +56,79 @@ describe('Video plugin test cases', function() {
         expect(videoSampleData.type).toBeDefined();
     });
 
-    xit("Check video format", function() {
+    it("Check video format", function() {
         expect(videoSampleData.src).toMatch(/(.*?)\.(ogv|webm|mp4)/g);
         expect(videoSampleData.type).toMatch(/(.*?)\/(ogv|webm|mp4)/g);
     })
 
-    xit("Play Video", function() {
+    it("Play Video", function() {
+        spyOn(videoPlugin, 'play').and.callThrough();
         videoPlugin.play(action);
         expect(videoPlugin.play).toHaveBeenCalled();
         expect(videoPlugin.play.calls.count()).toEqual(1);
     });
 
-    xit("Pause Video", function() {
-        videoPlugin.pause(action);
-        expect(videoPlugin.pause).toHaveBeenCalled();
-        expect(videoPlugin.pause.calls.count()).toEqual(1);
-    });
+    // it("Pause Video", function() {
+    //     spyOn(videoPlugin, 'pause').and.callThrough();
+    //     videoPlugin.pause(action);
+    //     expect(videoPlugin.pause).toHaveBeenCalled();
+    //     expect(videoPlugin.pause.calls.count()).toEqual(1);
+    // });
 
-    xit("Stop Video", function() {
-        videoPlugin.stop(action);
-        expect(videoPlugin.stop).toHaveBeenCalled();
-        expect(videoPlugin.stop.calls.count()).toEqual(1);
-    });
+    // it("Stop Video", function() {
+    //     spyOn(videoPlugin, 'stop').and.callThrough();
+    //     videoPlugin.stop(action);
+    //     expect(videoPlugin.stop).toHaveBeenCalled();
+    //     expect(videoPlugin.stop.calls.count()).toEqual(1);
+    // });
 
-    xit("Replay Video", function() {
+    it("Replay Video", function() {
+        spyOn(videoPlugin, 'replay').and.callThrough();
         videoPlugin.replay(action);
         expect(videoPlugin.replay).toHaveBeenCalled();
         expect(videoPlugin.replay.calls.count()).toEqual(1);
     });
 
-    xit("Start Video", function() {
-        videoPlugin.start(action);
+    it("Start Video", function() {
+        spyOn(videoPlugin, 'start').and.callThrough();
+        var videoElem = videoPlugin.getVideo(action);
+        videoPlugin.start(videoElem);
         expect(videoPlugin.start).toHaveBeenCalled();
         expect(videoPlugin.start.calls.count()).toEqual(1);
     });
 
-    xit("Get Video", function() {
+    it("Get Video", function() {
+        spyOn(videoPlugin, 'getVideo').and.callThrough();
         videoPlugin.getVideo(action);
         expect(videoPlugin.getVideo).toHaveBeenCalled();
         expect(videoPlugin.getVideo.calls.count()).toEqual(1);
     });
 
-    xit("Add Video Element Video", function() {
+    it("Add Video Element Video", function() {
+        spyOn(videoPlugin, 'addVideoElement').and.callThrough();
         videoPlugin.addVideoElement();
         expect(videoPlugin.addVideoElement).toHaveBeenCalled();
         expect(videoPlugin.addVideoElement.calls.count()).toEqual(1);
     });
 
-    xit("Create Video Element Video", function() {
+    it("Create Video Element Video", function() {
+        spyOn(videoPlugin, 'createVideoElement').and.callThrough();
         videoPlugin.createVideoElement();
         expect(videoPlugin.createVideoElement).toHaveBeenCalled();
         expect(videoPlugin.createVideoElement.calls.count()).toEqual(1);
     });
 
-    xit("Log Console Video", function() {
+    it("Log Console Video", function() {
+        spyOn(videoPlugin, 'logConsole').and.callThrough();
         videoPlugin.logConsole();
         expect(videoPlugin.logConsole).toHaveBeenCalled();
         expect(videoPlugin.logConsole.calls.count()).toEqual(1);
     });
 
-    xit("Register events Video", function() {
-        videoPlugin.registerEvents();
-        expect(videoPlugin.registerEvents).toHaveBeenCalled();
-        expect(videoPlugin.registerEvents.calls.count()).toEqual(1);
-    });
-
-    xit("Handle telemetry log Video", function() {
-        videoPlugin.handleTelemetryLog();
-        expect(videoPlugin.handleTelemetryLog).toHaveBeenCalled();
-        expect(videoPlugin.handleTelemetryLog.calls.count()).toEqual(1);
-    });
-
     xit("On load videoSampleData Video", function() {
+        spyOn(videoPlugin, 'onLoadvideoSampleData').and.callThrough();
         videoPlugin.onLoadvideoSampleData();
         expect(videoPlugin.onLoadvideoSampleData).toHaveBeenCalled();
         expect(videoPlugin.onLoadvideoSampleData.calls.count()).toEqual(1);
     });
-
-    /*it("Check video format and type ", function(){
-        expect(["apples", "oranges", "pears"]).toContain("oranges");
-    });*/
-
-    /*it("Video Plugin initialize", function(){
-        videoPlugin = PluginManager.invoke('video', videoSampleData, parent);
-    });*/
 });

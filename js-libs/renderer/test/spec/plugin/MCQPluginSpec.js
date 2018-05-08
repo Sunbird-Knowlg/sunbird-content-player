@@ -5,16 +5,42 @@ var sampleData = {
     offsetX: 2,
     offsetY: 3,
     highlight: '#E89241',
-    option: [{
-        "x": 0,
-        "y": 0,
-        "w": 50,
+    pluginType: "mcq",
+    options: {
+        "shape": {
+            "w": 100,
+            "h": 100,
+            "x": 0,
+            "y": 0,
+            "fill": "#ccc",
+            "type": "roundrect"
+        },
+        "text": {
+            "w": 100,
+            "h": 100,
+            "x": 0,
+            "y": 0,
+            "fontsize": "2.5vw",
+            "model": "text.title",
+            "lineHeight": 1.4,
+            "valign": "middle",
+            "align": "center",
+            "font": "Verdana"
+        },
+        "layout": "table",
+        "highlight": "yellow",
+        "w": 97,
         "h": 50,
-        "z-index": "10",
-        "stroke": 6,
-        "bgcolor": "skyblue",
-        "color": "yellow"
-    }]
+        "x": 1.5,
+        "options": "options",
+        "y": 50,
+        "cols": 4,
+        "marginX": 5,
+        "marginY": 5,
+        "pluginType": "options",
+        "z-index": -1,
+        "font": "NotoSans, NotoSansGujarati, NotoSansOriya, NotoSansMalayalam"
+    }
 };
 
 describe('MCQ Plugin test cases', function() {
@@ -43,7 +69,10 @@ describe('MCQ Plugin test cases', function() {
     });
 
      it('MCQ plugin selectOption', function() {
-        this.plugin.selectOption();
+         var option = _.clone(this.plugin._options[0]);
+         option._index = 1;
+         option._self.shadow._self.visible = true;
+        this.plugin.selectOption(option);
         expect(this.plugin.selectOption).toHaveBeenCalled();
         expect(this.plugin.selectOption.calls.count()).toEqual(1);
     });

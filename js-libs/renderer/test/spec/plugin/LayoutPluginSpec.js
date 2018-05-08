@@ -1,5 +1,5 @@
 describe('Layout Plugin test cases', function() {
-    beforeAll(function(done) {            
+    beforeEach(function(done) {
         var data = {
             "cols": "2",
             "h": "20",
@@ -35,7 +35,7 @@ describe('Layout Plugin test cases', function() {
                 "y": "10"
             },
             "events":[{"action":{"type":"command","command":"play","asset":"ht1","asset_model":"model"}},{"action":{"type":"command","command":"play","asset":"ht2", "ev-model":"model"}}],
-            "iterate": 'layout.item'
+            "iterate": 'item.title'
         };
         this.plugin = new LayoutPlugin( data, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
         spyOn(this.plugin,'initPlugin').and.callThrough()
@@ -72,27 +72,44 @@ describe('Layout Plugin test cases', function() {
         expect(this.plugin._addCellAttributes.calls.count()).toEqual(1);
     });
 
-    it('Layout plugin getCellEvents function call', function() {
-        this._data = {};
-        this.plugin.getCellEvents({});
-        expect(this.plugin.getCellEvents).toHaveBeenCalled();
-        expect(this.plugin.getCellEvents.calls.count()).toEqual(1);
+    describe('Layout plugin getCellEvents function call', function() {
+        it('When data events is an array', function() {
+            this._data = {};
+            var events = this.plugin.getCellEvents();
+            expect(events.length).toBeDefined();
+            expect(this.plugin.getCellEvents).toHaveBeenCalled();
+            expect(this.plugin.getCellEvents.calls.count()).toEqual(1);
+        });
+
+        it('When data events is an object', function () {
+            this.plugin._data.events = {'event': this.plugin._data.events[0]};
+            var event = this.plugin.getCellEvents();
+            expect(event.length).not.toBeDefined();
+            expect(this.plugin.getCellEvents).toHaveBeenCalled();
+            expect(this.plugin.getCellEvents.calls.count()).toEqual(1);
+        });
     });
 
-    it('Layout plugin resolveActionModelValues function call', function() {
-        this._data = {};
-        this.plugin.resolveActionModelValues({});
-        expect(this.plugin.resolveActionModelValues).toHaveBeenCalled();
-        expect(this.plugin.resolveActionModelValues.calls.count()).toEqual(1);
+    describe('Layout plugin resolveActionModelValues function call', function() {
+        it('when event is not available', function() {
+            this._data = {};
+            this.plugin.resolveActionModelValues({});
+            expect(this.plugin.resolveActionModelValues).toHaveBeenCalled();
+            expect(this.plugin.resolveActionModelValues.calls.count()).toEqual(1);
+        });
+
+        it('When event.action is an array', function() {
+            this._data = {};
+            this.plugin.resolveActionModelValues([{type: 'click', action:[{command : 'play', 'ev-model': 'item.title'}]}]);
+            expect(this.plugin.resolveActionModelValues).toHaveBeenCalled();
+            expect(this.plugin.resolveActionModelValues.calls.count()).toEqual(1);
+        });
+
+        it('When event.action is an object', function () {
+            this._data = {};
+            this.plugin.resolveActionModelValues({ type: 'click', action: { command: 'play', asset_model: 'item.title'}});
+            expect(this.plugin.resolveActionModelValues).toHaveBeenCalled();
+            expect(this.plugin.resolveActionModelValues.calls.count()).toEqual(1);
+        });
     });
-
-    it('Layout plugin resolveActionModelValues function call', function() {
-        this._data = {};
-        this.plugin.resolveActionModelValues([{type: 'click', action:[{command : 'play'}]}]);
-        expect(this.plugin.resolveActionModelValues).toHaveBeenCalled();
-        expect(this.plugin.resolveActionModelValues.calls.count()).toEqual(2);
-    });
-
-
-
 });

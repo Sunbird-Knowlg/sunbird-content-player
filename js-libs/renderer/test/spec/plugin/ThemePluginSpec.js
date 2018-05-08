@@ -19,8 +19,8 @@ describe('Theme Plugin test cases', function() {
         spyOn(this.plugin, 'replaceStage').and.callThrough();
         spyOn(this.plugin, 'invokeStage').and.callThrough();
         spyOn(this.plugin, 'preloadStages').and.callThrough();
-        //spyOn(this.plugin, 'mergeStages').and.callThrough();
-        //spyOn(this.plugin, 'isStageChanging').and.callThrough();
+        spyOn(this.plugin, 'mergeStages').and.callThrough();
+        spyOn(this.plugin, 'isStageChanging').and.callThrough();
         spyOn(this.plugin, 'transitionTo').and.callThrough();
         spyOn(this.plugin, 'jumpToStage').and.callThrough();
         spyOn(this.plugin, 'removeHtmlElements').and.callThrough();
@@ -45,7 +45,7 @@ describe('Theme Plugin test cases', function() {
       jasmine.clock().uninstall();
     });
 
-    xit('Theme plugin initPlugin() fields validation', function() {
+    it('Theme plugin initPlugin() fields validation', function() {
         Renderer.theme._data.saveState = true;
         this.plugin.initPlugin(Renderer.theme._data);
         expect(this.plugin.initPlugin).toHaveBeenCalled();
@@ -74,7 +74,8 @@ describe('Theme Plugin test cases', function() {
     });
 
     xit('Theme plugin start()', function() {
-        this.plugin.start({ primary: true });
+        this.plugin._data = JSON.parse(JSON.stringify(contentBody)).theme;
+        this.plugin.start('/base/public/test/testContent/assets/');
         expect(this.plugin.start).toHaveBeenCalled();
         expect(this.plugin.start.calls.count()).toEqual(1);
     });
@@ -97,12 +98,24 @@ describe('Theme Plugin test cases', function() {
         expect(ControllerManager.get).toHaveBeenCalled();
     });
 
-    xit('Theme plugin initStageControllers()', function() {
-        spyOn(ControllerManager, 'get').and.callThrough();
-        this.plugin.initStageControllers(Renderer.theme._currentScene);
-        expect(this.plugin.initStageControllers).toHaveBeenCalled();
-        expect(ControllerManager.get).toHaveBeenCalled();
-    });
+    describe('Theme plugin initStageControllers()', function() {
+        it('when single stage controller is present in stahe', function() {
+            spyOn(ControllerManager, 'get').and.callThrough();
+            this.plugin._currentScene.controller = this.plugin._currentScene._stageController;
+            this.plugin.initStageControllers(Renderer.theme._currentScene);
+            expect(this.plugin.initStageControllers).toHaveBeenCalled();
+            expect(ControllerManager.get).toHaveBeenCalled();
+        });
+
+        it('when multiple stage controller is present in stahe', function () {
+            spyOn(ControllerManager, 'get').and.callThrough();
+            this.plugin._currentScene.controller = [this.plugin._currentScene._stageController];
+            this.plugin.initStageControllers(Renderer.theme._currentScene);
+            expect(this.plugin.initStageControllers).toHaveBeenCalled();
+            expect(ControllerManager.get).toHaveBeenCalled();
+            expect(ControllerManager.get.calls.count()).toEqual(this.plugin._currentScene.controller.length);
+        });
+    })
 
     xit('Theme plugin reRender()', function() {
         this.plugin.reRender();
@@ -124,7 +137,7 @@ describe('Theme Plugin test cases', function() {
         expect(this.plugin.tick.calls.count()).toEqual(1);
     });
 
-    xit('Theme plugin restart()', function(done) {
+    it('Theme plugin restart()', function(done) {
         var instance = this;
         spyOn(TelemetryService, 'end').and.callThrough();
         spyOn(TelemetryService, 'start').and.callThrough();
@@ -158,12 +171,12 @@ describe('Theme Plugin test cases', function() {
     xit('Theme plugin addChild()', function() {
         var stageInstance = PluginManager.invoke('stage', this.plugin._data.stage[0], this.plugin, null, this.plugin);
         this.plugin.addChild(stageInstance._self,  stageInstance);
-        expect(stageInstance).not.toBe(undefined);
-        expect(this.plugin._currentScene).not.toBe(undefined);
+        expect(stageInstance).toBeDefined();
+        expect(this.plugin._currentScene).toBeDefined();
     });
 
     xit('Theme plugin replaceStage()', function() {
-        this.plugin.replaceStage("splash");
+        this.plugin.replaceStage("stage1");
         expect(this.plugin.replaceStage).toHaveBeenCalled();
         expect(this.plugin.replaceStage.calls.count()).toEqual(1);
     });
@@ -177,43 +190,80 @@ describe('Theme Plugin test cases', function() {
         // expect(this.plugin.preloadStages.calls.count()).toEqual(1);
     });
 
-    xit('Theme plugin removeHtmlElements()', function() {
+    describe('Theme plugin mergeStages()', function() {
+        it('Theme plugin mergeStages()', function () {
+            var mergeData = this.plugin.mergeStages({stage1: ['1']}, {stage2:['2']});
+            expect(this.plugin.mergeStages).toHaveBeenCalled();
+            expect(this.plugin.mergeStages.calls.count()).toEqual(1);
+            expect(mergeData).toBeDefined();
+        });
+
+        it('If id is available in stage2', function () {
+            var mergeData = this.plugin.mergeStages({ stage: '1', id:"stage1" }, { stage: '2', id: 'stage2' });
+            expect(this.plugin.mergeStages).toHaveBeenCalled();
+            expect(this.plugin.mergeStages.calls.count()).toEqual(1);
+            expect(mergeData).toBeDefined();
+        });
+    });
+
+    it('Theme plugin isStageChanging', function() {
+        var isStageChange = this.plugin.isStageChanging();
+        expect(isStageChange).toBeDefined();
+        expect(this.plugin.isStageChanging).toHaveBeenCalled();
+        expect(this.plugin.isStageChanging.calls.count()).toEqual(1);
+    })
+
+    // describe('Theme plugin transitionTo', function() {
+    //     it('Transition on passing correct action object', function () {
+    //         var action = { "asset":"theme", "command":"transitionTo", "duration":"100", "ease":"linear", "effect":"fadeIn", "type":"command", "pluginId":"theme", "value":"stage2", "transitionType":"next", "dataAttributes": { }, "stageId":"stage1"};
+    //         spyOn(RecorderManager, 'stopRecording').and.callThrough();
+    //         spyOn(AudioManager, 'stopAll').and.callThrough();
+    //         spyOn(TimerManager, 'stopAll').and.callThrough();
+    //         this.plugin.transitionTo(action);
+    //         expect(RecorderManager.stopRecording).toHaveBeenCalled();
+    //         expect(AudioManager.stopAll).toHaveBeenCalled();
+    //         expect(TimerManager.stopAll).toHaveBeenCalled();
+    //         expect(this.plugin.jumpToStage).toHaveBeenCalled();
+    //     })
+    // })
+
+    it('Theme plugin removeHtmlElements()', function() {
         this.plugin.removeHtmlElements("splash");
         expect(this.plugin.removeHtmlElements).toHaveBeenCalled();
         expect(this.plugin.removeHtmlElements.calls.count()).toEqual(1);
     });
 
-    xit('Theme plugin removeHtmlElements()', function() {
+    it('Theme plugin removeHtmlElements()', function() {
         this.plugin.removeHtmlElements();
         expect(this.plugin.removeHtmlElements).toHaveBeenCalled();
         expect(this.plugin.removeHtmlElements.calls.count()).toEqual(1);
     });
 
-    xit('Theme plugin disableInputs()', function() {
+    it('Theme plugin disableInputs()', function() {
         this.plugin.disableInputs();
         expect(this.plugin.disableInputs).toHaveBeenCalled();
         expect(this.plugin.disableInputs.calls.count()).toEqual(1);
     });
 
-    xit('Theme plugin enableInputs()', function() {
+    it('Theme plugin enableInputs()', function() {
         this.plugin.enableInputs();
         expect(this.plugin.enableInputs).toHaveBeenCalled();
         expect(this.plugin.enableInputs.calls.count()).toEqual(1);
     });
 
-    xit('Theme plugin getDirection()', function() {
+    it('Theme plugin getDirection()', function() {
         this.plugin.getDirection();
         expect(this.plugin.getDirection).toHaveBeenCalled();
         expect(this.plugin.getDirection.calls.count()).toEqual(1);
     });
 
-    xit('Theme plugin getEase()', function() {
+    it('Theme plugin getEase()', function() {
         this.plugin.getEase();
         expect(this.plugin.getEase).toHaveBeenCalled();
         expect(this.plugin.getEase.calls.count()).toEqual(1);
     });
 
-    // xit('Theme plugin getAsset()', function() {
+    // it('Theme plugin getAsset()', function() {
     //     callback = jasmine.createSpy("callback");
     //     jasmine.clock().install();
     //     var instance = this;
@@ -247,7 +297,7 @@ describe('Theme Plugin test cases', function() {
     //     expect(callback).toHaveBeenCalled();*/
     // });
 
-    xit('Theme plugin getStagesToPreLoad()', function() {
+    it('Theme plugin getStagesToPreLoad()', function() {
         this.plugin.getStagesToPreLoad({next : "splash", previous: "splash"});
         expect(this.plugin.getStagesToPreLoad).toHaveBeenCalled();
         expect(this.plugin.getStagesToPreLoad.calls.count()).toEqual(1);

@@ -1,9 +1,12 @@
 describe('Animation Plugin test cases', function() {
     var AnimationPlugin;
     var themeData = JSON.parse('{"loop": "true", "to":{"ease":"linear","duration":500,"__cdata":{"x":20,"y":20}},"id":"do_10096317Walking"}');
-
-    // Img plugin is used for all the event manager specs. Make sure the specs of ImagePlugin are successfull
     beforeAll(function(done) {
+        // Mocking documents.fonts as it is not available in phantomjs
+        document.fonts = {'ready': {}};
+        document.fonts.ready.then = jasmine.createSpy().and.callFake(function () {
+            Renderer.update = true;
+        });
         org.ekstep.contentrenderer.loadPlugins([{"mimeType":["application/vnd.ekstep.ecml-archive"],"id":"org.ekstep.ecmlrenderer","ver":1,"type":"plugin"}], [], function() {
             setTimeout(function() {
                 AnimationPlugin = AnimationManager.pluginMap.tween.prototype;

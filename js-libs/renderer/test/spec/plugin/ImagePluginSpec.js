@@ -14,7 +14,7 @@ describe('Image Plugin test cases', function() {
         });
         it('initPlugin when image is overlay asset', function() {
             var img_data = {"asset": "validate","x": 100,"y": -150,"w": 550,"h": 600,"align": "left","valign": "middle","visible": true,"id": "popup-Tint"};
-            this.plugin = org.ekstep.pluginframework.pluginManager.pluginInstances.do_2122479583895552001118;
+            this.plugin = PluginManager.invoke('image', img_data, Renderer.theme._currentScene, Renderer.theme._currentScene, Renderer.theme);
             expect(this.plugin.visible).not.toBeTruthy();
         });
         it('initPlugin when image is in template', function() {

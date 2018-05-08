@@ -1,15 +1,23 @@
-/**
- * @author Manjunath Davanam <manjunathd@ilimi.in>
- */
+// Karma configuration
+// Generated on Tue May 08 2018 12:28:40 GMT+0530 (India Standard Time)
 
-module.exports = function(config) {
+module.exports = function (config) {
     config.set({
+
+        // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '../../../player/',
+
+
+        // frameworks to use
+        // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         frameworks: [
             'jasmine-jquery',
             'jasmine',
             'jasmine-matchers'
         ],
+
+
+        // list of files / patterns to load in the browser
         files: [
             'https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js',
             'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/createjs.min.js',
@@ -74,48 +82,77 @@ module.exports = function(config) {
             { pattern: 'public/assets/sounds/*.mp3', watched: false, served: true, included: false },
             { pattern: 'public/assets/icons/*.png', watched: false, served: true, included: false },
             { pattern: 'public/test/testContent/assets/assets/public/content/*.jpg', watched: false, served: true, included: false },
+            { pattern: 'public/test/testContent/assets/assets/public/content/*.png', watched: false, served: true, included: false },
+            { pattern: 'public/test/testContent/assets/assets/public/content/spriteAnimation.json', watched: false, served: true, included: false },
             { pattern: 'public/test/testContent/items/assessment_mtf.json', watched: false, served: true, included: false },
             { pattern: 'public/test/testContent/assets/assets/public/content/*.mp3', watched: false, served: true, included: false },
             { pattern: 'public/test/testContent/assets/assets/public/content/*.mp4', watched: false, served: true, included: false },
-            '../js-libs/renderer/test/spec/beforeAll.js',
-            '../js-libs/renderer/test/spec/AnimationPluginSpec.js',
-            '../js-libs/renderer/test/spec/AudioPluginSpec.js',
-            '../js-libs/renderer/test/spec/ContainerPluginSpec.js',
-            '../js-libs/renderer/test/spec/DivPluginSpec.js',
-            '../js-libs/renderer/test/spec/EmbedPluginSpec.js',
-            '../js-libs/renderer/test/spec/GridLayoutPluginSpec.js',
-            '../js-libs/renderer/test/spec/HighlightTextPluginSpec.js',
-            '../js-libs/renderer/test/spec/HotspotPluginSpec.js',
-            '../js-libs/renderer/test/spec/ImagePluginSpec.js',
-            '../js-libs/renderer/test/spec/InputPluginSpec.js',
-            '../js-libs/renderer/test/spec/LayoutPluginSpec.js',
-            '../js-libs/renderer/test/spec/MCQPluginSpec.js',
-            '../js-libs/renderer/test/spec/MTFPluginSpec.js',
-            '../js-libs/renderer/test/spec/OptionPluginSpec.js',
-            '../js-libs/renderer/test/spec/OptionsPluginSpec.js',
-            '../js-libs/renderer/test/spec/PlaceholderPluginSpec.js',
-            '../js-libs/renderer/test/spec/ScribblePluginSpec.js',
-            '../js-libs/renderer/test/spec/SetPluginSpec.js',
-            '../js-libs/renderer/test/spec/ShapePluginSpec.js',
-            '../js-libs/renderer/test/spec/StagePluginSpec.js',
-            '../js-libs/renderer/test/spec/SummaryPluginSpec.js',
-            '../js-libs/renderer/test/spec/TextPluginSpec.js',
-            '../js-libs/renderer/test/spec/TimerManagerSpec.js',
-            '../js-libs/renderer/test/spec/ThemePluginSpec.js',
-            '../js-libs/renderer/test/spec/TweenPluginSpec.js'
-            // '../js-libs/renderer/test/spec/VideoPluginSpec.js'
+            '../js-libs/renderer/test/spec/dom_simulation.js',
+            '../js-libs/renderer/test/spec/plugin/AnimationPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/AudioPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/ContainerPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/DivPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/EmbedPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/GridLayoutPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/HighlightTextPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/HotspotPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/ImagePluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/InputPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/LayoutPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/MCQPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/MTFPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/OptionPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/OptionsPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/PlaceholderPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/ScribblePluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/SetPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/ShapePluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/SpritePluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/StagePluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/SummaryPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/TextPluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/TimerManagerSpec.js',
+            '../js-libs/renderer/test/spec/plugin/ThemePluginSpec.js',
+            '../js-libs/renderer/test/spec/plugin/TweenPluginSpec.js',
+            // '../js-libs/renderer/test/spec/plugin/VideoPluginSpec.js',
+            '../js-libs/renderer/test/spec/command/AllCommandSpec.js',
+            '../js-libs/renderer/test/spec/command/CommandSpec.js'
         ],
+
+
+        // list of files to exclude
         exclude: ['coverage'],
-        preprocessors: {
-            '../js-libs/renderer/plugin/*.js': ['coverage'],
-            '../js-libs/renderer/command/*.js': ['coverage'],
-            '../js-libs/renderer/manager/*.js': ['coverage'],
-            '../js-libs/renderer/controller/*.js': ['coverage'],
-            '../js-libs/renderer/evaluator/*.js': ['coverage'],
-            '../js-libs/renderer/generator/*.js': ['coverage']
+
+        client: {
+            captureConsole: false
         },
+
+        plugins: [
+            "karma-phantomjs-launcher",
+            "karma-jasmine-jquery",
+            "karma-jasmine",
+            "karma-jasmine-matchers",
+            "karma-junit-reporter",
+            'karma-coverage',
+            "karma-ng-html2js-preprocessor",
+            "karma-verbose-reporter",
+            "karma-mocha-reporter"
+        ],
+
+
+        // preprocess matching files before serving them to the browser
+        // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+        preprocessors: {
+            '../js-libs/renderer/!(test)/*.js': ['coverage']
+        },
+
+
+        // test results reporter to use
+        // possible values: 'dots', 'progress'
+        // available reporters: https://npmjs.org/browse/keyword/karma-reporter
         reporters: ['mocha', 'verbose', 'progress', 'coverage'],
-         // reporter options
+
+        // reporter options
         mochaReporter: {
             colors: {
                 success: 'green',
@@ -130,45 +167,52 @@ module.exports = function(config) {
                 error: 'x'
             }
         },
-        junitReporter: {
-            outputDir: '../js-libs/renderer/test/coverage', 
-            outputFile: 'test-results.xml',
-        },
+
+        // web server port
+        port: 8080,
+
+
+        // enable / disable colors in the output (reporters and logs)
+        colors: true,
+
+
+        // level of logging
+        // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+        logLevel: config.LOG_INFO,
+
+
+        // enable / disable watching file and executing tests whenever any file changes
+        autoWatch: true,
+
+
+        // start these browsers
+        // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
+        browsers: ['PhantomJS'],
+
+
+        // Continuous Integration mode
+        // if true, Karma captures browsers, runs the tests and exits
+        singleRun: false,
+
+        // Concurrency level
+        // how many browser should be started simultaneous
+        concurrency: Infinity,
+
         coverageReporter: {
-            reporters: [{
-                type: 'html',
-                dir: 'coverage'
-            }, {
-                type: 'text-summary'
-            }, {
-                type: 'cobertura'
-            }]
+            reporters: [
+                { type: 'html', dir: 'coverage/' },
+                { type: 'text-summary' },
+                { type: 'cobertura' }
+            ]
         },
 
-        plugins: [
-            "karma-phantomjs-launcher",
-            "karma-jasmine-jquery",
-            "karma-jasmine",
-            "karma-jasmine-matchers",
-            "karma-junit-reporter",
-            'karma-coverage',
-            "karma-ng-html2js-preprocessor",
-            "karma-verbose-reporter",
-            "karma-mocha-reporter"
-        ],
         proxies: {
             "/public/coreplugins/": "/base/public/coreplugins/",
             "/assets/sounds/": "/base/public/assets/sounds/",
             "/assets/user_list/": "/base/public/assets/user_list/",
             "/assets/icons/": "/base/public/assets/icons/",
         },
-        port: 8080,
-        colors: true,
-        logLevel: config.LOG_DISABLE,
-        autoWatch: true,
-        browsers: ['PhantomJS'],
-        singleRun: false,
-        browserNoActivityTimeout: 60000,
-        client: { captureConsole: false }
+
+        browserNoActivityTimeout: 60000
     })
 }
