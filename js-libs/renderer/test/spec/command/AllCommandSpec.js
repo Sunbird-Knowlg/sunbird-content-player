@@ -384,12 +384,265 @@ describe('Show Command js test cases', function () {
       spyOn(this.plugin, 'initCommand').and.callThrough();
    })
 
-   it('Set Command initCommand function when set type plugin is available', function () {
+   it('Set Command initCommand function', function () {
       action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
       this.plugin._action = action;
       this.plugin.initCommand(action);
       expect(this.plugin.initCommand).toHaveBeenCalled();
       expect(this.plugin.initCommand.calls.count()).toEqual(1);
       expect(CommandManager.commandMap[this.plugin._name]).toBeDefined();
+   })
+});
+
+describe('Show Html Elements Command js test cases', function () {
+   var action;
+   beforeEach(function () {
+      this.plugin = ShowHTMLElementsCommand.prototype;
+      spyOn(this.plugin, 'invoke').and.callThrough();
+      spyOn(CommandManager, 'displayAllHtmlElements').and.callThrough();
+   })
+
+   it('Show Html Elements Command invoke function', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      this.plugin._action = action;
+      this.plugin.invoke(action);
+      expect(this.plugin.invoke).toHaveBeenCalled();
+      expect(this.plugin.invoke.calls.count()).toEqual(1);
+      expect(CommandManager.displayAllHtmlElements).toHaveBeenCalled();
+      expect(CommandManager.commandMap[this.plugin._name]).toBeDefined();
+   })
+});
+
+describe('Start Genie Command js test cases', function () {
+   var action;
+   beforeEach(function () {
+      this.plugin = StartGenieCommand.prototype;
+      spyOn(this.plugin, 'invoke').and.callThrough();
+      spyOn(TelemetryService, 'end').and.callThrough();
+      spyOn(window, 'exitApp').and.callThrough();
+   })
+
+   it('When _gameData id is not equal to packageName & packageNameDelhi ', function (done) {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      this.plugin._action = action;
+      TelemetryService._gameData.id = "org.ekstep.newcontentplayer";
+      org.ekstep.service.renderer.endGenieCanvas = function() {};
+      this.plugin.invoke(action);
+      expect(this.plugin.invoke).toHaveBeenCalled();
+      expect(this.plugin.invoke.calls.count()).toEqual(1);
+      expect(TelemetryService.end).toHaveBeenCalled();
+      expect(CommandManager.commandMap[this.plugin._name]).toBeDefined();
+      setTimeout(function() {
+         expect(window.exitApp).toHaveBeenCalled();
+         done();
+      }, 501);
+   })
+
+   it('When _gameData id is equal to either packageName or packageNameDelhi ', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      this.plugin._action = action;
+      TelemetryService._gameData.id = "org.ekstep.contentplayer";
+      org.ekstep.service.renderer.endGenieCanvas = function () { };
+      this.plugin.invoke(action);
+      expect(this.plugin.invoke).toHaveBeenCalled();
+      expect(this.plugin.invoke.calls.count()).toEqual(1);
+      expect(window.exitApp).toHaveBeenCalled();
+   })
+});
+
+describe('Start Record Command js test cases', function () {
+   var action;
+   beforeEach(function () {
+      this.plugin = StartRecordCommand.prototype;
+      spyOn(this.plugin, 'invoke').and.callThrough();
+      spyOn(RecorderManager, 'startRecording').and.callThrough();
+   })
+
+   it('invoke function call ', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      this.plugin._action = action;
+      this.plugin.invoke(action);
+      expect(this.plugin.invoke).toHaveBeenCalled();
+      expect(this.plugin.invoke.calls.count()).toEqual(1);
+      expect(RecorderManager.startRecording).toHaveBeenCalled();
+      expect(CommandManager.commandMap[this.plugin._name]).toBeDefined();
+   })
+});
+
+describe('Start Record Command js test cases', function () {
+   var action;
+   beforeEach(function () {
+      this.plugin = StopCommand.prototype;
+      spyOn(this.plugin, 'invoke').and.callThrough();
+   })
+
+   it('invoke function call when audio plugin is available', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" }, "sound": true };
+      spyOn(AudioManager, 'stopAll').and.callThrough();
+      this.plugin._action = action;
+      this.plugin.invoke(action);
+      expect(this.plugin.invoke).toHaveBeenCalled();
+      expect(AudioManager.stopAll).toHaveBeenCalled();
+      expect(this.plugin.invoke.calls.count()).toEqual(1);
+      expect(CommandManager.commandMap[this.plugin._name]).toBeDefined();
+   })
+
+   it('invoke function call when audio plugin is not available', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      spyOn(AudioManager, 'stop').and.callThrough();
+      this.plugin._action = action;
+      this.plugin.invoke(action);
+      expect(this.plugin.invoke).toHaveBeenCalled();
+      expect(AudioManager.stop).toHaveBeenCalled();
+      expect(this.plugin.invoke.calls.count()).toEqual(1);
+   })
+});
+
+describe('Stop Record Command js test cases', function () {
+   var action;
+   beforeEach(function () {
+      this.plugin = StopRecordCommand.prototype;
+      spyOn(this.plugin, 'invoke').and.callThrough();
+      spyOn(RecorderManager, 'stopRecording').and.callThrough();
+   })
+
+   it('invoke function call', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      this.plugin._action = action;
+      this.plugin.invoke(action);
+      expect(this.plugin.invoke).toHaveBeenCalled();
+      expect(RecorderManager.stopRecording).toHaveBeenCalled();
+      expect(this.plugin.invoke.calls.count()).toEqual(1);
+      expect(CommandManager.commandMap[this.plugin._name]).toBeDefined();
+   })
+});
+
+describe('Toggle Play Command js test cases', function () {
+   var action;
+   beforeEach(function () {
+      this.plugin = TogglePlayCommand.prototype;
+      spyOn(this.plugin, 'invoke').and.callThrough();
+   })
+   
+   it('invoke function call when plugin is available', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      this.plugin._action = action;
+      var plugin = this.plugin.getPluginObject();
+      spyOn(plugin, 'togglePlay').and.callThrough();
+      this.plugin.invoke(action);
+      expect(this.plugin.invoke).toHaveBeenCalled();
+      expect(plugin.togglePlay).toHaveBeenCalled();
+      expect(this.plugin.invoke.calls.count()).toEqual(1);
+      expect(CommandManager.commandMap[this.plugin._name]).toBeDefined();
+   })
+
+   it('invoke function call when plugin is not available', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      this.plugin._action = action;
+      spyOn(AudioManager, 'togglePlay').and.callThrough();
+      this.plugin.invoke(action);
+      expect(this.plugin.invoke).toHaveBeenCalled();
+      expect(AudioManager.togglePlay).toHaveBeenCalled();
+      expect(this.plugin.invoke.calls.count()).toEqual(1);
+   })
+});
+
+describe('Toggle Shadow Command js test cases', function () {
+   var action;
+   beforeEach(function () {
+      this.plugin = ToggleShadowCommand.prototype;
+      spyOn(this.plugin, 'initCommand').and.callThrough();
+   })
+
+   it('invoke function call', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      this.plugin.initCommand(action);
+      expect(this.plugin.initCommand).toHaveBeenCalled();
+      expect(this.plugin.initCommand.calls.count()).toEqual(1);
+      expect(CommandManager.commandMap[this.plugin._name]).toBeDefined();
+   })
+});
+
+describe('Toggle Show Command js test cases', function () {
+   var action;
+   beforeEach(function () {
+      this.plugin = ToggleShowCommand.prototype;
+      spyOn(this.plugin, 'initCommand').and.callThrough();
+   })
+
+   it('invoke function call', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      this.plugin.initCommand(action);
+      expect(this.plugin.initCommand).toHaveBeenCalled();
+      expect(this.plugin.initCommand.calls.count()).toEqual(1);
+      expect(CommandManager.commandMap[this.plugin._name]).toBeDefined();
+   })
+});
+
+describe('Toggle Show Command js test cases', function () {
+   var action;
+   beforeEach(function () {
+      this.plugin = TransitionToCommand.prototype;
+      spyOn(this.plugin, 'initCommand').and.callThrough();
+   })
+
+   it('invoke function call', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      this.plugin.initCommand(action);
+      expect(this.plugin.initCommand).toHaveBeenCalled();
+      expect(this.plugin.initCommand.calls.count()).toEqual(1);
+      expect(CommandManager.commandMap[this.plugin._name]).toBeDefined();
+   })
+});
+
+describe('Toggle Show Command js test cases', function () {
+   var action;
+   beforeEach(function () {
+      this.plugin = UnblurCommand.prototype;
+      spyOn(this.plugin, 'initCommand').and.callThrough();
+   })
+
+   it('invoke function call', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      this.plugin.initCommand(action);
+      expect(this.plugin.initCommand).toHaveBeenCalled();
+      expect(this.plugin.initCommand.calls.count()).toEqual(1);
+      expect(CommandManager.commandMap[this.plugin._name]).toBeDefined();
+   })
+});
+
+describe('Toggle Show Command js test cases', function () {
+   var action;
+   beforeEach(function () {
+      this.plugin = WindowEventCommand.prototype;
+      spyOn(this.plugin, 'invoke').and.callThrough();
+   })
+
+   it('invoke function call when previousContentMimeType  is available', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      GlobalContext.previousContentMimeType = "application/vnd.ekstep.ecml-archive";
+      this.plugin.invoke(action);
+      expect(this.plugin.invoke).toHaveBeenCalled();
+      expect(this.plugin.invoke.calls.count()).toEqual(1);
+      expect(CommandManager.commandMap[this.plugin._name]).toBeDefined();
+   })
+
+   it('invoke function call when currentContentMimeType  is available', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      delete GlobalContext.previousContentMimeType;
+      CONTENT_MIMETYPES = ['application/vnd.ekstep.ecml-archive'];
+      GlobalContext.currentContentMimeType = "application/vnd.ekstep.ecml-archive";
+      this.plugin.invoke(action);
+      expect(this.plugin.invoke).toHaveBeenCalled();
+      expect(this.plugin.invoke.calls.count()).toEqual(1);
+   })
+
+   it('invoke function call when mimetype is not available', function () {
+      action = { "type": "command", "command": "eval", "asset": "stage1", "pluginId": "stage1", "success": "correct_answer", "failure": "wrong_answer", "dataAttributes": {}, "stageId": "stage1", "value": { "target": "1" } };
+      delete GlobalContext.previousContentMimeType;
+      delete GlobalContext.currentContentMimeType;
+      this.plugin.invoke(action);
+      expect(this.plugin.invoke).toHaveBeenCalled();
+      expect(this.plugin.invoke.calls.count()).toEqual(1);
    })
 });
