@@ -93,9 +93,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     setYoutubeStyles: function(youtube) {
+        var instance = this;
         youtube.bigPlayButton.hide().el_.style.display = 'none';
         videojs(this.manifest.id).ready(function() {
-            var video = document.getElementById(this.manifest.id);
+            var video = document.getElementById(instance.manifest.id);
             video.style.width = '100%';
             video.style.height = '100%';
         });
