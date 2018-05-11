@@ -32,7 +32,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                 return event.name == "OE_END";
             }
         })
-        var startTime = endEvent.length > 0 ? endEvent[0].startTime : 0;
+        var startTime = endEvent.length > 0 ? endEvent[endEvent.length - 1].startTime : 0;
         if (startTime) {
             var totalTime = Math.round((new Date().getTime() - startTime) / 1000);
             var mm = Math.floor(totalTime / 60);
