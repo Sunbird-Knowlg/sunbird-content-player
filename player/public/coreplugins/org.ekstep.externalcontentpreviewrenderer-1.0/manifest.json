@@ -1,0 +1,14 @@
+{
+    "id": "org.ekstep.externalcontentpreviewrenderer",
+    "ver": "1.0",
+    "shortId": "org.eskstep.externalcontentpreviewrenderer",
+    "author": "Revathi P",
+    "description": "",
+    "publishedDate": "",
+    "renderer": {
+        "main": "renderer/plugin.js"
+    },
+    "dependencies": []
+    
+
+}
