@@ -110,7 +110,7 @@ AppConfig = {
     },
     showEndPage: false,
     env: 'contentplayer',
-    pdata: {'id':'in.ekstep', 'ver':'1.0'},
+    pdata: {'id': 'in.ekstep', 'ver':'1.0', 'pid': 'contentplayer'},
     channel: "in.ekstep",
     etags: {
         app: [],
