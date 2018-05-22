@@ -109,7 +109,7 @@ AppConfig = {
         webLink: "https://www.ekstep.in"
     },
     showEndPage: false,
-    env: 'ContentPlayer',
+    env: 'contentplayer',
     pdata: {'id':'in.ekstep', 'ver':'1.0'},
     channel: "in.ekstep",
     etags: {
