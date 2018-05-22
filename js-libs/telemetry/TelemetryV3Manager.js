@@ -56,7 +56,7 @@ TelemetryV3Manager = Class.extend({
             this._start.pop();
             var edata = {
               "type" : data.type || "content",
-              "mode" : data.mode || config.mode,
+              "mode" : data.mode || this._config.mode,
               "pageid" : data.pageid || data.stageid,
               "summary" : data.summary || [{"progress": data.progress || 50}]
             }            
