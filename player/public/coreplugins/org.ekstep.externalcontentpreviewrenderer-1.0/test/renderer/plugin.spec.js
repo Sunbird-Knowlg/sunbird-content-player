@@ -3,10 +3,18 @@ describe('base Launcher for external url preview', function () {
     // Please move the logic to other classes and test them independently
     // Let the plugin class delegate functionality to these classes
     var baseLauncher;
+    var data = {
+        artifactUrl: "http://www.dailymotion.com/video/xj4qo4",
+        audience: ["Learner"],
+        code: "81cc2279-a070-4cce-b01d-506116804a00",
+        contentType: "Resource",
+        identifier: "do_21250846122002022414216",
+        mimeType: "text/x-url"
+    };
     beforeAll(function (done) {
         var instance = this;
         org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies('org.ekstep.externalcontentpreviewrenderer', '1.0', 'plugin', undefined, function () {
-            baseLauncher = externalContentPreview.prototype;
+            baseLauncher = org.ekstep.externalcontentpreviewrenderer.prototype;
             done()
         });
         // Loading html renderer plugin 
@@ -44,18 +52,28 @@ describe('base Launcher for external url preview', function () {
     it('It should inovoke initLauncher of external url', function (done) {
         spyOn(baseLauncher, "initLauncher").and.callThrough();
         baseLauncher.manifest = org.ekstep.pluginframework.pluginManager.plugins['org.ekstep.externalcontentpreviewrenderer'].m
+        baseLauncher = org.ekstep.externalcontentpreviewrenderer.prototype;
         baseLauncher.initLauncher();
         expect(baseLauncher.initLauncher).toHaveBeenCalled();
         done();
     });
 
     it('generate preview from url to be called', function (done) {
-        spyOn(baseLauncher, "getPreviewFromURL").and.callThrough();
+        var bindHtml = function (err, htmlString) {
+            return '<div><p> No Preview available </p></div>';
+        }
+
+
+        // spyOn(baseLauncher, "getPreviewFromURL").and.callThrough();
+        // baseLauncher.getPreviewFromURL(data.artifactUrl, this.bindHtml);
+
+
+
         spyOn(EkstepRendererAPI, 'dispatchEvent').and.callThrough()
-        baseLauncher.start();
         expect(baseLauncher.getPreviewFromURL).toHaveBeenCalled();
         setTimeout(function () {
             expect(EkstepRendererAPI.dispatchEvent).toHaveBeenCalled();
+            baseLauncher.handleDivClick();
             done();
         }, 1000);
     });
@@ -64,9 +82,16 @@ describe('base Launcher for external url preview', function () {
     xit('should call fetchData from apiService', function(done) {
         spyOn(baseLauncher, 'fetchUrlMeta').and.returnValue(resp);
     
+        it('It should inovoke initLauncher of external url', function (done) {
+            spyOn(baseLauncher, "reset").and.callThrough();
+            baseLauncher.reset();
+            expect(baseLauncher.reset).toHaveBeenCalled();
+            expect(currentIndex).toEqual(50);
+            done();
+        });
         baseLauncher.generatePreview().then(function(result) {
-            expect(baseLauncher.fetchUrlMeta).toHaveBeenCalledWith(video);
-            expect(result).toEqual(resp);
+            expect(baseLauncher.fetchUrlMeta).toHaveBeenCalledWith(request.url);
+            //expect(result).toEqual(resp);
             done();
           });
       });
