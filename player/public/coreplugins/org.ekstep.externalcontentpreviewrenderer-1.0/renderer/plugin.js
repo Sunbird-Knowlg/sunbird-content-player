@@ -1,9 +1,8 @@
-var externalContentPreview = org.ekstep.contentrenderer.baseLauncher.extend({
+org.ekstep.contentrenderer.baseLauncher.extend({
     initLauncher: function () {
         var instance = this;
         this.start();
     },
-    initPlugin: function () { },
     start: function () {
         var instance = this;
         this._super();
@@ -12,8 +11,6 @@ var externalContentPreview = org.ekstep.contentrenderer.baseLauncher.extend({
         jQuery(this.manifest.id).remove();
         var iframediv = document.createElement('div');
         this.getPreviewFromURL(data.artifactUrl, function (err, htmlString) {
-
-            // let timeInterval = 250
             if (!err) {
                 iframediv.innerHTML = htmlString;
                 jQuery(iframediv).click(function (event) {
@@ -35,7 +32,7 @@ var externalContentPreview = org.ekstep.contentrenderer.baseLauncher.extend({
     },
     fetchUrlMeta: function (url, cb) {
         return jQuery.ajax({
-            url: 'http://localhost:3000/external-url/v1/fetchmeta',
+            url: window.location.host + 'http://localhost:3000/external-url/v1/fetchmeta',
             type: "POST",
             headers: {
                 'Content-Type': 'application/json'
