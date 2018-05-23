@@ -1,18 +1,18 @@
 <style>
 .sunbird-content-holder {
-  position: absolute;
-  top: 44%;
-  margin: 5% 9%;
-  left: 26%;
-  width: 35%;
-  height: 26%
+    position: absolute;
+    top: 44%;
+    margin: 5% 9%;
+    left: 26%;
+    width: 35%;
+    height: 26%
 }
 
 .sunbird-content {
-  width: 100%;
-  left: 0%;
-  top: 6%;
-  position: absolute;
+    width: 100%;
+    left: 0%;
+    top: 6%;
+    position: absolute;
 }
 
 .sunbird-ep-home {
@@ -23,20 +23,19 @@
 }
 
 .sunbird-ep-opactiy {
-
-  opacity: 1;
+    opacity: 1;
 }
 
 .sunbird-footer {
-  top: 70%;
-  position: relative;
-  font-size: 22px;
-  padding: 1%;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  position: absolute;
-  margin: auto
+    top: 70%;
+    position: relative;
+    font-size: 22px;
+    padding: 1%;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    margin: auto
 }
 
 .sunbid-content-title { 
@@ -63,6 +62,7 @@
     color: #0080ff;
     letter-spacing: 0.09em;
 }
+
 .totol-spend-time {
     position: absolute;
     left: -60%;
@@ -74,6 +74,7 @@
     font-size: 2.5em;
     width: 180px;
 }
+
 .totol-score {
     position: absolute;
     right: -40%;
@@ -134,7 +135,7 @@
     }
  }
 
- @media screen and (min-width: 641px) and (max-width: 736px) {
+@media screen and (min-width: 641px) and (max-width: 736px) {
     .totol-score {
         width:130px;
         right: -60%;
@@ -156,8 +157,9 @@
     .endpage-player-license {
         font-size: 1em !important;   
     }
- }
- @media screen and (min-width: 738px) and (max-width: 812px) {
+}
+
+@media screen and (min-width: 738px) and (max-width: 812px) {
     .totol-score {
         width:125px;
     }
@@ -177,11 +179,7 @@
     .endpage-player-license {
         font-size: 1em !important;   
     }
- }
-
-
-
- 
+}
 
 .total-time-display {
     top: 150%;
@@ -203,6 +201,7 @@
     font-size: 1.4em;
     transform: translate(-50%, -50%);
 }
+
 .gc-content-owner-player {
     font-size: 2em;
     width: 100%;
@@ -212,39 +211,31 @@
 }
 
 </style>
-<div class="font-lato gc-ep-cont" ng-app="sunbird-endpage" ng-controller="endPageController" id='endpage' ng-show="showEndPage">
-  <image class="gc-ep-cont-background" ng-src="{{endpageBackground}}" />
-  <div class="sunbird-content">
-    <p class="sunbird-message" style="font-size: 2em;
-    padding: 2%;">Congratulations! You just completed</p>
-    <p class="sunbid-content-title" ng-if="playerMetadata .name">{{playerMetadata .name}}</p>
-    <p class="gc-content-owner gc-text-elipsis" ng-if="playerMetadata.owner">Author: {{playerMetadata.owner}}</p>
-
-  </div>
-  
-  <div class="sunbird-content-holder">
-    <div class="totol-spend-time">
-    <p>{{totalTimeSpent}}</p>
-    <p class="total-time-display">Time</p>
+<div class="font-lato gc-ep-cont" ng-app="sunbird-endpage" ng-controller="endPageController"     id='endpage' ng-show="showEndPage">
+    <image class="gc-ep-cont-background" ng-src="{{endpageBackground}}" />
+    <div class="sunbird-content">
+        <p class="sunbird-message" style="font-size: 2em;
+        padding: 2%;">Congratulations! You just completed</p>
+        <p class="sunbid-content-title" ng-if="playerMetadata .name">{{playerMetadata .name}}</p>
+        <p class="gc-content-owner gc-text-elipsis" ng-if="playerMetadata.owner">Author: {{playerMetadata.owner}}</p>
     </div>
-    <div class="sunbird-content-replay" ng-click="replayContent()">
-      <img class="replay" ng-src="{{replayIcon}}" style="width: 20%;">
+    <div class="sunbird-content-holder">
+        <div class="totol-spend-time">
+            <p>{{totalTimeSpent}}</p>
+            <p class="total-time-display">Time</p>
+        </div>
+        <div class="sunbird-content-replay" ng-click="replayContent()">
+          <img class="replay" ng-src="{{replayIcon}}" style="width: 20%;">
+        </div>
+        <div class="sunbird-content-home">
+          <img class="sunbird-ep-home" ng-class="isCordova ? 'sunbird-ep-home' : ' sunbird-ep-opactiy' " ng-src="{{genieIcon}}" ng-click="openGenie()"></img>
+        </div>
+        <div class="totol-score" ng-if="totalScore">
+            <p>{{totalScore}}</p>
+            <p class="total-time-display" style="font-size: 0.7em">Score</p>
+        </div>
     </div>
-    <div class="sunbird-content-home">
-      <img class="sunbird-ep-home" ng-class="isCordova ? 'sunbird-ep-home' : ' sunbird-ep-opactiy' " ng-src="{{genieIcon}}" ng-click="openGenie()"></img>
+    <div class="endpage-player-license">
+        <b>{{licenseAttribute}}</b>
     </div>
-    <div class="totol-score" ng-if="showScore">
-        <p>{{totalScore}}</p>
-        <p class="total-time-display" style="font-size: 0.7em">Score</p>
-    </div>
-    <div class="totol-score" ng-if="!showScore">
-        <p>{{totalScore}}<p>
-        <p class="total-time-display">Score</p>
-    </div>
-
-  </div>
-
-  <div class="endpage-player-license">
-    <b>{{licenseAttribute}}</b>
-  </div>
 </div>

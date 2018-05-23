@@ -87,10 +87,6 @@ AppConfig = {
             id:"org.sunbird.player.endpage",
             ver:1.0,
             type:'plugin'
-        },{
-            id:"org.sunbird.player.endpage",
-            ver:1.0,
-            type:'plugin'
         }
     ],
     overlay: {
