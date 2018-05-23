@@ -218,7 +218,8 @@
     <p class="sunbird-message" style="font-size: 2em;
     padding: 2%;">Congratulations! You just completed</p>
     <p class="sunbid-content-title" ng-if="playerMetadata .name">{{playerMetadata .name}}</p>
-    <p class="gc-content-owner-player gc-text-elipsis" ng-if="!playerMetadata.owner">Author: Rajesh</p>
+    <p class="gc-content-owner gc-text-elipsis" ng-if="playerMetadata.owner">Author: {{playerMetadata.owner}}</p>
+
   </div>
   
   <div class="sunbird-content-holder">
@@ -232,10 +233,6 @@
     <div class="sunbird-content-home">
       <img class="sunbird-ep-home" ng-class="isCordova ? 'sunbird-ep-home' : ' sunbird-ep-opactiy' " ng-src="{{genieIcon}}" ng-click="openGenie()"></img>
     </div>
-   <!--  <div class="gc-ep-score" ng-show="showScore">
-        <image ng-src="{{imageBasePath}}icn_trophy.png" />
-        <p class="gc-white-text gc-ep-white-title">{{totalScore}}</p>
-    </div> -->
     <div class="totol-score" ng-if="showScore">
         <p>{{totalScore}}</p>
         <p class="total-time-display" style="font-size: 0.7em">Score</p>
