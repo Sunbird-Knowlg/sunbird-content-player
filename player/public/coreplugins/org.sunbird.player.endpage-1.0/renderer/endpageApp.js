@@ -14,6 +14,25 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         $scope.licenseAttribute = $scope.playerMetadata.license || 'Licensed under CC By 4.0 license'
     };
 
+    $scope.getTotalScore = function(id) {
+        if ("undefined" != typeof cordova) {
+            org.ekstep.service.content.getLearnerAssessment(GlobalContext.user.uid, id, GlobalContext.game.contentExtras)
+                .then(function(score) {
+                    if (score && score.total_questions) {
+                        $scope.showScore = true;
+                        $scope.$apply(function() {
+                            $scope.totalScore = (score.total_correct + "/" + score.total_questions);
+                        });
+                    } else {
+                        $scope.showScore = false;
+                    }
+                })
+        } else {
+            $scope.showScore = false;
+            $scope.totalScore = '---';
+        }
+    }
+
     $scope.replayContent = function() {
         var data = {
             'interactId' : 'ge_replay',
@@ -64,6 +83,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         }, 1000);
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         $scope.setTotalTimeSpent();
+        $scope.getTotalScore($rootScope.content.identifier);
         if (TelemetryService.instance.telemetryStartActive()) {
                 var telemetryEndData = {};
                 telemetryEndData.stageid = getCurrentStageId();
@@ -78,7 +98,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         $scope.playerMetadata = content;
         $scope.genieIcon = EkstepRendererAPI.resolvePluginResource("org.sunbird.player.endpage", "1.0", "renderer/assets/home.png");
         $scope.replayIcon = EkstepRendererAPI.resolvePluginResource("org.sunbird.player.endpage", "1.0", "renderer/assets/icn_replay.png");
-        $scope.endpageBackground = EkstepRendererAPI.resolvePluginResource("org.sunbird.player.endpage", "1.0", "renderer/assets/endpageBackground.png");
+        $scope.endpageBackground = EkstepRendererAPI.resolvePluginResource("org.sunbird.player.endpage", "1.0", "renderer/assets/Background.png");
         $scope.handleEndpage();
     };
     EkstepRendererAPI.addEventListener('renderer:content:end', function() {
@@ -94,5 +114,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         $scope.showEndPage = false;
         $scope.safeApply();
     });
+
+
 });
 

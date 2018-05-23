@@ -1,10 +1,10 @@
 <style>
 .sunbird-content-holder {
   position: absolute;
-  top: 28%;
+  top: 44%;
   margin: 5% 9%;
   left: 26%;
-  width: 40%;
+  width: 35%;
   height: 26%
 }
 
@@ -17,14 +17,14 @@
 
 .sunbird-ep-home {
   position: absolute;
-  width: 22%;
+  width: 20%;
   left: 57%;
   top: 3%;
 }
 
 .sunbird-ep-opactiy {
 
-  opacity: 0.5
+  opacity: 1;
 }
 
 .sunbird-footer {
@@ -40,27 +40,175 @@
 }
 
 .sunbid-content-title { 
-  overflow: hidden; 
-  text-overflow: ellipsis; 
-  display: -webkit-box; 
-  -webkit-line-clamp: 2; 
-  -webkit-box-orient: vertical; 
-  width: 100%; 
-  text-transform: uppercase;
-  padding: 0.2em 0em 0em; 
-  font-size: 1.8em; 
-  text-align: center;
-   line-height: 1.3em; 
-   color: black; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical; 
+    width: 100%; 
+    text-transform: uppercase;
+    padding: 0.4em 0em 0em; 
+    font-size: 3.8em; 
+    text-align: center;
+    line-height: 2.5em; 
+    color: #494949; 
  }
 
-.sunbird-message{
+.sunbird-message {
     width: 100%;
     text-align: center;
-    font-size: 1.1em;
+    font-size: 3.6em !important;
     font-weight: bold;
     padding: 0 5%;
+    color: #0080ff;
+    letter-spacing: 0.09em;
+}
+.totol-spend-time {
+    position: absolute;
+    left: -60%;
+    top: 6%;
+    border: 2px dashed;
+    padding: 5%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 2.5em;
+    width: 180px;
+}
+.totol-score {
+    position: absolute;
+    right: -40%;
+    top: 6%;
+    border: 2px dashed;
+    padding: 5%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 2em;
+    width: 180px;
+}
+
+@media screen and (min-width:360px) and (max-width: 568px) {
+    .totol-score {
+        width:125px;
+        right: -60%;
+    }
+    .totol-spend-time {
+        width:125px;
+        left: -80%;
+    }
+    .sunbird-message {
+        font-size: 2em !important;
+    }
+    .sunbid-content-title {
+        line-height: 1.2em;
+        font-size: 2.5em; 
+    }
+    .endpage-player-license {
+        font-size: 1em !important;   
+    }
+    .gc-content-owner-player {
+        font-size: 1.5em !important;
+    }
+ }
+
+@media screen and (min-width: 569px) and (max-width: 640px) {
+    .totol-score {
+        width:125px;
+        right: -60%;
+    }
+    .totol-spend-time {
+        width:125px;
+        left: -80%;
+    }
+    .sunbird-message {
+        font-size: 2em !important;
+    }
+    .sunbid-content-title {
+        line-height: 1.2em;
+        font-size: 2.5em; 
+    }
+    .gc-content-owner-player {
+        font-size: 1.5em !important;
+    }
+    .endpage-player-license {
+        font-size: 1em !important;   
+    }
+ }
+
+ @media screen and (min-width: 641px) and (max-width: 736px) {
+    .totol-score {
+        width:130px;
+        right: -60%;
+    }
+    .totol-spend-time {
+        width:130px;
+        left: -70%;
+    }
+    .sunbird-message {
+        font-size: 2em !important;
+    }
+    .sunbid-content-title {
+        line-height: 1.5em;
+        font-size: 2.8em; 
+    }
+    .gc-content-owner-player {
+        font-size: 1.5em !important;
+    }
+    .endpage-player-license {
+        font-size: 1em !important;   
+    }
+ }
+ @media screen and (min-width: 738px) and (max-width: 812px) {
+    .totol-score {
+        width:125px;
+    }
+    .totol-spend-time {
+        width:125px;
+    }
+    .sunbird-message {
+        font-size: 2em !important;
+    }
+    .sunbid-content-title {
+        line-height: 1.5em;
+        font-size: 2.8em; 
+    }
+     .gc-content-owner-player {
+        font-size: 1.5em !important;
+    }
+    .endpage-player-license {
+        font-size: 1em !important;   
+    }
+ }
+
+
+
+ 
+
+.total-time-display {
+    top: 150%;
+    position: absolute;
+    font-weight: bold;
+    font-size: .7em;
+    font-family: inherit;
+    letter-spacing: .1em;
+    left: 50%;
+    transform: translate(-50%, -50%);
     color: #494949;
+}
+
+.endpage-player-license {
+    position: absolute;
+    bottom: 3%;
+    left: 50%;
+    color: #494949;
+    font-size: 1.4em;
+    transform: translate(-50%, -50%);
+}
+.gc-content-owner-player {
+    font-size: 2em;
+    width: 100%;
+    text-align: center;
+    color: #494949;
+    padding: 0.08em 0em 0.5em;
 }
 
 </style>
@@ -70,23 +218,36 @@
     <p class="sunbird-message" style="font-size: 2em;
     padding: 2%;">Congratulations! You just completed</p>
     <p class="sunbid-content-title" ng-if="playerMetadata .name">{{playerMetadata .name}}</p>
-    <p class="gc-content-owner gc-text-elipsis" ng-if="playerMetadata.owner">Author: {{playerMetadata.owner}}</p>
+    <p class="gc-content-owner-player gc-text-elipsis" ng-if="!playerMetadata.owner">Author: Rajesh</p>
   </div>
+  
   <div class="sunbird-content-holder">
+    <div class="totol-spend-time">
+    <p>{{totalTimeSpent}}</p>
+    <p class="total-time-display">Time</p>
+    </div>
     <div class="sunbird-content-replay" ng-click="replayContent()">
-      <img class="replay" ng-src="{{replayIcon}}" style="width: 22%;">
+      <img class="replay" ng-src="{{replayIcon}}" style="width: 20%;">
     </div>
     <div class="sunbird-content-home">
       <img class="sunbird-ep-home" ng-class="isCordova ? 'sunbird-ep-home' : ' sunbird-ep-opactiy' " ng-src="{{genieIcon}}" ng-click="openGenie()"></img>
     </div>
+   <!--  <div class="gc-ep-score" ng-show="showScore">
+        <image ng-src="{{imageBasePath}}icn_trophy.png" />
+        <p class="gc-white-text gc-ep-white-title">{{totalScore}}</p>
+    </div> -->
+    <div class="totol-score" ng-if="showScore">
+        <p>{{totalScore}}</p>
+        <p class="total-time-display" style="font-size: 0.7em">Score</p>
+    </div>
+    <div class="totol-score" ng-if="!showScore">
+        <p>{{totalScore}}<p>
+        <p class="total-time-display">Score</p>
+    </div>
+
   </div>
-  <div class="sunbird-footer" style="width: 11em;
-    text-align: center;">
-    <p style="display: inline-block;
-    text-decoration: underline;">Total Time Spent</p>
-    <p style="padding: 4%">{{totalTimeSpent}}</p>
-  </div>
-  <div class="end-license">
+
+  <div class="endpage-player-license">
     <b>{{licenseAttribute}}</b>
   </div>
 </div>

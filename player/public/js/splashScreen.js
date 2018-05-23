@@ -30,7 +30,7 @@ var splashScreen = {
         EkstepRendererAPI.addEventListener("renderer:content:start", splashScreen.hide);
     },
     createHtml: function() {
-        var html = '<img src="' + splashScreen.config.bgImage + '" class="gc-loader-img" onerror="this.style.display=\'none\'" /><P class="splashText" id="splashTextId"> Loading your content ... </p><div id="progressArea"><div id="progressBar"></div><p id="progressCount" class="font-lato gc-loader-prog"></p></div><a href="' + splashScreen.config.webLink + '" target="_blank"><div id="splashScreen" class="splashScreen"> <img src="' + splashScreen.config.icon + '" class="splash-icon " onerror="this.style.display=\'none\'" /> <span>' + splashScreen.config.text + '</span> </div></a>';
+        var html = '<img src="' + splashScreen.config.bgImage + '" class="gc-loader-img" onerror="this.style.display=\'none\'" /><P class="splashText" id="splashTextId"> Loading your content</p><div id="progressArea"><div id="progressBar"></div><p id="progressCount" class="font-lato gc-loader-prog"></p></div><a href="' + splashScreen.config.webLink + '" target="_blank"><div id="splashScreen" class="splashScreen"> <img src="' + splashScreen.config.icon + '" class="splash-icon " onerror="this.style.display=\'none\'" /> <span>' + splashScreen.config.text + '</span> </div></a>';
         return html;
     },
 
@@ -42,7 +42,7 @@ var splashScreen = {
     },
 
     loadContentDetails: function(eve, data) {
-        $("#splashTextId").text(data.name);
+       // $("#splashTextId").text(data.name);
     },
 
     show: function() {
