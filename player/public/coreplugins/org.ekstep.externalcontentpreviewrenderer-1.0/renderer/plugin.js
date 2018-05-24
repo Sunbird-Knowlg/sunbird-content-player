@@ -15,9 +15,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             jQuery(iframediv).click(function (event) {
                 setTimeout(function () {
                     var newWindow = window.open(window.location.origin + '/learn/redirect', '_blank')
-
-                    newWindow.redirectUrl = ((data.artifactUrl) +
-                        '#&contentId=' + data.identifier)
+                    newWindow.redirectUrl = ((data.artifactUrl) + '#&contentId=' + data.identifier)
                     newWindow.timetobethere = 500
                 }, 200)
             });
