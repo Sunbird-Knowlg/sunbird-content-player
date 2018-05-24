@@ -7,6 +7,5 @@
     "publishedDate": "",
     "renderer": {
         "main": "renderer/plugin.js"
-    },
-    "dependencies": []
+    }
 }
