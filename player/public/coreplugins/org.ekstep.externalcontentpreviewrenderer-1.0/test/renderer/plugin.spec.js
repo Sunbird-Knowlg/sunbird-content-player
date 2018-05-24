@@ -1,7 +1,4 @@
 describe('base Launcher for external url preview', function () {
-    // Renderer plugin can't be tested as of now
-    // Please move the logic to other classes and test them independently
-    // Let the plugin class delegate functionality to these classes
     var baseLauncher;
     var data = {
         artifactUrl: "http://www.dailymotion.com/video/xj4qo4",
@@ -13,11 +10,11 @@ describe('base Launcher for external url preview', function () {
     };
     beforeAll(function (done) {
         var instance = this;
-        org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies('org.ekstep.externalcontentpreviewrenderer', '1.0', 'plugin', undefined, function () {
-            baseLauncher = org.ekstep.externalcontentpreviewrenderer.prototype;
+        org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies('org.ekstep.extcontentpreview', '1.0', 'plugin', undefined, function () {
+            baseLauncher = org.ekstep.extcontentpreview.prototype;
             done()
         });
-        // Loading html renderer plugin 
+        // Mock data 
         request = { "url": "http://www.dailymotion.com/video/xxw52s" };
         resp = {
             "id": "api.plugin.external-url-preview.fetch-meta",
@@ -51,8 +48,8 @@ describe('base Launcher for external url preview', function () {
   
     it('It should inovoke initLauncher of external url', function (done) {
         spyOn(baseLauncher, "initLauncher").and.callThrough();
-        baseLauncher.manifest = org.ekstep.pluginframework.pluginManager.plugins['org.ekstep.externalcontentpreviewrenderer'].m
-        baseLauncher = org.ekstep.externalcontentpreviewrenderer.prototype;
+        baseLauncher.manifest = org.ekstep.pluginframework.pluginManager.plugins['org.ekstep.extcontentpreview'].m
+        baseLauncher = org.ekstep.extcontentpreview.prototype;
         baseLauncher.initLauncher();
         expect(baseLauncher.initLauncher).toHaveBeenCalled();
         done();
@@ -62,13 +59,8 @@ describe('base Launcher for external url preview', function () {
         var bindHtml = function (err, htmlString) {
             return '<div><p> No Preview available </p></div>';
         }
-
-
         // spyOn(baseLauncher, "getPreviewFromURL").and.callThrough();
         // baseLauncher.getPreviewFromURL(data.artifactUrl, this.bindHtml);
-
-
-
         spyOn(EkstepRendererAPI, 'dispatchEvent').and.callThrough()
         expect(baseLauncher.getPreviewFromURL).toHaveBeenCalled();
         setTimeout(function () {

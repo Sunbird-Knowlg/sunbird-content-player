@@ -11,27 +11,19 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         jQuery(this.manifest.id).remove();
         var iframediv = document.createElement('div');
         this.getPreviewFromURL(data.artifactUrl, function (err, htmlString) {
-            if (!err) {
-                iframediv.innerHTML = htmlString;
-                jQuery(iframediv).on(
-                    'click', this.handleDivClick
-                );
-                EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
-                instance.addToGameArea(iframediv);
-            }
-            else {
-                console.log(err);
-            }
+            iframediv.innerHTML = htmlString;
+            jQuery(iframediv).click(function (event) {
+                setTimeout(function () {
+                    var newWindow = window.open(window.location.origin + '/learn/redirect', '_blank')
+
+                    newWindow.redirectUrl = ((data.artifactUrl) +
+                        '#&contentId=' + data.identifier)
+                    newWindow.timetobethere = 500
+                }, 200)
+            });
+            EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
+            instance.addToGameArea(iframediv);
         });
-        handleDivClick = function (e) {
-            setTimeout(function () {
-                var newWindow = window.open(window.location.origin + window.top.location.pathname +
-                    '#!/redirect', '_blank');
-                newWindow.redirectUrl = ((data.artifactUrl) +
-                    '#&contentId=' + data.identifier)
-                newWindow.timetobethere = 500
-            }, 200)
-        }
     },
     fetchUrlMeta: function (url, cb) {
         return jQuery.ajax({
@@ -73,8 +65,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
 
     reset: function () {
-        this.currentIndex = 50;
+        this.currentIndex = 20;
         this.totalIndex = 100;
     }
 });
-//# sourceURL=externalcontenetpreviewrenderer.js
+//# sourceURL=extcontentpreview.js
