@@ -105,7 +105,7 @@ AppConfig = {
     splash: {
         text: "Powered by EkStep",
         icon: "assets/icons/icn_genie.png",
-        bgImage: "assets/icons/background_1.png",
+        bgImage: "assets/icons/splacebackground_1.png",
         webLink: "https://www.ekstep.in"
     },
     showEndPage: false,
