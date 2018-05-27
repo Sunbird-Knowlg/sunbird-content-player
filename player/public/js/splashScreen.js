@@ -42,7 +42,7 @@ var splashScreen = {
     },
 
     loadContentDetails: function(eve, data) {
-       // $("#splashTextId").text(data.name);
+       $("#splashTextId").text(data.name);
     },
 
     show: function() {

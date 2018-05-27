@@ -20,16 +20,16 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                 .then(function(score) {
                     if (score && score.total_questions) {
                         $scope.$apply(function() {
-                            $scope.totalScore = (score.total_correct + "/" + score.total_questions);
+                            $scope.score = (score.total_correct + "/" + score.total_questions);
                         });
                     } else {
-                        $scope.totalScore = '--';
+                        $scope.score = undefined;
                     }
                 })
         } else {
-            $scope.totalScore = '--';
+            $scope.score = undefined;
         }
-    }
+    };
 
     $scope.replayContent = function() {
         var data = {
@@ -58,10 +58,10 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         } else {
             $scope.showFeedbackArea = false;
         }
-    }
+    };
     $scope.openGenie = function(){
         EkstepRendererAPI.dispatchEvent('renderer:genie:click');
-    }
+    };
     
     $scope.handleEndpage = function() {
         $scope.setLicense();
@@ -90,7 +90,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         } else {
               console.warn('Telemetry service end is already logged Please log start telemetry again');
         }
-    }
+    };
     $scope.initEndpage = function() {
         $scope.playerMetadata = content;
         $scope.genieIcon = EkstepRendererAPI.resolvePluginResource("org.sunbird.player.endpage", "1.0", "renderer/assets/home.png");
