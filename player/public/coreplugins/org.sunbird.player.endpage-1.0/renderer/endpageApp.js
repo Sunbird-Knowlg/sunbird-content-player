@@ -14,6 +14,23 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         $scope.licenseAttribute = $scope.playerMetadata.license || 'Licensed under CC By 4.0 license'
     };
 
+    $scope.getTotalScore = function(id) {
+        if ("undefined" != typeof cordova) {
+            org.ekstep.service.content.getLearnerAssessment(GlobalContext.user.uid, id, GlobalContext.game.contentExtras)
+                .then(function(score) {
+                    if (score && score.total_questions) {
+                        $scope.$apply(function() {
+                            $scope.score = (score.total_correct + "/" + score.total_questions);
+                        });
+                    } else {
+                        $scope.score = undefined;
+                    }
+                })
+        } else {
+            $scope.score = undefined;
+        }
+    };
+
     $scope.replayContent = function() {
         var data = {
             'interactId' : 'ge_replay',
@@ -41,10 +58,10 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         } else {
             $scope.showFeedbackArea = false;
         }
-    }
+    };
     $scope.openGenie = function(){
         EkstepRendererAPI.dispatchEvent('renderer:genie:click');
-    }
+    };
     
     $scope.handleEndpage = function() {
         $scope.setLicense();
@@ -64,6 +81,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         }, 1000);
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         $scope.setTotalTimeSpent();
+        $scope.getTotalScore($rootScope.content.identifier);
         if (TelemetryService.instance.telemetryStartActive()) {
                 var telemetryEndData = {};
                 telemetryEndData.stageid = getCurrentStageId();
@@ -72,9 +90,8 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         } else {
               console.warn('Telemetry service end is already logged Please log start telemetry again');
         }
-    }
+    };
     $scope.initEndpage = function() {
-        
         $scope.playerMetadata = content;
         $scope.genieIcon = EkstepRendererAPI.resolvePluginResource("org.sunbird.player.endpage", "1.0", "renderer/assets/home.png");
         $scope.replayIcon = EkstepRendererAPI.resolvePluginResource("org.sunbird.player.endpage", "1.0", "renderer/assets/icn_replay.png");
@@ -95,4 +112,3 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         $scope.safeApply();
     });
 });
-
