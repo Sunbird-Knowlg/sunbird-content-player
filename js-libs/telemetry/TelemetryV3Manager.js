@@ -15,7 +15,7 @@ TelemetryV3Manager = Class.extend({
 
       //Adding Details values
       configData['cdata'] = TelemetryService._correlationData;
-      configData['env'] = "ContentPlayer";
+      configData['env'] = "contentplayer";
       configData['uid'] = TelemetryService._user.uid || 'anonymous';
       configData['channel'] = configData.channel || 'in.ekstep';
       configData['object'] = { id: TelemetryService.getGameId(), type: 'Content', ver: TelemetryService.getGameVer()};
