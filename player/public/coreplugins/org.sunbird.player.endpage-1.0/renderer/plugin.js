@@ -22,7 +22,7 @@ org.ekstep.contentrenderer.baseEndepage.extend({
         EkstepRendererAPI.dispatchEvent("renderer:add:template", {templatePath: this.templatePath, scopeVariable: this._ngScopeVar, toElement: '#pluginTemplate'});
     },
     gotTohome: function() {
-        if (undefined != typeof cordova) {
+        if (!isbrowserpreview) {
             EkstepRendererAPI.hideEndPage();
             stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " ";
             TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {
@@ -31,5 +31,4 @@ org.ekstep.contentrenderer.baseEndepage.extend({
             exitApp();
         };
     }
-
 })

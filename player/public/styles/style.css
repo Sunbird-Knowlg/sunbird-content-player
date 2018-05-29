@@ -90,9 +90,9 @@
     position: absolute;
     top: 20vh;
     width: 100vw;
-    text-transform: uppercase;
-    color: #0080ff;
     text-align: center;
+    text-transform: uppercase;
+    color: #494949;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.5em;
@@ -101,8 +101,8 @@
     -webkit-box-orient: vertical;
     height: auto;
     -webkit-line-clamp: 2;
-    font-size: 10vh;
-    -webkit-text-stroke: 0.2vh #0080ff;
+    font-size: 9vh;
+    -webkit-text-stroke: 0.2vh #009e81;
 }
 
 .splashScreen {
@@ -1800,7 +1800,7 @@ body {
     left: 25vw;
     top: 50vh;
     width: 50vw;
-    height: 4em;
+    height: 2em;
     text-align: center;
     border-radius: 90px;
     background-color: #ddd;
@@ -1808,20 +1808,20 @@ body {
 
 .gc-loader-prog {
     position: absolute;
-    height: 4em;
+    height: 2em;
     color: white;
     width: 100%;
     font-weight: bold;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 4em;
+    line-height: 2em;
     display: -webkit-box;
     -webkit-box-orient: vertical;
 }
 
 #progressBar {
     position: absolute;
-    height: 4em;
+    height: 2em;
     border-radius: 90px;
     background-color: #e67300;
 }
