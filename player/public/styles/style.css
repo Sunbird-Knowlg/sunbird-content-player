@@ -90,6 +90,7 @@
     position: absolute;
     top: 20vh;
     width: 100vw;
+    text-align: center;
     text-transform: uppercase;
     color: #494949;
     overflow: hidden;
