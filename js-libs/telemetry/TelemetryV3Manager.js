@@ -15,7 +15,7 @@ TelemetryV3Manager = Class.extend({
 
       //Adding Details values
       configData['cdata'] = TelemetryService._correlationData;
-      configData['env'] = configData.mode || "ContentPlayer";
+      configData['env'] = "contentplayer";
       configData['uid'] = TelemetryService._user.uid || 'anonymous';
       configData['channel'] = configData.channel || 'in.ekstep';
       configData['object'] = { id: TelemetryService.getGameId(), type: 'Content', ver: TelemetryService.getGameVer()};
@@ -56,7 +56,7 @@ TelemetryV3Manager = Class.extend({
             this._start.pop();
             var edata = {
               "type" : data.type || "content",
-              "mode" : this._config['env'],
+              "mode" : data.mode || this._config.mode,
               "pageid" : data.pageid || data.stageid,
               "summary" : data.summary || [{"progress": data.progress || 50}]
             }            
