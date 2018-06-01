@@ -22,8 +22,8 @@ var TelemetrySyncManager = {
         console.log("Telemetry Events ", telemetryEvent);
         var instance = TelemetrySyncManager;
         instance._teleData.push(Object.assign({},telemetryEvent));
-        if((telemetryEvent.eid.toUpperCase() == "END") || (instance._teleData.length >= Telemetry.config.batchsize)) {
-            var telemetryData = instance._teleData;
+        if((telemetryEvent.eid.toUpperCase() === "END") || (instance._teleData.length >= Telemetry.config.batchsize)) {
+            var telemetryData = instance._teleData.splice(0, Telemetry.config.batchsize);
             var telemetryObj = {
                 "id": "ekstep.telemetry",
                 "ver": Telemetry._version,
@@ -43,9 +43,9 @@ var TelemetrySyncManager = {
                 headers: headersParam,
                 data: JSON.stringify(telemetryObj)
             }).done(function(resp) {
-                instance._teleData = [];
                 console.log("Telemetry API success", resp);
             }).fail(function(error, textStatus, errorThrown) {
+                instance.pushAll(telemetryData);
                 if (error.status == 403) {
                     console.error("Authentication error: ", error);
                 } else {
@@ -53,6 +53,13 @@ var TelemetrySyncManager = {
                 }
             });
         }
+    },
+    pushAll:function(events){
+       TelemetrySyncManager._teleData.push(events);
+       TelemetrySyncManager._teleData = TelemetrySyncManager._teleData.reduce(function (key, val) {              
+            return key.concat(val);
+        }, []); // Faltting the array upto 1 level.
+
     }
 }
 if (typeof document != 'undefined') {
