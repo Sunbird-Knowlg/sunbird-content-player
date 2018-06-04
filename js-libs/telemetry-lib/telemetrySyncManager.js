@@ -45,7 +45,7 @@ var TelemetrySyncManager = {
             }).done(function(resp) {
                 console.log("Telemetry API success", resp);
             }).fail(function(error, textStatus, errorThrown) {
-                instance.pushAll(telemetryData);
+                instance.mergeArray(telemetryData);
                 if (error.status == 403) {
                     console.error("Authentication error: ", error);
                 } else {
@@ -54,12 +54,8 @@ var TelemetrySyncManager = {
             });
         }
     },
-    pushAll:function(events){
-       TelemetrySyncManager._teleData.push(events);
-       TelemetrySyncManager._teleData = TelemetrySyncManager._teleData.reduce(function (key, val) {              
-            return key.concat(val);
-        }, []); // Faltting the array upto 1 level.
-
+    mergeArray: function(events) {
+        TelemetrySyncManager._teleData = TelemetrySyncManager._teleData.concat(events);
     }
 }
 if (typeof document != 'undefined') {
