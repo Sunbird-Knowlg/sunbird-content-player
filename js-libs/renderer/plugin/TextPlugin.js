@@ -27,6 +27,10 @@ var TextPlugin = Plugin.extend({
      * @memberof TextPlugin
      */
     _render: true,
+    /**
+     * Contains fonts which doesn't support default baseline config for WYSIWYG.
+     */
+    topBaselineFonts: ["NotoSans", "NotoSansKannada", "NotoNastaliqUrdu"],
 
     /**
      *   Invoked by framework when plugin instance created/renderered on stage,
@@ -76,8 +80,8 @@ var TextPlugin = Plugin.extend({
         var text = new createjs.Text(textStr, font, data.color || '#000000');
         text.lineWidth = dims.w;
         text.x = dims.x;
-        text.y = dims.y;
-        text.lineHeight = lineHeight * (text.getMeasuredLineHeight());
+        text.y = dims.y * data.offsetY; // Adding offset value
+        text.lineHeight = lineHeight;   // Using lineheight coming from ecml(not using createjs function to calculate lineheight)
         text.outline = outline;
 
         // H and V alignment
@@ -94,6 +98,7 @@ var TextPlugin = Plugin.extend({
             text.regX = -dims.w / 2;
         }
 
+        // Refactor this code(remove textbaseline functionality)
         if (valign == 'top') {
             text.y = dims.y;
             text.textBaseline = 'hanging';
@@ -108,10 +113,12 @@ var TextPlugin = Plugin.extend({
                 text.textBaseline = 'hanging';
             }
         }
-
-        if (data.textBaseline) {
-            text.textBaseline = data.textBaseline;
-        }
+        
+        text.textBaseline = this.getBaseline(); // Fetching baseline of text;
+        // Removing baseline of text(it is different for different fonts)
+        // if (data.textBaseline) {
+        //     text.textBaseline = data.textBaseline;
+        // }
 
         text.textAlign = align;
         text.valign = valign;
@@ -134,6 +141,15 @@ var TextPlugin = Plugin.extend({
             this._self.text = textStr;
             Renderer.update = true;
         }
+    },
+    /**
+     * This method returns the required baseline of fonts for WYSIWYG
+     * Called from initPlugin method
+     * @param font {string} fontfamily name
+     * @memberof TextPlugin
+     */
+    getBaseline: function(font) {
+        
     }
 });
 PluginManager.registerPlugin('text', TextPlugin);
