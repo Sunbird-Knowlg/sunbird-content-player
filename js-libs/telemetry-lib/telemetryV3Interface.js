@@ -65,7 +65,8 @@ var EkTelemetry = (function() {
     this.visitRequiredFields = ["objid","objtype"],
     this.questionRequiredFields = ["id","maxscore","exlength","desc","title"],
     this.pdataRequiredFields = ["id"],
-    this.targetObjectRequiredFields = ["type","id"],
+    this.targetObjectRequiredFields = ["type","id"];
+    this.ajv = new Ajv({schemas: telemetrySchema});
 
     /**
      * Which is used to initialize the telemetry event
@@ -443,6 +444,12 @@ var EkTelemetry = (function() {
      */
     instance._dispatch = function(message) {
         message.mid = message.eid + ':' + CryptoJS.MD5(JSON.stringify(message)).toString();
+        var validate = ajv.getSchema('http://api.ekstep.org/telemetry/' + message.eid.toLowerCase())
+        var valid = validate(data)
+        if (!valid) { 
+          console.error('Invalid Event: ' + this.ajv.errorsText(validate.errors))
+          return;
+        }
         if (telemetryInstance.runningEnv === 'client') {
             if (!message.context.did) {
                 if (!EkTelemetry.fingerPrintId) {
