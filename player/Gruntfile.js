@@ -121,6 +121,8 @@ module.exports = function(grunt) {
             },
             telemetryLib: {
                 src: [
+            	    '../js-libs/telemetry-lib/ajv.min.js',
+            	    '../js-libs/telemetry-lib/telemetry-spec.js',
                     '../js-libs/telemetry-lib/detectClient.js',
                     '../js-libs/telemetry-lib/md5.js',
                     '../js-libs/telemetry-lib/fingerprint2.min.js',
