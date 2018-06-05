@@ -4,6 +4,11 @@
  * @author Akash Gupta <Akash.Gupta@tarento.com>
  */
 
+
+if(typeof document == 'undefined'){
+	var Ajv = require('ajv')
+};
+
 var libraryDispatcher = {
     dispatch: function(event) {
         if (typeof document != 'undefined') {
@@ -55,6 +60,7 @@ var EkTelemetry = (function() {
         "rollup": {}
     },
     this.runningEnv = 'client';
+    this.isValidationRequired = true;
     this._globalObject = {};
     this.startData = [];
     this.ajv = new Ajv({schemas: telemetrySchema});
@@ -150,7 +156,7 @@ var EkTelemetry = (function() {
      */
     this.ektelemetry.feedback = function(data, options) {
         var eksData = {
-            "rating": data.rating || '',
+            "rating": data.rating,
             "comments": data.comments || ''
         }
         instance.updateValues(options);
@@ -320,6 +326,7 @@ var EkTelemetry = (function() {
         contentId && (telemetryInstance._globalObject.id = contentId);
         contentVer && (telemetryInstance._globalObject.ver = contentVer);
         config.runningEnv && (telemetryInstance.runningEnv = config.runningEnv);
+        config.isValidationRequired && (telemetryInstance.isValidationRequired = config.isValidationRequired);
         config.batchsize = config.batchsize ? (config.batchsize < 10 ? 10 : (config.batchsize > 1000 ? 1000 : config.batchsize)) : _defaultValue.batchsize;
         EkTelemetry.config = Object.assign(_defaultValue, config);
         EkTelemetry.initialized = true;
@@ -334,12 +341,14 @@ var EkTelemetry = (function() {
      */
     instance._dispatch = function(message) {
         message.mid = message.eid + ':' + CryptoJS.MD5(JSON.stringify(message)).toString();
-        var validate = ajv.getSchema('http://api.ekstep.org/telemetry/' + message.eid.toLowerCase())
-        var valid = validate(message)
-        if (!valid) { 
-          console.error('Invalid Event: ' + ajv.errorsText(validate.errors))
-          return;
-        }
+        if(telemetryInstance.isValidationRequired){
+	        var validate = ajv.getSchema('http://api.ekstep.org/telemetry/' + message.eid.toLowerCase())
+	        var valid = validate(message)
+	        if (!valid) { 
+	          console.error('Invalid Event: ' + ajv.errorsText(validate.errors))
+	          return;
+	        }
+    	}
         if (telemetryInstance.runningEnv === 'client') {
             if (!message.context.did) {
                 if (!EkTelemetry.fingerPrintId) {
