@@ -13,9 +13,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.getPreviewFromURL(data.artifactUrl, function (err, htmlString) {
             iframediv.innerHTML = htmlString;
             jQuery(iframediv).click(function (event) {
+                urlArray = window.parent.location.pathname.split('/');
                 setTimeout(function () {
-                    var newWindow = window.open(window.location.origin + '/learn/redirect', '_blank')
-                    newWindow.redirectUrl = ((data.artifactUrl) + '#&contentId=' + data.identifier)
+                    var newWindow = window.open(window.location.origin + window.top.location.pathname +
+                        '/learn/redirect', '_blank');
+                    if (urlArray.length > 5 && urlArray[1] === 'learn' && urlArray[2] === 'course') {
+                        newWindow.redirectUrl = ((data.artifactUrl) + '#&courseId=' + urlArray[3] + '#&batchId=' + urlArray[4] + '#&contentId='
+                            + data.identifier + '#&uid' + "")
+                    } else {
+                        newWindow.redirectUrl = ((data.artifactUrl) + '#&contentId=' + data.identifier)
+                    }
                     newWindow.timetobethere = 500
                 }, 200)
             });
@@ -23,31 +30,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.addToGameArea(iframediv);
         });
     },
-    fetchUrlMeta: function (url, cb) {
-        return jQuery.ajax({
-            url: window.location.origin + '/url/v1/fetchmeta',
-            type: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: JSON.stringify({
-                "request": {
-                    "url": url
-                }
-            })
-        });
-    },
     getPreviewFromURL: function (url, cb) {
         var instance = this;
-        this.fetchUrlMeta(url).done(function (resp) {
+        org.ekstep.service.web.getExtUrlMeta(url).then(function (resp) {
             if (resp && resp.result) {
                 cb(null, instance.generatePreview(resp.result));
             }
             else {
                 cb(null, instance.generatePreview({}));
             }
-        }).fail(function (error, textStatus, errorThrown) {
-            cb(null, instance.generatePreview({}))
+        }).catch(function (err) {
+            console.error("Failed: getExtUrlMeta()", err);
         });
     },
     generatePreview: function (data) {
