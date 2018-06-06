@@ -184,7 +184,7 @@ describe("Telemetry Validation", function() {
         it(" When type: undefined, Expect error: Invalid ", function(done) {
             eventData.type = undefined;
             callEndEvent(function(err) {
-                expect(err).not.toBeDefined();
+                expect(err).toBeDefined();
                 expect(err.split(' ')).toContain("Invalid");
                 done();
             });
