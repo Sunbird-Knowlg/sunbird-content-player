@@ -138,4 +138,35 @@ describe("Telemetry Validation", function() {
 
 
     });
+    describe("ASSESS Event", function() {
+        var callAssessEvent = function(callback) {
+            cb = callback;
+            try {
+                document.addEventListener('TelemetryEvent', telemetryEventSuccess);
+                EkTelemetry.assess(eventData, {});
+            } catch (e) {
+                cb(e);
+            }
+        }
+        beforeEach(function(done) {
+            eventData = {"item":{"id":"wings.en.A.2","maxscore":1,"exlength":0,"params":[],"uri":"","title":"Write in numerals","mmc":[],"mc":[],"desc":""},"index":1,"pass":"No","score":1,"resvalues":[],"duration":141};
+            done();
+        })
+        it(" When `valid`, Expect `no error` ", function(done) {
+            callAssessEvent(function(res) {
+                expect(res).toBeDefined();
+                done();
+            });
+        });
+        it(" When `invalid`, Expect `throw error` ", function(done) {
+            eventData.item = undefined;
+            callAssessEvent(function(error) {
+                expect(error).toBeDefined();
+                var errors = error.split(' ');
+                console.log("Errors", errors);
+                expect(errors).toMatch(/'item'/);
+                done();
+            });
+        });
+    });
 });
