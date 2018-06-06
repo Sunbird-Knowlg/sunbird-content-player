@@ -35,130 +35,142 @@ describe("Telemetry Validation", function() {
             done();
         })
         describe('Configurations', function() {
-                beforeEach(function(done) {
-                    EkTelemetry.initialized = false;
+            beforeEach(function(done) {
+                EkTelemetry.initialized = false;
+                done();
+            });
+            describe('Env', function() {
+                it(" When env: null, Expect env: ContentPlayer", function(done) {
+                    configurations.env = null;
+                    callStartEvent(function(res) {
+                        expect(res.context.env).toBe('ContentPlayer');
+                        done();
+                    });
+                });
+                it(" When env: undefined, Expect env: ContentPlayer", function(done) {
+                    configurations.env = undefined;
+                    callStartEvent(function(res) {
+                        expect(res.context.env).toBe('ContentPlayer');
+                        done();
+                    });
+                });
+                it(' When env: " " , Expect env: " "', function(done) {
+                    configurations.env = "";
+                    callStartEvent(function(res) {
+                        expect(res.context.env).toBe('ContentPlayer');
+                        done();
+                    });
+                });
+                it(" When env: preview, Expect env: preview ", function(done) {
+                    configurations.env = 'preview';
+                    callStartEvent(function(res) {
+                        expect(res.context.env).toBe('preview');
+                        done();
+                    });
+                });
+            });
+            describe('Channel', function() {
+                it("When channel: undefined, Expect channel: in.ekstep", function(done) {
+                    configurations.channel = undefined;
+                    callStartEvent(function(res) {
+                        expect(res.context.channel).toBe('in.ekstep');
+                        done();
+                    });
+                });
+                it("When channel: null , Expect channel: in.ekstep", function(done) {
+                    configurations.channel = null;
+                    callStartEvent(function(res) {
+                        expect(res.context.channel).toBe('in.ekstep');
+                        done();
+                    });
+                });
+                it('When channel: " " , Expect channel: in.ekstep', function(done) {
+                    configurations.channel = "";
+                    callStartEvent(function(res) {
+                        expect(res.context.channel).toBe('in.ekstep');
+                        done();
+                    });
+                });
+                it(" When channel: in.sunbird, Expect channel: in.sunbird ", function(done) {
+                    configurations.channel = 'x';
+                    callStartEvent(function(res) {
+                        expect(res.context.channel).toBe('x');
+                        done();
+                    });
+                });
+            });
+
+        })
+        describe('Event Data', function() {
+            it('When valid event, Expect no error', function(done) {
+                callStartEvent(function(res) {
+                    expect(res).not.toBe(undefined);
+                    expect(res.eid).toBe('START')
                     done();
                 });
-                describe('Env', function() {
-                    it(" When env: null, Expect env: ContentPlayer", function(done) {
-                        configurations.env = null;
-                        callStartEvent(function(res) {
-                            expect(res.context.env).toBe('ContentPlayer');
-                            done();
-                        });
-                    });
-                    it(" When env: undefined, Expect env: ContentPlayer", function(done) {
-                        configurations.env = undefined;
-                        callStartEvent(function(res) {
-                            expect(res.context.env).toBe('ContentPlayer');
-                            done();
-                        });
-                    });
-                    it(' When env: " " , Expect env: " "', function(done) {
-                        configurations.env = "";
-                        callStartEvent(function(res) {
-                            expect(res.context.env).toBe('ContentPlayer');
-                            done();
-                        });
-                    });
-                    it(" When env: preview, Expect env: preview ", function(done) {
-                        configurations.env = 'preview';
-                        callStartEvent(function(res) {
-                            expect(res.context.env).toBe('preview');
-                            done();
-                        });
-                    });
-                });
-                describe('Channel', function() {
-                    it("When channel: undefined, Expect channel: in.ekstep", function(done) {
-                        configurations.channel = undefined;
-                        callStartEvent(function(res) {
-                            expect(res.context.channel).toBe('in.ekstep');
-                            done();
-                        });
-                    });
-                    it("When channel: null , Expect channel: in.ekstep", function(done) {
-                        configurations.channel = null;
-                        callStartEvent(function(res) {
-                            expect(res.context.channel).toBe('in.ekstep');
-                            done();
-                        });
-                    });
-                    it('When channel: " " , Expect channel: in.ekstep', function(done) {
-                        configurations.channel = "";
-                        callStartEvent(function(res) {
-                            expect(res.context.channel).toBe('in.ekstep');
-                            done();
-                        });
-                    });
-                    it(" When channel: in.sunbird, Expect channel: in.sunbird ", function(done) {
-                        configurations.channel = 'x';
-                        callStartEvent(function(res) {
-                            expect(res.context.channel).toBe('x');
-                            done();
-                        });
-                    });
-                });
-
             })
-            // describe('Event Data', function() {
-            //     it('When type: undefined, Expect error: type is required ', function(done) {
-            //         eventData.type = undefined;
-            //         callStartEvent(function(err) {
-            //             expect(err).not.toBe(undefined);
-            //             expect(err.split(' ')).toContain("Invalid");
-            //             done();
-            //         });
-            //     });
-            //     it('When type: null, Expect error: type is required', function(done) {
-            //         eventData.type = null;
-            //         callStartEvent(function(err) {
-            //             expect(err).not.toBe(undefined);
-            //             expect(err.split(' ')).toContain("Invalid");
-            //             done();
-            //         });
-            //     });
-            //     it('When type: " ", Expect error: type is required', function(done) {
-            //         eventData.type = null;
-            //         callStartEvent(function(err) {
-            //             expect(err).not.toBe(undefined);
-            //             expect(err.split(' ')).toContain("Invalid");
-            //             done();
-            //         });
-            //     });
-            //     it('When type: content, Expect type: content', function(done) {
-            //         eventData.type = 'content';
-            //         callStartEvent(function(res) {
-            //             expect(res).not.toBe(undefined);
-            //             expect(res.edata.type).toBe('content');
-            //             done();
-            //         });
-            //     });
-            //     it('When mode: preview, Expect mode: preview ', function(done) {
-            //         eventData.mode = 'preview';
-            //         callStartEvent(function(res) {
-            //             expect(res).not.toBe(undefined);
-            //             expect(res.edata.mode).toBe('preview');
-            //             done();
-            //         });
-            //     });
-            //     it('When mode: undefined, Expect mode: undefined ', function(done) {
-            //         eventData.mode = undefined;
-            //         callStartEvent(function(res) {
-            //             expect(res).not.toBe(undefined);
-            //             expect(res.edata.mode).toBe(undefined);
-            //             done();
-            //         });
-            //     });
-            //     it('When mode: " ", Expect mode: " " ', function(done) {
-            //         eventData.mode = '';
-            //         callStartEvent(function(res) {
-            //             expect(res).not.toBe("");
-            //             expect(res.edata.mode).toBe("");
-            //             done();
-            //         });
-            //     });
-            // })
+            describe('type', function() {
+                it('When type: undefined, Expect error: type is required ', function(done) {
+                    eventData.type = undefined;
+                    callStartEvent(function(err) {
+                        expect(err).not.toBe(undefined);
+                        expect(err.split(' ')).toContain("Invalid");
+                        done();
+                    });
+                });
+                it('When type: null, Expect error: type is required', function(done) {
+                    eventData.type = null;
+                    callStartEvent(function(err) {
+                        expect(err).not.toBe(undefined);
+                        expect(err.split(' ')).toContain("Invalid");
+                        done();
+                    });
+                });
+                it('When type: " ", Expect error: type is required', function(done) {
+                    eventData.type = null;
+                    callStartEvent(function(err) {
+                        expect(err).not.toBe(undefined);
+                        expect(err.split(' ')).toContain("Invalid");
+                        done();
+                    });
+                });
+                it('When type: content, Expect type: content', function(done) {
+                    eventData.type = 'content';
+                    callStartEvent(function(res) {
+                        expect(res).not.toBe(undefined);
+                        expect(res.edata.type).toBe('content');
+                        done();
+                    });
+                });
+            })
+            describe('Mode', function() {
+                it('When mode: preview, Expect mode: preview ', function(done) {
+                    eventData.mode = 'preview';
+                    callStartEvent(function(res) {
+                        expect(res).not.toBe(undefined);
+                        expect(res.edata.mode).toBe('preview');
+                        done();
+                    });
+                });
+                it('When mode: undefined, Expect mode: undefined ', function(done) {
+                    eventData.mode = undefined;
+                    callStartEvent(function(res) {
+                        expect(res).not.toBe(undefined);
+                        expect(res.edata.mode).toBe(undefined);
+                        done();
+                    });
+                });
+                it('When mode: " ", Expect mode: " " ', function(done) {
+                    eventData.mode = '';
+                    callStartEvent(function(res) {
+                        expect(res).not.toBe("");
+                        expect(res.edata.mode).toBe("");
+                        done();
+                    });
+                });
+            })
+
+        })
     });
     describe("END Event", function() {
         var callEndEvent = function(callback) {
@@ -250,7 +262,7 @@ describe("Telemetry Validation", function() {
                     done();
                 });
             });
-             it("When pass: '', Expect error: pass is required", function(done) {
+            it("When pass: '', Expect error: pass is required", function(done) {
                 eventData.pass = undefined;
                 callAssessEvent(function(error) {
                     expect(error).toBeDefined();
@@ -259,7 +271,7 @@ describe("Telemetry Validation", function() {
                     done();
                 });
             });
-             it("When pass: null, Expect error: pass is required", function(done) {
+            it("When pass: null, Expect error: pass is required", function(done) {
                 eventData.pass = undefined;
                 callAssessEvent(function(error) {
                     expect(error).toBeDefined();
