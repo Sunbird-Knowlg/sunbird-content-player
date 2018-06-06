@@ -41,28 +41,28 @@ describe("Telemetry Validation", function() {
             });
 
             describe('Channel', function() {
-                it(" When `channel: undefined`, Expect `channel:in.ekstep` ", function(done) {
+                it("When channel: undefined, Expect channel: in.ekstep", function(done) {
                     configurations.channel = undefined;
                     callStartEvent(function(res) {
                         expect(res.context.channel).toBe('in.ekstep');
                         done();
                     });
                 });
-                it(" When `channel: null `, Expect `channel: in.ekstep` ", function(done) {
+                it("When channel: null , Expect channel: in.ekstep", function(done) {
                     configurations.channel = null;
                     callStartEvent(function(res) {
                         expect(res.context.channel).toBe('in.ekstep');
                         done();
                     });
                 });
-                it(" When `channel: ' ' `, Expect `channel: in.ekstep` ", function(done) {
-                    configurations.channel = ' ';
+                it('When channel: " " , Expect channel: in.ekstep', function(done) {
+                    configurations.channel = "";
                     callStartEvent(function(res) {
                         expect(res.context.channel).toBe('in.ekstep');
                         done();
                     });
                 });
-                it(" When `channel: x`, Expect `channel:x` ", function(done) {
+                it(" When channel: in.sunbird, Expect channel: in.sunbird ", function(done) {
                     configurations.channel = 'x';
                     callStartEvent(function(res) {
                         expect(res.context.channel).toBe('x');
@@ -71,28 +71,28 @@ describe("Telemetry Validation", function() {
                 });
             });
             describe('Env', function() {
-                it(" When `env: null`, Expect `env: ContentPlayer` ", function(done) {
+                it(" When env: null, Expect env: ContentPlayer", function(done) {
                     configurations.env = null;
                     callStartEvent(function(res) {
                         expect(res.context.env).toBe('ContentPlayer');
                         done();
                     });
                 });
-                it(" When `env: undefined `, Expect `env: ContentPlayer` ", function(done) {
+                it(" When env: undefined, Expect env: ContentPlayer", function(done) {
                     configurations.env = undefined;
                     callStartEvent(function(res) {
                         expect(res.context.env).toBe('ContentPlayer');
                         done();
                     });
                 });
-                it(" When `env: ' ' `, Expect `env: ' ' ` ", function(done) {
-                    configurations.env = ' ';
+                it(' When env: " " , Expect env: " "', function(done) {
+                    configurations.env = "";
                     callStartEvent(function(res) {
                         expect(res.context.env).toBe(' ');
                         done();
                     });
                 });
-                it(" When `env: preview`, Expect `env:preview` ", function(done) {
+                it(" When env: preview, Expect env:preview ", function(done) {
                     configurations.env = 'preview';
                     callStartEvent(function(res) {
                         expect(res.context.env).toBe('preview');
@@ -103,7 +103,7 @@ describe("Telemetry Validation", function() {
 
         })
         describe('Event Data', function() {
-            it('When `type:undefined`, Expect `error: type is required` ', function(done) {
+            it('When type: undefined, Expect error: type is required ', function(done) {
                 eventData.type = undefined;
                 callStartEvent(function(err) {
                     expect(err).not.toBe(undefined);
@@ -111,7 +111,7 @@ describe("Telemetry Validation", function() {
                     done();
                 });
             });
-            it('When `type:null`, Expect `error: type is required` ', function(done) {
+            it('When type: null, Expect error: type is required', function(done) {
                 eventData.type = null;
                 callStartEvent(function(err) {
                     expect(err).not.toBe(undefined);
@@ -119,7 +119,7 @@ describe("Telemetry Validation", function() {
                     done();
                 });
             });
-            it('When `type:" "`, Expect `error: type is required` ', function(done) {
+            it('When type: " ", Expect error: type is required', function(done) {
                 eventData.type = null;
                 callStartEvent(function(err) {
                     expect(err).not.toBe(undefined);
@@ -127,7 +127,7 @@ describe("Telemetry Validation", function() {
                     done();
                 });
             });
-            it('When `type:"content"`, Expect `type:content` ', function(done) {
+            it('When type: content, Expect type: content', function(done) {
                 eventData.type = 'content';
                 callStartEvent(function(res) {
                     expect(res).not.toBe(undefined);
@@ -135,7 +135,7 @@ describe("Telemetry Validation", function() {
                     done();
                 });
             });
-            it('When `mode: "preview"`, Expect `mode:preview` ', function(done) {
+            it('When mode: preview, Expect mode: preview ', function(done) {
                 eventData.mode = 'preview';
                 callStartEvent(function(res) {
                     expect(res).not.toBe(undefined);
@@ -143,7 +143,7 @@ describe("Telemetry Validation", function() {
                     done();
                 });
             });
-            it('When `mode: undefined`, Expect `mode:undefined` ', function(done) {
+            it('When mode: undefined, Expect mode: undefined ', function(done) {
                 eventData.mode = undefined;
                 callStartEvent(function(res) {
                     expect(res).not.toBe(undefined);
@@ -151,7 +151,7 @@ describe("Telemetry Validation", function() {
                     done();
                 });
             });
-            it('When `mode: " "`, Expect `mode:"" ` ', function(done) {
+            it('When mode: " ", Expect mode: " " ', function(done) {
                 eventData.mode = '';
                 callStartEvent(function(res) {
                     expect(res).not.toBe("");
@@ -175,17 +175,16 @@ describe("Telemetry Validation", function() {
             eventData = { "type": "content", "pageid": "splash", "summary": [{ "progress": 50 }] };
             done();
         })
-        it(" When `valid`, Expect `no error` ", function(done) {
+        it(" When valid event, Expect no error ", function(done) {
             callEndEvent(function(res) {
                 expect(res).toBeDefined();
                 done();
             });
         });
-        it(" When `invalid`, Expect `throw error` ", function(done) {
+        it(" When type: undefined, Expect error: Invalid ", function(done) {
             eventData.type = undefined;
             callEndEvent(function(err) {
                 expect(err).not.toBeDefined();
-                console.log("Error", err);
                 expect(err.split(' ')).toContain("Invalid");
                 done();
             });
@@ -204,16 +203,16 @@ describe("Telemetry Validation", function() {
             }
         }
         beforeEach(function(done) {
-            eventData = {"item":{"id":"wings.en.A.2","maxscore":1,"exlength":0,"params":[],"uri":"","title":"Write in numerals","mmc":[],"mc":[],"desc":""},"index":1,"pass":"No","score":1,"resvalues":[],"duration":141};
+            eventData = { "item": { "id": "wings.en.A.2", "maxscore": 1, "exlength": 0, "params": [], "uri": "", "title": "Write in numerals", "mmc": [], "mc": [], "desc": "" }, "index": 1, "pass": "No", "score": 1, "resvalues": [], "duration": 141 };
             done();
         })
-        it(" When `valid`, Expect `no error` ", function(done) {
+        it(" When valid event, Expect no error ", function(done) {
             callAssessEvent(function(res) {
                 expect(res).toBeDefined();
                 done();
             });
         });
-        it(" When `invalid`, Expect `throw error` ", function(done) {
+        it(" When item: undefined, Expect error: item ", function(done) {
             eventData.item = undefined;
             callAssessEvent(function(error) {
                 expect(error).toBeDefined();
