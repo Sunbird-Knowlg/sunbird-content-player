@@ -23,12 +23,11 @@ describe("Telemetry Validation", function() {
                 document.addEventListener('TelemetryEvent', telemetryEventSuccess);
                 EkTelemetry.start(configurations, contentId, version, eventData);
             } catch (e) {
-                expect(e).not.toBe(undefined);
+                cb(e);
             }
         }
 
         beforeEach(function(done) {
-            //console.log("parent");
             configurations = { "uid": "anonymous", "channel": "in.ekstep", "pdata": { "id": "in.ekstep", "ver": "1.0", "pid": "" }, "env": "preview", "sid": "", "did": "", "cdata": [{ "type": "worksheet", "id": "do_736298262" }], "rollup": { "l1": "", "l2": "" }, "object": { "id": "do_9823y23", "type": "Conten", "ver": "", "rollup": { "l1": "", "l2": "" } }, "batchsize": 20, "host": "https://api.ekstep.in", "endpoint": "/data/v3/telemetry", "tags": [], "apislug": "/action" }
             contentId = 'do_212432352355435435';
             version = '1.0';
@@ -38,7 +37,6 @@ describe("Telemetry Validation", function() {
         describe('Configurations', function() {
             beforeEach(function(done) {
                 EkTelemetry.initialized = false;
-                configurations = { "uid": "anonymous", "channel": "in.ekstep", "pdata": { "id": "in.ekstep", "ver": "1.0", "pid": "" }, "env": "preview", "sid": "", "did": "", "cdata": [{ "type": "worksheet", "id": "do_736298262" }], "rollup": { "l1": "", "l2": "" }, "object": { "id": "do_9823y23", "type": "Conten", "ver": "", "rollup": { "l1": "", "l2": "" } }, "batchsize": 20, "host": "https://api.ekstep.in", "endpoint": "/data/v3/telemetry", "tags": [], "apislug": "/action" }
                 done();
             });
 
@@ -104,6 +102,64 @@ describe("Telemetry Validation", function() {
             });
 
         })
+        describe('Event Data', function() {
+            it('When `type:undefined`, Expect `error: type is required` ', function(done) {
+                eventData.type = undefined;
+                callStartEvent(function(err) {
+                    expect(err).not.toBe(undefined);
+                    expect(err.split(' ')).toContain("Invalid");
+                    done();
+                });
+            });
+            it('When `type:null`, Expect `error: type is required` ', function(done) {
+                eventData.type = null;
+                callStartEvent(function(err) {
+                    expect(err).not.toBe(undefined);
+                    expect(err.split(' ')).toContain("Invalid");
+                    done();
+                });
+            });
+            it('When `type:" "`, Expect `error: type is required` ', function(done) {
+                eventData.type = null;
+                callStartEvent(function(err) {
+                    expect(err).not.toBe(undefined);
+                    expect(err.split(' ')).toContain("Invalid");
+                    done();
+                });
+            });
+            it('When `type:"content"`, Expect `type:content` ', function(done) {
+                eventData.type = 'content';
+                callStartEvent(function(res) {
+                    expect(res).not.toBe(undefined);
+                    expect(res.edata.type).toBe('content');
+                    done();
+                });
+            });
+            it('When `mode: "preview"`, Expect `mode:preview` ', function(done) {
+                eventData.mode = 'preview';
+                callStartEvent(function(res) {
+                    expect(res).not.toBe(undefined);
+                    expect(res.edata.mode).toBe('preview');
+                    done();
+                });
+            });
+            it('When `mode: undefined`, Expect `mode:undefined` ', function(done) {
+                eventData.mode = undefined;
+                callStartEvent(function(res) {
+                    expect(res).not.toBe(undefined);
+                    expect(res.edata.mode).toBe(undefined);
+                    done();
+                });
+            });
+            it('When `mode: " "`, Expect `mode:"" ` ', function(done) {
+                eventData.mode = '';
+                callStartEvent(function(res) {
+                    expect(res).not.toBe("");
+                    expect(res.edata.mode).toBe("");
+                    done();
+                });
+            });
+        })
     });
     describe("END Event", function() {
         var callEndEvent = function(callback) {
@@ -127,11 +183,10 @@ describe("Telemetry Validation", function() {
         });
         it(" When `invalid`, Expect `throw error` ", function(done) {
             eventData.type = undefined;
-            callEndEvent(function(error) {
-                expect(error).not.toBeDefined();
-                //var errors = error.split(' ');
-                console.log("Errors", errors);
-                expect(error).toMatch(/'type'/);
+            callEndEvent(function(err) {
+                expect(err).not.toBeDefined();
+                console.log("Error", err);
+                expect(err.split(' ')).toContain("Invalid");
                 done();
             });
         });
