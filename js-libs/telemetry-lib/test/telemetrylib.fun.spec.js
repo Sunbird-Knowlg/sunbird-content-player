@@ -158,14 +158,152 @@ describe("Telemetry Validation", function() {
                 done();
             });
         });
-        it(" When `invalid`, Expect `throw error` ", function(done) {
-            eventData.item = undefined;
+        describe('item', function() {
+            it("When `item: undefined`, Expect `error` ", function(done) {
+                eventData.item = undefined;
+                callAssessEvent(function(error) {
+                    expect(error).toBeDefined();
+                    var errors = error.split(' ');
+                    expect(errors).toMatch(/'item'/);
+                    done();
+                });
+            });
+            it("When `item: ''`, Expect `error` ", function(done) {
+                eventData.item = undefined;
+                callAssessEvent(function(error) {
+                    expect(error).toBeDefined();
+                    var errors = error.split(' ');
+                    expect(errors).toMatch(/'item'/);
+                    done();
+                });
+            });
+            it("When `item: null`, Expect `error` ", function(done) {
+                eventData.item = undefined;
+                callAssessEvent(function(error) {
+                    expect(error).toBeDefined();
+                    var errors = error.split(' ');
+                    expect(errors).toMatch(/'item'/);
+                    done();
+                });
+            });
+        });
+        it("When `pass: undefined`, Expect `error` ", function(done) {
+            eventData.pass = undefined;
             callAssessEvent(function(error) {
                 expect(error).toBeDefined();
                 var errors = error.split(' ');
-                console.log("Errors", errors);
-                expect(errors).toMatch(/'item'/);
+                expect(errors).toMatch(/'pass'/);
                 done();
+            });
+        });
+        describe('score', function() {
+            it("When `score: undefined`, Expect `error` ", function(done) {
+                eventData.score = undefined;
+                callAssessEvent(function(error) {
+                    expect(error).toBeDefined();
+                    var errors = error.split(' ');
+                    expect(errors).toMatch(/'score'/);
+                    done();
+                });
+            });
+            it("When `score: ''`, Expect `error` ", function(done) {
+                eventData.score = undefined;
+                callAssessEvent(function(error) {
+                    expect(error).toBeDefined();
+                    var errors = error.split(' ');
+                    expect(errors).toMatch(/'score'/);
+                    done();
+                });
+            });
+            it("When `score: null`, Expect `error` ", function(done) {
+                eventData.score = undefined;
+                callAssessEvent(function(error) {
+                    expect(error).toBeDefined();
+                    var errors = error.split(' ');
+                    expect(errors).toMatch(/'score'/);
+                    done();
+                });
+            });
+        });
+        describe('duration', function() {
+            it("When `duration: undefined`, Expect `error` ", function(done) {
+                eventData.duration = undefined;
+                callAssessEvent(function(error) {
+                    expect(error).toBeDefined();
+                    var errors = error.split(' ');
+                    expect(errors).toMatch(/'duration'/);
+                    done();
+                });
+            });
+            it("When `duration: null`, Expect `error` ", function(done) {
+                eventData.duration = undefined;
+                callAssessEvent(function(error) {
+                    expect(error).toBeDefined();
+                    var errors = error.split(' ');
+                    expect(errors).toMatch(/'duration'/);
+                    done();
+                });
+            });
+            it("When `duration: ''`, Expect `error` ", function(done) {
+                eventData.duration = undefined;
+                callAssessEvent(function(error) {
+                    expect(error).toBeDefined();
+                    var errors = error.split(' ');
+                    expect(errors).toMatch(/'duration'/);
+                    done();
+                });
+            });
+        });
+        describe('resvalues', function() {
+            it("When `resvalues: undefined`, Expect `error` ", function(done) {
+                eventData.resvalues = undefined;
+                callAssessEvent(function(error) {
+                    expect(error).toBeDefined();
+                    var errors = error.split(' ');
+                    expect(errors).toMatch(/'resvalues'/);
+                    done();
+                });
+            });
+            it("When `resvalues: null`, Expect `error` ", function(done) {
+                eventData.resvalues = undefined;
+                callAssessEvent(function(error) {
+                    expect(error).toBeDefined();
+                    var errors = error.split(' ');
+                    expect(errors).toMatch(/'resvalues'/);
+                    done();
+                });
+            });
+            it("When `resvalues: ''`, Expect `error` ", function(done) {
+                eventData.resvalues = undefined;
+                callAssessEvent(function(error) {
+                    expect(error).toBeDefined();
+                    var errors = error.split(' ');
+                    expect(errors).toMatch(/'resvalues'/);
+                    done();
+                });
+            });
+        });
+        describe('index', function() {
+            it("When `index: undefined`, Expect `no error` ", function(done) {
+                eventData.index = undefined;
+                callAssessEvent(function(res) {
+                    expect(res).toBeDefined();
+                    done();
+                });
+            });
+            it("When `index: ''`, Expect `no error` ", function(done) {
+                eventData.index = undefined;
+                callAssessEvent(function(res) {
+                    expect(res).toBeDefined();
+                    done();
+                });
+            });
+            it("When `index: null`, Expect `no error` ", function(done) {
+                eventData.index = undefined;
+                callAssessEvent(function(res) {
+                    expect(res).toBeDefined();
+                    done();
+                });
             });
         });
     });
