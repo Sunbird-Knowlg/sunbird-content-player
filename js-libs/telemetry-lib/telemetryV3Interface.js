@@ -345,8 +345,7 @@ var EkTelemetry = (function() {
 	        var validate = ajv.getSchema('http://api.ekstep.org/telemetry/' + message.eid.toLowerCase())
 	        var valid = validate(message)
 	        if (!valid) { 
-	          console.error('Invalid Event: ' + ajv.errorsText(validate.errors))
-	          return;
+               throw 'Invalid Event: ' + ajv.errorsText(validate.errors)
 	        }
     	}
         if (telemetryInstance.runningEnv === 'client') {
