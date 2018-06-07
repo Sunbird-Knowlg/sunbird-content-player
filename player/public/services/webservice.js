@@ -7,8 +7,7 @@ org.ekstep.service.web = new (org.ekstep.service.mainService.extend({
         _baseUrl: undefined,
         contentBasePath: '/content/v3/read/',
         languageBasePath: '/language/v3/',
-        telemetryBasePath: '/data/v3/telemetry',
-        extContentMetaPath: '/v1/url/fetchmeta',
+        telemetryBasePath: '/data/v3/telemetry',       
         getAPI: function() {
             return this._baseUrl + this.contentBasePath;
         },
@@ -17,10 +16,7 @@ org.ekstep.service.web = new (org.ekstep.service.mainService.extend({
         },
         getTelematyAPI: function() {
             return this._baseUrl + this.telemetryBasePath;
-        },
-        getExtUrlMetaAPI: function() {
-            return this.extContentMetaPath;
-        },
+        },       
         setBaseUrl: function(baseUrl) {
             this._baseUrl = baseUrl;
         },
@@ -117,25 +113,6 @@ org.ekstep.service.web = new (org.ekstep.service.mainService.extend({
                     map.isAvailable = true;
                     map.path = "stories/" + metadata.code;
                     resolve(map);
-                } else {
-                    console.info("err : ", resp.error)
-                }
-            });
-        });
-    },
-    getExtUrlMeta: function(url, headersParam) {
-        var instance = this;
-        return new Promise(function(resolve, reject) {
-            var headersParam = {};
-            data = JSON.stringify({
-                "request": {
-                    "url": url
-                }
-            })
-            instance.callApi(org.ekstep.service.web.api.getExtUrlMetaAPI(), 'POST', headersParam, data, function(resp) {
-                var result = {};
-                if (!resp.error) {
-                    resolve(resp);
                 } else {
                     console.info("err : ", resp.error)
                 }

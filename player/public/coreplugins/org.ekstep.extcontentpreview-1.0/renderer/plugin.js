@@ -6,22 +6,23 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     start: function () {
         var instance = this;
         this._super();
-        data = content;
+        windowContent = window.content;
         this.reset();
         jQuery(this.manifest.id).remove();
         var iframediv = document.createElement('div');
-        this.getPreviewFromURL(data.artifactUrl, function (err, htmlString) {
+        this.getPreviewFromURL(windowContent.artifactUrl, function (err, htmlString) {
             iframediv.innerHTML = htmlString;
             jQuery(iframediv).click(function (event) {
                 urlArray = window.parent.location.pathname.split('/');
+
                 setTimeout(function () {
-                    var newWindow = window.open(window.location.origin + window.top.location.pathname +
-                        '/learn/redirect', '_blank');
+                    var newWindow;
+                    newWindow = window.open(window.location.origin + '/learn/redirect', '_blank');
                     if (urlArray.length > 5 && urlArray[1] === 'learn' && urlArray[2] === 'course') {
-                        newWindow.redirectUrl = ((data.artifactUrl) + '#&courseId=' + urlArray[3] + '#&batchId=' + urlArray[4] + '#&contentId='
-                            + data.identifier + '#&uid' + "")
+                        newWindow.redirectUrl = ((windowContent.artifactUrl) + '#&courseId=' + urlArray[3] + '#&batchId=' + urlArray[4] + '#&contentId='
+                            + windowContent.identifier)
                     } else {
-                        newWindow.redirectUrl = ((data.artifactUrl) + '#&contentId=' + data.identifier)
+                        newWindow.redirectUrl = ((windowContent.artifactUrl) + '#&contentId=' + windowContent.identifier)
                     }
                     newWindow.timetobethere = 500
                 }, 200)
@@ -30,9 +31,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             instance.addToGameArea(iframediv);
         });
     },
+
     getPreviewFromURL: function (url, cb) {
         var instance = this;
-        org.ekstep.service.web.getExtUrlMeta(url).then(function (resp) {
+        org.ekstep.service.exturlrenderer.getExtUrlMeta(url).then(function (resp) {
             if (resp && resp.result) {
                 cb(null, instance.generatePreview(resp.result));
             }
@@ -56,7 +58,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
 
     reset: function () {
-        this.currentIndex = 20;
+        this.currentIndex = 50;
         this.totalIndex = 100;
     }
 });
