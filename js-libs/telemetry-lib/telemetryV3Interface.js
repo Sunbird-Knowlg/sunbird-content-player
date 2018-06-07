@@ -4,7 +4,7 @@
  * @author Akash Gupta <Akash.Gupta@tarento.com>
  */
 
-
+// To support for node server environment 
 if(typeof document == 'undefined'){
 	var Ajv = require('ajv')
 };
