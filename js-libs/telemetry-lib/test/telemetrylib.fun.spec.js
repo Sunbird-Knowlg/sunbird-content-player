@@ -220,6 +220,7 @@ describe("Telemetry Validation", function() {
         it(" When valid event, Expect no error ", function(done) {
             callAssessEvent(function(res) {
                 expect(res).toBeDefined();
+                expect(res.eid).toBe('ASSESS')
                 done();
             });
         });
@@ -234,7 +235,7 @@ describe("Telemetry Validation", function() {
                 });
             });
             it("When item: '', Expect error: item is required", function(done) {
-                eventData.item = undefined;
+                eventData.item = '';
                 callAssessEvent(function(error) {
                     expect(error).toBeDefined();
                     var errors = error.split(' ');
@@ -243,7 +244,7 @@ describe("Telemetry Validation", function() {
                 });
             });
             it("When item: null, Expect error: item is required", function(done) {
-                eventData.item = undefined;
+                eventData.item = null;
                 callAssessEvent(function(error) {
                     expect(error).toBeDefined();
                     var errors = error.split(' ');
@@ -263,7 +264,7 @@ describe("Telemetry Validation", function() {
                 });
             });
             it("When pass: '', Expect error: pass is required", function(done) {
-                eventData.pass = undefined;
+                eventData.pass = '';
                 callAssessEvent(function(error) {
                     expect(error).toBeDefined();
                     var errors = error.split(' ');
@@ -272,7 +273,7 @@ describe("Telemetry Validation", function() {
                 });
             });
             it("When pass: null, Expect error: pass is required", function(done) {
-                eventData.pass = undefined;
+                eventData.pass = null;
                 callAssessEvent(function(error) {
                     expect(error).toBeDefined();
                     var errors = error.split(' ');
@@ -292,7 +293,7 @@ describe("Telemetry Validation", function() {
                 });
             });
             it("When score: '', Expect error: score is required", function(done) {
-                eventData.score = undefined;
+                eventData.score = '';
                 callAssessEvent(function(error) {
                     expect(error).toBeDefined();
                     var errors = error.split(' ');
@@ -301,7 +302,7 @@ describe("Telemetry Validation", function() {
                 });
             });
             it("When score: null, Expect error: score is required", function(done) {
-                eventData.score = undefined;
+                eventData.score = null;
                 callAssessEvent(function(error) {
                     expect(error).toBeDefined();
                     var errors = error.split(' ');
@@ -321,7 +322,7 @@ describe("Telemetry Validation", function() {
                 });
             });
             it("When duration: '', Expect error: duration is required", function(done) {
-                eventData.duration = undefined;
+                eventData.duration = '';
                 callAssessEvent(function(error) {
                     expect(error).toBeDefined();
                     var errors = error.split(' ');
@@ -330,7 +331,7 @@ describe("Telemetry Validation", function() {
                 });
             });
             it("When duration: null, Expect error: duration is required", function(done) {
-                eventData.duration = undefined;
+                eventData.duration = null;
                 callAssessEvent(function(error) {
                     expect(error).toBeDefined();
                     var errors = error.split(' ');
@@ -350,7 +351,7 @@ describe("Telemetry Validation", function() {
                 });
             });
             it("When resvalues: '', Expect error: resvalues is required", function(done) {
-                eventData.resvalues = undefined;
+                eventData.resvalues = ' ';
                 callAssessEvent(function(error) {
                     expect(error).toBeDefined();
                     var errors = error.split(' ');
@@ -359,7 +360,7 @@ describe("Telemetry Validation", function() {
                 });
             });
             it("When resvalues: null, Expect error: resvalues is required", function(done) {
-                eventData.resvalues = undefined;
+                eventData.resvalues = nul;
                 callAssessEvent(function(error) {
                     expect(error).toBeDefined();
                     var errors = error.split(' ');
@@ -377,14 +378,14 @@ describe("Telemetry Validation", function() {
                 });
             });
             it("When index: '', Expect no error", function(done) {
-                eventData.index = undefined;
+                eventData.index = '';
                 callAssessEvent(function(res) {
                     expect(res).toBeDefined();
                     done();
                 });
             });
             it("When index: null, Expect no error", function(done) {
-                eventData.index = undefined;
+                eventData.index = null;
                 callAssessEvent(function(res) {
                     expect(res).toBeDefined();
                     done();
