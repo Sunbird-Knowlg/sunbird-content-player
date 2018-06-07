@@ -124,7 +124,7 @@ org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) 
 org.ekstep.contentrenderer.initializePreview = function(configuration) {
     if(configuration){ // Deep clone of configuration. To avoid object refrence issue.
    	    var configurationObj = JSON.parse(JSON.stringify(configuration)); 
-	}
+    }
     if (_.isUndefined(configurationObj.context)) {
         configurationObj.context = {};
     }
