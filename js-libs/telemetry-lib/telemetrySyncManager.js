@@ -45,7 +45,7 @@ var TelemetrySyncManager = {
             }).done(function(resp) {
                 console.log("Telemetry API success", resp);
             }).fail(function(error, textStatus, errorThrown) {
-                instance.mergeArray(telemetryData);
+                instance.mergeEvents(telemetryData);
                 if (error.status == 403) {
                     console.error("Authentication error: ", error);
                 } else {
@@ -54,7 +54,7 @@ var TelemetrySyncManager = {
             });
         }
     },
-    mergeArray: function(events) {
+    mergeEvents: function(events) {
         TelemetrySyncManager._teleData = TelemetrySyncManager._teleData.concat(events);
     }
 }
