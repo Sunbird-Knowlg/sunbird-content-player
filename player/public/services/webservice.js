@@ -1,4 +1,4 @@
-org.ekstep.service.web = new(org.ekstep.service.mainService.extend({
+org.ekstep.service.web = new (org.ekstep.service.mainService.extend({
     init: function() {
     },
     initialize: function() {
@@ -7,7 +7,7 @@ org.ekstep.service.web = new(org.ekstep.service.mainService.extend({
         _baseUrl: undefined,
         contentBasePath: '/content/v3/read/',
         languageBasePath: '/language/v3/',
-        telemetryBasePath: '/data/v3/telemetry',
+        telemetryBasePath: '/data/v3/telemetry',       
         getAPI: function() {
             return this._baseUrl + this.contentBasePath;
         },
@@ -16,7 +16,7 @@ org.ekstep.service.web = new(org.ekstep.service.mainService.extend({
         },
         getTelematyAPI: function() {
             return this._baseUrl + this.telemetryBasePath;
-        },
+        },       
         setBaseUrl: function(baseUrl) {
             this._baseUrl = baseUrl;
         },
