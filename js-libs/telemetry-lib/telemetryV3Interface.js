@@ -308,7 +308,13 @@ var EkTelemetry = (function() {
      */
     this.ektelemetry.resetTags = function(tags){
         telemetryInstance._currentTags = tags || [];
-    }     
+    }
+
+    this.ektelemetry.syncEvents = function(){
+    	if(typeof TelemetrySyncManager != 'undefined'){
+    		TelemetrySyncManager.syncEvents();
+    	}
+    }      
 
     /**
      * Which is used to initialize the telemetry in globally.
