@@ -819,6 +819,6 @@ module.exports = function(grunt) {
     grunt.registerTask('renderer-test', ['karma:renderer']);
     grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator", "uglify:htmlinterfacemin"]);
     grunt.registerTask('renderer-telemetryV3', ['karma:telemetryV3']);
-    grunt.registerTask('telemetryV3', ['karma:telemetryFunV3']);
+    grunt.registerTask('telemetry-lib-test', ['karma:telemetryFunV3']);
     grunt.registerTask('generate-libs', ['copy:authtoken', 'copy:telemetry', 'copy:htmlinterface', 'copy:renderer' ]);
 };
