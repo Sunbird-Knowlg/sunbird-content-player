@@ -351,7 +351,7 @@ var EkTelemetry = (function() {
         if (telemetryInstance.runningEnv === 'client') {
             if (!message.context.did) {
                 if (!EkTelemetry.fingerPrintId) {
-                    instance.getFingerPrint(function(result, components) {
+                    EkTelemetry.getFingerPrint(function(result, components) {
                         message.context.did = result;
                         EkTelemetry.fingerPrintId = result;
                         dispatcher.dispatch(message);
@@ -484,7 +484,7 @@ var EkTelemetry = (function() {
         }
     }
 
-    instance.getFingerPrint = function(cb) {
+    this.ektelemetry.getFingerPrint = function(cb) {
         new Fingerprint2().get(function(result, components) {
             if (cb) cb(result, components)
         })
