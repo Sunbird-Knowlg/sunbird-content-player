@@ -53,7 +53,7 @@ var EkTelemetry = (function() {
     this._globalContext = {
         "channel": 'in.ekstep',
         "pdata": {id: "in.ekstep", ver: "1.0", pid: ""},
-        "env": 'ContentPlayer',
+        "env": "contentplayer",
         "sid": "",
         "did": "",
         "cdata": [],
