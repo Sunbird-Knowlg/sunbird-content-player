@@ -881,6 +881,7 @@ window.EkstepRendererAPI = {
     */
 
     logErrorEvent: function(errorStack, data) {
+    	if(!errorStack) console.error('`Error stack` object is required to log an error telemetry event');
         try {
             if (data) {
                 data.env = "undefined" != typeof cordova ? 'mobile' : EkstepRendererAPI.getGlobalConfig().context.mode || 'preview';
@@ -897,7 +898,7 @@ window.EkstepRendererAPI = {
                     }
                 }
                 if (errorStack) {
-                    data.err = errorStack.status || errorStack;
+                    data.err = (errorStack.status && errorStack.status.toString()) || errorStack;
                     data.stacktrace = errorStack.stack || errorStack.responseText;
                 }
                 EkstepRendererAPI.getTelemetryService().error(data);
