@@ -80,8 +80,8 @@ var TextPlugin = Plugin.extend({
         var text = new createjs.Text(textStr, font, data.color || '#000000');
         text.lineWidth = dims.w;
         text.x = dims.x;
-        text.y = dims.y * data.offsetY; // Adding offset value
-        text.lineHeight = lineHeight;   // Using lineheight coming from ecml(not using createjs function to calculate lineheight)
+        text.y = dims.y;
+        text.lineHeight = lineHeight * (text.getMeasuredLineHeight());
         text.outline = outline;
 
         // H and V alignment
@@ -98,7 +98,6 @@ var TextPlugin = Plugin.extend({
             text.regX = -dims.w / 2;
         }
 
-        // Refactor this code(remove textbaseline functionality)
         if (valign == 'top') {
             text.y = dims.y;
             text.textBaseline = 'hanging';
@@ -114,11 +113,16 @@ var TextPlugin = Plugin.extend({
             }
         }
         
-        text.textBaseline = this.getBaseline(); // Fetching baseline of text;
         // Removing baseline of text(it is different for different fonts)
-        // if (data.textBaseline) {
-        //     text.textBaseline = data.textBaseline;
-        // }
+        if (data.textBaseline) {
+            text.textBaseline = data.textBaseline;
+        }
+
+        if (data.version >= 1.2) {
+            text.y = text.y + data.offsetY; // Adding offset value;
+            text.textBaseline = 'hanging';
+            text.lineHeight = lineHeight;   // Using lineheight coming from ecml(not using createjs function to calculate lineheight)
+        }
 
         text.textAlign = align;
         text.valign = valign;
@@ -141,15 +145,6 @@ var TextPlugin = Plugin.extend({
             this._self.text = textStr;
             Renderer.update = true;
         }
-    },
-    /**
-     * This method returns the required baseline of fonts for WYSIWYG
-     * Called from initPlugin method
-     * @param font {string} fontfamily name
-     * @memberof TextPlugin
-     */
-    getBaseline: function(font) {
-        
     }
 });
 PluginManager.registerPlugin('text', TextPlugin);
