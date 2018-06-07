@@ -27,10 +27,6 @@ var TextPlugin = Plugin.extend({
      * @memberof TextPlugin
      */
     _render: true,
-    /**
-     * Contains fonts which doesn't support default baseline config for WYSIWYG.
-     */
-    topBaselineFonts: ["NotoSans", "NotoSansKannada", "NotoNastaliqUrdu"],
 
     /**
      *   Invoked by framework when plugin instance created/renderered on stage,
