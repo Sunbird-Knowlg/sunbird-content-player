@@ -59,6 +59,12 @@ AppConfig = {
             id: 'org.ekstep.pdfrenderer',
             ver: 1.0,
             type: 'plugin'
+        },
+        {
+            mimeType: ['text/x-url'],
+            id: 'org.ekstep.extcontentpreview',
+            ver: 1.0,
+            type: 'plugin'
         }
     ],
     assetbase: 'assets/icons/',
