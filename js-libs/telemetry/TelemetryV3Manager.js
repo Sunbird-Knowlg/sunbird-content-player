@@ -67,7 +67,7 @@ TelemetryV3Manager = Class.extend({
         }
     },
     interact: function(type, id, extype, eks, eid) {
-        if(type == undefined || id == undefined) {
+        if(type == undefined || id == undefined  || typeof id !== 'string') {
             console.error('Invalid interact data');
             return;
         }
@@ -123,8 +123,8 @@ TelemetryV3Manager = Class.extend({
                 params: data.params || eventObj.event.edata.eks.params || [],
                 uri: data.uri || "",
                 title: data.qtitle || data.title,
-                mmc: data.mmc || "",
-                mc: data.mc || ""
+                mmc: data.mmc || [],
+                mc: data.mc || []
             }
             if(data.qdesc || data.desc){
                 v3questionItem.desc =  data.qdesc.substr(0,140) || data.desc.substr(0,140);
