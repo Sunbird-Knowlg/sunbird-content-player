@@ -109,14 +109,13 @@ var TextPlugin = Plugin.extend({
             }
         }
         
-        // Removing baseline of text(it is different for different fonts)
         if (data.textBaseline) {
             text.textBaseline = data.textBaseline;
         }
 
-        if (data.version >= 1.2) {
+        // Adding WYSIWYG config
+        if (data.version === 'V2') {
             text.y = text.y + data.offsetY; // Adding offset value;
-            text.textBaseline = 'hanging';
             text.lineHeight = lineHeight;   // Using lineheight coming from ecml(not using createjs function to calculate lineheight)
         }
 
