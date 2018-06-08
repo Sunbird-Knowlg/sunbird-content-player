@@ -67,7 +67,7 @@ TelemetryV3Manager = Class.extend({
         }
     },
     interact: function(type, id, extype, eks, eid) {
-        if(type == undefined || id == undefined  || typeof id !== 'string') {
+        if(type == undefined || id == undefined) {
             console.error('Invalid interact data');
             return;
         }
