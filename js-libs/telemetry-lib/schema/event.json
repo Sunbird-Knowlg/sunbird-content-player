@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://api.ekstep.org/telemetry/event",
+  "type": "object",
+  "oneOf": [{
+      "$ref": "http://api.ekstep.org/telemetry/start"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/end"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/impression"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/interact"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/assess"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/response"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/interrupt"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/feedback"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/share"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/audit"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/error"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/heartbeat"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/log"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/search"
+    },
+    {
+      "$ref": "http://api.ekstep.org/telemetry/exdata"
+    }
+  ]
+}

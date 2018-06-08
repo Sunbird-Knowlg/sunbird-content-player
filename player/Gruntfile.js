@@ -31,7 +31,11 @@ module.exports = function(grunt) {
             },
             telemetryV3: {
                 configFile: '../js-libs/telemetry-lib/test/karma.renderer.config.js',
+            },
+            telemetryFunV3: {
+                configFile: '../js-libs/telemetry-lib/test/karma.telemetry.fun.config.js',
             }
+
         },
         concat: {
             css: {
@@ -121,6 +125,8 @@ module.exports = function(grunt) {
             },
             telemetryLib: {
                 src: [
+            	    '../js-libs/telemetry-lib/ajv.min.js',
+            	    '../js-libs/telemetry-lib/telemetry-spec.js',
                     '../js-libs/telemetry-lib/detectClient.js',
                     '../js-libs/telemetry-lib/md5.js',
                     '../js-libs/telemetry-lib/fingerprint2.min.js',
@@ -813,5 +819,6 @@ module.exports = function(grunt) {
     grunt.registerTask('renderer-test', ['karma:renderer']);
     grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator", "uglify:htmlinterfacemin"]);
     grunt.registerTask('renderer-telemetryV3', ['karma:telemetryV3']);
+    grunt.registerTask('telemetry-lib-test', ['karma:telemetryFunV3']);
     grunt.registerTask('generate-libs', ['copy:authtoken', 'copy:telemetry', 'copy:htmlinterface', 'copy:renderer' ]);
 };

@@ -1,0 +1,19 @@
+{
+  "$id": "http://api.ekstep.org/telemetry/pdata",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$id": "http://api.ekstep.org/telemetry/pdata/id",
+      "type": "string"
+    },
+    "pid": {
+      "$id": "http://api.ekstep.org/telemetry/pdata/pid",
+      "type": "string"
+    },
+    "ver": {
+      "$id": "http://api.ekstep.org/telemetry/pdata/ver",
+      "type": "string"
+    }
+  },
+  "required": ["id"]
+}
