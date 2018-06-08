@@ -898,7 +898,7 @@ window.EkstepRendererAPI = {
                     }
                 }
                 if (errorStack) {
-                    data.err = (errorStack.status && errorStack.status.toString()) || "-1"; // Status Code(By default is -1)
+                    data.err = ((errorStack.status && errorStack.status.toString()) || errorStack.message) || "-1"; // Status Code(By default is -1)
                     data.stacktrace = errorStack.stack || errorStack.responseText;
                 }
                 EkstepRendererAPI.getTelemetryService().error(data);
