@@ -8,13 +8,13 @@
     margin-top: 30vh;
     cursor: pointer;
     line-height: 1.5em;
-    /* display: inline-block; */
   }
 .preview-link-content .left-content {
     display: inline-block;
     white-space: normal;
     vertical-align: middle;
-    width: 68%;
+    width: 70%;
+    padding-right: 0.9em;
 } 
 
 .preview-link-content .left-content .grey-text{
