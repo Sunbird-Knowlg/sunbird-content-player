@@ -60,7 +60,7 @@ var EkTelemetry = (function() {
         "rollup": {}
     },
     this.runningEnv = 'client';
-    this.telemetryValidation = true;
+    this.telemetryValidation = false;
     this._globalObject = {};
     this.startData = [];
     this.ajv = new Ajv({schemas: telemetrySchema});
