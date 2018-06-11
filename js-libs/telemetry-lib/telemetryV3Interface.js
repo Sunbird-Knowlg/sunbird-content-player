@@ -60,7 +60,7 @@ var EkTelemetry = (function() {
         "rollup": {}
     },
     this.runningEnv = 'client';
-    this.isValidationRequired = true;
+    this.telemetryValidation = true;
     this._globalObject = {};
     this.startData = [];
     this.ajv = new Ajv({schemas: telemetrySchema});
@@ -332,7 +332,9 @@ var EkTelemetry = (function() {
         contentId && (telemetryInstance._globalObject.id = contentId);
         contentVer && (telemetryInstance._globalObject.ver = contentVer);
         config.runningEnv && (telemetryInstance.runningEnv = config.runningEnv);
-        telemetryInstance.isValidationRequired = config.isValidationRequired;
+        if (typeof config.telemetryValidation !== 'undefined') {
+            telemetryInstance.telemetryValidation = config.telemetryValidation;
+        }
         config.batchsize = config.batchsize ? (config.batchsize < 10 ? 10 : (config.batchsize > 1000 ? 1000 : config.batchsize)) : _defaultValue.batchsize;
         EkTelemetry.config = Object.assign(_defaultValue, config);
         EkTelemetry.initialized = true;
@@ -347,7 +349,7 @@ var EkTelemetry = (function() {
      */
     instance._dispatch = function(message) {
         message.mid = message.eid + ':' + CryptoJS.MD5(JSON.stringify(message)).toString();
-        if(telemetryInstance.isValidationRequired){
+        if(telemetryInstance.telemetryValidation){
 	        var validate = ajv.getSchema('http://api.ekstep.org/telemetry/' + message.eid.toLowerCase())
 	        var valid = validate(message)
 	        if (!valid) { 
