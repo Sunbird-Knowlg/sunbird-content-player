@@ -116,6 +116,7 @@ var TextPlugin = Plugin.extend({
         // Adding WYSIWYG config 
         if (data.version === 'V2') {
             text.y = text.y + data.offsetY; // Adding offset value;
+            lineHeight = (this._parent.dimensions().w * lineHeight / 720);
             text.lineHeight = lineHeight;   // Using lineheight coming from ecml(not using createjs function to calculate lineheight)
         }
 
