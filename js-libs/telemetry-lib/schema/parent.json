@@ -1,0 +1,14 @@
+{
+  "$id": "http://api.ekstep.org/telemetry/parent",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$id": "http://api.ekstep.org/telemetry/parent/id",
+      "type": "string"
+    },
+    "type": {
+      "$id": "http://api.ekstep.org/telemetry/parent/type",
+      "type": "string"
+    }
+  }
+}
