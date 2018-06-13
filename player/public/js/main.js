@@ -166,6 +166,8 @@ function startTelemetry(id, ver, cb) {
         })
         delete otherData.cdata;
     }
+    otherData.enableValidation = otherData.enableTelemetryValidation;
+    delete otherData.enableTelemetryValidation;
     correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData, otherData).then(function(response) {
         TelemetryService.eventDispatcher = EkstepRendererAPI.dispatchEvent;
