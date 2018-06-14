@@ -30,9 +30,16 @@
     width: 100%;
     padding-top: 2%;
     padding-bottom: 1%;
-    background: white;
     position: fixed;
-    border: 2px thin black
+    border: 2px thin black;
+}
+
+#pdf-search-container:hover  { 
+   opacity: 1;
+}
+
+#pdf-search-container:hover + #page-count-container { 
+   opacity: 1;
 }
 
 #pdf-buttons {
@@ -45,8 +52,12 @@
 }
 
 #pdf-search-container {
-    float: left;
-    margin-left: 30%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: 1%;
+    transform: translate(-50%, -50%);
+    opacity: 0.1;
 }
 
 #pdf-find-text {
@@ -62,6 +73,9 @@
     margin-right: 5%;
     float: right;
     margin-top: 0.5%;
+    font-size: 1.3em;
+    background: deepskyblue;
+    opacity: 0.1;
 }
 
 #pdf-current-page {
@@ -77,7 +91,7 @@
     box-sizing: border-box;
     /*width: 100%;*/
     height: auto;
-    padding-top: 5%;
+    padding-top: 6%;
 }
 
 #page-loader {
