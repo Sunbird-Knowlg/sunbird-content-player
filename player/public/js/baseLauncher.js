@@ -41,12 +41,15 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     start: function() {
+        var instance = this;
         console.info('Base Launcher should construct');
-        this.resetDomElement();
-        this.startTelemetry();
-        if (this.enableHeartBeatEvent) {
-            this.heartBeatEvent(true);
+        instance.resetDomElement();
+        if (instance.enableHeartBeatEvent) {
+            instance.heartBeatEvent(true);
         }
+        setTimeout(function(){
+            instance.startTelemetry();
+        }, 0);
     },
 
     /**
