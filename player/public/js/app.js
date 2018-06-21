@@ -42,8 +42,6 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             $ionicPlatform.on("pause", function() {
                 Renderer && Renderer.pause();
                 TelemetryService.interrupt("BACKGROUND", getCurrentStageId);
-                StatusBar.hide();
-                window.navigationbar.hide();
             });
             $ionicPlatform.on("resume", function() {
                 Renderer && Renderer.resume();
@@ -62,6 +60,8 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 $rootScope.addIonicEvents();
                 if (window.cordova && window.cordova.plugins.Keyboard) {
                     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+                    StatusBar.hide();
+                    window.navigationbar.hide();
                 } else {
                     globalConfig.recorder = "android";
                 }
