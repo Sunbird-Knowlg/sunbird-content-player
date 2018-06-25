@@ -476,6 +476,7 @@ module.exports = function(grunt) {
                         'cordova-plugin-file-transfer@1.6.1',
                         'cordova-plugin-inappbrowser@1.6.1',
                         'cordova-plugin-market@1.1',
+                        'https://github.com/cranberrygame/cordova-plugin-navigationbar.git',
                         'https://github.com/apache/cordova-plugin-statusbar.git'
                     ]
                 }
