@@ -1030,6 +1030,62 @@ window.EkstepRendererAPI = {
             delete GlobalContext.registerEval[evalType.toLowerCase()]
         else
             GlobalContext.registerEval = [];
+    },
+    /**
+    * Repaint the canvas based on content passed
+    * @param {string} content - content manifest & body json
+    * @memberof EkstepRendererAPI
+    */
+    renderContent: function(contentObj) {
+        if(contentObj) {
+            if (contentObj.baseDir) {
+                var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
+                globalConfigObj.basepath = contentObj.baseDir;
+            }
+            var eventName, pluginName;
+            // If any extra mimetype based function is required we can add it here
+            switch (contentObj.mimeType) {
+                case "application/vnd.ekstep.html-archive":
+                case "application/vnd.ekstep.h5p-archive":
+                    eventName = "";
+                    pluginName = "";
+                    break;
+                case "application/vnd.ekstep.ecml-archive":
+                    eventName = "";
+                    pluginName = "";
+                    break;
+                case "application/epub":
+                    eventName = "";
+                    pluginName = "";
+                    break;
+                case "video/mp4":
+                case "video/x-youtube":
+                case "video/webm":
+                    eventName = "";
+                    pluginName = "";
+                    break;
+                case "application/pdf":
+                    eventName = "";
+                    pluginName = "";
+                    break;
+                // Do we need this
+                // Have no idea what kind of content type is this
+                case "text/x-url":
+                    eventName = "";
+                    pluginName = "";
+                    break;
+            }
+            var plugin = EkstepRendererAPI.getPluginObjs(pluginName);
+            if (!_.isUndefined(plugin)) { // When mimetype of new content is same as old content
+                content = contentObj;
+                EkstepRendererAPI.dispatchEvent(eventName, undefined, contentObj)
+            } else {
+                content = contentObj;
+                EkstepRendererAPI.getPluginObjs('org.ekstep.launcher').mimeTypeLauncher(contentObj);
+                // Load the specific mimetype plugin launcher
+            }
+        } else {
+            console.warn('Invalid Content')
+        }
     }
-
 }

@@ -14,6 +14,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
+        EkstepRendererAPI.addEventListener('content:load:application/video', this.start, this);
         this.start();
     },
     start: function() {

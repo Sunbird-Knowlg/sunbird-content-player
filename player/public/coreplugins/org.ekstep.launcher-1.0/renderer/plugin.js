@@ -10,6 +10,7 @@ Plugin.extend({
     _injectTemplateFn: undefined,
     initialize: function() {
         EkstepRendererAPI.addEventListener('renderer:launcher:load', this.start, this);
+        EkstepRendererAPI.addEventListener('renderer:mimetypelauncher:load', this.start, this);
         this.templatePath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/renderer.html");
         this.controllerPath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/js/rendererApp.js");
         var instance = this;
@@ -19,10 +20,6 @@ Plugin.extend({
         var globalConfig = EkstepRendererAPI.getGlobalConfig();
         var instance = this;
 
-        var contentTypePlugin = _.find(globalConfig.contentLaunchers, function(eachConfig) {
-            if (_.contains(eachConfig.mimeType, content.mimeType)) return eachConfig;
-        });
-
         /**
          * renderer:repo:create event will get dispatch to add a custom repo to load the plugins from the path.
          * @event 'renderer:repo:create'
@@ -31,10 +28,20 @@ Plugin.extend({
          */
         EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined, [globalConfig.corePluginspath]);
         instance.loadCommonPlugins(function(){
-            if (!_.isUndefined(contentTypePlugin)) {
-                instance.loadPlugin(contentTypePlugin, content);
-            }
+            instance.mimeTypeLauncher(content);
         });
+    },
+    /**
+    * Launch the particular mimetype launcher
+    * @param {string} content - content manifest
+    */
+    mimeTypeLauncher: function(contentObj) {
+        var contentTypePlugin = _.find(globalConfig.contentLaunchers, function(eachConfig) {
+            if (_.contains(eachConfig.mimeType, contentObj.mimeType)) return eachConfig;
+        });
+        if (!_.isUndefined(contentTypePlugin)) {
+            this.loadPlugin(contentTypePlugin, contentObj);
+        }
     },
     loadCommonPlugins: function(cb) {
         var plugins = []
