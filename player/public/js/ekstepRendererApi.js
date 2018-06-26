@@ -1076,10 +1076,11 @@ window.EkstepRendererAPI = {
                     break;
             }
             var plugin = EkstepRendererAPI.getPluginObjs(pluginName);
-            if (!_.isUndefined(plugin)) { // When mimetype of new content is same as old content
+            if (!_.isUndefined(plugin)) { // When mimetype plugin is already loaded, just render content by content manifest
                 content = contentObj;
                 EkstepRendererAPI.dispatchEvent(eventName, undefined, contentObj)
             } else {
+                // When mimetype plugin is not loaded, It will load the plugin and call the start function automatically
                 content = contentObj;
                 EkstepRendererAPI.getPluginObjs('org.ekstep.launcher').mimeTypeLauncher(contentObj);
                 // Load the specific mimetype plugin launcher

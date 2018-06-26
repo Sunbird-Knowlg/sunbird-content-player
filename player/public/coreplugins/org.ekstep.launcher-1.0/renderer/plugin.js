@@ -28,6 +28,7 @@ Plugin.extend({
          */
         EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined, [globalConfig.corePluginspath]);
         instance.loadCommonPlugins(function(){
+            // Decoupled the loading of mimetype launcher plugin.
             instance.mimeTypeLauncher(content);
         });
     },
@@ -41,6 +42,8 @@ Plugin.extend({
         });
         if (!_.isUndefined(contentTypePlugin)) {
             this.loadPlugin(contentTypePlugin, contentObj);
+        } else {
+            console.error('Invalid Mimetype ' + contentObj.mimeType)
         }
     },
     loadCommonPlugins: function(cb) {
