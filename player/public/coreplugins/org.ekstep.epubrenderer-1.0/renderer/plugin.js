@@ -75,7 +75,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
             if(instance.currentPage === 2) {
                 // This is needed because some ePubs do not go back to the cover page on `book.prevPage()`
-                instance.gotoStart();
+                instance.book.gotoPage(1);
                 instance.logTelemetryNavigate("2", "1");
             } else {
                 instance.book.prevPage();
@@ -97,7 +97,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         instance.book.on('book:pageChanged', function (data) {
             instance.logTelemetryInteract(instance.currentPage.toString());
             instance.logTelemetryNavigate(instance.currentPage.toString(), data.anchorPage.toString());
-            instance.currentPage = data.pageRange[1];
+            instance.currentPage = data.anchorPage;
             instance.updateProgressElements();
             if (instance.book.pagination.lastPage === data.anchorPage || instance.book.pagination.lastPage === data.pageRange[1]) {
                 instance.lastPage = true;
