@@ -13,6 +13,8 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     manifest: undefined,
     enableHeartBeatEvent: false,
     heartBeatData: {},
+    // Move running variable to baselauncher instead of all plugin launcher
+    running: false,
 
     /**
      * init of the launcher with the given data.
@@ -42,6 +44,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
     start: function() {
         console.info('Base Launcher should construct');
+        this.running = true; // Setting renderer runnong as true.
         this.resetDomElement();
         this.startTelemetry();
         if (this.enableHeartBeatEvent) {
@@ -57,6 +60,8 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     end: function() {
         this.heartBeatEvent(false);
         this.endTelemetry();
+        // Setting renderer running as false
+        this.running = false;
         EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
     },
 

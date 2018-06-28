@@ -10,7 +10,6 @@ Plugin.extend({
     _injectTemplateFn: undefined,
     initialize: function() {
         EkstepRendererAPI.addEventListener('renderer:launcher:load', this.start, this);
-        EkstepRendererAPI.addEventListener('renderer:mimetypelauncher:load', this.start, this);
         this.templatePath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/renderer.html");
         this.controllerPath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/js/rendererApp.js");
         var instance = this;
@@ -19,7 +18,9 @@ Plugin.extend({
     start: function(evt, content) {
         var globalConfig = EkstepRendererAPI.getGlobalConfig();
         var instance = this;
-
+        var contentTypePlugin = _.find(globalConfig.contentLaunchers, function(eachConfig) {
+            if (_.contains(eachConfig.mimeType, content.mimeType)) return eachConfig;
+        });
         /**
          * renderer:repo:create event will get dispatch to add a custom repo to load the plugins from the path.
          * @event 'renderer:repo:create'
@@ -28,23 +29,15 @@ Plugin.extend({
          */
         EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined, [globalConfig.corePluginspath]);
         instance.loadCommonPlugins(function(){
-            // Decoupled the loading of mimetype launcher plugin.
-            instance.mimeTypeLauncher(content);
+            if (!_.isUndefined(contentTypePlugin)) {
+                // Except current Mimetype destroying all mimetype launchers
+                _.find(globalConfig.contentLaunchers, function(eachConfig) {
+                    if (!_.contains(eachConfig.mimeType, content.mimeType)) 
+                        org.ekstep.pluginframework.pluginManager.destroyPlugin(eachConfig.id);
+                });
+                instance.loadPlugin(contentTypePlugin, content);
+            }
         });
-    },
-    /**
-    * Launch the particular mimetype launcher
-    * @param {string} content - content manifest
-    */
-    mimeTypeLauncher: function(contentObj) {
-        var contentTypePlugin = _.find(globalConfig.contentLaunchers, function(eachConfig) {
-            if (_.contains(eachConfig.mimeType, contentObj.mimeType)) return eachConfig;
-        });
-        if (!_.isUndefined(contentTypePlugin)) {
-            this.loadPlugin(contentTypePlugin, contentObj);
-        } else {
-            console.error('Invalid Mimetype ' + contentObj.mimeType)
-        }
     },
     loadCommonPlugins: function(cb) {
         var plugins = []
@@ -62,15 +55,24 @@ Plugin.extend({
     loadPlugin: function(plugin, contentData) {
         var instance = this;
         content = contentData;
-        org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
-        /**
-         * telemetryPlugin:intialize event will get dispatch to Initialize the telemetry plugin before loading of the launchers.
-         * @event 'telemetryPlugin:intialize'
-         * @fires 'telemetryPlugin:intialize'
-         * @memberof EkstepRendererEvents
-         */
-            EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
-        });
+        // Checking if mimetype launcher is already loaded or not
+        var pluginInstance = EkstepRendererAPI.getPluginObjs(plugin.id);
+        if (pluginInstance) {
+            // If already loaded just start the content
+            pluginInstance.start();
+        } else {
+            // If mimetype lauincher is not loaded load the launcher
+            // Start function will be automatically handled.
+            org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
+            /**
+             * telemetryPlugin:intialize event will get dispatch to Initialize the telemetry plugin before loading of the launchers.
+             * @event 'telemetryPlugin:intialize'
+             * @fires 'telemetryPlugin:intialize'
+             * @memberof EkstepRendererEvents
+             */
+                EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
+            });
+        }
     }
 })
 //# sourceURL=ContentLauncher.js

@@ -20,6 +20,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     start: function (event, data) {
         this._super()
+        // Setting renderer global variable
+        EkstepRendererAPI.setRenderer(this);
         var instance = this;
         data = content;
         var epubPath = undefined;

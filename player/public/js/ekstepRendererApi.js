@@ -121,7 +121,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getCurrentStageId: function() {
-        return (!_.isUndefined(Renderer)) ? Renderer.theme._currentStage : '';
+        return (!_.isUndefined(Renderer) && !_.isUndefined(Renderer.theme)) ? Renderer.theme._currentStage : '';
     },
 
     /**
@@ -1032,6 +1032,15 @@ window.EkstepRendererAPI = {
             GlobalContext.registerEval = [];
     },
     /**
+    * Return Boolean value & tells if renderer is running or not
+    * @param {string} evalType - custom evaluator type
+    * @memberof EkstepRendererAPI
+    */
+    isRendererRunning: function() {
+        if (!_.isUndefined(Renderer)) return Renderer.running;
+        else return false;
+    },
+    /**
     * Repaint the canvas based on content passed
     * @param {string} content - content manifest & body json
     * @memberof EkstepRendererAPI
@@ -1042,49 +1051,9 @@ window.EkstepRendererAPI = {
                 var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
                 globalConfigObj.basepath = contentObj.baseDir;
             }
-            var eventName, pluginName;
-            // If any extra mimetype based function is required we can add it here
-            switch (contentObj.mimeType) {
-                case "application/vnd.ekstep.html-archive":
-                case "application/vnd.ekstep.h5p-archive":
-                    eventName = "";
-                    pluginName = "";
-                    break;
-                case "application/vnd.ekstep.ecml-archive":
-                    eventName = "";
-                    pluginName = "";
-                    break;
-                case "application/epub":
-                    eventName = "";
-                    pluginName = "";
-                    break;
-                case "video/mp4":
-                case "video/x-youtube":
-                case "video/webm":
-                    eventName = "";
-                    pluginName = "";
-                    break;
-                case "application/pdf":
-                    eventName = "";
-                    pluginName = "";
-                    break;
-                // Do we need this
-                // Have no idea what kind of content type is this
-                case "text/x-url":
-                    eventName = "";
-                    pluginName = "";
-                    break;
-            }
-            var plugin = EkstepRendererAPI.getPluginObjs(pluginName);
-            if (!_.isUndefined(plugin)) { // When mimetype plugin is already loaded, just render content by content manifest
-                content = contentObj;
-                EkstepRendererAPI.dispatchEvent(eventName, undefined, contentObj)
-            } else {
-                // When mimetype plugin is not loaded, It will load the plugin and call the start function automatically
-                content = contentObj;
-                EkstepRendererAPI.getPluginObjs('org.ekstep.launcher').mimeTypeLauncher(contentObj);
-                // Load the specific mimetype plugin launcher
-            }
+            EkstepRendererAPI.clearStage();
+            content = contentObj;
+            EkstepRendererAPI.dispatchEvent('renderer:launcher:load', undefined, contentObj)
         } else {
             console.warn('Invalid Content')
         }

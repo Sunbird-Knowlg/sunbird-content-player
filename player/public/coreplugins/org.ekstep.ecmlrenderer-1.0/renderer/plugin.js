@@ -10,7 +10,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     theme: undefined,
     update: true,
     gdata: undefined,
-    running: false,
     preview: false,
     divIds: {
         gameArea: 'gameArea',
@@ -37,6 +36,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      * @memberof ecmlRenderer
      */
     start: function(evt, renderObj) {
+        if (this.running) {
+            this.cleanUp();
+        }
         this._super();
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         var instance = this;
@@ -47,10 +49,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             renderObj.path = '';
         }
         try {
-            if (this.running) {
-                this.cleanUp();
-            }
-            this.running = true;
+            // this.running = true;
             this.preview = renderObj.preview || false;
             if (renderObj.body) {
                 var dataObj = {

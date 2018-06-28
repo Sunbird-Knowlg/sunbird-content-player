@@ -11,14 +11,14 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     heartBeatData:{},
     enableHeartBeatEvent:false,
     initLauncher: function(manifestData) {
-
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
-        EkstepRendererAPI.addEventListener('content:load:application/video', this.start, this);
         this.start();
     },
     start: function() {
         this._super();
+        // Setting renderer global variable
+        EkstepRendererAPI.setRenderer(this);
         var data = _.clone(content);
         this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();

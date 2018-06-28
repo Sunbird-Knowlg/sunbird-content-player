@@ -15,7 +15,6 @@
          this._manifest = manifestData;
          EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
          EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
-         EkstepRendererAPI.addEventListener('content:load:application/pdf', this.start, this);
          this.start();
      },
      enableOverly: function() {
@@ -27,6 +26,8 @@
      },
      start: function() {
         this._super();
+        // Setting renderer global variable
+        EkstepRendererAPI.setRenderer(this);
         context = this;
         var data = _.clone(content);
         this.initContentProgress();

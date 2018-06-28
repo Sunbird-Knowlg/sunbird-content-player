@@ -8,13 +8,14 @@
     totalIndex:100,
     enableHeartBeatEvent:true,
     initLauncher: function() {
-        EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.start, this);
         var instance = this;
         this.start();
     },
     start: function() {
         this._super();
         data = content;
+        // Setting renderer global variable
+        EkstepRendererAPI.setRenderer(this);
         this.reset();
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
