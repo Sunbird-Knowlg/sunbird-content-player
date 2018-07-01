@@ -21,23 +21,33 @@ Plugin.extend({
         var contentTypePlugin = _.find(globalConfig.contentLaunchers, function(eachConfig) {
             if (_.contains(eachConfig.mimeType, content.mimeType)) return eachConfig;
         });
-        /**
-         * renderer:repo:create event will get dispatch to add a custom repo to load the plugins from the path.
-         * @event 'renderer:repo:create'
-         * @fires 'renderer:repo:create'
-         * @memberof EkstepRendererEvents
-         */
-        EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined, [globalConfig.corePluginspath]);
-        instance.loadCommonPlugins(function(){
-            if (!_.isUndefined(contentTypePlugin)) {
-                // Except current Mimetype destroying all mimetype launchers
-                _.find(globalConfig.contentLaunchers, function(eachConfig) {
-                    if (!_.contains(eachConfig.mimeType, content.mimeType)) 
-                        org.ekstep.pluginframework.pluginManager.destroyPlugin(eachConfig.id);
-                });
-                instance.loadPlugin(contentTypePlugin, content);
-            }
-        });
+        // Checking if mimetype launcher is already loaded or not
+        var pluginInstance = EkstepRendererAPI.getPluginObjs(contentTypePlugin.id);
+        if (pluginInstance) {
+            // If already loaded just start the content
+            pluginInstance.start();
+        } else {
+            // If not loaded load the launcher
+            /**
+             * renderer:repo:create event will get dispatch to add a custom repo to load the plugins from the path.
+             * @event 'renderer:repo:create'
+             * @fires 'renderer:repo:create'
+             * @memberof EkstepRendererEvents
+             */
+            EkstepRendererAPI.dispatchEvent("renderer:repo:create",undefined, [globalConfig.corePluginspath]);
+            instance.loadCommonPlugins(function(){
+                if (!_.isUndefined(contentTypePlugin)) {
+                    // Except current Mimetype destroying all mimetype launchers
+                    _.find(globalConfig.contentLaunchers, function(eachConfig) {
+                        var plugin = org.ekstep.pluginframework.pluginManager.pluginObjs[eachConfig.id];
+                        if (!_.contains(eachConfig.mimeType, content.mimeType) && plugin) {
+                            plugin.destroy();
+                        }
+                    });
+                    instance.loadPlugin(contentTypePlugin, content);
+                }
+            });
+        }
     },
     loadCommonPlugins: function(cb) {
         var plugins = []
@@ -55,24 +65,15 @@ Plugin.extend({
     loadPlugin: function(plugin, contentData) {
         var instance = this;
         content = contentData;
-        // Checking if mimetype launcher is already loaded or not
-        var pluginInstance = EkstepRendererAPI.getPluginObjs(plugin.id);
-        if (pluginInstance) {
-            // If already loaded just start the content
-            pluginInstance.start();
-        } else {
-            // If mimetype lauincher is not loaded load the launcher
-            // Start function will be automatically handled.
-            org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
-            /**
-             * telemetryPlugin:intialize event will get dispatch to Initialize the telemetry plugin before loading of the launchers.
-             * @event 'telemetryPlugin:intialize'
-             * @fires 'telemetryPlugin:intialize'
-             * @memberof EkstepRendererEvents
-             */
-                EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
-            });
-        }
+        org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
+        /**
+         * telemetryPlugin:intialize event will get dispatch to Initialize the telemetry plugin before loading of the launchers.
+         * @event 'telemetryPlugin:intialize'
+         * @fires 'telemetryPlugin:intialize'
+         * @memberof EkstepRendererEvents
+         */
+            EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
+        });
     }
 })
 //# sourceURL=ContentLauncher.js

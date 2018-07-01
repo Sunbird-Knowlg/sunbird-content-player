@@ -112,7 +112,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getCurrentStage: function() {
-        return Renderer.theme._currentScene;
+        return (Renderer && Renderer.theme) ? Renderer.theme._currentScene : "";
     },
 
     /**
@@ -179,7 +179,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     cleanRenderer: function() {
-        Renderer.cleanUp();
+        Renderer.clear();
     },
 
     /**
@@ -284,7 +284,7 @@ window.EkstepRendererAPI = {
      */
     isItemScene: function() {
         var stage = EkstepRendererAPI.getCurrentStage();
-        return stage.isItemScene();
+        return stage ? stage.isItemScene() : "";
     },
 
     /**
@@ -1032,30 +1032,46 @@ window.EkstepRendererAPI = {
             GlobalContext.registerEval = [];
     },
     /**
-    * Return Boolean value & tells if renderer is running or not
-    * @param {string} evalType - custom evaluator type
-    * @memberof EkstepRendererAPI
-    */
+     * Return Boolean value & tells if renderer is running or not
+     * @memberof EkstepRendererAPI
+     */
     isRendererRunning: function() {
-        if (!_.isUndefined(Renderer)) return Renderer.running;
-        else return false;
+        var launcherAvailable = false;
+        _.each(globalConfig.contentLaunchers, function(eachConfig) {
+            if (EkstepRendererAPI.getPluginObjs(eachConfig.id)) {
+                launcherAvailable = true;
+            }
+        });
+        return launcherAvailable;
     },
     /**
-    * Repaint the canvas based on content passed
-    * @param {string} content - content manifest & body json
-    * @memberof EkstepRendererAPI
-    */
+     * Repaint the canvas based on content passed
+     * @param {string} contentObj - content manifest & body json
+     * @memberof EkstepRendererAPI
+     */
     renderContent: function(contentObj) {
         if(contentObj) {
             if (contentObj.baseDir) {
                 var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
                 globalConfigObj.basepath = contentObj.baseDir;
             }
-            EkstepRendererAPI.clearStage();
             content = contentObj;
             EkstepRendererAPI.dispatchEvent('renderer:launcher:load', undefined, contentObj)
         } else {
             console.warn('Invalid Content')
+        }
+    },
+    /**
+     * Forcely remove EventListener
+     * @param {string} eventname - eventname to be removed
+     * @memberof EkstepRendererAPI
+     */
+    forceRemoveEventListener: function(eventName) {
+        var listeners = EventBus.listeners[eventName]
+        if (listeners) {
+            _.each(listeners, function(event) {
+                EkstepRendererAPI.removeEventListener(eventName, event.callback, event.scope)
+            })
         }
     }
 }

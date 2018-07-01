@@ -17,8 +17,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     start: function() {
         this._super();
-        // Setting renderer global variable
-        EkstepRendererAPI.setRenderer(this);
         var data = _.clone(content);
         this.heartBeatData.stageId = content.mimeType === 'video/x-youtube' ? 'youtubestage' : 'videostage';
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
@@ -237,6 +235,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         } else {
             this.videoPlayer.muted = false;
         }
+    },
+    clear: function() {
+        this.resetDomElement();
+        EkstepRendererAPI.dispatchEvent("renderer:next:show");
+        EkstepRendererAPI.dispatchEvent('renderer:stagereload:show');
+        EkstepRendererAPI.dispatchEvent("renderer:previous:show");
     }
 });
 

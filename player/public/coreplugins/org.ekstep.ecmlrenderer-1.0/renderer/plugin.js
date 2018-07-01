@@ -10,6 +10,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     theme: undefined,
     update: true,
     gdata: undefined,
+    running: false,
     preview: false,
     divIds: {
         gameArea: 'gameArea',
@@ -25,7 +26,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      */
     initLauncher: function(manifest) {
         EkstepRendererAPI.addEventListener('renderer:content:load', this.start, this);
-        EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
+        EkstepRendererAPI.addEventListener('renderer:cleanUp', this.clear, this);
         var instance = this;
         setTimeout(function(){
             instance.start();
@@ -36,9 +37,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      * @memberof ecmlRenderer
      */
     start: function(evt, renderObj) {
-        if (this.running) {
-            this.cleanUp();
-        }
         this._super();
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         var instance = this;
@@ -49,7 +47,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             renderObj.path = '';
         }
         try {
-            // this.running = true;
+            this.running = true;
             this.preview = renderObj.preview || false;
             if (renderObj.body) {
                 var dataObj = {
@@ -99,7 +97,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             gameArea.style.width = newWidth + 'px';
             gameArea.style.height = newHeight + 'px';
         }
-
+        gameArea.style.left = "";
+        gameArea.style.top = "";
         gameArea.style.marginTop = (-newHeight / 2) + 'px';
         gameArea.style.marginLeft = (-newWidth / 2) + 'px';
         EkstepRendererAPI.dispatchEvent("render:overlay:applyStyles");
@@ -226,15 +225,20 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      * This method is used clean renderer objects
      * @memberof ecmlRenderer
      */
-    cleanUp: function() {
-        this.running = false;
-        AnimationManager.cleanUp();
-        AssetManager.destroy();
-        TimerManager.destroy();
-        AudioManager.cleanUp();
-        if(Renderer.theme)
-            Renderer.theme.cleanUp();
-        Renderer.theme = undefined;
+    clear: function() {
+        if (this.running) {
+            this.running = false;
+            AnimationManager.cleanUp();
+            AssetManager.destroy();
+            TimerManager.destroy();
+            AudioManager.cleanUp();
+            this.resetDomElement();
+            if(Renderer && Renderer.theme) {
+                Renderer.theme.cleanUp();
+                Renderer.theme.clearStage();
+                Renderer.theme = undefined;
+            }
+        }
     },
     pause: function() {
         if (Renderer.theme)
@@ -282,7 +286,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             } else {
                 instance.stageId.push(event.target.id);
             }
-        });
+        }, this);
 
         EkstepRendererAPI.addEventListener("renderer:assesment:eval", function(event) {
             instance.qid.push(event.target.event.edata.eks.qid);

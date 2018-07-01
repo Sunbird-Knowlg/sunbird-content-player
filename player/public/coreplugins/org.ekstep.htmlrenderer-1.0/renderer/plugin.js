@@ -14,8 +14,6 @@
     start: function() {
         this._super();
         data = content;
-        // Setting renderer global variable
-        EkstepRendererAPI.setRenderer(this);
         this.reset();
         var isMobile = window.cordova ? true : false;
         var envHTML = isMobile ? "app" : "portal";
@@ -72,6 +70,9 @@
     reset:function(){
       this.currentIndex = 50;
       this.totalIndex = 100;
+    },
+    clear: function() {
+        this.resetDomElement();
     }
 });
 //# sourceURL=HTMLRendererePlugin.js

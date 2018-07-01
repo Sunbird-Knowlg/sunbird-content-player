@@ -13,8 +13,6 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     manifest: undefined,
     enableHeartBeatEvent: false,
     heartBeatData: {},
-    // Move running variable to baselauncher instead of all plugin launcher
-    running: false,
 
     /**
      * init of the launcher with the given data.
@@ -43,8 +41,9 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     start: function() {
+        this.clear();
         console.info('Base Launcher should construct');
-        this.running = true; // Setting renderer runnong as true.
+        this.clearDomElement();
         this.resetDomElement();
         this.startTelemetry();
         if (this.enableHeartBeatEvent) {
@@ -60,8 +59,6 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     end: function() {
         this.heartBeatEvent(false);
         this.endTelemetry();
-        // Setting renderer running as false
-        this.running = false;
         EkstepRendererAPI.dispatchEvent("renderer:endpage:show");
     },
 
@@ -163,7 +160,9 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
             left: '0px',
             top: '0px',
             width: "100%",
-            height: "100%"
+            height: "100%",
+            marginTop: 0,
+            marginLeft: 0
         });
         var elementId = document.getElementById(this.manifest.id);
         elementId.style.position = 'absolute';
@@ -179,6 +178,9 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     resetDomElement: function() {
         console.info('Child Launcher should implement');
         jQuery('#' + this.manifest.id).remove();
+    },
+
+    clearDomElement: function() {
         var chilElemtns = jQuery('#gameArea').children();
         jQuery(chilElemtns).each(function() {
             if ((this.id !== "overlay") && (this.id !== "gameCanvas")) {
@@ -212,6 +214,27 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
             })
         }
 
+    },
+    destroy: function() {
+        this.clear();
+        this.resetDomElement();
+        var instance = this;
+        var pluginName = this.manifest.id;
+        var listeners = EventBus.listeners;
+        for(var type in listeners) {
+            var noOfCallbacks = listeners[type].length;
+            for (var i=0;i<noOfCallbacks;i++) {
+                var event = listeners[type];
+                if (event[i].scope == instance) {
+                    EkstepRendererAPI.removeEventListener(type, event[i].callback, event[i].scope)
+                }
+            }
+        }
+        if (org.ekstep.pluginframework.pluginManager.plugins) delete org.ekstep.pluginframework.pluginManager.plugins[pluginName];
+        if (org.ekstep.pluginframework.pluginManager.pluginManifests) delete org.ekstep.pluginframework.pluginManager.pluginManifests[pluginName];
+        if (org.ekstep.pluginframework.pluginManager.pluginObjs) delete org.ekstep.pluginframework.pluginManager.pluginObjs[pluginName];
+        if (org.ekstep.pluginframework.pluginManager.pluginVisited) delete org.ekstep.pluginframework.pluginManager.pluginVisited[pluginName];
+        console.log(pluginName, " Plugin instance got destroyed");
     }
 
 });

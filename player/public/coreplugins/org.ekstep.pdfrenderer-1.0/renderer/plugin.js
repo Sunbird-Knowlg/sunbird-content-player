@@ -26,8 +26,6 @@
      },
      start: function() {
         this._super();
-        // Setting renderer global variable
-        EkstepRendererAPI.setRenderer(this);
         context = this;
         var data = _.clone(content);
         this.initContentProgress();
@@ -314,6 +312,11 @@
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
         return this.progres(currentStageIndex, totalStages);
     },
+    clear: function() {
+        this.resetDomElement();
+        EkstepRendererAPI.forceRemoveEventListener('actionNavigateNext');
+        EkstepRendererAPI.forceRemoveEventListener('actionNavigatePrevious');
+    }
  });
 
  //# sourceURL=PDFRenderer.js
