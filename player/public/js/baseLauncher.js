@@ -225,7 +225,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
             var noOfCallbacks = listeners[type].length;
             for (var i=0;i<noOfCallbacks;i++) {
                 var event = listeners[type];
-                if (event[i].scope == instance) {
+                if (event[i] && (event[i].scope == instance)) {
                     EkstepRendererAPI.removeEventListener(type, event[i].callback, event[i].scope)
                 }
             }

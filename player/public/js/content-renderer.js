@@ -124,8 +124,9 @@ org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) 
 org.ekstep.contentrenderer.initializePreview = function(configuration) {
     // Checking if renderer is running or not
     if (EkstepRendererAPI.isRendererRunning()) {
+        EkstepRendererAPI.hideEndPage();
         // If renderer is running just call function to load aluncher
-        var contentObj = configuration.manifest || globalConfig.defaultMetadata;
+        var contentObj = configuration.metadata || globalConfig.defaultMetadata;
         if (configuration.data) contentObj.body = configuration.data;
         EkstepRendererAPI.renderContent(contentObj);
     } else {
