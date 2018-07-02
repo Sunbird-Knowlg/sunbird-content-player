@@ -29,6 +29,13 @@ var TextPlugin = Plugin.extend({
     _render: true,
 
     /**
+     * Magic number used to convert lineHeight for text V2
+     * @member {number} lineHeightMagicNumber
+     * @memberof TextPlugin
+     */
+    lineHeightMagicNumber: 1.13, // Fabricjs is using magic number 1.13 in their library
+
+    /**
      *   Invoked by framework when plugin instance created/renderered on stage,
      *   Use this plugin to create diffrent style of text on stage.
      *   @param data {object} data is input object for the text plugin.
@@ -116,7 +123,8 @@ var TextPlugin = Plugin.extend({
         // Adding WYSIWYG config 
         if (data.version === 'V2') {
             text.y = text.y + (data.offsetY * parseFloat(fontsize)); // Adding offset value
-            lineHeight = (this._parent.dimensions().w * lineHeight / data.parentW);
+            // Converting lineheight to supported lineheight for createJS
+            lineHeight = this.lineHeightMagicNumber * data.lineHeight * parseFloat(fontsize);
             text.lineHeight = lineHeight;   // Using lineheight coming from ecml(not using createjs function to calculate lineheight)
         }
 
