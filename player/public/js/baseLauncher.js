@@ -41,6 +41,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     start: function() {
+        var instance = this;
         this.clear();
         console.info('Base Launcher should construct');
         this.clearDomElement();
