@@ -70,9 +70,6 @@
     reset:function(){
       this.currentIndex = 50;
       this.totalIndex = 100;
-    },
-    clear: function() {
-        this.resetDomElement();
     }
 });
 //# sourceURL=HTMLRendererePlugin.js

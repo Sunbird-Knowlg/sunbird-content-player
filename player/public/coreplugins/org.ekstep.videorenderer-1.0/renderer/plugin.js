@@ -29,14 +29,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.createVideo(path, data);
         this.configOverlay();
     },
-    resetDomElement: function() {
-        if (document.getElementById(this.manifest.id)) {
-            videojs(this.manifest.id).dispose();
-            jQuery('#' + this.manifest.id).remove();
-        }
-        this.progressTimer(false);
-        this.currentTime = 0;
-    },
     createVideo: function(path, data) {
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         video = document.createElement('video');
@@ -236,8 +228,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             this.videoPlayer.muted = false;
         }
     },
-    clear: function() {
-        this.resetDomElement();
+    cleanUp: function() {
+        if (document.getElementById(this.manifest.id)) {
+            videojs(this.manifest.id).dispose();
+        }
+        this.progressTimer(false);
+        this.currentTime = 0;
         EkstepRendererAPI.dispatchEvent("renderer:next:show");
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:show');
         EkstepRendererAPI.dispatchEvent("renderer:previous:show");

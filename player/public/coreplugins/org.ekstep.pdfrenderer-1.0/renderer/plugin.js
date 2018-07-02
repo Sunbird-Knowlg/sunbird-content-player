@@ -312,10 +312,9 @@
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
         return this.progres(currentStageIndex, totalStages);
     },
-    clear: function() {
-        this.resetDomElement();
-        EkstepRendererAPI.forceRemoveEventListener('actionNavigateNext');
-        EkstepRendererAPI.forceRemoveEventListener('actionNavigatePrevious');
+    cleanUp: function() {
+        EkstepRendererAPI.removeEventListener('actionNavigateNext');
+        EkstepRendererAPI.removeEventListener('actionNavigatePrevious');
     }
  });
 

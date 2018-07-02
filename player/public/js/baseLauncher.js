@@ -42,9 +42,8 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
     start: function() {
         var instance = this;
-        this.clear();
+        this.cleanUp();
         console.info('Base Launcher should construct');
-        this.clearDomElement();
         this.resetDomElement();
         this.startTelemetry();
         if (this.enableHeartBeatEvent) {
@@ -81,7 +80,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * Clearing of the Lancher instace
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
-    clear: function() {
+    cleanUp: function() {
         console.info('Clearing the launcher instance')
     },
 
@@ -180,11 +179,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * Any child launcher can extends/override this functionality.
      */
     resetDomElement: function() {
-        console.info('Child Launcher should implement');
         jQuery('#' + this.manifest.id).remove();
-    },
-
-    clearDomElement: function() {
         var chilElemtns = jQuery('#gameArea').children();
         jQuery(chilElemtns).each(function() {
             if ((this.id !== "overlay") && (this.id !== "gameCanvas")) {
@@ -220,15 +215,15 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
 
     },
     destroy: function() {
-        this.clear();
-        this.resetDomElement();
         var instance = this;
         var pluginName = this.manifest.id;
         var listeners = EventBus.listeners;
+        this.cleanUp();
+        this.resetDomElement();
         for(var type in listeners) {
             var noOfCallbacks = listeners[type].length;
+            var event = listeners[type];
             for (var i=0;i<noOfCallbacks;i++) {
-                var event = listeners[type];
                 if (event[i] && (event[i].scope == instance)) {
                     EkstepRendererAPI.removeEventListener(type, event[i].callback, event[i].scope)
                 }

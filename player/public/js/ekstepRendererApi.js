@@ -56,8 +56,17 @@ window.EkstepRendererAPI = {
      * @param scope {object} the scope of the event (use this)
      * @memberof EkstepRendererAPI
      */
-    removeEventListener: function(type, callback, scope) {
-        EventBus.removeEventListener(type, callback, scope)
+    removeEventListener: function(type, callback, scope, forceRemove) {
+        if (forceRemove) {
+            var listeners = EventBus.listeners[eventName]
+            if (listeners) {
+                _.each(listeners, function(event) {
+                    EkstepRendererAPI.removeEventListener(eventName, event.callback, event.scope)
+                })
+            }
+        } else {
+            EventBus.removeEventListener(type, callback, scope)
+        }
     },
 
     /**
@@ -75,15 +84,6 @@ window.EkstepRendererAPI = {
      */
     getManifest: function() {
         return Renderer.theme._data.manifest;
-    },
-
-    /**
-     * Removes current stage HTML elements. This could be useful when plugins work across stages
-     * Using this, a plugin can get access to remove the current stage HTML element such vidoe html element etc.,
-     * @memberof EkstepRendererAPI
-     */
-    removeHtmlElements: function() {
-        Renderer.theme.removeHtmlElements();
     },
 
     /**
@@ -179,7 +179,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     cleanRenderer: function() {
-        Renderer.clear();
+        Renderer.cleanUp();
     },
 
     /**
@@ -999,11 +999,12 @@ window.EkstepRendererAPI = {
         }
     },
     /**
-    * Remove all Html elements from game area
-    * @memberof EkstepRendererAPI
-    */
+     * Removes current stage HTML elements. This could be useful when plugins work across stages
+     * Using this, a plugin can get access to remove the current stage HTML element such vidoe html element etc.,
+     * @memberof EkstepRendererAPI
+     */
     removeHtmlElements: function() {
-        var gameAreaEle = jQuery('#' + Renderer.divIds.gameArea);
+        var gameAreaEle = jQuery('#gameArea');
         var chilElemtns = gameAreaEle.children();
         jQuery(chilElemtns).each(function() {
             if ((this.id !== "overlay") && (this.id !== "gameCanvas")) {
@@ -1059,19 +1060,6 @@ window.EkstepRendererAPI = {
             EkstepRendererAPI.dispatchEvent('renderer:launcher:load', undefined, contentObj)
         } else {
             console.warn('Invalid Content')
-        }
-    },
-    /**
-     * Forcely remove EventListener
-     * @param {string} eventname - eventname to be removed
-     * @memberof EkstepRendererAPI
-     */
-    forceRemoveEventListener: function(eventName) {
-        var listeners = EventBus.listeners[eventName]
-        if (listeners) {
-            _.each(listeners, function(event) {
-                EkstepRendererAPI.removeEventListener(eventName, event.callback, event.scope)
-            })
         }
     }
 }

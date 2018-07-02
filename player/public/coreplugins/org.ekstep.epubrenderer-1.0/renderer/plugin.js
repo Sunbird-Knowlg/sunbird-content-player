@@ -195,14 +195,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
         return this.progres(currentStageIndex + 1, totalStages);
     },
-    resetDomElement: function() {
-        jQuery('#' + this.manifest.id).remove();
+    cleanUp: function() {
         this.removeProgressElements();
-    },
-    clear: function() {
-        this.resetDomElement();
-        EkstepRendererAPI.forceRemoveEventListener('actionNavigateNext');
-        EkstepRendererAPI.forceRemoveEventListener('actionNavigatePrevious');
+        EkstepRendererAPI.removeEventListener('actionNavigateNext', undefined, undefined, true);
+        EkstepRendererAPI.removeEventListener('actionNavigatePrevious', undefined, undefined, true);
     }
 });
 //# sourceURL=ePubRendererPlugin.js

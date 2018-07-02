@@ -26,7 +26,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      */
     initLauncher: function(manifest) {
         EkstepRendererAPI.addEventListener('renderer:content:load', this.start, this);
-        EkstepRendererAPI.addEventListener('renderer:cleanUp', this.clear, this);
+        EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
         var instance = this;
         setTimeout(function(){
             instance.start();
@@ -225,14 +225,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      * This method is used clean renderer objects
      * @memberof ecmlRenderer
      */
-    clear: function() {
+    cleanUp: function() {
         if (this.running) {
             this.running = false;
             AnimationManager.cleanUp();
             AssetManager.destroy();
             TimerManager.destroy();
             AudioManager.cleanUp();
-            this.resetDomElement();
             if(Renderer && Renderer.theme) {
                 Renderer.theme.cleanUp();
                 Renderer.theme.clearStage();
