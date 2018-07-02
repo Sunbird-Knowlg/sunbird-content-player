@@ -49,6 +49,9 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
         if (this.enableHeartBeatEvent) {
             this.heartBeatEvent(true);
         }
+        setTimeout(function(){
+            instance.startTelemetry();
+        }, 0);
     },
 
     /**
