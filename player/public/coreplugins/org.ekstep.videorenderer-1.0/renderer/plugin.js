@@ -11,7 +11,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     heartBeatData:{},
     enableHeartBeatEvent:false,
     initLauncher: function(manifestData) {
-
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
         this.start();
@@ -29,14 +28,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
         this.createVideo(path, data);
         this.configOverlay();
-    },
-    resetDomElement: function() {
-        if (document.getElementById(this.manifest.id)) {
-            videojs(this.manifest.id).dispose();
-            jQuery('#' + this.manifest.id).remove();
-        }
-        this.progressTimer(false);
-        this.currentTime = 0;
     },
     createVideo: function(path, data) {
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
@@ -236,6 +227,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         } else {
             this.videoPlayer.muted = false;
         }
+    },
+    cleanUp: function() {
+        if (document.getElementById(this.manifest.id)) {
+            videojs(this.manifest.id).dispose();
+        }
+        this.progressTimer(false);
+        this.currentTime = 0;
+        EkstepRendererAPI.dispatchEvent("renderer:next:show");
+        EkstepRendererAPI.dispatchEvent('renderer:stagereload:show');
+        EkstepRendererAPI.dispatchEvent("renderer:previous:show");
     }
 });
 

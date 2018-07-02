@@ -122,31 +122,41 @@ org.ekstep.contentrenderer.setContent = function(metadata, data, configuration) 
 };
 
 org.ekstep.contentrenderer.initializePreview = function(configuration) {
-    if(configuration){ // Deep clone of configuration. To avoid object refrence issue.
-   	    var configurationObj = JSON.parse(JSON.stringify(configuration)); 
-    }
-    if (_.isUndefined(configurationObj.context)) {
-        configurationObj.context = {};
-    }
-    if (_.isUndefined(configurationObj.config)) {
-        configurationObj.config = {};
-    }
-    if (_.isUndefined(configurationObj.context.contentId)) {
-        configurationObj.context.contentId = getUrlParameter("id");
-    }
-    setGlobalConfig(configurationObj);
-    GlobalContext.game = { id: configurationObj.contentId || GlobalContext.game.id, ver: (configurationObj.metadata && configurationObj.metadata.pkgVersion) || '1.0'};
-    GlobalContext.game.ver = GlobalContext.game.ver.toString();
-    GlobalContext.user = { uid: configurationObj.uid};
+    // Checking if renderer is running or not
+    if (EkstepRendererAPI.isRendererRunning()) {
+        EkstepRendererAPI.hideEndPage();
+        // If renderer is running just call function to load aluncher
+        var contentObj = configuration.metadata || globalConfig.defaultMetadata;
+        if (configuration.data) contentObj.body = configuration.data;
+        EkstepRendererAPI.renderContent(contentObj);
+    } else {
+        // If renderer is not running launch the framework from start
+        if(configuration){ // Deep clone of configuration. To avoid object refrence issue.
+            var configurationObj = JSON.parse(JSON.stringify(configuration)); 
+        }
+        if (_.isUndefined(configurationObj.context)) {
+            configurationObj.context = {};
+        }
+        if (_.isUndefined(configurationObj.config)) {
+            configurationObj.config = {};
+        }
+        if (_.isUndefined(configurationObj.context.contentId)) {
+            configurationObj.context.contentId = getUrlParameter("id");
+        }
+        setGlobalConfig(configurationObj);
+        GlobalContext.game = { id: configurationObj.contentId || GlobalContext.game.id, ver: (configurationObj.metadata && configurationObj.metadata.pkgVersion) || '1.0'};
+        GlobalContext.game.ver = GlobalContext.game.ver.toString();
+        GlobalContext.user = { uid: configurationObj.uid};
 
-    addWindowUnloadEvent();
-    /**
-     * renderer:player:init event will get dispatch after loading default & external injected plugins
-     * @event 'renderer:player:init'
-     * @fires 'renderer:player:init'
-     * @memberof EkstepRendererEvents
-     */
-    EkstepRendererAPI.dispatchEvent("renderer.content.getMetadata");
+        addWindowUnloadEvent();
+        /**
+         * renderer:player:init event will get dispatch after loading default & external injected plugins
+         * @event 'renderer:player:init'
+         * @fires 'renderer:player:init'
+         * @memberof EkstepRendererEvents
+         */
+        EkstepRendererAPI.dispatchEvent("renderer.content.getMetadata");
+    }
 };
 
 /**
