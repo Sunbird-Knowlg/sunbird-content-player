@@ -8,10 +8,8 @@
     "renderer": {
         "main": "renderer/plugin.js",
         "dependencies": [
-            {
-                "type": "js",
-                "src": "renderer/exturlservice.js"
-            }
+            { "type": "js", "src": "renderer/exturlservice.js" },
+            { "type": "css", "src": "renderer/style.css"}
         ]
     }
 }

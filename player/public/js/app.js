@@ -123,7 +123,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         EkstepRendererAPI.addEventListener("renderer:add:template", function(event){
             var data = event.target;
             injectTemplates(data.templatePath, data.scopeVariable, data.toElement);
-        });
+        }, this);
 
 
         EkstepRendererAPI.addEventListener("renderer:content:close", function(event, data) {

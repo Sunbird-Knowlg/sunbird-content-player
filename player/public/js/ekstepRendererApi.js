@@ -56,8 +56,17 @@ window.EkstepRendererAPI = {
      * @param scope {object} the scope of the event (use this)
      * @memberof EkstepRendererAPI
      */
-    removeEventListener: function(type, callback, scope) {
-        EventBus.removeEventListener(type, callback, scope)
+    removeEventListener: function(type, callback, scope, forceRemove) {
+        if (forceRemove) {
+            var listeners = EventBus.listeners[eventName]
+            if (listeners) {
+                _.each(listeners, function(event) {
+                    EkstepRendererAPI.removeEventListener(eventName, event.callback, event.scope)
+                })
+            }
+        } else {
+            EventBus.removeEventListener(type, callback, scope)
+        }
     },
 
     /**
@@ -75,15 +84,6 @@ window.EkstepRendererAPI = {
      */
     getManifest: function() {
         return Renderer.theme._data.manifest;
-    },
-
-    /**
-     * Removes current stage HTML elements. This could be useful when plugins work across stages
-     * Using this, a plugin can get access to remove the current stage HTML element such vidoe html element etc.,
-     * @memberof EkstepRendererAPI
-     */
-    removeHtmlElements: function() {
-        Renderer.theme.removeHtmlElements();
     },
 
     /**
@@ -112,7 +112,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getCurrentStage: function() {
-        return Renderer.theme._currentScene;
+        return (Renderer && Renderer.theme) ? Renderer.theme._currentScene : "";
     },
 
     /**
@@ -121,7 +121,7 @@ window.EkstepRendererAPI = {
      * @memberof EkstepRendererAPI
      */
     getCurrentStageId: function() {
-        return (!_.isUndefined(Renderer)) ? Renderer.theme._currentStage : '';
+        return (!_.isUndefined(Renderer) && !_.isUndefined(Renderer.theme)) ? Renderer.theme._currentStage : '';
     },
 
     /**
@@ -284,7 +284,7 @@ window.EkstepRendererAPI = {
      */
     isItemScene: function() {
         var stage = EkstepRendererAPI.getCurrentStage();
-        return stage.isItemScene();
+        return stage ? stage.isItemScene() : "";
     },
 
     /**
@@ -999,11 +999,12 @@ window.EkstepRendererAPI = {
         }
     },
     /**
-    * Remove all Html elements from game area
-    * @memberof EkstepRendererAPI
-    */
+     * Removes current stage HTML elements. This could be useful when plugins work across stages
+     * Using this, a plugin can get access to remove the current stage HTML element such vidoe html element etc.,
+     * @memberof EkstepRendererAPI
+     */
     removeHtmlElements: function() {
-        var gameAreaEle = jQuery('#' + Renderer.divIds.gameArea);
+        var gameAreaEle = jQuery('#gameArea');
         var chilElemtns = gameAreaEle.children();
         jQuery(chilElemtns).each(function() {
             if ((this.id !== "overlay") && (this.id !== "gameCanvas")) {
@@ -1030,6 +1031,35 @@ window.EkstepRendererAPI = {
             delete GlobalContext.registerEval[evalType.toLowerCase()]
         else
             GlobalContext.registerEval = [];
+    },
+    /**
+     * Return Boolean value & tells if renderer is running or not
+     * @memberof EkstepRendererAPI
+     */
+    isRendererRunning: function() {
+        var launcherAvailable = false;
+        _.each(globalConfig.contentLaunchers, function(eachConfig) {
+            if (EkstepRendererAPI.getPluginObjs(eachConfig.id)) {
+                launcherAvailable = true;
+            }
+        });
+        return launcherAvailable;
+    },
+    /**
+     * Repaint the canvas based on content passed
+     * @param {string} contentObj - content manifest & body json
+     * @memberof EkstepRendererAPI
+     */
+    renderContent: function(contentObj) {
+        if(contentObj) {
+            if (contentObj.baseDir) {
+                var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
+                globalConfigObj.basepath = contentObj.baseDir;
+            }
+            content = contentObj;
+            EkstepRendererAPI.dispatchEvent('renderer:launcher:load', undefined, contentObj)
+        } else {
+            console.warn('Invalid Content')
+        }
     }
-
 }

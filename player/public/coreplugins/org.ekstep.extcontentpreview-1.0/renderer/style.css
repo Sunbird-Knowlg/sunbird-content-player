@@ -1,0 +1,79 @@
+.grey-text {
+    color: #717274;
+}
+
+.preview-link-content {
+    padding: 1em;
+    margin-right: 1em;
+    margin-left: 1em;
+    margin-top: 30vh;
+    cursor: pointer;
+    line-height: 1.5em;
+}
+
+.preview-link-content .left-content {
+    display: inline-block;
+    white-space: normal;
+    vertical-align: middle;
+    width: 70%;
+    padding-right: 0.9em;
+}
+
+.preview-link-content .left-content .grey-text {
+    font-size: 1.5em;
+    color: #857c7c;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+}
+
+.preview-link-content .left-content .header {
+    font-size: 1.3em;
+    overflow: visible;
+    text-overflow: unset;
+    white-space: normal;
+}
+
+.preview-link-content .left-content .description {
+    font-size: 1.5em;
+    color: #111111;
+}
+
+.preview-link-content p {
+    font-size: 1.2em;
+    overflow: visible;
+    text-overflow: unset;
+    white-space: normal;
+    margin-top: 0.5em;
+}
+
+#contentViewerIframe>div>div.left-content>h2 {
+    font-size: 1vw;
+}
+
+.preview-link-content .left-content .header:hover {
+    text-decoration: underline;
+}
+
+.preview-link-content .right-content {
+    width: 30%;
+    vertical-align: middle;
+    display: inline-block;
+    white-space: normal;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.preview-link-content .right-content img {
+    width: 100%;
+}
+
+.no-preview {
+    width: 100%;
+    padding: 5%;
+    font-size: 4vw;
+    text-align: center;
+}
+
+.grey-text {
+    color: #717274;
+}
