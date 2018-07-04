@@ -35,6 +35,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.style.width = '100%';
         video.style.height = '100%';
         video.controls = true;
+        video.controlsList = 'nodownload';
         video.autoplay = true;
         video.preload = "auto";
         video.className = 'video-js vjs-default-skin';
@@ -44,6 +45,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.onvolumechange = function() {
             (video.muted) ? EkstepRendererAPI.dispatchEvent('renderer:overlay:mute') : EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
         };
+        $("video").bind("contextmenu",function() {
+            return false;
+        });
     },
     _loadVideo: function(path) {
         var source = document.createElement("source");
