@@ -3,47 +3,39 @@
 
 const ENVIRONMENT = process.env.NODE_ENV;
 const BUILD_NUMBER = process.env.build_number || 1;
-const EDITOR_VER = process.env.editor_version_number || 1;
-const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number || 1;
+const PLAYER_VER = process.env.player_version_number || 1;
 
-const BUILD_FOLDER_NAME = 'player.zip';
+// Build Zip Folder Name
+const BUILD_FOLDER_NAME = 'player-build';
 
+// Required dependency files
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const expose = require('expose-loader');
-const BowerResolvePlugin = require("bower-resolve-webpack-plugin");
-const UglifyJS = require("uglify-es");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const PurifyCSSPlugin = require('purifycss-webpack');
 const glob = require('glob-all');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const FontminPlugin = require('fontmin-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ZipPlugin = require('zip-webpack-plugin');
-const CompressionPlugin = require("compression-webpack-plugin")
-const BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
+var GasPlugin = require("gas-webpack-plugin");
+//var ngminPlugin = require("ngmin-webpack-plugin");
 
-/** 
- *  Core plugins file path, Refer minified file which is already created form the gulp.
- */
-const CORE_PLUGINS = './app/scripts/coreplugins.js';
+const WINDOW_OBJECT_EXPLORER = './public/js/webpack.global.variable.js'
 
 const APP_STYLE = [
     './public/styles/ionic.css',
-    './public/lstyles/bookshelf_slider.css',
-    //'./public/styles/skin02.css',
+    './public/styles/bookshelf_slider.css',
+    './public/styles/skin02.css',
     './public/styles/toastr.min.css',
     './public/styles/jquery.mCustomScrollbar.min.css',
     './public/styles/style.css'
-
 ];
 
 const EXTERNAL_SCRIPTS = [
+
     './public/libs/jquery.min.js',
     './public/libs/jquery.easing.1.3.js',
     './public/libs/jquery.bookshelfslider.min.js',
@@ -56,18 +48,21 @@ const EXTERNAL_SCRIPTS = [
     './public/libs/angular-resource.min.js',
     './public/libs/ng-cordova.min.js',
     './public/libs/ocLazyLoad.js',
+    './public/libs/eventbus.min.js',
     './public/libs/plugin-framework.min.js'
 ]
 
 const APP_SCRIPTS = [
-    '././public/js/globalContext.js',
+    './public/libs/class.js',
+    './public/js/AppConfig.js',
+    './public/js/globalContext.js',
     './public/js/appMessages.js',
     './public/js/splashScreen.js',
     './public/js/main.js',
     './public/js/app.js',
     './public/js/basePlugin.js',
     './public/services/mainservice.js',
-    './public/services/webservice.js',
+    './public/services/localservice.js',
     './public/services/interfaceService.js',
     './public/js/ekstepRendererApi.js',
     './public/js/content-renderer.js',
@@ -78,29 +73,22 @@ const APP_SCRIPTS = [
     './public/js/iEvaluator.js',
     './public/dispatcher/idispatcher.js',
     './public/dispatcher/web-dispatcher.js',
-    './public/dispatcher/device-dispatcher.js'
+    './public/dispatcher/device-dispatcher.js',
+    //'./public/js/webpack.global.variable.js'
 ]
 
 const TELEMETRY = [
-        './public/libs/class.js',
-        './public/libs/date-format.js',
-        '../js-libs/build/telemetry.js',
-        '../js-libs/telemetry/InActiveEvent.js',
-        '../js-libs/telemetry/TelemetryEvent.js',
-        '../js-libs/telemetry/TelemetryService.js',
-        '../js-libs/telemetry/TelemetryServiceUtil.js',
-        '../js-libs/telemetry/TelemetryV1Manager.js',
-        '../js-libs/telemetry/TelemetryV2Manager.js',
-        '../js-libs/telemetry/TelemetryV3Manager.js'
-    ]
-    // getRendererFrameworkFiles = function() {
-    //     var fs = require('fs'),
-    //         entries = fs.readdirSync('../js-libs/renderer/**/').filter(function(file) {
-    //             return file.match(/.*\.js$/);
-    //         });
-    //     console.log("entries", entries);
-    // }
-    //getRendererFrameworkFiles();
+    './public/libs/date-format.js',
+    '../js-libs/build/telemetry.js',
+    '../js-libs/telemetry/InActiveEvent.js',
+    '../js-libs/telemetry/TelemetryEvent.js',
+    '../js-libs/telemetry/TelemetryService.js',
+    '../js-libs/telemetry/TelemetryServiceUtil.js',
+    '../js-libs/telemetry/TelemetryV1Manager.js',
+    '../js-libs/telemetry/TelemetryV2Manager.js',
+    '../js-libs/telemetry/TelemetryV3Manager.js',
+    //'./public/js/webpack.global.variable.js'
+]
 const APP_FRAMEWORK = [
     './public/libs/xml2json.min.js',
     '../js-libs/renderer/manager/PluginManager.js',
@@ -152,7 +140,6 @@ const APP_FRAMEWORK = [
     '../js-libs/renderer/command/TransitionToCommand.js',
     '../js-libs/renderer/command/UnblurCommand.js',
     '../js-libs/renderer/command/WindowEventCommand.js',
-    //'../js-libs/renderer/command/*.js',
     '../js-libs/renderer/plugin/HTMLPlugin.js',
     '../js-libs/renderer/plugin/AnimationPlugin.js',
     '../js-libs/renderer/plugin/LayoutPlugin.js',
@@ -181,32 +168,46 @@ const APP_FRAMEWORK = [
     '../js-libs/renderer/plugin/GridlayoutPlugin.js',
     '../js-libs/renderer/plugin/HighlightTextPlugin.js',
     '../js-libs/speech/android-recorder.js',
-    '../js-libs/speech/speech.js'
+    '../js-libs/speech/speech.js',
+    //'./public/js/webpack.global.variable.js'
 ]
 
-// removing the duplicate files
-const SCRIPTS = [...new Set([...EXTERNAL_SCRIPTS, ...TELEMETRY, ...APP_SCRIPTS])]
 
-if (!BUILD_NUMBER && !EDITOR_VER && !PLUGIN_FRAMEWORK_VER) {
-    console.error('Error!!! Cannot find framework_version_number, editor_version_number and build_number env variables');
+// removing the duplicate files
+const SCRIPTS = [...new Set([...EXTERNAL_SCRIPTS, ...TELEMETRY, ...APP_SCRIPTS])];
+
+//SCRIPTS.push(WINDOW_OBJECT_EXPLORER);
+//APP_FRAMEWORK.push(WINDOW_OBJECT_EXPLORER);
+console.log("App", APP_FRAMEWORK)
+
+if (!BUILD_NUMBER && !PLAYER_VER) {
+    console.error('Error!!! Cannot find player_version_number and build_number env variables');
     return process.exit(1)
 }
-const VERSION = EDITOR_VER + '.' + BUILD_NUMBER;
+const VERSION = PLAYER_VER + '.' + BUILD_NUMBER;
 
 module.exports = {
     entry: {
         'script': SCRIPTS,
-        'renderer': [...new Set(APP_FRAMEWORK)]
-            //"style": APP_STYLE
+        'renderer': [...new Set(APP_FRAMEWORK)], // Renderer libs only for ECML type contents  
+        "style": APP_STYLE
     },
     output: {
         filename: `[name].min.${VERSION}.js`,
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'public/' + BUILD_FOLDER_NAME)
     },
+    // optimization: {
+    //     minimizer: [
+    //         new UglifyJsPlugin()
+    //     ]
+    // },
     resolve: {
         alias: {
             'jquery': path.resolve("./public/libs/jquery.min.js"),
+            'underscore': path.resolve("./public/libs/underscore.js"),
             'jquery-mousewheel': path.resolve('./node_modules/jquery-mousewheel/jquery.mousewheel.js'),
+            'Fingerprint2': path.resolve('../js-libs/telemetry-lib/fingerprint2.min.js'),
+            "X2JS": path.resolve('./public/libs/xml2json.min.js')
         }
     },
     module: {
@@ -224,33 +225,8 @@ module.exports = {
                                 removeAll: true
                             }
                         }
-                    },
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            sourceMap: false,
-                            minimize: true,
-                            "preset": "advanced",
-                            discardComments: {
-                                removeAll: true
-                            }
-                        }
                     }
                 ]
-            },
-            {
-                test: /\.(gif|png|jpe?g|svg)$/i,
-                use: [
-                    'file-loader',
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 50, //it's important
-                            outputPath: './images',
-                            name: '[name].[ext]',
-                        }
-                    },
-                ],
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
@@ -263,34 +239,59 @@ module.exports = {
                         fallback: 'responsive-loader'
                     }
                 }]
+            }, {
+                test: require.resolve('./public/libs/eventbus.min.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'EventBus'
+                }]
+            },
+            {
+                test: require.resolve('./public/libs/jquery.min.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'jQuery'
+                }]
+            },
+            {
+                test: require.resolve('./public/libs/jquery.min.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: '$'
+                }]
+            },
+            {
+                test: require.resolve('./public/libs/underscore.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: '_'
+                }]
+            },
+            {
+                test: require.resolve('../js-libs/build/telemetry.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'EkTelemetry'
+                }]
+            },
+            {
+                test: require.resolve('../js-libs/telemetry-lib/fingerprint2.min.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'Fingerprint2'
+                }]
+            },
+            {
+                test: require.resolve('./public/libs/xml2json.min.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'X2JS'
+                }]
             },
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(['dist']),
-        new UglifyJsPlugin({
-            cache: false,
-            parallel: true,
-            uglifyOptions: {
-                compress: {
-                    dead_code: true,
-                    drop_console: true,
-                    global_defs: {
-                        DEBUG: true
-                    },
-                    passes: 1,
-                },
-                ecma: 6,
-                mangle: true
-            },
-            sourceMap: true
-        }),
-        // copy the index.html and templated to eidtor filder
-        // new CopyWebpackPlugin([{
-        //     from: './app/index.html',
-        //     to: './[name].[ext]',
-        //     toType: 'template'
-        // }]),
+        //new CleanWebpackPlugin([path.resolve(__dirname, 'public/' + BUILD_FOLDER_NAME)]),
         new ImageminPlugin({
             test: /\.(jpe?g|png|gif|svg)$/i,
             name: '[name].[ext]',
@@ -302,7 +303,19 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: `[name].min.${VERSION}.css`,
         }),
-        new webpack.ProvidePlugin({}),
+        //new GasPlugin(),
+        new ngAnnotatePlugin({
+            add: true,
+        }),
+        new webpack.ProvidePlugin({
+            "window.$": "jquery",
+            "window._": 'underscore',
+            $: 'jquery',
+            jQuery: 'jquery',
+            _: 'underscore',
+            async: "async",
+            Fingerprint2: 'Fingerprint2'
+        }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new OptimizeCssAssetsPlugin({
@@ -315,34 +328,6 @@ module.exports = {
                 }
             },
             canPrint: true
-        }),
-        new ZipPlugin({
-            path: path.join(__dirname, '.'),
-            filename: BUILD_FOLDER_NAME,
-            fileOptions: {
-                mtime: new Date(),
-                mode: 0o100664,
-                compress: true,
-                forceZip64Format: false,
-            },
-            pathMapper: function(assetPath) {
-                console.log("AssesPath", assetPath)
-                if (assetPath.startsWith('gulpfile')) {
-                    return path.join('.', path.basename(assetPath));
-                }
-                if (assetPath.endsWith('.js'))
-                    return path.join(path.dirname(assetPath), 'scripts', path.basename(assetPath));
-                if (assetPath.endsWith('.css'))
-                    return path.join(path.dirname(assetPath), 'styles', path.basename(assetPath));
-                if (assetPath.startsWith('fonts')) {
-                    return path.join('styles', 'fonts', path.basename(assetPath));
-                };
-                return assetPath;
-            },
-            exclude: [`style.min.${VERSION}.js`],
-            zipOptions: {
-                forceZip64Format: false,
-            },
         })
     ],
     optimization: {
@@ -364,5 +349,4 @@ module.exports = {
             },
         }
     }
-
 };

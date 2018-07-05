@@ -5,9 +5,9 @@
  */
 
 // To support for node server environment 
-if(typeof document == 'undefined'){
-	var Ajv = require('ajv')
-};
+if(typeof require === "function") {
+   var Ajv = require('ajv')
+}
 
 var libraryDispatcher = {
     dispatch: function(event) {
