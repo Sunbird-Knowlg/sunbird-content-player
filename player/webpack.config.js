@@ -74,7 +74,6 @@ const APP_SCRIPTS = [
     './public/dispatcher/idispatcher.js',
     './public/dispatcher/web-dispatcher.js',
     './public/dispatcher/device-dispatcher.js',
-    //'./public/js/webpack.global.variable.js'
 ]
 
 const TELEMETRY = [
@@ -87,7 +86,6 @@ const TELEMETRY = [
     '../js-libs/telemetry/TelemetryV1Manager.js',
     '../js-libs/telemetry/TelemetryV2Manager.js',
     '../js-libs/telemetry/TelemetryV3Manager.js',
-    //'./public/js/webpack.global.variable.js'
 ]
 const APP_FRAMEWORK = [
     './public/libs/xml2json.min.js',
@@ -168,16 +166,12 @@ const APP_FRAMEWORK = [
     '../js-libs/renderer/plugin/GridlayoutPlugin.js',
     '../js-libs/renderer/plugin/HighlightTextPlugin.js',
     '../js-libs/speech/android-recorder.js',
-    '../js-libs/speech/speech.js',
-    //'./public/js/webpack.global.variable.js'
+    '../js-libs/speech/speech.js'
 ]
 
 
 // removing the duplicate files
 const SCRIPTS = [...new Set([...EXTERNAL_SCRIPTS, ...TELEMETRY, ...APP_SCRIPTS])];
-
-//SCRIPTS.push(WINDOW_OBJECT_EXPLORER);
-//APP_FRAMEWORK.push(WINDOW_OBJECT_EXPLORER);
 console.log("App", APP_FRAMEWORK)
 
 if (!BUILD_NUMBER && !PLAYER_VER) {
@@ -196,18 +190,18 @@ module.exports = {
         filename: `[name].min.${VERSION}.js`,
         path: path.resolve(__dirname, 'public/' + BUILD_FOLDER_NAME)
     },
-    // optimization: {
-    //     minimizer: [
-    //         new UglifyJsPlugin()
-    //     ]
-    // },
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin()
+        ]
+    },
     resolve: {
         alias: {
             'jquery': path.resolve("./public/libs/jquery.min.js"),
             'underscore': path.resolve("./public/libs/underscore.js"),
             'jquery-mousewheel': path.resolve('./node_modules/jquery-mousewheel/jquery.mousewheel.js'),
             'Fingerprint2': path.resolve('../js-libs/telemetry-lib/fingerprint2.min.js'),
-            "X2JS": path.resolve('./public/libs/xml2json.min.js')
+            "X2JS": path.resolve('./public/libs/xml2json.min.js'),
         }
     },
     module: {
@@ -314,7 +308,7 @@ module.exports = {
             jQuery: 'jquery',
             _: 'underscore',
             async: "async",
-            Fingerprint2: 'Fingerprint2'
+            Fingerprint2: 'Fingerprint2',
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),

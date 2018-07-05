@@ -35,3 +35,5 @@ PluginManager = {
         return org.ekstep.pluginframework.pluginManager.getPlugins();
     }
 };
+
+window.PluginManager = PluginManager;

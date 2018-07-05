@@ -1,4 +1,4 @@
-AppMessages = {
+window.AppMessages = {
 	NO_CONTENT_LIST_FOUND: "There are no stories or worksheets available in this collection. You can always download new ones !",
 	NO_CONTENT_FOUND: "There is no content available. You can always download !",
 	SUCCESS_GET_CONTENT_LIST: "Content list synced.",
@@ -19,14 +19,14 @@ AppMessages = {
 	ERR_FETCHING_CONTENT_PATH: "Error while getting content. Please try again."
 };
 
-var AppErrors = {
+window.AppErrors = {
 	contentListFetch: 'Error while fetching content list: ',
 	contentListFilterFetch: 'Error while fetching and filtering content list: ',
 	contetnPathFetch: 'Error while fetching content path: ',
 	sendFeedbackStatus: 'Unable to send feedback event'
 };
 
-var AppLables = {
+window.AppLables = {
     "languageCode": "en",
     "home": "Home",
     "title": "TITLE",

@@ -47,3 +47,5 @@ var Command = Class.extend({
 		}
 	}
 });
+
+window.Command = Command;

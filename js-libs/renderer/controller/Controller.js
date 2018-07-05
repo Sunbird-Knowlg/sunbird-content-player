@@ -188,3 +188,5 @@ var Controller = Class.extend({
     	return item;
     },
 })
+
+window.Controller = Controller;
