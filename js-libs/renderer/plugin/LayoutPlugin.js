@@ -150,3 +150,5 @@ var LayoutPlugin = Plugin.extend({
         return returnEvents;
     }
 });
+
+window.LayoutPlugin = LayoutPlugin;

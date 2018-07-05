@@ -172,7 +172,6 @@ const APP_FRAMEWORK = [
 
 // removing the duplicate files
 const SCRIPTS = [...new Set([...EXTERNAL_SCRIPTS, ...TELEMETRY, ...APP_SCRIPTS])];
-console.log("App", APP_FRAMEWORK)
 
 if (!BUILD_NUMBER && !PLAYER_VER) {
     console.error('Error!!! Cannot find player_version_number and build_number env variables');
@@ -285,7 +284,7 @@ module.exports = {
         ]
     },
     plugins: [
-        //new CleanWebpackPlugin([path.resolve(__dirname, 'public/' + BUILD_FOLDER_NAME)]),
+        new CleanWebpackPlugin([path.resolve(__dirname, 'public/' + BUILD_FOLDER_NAME)]),
         new ImageminPlugin({
             test: /\.(jpe?g|png|gif|svg)$/i,
             name: '[name].[ext]',
@@ -297,7 +296,6 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: `[name].min.${VERSION}.css`,
         }),
-        //new GasPlugin(),
         new ngAnnotatePlugin({
             add: true,
         }),

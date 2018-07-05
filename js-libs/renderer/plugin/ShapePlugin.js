@@ -189,4 +189,5 @@ var ShapePlugin = Plugin.extend({
         "trapezium" : [{"x":25,"y":0},{"x":75,"y":0},{"x":100,"y":100},{"x":0,"y":100}]
     }
 });
+window.ShapePlugin = ShapePlugin;
 PluginManager.registerPlugin('shape', ShapePlugin);
