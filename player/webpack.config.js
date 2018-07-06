@@ -114,6 +114,7 @@ module.exports = (env, argv) => {
                 'underscore': path.resolve("./public/libs/underscore.js"),
                 'jquery-mousewheel': path.resolve('./node_modules/jquery-mousewheel/jquery.mousewheel.js'),
                 'Fingerprint2': path.resolve('../js-libs/telemetry-lib/fingerprint2.min.js'),
+                'ajv': require.resolve('./node_modules/ajv/dist/ajv.min.js')
             }
         },
         // optimization: {
@@ -245,7 +246,7 @@ module.exports = (env, argv) => {
                 _: 'underscore',
                 async: "async",
                 Fingerprint2: 'Fingerprint2',
-                ajv: path.resolve('./node_modules/ajv/dist/ajv.min.js')
+                ajv: require.resolve('./node_modules/ajv/dist/ajv.min.js')
             }),
             new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.HotModuleReplacementPlugin(),
