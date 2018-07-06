@@ -213,13 +213,13 @@ module.exports = (env, argv) => {
                         options: 'Fingerprint2'
                     }]
                 },
-                {
-                    test: require.resolve('./node_modules/ajv/dist/ajv.min.js'),
-                    use: [{
-                        loader: 'expose-loader',
-                        options: 'ajv'
-                    }]
-                }
+                // {
+                //     test: require.resolve('./node_modules/ajv/dist/ajv.min.js'),
+                //     use: [{
+                //         loader: 'expose-loader',
+                //         options: 'ajv'
+                //     }]
+                // }
             ]
         },
         plugins: [
@@ -246,7 +246,7 @@ module.exports = (env, argv) => {
                 _: 'underscore',
                 async: "async",
                 Fingerprint2: 'Fingerprint2',
-                ajv: require.resolve('./node_modules/ajv/dist/ajv.min.js')
+                // ajv: require.resolve('./node_modules/ajv/dist/ajv.min.js')
             }),
             new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.HotModuleReplacementPlugin(),
