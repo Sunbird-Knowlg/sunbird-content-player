@@ -22,7 +22,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
 
 const APP_CONFIG = {
-    ekstep: './public/js/AppConfig.js',
+    ekstep: './public/js/appConfig.js',
     sunbird: './public/js/appConfig-Sunbird.js'
 }
 
