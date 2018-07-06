@@ -58,10 +58,10 @@ window.EkstepRendererAPI = {
      */
     removeEventListener: function(type, callback, scope, forceRemove) {
         if (forceRemove) {
-            var listeners = EventBus.listeners[eventName]
+            var listeners = EventBus.listeners[type]
             if (listeners) {
                 _.each(listeners, function(event) {
-                    EkstepRendererAPI.removeEventListener(eventName, event.callback, event.scope)
+                    EkstepRendererAPI.removeEventListener(type, event.callback, event.scope)
                 })
             }
         } else {
