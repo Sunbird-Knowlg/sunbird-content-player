@@ -810,7 +810,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('init-webpack', ['clean', 'mkdir:all', 'copy:main', 'injector:prview'])
 
-    grunt.registerTask('build-preview-webpack', ['clean', 'init-webpack', 'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
+    grunt.registerTask('build-preview-webpack', ['clean', 'build-telemetry-lib', 'init-webpack', 'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
 
 
     //Build AAR
