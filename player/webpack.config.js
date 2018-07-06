@@ -77,7 +77,7 @@ const APP_SCRIPTS = [
 ];
 const TELEMETRY = [
     './public/libs/date-format.js',
-    '../js-libs/build/telemetry.js',
+    '../js-libs/build/telemetry.min.js',
     '../js-libs/telemetry/InActiveEvent.js',
     '../js-libs/telemetry/TelemetryEvent.js',
     '../js-libs/telemetry/TelemetryService.js',
@@ -199,7 +199,7 @@ module.exports = (env, argv) => {
                     }]
                 },
                 {
-                    test: require.resolve('../js-libs/build/telemetry.js'),
+                    test: require.resolve('../js-libs/build/telemetry.min.js'),
                     use: [{
                         loader: 'expose-loader',
                         options: 'EkTelemetry'
