@@ -211,6 +211,13 @@ module.exports = (env, argv) => {
                         loader: 'expose-loader',
                         options: 'Fingerprint2'
                     }]
+                },
+                {
+                    test: require.resolve('./node_modules/ajv/dist/ajv.min.js'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'ajv'
+                    }]
                 }
             ]
         },
