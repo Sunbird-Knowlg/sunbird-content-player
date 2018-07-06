@@ -245,6 +245,7 @@ module.exports = (env, argv) => {
                 _: 'underscore',
                 async: "async",
                 Fingerprint2: 'Fingerprint2',
+                ajv: path.resolve('./node_modules/ajv/dist/ajv.min.js')
             }),
             new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.HotModuleReplacementPlugin(),
