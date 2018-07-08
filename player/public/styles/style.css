@@ -1,51 +1,51 @@
 @font-face {
     font-family: 'NotoSansDevanagari';
-    src: url('fonts/NotoSansDevanagari-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansDevanagari-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansTelugu';
-    src: url('fonts/NotoSansTelugu-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansTelugu-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansKannada';
-    src: url('fonts/NotoSansKannada-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansKannada-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansOriya';
-    src: url('fonts/NotoSansOriya-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansOriya-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansGujarati';
-    src: url('fonts/NotoSansGujarati-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansGujarati-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansBengali';
-    src: url('fonts/NotoSansBengali-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansBengali-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansMalayalam';
-    src: url('fonts/NotoSansMalayalam-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansMalayalam-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoNastaliqUrdu';
-    src: url('fonts/NotoNastaliqUrdu-Regular.ttf') format('truetype')
+    src: url('fonts/NotoNastaliqUrdu-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansGurmukhi';
-    src: url('fonts/NotoSansGurmukhi-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansGurmukhi-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansTamil';
-    src: url('fonts/NotoSansTamil-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansTamil-Regular.woff') format('woff')
 }
 
 @font-face {
@@ -55,33 +55,33 @@
 
 @font-face {
     font-family: 'NotoSans';
-    src: url('fonts/NotoSans-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSans-Regular.woff') format('woff')
 }
 
 @font-face {
     /* reference: http://www.latofonts.com/lato-free-fonts/ */
     font-family: 'lato-black';
-    src: url('fonts/lato/Lato-Black.ttf') format('opentype')
+    src: url('fonts/lato/Lato-Black.woff') format('woff')
 }
 
 @font-face {
     font-family: 'lato-bold';
-    src: url('fonts/lato/Lato-Bold.ttf') format('opentype')
+    src: url('fonts/lato/Lato-Bold.woff') format('woff')
 }
 
 @font-face {
     font-family: 'lato-light';
-    src: url('fonts/lato/Lato-Light.ttf') format('opentype')
+    src: url('fonts/lato/Lato-Light.woff') format('woff')
 }
 
 @font-face {
     font-family: 'lato-medium';
-    src: url('fonts/lato/Lato-Medium.ttf') format('opentype')
+    src: url('fonts/lato/Lato-Medium.woff') format('woff')
 }
 
 @font-face {
     font-family: 'lato-regular';
-    src: url('fonts/lato/Lato-Regular.ttf') format('opentype')
+    src: url('fonts/lato/Lato-Regular.woff') format('woff')
 }
 
 .splashText {
