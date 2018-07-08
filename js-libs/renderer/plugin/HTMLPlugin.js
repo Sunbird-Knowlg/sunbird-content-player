@@ -4,4 +4,3 @@ var HTMLPlugin = Plugin.extend({
     _render: true
 });
 
-window.HTMLPlugin = HTMLPlugin;

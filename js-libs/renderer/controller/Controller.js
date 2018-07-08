@@ -189,4 +189,3 @@ var Controller = Class.extend({
     },
 })
 
-window.Controller = Controller;

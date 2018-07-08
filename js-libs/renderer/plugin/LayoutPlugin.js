@@ -151,4 +151,3 @@ var LayoutPlugin = Plugin.extend({
     }
 });
 
-window.LayoutPlugin = LayoutPlugin;
