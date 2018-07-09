@@ -1,83 +1,114 @@
 <style>
-    .tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
+#sunbirdUserSwitchingModal .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #888;
+    width: 98%;
+    height: 96vh;
+    position: relative;
+    font-family: notosans;
 }
-
-.userswitcher-card {
+#sunbirdUserSwitchingModal .modal-content .user-header {
+    background-color: #eee;
+    font-size: 2vw;
+    padding: 0px 20px;
+    height: 15%;
+}
+#sunbirdUserSwitchingModal .modal-content .user-header .active {
+    color: #1786fe;
+    border-bottom: 3px solid #7d87ff;
+}
+/* The Close Button */
+#sunbirdUserSwitchingModal .close {
+    color: #969799;
+    float: right;
+    font-size: 40px;
+    margin-top: 15px;
+}
+#sunbirdUserSwitchingModal .close:hover,
+#sunbirdUserSwitchingModal .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+#sunbirdUserSwitchingModal .model-butttons .replay {
+    border-radius: 5px;
+    padding: 2.5vh 9vw;
+    background-color: #007aff;
+    color: #fefefe;
+    float: right;
+    margin: 6px 20px 0 0;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+/* User Switcher popup*/
+#sunbirdUserSwitchingModal.user-modal {
+    display: block;
+    position: fixed;
+    z-index: 99999;
+    padding-top: 2vh;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+#sunbirdUserSwitchingModal .modal-content .userswitcher-card {
     padding: 12px 19px;
     height: 32%;
     width: 50%;
 }
-
-/* Style the buttons inside the tab */
-.tab button {
-    background-color: inherit;
-    float: left;
+#sunbirdUserSwitchingModal .modal-content .tab button {
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
 }
-
-#users {
+#sunbirdUserSwitchingModal .modal-content #users {
     height: 70%;
     overflow-y: scroll;
 }
-
-.user-header .tablinks {
+#sunbirdUserSwitchingModal .modal-content .user-header .tablinks {
     padding: 10.5px 16px;
     font-size: 15px;
     text-transform: uppercase;
 }
-
-.user-footer {
+#sunbirdUserSwitchingModal .modal-content .model-butttons .user-footer {
     background-color: #fff;
     border-top: 2px solid #f3f3f3;
     border-bottom: none;
-    height: 100%;
 }
-
-.grid-container {
+#sunbirdUserSwitchingModal .modal-content .grid-container {
   display: inline-grid;
   grid-template-columns: auto;
 }
-.grid-item {
+#sunbirdUserSwitchingModal .modal-content .grid-container .grid-item {
     background-color: #f5f5f5;
     padding: 8px 15px
 }
-
-.userswitcher-class {
+#sunbirdUserSwitchingModal .modal-content .userswitcher-class {
     color: #a0a0a0;
 }
-
-#users .active .userswitcher-data .userswitcher-name {
+#sunbirdUserSwitchingModal .modal-content #users .active .userswitcher-data .userswitcher-name {
     color: #007aff;
 }
 </style>
-<div ng-init="init()" ng-show="showUserSwitchModal" id="userSwitchingModal" class="user-modal">
+<div ng-init="init()" ng-show="showUserSwitchModal" id="sunbirdUserSwitchingModal" class="user-modal">
     <div class="modal-content">
         <div class="user-header tab">
             <span ng-click="closeUserSwitchingModal()" class="close">&times;</span>
-            <button class="tablinks" id="usersButton" ng-click="openCity($event, 'users')">Users</button>
-            <!-- <button class="tablinks" id="groupsButton" ng-click="openCity($event, 'groups')">Groups</button> -->
+            <button class="tablinks" id="usersButton" ng-click="initializeUser($event, 'users')">Users</button>
+            <!-- <button class="tablinks" id="groupsButton" ng-click="initializeUser($event, 'groups')">Groups</button> -->
         </div>
-        <!-- <div id="sliderContainer" class="slider-container tabcontent"> -->
-            <!-- <div id="userSlider"> -->
-                <div id="users">
-                    <div ng-repeat="user in user1 track by $index" ng-click='selectUser(user)' class="inline userswitcher-card grid-container" ng-class="user.selected ? 'active' : ''">
-                        <div class="userswitcher-data grid-item">
-                            <p class="userswitcher-name">{{user.name}}</p>
-                            <p class="userswitcher-class">{{user.class}}</p>
-                            <i class="ion-md-checkmark-circle" name="checkmark-circle"></i>
-                        </div>
-                    </div>
+        <div id="users">
+            <div ng-repeat="user in user1 track by $index" ng-click='selectUser(user)' class="userswitcher-card grid-container" ng-class="user.selected ? 'active' : ''">
+                <div class="userswitcher-data grid-item">
+                    <p class="userswitcher-name">{{user.name}}</p>
+                    <p class="userswitcher-class">{{user.class}}</p>
+                    <i class="ion-md-checkmark-circle" name="checkmark-circle"></i>
                 </div>
-            <!-- </div> -->
-        <!-- </div> -->
+            </div>
+        </div>
         <div class="model-butttons">
             <div class="tab user-footer">
                 <button class="replay" ng-click="replayContent()">Play</button>

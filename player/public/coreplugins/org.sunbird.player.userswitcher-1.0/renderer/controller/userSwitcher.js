@@ -4,17 +4,8 @@
  * @author Krushanu Mohapatra <krushanu.mohapatra@tarento.com> Akash Gupta <akash.gupta@tarento.com>
  */
 
-app.controllerProvider.register('UserSwitchController1', [
-    '$scope',
-    '$rootScope',
-    '$state',
-    '$stateParams',
-    function($scope, $rootScope, $state, $stateParams) {
-        $scope.AppLables = AppLables;
-        $scope.groupLength = undefined;
+app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootScope','$state','$stateParams',function($scope, $rootScope, $state, $stateParams) {
         $scope.selectedUser = {};
-        $scope.showUserSwitchModal = false;
-        $scope.imageBasePath = globalConfig.assetbase;
         $scope.user1 = [];
         $scope.json = {};
         for (var i=0;i<100;i++) {
@@ -31,50 +22,30 @@ app.controllerProvider.register('UserSwitchController1', [
         }
 
         $scope.showUserSwitchingModal = function() {
-            if ($rootScope.enableUserSwitcher) {
-                if ($scope.showUserSwitchModal)
-                    return;
-                TelemetryService.interact("TOUCH", "gc_userswitch_popup_open", "TOUCH", {
-                    stageId: EkstepRendererAPI.getCurrentStageId()
-                        ? EkstepRendererAPI.getCurrentStageId()
-                        : $rootScope.pageId
-                }, $scope.TelemetryEvent.interact);
-                EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideUserSwitchingModal, $scope);
-                _.each($rootScope.users, function(user) {
-                    if (user.selected === true)
-                        user.selected = false;
-                    if (user.uid === $rootScope.currentUser.uid)
-                        user.selected = true;
-                    }
-                );
-                $scope.sortUserlist();
-                $rootScope.safeApply(function() {
-                    $scope.showUserSwitchModal = true;
-                });
-            } else {
-                showToaster('info', "User switch is disabled");
-            }
-        }
-
-        $scope.checkUsersImage = function() {
+            if ($scope.showUserSwitchModal)
+                return;
+            TelemetryService.interact("TOUCH", "gc_userswitch_popup_open", "TOUCH", {
+                stageId: EkstepRendererAPI.getCurrentStageId()? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId 
+            },$scope.TelemetryEvent.interact);
+            EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideUserSwitchingModal, $scope);
             _.each($rootScope.users, function(user) {
-                var imageUrl = user.profileImage;
-                imageExists(imageUrl, function(exists) {
-                    if (exists === false)
-                        user.profileImage = "assets/icons/avatar_anonymous.png"
-                    console.log('RESULT: url=' + imageUrl + ', exists=' + exists);
-                });
-            })
+                if (user.selected === true)
+                    user.selected = false;
+                if (user.uid === $rootScope.currentUser.uid)
+                    user.selected = true;
+                }
+            );
+            $scope.sortUserlist();
+            $rootScope.safeApply(function() {
+                $scope.showUserSwitchModal = true;
+            });
         }
 
         $scope.getUsersList = function() {
             org.ekstep.service.content.getAllUserProfile().then(function(usersData) {
                 // $rootScope.users = usersData;
-                $scope.checkUsersImage();
-                $scope.groupLength = (_.where($rootScope.users, {"isGroupUser": true})).length;
                 if ($rootScope.users.length == 0)
                     $rootScope.users.push($rootScope.currentUser);
-                $scope.addScroll();
                 $scope.sortUserlist();
             }).catch(function(err) {
                 console.error(err);
@@ -94,9 +65,7 @@ app.controllerProvider.register('UserSwitchController1', [
                 }
             );
             TelemetryService.interact("TOUCH", selectedUser.uid, "TOUCH", {
-                stageId: EkstepRendererAPI.getCurrentStageId()
-                    ? EkstepRendererAPI.getCurrentStageId()
-                    : $rootScope.pageId
+                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
             }, $scope.TelemetryEvent.interact);
             selectedUser.selected = true;
             $scope.selectedUser = selectedUser;
@@ -106,31 +75,16 @@ app.controllerProvider.register('UserSwitchController1', [
         $scope.replayContent = function() {
             var replayContent = true;
             TelemetryService.interact("TOUCH", 'gc_userswitch_replayContent', "TOUCH", {
-                stageId: EkstepRendererAPI.getCurrentStageId()
-                    ? EkstepRendererAPI.getCurrentStageId()
-                    : $rootScope.pageId
+                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
             }, $scope.TelemetryEvent.interact);
             if (_.isEmpty($scope.selectedUser)) {
                 EkstepRendererAPI.dispatchEvent('renderer:content:close');
-
                 EkstepRendererAPI.dispatchEvent('renderer:content:replay');
                 $scope.closeUserSwitchingModal(false);
                 EkstepRendererAPI.hideEndPage(); // need to remove; hiding of endpage should happen on replay function
             } else {
                 $scope.switchUser(replayContent);
             }
-        }
-
-        // When the user clicks on Continue, Continue the content from there
-        $scope.continueContent = function() {
-            // here the user Selection happens
-            var replayContent = false;
-            TelemetryService.interact("TOUCH", 'gc_userswitch_continue', "TOUCH", {
-                stageId: EkstepRendererAPI.getCurrentStageId()
-                    ? EkstepRendererAPI.getCurrentStageId()
-                    : $rootScope.pageId
-            }, $scope.TelemetryEvent.interact);
-            $scope.switchUser(replayContent);
         }
 
         $scope.switchUser = function(replayContent) {
@@ -230,10 +184,8 @@ app.controllerProvider.register('UserSwitchController1', [
              * @memberOf EkstepRendererEvents
              */
             EventBus.addEventListener("event:getcurrentuser", function() {
-                if (globalConfig.overlay.showUser)
-                    currentUser = $rootScope.currentUser;
-                }
-            );
+                currentUser = $rootScope.currentUser;
+            });
 
             /**
              * event:getuserlist Event to get the user list.
@@ -242,10 +194,8 @@ app.controllerProvider.register('UserSwitchController1', [
              * @memberOf EkstepRendererEvents
              */
             EventBus.addEventListener("event:getuserlist", function() {
-                if (globalConfig.overlay.showUser)
-                    userList = $rootScope.users;
-                }
-            );
+                userList = $rootScope.users;
+            });
 
             /**
              * event:showuser Event to show the user icon.
@@ -267,12 +217,8 @@ app.controllerProvider.register('UserSwitchController1', [
              * @memberOf EkstepRendererEvents
              */
             EventBus.addEventListener("event:enableUserSwitcher", function(value) {
-                if (globalConfig.overlay.enableUserSwitcher) {
-                    $rootScope.safeApply = function() {
-                        $rootScope.enableUserSwitcher = value.target;
-                    }
-                } else {
-                    console.warn('User switcher is disabled in appconfig');
+                $rootScope.safeApply = function() {
+                    $rootScope.enableUserSwitcher = value.target;
                 }
             });
 
@@ -308,35 +254,13 @@ app.controllerProvider.register('UserSwitchController1', [
     }
 ]);
 
-app.compileProvider.directive('userSwitcher1', function($rootScope, $compile) {
+app.compileProvider.directive('sunbirdUserswitcher', function($rootScope, $compile) {
     return {
         restrict: 'E',
-        controller: 'UserSwitchController1',
+        controller: 'SunbirdUserSwitchController',
         template: "<div ng-include='getUserSwitcherTemplate()' ></div>",
         link: function(scope, element, attrs, controller) {
-
-            scope.addScroll = function() {
-                // get the user selection div
-                var userSlider = element.find("#userSlider");
-                var groupSlider = element.find("#groupSlider");
-
-                userSlider.mCustomScrollbar({
-                    axis: "x",
-                    theme: "dark-3",
-                    advanced: {
-                        autoExpandHorizontalScroll: true
-                    }
-                });
-                groupSlider.mCustomScrollbar({
-                    axis: "x",
-                    theme: "dark-3",
-                    advanced: {
-                        autoExpandHorizontalScroll: true
-                    }
-                });
-            }
-
-            scope.openCity = function(evt, cityName) {
+            scope.initializeUser = function(evt, cityName) {
                 var i, tabcontent, tablinks;
                 tabcontent = document.getElementsByClassName("tabcontent");
                 for (i = 0; i < tabcontent.length; i++) {
@@ -356,7 +280,7 @@ app.compileProvider.directive('userSwitcher1', function($rootScope, $compile) {
                     element.find("#groupSlider").mCustomScrollbar('destroy');
                     scope.initializeCtrl();
                     var users = document.getElementById('usersButton');
-                    scope.openCity({currentTarget: users}, 'users');
+                    scope.initializeUser({currentTarget: users}, 'users');
                     scope.safeApply();
                 }
             };

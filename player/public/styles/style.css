@@ -1627,16 +1627,9 @@ body {
 
 #userSwitchingModal .modal-content .user-header {
     background-color: #eee;
-    border: none;
+    text-align: center;
     font-family: lato-Regular;
     font-size: 2vw;
-    padding: 0px 20px;
-    height: 15%;
-}
-
-#userSwitchingModal .modal-content .user-header .active {
-    color: #1786fe;
-    border-bottom: 3px solid #7d87ff;
 }
 
 #userSwitchingModal .modal-content .user-header P {
@@ -1647,11 +1640,12 @@ body {
 
 /* The Close Button */
 #userSwitchingModal .close {
-    color: #969799;
+    color: #333;
     float: right;
-    font-size: 40px;
-    margin-top: 15px;
-    margin-right: 0px;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 6px;
+    margin-right: 7px;
 }
 
 #userSwitchingModal .close:hover,
@@ -1678,7 +1672,7 @@ body {
     min-height: 145px;
     width: 100%;
     padding: 5px 20px 0px 20px;
-    /* background-color: #eee; */
+    background-color: #eee;
 }
 
 #userSwitchingModal #groupSlider {
@@ -1738,26 +1732,20 @@ body {
 }
 
 #userSwitchingModal .modal-content .model-butttons {
-    /* position: absolute;
+    position: absolute;
     bottom: 10px;
-    right: 20px; */
+    right: 20px;
     height: 15%
-}
-
-userSwitchingModal .model-butttons .replay .active {
-    background-color: #007aff;
 }
 
 #userSwitchingModal .model-butttons .replay,
 #userSwitchingModal .model-butttons .continue {
-    border-radius: 5px;
-    padding: 2.5vh 9vw;
-    background-color: #007aff;
+    border-color: rgba(255, 255, 255, 0); 
+    border-radius: 50px;
+    padding: 1.5vh 3vw;
+    margin-left: 5px;
+    background-color: #2691d0; 
     color: #fefefe;
-    float: right;
-    margin: 6px 20px 0 0;
-    text-transform: uppercase;
-    font-size: 12px;
 }
 
 #userSwitchingModal .model-butttons .replay img {
