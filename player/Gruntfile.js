@@ -805,21 +805,15 @@ module.exports = function(grunt) {
     grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared', 'replace:xwalk_library']);
 
     //Build web prview
-    grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetryLib', 'concat:telemetry', "uglify:telemetrymin", 'concat:script', 'concat:' + target, 'clean:script', 'clean:deletefiles', 'injector:prview', 'replace:build_Number']);
-    grunt.registerTask('build-preview', ['clean', 'build-telemetry-lib', 'preview-init-setup', 'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
-
-    grunt.registerTask('init-webpack', ['clean', 'mkdir:all', 'copy:main', 'injector:prview'])
-
-    grunt.registerTask('build-preview-webpack', ['clean', 'build-telemetry-lib', 'init-webpack', 'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
-
+    grunt.registerTask('init', ['mkdir:all', 'copy:main', 'injector:prview'])
+    grunt.registerTask('build-preview', ['clean', 'build-telemetry-lib', 'init', 'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
 
     //Build AAR
     grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);
-    grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'replace:gradleCanvasVersion', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('build-app', ['init-setup', 'build-aar']);
+    grunt.registerTask('build-aarshared-xwalk', ['init', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'replace:gradleCanvasVersion', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-app', ['clean', 'mkdir:all', 'init-setup', 'build-aar']);
     //Added on 16/04/18. Simple command to build aar file. There is no xwalk build required. This changes made to share build for Sunbird.
     grunt.registerTask('build-aar', ['mkdir:all', 'build-aarshared-xwalk']);
-
 
     grunt.registerTask('build-jsdoc', ['jsdoc', 'compress:main']);
 
