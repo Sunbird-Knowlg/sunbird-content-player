@@ -1,0 +1,11 @@
+{
+    "id": "org.sunbird.player.userswitcher",
+    "ver": "1.0",
+    "shortId": "org.sunbird.player.userswitcher",
+    "author": "Akash Gupta",
+    "description": "",
+    "publishedDate": "",
+    "renderer": {
+        "main": "renderer/plugin.js"
+    }
+}

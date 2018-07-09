@@ -1,0 +1,87 @@
+<style>
+    .tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.userswitcher-card {
+    padding: 12px 19px;
+    height: 32%;
+    width: 50%;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+#users {
+    height: 70%;
+    overflow-y: scroll;
+}
+
+.user-header .tablinks {
+    padding: 10.5px 16px;
+    font-size: 15px;
+    text-transform: uppercase;
+}
+
+.user-footer {
+    background-color: #fff;
+    border-top: 2px solid #f3f3f3;
+    border-bottom: none;
+    height: 100%;
+}
+
+.grid-container {
+  display: inline-grid;
+  grid-template-columns: auto;
+}
+.grid-item {
+    background-color: #f5f5f5;
+    padding: 8px 15px
+}
+
+.userswitcher-class {
+    color: #a0a0a0;
+}
+
+#users .active .userswitcher-data .userswitcher-name {
+    color: #007aff;
+}
+</style>
+<div ng-init="init()" ng-show="showUserSwitchModal" id="userSwitchingModal" class="user-modal">
+    <div class="modal-content">
+        <div class="user-header tab">
+            <span ng-click="closeUserSwitchingModal()" class="close">&times;</span>
+            <button class="tablinks" id="usersButton" ng-click="openCity($event, 'users')">Users</button>
+            <!-- <button class="tablinks" id="groupsButton" ng-click="openCity($event, 'groups')">Groups</button> -->
+        </div>
+        <!-- <div id="sliderContainer" class="slider-container tabcontent"> -->
+            <!-- <div id="userSlider"> -->
+                <div id="users">
+                    <div ng-repeat="user in user1 track by $index" ng-click='selectUser(user)' class="inline userswitcher-card grid-container" ng-class="user.selected ? 'active' : ''">
+                        <div class="userswitcher-data grid-item">
+                            <p class="userswitcher-name">{{user.name}}</p>
+                            <p class="userswitcher-class">{{user.class}}</p>
+                            <i class="ion-md-checkmark-circle" name="checkmark-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            <!-- </div> -->
+        <!-- </div> -->
+        <div class="model-butttons">
+            <div class="tab user-footer">
+                <button class="replay" ng-click="replayContent()">Play</button>
+            </div>
+        </div>
+    </div>
+</div>
