@@ -74,6 +74,7 @@ const APP_SCRIPTS = [
     './public/dispatcher/idispatcher.js',
     './public/dispatcher/web-dispatcher.js',
     './public/dispatcher/device-dispatcher.js',
+    '../js-libs/renderer/manager/AudioManager.js',
 ];
 const TELEMETRY = [
     './public/libs/date-format.js',
@@ -160,6 +161,7 @@ module.exports = (env, argv) => {
                         }
                     ]
                 },
+
                 {
                     test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
                     use: [{
@@ -212,26 +214,11 @@ module.exports = (env, argv) => {
                         loader: 'expose-loader',
                         options: 'Fingerprint2'
                     }]
-                },
-                // {
-                //     test: require.resolve('./node_modules/ajv/dist/ajv.min.js'),
-                //     use: [{
-                //         loader: 'expose-loader',
-                //         options: 'ajv'
-                //     }]
-                // }
+                }
             ]
         },
         plugins: [
             new CleanWebpackPlugin([path.resolve(__dirname, 'public/' + BUILD_FOLDER_NAME)]),
-            new ImageminPlugin({
-                test: /\.(jpe?g|png|gif|svg)$/i,
-                name: '[name].[ext]',
-                outputPath: './images',
-                pngquant: {
-                    quality: '65-70'
-                }
-            }),
             new MiniCssExtractPlugin({
                 filename: `[name].min.${VERSION}.css`,
             }),
