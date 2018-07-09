@@ -7,6 +7,9 @@
     "publishedDate": "",
     "renderer": {
         "main": "renderer/plugin.js"
-    } 
+    },
+    "dependencies": [
+        {"plugin": "org.sunbird.player.userswitcher", "ver": "1.0", "scope": "renderer" }
+    ]   
 
 }

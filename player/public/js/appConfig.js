@@ -90,10 +90,6 @@ AppConfig = {
             id:"org.ekstep.alert",
             ver:1.0,
             type:'plugin'
-        },{
-            id:"org.sunbird.player.userswitcher",
-            ver:1.0,
-            type:'plugin'
         }
     ],
     overlay: {
