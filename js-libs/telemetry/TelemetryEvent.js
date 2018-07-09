@@ -69,6 +69,9 @@ TelemetryEvent = Class.extend({
                 var eventStr = JSON.stringify(this.event);
                 console.log("V2 Telemetry event - ", eventStr);
                 TelemetryService.eventDispatcher('telemetryEvent', eventStr);
+                if(this.event.eid == 'OE_ASSESS' ) {
+                    TelemetryService.eventDispatcher('telemetryEventData', this.event);
+                }
                 return eventStr;
                 // telemetry.send(JSON.stringify(this.event), apiName).then(function() {
                 //     return JSON.stringify(this.event);

@@ -15,17 +15,11 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.getTotalScore = function(id) {
-        if ("undefined" != typeof cordova) {
-            org.ekstep.service.content.getLearnerAssessment(GlobalContext.user.uid, id, GlobalContext.game.contentExtras)
-                .then(function(score) {
-                    if (score && score.total_questions) {
-                        $scope.$apply(function() {
-                            $scope.score = (score.total_correct + "/" + score.total_questions);
-                        });
-                    } else {
-                        $scope.score = undefined;
-                    }
-                })
+        let score = org.ekstep.service.content.getAssessmentScore(GlobalContext.user.uid);
+        if (score && score.totalQuestions) {
+            $scope.$apply(function() {
+                $scope.score = (score.totalScore + "/" + score.totalQuestions);
+            });
         } else {
             $scope.score = undefined;
         }
