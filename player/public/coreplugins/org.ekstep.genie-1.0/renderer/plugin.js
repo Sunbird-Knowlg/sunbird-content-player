@@ -6,7 +6,7 @@
 Plugin.extend({
     initialize: function() {
         var icon = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/assets/icn_home.png");
-        app.compileProvider.directive('genie', function($rootScope) {
+        app.compileProvider.directive('genie', ['$rootScope', function($rootScope) {
             return {
                 restrict: 'E',
                 template: '<div ng-class="enableGenie ? \'genie-home\' : \'icon-opacity genie-home\'" ng-click="goToGenie()"><img ng-src="{{imgSrc}}"/><span> {{AppLables.home}} </span></div>',
@@ -18,12 +18,12 @@ Plugin.extend({
                         scope.goToGenie = function() {
                             EkstepRendererAPI.hideEndPage();
                             stageId = !_.isUndefined(Renderer) ? Renderer.theme._currentStage : " ";
-                            TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", {stageId: stageId });
+                            TelemetryService.interact("TOUCH", "gc_genie", "TOUCH", { stageId: stageId });
                             exitApp();
                         }
                     }
                 }
             }
-        });
+        }]);
     }
 })
