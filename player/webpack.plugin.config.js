@@ -196,6 +196,7 @@ module.exports = {
         }),
         new webpack.ProvidePlugin({
             jQuery: 'jquery',
+            toastr: path.resolve('./public/coreplugins/org.ekstep.toaster-1.0/renderer/libs/toastr.min.js'),
             CryptoJS: path.resolve('./public/coreplugins/org.ekstep.telemetrysync-1.0/renderer/libs/md5.js')
                 // createjs: 'createjs',
                 // creatine: require.resolve('./public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/creatine-1.0.0.min'),
