@@ -237,17 +237,25 @@ module.exports = function(grunt) {
         copy: {
             main: {
                 files: [{
-                    expand: true,
-                    cwd: 'public/',
-                    src: ['assets/**', '!js/tests/**', '!js/*', 'coreplugins/**', '!json/*', '!libs/*', '!styles/**', 'templates/*', 'index.html', 'index_min.html', 'coreplugins.js'],
-                    dest: 'www/'
-                }, {
-                    expand: true,
-                    cwd: 'public/player-build/',
-                    src: '**',
-                    dest: 'www/',
-                    flatten: false,
-                }]
+                        expand: true,
+                        cwd: 'public/',
+                        src: ['assets/**', '!js/tests/**', '!js/*', 'coreplugins/**', '!json/*', '!libs/*', '!styles/**', 'templates/*', 'index.html', 'index_min.html'],
+                        dest: 'www/'
+                    }, {
+                        expand: true,
+                        cwd: 'public/player-build/',
+                        src: '**',
+                        dest: 'www/',
+                        flatten: false,
+                    },
+                    {
+                        expand: true,
+                        cwd: 'public/js/',
+                        src: 'coreplugins.js',
+                        dest: 'www/',
+                        flatten: false,
+                    }
+                ]
             },
             previewFiles: {
                 files: [{
