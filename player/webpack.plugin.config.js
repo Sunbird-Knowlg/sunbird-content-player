@@ -137,6 +137,13 @@ module.exports = {
                     options: 'CryptoJS'
                 }]
             },
+            {
+                test: require.resolve('./public/coreplugins/org.ekstep.toaster-1.0/renderer/libs/toastr.min.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'toastr'
+                }]
+            },
             // {
             //     test: require.resolve('./public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/createjs.min.js'),
             //     use: [{
