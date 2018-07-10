@@ -239,7 +239,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'public/',
-                    src: ['assets/**', '!js/tests/**', '!js/*', 'coreplugins/**', '!json/*', '!libs/*', '!styles/**', 'templates/*', 'index.html', 'index_min.html'],
+                    src: ['assets/**', '!js/tests/**', '!js/*', 'coreplugins/**', '!json/*', '!libs/*', '!styles/**', 'templates/*', 'index.html', 'index_min.html', 'coreplugins.js'],
                     dest: 'www/'
                 }, {
                     expand: true,
