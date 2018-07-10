@@ -1,6 +1,4 @@
-'use strict';
-
-app.controllerProvider.register("OverlayController", function($scope, $rootScope, $compile, $stateParams) {
+app.controllerProvider.register("OverlayController", ["$scope", "$rootScope", "$compile", "$stateParams", function($scope, $rootScope, $compile, $stateParams) {
     var globalConfig = EkstepRendererAPI.getGlobalConfig();
     $rootScope.isItemScene = false;
     $rootScope.menuOpened = false;
@@ -104,23 +102,23 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         });
         if (navType === "next") {
 
-        /**
-         * actionNavigateNext  event used to navigate to next stage from the current stage of the content.
-         * @event actionNavigateNext
-         * @fires actionNavigateNext
-         * @memberof EkstepRendererEvents
-         */
+            /**
+             * actionNavigateNext  event used to navigate to next stage from the current stage of the content.
+             * @event actionNavigateNext
+             * @fires actionNavigateNext
+             * @memberof EkstepRendererEvents
+             */
             EventBus.dispatch("actionNavigateNext", navType);
             EventBus.dispatch("nextClick");
 
         } else if (navType === "previous") {
 
-        /**
-         * actionNavigatePrevious  event used to navigate to previous stage from the current stage of the content.
-         * @event actionNavigatePrevious
-         * @fires actionNavigatePrevious
-         * @memberof EkstepRendererEvents
-         */
+            /**
+             * actionNavigatePrevious  event used to navigate to previous stage from the current stage of the content.
+             * @event actionNavigatePrevious
+             * @fires actionNavigatePrevious
+             * @memberof EkstepRendererEvents
+             */
             EventBus.dispatch("actionNavigatePrevious", navType);
             EventBus.dispatch("previousClick");
         }
@@ -185,7 +183,8 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     }
 
     $scope.openMenu = function() {
-        //display a layer to disable clicking and scrolling on the gameArea while menu is shown
+        console.log("menu opne")
+            //display a layer to disable clicking and scrolling on the gameArea while menu is shown
         if (jQuery('.menu-overlay').css('display') == "block") {
             $scope.hideMenu();
             return;
@@ -196,9 +195,10 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
         });
         jQuery('.menu-overlay').css('display', 'block');
         jQuery(".gc-menu").show();
-        jQuery(".gc-menu").animate({
-            "marginLeft": ["0%", 'easeOutExpo']
-        }, 700, function() {});
+        jQuery('.gc-menu').css('marginLeft', '0%');
+        // TODO: jQuery(".gc-menu").animate({
+        //     "marginLeft": ["0%", 'easeOutExpo']
+        // }, 700, function() {});
         EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideMenu, $scope);
     }
 
@@ -209,9 +209,10 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
             stageId: $rootScope.stageId
         });
         jQuery('.menu-overlay').css('display', 'none');
-        jQuery(".gc-menu").animate({
-            "marginLeft": ["-35%", 'easeOutExpo']
-        }, 700, function() {});
+        jQuery('.gc-menu').css('marginLeft', '-35%');
+        //TODO: jQuery(".gc-menu").animate({
+        //     "marginLeft": ["-35%", 'easeOutExpo']
+        // }, 700, function() {});
         $rootScope.safeApply();
     }
 
@@ -235,9 +236,9 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
     }
 
     $scope.init();
-});
+}]);
 
-app.compileProvider.directive('mute', function($rootScope) {
+app.compileProvider.directive('mute', ['$rootScope', function($rootScope) {
     return {
         restrict: 'E',
         template: '<div ng-click="toggleMute()"><img src="{{muteImg}}"/><span>Sound {{AppLables.mute}} </span></div>',
@@ -263,9 +264,9 @@ app.compileProvider.directive('mute', function($rootScope) {
              * @memberof EkstepRendererEvents
              */
             EkstepRendererAPI.addEventListener('renderer:overlay:mute', function() {
-                    AudioManager.mute();
-                    scope.muteImg = scope.imageBasePath + "audio_mute_icon.png";
-                    AppLables.mute = "off";
+                AudioManager.mute();
+                scope.muteImg = scope.imageBasePath + "audio_mute_icon.png";
+                AppLables.mute = "off";
             });
             EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
             scope.toggleMute = function() {
@@ -280,15 +281,14 @@ app.compileProvider.directive('mute', function($rootScope) {
             }
         }
     }
-});
+}]);
 
-app.compileProvider.directive('reloadStage', function($rootScope) {
+app.compileProvider.directive('reloadStage', ['$rootScope', function($rootScope) {
     return {
         restrict: 'E',
         template: '<span class="reload-stage" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" ng-show="reload !== state_off" src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></span>',
         link: function(scope) {
-
-            scope.toggleReload = function(event) {
+            scope.toggleReload = function _menuTPfunction(event) {
                 var val;
                 var globalConfig = EkstepRendererAPI.getGlobalConfig();
                 var defaultValue = globalConfig.overlay.showReload ? "on" : "off";
@@ -321,26 +321,33 @@ app.compileProvider.directive('reloadStage', function($rootScope) {
             EkstepRendererAPI.addEventListener("renderer:stagereload:hide", scope.toggleReload, scope)
         }
     }
-});
+}]);
 
-app.compileProvider.directive('menu', function($rootScope, $sce) {
+app.compileProvider.directive('menu', ['$rootScope', '$sce', function($rootScope, $sce) {
     return {
         restrict: 'E',
         scope: false,
         link: function(scope) {
+            scope.template = undefined;
             scope.getTemplate = function() {
-                return scope.pluginInstance._menuTP;
+                if (scope.pluginInstance) {
+                    return scope.pluginInstance._menuTP;
+                } else {
+                    return undefined;
+                }
             }
-        },
-        template: "<div ng-include=getTemplate()></div>"
-    }
-});
+            scope.template = scope.getTemplate() || "menu.html"
 
-app.compileProvider.directive('stageInstructions', function($rootScope) {
+        },
+        template: "<div ng-include=\"'menu.html' \"></div>"
+    }
+}]);
+
+app.compileProvider.directive('stageInstructions', ['$rootScope', function($rootScope) {
     return {
         restrict: 'E',
         template: '<div ng-class="{\'icon-opacity\' : !stageData.params.instructions}" ng-click="showInstructions()"><img ng-src="{{imageBasePath}}icn_teacher.png" style="z-index:2;" alt="note img"/><span> {{AppLables.instructions}} </span></div>',
-        controller: function($scope, $rootScope) {
+        link: function($scope, $rootScope) {
             $scope.stageInstMessage = "";
             $scope.showInst = false;
 
@@ -373,9 +380,9 @@ app.compileProvider.directive('stageInstructions', function($rootScope) {
             });
         }
     }
-});
+}]);
 
-app.compileProvider.directive('assess', function($rootScope) {
+app.compileProvider.directive('assess', ['$rootScope', function($rootScope) {
     return {
         restrict: 'E',
         scope: {
@@ -383,14 +390,15 @@ app.compileProvider.directive('assess', function($rootScope) {
             show: '='
         },
         template: '<a class="assess" ng-class="assessStyle" href="javascript:void(0);" ng-click="onSubmit()">{{showOverlaySubmit}} <!-- enabled --><img ng-src="{{image}}"/></a>',
-        link: function(scope, element) {
-            scope.labelSubmit = AppLables.submit;
-        },
-        controller: function($scope, $rootScope, $timeout) {
+        // link: function(scope, element) {
+        //     scope.labelSubmit = AppLables.submit;
+        // },
+        link: function($scope, $rootScope, $timeout) {
             $scope.isEnabled = false;
             $scope.assessStyle = 'assess-disable';
+            $scope.labelSubmit = AppLables.submit;
 
-            $rootScope.$watch('enableEval', function() {
+            $scope.$watch('enableEval', function() { //TODO:  check this
                 $scope.isEnabled = $rootScope.enableEval;
                 if ($scope.isEnabled) {
                     $timeout(function() {
@@ -413,13 +421,13 @@ app.compileProvider.directive('assess', function($rootScope) {
             }
         }
     }
-});
+}]);
 
-app.compileProvider.directive('goodJob', function($rootScope) {
+app.compileProvider.directive('goodJob', ['$rootScope', function($rootScope) {
     return {
         restrict: 'E',
         template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-goodjob-popup"> <div class="correct-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner3.png" height="100%" width="100%"> </div> <div class="sign-board"> <img ng-src="{{imageBasePath}}check.png" id="correctButton" width="40%" /> </div> </div> <div id="popup-buttons-container"> <div ng-click="hidePopup(); moveToNextStage(\'next\');" class="primary center button">{{AppLables.next}}</div> </div> </div> </div> </div>',
-        controller: function($scope, $rootScope, $timeout) {
+        link: function($scope) {
             $scope.retryAssessment = function(id, e) {
                 $scope.hidePopup(id);
                 EventBus.dispatch("retryClick");
@@ -436,70 +444,72 @@ app.compileProvider.directive('goodJob', function($rootScope) {
             }
 
             $scope.moveToNextStage = function(navType) {
+                console.log("Move next")
                 EkstepRendererAPI.unRegisterEval();
                 EventBus.dispatch("actionNavigateSkip", navType);
                 EventBus.dispatch("skipClick");
             }
         }
     }
-});
+}]);
 
-app.compileProvider.directive('tryAgain', function($rootScope) {
+app.compileProvider.directive('tryAgain', ['$rootScope', function($rootScope) {
     return {
         restrict: 'E',
         template: '<div class="popup"> <div class="popup-overlay" ng-click="hidePopup()"></div> <div class="popup-full-body"> <div class="font-lato assess-popup assess-tryagain-popup"> <div class="wrong-answer" style=" text-align: center;"> <div class="banner"> <img ng-src="{{imageBasePath}}banner2.png" height="100%" width="100%"> </div> <div class="sign-board"><img ng-src="{{imageBasePath}}incorrect.png" width="40%" id="incorrectButton" /> </div> </div> <div id="popup-buttons-container"> <div ng-click="hidePopup(); moveToNextStage(\'next\');" class="left button">{{AppLables.next}}</div> <div ng-click="retryAssessment(\'gc_retry\', $event);" href="javascript:void(0);" class="right primary button">{{AppLables.tryAgain}}</div> </div> </div> </div> </div>'
     }
-});
+}]);
 
-app.compileProvider.directive('contentClose', function($rootScope) {
-    return {
-        restrict: 'E',
-        template: '<span class="content-close" ng-click="closeContent();" ng-show="showContentClose !== state_off"><img id="content_close" ng-src="{{contentCloseIcon}}" style="width:100%;"/></span>',
-        link: function(scope) {
-            scope.contentCloseIcon = EkstepRendererAPI.resolvePluginResource(scope.pluginInstance._manifest.id, scope.pluginInstance._manifest.ver, "renderer/assets/icons/content-close.png");
+// app.compileProvider.directive('contentClose', ['$rootScope', function($rootScope) {
+//     return {
+//         restrict: 'E',
+//         template: '<span class="content-close" ng-click="closeContent();" ng-show="showContentClose !== state_off"><img id="content_close" ng-src="{{contentCloseIcon}}" style="width:100%;"/></span>',
+//         link: function(scope) {
+//             scope.contentCloseIcon = EkstepRendererAPI.resolvePluginResource(scope.pluginInstance._manifest.id, scope.pluginInstance._manifest.ver, "renderer/assets/icons/content-close.png");
 
-            scope.toggleContentClose = function(event) {
-                var val;
-                var globalConfig = EkstepRendererAPI.getGlobalConfig();
-                var defaultValue = globalConfig.overlay.showContentClose ? "on" : "off";
-                switch (event.type) {
-                    case "renderer:contentclose:show":
-                        val = "on";
-                        break;
-                    case "renderer:contentclose:hide":
-                        val = "off";
-                        break;
-                    default:
-                        val = defaultValue;
-                }
-                scope.showContentClose = val;
-                $rootScope.safeApply();
-            };
+//             scope.toggleContentClose = function(event) {
+//                 var val;
+//                 var globalConfig = EkstepRendererAPI.getGlobalConfig();
+//                 var defaultValue = globalConfig.overlay.showContentClose ? "on" : "off";
+//                 switch (event.type) {
+//                     case "renderer:contentclose:show":
+//                         val = "on";
+//                         break;
+//                     case "renderer:contentclose:hide":
+//                         val = "off";
+//                         break;
+//                     default:
+//                         val = defaultValue;
+//                 }
+//                 scope.showContentClose = val;
+//                 $rootScope.safeApply();
+//             };
 
-            scope.closeContent = function () {
-                EkstepRendererAPI.dispatchEvent('renderer:content:end');
-                EventBus.dispatch('actionContentClose');
-                TelemetryService.interact("TOUCH", "content_close", "TOUCH", {
-                    stageId: $rootScope.stageId
-                });
-            };
+//             scope.closeContent = function() {
+//                 EkstepRendererAPI.dispatchEvent('renderer:content:end');
+//                 EventBus.dispatch('actionContentClose');
+//                 TelemetryService.interact("TOUCH", "content_close", "TOUCH", {
+//                     stageId: $rootScope.stageId
+//                 });
+//             };
 
-            /**
-             * renderer:contentclose:show Event to show the close icon.
-             * @event renderer:contentclose:show
-             * @listen renderer:contentclose:show
-             * @memberOf EkstepRendererEvents
-             */
-            EkstepRendererAPI.addEventListener("renderer:contentclose:show", scope.toggleContentClose, scope);
-            /**
-             * renderer:contentclose:hide Event to hide the close icon.
-             * @event renderer:contentclose:hide
-             * @listen renderer:contentclose:hide
-             * @memberOf EkstepRendererEvents
-             */
-            EkstepRendererAPI.addEventListener("renderer:contentclose:hide", scope.toggleContentClose, scope)
-        }
-    }
-});
+//             /**
+//              * renderer:contentclose:show Event to show the close icon.
+//              * @event renderer:contentclose:show
+//              * @listen renderer:contentclose:show
+//              * @memberOf EkstepRendererEvents
+//              */
+//             EkstepRendererAPI.addEventListener("renderer:contentclose:show", scope.toggleContentClose, scope);
+//             /**
+//              * renderer:contentclose:hide Event to hide the close icon.
+//              * @event renderer:contentclose:hide
+//              * @listen renderer:contentclose:hide
+//              * @memberOf EkstepRendererEvents
+//              */
+//             EkstepRendererAPI.addEventListener("renderer:contentclose:hide", scope.toggleContentClose, scope)
+//         }
+//     }
+// }]);
+
 
 //#sourceURL=overlay.js

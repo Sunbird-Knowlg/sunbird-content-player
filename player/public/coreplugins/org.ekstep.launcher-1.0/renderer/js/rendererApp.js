@@ -1,11 +1,10 @@
 'use strict';
 
-app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $state, $stateParams) {
+app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state', '$stateParams', function($scope, $rootScope, $state, $stateParams) {
     $rootScope.pageId = "ContentApp-Renderer";
     $scope.showPlayer = false;
     $scope.isInitialized = false;
     $scope.canvas = false;
-
     $scope.init = function() {
         if (_.isUndefined($rootScope.content)) {
             if (!_.isUndefined(content.metadata)) {
@@ -28,7 +27,7 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
     $scope.renderContent = function() {
         if ($rootScope.content) {
             $rootScope.pageTitle = $rootScope.content.name;
-            $scope.canvas  = $rootScope.content.mimeType == 'application/vnd.ekstep.ecml-archive' ? true : false;
+            $scope.canvas = $rootScope.content.mimeType == 'application/vnd.ekstep.ecml-archive' ? true : false;
             GlobalContext.currentContentId = _.isUndefined(GlobalContext.currentContentId) ? $rootScope.content.identifier : GlobalContext.currentContentId;
             $scope.callStartTelemetry($rootScope.content, function() {
                 $scope.item = $rootScope.content;
@@ -49,23 +48,24 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
     $scope.reloadStage = function() {
         reloadStage();
     };
-    $scope.$on('$destroy', function() {})
-    $rootScope.showMessage = false;
-    $rootScope.$on('show-message', function(event, data) {
-        if (data.message && data.message != '') {
-            $rootScope.$apply(function() {
-                $rootScope.showMessage = true;
-                $rootScope.message = data.message;
-            });
-        }
-        if (data) {
-            setTimeout(function() {
-                $rootScope.$apply(function() {
-                    $rootScope.showMessage = false;
-                });
-            }, 5000);
-        }
-    });
+    // $scope.$on('$destroy', function() {})
+    // $rootScope.showMessage = false;
+    // $rootScope.$on('show-message', function(event, data) {
+    //     console.log("show-message")
+    //     if (data.message && data.message != '') {
+    //         $rootScope.$apply(function() {
+    //             $rootScope.showMessage = true;
+    //             $rootScope.message = data.message;
+    //         });
+    //     }
+    //     if (data) {
+    //         setTimeout(function() {
+    //             $rootScope.$apply(function() {
+    //                 $rootScope.showMessage = false;
+    //             });
+    //         }, 5000);
+    //     }
+    // });
 
     $scope.initializePlayer = function() {
         $scope.isInitialized = true;
@@ -88,7 +88,7 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
         $scope.showPlayer = true;
         $scope.safeApply();
     };
-    
+
     EkstepRendererAPI.addEventListener("renderer:player:init", $scope.initializePlayer);
 
     /**
@@ -100,21 +100,21 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
     EkstepRendererAPI.addEventListener('renderer:player:hide', $scope.hideCanvasPlayer);
     EkstepRendererAPI.addEventListener('renderer:player:show', $scope.showCanvasPlayer);
 
-     /**
+    /**
      * renderer:content:replay event to replay the current content.
      * @event 'renderer:content:replay'
      * @listens 'renderer:content:replay'
      * @memberof 'org.ekstep.launcher'
      */
-    EkstepRendererAPI.addEventListener('renderer:content:replay', function(){
+    EkstepRendererAPI.addEventListener('renderer:content:replay', function() {
         $rootScope.$broadcast('renderer:overlay:unmute');
         $scope.showCanvasPlayer()
-        // EkstepRendererAPI.dispatchEvent('renderer:player:show')
+            // EkstepRendererAPI.dispatchEvent('renderer:player:show')
     });
 
     /* TODO: Temporary solution so load content. init event is dispatched before loading/compiling this controller */
-    setTimeout(function(){
-        if($scope.isInitialized){
+    setTimeout(function() {
+        if ($scope.isInitialized) {
             $scope.isInitialized = false;
         } else {
             //EkstepRendererAPI.dispatchEvent('renderer:player:show');
@@ -122,4 +122,4 @@ app.controllerProvider.register('ContentCtrl', function($scope, $rootScope, $sta
             $scope.init();
         }
     }, 2000);
-});
+}]);
