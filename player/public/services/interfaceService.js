@@ -241,21 +241,19 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
         });
     },
     setAssessmentScore: function(event) {
-        //This method is used for store event OE_Access Data.
-        if(typeof(result[event.target.uid]) == "undefined") {
-            result[event.target.uid] = new Object();
+        //This method is used for store event OE_ASSESS Data.
+        if(typeof(result[event.uid]) == "undefined") {
+            result[event.uid] = {};
         }
-        result[event.target.uid][event.target.edata.eks.qid] = event.target.edata;
+        result[event.uid][event.edata.eks.qid] = event.edata;
     },
     getAssessmentScore: function(uid) {
-        //This method is used for calculate total score  and how many questions attempt by user.
+        //This method is used total calculate total score.
         let score = {};
         var totalScore = 0;
         const assesmentScore = _.find(result, function(value, key) {
             return key == uid ? value:'';
         });
-
-        //TODO Calculate score from assesmentScore of current user then return score
         _.forEach(assesmentScore, function(value, key) {
             if(value.eks.pass == 'Yes') {
                 totalScore = totalScore + value.eks.score;
@@ -263,18 +261,19 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
                 totalScore = totalScore + 0;
             }
         });
-
         score.totalScore = totalScore;
         score.totalQuestions = Object.keys(assesmentScore).length;
-
         return score;
     }
-
 }));
 
-//Here Listen telemetry event.
+/*Here Listen Telemetry event and 
+    Get all OE_ASSESS data and set it to setAssesment method.
+*/ 
 var result = {};
-EkstepRendererAPI.addEventListener('telemetryEventData',function(event) {
-	//Get all OE_Assess data and push into assessmentScore in interfaceservices
-    org.ekstep.service.content.setAssessmentScore(event);
+EkstepRendererAPI.addEventListener('telemetryEvent',function(event) {
+    event = JSON.parse(event.target);
+    if(event.eid == 'OE_ASSESS') {
+        org.ekstep.service.content.setAssessmentScore(event);
+    }
 })
