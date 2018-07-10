@@ -17,8 +17,8 @@ var corePlugins = [
     "org.ekstep.alert-1.0",
     "org.ekstep.telemetrysync-1.0",
     "org.ekstep.overlay-1.0",
-    //"org.ekstep.nextnavigation-1.0",
-    //"org.ekstep.previousnavigation-1.0"
+    "org.ekstep.nextnavigation-1.0",
+    "org.ekstep.previousnavigation-1.0"
 
 ];
 
