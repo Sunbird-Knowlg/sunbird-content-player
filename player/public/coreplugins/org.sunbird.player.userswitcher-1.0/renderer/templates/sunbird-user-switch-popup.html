@@ -72,6 +72,7 @@
     padding: 10.5px 16px;
     font-size: 15px;
     text-transform: uppercase;
+    min-height: 100%;
 }
 #sunbirdUserSwitchingModal .modal-content .model-butttons .user-footer {
     background-color: #fff;
@@ -93,7 +94,7 @@
     color: #007aff;
 }
 </style>
-<div ng-init="init()" ng-show="showUserSwitchModal" id="sunbirdUserSwitchingModal" class="user-modal">
+<div ng-init="init()" ng-show="showSunbirdUserSwitchModal" id="sunbirdUserSwitchingModal" class="user-modal">
     <div class="modal-content">
         <div class="user-header tab">
             <span ng-click="closeUserSwitchingModal()" class="close">&times;</span>

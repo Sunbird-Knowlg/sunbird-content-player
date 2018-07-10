@@ -17,12 +17,12 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
         $scope.hideUserSwitchingModal = function() {
             $rootScope.safeApply(function() {
                 EkstepRendererAPI.removeEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideUserSwitchingModal, $scope);
-                $scope.showUserSwitchModal = false;
+                $scope.showSunbirdUserSwitchModal = false;
             });
         }
 
         $scope.showUserSwitchingModal = function() {
-            if ($scope.showUserSwitchModal)
+            if ($scope.showSunbirdUserSwitchModal)
                 return;
             TelemetryService.interact("TOUCH", "gc_userswitch_popup_open", "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId()? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId 
@@ -37,7 +37,7 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
             );
             $scope.sortUserlist();
             $rootScope.safeApply(function() {
-                $scope.showUserSwitchModal = true;
+                $scope.showSunbirdUserSwitchModal = true;
             });
         }
 
@@ -204,7 +204,6 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
              * @memberOf EkstepRendererEvents
              */
             EventBus.addEventListener("event:showuser", function(value) {
-                globalConfig.overlay.showUser = value;
                 $rootScope.safeApply = function() {
                     $rootScope.showUser = value;
                 }
@@ -275,14 +274,10 @@ app.compileProvider.directive('sunbirdUserswitcher', function($rootScope, $compi
             }
 
             scope.init = function() {
-                if (globalConfig.overlay.showUser === true) {
-                    element.find("#userSlider").mCustomScrollbar('destroy');
-                    element.find("#groupSlider").mCustomScrollbar('destroy');
-                    scope.initializeCtrl();
-                    var users = document.getElementById('usersButton');
-                    scope.initializeUser({currentTarget: users}, 'users');
-                    scope.safeApply();
-                }
+                scope.initializeCtrl();
+                var users = document.getElementById('usersButton');
+                scope.initializeUser({currentTarget: users}, 'users');
+                scope.safeApply();
             };
 
             scope.getUserSwitcherTemplate = function() {
