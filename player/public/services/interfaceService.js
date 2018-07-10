@@ -241,14 +241,14 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
         });
     },
     setAssessmentScore: function(event) {
-        //This method is used for store event OE_ASSESS Data.
+        //This method is used to store event OE_ASSESS Data.
         if(typeof(result[event.uid]) == "undefined") {
             result[event.uid] = {};
         }
         result[event.uid][event.edata.eks.qid] = event.edata;
     },
     getAssessmentScore: function(uid) {
-        //This method is used total calculate total score.
+        //This method is used to calculate total score.
         let score = {};
         var totalScore = 0;
         const assesmentScore = _.find(result, function(value, key) {
@@ -276,4 +276,10 @@ EkstepRendererAPI.addEventListener('telemetryEvent',function(event) {
     if(event.eid == 'OE_ASSESS') {
         org.ekstep.service.content.setAssessmentScore(event);
     }
-})
+});
+
+//When call replay button then make result object empty.
+EkstepRendererAPI.addEventListener('renderer:content:replay',function() {
+    result = {};
+});
+
