@@ -172,9 +172,8 @@ module.exports = function(grunt) {
             },
             renderermin: {
                 options: {
-                    beautify: false,
-                    mangle: false,
-                    compress: false
+                    beautify: true,
+                    mangle: false
                 },
                 files: {
                     'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js': [
@@ -819,7 +818,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test-setup', ['new-buildPreview', 'copy:testinit', 'clean']);
     grunt.registerTask('player-test', ['karma:app']);
-    grunt.registerTask('renderer-test', ['karma:renderer']);
+    grunt.registerTask('renderer-test', ['build-preview', 'karma:renderer']);
     grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator", "uglify:htmlinterfacemin"]);
     grunt.registerTask('renderer-telemetryV3', ['karma:telemetryV3']);
     grunt.registerTask('telemetry-lib-test', ['karma:telemetryFunV3']);

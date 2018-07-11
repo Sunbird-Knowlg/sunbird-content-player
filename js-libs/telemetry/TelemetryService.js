@@ -119,7 +119,7 @@ TelemetryService = {
         return eventObj;
     },
     start: function(id, ver, data) {
-        if (!TelemetryService.isActive || !TelemetryService.instance) {
+        if (!TelemetryService.isActive) {
             console.log("TelemetryService is not active.");
             return new InActiveEvent();
         } else {
@@ -135,7 +135,7 @@ TelemetryService = {
         }
     },
     end: function(data) {
-        if (!TelemetryService.isActive || !TelemetryService.instance) {
+        if (!TelemetryService.isActive) {
             return new InActiveEvent();
         }
         TelemetryService.instance.end(data);
