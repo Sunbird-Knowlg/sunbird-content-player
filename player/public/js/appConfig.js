@@ -12,7 +12,7 @@ AppConfig = {
     devicePluginspath: "/widgets/content-plugins",
     corePluginspath: 'coreplugins',
     apislug: '/action',
-    telemetryEventsConfigFields: ['env', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner', 'tags', 'rollup', 'mode'],
+    telemetryEventsConfigFields: ['env', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner', 'tags', 'rollup', 'mode','enableTelemetryValidation'],
     mimetypes: [
         "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/epub", "video/mp4", "application/pdf","video/x-youtube","video/webm"
     ],
@@ -59,7 +59,14 @@ AppConfig = {
             id: 'org.ekstep.pdfrenderer',
             ver: 1.0,
             type: 'plugin'
+        },
+        {
+            mimeType: ['text/x-url'],
+            id: 'org.ekstep.extcontentpreview',
+            ver: 1.0,
+            type: 'plugin'
         }
+
     ],
     assetbase: 'assets/icons/',
     defaultPlugins: [
@@ -105,7 +112,7 @@ AppConfig = {
         webLink: "https://www.ekstep.in"
     },
     showEndPage: true,
-    env: 'ContentPlayer',
+    env: 'contentplayer',
     pdata: { 'id': 'in.ekstep', 'ver': '1.0', 'pid': 'contentplayer'},
     channel: "in.ekstep",
     etags: {

@@ -25,7 +25,7 @@
 
 @font-face {
     font-family: 'NotoSansBengali';
-    src: url('fonts/NotoSansBengali-Regula.ttf') format('truetype')
+    src: url('fonts/NotoSansBengali-Regular.ttf') format('truetype')
 }
 
 @font-face {
@@ -89,11 +89,10 @@
 .splashText {
     position: absolute;
     top: 20vh;
-    text-align: center;
     width: 100vw;
+    text-align: center;
     text-transform: uppercase;
     color: #494949;
-    text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.5em;

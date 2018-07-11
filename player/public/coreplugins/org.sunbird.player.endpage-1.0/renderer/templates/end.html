@@ -1,0 +1,140 @@
+<style>
+.sb-content-holder {
+    position: absolute;
+    top: 60%;
+    width: 100%;
+    height: 30%;
+}
+
+.sb-content {
+    width: 100%;
+    left: 0%;
+    top: 15%;
+    position: absolute;
+}
+
+.sb-ep-replay {
+    position: absolute;
+    left: 35%;
+    top: 6%;
+    width: 9%;
+}
+
+.sb-ep-home {
+  position: absolute;
+  left: 55%;
+  top: 6%;
+  width: 9%;
+}
+
+.sb-content-title { 
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    text-transform: uppercase;
+    padding: 0.6em 0em 0em;
+    font-size: 4vw;
+    text-align: center;
+    line-height: 2.5em;
+    color: #494949; 
+ }
+
+.sunbird-ep-opactiy {
+    opacity: 0.5;
+}
+
+.sb-message {
+    width: 98%;
+    text-align: center;
+    font-size: 4vw;
+    font-weight: bold;
+    color: #0080ff;
+    letter-spacing: 0.09em;
+}
+
+.sb-time-display {
+    position: absolute;
+    left: 12%;
+    top: 12%;
+    border: 2px dashed;
+    padding: 2% 3%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 3vm;
+    width: 15%;
+    font-size: 2.5vw;
+}
+
+.display-score {
+    position: absolute;
+    left: 72%;
+    top: 12%;
+    border: 2px dashed;
+    padding: 2% 3%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 3vm;
+    width: 15%;
+    font-size: 2.5vw;
+}
+
+.result-display {
+    top: 150%;
+    position: absolute;
+    font-weight: bold;
+    font-size: .7em;
+    font-family: inherit;
+    letter-spacing: .1em;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #494949;
+}
+
+.endpage-player-license {
+    position: absolute;
+    bottom: 3%;
+    left: 50%;
+    color: #494949;
+    font-size: 1.5vw;
+    transform: translate(-50%, -50%);
+    letter-spacing: .1em;
+}
+
+.gc-content-owner-player {
+    font-size: 2vw;
+    width: 100%;
+    text-align: center;
+    color: #494949;
+    padding: 0.08em 0em 0.5em;
+    text-transform: uppercase;
+}
+
+</style>
+<div class="font-lato gc-ep-cont" ng-app="sunbird-endpage" ng-controller="endPageController"     id='endpage' ng-show="showEndPage">
+    <image class="gc-ep-cont-background" ng-src="{{endpageBackground}}" />
+    <div class="sb-content">
+        <p class="sb-message">Congratulations! You just completed</p>
+        <p class="sb-content-title" ng-if="playerMetadata .name">{{playerMetadata .name}}</p>
+        <p class="gc-content-owner-player gc-text-elipsis" ng-if="playerMetadata.owner">Author: {{playerMetadata.owner}}</p>
+    </div>
+    <div class="sb-content-holder">
+        <div class="sb-time-display">
+            <p>{{totalTimeSpent}}</p>
+            <p class="result-display">Time</p>
+        </div>
+        <div class="sb-content-replay" ng-click="replayContent()">
+          <img class="sb-ep-replay" ng-src="{{replayIcon}}">
+        </div>
+        <div class="sb-content-home">
+          <img class="sb-ep-home" ng-class="isCordova ? 'sb-ep-home' : ' sunbird-ep-opactiy' " ng-src="{{genieIcon}}" ng-click="openGenie()"></img>
+        </div>
+        <div class="display-score">
+            <p ng-if="score">{{score}}</p>
+            <p ng-if="!score">--</p>
+            <p class="result-display">Score</p>
+        </div>
+    </div>
+    <div class="endpage-player-license">
+        <b>{{licenseAttribute}}</b>
+    </div>
+</div>

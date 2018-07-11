@@ -60,6 +60,9 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 $rootScope.addIonicEvents();
                 if (window.cordova && window.cordova.plugins.Keyboard) {
                     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+                    StatusBar.hide();
+                    window.navigationbar.setUp(true); 
+                    navigationbar.hideNavigationBar();
                 } else {
                     globalConfig.recorder = "android";
                 }
@@ -120,7 +123,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         EkstepRendererAPI.addEventListener("renderer:add:template", function(event){
             var data = event.target;
             injectTemplates(data.templatePath, data.scopeVariable, data.toElement);
-        });
+        }, this);
 
 
         EkstepRendererAPI.addEventListener("renderer:content:close", function(event, data) {

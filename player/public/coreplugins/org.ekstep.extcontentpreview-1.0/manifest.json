@@ -1,0 +1,15 @@
+{
+    "id": "org.ekstep.extcontentpreview",
+    "ver": "1.0",
+    "shortId": "org.eskstep.extcontentpreview",
+    "author": "Revathi P",
+    "description": "",
+    "publishedDate": "",
+    "renderer": {
+        "main": "renderer/plugin.js",
+        "dependencies": [
+            { "type": "js", "src": "renderer/exturlservice.js" },
+            { "type": "css", "src": "renderer/style.css"}
+        ]
+    }
+}

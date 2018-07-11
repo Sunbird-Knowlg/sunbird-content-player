@@ -166,6 +166,8 @@ function startTelemetry(id, ver, cb) {
         })
         delete otherData.cdata;
     }
+    otherData.enableValidation = otherData.enableTelemetryValidation;
+    delete otherData.enableTelemetryValidation;
     correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData, otherData).then(function(response) {
         TelemetryService.eventDispatcher = EkstepRendererAPI.dispatchEvent;
@@ -209,7 +211,7 @@ function showToaster(toastType, message, customOptions) {
 
 function addWindowUnloadEvent() {
     // TODO: Use Iframe unload event
-    window.onbeforeunload = function(e) {
+    window.onunload = function(e) { //onbeforeunload is not dispatched when navigating to other page
         e = e || window.event;
         var y = e.pageY || e.clientY;
         !y && EkstepRendererAPI.getTelemetryService().interrupt('OTHER', EkstepRendererAPI.getCurrentStageId()); EkstepRendererAPI.dispatchEvent("renderer:content:close");

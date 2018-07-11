@@ -301,6 +301,7 @@ LoadByStageStrategy = Class.extend({
         for (k in instance.loaders) {
             instance.destroyStage(k);
         }
+        instance.commonAssets = [];
         instance.assetMap = {};
         instance.loaders = {};
         instance.stageManifests = {};

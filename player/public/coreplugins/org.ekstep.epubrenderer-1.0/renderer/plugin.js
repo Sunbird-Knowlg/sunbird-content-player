@@ -25,6 +25,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var epubPath = undefined;
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         this.initContentProgress();
+        var div = document.createElement('div');
+        div.id = this.manifest.id;
+        this.addToGameArea(div);
         if (window.cordova) {
           // For device index.epub will be extracted/unziped to folder. So point to the folder
             epubPath = globalConfigObj.basepath + "/";
@@ -44,7 +47,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     renderEpub: function (epubPath) {
-        jQuery('#gameCanvas').remove();
+        // jQuery('#gameCanvas').remove();
         jQuery('#gameArea').css({left: '10%', top: '0px', width: "80%", height: "90%", margin: "5% 0 0 0"});
         var epubOptions = {
             width: document.getElementById('gameArea').offsetWidth,
@@ -55,7 +58,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.book.setStyle("padding-right", "1px");
         this.book.setStyle("padding-left", "1px");
         this.book.forceSingle(true);
-        this.book.renderTo('gameArea');
+        this.book.renderTo(this.manifest.id);
         this.addEventHandlers();
         this.initProgressElements();
     },
@@ -69,19 +72,19 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             } else {
                 instance.book.nextPage();
             }
-        });
+        }, this);
 
         EventBus.addEventListener('previousClick', function () {
             EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
             if(instance.currentPage === 2) {
                 // This is needed because some ePubs do not go back to the cover page on `book.prevPage()`
-                instance.gotoStart();
+                instance.book.gotoPage(1);
                 instance.logTelemetryNavigate("2", "1");
             } else {
                 instance.book.prevPage();
             }
             instance.lastPage = false;
-        });
+        }, this);
 
         EventBus.addEventListener('actionContentClose', function () {
             instance.logTelemetryInteract(instance.currentPage.toString());
@@ -97,7 +100,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         instance.book.on('book:pageChanged', function (data) {
             instance.logTelemetryInteract(instance.currentPage.toString());
             instance.logTelemetryNavigate(instance.currentPage.toString(), data.anchorPage.toString());
-            instance.currentPage = data.pageRange[1];
+            instance.currentPage = data.anchorPage;
             instance.updateProgressElements();
             if (instance.book.pagination.lastPage === data.anchorPage || instance.book.pagination.lastPage === data.pageRange[1]) {
                 instance.lastPage = true;
@@ -191,7 +194,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         var totalStages = this.totalPages;
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
         return this.progres(currentStageIndex + 1, totalStages);
+    },
+    cleanUp: function() {
+        this.removeProgressElements();
+        EkstepRendererAPI.removeEventListener('actionNavigateNext', undefined, undefined, true);
+        EkstepRendererAPI.removeEventListener('actionNavigatePrevious', undefined, undefined, true);
     }
-    
 });
 //# sourceURL=ePubRendererPlugin.js

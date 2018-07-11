@@ -3,23 +3,89 @@
  * @author Akash Gupta <akash.gupta@tarento.com>
  */
 
-describe("TelemetrySyncManager tests", function() {
-    var testFunction;
-    var telemetrySyncInstance;
+describe("TelemetrySync Manager", function() {
     beforeAll(function() {
-        testFunction = jasmine.createSpy();
-        telemetrySyncInstance = TelemetrySyncManager;
-        document.addEventListener('TelemetryEvent', testFunction);
-        event = JSON.parse('{"eid": "INTERACT","ets": 1512225320922,"ver": "3.0","mid": "INTERACT_b3a3d84078a322f12786d29f3ab5fad7","actor": {"id": "anonymous","type": "User"},"context": {"channel": "in.ekstep","pdata": {"id": "in.ekstep","ver": "1.0","pid": ""},"env": "preview","sid": "","did": "","cdata": [{"type": "worksheet","id": "do_736298262"}],"rollup": {"l1": "","l2": ""}},"object": {"id": "do_9823y23","type": "Conten","ver": "","rollup": {"l1": "","l2": ""}},"tags": [],"edata": {"type": "LISTEN","subtype": "","id": "123","pageid": "","target": {"id": "targetId","ver": "1.0","type": "Plugin"},"plugin": "","extra": {"pos": [],"values": []}}}');
+        telemetryObj = EkTelemetry;
+        config = JSON.parse('{"uid":"anonymous","channel":"in.ekstep","pdata":{"id":"in.ekstep","ver":"1.0","pid":""},"env":"preview","sid":"","did":"","cdata":[{"type":"worksheet","id":"do_736298262"}],"rollup":{"l1":"","l2":""},"object":{"id":"do_9823y23","type":"Conten","ver":"","rollup":{"l1":"","l2":""}},"batchsize":20,"host":"https://api.ekstep.in","endpoint":"/data/v3/telemetry","tags":[], "apislug":"/action"}');
+        EkTelemetry.initialize(config);
+    });
+    it('Telemetry configurations must be defined', function() {
+        console.log('Configurations', EkTelemetry.config.host);
+        expect(EkTelemetry.initialized).toBe(true);
+        expect(EkTelemetry.config.endpoint).toBe('/data/v3/telemetry');
+        expect(EkTelemetry.config.host).toBe('https://api.ekstep.in');
+        expect(EkTelemetry.config.apislug).toBe('/action')
+        expect(EkTelemetry._version).toBe("3.0");
+    });
+    it("It should add event listener for TelemetryEvent", function(done) {
+        spyOn(TelemetrySyncManager, "init").and.callThrough();
+        TelemetrySyncManager.init();
+        expect(TelemetrySyncManager.init).toHaveBeenCalled();
+        done();
+    });
+    it('On invoke of sendTelemetry method, It should hold all the events in telemetry instance', function(done) {
+        EkTelemetry.config.batchsize = 20;
+        var event = {
+            detail: { eid: 'INTERACT' }
+        }
+        for (i = 1; i <= 10; i++) {
+            TelemetrySyncManager.sendTelemetry(event)
+            if (i == 10) {
+                expect(TelemetrySyncManager._teleData.length).toBe(10);
+                TelemetrySyncManager._teleData = [];
+                done();
+            }
+        }
     });
 
-    describe("TelemetrySyncManager Init", function() {
-        it("It should add event listener for TelemetryEvent", function() {
-            spyOn(telemetrySyncInstance, "init").and.callThrough();
-            // spyOn(instance, "testFunction").and.callThrough();
-            telemetrySyncInstance.init();
-            // expect(testFunction).toHaveBeenCalled();
-            expect(telemetrySyncInstance.init).toHaveBeenCalled();
-        })        
+    it('Telemetry events array instance should splice when batch size of the event is exceeded', function(done) {
+        EkTelemetry.config.batchsize = 20;
+        var event = {
+            detail: { eid: 'INTERACT' }
+        }
+        for (i = 1; i <= EkTelemetry.config.batchsize; i++) {
+            TelemetrySyncManager.sendTelemetry(event)
+            if (i == EkTelemetry.config.batchsize) {
+                expect(TelemetrySyncManager._teleData.length).toBe(0);
+                done();
+            }
+        }
+    });
+    it('If end event is invoked then it should sync all events data', function(done) {
+        EkTelemetry.config.batchsize = 20;
+        var event = {
+            detail: { eid: 'END' }
+        }
+        for (i = 1; i <= EkTelemetry.config.batchsize; i++) {
+            TelemetrySyncManager.sendTelemetry(event)
+            if (i == EkTelemetry.config.batchsize) {
+                expect(TelemetrySyncManager._teleData.length).toBe(0);
+                done();
+            }
+        }
+    });
+    it('On sync success it should not lost the old event data', function(done) {
+        var event = {
+            detail: { eid: 'END' }
+        }
+        spyOn($, "ajax").andCallFake(function(options) {
+            options.done();
+            expect(TelemetrySyncManager._teleData.length).toBe(0);
+            done();
+        });
+        TelemetrySyncManager.sendTelemetry(event);
+
+    });
+    it('On sync fail it should not lost the old event data', function(done) {
+        var event = {
+            detail: { eid: 'END' }
+        }
+        spyOn(jQuery, "ajax").andCallFake(function(options) {
+            options.fail();
+            expect(TelemetrySyncManager._teleData.length).not.toBe(0);
+            done();
+        });
+        TelemetrySyncManager.sendTelemetry(event);
+
     });
 });

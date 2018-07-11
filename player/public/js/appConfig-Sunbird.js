@@ -11,7 +11,7 @@ AppConfig = {
     devicePluginspath: "/widgets/content-plugins",
     corePluginspath: 'coreplugins',
     apislug: '/action',
-    telemetryEventsConfigFields: ['env', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner', 'tags', 'rollup', 'mode'],
+    telemetryEventsConfigFields: ['env', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner', 'tags', 'rollup', 'mode','enableTelemetryValidation'],
     configFields: ['origin', 'contentId', 'appInfo', 'languageInfo', 'contentExtras', 'appQualifier', 'mode', 'env', 'sid', 'uid', 'did', 'channel', 'etags', 'tags', 'rollup', 'pdata', 'cdata', 'contentLaunchers', 'overlay', 'splash', 'showEndPage', 'app', 'dims', 'partner'],
     mimetypes: [
         "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/epub", "video/mp4", "application/pdf","video/x-youtube","video/webm"
@@ -57,6 +57,12 @@ AppConfig = {
         {
             mimeType: ['application/pdf'],
             id: 'org.ekstep.pdfrenderer',
+            ver: 1.0,
+            type: 'plugin'
+        },
+        {
+            mimeType: ['text/x-url'],
+            id: 'org.ekstep.extcontentpreview',
             ver: 1.0,
             type: 'plugin'
         }
@@ -105,12 +111,12 @@ AppConfig = {
     splash: {
         text: "Powered by EkStep",
         icon: "assets/icons/icn_genie.png",
-        bgImage: "assets/icons/background_1.png",
+        bgImage: "assets/icons/splacebackground_1.png",
         webLink: "https://www.ekstep.in"
     },
-    showEndPage: true,
-    env: 'ContentPlayer',
-    pdata: {'id':'in.ekstep', 'ver':'1.0'},
+    showEndPage: false,
+    env: 'contentplayer',
+    pdata: {'id': 'in.ekstep', 'ver':'1.0', 'pid': 'contentplayer'},
     channel: "in.ekstep",
     etags: {
         app: [],
