@@ -333,11 +333,11 @@ app.compileProvider.directive('menu', ['$rootScope', '$sce', function($rootScope
                 if (scope.pluginInstance) {
                     return scope.pluginInstance._menuTP;
                 } else {
-                    return 'menu.html';
+                    return "'overlay_menu.html'";
                 }
             };
         },
-        template: "<div ng-include=\"'overlay_menu.html' \"></div>"
+        template: "<div ng-include=getTemplate()></div>"
 
     }
 }]);
