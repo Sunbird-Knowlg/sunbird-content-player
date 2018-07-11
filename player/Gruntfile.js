@@ -172,7 +172,7 @@ module.exports = function(grunt) {
             },
             renderermin: {
                 options: {
-                    beautify: true,
+                    beautify: false,
                     mangle: false
                 },
                 files: {
