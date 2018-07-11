@@ -6,6 +6,9 @@
     "description": "",
     "publishedDate": "",
     "renderer": {
-        "main": "renderer/plugin.js"
+        "main": "renderer/plugin.js",
+        "views": [
+            { "template": "./templates/user-switch-popup.html", "controller": "./controller/userSwitcher.js" }
+        ]
     }
 }
