@@ -8,7 +8,7 @@ Plugin.extend({
     initialize: function() {
         console.info('Previous navigation intialize');
         var previousIcon = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/assets/previous.png");
-        app.compileProvider.directive('previousNavigation', function($rootScope) {
+        app.compileProvider.directive('previousNavigation', ['$rootScope', function($rootScope) {
             return {
                 restrict: 'E',
                 template: '<div><a class="nav-icon nav-previous" ng-show="showOverlayPrevious !== state_off" ng-class="{\'nav-disable\': showOverlayPrevious == state_disable}" href="javascript:void(0);"><img ng-src="{{previousIcon}}" ng-click="navigate(\'previous\')"></a></div>',
@@ -61,7 +61,7 @@ Plugin.extend({
                     })
                 }
             }
-        });
+        }]);
     }
 })
 

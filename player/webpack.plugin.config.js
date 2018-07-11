@@ -124,13 +124,15 @@ module.exports = {
     },
     module: {
         rules: [{
-                test: /\.(html)$/,
-                use: {
+                test: /\.html$/,
+                use: [{
                     loader: 'html-loader',
                     options: {
-                        attrs: [':data-src']
+                        minimize: true,
+                        removeComments: false,
+                        collapseWhitespace: false
                     }
-                }
+                }],
             },
             {
                 test: require.resolve('./public/coreplugins/org.ekstep.telemetrysync-1.0/renderer/libs/md5.js'),
@@ -177,7 +179,7 @@ module.exports = {
                     }
                 ]
             }, {
-                test: /\.(gif|png|jpe?g|svg)$/,
+                test: /\.(gif|png|jpeg|svg)$/,
                 use: [
                     'file-loader',
                     {
