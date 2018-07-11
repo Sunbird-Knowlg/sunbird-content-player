@@ -49,7 +49,7 @@
     <ion-nav-view></ion-nav-view>
     <div id="loading" class="gc-loader-area"></div>
 
-     <div class="content-holder" ng-repeat="templatePath in templates">
+     <div class="content-holder" ng-repeat="templatePath in templates track by $index">
         <div ng-include="templatePath"></div>
     </div>
 
