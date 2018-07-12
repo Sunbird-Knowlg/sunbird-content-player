@@ -15,7 +15,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.getTotalScore = function(id) {
-        let score = org.ekstep.service.content.getAssessmentScore(GlobalContext.user.uid);
+        var score = org.ekstep.service.content.getAssessmentScore(GlobalContext.user.uid);
         if (score && score.totalQuestions) {
             $scope.$apply(function() {
                 $scope.score = (score.totalScore + "/" + score.totalQuestions);

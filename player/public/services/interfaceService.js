@@ -242,10 +242,10 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
     },
     setAssessmentScore: function(event) {
         //This method is used to store event OE_ASSESS Data.
-        if(typeof(result[event.uid]) == "undefined") {
-            result[event.uid] = {};
+        if(typeof(result[event.actor.id]) == "undefined") {
+            result[event.actor.id] = {};
         }
-        result[event.uid][event.edata.eks.qid] = event.edata;
+        result[event.actor.id][event.edata.item.id] = event.edata;
     },
     getAssessmentScore: function(uid) {
         //This method is used to calculate total score.
@@ -255,8 +255,8 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
             return key == uid ? value:'';
         });
         _.forEach(assesmentScore, function(value, key) {
-            if(value.eks.pass == 'Yes') {
-                totalScore = totalScore + value.eks.score;
+            if(value.pass == 'Yes') {
+                totalScore = totalScore + value.score;
             } else {
                 totalScore = totalScore + 0;
             }
@@ -273,7 +273,7 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
 var result = {};
 EkstepRendererAPI.addEventListener('telemetryEvent',function(event) {
     event = JSON.parse(event.target);
-    if(event.eid == 'OE_ASSESS') {
+    if(event.eid == 'ASSESS') {
         org.ekstep.service.content.setAssessmentScore(event);
     }
 });
