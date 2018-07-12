@@ -1,4 +1,4 @@
-describe('Repo Plugin', function() {
+describe('TelemetrySync Plugin', function() {
 	var manifest, TelemetrySync;
     beforeAll(function(callback) {
         org.ekstep.contentrenderer.loadPlugins([{"id":"org.ekstep.telemetrysync","ver":1,"type":"plugin"}], [], function() {
@@ -30,7 +30,7 @@ describe('Repo Plugin', function() {
         })
     });
     describe("When appendRequiredFields is invoked", function() {
-        it("It should merge did, uid, sid with telemetry event", function() {
+        xit("It should merge did, uid, sid with telemetry event", function() {
             var event = JSON.parse('{"ver":"2.1","edata":{"eks":{"stageid":"3e38c081-6101-4817-8572-7c2d584a5c7e","type":"TOUCH","subtype":"","pos":[],"id":"gc_menuopen","tid":"","uri":"","extype":"","values":[]}},"eid":"OE_INTERACT","gdata":{"id":"org.ekstep.quiz.app","ver":"411"},"cdata":[{"id":"dd048a93648cad4b3ef1cdd5509be8e3","type":"ContentSession"}],"channel":"in.ekstep","etags":{"dims":[],"app":[],"partner":[]},"pdata":{"id":"in.ekstep","ver":"1.0"},"ets":1511435094883}');
             var newEvent = TelemetrySync.appendRequiredFields(event);
             expect(EventBus.hasEventListener(newEvent.sid)).not.toBeUndefined();
