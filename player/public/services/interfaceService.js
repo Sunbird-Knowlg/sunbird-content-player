@@ -240,46 +240,27 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
             });
         });
     },
-    setAssessmentScore: function(event) {
-        //This method is used to store event OE_ASSESS Data.
-        if(typeof(result[event.actor.id]) == "undefined") {
-            result[event.actor.id] = {};
-        }
-        result[event.actor.id][event.edata.item.id] = event.edata;
+    cacheAssessEvent: function(event) {
+        eventData[event.edata.item.id] = event;
     },
     getAssessmentScore: function(uid) {
-        //This method is used to calculate total score.
-        var score = {};
-        var totalScore = 0;
-        const assesmentScore = _.find(result, function(value, key) {
-            return key == uid ? value:'';
-        });
-        _.forEach(assesmentScore, function(value, key) {
-            if(value.pass == 'Yes') {
-                totalScore = totalScore + value.score;
-            } else {
-                totalScore = totalScore + 0;
-            }
-        });
-        score.totalScore = totalScore;
-        score.totalQuestions = Object.keys(assesmentScore).length;
-        return score;
+        return eventData;
     }
 }));
 
 /*Here Listen Telemetry event and 
     Get all OE_ASSESS data and set it to setAssesment method.
 */ 
-var result = {};
+var eventData = {};
 EkstepRendererAPI.addEventListener('telemetryEvent',function(event) {
     event = JSON.parse(event.target);
     if(event.eid == 'ASSESS') {
-        org.ekstep.service.content.setAssessmentScore(event);
+        org.ekstep.service.content.cacheAssessEvent(event);
     }
 });
 
 //When call replay button then make result object empty.
 EkstepRendererAPI.addEventListener('renderer:content:replay',function() {
-    result = {};
+    eventData = {};
 });
 

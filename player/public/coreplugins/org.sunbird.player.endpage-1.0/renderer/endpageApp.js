@@ -15,10 +15,19 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.getTotalScore = function(id) {
-        var score = org.ekstep.service.content.getAssessmentScore(GlobalContext.user.uid);
-        if (score && score.totalQuestions) {
+        var totalScore = 0, totalQuestions = 0;
+        var eventData = org.ekstep.service.content.getAssessmentScore();
+        if (eventData) {
+            _.forEach(eventData, function(value, key) {
+                if(value.edata.pass == 'Yes') {
+                    totalScore = totalScore + value.edata.score;
+                } else {
+                    totalScore = totalScore + 0;
+                }
+            });
+            totalQuestions =  Object.keys(eventData).length;
             $scope.$apply(function() {
-                $scope.score = (score.totalScore + "/" + score.totalQuestions);
+                $scope.score = (totalScore + "/" + totalQuestions);
             });
         } else {
             $scope.score = undefined;
