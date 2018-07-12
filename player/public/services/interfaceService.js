@@ -249,7 +249,7 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
     },
     getAssessmentScore: function(uid) {
         //This method is used to calculate total score.
-        let score = {};
+        var score = {};
         var totalScore = 0;
         const assesmentScore = _.find(result, function(value, key) {
             return key == uid ? value:'';
