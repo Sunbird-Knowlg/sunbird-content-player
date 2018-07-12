@@ -11,7 +11,7 @@ function postMessageHandler(event) {
     console.info("PostMessage is invoked")
     // TODO: Should remove hardcoaded mimetype
     if (event.data && (content.mimeType !== undefined && content.mimeType !== 'video/x-youtube')) {
-        org.ekstep.contentrenderer.initializePreview(event.data)
+        // org.ekstep.contentrenderer.initializePreview(event.data)
     }
 }
 

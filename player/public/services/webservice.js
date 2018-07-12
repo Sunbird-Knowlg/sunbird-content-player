@@ -41,7 +41,7 @@ org.ekstep.service.web = new (org.ekstep.service.mainService.extend({
     },
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
-            $.getJSON("assets/user_list/user_list.json", function(data) {
+            $.getJSON("assets/sb_user_list/sb_user_list.json", function(data) {
                 resolve(data[0]);
             })
         });
@@ -49,7 +49,7 @@ org.ekstep.service.web = new (org.ekstep.service.mainService.extend({
 
     getAllUserProfile: function() {
         return new Promise(function(resolve, reject) {
-            $.getJSON("assets/user_list/user_list.json", function(data) {
+            $.getJSON("assets/sb_user_list/sb_user_list.json", function(data) {
                 resolve(data);
             })
         });

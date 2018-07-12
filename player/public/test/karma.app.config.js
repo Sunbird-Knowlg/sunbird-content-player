@@ -40,9 +40,9 @@ module.exports = function(config) {
             '../js/detectClient.js',
             '../js/ekstepRendererEvents.js',
             'https://s3.ap-south-1.amazonaws.com/ekstep-public-prod/v3/preview/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs/renderer.min.js',
-            '../coreplugins/**/renderer/*.js',
-            '../coreplugins/**/spec/*.js',
-            'specs/*.spec.js',
+            '../coreplugins/org.sunbird.player.userswitcher-1.0/renderer/*.js',
+            '../coreplugins/org.sunbird.player.userswitcher-1.0/spec/*.js'
+            //'specs/*.spec.js',
 
         ],
         exclude: ['coverage', '../js/htmlInterface.js'], // Need to remove the htmlInterface.js  file

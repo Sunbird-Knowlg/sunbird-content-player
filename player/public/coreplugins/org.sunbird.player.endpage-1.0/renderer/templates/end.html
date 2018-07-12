@@ -125,6 +125,11 @@
         <div class="sb-content-replay" ng-click="replayContent()">
           <img class="sb-ep-replay" ng-src="{{replayIcon}}">
         </div>
+        <div ng-click="ep_openUserSwitchingModal()" class="gc-ep-footer-icons gc-ep-userSwitch">
+            <img class="user" ng-src="{{currentUser.profileImage}}" />
+            <p><b>{{currentUser.name}}</b>
+                <br/> <small> {{AppLables.change}} </small></p>
+        </div>
         <div class="sb-content-home">
           <img class="sb-ep-home" ng-class="isCordova ? 'sb-ep-home' : ' sunbird-ep-opactiy' " ng-src="{{genieIcon}}" ng-click="openGenie()"></img>
         </div>

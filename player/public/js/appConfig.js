@@ -93,8 +93,8 @@ AppConfig = {
         }
     ],
     overlay: {
-        enableUserSwitcher: true,
-        showUser: true,
+        enableUserSwitcher: false,
+        showUser: false,
         showOverlay: true,
         showNext: true,
         showPrevious: true,
@@ -111,7 +111,7 @@ AppConfig = {
         bgImage: "assets/icons/background_1.png",
         webLink: "https://www.ekstep.in"
     },
-    showEndPage: true,
+    showEndPage: false,
     env: 'contentplayer',
     pdata: { 'id': 'in.ekstep', 'ver': '1.0', 'pid': 'contentplayer'},
     channel: "in.ekstep",

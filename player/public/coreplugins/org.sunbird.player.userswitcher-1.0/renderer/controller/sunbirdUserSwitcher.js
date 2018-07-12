@@ -1,19 +1,14 @@
 
 /**
  * User switcher controller
- * @author Krushanu Mohapatra <krushanu.mohapatra@tarento.com> Akash Gupta <akash.gupta@tarento.com>
+ * @author Gourav More <gourav_m@tekditechnologies.com> Akash Gupta <akash.gupta@tarento.com>
  */
 
 app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootScope','$state','$stateParams',function($scope, $rootScope, $state, $stateParams) {
         $scope.selectedUser = {};
-        $scope.user1 = [];
         $scope.json = {};
-        for (var i=0;i<100;i++) {
-            $scope.json.class = "Class " + i;
-            $scope.json.name = "Name " + i
-            $scope.user1.push(_.clone($scope.json));
-        }
-        $rootScope.users = $scope.user1;
+        $scope.playButton = 'Replay';
+        $scope.showSunbirdUserSwitchModal = false;
         $scope.hideUserSwitchingModal = function() {
             $rootScope.safeApply(function() {
                 EkstepRendererAPI.removeEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideUserSwitchingModal, $scope);
@@ -35,6 +30,7 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
                     user.selected = true;
                 }
             );
+            $scope.playButton = 'Replay';
             $scope.sortUserlist();
             $rootScope.safeApply(function() {
                 $scope.showSunbirdUserSwitchModal = true;
@@ -42,14 +38,14 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
         }
 
         $scope.getUsersList = function() {
-            org.ekstep.service.content.getAllUserProfile().then(function(usersData) {
-                // $rootScope.users = usersData;
-                if ($rootScope.users.length == 0)
-                    $rootScope.users.push($rootScope.currentUser);
-                $scope.sortUserlist();
-            }).catch(function(err) {
-                console.error(err);
-            });
+            if(Object.keys(globalConfig.context).length == 0){
+                $.getJSON("assets/sb_user_list/sb_user_list.json",function(data){
+                    $rootScope.users = data;
+                });
+            }else{
+                $rootScope.users = getGlobalConfig.context;
+            }
+            $scope.sortUserlist();
         }
 
         $scope.sortUserlist = function() {
@@ -69,6 +65,8 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
             }, $scope.TelemetryEvent.interact);
             selectedUser.selected = true;
             $scope.selectedUser = selectedUser;
+            $scope.playButton = 'Play';
+
         }
 
         // When the user clicks on replayContent, replayContent the content
@@ -81,7 +79,7 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
                 EkstepRendererAPI.dispatchEvent('renderer:content:close');
                 EkstepRendererAPI.dispatchEvent('renderer:content:replay');
                 $scope.closeUserSwitchingModal(false);
-                EkstepRendererAPI.hideEndPage(); // need to remove; hiding of endpage should happen on replay function
+                EkstepRendererAPI.hideEndPage();
             } else {
                 $scope.switchUser(replayContent);
             }

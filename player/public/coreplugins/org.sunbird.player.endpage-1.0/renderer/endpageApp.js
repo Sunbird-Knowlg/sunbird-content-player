@@ -32,11 +32,10 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.replayContent = function() {
-        var data = {
-            'interactId' : 'ge_replay',
-            'callback': $scope.replayCallback
-        };
-        EkstepRendererAPI.dispatchEvent('renderer:content:close', undefined, data);
+        EventBus.dispatch("event:openUserSwitchingModal");
+    };
+    $scope.ep_openUserSwitchingModal = function() {
+        EventBus.dispatch("event:openUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
     };
     $scope.replayCallback = function(){
         EkstepRendererAPI.hideEndPage();

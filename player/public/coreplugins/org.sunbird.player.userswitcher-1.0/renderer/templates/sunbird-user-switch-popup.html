@@ -132,18 +132,18 @@
             <!-- <button class="tablinks" id="groupsButton" ng-click="initializeUser($event, 'groups')">Groups</button> -->
         </div>
         <div id="users">
-            <div ng-repeat="user in user1 track by $index" ng-click='selectUser(user)' class="userswitcher-card grid-container" ng-class="user.selected ? 'active' : ''">
+            <div ng-repeat="user in $root.users track by $index" ng-click='selectUser(user)' class="userswitcher-card grid-container" ng-class="user.selected ? 'active' : ''">
                 <div class="userswitcher-container grid-item">
                     <div class="userswitcher-data">
                         <p class="userswitcher-name">{{user.name}}</p>
-                        <p class="userswitcher-class">{{user.class}}</p>
+                        <p class="userswitcher-class">{{user.class.toString()}}</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="model-butttons">
             <div class="tab user-footer">
-                <button class="replay" ng-click="replayContent()">Replay</button>
+                <button class="replay" ng-click="replayContent()">{{playButton}}</button>
             </div>
         </div>
     </div>
