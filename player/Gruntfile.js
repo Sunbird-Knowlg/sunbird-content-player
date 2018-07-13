@@ -239,7 +239,7 @@ module.exports = function(grunt) {
                 files: [{
                         expand: true,
                         cwd: 'public/',
-                        src: ['assets/**', '!js/tests/**', '!js/*', '!json/*', '!libs/*', '!styles/**', 'templates/*', 'index.html', 'index_min.html'],
+                        src: ['assets/**', '!js/tests/**', "coreplugins/**", '!js/*', '!json/*', '!libs/*', '!styles/**', 'templates/*', 'index.html', 'index_min.html'],
                         dest: 'www/'
                     }, {
                         expand: true,
@@ -253,13 +253,6 @@ module.exports = function(grunt) {
                         cwd: 'public/js/',
                         src: 'coreplugins.js',
                         dest: 'www/',
-                        flatten: false,
-                    },
-                    {
-                        expand: true,
-                        cwd: 'public/coreplugins/',
-                        src: ['org.ekstep.ecmlrenderer-1.0/**', 'org.ekstep.endpage-1.0/**', 'org.ekstep.epubrenderer-1.0/**', 'org.ekstep.htmlrenderer-1.0/**', 'org.ekstep.overlay-1.0/**', 'org.ekstep.pdfrenderer-1.0/**', 'org.ekstep.videorenderer-1.0/**', 'org.sunbird.player.endpage-1.0/**'],
-                        dest: 'www/coreplugins',
                         flatten: false,
                     }
                 ]

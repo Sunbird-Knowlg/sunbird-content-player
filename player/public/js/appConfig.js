@@ -7,6 +7,7 @@ AppConfig = {
     recorder: "AUDIO_RECORDER",
     flavor: "DEPLOYMENT",
     heartBeatTime: 180000,
+    isCorePluginsPackaged: true, // Default to TRUE, For local development turn off this flag.
     s3ContentHost: "/assets/public/content/",
     previewPluginspath: "/content-plugins",
     devicePluginspath: "/widgets/content-plugins",
@@ -86,10 +87,6 @@ AppConfig = {
         type: 'plugin'
     }, {
         id: "org.ekstep.alert",
-        ver: 1.0,
-        type: 'plugin'
-    }, {
-        id: "org.ekstep.overlay",
         ver: 1.0,
         type: 'plugin'
     }],
