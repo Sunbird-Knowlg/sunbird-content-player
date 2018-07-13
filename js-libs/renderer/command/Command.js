@@ -47,3 +47,4 @@ var Command = Class.extend({
 		}
 	}
 });
+
