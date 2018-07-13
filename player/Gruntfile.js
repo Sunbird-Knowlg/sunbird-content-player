@@ -125,8 +125,8 @@ module.exports = function(grunt) {
             },
             telemetryLib: {
                 src: [
-            	    '../js-libs/telemetry-lib/ajv.min.js',
-            	    '../js-libs/telemetry-lib/telemetry-spec.js',
+                    '../js-libs/telemetry-lib/ajv.min.js',
+                    '../js-libs/telemetry-lib/telemetry-spec.js',
                     '../js-libs/telemetry-lib/detectClient.js',
                     '../js-libs/telemetry-lib/md5.js',
                     '../js-libs/telemetry-lib/fingerprint2.min.js',
@@ -239,14 +239,14 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: 'public/',
-                    src: ['assets/**', '!js/tests/**', 'js/*', 'coreplugins/**', 'json/*', 'libs/*', 'styles/**', 'templates/*', 'index.html', 'index_min.html'],
+                    src: ['assets/**', '!js/tests/**', '!js/*', 'coreplugins/**', '!json/*', '!libs/*', '!styles/**', 'templates/*', 'index.html', 'index_min.html'],
                     dest: 'www/'
                 }, {
-                    src: ['public/js/AppConfig.js'],
-                    dest: 'www/js/AppConfig.js'
-                }, {
-                    src: ['../js-libs/renderer/manager/AudioManager.js', ],
-                    dest: 'www/scripts/AudioManager.js'
+                    expand: true,
+                    cwd: 'public/player-build/',
+                    src: '**',
+                    dest: 'www/',
+                    flatten: false,
                 }]
             },
             previewFiles: {
@@ -320,7 +320,7 @@ module.exports = function(grunt) {
                     dest: 'dist'
                 }]
             },
-            toPreview:{
+            toPreview: {
                 files: [{
                     expand: true,
                     cwd: 'www',
@@ -328,7 +328,7 @@ module.exports = function(grunt) {
                     dest: 'www/preview'
                 }]
             },
-            authtoken:{
+            authtoken: {
                 files: [{
                     expand: true,
                     cwd: '../js-libs/build',
@@ -336,11 +336,11 @@ module.exports = function(grunt) {
                     ver: '1.0',
                     dest: '../js-libs/build/libs/',
                     rename: function(dest, src, data) {
-                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js'); 
+                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js');
                     }
                 }]
             },
-            telemetry:{
+            telemetry: {
                 files: [{
                     expand: true,
                     cwd: '../js-libs/build',
@@ -348,11 +348,11 @@ module.exports = function(grunt) {
                     ver: '1.0',
                     dest: '../js-libs/build/libs/',
                     rename: function(dest, src, data) {
-                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js'); 
+                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js');
                     }
                 }]
             },
-            htmlinterface:{
+            htmlinterface: {
                 files: [{
                     expand: true,
                     cwd: '../js-libs/build',
@@ -360,11 +360,11 @@ module.exports = function(grunt) {
                     ver: '1.0',
                     dest: '../js-libs/build/player/',
                     rename: function(dest, src, data) {
-                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js'); 
+                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js');
                     }
                 }]
             },
-            renderer:{
+            renderer: {
                 files: [{
                     expand: true,
                     cwd: 'public/coreplugins/org.ekstep.ecmlrenderer-1.0/renderer/libs',
@@ -372,7 +372,7 @@ module.exports = function(grunt) {
                     ver: '1.0',
                     dest: '../js-libs/build/player/',
                     rename: function(dest, src, data) {
-                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js'); 
+                        return dest + src.replace('.min.js', '-' + data.ver + '.min.js');
                     }
                 }]
             }
@@ -385,9 +385,9 @@ module.exports = function(grunt) {
             minjs: ['public/js/*.min.js'],
             minhtml: ['www/index_min.html'],
             preview: {
-                src : ['www/**/*', '!www/preview/**']
+                src: ['www/**/*', '!www/preview/**']
             },
-            deletefiles: ['www/styles/ionic.css', 'www/styles/bookshelf_slider.css', 'www/styles/skin02.css', 'www/styles/toastr.min.css', 'www/styles/jquery.mCustomScrollbar.min.css', 'www/libs', 'www/js','www/coreplugins/org.ekstep.collection-1.0'],
+            deletefiles: ['www/styles/ionic.css', 'www/styles/bookshelf_slider.css', 'www/styles/skin02.css', 'www/styles/toastr.min.css', 'www/styles/jquery.mCustomScrollbar.min.css', 'www/libs', 'www/js', 'www/coreplugins/org.ekstep.collection-1.0'],
         },
         rename: {
             main: {
@@ -620,18 +620,18 @@ module.exports = function(grunt) {
                     to: "libraryVariants"
                 }]
             },
-            build_Number:{
+            build_Number: {
                 src: ['www/index.html'],
                 overwrite: true,
                 replacements: [{
                     from: ".js",
                     to: ".js?ver=BUILD_NUMBER"
-                },{
+                }, {
                     from: ".css",
                     to: ".css?ver=BUILD_NUMBER"
                 }]
             },
-            gradleCanvasVersion:{
+            gradleCanvasVersion: {
                 src: ['platforms/android/build-extras.gradle', 'www/scripts/renderer.script.min.js'],
                 overwrite: true,
                 replacements: [{
@@ -639,7 +639,7 @@ module.exports = function(grunt) {
                     to: "<%= version %>"
                 }]
             },
-            previewAppConfigCanvasVersion:{
+            previewAppConfigCanvasVersion: {
                 src: ['www/preview/scripts/renderer.script.min.js'],
                 overwrite: true,
                 replacements: [{
@@ -650,7 +650,7 @@ module.exports = function(grunt) {
         },
         jsdoc: {
             dist: {
-                src: ['../js-libs/renderer/**/*.js', 'public/js/*.js','public/coreplugins/**/renderer/js/*.js','public/coreplugins/**/renderer/*.js', '../README.md'],
+                src: ['../js-libs/renderer/**/*.js', 'public/js/*.js', 'public/coreplugins/**/renderer/js/*.js', 'public/coreplugins/**/renderer/*.js', '../README.md'],
                 options: {
                     destination: 'docs'
                 }
@@ -666,22 +666,22 @@ module.exports = function(grunt) {
                     src: ['docs/**']
                 }]
             },
-            preview:{
+            preview: {
                 options: {
                     archive: 'preview.zip'
                 },
                 files: [{
-                    expand:true,
+                    expand: true,
                     cwd: 'www/preview',
                     src: ['**']
                 }]
             },
-            libs:{
+            libs: {
                 options: {
                     archive: 'libs.zip'
                 },
                 files: [{
-                    expand:true,
+                    expand: true,
                     cwd: '../js-libs/build',
                     src: ['**']
                 }]
@@ -695,12 +695,14 @@ module.exports = function(grunt) {
                 },
                 files: {
                     'www/index.html': [
-                        'www/scripts/renderer.external.min.js',
-                        'www/scripts/renderer.script.min.js',
-                        'www/scripts/renderer.telemetry.min.js',
-                        'www/scripts/AudioManager.js',
-                        'www/coreplugins/LauncherPlugin.js',
-                        'www/styles/*.css'
+                        'www/script.*.js',
+                        'www/*.css',
+                        // 'www/scripts/renderer.external.min.js',
+                        // 'www/scripts/renderer.script.min.js',
+                        // 'www/scripts/renderer.telemetry.min.js',
+                        // 'www/scripts/AudioManager.js',
+                        // 'www/coreplugins/LauncherPlugin.js',
+                        // 'www/styles/*.css'
                     ],
                 }
             }
@@ -803,16 +805,15 @@ module.exports = function(grunt) {
     grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared', 'replace:xwalk_library']);
 
     //Build web prview
-    grunt.registerTask('preview-init-setup', ['mkdir:all', 'uglify:renderermin', 'copy:main', 'concat:css', 'concat:externaljs', 'concat:telemetryLib', 'concat:telemetry', "uglify:telemetrymin", 'concat:script', 'concat:' + target, 'clean:script', 'clean:deletefiles', 'injector:prview', 'replace:build_Number']);
-    grunt.registerTask('build-preview', ['clean', 'build-telemetry-lib', 'preview-init-setup' ,'rename:preview', 'clean:minhtml', 'copy:toPreview', 'replace:previewAppConfigCanvasVersion', 'clean:preview']);
+    grunt.registerTask('init', ['mkdir:all', 'copy:main', 'injector:prview'])
+    grunt.registerTask('build-preview', ['clean', 'build-telemetry-lib', 'init', 'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
 
     //Build AAR
     grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);
-    grunt.registerTask('build-aarshared-xwalk', ['preview-init-setup', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned','replace:gradleCanvasVersion', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
-    grunt.registerTask('build-app', ['init-setup', 'build-aar']);
+    grunt.registerTask('build-aarshared-xwalk', ['init', 'clean:after', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'replace:gradleCanvasVersion', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android', 'clean:minjs']);
+    grunt.registerTask('build-app', ['clean', 'mkdir:all', 'init-setup', 'build-aar']);
     //Added on 16/04/18. Simple command to build aar file. There is no xwalk build required. This changes made to share build for Sunbird.
     grunt.registerTask('build-aar', ['mkdir:all', 'build-aarshared-xwalk']);
-   
 
     grunt.registerTask('build-jsdoc', ['jsdoc', 'compress:main']);
 
@@ -822,5 +823,6 @@ module.exports = function(grunt) {
     grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator", "uglify:htmlinterfacemin"]);
     grunt.registerTask('renderer-telemetryV3', ['karma:telemetryV3']);
     grunt.registerTask('telemetry-lib-test', ['karma:telemetryFunV3']);
-    grunt.registerTask('generate-libs', ['copy:authtoken', 'copy:telemetry', 'copy:htmlinterface', 'copy:renderer' ]);
+
+    grunt.registerTask('generate-libs', ['copy:authtoken', 'copy:telemetry', 'copy:htmlinterface', 'copy:renderer']);
 };

@@ -153,3 +153,5 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             }
         }, this);
     });
+
+window.app = app;    

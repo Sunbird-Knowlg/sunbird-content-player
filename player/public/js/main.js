@@ -1,4 +1,4 @@
-var packageName = "org.ekstep.contentplayer", version = AppConfig.version, packageNameDelhi = "org.ekstep.delhi.curriculum",
+ window.packageName = "org.ekstep.contentplayer", version = AppConfig.version, packageNameDelhi = "org.ekstep.delhi.curriculum",
     geniePackageName = "org.ekstep.genieservices", currentUser = {}, userList = [],
     COLLECTION_MIMETYPE = "application/vnd.ekstep.content-collection",
     stack = new Array(), collectionChildrenIds = new Array(), collectionPath = new Array(), collectionPathMap = {},
@@ -7,19 +7,9 @@ var packageName = "org.ekstep.contentplayer", version = AppConfig.version, packa
 
 document.body.addEventListener("logError", telemetryError, false);
 
-function postMessageHandler(event) {
-    console.info("PostMessage is invoked")
-    // TODO: Should remove hardcoaded mimetype
-    if (event.data && (content.mimeType !== undefined && content.mimeType !== 'video/x-youtube')) {
-        // org.ekstep.contentrenderer.initializePreview(event.data)
-    }
-}
 
-if (window.addEventListener) {
-    window.addEventListener("message", postMessageHandler, false);
-} else {
-    window.attachEvent("onmessage", postMessageHandler);
-}
+
+
 
 function telemetryError(e) {
     var $body = angular.element(document.body);
@@ -339,3 +329,22 @@ function mergeJSON(a, b) {
     });
     return res;
 }
+
+// Append all the functions to window
+
+ //window.postMessageHandler = postMessageHandler;
+ window.mergeJSON = mergeJSON;
+ window.setTelemetryEventFields = setTelemetryEventFields;
+ window.setGlobalConfig = setGlobalConfig;
+ window.logContentProgress = logContentProgress;
+ window.getPreviewMode = getPreviewMode;
+ window.compareObject = compareObject;
+ window.addWindowUnloadEvent = addWindowUnloadEvent;
+ window.showToaster = showToaster;
+ window.getAsseturl = getAsseturl;
+ window.startTelemetry = startTelemetry;
+ window.exitApp = exitApp;
+ window.imageExists = imageExists;
+ window.getCurrentStageId = getCurrentStageId;
+  
+

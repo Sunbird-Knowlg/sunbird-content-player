@@ -82,4 +82,5 @@ var splashScreen = {
       jQuery('#loading').hide();
     }
 };
+window.splashScreen = splashScreen;
 // splashScreen.initialize();
