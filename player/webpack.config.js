@@ -1,9 +1,8 @@
 //TODO: Remove the unused constants
 
 
-const ENVIRONMENT = process.env.NODE_ENV;
-const BUILD_NUMBER = process.env.build_number || 1;
-const PLAYER_VER = process.env.player_version_number || 1;
+const BUILD_NUMBER = process.env.build_number;
+const PLAYER_VER = process.env.player_version_number;
 
 // Build Zip Folder Name
 const BUILD_FOLDER_NAME = 'player-build';
@@ -118,31 +117,6 @@ module.exports = (env, argv) => {
                 'ajv': require.resolve('./node_modules/ajv/dist/ajv.min.js')
             }
         },
-        // optimization: {
-        //     minimizer: [
-        //         new UglifyJsPlugin({
-        //             uglifyOptions: {
-        //                 compress: {
-        //                     drop_console: true,
-        //                     warnings: false,
-        //                 },
-        //                 output: {
-        //                     comments: false
-        //                 },
-        //                 parallel: 4,
-        //                 compress: false,
-        //                 output: {
-        //                     ascii_only: true,
-        //                     beautify: false,
-        //                     comments: false,
-        //                     beautify: false,
-        //                     ast: true,
-        //                     code: false
-        //                 },
-        //             }
-        //         })
-        //     ]
-        // },
         module: {
             rules: [{
                     test: /\.(s*)css$/,
@@ -233,7 +207,6 @@ module.exports = (env, argv) => {
                 _: 'underscore',
                 async: "async",
                 Fingerprint2: 'Fingerprint2',
-                // ajv: require.resolve('./node_modules/ajv/dist/ajv.min.js')
             }),
             new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.HotModuleReplacementPlugin(),
