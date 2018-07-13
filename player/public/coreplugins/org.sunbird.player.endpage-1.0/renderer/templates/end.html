@@ -1,146 +1,455 @@
 <style>
-.sb-content-holder {
-    position: absolute;
-    top: 60%;
-    width: 100%;
-    height: 30%;
+@font-face {
+  font-family: 'NotoSans-Regular';
+  src: url("../fonts/NotoSans/NotoSans-Regular.woff") format("woff"), url("../fonts/NotoSans/NotoSans-Regular.ttf") format("truetype");
 }
 
-.sb-content {
-    width: 100%;
-    left: 0%;
-    top: 15%;
-    position: absolute;
+@font-face {
+  font-family: 'NotoSans-SemiBold';
+  src: url("../fonts/NotoSans/NotoSans-SemiBold.woff") format("woff"), url("../fonts/NotoSans/NotoSans-SemiBold.ttf") format("truetype");
 }
 
-.sb-ep-replay {
-    position: absolute;
-    left: 35%;
-    top: 6%;
-    width: 9%;
+@font-face {
+  font-family: 'NotoSans-Bold';
+  src: url("../fonts/NotoSans/NotoSans-Bold.woff") format("woff"), url("../fonts/NotoSans/NotoSans-Bold.ttf") format("truetype");
 }
 
-.sb-ep-home {
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/*----- START: Screen Variables -----*/
+/*----- START: Fonts Variables -----*/
+/*----- START: Color Variables -----*/
+.ps-wrapper {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.user-name{
+  font-size: 50px
+}
+
+.ps-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
+}
+
+.ps-heading {
+  font-family: "NotoSans-Bold", sans-serif;
+  font-size: 2.8vw;
+  margin-bottom: 2vw;
+  font-weight: 700;
+  color: #333333;
+}
+
+.ps-subheading {
+  font-family: "NotoSans-Regular", sans-serif;
+  font-size: 2vw;
+  color: #333333;
+  margin-bottom: 5px;
+}
+
+.ps-author {
+  font-family: "NotoSans-Regular", sans-serif;
+  font-size: 1.6vw;
+  margin: 10px auto;
+  color: #979797;
+}
+
+.ps-header {
+  text-align: center;
+  padding: 3vw 0 2vw 0;
+}
+
+.ps-arrow {
+  width: 3vw;
+  height: auto;
+}
+
+.ps-body {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  width: 100%;
+}
+
+.ps-nav {
+  width: 25%;
+  box-shadow: 0 0 4px 1px #bcbcbc;
+}
+
+.ps-score {
+  width: 50%;
+}
+
+.ps-text-left {
+  text-align: left !important;
+}
+
+.ps-text-right {
+  text-align: right !important;
+}
+
+.ps-nav-subtitle {
+  color: #ffffff;
+  font-family: "NotoSans-Regular", sans-serif;
+  font-size: 1.6vw;
+}
+
+.ps-nav-title {
+  font-family: "NotoSans-Bold", sans-serif;
+  font-size: 2.4vw;
+  color: #ffffff;
+  margin: 3px 0;
+}
+
+.ps-nav-header {
+  background-color: #44b50f;
+  padding: 1.2vw 2vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.ps-nav-body {
+  background-color: #333333;
+  padding: 1.2vw 2vw;
+}
+
+.ps-nav-wrapper {
+  display: inline-block;
+}
+
+.ps-score {
+  padding: 20px;
+  position: relative;
+}
+
+.ps-score-content {
   position: absolute;
-  left: 55%;
-  top: 6%;
-  width: 9%;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: #f3f3f3;
+  border-radius: 4px;
+  padding: 2vw 3vw;
 }
 
-.sb-content-title { 
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    text-transform: uppercase;
-    padding: 0.6em 0em 0em;
-    font-size: 4vw;
-    text-align: center;
-    line-height: 2.5em;
-    color: #494949; 
- }
-
-.sunbird-ep-opactiy {
-    opacity: 0.5;
+.ps-chapter-text {
+  color: #ffffff;
+  font-family: "NotoSans-Regular", sans-serif;
+  font-size: 1.9vw;
+  line-height: 2.5vw;
+  font-weight: 700;
 }
 
-.sb-message {
-    width: 98%;
-    text-align: center;
-    font-size: 4vw;
-    font-weight: bold;
-    color: #0080ff;
-    letter-spacing: 0.09em;
+.ps-chapter-detail {
+  color: #ffffff;
+  font-family: "NotoSans-Regular", sans-serif;
+  font-weight: 400;
+  font-size: 1.7vw;
+  line-height: 2.5vw;
 }
 
-.sb-time-display {
-    position: absolute;
-    left: 12%;
-    top: 12%;
-    border: 2px dashed;
-    padding: 2% 3%;
-    text-align: center;
-    font-weight: bold;
-    font-size: 3vm;
-    width: 15%;
-    font-size: 2.5vw;
+.ps-footer {
+  position: absolute;
+  bottom: 0;
+  padding: 1%;
+  width: 100%;
 }
 
-.display-score {
-    position: absolute;
-    left: 72%;
-    top: 12%;
-    border: 2px dashed;
-    padding: 2% 3%;
-    text-align: center;
-    font-weight: bold;
-    font-size: 3vm;
-    width: 15%;
-    font-size: 2.5vw;
+.ps-footer-text {
+  font-family: "NotoSans-SemiBold", sans-serif;
+  color: #979797;
+  font-weight: 400;
+  font-size: 1.2vw;
+  text-align: center;
 }
 
-.result-display {
-    top: 150%;
-    position: absolute;
-    font-weight: bold;
-    font-size: .7em;
-    font-family: inherit;
-    letter-spacing: .1em;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #494949;
+.ps-score-list {
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
-.endpage-player-license {
-    position: absolute;
-    bottom: 3%;
-    left: 50%;
-    color: #494949;
-    font-size: 1.5vw;
-    transform: translate(-50%, -50%);
-    letter-spacing: .1em;
+.ps-score-list__item {
+  padding: 0 2vw;
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-right: 1px solid #eaeaea;
 }
 
-.gc-content-owner-player {
-    font-size: 2vw;
-    width: 100%;
-    text-align: center;
-    color: #494949;
-    padding: 0.08em 0em 0.5em;
-    text-transform: uppercase;
+.ps-score-list__item:last-child {
+  border: none;
+}
+
+.ps-score-icon {
+  width: 2.5vw;
+  height: 2.5vw;
+  padding: 5%;
+}
+
+.ps-score-heading {
+  font-family: "NotoSans-Bold", sans-serif;
+  color: #979797;
+  font-size: 1.4vw;
+  text-align: center;
+  padding: 1%;
+}
+
+.ps-score-data {
+  color: #979797;
+  font-family: "NotoSans-Regular", sans-serif;
+  font-weight: 400;
+  padding: 1vw 1vw 0 1vw;
+  font-size: 2vw;
+}
+
+.ps-score-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.ps-btn, .ps-btn:hover, .ps-btn:focus, .ps-btn:active {
+  /*padding: 1.5vw; */
+    background-color: #979797;
+    border-radius: 50%;
+    width: 6.2vw;
+    color: #ffffff;
+    /* font-family: "NotoSans-Bold", sans-serif; */
+    font-size: 5.2vw;
+    /* font-weight: bold; */
+    text-decoration: none;
+    height: 6.2vw;
+    /* display: inline-block; */
+    /* vertical-align: middle; */
+    /* margin-right: 10px;*/
+}
+
+.ps-btn--orange, .ps-btn--orange:hover, .ps-btn--orange:focus, .ps-btn--orange:active {
+  background-color: #f5a623;
+}
+
+.ps-btn--blue, .ps-btn--blue:hover, .ps-btn--blue:focus, .ps-btn--blue:active {
+  background-color: #007aff;
+}
+
+.ps-btn--black, .ps-btn--black:hover, .ps-btn--black:focus, .ps-btn--black:active {
+  background-color: #4a4a4a;
+}
+
+.textdeco-none {
+  text-decoration: none !important;
+}
+
+.ps-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  margin: 2vw auto 3vw auto;
+}
+
+.ps-btn-icon {
+  width: 100%;
+  height: 46%;
+}
+
+.ps-action-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 70vw;
+  padding-top: 1vw;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.ps-action-list__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.ps-action-text {
+  font-family: "NotoSans-Regular", sans-serif;
+  font-weight: 400;
+  text-transform: capitalize;
+  font-size: 1.6vw;
+  margin-bottom: 0.3vw;
+}
+
+.ps-action-data {
+  text-align: left;
+}
+
+.ps-link, .ps-link:hover, .ps-link:focus {
+  color: #007aff;
+  font-size: 1.2vw;
+  font-family: "NotoSans-Regular", sans-serif;
+  font-weight: 700;
+  text-transform: capitalize;
+  text-decoration: none;
 }
 
 </style>
 <div class="font-lato gc-ep-cont" ng-app="sunbird-endpage" ng-controller="endPageController"     id='endpage' ng-show="showEndPage">
-    <image class="gc-ep-cont-background" ng-src="{{endpageBackground}}" />
-    <div class="sb-content">
-        <p class="sb-message">Congratulations! You just completed</p>
-        <p class="sb-content-title" ng-if="playerMetadata .name">{{playerMetadata.name}}</p>
-        <p class="gc-content-owner-player gc-text-elipsis" ng-if="playerMetadata.owner">Author: {{playerMetadata.owner}}</p>
+  <div class="ps-wrapper">
+    <div class="ps-content">
+      <div class="ps-header">
+        <h2 class="ps-heading">You just completed</h2>
+        <p class="ps-subheading">This is a great course on how to conduct courses on DIKSHA</p>
+        <p class="ps-author">Author: <span>Surendrasingh Sacharia and Joel Clasterre</span></p>
+      </div>
+      <div class="ps-body">
+        <div class="ps-nav left"><a href="javascript:void(0);" class="ps-nav-header textdeco-none"><img src="{{leftArrowIcon}}" alt="prev" class="ps-arrow">
+            <div class="ps-nav-wrappe ps-text-right">
+              <p class="ps-nav-subtitle">Goto</p>
+              <h2 class="ps-nav-title">Previous</h2>
+            </div></a>
+          <div class="ps-nav-body ps-text-right">
+            <p class="ps-chapter-text">Chapter 1 :</p>
+            <p class="ps-chapter-detail">Let’s go to the next imagine to buy an iphone.</p>
+          </div>
+        </div>
+        <div class="ps-score">
+          <div class="ps-score-content">
+            <ul class="ps-score-list">
+              <li class="ps-score-list__item">
+                <div class="ps-score-item"><img src="{{scoreIcon}}" class="ps-score-icon">
+                  <div class="ps-score-detail">
+                    <h2 class="ps-score-heading">SCORE</h2>
+                    <p class="ps-score-data">{{getTotalScore}}</p>
+                  </div>
+                </div>
+              </li>
+              <li class="ps-score-list__item">
+                <div class="ps-score-item"><img src="{{clockIcon}}" class="ps-score-icon">
+                  <div class="ps-score-detail">
+                    <h2 class="ps-score-heading">TIME</h2>
+                    <p class="ps-score-data">{{totalTimeSpent}}</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ps-nav right"><a href="javascript:void(0);" class="ps-nav-header textdeco-none">
+            <div class="ps-nav-wrapper">
+              <p class="ps-nav-subtitle">Goto</p>
+              <h2 class="ps-nav-title">Next</h2>
+            </div><img src="{{rightArrowIcon}}" alt="prev" class="ps-arrow"></a>
+          <div class="ps-nav-body ps-text-left">
+            <p class="ps-chapter-text">Chapter 2 :</p>
+            <p class="ps-chapter-detail">Let’s go to the next imagine to buy an iphone.</p>
+          </div>
+        </div>
+      </div>
+      <div class="ps-actions">
+        <ul class="ps-action-list">
+          <li class="ps-action-list__item"><a href="javascript:void(0);" ng-click="replayContent()" class="ps-btn ps-btn--orange"><img src="{{replayIcon}}" class="ps-btn-icon"></a>
+            <p class="ps-action-text">Replay</p>
+          </li>
+          <li class="ps-action-list__item"><a href="javascript:void(0);" class="ps-btn ps-btn--blue"><span class="user-name">{{currentUser.name.charAt(0).toUpperCase() + string.slice(1);}}</span></a>
+            <div class="ps-action-data">
+              <p class="ps-action-text">{{currentUser.name}}</p><a href="javascript:void(0);" class="ps-link">Change user ?</a>
+            </div>
+          </li>
+          <li class="ps-action-list__item"><a href="javascript:void(0);" class="ps-btn ps-btn--black"><img src="{{genieIcon}}" class="ps-btn-icon"></a>
+            <p class="ps-action-text">Home</p>
+          </li>
+        </ul>
+      </div>
+      <div class="ps-footer">
+        <p class="ps-footer-text">{{licenseAttribute}}</p>
+      </div>
     </div>
-    <div class="sb-content-holder">
-        <div class="sb-time-display">
-            <p>{{totalTimeSpent}}</p>
-            <p class="result-display">Time</p>
-        </div>
-        <div class="sb-content-replay" ng-click="replayContent()">
-          <img class="sb-ep-replay" ng-src="{{replayIcon}}">
-        </div>
-        <div ng-click="ep_openUserSwitchingModal()" class="gc-ep-footer-icons gc-ep-userSwitch">
-            <img class="user" ng-src="{{currentUser.profileImage}}" />
-            <p><b>{{currentUser.name}}</b>
-                <br/> <small>change</small></p>
-        </div>
-        <div class="sb-content-home">
-          <img class="sb-ep-home" ng-class="isCordova ? 'sb-ep-home' : ' sunbird-ep-opactiy' " ng-src="{{genieIcon}}" ng-click="openGenie()"></img>
-        </div>
-        <div class="display-score">
-            <p ng-if="score">{{score}}</p>
-            <p ng-if="!score">--</p>
-            <p class="result-display">Score</p>
-        </div>
-    </div>
-    <div class="endpage-player-license">
-        <b>{{licenseAttribute}}</b>
-    </div>
+  </div>
 </div>
 <sunbird-userswitcher></sunbird-userswitcher>
