@@ -26,9 +26,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                 }
             });
             totalQuestions =  Object.keys(eventData).length;
-            $scope.$apply(function() {
-                $scope.score = (totalScore + "/" + totalQuestions);
-            });
+            $scope.score = (totalScore + "/" + totalQuestions);
         } else {
             $scope.score = undefined;
         }

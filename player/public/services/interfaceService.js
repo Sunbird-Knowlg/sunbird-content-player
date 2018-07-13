@@ -1,4 +1,5 @@
 org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
+    eventData: {},
     init: function() {
     },
     getContentList: function(filter, childrenIds) {
@@ -241,26 +242,13 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
         });
     },
     cacheAssessEvent: function(event) {
-        eventData[event.edata.item.id] = event;
+        this.eventData[event.edata.item.id] = event;
     },
     getAssessmentScore: function(uid) {
-        return eventData;
+        return this.eventData;
+    },
+    clearCacheAssessEvent: function() {
+        this.eventData = {};
     }
+
 }));
-
-/*Here Listen Telemetry event and 
-    Get all OE_ASSESS data and set it to setAssesment method.
-*/ 
-var eventData = {};
-EkstepRendererAPI.addEventListener('telemetryEvent',function(event) {
-    event = JSON.parse(event.target);
-    if(event.eid == 'ASSESS') {
-        org.ekstep.service.content.cacheAssessEvent(event);
-    }
-});
-
-//When call replay button then make result object empty.
-EkstepRendererAPI.addEventListener('renderer:content:replay',function() {
-    eventData = {};
-});
-
