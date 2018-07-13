@@ -16,7 +16,7 @@ org.ekstep.service.local = new(org.ekstep.service.mainService.extend({
 
     getCurrentUser: function() {
         return new Promise(function(resolve, reject) {
-            $.getJSON("assets/sb_user_list/sb_user_list.json", function(data) {
+            $.getJSON("assets/user_list/sb_user_list.json", function(data) {
                 if (data.length == 0) {
                     data = [{"uid": "9g8h4ndAnonymouscg56ngd"}];
                 }
@@ -27,7 +27,7 @@ org.ekstep.service.local = new(org.ekstep.service.mainService.extend({
 
     getAllUserProfile: function() {
         return new Promise(function(resolve, reject) {
-            $.getJSON("assets/sb_user_list/sb_user_list.json",function(data){
+            $.getJSON("assets/user_list/sb_user_list.json",function(data){
                 resolve(data);
             })
         });
