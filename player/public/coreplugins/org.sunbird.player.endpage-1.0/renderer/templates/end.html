@@ -114,7 +114,7 @@
     <image class="gc-ep-cont-background" ng-src="{{endpageBackground}}" />
     <div class="sb-content">
         <p class="sb-message">Congratulations! You just completed</p>
-        <p class="sb-content-title" ng-if="playerMetadata .name">{{playerMetadata .name}}</p>
+        <p class="sb-content-title" ng-if="playerMetadata .name">{{playerMetadata.name}}</p>
         <p class="gc-content-owner-player gc-text-elipsis" ng-if="playerMetadata.owner">Author: {{playerMetadata.owner}}</p>
     </div>
     <div class="sb-content-holder">
@@ -128,7 +128,7 @@
         <div ng-click="ep_openUserSwitchingModal()" class="gc-ep-footer-icons gc-ep-userSwitch">
             <img class="user" ng-src="{{currentUser.profileImage}}" />
             <p><b>{{currentUser.name}}</b>
-                <br/> <small> {{AppLables.change}} </small></p>
+                <br/> <small>change</small></p>
         </div>
         <div class="sb-content-home">
           <img class="sb-ep-home" ng-class="isCordova ? 'sb-ep-home' : ' sunbird-ep-opactiy' " ng-src="{{genieIcon}}" ng-click="openGenie()"></img>
