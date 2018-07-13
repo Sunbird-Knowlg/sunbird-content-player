@@ -10,8 +10,12 @@
     <title></title>
 
     <!-- injector:css -->
-
-    <link rel="stylesheet" type="text/css" href="player-build/style.min.1.1.css" />
+    <link rel="stylesheet" type="text/css" href="styles/ionic.css" />
+    <link rel="stylesheet" type="text/css" href="styles/bookshelf_slider.css" />
+    <link rel="stylesheet" type="text/css" href="styles/skin02.css" />
+    <link rel="stylesheet" type="text/css" href="styles/toastr.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/jquery.mCustomScrollbar.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
     <!-- endinjector -->
 
     <style>
@@ -44,13 +48,63 @@
     <div id="loading" class="gc-loader-area"></div>
 
     <div class="content-holder" ng-repeat="templatePath in templates">
-        <!-- <div ng-include="templatePath"></div> -->
         <div ng-include="templatePath.tmeplateUrl || templatePath.identifier"></div>
-
     </div>
 
     <!-- injector:js -->
-    <script src="./player-build/script.min.1.1.js"></script>
+    <script type="text/javascript" src="libs/jquery.min.js"></script>
+    <script type="text/javascript" src="libs/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="libs/jquery.bookshelfslider.min.js"></script>
+    <script type="text/javascript" src="libs/async.min.js"></script>
+    <script type="text/javascript" src="libs/plugin-framework.min.js"></script>
+    <script type="text/javascript" src="libs/toastr.min.js"></script>
+    <script type="text/javascript" src="libs/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="libs/ionic.bundle.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="libs/ng-cordova.min.js"></script>
+    <script type="text/javascript" src="libs/angular-resource.min.js"></script>
+    <script type="text/javascript" src="libs/underscore.js"></script>
+    <script type="text/javascript" src="libs/date-format.js"></script>
+    <script type="text/javascript" src="libs/ocLazyLoad.js"></script>
+
+    <script type="text/javascript" src="js/appConfig.js"></script>
+    <script type="text/javascript" src="js/globalContext.js"></script>
+    <script type="text/javascript" src="js/appMessages.js"></script>
+    <script type="text/javascript" src="js/splashScreen.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/ekstepRendererApi.js"></script>
+    <script type="text/javascript" src="js/content-renderer.js"></script>
+    <script type="text/javascript" src="js/ekstepRendererEvents.js"></script>
+    <script type="text/javascript" src="js/iEvaluator.js"></script>
+    <script type="text/javascript" src="js/basePlugin.js"></script>
+    <script type="text/javascript" src="js/baseLauncher.js"></script>
+    <script type="text/javascript" src="js/baseEndpage.js"></script>
+
+    <script src="telemetry-lib/ajv.min.js"></script>
+    <script src="telemetry-lib/telemetry-spec.js"></script>
+    <script src="telemetry-lib/fingerprint2.min.js"></script>
+    <script src="telemetry/InActiveEvent.js"></script>
+    <script src="telemetry/TelemetryEvent.js"></script>
+    <script src="telemetry/TelemetryServiceUtil.js"></script>
+    <script src="telemetry/TelemetryService.js"></script>
+    <script src="telemetry-lib/telemetryV3Interface.js"></script>
+    <script src="telemetry/TelemetryV1Manager.js"></script>
+    <script src="telemetry/TelemetryV2Manager.js"></script>
+    <script src="telemetry/TelemetryV3Manager.js"></script>
+    <script src="js/test/specHelper.js"></script>
+
+    <script type="text/javascript" src="services/mainservice.js"></script>
+    <script type="text/javascript" src="services/localservice.js"></script>
+    <script type="text/javascript" src="services/interfaceService.js"></script>
+    <script type="text/javascript" src="services/htmlservice.js"></script>
+    <script type="text/javascript" src="services/controllerservice.js"></script>
+
+    <script src="dispatcher/idispatcher.js"></script>
+    <script src="dispatcher/web-dispatcher.js"></script>
+    <script src="dispatcher/device-dispatcher.js"></script>
+
+    <script type="text/javascript" src="renderer/manager/AudioManager.js"></script>
     <!-- endinjector -->
 
 </body>

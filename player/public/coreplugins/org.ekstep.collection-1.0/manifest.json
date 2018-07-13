@@ -6,9 +6,6 @@
     "description": "",
     "publishedDate": "",
     "renderer": {
-        "main": "renderer/plugin.js",
-        "views":[
-            {"template":"./templates/collection.html", "controller":"./controller/collection.js"}
-        ]
+        "main": "renderer/plugin.js"
     }
 }
