@@ -4,7 +4,7 @@ AnimationManager = {
 	pluginObjMap: {},
 	handle: function(action) {
 		var instance;
-		if(action.asset) {
+		if (action && action.asset) {
 			instance = PluginManager.getPluginObject(action.asset);
 		} else {
 			return;

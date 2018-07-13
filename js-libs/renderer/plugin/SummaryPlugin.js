@@ -13,10 +13,8 @@ var SummaryPlugin = Plugin.extend({
             } else if (this._stage._controllerMap[controller]) {
                 message = this._stage._controllerMap[controller].feedback();
             }
-            if (message) {
-                if (message.type == 'text') {
-                    this.renderTextSummary(message.asset, data);
-                }
+            if (message && message.type == 'text') {
+                this.renderTextSummary(message.asset, data);
             }
         }
     },
