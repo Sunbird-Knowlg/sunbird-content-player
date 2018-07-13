@@ -327,8 +327,12 @@ app.compileProvider.directive('userSwitcher', ['$rootScope', '$compile', functio
             };
             scope.getUserSwitcherTemplate = function() {
                 var userSwitcherPluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.userswitcher");
-                //return userSwitcherPluginInstance._templatePath;
-                return 'userSwitch.html';
+                var config = EkstepRendererAPI.getGlobalConfig();
+                if (!config.isCorePluginsPackaged) {
+                    return userSwitcherPluginInstance._templatePath;
+                } else {
+                    return 'userSwitch.html';
+                }
             }
         }
     }
