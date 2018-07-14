@@ -14,10 +14,10 @@ const PACKAGE_FILE_NAME = 'coreplugins.js'; // Packaged all plugins file name
 const OUTPUT_PATH = 'public/'; // Package file path.
 const DIST_OUTPUT_FILE_PATH = '/renderer/plugin.dist.js'; // dist file path which is created in each plugins folder
 const CONFIG = {
-    drop_console = process.env.config.drop_console || true,
-    mangle = process.env.config.mangle || true,
+    drop_console: process.env.drop_console || false,
+    mangle: process.env.mangle || false,
 }
-const PLUGINS = process.env.config.plugins || [
+const PLUGINS = process.env.plugins || [
     "org.ekstep.launcher-1.0",
     "org.ekstep.repo-1.0",
     "org.ekstep.toaster-1.0",
