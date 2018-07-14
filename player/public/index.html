@@ -47,8 +47,8 @@
 <body ng-controller="BaseCtrl">
     <div id="loading" class="gc-loader-area"></div>
 
-    <div class="content-holder" ng-repeat="templatePath in templates">
-        <div ng-include="templatePath.tmeplateUrl || templatePath.identifier"></div>
+    <div class="content-holder" ng-repeat="template in templates">
+        <div ng-include="template.tmeplateUrl || template.identifier"></div>
     </div>
 
     <!-- injector:js -->
