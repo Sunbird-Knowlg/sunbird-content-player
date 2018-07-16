@@ -1,0 +1,8 @@
+{
+    "framerate": 8,
+    "images": ["/base/public/test/testContent/assets/assets/public/content/lifttrunk5.png"],
+    "frames": {"regX": 0, "height": 216.3, "count": 7, "regY": 0, "width": 216, "spacing": 5, "margin": 5},
+    "animations": {
+        "lift": [0, 6, "lift",0.3]
+    }
+}

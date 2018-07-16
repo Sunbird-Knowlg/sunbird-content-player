@@ -817,8 +817,8 @@ module.exports = function(grunt) {
     grunt.registerTask('build-jsdoc', ['jsdoc', 'compress:main']);
 
     grunt.registerTask('test-setup', ['new-buildPreview', 'copy:testinit', 'clean']);
-    grunt.registerTask('player-test', ['karma:app']);
-    grunt.registerTask('renderer-test', ['karma:renderer']);
+    grunt.registerTask('player-test', ['build-preview', 'karma:app']);
+    grunt.registerTask('renderer-test', ['build-preview', 'karma:renderer']);
     grunt.registerTask('build-telemetry-lib', ['concat:telemetryLib', "uglify:telemetrymin", "uglify:authtokengenerator", "uglify:htmlinterfacemin"]);
     grunt.registerTask('renderer-telemetryV3', ['karma:telemetryV3']);
     grunt.registerTask('telemetry-lib-test', ['karma:telemetryFunV3']);
