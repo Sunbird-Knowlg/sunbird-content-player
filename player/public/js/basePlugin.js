@@ -826,3 +826,5 @@ var Plugin = Class.extend({
     },
 
 });
+
+window.Plugin = Plugin;

@@ -3,3 +3,4 @@ var HTMLPlugin = Plugin.extend({
 	_isContainer: false,
     _render: true
 });
+

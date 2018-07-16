@@ -1,53 +1,51 @@
 @font-face {
     font-family: 'NotoSansDevanagari';
-    src: url('fonts/NotoSansDevanagari-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansDevanagari-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansTelugu';
-    src: url('fonts/NotoSansTelugu-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansTelugu-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansKannada';
-    src: url('fonts/NotoSansKannada-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansKannada-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansOriya';
-    src: url('fonts/NotoSansOriya-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansOriya-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansGujarati';
-    src: url('fonts/NotoSansGujarati-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansGujarati-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansBengali';
-    src: url('fonts/NotoSansBengali-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansBengali-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansMalayalam';
-    src: url('fonts/NotoSansMalayalam-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansMalayalam-Regular.woff') format('woff')
 }
-
 
 @font-face {
     font-family: 'NotoNastaliqUrdu';
-    src: url('fonts/NotoNastaliqUrdu-Regular.ttf') format('truetype')
+    src: url('fonts/NotoNastaliqUrdu-Regular.woff') format('woff')
 }
 
 @font-face {
     font-family: 'NotoSansGurmukhi';
-    src: url('fonts/NotoSansGurmukhi-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansGurmukhi-Regular.woff') format('woff')
 }
-
 
 @font-face {
     font-family: 'NotoSansTamil';
-    src: url('fonts/NotoSansTamil-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSansTamil-Regular.woff') format('woff')
 }
 
 @font-face {
@@ -57,33 +55,33 @@
 
 @font-face {
     font-family: 'NotoSans';
-    src: url('fonts/NotoSans-Regular.ttf') format('truetype')
+    src: url('fonts/NotoSans-Regular.woff') format('woff')
 }
 
 @font-face {
     /* reference: http://www.latofonts.com/lato-free-fonts/ */
     font-family: 'lato-black';
-    src: url('fonts/lato/Lato-Black.ttf') format('opentype')
+    src: url('fonts/lato/Lato-Black.woff') format('woff')
 }
 
 @font-face {
     font-family: 'lato-bold';
-    src: url('fonts/Lato/Lato-Bold.ttf') format('opentype')
+    src: url('fonts/lato/Lato-Bold.woff') format('woff')
 }
 
 @font-face {
     font-family: 'lato-light';
-    src: url('fonts/lato/Lato-Light.ttf') format('opentype')
+    src: url('fonts/lato/Lato-Light.woff') format('woff')
 }
 
 @font-face {
     font-family: 'lato-medium';
-    src: url('fonts/lato/Lato-Medium.ttf') format('opentype')
+    src: url('fonts/lato/Lato-Medium.woff') format('woff')
 }
 
 @font-face {
     font-family: 'lato-regular';
-    src: url('fonts/lato/Lato-Regular.ttf') format('opentype')
+    src: url('fonts/lato/Lato-Regular.woff') format('woff')
 }
 
 .splashText {
@@ -512,8 +510,6 @@ body {
 }
 
 
-
-
 /* For .assess-popup height:65% is important to make it align vertically and horizontally with the screen */
 
 .assess-popup {
@@ -568,15 +564,15 @@ body {
 }
 
 .popup-full-body {
-     position: absolute;
-     top: 0;
-     bottom: 0;
-     left: 0;
-     right: 0;
-     margin: auto;
-     width: 60vw;
-     height: 70vh;
- }
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 60vw;
+    height: 70vh;
+}
 
 .popup-close {
     position: inherit;
@@ -1165,7 +1161,7 @@ body {
 }
 
 .gc-ep-credits>input[type=button] {
-    background-image: url(../../assets/icons/btn_credits.png);
+    background-image: url(../assets/icons/btn_credits.png);
     background-repeat: no-repeat;
     padding: 2% 19%;
     border: none;
@@ -1341,8 +1337,6 @@ body {
 .gc-ep-credit {
     margin-right: 10px;
 }
-
-
 
 
 /*Loader css*/
@@ -1579,8 +1573,6 @@ body {
 }
 
 
-
-
 /* User Switcher Modal css starts */
 
 
@@ -1611,8 +1603,6 @@ body {
 }
 
 
-
-
 /* Modal Content */
 
 #userSwitchingModal .modal-content {
@@ -1636,8 +1626,6 @@ body {
     padding-top: 7px;
     text-transform: uppercase;
 }
-
-
 
 
 /* The Close Button */
@@ -1779,8 +1767,6 @@ body {
 }
 
 
-
-
 /* User Switcher Modal endes*/
 
 
@@ -1827,8 +1813,6 @@ body {
 }
 
 
-
-
 /*Ionic is overwriting css for ul & ol css bullets and numbers*/
 
 
@@ -1852,21 +1836,24 @@ body {
 }
 
 .richText em {
-  font-style: italic !important;
+    font-style: italic !important;
 }
 
 .richText strong {
-  font-weight: bold !important;
+    font-weight: bold !important;
 }
 
 .richText s {
-  text-decoration: line-through !important;
+    text-decoration: line-through !important;
 }
 
+
 /*For richtext WYSIWYG preview*/
+
 .richText * {
     line-height: 1.3 !important;
 }
+
 
 /* new popup style */
 
@@ -2094,8 +2081,6 @@ body {
 .center {
     margin: 0 auto;
 }
-
-
 
 
 /* new popup style */
