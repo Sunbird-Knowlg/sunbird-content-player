@@ -15,11 +15,11 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.getTotalScore = function(id) {
-        var totalScore = 0, totalQuestions = 0;
-        var telEvents = org.ekstep.service.content.getAssessmentScore();
+        var totalScore = 0, totalQuestions = 0, status = 'Yes';
+        var telEvents = org.ekstep.service.content.getTelemetryAssessEvents();
         if (telEvents) {
             _.forEach(telEvents, function(value) {
-                if(value.edata.pass == 'Yes') {
+                if(value.edata.pass === status) {
                     totalScore = totalScore + value.edata.score;
                     totalQuestions++;
                 } else {

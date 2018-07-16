@@ -241,10 +241,10 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
             });
         });
     },
-    cacheAssessEvent: function(event) {
-        this.assessEvents[event.edata.item.id] = event;
+    cacheAssessEvent: function(qid, event) {
+        this.assessEvents[qid] = event;
     },
-    getAssessmentScore: function(uid) {
+    getTelemetryAssessEvents: function() {
         return this.assessEvents;
     },
     clearCacheAssessEvent: function() {

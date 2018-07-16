@@ -161,7 +161,7 @@ function startTelemetry(id, ver, cb) {
     correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData, otherData).then(function(response) {
         TelemetryService.eventDispatcher = EkstepRendererAPI.dispatchEvent;
-        telemetryEventListener();
+        getTelemetryAssessEventsListener();
         if (!_.isUndefined(TelemetryService.instance)) {
             var tsObj = _.clone(TelemetryService);
             tsObj._start = JSON.stringify(tsObj.instance._start);
@@ -177,14 +177,14 @@ function startTelemetry(id, ver, cb) {
     });
 }
 
-function telemetryEventListener() {
+function getTelemetryAssessEventsListener() {
     /* Here Listen Telemetry event and 
        Get all ASSESS data and set it to cacheAssessEvent method.
     */ 
     EkstepRendererAPI.addEventListener('telemetryEvent',function(event) {
         event = JSON.parse(event.target);
         if(event.eid == 'ASSESS') {
-            org.ekstep.service.content.cacheAssessEvent(event);
+            org.ekstep.service.content.cacheAssessEvent(event.edata.item.id, event);
         }
     });
 
@@ -364,5 +364,6 @@ function mergeJSON(a, b) {
  window.exitApp = exitApp;
  window.imageExists = imageExists;
  window.getCurrentStageId = getCurrentStageId;
+ window.getTelemetryAssessEventsListener = getTelemetryAssessEventsListener;
   
 
