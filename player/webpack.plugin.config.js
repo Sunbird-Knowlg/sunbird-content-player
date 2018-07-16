@@ -11,7 +11,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const PLUGINS_BASE_PATH = './public/coreplugins/'; // Plugins base path
 const PACKAGE_FILE_NAME = 'coreplugins.js'; // Packaged all plugins file name
-const OUTPUT_PATH = 'public/'; // Package file path.
+const OUTPUT_PATH = 'public/js'; // Package file path.
 const DIST_OUTPUT_FILE_PATH = '/renderer/plugin.dist.js'; // dist file path which is created in each plugins folder
 const CONFIG = {
     drop_console: process.env.drop_console || false,

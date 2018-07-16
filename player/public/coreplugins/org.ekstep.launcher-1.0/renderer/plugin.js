@@ -16,13 +16,11 @@ Plugin.extend({
             org.ekstep.service.controller.loadNgModules(this.templatePath, this.controllerPath);
         },
         start: function(evt, content) {
-            console.log("Launher start")
             var globalConfig = EkstepRendererAPI.getGlobalConfig();
             var instance = this;
             var contentTypePlugin = _.find(globalConfig.contentLaunchers, function(eachConfig) {
                 if (_.contains(eachConfig.mimeType, content.mimeType)) return eachConfig;
             });
-            if (!contentTypePlugin) return;
             // Checking if mimetype launcher is already loaded or not
             var pluginInstance = EkstepRendererAPI.getPluginObjs(contentTypePlugin.id);
             if (pluginInstance) {
