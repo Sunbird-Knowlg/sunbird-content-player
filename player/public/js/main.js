@@ -177,13 +177,15 @@ function startTelemetry(id, ver, cb) {
     });
 }
 
+//This method is used to Get TelemetryAssessEventsListener
 function getTelemetryAssessEventsListener() {
     /* Here Listen Telemetry event and 
        Get all ASSESS data and set it to cacheAssessEvent method.
     */ 
+    const ASSESS = 'ASSESS';
     EkstepRendererAPI.addEventListener('telemetryEvent',function(event) {
         event = JSON.parse(event.target);
-        if(event.eid == 'ASSESS') {
+        if(event.eid == ASSESS) {
             org.ekstep.service.content.cacheAssessEvent(event.edata.item.id, event);
         }
     });
