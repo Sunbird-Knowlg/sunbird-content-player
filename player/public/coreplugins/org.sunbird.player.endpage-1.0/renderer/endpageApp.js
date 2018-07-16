@@ -16,16 +16,17 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
 
     $scope.getTotalScore = function(id) {
         var totalScore = 0, totalQuestions = 0;
-        var eventData = org.ekstep.service.content.getAssessmentScore();
-        if (eventData) {
-            _.forEach(eventData, function(value, key) {
+        var telEvents = org.ekstep.service.content.getAssessmentScore();
+        if (telEvents) {
+            _.forEach(telEvents, function(value) {
                 if(value.edata.pass == 'Yes') {
                     totalScore = totalScore + value.edata.score;
+                    totalQuestions++;
                 } else {
                     totalScore = totalScore + 0;
+                    totalQuestions++;
                 }
             });
-            totalQuestions =  Object.keys(eventData).length;
             $scope.score = (totalScore + "/" + totalQuestions);
         } else {
             $scope.score = undefined;

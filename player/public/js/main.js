@@ -189,7 +189,7 @@ function startTelemetry(id, ver, cb) {
 
 function telemetryEventListener() {
     /* Here Listen Telemetry event and 
-       Get all OE_ASSESS data and set it to setAssesment method.
+       Get all ASSESS data and set it to cacheAssessEvent method.
     */ 
     EkstepRendererAPI.addEventListener('telemetryEvent',function(event) {
         event = JSON.parse(event.target);
@@ -200,7 +200,7 @@ function telemetryEventListener() {
 
     //When call replay button then make result object empty.
     EkstepRendererAPI.addEventListener('renderer:content:replay',function() {
-        org.ekstep.service.content.clearCacheAssessEvent(event);
+        org.ekstep.service.content.clearCacheAssessEvent();
     });
 }
 

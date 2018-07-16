@@ -1,5 +1,5 @@
 org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
-    eventData: {},
+    assessEvents: {},
     init: function() {
     },
     getContentList: function(filter, childrenIds) {
@@ -242,13 +242,13 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
         });
     },
     cacheAssessEvent: function(event) {
-        this.eventData[event.edata.item.id] = event;
+        this.assessEvents[event.edata.item.id] = event;
     },
     getAssessmentScore: function(uid) {
-        return this.eventData;
+        return this.assessEvents;
     },
     clearCacheAssessEvent: function() {
-        this.eventData = {};
+        this.assessEvents = {};
     }
 
 }));
