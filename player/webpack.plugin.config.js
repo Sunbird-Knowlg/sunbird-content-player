@@ -8,6 +8,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const fs = require('fs');
 const entryPlus = require('webpack-entry-plus');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const WebpackOnBuildPlugin = require('on-build-webpack');
 
 const PLUGINS_BASE_PATH = './public/coreplugins/'; // Plugins base path
 const PACKAGE_FILE_NAME = 'coreplugins.js'; // Packaged all plugins file name
@@ -17,6 +18,7 @@ const CONFIG = {
     drop_console: process.env.drop_console || false,
     mangle: process.env.mangle || false,
 }
+
 const PLUGINS = process.env.plugins || [
     "org.ekstep.launcher-1.0",
     "org.ekstep.repo-1.0",
@@ -33,13 +35,20 @@ let entryFiles = []
 
 function getEntryFiles() {
     entryFiles = [{
-        entryFiles: packagePlugins(PLUGINS),
+        entryFiles: packagePlugins(),
         outputName: PACKAGE_FILE_NAME,
-    }];
+    }]
     return entryPlus(entryFiles);
 }
+cleanDistFiles = function() {
+    PLUGINS.forEach(function(plugin) {
+        if (fs.existsSync(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`)) {
+            fs.unlinkSync(`${PLUGINS_BASE_PATH}${plugin}${DIST_OUTPUT_FILE_PATH}`);
+        }
+    })
+}
 
-function packagePlugins(PLUGINS) {
+function packagePlugins() {
     var pluginPackageArr = [];
     PLUGINS.forEach(function(plugin) {
         var dependenciesArr = [];
@@ -201,6 +210,11 @@ module.exports = {
                 mangle: CONFIG.mangle
             },
             sourceMap: true
+        }),
+        new WebpackOnBuildPlugin(function(stats) {
+            cleanDistFiles();
+            console.log("I am success");
+            // Remove the plugin.dist files from all plugins folder once build is done.
         }),
 
     ],
