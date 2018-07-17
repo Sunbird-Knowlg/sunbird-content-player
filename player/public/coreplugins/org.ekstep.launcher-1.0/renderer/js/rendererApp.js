@@ -48,25 +48,6 @@ app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state'
     $scope.reloadStage = function() {
         reloadStage();
     };
-    // $scope.$on('$destroy', function() {})
-    // $rootScope.showMessage = false;
-    // $rootScope.$on('show-message', function(event, data) {
-    //     console.log("show-message")
-    //     if (data.message && data.message != '') {
-    //         $rootScope.$apply(function() {
-    //             $rootScope.showMessage = true;
-    //             $rootScope.message = data.message;
-    //         });
-    //     }
-    //     if (data) {
-    //         setTimeout(function() {
-    //             $rootScope.$apply(function() {
-    //                 $rootScope.showMessage = false;
-    //             });
-    //         }, 5000);
-    //     }
-    // });
-
     $scope.initializePlayer = function() {
         $scope.isInitialized = true;
         /**
