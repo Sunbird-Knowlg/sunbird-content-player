@@ -64,3 +64,9 @@ function getTime(ms) {
 function getCurrentTime() {
     return new Date().getTime();
 }
+
+// Exposing to window object
+
+
+window.getCurrentTime = getCurrentTime;
+window.getTime = getTime;

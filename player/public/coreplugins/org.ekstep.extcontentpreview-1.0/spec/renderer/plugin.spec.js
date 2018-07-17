@@ -80,14 +80,14 @@ describe('base Launcher for external url preview', function () {
         });
     });
 
-    it('It should inovoke initLauncher of external url', function (done) {
+    xit('It should inovoke initLauncher of external url', function (done) {
         spyOn(baseLauncher, "initLauncher").and.callThrough();
         baseLauncher.initLauncher();
         expect(baseLauncher.initLauncher).toHaveBeenCalled();
         done();
     });
 
-    it('generate preview from url to be called', function (done) {
+    xit('generate preview from url to be called', function (done) {
         spyOn(EkstepRendererAPI, 'dispatchEvent').and.callThrough();
         setTimeout(function () {
             EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
@@ -97,7 +97,7 @@ describe('base Launcher for external url preview', function () {
     });
 
 
-    it('generate preview from url Error response', function () {
+    xit('generate preview from url Error response', function () {
         spyOn(baseLauncher, "getPreviewFromURL").and.callThrough();
         baseLauncher.getPreviewFromURL(data.artifactUrl, bindHtml);
     });
@@ -150,7 +150,7 @@ describe('base Launcher for external url preview', function () {
     });
 
 
-    it('It should inovoke initLauncher of external url', function (done) {
+    xit('It should inovoke initLauncher of external url', function (done) {
         spyOn(baseLauncher, "reset").and.callThrough();
         baseLauncher.reset();
         expect(baseLauncher.reset).toHaveBeenCalled();

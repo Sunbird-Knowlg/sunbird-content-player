@@ -601,7 +601,7 @@ var Plugin = Class.extend({
                 value = eval(expr);
             }
         } catch (err) {
-            console.warn('expr: ' + expr + ' evaluation faild:', err.message);
+            console.warn('expr: ' + expr + ' evaluation failed:', err.message);
         }
         return value;
     },
@@ -826,3 +826,5 @@ var Plugin = Class.extend({
     },
 
 });
+
+window.Plugin = Plugin;

@@ -11,7 +11,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     heartBeatData:{},
     enableHeartBeatEvent:false,
     initLauncher: function(manifestData) {
-
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
         this.start();
@@ -30,20 +29,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.createVideo(path, data);
         this.configOverlay();
     },
-    resetDomElement: function() {
-        if (document.getElementById(this.manifest.id)) {
-            videojs(this.manifest.id).dispose();
-            jQuery('#' + this.manifest.id).remove();
-        }
-        this.progressTimer(false);
-        this.currentTime = 0;
-    },
     createVideo: function(path, data) {
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         video = document.createElement('video');
         video.style.width = '100%';
         video.style.height = '100%';
         video.controls = true;
+        video.controlsList = 'nodownload';
         video.autoplay = true;
         video.preload = "auto";
         video.className = 'video-js vjs-default-skin';
@@ -53,6 +45,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         video.onvolumechange = function() {
             (video.muted) ? EkstepRendererAPI.dispatchEvent('renderer:overlay:mute') : EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
         };
+        $("video").bind("contextmenu",function() {
+            return false;
+        });
     },
     _loadVideo: function(path) {
         var source = document.createElement("source");
@@ -236,6 +231,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         } else {
             this.videoPlayer.muted = false;
         }
+    },
+    cleanUp: function() {
+        if (document.getElementById(this.manifest.id)) {
+            videojs(this.manifest.id).dispose();
+        }
+        this.progressTimer(false);
+        this.currentTime = 0;
+        EkstepRendererAPI.dispatchEvent("renderer:next:show");
+        EkstepRendererAPI.dispatchEvent('renderer:stagereload:show');
+        EkstepRendererAPI.dispatchEvent("renderer:previous:show");
     }
 });
 
