@@ -16,7 +16,6 @@
          EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
          EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
          this.start();
-
      },
      enableOverly: function() {
          EkstepRendererAPI.dispatchEvent("renderer:overlay:show");
@@ -201,6 +200,9 @@
      },
 
      nextNavigation: function() {
+        $("#pdf-meta").addClass('higheropacity');
+        $("#page-count-container").addClass('higheropacity');
+        $("#pdf-search-container").addClass('loweropacity');
         EkstepRendererAPI.getTelemetryService().interact("TOUCH", "next", null, {
             stageId: context.CURRENT_PAGE.toString()
         });
@@ -212,6 +214,9 @@
          }
      },
      previousNavigation: function() {
+        $("#pdf-meta").addClass('higheropacity');
+        $("#page-count-container").addClass('higheropacity');
+        $("#pdf-search-container").addClass('loweropacity');
          EkstepRendererAPI.getTelemetryService().interact("TOUCH", "previous", null, {
             stageId: context.CURRENT_PAGE.toString()
          });
@@ -293,7 +298,45 @@
                      // Show the canvas and hide the page loader
                      $("#pdf-canvas").show();
                      $("#page-loader").hide();
-                 });
+                    
+                    setTimeout(function(){
+                        $("#pdf-meta").removeClass('higheropacity');
+                        $("#pdf-meta").addClass('loweropacity');
+                        $("#page-count-container").removeClass('higheropacity');
+                        $("#page-count-container").addClass('loweropacity');
+                        $("#pdf-search-container").removeClass('higheropacity');
+                        $("#pdf-search-container").addClass('loweropacity');
+                    }, 2000);
+
+                    $("#pdf-meta").mouseenter(function() {
+                        $("#pdf-meta").removeClass('loweropacity');
+                        $("#pdf-meta").addClass('higheropacity');
+                        $("#page-count-container").removeClass('loweropacity');
+                        $("#page-count-container").addClass('higheropacity');
+                        $("#pdf-search-container").removeClass('loweropacity');
+                        $("#pdf-search-container").addClass('higheropacity');
+                    });
+
+                    $("#pdf-meta").mouseleave(function() {
+                        $("#pdf-meta").removeClass('higheropacity');
+                        $("#pdf-meta").addClass('loweropacity');
+                        $("#page-count-container").removeClass('higheropacity');
+                        $("#page-count-container").addClass('loweropacity');
+                        $("#pdf-search-container").removeClass('higheropacity');
+                        $("#pdf-search-container").addClass('loweropacity');
+                    });
+
+                    $("#pdf-meta").click(function() {
+                        $("#pdf-meta").removeClass('loweropacity');
+                        $("#pdf-meta").addClass('higheropacity');
+                        $("#page-count-container").removeClass('loweropacity');
+                        $("#page-count-container").addClass('higheropacity');
+                        $("#pdf-search-container").removeClass('loweropacity');
+                        $("#pdf-search-container").addClass('higheropacity');
+                    });
+
+                });
+
              });
          } else {
             showToaster('error', "Page not found");
@@ -313,6 +356,10 @@
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
         return this.progres(currentStageIndex, totalStages);
     },
+    cleanUp: function() {
+        EkstepRendererAPI.removeEventListener('actionNavigateNext');
+        EkstepRendererAPI.removeEventListener('actionNavigatePrevious');
+    }
  });
 
  //# sourceURL=PDFRenderer.js
