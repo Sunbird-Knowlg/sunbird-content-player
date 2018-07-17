@@ -77,8 +77,8 @@
         "webpack-cli": "^2.1.4"
     },
     "scripts": {
-        "build-sunbird": "webpack --env.platform=sunbird",
-        "build-ekstep": "webpack --env.platform=ekstep"
+        "build-sunbird": "webpack --env.channel=sunbird",
+        "build-ekstep": "webpack --env.channel=ekstep"
     },
     "cordovaPlugins": [
         "cordova-plugin-device",
