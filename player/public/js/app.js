@@ -132,7 +132,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         function injectTemplates(templatePath, scopeVariable, toElement) {
             if (!templatePath) { return }
             $scope.templates.push({
-                tmeplateUrl: templatePath
+                templateURL: templatePath
             });
             var el = angular.element("content-holder");
             $compile(el.contents())($scope);
