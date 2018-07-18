@@ -188,6 +188,13 @@ module.exports = (env, argv) => {
                         loader: 'expose-loader',
                         options: 'Fingerprint2'
                     }]
+                },
+                {
+                    test: require.resolve('../js-libs/telemetry-lib/md5.js'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'CryptoJS'
+                    }]
                 }
             ]
         },
