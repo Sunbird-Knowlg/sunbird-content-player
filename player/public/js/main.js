@@ -346,5 +346,6 @@ function mergeJSON(a, b) {
  window.exitApp = exitApp;
  window.imageExists = imageExists;
  window.getCurrentStageId = getCurrentStageId;
+ window.contentExitCall = contentExitCall;
   
 
