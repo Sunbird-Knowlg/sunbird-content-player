@@ -263,7 +263,7 @@ app.controllerProvider.register('UserSwitchController', [
                 org.ekstep.service.content.getCurrentUser().then(function(data) {
                     if (_.isEmpty(data.handle)) {
                         data.handle = "Anonymous";
-                        data.profileImage = "assets/icons/avatar_1anonymous.png";
+                        data.profileImage = "assets/icons/avatar_anonymous.png";
                     }
                     /*
                      * Have an empty check for image validation
