@@ -355,10 +355,6 @@
         var totalStages = this.TOTAL_PAGES;
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
         return this.progres(currentStageIndex, totalStages);
-    },
-    cleanUp: function() {
-        EkstepRendererAPI.removeEventListener('actionNavigateNext');
-        EkstepRendererAPI.removeEventListener('actionNavigatePrevious');
     }
  });
 
