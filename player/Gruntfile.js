@@ -813,7 +813,7 @@ module.exports = function(grunt) {
     grunt.registerTask('set-xwalkshared-library', ['copy:customActivity', 'cordovacli:rm_xwalk', 'cordovacli:add_xwalk_shared', 'replace:xwalk_library']);
 
     //Build web prview
-    grunt.registerTask('init', ['copy:main', 'injector:prview'])
+    grunt.registerTask('init', ['uglify:renderermin', 'copy:main', 'injector:prview'])
     grunt.registerTask('build-preview', ['clean', 'mkdir:all', 'build-telemetry-lib', 'init', 'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
 
     //Build AAR
