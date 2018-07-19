@@ -84,6 +84,16 @@
     src: url('fonts/lato/Lato-Regular.woff') format('woff')
 }
 
+@font-face {
+    font-family: 'NotoSans-SemiBold';
+    src: url('fonts/NotoSans-SemiBold.woff') format('woff')
+}
+
+@font-face {
+    font-family: 'NotoSans-Bold';
+    src: url('fonts/NotoSans-Bold.woff') format('woff')
+}
+
 .splashText {
     position: absolute;
     top: 20vh;

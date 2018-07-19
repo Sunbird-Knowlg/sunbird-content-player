@@ -10,7 +10,6 @@
 }
 #sunbirdUserSwitchingModal .modal-content .user-header {
     background-color: #eee;
-    font-size: 2vw;
     padding: 2%;
     height: 15%;
 }
@@ -24,8 +23,9 @@
     float: right;
 }
 #sunbirdUserSwitchingModal .close {
-    height: 4.5vw;
-    width: 4.5vw;
+    height: 5.5vw;
+    width: 5.5vw;
+    margin-top: -6px;
 }
 #sunbirdUserSwitchingModal .close:hover,
 #sunbirdUserSwitchingModal .close:focus {
@@ -41,8 +41,7 @@
     float: right;
     margin: 0.5em 20px 0 0;
     text-transform: uppercase;
-    font-size: 0.9em;
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 /* User Switcher popup*/
 #sunbirdUserSwitchingModal.user-modal {
@@ -58,27 +57,28 @@
     background-color: rgba(0, 0, 0, 0.4);
 }
 #sunbirdUserSwitchingModal .modal-content .userswitcher-card {
-    padding: 12px 8px 0px 10px;
-    height: 32%;
-    width: 50%;
+    padding: 12px 2px 0px 13px;
+    height: 34.5%;
+    width: 49.4%;
 }
 #sunbirdUserSwitchingModal .modal-content .tab button {
     border: none;
     outline: none;
     cursor: pointer;
+    font-family: "NotoSans-SemiBold";
 }
 #sunbirdUserSwitchingModal .modal-content #users {
     height: 70%;
     width: 99%;
     overflow-y: scroll;
-    padding-left: 9px;
+    padding: 4px 0px 11px 9px;
 }
 #sunbirdUserSwitchingModal .modal-content .user-header .tablinks {
-    padding: 7px 16px 0px 16px;
-    font-size: 1.3em;
+    padding: 7px 16px 0px 21px;
     text-transform: uppercase;
     min-height: 100%;
-    font-weight: bold;
+    padding-top: 4px;
+    /*font-weight: bold;*/
 }
 #sunbirdUserSwitchingModal .modal-content .model-butttons {
     display: table;
@@ -105,22 +105,25 @@
 }
 #sunbirdUserSwitchingModal .modal-content .userswitcher-class {
     color: #a0a0a0;
-    margin-top: 6px;
+    margin-top: 7px;
+    font-size: 0.8em;
 }
 #sunbirdUserSwitchingModal .modal-content #users .active .userswitcher-container .userswitcher-name {
     color: #007aff;
 }
 #sunbirdUserSwitchingModal .modal-content #users .active .userswitcher-name{
-    white-space: nowrap; 
+    white-space: nowrap;
     width: 30vw; 
     overflow: hidden;
     text-overflow: ellipsis; 
 }
 #sunbirdUserSwitchingModal .modal-content #users .userswitcher-name{
-    white-space: nowrap; 
+    white-space: nowrap;
+    font-family: "NotoSans-SemiBold"; 
     width: 40vw; 
     overflow: hidden;
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
+    font-size: 14px; 
 }
 #users::-webkit-scrollbar {
     border-radius: 30%;
