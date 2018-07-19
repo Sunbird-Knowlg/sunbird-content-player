@@ -119,7 +119,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                     angular.forEach(angular.element(templatePath), function(node) {
                         console.log("NodeId", node.id)
                         $templateCache.put(node.id, node.innerHTML);
-                        $scope.templates.push({ identifier: node.id });
+                        $scope.templates.push({ id: node.id });
                         var el = angular.element("content-holder");
                         $compile(el.contents())($scope);
                         $scope.safeApply();
@@ -132,7 +132,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         function injectTemplates(templatePath, scopeVariable, toElement) {
             if (!templatePath) { return }
             $scope.templates.push({
-                templateURL: templatePath
+                path: templatePath
             });
             var el = angular.element("content-holder");
             $compile(el.contents())($scope);
