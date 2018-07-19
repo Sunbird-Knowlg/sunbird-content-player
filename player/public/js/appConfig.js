@@ -6,15 +6,16 @@ AppConfig = {
     canvasVersion: "genie-canvas-version",
     recorder: "AUDIO_RECORDER",
     flavor: "DEPLOYMENT",
-    heartBeatTime:180000,
+    heartBeatTime: 180000,
+    isCorePluginsPackaged: true, // Default to TRUE, For local development turn off this flag.
     s3ContentHost: "/assets/public/content/",
     previewPluginspath: "/content-plugins",
     devicePluginspath: "/widgets/content-plugins",
     corePluginspath: 'coreplugins',
     apislug: '/action',
-    telemetryEventsConfigFields: ['env', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner', 'tags', 'rollup', 'mode','enableTelemetryValidation'],
+    telemetryEventsConfigFields: ['env', 'sid', 'uid', 'did', 'channel', 'etags', 'pdata', 'cdata', 'app', 'dims', 'partner', 'tags', 'rollup', 'mode', 'enableTelemetryValidation'],
     mimetypes: [
-        "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/epub", "video/mp4", "application/pdf","video/x-youtube","video/webm"
+        "application/vnd.ekstep.ecml-archive", "application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive", "application/epub", "video/mp4", "application/pdf", "video/x-youtube", "video/webm"
     ],
     defaultMetadata: {
         "identifier": "org.ekstep.item.sample",
@@ -30,8 +31,7 @@ AppConfig = {
         "isAvailable": true,
         "path": ""
     },
-    contentLaunchers: [
-        {
+    contentLaunchers: [{
             mimeType: ['application/vnd.ekstep.html-archive', 'application/vnd.ekstep.h5p-archive'],
             id: 'org.ekstep.htmlrenderer',
             ver: 1.0,
@@ -69,29 +69,27 @@ AppConfig = {
 
     ],
     assetbase: 'assets/icons/',
-    defaultPlugins: [
-        {
-            id: 'org.ekstep.launcher',
-            ver: 1.0,
-            type: 'plugin'
-        }, {
-            id: 'org.ekstep.repo',
-            ver: 1.0,
-            type: 'plugin'
-        },{
-            id:"org.ekstep.telemetrysync",
-            ver:1.0,
-            type:'plugin'
-        },{
-            id:"org.ekstep.toaster",
-            ver:1.0,
-            type:'plugin'
-        },{
-            id:"org.ekstep.alert",
-            ver:1.0,
-            type:'plugin'
-        }
-    ],
+    defaultPlugins: [{
+        id: 'org.ekstep.launcher',
+        ver: 1.0,
+        type: 'plugin'
+    }, {
+        id: 'org.ekstep.repo',
+        ver: 1.0,
+        type: 'plugin'
+    }, {
+        id: "org.ekstep.telemetrysync",
+        ver: 1.0,
+        type: 'plugin'
+    }, {
+        id: "org.ekstep.toaster",
+        ver: 1.0,
+        type: 'plugin'
+    }, {
+        id: "org.ekstep.alert",
+        ver: 1.0,
+        type: 'plugin'
+    }],
     overlay: {
         enableUserSwitcher: true,
         showUser: true,
@@ -113,7 +111,7 @@ AppConfig = {
     },
     showEndPage: true,
     env: 'contentplayer',
-    pdata: { 'id': 'in.ekstep', 'ver': '1.0', 'pid': 'contentplayer'},
+    pdata: { 'id': 'in.ekstep', 'ver': '1.0', 'pid': 'contentplayer' },
     channel: "in.ekstep",
     etags: {
         app: [],

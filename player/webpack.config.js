@@ -25,6 +25,11 @@ const APP_CONFIG = {
     sunbird: './public/js/appConfig-Sunbird.js'
 }
 
+const FOLDER_PATHS = {
+    basePath: './',
+    jsLibs: "../js-libs/",
+
+};
 const APP_STYLE = [
     './public/styles/ionic.css',
     './public/styles/bookshelf_slider.css',
@@ -97,8 +102,7 @@ if (!BUILD_NUMBER && !PLAYER_VER) {
 const VERSION = PLAYER_VER + '.' + BUILD_NUMBER;
 
 module.exports = (env, argv) => {
-    (env.platform === 'sunbird') ? SCRIPTS.unshift(APP_CONFIG.sunbird): SCRIPTS.unshift(APP_CONFIG.ekstep);
-    console.log("Scripts", SCRIPTS)
+    (env.channel === 'sunbird') ? SCRIPTS.unshift(APP_CONFIG.sunbird): SCRIPTS.unshift(APP_CONFIG.ekstep);
     return {
         entry: {
             'script': SCRIPTS,
@@ -110,11 +114,11 @@ module.exports = (env, argv) => {
         },
         resolve: {
             alias: {
-                'jquery': path.resolve("./public/libs/jquery.min.js"),
-                'underscore': path.resolve("./public/libs/underscore.js"),
-                'jquery-mousewheel': path.resolve('./node_modules/jquery-mousewheel/jquery.mousewheel.js'),
-                'Fingerprint2': path.resolve('../js-libs/telemetry-lib/fingerprint2.min.js'),
-                'ajv': require.resolve('./node_modules/ajv/dist/ajv.min.js')
+                'jquery': path.resolve(`${FOLDER_PATHS.basePath}public/libs/jquery.min.js`),
+                'underscore': path.resolve(`${FOLDER_PATHS.basePath}public/libs/underscore.js`),
+                'jquery-mousewheel': path.resolve(`${FOLDER_PATHS.basePath}node_modules/jquery-mousewheel/jquery.mousewheel.js`),
+                'Fingerprint2': path.resolve(`${FOLDER_PATHS.jsLibs}telemetry-lib/fingerprint2.min.js`),
+                'ajv': require.resolve(`${FOLDER_PATHS.basePath}node_modules/ajv/dist/ajv.min.js`)
             }
         },
         module: {
@@ -148,45 +152,52 @@ module.exports = (env, argv) => {
                         }
                     }]
                 }, {
-                    test: require.resolve('./public/libs/eventbus.min.js'),
+                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/eventbus.min.js`),
                     use: [{
                         loader: 'expose-loader',
                         options: 'EventBus'
                     }]
                 },
                 {
-                    test: require.resolve('./public/libs/jquery.min.js'),
+                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/jquery.min.js`),
                     use: [{
                         loader: 'expose-loader',
                         options: 'jQuery'
                     }]
                 },
                 {
-                    test: require.resolve('./public/libs/jquery.min.js'),
+                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/jquery.min.js`),
                     use: [{
                         loader: 'expose-loader',
                         options: '$'
                     }]
                 },
                 {
-                    test: require.resolve('./public/libs/underscore.js'),
+                    test: require.resolve(`${FOLDER_PATHS.basePath}public/libs/underscore.js`),
                     use: [{
                         loader: 'expose-loader',
                         options: '_'
                     }]
                 },
                 {
-                    test: require.resolve('../js-libs/build/telemetry.min.js'),
+                    test: require.resolve(`${FOLDER_PATHS.jsLibs}build/telemetry.min.js`),
                     use: [{
                         loader: 'expose-loader',
                         options: 'EkTelemetry'
                     }]
                 },
                 {
-                    test: require.resolve('../js-libs/telemetry-lib/fingerprint2.min.js'),
+                    test: require.resolve(`${FOLDER_PATHS.jsLibs}telemetry-lib/fingerprint2.min.js`),
                     use: [{
                         loader: 'expose-loader',
                         options: 'Fingerprint2'
+                    }]
+                },
+                {
+                    test: require.resolve('../js-libs/telemetry-lib/md5.js'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'CryptoJS'
                     }]
                 }
             ]

@@ -24,10 +24,12 @@
             left: 50%;
             top: 50%;
         }
+        
         #gameCanvas {
             width: 100%;
             height: 100%;
         }
+        
         .inputText {
             -moz-border-radius: 15px;
             border-radius: 15px;
@@ -45,8 +47,8 @@
 <body ng-controller="BaseCtrl">
     <div id="loading" class="gc-loader-area"></div>
 
-    <div class="content-holder" ng-repeat="templatePath in templates">
-        <div ng-include="templatePath"></div>
+    <div class="content-holder" ng-repeat="template in templates">
+        <div ng-include="template.path || template.id"></div>
     </div>
 
     <!-- injector:js -->
