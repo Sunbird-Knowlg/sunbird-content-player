@@ -25,12 +25,12 @@
             left: 50%;
             top: 50%;
         }
-
+        
         #gameCanvas {
             width: 100%;
             height: 100%;
         }
-
+        
         .inputText {
             -moz-border-radius: 15px;
             border-radius: 15px;
@@ -49,8 +49,10 @@
     <ion-nav-view></ion-nav-view>
     <div id="loading" class="gc-loader-area"></div>
 
-     <div class="content-holder" ng-repeat="templatePath in templates">
-        <div ng-include="templatePath"></div>
+    <div class="content-holder" ng-repeat="template in templates">
+        <!-- <div ng-include="templatePath"></div> -->
+        <div ng-include="template.templateURL || template.identifier"></div>
+
     </div>
 
     <!-- cordova script (this will be a 404 during development) -->

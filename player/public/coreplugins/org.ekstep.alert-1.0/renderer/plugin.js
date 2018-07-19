@@ -11,7 +11,7 @@ Plugin.extend({
         var instance = this;
         this._templatePath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/alert-popup.html");
         this.controllerPath = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/controller/alert.js");
-        org.ekstep.service.controller.loadNgModules('', this.controllerPath);
+        org.ekstep.service.controller.loadNgModules(this._templatePath, this.controllerPath);
     }
 });
 

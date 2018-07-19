@@ -15,7 +15,8 @@
         "xml2json": "*"
     },
     "devDependencies": {
-        "ajv": "^6.5.2",
+        "on-build-webpack": "^0.1.0",
+        "webpack-entry-plus": "~1.0.12",
         "bower": "^1.3.3",
         "cca": "^0.7.4",
         "clean-webpack-plugin": "^0.1.19",
@@ -74,11 +75,15 @@
         "file-loader": "^1.1.11",
         "webfontloader": "1.6",
         "webpack": "~4.14.0",
-        "webpack-cli": "^2.1.4"
+        "webpack-cli": "^2.1.4",
+        "uglify-js": "^3.4.4",
+        "fs": "^0.0.1-security"
     },
     "scripts": {
         "build-sunbird": "webpack --env.platform=sunbird",
-        "build-ekstep": "webpack --env.platform=ekstep"
+        "build-ekstep": "webpack --env.platform=ekstep",
+        "package-coreplugins": "webpack --config webpack.plugin.config.js"
+
     },
     "cordovaPlugins": [
         "cordova-plugin-device",

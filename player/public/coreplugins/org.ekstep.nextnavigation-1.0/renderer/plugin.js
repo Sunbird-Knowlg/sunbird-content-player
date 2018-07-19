@@ -7,7 +7,7 @@ Plugin.extend({
     _type: "nextNavigation",
     initialize: function() {
         var nextIcon = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/assets/next.png");
-        app.compileProvider.directive('nextNavigation', function($rootScope) {
+        app.compileProvider.directive('nextNavigation', ['$rootScope', function($rootScope) {
             return {
                 restrict: 'E',
                 template: '<div><a class="nav-icon nav-next" ng-show="showOverlayNext !== state_off" href="javascript:void(0);"><img ng-src="{{nextIcon}}" ng-click="navigate(\'next\')"></a></div>',
@@ -28,12 +28,12 @@ Plugin.extend({
                             case "renderer:next:show":
                                 val = "on";
                                 break;
-                            /**
-                             * renderer:next:hide Event to hide next navigation icon.
-                             * @event renderer:next:hide
-                             * @listen renderer:next:hide
-                             * @memberOf EkstepRendererEvents
-                             */    
+                                /**
+                                 * renderer:next:hide Event to hide next navigation icon.
+                                 * @event renderer:next:hide
+                                 * @listen renderer:next:hide
+                                 * @memberOf EkstepRendererEvents
+                                 */
                             case "renderer:next:hide":
                                 val = "off";
                                 break;
@@ -48,7 +48,7 @@ Plugin.extend({
                     });
                 }
             }
-        });
+        }]);
     }
 })
 

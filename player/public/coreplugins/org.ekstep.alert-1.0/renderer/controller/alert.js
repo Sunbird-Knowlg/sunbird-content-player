@@ -3,7 +3,7 @@
  * @author Gourav More <gourav_m@tekditechnologies.com>
  */
 
-app.compileProvider.directive('alert', function($rootScope, $compile) {
+app.compileProvider.directive('alert', ['$rootScope', '$compile', function($rootScope, $compile) {
     return {
         restrict: 'E',
         template: "<div ng-include='getAlertPluginTemplate()' ></div>",
@@ -11,7 +11,7 @@ app.compileProvider.directive('alert', function($rootScope, $compile) {
             var upIcon = EkstepRendererAPI.resolvePluginResource("org.ekstep.alert", "1.0", "assets/up.png");
             var downIcon = EkstepRendererAPI.resolvePluginResource("org.ekstep.alert", "1.0", "assets/down.png");
             scope.title = "";
-            scope.text = ""; 
+            scope.text = "";
             scope.type = null;
             scope.showCancelButton = true;
             scope.detailBtnText = "Details";
@@ -44,30 +44,30 @@ app.compileProvider.directive('alert', function($rootScope, $compile) {
                 scope.showPopup = true;
                 scope.safeApply();
             }
-            scope.hidePopup = function(){
-              scope.showPopup = false;
-              if ("undefined" != typeof cordova) exitApp();
-              scope.safeApply();
+            scope.hidePopup = function() {
+                scope.showPopup = false;
+                if ("undefined" != typeof cordova) exitApp();
+                scope.safeApply();
             }
-            scope.showDetails = function(){
-              if(scope.showDetailsPopUp){
-                scope.showDetailsPopUp = false;
-                scope.copyAnswer = "Copy";
-                scope.detailsIcon = downIcon;
-              }else{
-                scope.showDetailsPopUp = true;
-                scope.detailsIcon = upIcon;
-              }
-              scope.safeApply();
+            scope.showDetails = function() {
+                if (scope.showDetailsPopUp) {
+                    scope.showDetailsPopUp = false;
+                    scope.copyAnswer = "Copy";
+                    scope.detailsIcon = downIcon;
+                } else {
+                    scope.showDetailsPopUp = true;
+                    scope.detailsIcon = upIcon;
+                }
+                scope.safeApply();
             }
-            scope.hideDetails = function(){
-              scope.showDetailsPopUp = false;
-              scope.safeApply();
-            }
-            /**
-             *   function to copy content preview link
-             *   @memberof collaborator
-             */
+            scope.hideDetails = function() {
+                    scope.showDetailsPopUp = false;
+                    scope.safeApply();
+                }
+                /**
+                 *   function to copy content preview link
+                 *   @memberof collaborator
+                 */
             scope.getUrlLink = function() {
                 $("#copyTarget").select();
 
@@ -80,10 +80,15 @@ app.compileProvider.directive('alert', function($rootScope, $compile) {
             }
             scope.getAlertPluginTemplate = function() {
                 var alertPluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.alert");
-                return alertPluginInstance._templatePath;
+                var config = EkstepRendererAPI.getGlobalConfig();
+                if (!config.isCorePluginsPackaged) {
+                    return alertPluginInstance._templatePath;
+                } else {
+                    return "org.ekstep.alert" // Template Identifier
+                }
             }
         }
     }
-});
+}]);
 
 //# sourceMappingURL=alert.js.ctrl
