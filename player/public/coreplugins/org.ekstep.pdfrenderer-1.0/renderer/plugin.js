@@ -254,6 +254,7 @@
          });
      },
      showPage: function(page_no) {
+        var instance = this;
         EkstepRendererAPI.dispatchEvent("sceneEnter", context);
          if (page_no <= context.TOTAL_PAGES && page_no > 0) {
 
@@ -300,39 +301,19 @@
                      $("#page-loader").hide();
                     
                     setTimeout(function(){
-                        $("#pdf-meta").removeClass('higheropacity');
-                        $("#pdf-meta").addClass('loweropacity');
-                        $("#page-count-container").removeClass('higheropacity');
-                        $("#page-count-container").addClass('loweropacity');
-                        $("#pdf-search-container").removeClass('higheropacity');
-                        $("#pdf-search-container").addClass('loweropacity');
+                        instance.applyOpacityToNavbar('low');
                     }, 2000);
 
                     $("#pdf-meta").mouseenter(function() {
-                        $("#pdf-meta").removeClass('loweropacity');
-                        $("#pdf-meta").addClass('higheropacity');
-                        $("#page-count-container").removeClass('loweropacity');
-                        $("#page-count-container").addClass('higheropacity');
-                        $("#pdf-search-container").removeClass('loweropacity');
-                        $("#pdf-search-container").addClass('higheropacity');
+                        instance.applyOpacityToNavbar('heigh');
                     });
 
-                    $("#pdf-meta").mouseleave(function() {
-                        $("#pdf-meta").removeClass('higheropacity');
-                        $("#pdf-meta").addClass('loweropacity');
-                        $("#page-count-container").removeClass('higheropacity');
-                        $("#page-count-container").addClass('loweropacity');
-                        $("#pdf-search-container").removeClass('higheropacity');
-                        $("#pdf-search-container").addClass('loweropacity');
+                    $("#pdf-meta").on("mouseleave scroll",function() {
+                        instance.applyOpacityToNavbar('low');
                     });
 
                     $("#pdf-meta").click(function() {
-                        $("#pdf-meta").removeClass('loweropacity');
-                        $("#pdf-meta").addClass('higheropacity');
-                        $("#page-count-container").removeClass('loweropacity');
-                        $("#page-count-container").addClass('higheropacity');
-                        $("#pdf-search-container").removeClass('loweropacity');
-                        $("#pdf-search-container").addClass('higheropacity');
+                        instance.applyOpacityToNavbar('heigh');
                     });
 
                 });
@@ -345,6 +326,23 @@
              //$("#pdf-canvas").hide();
          }
      },
+    applyOpacityToNavbar: function(opacity){
+        if(opacity === 'low'){
+            $("#pdf-meta").addClass('loweropacity');
+            $("#page-count-container").addClass('loweropacity');
+            $("#pdf-search-container").addClass('loweropacity');
+            $("#pdf-meta").removeClass('higheropacity');
+            $("#page-count-container").removeClass('higheropacity');
+            $("#pdf-search-container").removeClass('higheropacity');
+         }else{
+            $("#pdf-meta").addClass('higheropacity');
+            $("#page-count-container").addClass('higheropacity');
+            $("#pdf-search-container").addClass('higheropacity');
+            $("#pdf-meta").removeClass('loweropacity');
+            $("#page-count-container").removeClass('loweropacity');
+            $("#pdf-search-container").removeClass('loweropacity');
+         }
+    },
     initContentProgress: function(){
         var instance = this;
         EkstepRendererAPI.addEventListener("sceneEnter",function(event){
