@@ -347,5 +347,12 @@ function mergeJSON(a, b) {
  window.imageExists = imageExists;
  window.getCurrentStageId = getCurrentStageId;
  window.contentExitCall = contentExitCall;
-  
+ window.telemetryError = telemetryError;
+ window.removeRecordingFiles = removeRecordingFiles;
+ window.createCustomEvent = createCustomEvent;
+ window.getUrlParameter = getUrlParameter;
+ window.startApp = startApp;
+ window.contentNotAvailable = contentNotAvailable;
+ window.checkStage = checkStage;
+ window.objectAssign = objectAssign;
 
