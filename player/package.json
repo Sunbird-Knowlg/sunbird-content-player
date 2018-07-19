@@ -81,7 +81,7 @@
     },
     "scripts": {
         "build-sunbird": "webpack --env.channel=sunbird",
-        "build-ekstep": "webpack --env.channel=ekstep"
+        "build-ekstep": "webpack --env.channel=ekstep",
         "package-coreplugins": "webpack --config webpack.plugin.config.js"
     },
     "cordovaPlugins": [
