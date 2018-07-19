@@ -215,6 +215,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         return this.progres(this.currentTime, totalDuration);
     },
     onOverlayAudioMute: function() {
+        if (!this.videoPlayer) return false
         if (this.videoPlayer.currentType_ === 'video/youtube') {
             if (!this.videoPlayer.muted()) {
                 this.videoPlayer.muted(true);
@@ -224,6 +225,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     onOverlayAudioUnmute: function() {
+    	if (!this.videoPlayer) return false
         if(this.videoPlayer.currentType_ === 'video/youtube') {
             if (this.videoPlayer.muted()) {
                 this.videoPlayer.muted(false);
