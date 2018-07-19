@@ -159,7 +159,8 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
             var globalConfig = EkstepRendererAPI.getGlobalConfig();
             $rootScope.showUser = globalConfig.overlay.showUser;
             $rootScope.enableUserSwitcher = globalConfig.overlay.enableUserSwitcher;
-
+            $scope.closeIcon = EkstepRendererAPI.resolvePluginResource("org.sunbird.player.userswitcher", "1.0", "renderer/assets/Grey_close.png");
+            $scope.checkMarkIcon = EkstepRendererAPI.resolvePluginResource("org.sunbird.player.userswitcher", "1.0", "renderer/assets/checkmark.png");
             EventBus.addEventListener("event:showUser", function(value) {
                 $rootScope.showUser = value.target;
             });
@@ -182,7 +183,7 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
              * @memberOf EkstepRendererEvents
              */
             EventBus.addEventListener("event:getcurrentuser", function() {
-                currentUser = $rootScope.currentUser;
+                $scope.currentUser = $rootScope.currentUser;
             });
 
             /**
@@ -221,8 +222,10 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
 
             if (_.isUndefined($rootScope.currentUser)) {
                 org.ekstep.service.content.getCurrentUser().then(function(data) {
-                    if (_.isEmpty(data.handle)) {
+                    if (_.isEmpty(data.handle) || _.isEmpty(data.name) ) {
                         data.handle = "Anonymous";
+                        data.name = "Anonymous";
+                        data.class = "Class 0";
                         data.profileImage = "assets/icons/avatar_1anonymous.png";
                     }
                     /*

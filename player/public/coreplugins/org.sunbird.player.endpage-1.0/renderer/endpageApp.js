@@ -7,6 +7,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.endpageBackground;
     $scope.replayIcon;
     $scope.isCordova = window.cordova ? true : false;
+    $scope.pluginInstance = {};
     $scope.arrayToString = function(array) {
         return (_.isString(array)) ? array : (!_.isEmpty(array) && _.isArray(array)) ? array.join(", ") : "";
     };
@@ -32,7 +33,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.replayContent = function() {
-        EventBus.dispatch("event:openUserSwitchingModal");
+        EventBus.dispatch("event:openUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
     };
     $scope.ep_openUserSwitchingModal = function() {
         EventBus.dispatch("event:openUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
@@ -64,6 +65,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     
     $scope.handleEndpage = function() {
         $scope.setLicense();
+        $scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.sunbird.player.userswitcher");
         if (_(TelemetryService.instance).isUndefined()) {
             var otherData = GlobalContext.config.otherData;
             !_.isUndefined(otherData.cdata) ? correlationData.push(otherData.cdata) : correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(),"type": "ContentSession"});
