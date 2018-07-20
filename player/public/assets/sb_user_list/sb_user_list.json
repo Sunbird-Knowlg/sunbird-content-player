@@ -1,209 +1,25 @@
 [
 	{
-		"uid": "uid0",
-		"profileType": "teacher",
+		"uid": "9g8h4ndAnonymouscg56ngd",
+		"profileType": "NA",
 		"name": "Anonymous",
 		"syllabus": [
 		"mh_k-12_15"
 		],
 		"board": [
-		"Anonymous"
+		"NA"
 		],
 		"medium": [
-		"Anonymous"
+		"NA"
 		],
 		"class": [
 		"Class 0"
 		],
 		"subject": [
-		"Anonymous",
-		"Anonymous"
+		"NA",
+		"NA"
 		],
 		"createdAt": "",
 		"updatedAt": ""
-	},
-		{
-	  "uid": "uid1",
-	  "profileType": "teacher",
-	  "name": "Guest 1",
-	  "syllabus": [
-		"mh_k-12_15"
-	  ],
-	  "board": [
-		"statemaharashtra"
-	  ],
-	  "medium": [
-		"hindi"
-	  ],
-	  "class": [
-		"Class 4"
-	  ],
-	  "subject": [
-		"marathi",
-		"geography"
-	  ],
-	  "createdAt": "",
-	  "updatedAt": ""
-	},
-    {
-	  "uid": "uid2",
-	  "profileType": "teacher",
-	  "name": "Guest 2",
-	  "syllabus": [
-		"mh_k-12_15"
-	  ],
-	  "board": [
-		"statemaharashtra"
-	  ],
-	  "medium": [
-		"hindi"
-	  ],
-	  "class": [
-		"Class 4"
-	  ],
-	  "subject": [
-		"marathi",
-		"geography"
-	  ],
-	  "createdAt": "",
-	  "updatedAt": ""
-	},
-    {
-	  "uid": "uid3",
-	  "profileType": "teacher",
-	  "name": "Guest 3",
-	  "syllabus": [
-		"mh_k-12_15"
-	  ],
-	  "board": [
-		"statemaharashtra"
-	  ],
-	  "medium": [
-		"hindi"
-	  ],
-	  "class": [
-		"Class 4"
-	  ],
-	  "subject": [
-		"marathi",
-		"geography"
-	  ],
-	  "createdAt": "",
-	  "updatedAt": ""
-	},
-    {
-	  "uid": "uid4",
-	  "profileType": "teacher",
-	  "name": "Guest 4",
-	  "syllabus": [
-		"mh_k-12_15"
-	  ],
-	  "board": [
-		"statemaharashtra"
-	  ],
-	  "medium": [
-		"hindi"
-	  ],
-	  "class": [
-		"Class 4"
-	  ],
-	  "subject": [
-		"marathi",
-		"geography"
-	  ],
-	  "createdAt": "",
-	  "updatedAt": ""
-	},
-    {
-	  "uid": "uid5",
-	  "profileType": "teacher",
-	  "name": "Guest 5",
-	  "syllabus": [
-		"mh_k-12_15"
-	  ],
-	  "board": [
-		"statemaharashtra"
-	  ],
-	  "medium": [
-		"hindi"
-	  ],
-	  "class": [
-		"Class 4"
-	  ],
-	  "subject": [
-		"marathi",
-		"geography"
-	  ],
-	  "createdAt": "",
-	  "updatedAt": ""
-	},
-    {
-	  "uid": "uid6",
-	  "profileType": "teacher",
-	  "name": "Guest 6",
-	  "syllabus": [
-		"mh_k-12_15"
-	  ],
-	  "board": [
-		"statemaharashtra"
-	  ],
-	  "medium": [
-		"hindi"
-	  ],
-	  "class": [
-		"Class 4"
-	  ],
-	  "subject": [
-		"marathi",
-		"geography"
-	  ],
-	  "createdAt": "",
-	  "updatedAt": ""
-	},
-    {
-	  "uid": "uid7",
-	  "profileType": "teacher",
-	  "name": "Guest 7",
-	  "syllabus": [
-		"mh_k-12_15"
-	  ],
-	  "board": [
-		"statemaharashtra"
-	  ],
-	  "medium": [
-		"hindi"
-	  ],
-	  "class": [
-		"Class 4"
-	  ],
-	  "subject": [
-		"marathi",
-		"geography"
-	  ],
-	  "createdAt": "",
-	  "updatedAt": ""
-	},
-    {
-	  "uid": "uid8",
-	  "profileType": "teacher",
-	  "name": "Guest 8",
-	  "syllabus": [
-		"mh_k-12_15"
-	  ],
-	  "board": [
-		"statemaharashtra"
-	  ],
-	  "medium": [
-		"hindi"
-	  ],
-	  "class": [
-		"Class 4"
-	  ],
-	  "subject": [
-		"marathi",
-		"geography"
-	  ],
-	  "createdAt": "",
-	  "updatedAt": ""
 	}
 ]

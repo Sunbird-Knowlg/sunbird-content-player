@@ -33,6 +33,14 @@ org.ekstep.service.local = new(org.ekstep.service.mainService.extend({
         });
     },
 
+    getAllSBUserProfile: function() {
+        return new Promise(function(resolve, reject) {
+            $.getJSON("assets/sb_user_list/sb_user_list.json",function(data){
+                resolve(data);
+            })
+        });
+    },
+
     setUser: function(uid) {
         return new Promise(function(resolve, reject) {
             resolve(true);

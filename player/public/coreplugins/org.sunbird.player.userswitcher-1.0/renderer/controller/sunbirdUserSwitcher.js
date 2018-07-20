@@ -38,18 +38,18 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
         }
 
         $scope.getUsersList = function() {
-            if(Object.keys(globalConfig.context).length == 0){
-                $.getJSON("assets/sb_user_list/sb_user_list.json",function(data){
-                    $rootScope.users = data;
-                });
-            }else{
-                $rootScope.users = getGlobalConfig.context;
-            }
-            $scope.sortUserlist();
+            org.ekstep.service.content.getAllSBUserProfile().then(function(usersData) {
+                $rootScope.users = usersData;
+                if ($rootScope.users.length == 0)
+                    $rootScope.users.push($rootScope.currentUser);
+                $scope.sortUserlist();
+            }).catch(function(err) {
+                console.error(err);
+            });
         }
 
         $scope.sortUserlist = function() {
-            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'handle'), 'userIndex');
+            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'name'), 'userIndex');
         }
 
         // this function changes the selected user
@@ -221,24 +221,11 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
             });
 
             if (_.isUndefined($rootScope.currentUser)) {
-                org.ekstep.service.content.getCurrentUser().then(function(data) {
-                    if (_.isEmpty(data.handle) || _.isEmpty(data.name) ) {
-                        data.handle = "Anonymous";
+                org.ekstep.service.content.getCurrentUser().then(function(data) {    
+                    if (_.isEmpty(data.name)) {
                         data.name = "Anonymous";
                         data.class = "Class 0";
-                        data.profileImage = "assets/icons/avatar_1anonymous.png";
                     }
-                    /*
-                 * Have an empty check for image validation
-                 * If image is not available at the given path, replace the image with "avatar_anonymous" image
-                 */
-                    var imageUrl = data.profileImage;
-                    imageExists(imageUrl, function(exists) {
-                        if (exists === false)
-                            data.profileImage = "assets/icons/avatar_anonymous.png"
-                        console.log('RESULT: url=' + imageUrl + ', exists=' + exists);
-                    });
-
                     $rootScope.currentUser = data;
                     $rootScope.currentUser.selected = true;
                     $scope.getUsersList();

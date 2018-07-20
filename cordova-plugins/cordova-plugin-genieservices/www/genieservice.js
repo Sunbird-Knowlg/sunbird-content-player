@@ -25,6 +25,10 @@ genieservice.prototype.getAllUserProfile = function() {
     return this.handleAction("getAllUserProfile", []);
 }
 
+genieservice.prototype.getAllSBUserProfile = function() {
+    return this.handleAction("getAllSBUserProfile", []);
+}
+
 genieservice.prototype.setUser = function(userId) {
     return this.handleAction("setUser", [userId]);
 }

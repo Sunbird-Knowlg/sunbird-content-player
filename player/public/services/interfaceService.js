@@ -217,6 +217,20 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
                 });
         });
     },
+    getAllSBUserProfile: function() {
+        return new Promise(function(resolve, reject) {
+            org.ekstep.service.renderer.getAllSBUserProfile()
+                .then(function(data) {
+                    resolve(data);
+                })
+                .catch(function(err) {
+                    /*console.error(AppErrors.contetnPathFetch, err);
+                    reject(err);*/
+                    var data = [{"uid":"9g8h4ndAnonymouscg56ngd","profileType":"teacher","name":"Anonymous","syllabus":["mh_k-12_15"],"board":["Anonymous"],"medium":["Anonymous"],"class":["Class 0"],"subject":["Anonymous","Anonymous"],"createdAt":"","updatedAt":""}];
+                    resolve(data);
+                });
+        });
+    },
     getUser: function(uid) {
 
     },
