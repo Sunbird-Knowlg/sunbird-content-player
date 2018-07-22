@@ -1,7 +1,7 @@
 /**
  * Plugin to create repo instance and to register repo instance
  * @extends EkstepRenderer.Plugin
- * @author Akash Gupta <akash.gupta@tarento.com>
+ * @author Gourav More <gourav_m@tekditechonologies.com>, Akash Gupta <akash.gupta@tarento.com>
  */
 Plugin.extend({
     _templatePath: undefined,

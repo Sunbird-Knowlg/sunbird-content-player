@@ -3,6 +3,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     var globalConfig = EkstepRendererAPI.getGlobalConfig();
     $scope.showEndPage = false;
     $rootScope.pageId = "sunbird-player-Endpage";
+    $scope.pluginManifest = {"id": "org.sunbird.player.endpage", "ver": "1.0"};
     $scope.genieIcon;
     $scope.endpageBackground;
     $scope.replayIcon;
@@ -90,15 +91,13 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
     $scope.initEndpage = function() {
         $scope.playerMetadata = content;
-        $scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.ekstep.endpage");
-        var pluginManifest = $scope.pluginInstance._manifest;
-        $scope.genieIcon = EkstepRendererAPI.resolvePluginResource(pluginManifest.id, pluginManifest.ver, "renderer/assets/home.svg");
-        $scope.scoreIcon = EkstepRendererAPI.resolvePluginResource(pluginManifest.id, pluginManifest.ver, "renderer/assets/score.svg");
-        $scope.leftArrowIcon = EkstepRendererAPI.resolvePluginResource(pluginManifest.id, pluginManifest.ver, "renderer/assets/left-arrow.svg");
-        $scope.rightArrowIcon = EkstepRendererAPI.resolvePluginResource(pluginManifest.id, pluginManifest.ver, "renderer/assets/right-arrow.svg");
-        $scope.clockIcon = EkstepRendererAPI.resolvePluginResource(pluginManifest.id, pluginManifest.ver, "renderer/assets/clock.svg");
-        $scope.replayIcon = EkstepRendererAPI.resolvePluginResource(pluginManifest.id, pluginManifest.ver, "renderer/assets/replay.svg");
-        $scope.endpageBackground = EkstepRendererAPI.resolvePluginResource(pluginManifest.id, pluginManifest.ver, "renderer/assets/endpageBackground.png");
+        $scope.genieIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/home.svg");
+        $scope.scoreIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/score.svg");
+        $scope.leftArrowIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/left-arrow.svg");
+        $scope.rightArrowIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/right-arrow.svg");
+        $scope.clockIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/clock.svg");
+        $scope.replayIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/replay.svg");
+        $scope.endpageBackground = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/endpageBackground.png");
         $scope.handleEndpage();
     };
     EkstepRendererAPI.addEventListener('renderer:content:end', function() {
