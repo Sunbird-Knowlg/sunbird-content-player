@@ -99,8 +99,8 @@ public class GenieServicePlugin extends CordovaPlugin {
             userService.getCurrentUser(new GenieServicesResponse(callbackContext));
         } else if(action.equals("getAllUserProfile")) {
             userService.getAllUserProfile(new GenieServicesResponse(callbackContext));
-        } else if(action.equals("getAllSBUserProfile")) {
-            userService.getAllSBUserProfile(new GenieServicesResponse(callbackContext));
+        } else if(action.equals("getAllGroupUsers")) {
+            userService.getAllGroupUsers(new GenieServicesResponse(callbackContext));
         }
          else if(action.equals("setUser")) {
             String userId = args.getString(0);

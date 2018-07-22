@@ -67,11 +67,7 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
     };
     $scope.playContent = function(content) {
         globalConfig.basepath = content.baseDir;
-        // EkstepRendererAPI.dispatchEvent("renderer:splash:show");
-        globalConfig.config.plugins = [];
-        globalConfig.config.plugins.push({"id":"org.sunbird.player.endpage","ver":"1.0","type":"plugin","depends":""})
-        globalConfig.config.showEndPage = false;
-        GlobalContext.config.showEndPage = false;
+        EkstepRendererAPI.dispatchEvent("renderer:splash:show");
         $rootScope.content = content;
         if (content.mimeType == COLLECTION_MIMETYPE) {
             console.info("collection nat handled")

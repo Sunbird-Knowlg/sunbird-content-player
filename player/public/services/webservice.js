@@ -55,9 +55,9 @@ org.ekstep.service.web = new (org.ekstep.service.mainService.extend({
         });
     },
 
-    getAllSBUserProfile: function() {
+    getAllGroupUsers: function() {
         return new Promise(function(resolve, reject) {
-            $.getJSON("assets/user_list/user_list.json", function(data) {
+            $.getJSON("assets/user_list/group_user_list.json", function(data) {
                 resolve(data);
             })
         });

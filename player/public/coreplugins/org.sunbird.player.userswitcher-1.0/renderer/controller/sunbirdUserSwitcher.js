@@ -9,6 +9,7 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
         $scope.json = {};
         $scope.playButton = 'Replay';
         $scope.showSunbirdUserSwitchModal = false;
+        $scope.pluginInstance = {};
         $scope.hideUserSwitchingModal = function() {
             $rootScope.safeApply(function() {
                 EkstepRendererAPI.removeEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideUserSwitchingModal, $scope);
@@ -159,8 +160,10 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
             var globalConfig = EkstepRendererAPI.getGlobalConfig();
             $rootScope.showUser = globalConfig.overlay.showUser;
             $rootScope.enableUserSwitcher = globalConfig.overlay.enableUserSwitcher;
-            $scope.closeIcon = EkstepRendererAPI.resolvePluginResource("org.sunbird.player.userswitcher", "1.0", "renderer/assets/Grey_close.png");
-            $scope.checkMarkIcon = EkstepRendererAPI.resolvePluginResource("org.sunbird.player.userswitcher", "1.0", "renderer/assets/checkmark.png");
+            $scope.pluginInstance = EkstepRendererAPI.getPluginObjs("org.sunbird.player.userswitcher");
+            var pluginManifest = $scope.pluginInstance._manifest;
+            $scope.closeIcon = EkstepRendererAPI.resolvePluginResource(pluginManifest.id, pluginManifest.ver, "renderer/assets/Grey_close.png");
+            $scope.checkMarkIcon = EkstepRendererAPI.resolvePluginResource(pluginManifest.id, pluginManifest.ver, "renderer/assets/checkmark.png");
             EventBus.addEventListener("event:showUser", function(value) {
                 $rootScope.showUser = value.target;
             });

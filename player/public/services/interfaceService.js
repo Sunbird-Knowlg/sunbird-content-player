@@ -217,17 +217,18 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
                 });
         });
     },
-    getAllSBUserProfile: function() {
+    getAllGroupUsers: function() {
         return new Promise(function(resolve, reject) {
-            org.ekstep.service.renderer.getAllSBUserProfile()
+            org.ekstep.service.renderer.getAllGroupUsers()
                 .then(function(data) {
                     resolve(data);
                 })
                 .catch(function(err) {
+                    $.getJSON("assets/user_list/group_user_list.json", function(data) {
+                        resolve(data);
+                    });
                     /*console.error(AppErrors.contetnPathFetch, err);
                     reject(err);*/
-                    var data = [{"uid":"9g8h4ndAnonymouscg56ngd","profileType":"teacher","name":"Anonymous","syllabus":["mh_k-12_15"],"board":["Anonymous"],"medium":["Anonymous"],"class":["Class 0"],"subject":["Anonymous","Anonymous"],"createdAt":"","updatedAt":""}];
-                    resolve(data);
                 });
         });
     },
