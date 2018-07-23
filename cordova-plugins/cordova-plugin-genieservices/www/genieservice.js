@@ -54,6 +54,11 @@ genieservice.prototype.getRelatedContent = function(contentList, contentId, uid)
     return this.handleAction("getRelatedContent", [contentList, contentId, uid]);
 }
 
+// get previous and next content of particular content
+genieservice.prototype.getRelevantContent = function(req) {
+    return this.handleAction("getRelevantContent", [req]);
+}
+
 genieservice.prototype.getLearnerAssessment = function(uid, id, contentExtras) {
     return this.handleAction("getLearnerAssessment", [uid, id, contentExtras]);
 }

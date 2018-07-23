@@ -7,6 +7,14 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.genieIcon;
     $scope.endpageBackground;
     $scope.replayIcon;
+    /**
+     * @property - {Object} which holds previous content of current content
+     */     
+    $scope.previousContent = {};
+    /**
+     * @property - {Object} which holds next content of current content
+     */
+    $scope.nextContent = {};
     $scope.isCordova = window.cordova ? true : false;
     $scope.pluginInstance = {};
     $scope.arrayToString = function(array) {
@@ -80,6 +88,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         $scope.setTotalTimeSpent();
         $scope.getTotalScore($rootScope.content.identifier);
+        $scope.getRelevantContent($rootScope.content.identifier);
         if (TelemetryService.instance.telemetryStartActive()) {
                 var telemetryEndData = {};
                 telemetryEndData.stageid = getCurrentStageId();
@@ -89,6 +98,52 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
               console.warn('Telemetry service end is already logged Please log start telemetry again');
         }
     };
+    
+    /**
+     * @description - which helps to get previous and next content of current content
+     */
+    $scope.getRelevantContent = function(contentId){
+        if (!isbrowserpreview) {
+            if(!_.has($scope.previousContent,contentId) && !_.has($scope.nextContent,contentId)){
+                var requestBody = {
+                    "contentIdentifier": contentId,
+                    "cdata": _.reject(GlobalContext.config.otherData.cdata,{type:'ContentSession'}),
+                    "next": true,
+                    "prev": true
+                };
+                //Call getPreviousAndNextContent function which is present inside interfaceService.js by passing current content-id and user-id 
+                org.ekstep.service.content.getRelevantContent(JSON.stringify(requestBody)).then(function(response){
+                    if(response){
+                        $scope.previousContent[contentId] = response.prev;
+                        $scope.nextContent[contentId] = response.next;
+                    } else{
+                        console.log('Error has occurred');
+                    }
+                });
+            }
+        }
+    };
+
+    /**
+     * @description - to play next or previous content
+     */
+    $scope.contentLaunch = function(contentType,contentId){
+        if (!isbrowserpreview) {
+            var playContent = (contentType === 'previous') ? $scope.previousContent[contentId] : $scope.nextContent[contentId];
+            //Check content is available in device
+            org.ekstep.service.content.getContentAvailability(playContent.content.contentData.identifier)
+                .then(function(contentIsAvailable) {
+                    if (contentIsAvailable) {
+                        org.ekstep.contentrenderer.getContentMetadata(playContent.content.contentData.identifier, function(obj) {
+                            EkstepRendererAPI.hideEndPage();
+                            $rootScope.content = window.content = obj;
+                            EkstepRendererAPI.dispatchEvent('renderer:player:init');
+                        });
+                    }
+                });
+        }
+    };
+
     $scope.initEndpage = function() {
         $scope.playerMetadata = content;
         $scope.genieIcon = EkstepRendererAPI.resolvePluginResource($scope.pluginManifest.id, $scope.pluginManifest.ver, "renderer/assets/home.svg");

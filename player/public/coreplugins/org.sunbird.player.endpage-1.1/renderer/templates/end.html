@@ -7,29 +7,33 @@
         <p class="ps-author" ng-if="content.owner">Author: <span>ng-if="content.owner"</span></p>
       </div>
       <div class="ps-body">
-        <div class="ps-nav left"><a href="javascript:void(0);" class="ps-nav-header textdeco-none"><img src="{{leftArrowIcon}}" alt="prev" class="ps-arrow">
+        <div class="ps-nav left" ng-show="previousContent[content.identifier]" ng-click="contentLaunch('previous',content.identifier)">
+          <a class="ps-nav-header textdeco-none">
+            <img ng-src="{{leftArrowIcon}}" alt="prev" class="ps-arrow">
             <div class="ps-nav-wrappe ps-text-right">
               <p class="ps-nav-subtitle">Goto</p>
               <h2 class="ps-nav-title">Previous</h2>
-            </div></a>
+            </div>
+          </a>
           <div class="ps-nav-body ps-text-right">
-            <p class="ps-chapter-text">Chapter 1 :</p>
-            <p class="ps-chapter-detail">Let’s go to the next imagine to buy an iphone.</p>
+            <p class="ps-chapter-text chapter-section">{{previousContent[content.identifier].content.contentData.name}}</p>
           </div>
         </div>
         <div class="ps-score">
           <div class="ps-score-content">
             <ul class="ps-score-list">
               <li class="ps-score-list__item">
-                <div class="ps-score-item"><img src="{{scoreIcon}}" class="ps-score-icon">
+                <div class="ps-score-item">
+                  <img ng-src="{{scoreIcon}}" class="ps-score-icon">
                   <div class="ps-score-detail">
                     <h2 class="ps-score-heading">SCORE</h2>
-                    <p class="ps-score-data">{{getTotalScore}}</p>
+                    <p class="ps-score-data endpage-score">{{score || '--'}}</p>
                   </div>
                 </div>
               </li>
               <li class="ps-score-list__item">
-                <div class="ps-score-item"><img src="{{clockIcon}}" class="ps-score-icon">
+                <div class="ps-score-item">
+                  <img ng-src="{{clockIcon}}" class="ps-score-icon">
                   <div class="ps-score-detail">
                     <h2 class="ps-score-heading">TIME</h2>
                     <p class="ps-score-data">{{totalTimeSpent}}</p>
@@ -39,20 +43,25 @@
             </ul>
           </div>
         </div>
-        <div class="ps-nav right"><a href="javascript:void(0);" class="ps-nav-header textdeco-none">
+        <div class="ps-nav right" ng-show="nextContent[content.identifier]" ng-click="contentLaunch('next',content.identifier)">
+          <a class="ps-nav-header textdeco-none">
             <div class="ps-nav-wrapper">
               <p class="ps-nav-subtitle">Goto</p>
               <h2 class="ps-nav-title">Next</h2>
-            </div><img src="{{rightArrowIcon}}" alt="prev" class="ps-arrow"></a>
+            </div>
+            <img ng-src="{{rightArrowIcon}}" alt="prev" class="ps-arrow">
+          </a>
           <div class="ps-nav-body ps-text-left">
-            <p class="ps-chapter-text">Chapter 2 :</p>
-            <p class="ps-chapter-detail">Let’s go to the next imagine to buy an iphone.</p>
+            <p class="ps-chapter-text chapter-section">{{nextContent[content.identifier].content.contentData.name}}</p>
           </div>
         </div>
       </div>
       <div class="ps-actions">
         <ul class="ps-action-list">
-          <li class="ps-action-list__item"><a href="javascript:void(0);" ng-click="replayContent()" class="ps-btn ps-btn--orange"><img src="{{replayIcon}}" class="ps-btn-icon"></a>
+          <li class="ps-action-list__item">
+            <a href="javascript:void(0);" class="ps-btn ps-btn--orange endpage-icons" ng-click="replayContent()">
+              <img ng-src="{{replayIcon}}" class="ps-btn-icon">
+            </a>
             <p class="ps-action-text">Replay</p>
           </li>
           <li class="ps-action-list__item"><a class="ps-btn ps-btn--blue"><span class="user-name">{{currentUser.name.charAt(0).toUpperCase() + string.slice(1);}}</span></a>

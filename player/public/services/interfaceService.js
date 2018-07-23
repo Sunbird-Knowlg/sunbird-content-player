@@ -254,6 +254,23 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
                 reject(err);
             });
         });
+    },
+    //Get previous and next content of particular content
+    getRelevantContent: function(request){
+        return new Promise(function(resolve, reject) {
+        org.ekstep.service.renderer.getRelevantContent(request)
+            .then(function(contents) {
+                if (contents) {
+                    resolve(contents);
+                } else {
+                    reject("Contents is not available.");
+                }
+            })
+            .catch(function(err) {
+                console.error(AppErrors.contetnPathFetch, err);
+                reject(err);
+            });
+        });
     }
 
 }));
