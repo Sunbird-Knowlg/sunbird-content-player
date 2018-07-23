@@ -1,0 +1,74 @@
+<div class="font-lato gc-ep-cont" ng-app="sunbird-endpage" ng-controller="endPageController"     id='endpage' ng-show="showEndPage">
+  <div class="ps-wrapper">
+    <div class="ps-content">
+      <div class="ps-header">
+        <h2 class="ps-heading">You just completed</h2>
+        <p class="ps-subheading">This is a great course on how to conduct courses on DIKSHA</p>
+        <p class="ps-author">Author: <span>Surendrasingh Sacharia and Joel Clasterre</span></p>
+      </div>
+      <div class="ps-body">
+        <div class="ps-nav left"><a href="javascript:void(0);" class="ps-nav-header textdeco-none"><img src="{{leftArrowIcon}}" alt="prev" class="ps-arrow">
+            <div class="ps-nav-wrappe ps-text-right">
+              <p class="ps-nav-subtitle">Goto</p>
+              <h2 class="ps-nav-title">Previous</h2>
+            </div></a>
+          <div class="ps-nav-body ps-text-right">
+            <p class="ps-chapter-text">Chapter 1 :</p>
+            <p class="ps-chapter-detail">Let’s go to the next imagine to buy an iphone.</p>
+          </div>
+        </div>
+        <div class="ps-score">
+          <div class="ps-score-content">
+            <ul class="ps-score-list">
+              <li class="ps-score-list__item">
+                <div class="ps-score-item"><img src="{{scoreIcon}}" class="ps-score-icon">
+                  <div class="ps-score-detail">
+                    <h2 class="ps-score-heading">SCORE</h2>
+                    <p class="ps-score-data">{{getTotalScore}}</p>
+                  </div>
+                </div>
+              </li>
+              <li class="ps-score-list__item">
+                <div class="ps-score-item"><img src="{{clockIcon}}" class="ps-score-icon">
+                  <div class="ps-score-detail">
+                    <h2 class="ps-score-heading">TIME</h2>
+                    <p class="ps-score-data">{{totalTimeSpent}}</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="ps-nav right"><a href="javascript:void(0);" class="ps-nav-header textdeco-none">
+            <div class="ps-nav-wrapper">
+              <p class="ps-nav-subtitle">Goto</p>
+              <h2 class="ps-nav-title">Next</h2>
+            </div><img src="{{rightArrowIcon}}" alt="prev" class="ps-arrow"></a>
+          <div class="ps-nav-body ps-text-left">
+            <p class="ps-chapter-text">Chapter 2 :</p>
+            <p class="ps-chapter-detail">Let’s go to the next imagine to buy an iphone.</p>
+          </div>
+        </div>
+      </div>
+      <div class="ps-actions">
+        <ul class="ps-action-list">
+          <li class="ps-action-list__item"><a href="javascript:void(0);" ng-click="replayContent()" class="ps-btn ps-btn--orange"><img src="{{replayIcon}}" class="ps-btn-icon"></a>
+            <p class="ps-action-text">Replay</p>
+          </li>
+          <li class="ps-action-list__item"><a class="ps-btn ps-btn--blue"><span class="user-name">{{currentUser.name.charAt(0).toUpperCase() + string.slice(1);}}</span></a>
+            <div class="ps-action-data">
+              <p class="ps-action-text">{{currentUser.name}}</p>
+            </div>
+          </li>
+          <li class="ps-action-list__item"><a href="javascript:void(0);" class="ps-btn ps-btn--black"><img src="{{genieIcon}}" class="ps-btn-icon"></a>
+            <p class="ps-action-text">Home</p>
+          </li>
+        </ul>
+      </div>
+      <div class="ps-footer">
+        <p class="ps-footer-text">{{licenseAttribute}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<sunbird-userswitcher></sunbird-userswitcher>
