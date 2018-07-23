@@ -3,8 +3,8 @@
     <div class="ps-content">
       <div class="ps-header">
         <h2 class="ps-heading">You just completed</h2>
-        <p class="ps-subheading">This is a great course on how to conduct courses on DIKSHA</p>
-        <p class="ps-author">Author: <span>Surendrasingh Sacharia and Joel Clasterre</span></p>
+        <p class="ps-subheading" ng-if="content.name">{{content.name}}</p>
+        <p class="ps-author" ng-if="content.owner">Author: <span>ng-if="content.owner"</span></p>
       </div>
       <div class="ps-body">
         <div class="ps-nav left"><a href="javascript:void(0);" class="ps-nav-header textdeco-none"><img src="{{leftArrowIcon}}" alt="prev" class="ps-arrow">
