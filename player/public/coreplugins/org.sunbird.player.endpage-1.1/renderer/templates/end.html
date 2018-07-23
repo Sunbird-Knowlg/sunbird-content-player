@@ -4,7 +4,7 @@
       <div class="ps-header">
         <h2 class="ps-heading">You just completed</h2>
         <p class="ps-subheading" ng-if="content.name">{{content.name}}</p>
-        <p class="ps-author" ng-if="content.owner">Author: <span>ng-if="content.owner"</span></p>
+        <p class="ps-author" ng-if="content.owner">Author: <span>{{content.owner}}</span></p>
       </div>
       <div class="ps-body">
         <div class="ps-nav left" ng-show="previousContent[content.identifier]" ng-click="contentLaunch('previous',content.identifier)">
@@ -69,7 +69,7 @@
               <p class="ps-action-text">{{currentUser.name}}</p>
             </div>
           </li>
-          <li class="ps-action-list__item"><a href="javascript:void(0);" class="ps-btn ps-btn--black"><img src="{{genieIcon}}" class="ps-btn-icon"></a>
+          <li class="ps-action-list__item" ng-click="openGenie()"><a href="javascript:void(0);" class="ps-btn ps-btn--black"><img src="{{genieIcon}}" class="ps-btn-icon"></a>
             <p class="ps-action-text">Home</p>
           </li>
         </ul>

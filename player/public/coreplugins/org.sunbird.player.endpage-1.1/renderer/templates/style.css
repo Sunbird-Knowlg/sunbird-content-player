@@ -179,8 +179,8 @@ table {
 }
 
 .ps-score {
-  padding: 20px;
-  position: relative;
+  padding: 6vw;
+  /* position: relative; */
 }
 
 .ps-score-content {
