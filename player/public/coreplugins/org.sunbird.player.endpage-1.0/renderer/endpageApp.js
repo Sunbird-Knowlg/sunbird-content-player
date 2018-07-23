@@ -17,7 +17,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     $scope.getTotalScore = function(id) {
         var totalScore = 0, totalQuestions = 0;
         var telEvents = org.ekstep.service.content.getTelemetryAssessEvents();
-        if (telEvents) {
+        if (!_.isEmpty(telEvents)) {
             _.forEach(telEvents, function(value) {
                 if(value.edata.pass === 'Yes') {
                     totalScore = totalScore + value.edata.score;
