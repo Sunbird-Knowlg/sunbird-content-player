@@ -4,7 +4,7 @@
 // 'quiz' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
-    .constant("appConstants", {"contentId": "contentId", "stateContentList": "contentList", "stateShowContent": "showContent", "statePlayContent": "playContent", "stateShowContentEnd": "showContentEnd"})
+    .constant("appConstants", { "contentId": "contentId", "stateContentList": "contentList", "stateShowContent": "showContent", "statePlayContent": "playContent", "stateShowContentEnd": "showContentEnd" })
     .run(function($rootScope, $ionicPlatform, $location, $timeout, $state, $stateParams, appConstants) {
         $rootScope.enableEval = false;
         $rootScope.enableUserSwitcher = undefined;
@@ -35,7 +35,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 } else {
                     var type = (Renderer && !Renderer.running) ? 'EXIT_APP' : 'EXIT_CONTENT';
                     var stageId = getCurrentStageId();
-                    TelemetryService.interact('TOUCH', 'DEVICE_BACK_BTN', 'EXIT', {type:type,stageId:stageId});
+                    TelemetryService.interact('TOUCH', 'DEVICE_BACK_BTN', 'EXIT', { type: type, stageId: stageId });
                     contentExitCall();
                 }
             }, 100);
@@ -52,7 +52,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
             $ionicPlatform.ready(function() {
                 splashScreen.addEvents();
                 isMobile = window.cordova ? true : false,
-                org.ekstep.service.init();
+                    org.ekstep.service.init();
                 if ("undefined" == typeof Promise) {
                     alert("Your device isn’t compatible with this version of Genie.");
                     exitApp();
@@ -61,7 +61,7 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 if (window.cordova && window.cordova.plugins.Keyboard) {
                     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
                     StatusBar.hide();
-                    window.navigationbar.setUp(true); 
+                    window.navigationbar.setUp(true);
                     navigationbar.hideNavigationBar();
                 } else {
                     globalConfig.recorder = "android";
@@ -90,37 +90,55 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         app.controllerProvider = $controllerProvider;
         app.compileProvider = $compileProvider;
 
-    }).controller('BaseCtrl', function($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, appConstants) {
+    }).controller('BaseCtrl', function($scope, $rootScope, $state, $ocLazyLoad, $stateParams, $compile, $templateCache, appConstants) {
 
         $scope.templates = [];
-        function loadNgModules(templatePath, controllerPath, callback) {
+
+        function loadNgModules(templatePath, controllerPath, allowTemplateCache) {
             var loadFiles = [];
-            if(templatePath){
-                if(_.isArray(templatePath)){
-                    _.each(templatePath, function(template){
-                        loadFiles.push({ type: 'html', path: template });
+            if (!allowTemplateCache) {
+                if (templatePath) {
+                    if (_.isArray(templatePath)) {
+                        _.each(templatePath, function(template) {
+                            loadFiles.push({ type: 'html', path: template });
+                        });
+                    } else {
+                        loadFiles.push({ type: 'html', path: templatePath });
+                    }
+                }
+                if (controllerPath) {
+                    loadFiles.push({ type: 'js', path: controllerPath });
+                }
+                $ocLazyLoad.load(loadFiles).then(function() {
+                    if (!_.isArray(templatePath)) {
+                        injectTemplates(templatePath);
+                    }
+                });
+            } else {
+                if (angular.isString(templatePath) && templatePath.length > 0) {
+                    angular.forEach(angular.element(templatePath), function(node) {
+                        console.log("NodeId", node.id)
+                        $templateCache.put(node.id, node.innerHTML);
+                        $scope.templates.push({ id: node.id });
+                        var el = angular.element("content-holder");
+                        $compile(el.contents())($scope);
+                        $scope.safeApply();
                     });
-                } else {
-                    loadFiles.push({ type: 'html', path: templatePath });
                 }
+
             }
-            if(controllerPath){
-                loadFiles.push({ type: 'js', path: controllerPath });
-            }
-            $ocLazyLoad.load(loadFiles).then(function(){
-                if(!_.isArray(templatePath)){
-                    injectTemplates(templatePath);
-                }
-            });
         };
 
         function injectTemplates(templatePath, scopeVariable, toElement) {
-            $scope.templates.push(templatePath);
+            if (!templatePath) { return }
+            $scope.templates.push({
+                path: templatePath
+            });
             var el = angular.element("content-holder");
             $compile(el.contents())($scope);
             $scope.safeApply();
         }
-        EkstepRendererAPI.addEventListener("renderer:add:template", function(event){
+        EkstepRendererAPI.addEventListener("renderer:add:template", function(event) {
             var data = event.target;
             injectTemplates(data.templatePath, data.scopeVariable, data.toElement);
         }, this);
@@ -133,9 +151,9 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
                 if (!isTelemetryStartActive) {
                     eventName = 'GE_INTERACT'
                 }
-              TelemetryService.interact("TOUCH", data.interactId, "TOUCH", {
-                stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
-              }, eventName);
+                TelemetryService.interact("TOUCH", data.interactId, "TOUCH", {
+                    stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
+                }, eventName);
             }
             EkstepRendererAPI.dispatchEvent('renderer:telemetry:end');
             if (data && data.callback) data.callback();
@@ -154,4 +172,4 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         }, this);
     });
 
-window.app = app;    
+window.app = app;

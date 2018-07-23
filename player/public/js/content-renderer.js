@@ -25,11 +25,12 @@ org.ekstep.contentrenderer.init = function() {
 /**
  * Loading of canvas default plguis which are defined in the globalconfig obj
  */
-org.ekstep.contentrenderer.loadDefaultPlugins = function(cb){
+org.ekstep.contentrenderer.loadDefaultPlugins = function(cb) {
     org.ekstep.contentrenderer.initPlugins('', 'coreplugins');
     var globalConfig = EkstepRendererAPI.getGlobalConfig();
-    org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins,[],function(){
-        if(cb) cb()
+    globalConfig.isCorePluginsPackaged && jQuery("body").append($("<script type='text/javascript' src='./coreplugins.js?" + globalConfig.version + "'>"));
+    org.ekstep.contentrenderer.loadPlugins(globalConfig.defaultPlugins, [], function() {
+        if (cb) cb()
     });
 };
 
@@ -52,12 +53,12 @@ org.ekstep.contentrenderer.startGame = function(appInfo) {
                  */
                 EkstepRendererAPI.dispatchEvent('renderer:player:init');
             } else {
-                if(!isbrowserpreview){
+                if (!isbrowserpreview) {
                     // TODO : Need to clean
-                    org.ekstep.contentrenderer.loadPlugins({"id": "org.ekstep.collection", "ver": "1.0", "type": 'plugin'}, [], function(){
-                         EkstepRendererAPI.dispatchEvent('renderer:collection:show');
-                    });  
-                }else{
+                    org.ekstep.contentrenderer.loadPlugins({ "id": "org.ekstep.collection", "ver": "1.0", "type": 'plugin' }, [], function() {
+                        EkstepRendererAPI.dispatchEvent('renderer:collection:show');
+                    });
+                } else {
                     console.log("SORRY COLLECTION PREVIEW IS NOT AVAILABEL");
                 }
             }
@@ -76,7 +77,7 @@ org.ekstep.contentrenderer.addRepos = function() {
     EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, {
         path: obj.config.repos,
         position: 0
-    });    
+    });
 };
 
 /**
@@ -91,8 +92,8 @@ org.ekstep.contentrenderer.loadExternalPlugins = function(cb) {
             console.info('External plugins are loaded');
             if (cb) cb();
         });
-    }else{
-        if(cb) cb();
+    } else {
+        if (cb) cb();
     }
 };
 
@@ -131,8 +132,8 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
         EkstepRendererAPI.renderContent(contentObj);
     } else {
         // If renderer is not running launch the framework from start
-        if(configuration){ // Deep clone of configuration. To avoid object refrence issue.
-            var configurationObj = JSON.parse(JSON.stringify(configuration)); 
+        if (configuration) { // Deep clone of configuration. To avoid object refrence issue.
+            var configurationObj = JSON.parse(JSON.stringify(configuration));
         }
         if (_.isUndefined(configurationObj.context)) {
             configurationObj.context = {};
@@ -144,9 +145,9 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
             configurationObj.context.contentId = getUrlParameter("id");
         }
         setGlobalConfig(configurationObj);
-        GlobalContext.game = { id: configurationObj.contentId || GlobalContext.game.id, ver: (configurationObj.metadata && configurationObj.metadata.pkgVersion) || '1.0'};
+        GlobalContext.game = { id: configurationObj.contentId || GlobalContext.game.id, ver: (configurationObj.metadata && configurationObj.metadata.pkgVersion) || '1.0' };
         GlobalContext.game.ver = GlobalContext.game.ver.toString();
-        GlobalContext.user = { uid: configurationObj.uid};
+        GlobalContext.user = { uid: configurationObj.uid };
 
         addWindowUnloadEvent();
         /**
@@ -174,7 +175,12 @@ org.ekstep.contentrenderer.initPlugins = function(host, repoRelativePath) {
     host = _.isUndefined(host) ? '' : host;
     var pluginRepo = host + repoRelativePath;
     var globalConfig = EkstepRendererAPI.getGlobalConfig();
-    var pfConfig = {env: "renderer", async: async,build_number:globalConfig.version, pluginRepo: pluginRepo, repos: [org.ekstep.pluginframework.publishedRepo]
+    var pfConfig = {
+        env: "renderer",
+        async: async,
+        build_number: globalConfig.version,
+        pluginRepo: pluginRepo,
+        repos: [org.ekstep.pluginframework.publishedRepo]
     };
     org.ekstep.pluginframework.initialize(pfConfig);
 };
@@ -324,11 +330,11 @@ org.ekstep.contentrenderer.device = function() {
     var globalconfig = EkstepRendererAPI.getGlobalConfig();
     if (isMobile) {
         if (globalconfig.metadata) {
-            org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function () {
+            org.ekstep.contentrenderer.setContentMetadata(globalconfig.metadata, function() {
                 org.ekstep.contentrenderer.startGame(content.metadata);
             });
         } else {
-            org.ekstep.contentrenderer.getContentMetadata(globalconfig.contentId, function () {
+            org.ekstep.contentrenderer.getContentMetadata(globalconfig.contentId, function() {
                 org.ekstep.contentrenderer.startGame(content.metadata);
             });
         }

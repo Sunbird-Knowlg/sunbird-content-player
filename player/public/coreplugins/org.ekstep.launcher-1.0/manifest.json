@@ -6,7 +6,10 @@
     "description": "",
     "publishedDate": "",
     "renderer": {
-        "main": "renderer/plugin.js"
+        "main": "renderer/plugin.js",
+        "views": [
+            { "template": "./templates/renderer.html", "controller": "./js/rendererApp.js" }
+        ]
     }
 
 }
