@@ -315,7 +315,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     });
 
                 });
-
             });
         } else {
             showToaster('error', "Page not found");
