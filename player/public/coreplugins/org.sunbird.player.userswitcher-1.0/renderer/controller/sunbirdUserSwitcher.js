@@ -39,7 +39,7 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
         }
 
         $scope.getUsersList = function() {
-            org.ekstep.service.content.getAllGroupUsers().then(function(usersData) {
+            org.ekstep.service.content.getAllUserProfile().then(function(usersData) {
                 $rootScope.users = usersData;
                 if ($rootScope.users.length == 0)
                     $rootScope.users.push($rootScope.currentUser);

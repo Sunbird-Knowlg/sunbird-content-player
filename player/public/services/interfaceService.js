@@ -217,13 +217,6 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
                 });
         });
     },
-    getAllGroupUsers: function() {
-        return new Promise(function(resolve, reject) {
-            $.getJSON("assets/user_list/group_user_list.json", function(data) {
-                resolve(data);
-            });
-        });
-    },
     getUser: function(uid) {
 
     },

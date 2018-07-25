@@ -55,14 +55,6 @@ org.ekstep.service.web = new (org.ekstep.service.mainService.extend({
         });
     },
 
-    getAllGroupUsers: function() {
-        return new Promise(function(resolve, reject) {
-            $.getJSON("assets/user_list/group_user_list.json", function(data) {
-                resolve(data);
-            })
-        });
-    },
-
     setUser: function(uid) {
         return new Promise(function(resolve, reject) {
             resolve(true);
