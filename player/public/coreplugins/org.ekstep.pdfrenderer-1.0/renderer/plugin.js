@@ -7,9 +7,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     PDF_DOC: undefined,
     CANVAS_CTX: undefined,
     context: undefined,
-    stageId:[],
+    stageId: [],
     heartBeatData: {},
-    enableHeartBeatEvent:true,
+    enableHeartBeatEvent: true,
     initLauncher: function(manifestData) {
         console.info('PDF Renderer init', manifestData)
         this._manifest = manifestData;
@@ -29,8 +29,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         context = this;
         var data = _.clone(content);
         this.initContentProgress();
-            var path = undefined;
-            var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
+        var path = undefined;
+        var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         if (window.cordova || !isbrowserpreview) {
             var prefix_url = globalConfigObj.basepath || '';
             path = prefix_url + "/" + data.artifactUrl + "?" + new Date().getSeconds();
@@ -68,7 +68,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.dispatchEvent("renderer:splash:hide");
         var pdfMainContainer = document.createElement("div");
         pdfMainContainer.id = "pdf-main-container";
-         
+
         var pdfLoader = document.createElement("div");
         pdfLoader.id = "pdf-loader";
         pdfLoader.textContent = "Loading document ...";
@@ -174,24 +174,24 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             var searchText = document.getElementById("pdf-find-text");
             console.log("SEARCH TEXT", searchText.value);
             EkstepRendererAPI.getTelemetryService().interact("TOUCH", "navigate", "TOUCH", {
-            stageId: context.CURRENT_PAGE.toString(),
-            subtype: ''
-        });
-        EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), searchText.value);
-        context.showPage(parseInt(searchText.value));
+                stageId: context.CURRENT_PAGE.toString(),
+                subtype: ''
+            });
+            EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), searchText.value);
+            context.showPage(parseInt(searchText.value));
         });
 
         $('#pdf-prev').on('click', function() {
             EkstepRendererAPI.getTelemetryService().interact("TOUCH", "previous", "TOUCH", {
-            stageId: context.CURRENT_PAGE.toString()
+                stageId: context.CURRENT_PAGE.toString()
             });
             context.previousNavigation();
         });
         $('#pdf-next').on('click', function() {
-        EkstepRendererAPI.getTelemetryService().interact("TOUCH", "next", "TOUCH", {
-        stageId: context.CURRENT_PAGE.toString()
-        });
-        context.nextNavigation();
+            EkstepRendererAPI.getTelemetryService().interact("TOUCH", "next", "TOUCH", {
+                stageId: context.CURRENT_PAGE.toString()
+            });
+            context.nextNavigation();
         });
         this.heartBeatData.stageId = context.CURRENT_PAGE.toString();
         context.showPDF(path, context.manifest);
@@ -215,17 +215,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         $("#pdf-meta").addClass('higheropacity');
         $("#page-count-container").addClass('higheropacity');
         $("#pdf-search-container").addClass('loweropacity');
-         EkstepRendererAPI.getTelemetryService().interact("TOUCH", "previous", null, {
+        EkstepRendererAPI.getTelemetryService().interact("TOUCH", "previous", null, {
             stageId: context.CURRENT_PAGE.toString()
-         });
-         EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE - 1).toString());
-         if (context.CURRENT_PAGE != 1)
-             context.showPage(--context.CURRENT_PAGE);
+        });
+        EkstepRendererAPI.getTelemetryService().navigate(context.CURRENT_PAGE.toString(), (context.CURRENT_PAGE - 1).toString());
+        if (context.CURRENT_PAGE != 1)
+            context.showPage(--context.CURRENT_PAGE);
     },
     showPDF: function(pdf_url) {
         $("#pdf-loader").show(); // use rendere loader
         PDFJS.disableWorker = true;
-        console.log("MANIFEST DATA",this.manifest)
+        console.log("MANIFEST DATA", this.manifest)
 
         // use api to resolve the plugin resource
         PDFJS.workerSrc = org.ekstep.pluginframework.pluginManager.resolvePluginResource(this.manifest.id, this.manifest.ver, "renderer/libs/pdf.worker.js");
@@ -254,7 +254,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     showPage: function(page_no) {
         var instance = this;
         EkstepRendererAPI.dispatchEvent("sceneEnter", context);
-         if (page_no <= context.TOTAL_PAGES && page_no > 0) {
+        if (page_no <= context.TOTAL_PAGES && page_no > 0) {
 
             context.PAGE_RENDERING_IN_PROGRESS = 1;
             context.CURRENT_PAGE = this.heartBeatData.stageId = page_no;
@@ -278,7 +278,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                 // Get viewport of the page at required scale
                 var viewport = page.getViewport(scale_required);
 
-
                 // Set canvas height
                 context.CANVAS.height = viewport.height;
 
@@ -287,7 +286,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     viewport: viewport
                 };
 
-                 // Render the page contents in the canvas
+                // Render the page contents in the canvas
                 page.render(renderContext).then(function() {
                     context.PAGE_RENDERING_IN_PROGRESS = 0;
 
@@ -298,20 +297,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     $("#pdf-canvas").show();
                     $("#page-loader").hide();
 
-                    setTimeout(function(){
-                    instance.applyOpacityToNavbar('low');
+                    setTimeout(function() {
+                        instance.applyOpacityToNavbar(false);
                     }, 2000);
 
-                    $("#pdf-meta").mouseenter(function() {
-                    instance.applyOpacityToNavbar('heigh');
+                    $("#pdf-meta").on("mouseenter click", function() {
+                        instance.applyOpacityToNavbar(true);
                     });
 
-                    $("#pdf-meta").on("mouseleave scroll",function() {
-                    instance.applyOpacityToNavbar('low');
-                    });
-
-                    $("#pdf-meta").click(function() {
-                        instance.applyOpacityToNavbar('heigh');
+                    $("#pdf-meta").on("mouseleave scroll", function() {
+                        instance.applyOpacityToNavbar(false);
                     });
 
                 });
@@ -322,16 +317,16 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             $("#page-loader").hide();
             //$("#pdf-canvas").hide();
         }
-     },
-    applyOpacityToNavbar: function(opacity){
-        if(opacity === 'low'){
+    },
+    applyOpacityToNavbar: function(opacity) {
+        if (!opacity) {
             $("#pdf-meta").addClass('loweropacity');
             $("#page-count-container").addClass('loweropacity');
             $("#pdf-search-container").addClass('loweropacity');
             $("#pdf-meta").removeClass('higheropacity');
             $("#page-count-container").removeClass('higheropacity');
             $("#pdf-search-container").removeClass('higheropacity');
-        }else{
+        } else {
             $("#pdf-meta").addClass('higheropacity');
             $("#page-count-container").addClass('higheropacity');
             $("#pdf-search-container").addClass('higheropacity');
@@ -340,17 +335,17 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             $("#pdf-search-container").removeClass('loweropacity');
         }
     },
-    initContentProgress: function(){
+    initContentProgress: function() {
         var instance = this;
-        EkstepRendererAPI.addEventListener("sceneEnter",function(event){
+        EkstepRendererAPI.addEventListener("sceneEnter", function(event) {
             instance.stageId.push(event.target.CURRENT_PAGE);
         });
     },
-    contentProgress:function(){
+    contentProgress: function() {
         var totalStages = this.TOTAL_PAGES;
         var currentStageIndex = _.size(_.uniq(this.stageId)) || 1;
         return this.progres(currentStageIndex, totalStages);
     }
- });
+});
 
 //# sourceURL=PDFRenderer.js
