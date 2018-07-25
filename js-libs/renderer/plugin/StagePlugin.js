@@ -18,7 +18,7 @@ var StagePlugin = Plugin.extend({
     timeInstance: {},
     initPlugin: function(data) {
         var instance = this;
-        //TODO: Should be released in April Release
+        //Should be released in April Release
         this.destroyTimeInstance(data);
         this._inputs = [];
         this.params = {};
@@ -75,7 +75,7 @@ var StagePlugin = Plugin.extend({
                 });
             }
         }
-        //TODO: Should be released in April Release
+        // Should be released in April Release
         var isStageLoaded;
         if (!_.isUndefined(AssetManager.strategy)) {
             isStageLoaded = AssetManager.strategy.isStageAssetsLoaded(data.id);
@@ -105,7 +105,6 @@ var StagePlugin = Plugin.extend({
         }
         this.invokeChildren(data, this, this, this._theme);
     },
-    //TODO: Should be released in April Release
     destroyTimeInstance: function(data) {
         if (Renderer.theme && Renderer.theme.getStagesToPreLoad) {
             var stages = Renderer.theme.getStagesToPreLoad(data);
@@ -282,7 +281,6 @@ var StagePlugin = Plugin.extend({
                 if (result) {
                     valid = result.pass;
                 }
-                //TODO: setParam should use, but not working
                 this._currentState["isEvaluated"] = true;
                 EventBus.dispatch("evaluated", result);
 

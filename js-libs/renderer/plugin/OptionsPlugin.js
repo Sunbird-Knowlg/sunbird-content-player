@@ -101,7 +101,7 @@ var OptionsPlugin = Plugin.extend({
     			}
     		}
     	}
-        // TODO: check why did we add this delete statements?
+        // check why did we add this delete statements?
         // delete instance._data.events;
         // delete instance._data.event;
     }

@@ -70,8 +70,6 @@ function contentExitCall() {
     }
 }
 
-// TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
-// So, change exitApp to do the same.
 function exitApp(stageId) {
     if(!stageId){
         stageId = getCurrentStageId();
@@ -200,7 +198,7 @@ function showToaster(toastType, message, customOptions) {
 }
 
 function addWindowUnloadEvent() {
-    // TODO: Use Iframe unload event
+    // Use Iframe unload event
     window.onunload = function(e) { //onbeforeunload is not dispatched when navigating to other page
         e = e || window.event;
         var y = e.pageY || e.clientY;

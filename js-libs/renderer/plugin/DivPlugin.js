@@ -31,8 +31,8 @@ var DivPlugin = HTMLPlugin.extend({
 
         var innerHtml = (data.__cdata || textStr);
 
-        // TODO: need to check child events working with the current div and it's children (if id is provided.)
-        // TODO: get the data from model - like how we are getting the JSON data for scene title.
+        // need to check child events working with the current div and it's children (if id is provided.)
+        // get the data from model - like how we are getting the JSON data for scene title.
         jQuery("#" + data.id).append(data.__cdata);
         this._div = div;
         this._self = new createjs.DOMElement(div);

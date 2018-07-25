@@ -93,7 +93,7 @@ app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state'
             // EkstepRendererAPI.dispatchEvent('renderer:player:show')
     });
 
-    /* TODO: Temporary solution so load content. init event is dispatched before loading/compiling this controller */
+    /* init event is dispatched before loading/compiling this controller */
     setTimeout(function() {
         if ($scope.isInitialized) {
             $scope.isInitialized = false;
