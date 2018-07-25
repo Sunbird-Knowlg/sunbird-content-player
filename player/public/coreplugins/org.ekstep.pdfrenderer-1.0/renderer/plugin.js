@@ -10,6 +10,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId: [],
     heartBeatData: {},
     enableHeartBeatEvent: true,
+    headerTimer: undefined,
     initLauncher: function(manifestData) {
         console.info('PDF Renderer init', manifestData)
         this._manifest = manifestData;
@@ -198,9 +199,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
 
     nextNavigation: function() {
-        $("#pdf-meta").addClass('higheropacity');
-        $("#page-count-container").addClass('higheropacity');
-        $("#pdf-search-container").addClass('loweropacity');
         EkstepRendererAPI.getTelemetryService().interact("TOUCH", "next", null, {
             stageId: context.CURRENT_PAGE.toString()
         });
@@ -212,9 +210,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     previousNavigation: function() {
-        $("#pdf-meta").addClass('higheropacity');
-        $("#page-count-container").addClass('higheropacity');
-        $("#pdf-search-container").addClass('loweropacity');
         EkstepRendererAPI.getTelemetryService().interact("TOUCH", "previous", null, {
             stageId: context.CURRENT_PAGE.toString()
         });
@@ -272,6 +267,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
 
             // Fetch the page
             context.PDF_DOC.getPage(page_no).then(function(page) {
+                if(instance.headerTimer) clearTimeout(instance.headerTimer);
                 // As the canvas is of a fixed width we need to set the scale of the viewport accordingly
                 var scale_required = context.CANVAS.width / page.getViewport(1).width;
 
@@ -297,16 +293,20 @@ org.ekstep.contentrenderer.baseLauncher.extend({
                     $("#pdf-canvas").show();
                     $("#page-loader").hide();
 
-                    setTimeout(function() {
+                    instance.applyOpacityToNavbar(true);
+                    instance.headerTimer = setTimeout(function() {
+                        clearTimeout(instance.headerTimer);
                         instance.applyOpacityToNavbar(false);
                     }, 2000);
 
-                    $("#pdf-meta").on("mouseenter click", function() {
-                        instance.applyOpacityToNavbar(true);
+                    $("#pdf-meta").on("mouseover click", function() {
+                        if($("#pdf-meta").hasClass("loweropacity"))
+                            instance.applyOpacityToNavbar(true);
                     });
 
                     $("#pdf-meta").on("mouseleave scroll", function() {
-                        instance.applyOpacityToNavbar(false);
+                        if($("#pdf-meta").hasClass("higheropacity"))
+                            instance.applyOpacityToNavbar(false);
                     });
 
                 });
@@ -319,20 +319,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     applyOpacityToNavbar: function(opacity) {
-        if (!opacity) {
-            $("#pdf-meta").addClass('loweropacity');
-            $("#page-count-container").addClass('loweropacity');
-            $("#pdf-search-container").addClass('loweropacity');
-            $("#pdf-meta").removeClass('higheropacity');
-            $("#page-count-container").removeClass('higheropacity');
-            $("#pdf-search-container").removeClass('higheropacity');
+        if (!opacity) {                     
+            $("#pdf-meta, #page-count-container, #pdf-search-container").removeClass('higheropacity');
+            $("#pdf-meta, #page-count-container, #pdf-search-container").addClass('loweropacity');
         } else {
-            $("#pdf-meta").addClass('higheropacity');
-            $("#page-count-container").addClass('higheropacity');
-            $("#pdf-search-container").addClass('higheropacity');
-            $("#pdf-meta").removeClass('loweropacity');
-            $("#page-count-container").removeClass('loweropacity');
-            $("#pdf-search-container").removeClass('loweropacity');
+            $("#pdf-meta, #page-count-container, #pdf-search-container").removeClass('loweropacity');
+            $("#pdf-meta, #page-count-container, #pdf-search-container").addClass('higheropacity');
         }
     },
     initContentProgress: function() {
