@@ -1,5 +1,5 @@
 org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
-    assessEvents: {},
+    telemetryEvents: {},
     init: function() {
     },
     getContentList: function(filter, childrenIds) {
@@ -242,13 +242,14 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
         });
     },
     cacheAssessEvent: function(qid, event) {
-        this.assessEvents[qid] = event;
+        this.telemetryEvents.assessEvents = this.telemetryEvents.assessEvents || {};
+        this.telemetryEvents.assessEvents[qid] = event;
     },
     getTelemetryAssessEvents: function() {
-        return this.assessEvents;
+        return this.telemetryEvents.assessEvents;
     },
     clearCacheAssessEvent: function() {
-        this.assessEvents = {};
+        this.telemetryEvents = {};
     }
 
 }));
