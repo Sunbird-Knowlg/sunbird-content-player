@@ -161,6 +161,7 @@ function startTelemetry(id, ver, cb) {
     correlationData.push({"id": CryptoJS.MD5(Math.random().toString()).toString(), "type": "ContentSession"});
     TelemetryService.init(GlobalContext.game, GlobalContext.user, correlationData, otherData).then(function(response) {
         TelemetryService.eventDispatcher = EkstepRendererAPI.dispatchEvent;
+        getTelemetryAssessEventsListener();
         if (!_.isUndefined(TelemetryService.instance)) {
             var tsObj = _.clone(TelemetryService);
             tsObj._start = JSON.stringify(tsObj.instance._start);
@@ -173,6 +174,25 @@ function startTelemetry(id, ver, cb) {
         EkstepRendererAPI.logErrorEvent(error, {'type':'system','action':'play','severity':'fatal'});
         showToaster('error', 'TelemetryService init failed.');
         exitApp();
+    });
+}
+
+//This method is used to Get TelemetryAssessEventsListener
+function getTelemetryAssessEventsListener() {
+    /* Here Listen Telemetry event and 
+       Get all ASSESS data and set it to cacheAssessEvent method.
+    */ 
+    const ASSESS = 'ASSESS';
+    EkstepRendererAPI.addEventListener('telemetryEvent',function(event) {
+        event = JSON.parse(event.target);
+        if(event.eid == ASSESS) {
+            org.ekstep.service.content.cacheAssessEvent(event.edata.item.id, event);
+        }
+    });
+
+    //When call replay button then make result object empty.
+    EkstepRendererAPI.addEventListener('renderer:content:replay',function() {
+        org.ekstep.service.content.clearCacheAssessEvent();
     });
 }
 
@@ -355,4 +375,5 @@ function mergeJSON(a, b) {
  window.contentNotAvailable = contentNotAvailable;
  window.checkStage = checkStage;
  window.objectAssign = objectAssign;
+ window.getTelemetryAssessEventsListener = getTelemetryAssessEventsListener;
 
