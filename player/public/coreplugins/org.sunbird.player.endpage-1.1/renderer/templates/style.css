@@ -367,3 +367,29 @@ table {
   text-transform: capitalize;
   text-decoration: none;
 }
+
+.contentButton {
+  height: 17vw;
+  overflow: hidden;
+}
+
+.contentDiv{
+  height: 10vw;
+  align-items: center;
+  display: flex;
+}
+
+.innerTextElement{
+  /* overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; */
+  word-break: break-all;
+}
+
+.buttonVisible {
+ visibility: visible;
+}
+
+.buttonHide {
+  visibility: hidden;
+}
