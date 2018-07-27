@@ -5,6 +5,7 @@ app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state'
     $scope.showPlayer = false;
     $scope.isInitialized = false;
     $scope.canvas = false;
+    $scope.constant = {'ASSESS':'ASSESS'};
     $scope.init = function() {
         if (_.isUndefined($rootScope.content)) {
             if (!_.isUndefined(content.metadata)) {
@@ -95,9 +96,8 @@ app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state'
     });
 
     EkstepRendererAPI.addEventListener('telemetryEvent',function(event) {
-        const ASSESS = 'ASSESS';
         event = JSON.parse(event.target);
-        if(event.eid == ASSESS) {
+        if(event.eid == $scope.constant.ASSESS) {
             org.ekstep.service.content.cacheTelemetryEvents(event.edata.item.id, event);
         }
     });
