@@ -225,6 +225,15 @@ table {
   text-align: center;
 }
 
+.ps-vertical-line {
+  margin: 2% 0%;
+}
+
+.vertical-line {
+  border-left: 2px solid #E7E7E7;
+  height: 100%;
+}
+
 .ps-score-list {
   margin: 0;
   padding: 0;
