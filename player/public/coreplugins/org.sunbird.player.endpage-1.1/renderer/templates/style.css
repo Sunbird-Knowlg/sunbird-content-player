@@ -388,11 +388,17 @@ table {
   display: flex;
 }
 
-.innerTextElement{
-  /* overflow: hidden;
+.multiline-ellipsis {
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3; */
-  word-break: break-all;
+}
+
+.ellipsis-three-line{
+  /* overflow: hidden;
+  display: -webkit-box;*/
+  -webkit-line-clamp: 3; 
 }
 
 .buttonVisible {
