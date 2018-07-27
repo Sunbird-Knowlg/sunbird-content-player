@@ -22,12 +22,12 @@
         <div class="ps-score">
           <div class="ps-score-content">
             <ul class="ps-score-list">
-              <li class="ps-score-list__item">
+              <li ng-if="score" class="ps-score-list__item">
                 <div class="ps-score-item">
                   <img ng-src="{{scoreIcon}}" class="ps-score-icon">
                   <div class="ps-score-detail">
                     <h2 class="ps-score-heading">SCORE</h2>
-                    <p class="ps-score-data endpage-score">{{score || '--/--'}}</p>
+                    <p class="ps-score-data endpage-score">{{score}}</p>
                   </div>
                 </div>
               </li>
