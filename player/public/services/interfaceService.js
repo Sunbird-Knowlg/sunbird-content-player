@@ -258,14 +258,14 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
             });
         });
     },
-    cacheAssessEvent: function(qid, event) {
+    cacheTelemetryEvents: function(qid, event) {
         this.telemetryEvents.assessEvents = this.telemetryEvents.assessEvents || {};
         this.telemetryEvents.assessEvents[qid] = event;
     },
     getTelemetryAssessEvents: function() {
         return this.telemetryEvents.assessEvents;
     },
-    clearCacheAssessEvent: function() {
+    clearTelemetryEvents: function() {
         this.telemetryEvents = {};
     }
 
