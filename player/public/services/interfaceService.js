@@ -1,5 +1,8 @@
 org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
     telemetryEvents: {},
+    constant: {
+        'ASSESS': 'assess'
+    },
     init: function() {
     },
     getContentList: function(filter, childrenIds) {
@@ -258,12 +261,18 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
             });
         });
     },
-    cacheTelemetryEvents: function(qid, event) {
-        this.telemetryEvents.assessEvents = this.telemetryEvents.assessEvents || {};
-        this.telemetryEvents.assessEvents[qid] = event;
+    cacheTelemetryEvents: function(event) {
+        if(event.eid.toLowerCase() == this.constant.ASSESS.toLowerCase()) {
+            this.telemetryEvents[this.constant.ASSESS] = this.telemetryEvents[this.constant.ASSESS] || {};
+            this.telemetryEvents[this.constant.ASSESS][event.edata.item.id] = event;
+        } else {
+            // var eventName = event.eid;
+            // this.telemetryEvents[eventName] = this.telemetryEvents[eventName] || {};
+            // _.extend(this.telemetryEvents[event.eid], event);
+        }
     },
-    getTelemetryAssessEvents: function() {
-        return this.telemetryEvents.assessEvents;
+    getTelemetryEvents: function() {
+        return this.telemetryEvents;
     },
     clearTelemetryEvents: function() {
         this.telemetryEvents = {};
