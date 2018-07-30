@@ -15,7 +15,7 @@
             {
                 "identifier": "org.ekstep.customeval",
                 "mimeType": "application/vnd.ekstep.ecml-archive",
-                "localData": {
+                "contentData": {
                     "questionnaire": null,
                     "appIcon": "fixture-stories/custom_eval/logo.png",
                     "subject": "literacy_v2",
@@ -40,7 +40,7 @@
             {
                 "identifier": "epub-demo",
                 "mimeType": "application/epub",
-                "localData": {
+                "contentData": {
                     "questionnaire": null,
                     "appIcon": "fixture-stories/bgae-fn/logo.png",
                     "subject": "literacy_v2",
@@ -65,7 +65,7 @@
             {
             "identifier": "org.ekstep.pratham-camal",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "stories/pratham-camal/logo.png",
                 "subject": "literacy_v2",
@@ -88,7 +88,7 @@
         },{
             "identifier": "org.ekstep.videorenderer",
             "mimeType": "video/webm",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "stories/pratham-camal/logo.png",
                 "subject": "literacy_v2",
@@ -113,7 +113,7 @@
         {
             "identifier": "org.ekstep.pdfrenderer",
             "mimeType": "application/pdf",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "stories/pratham-camal/logo.png",
                 "subject": "literacy_v2",
@@ -138,7 +138,7 @@
         {
             "identifier": "org.ekstep.youtube",
             "mimeType": "video/x-youtube",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "stories/pratham-camal/logo.png",
                 "subject": "literacy_v2",
@@ -163,7 +163,7 @@
         {
             "identifier": "org.ekstep.dependency",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/shapes/logo.png",
                 "subject": "literacy_v2",
@@ -188,7 +188,7 @@
         {
             "identifier": "org.ekstep.dependency",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/shapes/logo.png",
                 "subject": "literacy_v2",
@@ -212,7 +212,7 @@
         {
             "identifier": "org.ekstep.H5P_Sample",
             "mimeType": "application/vnd.ekstep.h5p-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/H5P_Sample/logo.png",
                 "subject": "literacy_v2",
@@ -236,7 +236,7 @@
         {
             "identifier": "org.ekstep.H5P_Course",
             "mimeType": "application/vnd.ekstep.h5p-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/H5P_Course/logo.png",
                 "subject": "literacy_v2",
@@ -260,7 +260,7 @@
         {
             "identifier": "org.ekstep.H5P_Quiz",
             "mimeType": "application/vnd.ekstep.h5p-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/H5P_Quiz/logo.png",
                 "subject": "literacy_v2",
@@ -284,7 +284,7 @@
         {
             "identifier": "org.ekstep.H5P_Questionnaire",
             "mimeType": "application/vnd.ekstep.h5p-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/H5P_Questionnaire/logo.png",
                 "subject": "literacy_v2",
@@ -308,7 +308,7 @@
         {
             "identifier": "org.ekstep.desertflip",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/shapes/logo.png",
                 "subject": "literacy_v2",
@@ -331,7 +331,7 @@
         },{
             "identifier": "org.ekstep.shapes",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/shapes/logo.png",
                 "subject": "literacy_v2",
@@ -354,7 +354,7 @@
         },{
             "identifier": "org.ekstep.depen",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "stories/shapes/logo.png",
                 "subject": "literacy_v2",
@@ -377,7 +377,7 @@
         },{
             "identifier": "org.ekstep.story.en.override_nav",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/override_nav/logo.png",
                 "subject": "literacy_v2",
@@ -400,7 +400,7 @@
         },{
             "identifier": "org.ekstep.item.templates",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/item-templates/logo.png",
                 "subject": "literacy_v2",
@@ -423,7 +423,7 @@
         },{
             "identifier": "org.ekstep.font",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/font/logo.png",
                 "subject": "literacy_v2",
@@ -450,7 +450,7 @@
         {
             "identifier": "org.ekstep.desertflip",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/desertflip/logo.png",
                 "subject": "literacy_v2",
@@ -473,7 +473,7 @@
         },{
             "identifier": "org.ekstep.debug",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/mar8/logo.png",
                 "subject": "literacy_v2",
@@ -496,7 +496,7 @@
         },{
             "identifier": "do_20043647",
             "mimeType": "application/vnd.ekstep.html-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/HTMLLauncher/logo.jpg",
                 "subject": "literacy_v2",
@@ -527,7 +527,7 @@
         },{
             "identifier": "do_20043647",
             "mimeType": "application/vnd.ekstep.html-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/HTMLContent/logo.png",
                 "subject": "literacy_v2",
@@ -557,7 +557,7 @@
         },{
             "identifier": "do_20045479",
             "mimeType": "application/vnd.ekstep.html-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/HTMLContent/logo.png",
                 "subject": "literacy_v2",
@@ -587,7 +587,7 @@
         },{
             "identifier": "org.ekstep.showcase.video",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/videos/logo.png",
                 "subject": "literacy_v2",
@@ -610,7 +610,7 @@
         },{
             "identifier": "org.ekstep.showcase.transitions",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/transitions/logo.png",
                 "subject": "literacy_v2",
@@ -633,7 +633,7 @@
         },{
             "identifier": "org.ekstep.space.add",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/space/logo.png",
                 "subject": "literacy_v2",
@@ -656,7 +656,7 @@
         },{
             "identifier": "org.ekstep.desert.add",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/desert/logo.png",
                 "subject": "literacy_v2",
@@ -679,7 +679,7 @@
         },{
             "identifier": "org.ekstep.verbs",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/verbs/logo.png",
                 "subject": "literacy_v2",
@@ -702,7 +702,7 @@
         },{
             "identifier": "org.ekstep.story.en.bandar",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/domain_3984_Bandar/logo.png",
                 "subject": "literacy_v2",
@@ -725,7 +725,7 @@
         },{
             "identifier": "org.ekstep.read-along",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/read-along/logo.png",
                 "subject": "literacy_v2",
@@ -748,7 +748,7 @@
         },{
             "identifier": "org.ekstep.contentplayer",
             "mimeType": "application/vnd.ekstep.content-collection",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/quizapp_bugs/logo.png",
                 "subject": "literacy_v2",
@@ -771,7 +771,7 @@
         },{
             "identifier": "org.ekstep.quiz.app.tests.renderer",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/test_cases/logo.png",
                 "subject": "literacy_v2",
@@ -795,7 +795,7 @@
         },{
             "identifier": "org.ekstep.custom.plugin",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/CustomPluginStory/logo.png",
                 "subject": "literacy_v2",
@@ -818,7 +818,7 @@
         },{
             "identifier": "org.ekstep.lit.noun",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/mar8/logo.png",
                 "subject": "literacy_v2",
@@ -841,7 +841,7 @@
         },{
             "identifier": "org.ekstep.lit.haircut.story",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/haircut_story/logo.png",
                 "subject": "literacy_v2",
@@ -864,7 +864,7 @@
         },{
             "identifier": "org.ekstep.lit.moon_cap.story",
             "mimeType": "application/vnd.ekstep.ecml-archive",
-            "localData": {
+            "contentData": {
                 "questionnaire": null,
                 "appIcon": "fixture-stories/the_moon_and_the_cap/logo.png",
                 "subject": "literacy_v2",

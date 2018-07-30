@@ -268,7 +268,22 @@ function logContentProgress(value) {
 function setGlobalConfig(configuration) {
     _.extend(configuration, configuration.context);  // TelemetryEvent is using globalConfig.context.sid/did
     _.extend(configuration, configuration.config);
-    (typeof configuration.metadata == "string") ? configuration.metadata = JSON.parse(configuration.metadata) : "";
+    if(typeof configuration.metadata == "string") {
+        configuration.metadata = JSON.parse(configuration.metadata);
+        if(configuration.metadata.contentData){
+            console.warn("Content Data available in metadata/manifest")
+            //TODO : mobile specific temporary fix release-1.9.0
+            var metadata = configuration.metadata.contentData;
+            _.extend(metadata,  _.pick(configuration.metadata, "hierarchyInfo", "isAvailableLocally"));
+
+            // Override the metadata object of intent with proper structure. 
+            // manifest & hierarchyInfo
+            configuration.metadata = metadata;
+        }
+    } 
+    else { 
+        configuration.metadata = "";
+    };
     if (!_.isUndefined(configuration.context.pdata) && !_.isUndefined(configuration.context.pdata.pid) && !configuration.context.pdata.pid.includes('.' + AppConfig.pdata.pid)) {
         configuration.context.pdata.pid = configuration.context.pdata.pid + '.' + AppConfig.pdata.pid;
     }

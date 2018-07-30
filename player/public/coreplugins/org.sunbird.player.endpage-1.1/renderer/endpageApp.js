@@ -103,10 +103,10 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
      */
     $scope.getRelevantContent = function(contentId){
         if (!isbrowserpreview) {
-            if(!_.has($scope.previousContent,contentId) && !_.has($scope.nextContent,contentId)){
+            if(!_.has($scope.previousContent, contentId) && !_.has($scope.nextContent, contentId)){
                 var requestBody = {
                     "contentIdentifier": contentId,
-                    "cdata": _.reject(GlobalContext.config.otherData.cdata,{type:'ContentSession'}),
+                    "hierarchyInfo": $rootScope.content.hierarchyInfo,
                     "next": true,
                     "prev": true
                 };
@@ -126,21 +126,33 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     /**
      * @description - to play next or previous content
      */
-    $scope.contentLaunch = function(contentType,contentId){
-        if (!isbrowserpreview) {
-            var playContent = (contentType === 'previous') ? $scope.previousContent[contentId] : $scope.nextContent[contentId];
+    $scope.contentLaunch = function(contentType, contentId) {
+        //if (!isbrowserpreview) {
+            var contentToPlay = (contentType === 'previous') ? $scope.previousContent[contentId] : $scope.nextContent[contentId];
+            // var contentMetadata = {};
+            // if(contentToPlay){
+            //     contentMetadata = contentToPlay.content.contentData;
+            //     _.extend(contentMetadata, contentToPlay.content.hierarchyInfo, contentToPlay.content.isAvailableLocally)
+            // }
             //Check content is available in device
-            org.ekstep.service.content.getContentAvailability(playContent.content.contentData.identifier)
-                .then(function(contentIsAvailable) {
-                    if (contentIsAvailable) {
-                        org.ekstep.contentrenderer.getContentMetadata(playContent.content.contentData.identifier, function(obj) {
+            //org.ekstep.service.content.getContentAvailability(playContent.content.contentData.identifier)
+                //  .then(function(contentIsAvailable) {
+                    if (contentToPlay.content.isAvailableLocally) {
+                        org.ekstep.contentrenderer.getContentMetadata(contentToPlay.content.identifier, function(metadata) {
                             EkstepRendererAPI.hideEndPage();
-                            $rootScope.content = window.content = obj;
-                            EkstepRendererAPI.dispatchEvent('renderer:player:init');
+                            var object = {
+                                'config': GlobalContext.config,
+                                'data': undefined,
+                                'metadata': metadata
+                            }
+                            // org.ekstep.contentrenderer.initializePreview(object)
+                            $rootScope.content = window.content = content = metadata;
+                            console.log("contentType: ", contentType, "metadata", content);
+                            org.ekstep.contentrenderer.startGame(metadata);
                         });
                     }
-                });
-        }
+                // });
+        //}
     };
 
     $scope.initEndpage = function() {
