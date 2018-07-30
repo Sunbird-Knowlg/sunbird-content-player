@@ -209,14 +209,14 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
         });
         return list;
     },
-    getAllUserProfile: function() {
+    getAllUserProfile: function(obj) {
         return new Promise(function(resolve, reject) {
-            org.ekstep.service.renderer.getAllUserProfile()
+            org.ekstep.service.renderer.getAllUserProfile(obj)
                 .then(function(data) {
                     resolve(data);
                 })
                 .catch(function(err) {
-                    console.error(AppErrors.contetnPathFetch, err);
+                    console.error("Error", err);
                     reject(err);
                 });
         });

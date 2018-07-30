@@ -21,8 +21,8 @@ genieservice.prototype.getCurrentUser = function() {
     return this.handleAction("getCurrentUser", []);
 }
 
-genieservice.prototype.getAllUserProfile = function() {
-    return this.handleAction("getAllUserProfile", []);
+genieservice.prototype.getAllUserProfile = function(obj) {
+    return this.handleAction("getAllUserProfile", [obj]);
 }
 
 genieservice.prototype.setUser = function(userId) {

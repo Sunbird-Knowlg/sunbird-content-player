@@ -1,3 +1,4 @@
+<ng-template id="sunbirdUserSwitch.html">
 <style>
 #sunbirdUserSwitchingModal .modal-content {
     background-color: #fefefe;
@@ -173,8 +174,8 @@ img.user-check{
                 <div class="userswitcher-container grid-item">
                     <div class="userswitcher-data">
                         <div class="inline-username-block">
-                            <p class="userswitcher-name">{{user.name || user.handle}}</p>
-                            <p class="userswitcher-class">{{user.class.toString() || "Class 0"}}</p>
+                            <p class="userswitcher-name">{{user.handle}}</p>
+                            <p class="userswitcher-class">{{user.grade.toString() || "Class 0"}}</p>
                         </div>
                         <div class="inline-block">
                             <img ng-show="user.selected" class="user-check" src="{{checkMarkIcon}}">
@@ -190,3 +191,4 @@ img.user-check{
         </div>
     </div>
 </div>
+</ng-template>

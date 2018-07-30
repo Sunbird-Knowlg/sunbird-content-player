@@ -10,6 +10,7 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
         $scope.playButton = 'Replay';
         $scope.showSunbirdUserSwitchModal = false;
         $scope.pluginInstance = {};
+        $scope.appContext = EkstepRendererAPI.getGlobalConfig().appContext;
         $scope.hideUserSwitchingModal = function() {
             $rootScope.safeApply(function() {
                 EkstepRendererAPI.removeEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideUserSwitchingModal, $scope);
@@ -39,7 +40,7 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
         }
 
         $scope.getUsersList = function() {
-            org.ekstep.service.content.getAllUserProfile().then(function(usersData) {
+            org.ekstep.service.content.getAllUserProfile($scope.appContext).then(function(usersData) {
                 $rootScope.users = usersData;
                 if ($rootScope.users.length == 0)
                     $rootScope.users.push($rootScope.currentUser);
@@ -50,7 +51,7 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
         }
 
         $scope.sortUserlist = function() {
-            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'name'), 'userIndex');
+            $rootScope.users = _.sortBy(_.sortBy($rootScope.users, 'handle'), 'userIndex');
         }
 
         // this function changes the selected user
@@ -225,9 +226,9 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
 
             if (_.isUndefined($rootScope.currentUser)) {
                 org.ekstep.service.content.getCurrentUser().then(function(data) {    
-                    if (_.isEmpty(data.name)) {
-                        data.name = "Anonymous";
-                        data.class = "Class 0";
+                    if (_.isEmpty(data.handle)) {
+                        data.handle = "Anonymous";
+                        data.grade = ["Class 0"];
                     }
                     $rootScope.currentUser = data;
                     $rootScope.currentUser.selected = true;
@@ -273,7 +274,13 @@ app.compileProvider.directive('sunbirdUserswitcher', function($rootScope, $compi
 
             scope.getUserSwitcherTemplate = function() {
                 var userSwitcherPluginInstance = EkstepRendererAPI.getPluginObjs("org.sunbird.player.userswitcher");
-                return userSwitcherPluginInstance._templatePath;
+                var config = EkstepRendererAPI.getGlobalConfig();
+                if (!config.isCorePluginsPackaged) {
+                    return userSwitcherPluginInstance._templatePath;
+                } else {
+                    return 'sunbirdUserSwitch.html';
+                }
+                
             }
         }
     }
