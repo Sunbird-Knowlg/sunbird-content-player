@@ -78,6 +78,7 @@ GlobalContext = {
                 if (url) {
                     try {
                         contextObj[param] = JSON.parse(url);
+                        console.log("contextObj", contextObj[param]);
                     } catch(e) {
                         contextObj[param] = url;
                     }

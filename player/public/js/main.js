@@ -270,20 +270,19 @@ function setGlobalConfig(configuration) {
     _.extend(configuration, configuration.config);
     if(typeof configuration.metadata == "string") {
         configuration.metadata = JSON.parse(configuration.metadata);
-        if(configuration.metadata.contentData){
-            console.warn("Content Data available in metadata/manifest")
-            //TODO : mobile specific temporary fix release-1.9.0
-            var metadata = configuration.metadata.contentData;
-            _.extend(metadata,  _.pick(configuration.metadata, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
-            metadata.basepath = metadata.basePath;
-            // Override the metadata object of intent with proper structure. 
-            // manifest & hierarchyInfo
-            configuration.metadata = metadata;
-        }
-    } 
-    else { 
-        configuration.metadata = "";
-    };
+    }
+    if(configuration.metadata.contentData){
+        console.warn("Content Data available in metadata/manifest")
+        //TODO : mobile specific temporary fix release-1.9.0
+        var metadata = configuration.metadata.contentData;
+        _.extend(metadata,  _.pick(configuration.metadata, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
+        metadata.basepath = metadata.basePath;
+        configuration.basepath = configuration.basePath;
+        // Override the metadata object of intent with proper structure. 
+        // manifest & hierarchyInfo
+        configuration.metadata = metadata;
+    }
+    
     if (!_.isUndefined(configuration.context.pdata) && !_.isUndefined(configuration.context.pdata.pid) && !configuration.context.pdata.pid.includes('.' + AppConfig.pdata.pid)) {
         configuration.context.pdata.pid = configuration.context.pdata.pid + '.' + AppConfig.pdata.pid;
     }
