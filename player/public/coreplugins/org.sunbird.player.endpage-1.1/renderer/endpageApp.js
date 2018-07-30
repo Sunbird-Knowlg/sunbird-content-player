@@ -142,7 +142,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                 EkstepRendererAPI.dispatchEvent('renderer:player:show');
         } else {
             if(globalConfig.deeplinkBasePath){
-                var deepLinkURL = globalConfig.deeplinkBasePath + "c/" + $rootScope.content.identifier + "?hierarchyInfo=" + JSON.stringify($rootScope.content.hierarchyInfo);
+                var deepLinkURL = globalConfig.deeplinkBasePath + "c/" + contentToPlay.content.identifier + "?hierarchyInfo=" + JSON.stringify($rootScope.content.hierarchyInfo);
                 window.open(deepLinkURL, "_system");
             } else {
                 console.warn(window.AppLables.noDeeplinkBasePath);

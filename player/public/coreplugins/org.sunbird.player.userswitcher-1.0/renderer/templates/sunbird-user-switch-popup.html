@@ -75,11 +75,9 @@
     padding: 4px 0px 11px 9px;
 }
 #sunbirdUserSwitchingModal .modal-content .user-header .tablinks {
-    padding: 7px 16px 0px 21px;
     text-transform: uppercase;
-    min-height: 100%;
-    padding-top: 4px;
-    /*font-weight: bold;*/
+    margin-top: 15%;
+    font-weight: 700;
 }
 #sunbirdUserSwitchingModal .modal-content .model-butttons {
     display: table;
@@ -162,7 +160,7 @@ img.user-check{
     <div class="modal-content">
         <div class="user-header tab">
             <div class="inline-block">
-                <button class="tablinks" id="usersButton" ng-click="initializeUser($event, 'users')">Users</button>
+                <h1 class="tablinks" id="usersButton" ng-click="initializeUser($event, 'users')">Users</h1>
             </div>
             <div class="close-block">
                 <span ng-click="closeUserSwitchingModal()"><img class="close" src="{{closeIcon}}"></span>
