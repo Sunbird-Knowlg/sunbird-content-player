@@ -16,6 +16,16 @@
                 "identifier": "org.ekstep.customeval",
                 "mimeType": "application/vnd.ekstep.ecml-archive",
                 "contentData": {
+                    "hierarchyInfo": [
+                        {
+                          "contentType": "textbook",
+                          "identifier": "do_2125251490189148161635"
+                        },
+                        {
+                          "contentType": "textbookunit",
+                          "identifier": "do_2125251493823201281636"
+                        }
+                      ],
                     "questionnaire": null,
                     "appIcon": "fixture-stories/custom_eval/logo.png",
                     "subject": "literacy_v2",

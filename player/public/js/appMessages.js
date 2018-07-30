@@ -56,5 +56,5 @@ window.AppLables = {
     "anonymousUserName": "Anonymous",
 	"backButtonText": "Would you like to leave this content ?",
 	"tryAgain": "Try Again",
-	
+	"noDeeplinkBasePath": "Content is not downloaded & 'deeplinkBasePath' is not defined"
 }

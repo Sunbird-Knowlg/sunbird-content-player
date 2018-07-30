@@ -88,14 +88,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         $scope.setTotalTimeSpent();
         $scope.getTotalScore($rootScope.content.identifier);
         $scope.getRelevantContent($rootScope.content.identifier);
-        if (TelemetryService.instance.telemetryStartActive()) {
-                var telemetryEndData = {};
-                telemetryEndData.stageid = getCurrentStageId();
-                telemetryEndData.progress = logContentProgress();
-                TelemetryService.end(telemetryEndData);
-        } else {
-              console.warn('Telemetry service end is already logged Please log start telemetry again');
-        }
     };
     
     /**
@@ -127,32 +119,36 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
      * @description - to play next or previous content
      */
     $scope.contentLaunch = function(contentType, contentId) {
-        //if (!isbrowserpreview) {
-            var contentToPlay = (contentType === 'previous') ? $scope.previousContent[contentId] : $scope.nextContent[contentId];
-            // var contentMetadata = {};
-            // if(contentToPlay){
-            //     contentMetadata = contentToPlay.content.contentData;
-            //     _.extend(contentMetadata, contentToPlay.content.hierarchyInfo, contentToPlay.content.isAvailableLocally)
-            // }
-            //Check content is available in device
-            //org.ekstep.service.content.getContentAvailability(playContent.content.contentData.identifier)
-                //  .then(function(contentIsAvailable) {
-                    if (contentToPlay.content.isAvailableLocally) {
-                        org.ekstep.contentrenderer.getContentMetadata(contentToPlay.content.identifier, function(metadata) {
-                            EkstepRendererAPI.hideEndPage();
-                            var object = {
-                                'config': GlobalContext.config,
-                                'data': undefined,
-                                'metadata': metadata
-                            }
-                            // org.ekstep.contentrenderer.initializePreview(object)
-                            $rootScope.content = window.content = content = metadata;
-                            console.log("contentType: ", contentType, "metadata", content);
-                            org.ekstep.contentrenderer.startGame(metadata);
-                        });
-                    }
-                // });
-        //}
+        var contentToPlay = (contentType === 'previous') ? $scope.previousContent[contentId] : $scope.nextContent[contentId];
+        var contentMetadata = {};
+        if(contentToPlay){
+            contentMetadata = contentToPlay.content.contentData;
+            _.extend(contentMetadata,  _.pick(contentToPlay.content, "hierarchyInfo", "isAvailableLocally", "basePath"));
+            contentMetadata.basepath = contentMetadata.basePath;
+        }
+
+        if (contentToPlay.content.isAvailableLocally) {
+                EkstepRendererAPI.hideEndPage();
+                var object = {
+                    'config': GlobalContext.config,
+                    'data': undefined,
+                    'metadata': contentMetadata
+                }
+                GlobalContext.config = mergeJSON(AppConfig, contentMetadata);
+                window.globalConfig = GlobalContext.config;
+
+                $rootScope.content = window.content = content = contentMetadata;
+                org.ekstep.contentrenderer.initializePreview(object)
+                EkstepRendererAPI.dispatchEvent('renderer:player:show');
+        } else {
+            globalConfig.deeplinkBasePath = "ekstep://";
+            if(globalConfig.deeplinkBasePath){
+                var deepLinkURL = globalConfig.deeplinkBasePath + "c/" + $rootScope.content.identifier + "?hierarchyInfo=" + JSON.stringify($rootScope.content.hierarchyInfo);
+                window.open(deepLinkURL, "_system");
+            } else {
+                console.warn(window.AppLables.noDeeplinkBasePath);
+            }
+        }
     };
 
     $scope.initEndpage = function() {

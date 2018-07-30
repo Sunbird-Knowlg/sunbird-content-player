@@ -274,8 +274,8 @@ function setGlobalConfig(configuration) {
             console.warn("Content Data available in metadata/manifest")
             //TODO : mobile specific temporary fix release-1.9.0
             var metadata = configuration.metadata.contentData;
-            _.extend(metadata,  _.pick(configuration.metadata, "hierarchyInfo", "isAvailableLocally"));
-
+            _.extend(metadata,  _.pick(configuration.metadata, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
+            metadata.basepath = metadata.basePath;
             // Override the metadata object of intent with proper structure. 
             // manifest & hierarchyInfo
             configuration.metadata = metadata;
