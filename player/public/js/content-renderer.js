@@ -144,6 +144,9 @@ org.ekstep.contentrenderer.initializePreview = function(configuration) {
         if (_.isUndefined(configurationObj.context.contentId)) {
             configurationObj.context.contentId = getUrlParameter("id");
         }
+        if (_.isUndefined(configurationObj.appContext)) {
+            configurationObj.appContext = {};
+        }
         setGlobalConfig(configurationObj);
         GlobalContext.game = { id: configurationObj.contentId || GlobalContext.game.id, ver: (configurationObj.metadata && configurationObj.metadata.pkgVersion) || '1.0' };
         GlobalContext.game.ver = GlobalContext.game.ver.toString();
