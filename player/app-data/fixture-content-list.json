@@ -21,6 +21,7 @@
                     "subject": "literacy_v2",
                     "description": "epub - Beyond Good and Evil",
                     "name": "Custom Eval",
+                    "owner": "Vinu Kumar V S",
                     "downloadUrl": "",
                     "checksum": null,
                     "loadingMessage": "Without requirements or design, programming is the art of adding bugs to an empty text file. ...",

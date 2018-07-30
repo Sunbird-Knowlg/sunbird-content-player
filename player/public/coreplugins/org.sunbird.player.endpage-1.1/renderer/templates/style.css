@@ -70,6 +70,7 @@ table {
 }
 
 .ps-content {
+  font-family: NotoSans, sans-serif;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -87,7 +88,6 @@ table {
 }
 
 .ps-heading {
-  font-family: "NotoSans-Bold", sans-serif;
   font-size: 2.8vw;
   margin-bottom: 2vw;
   font-weight: 700;
@@ -95,22 +95,22 @@ table {
 }
 
 .ps-subheading {
-  font-family: "NotoSans-Regular", sans-serif;
   font-size: 2vw;
   color: #333333;
   margin-bottom: 5px;
 }
 
 .ps-author {
-  font-family: "NotoSans-Regular", sans-serif;
   font-size: 1.6vw;
-  margin: 10px auto;
+  /* margin: 10px auto; */
+  padding-top: 4%;
   color: #979797;
 }
 
 .ps-header {
   text-align: center;
-  padding: 3vw 0 2vw 0;
+  margin: 1%;
+  /* padding: 3vw 0 2vw 0; */
 }
 
 .ps-arrow {
@@ -123,10 +123,12 @@ table {
   display: -ms-flexbox !important;
   display: flex !important;
   width: 100%;
+  margin: 5%;
 }
 
 .ps-nav {
-  width: 19.4%;
+  width: 22%;
+  margin-top: -3%;
   box-shadow: 0 0 4px 1px #bcbcbc;
 }
 
@@ -144,12 +146,10 @@ table {
 
 .ps-nav-subtitle {
   color: #ffffff;
-  font-family: "NotoSans-Regular", sans-serif;
   font-size: 1.6vw;
 }
 
 .ps-nav-title {
-  font-family: "NotoSans-Bold", sans-serif;
   font-size: 2.4vw;
   color: #ffffff;
   margin: 3px 0;
@@ -172,6 +172,7 @@ table {
 .ps-nav-body {
   background-color: #333333;
   padding: 1.2vw 2vw;
+  height: 75%;
 }
 
 .ps-nav-wrapper {
@@ -186,26 +187,25 @@ table {
 .ps-score-content {
   font-weight: bold;
   position: absolute;
+  width: 50%;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   background-color: #f3f3f3;
-  border-radius: 4px;
+  border-radius: 5px;
   padding: 1vw 0vw;
 }
 
 .ps-chapter-text {
   color: #ffffff;
-  font-family: "NotoSans-Regular", sans-serif;
-  font-size: 1.9vw;
+  font-size: 1.7vw;
   line-height: 2.5vw;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .ps-chapter-detail {
   color: #ffffff;
-  font-family: "NotoSans-Regular", sans-serif;
   font-weight: 400;
   font-size: 1.7vw;
   line-height: 2.5vw;
@@ -214,16 +214,24 @@ table {
 .ps-footer {
   position: absolute;
   bottom: 0;
-  padding: 1%;
+  padding: 2%;
   width: 100%;
 }
 
 .ps-footer-text {
-  font-family: "NotoSans-SemiBold", sans-serif;
   /*color: #979797;*/
   font-weight: 400;
   font-size: 1.2vw;
   text-align: center;
+}
+
+.ps-vertical-line {
+  margin: 2% 0%;
+}
+
+.vertical-line {
+  border-left: 2px solid #E7E7E7;
+  height: 100%;
 }
 
 .ps-score-list {
@@ -236,7 +244,7 @@ table {
 
 .ps-score-list__item {
   padding: 0 6vw;
-  width: 50%;
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -248,6 +256,7 @@ table {
 
 .ps-score-list__item:last-child {
   border: none;
+  width: 100%;
 }
 
 .ps-score-icon {
@@ -255,26 +264,26 @@ table {
   height: 3.5vw;
 }
 .ps-score-detail{
-    padding: 15px;
+  padding: 20% 0%;
+  width: 10vw;
+  text-align: center;
 }
 .ps-score-heading {
-  font-family: "NotoSans-Bold", sans-serif;
   color: #979797;
-  font-size: 1.4vw;
-  text-align: center;
+  font-size: 1.5vw;
   padding: 1%;
   word-wrap: normal;
 }
 
 .ps-score-data {
   color: #979797;
-  font-family: "NotoSans-Regular", sans-serif;
   font-weight: 400;
   padding: 1vw 1vw 0 1vw;
-  /*font-size: 2vw;*/
+  font-size: 2.6vw;
 }
 
 .ps-score-item {
+  margin: 0 auto;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -289,7 +298,6 @@ table {
   border-radius: 50%;
   width: 5.9vw;
   color: #ffffff;
-  font-family: "NotoSans-Bold", sans-serif;
   font-size: 4.5vw;
   font-weight: 900;
   text-decoration: none;
@@ -337,7 +345,7 @@ table {
   display: -ms-flexbox;
   display: flex;
   width: 70vw;
-  padding-top: 1vw;
+  /* padding-top: 1vw; */
   -ms-flex-pack: distribute;
       justify-content: space-around;
 }
@@ -352,7 +360,6 @@ table {
 }
 
 .ps-action-text {
-  font-family: "NotoSans-Regular", sans-serif;
   font-weight: 400;
   text-transform: capitalize;
   font-size: 1.6vw;
@@ -365,8 +372,39 @@ table {
 .ps-link, .ps-link:hover, .ps-link:focus {
   color: #007aff;
   font-size: 1.2vw;
-  font-family: "NotoSans-Regular", sans-serif;
   font-weight: 700;
   text-transform: capitalize;
   text-decoration: none;
+}
+
+.contentButton {
+  height: 17vw;
+  overflow: hidden;
+}
+
+.contentDiv{
+  height: 10vw;
+  align-items: center;
+  display: flex;
+}
+
+.multiline-ellipsis {
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+}
+
+.ellipsis-three-line{
+  /* overflow: hidden;
+  display: -webkit-box;*/
+  -webkit-line-clamp: 3; 
+}
+
+.buttonVisible {
+ visibility: visible;
+}
+
+.buttonHide {
+  visibility: hidden;
 }

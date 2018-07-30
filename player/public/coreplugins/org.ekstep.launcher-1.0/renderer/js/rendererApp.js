@@ -88,9 +88,15 @@ app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state'
      * @memberof 'org.ekstep.launcher'
      */
     EkstepRendererAPI.addEventListener('renderer:content:replay', function() {
+        org.ekstep.service.content.clearTelemetryEvents();
         $rootScope.$broadcast('renderer:overlay:unmute');
         $scope.showCanvasPlayer()
             // EkstepRendererAPI.dispatchEvent('renderer:player:show')
+    });
+
+    EkstepRendererAPI.addEventListener('telemetryEvent',function(event) {
+        event = JSON.parse(event.target);
+        org.ekstep.service.content.cacheTelemetryEvents(event);
     });
 
     /* TODO: Temporary solution so load content. init event is dispatched before loading/compiling this controller */

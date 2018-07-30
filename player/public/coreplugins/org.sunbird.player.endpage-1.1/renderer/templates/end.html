@@ -7,30 +7,31 @@
         <p class="ps-author" ng-if="content.owner">Author: <span>{{content.owner}}</span></p>
       </div>
       <div class="ps-body">
-        <div class="ps-nav left" ng-show="previousContent[content.identifier]" ng-click="contentLaunch('previous',content.identifier)">
+        <div class="ps-nav left contentButton" ng-class="previousContent[content.identifier] ? 'buttonVisible' : 'buttonHide'" ng-click="contentLaunch('previous',content.identifier)">
           <a class="ps-nav-header textdeco-none">
             <img ng-src="{{leftArrowIcon}}" alt="prev" class="ps-arrow">
             <div class="ps-nav-wrappe ps-text-right">
-              <p class="ps-nav-subtitle">Goto</p>
+              <p class="ps-nav-subtitle">Go to</p>
               <h2 class="ps-nav-title">Previous</h2>
             </div>
           </a>
           <div class="ps-nav-body ps-text-right">
-            <p class="ps-chapter-text chapter-section">{{previousContent[content.identifier].content.contentData.name}}</p>
+            <p class="ps-chapter-text chapter-section multiline-ellipsis ellipsis-three-line" >{{ previousContent[content.identifier].content.contentData.name.length > 40 ? previousContent[content.identifier].content.contentData.name.substring(0,40)+"..." : previousContent[content.identifier].content.contentData.name}}</p>
           </div>
         </div>
         <div class="ps-score">
           <div class="ps-score-content">
             <ul class="ps-score-list">
-              <li class="ps-score-list__item">
+              <li ng-if="score" class="ps-score-list__item">
                 <div class="ps-score-item">
                   <img ng-src="{{scoreIcon}}" class="ps-score-icon">
                   <div class="ps-score-detail">
                     <h2 class="ps-score-heading">SCORE</h2>
-                    <p class="ps-score-data endpage-score">{{score || '--/--'}}</p>
+                    <p class="ps-score-data endpage-score">{{score}}</p>
                   </div>
                 </div>
               </li>
+              <li class="ps-vertical-line"><div class="vertical-line"></div></li>
               <li class="ps-score-list__item">
                 <div class="ps-score-item">
                   <img ng-src="{{clockIcon}}" class="ps-score-icon">
@@ -43,16 +44,16 @@
             </ul>
           </div>
         </div>
-        <div class="ps-nav right" ng-show="nextContent[content.identifier]" ng-click="contentLaunch('next',content.identifier)">
+        <div class="ps-nav right contentButton" ng-class="nextContent[content.identifier] ? 'buttonVisible' : 'buttonHide'" ng-click="contentLaunch('next',content.identifier)">
           <a class="ps-nav-header textdeco-none">
             <div class="ps-nav-wrapper">
-              <p class="ps-nav-subtitle">Goto</p>
+              <p class="ps-nav-subtitle">Go to</p>
               <h2 class="ps-nav-title">Next</h2>
             </div>
             <img ng-src="{{rightArrowIcon}}" alt="prev" class="ps-arrow">
           </a>
           <div class="ps-nav-body ps-text-left">
-            <p class="ps-chapter-text chapter-section">{{nextContent[content.identifier].content.contentData.name}}</p>
+            <p class="ps-chapter-text chapter-section multiline-ellipsis ellipsis-three-line">{{ nextContent[content.identifier].content.contentData.name.length > 40 ? nextContent[content.identifier].content.contentData.name.substring(0,40)+"..." : nextContent[content.identifier].content.contentData.name}}</p>
           </div>
         </div>
       </div>

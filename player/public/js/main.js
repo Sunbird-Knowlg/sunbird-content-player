@@ -7,10 +7,6 @@
 
 document.body.addEventListener("logError", telemetryError, false);
 
-
-
-
-
 function telemetryError(e) {
     var $body = angular.element(document.body);
     var $rootScope = $body.scope().$root;
@@ -355,4 +351,4 @@ function mergeJSON(a, b) {
  window.contentNotAvailable = contentNotAvailable;
  window.checkStage = checkStage;
  window.objectAssign = objectAssign;
-
+ 
