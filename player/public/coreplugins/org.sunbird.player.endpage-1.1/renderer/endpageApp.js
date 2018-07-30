@@ -123,7 +123,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         var contentMetadata = {};
         if(contentToPlay){
             contentMetadata = contentToPlay.content.contentData;
-            _.extend(contentMetadata,  _.pick(contentToPlay.content, "hierarchyInfo", "isAvailableLocally", "basePath"));
+            _.extend(contentMetadata,  _.pick(contentToPlay.content, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
             contentMetadata.basepath = contentMetadata.basePath;
         }
 
@@ -141,7 +141,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
                 org.ekstep.contentrenderer.initializePreview(object)
                 EkstepRendererAPI.dispatchEvent('renderer:player:show');
         } else {
-            globalConfig.deeplinkBasePath = "ekstep://";
             if(globalConfig.deeplinkBasePath){
                 var deepLinkURL = globalConfig.deeplinkBasePath + "c/" + $rootScope.content.identifier + "?hierarchyInfo=" + JSON.stringify($rootScope.content.hierarchyInfo);
                 window.open(deepLinkURL, "_system");
