@@ -119,6 +119,12 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
      * @description - to play next or previous content
      */
     $scope.contentLaunch = function(contentType, contentId) {
+        var eleId = (contentType === 'previous') ? "gc_previousContent" : "gc_nextcontentContent";
+        TelemetryService.interact("TOUCH", eleId, "TOUCH", {
+            stageId: "ContentApp-EndScreen",
+            plugin: $scope.pluginManifest
+        }, "GE_INTERACT");
+
         var contentToPlay = (contentType === 'previous') ? $scope.previousContent[contentId] : $scope.nextContent[contentId];
         var contentMetadata = {};
         if(contentToPlay){

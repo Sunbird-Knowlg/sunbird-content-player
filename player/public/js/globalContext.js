@@ -36,7 +36,7 @@ GlobalContext = {
                     resolve(globalConfig);
                 })
             } else {
-                // TODO: Only for the local
+                // Only for the local
                 if (!isbrowserpreview) {
                     GlobalContext.config = {
                         origin: "Genie",
@@ -78,7 +78,6 @@ GlobalContext = {
                 if (url) {
                     try {
                         contextObj[param] = JSON.parse(url);
-                        console.log("contextObj", contextObj[param]);
                     } catch(e) {
                         contextObj[param] = url;
                     }
