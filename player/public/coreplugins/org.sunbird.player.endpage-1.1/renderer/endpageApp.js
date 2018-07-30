@@ -128,6 +128,11 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
      */
     $scope.contentLaunch = function(contentType,contentId){
         if (!isbrowserpreview) {
+            var eleId = (contentType === 'previous') ? "gc_previouscontent" : "gc_nextcontent";
+            TelemetryService.interact("TOUCH", eleId, "TOUCH", {
+                stageId: "ContentApp-EndScreen",
+                plugin: $scope.pluginManifest
+            }, "GE_INTERACT");
             var playContent = (contentType === 'previous') ? $scope.previousContent[contentId] : $scope.nextContent[contentId];
             //Check content is available in device
             org.ekstep.service.content.getContentAvailability(playContent.content.contentData.identifier)
