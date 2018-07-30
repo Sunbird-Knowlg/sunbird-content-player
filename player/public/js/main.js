@@ -66,7 +66,7 @@ function contentExitCall() {
     }
 }
 
-// TODO: After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
+// After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
 // So, change exitApp to do the same.
 function exitApp(stageId) {
     if(!stageId){
@@ -196,7 +196,7 @@ function showToaster(toastType, message, customOptions) {
 }
 
 function addWindowUnloadEvent() {
-    // TODO: Use Iframe unload event
+    // Use Iframe unload event
     window.onunload = function(e) { //onbeforeunload is not dispatched when navigating to other page
         e = e || window.event;
         var y = e.pageY || e.clientY;
@@ -272,8 +272,7 @@ function setGlobalConfig(configuration) {
         configuration.metadata = JSON.parse(configuration.metadata);
     }
     if(configuration.metadata.contentData){
-        console.warn("Content Data available in metadata/manifest")
-        //TODO : mobile specific temporary fix release-1.9.0
+        // Mobile specific temporary fix release-1.9.0
         var metadata = configuration.metadata.contentData;
         _.extend(metadata,  _.pick(configuration.metadata, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
         metadata.basepath = metadata.basePath;
