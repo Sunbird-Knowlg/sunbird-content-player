@@ -1,6 +1,3 @@
-//TODO: Remove the unused constants
-
-
 const BUILD_NUMBER = process.env.build_number;
 const PLAYER_VER = process.env.player_version_number;
 

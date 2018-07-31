@@ -12,9 +12,9 @@ org.ekstep.contentrenderer.questionUnitPlugin.extend({
     _selectedanswere:undefined,
     /*initPlugin: function (data) {
         console.log('qu-data--->', data);
-        //TODO: Implement logic and define interfaces from org.ekstep.questionunit
+        ///Implement logic and define interfaces from org.ekstep.questionunit
 
-        //TODO: Remove placeholder images from assets (no.png and yes.png)
+        //Remove placeholder images from assets (no.png and yes.png)
     },*/
     evaluate: function (data) {
         console.log(data);

@@ -107,7 +107,6 @@ var Plugin = Class.extend({
             if (this._enableEvents) {
                 EventManager.registerEvents(this, this._data);
             }
-            //TODO: Need to remove the _id use only id varible
             this._id = this.id = this._data.id || this._data.asset || _.uniqueId('plugin');
             PluginManager.registerPluginObject(this);
             if (this._self && data.visible === false) {

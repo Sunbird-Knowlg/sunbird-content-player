@@ -1,4 +1,4 @@
-// TODO: need to combine all the sync commands.
+// need to combine all the sync commands.
 var Command = Class.extend({
 	_name: undefined,
 	_methodName: undefined,

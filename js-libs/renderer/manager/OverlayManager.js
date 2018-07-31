@@ -85,7 +85,7 @@ OverlayManager = {
         var eventName = this._constants.overlayPrevious;
         var val = this._stageConfig[eventName];
         var navigateToStage = this.getNavigateTo('previous');
-        // ToDo: Have to remove this if condition when ecml nav is supported by plugins;
+        // Have to remove this if condition when ecml nav is supported by plugins;
         if (val == "on") {
             if (_.isUndefined(navigateToStage)) {
                 val = "disable";
