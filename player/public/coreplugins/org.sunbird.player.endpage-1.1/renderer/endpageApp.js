@@ -88,14 +88,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
         $scope.setTotalTimeSpent();
         $scope.getTotalScore($rootScope.content.identifier);
         $scope.getRelevantContent($rootScope.content.identifier);
-        if (TelemetryService.instance.telemetryStartActive()) {
-                var telemetryEndData = {};
-                telemetryEndData.stageid = getCurrentStageId();
-                telemetryEndData.progress = logContentProgress();
-                TelemetryService.end(telemetryEndData);
-        } else {
-              console.warn('Telemetry service end is already logged Please log start telemetry again');
-        }
     };
     
     /**
@@ -103,10 +95,10 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
      */
     $scope.getRelevantContent = function(contentId){
         if (!isbrowserpreview) {
-            if(!_.has($scope.previousContent,contentId) && !_.has($scope.nextContent,contentId)){
+            if(!_.has($scope.previousContent, contentId) && !_.has($scope.nextContent, contentId)){
                 var requestBody = {
                     "contentIdentifier": contentId,
-                    "cdata": _.reject(GlobalContext.config.otherData.cdata,{type:'ContentSession'}),
+                    "hierarchyInfo": $rootScope.content.hierarchyInfo,
                     "next": true,
                     "prev": true
                 };
@@ -126,25 +118,41 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     /**
      * @description - to play next or previous content
      */
-    $scope.contentLaunch = function(contentType,contentId){
-        if (!isbrowserpreview) {
-            var eleId = (contentType === 'previous') ? "gc_previouscontent" : "gc_nextcontent";
-            TelemetryService.interact("TOUCH", eleId, "TOUCH", {
-                stageId: "ContentApp-EndScreen",
-                plugin: $scope.pluginManifest
-            }, "GE_INTERACT");
-            var playContent = (contentType === 'previous') ? $scope.previousContent[contentId] : $scope.nextContent[contentId];
-            //Check content is available in device
-            org.ekstep.service.content.getContentAvailability(playContent.content.contentData.identifier)
-                .then(function(contentIsAvailable) {
-                    if (contentIsAvailable) {
-                        org.ekstep.contentrenderer.getContentMetadata(playContent.content.contentData.identifier, function(obj) {
-                            EkstepRendererAPI.hideEndPage();
-                            $rootScope.content = window.content = obj;
-                            EkstepRendererAPI.dispatchEvent('renderer:player:init');
-                        });
-                    }
-                });
+    $scope.contentLaunch = function(contentType, contentId) {
+        var eleId = (contentType === 'previous') ? "gc_previousContent" : "gc_nextcontentContent";
+        TelemetryService.interact("TOUCH", eleId, "TOUCH", {
+            stageId: "ContentApp-EndScreen",
+            plugin: $scope.pluginManifest
+        }, "GE_INTERACT");
+
+        var contentToPlay = (contentType === 'previous') ? $scope.previousContent[contentId] : $scope.nextContent[contentId];
+        var contentMetadata = {};
+        if(contentToPlay){
+            contentMetadata = contentToPlay.content.contentData;
+            _.extend(contentMetadata,  _.pick(contentToPlay.content, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
+            contentMetadata.basepath = contentMetadata.basePath;
+        }
+
+        if (contentToPlay.content.isAvailableLocally) {
+                EkstepRendererAPI.hideEndPage();
+                var object = {
+                    'config': GlobalContext.config,
+                    'data': undefined,
+                    'metadata': contentMetadata
+                }
+                GlobalContext.config = mergeJSON(AppConfig, contentMetadata);
+                window.globalConfig = GlobalContext.config;
+
+                $rootScope.content = window.content = content = contentMetadata;
+                org.ekstep.contentrenderer.initializePreview(object)
+                EkstepRendererAPI.dispatchEvent('renderer:player:show');
+        } else {
+            if(globalConfig.deeplinkBasePath){
+                var deepLinkURL = globalConfig.deeplinkBasePath + "c/" + contentToPlay.content.identifier + "?hierarchyInfo=" + JSON.stringify($rootScope.content.hierarchyInfo);
+                window.open(deepLinkURL, "_system");
+            } else {
+                console.warn(window.AppLables.noDeeplinkBasePath);
+            }
         }
     };
 

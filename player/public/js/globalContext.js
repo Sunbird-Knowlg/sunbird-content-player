@@ -36,7 +36,7 @@ GlobalContext = {
                     resolve(globalConfig);
                 })
             } else {
-                // TODO: Only for the local
+                // Only for the local
                 if (!isbrowserpreview) {
                     GlobalContext.config = {
                         origin: "Genie",

@@ -396,8 +396,6 @@ table {
 }
 
 .ellipsis-three-line{
-  /* overflow: hidden;
-  display: -webkit-box;*/
   -webkit-line-clamp: 3; 
 }
 
