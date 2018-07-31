@@ -94,8 +94,8 @@ app.controllerProvider.register('ContentCtrl', ['$scope', '$rootScope', '$state'
             // EkstepRendererAPI.dispatchEvent('renderer:player:show')
     });
 
-    EkstepRendererAPI.addEventListener('telemetryEvent',function(event) {
-        event = JSON.parse(event.target);
+    EkstepRendererAPI.addEventListener('telemetryEvent', function(event) {
+        event = !_.isObject(event.target) ? JSON.parse(event.target) : (event.target);
         org.ekstep.service.content.cacheTelemetryEvents(event);
     });
 
