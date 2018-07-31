@@ -77,7 +77,7 @@ Plugin.extend({
         listenTelementryEvent: function() {
             var instance = this;
             EventBus.addEventListener("telemetryEvent", function(data) {
-                data = (!_.isObject(data)) ? JSON.parse(data.target) : data.target;
+                data = (!_.isObject(data.target)) ? JSON.parse(data.target) : data.target;
                 if (parseInt(data.ver) >= 3) {
                     data = instance.appendRequiredFields(data);
                     instance.addToQueue(data);
