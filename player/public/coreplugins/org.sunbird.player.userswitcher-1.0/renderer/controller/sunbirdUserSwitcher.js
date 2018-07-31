@@ -21,7 +21,7 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
         $scope.showUserSwitchingModal = function() {
             if ($scope.showSunbirdUserSwitchModal)
                 return;
-            TelemetryService.interact("TOUCH", "gc_userswitch_popup_open", "TOUCH", {
+            TelemetryService.interact("TOUCH", "gc_sb_userswitch_popup_open", "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId()? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId 
             },$scope.TelemetryEvent.interact);
             EkstepRendererAPI.addEventListener(EkstepRendererEvents['renderer:device:back'], $scope.hideUserSwitchingModal, $scope);
@@ -74,7 +74,7 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
         // When the user clicks on replayContent, replayContent the content
         $scope.replayContent = function() {
             var replayContent = true;
-            TelemetryService.interact("TOUCH", 'gc_userswitch_replayContent', "TOUCH", {
+            TelemetryService.interact("TOUCH", 'gc_sb_userswitch_replayContent', "TOUCH", {
                 stageId: EkstepRendererAPI.getCurrentStageId() ? EkstepRendererAPI.getCurrentStageId() : $rootScope.pageId
             }, $scope.TelemetryEvent.interact);
             if (_.isEmpty($scope.selectedUser)) {
@@ -148,7 +148,7 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
 
         $scope.closeUserSwitchingModal = function(logTelemetry) {
             if (logTelemetry) {
-                TelemetryService.interact("TOUCH", "gc_userswitch_popup_close", "TOUCH", {
+                TelemetryService.interact("TOUCH", "gc_sb_userswitch_popup_close", "TOUCH", {
                     stageId: EkstepRendererAPI.getCurrentStageId()
                         ? EkstepRendererAPI.getCurrentStageId()
                         : $rootScope.pageId
