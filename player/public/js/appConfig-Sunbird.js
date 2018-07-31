@@ -68,34 +68,40 @@ AppConfig = {
         }
     ],
     assetbase: 'assets/icons/',
-    defaultPlugins: [{
-        id: 'org.ekstep.launcher',
-        ver: 1.0,
-        type: 'plugin'
-    }, {
-        id: 'org.ekstep.repo',
-        ver: 1.0,
-        type: 'plugin'
-    }, {
-        id: "org.ekstep.telemetrysync",
-        ver: 1.0,
-        type: 'plugin'
-    }, {
-        id: "org.ekstep.toaster",
-        ver: 1.0,
-        type: 'plugin'
-    }, {
-        id: "org.ekstep.alert",
-        ver: 1.0,
-        type: 'plugin'
-    }, {
-        id: "org.sunbird.player.endpage",
-        ver: 1.0,
-        type: 'plugin'
-    }],
+    defaultPlugins: [
+        {
+            id: 'org.ekstep.launcher',
+            ver: 1.0,
+            type: 'plugin'
+        }, {
+            id: 'org.ekstep.repo',
+            ver: 1.0,
+            type: 'plugin'
+        },{
+            id:"org.ekstep.telemetrysync",
+            ver:1.0,
+            type:'plugin'
+        },{
+            id:"org.ekstep.toaster",
+            ver:1.0,
+            type:'plugin'
+        },{
+            id:"org.ekstep.alert",
+            ver:1.0,
+            type:'plugin'
+        },{
+            id:"org.sunbird.player.endpage",
+            ver:1.1,
+            type:'plugin'
+        },{
+            id:"org.sunbird.player.userswitcher",
+            ver:1.0,
+            type:'plugin'
+        }
+    ],
     overlay: {
-        enableUserSwitcher: true,
-        showUser: true,
+        enableUserSwitcher: false,
+        showUser: false,
         showOverlay: true,
         showNext: true,
         showPrevious: true,

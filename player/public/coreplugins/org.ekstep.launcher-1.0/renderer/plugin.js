@@ -48,6 +48,7 @@ Plugin.extend({
                     }
                 });
             }
+            EkstepRendererAPI.dispatchEvent('renderer:player:show');
         },
         loadCommonPlugins: function(cb) {
             var plugins = []

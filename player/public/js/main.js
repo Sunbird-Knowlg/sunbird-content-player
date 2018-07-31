@@ -7,10 +7,6 @@
 
 document.body.addEventListener("logError", telemetryError, false);
 
-
-
-
-
 function telemetryError(e) {
     var $body = angular.element(document.body);
     var $rootScope = $body.scope().$root;
@@ -70,6 +66,8 @@ function contentExitCall() {
     }
 }
 
+// After integration with Genie, onclick of exit we should go to previous Activity of the Genie.
+// So, change exitApp to do the same.
 function exitApp(stageId) {
     if(!stageId){
         stageId = getCurrentStageId();
@@ -270,7 +268,22 @@ function logContentProgress(value) {
 function setGlobalConfig(configuration) {
     _.extend(configuration, configuration.context);  // TelemetryEvent is using globalConfig.context.sid/did
     _.extend(configuration, configuration.config);
-    (typeof configuration.metadata == "string") ? configuration.metadata = JSON.parse(configuration.metadata) : "";
+    if(typeof configuration.metadata == "string") {
+        configuration.metadata = JSON.parse(configuration.metadata);
+    }
+    if(configuration.metadata.contentData){
+        // Mobile specific temporary fix release-1.9.0
+        var metadata = configuration.metadata.contentData;
+        _.extend(metadata,  _.pick(configuration.metadata, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
+        metadata.basepath = metadata.basePath;
+        configuration.basepath = configuration.basePath;
+        if(metadata.rollup)
+            configuration.rollup = metadata.rollup;
+        // Override the metadata object of intent with proper structure. 
+        // manifest & hierarchyInfo
+        configuration.metadata = metadata;
+    }
+    
     if (!_.isUndefined(configuration.context.pdata) && !_.isUndefined(configuration.context.pdata.pid) && !configuration.context.pdata.pid.includes('.' + AppConfig.pdata.pid)) {
         configuration.context.pdata.pid = configuration.context.pdata.pid + '.' + AppConfig.pdata.pid;
     }
@@ -353,4 +366,4 @@ function mergeJSON(a, b) {
  window.contentNotAvailable = contentNotAvailable;
  window.checkStage = checkStage;
  window.objectAssign = objectAssign;
-
+ 
