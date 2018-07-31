@@ -59,7 +59,7 @@
 }
 #sunbirdUserSwitchingModal .modal-content .userswitcher-card {
     padding: 12px 2px 0px 13px;
-    height: 34.5%;
+    height: 33.4%;
     width: 49.4%;
 }
 #sunbirdUserSwitchingModal .modal-content .tab button {
@@ -71,7 +71,7 @@
 #sunbirdUserSwitchingModal .modal-content #users {
     height: 70%;
     width: 99%;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 4px 0px 11px 9px;
 }
 #sunbirdUserSwitchingModal .modal-content .user-header .tablinks {
@@ -141,15 +141,18 @@
 .userswitcher-data {
     display: table-cell;
     vertical-align: middle;
+    position: relative;
 }
 img.user-check{
-    height: 4vw;
-    width: 4vw;
-    vertical-align: super;
+    height: 3vw;
+    width: 3vw;
+    position: absolute;
+    top: 26%;
 }
 .userswitcher-data .inline-username-block{
     display: inline-block;
     width: 81%;
+    height: 10vh;
 }
 .inline-block{
     display: inline-block;
@@ -173,7 +176,7 @@ img.user-check{
                     <div class="userswitcher-data">
                         <div class="inline-username-block">
                             <p class="userswitcher-name">{{user.handle}}</p>
-                            <p class="userswitcher-class">{{user.grade.toString() || "Class 0"}}</p>
+                            <p ng-show="user.grade" class="userswitcher-class">{{user.grade.toString()}}</p>
                         </div>
                         <div class="inline-block">
                             <img ng-show="user.selected" class="user-check" src="{{checkMarkIcon}}">
