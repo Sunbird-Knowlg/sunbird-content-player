@@ -271,7 +271,7 @@ function setGlobalConfig(configuration) {
     if(typeof configuration.metadata == "string") {
         configuration.metadata = JSON.parse(configuration.metadata);
     }
-    if(configuration.metadata.contentData){
+    if(configuration.metadata && configuration.metadata.contentData){
         // Mobile specific temporary fix release-1.9.0
         var metadata = configuration.metadata.contentData;
         _.extend(metadata,  _.pick(configuration.metadata, "hierarchyInfo", "isAvailableLocally", "basePath", "rollup"));
