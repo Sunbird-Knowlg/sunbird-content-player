@@ -41,7 +41,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.replayContent = function() {
-        EventBus.dispatch("event:openUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
+        EventBus.dispatch("event:openSunbirdUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
     };
     $scope.replayCallback = function(){
         EkstepRendererAPI.hideEndPage();

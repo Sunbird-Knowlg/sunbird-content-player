@@ -169,7 +169,7 @@ app.controllerProvider.register('SunbirdUserSwitchController', ['$scope','$rootS
                 $rootScope.showUser = value.target;
             });
 
-            EventBus.addEventListener("event:openUserSwitchingModal", function(data) {
+            EventBus.addEventListener("event:openSunbirdUserSwitchingModal", function(data) {
                 $scope.TelemetryEvent = {};
                 if (data && data.target && data.target.logGEEvent) {
                     $scope.TelemetryEvent = {
