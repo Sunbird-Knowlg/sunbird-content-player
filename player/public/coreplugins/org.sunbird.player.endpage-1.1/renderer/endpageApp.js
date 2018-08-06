@@ -25,21 +25,25 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.getTotalScore = function(id) {
-        var totalScore = 0, totalQuestions = 0;
+        var totalScore = 0, maxScore = 0;
         var teleEvents = org.ekstep.service.content.getTelemetryEvents();
         if (!_.isEmpty(teleEvents) && !_.isUndefined(teleEvents.assess)) {
             _.forEach(teleEvents.assess, function(value) {
                 if(value.edata.pass === 'Yes') {
                     totalScore = totalScore + value.edata.score;
                 }
-                totalQuestions++;
+                if(value.edata.item.maxscore) {
+                    maxScore = maxScore + value.edata.item.maxscore;
+                } else {
+                    maxScore = maxScore + 0;
+                }
             });
-            $scope.score = (totalScore + "/" + totalQuestions);
+            $scope.score = (totalScore + "/" + maxScore);
         } else {
             $scope.score = undefined;
         }
     };
-
+   
     $scope.replayContent = function() {
         EventBus.dispatch("event:openUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
     };
@@ -178,6 +182,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     });
     EkstepRendererAPI.addEventListener('renderer:endpage:hide',function() {
         $scope.showEndPage = false;
+        org.ekstep.service.content.clearTelemetryEvents();
         $scope.safeApply();
     });
 });
