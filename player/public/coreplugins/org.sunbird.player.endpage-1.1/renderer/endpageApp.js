@@ -25,7 +25,6 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     };
 
     $scope.getTotalScore = function(id) {
-        $scope.clearTelemetryCache();
         var totalScore = 0, maxScore = 0;
         var teleEvents = org.ekstep.service.content.getTelemetryEvents();
         if (!_.isEmpty(teleEvents) && !_.isUndefined(teleEvents.assess)) {
@@ -44,12 +43,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
             $scope.score = undefined;
         }
     };
-    $scope.clearTelemetryCache = function() {
-        EkstepRendererAPI.addEventListener("renderer:player:show",function(){
-            org.ekstep.service.content.clearTelemetryEvents();
-        });
-    }
-
+   
     $scope.replayContent = function() {
         EventBus.dispatch("event:openUserSwitchingModal", {'logGEEvent': $scope.pluginInstance._isAvailable});
     };
@@ -188,6 +182,7 @@ endPage.controller("endPageController", function($scope, $rootScope, $state,$ele
     });
     EkstepRendererAPI.addEventListener('renderer:endpage:hide',function() {
         $scope.showEndPage = false;
+        org.ekstep.service.content.clearTelemetryEvents();
         $scope.safeApply();
     });
 });
