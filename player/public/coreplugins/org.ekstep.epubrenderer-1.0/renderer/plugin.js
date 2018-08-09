@@ -14,8 +14,36 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId:[],
     enableHeartBeatEvent: false,
     initLauncher: function () {
+        var instance = this;
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.epub-archive', this.launch, this);
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
+
+        EkstepRendererAPI.addEventListener('nextClick', function () {
+            EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
+            if (instance.lastPage) {
+                EkstepRendererAPI.dispatchEvent('renderer:content:end');
+                instance.removeProgressElements(); 
+            } else {
+                instance.book.nextPage();
+            }
+        }, this);
+
+        EkstepRendererAPI.addEventListener('previousClick', function () {
+            EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
+            if(instance.currentPage === 2) {
+                // This is needed because some ePubs do not go back to the cover page on `book.prevPage()`
+                instance.book.gotoPage(1);
+                instance.logTelemetryNavigate("2", "1");
+            } else {
+                instance.book.prevPage();
+            }
+            instance.lastPage = false;
+        }, this);
+
+        EkstepRendererAPI.addEventListener('actionContentClose', function () {
+            instance.logTelemetryInteract(instance.currentPage.toString());
+            instance.removeProgressElements();
+        });
         this.start();
     },
     start: function (event, data) {
@@ -66,33 +94,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     },
     addEventHandlers: function () {
         var instance = this;
-        EventBus.addEventListener('nextClick', function () {
-            EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
-            if (instance.lastPage) {
-                EkstepRendererAPI.dispatchEvent('renderer:content:end');
-                instance.removeProgressElements();
-            } else {
-                instance.book.nextPage();
-            }
-        }, this);
-
-        EventBus.addEventListener('previousClick', function () {
-            EkstepRendererAPI.dispatchEvent('sceneEnter',instance);
-            if(instance.currentPage === 2) {
-                // This is needed because some ePubs do not go back to the cover page on `book.prevPage()`
-                instance.book.gotoPage(1);
-                instance.logTelemetryNavigate("2", "1");
-            } else {
-                instance.book.prevPage();
-            }
-            instance.lastPage = false;
-        }, this);
-
-        EventBus.addEventListener('actionContentClose', function () {
-            instance.logTelemetryInteract(instance.currentPage.toString());
-            instance.removeProgressElements();
-        });
-
         instance.book.generatePagination().then(function (data) {
             instance._start = data[0].cfi;
             instance.totalPages = data.length;
