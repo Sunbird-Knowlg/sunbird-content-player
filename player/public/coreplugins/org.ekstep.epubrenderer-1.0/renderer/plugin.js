@@ -57,6 +57,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         this.book = ePub(epubPath, epubOptions);
         this.book.setStyle("padding-right", "1px");
         this.book.setStyle("padding-left", "1px");
+        this.book.setStyle("height", "100%");
+        this.book.setStyle("overflow", "auto");
         this.book.forceSingle(true);
         this.book.renderTo(this.manifest.id);
         this.addEventHandlers();
