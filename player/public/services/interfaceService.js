@@ -1,6 +1,9 @@
 org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
-    init: function() {
+    telemetryEvents: {},
+    constant: {
+        'ASSESS': 'assess'
     },
+    init: function() {},
     getContentList: function(filter, childrenIds) {
         return new Promise(function(resolve, reject) {
             org.ekstep.service.content._filterContentList(filter, childrenIds)
@@ -205,14 +208,14 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
         });
         return list;
     },
-    getAllUserProfile: function() {
+    getAllUserProfile: function(obj) {
         return new Promise(function(resolve, reject) {
-            org.ekstep.service.renderer.getAllUserProfile()
+            org.ekstep.service.renderer.getAllUserProfile(obj)
                 .then(function(data) {
                     resolve(data);
                 })
                 .catch(function(err) {
-                    console.error(AppErrors.contetnPathFetch, err);
+                    console.error("Error", err);
                     reject(err);
                 });
         });
@@ -239,6 +242,37 @@ org.ekstep.service.content = new(org.ekstep.service.mainService.extend({
                 reject(err);
             });
         });
+    },
+    //Get previous and next content of particular content
+    getRelevantContent: function(request) {
+        return new Promise(function(resolve, reject) {
+            org.ekstep.service.renderer.getRelevantContent(request)
+                .then(function(contents) {
+                    if (contents) {
+                        resolve(contents);
+                    } else {
+                        reject("Contents is not available.");
+                    }
+                })
+                .catch(function(err) {
+                    console.error(AppErrors.contetnPathFetch, err);
+                    reject(err);
+                });
+        });
+    },
+    cacheTelemetryEvents: function(event) {
+        if (event.eid.toLowerCase() === this.constant.ASSESS.toLowerCase()) {
+            var eventObj = _.clone(event);
+            this.telemetryEvents[this.constant.ASSESS] = this.telemetryEvents[this.constant.ASSESS] || {};
+            this.telemetryEvents[this.constant.ASSESS][eventObj.edata.item.id] = eventObj
+        }
+    },
+    getTelemetryEvents: function() {
+        return this.telemetryEvents;
+
+    },
+    clearTelemetryEvents: function() {
+        this.telemetryEvents = {};
     }
 
 }));

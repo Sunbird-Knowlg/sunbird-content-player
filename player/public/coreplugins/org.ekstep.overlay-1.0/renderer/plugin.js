@@ -31,7 +31,6 @@ Plugin.extend({
         EkstepRendererAPI.addEventListener("renderer:content:start", instance.showOrHideOverlay, instance);
     },
     showOrHideOverlay: function(){
-        // TODO: temaparary solution to handle overlay is not showing in dev some times
         this.overlayVisible = true;
     },
     updateRendererStyles: function(event, instance){

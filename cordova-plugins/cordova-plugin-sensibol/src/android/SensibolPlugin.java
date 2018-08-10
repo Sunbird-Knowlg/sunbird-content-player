@@ -28,7 +28,6 @@ import com.sensibol.ekstep.speechengine.sdk.SpeechEngineFactory;
 public class SensibolPlugin extends CordovaPlugin {
 
     public static final String TAG = "SensibolPlugin";
-    // TODO: Can't have "Genie" in the path -> ideally, local app path
     private static final String WORK_DIR_PATH = "/storage/emulated/0/Genie/SdkWorkDir";
     private SpeechEngine speechEngine;
     private boolean initialized = false;

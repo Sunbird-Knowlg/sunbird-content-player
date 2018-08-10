@@ -239,7 +239,7 @@ var Telemetry = (function() {
             "channel": Telemetry.config.channel,
             "pdata": Telemetry.config.pdata,
             "gdata": Telemetry.config.gdata,
-            "cdata": Telemetry.config.cdata, //TODO: No correlation data as of now. Needs to be sent by portal in context
+            "cdata": Telemetry.config.cdata,
             "uid": Telemetry.config.uid, // uuid of the requester
             "sid": Telemetry.config.sid,
             "did": Telemetry.config.did,

@@ -778,7 +778,7 @@ var EkTelemetry = (function() {
             "env": EkTelemetry.config.env,
             "sid": EkTelemetry.config.sid,
             "did": EkTelemetry.config.did,
-            "cdata": EkTelemetry.config.cdata, //TODO: No correlation data as of now. Needs to be sent by portal in context
+            "cdata": EkTelemetry.config.cdata,
             "rollup": EkTelemetry.config.rollup || {}
         };
         telemetryInstance.telemetryEnvelop.eid =  eventId,

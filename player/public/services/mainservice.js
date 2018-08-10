@@ -23,7 +23,6 @@ org.ekstep.service.init = function() {
     }
 };
 
-/*TODO: Telemetry_web should be part of telemetryservice*/
 telemetry_web = {
     tList: [],
     send: function(string) {

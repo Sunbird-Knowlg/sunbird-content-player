@@ -21,8 +21,8 @@ genieservice.prototype.getCurrentUser = function() {
     return this.handleAction("getCurrentUser", []);
 }
 
-genieservice.prototype.getAllUserProfile = function() {
-    return this.handleAction("getAllUserProfile", []);
+genieservice.prototype.getAllUserProfile = function(obj) {
+    return this.handleAction("getAllUserProfile", [obj]);
 }
 
 genieservice.prototype.setUser = function(userId) {
@@ -48,6 +48,11 @@ genieservice.prototype.getContent = function(id) {
 
 genieservice.prototype.getRelatedContent = function(contentList, contentId, uid) {
     return this.handleAction("getRelatedContent", [contentList, contentId, uid]);
+}
+
+// get previous and next content of particular content
+genieservice.prototype.getRelevantContent = function(req) {
+    return this.handleAction("getRelevantContent", [req]);
 }
 
 genieservice.prototype.getLearnerAssessment = function(uid, id, contentExtras) {

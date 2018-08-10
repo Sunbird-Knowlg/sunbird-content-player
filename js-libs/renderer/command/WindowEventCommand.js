@@ -2,7 +2,7 @@ var WindowEventCommand = Command.extend({
 	_name: 'WINDOWEVENT',
 	_isPluginAction: false,
 	invoke: function(action) {
-		// TODO: remove the dependency on GlobalContext for this command.
+		// remove the dependency on GlobalContext for this command.
         var mimeType = GlobalContext.previousContentMimeType ? GlobalContext.previousContentMimeType : GlobalContext.currentContentMimeType;
         if (GlobalContext.previousContentMimeType || COLLECTION_MIMETYPE == mimeType) {
             window.location.hash = "#/content/list/"+ GlobalContext.previousContentId;
