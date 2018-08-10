@@ -10,6 +10,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId: [],
     heartBeatData: {},
     enableHeartBeatEvent: true,
+    headerTimer: undefined,
     initLauncher: function (manifestData) {
         this._manifest = manifestData;
         EkstepRendererAPI.addEventListener('content:load:application/pdf', this.start, this);
