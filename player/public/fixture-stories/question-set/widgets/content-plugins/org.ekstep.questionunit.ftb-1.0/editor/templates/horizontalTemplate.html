@@ -45,17 +45,17 @@
         <div class="ui three column grid">
           <!-- Question Image -->
           <div class="two wide column" ng-if="isQuestion && (editorObj1.question.image.length == 0 || selectedImageURL.length > 0)">
-            <img class="mediaupload-image" style="display:block;width: 70%;" src="{{selectedImageURL}}" id="imageQ">
+            <img class="mediaupload-image" style="display:block;width: 70%;" ng-src="{{selectedImageURL}}" id="imageQ">
           </div>
           <div class="two wide column" ng-if="isQuestion && (editorObj1.question.image.length > 0 || selectedImageURL.length == 0)">
-            <img class="mediaupload-image" style="display:block;width: 70%;" src="{{editorObj1.question.image}}" id="imageQ">
+            <img class="mediaupload-image" style="display:block;width: 70%;" ng-src="{{editorObj1.question.image}}" id="imageQ">
           </div>
           <!-- Answer Image -->
           <div class="two wide column" ng-if="isAnswer && (editorObj1.answer[index-1].image.length > 0 || selectedImageURL.length == 0)">
-            <img class="mediaupload-image" style="display:block;width: 70%;" src="{{editorObj1.answer[index-1].image}}" id="image_{{index}}">
+            <img class="mediaupload-image" style="display:block;width: 70%;" ng-src="{{editorObj1.answer[index-1].image}}" id="image_{{index}}">
           </div>
           <div class="two wide column" ng-if="isAnswer && (editorObj1.answer[index-1].image.length == 0 || selectedImageURL.length > 0)">
-            <img class="mediaupload-image" style="display:block;width: 70%;" src="{{selectedImageURL}}" id="image_{{index}}">
+            <img class="mediaupload-image" style="display:block;width: 70%;" ng-src="{{selectedImageURL}}" id="image_{{index}}">
           </div>
           <div class="one column" style="margin-top: 3%;">
             <div class="ui grid two column row">
@@ -73,23 +73,23 @@
         <div class="ui two column grid">
           <!-- Question Audio -->
           <div class="one wide column" ng-if="isQuestion && (editorObj1.question.audio.length == 0 || selectedAudioURL.length > 0)">
-            <audio src="{{selectedAudioURL}}" controls="" class="audio-container" style="display: none" id="audioQ">
+            <audio ng-src="{{selectedAudioURL}}" controls="" class="audio-container" style="display: none" id="audioQ">
             </audio>
             <i ng-class="play ? 'play large icon blue' : 'pause large icon blue'" ng-click="playAudio(play)"></i>
           </div>
           <div class="one wide column" ng-if="isQuestion && (editorObj1.question.audio.length > 0 || selectedAudioURL.length == 0)">
-            <audio src="{{editorObj1.question.audio}}" controls="" class="audio-container" style="display: none" id="audioQ">
+            <audio ng-src="{{editorObj1.question.audio}}" controls="" class="audio-container" style="display: none" id="audioQ">
             </audio>
             <i ng-class="play ? 'play large icon blue' : 'pause large icon blue'" ng-click="playAudio(play)"></i>
           </div>
           <!-- Answer Audio -->
           <div class="one wide column" ng-if="isAnswer && (editorObj1.answer[index-1].audio.length == 0 || selectedAudioURL.length > 0)">
-            <audio src="{{selectedAudioURL}}" controls="" class="audio-container" style="display: none" id="audio_{{index}}">
+            <audio ng-src="{{selectedAudioURL}}" controls="" class="audio-container" style="display: none" id="audio_{{index}}">
             </audio>
             <i ng-class="play ? 'play large icon blue' : 'pause large icon blue'" ng-click="playAudio(play)"></i>
           </div>
           <div class="one wide column" ng-if="isAnswer && (editorObj1.answer[index-1].audio.length > 0 || selectedAudioURL.length == 0)">
-            <audio src="{{editorObj1.answer[index-1].audio}}" controls="" class="audio-container" style="display: none" id="audio_{{index}}">
+            <audio ng-src="{{editorObj1.answer[index-1].audio}}" controls="" class="audio-container" style="display: none" id="audio_{{index}}">
             </audio>
             <i ng-class="play ? 'play large icon blue' : 'pause large icon blue'" ng-click="playAudio(play,index-1)"></i>
           </div>

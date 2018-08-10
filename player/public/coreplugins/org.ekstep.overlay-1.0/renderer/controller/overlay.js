@@ -239,7 +239,7 @@ app.controllerProvider.register("OverlayController", function($scope, $rootScope
 app.compileProvider.directive('mute', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<div ng-click="toggleMute()"><img src="{{muteImg}}"/><span>Sound {{AppLables.mute}} </span></div>',
+        template: '<div ng-click="toggleMute()"><img ng-src="{{muteImg}}"/><span>Sound {{AppLables.mute}} </span></div>',
         link: function(scope, url) {
 
             /**
@@ -284,7 +284,7 @@ app.compileProvider.directive('mute', function($rootScope) {
 app.compileProvider.directive('reloadStage', function($rootScope) {
     return {
         restrict: 'E',
-        template: '<span class="reload-stage" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" ng-show="reload !== state_off" src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></span>',
+        template: '<span class="reload-stage" onclick="EventBus.dispatch(\'actionReload\')"><img id="reload_id" ng-show="reload !== state_off" ng-src="{{imageBasePath}}icn_replayaudio.png" style="width:100%;"/></span>',
         link: function(scope) {
 
             scope.toggleReload = function(event) {

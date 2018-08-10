@@ -29,7 +29,7 @@
                 <div class="ui tab" data-tab="questionImageTab" ng-show="false">
                   <div class="ui three column grid">
                     <div class="two wide column">
-                      <img src="{{mcqFormData.question.image}}">
+                      <img ng-src="{{mcqFormData.question.image}}">
                     </div>
                     <div class="one column">
                       <div class="ui grid two column row">
@@ -46,7 +46,7 @@
                 <div class="ui tab" data-tab="questionAudioTab" ng-show="false">
                   <div class="ui two column grid">
                     <div class="one wide column">
-                      <audio src="{{mcqFormData.question.audio}}" controls="" class="audio-container">
+                      <audio ng-src="{{mcqFormData.question.audio}}" controls="" class="audio-container">
                       </audio>
                       <i class="large icon blue" ng-click="playAudio(play)"></i>
                     </div>
@@ -95,7 +95,7 @@
                   <div class="ui tab" data-tab="optionImageTab" ng-show="false">
                     <div class="ui three column grid">
                       <div class="two wide column">
-                        <img src="{{value.image}}">
+                        <img ng-src="{{value.image}}">
                       </div>
                       <div class="one column">
                         <div class="ui grid two column row">
@@ -112,7 +112,7 @@
                   <div class="ui tab" data-tab="optionAudioTab" ng-show="false">
                     <div class="ui two column grid">
                       <div class="one wide column">
-                        <audio src="{{value.audio}}" controls="" class="audio-container">
+                        <audio ng-src="{{value.audio}}" controls="" class="audio-container">
                         </audio>
                         <i class="large icon blue" ng-click="playAudio(play)"></i>
                       </div>
