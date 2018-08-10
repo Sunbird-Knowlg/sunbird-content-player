@@ -19,6 +19,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId:[],
     qid:[],
     enableHeartBeatEvent:false,
+    sleep: false,
 
     /**
      * registers events
@@ -27,16 +28,19 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initLauncher: function(manifest) {
         EkstepRendererAPI.addEventListener('renderer:content:load', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
-        var instance = this;
-        setTimeout(function(){
-            instance.start();
-        }, 0);
+        EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
+        EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
+        // var instance = this;
+        // setTimeout(function(){
+        //     instance.start();
+        // }, 0);
     },
     /**
      *
      * @memberof ecmlRenderer
      */
     start: function(evt, renderObj) {
+        this.sleep = false;
         this._super();
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         var instance = this;
@@ -227,6 +231,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      */
     cleanUp: function() {
         if (this.running) {
+            this.sleep = true;
             this.running = false;
             AnimationManager.cleanUp();
             AssetManager.destroy();
@@ -277,6 +282,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initContentProgress: function() {
         var instance = this;
         EkstepRendererAPI.addEventListener("sceneEnter", function(event) {
+            if (instance.sleep) return;
             var currentScene = Renderer.theme._currentScene
             if (currentScene.isItemScene()) {
                 if (!_.contains(instance.qid, currentScene._stageController.assessStartEvent.event.edata.eks.qid)) {

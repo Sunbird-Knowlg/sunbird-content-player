@@ -213,27 +213,27 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
             })
         }
 
-    },
-    destroy: function() {
-        var instance = this;
-        var pluginName = this.manifest.id;
-        var listeners = EventBus.listeners;
-        this.cleanUp();
-        this.resetDomElement();
-        for(var type in listeners) {
-            var noOfCallbacks = listeners[type].length;
-            var event = listeners[type];
-            for (var i=0;i<noOfCallbacks;i++) {
-                if (event[i] && (event[i].scope == instance)) {
-                    EkstepRendererAPI.removeEventListener(type, event[i].callback, event[i].scope)
-                }
-            }
-        }
-        if (org.ekstep.pluginframework.pluginManager.plugins) delete org.ekstep.pluginframework.pluginManager.plugins[pluginName];
-        if (org.ekstep.pluginframework.pluginManager.pluginManifests) delete org.ekstep.pluginframework.pluginManager.pluginManifests[pluginName];
-        if (org.ekstep.pluginframework.pluginManager.pluginObjs) delete org.ekstep.pluginframework.pluginManager.pluginObjs[pluginName];
-        if (org.ekstep.pluginframework.pluginManager.pluginVisited) delete org.ekstep.pluginframework.pluginManager.pluginVisited[pluginName];
-        console.log(pluginName, " Plugin instance got destroyed");
+    // },
+    // destroy: function() {
+    //     var instance = this;
+    //     var pluginName = this.manifest.id;
+    //     var listeners = EventBus.listeners;
+    //     this.cleanUp();
+    //     this.resetDomElement();
+    //     for(var type in listeners) {
+    //         var noOfCallbacks = listeners[type].length;
+    //         var event = listeners[type];
+    //         for (var i=0;i<noOfCallbacks;i++) {
+    //             if (event[i] && (event[i].scope == instance)) {
+    //                 EkstepRendererAPI.removeEventListener(type, event[i].callback, event[i].scope)
+    //             }
+    //         }
+    //     }
+    //     if (org.ekstep.pluginframework.pluginManager.plugins) delete org.ekstep.pluginframework.pluginManager.plugins[pluginName];
+    //     if (org.ekstep.pluginframework.pluginManager.pluginManifests) delete org.ekstep.pluginframework.pluginManager.pluginManifests[pluginName];
+    //     if (org.ekstep.pluginframework.pluginManager.pluginObjs) delete org.ekstep.pluginframework.pluginManager.pluginObjs[pluginName];
+    //     if (org.ekstep.pluginframework.pluginManager.pluginVisited) delete org.ekstep.pluginframework.pluginManager.pluginVisited[pluginName];
+    //     console.log(pluginName, " Plugin instance got destroyed");
     }
 
 });

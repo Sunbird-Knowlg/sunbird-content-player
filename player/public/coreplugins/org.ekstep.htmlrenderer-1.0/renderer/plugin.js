@@ -8,8 +8,10 @@
     totalIndex:100,
     enableHeartBeatEvent:true,
     initLauncher: function() {
-        var instance = this;
-        this.start();
+        EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.start, this);
+        EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.h5p-archive', this.start, this);
+        EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
+        // this.start();
     },
     start: function() {
         this._super();

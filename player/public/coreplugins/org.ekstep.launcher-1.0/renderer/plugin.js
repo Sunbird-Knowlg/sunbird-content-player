@@ -23,9 +23,11 @@ Plugin.extend({
             });
             // Checking if mimetype launcher is already loaded or not
             var pluginInstance = EkstepRendererAPI.getPluginObjs(contentTypePlugin.id);
+            EkstepRendererAPI.dispatchEvent('renderer:launcher:clean')
             if (pluginInstance) {
                 // If already loaded just start the content
-                pluginInstance.start();
+                EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType);
+                // pluginInstance.start();
             } else {
                 // If not loaded load the launcher
                 /**
@@ -38,12 +40,12 @@ Plugin.extend({
                 instance.loadCommonPlugins(function() {
                     if (!_.isUndefined(contentTypePlugin)) {
                         // Except current Mimetype destroying all mimetype launchers
-                        _.find(globalConfig.contentLaunchers, function(eachConfig) {
-                            var plugin = org.ekstep.pluginframework.pluginManager.pluginObjs[eachConfig.id];
-                            if (!_.contains(eachConfig.mimeType, content.mimeType) && plugin) {
-                                plugin.destroy();
-                            }
-                        });
+                        // _.find(globalConfig.contentLaunchers, function(eachConfig) {
+                        //     var plugin = org.ekstep.pluginframework.pluginManager.pluginObjs[eachConfig.id];
+                        //     if (!_.contains(eachConfig.mimeType, content.mimeType) && plugin) {
+                        //         plugin.destroy();
+                        //     }
+                        // });
                         instance.loadPlugin(contentTypePlugin, content);
                     }
                 });
@@ -64,7 +66,6 @@ Plugin.extend({
             });
         },
         loadPlugin: function(plugin, contentData) {
-            var instance = this;
             content = contentData;
             org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
                 /**
@@ -74,6 +75,7 @@ Plugin.extend({
                  * @memberof EkstepRendererEvents
                  */
                 EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
+                EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType);
             });
         }
     })

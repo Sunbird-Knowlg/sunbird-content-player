@@ -14,9 +14,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId:[],
     enableHeartBeatEvent: false,
     initLauncher: function () {
-        EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.epub-archive', this.launch, this);
+        EkstepRendererAPI.addEventListener('content:load:application/epub', this.start, this);
+        EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
-        this.start();
+        // this.start();
     },
     start: function (event, data) {
         this._super()

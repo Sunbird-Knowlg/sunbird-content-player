@@ -1,7 +1,7 @@
 org.ekstep.contentrenderer.baseLauncher.extend({
     initLauncher: function () {
-        var instance = this;
-        this.start();
+        EkstepRendererAPI.addEventListener('content:load:text/x-url', this.start, this);
+        // this.start();
     },
     start: function () {
         var instance = this;

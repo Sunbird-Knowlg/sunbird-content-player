@@ -11,9 +11,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     heartBeatData:{},
     enableHeartBeatEvent:false,
     initLauncher: function(manifestData) {
+        EkstepRendererAPI.addEventListener('content:load:video/mp4', this.start, this);
+        EkstepRendererAPI.addEventListener('content:load:video/x-youtube', this.start, this);
+        EkstepRendererAPI.addEventListener('content:load:video/webm', this.start, this);
+        EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
-        this.start();
+        // this.start();
     },
     start: function() {
         this._super();
