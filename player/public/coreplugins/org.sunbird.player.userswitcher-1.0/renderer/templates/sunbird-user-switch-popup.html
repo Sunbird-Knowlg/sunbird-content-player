@@ -166,7 +166,7 @@ img.user-check{
                 <h1 class="tablinks" id="usersButton" ng-click="initializeUser($event, 'users')">Users</h1>
             </div>
             <div class="close-block">
-                <span ng-click="closeUserSwitchingModal()"><img class="close" src="{{closeIcon}}"></span>
+                <span ng-click="closeUserSwitchingModal()"><img class="close" ng-src="{{closeIcon}}"></span>
             </div>
             <!-- <button class="tablinks" id="groupsButton" ng-click="initializeUser($event, 'groups')">Groups</button> -->
         </div>
@@ -179,7 +179,7 @@ img.user-check{
                             <p ng-show="user.grade" class="userswitcher-class">{{user.grade.toString()}}</p>
                         </div>
                         <div class="inline-block">
-                            <img ng-show="user.selected" class="user-check" src="{{checkMarkIcon}}">
+                            <img ng-show="user.selected" class="user-check" ng-src="{{checkMarkIcon}}">
                         </div>
                     </div>
                 </div>
