@@ -45,8 +45,23 @@
 </head>
 
 <body ng-controller="BaseCtrl">
-    <div id="loading" class="gc-loader-area"></div>
+    <div id="loading">
+        <div id="loading-center">
+            <div id="loading-center-absolute">
+                <div class="object"></div>
+                <div class="object"></div>
+                <div class="object"></div>
+                <div class="object"></div>
+                <div class="object"></div>
+                <div class="object"></div>
+                <div class="object"></div>
+                <div class="object"></div>
+                <div class="object"></div>
+                <div class="object"></div>
+            </div>
+        </div>
 
+    </div>
     <div class="content-holder" ng-repeat="template in templates">
         <div ng-include="template.path || template.id"></div>
     </div>

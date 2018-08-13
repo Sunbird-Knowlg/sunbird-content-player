@@ -22,6 +22,7 @@ Plugin.extend({
                 if (_.contains(eachConfig.mimeType, content.mimeType)) return eachConfig;
             });
             // Checking if mimetype launcher is already loaded or not
+            if (!contentTypePlugin) return
             var pluginInstance = EkstepRendererAPI.getPluginObjs(contentTypePlugin.id);
             if (pluginInstance) {
                 // If already loaded just start the content
