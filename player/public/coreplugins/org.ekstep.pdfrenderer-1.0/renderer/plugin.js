@@ -249,6 +249,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     showPage: function(page_no) {
         var instance = this;
         EkstepRendererAPI.dispatchEvent("sceneEnter", context);
+        $('.nav-previous').addClass('higheropacity');
+        if(page_no == 1) {
+            $('.nav-previous').removeClass('higheropacity');
+            $('.nav-previous').addClass('loweropacity');
+        }
+
         if (page_no <= context.TOTAL_PAGES && page_no > 0) {
 
             context.PAGE_RENDERING_IN_PROGRESS = 1;
