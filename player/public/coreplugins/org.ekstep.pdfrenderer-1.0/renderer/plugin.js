@@ -218,7 +218,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             context.showPage(--context.CURRENT_PAGE);
     },
     showPDF: function(pdf_url) {
-        $('.nav-previous').addClass('nav-disable');
+        
         $("#pdf-loader").show(); // use rendere loader
         PDFJS.disableWorker = true;
         console.log("MANIFEST DATA", this.manifest)
@@ -250,10 +250,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     showPage: function(page_no) {
         var instance = this;
         EkstepRendererAPI.dispatchEvent("sceneEnter", context);
-        $('.nav-previous').removeClass('nav-disable');
-        $('.nav-previous').addClass('nav-enable');
+        EkstepRendererAPI.dispatchEvent("overlayPrevious", true);
         if(page_no == 1) {
-            $('.nav-previous').addClass('nav-disable');
+            EkstepRendererAPI.dispatchEvent("renderer:previous:show");
         }
 
         if (page_no <= context.TOTAL_PAGES && page_no > 0) {
