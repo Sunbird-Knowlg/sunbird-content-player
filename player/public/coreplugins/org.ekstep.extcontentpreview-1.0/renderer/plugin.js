@@ -1,5 +1,8 @@
 org.ekstep.contentrenderer.baseLauncher.extend({
+    sleep: false,
+    mimeType: ['text/x-url'],
     initLauncher: function () {
+        EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
         EkstepRendererAPI.addEventListener('content:load:text/x-url', this.start, this);
         // this.start();
     },
@@ -56,10 +59,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
         return previewHtml;
     },
-
     reset: function () {
         this.currentIndex = 50;
         this.totalIndex = 100;
+    },
+    cleanUp: function() {
+        this.sleepMode = true;
     }
 });
 //# sourceURL=extcontentpreview.js

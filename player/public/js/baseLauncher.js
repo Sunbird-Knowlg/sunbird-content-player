@@ -13,6 +13,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     manifest: undefined,
     enableHeartBeatEvent: false,
     heartBeatData: {},
+    sleepMode: false,
 
     /**
      * init of the launcher with the given data.
@@ -46,6 +47,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
         console.info('Base Launcher should construct');
         this.resetDomElement();
         this.startTelemetry();
+        this.sleepMode = false;
         if (this.enableHeartBeatEvent) {
             this.heartBeatEvent(true);
         }
@@ -77,7 +79,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     },
 
     /**
-     * Clearing of the Lancher instace
+     * Clearing of the Launcher instace
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     cleanUp: function() {
@@ -137,7 +139,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
             instance._time = setInterval(function() {
                 EkstepRendererAPI.getTelemetryService().interact("HEARTBEAT", "", "", instance.heartBeatData || {});
             }, EkstepRendererAPI.getGlobalConfig().heartBeatTime);
-        }
+        } else
         if (!flag) {
             clearInterval(instance._time);
         }
@@ -212,7 +214,6 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
                 }
             })
         }
-
     // },
     // destroy: function() {
     //     var instance = this;
@@ -235,5 +236,4 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     //     if (org.ekstep.pluginframework.pluginManager.pluginVisited) delete org.ekstep.pluginframework.pluginManager.pluginVisited[pluginName];
     //     console.log(pluginName, " Plugin instance got destroyed");
     }
-
 });

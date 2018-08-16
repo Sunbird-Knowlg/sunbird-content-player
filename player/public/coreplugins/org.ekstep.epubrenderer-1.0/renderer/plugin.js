@@ -13,7 +13,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     lastPage: false,
     stageId:[],
     enableHeartBeatEvent: false,
+    mimeType: ['application/epub'],
     initLauncher: function () {
+        EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
         EkstepRendererAPI.addEventListener('content:load:application/epub', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
@@ -197,6 +199,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         return this.progres(currentStageIndex + 1, totalStages);
     },
     cleanUp: function() {
+        this.sleepMode = true;
         this.removeProgressElements();
         EkstepRendererAPI.removeEventListener('actionNavigateNext', undefined, undefined, true);
         EkstepRendererAPI.removeEventListener('actionNavigatePrevious', undefined, undefined, true);

@@ -7,7 +7,10 @@
     currentIndex: 50,
     totalIndex:100,
     enableHeartBeatEvent:true,
+    sleep: false,
+    mimeType: ['application/vnd.ekstep.html-archive', 'application/vnd.ekstep.h5p-archive'],
     initLauncher: function() {
+        EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.html-archive', this.start, this);
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.h5p-archive', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
@@ -72,6 +75,9 @@
     reset:function(){
       this.currentIndex = 50;
       this.totalIndex = 100;
+    },
+    cleanUp: function() {
+        this.sleepMode = true;
     }
 });
 //# sourceURL=HTMLRendererePlugin.js

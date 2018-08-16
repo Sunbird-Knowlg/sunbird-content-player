@@ -11,7 +11,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     heartBeatData: {},
     enableHeartBeatEvent: true,
     headerTimer: undefined,
+    mimeType: ['application/pdf'],
     initLauncher: function (manifestData) {
+        EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
         this._manifest = manifestData;
         EkstepRendererAPI.addEventListener('content:load:application/pdf', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
@@ -340,6 +342,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         return this.progres(currentStageIndex, totalStages);
     },
     cleanUp: function () {
+        this.sleepMode = true;
         // EkstepRendererAPI.removeEventListener('actionNavigateNext');
         // EkstepRendererAPI.removeEventListener('actionNavigatePrevious');
     }

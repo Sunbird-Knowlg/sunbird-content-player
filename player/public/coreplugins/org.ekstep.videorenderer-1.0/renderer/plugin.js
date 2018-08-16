@@ -10,7 +10,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId: undefined,
     heartBeatData:{},
     enableHeartBeatEvent:false,
+    mimeType: ['video/mp4', 'video/x-youtube', 'video/webm'],
     initLauncher: function(manifestData) {
+        EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
         EkstepRendererAPI.addEventListener('content:load:video/mp4', this.start, this);
         EkstepRendererAPI.addEventListener('content:load:video/x-youtube', this.start, this);
         EkstepRendererAPI.addEventListener('content:load:video/webm', this.start, this);
@@ -239,6 +241,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     cleanUp: function() {
+        this.sleepMode = true;
         if (document.getElementById(this.manifest.id)) {
             videojs(this.manifest.id).dispose();
         }

@@ -19,28 +19,23 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId:[],
     qid:[],
     enableHeartBeatEvent:false,
-    sleep: false,
-
+    mimeType: ['application/vnd.ekstep.ecml-archive'],
     /**
      * registers events
      * @memberof ecmlRenderer
      */
-    initLauncher: function(manifest) {
+    initLauncher: function() {
+        EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
         EkstepRendererAPI.addEventListener('renderer:content:load', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
         EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
-        // var instance = this;
-        // setTimeout(function(){
-        //     instance.start();
-        // }, 0);
     },
     /**
      *
      * @memberof ecmlRenderer
      */
     start: function(evt, renderObj) {
-        this.sleep = false;
         this._super();
         var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
         var instance = this;
@@ -255,8 +250,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     replay: function(){
         this.qid = [];
         this.stageId = [];
-        Renderer.theme.removeHtmlElements();
-        Renderer.theme.reRender();
+        if (Renderer.theme) {
+            Renderer.theme.removeHtmlElements();
+            Renderer.theme.reRender();
+        }
         this.startTelemetry();
     },
     
