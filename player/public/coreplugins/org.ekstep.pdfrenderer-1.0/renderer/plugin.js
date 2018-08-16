@@ -218,7 +218,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             context.showPage(--context.CURRENT_PAGE);
     },
     showPDF: function(pdf_url) {
-        
         $("#pdf-loader").show(); // use rendere loader
         PDFJS.disableWorker = true;
         console.log("MANIFEST DATA", this.manifest)
@@ -254,7 +253,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         if(page_no == 1) {
             EkstepRendererAPI.dispatchEvent("renderer:previous:show");
         }
-
         if (page_no <= context.TOTAL_PAGES && page_no > 0) {
 
             context.PAGE_RENDERING_IN_PROGRESS = 1;
