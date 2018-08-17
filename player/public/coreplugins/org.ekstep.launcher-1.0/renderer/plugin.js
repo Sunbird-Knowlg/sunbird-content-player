@@ -16,6 +16,7 @@ Plugin.extend({
             this.controllerPath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/js/rendererApp.js");
             org.ekstep.service.controller.loadNgModules(this.templatePath, this.controllerPath);
             EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, [globalConfig.corePluginspath]);
+            this.loadCommonPlugins();
         },
         registerLauncher: function(event) {
             var plugin = event.target;
@@ -24,7 +25,7 @@ Plugin.extend({
             });
         },
         start: function(evt, contentObj) {
-            this.loadCommonPlugins(() => {
+            // this.loadCommonPlugins(() => {
                 content = contentObj;
                 // var contentTypePlugin = _.find(this.launcherMap, function(eachConfig) {
                 //     if (_.contains(eachConfig.mimeType, content.mimeType)) return eachConfig;
@@ -57,19 +58,13 @@ Plugin.extend({
                 //         // });
                 //         instance.loadPlugin(contentTypePlugin, content);
                 //     }
-                });
+                // });
             // }
             EkstepRendererAPI.dispatchEvent('renderer:player:show');
         },
         loadCommonPlugins: function(cb) {
-            var plugins = [
-                {id: "org.ekstep.ecmlrenderer",ver: 1.0,type: 'plugin'},
-                {id: "org.ekstep.htmlrenderer",ver: 1.0,type: 'plugin'},
-                {id: "org.ekstep.videorenderer",ver: 1.0,type: 'plugin'},
-                {id: "org.ekstep.pdfrenderer",ver: 1.0,type: 'plugin'},
-                {id: "org.ekstep.epubrenderer",ver: 1.0,type: 'plugin'},
-                {id: "org.ekstep.extcontentpreview",ver: 1.0,type: 'plugin'}
-            ]
+            var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
+            var plugins = globalConfigObj.contentLaunchers;
             if (GlobalContext.config.showEndPage) {
                 plugins.push({ "id": "org.ekstep.endpage", "ver": "1.0", "type": 'plugin' });
             }
