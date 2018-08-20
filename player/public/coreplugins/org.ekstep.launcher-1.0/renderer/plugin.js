@@ -20,9 +20,10 @@ Plugin.extend({
         },
         registerLauncher: function(event) {
             var plugin = event.target;
+            var instance = this;
             try {
-                plugin._constants.mimeType.forEach((mimetype) => {
-                    this.launcherMap[mimetype] = {
+                plugin._constants.mimeType.forEach(function(mimetype) {
+                    instance.launcherMap[mimetype] = {
                         event: plugin._constants.launchEvent,
                         pluginId: plugin.manifest.id
                     };
