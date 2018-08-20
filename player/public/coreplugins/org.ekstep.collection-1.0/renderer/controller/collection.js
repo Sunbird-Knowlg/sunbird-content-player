@@ -66,6 +66,7 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
             });
     };
     $scope.playContent = function(content) {
+        splashScreen.initialize();
         globalConfig.basepath = content.baseDir;
         globalConfig.basePath = globalConfig.basepath
         EkstepRendererAPI.dispatchEvent("renderer:splash:show");
@@ -80,7 +81,7 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
                 mediaType: "Content"
             });
             $scope.showCollection = false;
-           org.ekstep.contentrenderer.startGame(content);
+            org.ekstep.contentrenderer.startGame(content);
         }
     };
     $scope.simulateCrash = function(fatal) {
@@ -106,11 +107,11 @@ app.controllerProvider.register("ContentListCtrl", function($scope, $rootScope, 
         $rootScope.title = GlobalContext.config.appInfo ? GlobalContext.config.appInfo.name : "";
         $scope.resetContentListCache();
     };
-    EkstepRendererAPI.addEventListener('renderer:collection:hide',function(){
+    EkstepRendererAPI.addEventListener('renderer:collection:hide', function() {
         $scope.showCollection = false;
     });
 
-    EkstepRendererAPI.addEventListener('renderer:collection:show',function(){
+    EkstepRendererAPI.addEventListener('renderer:collection:show', function() {
         $scope.showCollection = true;
         $scope.init();
     });
