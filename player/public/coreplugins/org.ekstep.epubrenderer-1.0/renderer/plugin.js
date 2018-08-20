@@ -13,10 +13,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     lastPage: false,
     stageId:[],
     enableHeartBeatEvent: false,
-    mimeType: ['application/epub'],
-    launchEvent: "renderer:launch:epub",
+    _constants: {
+        mimeType: ['application/epub'],
+        launchEvent: "renderer:launch:epub"
+    },
     initLauncher: function () {
-        EkstepRendererAPI.addEventListener(this.launchEvent, this.start, this);
+        EkstepRendererAPI.addEventListener(this._constants.launchEvent, this.start, this);
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
     },
     start: function (event, data) {

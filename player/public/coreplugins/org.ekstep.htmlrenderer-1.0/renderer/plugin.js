@@ -7,10 +7,12 @@
     currentIndex: 50,
     totalIndex:100,
     enableHeartBeatEvent:true,
-    mimeType: ['application/vnd.ekstep.html-archive', 'application/vnd.ekstep.h5p-archive'],
-    launchEvent: "renderer:launch:html/h5p",
+    _constants: {
+        mimeType: ['application/vnd.ekstep.html-archive', 'application/vnd.ekstep.h5p-archive'],
+        launchEvent: "renderer:launch:html/h5p",
+    },
     initLauncher: function() {
-        EkstepRendererAPI.addEventListener(this.launchEvent, this.start, this);
+        EkstepRendererAPI.addEventListener(this._constants.launchEvent, this.start, this);
     },
     start: function() {
         this._super();

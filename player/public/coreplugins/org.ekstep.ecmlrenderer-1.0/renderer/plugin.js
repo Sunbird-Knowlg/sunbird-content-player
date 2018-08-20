@@ -19,8 +19,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId:[],
     qid:[],
     enableHeartBeatEvent:false,
-    mimeType: ['application/vnd.ekstep.ecml-archive'],
-    launchEvent: "renderer:launch:ecml",
+    _constants: {
+        mimeType: ['application/vnd.ekstep.ecml-archive'],
+        launchEvent: "renderer:launch:ecml"
+    },
     /**
      * registers events
      * @memberof ecmlRenderer
@@ -28,7 +30,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initLauncher: function() {
         EkstepRendererAPI.addEventListener('renderer:content:load', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
-        EkstepRendererAPI.addEventListener(this.launchEvent, this.start, this);
+        EkstepRendererAPI.addEventListener(this._constants.launchEvent, this.start, this);
     },
     /**
      *

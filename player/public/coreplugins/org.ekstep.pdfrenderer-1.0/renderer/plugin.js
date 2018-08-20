@@ -11,11 +11,13 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     heartBeatData: {},
     enableHeartBeatEvent: true,
     headerTimer: undefined,
-    mimeType: ['application/pdf'],
-    launchEvent: 'renderer:launch:pdf',
+    _constants: {
+        mimeType: ['application/pdf'],
+        launchEvent: 'renderer:launch:pdf',
+    },
     initLauncher: function (manifestData) {
         this._manifest = manifestData;
-        EkstepRendererAPI.addEventListener(this.launchEvent, this.start, this);
+        EkstepRendererAPI.addEventListener(this._constants.launchEvent, this.start, this);
         EkstepRendererAPI.addEventListener('nextClick', this.nextNavigation, this);
         EkstepRendererAPI.addEventListener('previousClick', this.previousNavigation, this);
     },

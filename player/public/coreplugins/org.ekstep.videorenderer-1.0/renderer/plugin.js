@@ -10,10 +10,12 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId: undefined,
     heartBeatData:{},
     enableHeartBeatEvent:false,
-    mimeType: ['video/mp4', 'video/x-youtube', 'video/webm'],
-    launchEvent: 'renderer:launch:video',
+    _constants: {
+        mimeType: ['video/mp4', 'video/x-youtube', 'video/webm'],
+        launchEvent: 'renderer:launch:video'
+    },
     initLauncher: function() {
-        EkstepRendererAPI.addEventListener(this.launchEvent, this.start, this);
+        EkstepRendererAPI.addEventListener(this._constants.launchEvent, this.start, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
     },
