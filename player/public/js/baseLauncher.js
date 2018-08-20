@@ -87,6 +87,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      */
     cleanUp: function() {
         console.info('Clearing the launcher instance')
+        this.sleepMode = true;
     },
 
     /**

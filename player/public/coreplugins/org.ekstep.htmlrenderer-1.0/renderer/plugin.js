@@ -73,9 +73,6 @@
     reset:function(){
       this.currentIndex = 50;
       this.totalIndex = 100;
-    },
-    cleanUp: function() {
-        this.sleepMode = true;
     }
 });
 //# sourceURL=HTMLRendererePlugin.js

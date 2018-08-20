@@ -62,9 +62,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     reset: function () {
         this.currentIndex = 50;
         this.totalIndex = 100;
-    },
-    cleanUp: function() {
-        this.sleepMode = true;
     }
 });
 //# sourceURL=extcontentpreview.js
