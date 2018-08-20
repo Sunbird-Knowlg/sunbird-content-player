@@ -77,7 +77,11 @@
         "webpack": "~4.14.0",
         "webpack-cli": "^2.1.4",
         "uglify-js": "^3.4.4",
-        "fs": "^0.0.1-security"
+        "fs": "^0.0.1-security",
+        "replace-in-file": "3.4.2",
+        "replace": "1.0.0",
+        "on-build-webpack": "0.1.0",
+        "fs-extra": "7.0.0"
     },
     "scripts": {
         "build-sunbird": "webpack --env.channel=sunbird",

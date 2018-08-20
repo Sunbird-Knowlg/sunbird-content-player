@@ -1,3 +1,4 @@
+const fs = require('fs');
 module.exports = function(grunt) {
     var target = grunt.option('target') || 'ekstep';
 
@@ -815,6 +816,17 @@ module.exports = function(grunt) {
     //Build web prview
     grunt.registerTask('init', ['uglify:renderermin', 'copy:main', 'injector:prview'])
     grunt.registerTask('build-preview', ['clean', 'mkdir:all', 'build-telemetry-lib', 'init', 'rename:preview', 'clean:minhtml', 'copy:toPreview', 'clean:preview']);
+
+    grunt.registerTask('backup-config-xml', function() {
+        grunt.file.copy('./config.xml', './config.latest.xml')
+        grunt.file.copy('./config.dist.xml', './config.xml')
+    });
+
+    grunt.registerTask('revert-config-xml', function() {
+        grunt.file.copy('./config.latest.xml', './config.xml');
+        fs.unlink('./config.latest.xml');
+        fs.unlink('./config.dist.xml');
+    });
 
     //Build AAR
     grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);

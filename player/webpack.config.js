@@ -16,11 +16,27 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
+const fs = require('fs');
+const replace = require('replace-in-file');
+const file_extra = require('fs-extra')
+var WebpackOnBuildPlugin = require('on-build-webpack');
+
 
 const APP_CONFIG = {
-    ekstep: './public/js/appConfig.js',
-    sunbird: './public/js/appConfig-Sunbird.js'
+    ekstep: {
+        configFile: './public/js/appConfig.js',
+        splashScreen: {
+            backgroundImage: "./public/assets/icons/background_1.png"
+        }
+    },
+    sunbird: {
+        configFile: './public/js/appConfig-Sunbird.js',
+        splashScreen: {
+            backgroundImage: "./public/assets/icons/splacebackground_1.png"
+        }
+    }
 }
+
 
 const FOLDER_PATHS = {
     basePath: './',
@@ -99,7 +115,7 @@ if (!BUILD_NUMBER && !PLAYER_VER) {
 const VERSION = PLAYER_VER + '.' + BUILD_NUMBER;
 
 module.exports = (env, argv) => {
-    (env.channel === 'sunbird') ? SCRIPTS.unshift(APP_CONFIG.sunbird): SCRIPTS.unshift(APP_CONFIG.ekstep);
+    (env.channel === 'sunbird') ? SCRIPTS.unshift(APP_CONFIG.sunbird.configFile): SCRIPTS.unshift(APP_CONFIG.ekstep.configFile);
     return {
         entry: {
             'script': SCRIPTS,
@@ -204,6 +220,9 @@ module.exports = (env, argv) => {
             new MiniCssExtractPlugin({
                 filename: `[name].min.${VERSION}.css`,
             }),
+            new WebpackOnBuildPlugin(function(stats) {
+                updateCordovaConfigXML(env.channel)
+            }),
             new ngAnnotatePlugin({
                 add: true,
             }),
@@ -252,3 +271,29 @@ module.exports = (env, argv) => {
         }
     }
 };
+
+function updateCordovaConfigXML(channel) {
+    var replaceTo = (channel === 'sunbird') ? APP_CONFIG.sunbird.splashScreen.backgroundImage : APP_CONFIG.ekstep.splashScreen.backgroundImage
+    const options = {
+        files: './config.dist.xml',
+        from: /SPLASH_IMAGE_PATH/g,
+        to: replaceTo,
+    };
+    file_extra.copy('./config.xml', './config.dist.xml')
+        .then(() => {
+            console.log('success!');
+            replace(options)
+                .then(changes => {
+                    console.log('Modified files:', changes.join(', '));
+                })
+                .catch(error => {
+                    console.error('Error occurred:', error);
+                });
+        })
+        .catch(err => {
+            console.error(err)
+        })
+
+    // replace logic
+
+}
