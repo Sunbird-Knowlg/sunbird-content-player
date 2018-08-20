@@ -14,7 +14,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId:[],
     enableHeartBeatEvent: false,
     _constants: {
-        mimeType: ['application/epub'],
+        mimeType: ["application/epub"],
         launchEvent: "renderer:launch:epub"
     },
     initLauncher: function () {

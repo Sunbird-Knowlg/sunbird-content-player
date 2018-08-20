@@ -8,7 +8,7 @@
     totalIndex:100,
     enableHeartBeatEvent:true,
     _constants: {
-        mimeType: ['application/vnd.ekstep.html-archive', 'application/vnd.ekstep.h5p-archive'],
+        mimeType: ["application/vnd.ekstep.html-archive", "application/vnd.ekstep.h5p-archive"],
         launchEvent: "renderer:launch:html/h5p",
     },
     initLauncher: function() {

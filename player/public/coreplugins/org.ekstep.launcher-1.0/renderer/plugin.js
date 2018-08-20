@@ -21,30 +21,31 @@ Plugin.extend({
         registerLauncher: function(event) {
             var plugin = event.target;
             try {
-                plugin._constants.mimeType.forEach(mimetype => {
+                plugin._constants.mimeType.forEach((mimetype) => {
                     this.launcherMap[mimetype] = {
                         event: plugin._constants.launchEvent,
                         pluginId: plugin.manifest.id
-                    }
+                    };
                 });
             } catch (error) {
-                console.error('Plugin mimetype is not defined ', error)
+                console.error("Plugin mimetype is not defined ", error);
             }
         },
         start: function(evt, contentObj) {
             content = contentObj;
             var launcherPluginMap = this.launcherMap[content.mimeType];
+            if (_.isUndefined(launcherPluginMap)) return;
             // Checking if mimetype launcher is already loaded or not
             var pluginInstance = EkstepRendererAPI.getPluginObjs(launcherPluginMap.pluginId);
-            EkstepRendererAPI.dispatchEvent('renderer:launcher:clean')
+            EkstepRendererAPI.dispatchEvent("renderer:launcher:clean")
             if (pluginInstance) {
                 // If already loaded just start the content
                 EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
                 EkstepRendererAPI.dispatchEvent(launcherPluginMap.event);
             } else {
-                console.error('No plugin available to handle "' + content.mimetype + '" Mimetype')
+                console.error("No plugin available to handle '" + content.mimetype + "' Mimetype")
             }
-            EkstepRendererAPI.dispatchEvent('renderer:player:show');
+            EkstepRendererAPI.dispatchEvent("renderer:player:show");
         },
         loadCommonPlugins: function(cb) {
             var globalConfigObj = EkstepRendererAPI.getGlobalConfig();

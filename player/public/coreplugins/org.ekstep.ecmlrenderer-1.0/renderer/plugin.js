@@ -20,7 +20,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     qid:[],
     enableHeartBeatEvent:false,
     _constants: {
-        mimeType: ['application/vnd.ekstep.ecml-archive'],
+        mimeType: ["application/vnd.ekstep.ecml-archive"],
         launchEvent: "renderer:launch:ecml"
     },
     /**

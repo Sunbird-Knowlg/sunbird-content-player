@@ -1,7 +1,7 @@
 org.ekstep.contentrenderer.baseLauncher.extend({
     _constants: {
-        mimeType: ['text/x-url'],
-        launchEvent: 'renderer:launch:extcontent',
+        mimeType: ["text/x-url"],
+        launchEvent: "renderer:launch:extcontent",
     },
     initLauncher: function () {
         EkstepRendererAPI.addEventListener(this._constants.launchEvent, this.start, this);

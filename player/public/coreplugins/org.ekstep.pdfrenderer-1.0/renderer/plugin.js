@@ -12,8 +12,8 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     enableHeartBeatEvent: true,
     headerTimer: undefined,
     _constants: {
-        mimeType: ['application/pdf'],
-        launchEvent: 'renderer:launch:pdf',
+        mimeType: ["application/pdf"],
+        launchEvent: "renderer:launch:pdf",
     },
     initLauncher: function (manifestData) {
         this._manifest = manifestData;
