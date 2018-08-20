@@ -1056,6 +1056,7 @@ window.EkstepRendererAPI = {
                 var globalConfigObj = EkstepRendererAPI.getGlobalConfig();
                 globalConfigObj.basepath = contentObj.baseDir;
             }
+            EkstepRendererAPI.hideEndPage()
             content = contentObj;
             EkstepRendererAPI.dispatchEvent('renderer:launcher:load', undefined, contentObj)
         } else {

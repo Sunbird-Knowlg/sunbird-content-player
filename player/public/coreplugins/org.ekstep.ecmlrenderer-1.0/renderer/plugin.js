@@ -20,16 +20,15 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     qid:[],
     enableHeartBeatEvent:false,
     mimeType: ['application/vnd.ekstep.ecml-archive'],
+    launchEvent: "renderer:launch:ecml",
     /**
      * registers events
      * @memberof ecmlRenderer
      */
     initLauncher: function() {
-        EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
         EkstepRendererAPI.addEventListener('renderer:content:load', this.start, this);
         EkstepRendererAPI.addEventListener('renderer:cleanUp', this.cleanUp, this);
-        EkstepRendererAPI.addEventListener('content:load:application/vnd.ekstep.ecml-archive', this.start, this);
-        EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
+        EkstepRendererAPI.addEventListener(this.launchEvent, this.start, this);
     },
     /**
      *
@@ -225,8 +224,9 @@ org.ekstep.contentrenderer.baseLauncher.extend({
      * @memberof ecmlRenderer
      */
     cleanUp: function() {
+        if (this.sleepMode) return;
+        this.sleepMode = true;
         if (this.running) {
-            this.sleep = true;
             this.running = false;
             AnimationManager.cleanUp();
             AssetManager.destroy();
@@ -248,9 +248,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
             Renderer.theme.resume();
     },
     replay: function(){
+        if (this.sleepMode) return;
         this.qid = [];
         this.stageId = [];
-        if (Renderer.theme) {
+        if (Renderer && Renderer.theme) {
             Renderer.theme.removeHtmlElements();
             Renderer.theme.reRender();
         }
@@ -279,7 +280,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     initContentProgress: function() {
         var instance = this;
         EkstepRendererAPI.addEventListener("sceneEnter", function(event) {
-            if (instance.sleep) return;
+            if (instance.sleepMode) return;
             var currentScene = Renderer.theme._currentScene
             if (currentScene.isItemScene()) {
                 if (!_.contains(instance.qid, currentScene._stageController.assessStartEvent.event.edata.eks.qid)) {

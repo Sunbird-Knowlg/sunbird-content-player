@@ -14,12 +14,10 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     stageId:[],
     enableHeartBeatEvent: false,
     mimeType: ['application/epub'],
+    launchEvent: "renderer:launch:epub",
     initLauncher: function () {
-        EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
-        EkstepRendererAPI.addEventListener('content:load:application/epub', this.start, this);
-        EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
+        EkstepRendererAPI.addEventListener(this.launchEvent, this.start, this);
         EkstepRendererAPI.dispatchEvent('renderer:stagereload:hide');
-        // this.start();
     },
     start: function (event, data) {
         this._super()
@@ -50,7 +48,6 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     renderEpub: function (epubPath) {
-        // jQuery('#gameCanvas').remove();
         jQuery('#gameArea').css({left: '10%', top: '0px', width: "80%", height: "90%", margin: "5% 0 0 0"});
         var epubOptions = {
             width: document.getElementById('gameArea').offsetWidth,
@@ -111,6 +108,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         });
     },
     replay:function(){
+        if (this.sleepMode) return;
         this.stageId = [];
         this.lastPage = false;
         this.currentPage = 1;
@@ -199,6 +197,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         return this.progres(currentStageIndex + 1, totalStages);
     },
     cleanUp: function() {
+        if (this.sleepMode) return;
         this.sleepMode = true;
         this.removeProgressElements();
         EkstepRendererAPI.removeEventListener('actionNavigateNext', undefined, undefined, true);

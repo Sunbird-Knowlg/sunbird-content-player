@@ -154,8 +154,7 @@ OverlayManager = {
     },
     navigateNext: function() {
      try{
-        if (_.isUndefined(Renderer.theme._currentScene)) return;
-
+        if ((_.isUndefined(Renderer.theme) || _.isUndefined(Renderer.theme._currentScene))) return;
         var isItemScene = Renderer.theme._currentScene.isItemScene();
         if (isItemScene) {
             this.defaultSubmit();
@@ -214,7 +213,7 @@ OverlayManager = {
     },
     navigatePrevious: function() {
       try{
-        if (_.isUndefined(Renderer.theme._currentScene)) return;
+        if ((_.isUndefined(Renderer.theme) || _.isUndefined(Renderer.theme._currentScene))) return;
         var navigateToStage = this.getNavigateTo('previous');
         if (_.isUndefined(navigateToStage)) {
             if (!(Renderer.theme._currentScene.isItemScene() && Renderer.theme._currentScene._stageController.hasPrevious())) {

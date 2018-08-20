@@ -11,15 +11,11 @@ org.ekstep.contentrenderer.baseLauncher.extend({
     heartBeatData:{},
     enableHeartBeatEvent:false,
     mimeType: ['video/mp4', 'video/x-youtube', 'video/webm'],
-    initLauncher: function(manifestData) {
-        EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
-        EkstepRendererAPI.addEventListener('content:load:video/mp4', this.start, this);
-        EkstepRendererAPI.addEventListener('content:load:video/x-youtube', this.start, this);
-        EkstepRendererAPI.addEventListener('content:load:video/webm', this.start, this);
-        EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
+    launchEvent: 'renderer:launch:video',
+    initLauncher: function() {
+        EkstepRendererAPI.addEventListener(this.launchEvent, this.start, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:mute", this.onOverlayAudioMute, this);
         EkstepRendererAPI.addEventListener("renderer:overlay:unmute", this.onOverlayAudioUnmute, this);
-        // this.start();
     },
     start: function() {
         this._super();
@@ -188,6 +184,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         EkstepRendererAPI.getTelemetryService().interact(type || 'TOUCH', "", "", eksData);
     },
     replay:function(){
+        if (this.sleepMode) return;
        EkstepRendererAPI.dispatchEvent('renderer:overlay:unmute');
        this.start();
     },
@@ -241,6 +238,7 @@ org.ekstep.contentrenderer.baseLauncher.extend({
         }
     },
     cleanUp: function() {
+        if (this.sleepMode) return;
         this.sleepMode = true;
         if (document.getElementById(this.manifest.id)) {
             videojs(this.manifest.id).dispose();

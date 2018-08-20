@@ -8,6 +8,7 @@ Plugin.extend({
         controllerPath: undefined,
         _ngScopeVar: "playerContent",
         _injectTemplateFn: undefined,
+        // Hashmap for launchers
         launcherMap: {},
         initialize: function() {
             EkstepRendererAPI.addEventListener('renderer:launcher:load', this.start, this);
@@ -15,51 +16,34 @@ Plugin.extend({
             this.templatePath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/templates/renderer.html");
             this.controllerPath = EkstepRendererAPI.resolvePluginResource(this._manifest.id, this._manifest.ver, "renderer/js/rendererApp.js");
             org.ekstep.service.controller.loadNgModules(this.templatePath, this.controllerPath);
-            EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, [globalConfig.corePluginspath]);
             this.loadCommonPlugins();
         },
         registerLauncher: function(event) {
             var plugin = event.target;
-            plugin.mimeType.forEach(mimetype => {
-                this.launcherMap[mimetype] = plugin;
-            });
+            try {
+                plugin.mimeType.forEach(mimetype => {
+                    this.launcherMap[mimetype] = {
+                        event: plugin.launchEvent,
+                        pluginId: plugin.manifest.id
+                    }
+                });
+            } catch (error) {
+                console.error('Plugin mimetype is not defined ', error)
+            }
         },
         start: function(evt, contentObj) {
-            // this.loadCommonPlugins(() => {
-                content = contentObj;
-                // var contentTypePlugin = _.find(this.launcherMap, function(eachConfig) {
-                //     if (_.contains(eachConfig.mimeType, content.mimeType)) return eachConfig;
-                // });
+            content = contentObj;
+            var launcherPluginMap = this.launcherMap[content.mimeType];
             // Checking if mimetype launcher is already loaded or not
-                // var pluginInstance = EkstepRendererAPI.getPluginObjs(contentTypePlugin.manifest.id);
-                EkstepRendererAPI.dispatchEvent('renderer:launcher:clean')
-            // if (pluginInstance) {
+            var pluginInstance = EkstepRendererAPI.getPluginObjs(launcherPluginMap.pluginId);
+            EkstepRendererAPI.dispatchEvent('renderer:launcher:clean')
+            if (pluginInstance) {
                 // If already loaded just start the content
                 EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
-                EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType);
-                // pluginInstance.start();
-            // } else {
-                // If not loaded load the launcher
-                /**
-                 * renderer:repo:create event will get dispatch to add a custom repo to load the plugins from the path.
-                 * @event 'renderer:repo:create'
-                 * @fires 'renderer:repo:create'
-                 * @memberof EkstepRendererEvents
-                 */
-                // EkstepRendererAPI.dispatchEvent("renderer:repo:create", undefined, [globalConfig.corePluginspath]);
-                // instance.loadCommonPlugins(function() {
-                //     if (!_.isUndefined(contentTypePlugin)) {
-                //         // Except current Mimetype destroying all mimetype launchers
-                //         // _.find(globalConfig.contentLaunchers, function(eachConfig) {
-                //         //     var plugin = org.ekstep.pluginframework.pluginManager.pluginObjs[eachConfig.id];
-                //         //     if (!_.contains(eachConfig.mimeType, content.mimeType) && plugin) {
-                //         //         plugin.destroy();
-                //         //     }
-                //         // });
-                //         instance.loadPlugin(contentTypePlugin, content);
-                //     }
-                // });
-            // }
+                EkstepRendererAPI.dispatchEvent(launcherPluginMap.event);
+            } else {
+                console.error('No plugin available to handle "' + content.mimetype + '" Mimetype')
+            }
             EkstepRendererAPI.dispatchEvent('renderer:player:show');
         },
         loadCommonPlugins: function(cb) {
@@ -74,19 +58,6 @@ Plugin.extend({
             org.ekstep.contentrenderer.loadPlugins(plugins, [], function() {
                 if (cb) cb();
             });
-        // },
-        // loadPlugin: function(plugin, contentData) {
-        //     content = contentData;
-        //     org.ekstep.contentrenderer.loadPlugins(plugin, [], function() {
-        //         /**
-        //          * telemetryPlugin:intialize event will get dispatch to Initialize the telemetry plugin before loading of the launchers.
-        //          * @event 'telemetryPlugin:intialize'
-        //          * @fires 'telemetryPlugin:intialize'
-        //          * @memberof EkstepRendererEvents
-        //          */
-        //         EkstepRendererAPI.dispatchEvent("telemetryPlugin:intialize");
-        //         EkstepRendererAPI.dispatchEvent('content:load:' + content.mimeType);
-        //     });
         }
     })
     //# sourceURL=ContentLauncher.js

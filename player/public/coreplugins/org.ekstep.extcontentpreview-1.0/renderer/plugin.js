@@ -1,10 +1,8 @@
 org.ekstep.contentrenderer.baseLauncher.extend({
-    sleep: false,
     mimeType: ['text/x-url'],
+    launchEvent: 'renderer:launch:extcontent',
     initLauncher: function () {
-        EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
-        EkstepRendererAPI.addEventListener('content:load:text/x-url', this.start, this);
-        // this.start();
+        EkstepRendererAPI.addEventListener(this.launchEvent, this.start, this);
     },
     start: function () {
         var instance = this;

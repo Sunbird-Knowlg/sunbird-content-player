@@ -13,7 +13,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
     manifest: undefined,
     enableHeartBeatEvent: false,
     heartBeatData: {},
-    sleepMode: false,
+    sleepMode: true,
 
     /**
      * init of the launcher with the given data.
@@ -25,8 +25,10 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
             EkstepRendererAPI.addEventListener("renderer:telemetry:end", this.endTelemetry, this);
             EkstepRendererAPI.addEventListener('renderer:content:end', this.end, this);
             EkstepRendererAPI.addEventListener('renderer:content:replay', this.replay, this);
+            EkstepRendererAPI.addEventListener('renderer:launcher:clean', this.cleanUp, this);
             this.manifest = manifest;
             this.contentMetaData = content;
+            EkstepRendererAPI.dispatchEvent('renderer:launcher:register', this);
             this.initLauncher(this.manifest);
         } catch (error) {
             this.throwError(error);
@@ -73,6 +75,7 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
      * @memberof org.ekstep.contentrenderer.baseLauncher
      */
     replay: function() {
+        if (this.sleepMode) return;
         this.heartBeatEvent(false);
         this.endTelemetry();
         this.start();
@@ -214,26 +217,5 @@ org.ekstep.contentrenderer.baseLauncher = Class.extend({
                 }
             })
         }
-    // },
-    // destroy: function() {
-    //     var instance = this;
-    //     var pluginName = this.manifest.id;
-    //     var listeners = EventBus.listeners;
-    //     this.cleanUp();
-    //     this.resetDomElement();
-    //     for(var type in listeners) {
-    //         var noOfCallbacks = listeners[type].length;
-    //         var event = listeners[type];
-    //         for (var i=0;i<noOfCallbacks;i++) {
-    //             if (event[i] && (event[i].scope == instance)) {
-    //                 EkstepRendererAPI.removeEventListener(type, event[i].callback, event[i].scope)
-    //             }
-    //         }
-    //     }
-    //     if (org.ekstep.pluginframework.pluginManager.plugins) delete org.ekstep.pluginframework.pluginManager.plugins[pluginName];
-    //     if (org.ekstep.pluginframework.pluginManager.pluginManifests) delete org.ekstep.pluginframework.pluginManager.pluginManifests[pluginName];
-    //     if (org.ekstep.pluginframework.pluginManager.pluginObjs) delete org.ekstep.pluginframework.pluginManager.pluginObjs[pluginName];
-    //     if (org.ekstep.pluginframework.pluginManager.pluginVisited) delete org.ekstep.pluginframework.pluginManager.pluginVisited[pluginName];
-    //     console.log(pluginName, " Plugin instance got destroyed");
     }
 });
