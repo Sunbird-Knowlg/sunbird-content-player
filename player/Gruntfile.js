@@ -831,7 +831,7 @@ module.exports = function(grunt) {
     //Build AAR
     grunt.registerTask('init-setup', ['set-platforms', 'add-cordova-plugin-genieservices']);
     grunt.registerTask('build-aarshared-xwalk', ['init', 'rename:main', 'injector:prview', 'cordovacli:add_plugins', 'copy:unsigned', 'replace:gradleCanvasVersion', 'add-speech', 'set-android-library', 'set-xwalkshared-library', 'cordovacli:build_android']);
-    grunt.registerTask('build-app', ['clean', 'mkdir:all', 'init-setup', 'build-aarshared-xwalk']);
+    grunt.registerTask('build-app', ['clean', 'mkdir:all', 'backup-config-xml', 'init-setup', 'build-aarshared-xwalk', 'revert-config-xml']);
 
     //Added on 16/04/18. Simple command to build aar file. There is no xwalk build required. This changes made to share build for Sunbird.
     grunt.registerTask('build-aar', ['mkdir:all', 'build-aarshared-xwalk']);

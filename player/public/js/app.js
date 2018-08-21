@@ -50,9 +50,10 @@ var app = angular.module('genie-canvas', ['ionic', 'ngCordova', 'oc.lazyLoad'])
         };
         $timeout(function() {
             $ionicPlatform.ready(function() {
+                isMobile = window.cordova ? true : false;
+                isMobile && navigator.splashscreen.hide();
                 splashScreen.addEvents();
-                isMobile = window.cordova ? true : false,
-                    org.ekstep.service.init();
+                org.ekstep.service.init();
                 if ("undefined" == typeof Promise) {
                     alert("Your device isn’t compatible with this version of Genie.");
                     exitApp();
